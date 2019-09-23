@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { blue, grey160 } from '../colors';
+import { blue } from '../colors';
 
 type StyledButtonProps = {
   bg: string;
