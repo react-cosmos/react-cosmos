@@ -1,5 +1,8 @@
 export type LayoutSpec = {
   name: 'layout';
+  config: {
+    globalOrder: string[];
+  };
   state: {
     storageCacheReady: boolean;
   };

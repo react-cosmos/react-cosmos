@@ -13,6 +13,7 @@ type Props = {
   panelOpen: boolean;
   navWidth: number;
   panelWidth: number;
+  globalOrder: string[];
   onToggleNav: () => unknown;
   setNavWidth: (width: number) => unknown;
   setPanelWidth: (width: number) => unknown;
@@ -26,6 +27,7 @@ export function Layout({
   panelOpen,
   navWidth,
   panelWidth,
+  globalOrder,
   onToggleNav,
   setNavWidth,
   setPanelWidth
@@ -52,7 +54,7 @@ export function Layout({
           <Preview key="preview" />
         </Center>
         <div style={{ zIndex: 2 }}>
-          <ArraySlot name="global" />
+          <ArraySlot name="global" plugOrder={globalOrder} />
         </div>
       </Container>
     );
@@ -89,7 +91,7 @@ export function Layout({
         </PanelContainer>
       )}
       <div style={{ zIndex: 4 }}>
-        <ArraySlot name="global" />
+        <ArraySlot name="global" plugOrder={globalOrder} />
       </div>
     </Container>
   );

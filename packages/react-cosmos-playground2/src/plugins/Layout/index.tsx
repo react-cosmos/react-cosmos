@@ -14,6 +14,9 @@ import { LayoutContext } from './shared';
 
 const { onLoad, plug, register } = createPlugin<LayoutSpec>({
   name: 'layout',
+  defaultConfig: {
+    globalOrder: []
+  },
   initialState: {
     storageCacheReady: false
   },
@@ -34,7 +37,7 @@ onLoad(context => {
 });
 
 plug('root', ({ pluginContext }) => {
-  const { getState, getMethodsOf } = pluginContext;
+  const { getConfig, getState, getMethodsOf } = pluginContext;
   const onToggleNav = useOpenNav(pluginContext);
 
   const { storageCacheReady } = getState();
@@ -48,6 +51,7 @@ plug('root', ({ pluginContext }) => {
         panelOpen={false}
         navWidth={0}
         panelWidth={0}
+        globalOrder={[]}
         onToggleNav={() => {}}
         setNavWidth={() => {}}
         setPanelWidth={() => {}}
@@ -68,6 +72,7 @@ plug('root', ({ pluginContext }) => {
       panelOpen={isPanelOpen(pluginContext)}
       navWidth={navWidth}
       panelWidth={panelWidth}
+      globalOrder={getConfig().globalOrder}
       onToggleNav={onToggleNav}
       setNavWidth={setNavWidth}
       setPanelWidth={setPanelWidth}
