@@ -25,7 +25,12 @@ const DEFAULT_CONFIG = {
     navRowOrder: ['fixtureSearch', 'fixtureTree']
   },
   rendererHeader: {
-    rendererActionOrder: ['remoteRenderer', 'responsivePreview', 'controlPanel']
+    rendererActionOrder: [
+      'remoteRenderer',
+      'fullScreen',
+      'responsivePreview',
+      'controlPanel'
+    ]
   },
   controlPanel: {
     controlPanelRowOrder: ['props', 'classState']
