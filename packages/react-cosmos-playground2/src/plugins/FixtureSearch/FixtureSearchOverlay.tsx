@@ -13,7 +13,7 @@ import {
   KEY_UP
 } from '../../shared/keys';
 import {
-  black48,
+  black70,
   grey128,
   grey160,
   grey176,
@@ -284,7 +284,7 @@ const Overlay = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  background: ${black48};
+  background: ${black70};
 `;
 
 const Content = styled.div`
