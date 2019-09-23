@@ -13,14 +13,6 @@ type ListItemProps = {
   selected?: boolean;
 };
 
-const colors = {
-  bg: grey32,
-  bgSelected: grey8,
-  bgHover: grey24,
-  color: grey224,
-  colorSelected: grey248
-};
-
 export const ListItem = styled.span<ListItemProps>`
   --height: 28px;
 
@@ -29,15 +21,15 @@ export const ListItem = styled.span<ListItemProps>`
   align-items: center;
   height: var(--height);
   padding: 0 16px 0 ${props => getLeftPadding(props.indentLevel)}px;
-  background: ${selectedColors(colors.bg, colors.bgSelected)};
-  color: ${selectedColors(colors.color, colors.colorSelected)};
+  background: ${selectedColors(grey32, grey8)};
+  color: ${selectedColors(grey224, grey248)};
   line-height: var(--height);
   user-select: none;
   cursor: default;
   transition: background var(--quick), color var(--quick);
 
   :hover {
-    background: ${selectedColors(colors.bgHover, colors.bgSelected)};
+    background: ${selectedColors(grey24, grey8)};
   }
 `;
 
