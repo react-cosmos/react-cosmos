@@ -233,7 +233,7 @@ The [props panel](https://twitter.com/ReactCosmos/status/1139838627976843264) al
 import { useValue } from 'react-cosmos/fixture';
 
 export default () => {
-  const [count, setCount] = useValue(0);
+  const [count, setCount] = useValue('count', { defaultValue: 0 });
   return <CounterButton count={count} increment={() => setCount(count + 1)} />;
 };
 ```
