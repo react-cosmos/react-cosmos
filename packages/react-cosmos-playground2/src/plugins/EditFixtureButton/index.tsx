@@ -18,7 +18,8 @@ namedPlug<RendererActionProps>(
   'rendererAction',
   'editFixture',
   ({ pluginContext, slotProps }) => {
-    const core = pluginContext.getMethodsOf<CoreSpec>('core');
+    const { getMethodsOf } = pluginContext;
+    const core = getMethodsOf<CoreSpec>('core');
     const onError = useErrorNotification(pluginContext);
 
     if (!core.isDevServerOn()) {
