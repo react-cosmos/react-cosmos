@@ -11,7 +11,7 @@ loadPlugins({
       projectId: 'testProjectId',
       fixturesDir: '__fixtures__',
       fixtureFileSuffix: 'fixture',
-      devServerOn: false,
+      devServerOn: true,
       webRendererUrl: '/_renderer.html'
     }
   }
