@@ -1,29 +1,26 @@
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import { Slot, loadPlugins, resetPlugins } from 'react-plugin';
-import { mockRouter, mockRendererCore } from '../../../testHelpers/pluginMocks';
+import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { register } from '..';
+import { mockRouter } from '../../../testHelpers/pluginMocks';
 
 afterEach(resetPlugins);
 
-function registerTestPlugins() {
-  register();
-  mockRendererCore({
-    isRendererConnected: () => true,
-    isValidFixtureSelected: () => true
-  });
-}
-
 function loadTestPlugins() {
   loadPlugins();
-  return render(<Slot name="rendererAction" />);
+  return render(
+    <Slot
+      name="rendererAction"
+      slotProps={{
+        fixtureId: { path: 'foo', name: null }
+      }}
+    />
+  );
 }
 
 it('renders fullscreen button', async () => {
-  registerTestPlugins();
-  const { selectFixture } = mockRouter({
-    getSelectedFixtureId: () => ({ path: 'foo', name: null })
-  });
+  register();
+  const { selectFixture } = mockRouter();
 
   const { getByTitle } = loadTestPlugins();
   fireEvent.click(getByTitle(/go fullscreen/i));

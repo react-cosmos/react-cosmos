@@ -1,7 +1,7 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
+import { RendererActionProps } from '../../shared/slots';
 import { RouterSpec } from '../Router/public';
-import { RendererCoreSpec } from '../RendererCore/public';
 import { FullScreenButton } from './FullScreenButton';
 import { FullScreenButtonSpec } from './public';
 
@@ -9,18 +9,20 @@ const { namedPlug, register } = createPlugin<FullScreenButtonSpec>({
   name: 'fullScreenButton'
 });
 
-namedPlug('rendererAction', 'fullScreen', ({ pluginContext }) => {
-  const { getMethodsOf } = pluginContext;
-  const router = getMethodsOf<RouterSpec>('router');
-  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
+namedPlug<RendererActionProps>(
+  'rendererAction',
+  'fullScreen',
+  ({ pluginContext, slotProps }) => {
+    const { getMethodsOf } = pluginContext;
+    const router = getMethodsOf<RouterSpec>('router');
+    const { fixtureId } = slotProps;
 
-  return (
-    <FullScreenButton
-      selectedFixtureId={router.getSelectedFixtureId()}
-      validFixtureSelected={rendererCore.isValidFixtureSelected()}
-      selectFixture={router.selectFixture}
-    />
-  );
-});
+    const onSelect = React.useCallback(() => {
+      router.selectFixture(fixtureId, true);
+    }, [fixtureId, router]);
+
+    return <FullScreenButton onClick={onSelect} />;
+  }
+);
 
 export { register };
