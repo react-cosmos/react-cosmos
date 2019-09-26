@@ -2,7 +2,6 @@ import React from 'react';
 import { createPlugin } from 'react-plugin';
 import { IconButton32 } from '../../shared/ui/buttons';
 import { SlidersIcon } from '../../shared/icons';
-import { RendererCoreSpec } from '../RendererCore/public';
 import { LayoutSpec } from '../Layout/public';
 import { ControlPanel } from './ControlPanel';
 import { ControlPanelSpec } from './public';
@@ -23,19 +22,6 @@ plug('panel', ({ pluginContext }) => {
 });
 
 namedPlug('rendererAction', 'controlPanel', ({ pluginContext }) => {
-  const { getMethodsOf } = pluginContext;
-  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
-  if (!rendererCore.isValidFixtureSelected()) {
-    return (
-      <IconButton32
-        icon={<SlidersIcon />}
-        title="Open control panel"
-        disabled
-        selected={false}
-      />
-    );
-  }
-
   const layout = pluginContext.getMethodsOf<LayoutSpec>('layout');
   const panelOpen = layout.isPanelOpen();
   return (
