@@ -2,24 +2,21 @@ import React from 'react';
 import { loadPlugins, ArraySlot, resetPlugins } from 'react-plugin';
 import { render, fireEvent, wait, RenderResult } from '@testing-library/react';
 import { register } from '.';
-import {
-  mockCore,
-  mockRouter,
-  mockNotifications
-} from '../../testHelpers/pluginMocks';
+import { mockCore, mockNotifications } from '../../testHelpers/pluginMocks';
 import { mockFetch } from './testHelpers';
 
 afterEach(resetPlugins);
 
-function mockSelectedFixtureId() {
-  mockRouter({
-    getSelectedFixtureId: () => ({ path: 'foo.js', name: null })
-  });
-}
-
 async function loadTestPlugins() {
   loadPlugins();
-  return render(<ArraySlot name="fixtureAction" />);
+  return render(
+    <ArraySlot
+      name="rendererAction"
+      slotProps={{
+        fixtureId: { path: 'foo.js', name: null }
+      }}
+    />
+  );
 }
 
 function clickButton({ getByTitle }: RenderResult) {
@@ -29,10 +26,7 @@ function clickButton({ getByTitle }: RenderResult) {
 
 it(`doesn't render button when dev server is off`, async () => {
   register();
-  mockSelectedFixtureId();
-  mockCore({
-    isDevServerOn: () => false
-  });
+  mockCore({ isDevServerOn: () => false });
   mockNotifications();
 
   const { queryByTitle } = await loadTestPlugins();
@@ -41,10 +35,7 @@ it(`doesn't render button when dev server is off`, async () => {
 
 it('renders button', async () => {
   register();
-  mockSelectedFixtureId();
-  mockCore({
-    isDevServerOn: () => true
-  });
+  mockCore({ isDevServerOn: () => true });
   mockNotifications();
 
   const { getByTitle } = await loadTestPlugins();
@@ -54,10 +45,7 @@ it('renders button', async () => {
 it('calls server endpoint on button click', async () => {
   await mockFetch(200, async fetchMock => {
     register();
-    mockSelectedFixtureId();
-    mockCore({
-      isDevServerOn: () => true
-    });
+    mockCore({ isDevServerOn: () => true });
     mockNotifications();
 
     const renderer = await loadTestPlugins();
@@ -71,10 +59,7 @@ it('calls server endpoint on button click', async () => {
 it('shows 400 error notification', async () => {
   await mockFetch(400, async () => {
     register();
-    mockSelectedFixtureId();
-    mockCore({
-      isDevServerOn: () => true
-    });
+    mockCore({ isDevServerOn: () => true });
     const { pushTimedNotification } = mockNotifications();
 
     const renderer = await loadTestPlugins();
@@ -94,10 +79,7 @@ it('shows 400 error notification', async () => {
 it('shows 404 error notification', async () => {
   await mockFetch(404, async () => {
     register();
-    mockSelectedFixtureId();
-    mockCore({
-      isDevServerOn: () => true
-    });
+    mockCore({ isDevServerOn: () => true });
     const { pushTimedNotification } = mockNotifications();
 
     const renderer = await loadTestPlugins();
@@ -117,10 +99,7 @@ it('shows 404 error notification', async () => {
 it('shows 500 error notification', async () => {
   await mockFetch(500, async () => {
     register();
-    mockSelectedFixtureId();
-    mockCore({
-      isDevServerOn: () => true
-    });
+    mockCore({ isDevServerOn: () => true });
     const { pushTimedNotification } = mockNotifications();
 
     const renderer = await loadTestPlugins();

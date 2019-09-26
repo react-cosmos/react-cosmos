@@ -4,22 +4,13 @@ import { IconButton32 } from '../../shared/ui/buttons';
 import { EditIcon } from '../../shared/icons';
 
 type Props = {
-  devServerOn: boolean;
-  selectedFixtureId: FixtureId | null;
+  fixtureId: FixtureId;
   onError: (info: string) => unknown;
 };
 
-export function EditFixtureButton({
-  devServerOn,
-  selectedFixtureId,
-  onError
-}: Props) {
-  if (!devServerOn || !selectedFixtureId) {
-    return null;
-  }
-
+export function EditFixtureButton({ fixtureId, onError }: Props) {
   const handleClick = async () => {
-    const httpStatus = await openFile(selectedFixtureId.path);
+    const httpStatus = await openFile(fixtureId.path);
     switch (httpStatus) {
       case 200:
         // No need to notify when everything is OK

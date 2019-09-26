@@ -1,10 +1,12 @@
 import React from 'react';
-import { createPlugin } from 'react-plugin';
+import { createPlugin, PluginContext } from 'react-plugin';
+import { RendererActionProps } from '../../shared/slots';
 import { CoreSpec } from '../Core/public';
-import { RouterSpec } from '../Router/public';
 import { NotificationsSpec } from '../Notifications/public';
 import { EditFixtureButton } from './EditFixtureButton';
 import { EditFixtureButtonSpec } from './public';
+
+type EditFixtureButtonContext = PluginContext<EditFixtureButtonSpec>;
 
 const { namedPlug, register } = createPlugin<EditFixtureButtonSpec>({
   name: 'editFixtureButton'
@@ -12,14 +14,30 @@ const { namedPlug, register } = createPlugin<EditFixtureButtonSpec>({
 
 const ERORR_TITLE = 'Failed to open fixture';
 
-namedPlug('fixtureAction', 'editFixture', ({ pluginContext }) => {
-  const { getMethodsOf } = pluginContext;
-  const core = getMethodsOf<CoreSpec>('core');
-  const router = getMethodsOf<RouterSpec>('router');
+namedPlug<RendererActionProps>(
+  'rendererAction',
+  'editFixture',
+  ({ pluginContext, slotProps }) => {
+    const core = pluginContext.getMethodsOf<CoreSpec>('core');
+    const onError = useErrorNotification(pluginContext);
 
+    if (!core.isDevServerOn()) {
+      return null;
+    }
+
+    return (
+      <EditFixtureButton fixtureId={slotProps.fixtureId} onError={onError} />
+    );
+  }
+);
+
+export { register };
+
+function useErrorNotification(pluginContext: EditFixtureButtonContext) {
+  const { getMethodsOf } = pluginContext;
   const notifications = getMethodsOf<NotificationsSpec>('notifications');
   const { pushTimedNotification } = notifications;
-  const onError = React.useCallback(
+  return React.useCallback(
     info =>
       pushTimedNotification({
         id: 'edit-fixture',
@@ -29,14 +47,4 @@ namedPlug('fixtureAction', 'editFixture', ({ pluginContext }) => {
       }),
     [pushTimedNotification]
   );
-
-  return (
-    <EditFixtureButton
-      devServerOn={core.isDevServerOn()}
-      selectedFixtureId={router.getSelectedFixtureId()}
-      onError={onError}
-    />
-  );
-});
-
-export { register };
+}
