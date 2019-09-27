@@ -6,6 +6,7 @@ import { RendererHeaderSlot } from '../../shared/slots/RendererHeaderSlot';
 import { grey32, grey8, white10 } from '../../shared/ui/colors';
 import { useDrag } from '../../shared/ui/useDrag';
 import { TopBar } from './TopBar';
+import { RendererPanelSlot } from '../../shared/slots/RendererPanelSlot';
 
 type Props = {
   storageCacheReady: boolean;
@@ -95,9 +96,9 @@ export function Layout({
         <Preview key="preview" />
         {dragging && <DragOverlay />}
       </Center>
-      {panelOpen && (
+      {panelOpen && selectedFixtureId && (
         <PanelContainer style={{ width: panelWidth, zIndex: 3 }}>
-          <Slot name="panel" />
+          <RendererPanelSlot slotProps={{ fixtureId: selectedFixtureId }} />
           {panelDrag.dragging && <DragOverlay />}
           <PanelDragHandle ref={panelDrag.dragElRef} />
         </PanelContainer>

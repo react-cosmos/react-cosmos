@@ -65,13 +65,13 @@ it('renders "contentOverlay" slot', async () => {
   getByText(/we are the robots/i);
 });
 
-it('renders "panel" slot', async () => {
-  registerTestPlugins();
-  mockPlug('panel', () => <>we are the robots</>);
+// it('renders "rendererPanel" slot', async () => {
+//   registerTestPlugins();
+//   mockPlug('rendererPanel', () => <>we are the robots</>);
 
-  const { getByText } = await loadTestPlugins();
-  getByText(/we are the robots/i);
-});
+//   const { getByText } = await loadTestPlugins();
+//   getByText(/we are the robots/i);
+// });
 
 it('renders "global" plugs', async () => {
   mockPlug('global', () => <>first</>);

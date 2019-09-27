@@ -1,39 +1,45 @@
-import React from 'react';
 import { render } from '@testing-library/react';
-import { Slot, loadPlugins, resetPlugins } from 'react-plugin';
-import { mockPlug } from '../../../testHelpers/plugin';
-import { mockLayout } from '../../../testHelpers/pluginMocks';
+import React from 'react';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '..';
+import { ControlPanelRowSlotProps } from '../../../shared/slots/ControlPanelRowSlot';
+import { RendererPanelSlot } from '../../../shared/slots/RendererPanelSlot';
+import { mockPlug } from '../../../testHelpers/plugin';
+import { mockLayout, mockRendererCore } from '../../../testHelpers/pluginMocks';
 
 afterEach(resetPlugins);
 
 function loadTestPlugins() {
   loadPlugins();
-  return render(<Slot name="panel" />);
+  return render(
+    <RendererPanelSlot
+      slotProps={{ fixtureId: { path: 'foo.js', name: null } }}
+    />
+  );
 }
 
-function mockPanelRow(rowMock: string) {
-  mockPlug('controlPanelRow', () => <>{rowMock}</>);
+function mockPanelRow() {
+  mockPlug<ControlPanelRowSlotProps>('controlPanelRow', ({ slotProps }) => (
+    <>{slotProps.fixtureId.path}</>
+  ));
 }
 
 it('renders control panel rows when panel is open', async () => {
   register();
-  mockLayout({
-    isPanelOpen: () => true
-  });
-  mockPanelRow('mockRow');
+  mockRendererCore();
+  mockLayout({ isPanelOpen: () => true });
+  mockPanelRow();
 
   const { getByText } = loadTestPlugins();
-  getByText('mockRow');
+  getByText('foo.js');
 });
 
 it('does not render control panel rows when panel is closed', async () => {
   register();
-  mockLayout({
-    isPanelOpen: () => false
-  });
-  mockPanelRow('mockRow');
+  mockRendererCore();
+  mockLayout({ isPanelOpen: () => false });
+  mockPanelRow();
 
   const { queryByText } = loadTestPlugins();
-  expect(queryByText('mockRow')).toBeNull();
+  expect(queryByText('foo.js')).toBeNull();
 });

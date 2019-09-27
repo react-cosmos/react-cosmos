@@ -1,20 +1,33 @@
 import React from 'react';
+import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
+import { StateUpdater } from 'react-cosmos-shared2/util';
 import styled from 'styled-components';
 import { ControlPanelRowSlot } from '../../shared/slots/ControlPanelRowSlot';
 import { grey32 } from '../../shared/ui/colors';
 
 type Props = {
   fixtureId: FixtureId;
+  fixtureState: FixtureState;
+  onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
   controlPanelRowOrder: string[];
 };
 
-export function ControlPanel({ fixtureId, controlPanelRowOrder }: Props) {
+export function ControlPanel({
+  fixtureId,
+  fixtureState,
+  onFixtureStateChange,
+  controlPanelRowOrder
+}: Props) {
+  const slotProps = React.useMemo(
+    () => ({ fixtureId, fixtureState, onFixtureStateChange }),
+    [fixtureId, fixtureState, onFixtureStateChange]
+  );
   return (
     <Container>
       <Content>
         <ControlPanelRowSlot
-          slotProps={{ fixtureId }}
+          slotProps={slotProps}
           plugOrder={controlPanelRowOrder}
         />
       </Content>

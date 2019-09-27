@@ -1,142 +1,123 @@
+import { fireEvent, render, wait } from '@testing-library/react';
 import React from 'react';
-import { render, fireEvent, wait } from '@testing-library/react';
-import { ArraySlot, loadPlugins, resetPlugins } from 'react-plugin';
 import {
-  FixtureStateValues,
-  FixtureState
+  FixtureState,
+  FixtureStateValues
 } from 'react-cosmos-shared2/fixtureState';
-import {
-  mockRendererCore,
-  mockRouter,
-  mockStorage
-} from '../../../testHelpers/pluginMocks';
-import { getParentButton } from '../../../testHelpers/selectors';
-import { PROPS_TREE_EXPANSION_STORAGE_KEY } from '../shared';
-import { register } from '..';
+import { loadPlugins, resetPlugins } from 'react-plugin';
+import { register } from '.';
+import { ControlPanelRowSlot } from '../../shared/slots/ControlPanelRowSlot';
+import { mockStorage } from '../../testHelpers/pluginMocks';
+import { getParentButton } from '../../testHelpers/selectors';
+import { PROPS_TREE_EXPANSION_STORAGE_KEY } from './shared';
 
 afterEach(resetPlugins);
 
-function registerTestPlugins() {
-  register();
-  mockRouter({
-    getSelectedFixtureId: () => ({ path: 'foo.js', name: null })
-  });
-}
-
-function loadTestPlugins() {
+function loadTestPlugins(fixtureState: FixtureState) {
   loadPlugins();
-  return render(<ArraySlot name="controlPanelRow" />);
-}
-
-function mockFsPropsValues(values: FixtureStateValues) {
-  let updatedFixtureState: FixtureState = {
-    props: [
-      {
-        elementId: { decoratorId: 'root', elPath: '' },
-        renderKey: 0,
-        componentName: 'MyComponent',
-        values
-      }
-    ]
-  };
-  mockRendererCore({
-    isValidFixtureSelected: () => true,
-    getFixtureState: () => updatedFixtureState,
-    setFixtureState: (context, stateUpdater) => {
-      updatedFixtureState.props = stateUpdater(updatedFixtureState).props;
-    }
-  });
-  return { updatedFixtureState };
+  return render(
+    <ControlPanelRowSlot
+      slotProps={{
+        fixtureId: { path: 'foo.js', name: null },
+        fixtureState,
+        onFixtureStateChange: stateUpdater => {
+          fixtureState.props = stateUpdater(fixtureState).props;
+        }
+      }}
+      plugOrder={[]}
+    />
+  );
 }
 
 it('renders blank state', async () => {
-  registerTestPlugins();
+  register();
   mockStorage();
-  mockFsPropsValues({});
 
-  const { getByText } = loadTestPlugins();
+  const fixtureState = createFsState({});
+  const { getByText } = loadTestPlugins(fixtureState);
   getByText(/no visible props/i);
 });
 
 it('renders component name', async () => {
-  registerTestPlugins();
+  register();
   mockStorage();
-  mockFsPropsValues({
+
+  const fixtureState = createFsState({
     myValue: { type: 'primitive', value: 'foo' }
   });
-
-  const { getByText } = loadTestPlugins();
+  const { getByText } = loadTestPlugins(fixtureState);
   getByText('MyComponent');
 });
 
 it('updates string value', async () => {
-  registerTestPlugins();
+  register();
   mockStorage();
-  const { updatedFixtureState } = mockFsPropsValues({
+
+  const fixtureState = createFsState({
     myStrValue: { type: 'primitive', value: 'foo' }
   });
-
-  const { getByLabelText } = loadTestPlugins();
+  const { getByLabelText } = loadTestPlugins(fixtureState);
   const input = getByLabelText('myStrValue');
 
   fireEvent.change(input, { target: { value: 'bar' } });
   await wait(() =>
-    expect(updatedFixtureState.props![0].values).toEqual({
+    expect(fixtureState.props[0].values).toEqual({
       myStrValue: { type: 'primitive', value: 'bar' }
     })
   );
 });
 
 it('updates boolean value', async () => {
-  registerTestPlugins();
+  register();
   mockStorage();
-  const { updatedFixtureState } = mockFsPropsValues({
+
+  const fixtureState = createFsState({
     myBoolValue: { type: 'primitive', value: false }
   });
-
-  const { getByText } = loadTestPlugins();
+  const { getByText } = loadTestPlugins(fixtureState);
   getByText('myBoolValue');
   const button = getByText('false');
 
   fireEvent.click(button);
   await wait(() =>
-    expect(updatedFixtureState.props![0].values).toEqual({
+    expect(fixtureState.props[0].values).toEqual({
       myBoolValue: { type: 'primitive', value: true }
     })
   );
 });
 
 it('renders null value', async () => {
-  registerTestPlugins();
+  register();
   mockStorage();
-  mockFsPropsValues({
+
+  const fixtureState = createFsState({
     myNullValue: { type: 'primitive', value: null }
   });
-
-  const { getByText } = loadTestPlugins();
+  const { getByText } = loadTestPlugins(fixtureState);
   getByText('myNullValue');
   getByText('null');
 });
 
 it('renders unserializable value', async () => {
-  registerTestPlugins();
+  register();
   mockStorage();
-  mockFsPropsValues({
+
+  const fixtureState = createFsState({
     myRegexpValue: {
       type: 'unserializable',
       stringifiedValue: '/canttouchthis/i'
     }
   });
-
-  const { getByText } = loadTestPlugins();
+  const { getByText } = loadTestPlugins(fixtureState);
   getByText('myRegexpValue');
   getByText('/canttouchthis/i');
 });
 
 it('toggles nested object', async () => {
-  registerTestPlugins();
+  register();
   const { setItem } = mockStorage();
-  mockFsPropsValues({
+
+  const fixtureState = createFsState({
     myObjValue: {
       type: 'object',
       values: {
@@ -144,8 +125,7 @@ it('toggles nested object', async () => {
       }
     }
   });
-
-  const { getByText } = loadTestPlugins();
+  const { getByText } = loadTestPlugins(fixtureState);
   fireEvent.click(getParentButton(getByText('myObjValue')));
 
   expect(setItem).toBeCalledWith(
@@ -156,14 +136,15 @@ it('toggles nested object', async () => {
 });
 
 it('updates number input nested in object', async () => {
-  registerTestPlugins();
+  register();
   mockStorage({
     getItem: (context, key) =>
       key === PROPS_TREE_EXPANSION_STORAGE_KEY
         ? { 'foo.js': { root: { myObjValue: true } } }
         : null
   });
-  const { updatedFixtureState } = mockFsPropsValues({
+
+  const fixtureState = createFsState({
     myObjValue: {
       type: 'object',
       values: {
@@ -171,13 +152,12 @@ it('updates number input nested in object', async () => {
       }
     }
   });
-
-  const { getByLabelText } = loadTestPlugins();
+  const { getByLabelText } = loadTestPlugins(fixtureState);
   const input = getByLabelText('myNumValue');
 
   fireEvent.change(input, { target: { value: 6789 } });
   await wait(() =>
-    expect(updatedFixtureState.props![0].values).toEqual({
+    expect(fixtureState.props[0].values).toEqual({
       myObjValue: {
         type: 'object',
         values: {
@@ -187,3 +167,16 @@ it('updates number input nested in object', async () => {
     })
   );
 });
+
+function createFsState(propsValues: FixtureStateValues) {
+  return {
+    props: [
+      {
+        elementId: { decoratorId: 'root', elPath: '' },
+        renderKey: 0,
+        componentName: 'MyComponent',
+        values: propsValues
+      }
+    ]
+  };
+}

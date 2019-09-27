@@ -1,11 +1,12 @@
 import React from 'react';
 import { createPlugin, PluginContext } from 'react-plugin';
+import { ControlPanelRowSlotProps } from '../../shared/slots/ControlPanelRowSlot';
 import { TreeExpansion } from '../../shared/ui/TreeView';
-import { RendererCoreSpec } from '../RendererCore/public';
-import { RouterSpec } from '../Router/public';
 import { StorageSpec } from '../Storage/public';
-import { ValuesPanel } from './ValuesPanel';
 import { ValuesPanelSpec } from './public';
+import { ValuesPanel } from './ValuesPanel';
+
+type ValuesPanelContext = PluginContext<ValuesPanelSpec>;
 
 export const VALUES_TREE_EXPANSION_STORAGE_KEY = 'valuesTreeExpansion';
 
@@ -13,36 +14,32 @@ const { namedPlug, register } = createPlugin<ValuesPanelSpec>({
   name: 'valuesPanel'
 });
 
-namedPlug('controlPanelRow', 'values', ({ pluginContext }) => {
-  const { getMethodsOf } = pluginContext;
-  const routerCore = getMethodsOf<RouterSpec>('router');
-  const selectedFixtureId = routerCore.getSelectedFixtureId();
-  if (selectedFixtureId === null) {
-    return null;
+namedPlug<ControlPanelRowSlotProps>(
+  'controlPanelRow',
+  'values',
+  ({ pluginContext, slotProps }) => {
+    const { fixtureState, onFixtureStateChange } = slotProps;
+    const { treeExpansion, onTreeExpansionChange } = useTreeExpansionStorage(
+      pluginContext
+    );
+    return (
+      <ValuesPanel
+        fixtureState={fixtureState}
+        treeExpansion={treeExpansion}
+        onFixtureStateChange={onFixtureStateChange}
+        onTreeExpansionChange={onTreeExpansionChange}
+      />
+    );
   }
-
-  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
-  const fixtureState = rendererCore.getFixtureState();
-  const { treeExpansion, onTreeExpansionChange } = useTreeExpansionStorage(
-    pluginContext
-  );
-  return (
-    <ValuesPanel
-      fixtureState={fixtureState}
-      treeExpansion={treeExpansion}
-      onFixtureStateChange={rendererCore.setFixtureState}
-      onTreeExpansionChange={onTreeExpansionChange}
-    />
-  );
-});
+);
 
 export { register };
 
-function useTreeExpansionStorage(
-  pluginContext: PluginContext<ValuesPanelSpec>
-) {
-  // TODO: Persist tree expansion state per fixture ID
-  const storage = pluginContext.getMethodsOf<StorageSpec>('storage');
+// TODO: Persist tree expansion state per fixture ID
+function useTreeExpansionStorage(pluginContext: ValuesPanelContext) {
+  const { getMethodsOf } = pluginContext;
+  const storage = getMethodsOf<StorageSpec>('storage');
+
   const treeExpansion =
     storage.getItem<TreeExpansion>(VALUES_TREE_EXPANSION_STORAGE_KEY) || {};
   const onTreeExpansionChange = React.useCallback(
@@ -51,5 +48,6 @@ function useTreeExpansionStorage(
     },
     [storage]
   );
+
   return { treeExpansion, onTreeExpansionChange };
 }
