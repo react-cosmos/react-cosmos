@@ -1,17 +1,22 @@
 import React from 'react';
-import { ArraySlot } from 'react-plugin';
+import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
+import { ControlPanelRowSlot } from '../../shared/slots/ControlPanelRowSlot';
 import { grey32 } from '../../shared/ui/colors';
 
 type Props = {
+  fixtureId: FixtureId;
   controlPanelRowOrder: string[];
 };
 
-export function ControlPanel({ controlPanelRowOrder }: Props) {
+export function ControlPanel({ fixtureId, controlPanelRowOrder }: Props) {
   return (
     <Container>
       <Content>
-        <ArraySlot name="controlPanelRow" plugOrder={controlPanelRowOrder} />
+        <ControlPanelRowSlot
+          slotProps={{ fixtureId }}
+          plugOrder={controlPanelRowOrder}
+        />
       </Content>
     </Container>
   );
