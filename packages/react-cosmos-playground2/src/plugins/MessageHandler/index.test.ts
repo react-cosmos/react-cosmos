@@ -1,3 +1,6 @@
+// NOTE: Mock files need to imported before modules that use the mocked APIs
+import { mockSocketIo } from './testHelpers/mockSocketIo';
+
 import { wait } from '@testing-library/react';
 import {
   BuildErrorMessage,
@@ -11,7 +14,6 @@ import {
   mockCore,
   onMessageHandler
 } from '../../testHelpers/pluginMocks';
-import { mockSocketIo } from './testHelpers/mockSocketIo';
 
 afterEach(resetPlugins);
 
