@@ -1,7 +1,8 @@
 import { fireEvent, render, RenderResult } from '@testing-library/react';
 import React from 'react';
-import { ArraySlot, loadPlugins, resetPlugins, Slot } from 'react-plugin';
+import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { register } from '..';
+import { RendererActionSlot } from '../../../shared/slots/RendererActionSlot';
 import {
   mockRendererCore,
   mockRouter,
@@ -15,7 +16,6 @@ import {
   VIEWPORT_STORAGE_KEY
 } from '../shared';
 import { StorageMock } from '../testHelpers';
-import { RendererActionSlot } from '../../../shared/slots/RendererActionSlot';
 
 afterEach(resetPlugins);
 
