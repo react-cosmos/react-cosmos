@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPlugin, PluginContext } from 'react-plugin';
-import { RendererActionSlotProps } from '../../shared/slots/shared';
+import { RendererActionSlotProps } from '../../shared/slots/RendererActionSlot';
 import { CoreSpec } from '../Core/public';
 import { NotificationsSpec } from '../Notifications/public';
 import { EditFixtureButton } from './EditFixtureButton';

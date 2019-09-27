@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { RendererActionSlotProps } from '../../shared/slots/shared';
+import { RendererActionSlotProps } from '../../shared/slots/RendererActionSlot';
 import { RouterSpec } from '../Router/public';
 import { FullScreenButton } from './FullScreenButton';
 import { FullScreenButtonSpec } from './public';

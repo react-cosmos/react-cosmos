@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { RendererHeaderSlotProps } from '../../shared/slots/shared';
+import { RendererHeaderSlotProps } from '../../shared/slots/RendererHeaderSlot';
 import { RouterSpec } from '../Router/public';
 import { RendererHeaderSpec } from './public';
 import { RendererHeader } from './RendererHeader';

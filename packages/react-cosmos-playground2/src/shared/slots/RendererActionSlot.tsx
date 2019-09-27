@@ -1,8 +1,12 @@
 import React from 'react';
+import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { ArraySlot } from 'react-plugin';
-import { RendererActionSlotProps } from './shared';
 
-export type Props = {
+export type RendererActionSlotProps = {
+  fixtureId: FixtureId;
+};
+
+type Props = {
   slotProps: RendererActionSlotProps;
   plugOrder: string[];
 };
