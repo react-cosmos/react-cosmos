@@ -1,14 +1,20 @@
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import { Slot, loadPlugins, resetPlugins } from 'react-plugin';
-import { mockLayout } from '../../../testHelpers/pluginMocks';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '..';
+import { RendererActionSlot } from '../../../shared/slots/RendererActionSlot';
+import { mockLayout } from '../../../testHelpers/pluginMocks';
 
 afterEach(resetPlugins);
 
 function loadTestPlugins() {
   loadPlugins();
-  return render(<Slot name="rendererAction" />);
+  return render(
+    <RendererActionSlot
+      slotProps={{ fixtureId: { path: 'foo.js', name: null } }}
+      plugOrder={[]}
+    />
+  );
 }
 
 it('opens panel', async () => {

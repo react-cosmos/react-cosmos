@@ -1,7 +1,8 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '..';
+import { RendererActionSlot } from '../../../shared/slots/RendererActionSlot';
 import { mockRouter } from '../../../testHelpers/pluginMocks';
 
 afterEach(resetPlugins);
@@ -9,11 +10,9 @@ afterEach(resetPlugins);
 function loadTestPlugins() {
   loadPlugins();
   return render(
-    <Slot
-      name="rendererAction"
-      slotProps={{
-        fixtureId: { path: 'foo', name: null }
-      }}
+    <RendererActionSlot
+      slotProps={{ fixtureId: { path: 'foo', name: null } }}
+      plugOrder={[]}
     />
   );
 }

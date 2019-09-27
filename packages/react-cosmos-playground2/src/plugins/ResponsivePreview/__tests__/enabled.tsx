@@ -15,6 +15,7 @@ import {
   VIEWPORT_STORAGE_KEY
 } from '../shared';
 import { StorageMock } from '../testHelpers';
+import { RendererActionSlot } from '../../../shared/slots/RendererActionSlot';
 
 afterEach(resetPlugins);
 
@@ -53,7 +54,10 @@ function loadTestPlugins() {
   loadPlugins();
   return render(
     <>
-      <ArraySlot name="rendererAction" />
+      <RendererActionSlot
+        slotProps={{ fixtureId: { path: 'foo', name: null } }}
+        plugOrder={[]}
+      />
       <Slot name="rendererPreviewOuter">
         <div data-testid="previewMock" />
       </Slot>

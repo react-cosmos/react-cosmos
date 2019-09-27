@@ -1,7 +1,8 @@
+import { fireEvent, render, RenderResult, wait } from '@testing-library/react';
 import React from 'react';
-import { loadPlugins, ArraySlot, resetPlugins } from 'react-plugin';
-import { render, fireEvent, wait, RenderResult } from '@testing-library/react';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '.';
+import { RendererActionSlot } from '../../shared/slots/RendererActionSlot';
 import { mockCore, mockNotifications } from '../../testHelpers/pluginMocks';
 import { mockFetch } from './testHelpers';
 
@@ -10,11 +11,11 @@ afterEach(resetPlugins);
 async function loadTestPlugins() {
   loadPlugins();
   return render(
-    <ArraySlot
-      name="rendererAction"
+    <RendererActionSlot
       slotProps={{
         fixtureId: { path: 'foo.js', name: null }
       }}
+      plugOrder={[]}
     />
   );
 }
