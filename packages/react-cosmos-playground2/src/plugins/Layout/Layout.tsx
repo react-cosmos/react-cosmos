@@ -1,12 +1,15 @@
 import React from 'react';
+import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { ArraySlot, Slot } from 'react-plugin';
 import styled from 'styled-components';
+import { RendererHeaderSlot } from '../../shared/slots/RendererHeaderSlot';
 import { grey32, grey8, white10 } from '../../shared/ui/colors';
 import { useDrag } from '../../shared/ui/useDrag';
 import { TopBar } from './TopBar';
 
 type Props = {
   storageCacheReady: boolean;
+  selectedFixtureId: FixtureId | null;
   fullScreen: boolean;
   validFixtureSelected: boolean;
   navOpen: boolean;
@@ -22,6 +25,7 @@ type Props = {
 
 export function Layout({
   storageCacheReady,
+  selectedFixtureId,
   fullScreen,
   validFixtureSelected,
   navOpen,
@@ -82,7 +86,12 @@ export function Layout({
           topBarRightActionOrder={topBarRightActionOrder}
           onToggleNav={onToggleNav}
         />
-        <Slot name="rendererHeader" />
+        {selectedFixtureId && (
+          <RendererHeaderSlot
+            key="header"
+            slotProps={{ fixtureId: selectedFixtureId }}
+          />
+        )}
         <Preview key="preview" />
         {dragging && <DragOverlay />}
       </Center>

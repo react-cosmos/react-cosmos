@@ -1,85 +1,44 @@
 import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { ArraySlot } from 'react-plugin';
 import styled from 'styled-components';
-import { HomeIcon, RefreshCwIcon, XCircleIcon } from '../../shared/icons';
+import { RefreshCwIcon, XCircleIcon } from '../../shared/icons';
+import { RendererActionSlot } from '../../shared/slots/RendererActionSlot';
 import { IconButton32 } from '../../shared/ui/buttons';
 import { grey192, grey32, white10 } from '../../shared/ui/colors';
 
 type Props = {
+  fixtureId: FixtureId;
   rendererActionOrder: string[];
-  selectedFixtureId: null | FixtureId;
-  rendererConnected: boolean;
-  validFixtureSelected: boolean;
-  selectFixture: (fixtureId: FixtureId, fullScreen: boolean) => void;
-  unselectFixture: () => void;
+  onReload: () => unknown;
+  onClose: () => unknown;
 };
 
 export const RendererHeader = React.memo(function RendererHeader({
+  fixtureId,
   rendererActionOrder,
-  selectedFixtureId,
-  rendererConnected,
-  validFixtureSelected,
-  selectFixture,
-  unselectFixture
+  onReload,
+  onClose
 }: Props) {
-  if (!rendererConnected) {
-    return (
-      <Container>
-        <Left>
-          <Message>Waiting for renderer...</Message>
-        </Left>
-      </Container>
-    );
-  }
-
-  const rendererActionSlot = (
-    <ArraySlot name="rendererAction" plugOrder={rendererActionOrder} />
-  );
-
-  if (!selectedFixtureId) {
-    return (
-      <Container>
-        <Left>
-          <Message>No fixture selected</Message>
-        </Left>
-        <Right>{rendererActionSlot}</Right>
-      </Container>
-    );
-  }
-
-  if (!validFixtureSelected) {
-    return (
-      <Container>
-        <Left>
-          <Message>Fixture not found</Message>
-          <IconButton32
-            icon={<HomeIcon />}
-            title="Go home"
-            onClick={() => unselectFixture()}
-          />
-        </Left>
-        <Right>{rendererActionSlot}</Right>
-      </Container>
-    );
-  }
-
   return (
     <Container>
       <Left>
         <IconButton32
           icon={<XCircleIcon />}
           title="Close fixture"
-          onClick={() => unselectFixture()}
+          onClick={onClose}
         />
+      </Left>
+      <Right>
         <IconButton32
           icon={<RefreshCwIcon />}
           title="Reload fixture"
-          onClick={() => selectFixture(selectedFixtureId, false)}
+          onClick={onReload}
         />
-        <ArraySlot name="fixtureAction" />
-      </Left>
-      <Right>{rendererActionSlot}</Right>
+        <RendererActionSlot
+          slotProps={{ fixtureId }}
+          plugOrder={rendererActionOrder}
+        />
+      </Right>
     </Container>
   );
 });
@@ -120,12 +79,4 @@ const Right = styled(Actions)`
   display: flex;
   flex-direction: row;
   align-items: center;
-`;
-
-const Message = styled.span`
-  margin: 0 8px;
-
-  strong {
-    font-weight: 600;
-  }
 `;

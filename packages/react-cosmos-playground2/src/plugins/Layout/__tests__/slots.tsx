@@ -41,13 +41,13 @@ it('renders "nav" slot', async () => {
   getByText(/we are the robots/i);
 });
 
-it('renders "rendererHeader" slot', async () => {
-  registerTestPlugins();
-  mockPlug('rendererHeader', () => <>we are the robots</>);
+// it('renders "rendererHeader" slot', async () => {
+//   registerTestPlugins();
+//   mockPlug('rendererHeader', () => <>we are the robots</>);
 
-  const { getByText } = await loadTestPlugins();
-  getByText(/we are the robots/i);
-});
+//   const { getByText } = await loadTestPlugins();
+//   getByText(/we are the robots/i);
+// });
 
 it('renders "rendererPreview" slot', async () => {
   registerTestPlugins();

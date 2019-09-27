@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { RendererActionProps } from '../../shared/slots';
+import { RendererActionSlotProps } from '../../shared/slots/shared';
 import { RouterSpec } from '../Router/public';
 import { FullScreenButton } from './FullScreenButton';
 import { FullScreenButtonSpec } from './public';
@@ -9,7 +9,7 @@ const { namedPlug, register } = createPlugin<FullScreenButtonSpec>({
   name: 'fullScreenButton'
 });
 
-namedPlug<RendererActionProps>(
+namedPlug<RendererActionSlotProps>(
   'rendererAction',
   'fullScreen',
   ({ pluginContext, slotProps }) => {

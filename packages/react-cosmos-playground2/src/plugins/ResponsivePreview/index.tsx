@@ -55,7 +55,7 @@ plug('rendererPreviewOuter', ({ children, pluginContext }) => {
   );
 });
 
-namedPlug('topBarRightAction', 'responsivePreview', ({ pluginContext }) => {
+namedPlug('rendererAction', 'responsivePreview', ({ pluginContext }) => {
   const { getMethodsOf } = pluginContext;
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const fixtureState = rendererCore.getFixtureState();
@@ -64,9 +64,8 @@ namedPlug('topBarRightAction', 'responsivePreview', ({ pluginContext }) => {
 
   return (
     <ToggleButton
-      validFixtureSelected={rendererCore.isValidFixtureSelected()}
-      enabled={enabled}
-      toggleViewportState={() => {
+      selected={enabled}
+      onToggle={() => {
         if (enabled) {
           setViewportState(pluginContext, { ...viewportState, enabled: false });
           setFixtureStateViewport(pluginContext, null);

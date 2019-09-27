@@ -46,6 +46,7 @@ plug('root', ({ pluginContext }) => {
     return (
       <Layout
         storageCacheReady={false}
+        selectedFixtureId={null}
         fullScreen={false}
         validFixtureSelected={false}
         navOpen={false}
@@ -69,6 +70,7 @@ plug('root', ({ pluginContext }) => {
   return (
     <Layout
       storageCacheReady={true}
+      selectedFixtureId={router.getSelectedFixtureId()}
       fullScreen={router.isFullScreen()}
       validFixtureSelected={rendererCore.isValidFixtureSelected()}
       navOpen={isNavOpen(pluginContext)}

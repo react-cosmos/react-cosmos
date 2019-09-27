@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPlugin, PluginContext } from 'react-plugin';
-import { RendererActionProps } from '../../shared/slots';
+import { RendererActionSlotProps } from '../../shared/slots/shared';
 import { CoreSpec } from '../Core/public';
 import { NotificationsSpec } from '../Notifications/public';
 import { EditFixtureButton } from './EditFixtureButton';
@@ -14,7 +14,7 @@ const { namedPlug, register } = createPlugin<EditFixtureButtonSpec>({
 
 const ERORR_TITLE = 'Failed to open fixture';
 
-namedPlug<RendererActionProps>(
+namedPlug<RendererActionSlotProps>(
   'rendererAction',
   'editFixture',
   ({ pluginContext, slotProps }) => {
