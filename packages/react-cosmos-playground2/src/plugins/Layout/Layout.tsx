@@ -12,6 +12,7 @@ type Props = {
   storageCacheReady: boolean;
   selectedFixtureId: FixtureId | null;
   fullScreen: boolean;
+  rendererConnected: boolean;
   validFixtureSelected: boolean;
   navOpen: boolean;
   panelOpen: boolean;
@@ -28,6 +29,7 @@ export function Layout({
   storageCacheReady,
   selectedFixtureId,
   fullScreen,
+  rendererConnected,
   validFixtureSelected,
   navOpen,
   panelOpen,
@@ -87,6 +89,8 @@ export function Layout({
       )}
       <MainContainer key="main" style={{ zIndex: 1 }}>
         <TopBar
+          selectedFixtureId={selectedFixtureId}
+          rendererConnected={rendererConnected}
           validFixtureSelected={validFixtureSelected}
           navOpen={navOpen}
           topBarRightActionOrder={topBarRightActionOrder}

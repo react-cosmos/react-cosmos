@@ -1,10 +1,13 @@
 import React from 'react';
+import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { ArraySlot } from 'react-plugin';
 import styled from 'styled-components';
-import { grey8 } from '../../shared/ui/colors';
+import { grey160, grey8 } from '../../shared/ui/colors';
 import { ToggleNavButton } from './ToggleNavButton';
 
 type Props = {
+  selectedFixtureId: FixtureId | null;
+  rendererConnected: boolean;
   validFixtureSelected: boolean;
   navOpen: boolean;
   topBarRightActionOrder: string[];
@@ -12,11 +15,29 @@ type Props = {
 };
 
 export function TopBar({
+  selectedFixtureId,
+  rendererConnected,
   validFixtureSelected,
   navOpen,
   topBarRightActionOrder,
   onToggleNav
 }: Props) {
+  function getMessage() {
+    if (!rendererConnected) {
+      return <Message>Waiting for renderer...</Message>;
+    }
+
+    if (!selectedFixtureId) {
+      return <Message>No fixture selected</Message>;
+    }
+
+    if (!validFixtureSelected) {
+      return <Message>Fixture not found</Message>;
+    }
+
+    return null;
+  }
+
   return (
     <Container>
       <Left>
@@ -26,6 +47,7 @@ export function TopBar({
           onToggle={onToggleNav}
         />
       </Left>
+      {getMessage()}
       <Right>
         <ArraySlot
           name="topBarRightAction"
@@ -66,4 +88,13 @@ const Right = styled(Actions)`
   display: flex;
   flex-direction: row;
   align-items: center;
+`;
+
+const Message = styled.div`
+  padding: 4px;
+  color: ${grey160};
+  line-height: 24px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
