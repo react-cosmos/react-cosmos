@@ -19,6 +19,7 @@ export const RendererHeader = React.memo(function RendererHeader({
   onReload,
   onClose
 }: Props) {
+  const slotProps = React.useMemo(() => ({ fixtureId }), [fixtureId]);
   return (
     <Container>
       <Left>
@@ -35,7 +36,7 @@ export const RendererHeader = React.memo(function RendererHeader({
           onClick={onReload}
         />
         <RendererActionSlot
-          slotProps={{ fixtureId }}
+          slotProps={slotProps}
           plugOrder={rendererActionOrder}
         />
       </Right>
