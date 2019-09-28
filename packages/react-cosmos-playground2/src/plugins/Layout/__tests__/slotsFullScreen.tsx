@@ -65,9 +65,9 @@ it('renders "contentOverlay" slot', async () => {
   getByText(/we are the robots/i);
 });
 
-it('does not render "panel" slot', async () => {
+it('does not render "rendererPanel" slot', async () => {
   registerTestPlugins();
-  mockPlug('panel', () => <>we are the robots</>);
+  mockPlug('rendererPanel', () => <>we are the robots</>);
 
   const { queryByText } = await loadTestPlugins();
   expect(queryByText(/we are the robots/i)).toBeNull();

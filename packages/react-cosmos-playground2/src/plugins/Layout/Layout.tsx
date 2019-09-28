@@ -3,10 +3,10 @@ import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { ArraySlot, Slot } from 'react-plugin';
 import styled from 'styled-components';
 import { RendererHeaderSlot } from '../../shared/slots/RendererHeaderSlot';
-import { grey32, grey8, white10 } from '../../shared/ui/colors';
+import { RendererPanelSlot } from '../../shared/slots/RendererPanelSlot';
+import { grey32, white10 } from '../../shared/ui/colors';
 import { useDrag } from '../../shared/ui/useDrag';
 import { TopBar } from './TopBar';
-import { RendererPanelSlot } from '../../shared/slots/RendererPanelSlot';
 
 type Props = {
   storageCacheReady: boolean;
@@ -57,9 +57,14 @@ export function Layout({
   if (fullScreen) {
     return (
       <Container>
-        <Center key="center" style={{ zIndex: 1 }}>
-          <Preview key="preview" />
-        </Center>
+        <MainContainer key="main" style={{ zIndex: 1 }}>
+          <RendererContainer key="rendererContainer">
+            <RendererBody key="rendererBody">
+              <Slot name="rendererPreview" />
+            </RendererBody>
+            <Slot name="contentOverlay" />
+          </RendererContainer>
+        </MainContainer>
         <div style={{ zIndex: 2 }}>
           <ArraySlot name="global" plugOrder={globalOrder} />
         </div>
@@ -74,35 +79,42 @@ export function Layout({
   return (
     <Container dragging={dragging}>
       {showNav && (
-        <NavContainer style={{ width: navWidth, zIndex: 2 }}>
+        <Draggable style={{ width: navWidth, zIndex: 2 }}>
           <Slot name="nav" />
           {navDrag.dragging && <DragOverlay />}
           <NavDragHandle ref={navDrag.dragElRef} />
-        </NavContainer>
+        </Draggable>
       )}
-      <Center key="center" style={{ zIndex: 1 }}>
+      <MainContainer key="main" style={{ zIndex: 1 }}>
         <TopBar
           validFixtureSelected={validFixtureSelected}
           navOpen={navOpen}
           topBarRightActionOrder={topBarRightActionOrder}
           onToggleNav={onToggleNav}
         />
-        {selectedFixtureId && (
-          <RendererHeaderSlot
-            key="header"
-            slotProps={{ fixtureId: selectedFixtureId }}
-          />
-        )}
-        <Preview key="preview" />
-        {dragging && <DragOverlay />}
-      </Center>
-      {panelOpen && selectedFixtureId && (
-        <PanelContainer style={{ width: panelWidth, zIndex: 3 }}>
-          <RendererPanelSlot slotProps={{ fixtureId: selectedFixtureId }} />
-          {panelDrag.dragging && <DragOverlay />}
-          <PanelDragHandle ref={panelDrag.dragElRef} />
-        </PanelContainer>
-      )}
+        <RendererContainer key="rendererContainer">
+          {selectedFixtureId && (
+            <RendererHeaderSlot
+              key="header"
+              slotProps={{ fixtureId: selectedFixtureId }}
+            />
+          )}
+          <RendererBody key="rendererBody">
+            <Slot name="rendererPreview" />
+            {dragging && <DragOverlay />}
+            {panelOpen && selectedFixtureId && (
+              <RendererPanelContainer style={{ width: panelWidth, zIndex: 3 }}>
+                <RendererPanelSlot
+                  slotProps={{ fixtureId: selectedFixtureId }}
+                />
+                {panelDrag.dragging && <DragOverlay />}
+                <PanelDragHandle ref={panelDrag.dragElRef} />
+              </RendererPanelContainer>
+            )}
+          </RendererBody>
+          <Slot name="contentOverlay" />
+        </RendererContainer>
+      </MainContainer>
       <div style={{ zIndex: 4 }}>
         <ArraySlot name="global" plugOrder={globalOrder} />
       </div>
@@ -110,18 +122,11 @@ export function Layout({
   );
 }
 
-function Preview() {
-  return (
-    <PreviewContainer>
-      <Slot name="rendererPreview" />
-      <Slot name="contentOverlay" />
-    </PreviewContainer>
-  );
-}
-
-const Container = styled.div.attrs({ 'data-testid': 'layout' })<{
+type ContainerProps = {
   dragging?: boolean;
-}>`
+};
+
+const Container = styled.div.attrs({ 'data-testid': 'layout' })<ContainerProps>`
   position: absolute;
   top: 0;
   bottom: 0;
@@ -137,24 +142,33 @@ const Draggable = styled.div`
   position: relative;
 `;
 
-const NavContainer = styled(Draggable)``;
-
-const PanelContainer = styled(Draggable)``;
-
-const Center = styled.div`
+const MainContainer = styled.div`
+  flex: 1;
   position: relative;
   display: flex;
   flex-direction: column;
-  flex: 1;
-  background: ${grey8};
   overflow: hidden;
 `;
 
-const PreviewContainer = styled.div`
+const RendererContainer = styled.div`
   flex: 1;
   display: flex;
+  flex-direction: column;
   position: relative;
   overflow: hidden;
+`;
+
+const RendererBody = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+`;
+
+const RendererPanelContainer = styled(Draggable)`
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
 `;
 
 const DragHandle = styled.div`

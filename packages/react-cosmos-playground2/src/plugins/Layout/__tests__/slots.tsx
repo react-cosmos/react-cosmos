@@ -17,6 +17,7 @@ function registerTestPlugins() {
     loadCache: () => Promise.resolve(null)
   });
   mockRouter({
+    getSelectedFixtureId: () => ({ path: 'foo.js', name: null }),
     isFullScreen: () => false
   });
   mockCore();
@@ -41,13 +42,13 @@ it('renders "nav" slot', async () => {
   getByText(/we are the robots/i);
 });
 
-// it('renders "rendererHeader" slot', async () => {
-//   registerTestPlugins();
-//   mockPlug('rendererHeader', () => <>we are the robots</>);
+it('renders "rendererHeader" slot', async () => {
+  registerTestPlugins();
+  mockPlug('rendererHeader', () => <>we are the robots</>);
 
-//   const { getByText } = await loadTestPlugins();
-//   getByText(/we are the robots/i);
-// });
+  const { getByText } = await loadTestPlugins();
+  getByText(/we are the robots/i);
+});
 
 it('renders "rendererPreview" slot', async () => {
   registerTestPlugins();
@@ -65,13 +66,13 @@ it('renders "contentOverlay" slot', async () => {
   getByText(/we are the robots/i);
 });
 
-// it('renders "rendererPanel" slot', async () => {
-//   registerTestPlugins();
-//   mockPlug('rendererPanel', () => <>we are the robots</>);
+it('renders "rendererPanel" slot', async () => {
+  registerTestPlugins();
+  mockPlug('rendererPanel', () => <>we are the robots</>);
 
-//   const { getByText } = await loadTestPlugins();
-//   getByText(/we are the robots/i);
-// });
+  const { getByText } = await loadTestPlugins();
+  getByText(/we are the robots/i);
+});
 
 it('renders "global" plugs', async () => {
   mockPlug('global', () => <>first</>);

@@ -37,6 +37,7 @@ export function TopBar({
 }
 
 const Container = styled.div`
+  flex-shrink: 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
