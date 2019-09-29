@@ -30,5 +30,7 @@ require('../plugins/ValuesPanel').register();
 require('../plugins/WebpackHmrNotification').register();
 
 // TODO: Read list of disabled plugins from user config
+// TODO: Bring back full screen button (opens renderer in new tab)
+enablePlugin('fullScreenButton', false);
 enablePlugin('rendererSelect', false);
 enablePlugin('pluginList', false);
