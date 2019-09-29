@@ -125,7 +125,7 @@ export function Layout({
             <Slot name="rendererPreview" />
             {dragging && <DragOverlay />}
             {panelOpen && selectedFixtureId && (
-              <RendererPanelContainer style={{ width: panelWidth, zIndex: 3 }}>
+              <ControlPanelContainer style={{ width: panelWidth, zIndex: 3 }}>
                 <ControlPanel
                   fixtureId={selectedFixtureId}
                   fixtureState={fixtureState}
@@ -134,7 +134,7 @@ export function Layout({
                 />
                 {panelDrag.dragging && <DragOverlay />}
                 <PanelDragHandle ref={panelDrag.dragElRef} />
-              </RendererPanelContainer>
+              </ControlPanelContainer>
             )}
           </RendererBody>
           <Slot name="contentOverlay" />
@@ -190,7 +190,7 @@ const RendererBody = styled.div`
   overflow: hidden;
 `;
 
-const RendererPanelContainer = styled(Draggable)`
+const ControlPanelContainer = styled(Draggable)`
   max-width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
