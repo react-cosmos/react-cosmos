@@ -51,6 +51,7 @@ export const StyledIcon = styled.span<{ color: string }>`
   height: var(--size);
   padding: 2px 0 0 0;
   color: ${props => props.color};
+  transition: color var(--quick);
 `;
 
 export const Label = styled.span`
