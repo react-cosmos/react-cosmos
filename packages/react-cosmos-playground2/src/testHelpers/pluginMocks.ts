@@ -121,18 +121,6 @@ export function mockRendererCore(methods: MethodsOf<RendererCoreSpec> = {}) {
   return allMethods;
 }
 
-export function mockLayout(methods: MethodsOf<LayoutSpec> = {}) {
-  const allMethods = {
-    isNavOpen: jest.fn(),
-    isPanelOpen: jest.fn(),
-    openNav: jest.fn(),
-    openPanel: jest.fn(),
-    ...methods
-  };
-  mockMethodsOf<LayoutSpec>('layout', allMethods);
-  return allMethods;
-}
-
 export function mockRendererPreview(
   methods: MethodsOf<RendererPreviewSpec> = {}
 ) {

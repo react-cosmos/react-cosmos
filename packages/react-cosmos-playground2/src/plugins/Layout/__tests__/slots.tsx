@@ -42,14 +42,6 @@ it('renders "nav" slot', async () => {
   getByText(/we are the robots/i);
 });
 
-it('renders "rendererHeader" slot', async () => {
-  registerTestPlugins();
-  mockPlug('rendererHeader', () => <>we are the robots</>);
-
-  const { getByText } = await loadTestPlugins();
-  getByText(/we are the robots/i);
-});
-
 it('renders "rendererPreview" slot', async () => {
   registerTestPlugins();
   mockPlug('rendererPreview', () => <>we are the robots</>);
@@ -61,14 +53,6 @@ it('renders "rendererPreview" slot', async () => {
 it('renders "contentOverlay" slot', async () => {
   registerTestPlugins();
   mockPlug('contentOverlay', () => <>we are the robots</>);
-
-  const { getByText } = await loadTestPlugins();
-  getByText(/we are the robots/i);
-});
-
-it('renders "rendererPanel" slot', async () => {
-  registerTestPlugins();
-  mockPlug('rendererPanel', () => <>we are the robots</>);
 
   const { getByText } = await loadTestPlugins();
   getByText(/we are the robots/i);

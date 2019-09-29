@@ -24,12 +24,6 @@ const { onLoad, plug, namedPlug, register } = createPlugin<LayoutSpec>({
   },
   initialState: {
     storageCacheReady: false
-  },
-  methods: {
-    isNavOpen,
-    isPanelOpen,
-    openNav,
-    openPanel
   }
 });
 

@@ -1,11 +1,10 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { loadPlugins, Slot, resetPlugins } from 'react-plugin';
+import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { register } from '.';
 import {
   mockCore,
   mockFixtureTree,
-  mockLayout,
   mockRendererCore,
   mockRouter
 } from '../../testHelpers/pluginMocks';
@@ -26,7 +25,6 @@ function registerTestPlugins() {
       fixtureFileSuffix: 'fixture'
     })
   });
-  mockLayout();
   mockRendererCore({
     getFixtures: () => fixtures
   });

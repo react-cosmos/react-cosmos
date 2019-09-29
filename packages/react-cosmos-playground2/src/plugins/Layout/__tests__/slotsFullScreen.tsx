@@ -41,14 +41,6 @@ it('does not render "nav" slot', async () => {
   expect(queryByText(/we are the robots/i)).toBeNull();
 });
 
-it('does not render "rendererHeader" slot', async () => {
-  registerTestPlugins();
-  mockPlug('rendererHeader', () => <>we are the robots</>);
-
-  const { queryByText } = await loadTestPlugins();
-  expect(queryByText(/we are the robots/i)).toBeNull();
-});
-
 it('renders "rendererPreview" slot', async () => {
   registerTestPlugins();
   mockPlug('rendererPreview', () => <>we are the robots</>);
@@ -63,14 +55,6 @@ it('renders "contentOverlay" slot', async () => {
 
   const { getByText } = await loadTestPlugins();
   getByText(/we are the robots/i);
-});
-
-it('does not render "rendererPanel" slot', async () => {
-  registerTestPlugins();
-  mockPlug('rendererPanel', () => <>we are the robots</>);
-
-  const { queryByText } = await loadTestPlugins();
-  expect(queryByText(/we are the robots/i)).toBeNull();
 });
 
 it('renders "global" plugs', async () => {
