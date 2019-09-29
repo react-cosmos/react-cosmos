@@ -1,7 +1,7 @@
 import { white20 } from '../../../shared/ui/colors';
 import { Viewport } from '../public';
 
-const PADDING = [12, 12, 12, 12];
+const PADDING = [8, 12, 12, 12];
 const BORDER_WIDTH = 1;
 
 export const stretchStyle = { display: 'flex', flex: 1 };
