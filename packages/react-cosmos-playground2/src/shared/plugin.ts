@@ -8,7 +8,7 @@ export const DEFAULT_PLUGIN_CONFIG = {
       'responsivePreview',
       'fullScreen'
     ],
-    rendererPanelRowOrder: ['props', 'classState']
+    controlPanelRowOrder: ['props', 'classState']
   },
   nav: {
     navRowOrder: ['fixtureSearch', 'fixtureTree']
