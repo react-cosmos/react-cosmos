@@ -26,6 +26,7 @@ type Props = {
   rendererActionOrder: string[];
   controlPanelRowOrder: string[];
   onToggleNav: () => unknown;
+  onTogglePanel: () => unknown;
   onFixtureSelect: (fixtureId: FixtureId, fullScreen: boolean) => unknown;
   onFixtureClose: () => unknown;
   onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
@@ -49,6 +50,7 @@ export function Layout({
   rendererActionOrder,
   controlPanelRowOrder,
   onToggleNav,
+  onTogglePanel,
   onFixtureSelect,
   onFixtureClose,
   onFixtureStateChange,
@@ -115,8 +117,10 @@ export function Layout({
             <RendererHeader
               fixtureId={selectedFixtureId}
               navOpen={navOpen}
+              panelOpen={panelOpen}
               rendererActionOrder={rendererActionOrder}
               onToggleNav={onToggleNav}
+              onTogglePanel={onTogglePanel}
               onReload={() => onFixtureSelect(selectedFixtureId, false)}
               onClose={onFixtureClose}
             />

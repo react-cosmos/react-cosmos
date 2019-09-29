@@ -1,7 +1,5 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { SlidersIcon } from '../../shared/icons';
-import { IconButton32 } from '../../shared/ui/buttons';
 import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { RouterSpec } from '../Router/public';
@@ -14,7 +12,7 @@ import { getPanelWidthApi } from './panelWidth';
 import { LayoutSpec } from './public';
 import { LayoutContext } from './shared';
 
-const { onLoad, plug, namedPlug, register } = createPlugin<LayoutSpec>({
+const { onLoad, plug, register } = createPlugin<LayoutSpec>({
   name: 'layout',
   defaultConfig: {
     globalOrder: [],
@@ -38,6 +36,7 @@ onLoad(context => {
 plug('root', ({ pluginContext }) => {
   const { getConfig, getState, getMethodsOf } = pluginContext;
   const onToggleNav = useOpenNav(pluginContext);
+  const onTogglePanel = useOpenPanel(pluginContext);
 
   const { storageCacheReady } = getState();
   if (!storageCacheReady) {
@@ -58,6 +57,7 @@ plug('root', ({ pluginContext }) => {
         rendererActionOrder={[]}
         controlPanelRowOrder={[]}
         onToggleNav={() => {}}
+        onTogglePanel={() => {}}
         onFixtureSelect={() => {}}
         onFixtureClose={() => {}}
         onFixtureStateChange={() => {}}
@@ -94,23 +94,12 @@ plug('root', ({ pluginContext }) => {
       rendererActionOrder={rendererActionOrder}
       controlPanelRowOrder={controlPanelRowOrder}
       onToggleNav={onToggleNav}
+      onTogglePanel={onTogglePanel}
       onFixtureSelect={router.selectFixture}
       onFixtureClose={router.unselectFixture}
       onFixtureStateChange={rendererCore.setFixtureState}
       setNavWidth={setNavWidth}
       setPanelWidth={setPanelWidth}
-    />
-  );
-});
-
-namedPlug('rendererAction', 'controlPanel', ({ pluginContext }) => {
-  const onToggleNav = useOpenPanel(pluginContext);
-  return (
-    <IconButton32
-      icon={<SlidersIcon />}
-      title="Open control panel"
-      selected={isPanelOpen(pluginContext)}
-      onClick={onToggleNav}
     />
   );
 });

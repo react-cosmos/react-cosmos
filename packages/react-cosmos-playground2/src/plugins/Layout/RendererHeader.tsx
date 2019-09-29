@@ -1,7 +1,12 @@
 import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
-import { RefreshCwIcon, XCircleIcon, MenuIcon } from '../../shared/icons';
+import {
+  RefreshCwIcon,
+  XCircleIcon,
+  MenuIcon,
+  SlidersIcon
+} from '../../shared/icons';
 import { RendererActionSlot } from '../../shared/slots/RendererActionSlot';
 import { IconButton32 } from '../../shared/ui/buttons';
 import { grey192, grey32, white10 } from '../../shared/ui/colors';
@@ -9,8 +14,10 @@ import { grey192, grey32, white10 } from '../../shared/ui/colors';
 type Props = {
   fixtureId: FixtureId;
   navOpen: boolean;
+  panelOpen: boolean;
   rendererActionOrder: string[];
   onToggleNav: () => unknown;
+  onTogglePanel: () => unknown;
   onReload: () => unknown;
   onClose: () => unknown;
 };
@@ -18,8 +25,10 @@ type Props = {
 export const RendererHeader = React.memo(function RendererHeader({
   fixtureId,
   navOpen,
+  panelOpen,
   rendererActionOrder,
   onToggleNav,
+  onTogglePanel,
   onReload,
   onClose
 }: Props) {
@@ -39,16 +48,22 @@ export const RendererHeader = React.memo(function RendererHeader({
           title="Close fixture"
           onClick={onClose}
         />
-      </Left>
-      <Right>
         <IconButton32
           icon={<RefreshCwIcon />}
           title="Reload fixture"
           onClick={onReload}
         />
+      </Left>
+      <Right>
         <RendererActionSlot
           slotProps={slotProps}
           plugOrder={rendererActionOrder}
+        />
+        <IconButton32
+          icon={<SlidersIcon />}
+          title="Toggle control panel"
+          selected={panelOpen}
+          onClick={onTogglePanel}
         />
       </Right>
     </Container>
