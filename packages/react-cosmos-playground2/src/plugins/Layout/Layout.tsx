@@ -1,10 +1,12 @@
 import React from 'react';
+import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
+import { StateUpdater } from 'react-cosmos-shared2/util';
 import { ArraySlot, Slot } from 'react-plugin';
 import styled from 'styled-components';
-import { RendererPanelSlot } from '../../shared/slots/RendererPanelSlot';
 import { grey32, white10 } from '../../shared/ui/colors';
 import { useDrag } from '../../shared/ui/useDrag';
+import { ControlPanel } from './ControlPanel';
 import { RendererHeader } from './RendererHeader';
 import { TopBar } from './TopBar';
 
@@ -14,6 +16,7 @@ type Props = {
   fullScreen: boolean;
   rendererConnected: boolean;
   validFixtureSelected: boolean;
+  fixtureState: FixtureState;
   navOpen: boolean;
   panelOpen: boolean;
   navWidth: number;
@@ -21,9 +24,11 @@ type Props = {
   globalOrder: string[];
   topBarRightActionOrder: string[];
   rendererActionOrder: string[];
+  controlPanelRowOrder: string[];
   onToggleNav: () => unknown;
   onFixtureSelect: (fixtureId: FixtureId, fullScreen: boolean) => unknown;
   onFixtureClose: () => unknown;
+  onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
   setNavWidth: (width: number) => unknown;
   setPanelWidth: (width: number) => unknown;
 };
@@ -34,6 +39,7 @@ export function Layout({
   fullScreen,
   rendererConnected,
   validFixtureSelected,
+  fixtureState,
   navOpen,
   panelOpen,
   navWidth,
@@ -41,9 +47,11 @@ export function Layout({
   globalOrder,
   topBarRightActionOrder,
   rendererActionOrder,
+  controlPanelRowOrder,
   onToggleNav,
   onFixtureSelect,
   onFixtureClose,
+  onFixtureStateChange,
   setNavWidth,
   setPanelWidth
 }: Props) {
@@ -118,8 +126,11 @@ export function Layout({
             {dragging && <DragOverlay />}
             {panelOpen && selectedFixtureId && (
               <RendererPanelContainer style={{ width: panelWidth, zIndex: 3 }}>
-                <RendererPanelSlot
-                  slotProps={{ fixtureId: selectedFixtureId }}
+                <ControlPanel
+                  fixtureId={selectedFixtureId}
+                  fixtureState={fixtureState}
+                  controlPanelRowOrder={controlPanelRowOrder}
+                  onFixtureStateChange={onFixtureStateChange}
                 />
                 {panelDrag.dragging && <DragOverlay />}
                 <PanelDragHandle ref={panelDrag.dragElRef} />

@@ -8,7 +8,6 @@ resetPlugins();
 require('../plugins/BuildNotifications').register();
 require('../plugins/ClassStatePanel').register();
 require('../plugins/ContentOverlay').register();
-require('../plugins/ControlPanel').register();
 require('../plugins/Core').register();
 require('../plugins/EditFixtureButton').register();
 require('../plugins/FixtureSearch').register();

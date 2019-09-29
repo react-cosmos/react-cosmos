@@ -1,5 +1,7 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
+import { SlidersIcon } from '../../shared/icons';
+import { IconButton32 } from '../../shared/ui/buttons';
 import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { RouterSpec } from '../Router/public';
@@ -12,12 +14,13 @@ import { getPanelWidthApi } from './panelWidth';
 import { LayoutSpec } from './public';
 import { LayoutContext } from './shared';
 
-const { onLoad, plug, register } = createPlugin<LayoutSpec>({
+const { onLoad, plug, namedPlug, register } = createPlugin<LayoutSpec>({
   name: 'layout',
   defaultConfig: {
     globalOrder: [],
     topBarRightActionOrder: [],
-    rendererActionOrder: []
+    rendererActionOrder: [],
+    controlPanelRowOrder: []
   },
   initialState: {
     storageCacheReady: false
@@ -51,6 +54,7 @@ plug('root', ({ pluginContext }) => {
         fullScreen={false}
         rendererConnected={false}
         validFixtureSelected={false}
+        fixtureState={{}}
         navOpen={false}
         panelOpen={false}
         navWidth={0}
@@ -58,9 +62,11 @@ plug('root', ({ pluginContext }) => {
         globalOrder={[]}
         topBarRightActionOrder={[]}
         rendererActionOrder={[]}
+        controlPanelRowOrder={[]}
         onToggleNav={() => {}}
         onFixtureSelect={() => {}}
         onFixtureClose={() => {}}
+        onFixtureStateChange={() => {}}
         setNavWidth={() => {}}
         setPanelWidth={() => {}}
       />
@@ -74,7 +80,8 @@ plug('root', ({ pluginContext }) => {
   const {
     globalOrder,
     topBarRightActionOrder,
-    rendererActionOrder
+    rendererActionOrder,
+    controlPanelRowOrder
   } = getConfig();
   return (
     <Layout
@@ -83,6 +90,7 @@ plug('root', ({ pluginContext }) => {
       fullScreen={router.isFullScreen()}
       rendererConnected={rendererCore.isRendererConnected()}
       validFixtureSelected={rendererCore.isValidFixtureSelected()}
+      fixtureState={rendererCore.getFixtureState()}
       navOpen={isNavOpen(pluginContext)}
       panelOpen={isPanelOpen(pluginContext)}
       navWidth={navWidth}
@@ -90,11 +98,25 @@ plug('root', ({ pluginContext }) => {
       globalOrder={globalOrder}
       topBarRightActionOrder={topBarRightActionOrder}
       rendererActionOrder={rendererActionOrder}
+      controlPanelRowOrder={controlPanelRowOrder}
       onToggleNav={onToggleNav}
       onFixtureSelect={router.selectFixture}
       onFixtureClose={router.unselectFixture}
+      onFixtureStateChange={rendererCore.setFixtureState}
       setNavWidth={setNavWidth}
       setPanelWidth={setPanelWidth}
+    />
+  );
+});
+
+namedPlug('rendererAction', 'controlPanel', ({ pluginContext }) => {
+  const onToggleNav = useOpenPanel(pluginContext);
+  return (
+    <IconButton32
+      icon={<SlidersIcon />}
+      title="Open control panel"
+      selected={isPanelOpen(pluginContext)}
+      onClick={onToggleNav}
     />
   );
 });
@@ -104,5 +126,11 @@ export { register };
 function useOpenNav(pluginContext: LayoutContext) {
   return React.useCallback(() => {
     openNav(pluginContext, !isNavOpen(pluginContext));
+  }, [pluginContext]);
+}
+
+function useOpenPanel(pluginContext: LayoutContext) {
+  return React.useCallback(() => {
+    openPanel(pluginContext, !isPanelOpen(pluginContext));
   }, [pluginContext]);
 }

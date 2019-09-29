@@ -7,12 +7,10 @@ export const DEFAULT_PLUGIN_CONFIG = {
       'controlPanel',
       'responsivePreview',
       'fullScreen'
-    ]
+    ],
+    rendererPanelRowOrder: ['props', 'classState']
   },
   nav: {
     navRowOrder: ['fixtureSearch', 'fixtureTree']
-  },
-  controlPanel: {
-    controlPanelRowOrder: ['props', 'classState']
   }
 };
