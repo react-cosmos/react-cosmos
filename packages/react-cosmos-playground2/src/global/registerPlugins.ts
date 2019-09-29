@@ -22,7 +22,6 @@ require('../plugins/PluginList').register();
 require('../plugins/PropsPanel').register();
 require('../plugins/RemoteRenderer').register();
 require('../plugins/RendererCore').register();
-require('../plugins/RendererHeader').register();
 require('../plugins/RendererPreview').register();
 require('../plugins/RendererSelect').register();
 require('../plugins/ResponsivePreview').register();

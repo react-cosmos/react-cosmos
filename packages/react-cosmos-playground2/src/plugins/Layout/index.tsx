@@ -16,7 +16,8 @@ const { onLoad, plug, register } = createPlugin<LayoutSpec>({
   name: 'layout',
   defaultConfig: {
     globalOrder: [],
-    topBarRightActionOrder: []
+    topBarRightActionOrder: [],
+    rendererActionOrder: []
   },
   initialState: {
     storageCacheReady: false
@@ -56,7 +57,10 @@ plug('root', ({ pluginContext }) => {
         panelWidth={0}
         globalOrder={[]}
         topBarRightActionOrder={[]}
+        rendererActionOrder={[]}
         onToggleNav={() => {}}
+        onFixtureSelect={() => {}}
+        onFixtureClose={() => {}}
         setNavWidth={() => {}}
         setPanelWidth={() => {}}
       />
@@ -67,7 +71,11 @@ plug('root', ({ pluginContext }) => {
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const { navWidth, setNavWidth } = getNavWidthApi(pluginContext);
   const { panelWidth, setPanelWidth } = getPanelWidthApi(pluginContext);
-  const { globalOrder, topBarRightActionOrder } = getConfig();
+  const {
+    globalOrder,
+    topBarRightActionOrder,
+    rendererActionOrder
+  } = getConfig();
   return (
     <Layout
       storageCacheReady={true}
@@ -81,7 +89,10 @@ plug('root', ({ pluginContext }) => {
       panelWidth={panelWidth}
       globalOrder={globalOrder}
       topBarRightActionOrder={topBarRightActionOrder}
+      rendererActionOrder={rendererActionOrder}
       onToggleNav={onToggleNav}
+      onFixtureSelect={router.selectFixture}
+      onFixtureClose={router.unselectFixture}
       setNavWidth={setNavWidth}
       setPanelWidth={setPanelWidth}
     />

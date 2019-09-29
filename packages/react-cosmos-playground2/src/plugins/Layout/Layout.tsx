@@ -2,10 +2,10 @@ import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { ArraySlot, Slot } from 'react-plugin';
 import styled from 'styled-components';
-import { RendererHeaderSlot } from '../../shared/slots/RendererHeaderSlot';
 import { RendererPanelSlot } from '../../shared/slots/RendererPanelSlot';
 import { grey32, white10 } from '../../shared/ui/colors';
 import { useDrag } from '../../shared/ui/useDrag';
+import { RendererHeader } from './RendererHeader';
 import { TopBar } from './TopBar';
 
 type Props = {
@@ -20,7 +20,10 @@ type Props = {
   panelWidth: number;
   globalOrder: string[];
   topBarRightActionOrder: string[];
+  rendererActionOrder: string[];
   onToggleNav: () => unknown;
+  onFixtureSelect: (fixtureId: FixtureId, fullScreen: boolean) => unknown;
+  onFixtureClose: () => unknown;
   setNavWidth: (width: number) => unknown;
   setPanelWidth: (width: number) => unknown;
 };
@@ -37,7 +40,10 @@ export function Layout({
   panelWidth,
   globalOrder,
   topBarRightActionOrder,
+  rendererActionOrder,
   onToggleNav,
+  onFixtureSelect,
+  onFixtureClose,
   setNavWidth,
   setPanelWidth
 }: Props) {
@@ -88,19 +94,23 @@ export function Layout({
         </Draggable>
       )}
       <MainContainer key="main" style={{ zIndex: 1 }}>
-        <TopBar
-          selectedFixtureId={selectedFixtureId}
-          rendererConnected={rendererConnected}
-          validFixtureSelected={validFixtureSelected}
-          navOpen={navOpen}
-          topBarRightActionOrder={topBarRightActionOrder}
-          onToggleNav={onToggleNav}
-        />
+        {!selectedFixtureId && (
+          <TopBar
+            selectedFixtureId={selectedFixtureId}
+            rendererConnected={rendererConnected}
+            validFixtureSelected={validFixtureSelected}
+            navOpen={navOpen}
+            topBarRightActionOrder={topBarRightActionOrder}
+            onToggleNav={onToggleNav}
+          />
+        )}
         <RendererContainer key="rendererContainer">
           {selectedFixtureId && (
-            <RendererHeaderSlot
-              key="header"
-              slotProps={{ fixtureId: selectedFixtureId }}
+            <RendererHeader
+              fixtureId={selectedFixtureId}
+              rendererActionOrder={rendererActionOrder}
+              onReload={() => onFixtureSelect(selectedFixtureId, false)}
+              onClose={onFixtureClose}
             />
           )}
           <RendererBody key="rendererBody">

@@ -52,7 +52,6 @@ const Container = styled.div`
   justify-content: space-between;
   height: 40px;
   padding: 0 4px;
-  border-top: 1px solid ${white10};
   border-bottom: 1px solid ${white10};
   background: ${grey32};
   color: ${grey192};
