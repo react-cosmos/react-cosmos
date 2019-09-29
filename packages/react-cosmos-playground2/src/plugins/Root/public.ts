@@ -1,5 +1,5 @@
-export type LayoutSpec = {
-  name: 'layout';
+export type RootSpec = {
+  name: 'root';
   config: {
     globalOrder: string[];
     topBarRightActionOrder: string[];

@@ -6,7 +6,6 @@ import {
 } from 'react-plugin';
 import { CoreSpec } from '../plugins/Core/public';
 import { FixtureTreeSpec } from '../plugins/FixtureTree/public';
-import { LayoutSpec } from '../plugins/Layout/public';
 import { MessageHandlerSpec } from '../plugins/MessageHandler/public';
 import { NotificationsSpec } from '../plugins/Notifications/public';
 import { RendererCoreSpec } from '../plugins/RendererCore/public';
@@ -44,10 +43,6 @@ export function getCoreMethods() {
 
 export function getRendererCoreMethods() {
   return getMethodsOf<RendererCoreSpec>('rendererCore');
-}
-
-export function getLayoutMethods() {
-  return getMethodsOf<LayoutSpec>('layout');
 }
 
 export function getNotificationsMethods() {

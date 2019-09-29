@@ -34,7 +34,7 @@ type Props = {
   setPanelWidth: (width: number) => unknown;
 };
 
-export function Layout({
+export function Root({
   storageCacheReady,
   selectedFixtureId,
   fullScreen,
@@ -155,7 +155,7 @@ type ContainerProps = {
   dragging?: boolean;
 };
 
-const Container = styled.div.attrs({ 'data-testid': 'layout' })<ContainerProps>`
+const Container = styled.div.attrs({ 'data-testid': 'root' })<ContainerProps>`
   position: absolute;
   top: 0;
   bottom: 0;

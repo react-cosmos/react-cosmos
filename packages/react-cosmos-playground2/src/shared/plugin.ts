@@ -1,5 +1,5 @@
 export const DEFAULT_PLUGIN_CONFIG = {
-  layout: {
+  root: {
     globalOrder: ['fixtureSearch', 'notifications'],
     topBarRightActionOrder: ['remoteRenderer'],
     rendererActionOrder: ['editFixture', 'responsivePreview'],

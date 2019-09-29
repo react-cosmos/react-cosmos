@@ -4,16 +4,16 @@ import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { RouterSpec } from '../Router/public';
 import { StorageSpec } from '../Storage/public';
-import { Layout } from './Layout';
+import { Root } from './Layout';
 import { isNavOpen, openNav } from './navOpen';
 import { getNavWidthApi } from './navWidth';
 import { isPanelOpen, openPanel } from './panelOpen';
 import { getPanelWidthApi } from './panelWidth';
-import { LayoutSpec } from './public';
-import { LayoutContext } from './shared';
+import { RootSpec } from './public';
+import { RootPluginContext } from './shared';
 
-const { onLoad, plug, register } = createPlugin<LayoutSpec>({
-  name: 'layout',
+const { onLoad, plug, register } = createPlugin<RootSpec>({
+  name: 'root',
   defaultConfig: {
     globalOrder: [],
     topBarRightActionOrder: [],
@@ -41,7 +41,7 @@ plug('root', ({ pluginContext }) => {
   const { storageCacheReady } = getState();
   if (!storageCacheReady) {
     return (
-      <Layout
+      <Root
         storageCacheReady={false}
         selectedFixtureId={null}
         fullScreen={false}
@@ -78,7 +78,7 @@ plug('root', ({ pluginContext }) => {
     controlPanelRowOrder
   } = getConfig();
   return (
-    <Layout
+    <Root
       storageCacheReady={true}
       selectedFixtureId={router.getSelectedFixtureId()}
       fullScreen={router.isFullScreen()}
@@ -106,13 +106,13 @@ plug('root', ({ pluginContext }) => {
 
 export { register };
 
-function useOpenNav(pluginContext: LayoutContext) {
+function useOpenNav(pluginContext: RootPluginContext) {
   return React.useCallback(() => {
     openNav(pluginContext, !isNavOpen(pluginContext));
   }, [pluginContext]);
 }
 
-function useOpenPanel(pluginContext: LayoutContext) {
+function useOpenPanel(pluginContext: RootPluginContext) {
   return React.useCallback(() => {
     openPanel(pluginContext, !isPanelOpen(pluginContext));
   }, [pluginContext]);

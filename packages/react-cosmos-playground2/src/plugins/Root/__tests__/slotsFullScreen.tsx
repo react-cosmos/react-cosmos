@@ -17,8 +17,7 @@ function registerTestPlugins() {
     loadCache: () => Promise.resolve(null)
   });
   mockRouter({
-    getSelectedFixtureId: () => ({ path: 'foo.js', name: null }),
-    isFullScreen: () => false
+    isFullScreen: () => true
   });
   mockCore();
   mockRendererCore({
@@ -30,16 +29,16 @@ function registerTestPlugins() {
 async function loadTestPlugins() {
   loadPlugins();
   const utils = render(<Slot name="root" />);
-  await waitForElement(() => utils.getByTestId('layout'));
+  await waitForElement(() => utils.getByTestId('root'));
   return utils;
 }
 
-it('renders "nav" slot', async () => {
+it('does not render "nav" slot', async () => {
   registerTestPlugins();
   mockPlug('nav', () => <>we are the robots</>);
 
-  const { getByText } = await loadTestPlugins();
-  getByText(/we are the robots/i);
+  const { queryByText } = await loadTestPlugins();
+  expect(queryByText(/we are the robots/i)).toBeNull();
 });
 
 it('renders "rendererPreview" slot', async () => {
