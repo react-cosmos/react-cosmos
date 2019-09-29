@@ -1,7 +1,6 @@
 import { PluginContext } from 'react-plugin';
 import styled from 'styled-components';
 import { ContentOverlaySpec } from './public';
-import { black70 } from '../../shared/ui/colors';
 
 export type Context = PluginContext<ContentOverlaySpec>;
 
@@ -15,7 +14,6 @@ export const OverlayContainer = styled.div`
   flex-direction: column;
   justify-items: flex-start;
   align-items: flex-start;
-  border-top: 1px solid ${black70};
   background: var(--grey6);
   overflow: auto;
 `;

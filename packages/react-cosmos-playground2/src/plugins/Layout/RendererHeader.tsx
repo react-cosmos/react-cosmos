@@ -1,21 +1,25 @@
 import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
-import { RefreshCwIcon, XCircleIcon } from '../../shared/icons';
+import { RefreshCwIcon, XCircleIcon, MenuIcon } from '../../shared/icons';
 import { RendererActionSlot } from '../../shared/slots/RendererActionSlot';
 import { IconButton32 } from '../../shared/ui/buttons';
 import { grey192, grey32, white10 } from '../../shared/ui/colors';
 
 type Props = {
   fixtureId: FixtureId;
+  navOpen: boolean;
   rendererActionOrder: string[];
+  onToggleNav: () => unknown;
   onReload: () => unknown;
   onClose: () => unknown;
 };
 
 export const RendererHeader = React.memo(function RendererHeader({
   fixtureId,
+  navOpen,
   rendererActionOrder,
+  onToggleNav,
   onReload,
   onClose
 }: Props) {
@@ -23,6 +27,13 @@ export const RendererHeader = React.memo(function RendererHeader({
   return (
     <Container>
       <Left>
+        <IconButton32
+          icon={<MenuIcon />}
+          title="Toggle fixture list"
+          selected={navOpen}
+          onClick={onToggleNav}
+        />
+        <ButtonSeparator />
         <IconButton32
           icon={<XCircleIcon />}
           title="Close fixture"
@@ -79,4 +90,12 @@ const Right = styled(Actions)`
   display: flex;
   flex-direction: row;
   align-items: center;
+`;
+
+const ButtonSeparator = styled.div`
+  flex-shrink: 0;
+  background: ${white10};
+  width: 1px;
+  height: 40px;
+  margin-left: 4px;
 `;

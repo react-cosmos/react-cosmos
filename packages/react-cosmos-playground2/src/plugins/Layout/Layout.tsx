@@ -107,16 +107,16 @@ export function Layout({
             selectedFixtureId={selectedFixtureId}
             rendererConnected={rendererConnected}
             validFixtureSelected={validFixtureSelected}
-            navOpen={navOpen}
             topBarRightActionOrder={topBarRightActionOrder}
-            onToggleNav={onToggleNav}
           />
         )}
         <RendererContainer key="rendererContainer">
           {selectedFixtureId && (
             <RendererHeader
               fixtureId={selectedFixtureId}
+              navOpen={navOpen}
               rendererActionOrder={rendererActionOrder}
+              onToggleNav={onToggleNav}
               onReload={() => onFixtureSelect(selectedFixtureId, false)}
               onClose={onFixtureClose}
             />

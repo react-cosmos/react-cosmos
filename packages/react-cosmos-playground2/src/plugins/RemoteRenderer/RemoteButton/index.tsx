@@ -1,6 +1,6 @@
 import React from 'react';
-import { IconButton8 } from '../../../shared/ui/buttons';
 import { CastIcon } from '../../../shared/icons';
+import { IconButton32 } from '../../../shared/ui/buttons';
 import { Notification } from '../../Notifications/public';
 import { copyToClipboard } from './copyToClipboard';
 
@@ -20,7 +20,7 @@ export function RemoteButton({
   }
 
   return (
-    <IconButton8
+    <IconButton32
       icon={<CastIcon />}
       title="Copy remote renderer URL"
       onClick={() => copyRendererUrlToClipboard(webRendererUrl)}

@@ -2,25 +2,20 @@ import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { ArraySlot } from 'react-plugin';
 import styled from 'styled-components';
-import { grey160, grey8 } from '../../shared/ui/colors';
-import { ToggleNavButton } from './ToggleNavButton';
+import { grey160, grey32, white10 } from '../../shared/ui/colors';
 
 type Props = {
   selectedFixtureId: FixtureId | null;
   rendererConnected: boolean;
   validFixtureSelected: boolean;
-  navOpen: boolean;
   topBarRightActionOrder: string[];
-  onToggleNav: () => unknown;
 };
 
 export function TopBar({
   selectedFixtureId,
   rendererConnected,
   validFixtureSelected,
-  navOpen,
-  topBarRightActionOrder,
-  onToggleNav
+  topBarRightActionOrder
 }: Props) {
   function getMessage() {
     if (!rendererConnected) {
@@ -40,13 +35,7 @@ export function TopBar({
 
   return (
     <Container>
-      <Left>
-        <ToggleNavButton
-          disabled={!validFixtureSelected}
-          selected={navOpen}
-          onToggle={onToggleNav}
-        />
-      </Left>
+      <Left />
       {getMessage()}
       <Right>
         <ArraySlot
@@ -65,7 +54,8 @@ const Container = styled.div`
   justify-content: space-between;
   height: 32px;
   padding: 4px;
-  background: ${grey8};
+  border-bottom: 1px solid ${white10};
+  background: ${grey32};
 `;
 
 const Actions = styled.div`
