@@ -1,11 +1,11 @@
 import React from 'react';
+import { act, create } from 'react-test-renderer';
 import * as io from 'socket.io-client';
-import { create, act } from 'react-test-renderer';
-import { FixtureLoader, createWebSocketsConnect } from '..';
+import { createWebSocketsConnect, FixtureLoader } from '..';
 import {
-  MountFixtureLoaderArgs,
-  MountFixtureCallback,
-  createRendererConnectMockApi
+  createRendererConnectMockApi,
+  FixtureLoaderTestCallback,
+  FixtureLoaderTestArgs
 } from './shared';
 
 // __getMockApi is defined in mockSocketIo.js
@@ -17,8 +17,8 @@ const {
 } = (io as any).__getMockApi();
 
 export async function mountWebSockets(
-  args: MountFixtureLoaderArgs,
-  cb: MountFixtureCallback
+  args: FixtureLoaderTestArgs,
+  cb: FixtureLoaderTestCallback
 ) {
   expect.hasAssertions();
   const renderer = create(getElement(args));
@@ -40,9 +40,9 @@ export async function mountWebSockets(
 function getElement({
   rendererId,
   fixtures,
-  decorators,
+  decorators = {},
   onErrorReset
-}: MountFixtureLoaderArgs) {
+}: FixtureLoaderTestArgs) {
   return (
     <FixtureLoader
       rendererId={rendererId}
