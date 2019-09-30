@@ -5,7 +5,6 @@ import {
   SetFixtureState
 } from 'react-cosmos-shared2/fixtureState';
 import {
-  getSortedDecoratorsForFixturePath,
   getFixtureNamesByPath,
   ReactDecorator,
   ReactDecoratorsByPath,
@@ -27,6 +26,7 @@ export type Props = {
   rendererId: string;
   rendererConnect: RendererConnect;
   fixtures: ReactFixtureExportsByPath;
+  selectedFixtureId?: FixtureId;
   systemDecorators: ReactDecorator[];
   userDecorators: ReactDecoratorsByPath;
   renderMessage?: (args: { msg: string }) => React.ReactNode;
@@ -52,16 +52,24 @@ type State = {
 
 export class FixtureLoader extends React.Component<Props, State> {
   state: State = {
-    selectedFixture: null,
+    selectedFixture: this.props.selectedFixtureId
+      ? {
+          fixtureId: this.props.selectedFixtureId,
+          fixtureState: {},
+          syncedFixtureState: {}
+        }
+      : null,
     renderKey: 0
   };
 
   unsubscribe: null | (() => unknown) = null;
 
   componentDidMount() {
-    const { rendererConnect } = this.props;
-    this.unsubscribe = rendererConnect.onMessage(this.handleRequest);
-    this.postReadyState();
+    if (!this.props.selectedFixtureId) {
+      const { rendererConnect } = this.props;
+      this.unsubscribe = rendererConnect.onMessage(this.handleRequest);
+      this.postReadyState();
+    }
   }
 
   componentWillUnmount() {
@@ -121,16 +129,14 @@ export class FixtureLoader extends React.Component<Props, State> {
         // renderKey controls whether to reuse previous instances (and
         // transition props) or rebuild render tree from scratch
         key={renderKey}
-        decorators={[
-          ...systemDecorators,
-          ...getSortedDecoratorsForFixturePath(fixtureId.path, userDecorators)
-        ]}
+        fixtureId={fixtureId}
+        fixture={fixture}
+        systemDecorators={systemDecorators}
+        userDecorators={userDecorators}
         fixtureState={fixtureState}
         setFixtureState={this.setFixtureState}
         onErrorReset={onErrorReset || noop}
-      >
-        {fixture}
-      </FixtureProvider>
+      />
     );
   }
 

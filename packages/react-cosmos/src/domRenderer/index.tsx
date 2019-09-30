@@ -12,6 +12,7 @@ import './globalErrorHandler';
 import { rendererConnect } from './rendererConnect';
 import { rendererId } from './rendererId';
 import { renderMessage } from './renderMessage';
+import { getSelectedFixtureId } from './selectedFixtureId';
 
 type MountDomRendererOpts = {
   rendererConfig: DomRendererConfig;
@@ -28,16 +29,18 @@ export function mountDomRenderer({
   decorators,
   onErrorReset
 }: MountDomRendererOpts) {
+  const domContainer = getDomContainer(rendererConfig.containerQuerySelector);
   render(
     <FixtureLoader
       rendererId={rendererId}
       rendererConnect={rendererConnect}
       fixtures={fixtures}
+      selectedFixtureId={getSelectedFixtureId()}
       systemDecorators={[ErrorCatch]}
       userDecorators={decorators}
       renderMessage={renderMessage}
       onErrorReset={onErrorReset}
     />,
-    getDomContainer(rendererConfig.containerQuerySelector)
+    domContainer
   );
 }

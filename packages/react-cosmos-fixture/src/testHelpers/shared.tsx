@@ -1,20 +1,21 @@
 import until from 'async-until';
+import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import {
+  ReactDecoratorsByPath,
+  ReactFixtureExportsByPath
+} from 'react-cosmos-shared2/react';
+import {
+  FixtureId,
+  FixtureListUpdateResponse,
+  FixtureStateChangeResponse,
   RendererId,
+  RendererReadyResponse,
   RendererRequest,
   RendererResponse,
   SelectFixtureRequest,
-  UnselectFixtureRequest,
   SetFixtureStateRequest,
-  RendererReadyResponse,
-  FixtureListUpdateResponse,
-  FixtureStateChangeResponse
+  UnselectFixtureRequest
 } from 'react-cosmos-shared2/renderer';
-import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import {
-  ReactFixtureExportsByPath,
-  ReactDecoratorsByPath
-} from 'react-cosmos-shared2/react';
 import { ReactTestRenderer } from 'react-test-renderer';
 
 export type Message = RendererResponse | RendererRequest;
@@ -24,6 +25,7 @@ type GetMessages = () => Message[];
 export type FixtureLoaderTestArgs = {
   rendererId: RendererId;
   fixtures: ReactFixtureExportsByPath;
+  selectedFixtureId?: FixtureId;
   decorators?: ReactDecoratorsByPath;
   onErrorReset?: () => unknown;
 };

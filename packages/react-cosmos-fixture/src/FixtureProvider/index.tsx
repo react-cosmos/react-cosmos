@@ -1,50 +1,68 @@
-import memoize from 'memoize-one/dist/memoize-one.cjs';
 import React from 'react';
 import {
   FixtureState,
   SetFixtureState
 } from 'react-cosmos-shared2/fixtureState';
-import { ReactDecorator } from 'react-cosmos-shared2/react';
+import {
+  getSortedDecoratorsForFixturePath,
+  ReactDecorator,
+  ReactDecoratorsByPath
+} from 'react-cosmos-shared2/react';
+import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { FixtureContext } from '../FixtureContext';
 import { getDecoratedFixtureElement } from '../getDecoratedFixtureElement';
-import { FixtureContextValue } from '../shared';
 
 type Props = {
-  decorators: ReactDecorator[];
-  children: React.ReactNode;
+  fixtureId: FixtureId;
+  fixture: React.ReactNode;
+  systemDecorators: ReactDecorator[];
+  userDecorators: ReactDecoratorsByPath;
+  fixtureState: FixtureState;
+  setFixtureState: SetFixtureState;
+  renderMessage?: (args: { msg: string }) => React.ReactNode;
   onErrorReset: () => unknown;
-} & FixtureContextValue;
+};
 
-// IDEA: Maybe open up Fixture component for naming and other customization. Eg.
-//   <Fixture name="An interesting state">
-//     <Button>Click me</button>
-//   </Fixture>
-export class FixtureProvider extends React.PureComponent<Props> {
-  // Provider value is memoized as an object with reference identity to prevent
-  // unintentional renders https://reactjs.org/docs/context.html#caveats
-  getFixtureContextValue = memoize(
-    (fixtureState: FixtureState, setFixtureState: SetFixtureState) => ({
-      fixtureState,
-      setFixtureState
-    })
+export function FixtureProvider({
+  fixtureId,
+  fixture,
+  systemDecorators,
+  userDecorators,
+  fixtureState,
+  setFixtureState,
+  onErrorReset
+}: Props) {
+  // Prevent unintentional renders https://reactjs.org/docs/context.html#caveats
+  const contextValue = React.useMemo(
+    () => ({ fixtureState, setFixtureState }),
+    [fixtureState, setFixtureState]
   );
+  const decoratorProps = React.useMemo(
+    () => ({ fixtureState, setFixtureState, onErrorReset }),
+    [fixtureState, onErrorReset, setFixtureState]
+  );
+  const decorators = React.useMemo(
+    () => mergeDecorators(fixtureId, systemDecorators, userDecorators),
+    [fixtureId, systemDecorators, userDecorators]
+  );
+  const decoratedFixture = React.useMemo(
+    () => getDecoratedFixtureElement(fixture, decorators, decoratorProps),
+    [decoratorProps, decorators, fixture]
+  );
+  return (
+    <FixtureContext.Provider value={contextValue}>
+      {decoratedFixture}
+    </FixtureContext.Provider>
+  );
+}
 
-  render() {
-    const {
-      decorators,
-      children,
-      fixtureState,
-      setFixtureState,
-      onErrorReset
-    } = this.props;
-    const decoratorProps = { fixtureState, setFixtureState, onErrorReset };
-
-    return (
-      <FixtureContext.Provider
-        value={this.getFixtureContextValue(fixtureState, setFixtureState)}
-      >
-        {getDecoratedFixtureElement(children, decorators, decoratorProps)}
-      </FixtureContext.Provider>
-    );
-  }
+function mergeDecorators(
+  fixtureId: FixtureId,
+  systemDecorators: ReactDecorator[],
+  userDecorators: ReactDecoratorsByPath
+) {
+  return [
+    ...systemDecorators,
+    ...getSortedDecoratorsForFixturePath(fixtureId.path, userDecorators)
+  ];
 }
