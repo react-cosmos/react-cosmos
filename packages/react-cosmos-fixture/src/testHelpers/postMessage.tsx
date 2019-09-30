@@ -53,7 +53,7 @@ export async function mountPostMessage(
 function getElement({
   rendererId,
   fixtures,
-  initialFixtureId,
+  selectedFixtureId,
   decorators = {},
   onErrorReset
 }: FixtureLoaderTestArgs) {
@@ -62,7 +62,7 @@ function getElement({
       rendererId={rendererId}
       rendererConnect={createPostMessageConnect()}
       fixtures={fixtures}
-      initialFixtureId={initialFixtureId}
+      selectedFixtureId={selectedFixtureId}
       systemDecorators={[]}
       userDecorators={decorators}
       onErrorReset={onErrorReset}

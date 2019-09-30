@@ -10,7 +10,7 @@ const fixtures = {
 
 testFixtureLoader(
   'renders initially selected named fixture',
-  { rendererId, fixtures, initialFixtureId: { path: 'first', name: 'one' } },
+  { rendererId, fixtures, selectedFixtureId: { path: 'first', name: 'one' } },
   async ({ renderer }) => {
     await retry(() => expect(renderer.toJSON()).toBe('First'));
   }
@@ -18,7 +18,7 @@ testFixtureLoader(
 
 testFixtureLoader(
   'renders initially selected unnamed fixture',
-  { rendererId, fixtures, initialFixtureId: { path: 'second', name: null } },
+  { rendererId, fixtures, selectedFixtureId: { path: 'second', name: null } },
   async ({ renderer }) => {
     await retry(() => expect(renderer.toJSON()).toBe('Second'));
   }
