@@ -2,19 +2,21 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { RendererHeader } from './RendererHeader';
 
+const propDefaults = {
+  fixtureId: { path: 'foo', name: null },
+  panelOpen: false,
+  navOpen: false,
+  rendererActionOrder: [],
+  onToggleNav: () => {},
+  onTogglePanel: () => {},
+  onReload: () => {},
+  onClose: () => {}
+};
+
 it('renders toggle nav button', async () => {
   const onToggleNav = jest.fn();
   const { getByTitle } = render(
-    <RendererHeader
-      fixtureId={{ path: 'foo', name: null }}
-      panelOpen={false}
-      navOpen={false}
-      rendererActionOrder={[]}
-      onToggleNav={onToggleNav}
-      onTogglePanel={() => {}}
-      onReload={() => {}}
-      onClose={() => {}}
-    />
+    <RendererHeader {...propDefaults} onToggleNav={onToggleNav} />
   );
 
   fireEvent.click(getByTitle(/toggle fixture list/i));
@@ -24,16 +26,7 @@ it('renders toggle nav button', async () => {
 it('renders toggle panel button', async () => {
   const onTogglePanel = jest.fn();
   const { getByTitle } = render(
-    <RendererHeader
-      fixtureId={{ path: 'foo', name: null }}
-      panelOpen={false}
-      navOpen={false}
-      rendererActionOrder={[]}
-      onToggleNav={() => {}}
-      onTogglePanel={onTogglePanel}
-      onReload={() => {}}
-      onClose={() => {}}
-    />
+    <RendererHeader {...propDefaults} onTogglePanel={onTogglePanel} />
   );
 
   fireEvent.click(getByTitle(/toggle control panel/i));
@@ -43,16 +36,7 @@ it('renders toggle panel button', async () => {
 it('renders close button', async () => {
   const onClose = jest.fn();
   const { getByTitle } = render(
-    <RendererHeader
-      fixtureId={{ path: 'foo', name: null }}
-      navOpen={false}
-      panelOpen={false}
-      rendererActionOrder={[]}
-      onToggleNav={() => {}}
-      onTogglePanel={() => {}}
-      onReload={() => {}}
-      onClose={onClose}
-    />
+    <RendererHeader {...propDefaults} onClose={onClose} />
   );
 
   fireEvent.click(getByTitle(/close fixture/i));
@@ -62,16 +46,7 @@ it('renders close button', async () => {
 it('renders reload button', async () => {
   const onReload = jest.fn();
   const { getByTitle } = render(
-    <RendererHeader
-      fixtureId={{ path: 'foo', name: null }}
-      navOpen={false}
-      panelOpen={false}
-      rendererActionOrder={[]}
-      onToggleNav={() => {}}
-      onTogglePanel={() => {}}
-      onReload={onReload}
-      onClose={() => {}}
-    />
+    <RendererHeader {...propDefaults} onReload={onReload} />
   );
 
   fireEvent.click(getByTitle(/reload fixture/i));
