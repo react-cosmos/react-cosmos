@@ -3,8 +3,9 @@ import React from 'react';
 import { createValue } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer } from 'react-test-renderer';
-// Warning: Import test helpers before tested source to mock Socket.IO
-import { runFixtureLoaderTests } from '../testHelpers';
+import { testFixtureLoader } from '../testHelpers';
+
+// IMPORTANT: useValue has to be imported after the testHelpers mocks
 import { useValue } from '..';
 
 function createFixtures({ defaultValue }: { defaultValue: number }) {
@@ -25,91 +26,85 @@ const rendererId = uuid();
 const fixtures = createFixtures({ defaultValue: 0 });
 const fixtureId = { path: 'first', name: null };
 
-runFixtureLoaderTests(mount => {
-  it('renders fixture', async () => {
-    await mount(
-      { rendererId, fixtures },
-      async ({ renderer, selectFixture }) => {
-        await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-        await rendered(renderer, '0 clicks');
-      }
-    );
-  });
+testFixtureLoader(
+  'renders fixture',
+  { rendererId, fixtures },
+  async ({ renderer, selectFixture }) => {
+    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    await rendered(renderer, '0 clicks');
+  }
+);
 
-  it('creates fixture state', async () => {
-    await mount(
-      { rendererId, fixtures },
-      async ({ selectFixture, fixtureStateChange }) => {
-        await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-        await fixtureStateChange({
-          rendererId,
-          fixtureId,
-          fixtureState: {
-            props: expect.any(Array),
-            values: {
-              count: {
-                defaultValue: createValue(0),
-                currentValue: createValue(0)
-              }
-            }
+testFixtureLoader(
+  'creates fixture state',
+  { rendererId, fixtures },
+  async ({ selectFixture, fixtureStateChange }) => {
+    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    await fixtureStateChange({
+      rendererId,
+      fixtureId,
+      fixtureState: {
+        props: expect.any(Array),
+        values: {
+          count: {
+            defaultValue: createValue(0),
+            currentValue: createValue(0)
           }
-        });
+        }
       }
-    );
-  });
+    });
+  }
+);
 
-  it('updates fixture state via setter', async () => {
-    await mount(
-      { rendererId, fixtures },
-      async ({ renderer, selectFixture, fixtureStateChange }) => {
-        await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-        await rendered(renderer, '0 clicks');
-        clickButton(renderer);
-        clickButton(renderer);
-        await fixtureStateChange({
-          rendererId,
-          fixtureId,
-          fixtureState: {
-            props: expect.any(Array),
-            values: {
-              count: {
-                defaultValue: createValue(0),
-                currentValue: createValue(2)
-              }
-            }
+testFixtureLoader(
+  'updates fixture state via setter',
+  { rendererId, fixtures },
+  async ({ renderer, selectFixture, fixtureStateChange }) => {
+    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    await rendered(renderer, '0 clicks');
+    clickButton(renderer);
+    clickButton(renderer);
+    await fixtureStateChange({
+      rendererId,
+      fixtureId,
+      fixtureState: {
+        props: expect.any(Array),
+        values: {
+          count: {
+            defaultValue: createValue(0),
+            currentValue: createValue(2)
           }
-        });
+        }
       }
-    );
-  });
+    });
+  }
+);
 
-  it('resets fixture state on default value change', async () => {
-    await mount(
-      { rendererId, fixtures },
-      async ({ renderer, update, selectFixture, fixtureStateChange }) => {
-        await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-        await rendered(renderer, '0 clicks');
-        update({
-          rendererId,
-          fixtures: createFixtures({ defaultValue: 5 })
-        });
-        await fixtureStateChange({
-          rendererId,
-          fixtureId,
-          fixtureState: {
-            props: expect.any(Array),
-            values: {
-              count: {
-                defaultValue: createValue(5),
-                currentValue: createValue(5)
-              }
-            }
+testFixtureLoader(
+  'resets fixture state on default value change',
+  { rendererId, fixtures },
+  async ({ renderer, update, selectFixture, fixtureStateChange }) => {
+    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    await rendered(renderer, '0 clicks');
+    update({
+      rendererId,
+      fixtures: createFixtures({ defaultValue: 5 })
+    });
+    await fixtureStateChange({
+      rendererId,
+      fixtureId,
+      fixtureState: {
+        props: expect.any(Array),
+        values: {
+          count: {
+            defaultValue: createValue(5),
+            currentValue: createValue(5)
           }
-        });
+        }
       }
-    );
-  });
-});
+    });
+  }
+);
 
 function getButtonText(renderer: ReactTestRenderer) {
   return renderer.toJSON()!.children!.join('');

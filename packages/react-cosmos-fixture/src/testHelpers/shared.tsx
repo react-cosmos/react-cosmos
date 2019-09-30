@@ -21,7 +21,7 @@ export type Message = RendererResponse | RendererRequest;
 
 type GetMessages = () => Message[];
 
-export type MountFixtureLoaderArgs = {
+export type FixtureLoaderTestArgs = {
   rendererId: RendererId;
   fixtures: ReactFixtureExportsByPath;
   decorators?: ReactDecoratorsByPath;
@@ -51,14 +51,11 @@ export type RendererConnectMockApi = {
 
 export type FixtureLoaderTestApi = {
   renderer: ReactTestRenderer;
-  update: (args: MountFixtureLoaderArgs) => void;
+  update: (args: FixtureLoaderTestArgs) => void;
 } & RendererConnectMockApi;
 
-export type MountFixtureCallback = (api: FixtureLoaderTestApi) => Promise<void>;
-
-export type MountFixtureLoader = (
-  args: MountFixtureLoaderArgs,
-  cb: MountFixtureCallback
+export type FixtureLoaderTestCallback = (
+  api: FixtureLoaderTestApi
 ) => Promise<void>;
 
 type RendererConnectMockArgs = {

@@ -1,16 +1,16 @@
 import React from 'react';
-import { create, act } from 'react-test-renderer';
-import { FixtureLoader, createPostMessageConnect } from '..';
+import { act, create } from 'react-test-renderer';
+import { createPostMessageConnect, FixtureLoader } from '..';
 import {
+  createRendererConnectMockApi,
+  FixtureLoaderTestCallback,
   Message,
-  MountFixtureLoaderArgs,
-  MountFixtureCallback,
-  createRendererConnectMockApi
+  FixtureLoaderTestArgs
 } from './shared';
 
 export async function mountPostMessage(
-  args: MountFixtureLoaderArgs,
-  cb: MountFixtureCallback
+  args: FixtureLoaderTestArgs,
+  cb: FixtureLoaderTestCallback
 ) {
   const onMessage = jest.fn();
   window.addEventListener('message', onMessage, false);
@@ -55,7 +55,7 @@ function getElement({
   fixtures,
   decorators = {},
   onErrorReset
-}: MountFixtureLoaderArgs) {
+}: FixtureLoaderTestArgs) {
   return (
     <FixtureLoader
       rendererId={rendererId}

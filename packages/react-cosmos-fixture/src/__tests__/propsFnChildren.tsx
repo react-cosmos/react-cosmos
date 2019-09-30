@@ -1,10 +1,12 @@
-import React from 'react';
 import retry from '@skidding/async-retry';
-import { uuid } from 'react-cosmos-shared2/util';
+import React from 'react';
 import { createValues } from 'react-cosmos-shared2/fixtureState';
+import { uuid } from 'react-cosmos-shared2/util';
+import { testFixtureLoader } from '../testHelpers';
 import { HelloMessage } from '../testHelpers/components';
 import { anyProps } from '../testHelpers/fixtureState';
-import { runFixtureLoaderTests } from '../testHelpers';
+
+// IMPORTANT: FixtureCapture has to be imported after the testHelpers mocks
 import { FixtureCapture } from '..';
 
 function Wrap({ children }: { children: () => React.ReactNode }) {
@@ -29,32 +31,25 @@ const fixtures = {
 };
 const fixtureId = { path: 'first', name: null };
 
-runFixtureLoaderTests(mount => {
-  it('captures props from render callback', async () => {
-    await mount(
-      { rendererId, fixtures },
-      async ({ renderer, selectFixture, fixtureStateChange }) => {
-        await selectFixture({
-          rendererId,
-          fixtureId,
-          fixtureState: {}
-        });
-        await retry(() =>
-          expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B'])
-        );
-        await fixtureStateChange({
-          rendererId,
-          fixtureId,
-          fixtureState: {
-            props: [
-              anyProps({
-                decoratorId: 'mockDecoratorId',
-                values: createValues({ name: 'B' })
-              })
-            ]
-          }
-        });
-      }
+testFixtureLoader(
+  'captures props from render callback',
+  { rendererId, fixtures },
+  async ({ renderer, selectFixture, fixtureStateChange }) => {
+    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    await retry(() =>
+      expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B'])
     );
-  });
-});
+    await fixtureStateChange({
+      rendererId,
+      fixtureId,
+      fixtureState: {
+        props: [
+          anyProps({
+            decoratorId: 'mockDecoratorId',
+            values: createValues({ name: 'B' })
+          })
+        ]
+      }
+    });
+  }
+);

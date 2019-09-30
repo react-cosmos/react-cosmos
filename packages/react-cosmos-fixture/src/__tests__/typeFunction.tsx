@@ -1,6 +1,6 @@
 import React from 'react';
 import { uuid } from 'react-cosmos-shared2/util';
-import { runFixtureLoaderTests } from '../testHelpers';
+import { testFixtureLoader } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = {
@@ -8,24 +8,17 @@ const fixtures = {
 };
 const fixtureId = { path: 'first', name: null };
 
-runFixtureLoaderTests(mount => {
-  it('collects no props fixture state', async () => {
-    await mount(
-      { rendererId, fixtures },
-      async ({ selectFixture, fixtureStateChange }) => {
-        await selectFixture({
-          rendererId,
-          fixtureId,
-          fixtureState: {}
-        });
-        await fixtureStateChange({
-          rendererId,
-          fixtureId,
-          fixtureState: {
-            props: []
-          }
-        });
+testFixtureLoader(
+  'collects no props fixture state',
+  { rendererId, fixtures },
+  async ({ selectFixture, fixtureStateChange }) => {
+    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    await fixtureStateChange({
+      rendererId,
+      fixtureId,
+      fixtureState: {
+        props: []
       }
-    );
-  });
-});
+    });
+  }
+);

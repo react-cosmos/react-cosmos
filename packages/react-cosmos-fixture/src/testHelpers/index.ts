@@ -1,11 +1,15 @@
+// IMPORTANT: Import socket Socket.IO mock before modules which use Socket.IO
 import './mockSocketIo';
+
 import { mountPostMessage } from './postMessage';
 import { mountWebSockets } from './webSockets';
-import { MountFixtureLoader } from './shared';
+import { FixtureLoaderTestArgs, FixtureLoaderTestCallback } from './shared';
 
-type TestsCallback = (mount: MountFixtureLoader) => void;
-
-export function runFixtureLoaderTests(cb: TestsCallback) {
-  cb(mountPostMessage);
-  cb(mountWebSockets);
+export function testFixtureLoader(
+  testName: string,
+  args: FixtureLoaderTestArgs,
+  cb: FixtureLoaderTestCallback
+) {
+  it(`[postMessage] ${testName}`, () => mountPostMessage(args, cb));
+  it(`[webSockets] ${testName}`, () => mountWebSockets(args, cb));
 }
