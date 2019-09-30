@@ -28,12 +28,11 @@ const rendererId = uuid();
 const fixtures = {
   first: MyComponent
 };
-const decorators = {};
 
 runFixtureLoaderTests(mount => {
   it('creates fixture state', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,

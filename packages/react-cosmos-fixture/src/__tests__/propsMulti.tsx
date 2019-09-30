@@ -18,13 +18,12 @@ const fixtures = {
     </>
   )
 };
-const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
 runFixtureLoaderTests(mount => {
   it('captures multiple props instances', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
@@ -58,7 +57,7 @@ runFixtureLoaderTests(mount => {
 
   it('overwrites prop in second instance', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({
         renderer,
         selectFixture,

@@ -18,13 +18,12 @@ const rendererId = uuid();
 const fixtures = {
   first: <Counter />
 };
-const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
 runFixtureLoaderTests(mount => {
   it('captures initial state', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
@@ -51,7 +50,7 @@ runFixtureLoaderTests(mount => {
 
   it('overwrites initial state', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({
         renderer,
         selectFixture,
@@ -83,7 +82,7 @@ runFixtureLoaderTests(mount => {
 
   it('removes initial state property', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({
         renderer,
         selectFixture,
@@ -115,7 +114,7 @@ runFixtureLoaderTests(mount => {
 
   it('reverts to initial state', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({
         renderer,
         selectFixture,

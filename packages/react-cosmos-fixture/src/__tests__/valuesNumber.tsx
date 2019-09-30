@@ -23,13 +23,12 @@ function createFixtures({ defaultValue }: { defaultValue: number }) {
 
 const rendererId = uuid();
 const fixtures = createFixtures({ defaultValue: 0 });
-const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
 runFixtureLoaderTests(mount => {
   it('renders fixture', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, selectFixture }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
         await rendered(renderer, '0 clicks');
@@ -39,7 +38,7 @@ runFixtureLoaderTests(mount => {
 
   it('creates fixture state', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
         await fixtureStateChange({
@@ -61,7 +60,7 @@ runFixtureLoaderTests(mount => {
 
   it('updates fixture state via setter', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
         await rendered(renderer, '0 clicks');
@@ -86,14 +85,13 @@ runFixtureLoaderTests(mount => {
 
   it('resets fixture state on default value change', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, update, selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
         await rendered(renderer, '0 clicks');
         update({
           rendererId,
-          fixtures: createFixtures({ defaultValue: 5 }),
-          decorators
+          fixtures: createFixtures({ defaultValue: 5 })
         });
         await fixtureStateChange({
           rendererId,

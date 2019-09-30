@@ -12,13 +12,12 @@ const rendererId = uuid();
 const fixtures = {
   first: <HelloMessage name="Bianca" />
 };
-const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
 runFixtureLoaderTests(mount => {
   it('renders selected fixture with fixture state', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, selectFixture }) => {
         await selectFixture({
           rendererId,

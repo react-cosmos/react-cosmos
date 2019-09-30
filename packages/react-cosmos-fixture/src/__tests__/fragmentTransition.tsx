@@ -16,13 +16,12 @@ const fixtures = {
     </>
   )
 };
-const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
 runFixtureLoaderTests(mount => {
   it('transitions Fragment from single to multi children', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ update, selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
@@ -50,8 +49,7 @@ runFixtureLoaderTests(mount => {
                 </StateMock>
               </>
             )
-          },
-          decorators
+          }
         });
         // Do not remove this line: It captures a regression regarding an error
         // that occurred when component state was read asynchronously

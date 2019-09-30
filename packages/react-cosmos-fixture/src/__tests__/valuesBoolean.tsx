@@ -1,10 +1,11 @@
+// Warning: Import test helpers before tested source to mock Socket.IO
+import { runFixtureLoaderTests } from '../testHelpers';
+
 import retry from '@skidding/async-retry';
 import React from 'react';
 import { createValue } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from 'react-cosmos-shared2/util';
 import { ReactTestRenderer } from 'react-test-renderer';
-// Warning: Import test helpers before tested source to mock Socket.IO
-import { runFixtureLoaderTests } from '../testHelpers';
 import { useValue } from '..';
 
 function createFixtures({ defaultValue }: { defaultValue: boolean }) {
@@ -21,13 +22,12 @@ function createFixtures({ defaultValue }: { defaultValue: boolean }) {
 
 const rendererId = uuid();
 const fixtures = createFixtures({ defaultValue: false });
-const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
 runFixtureLoaderTests(mount => {
   it('renders fixture', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, selectFixture }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
         await rendered(renderer, 'false');
@@ -37,7 +37,7 @@ runFixtureLoaderTests(mount => {
 
   it('creates fixture state', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
         await fixtureStateChange({
@@ -59,7 +59,7 @@ runFixtureLoaderTests(mount => {
 
   it('updates fixture state via setter', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
         await rendered(renderer, 'false');
@@ -83,14 +83,13 @@ runFixtureLoaderTests(mount => {
 
   it('resets fixture state on default value change', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, update, selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
         await rendered(renderer, 'false');
         update({
           rendererId,
-          fixtures: createFixtures({ defaultValue: true }),
-          decorators
+          fixtures: createFixtures({ defaultValue: true })
         });
         await fixtureStateChange({
           rendererId,

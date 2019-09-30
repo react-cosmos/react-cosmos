@@ -9,13 +9,12 @@ const rendererId = uuid();
 const fixtures = {
   first: <Wrapper>yo</Wrapper>
 };
-const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
 runFixtureLoaderTests(mount => {
   it('transitions string children into an element with children', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ update, selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
@@ -41,8 +40,7 @@ runFixtureLoaderTests(mount => {
                 <Wrapper>brah</Wrapper>
               </Wrapper>
             )
-          },
-          decorators
+          }
         });
         await fixtureStateChange({
           rendererId,
@@ -69,7 +67,7 @@ runFixtureLoaderTests(mount => {
 
   it('transitions string children into an element with multiple children', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ update, selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
@@ -96,8 +94,7 @@ runFixtureLoaderTests(mount => {
                 <Wrapper>brah</Wrapper>
               </Wrapper>
             )
-          },
-          decorators
+          }
         });
         await fixtureStateChange({
           rendererId,

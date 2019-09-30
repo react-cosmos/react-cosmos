@@ -5,7 +5,6 @@ import { runFixtureLoaderTests } from '../testHelpers';
 import { anyProps } from '../testHelpers/fixtureState';
 
 const rendererId = uuid();
-const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
 runFixtureLoaderTests(mount => {
@@ -14,7 +13,7 @@ runFixtureLoaderTests(mount => {
       first: <input type="text" />
     };
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
@@ -42,7 +41,7 @@ runFixtureLoaderTests(mount => {
       first: <div>yo</div>
     };
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,

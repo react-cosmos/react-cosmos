@@ -3,30 +3,26 @@ import { runFixtureLoaderTests } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = { first: null, second: null };
-const decorators = {};
 
 runFixtureLoaderTests(mount => {
   it('renders blank state message', async () => {
-    await mount({ rendererId, fixtures, decorators }, async ({ renderer }) => {
+    await mount({ rendererId, fixtures }, async ({ renderer }) => {
       expect(renderer.toJSON()).toEqual('No fixture selected.');
     });
   });
 
   it('posts ready response on mount', async () => {
-    await mount(
-      { rendererId, fixtures, decorators },
-      async ({ rendererReady }) => {
-        await rendererReady({
-          rendererId,
-          fixtures
-        });
-      }
-    );
+    await mount({ rendererId, fixtures }, async ({ rendererReady }) => {
+      await rendererReady({
+        rendererId,
+        fixtures
+      });
+    });
   });
 
   it('posts ready response again on ping request', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ rendererReady, pingRenderers }) => {
         await rendererReady({
           rendererId,
@@ -43,7 +39,7 @@ runFixtureLoaderTests(mount => {
 
   it('posts fixture list on "fixtures" prop change', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ update, rendererReady, fixtureListUpdate }) => {
         await rendererReady({
           rendererId,
@@ -51,8 +47,7 @@ runFixtureLoaderTests(mount => {
         });
         update({
           rendererId,
-          fixtures: { ...fixtures, third: null },
-          decorators
+          fixtures: { ...fixtures, third: null }
         });
         await fixtureListUpdate({
           rendererId,

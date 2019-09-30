@@ -24,7 +24,7 @@ type GetMessages = () => Message[];
 export type MountFixtureLoaderArgs = {
   rendererId: RendererId;
   fixtures: ReactFixtureExportsByPath;
-  decorators: ReactDecoratorsByPath;
+  decorators?: ReactDecoratorsByPath;
   onErrorReset?: () => unknown;
 };
 

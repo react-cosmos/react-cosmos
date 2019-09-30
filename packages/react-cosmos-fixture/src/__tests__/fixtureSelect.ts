@@ -7,12 +7,11 @@ const fixtures = {
   first: { one: 'First' },
   second: 'Second'
 };
-const decorators = {};
 
 runFixtureLoaderTests(mount => {
   it('renders selected fixture', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, selectFixture }) => {
         await selectFixture({
           rendererId,
@@ -26,7 +25,7 @@ runFixtureLoaderTests(mount => {
 
   it('renders selected named fixture', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, selectFixture }) => {
         await selectFixture({
           rendererId,
@@ -40,7 +39,7 @@ runFixtureLoaderTests(mount => {
 
   it('creates fixture state', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
@@ -60,7 +59,7 @@ runFixtureLoaderTests(mount => {
 
   it('renders blank state after unselecting fixture', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, selectFixture, unselectFixture }) => {
         await selectFixture({
           rendererId,
@@ -77,7 +76,7 @@ runFixtureLoaderTests(mount => {
 
   it('ignores "selectFixture" message for different renderer', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, selectFixture }) => {
         await selectFixture({
           rendererId: 'foobar',
@@ -91,7 +90,7 @@ runFixtureLoaderTests(mount => {
 
   it('renders missing state on unknown fixture path', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, selectFixture }) => {
         await selectFixture({
           rendererId,

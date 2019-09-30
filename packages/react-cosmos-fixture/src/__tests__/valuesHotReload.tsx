@@ -43,13 +43,12 @@ function createFixtures({
 
 const rendererId = uuid();
 const fixtures = createFixtures();
-const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
 runFixtureLoaderTests(mount => {
   it('preserves fixture state change (via setter) on default value change', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, update, selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
         await rendered(renderer, { countText: '0', toggledText: 'false' });
@@ -58,8 +57,7 @@ runFixtureLoaderTests(mount => {
         await rendered(renderer, { countText: '1', toggledText: 'true' });
         update({
           rendererId,
-          fixtures: createFixtures({ defaultCount: 2, defaultToggled: false }),
-          decorators
+          fixtures: createFixtures({ defaultCount: 2, defaultToggled: false })
         });
         await fixtureStateChange({
           rendererId,
@@ -85,7 +83,7 @@ runFixtureLoaderTests(mount => {
 
   it('preserves fixture state change (via setFixtureState) on default value change', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({
         renderer,
         update,
@@ -114,8 +112,7 @@ runFixtureLoaderTests(mount => {
         await rendered(renderer, { countText: '1', toggledText: 'false' });
         update({
           rendererId,
-          fixtures: createFixtures({ defaultCount: 0, defaultToggled: true }),
-          decorators
+          fixtures: createFixtures({ defaultCount: 0, defaultToggled: true })
         });
         await fixtureStateChange({
           rendererId,
@@ -141,7 +138,7 @@ runFixtureLoaderTests(mount => {
 
   it('cleans up fixture state on input rename', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, update, selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
         await rendered(renderer, { countText: '0', toggledText: 'false' });
@@ -168,8 +165,7 @@ runFixtureLoaderTests(mount => {
           fixtures: createFixtures({
             toggledName: 'confirmed',
             defaultToggled: true
-          }),
-          decorators
+          })
         });
         await rendered(renderer, { countText: '1', toggledText: 'true' });
         await fixtureStateChange({

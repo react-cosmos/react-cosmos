@@ -53,7 +53,7 @@ export async function mountPostMessage(
 function getElement({
   rendererId,
   fixtures,
-  decorators,
+  decorators = {},
   onErrorReset
 }: MountFixtureLoaderArgs) {
   return (

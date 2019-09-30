@@ -4,14 +4,13 @@ import { runFixtureLoaderTests } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = { first: 'First' };
-const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
 runFixtureLoaderTests(mount => {
   it('fires error reset callback when selecting fixture', async () => {
     const onErrorReset = jest.fn();
     await mount(
-      { rendererId, fixtures, decorators, onErrorReset },
+      { rendererId, fixtures, onErrorReset },
       async ({ selectFixture }) => {
         await selectFixture({
           rendererId,
@@ -26,7 +25,7 @@ runFixtureLoaderTests(mount => {
   it('fires error reset callback when unselecting fixture', async () => {
     const onErrorReset = jest.fn();
     await mount(
-      { rendererId, fixtures, decorators, onErrorReset },
+      { rendererId, fixtures, onErrorReset },
       async ({ selectFixture, unselectFixture }) => {
         await selectFixture({
           rendererId,

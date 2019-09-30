@@ -9,7 +9,6 @@ const rendererId = uuid();
 const fixtures = {
   first: <Counter />
 };
-const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
 runFixtureLoaderTests(mount => {
@@ -22,7 +21,7 @@ runFixtureLoaderTests(mount => {
   // https://github.com/react-cosmos/react-cosmos/commit/56494b6ea10785cc3db8dda7a7fbcad62c8e1c12
   it('captures initial state after re-selecting fixture', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,

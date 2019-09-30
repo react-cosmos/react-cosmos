@@ -23,13 +23,12 @@ const fixtures = {
     </>
   )
 };
-const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
 runFixtureLoaderTests(mount => {
   it('keeps state when resetting props', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({
         renderer,
         selectFixture,
@@ -76,7 +75,7 @@ runFixtureLoaderTests(mount => {
 
   it('keeps state when transitioning props', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({
         renderer,
         selectFixture,
@@ -123,7 +122,7 @@ runFixtureLoaderTests(mount => {
 
   it('keeps props when changing state', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({
         renderer,
         selectFixture,
@@ -183,7 +182,7 @@ runFixtureLoaderTests(mount => {
       )
     };
     await mount(
-      { rendererId, fixtures: fixturesNew, decorators },
+      { rendererId, fixtures: fixturesNew },
       async ({
         renderer,
         selectFixture,
@@ -238,7 +237,7 @@ runFixtureLoaderTests(mount => {
 
   it('updates props on fixture change', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, update, selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
@@ -249,8 +248,7 @@ runFixtureLoaderTests(mount => {
           rendererId,
           fixtures: {
             first: <SuffixCounter suffix="timez" />
-          },
-          decorators
+          }
         });
         await retry(() => expect(renderer.toJSON()).toBe('0 timez'));
         await fixtureStateChange({

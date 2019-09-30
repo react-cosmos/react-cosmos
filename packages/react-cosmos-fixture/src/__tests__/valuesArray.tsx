@@ -1,8 +1,9 @@
+// Warning: Import test helpers before tested source to mock Socket.IO
+import { runFixtureLoaderTests } from '../testHelpers';
+
 import React from 'react';
 import { createValue } from 'react-cosmos-shared2/fixtureState';
 import { uuid } from 'react-cosmos-shared2/util';
-// Warning: Import test helpers before tested source to mock Socket.IO
-import { runFixtureLoaderTests } from '../testHelpers';
 import { useValue } from '..';
 import { ReactTestRenderer } from 'react-test-renderer';
 import retry from '@skidding/async-retry';
@@ -28,13 +29,12 @@ const rendererId = uuid();
 const fixtures = createFixtures({
   defaultValue: [{ isAdmin: true, name: 'Pat D', age: 45, onClick: () => {} }]
 });
-const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
 runFixtureLoaderTests(mount => {
   it('renders fixture', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, selectFixture }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
         await rendered(renderer, [{ isAdmin: true, name: 'Pat D', age: 45 }]);
@@ -44,7 +44,7 @@ runFixtureLoaderTests(mount => {
 
   it('creates fixture state', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
         await fixtureStateChange({
@@ -70,7 +70,7 @@ runFixtureLoaderTests(mount => {
 
   it('resets fixture state on default value change', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ update, selectFixture, fixtureStateChange }) => {
         await selectFixture({ rendererId, fixtureId, fixtureState: {} });
         update({
@@ -80,8 +80,7 @@ runFixtureLoaderTests(mount => {
               { isAdmin: false, name: 'Pat D', age: 45, onClick: () => {} },
               { isAdmin: true, name: 'Dan B', age: 39, onClick: () => {} }
             ]
-          }),
-          decorators
+          })
         });
         await fixtureStateChange({
           rendererId,

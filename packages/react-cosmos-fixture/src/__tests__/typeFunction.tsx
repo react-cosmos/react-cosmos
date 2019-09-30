@@ -6,13 +6,12 @@ const rendererId = uuid();
 const fixtures = {
   first: () => <input type="text" />
 };
-const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
 runFixtureLoaderTests(mount => {
   it('collects no props fixture state', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,

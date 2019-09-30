@@ -27,13 +27,12 @@ const fixtures = {
     </>
   )
 };
-const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
 runFixtureLoaderTests(mount => {
   it('captures mocked state from multiple instances', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
@@ -63,7 +62,7 @@ runFixtureLoaderTests(mount => {
 
   it('overwrites mocked state in second instances', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({
         renderer,
         selectFixture,

@@ -26,13 +26,12 @@ const fixtures = {
     </StateMock>
   )
 };
-const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
 runFixtureLoaderTests(mount => {
   it('captures mocked state', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
@@ -59,7 +58,7 @@ runFixtureLoaderTests(mount => {
 
   it('overwrites mocked state', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({
         renderer,
         selectFixture,
@@ -105,7 +104,7 @@ runFixtureLoaderTests(mount => {
 
   it('removes mocked state property', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({
         renderer,
         selectFixture,
@@ -137,7 +136,7 @@ runFixtureLoaderTests(mount => {
 
   it('reverts to mocked state', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({
         renderer,
         selectFixture,
@@ -207,7 +206,7 @@ runFixtureLoaderTests(mount => {
       )
     };
     await mount(
-      { rendererId, fixtures: fixturesNew, decorators },
+      { rendererId, fixtures: fixturesNew },
       async ({ selectFixture, getLastFixtureState }) => {
         await selectFixture({
           rendererId,
@@ -237,7 +236,7 @@ runFixtureLoaderTests(mount => {
 
   it('applies fixture state to replaced component type', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({
         renderer,
         update,
@@ -272,8 +271,7 @@ runFixtureLoaderTests(mount => {
                 <CoolCounter />
               </StateMock>
             )
-          },
-          decorators
+          }
         });
         expect(renderer.toJSON()).toBe('50 timez');
       }
@@ -282,7 +280,7 @@ runFixtureLoaderTests(mount => {
 
   it('overwrites fixture state on fixture change', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({
         renderer,
         update,
@@ -319,8 +317,7 @@ runFixtureLoaderTests(mount => {
                 <Counter />
               </StateMock>
             )
-          },
-          decorators
+          }
         });
         await fixtureStateChange({
           rendererId,
@@ -342,7 +339,7 @@ runFixtureLoaderTests(mount => {
 
   it('clears fixture state for removed fixture element', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, update, selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
@@ -368,8 +365,7 @@ runFixtureLoaderTests(mount => {
             // Counter element from fixture is gone, and so should the
             // fixture state related to it.
             first: 'No counts for you.'
-          },
-          decorators
+          }
         });
         expect(renderer.toJSON()).toBe('No counts for you.');
         await fixtureStateChange({

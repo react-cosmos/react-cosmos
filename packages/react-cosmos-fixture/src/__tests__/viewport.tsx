@@ -12,13 +12,12 @@ const fixtures = {
     </Viewport>
   )
 };
-const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
 runFixtureLoaderTests(mount => {
   it('renders children', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, selectFixture }) => {
         await selectFixture({
           rendererId,
@@ -32,7 +31,7 @@ runFixtureLoaderTests(mount => {
 
   it('creates viewport fixture state', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
@@ -53,7 +52,7 @@ runFixtureLoaderTests(mount => {
 
   it('updates viewport fixture state', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ update, selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
@@ -68,8 +67,7 @@ runFixtureLoaderTests(mount => {
                 yo
               </Viewport>
             )
-          },
-          decorators
+          }
         });
         await fixtureStateChange({
           rendererId,

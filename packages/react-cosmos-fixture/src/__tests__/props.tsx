@@ -16,13 +16,12 @@ const rendererId = uuid();
 const fixtures = {
   first: <HelloMessage name="Bianca" />
 };
-const decorators = {};
 const fixtureId = { path: 'first', name: null };
 
 runFixtureLoaderTests(mount => {
   it('captures props', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
@@ -48,7 +47,7 @@ runFixtureLoaderTests(mount => {
 
   it('overwrites prop', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({
         renderer,
         selectFixture,
@@ -80,7 +79,7 @@ runFixtureLoaderTests(mount => {
 
   it('removes prop', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({
         renderer,
         selectFixture,
@@ -112,7 +111,7 @@ runFixtureLoaderTests(mount => {
 
   it('clears props', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({
         renderer,
         selectFixture,
@@ -182,7 +181,7 @@ runFixtureLoaderTests(mount => {
       )
     });
     await mount(
-      { rendererId, fixtures: getFixtures(), decorators },
+      { rendererId, fixtures: getFixtures() },
       async ({
         update,
         selectFixture,
@@ -209,8 +208,7 @@ runFixtureLoaderTests(mount => {
         });
         update({
           rendererId,
-          fixtures: getFixtures(),
-          decorators
+          fixtures: getFixtures()
         });
         await retry(() => {
           expect(refs.length).toBeGreaterThanOrEqual(2);
@@ -237,7 +235,7 @@ runFixtureLoaderTests(mount => {
       )
     });
     await mount(
-      { rendererId, fixtures: getFixtures(), decorators },
+      { rendererId, fixtures: getFixtures() },
       async ({
         update,
         selectFixture,
@@ -264,8 +262,7 @@ runFixtureLoaderTests(mount => {
         });
         update({
           rendererId,
-          fixtures: getFixtures(),
-          decorators
+          fixtures: getFixtures()
         });
         await retry(() => {
           expect(refs.length).toBeGreaterThanOrEqual(2);
@@ -277,7 +274,7 @@ runFixtureLoaderTests(mount => {
 
   it('overwrites fixture state on fixture change', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({
         renderer,
         update,
@@ -309,8 +306,7 @@ runFixtureLoaderTests(mount => {
           rendererId,
           fixtures: {
             first: <HelloMessage name="Petec" />
-          },
-          decorators
+          }
         });
         await fixtureStateChange({
           rendererId,
@@ -331,7 +327,7 @@ runFixtureLoaderTests(mount => {
 
   it('clears fixture state for removed fixture element', async () => {
     await mount(
-      { rendererId, fixtures, decorators },
+      { rendererId, fixtures },
       async ({ renderer, update, selectFixture, fixtureStateChange }) => {
         await selectFixture({
           rendererId,
@@ -356,8 +352,7 @@ runFixtureLoaderTests(mount => {
             // HelloMessage element from fixture is gone, and so should the
             // fixture state related to it.
             first: 'Hello all'
-          },
-          decorators
+          }
         });
         expect(renderer.toJSON()).toBe('Hello all');
         await fixtureStateChange({
