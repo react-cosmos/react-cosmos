@@ -26,10 +26,7 @@ testFixtureLoader(
   async ({ rendererReady, pingRenderers }) => {
     await rendererReady({ rendererId, fixtures });
     await pingRenderers();
-    await rendererReady({
-      rendererId,
-      fixtures
-    });
+    await rendererReady({ rendererId, fixtures });
   }
 );
 
