@@ -9,4 +9,4 @@ export type State = {
   runtimeStatus: RuntimeStatus;
 };
 
-export type Context = PluginContext<RendererPreviewSpec>;
+export type RendererPreviewContext = PluginContext<RendererPreviewSpec>;

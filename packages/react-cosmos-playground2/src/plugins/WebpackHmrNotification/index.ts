@@ -5,7 +5,7 @@ import { RendererCoreSpec } from '../RendererCore/public';
 import { NotificationsSpec } from '../Notifications/public';
 import { WebpackHmrNotificationSpec } from './public';
 
-type Context = PluginContext<WebpackHmrNotificationSpec>;
+type WebpackHmrNotificationContext = PluginContext<WebpackHmrNotificationSpec>;
 
 const { on, register } = createPlugin<WebpackHmrNotificationSpec>({
   name: 'webpackHmrNotification'
@@ -17,7 +17,10 @@ on<RendererCoreSpec>('rendererCore', {
 
 export { register };
 
-function onRendererResponse(context: Context, msg: Message) {
+function onRendererResponse(
+  context: WebpackHmrNotificationContext,
+  msg: Message
+) {
   const { getMethodsOf } = context;
   const notifications = getMethodsOf<NotificationsSpec>('notifications');
 

@@ -3,9 +3,9 @@ import { Message } from 'react-cosmos-shared2/util';
 import { RendererResponse } from 'react-cosmos-shared2/renderer';
 import { receiveFixtureListUpdateResponse } from './fixtureListUpdate';
 import { receiveFixtureStateChangeResponse } from './fixtureStateChange';
-import { Context } from '../shared';
+import { RendererCoreContext } from '../shared';
 
-export function receiveResponse(context: Context, msg: Message) {
+export function receiveResponse(context: RendererCoreContext, msg: Message) {
   context.emit('response', msg);
 
   const rendererResponse = msg as RendererResponse;

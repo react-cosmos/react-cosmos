@@ -1,6 +1,9 @@
-import { Context } from './shared';
+import { RendererPreviewContext } from './shared';
 
-export function checkRendererStatus(context: Context, rendererUrl: string) {
+export function checkRendererStatus(
+  context: RendererPreviewContext,
+  rendererUrl: string
+) {
   // We can't do fetch requests when Cosmos exports are opened without a
   // web server (ie. via file:/// protocol) so we're left to _assume_ the
   // renderer iframe loads alright.

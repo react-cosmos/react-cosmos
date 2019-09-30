@@ -3,7 +3,7 @@ import { PluginContext } from 'react-plugin';
 import { StorageSpec } from '../Storage/public';
 import { ResponsivePreviewSpec, Viewport } from './public';
 
-export type Context = PluginContext<ResponsivePreviewSpec>;
+export type ResponsivePreviewContext = PluginContext<ResponsivePreviewSpec>;
 
 export type StorageMethods = StorageSpec['methods'];
 

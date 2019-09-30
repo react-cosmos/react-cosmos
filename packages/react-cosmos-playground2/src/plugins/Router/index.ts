@@ -9,7 +9,7 @@ import {
 } from '../../shared/url';
 import { RouterSpec } from './public';
 
-type Context = PluginContext<RouterSpec>;
+type RouterContext = PluginContext<RouterSpec>;
 
 const { onLoad, register } = createPlugin<RouterSpec>({
   name: 'router',
@@ -42,27 +42,30 @@ onLoad(context => {
 
 export { register };
 
-function getSelectedFixtureId({ getState }: Context) {
+function getSelectedFixtureId({ getState }: RouterContext) {
   return getState().urlParams.fixtureId || null;
 }
 
-function isFullScreen({ getState }: Context) {
+function isFullScreen({ getState }: RouterContext) {
   return getState().urlParams.fullScreen || false;
 }
 
 function selectFixture(
-  context: Context,
+  context: RouterContext,
   fixtureId: FixtureId,
   fullScreen: boolean
 ) {
   setUrlParams(context, { fixtureId, fullScreen });
 }
 
-function unselectFixture(context: Context) {
+function unselectFixture(context: RouterContext) {
   setUrlParams(context, {});
 }
 
-function setUrlParams(context: Context, nextUrlParams: PlaygroundUrlParams) {
+function setUrlParams(
+  context: RouterContext,
+  nextUrlParams: PlaygroundUrlParams
+) {
   const { urlParams } = context.getState();
   const fixtureChanged = !isEqual(nextUrlParams.fixtureId, urlParams.fixtureId);
   const urlParamsEqual = isEqual(nextUrlParams, urlParams);
@@ -79,6 +82,6 @@ function setUrlParams(context: Context, nextUrlParams: PlaygroundUrlParams) {
   });
 }
 
-function emitFixtureChangeEvent(context: Context) {
+function emitFixtureChangeEvent(context: RouterContext) {
   context.emit('fixtureChange', getSelectedFixtureId(context));
 }

@@ -1,11 +1,11 @@
 import { RendererCoreSpec } from '../RendererCore/public';
 import { StorageSpec } from '../Storage/public';
-import { RootPluginContext } from './shared';
+import { RootContext } from './shared';
 
 export const PANEL_OPEN_STORAGE_KEY = 'controlPanelOpen';
 const PANEL_OPEN_DEFAULT = true;
 
-export function isPanelOpen(context: RootPluginContext) {
+export function isPanelOpen(context: RootContext) {
   const { getMethodsOf } = context;
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   if (!rendererCore.isValidFixtureSelected()) {
@@ -17,7 +17,7 @@ export function isPanelOpen(context: RootPluginContext) {
   return typeof open === 'boolean' ? open : PANEL_OPEN_DEFAULT;
 }
 
-export function openPanel(context: RootPluginContext, open: boolean) {
+export function openPanel(context: RootContext, open: boolean) {
   const storage = context.getMethodsOf<StorageSpec>('storage');
   storage.setItem(PANEL_OPEN_STORAGE_KEY, open);
 }

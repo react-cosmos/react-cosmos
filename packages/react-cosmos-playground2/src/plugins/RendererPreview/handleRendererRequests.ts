@@ -1,10 +1,10 @@
 import { Message } from 'react-cosmos-shared2/util';
-import { Context } from './shared';
+import { RendererPreviewContext } from './shared';
 
 export function createRendererRequestHandler() {
   let iframeRef: null | HTMLIFrameElement = null;
 
-  function postRendererRequest(context: Context, msg: Message) {
+  function postRendererRequest(context: RendererPreviewContext, msg: Message) {
     if (iframeRef && iframeRef.contentWindow) {
       iframeRef.contentWindow.postMessage(msg, '*');
     }

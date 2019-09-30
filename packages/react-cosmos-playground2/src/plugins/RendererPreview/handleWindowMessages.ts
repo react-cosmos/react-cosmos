@@ -1,10 +1,10 @@
 import { RendererResponse } from 'react-cosmos-shared2/renderer';
 import { RendererCoreSpec } from '../RendererCore/public';
-import { Context } from './shared';
+import { RendererPreviewContext } from './shared';
 
 type WindowMsg = { data: { [key: string]: unknown } };
 
-export function handleWindowMessages(context: Context) {
+export function handleWindowMessages(context: RendererPreviewContext) {
   const handler = createMessageHandler(context);
   window.addEventListener('message', handler, false);
 
@@ -13,7 +13,7 @@ export function handleWindowMessages(context: Context) {
   };
 }
 
-function createMessageHandler(context: Context) {
+function createMessageHandler(context: RendererPreviewContext) {
   return (msg: WindowMsg) => {
     if (!isValidResponse(msg)) {
       return;
@@ -44,7 +44,7 @@ function isValidResponse(msg: WindowMsg) {
 }
 
 function updateRuntimeStatus(
-  { getState, setState }: Context,
+  { getState, setState }: RendererPreviewContext,
   response: RendererResponse
 ) {
   const { runtimeStatus } = getState();

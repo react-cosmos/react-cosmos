@@ -1,6 +1,6 @@
 import { RouterSpec } from '../../Router/public';
-import { Context } from '../shared';
+import { RendererCoreContext } from '../shared';
 
-export function getSelectedFixtureId({ getMethodsOf }: Context) {
+export function getSelectedFixtureId({ getMethodsOf }: RendererCoreContext) {
   return getMethodsOf<RouterSpec>('router').getSelectedFixtureId();
 }

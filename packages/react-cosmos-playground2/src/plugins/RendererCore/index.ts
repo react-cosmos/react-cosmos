@@ -6,7 +6,7 @@ import { setFixtureState } from './setFixtureState';
 import { receiveResponse } from './receiveResponse';
 import { onRouterFixtureChange } from './onRouterFixtureChange';
 import { RendererCoreSpec } from './public';
-import { Context } from './shared';
+import { RendererCoreContext } from './shared';
 
 const { on, register } = createPlugin<RendererCoreSpec>({
   name: 'rendererCore',
@@ -33,28 +33,28 @@ on<RouterSpec>('router', { fixtureChange: onRouterFixtureChange });
 
 export { register };
 
-function getConnectedRendererIds({ getState }: Context) {
+function getConnectedRendererIds({ getState }: RendererCoreContext) {
   return getState().connectedRendererIds;
 }
 
-function getPrimaryRendererId({ getState }: Context) {
+function getPrimaryRendererId({ getState }: RendererCoreContext) {
   return getState().primaryRendererId;
 }
 
-function getFixtures({ getState }: Context) {
+function getFixtures({ getState }: RendererCoreContext) {
   return getState().fixtures;
 }
 
-function getFixtureState({ getState }: Context) {
+function getFixtureState({ getState }: RendererCoreContext) {
   return getState().fixtureState;
 }
 
-function isRendererConnected({ getState }: Context) {
+function isRendererConnected({ getState }: RendererCoreContext) {
   return getState().connectedRendererIds.length > 0;
 }
 
 function selectPrimaryRenderer(
-  { setState }: Context,
+  { setState }: RendererCoreContext,
   primaryRendererId: RendererId
 ) {
   setState(prevState => ({ ...prevState, primaryRendererId }));

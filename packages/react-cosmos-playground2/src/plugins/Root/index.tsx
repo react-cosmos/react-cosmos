@@ -10,7 +10,7 @@ import { getNavWidthApi } from './navWidth';
 import { isPanelOpen, openPanel } from './panelOpen';
 import { getPanelWidthApi } from './panelWidth';
 import { RootSpec } from './public';
-import { RootPluginContext } from './shared';
+import { RootContext } from './shared';
 
 const { onLoad, plug, register } = createPlugin<RootSpec>({
   name: 'root',
@@ -106,13 +106,13 @@ plug('root', ({ pluginContext }) => {
 
 export { register };
 
-function useOpenNav(pluginContext: RootPluginContext) {
+function useOpenNav(pluginContext: RootContext) {
   return React.useCallback(() => {
     openNav(pluginContext, !isNavOpen(pluginContext));
   }, [pluginContext]);
 }
 
-function useOpenPanel(pluginContext: RootPluginContext) {
+function useOpenPanel(pluginContext: RootContext) {
   return React.useCallback(() => {
     openPanel(pluginContext, !isPanelOpen(pluginContext));
   }, [pluginContext]);

@@ -3,11 +3,11 @@ import { Message } from 'react-cosmos-shared2/util';
 import { SERVER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/build';
 import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
 import { CoreSpec } from '../Core/public';
-import { Context } from './shared';
+import { MessageHandlerContext } from './shared';
 
 let socket: void | SocketIOClient.Socket;
 
-export function initSocket(context: Context) {
+export function initSocket(context: MessageHandlerContext) {
   const core = context.getMethodsOf<CoreSpec>('core');
   if (!core.isDevServerOn()) {
     return;
@@ -34,7 +34,10 @@ export function initSocket(context: Context) {
   }
 }
 
-export function postRendererRequest(context: Context, msg: Message) {
+export function postRendererRequest(
+  context: MessageHandlerContext,
+  msg: Message
+) {
   if (socket) {
     socket.emit(RENDERER_MESSAGE_EVENT_NAME, msg);
   }
