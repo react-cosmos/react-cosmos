@@ -1,5 +1,5 @@
 import React from 'react';
-import { MaximizeIcon } from '../../shared/icons';
+import { ExternalIcon } from '../../shared/icons';
 import { IconButton32 } from '../../shared/ui/buttons';
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 export function FullScreenButton({ onClick }: Props) {
   return (
     <IconButton32
-      icon={<MaximizeIcon />}
+      icon={<ExternalIcon />}
       title="Go fullscreen"
       onClick={onClick}
     />
