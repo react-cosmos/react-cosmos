@@ -1,10 +1,11 @@
 import { getFixtureNamesByPath } from 'react-cosmos-shared2/react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import {
-  PlaygroundUrlParams,
-  stringifyPlaygroundUrlQuery
+  stringifyPlaygroundUrlQuery,
+  stringifyRendererUrlQuery
 } from 'react-cosmos-shared2/url';
 import { CosmosConfig } from './config';
+import { RENDERER_FILENAME } from './shared/playgroundHtml';
 import { getUserModules } from './shared/userDeps';
 
 type Args = {
@@ -44,12 +45,13 @@ function createFixtureUrl(
   fixtureId: FixtureId,
   fullScreen: boolean
 ) {
-  const urlParams: PlaygroundUrlParams = { fixtureId };
   if (fullScreen) {
-    urlParams.fullScreen = true;
+    const query = stringifyRendererUrlQuery({ _fixtureId: fixtureId });
+    return `${host}/${RENDERER_FILENAME}?${query}`;
   }
 
-  return `${host}/?${stringifyPlaygroundUrlQuery(urlParams)}`;
+  const query = stringifyPlaygroundUrlQuery({ fixtureId });
+  return `${host}/?${query}`;
 }
 
 function getPlaygroundHost({ hostname, port }: CosmosConfig) {

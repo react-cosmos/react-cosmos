@@ -48,6 +48,18 @@ export function parsePlaygroundUrlQuery(query: string): PlaygroundUrlParams {
   return decoded;
 }
 
+export function stringifyRendererUrlQuery(
+  urlParams: RendererUrlParams
+): string {
+  const encodedUrlParams: EncodedRendererUrlParams = {};
+
+  if (urlParams._fixtureId) {
+    encodedUrlParams._fixtureId = JSON.stringify(urlParams._fixtureId);
+  }
+
+  return qs.stringify(encodedUrlParams);
+}
+
 export function parseRendererUrlQuery(query: string): RendererUrlParams {
   const encodedUrlParams = parseUrlQuery<EncodedRendererUrlParams>(query);
   const decoded: RendererUrlParams = {};
