@@ -3,7 +3,7 @@ import React from 'react';
 import { RendererHeader } from './RendererHeader';
 
 const propDefaults = {
-  fixtureId: { path: 'foo', name: null },
+  fixtureId: { path: 'foo.js', name: null },
   panelOpen: false,
   navOpen: false,
   rendererActionOrder: [],
