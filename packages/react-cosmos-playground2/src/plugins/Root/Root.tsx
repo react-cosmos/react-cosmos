@@ -7,8 +7,8 @@ import styled from 'styled-components';
 import { grey32, white10 } from '../../shared/ui/colors';
 import { useDrag } from '../../shared/ui/useDrag';
 import { ControlPanel } from './ControlPanel';
+import { GlobalHeader } from './GlobalHeader';
 import { RendererHeader } from './RendererHeader';
-import { TopBar } from './TopBar';
 
 type Props = {
   storageCacheReady: boolean;
@@ -22,7 +22,7 @@ type Props = {
   navWidth: number;
   panelWidth: number;
   globalOrder: string[];
-  topBarRightActionOrder: string[];
+  globalActionOrder: string[];
   rendererActionOrder: string[];
   controlPanelRowOrder: string[];
   onToggleNav: () => unknown;
@@ -46,7 +46,7 @@ export function Root({
   navWidth,
   panelWidth,
   globalOrder,
-  topBarRightActionOrder,
+  globalActionOrder,
   rendererActionOrder,
   controlPanelRowOrder,
   onToggleNav,
@@ -105,11 +105,11 @@ export function Root({
       )}
       <MainContainer key="main" style={{ zIndex: 1 }}>
         {!selectedFixtureId && (
-          <TopBar
+          <GlobalHeader
             selectedFixtureId={selectedFixtureId}
             rendererConnected={rendererConnected}
             validFixtureSelected={validFixtureSelected}
-            topBarRightActionOrder={topBarRightActionOrder}
+            globalActionOrder={globalActionOrder}
           />
         )}
         <RendererContainer key="rendererContainer">

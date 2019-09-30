@@ -12,7 +12,7 @@ afterEach(resetPlugins);
 
 function loadTestPlugins() {
   loadPlugins();
-  return render(<ArraySlot name="topBarRightAction" />);
+  return render(<ArraySlot name="globalAction" />);
 }
 
 it(`doesn't render button when web renderer url is empty`, async () => {

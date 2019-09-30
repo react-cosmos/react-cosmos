@@ -8,14 +8,14 @@ type Props = {
   selectedFixtureId: FixtureId | null;
   rendererConnected: boolean;
   validFixtureSelected: boolean;
-  topBarRightActionOrder: string[];
+  globalActionOrder: string[];
 };
 
-export function TopBar({
+export function GlobalHeader({
   selectedFixtureId,
   rendererConnected,
   validFixtureSelected,
-  topBarRightActionOrder
+  globalActionOrder
 }: Props) {
   function getMessage() {
     if (!rendererConnected) {
@@ -38,10 +38,7 @@ export function TopBar({
       <Left />
       {getMessage()}
       <Right>
-        <ArraySlot
-          name="topBarRightAction"
-          plugOrder={topBarRightActionOrder}
-        />
+        <ArraySlot name="globalAction" plugOrder={globalActionOrder} />
       </Right>
     </Container>
   );

@@ -16,7 +16,7 @@ const { onLoad, plug, register } = createPlugin<RootSpec>({
   name: 'root',
   defaultConfig: {
     globalOrder: [],
-    topBarRightActionOrder: [],
+    globalActionOrder: [],
     rendererActionOrder: [],
     controlPanelRowOrder: []
   },
@@ -53,7 +53,7 @@ plug('root', ({ pluginContext }) => {
         navWidth={0}
         panelWidth={0}
         globalOrder={[]}
-        topBarRightActionOrder={[]}
+        globalActionOrder={[]}
         rendererActionOrder={[]}
         controlPanelRowOrder={[]}
         onToggleNav={() => {}}
@@ -73,7 +73,7 @@ plug('root', ({ pluginContext }) => {
   const { panelWidth, setPanelWidth } = getPanelWidthApi(pluginContext);
   const {
     globalOrder,
-    topBarRightActionOrder,
+    globalActionOrder,
     rendererActionOrder,
     controlPanelRowOrder
   } = getConfig();
@@ -90,7 +90,7 @@ plug('root', ({ pluginContext }) => {
       navWidth={navWidth}
       panelWidth={panelWidth}
       globalOrder={globalOrder}
-      topBarRightActionOrder={topBarRightActionOrder}
+      globalActionOrder={globalActionOrder}
       rendererActionOrder={rendererActionOrder}
       controlPanelRowOrder={controlPanelRowOrder}
       onToggleNav={onToggleNav}

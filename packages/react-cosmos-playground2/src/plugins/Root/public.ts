@@ -2,7 +2,7 @@ export type RootSpec = {
   name: 'root';
   config: {
     globalOrder: string[];
-    topBarRightActionOrder: string[];
+    globalActionOrder: string[];
     rendererActionOrder: string[];
     controlPanelRowOrder: string[];
   };
