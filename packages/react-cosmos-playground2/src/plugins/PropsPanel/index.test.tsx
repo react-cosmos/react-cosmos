@@ -13,12 +13,14 @@ import { PROPS_TREE_EXPANSION_STORAGE_KEY } from './shared';
 
 afterEach(resetPlugins);
 
+const fixtureId = { path: 'foo.js', name: null };
+
 function loadTestPlugins(fixtureState: FixtureState) {
   loadPlugins();
   return render(
     <ControlPanelRowSlot
       slotProps={{
-        fixtureId: { path: 'foo.js', name: null },
+        fixtureId,
         fixtureState,
         onFixtureStateChange: stateUpdater => {
           fixtureState.props = stateUpdater(fixtureState).props;
@@ -131,7 +133,7 @@ it('toggles nested object', async () => {
   expect(setItem).toBeCalledWith(
     expect.any(Object),
     PROPS_TREE_EXPANSION_STORAGE_KEY,
-    { 'foo.js': { root: { myObjValue: true } } }
+    { [fixtureId.path]: { root: { myObjValue: true } } }
   );
 });
 
@@ -140,7 +142,7 @@ it('updates number input nested in object', async () => {
   mockStorage({
     getItem: (context, key) =>
       key === PROPS_TREE_EXPANSION_STORAGE_KEY
-        ? { 'foo.js': { root: { myObjValue: true } } }
+        ? { [fixtureId.path]: { root: { myObjValue: true } } }
         : null
   });
 

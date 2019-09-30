@@ -8,15 +8,12 @@ import { mockFetch } from './testHelpers';
 
 afterEach(resetPlugins);
 
+const fixtureId = { path: 'foo.js', name: null };
+
 async function loadTestPlugins() {
   loadPlugins();
   return render(
-    <RendererActionSlot
-      slotProps={{
-        fixtureId: { path: 'foo.js', name: null }
-      }}
-      plugOrder={[]}
-    />
+    <RendererActionSlot slotProps={{ fixtureId }} plugOrder={[]} />
   );
 }
 
@@ -52,7 +49,7 @@ it('calls server endpoint on button click', async () => {
     const renderer = await loadTestPlugins();
     clickButton(renderer);
 
-    const openFileUrl = '/_open?filePath=foo.js';
+    const openFileUrl = `/_open?filePath=${fixtureId.path}`;
     expect(fetchMock).toBeCalledWith(openFileUrl, expect.any(Object));
   });
 });
