@@ -8,7 +8,8 @@ import {
   SetFixtureStateRequest,
   RendererReadyResponse,
   FixtureListUpdateResponse,
-  FixtureStateChangeResponse
+  FixtureStateChangeResponse,
+  FixtureId
 } from 'react-cosmos-shared2/renderer';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import {
@@ -24,6 +25,7 @@ type GetMessages = () => Message[];
 export type FixtureLoaderTestArgs = {
   rendererId: RendererId;
   fixtures: ReactFixtureExportsByPath;
+  initialFixtureId?: FixtureId;
   decorators?: ReactDecoratorsByPath;
   onErrorReset?: () => unknown;
 };

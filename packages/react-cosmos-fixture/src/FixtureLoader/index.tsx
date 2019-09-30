@@ -27,6 +27,7 @@ export type Props = {
   rendererId: string;
   rendererConnect: RendererConnect;
   fixtures: ReactFixtureExportsByPath;
+  initialFixtureId?: FixtureId;
   systemDecorators: ReactDecorator[];
   userDecorators: ReactDecoratorsByPath;
   renderMessage?: (args: { msg: string }) => React.ReactNode;
@@ -52,7 +53,13 @@ type State = {
 
 export class FixtureLoader extends React.Component<Props, State> {
   state: State = {
-    selectedFixture: null,
+    selectedFixture: this.props.initialFixtureId
+      ? {
+          fixtureId: this.props.initialFixtureId,
+          fixtureState: {},
+          syncedFixtureState: {}
+        }
+      : null,
     renderKey: 0
   };
 

@@ -40,6 +40,7 @@ export async function mountWebSockets(
 function getElement({
   rendererId,
   fixtures,
+  initialFixtureId,
   decorators = {},
   onErrorReset
 }: FixtureLoaderTestArgs) {
@@ -48,6 +49,7 @@ function getElement({
       rendererId={rendererId}
       rendererConnect={createWebSocketsConnect(WS_URL)}
       fixtures={fixtures}
+      initialFixtureId={initialFixtureId}
       systemDecorators={[]}
       userDecorators={decorators}
       onErrorReset={onErrorReset}
