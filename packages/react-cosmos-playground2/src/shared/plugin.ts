@@ -3,7 +3,7 @@ export const DEFAULT_PLUGIN_CONFIG = {
     globalOrder: ['fixtureSearch', 'notifications'],
     globalActionOrder: ['remoteRenderer'],
     rendererActionOrder: ['editFixture', 'responsivePreview'],
-    controlPanelRowOrder: ['props', 'classState']
+    controlPanelRowOrder: ['values', 'props', 'classState']
   },
   nav: {
     navRowOrder: ['fixtureSearch', 'fixtureTree']
