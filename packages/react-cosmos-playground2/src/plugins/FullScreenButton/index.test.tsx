@@ -3,7 +3,8 @@ import React from 'react';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '.';
 import { RendererActionSlot } from '../../shared/slots/RendererActionSlot';
-import { mockRouter } from '../../testHelpers/pluginMocks';
+import { mockCore } from '../../testHelpers/pluginMocks';
+import { mockWindowOpen } from '../../testHelpers/windowOpenMock';
 
 afterEach(resetPlugins);
 
@@ -18,10 +19,17 @@ function loadTestPlugins() {
 
 it('renders fullscreen button', async () => {
   register();
-  const { selectFixture } = mockRouter();
+  mockCore({ getWebRendererUrl: () => `/_renderer.html` });
+  const windowOpenMock = mockWindowOpen();
 
   const { getByTitle } = loadTestPlugins();
   fireEvent.click(getByTitle(/go fullscreen/i));
 
-  expect(selectFixture).toBeCalledWith(expect.any(Object), fixtureId, true);
+  const stringifiedFixtureId = encodeURIComponent(JSON.stringify(fixtureId));
+  expect(windowOpenMock.value).toBeCalledWith(
+    `/_renderer.html?_fixtureId=${stringifiedFixtureId}`,
+    '_blank'
+  );
+
+  windowOpenMock.unmock();
 });
