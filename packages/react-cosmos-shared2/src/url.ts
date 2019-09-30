@@ -6,9 +6,17 @@ export type PlaygroundUrlParams = {
   fullScreen?: boolean;
 };
 
+export type RendererUrlParams = {
+  _fixtureId?: FixtureId;
+};
+
 type EncodedPlaygroundUrlParams = {
   fixtureId?: string;
   fullScreen?: 'true';
+};
+
+type EncodedRendererUrlParams = {
+  _fixtureId?: string;
 };
 
 export function stringifyPlaygroundUrlQuery(
@@ -27,7 +35,7 @@ export function stringifyPlaygroundUrlQuery(
 }
 
 export function parsePlaygroundUrlQuery(query: string): PlaygroundUrlParams {
-  const encodedUrlParams: EncodedPlaygroundUrlParams = qs.parse(query);
+  const encodedUrlParams = parseUrlQuery<EncodedPlaygroundUrlParams>(query);
   const decoded: PlaygroundUrlParams = {};
 
   if (encodedUrlParams.fixtureId) {
@@ -38,4 +46,19 @@ export function parsePlaygroundUrlQuery(query: string): PlaygroundUrlParams {
   }
 
   return decoded;
+}
+
+export function parseRendererUrlQuery(query: string): RendererUrlParams {
+  const encodedUrlParams = parseUrlQuery<EncodedRendererUrlParams>(query);
+  const decoded: RendererUrlParams = {};
+
+  if (encodedUrlParams._fixtureId) {
+    decoded._fixtureId = JSON.parse(encodedUrlParams._fixtureId);
+  }
+
+  return decoded;
+}
+
+function parseUrlQuery<T extends {}>(query: string): T {
+  return qs.parse(query) as T;
 }
