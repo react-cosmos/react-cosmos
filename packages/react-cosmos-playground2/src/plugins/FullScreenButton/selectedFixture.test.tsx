@@ -7,7 +7,7 @@ import { mockRouter } from '../../testHelpers/pluginMocks';
 
 afterEach(resetPlugins);
 
-const fixtureId = { fixtureId: { path: 'foo.js', name: null } };
+const fixtureId = { path: 'foo.js', name: null };
 
 function loadTestPlugins() {
   loadPlugins();
