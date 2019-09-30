@@ -7,7 +7,7 @@ import { createRendererRequestHandler } from './handleRendererRequests';
 import { handleWindowMessages } from './handleWindowMessages';
 import { RendererPreview } from './RendererPreview';
 import { RendererPreviewSpec } from './public';
-import { Context } from './shared';
+import { RendererPreviewContext } from './shared';
 
 const { postRendererRequest, setIframeRef } = createRendererRequestHandler();
 
@@ -27,7 +27,7 @@ on<RendererCoreSpec>('rendererCore', {
   request: postRendererRequest
 });
 
-onLoad((context: Context) => {
+onLoad((context: RendererPreviewContext) => {
   const rendererUrl = getRendererUrl(context);
 
   if (!rendererUrl) {
@@ -51,14 +51,14 @@ plug('rendererPreview', ({ pluginContext }) => {
 
 export { register };
 
-function getUrlStatus({ getState }: Context) {
+function getUrlStatus({ getState }: RendererPreviewContext) {
   return getState().urlStatus;
 }
 
-function getRuntimeStatus({ getState }: Context) {
+function getRuntimeStatus({ getState }: RendererPreviewContext) {
   return getState().runtimeStatus;
 }
 
-function getRendererUrl({ getMethodsOf }: Context) {
+function getRendererUrl({ getMethodsOf }: RendererPreviewContext) {
   return getMethodsOf<CoreSpec>('core').getWebRendererUrl();
 }

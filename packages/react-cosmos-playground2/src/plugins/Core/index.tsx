@@ -1,7 +1,7 @@
 import { PluginContext, createPlugin } from 'react-plugin';
 import { CoreSpec } from './public';
 
-type Context = PluginContext<CoreSpec>;
+type CoreContext = PluginContext<CoreSpec>;
 
 const { register } = createPlugin<CoreSpec>({
   name: 'core',
@@ -22,19 +22,19 @@ const { register } = createPlugin<CoreSpec>({
 
 export { register };
 
-function getProjectId({ getConfig }: Context) {
+function getProjectId({ getConfig }: CoreContext) {
   return getConfig().projectId;
 }
 
-function getFixtureFileVars({ getConfig }: Context) {
+function getFixtureFileVars({ getConfig }: CoreContext) {
   const { fixturesDir, fixtureFileSuffix } = getConfig();
   return { fixturesDir, fixtureFileSuffix };
 }
 
-function isDevServerOn({ getConfig }: Context) {
+function isDevServerOn({ getConfig }: CoreContext) {
   return getConfig().devServerOn;
 }
 
-function getWebRendererUrl({ getConfig }: Context) {
+function getWebRendererUrl({ getConfig }: CoreContext) {
   return getConfig().webRendererUrl;
 }

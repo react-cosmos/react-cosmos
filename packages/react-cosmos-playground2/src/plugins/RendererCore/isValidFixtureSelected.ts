@@ -1,8 +1,8 @@
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { Context } from './shared';
+import { RendererCoreContext } from './shared';
 import { getSelectedFixtureId } from './shared/router';
 
-export function isValidFixtureSelected(context: Context) {
+export function isValidFixtureSelected(context: RendererCoreContext) {
   const fixtureId = getSelectedFixtureId(context);
   if (fixtureId === null) {
     return false;

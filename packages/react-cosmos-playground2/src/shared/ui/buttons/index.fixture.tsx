@@ -1,57 +1,94 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button, IconButton } from '.';
+import { Button32, IconButton32, IconButton8 } from '.';
 import { CopyIcon, RefreshCwIcon } from '../../icons';
-import { grey32 } from '../colors';
+import { grey32, grey8 } from '../colors';
 
 const Row = styled.div`
   display: flex;
   flex-direction: row;
 `;
 
-const DarkBg = styled(Row)`
+const Bg = styled(Row)`
   padding: 8px;
-  background: ${grey32};
 
   > button {
     margin-right: 8px;
   }
 `;
 
+const Bg32 = styled(Bg)`
+  background: ${grey32};
+`;
+
+const Bg8 = styled(Bg)`
+  background: ${grey8};
+`;
+
 export default (
   <>
-    <DarkBg>
-      <IconButton
+    <Bg32>
+      <IconButton32
         title="Reset to initial values"
         icon={<RefreshCwIcon />}
         selected={false}
         disabled={false}
         onClick={() => {}}
       />
-      <IconButton
+      <IconButton32
         title="Reset to initial values"
         icon={<RefreshCwIcon />}
         selected={false}
         disabled={true}
         onClick={() => {}}
       />
-      <IconButton
+      <IconButton32
         title="Reset to initial values"
         icon={<RefreshCwIcon />}
         selected={true}
         disabled={false}
         onClick={() => {}}
       />
-      <IconButton
+      <IconButton32
         title="Reset to initial values"
         icon={<RefreshCwIcon />}
         selected={true}
         disabled={true}
         onClick={() => {}}
       />
-    </DarkBg>
-    <DarkBg>
-      <Button
+    </Bg32>
+    <Bg8>
+      <IconButton8
+        title="Reset to initial values"
+        icon={<RefreshCwIcon />}
+        selected={false}
+        disabled={false}
+        onClick={() => {}}
+      />
+      <IconButton8
+        title="Reset to initial values"
+        icon={<RefreshCwIcon />}
+        selected={false}
+        disabled={true}
+        onClick={() => {}}
+      />
+      <IconButton8
+        title="Reset to initial values"
+        icon={<RefreshCwIcon />}
+        selected={true}
+        disabled={false}
+        onClick={() => {}}
+      />
+      <IconButton8
+        title="Reset to initial values"
+        icon={<RefreshCwIcon />}
+        selected={true}
+        disabled={true}
+        onClick={() => {}}
+      />
+    </Bg8>
+    <Bg32>
+      <Button32
         title="Reuse instances on prop changes"
         label={'reuse instances'}
         icon={<CopyIcon />}
@@ -59,7 +96,7 @@ export default (
         disabled={false}
         onClick={() => {}}
       />
-      <Button
+      <Button32
         title="Reuse instances on prop changes"
         label={'reuse instances'}
         icon={<CopyIcon />}
@@ -67,7 +104,7 @@ export default (
         disabled={true}
         onClick={() => {}}
       />
-      <Button
+      <Button32
         title="Reuse instances on prop changes"
         label={'reuse instances'}
         icon={<CopyIcon />}
@@ -75,7 +112,7 @@ export default (
         disabled={false}
         onClick={() => {}}
       />
-      <Button
+      <Button32
         title="Reuse instances on prop changes"
         label={'reuse instances'}
         icon={<CopyIcon />}
@@ -83,6 +120,6 @@ export default (
         disabled={true}
         onClick={() => {}}
       />
-    </DarkBg>
+    </Bg32>
   </>
 );

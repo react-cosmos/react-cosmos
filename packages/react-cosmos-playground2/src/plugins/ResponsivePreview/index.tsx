@@ -5,7 +5,7 @@ import { RendererCoreSpec } from '../RendererCore/public';
 import { RouterSpec } from '../Router/public';
 import { ResponsivePreviewSpec, Viewport } from './public';
 import {
-  Context,
+  ResponsivePreviewContext,
   DEFAULT_DEVICES,
   VIEWPORT_STORAGE_KEY,
   DEFAULT_VIEWPORT_STATE,
@@ -64,9 +64,8 @@ namedPlug('rendererAction', 'responsivePreview', ({ pluginContext }) => {
 
   return (
     <ToggleButton
-      validFixtureSelected={rendererCore.isValidFixtureSelected()}
-      enabled={enabled}
-      toggleViewportState={() => {
+      selected={enabled}
+      onToggle={() => {
         if (enabled) {
           setViewportState(pluginContext, { ...viewportState, enabled: false });
           setFixtureStateViewport(pluginContext, null);
@@ -81,7 +80,7 @@ namedPlug('rendererAction', 'responsivePreview', ({ pluginContext }) => {
 
 export { register };
 
-function getViewportState(context: Context): ViewportState {
+function getViewportState(context: ResponsivePreviewContext): ViewportState {
   const storage = context.getMethodsOf<StorageSpec>('storage');
   return (
     storage.getItem<ViewportState>(VIEWPORT_STORAGE_KEY) ||
@@ -89,12 +88,18 @@ function getViewportState(context: Context): ViewportState {
   );
 }
 
-function setViewportState(context: Context, viewportState: ViewportState) {
+function setViewportState(
+  context: ResponsivePreviewContext,
+  viewportState: ViewportState
+) {
   const storage = context.getMethodsOf<StorageSpec>('storage');
   storage.setItem(VIEWPORT_STORAGE_KEY, viewportState);
 }
 
-function setFixtureStateViewport(context: Context, viewport: null | Viewport) {
+function setFixtureStateViewport(
+  context: ResponsivePreviewContext,
+  viewport: null | Viewport
+) {
   const rendererCore = context.getMethodsOf<RendererCoreSpec>('rendererCore');
   rendererCore.setFixtureState(fixtureState => ({ ...fixtureState, viewport }));
 }

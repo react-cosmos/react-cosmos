@@ -1,10 +1,12 @@
 import { StorageSpec } from '../Storage/public';
-import { Context } from './shared';
+import { ContentOverlayContext } from './shared';
 
 export const DISMISS_STATE_STORAGE_KEY = 'welcomeDismissed';
 const DISMISS_STATE_DEFAULT = false;
 
-export function getWelcomeDismissState({ getMethodsOf }: Context) {
+export function getWelcomeDismissState({
+  getMethodsOf
+}: ContentOverlayContext) {
   const storage = getMethodsOf<StorageSpec>('storage');
   return {
     welcomeDismissed:

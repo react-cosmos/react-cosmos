@@ -5,10 +5,10 @@ import {
 import { NotificationsSpec } from '../../Notifications/public';
 import { postSelectFixtureRequest } from '../shared/postRequest';
 import { getSelectedFixtureId } from '../shared/router';
-import { Context, State } from '../shared';
+import { RendererCoreContext, State } from '../shared';
 
 export function receiveRendererReadyResponse(
-  context: Context,
+  context: RendererCoreContext,
   { payload }: RendererReadyResponse
 ) {
   const { rendererId, fixtures } = payload;
@@ -35,7 +35,10 @@ export function receiveRendererReadyResponse(
   }
 }
 
-function selectFixtureFromUrlParams(context: Context, rendererId: RendererId) {
+function selectFixtureFromUrlParams(
+  context: RendererCoreContext,
+  rendererId: RendererId
+) {
   const fixtureId = getSelectedFixtureId(context);
   if (fixtureId) {
     const { fixtureState } = context.getState();
@@ -44,7 +47,7 @@ function selectFixtureFromUrlParams(context: Context, rendererId: RendererId) {
 }
 
 function notifyRendererConnection(
-  { getMethodsOf }: Context,
+  { getMethodsOf }: RendererCoreContext,
   rendererId: RendererId
 ) {
   const notifications = getMethodsOf<NotificationsSpec>('notifications');

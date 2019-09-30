@@ -5,7 +5,7 @@ import { MessageHandlerSpec } from '../MessageHandler/public';
 import { NotificationsSpec } from '../Notifications/public';
 import { BuildNotificationsSpec } from './public';
 
-type Context = PluginContext<BuildNotificationsSpec>;
+type BuildNotificationsContext = PluginContext<BuildNotificationsSpec>;
 
 const { on, register } = createPlugin<BuildNotificationsSpec>({
   name: 'buildNotifications'
@@ -17,7 +17,7 @@ on<MessageHandlerSpec>('messageHandler', {
 
 export { register };
 
-function onServerMessage(context: Context, msg: Message) {
+function onServerMessage(context: BuildNotificationsContext, msg: Message) {
   const { getMethodsOf } = context;
   const notifications = getMethodsOf<NotificationsSpec>('notifications');
 

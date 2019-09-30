@@ -2,11 +2,10 @@ import { PluginContext } from 'react-plugin';
 import styled from 'styled-components';
 import { ContentOverlaySpec } from './public';
 
-export type Context = PluginContext<ContentOverlaySpec>;
+export type ContentOverlayContext = PluginContext<ContentOverlaySpec>;
 
 export const OverlayContainer = styled.div`
   position: absolute;
-  z-index: 1;
   top: 0;
   left: 0;
   width: 100%;

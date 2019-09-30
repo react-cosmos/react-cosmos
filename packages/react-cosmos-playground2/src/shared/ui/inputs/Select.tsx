@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ChevronDownIcon } from '../../icons';
-import { blue, grey160, grey224, grey24, grey32 } from '../colors';
+import { blue, grey176, grey248, grey32 } from '../colors';
 import { useFocus } from '../useFocus';
 
 type BaseOption = { value: string; label: string };
@@ -39,7 +39,7 @@ export function Select<Option extends BaseOption>({
   const selectedOption = options.find(o => o.value === value);
   const selectedLabel = selectedOption ? selectedOption.label : CUSTOM_LABEL;
   return (
-    <Container focused={focused}>
+    <Container focused={focused} bg={grey32}>
       <VisibleButton>
         <Label>{selectedLabel}</Label>
         <IconContainer>
@@ -71,15 +71,16 @@ export function Select<Option extends BaseOption>({
   );
 }
 
-const Container = styled.div<{ focused: boolean }>`
+type StyledSelectProps = {
+  focused: boolean;
+  bg: string;
+};
+
+const Container = styled.div<StyledSelectProps>`
   position: relative;
   border-radius: 3px;
-  background: ${grey32};
+  background: ${props => props.bg};
   box-shadow: ${props => (props.focused ? `0 0 0.5px 1px ${blue}` : 'none')};
-
-  :hover {
-    background: ${grey24};
-  }
 `;
 
 const VisibleButton = styled.div`
@@ -91,7 +92,7 @@ const VisibleButton = styled.div`
 `;
 
 const Label = styled.span`
-  color: ${grey224};
+  color: ${grey248};
   line-height: 32px;
 `;
 
@@ -100,7 +101,7 @@ const IconContainer = styled.span`
   width: var(--size);
   height: var(--size);
   padding: 2px 0 0 2px;
-  color: ${grey160};
+  color: ${grey176};
 `;
 
 const SelectInput = styled.select`

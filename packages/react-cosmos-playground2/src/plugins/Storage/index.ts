@@ -2,7 +2,7 @@ import * as localForage from 'localforage';
 import { PluginContext, createPlugin } from 'react-plugin';
 import { StorageSpec } from './public';
 
-type Context = PluginContext<StorageSpec>;
+type StorageContext = PluginContext<StorageSpec>;
 
 const { register } = createPlugin<StorageSpec>({
   name: 'storage',
@@ -18,12 +18,12 @@ const { register } = createPlugin<StorageSpec>({
 
 export { register };
 
-async function loadCache(context: Context, projectId: string) {
+async function loadCache(context: StorageContext, projectId: string) {
   const items: {} = (await localForage.getItem(getProjectKey(projectId))) || {};
   context.setState({ cache: { projectId, items } });
 }
 
-function getItem(context: Context, key: string) {
+function getItem(context: StorageContext, key: string) {
   const { cache } = context.getState();
   if (!cache) {
     throw new Error(`Can't retrieve item "${key}" before loading storage`);
@@ -32,7 +32,7 @@ function getItem(context: Context, key: string) {
   return cache.items[key];
 }
 
-function setItem(context: Context, key: string, value: any) {
+function setItem(context: StorageContext, key: string, value: any) {
   const { cache } = context.getState();
   if (!cache) {
     throw new Error(`Can't set item "${key}" before loading storage`);

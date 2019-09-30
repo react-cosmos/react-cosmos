@@ -33,13 +33,13 @@ export function mockMethodsOf<Spec extends PluginSpec>(
   createPlugin<any>({ name: pluginName, methods }).register();
 }
 
-export function mockPlug(
+export function mockPlug<SlotProps extends {} = {}>(
   slotName: string,
   component: PlugComponentType<any, any>
 ) {
   const name = getNewPluginName();
   const testPlugin = createPlugin({ name });
-  testPlugin.plug(slotName, component);
+  testPlugin.plug<SlotProps>(slotName, component);
   testPlugin.register();
 }
 

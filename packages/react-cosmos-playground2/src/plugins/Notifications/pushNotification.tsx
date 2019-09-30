@@ -1,11 +1,11 @@
 import { replaceOrAddItem, removeItemMatch } from 'react-cosmos-shared2/util';
 import { Notification, NotificationsSpec } from './public';
-import { Context } from './shared';
+import { NotificationsContext } from './shared';
 
 const TIMEOUT = 3000;
 
 export function pushStickyNotification(
-  context: Context,
+  context: NotificationsContext,
   notification: Notification
 ) {
   context.setState(prevState => ({
@@ -19,7 +19,7 @@ export function pushStickyNotification(
 }
 
 export function removeStickyNotification(
-  context: Context,
+  context: NotificationsContext,
   notificationId: string
 ) {
   context.setState(prevState => ({
@@ -32,7 +32,7 @@ export function removeStickyNotification(
 }
 
 export function pushTimedNotification(
-  context: Context,
+  context: NotificationsContext,
   notification: Notification
 ) {
   const { timedNotifications } = context.getState();
@@ -53,14 +53,14 @@ export function pushTimedNotification(
   }));
 }
 
-export function clearTimedNotification(context: Context) {
+export function clearTimedNotification(context: NotificationsContext) {
   context.setState(prevState => ({
     ...prevState,
     timedNotifications: null
   }));
 }
 
-function createNotificationTimeout(context: Context) {
+function createNotificationTimeout(context: NotificationsContext) {
   return window.setTimeout(() => clearTimedNotification(context), TIMEOUT);
 }
 

@@ -1,7 +1,8 @@
 import { fireEvent, render, RenderResult } from '@testing-library/react';
 import React from 'react';
-import { ArraySlot, loadPlugins, resetPlugins, Slot } from 'react-plugin';
+import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { register } from '..';
+import { RendererActionSlot } from '../../../shared/slots/RendererActionSlot';
 import {
   mockRendererCore,
   mockRouter,
@@ -53,7 +54,10 @@ function loadTestPlugins() {
   loadPlugins();
   return render(
     <>
-      <ArraySlot name="rendererAction" />
+      <RendererActionSlot
+        slotProps={{ fixtureId: { path: 'foo.js', name: null } }}
+        plugOrder={[]}
+      />
       <Slot name="rendererPreviewOuter">
         <div data-testid="previewMock" />
       </Slot>

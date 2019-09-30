@@ -44,7 +44,6 @@ const Container = styled.div`
   position: absolute;
   bottom: 8px;
   right: 8px;
-  z-index: 1;
 `;
 
 const Item = styled.div`
