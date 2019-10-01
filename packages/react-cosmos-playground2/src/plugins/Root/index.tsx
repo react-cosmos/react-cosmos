@@ -11,6 +11,7 @@ import { getPanelWidthApi } from './panelWidth';
 import { RootSpec } from './public';
 import { Root } from './Root';
 import { RootContext } from './shared';
+import { createFixtureTree } from '../../shared/fixtureTree';
 
 const { onLoad, plug, register } = createPlugin<RootSpec>({
   name: 'root',
@@ -35,6 +36,10 @@ onLoad(context => {
 
 plug('root', ({ pluginContext }) => {
   const { getConfig, getState, getMethodsOf } = pluginContext;
+  const router = getMethodsOf<RouterSpec>('router');
+  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
+
+  const fixtureTree = useFixtureTree(pluginContext);
   const onToggleNav = useOpenNav(pluginContext);
   const onTogglePanel = useOpenPanel(pluginContext);
 
@@ -43,6 +48,7 @@ plug('root', ({ pluginContext }) => {
     return (
       <Root
         storageCacheReady={false}
+        fixtureTree={fixtureTree}
         selectedFixtureId={null}
         rendererConnected={false}
         validFixtureSelected={false}
@@ -66,8 +72,6 @@ plug('root', ({ pluginContext }) => {
     );
   }
 
-  const router = getMethodsOf<RouterSpec>('router');
-  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const { navWidth, setNavWidth } = getNavWidthApi(pluginContext);
   const { panelWidth, setPanelWidth } = getPanelWidthApi(pluginContext);
   const {
@@ -79,6 +83,7 @@ plug('root', ({ pluginContext }) => {
   return (
     <Root
       storageCacheReady={true}
+      fixtureTree={fixtureTree}
       selectedFixtureId={router.getSelectedFixtureId()}
       rendererConnected={rendererCore.isRendererConnected()}
       validFixtureSelected={rendererCore.isValidFixtureSelected()}
@@ -103,6 +108,21 @@ plug('root', ({ pluginContext }) => {
 });
 
 export { register };
+
+function useFixtureTree(pluginContext: RootContext) {
+  const { getMethodsOf } = pluginContext;
+
+  const core = getMethodsOf<CoreSpec>('core');
+  const { fixturesDir, fixtureFileSuffix } = core.getFixtureFileVars();
+
+  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
+  const fixtures = rendererCore.getFixtures();
+
+  return React.useMemo(
+    () => createFixtureTree({ fixturesDir, fixtureFileSuffix, fixtures }),
+    [fixtureFileSuffix, fixtures, fixturesDir]
+  );
+}
 
 function useOpenNav(pluginContext: RootContext) {
   return React.useCallback(() => {

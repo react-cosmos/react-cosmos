@@ -1,17 +1,20 @@
+import { isEqual } from 'lodash';
 import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
 import {
-  RefreshCwIcon,
-  XCircleIcon,
   MenuIcon,
-  SlidersIcon
+  RefreshCwIcon,
+  SlidersIcon,
+  XCircleIcon
 } from '../../shared/icons';
 import { RendererActionSlot } from '../../shared/slots/RendererActionSlot';
+import { TreeNode } from '../../shared/tree';
 import { IconButton32 } from '../../shared/ui/buttons';
-import { grey192, grey32, white10 } from '../../shared/ui/colors';
+import { grey176, grey32, white10 } from '../../shared/ui/colors';
 
 type Props = {
+  fixtureTree: TreeNode<FixtureId>;
   fixtureId: FixtureId;
   navOpen: boolean;
   panelOpen: boolean;
@@ -23,6 +26,7 @@ type Props = {
 };
 
 export const RendererHeader = React.memo(function RendererHeader({
+  fixtureTree,
   fixtureId,
   navOpen,
   panelOpen,
@@ -32,6 +36,10 @@ export const RendererHeader = React.memo(function RendererHeader({
   onReload,
   onClose
 }: Props) {
+  const fixturePath = React.useMemo(
+    () => getFixtureTreePath(fixtureTree, fixtureId),
+    [fixtureTree, fixtureId]
+  );
   const slotProps = React.useMemo(() => ({ fixtureId }), [fixtureId]);
   return (
     <Container>
@@ -54,6 +62,9 @@ export const RendererHeader = React.memo(function RendererHeader({
           onClick={onReload}
         />
       </Left>
+      {fixturePath !== null && (
+        <FixtureName>{fixturePath.join(' ')}</FixtureName>
+      )}
       <Right>
         <RendererActionSlot
           slotProps={slotProps}
@@ -70,6 +81,32 @@ export const RendererHeader = React.memo(function RendererHeader({
   );
 });
 
+function getFixtureTreePath(
+  fixtureTree: TreeNode<FixtureId>,
+  fixtureId: FixtureId,
+  parents: string[] = []
+): string[] | null {
+  const { items, dirs } = fixtureTree;
+
+  const itemNames = Object.keys(items);
+  for (let itemName of itemNames) {
+    if (isEqual(items[itemName], fixtureId)) {
+      return [...parents, itemName];
+    }
+  }
+
+  const dirNames = Object.keys(dirs);
+  for (let dirName of dirNames) {
+    const dirParents = [...parents, dirName];
+    const foundPath = getFixtureTreePath(dirs[dirName], fixtureId, dirParents);
+    if (foundPath) {
+      return foundPath;
+    }
+  }
+
+  return null;
+}
+
 const Container = styled.div`
   flex-shrink: 0;
   display: flex;
@@ -80,7 +117,6 @@ const Container = styled.div`
   padding: 0 4px;
   border-bottom: 1px solid ${white10};
   background: ${grey32};
-  color: ${grey192};
   white-space: nowrap;
   overflow-x: auto;
 `;
@@ -113,4 +149,15 @@ const ButtonSeparator = styled.div`
   width: 1px;
   height: 40px;
   margin-left: 4px;
+`;
+
+const FixtureName = styled.div`
+  margin: 0 32px;
+  padding: 4px 0;
+  color: ${grey176};
+  line-height: 24px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  direction: rtl;
 `;

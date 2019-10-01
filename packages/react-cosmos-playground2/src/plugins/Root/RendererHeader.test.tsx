@@ -3,6 +3,7 @@ import React from 'react';
 import { RendererHeader } from './RendererHeader';
 
 const propDefaults = {
+  fixtureTree: { items: {}, dirs: {} },
   fixtureId: { path: 'foo.js', name: null },
   panelOpen: false,
   navOpen: false,

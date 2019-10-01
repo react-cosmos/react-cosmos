@@ -4,6 +4,7 @@ import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import { ArraySlot, Slot } from 'react-plugin';
 import styled from 'styled-components';
+import { TreeNode } from '../../shared/tree';
 import { grey32, white10 } from '../../shared/ui/colors';
 import { useDrag } from '../../shared/ui/useDrag';
 import { ControlPanel } from './ControlPanel';
@@ -12,6 +13,7 @@ import { RendererHeader } from './RendererHeader';
 
 type Props = {
   storageCacheReady: boolean;
+  fixtureTree: TreeNode<FixtureId>;
   selectedFixtureId: FixtureId | null;
   rendererConnected: boolean;
   validFixtureSelected: boolean;
@@ -35,6 +37,7 @@ type Props = {
 
 export function Root({
   storageCacheReady,
+  fixtureTree,
   selectedFixtureId,
   rendererConnected,
   validFixtureSelected,
@@ -95,6 +98,7 @@ export function Root({
         <RendererContainer key="rendererContainer">
           {selectedFixtureId && (
             <RendererHeader
+              fixtureTree={fixtureTree}
               fixtureId={selectedFixtureId}
               navOpen={navOpen}
               panelOpen={panelOpen}
