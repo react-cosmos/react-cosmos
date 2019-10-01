@@ -152,10 +152,11 @@ const ButtonSeparator = styled.div`
 `;
 
 const FixtureName = styled.div`
-  padding: 0 32px;
+  padding: 4px 32px;
   color: ${grey176};
-  overflow: hidden;
+  line-height: 24px;
   white-space: nowrap;
   text-overflow: ellipsis;
+  overflow: hidden;
   direction: rtl;
 `;

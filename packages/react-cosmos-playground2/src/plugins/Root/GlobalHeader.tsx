@@ -2,7 +2,7 @@ import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { ArraySlot } from 'react-plugin';
 import styled from 'styled-components';
-import { grey160, grey32, white10 } from '../../shared/ui/colors';
+import { grey176, grey32, white10 } from '../../shared/ui/colors';
 
 type Props = {
   selectedFixtureId: FixtureId | null;
@@ -79,7 +79,7 @@ const Right = styled(Actions)`
 
 const Message = styled.div`
   padding: 4px;
-  color: ${grey160};
+  color: ${grey176};
   line-height: 24px;
   white-space: nowrap;
   text-overflow: ellipsis;
