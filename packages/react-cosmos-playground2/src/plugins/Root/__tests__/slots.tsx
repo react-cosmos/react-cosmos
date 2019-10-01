@@ -19,8 +19,14 @@ function registerTestPlugins() {
   mockRouter({
     getSelectedFixtureId: () => ({ path: 'foo.js', name: null })
   });
-  mockCore();
+  mockCore({
+    getFixtureFileVars: () => ({
+      fixturesDir: '__fixtures__',
+      fixtureFileSuffix: 'fixture'
+    })
+  });
   mockRendererCore({
+    getFixtures: () => ({}),
     isValidFixtureSelected: () => true
   });
   register();
