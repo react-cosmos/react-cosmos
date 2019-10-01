@@ -7,10 +7,7 @@ import {
   resetPlugins
 } from 'react-plugin';
 import { register } from '..';
-import {
-  getNotificationsMethods,
-  mockRouter
-} from '../../../testHelpers/pluginMocks';
+import { getNotificationsMethods } from '../../../testHelpers/pluginMocks';
 
 afterEach(() => {
   act(() => {
@@ -37,7 +34,6 @@ function pushTimedNotification() {
 }
 
 it('renders timed notification', async () => {
-  mockRouter();
   register();
   const { getByText } = loadTestPlugins();
 
@@ -46,7 +42,6 @@ it('renders timed notification', async () => {
 });
 
 it('clears timed notification after timeout expires', async () => {
-  mockRouter();
   register();
   const { queryByText } = loadTestPlugins();
 
@@ -59,7 +54,6 @@ it('clears timed notification after timeout expires', async () => {
 });
 
 it('behaves peacefully when timeout expires after plugin unloads', async () => {
-  mockRouter();
   register();
   loadTestPlugins();
 

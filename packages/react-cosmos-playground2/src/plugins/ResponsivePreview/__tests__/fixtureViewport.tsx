@@ -1,12 +1,11 @@
-import React from 'react';
 import { render } from '@testing-library/react';
-import { loadPlugins, Slot, resetPlugins } from 'react-plugin';
-import {
-  mockStorage,
-  mockRouter,
-  mockRendererCore
-} from '../../../testHelpers/pluginMocks';
+import React from 'react';
+import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { register } from '..';
+import {
+  mockRendererCore,
+  mockStorage
+} from '../../../testHelpers/pluginMocks';
 
 afterEach(resetPlugins);
 
@@ -17,9 +16,6 @@ const fixtureState = {
 function registerTestPlugins() {
   register();
   mockStorage();
-  mockRouter({
-    isFullScreen: () => false
-  });
   mockRendererCore({
     getFixtureState: () => fixtureState,
     isValidFixtureSelected: () => true

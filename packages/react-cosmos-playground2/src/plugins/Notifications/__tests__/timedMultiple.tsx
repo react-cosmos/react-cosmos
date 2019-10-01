@@ -2,10 +2,7 @@ import { act, render } from '@testing-library/react';
 import React from 'react';
 import { ArraySlot, loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '..';
-import {
-  getNotificationsMethods,
-  mockRouter
-} from '../../../testHelpers/pluginMocks';
+import { getNotificationsMethods } from '../../../testHelpers/pluginMocks';
 
 afterEach(() => {
   act(() => {
@@ -39,7 +36,6 @@ function pushTimedNotifications() {
 }
 
 it('renders multiple timed notifications', async () => {
-  mockRouter();
   register();
   const { getByText } = loadTestPlugins();
 
@@ -49,7 +45,6 @@ it('renders multiple timed notifications', async () => {
 });
 
 it('clears all timed notifications after timeout expires', async () => {
-  mockRouter();
   register();
   const { queryByText } = loadTestPlugins();
 

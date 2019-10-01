@@ -8,8 +8,7 @@ export type RouterSpec = {
   };
   methods: {
     getSelectedFixtureId(): null | FixtureId;
-    isFullScreen(): boolean;
-    selectFixture(fixtureId: FixtureId, fullScreen: boolean): void;
+    selectFixture(fixtureId: FixtureId): void;
     unselectFixture(): void;
   };
   events: {

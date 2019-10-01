@@ -3,7 +3,6 @@ import { FixtureId } from './renderer';
 
 export type PlaygroundUrlParams = {
   fixtureId?: FixtureId;
-  fullScreen?: boolean;
 };
 
 export type RendererUrlParams = {
@@ -12,7 +11,6 @@ export type RendererUrlParams = {
 
 type EncodedPlaygroundUrlParams = {
   fixtureId?: string;
-  fullScreen?: 'true';
 };
 
 type EncodedRendererUrlParams = {
@@ -27,9 +25,6 @@ export function stringifyPlaygroundUrlQuery(
   if (urlParams.fixtureId) {
     encodedUrlParams.fixtureId = JSON.stringify(urlParams.fixtureId);
   }
-  if (urlParams.fullScreen) {
-    encodedUrlParams.fullScreen = 'true';
-  }
 
   return qs.stringify(encodedUrlParams);
 }
@@ -40,9 +35,6 @@ export function parsePlaygroundUrlQuery(query: string): PlaygroundUrlParams {
 
   if (encodedUrlParams.fixtureId) {
     decoded.fixtureId = JSON.parse(encodedUrlParams.fixtureId);
-  }
-  if (encodedUrlParams.fullScreen) {
-    decoded.fullScreen = true;
   }
 
   return decoded;

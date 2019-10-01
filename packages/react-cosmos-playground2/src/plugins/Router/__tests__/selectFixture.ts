@@ -15,24 +15,15 @@ it('updates selected fixture ID', async () => {
   register();
   loadPlugins();
   const router = getRouterMethods();
-  router.selectFixture(fixtureId, false);
+  router.selectFixture(fixtureId);
 
   await wait(() => expect(router.getSelectedFixtureId()).toBe(fixtureId));
-});
-
-it('updates fullscreen state', async () => {
-  register();
-  loadPlugins();
-  const router = getRouterMethods();
-  router.selectFixture(fixtureId, false);
-
-  await wait(() => expect(router.isFullScreen()).toBe(false));
 });
 
 it('sets URL params', async () => {
   register();
   loadPlugins();
-  getRouterMethods().selectFixture(fixtureId, false);
+  getRouterMethods().selectFixture(fixtureId);
 
   await wait(() =>
     expect(getUrlParams()).toEqual({ fixtureId: JSON.stringify(fixtureId) })
@@ -44,7 +35,7 @@ it('emits "fixtureChange" event', async () => {
   const { fixtureChange } = onRouter();
 
   loadPlugins();
-  getRouterMethods().selectFixture(fixtureId, false);
+  getRouterMethods().selectFixture(fixtureId);
 
   await wait(() =>
     expect(fixtureChange).toBeCalledWith(expect.any(Object), fixtureId)

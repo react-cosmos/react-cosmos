@@ -62,7 +62,7 @@ it('open fixture list and selects fixture', async () => {
     path: 'src/foobar/index.fixture.ts',
     name: 'fixture3b'
   };
-  expect(selectFixture).toBeCalledWith(expect.any(Object), fixtureId, false);
+  expect(selectFixture).toBeCalledWith(expect.any(Object), fixtureId);
 
   // Also closes fixture search overlay
   expect(queryByTestId('fixtureSearchContent')).toBeNull();

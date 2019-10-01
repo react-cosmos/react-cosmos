@@ -67,7 +67,6 @@ export function mockStorage(methods: MethodsOf<StorageSpec> = {}) {
 export function mockRouter(methods: MethodsOf<RouterSpec> = {}) {
   const allMethods = {
     getSelectedFixtureId: jest.fn(),
-    isFullScreen: jest.fn(),
     selectFixture: jest.fn(),
     unselectFixture: jest.fn(),
     ...methods

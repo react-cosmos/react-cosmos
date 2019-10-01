@@ -18,7 +18,6 @@ const { onLoad, register } = createPlugin<RouterSpec>({
   },
   methods: {
     getSelectedFixtureId,
-    isFullScreen,
     selectFixture,
     unselectFixture
   }
@@ -46,16 +45,8 @@ function getSelectedFixtureId({ getState }: RouterContext) {
   return getState().urlParams.fixtureId || null;
 }
 
-function isFullScreen({ getState }: RouterContext) {
-  return getState().urlParams.fullScreen || false;
-}
-
-function selectFixture(
-  context: RouterContext,
-  fixtureId: FixtureId,
-  fullScreen: boolean
-) {
-  setUrlParams(context, { fixtureId, fullScreen });
+function selectFixture(context: RouterContext, fixtureId: FixtureId) {
+  setUrlParams(context, { fixtureId });
 }
 
 function unselectFixture(context: RouterContext) {

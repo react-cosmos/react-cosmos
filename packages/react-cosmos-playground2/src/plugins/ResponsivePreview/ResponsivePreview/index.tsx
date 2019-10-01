@@ -12,7 +12,6 @@ type Props = {
   enabled: boolean;
   viewport: Viewport;
   scaled: boolean;
-  fullScreen: boolean;
   validFixtureSelected: boolean;
   setViewport(viewport: Viewport): unknown;
   setScaled(scaled: boolean): unknown;
@@ -36,7 +35,6 @@ export class ResponsivePreview extends React.Component<Props, State> {
       enabled,
       viewport,
       scaled,
-      fullScreen,
       validFixtureSelected
     } = this.props;
     const { container } = this.state;
@@ -45,7 +43,7 @@ export class ResponsivePreview extends React.Component<Props, State> {
     // whenever switching between responsive and non responsive mode. By
     // returning the same element nesting between states for Preview the
     // component instances are preserved and the transition is seamless.
-    if (!validFixtureSelected || fullScreen || !enabled || !container) {
+    if (!validFixtureSelected || !enabled || !container) {
       return (
         <Container>
           <div key="preview" ref={this.handleContainerRef} style={stretchStyle}>

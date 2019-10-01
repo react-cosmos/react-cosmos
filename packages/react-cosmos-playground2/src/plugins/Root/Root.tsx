@@ -13,7 +13,6 @@ import { RendererHeader } from './RendererHeader';
 type Props = {
   storageCacheReady: boolean;
   selectedFixtureId: FixtureId | null;
-  fullScreen: boolean;
   rendererConnected: boolean;
   validFixtureSelected: boolean;
   fixtureState: FixtureState;
@@ -27,7 +26,7 @@ type Props = {
   controlPanelRowOrder: string[];
   onToggleNav: () => unknown;
   onTogglePanel: () => unknown;
-  onFixtureSelect: (fixtureId: FixtureId, fullScreen: boolean) => unknown;
+  onFixtureSelect: (fixtureId: FixtureId) => unknown;
   onFixtureClose: () => unknown;
   onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
   setNavWidth: (width: number) => unknown;
@@ -37,7 +36,6 @@ type Props = {
 export function Root({
   storageCacheReady,
   selectedFixtureId,
-  fullScreen,
   rendererConnected,
   validFixtureSelected,
   fixtureState,
@@ -72,24 +70,6 @@ export function Root({
     return <Container />;
   }
 
-  if (fullScreen) {
-    return (
-      <Container>
-        <MainContainer key="main" style={{ zIndex: 1 }}>
-          <RendererContainer key="rendererContainer">
-            <RendererBody key="rendererBody">
-              <Slot name="rendererPreview" />
-            </RendererBody>
-            <Slot name="contentOverlay" />
-          </RendererContainer>
-        </MainContainer>
-        <div style={{ zIndex: 2 }}>
-          <ArraySlot name="global" plugOrder={globalOrder} />
-        </div>
-      </Container>
-    );
-  }
-
   const showNav = navOpen || !validFixtureSelected;
   const dragging = navDrag.dragging || panelDrag.dragging;
 
@@ -121,7 +101,7 @@ export function Root({
               rendererActionOrder={rendererActionOrder}
               onToggleNav={onToggleNav}
               onTogglePanel={onTogglePanel}
-              onReload={() => onFixtureSelect(selectedFixtureId, false)}
+              onReload={() => onFixtureSelect(selectedFixtureId)}
               onClose={onFixtureClose}
             />
           )}
