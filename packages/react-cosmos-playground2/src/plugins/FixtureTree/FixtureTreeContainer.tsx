@@ -27,10 +27,6 @@ export function FixtureTreeContainer({
   selectFixture,
   setTreeExpansion
 }: Props) {
-  const onSelect = React.useCallback(fixtureId => selectFixture(fixtureId), [
-    selectFixture
-  ]);
-
   if (!rendererConnected) {
     return <Container />;
   }
@@ -54,7 +50,7 @@ export function FixtureTreeContainer({
         fixtures={fixtures}
         selectedFixtureId={selectedFixtureId}
         treeExpansion={treeExpansion}
-        onSelect={onSelect}
+        onSelect={selectFixture}
         setTreeExpansion={setTreeExpansion}
       />
     </Container>
