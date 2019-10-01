@@ -152,7 +152,8 @@ const ButtonSeparator = styled.div`
 `;
 
 const FixtureName = styled.div`
-  padding: 4px 32px;
+  margin: 0 32px;
+  padding: 4px 0;
   color: ${grey176};
   line-height: 24px;
   white-space: nowrap;
