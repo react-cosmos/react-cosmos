@@ -17,8 +17,7 @@ function registerTestPlugins() {
     loadCache: () => Promise.resolve(null)
   });
   mockRouter({
-    getSelectedFixtureId: () => ({ path: 'foo.js', name: null }),
-    isFullScreen: () => false
+    getSelectedFixtureId: () => ({ path: 'foo.js', name: null })
   });
   mockCore();
   mockRendererCore({

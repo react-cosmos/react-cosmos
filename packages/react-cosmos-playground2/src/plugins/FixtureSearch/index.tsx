@@ -109,7 +109,7 @@ function useOnSelect(pluginContext: FixtureSearchContext) {
 
   return React.useCallback(
     (fixtureId: FixtureId, revealFixture: boolean) => {
-      router.selectFixture(fixtureId, false);
+      router.selectFixture(fixtureId);
       if (revealFixture) {
         fixtureTree.revealFixture(fixtureId);
       }

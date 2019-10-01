@@ -13,7 +13,7 @@ type Props = {
   rendererConnected: boolean;
   fixtures: FixtureNamesByPath;
   treeExpansion: TreeExpansion;
-  selectFixture: (fixtureId: FixtureId, fullScreen: boolean) => void;
+  selectFixture: (fixtureId: FixtureId) => void;
   setTreeExpansion: (treeExpansion: TreeExpansion) => unknown;
 };
 
@@ -27,11 +27,6 @@ export function FixtureTreeContainer({
   selectFixture,
   setTreeExpansion
 }: Props) {
-  const onSelect = React.useCallback(
-    fixtureId => selectFixture(fixtureId, false),
-    [selectFixture]
-  );
-
   if (!rendererConnected) {
     return <Container />;
   }
@@ -55,7 +50,7 @@ export function FixtureTreeContainer({
         fixtures={fixtures}
         selectedFixtureId={selectedFixtureId}
         treeExpansion={treeExpansion}
-        onSelect={onSelect}
+        onSelect={selectFixture}
         setTreeExpansion={setTreeExpansion}
       />
     </Container>

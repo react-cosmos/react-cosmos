@@ -1,6 +1,5 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { RouterSpec } from '../Router/public';
 import { Notifications } from './Notifications';
 import { NotificationsSpec } from './public';
 import {
@@ -35,11 +34,6 @@ onLoad(context => {
 });
 
 namedPlug('global', 'notifications', ({ pluginContext }) => {
-  const router = pluginContext.getMethodsOf<RouterSpec>('router');
-  if (router.isFullScreen()) {
-    return null;
-  }
-
   const { stickyNotifications, timedNotifications } = pluginContext.getState();
   const notifications =
     timedNotifications === null

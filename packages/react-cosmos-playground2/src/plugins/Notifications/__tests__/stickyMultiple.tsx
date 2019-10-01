@@ -2,10 +2,7 @@ import { act, render } from '@testing-library/react';
 import React from 'react';
 import { ArraySlot, loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '..';
-import {
-  getNotificationsMethods,
-  mockRouter
-} from '../../../testHelpers/pluginMocks';
+import { getNotificationsMethods } from '../../../testHelpers/pluginMocks';
 
 afterEach(resetPlugins);
 
@@ -33,7 +30,6 @@ function pushStickyNotifications() {
 }
 
 it('renders multiple sticky notifications', async () => {
-  mockRouter();
   register();
   const { getByText } = loadTestPlugins();
 

@@ -58,11 +58,10 @@ it('sends fixtureId to router on fixture click', async () => {
   const { getByText } = await loadTestPlugins();
   fireEvent.click(getByText(/zwei/i));
 
-  expect(selectFixture).toBeCalledWith(
-    expect.any(Object),
-    { path: 'zwei.js', name: null },
-    false
-  );
+  expect(selectFixture).toBeCalledWith(expect.any(Object), {
+    path: 'zwei.js',
+    name: null
+  });
 });
 
 it('renders blank state', async () => {

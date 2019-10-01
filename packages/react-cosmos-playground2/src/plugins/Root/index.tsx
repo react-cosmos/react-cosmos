@@ -44,7 +44,6 @@ plug('root', ({ pluginContext }) => {
       <Root
         storageCacheReady={false}
         selectedFixtureId={null}
-        fullScreen={false}
         rendererConnected={false}
         validFixtureSelected={false}
         fixtureState={{}}
@@ -81,7 +80,6 @@ plug('root', ({ pluginContext }) => {
     <Root
       storageCacheReady={true}
       selectedFixtureId={router.getSelectedFixtureId()}
-      fullScreen={router.isFullScreen()}
       rendererConnected={rendererCore.isRendererConnected()}
       validFixtureSelected={rendererCore.isValidFixtureSelected()}
       fixtureState={rendererCore.getFixtureState()}
