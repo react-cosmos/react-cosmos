@@ -8,12 +8,12 @@ export const rendererId = getRendererId();
 // a new rendererId.
 // https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage
 function getRendererId(): RendererId {
-  let rId = sessionStorage.getItem('cosmosRendererId');
+  let id = sessionStorage.getItem('cosmosRendererId');
 
-  if (!rId) {
-    rId = uuid();
-    sessionStorage.setItem('cosmosRendererId', rId);
+  if (!id) {
+    id = uuid();
+    sessionStorage.setItem('cosmosRendererId', id);
   }
 
-  return rId;
+  return id;
 }

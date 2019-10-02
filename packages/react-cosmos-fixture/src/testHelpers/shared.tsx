@@ -25,7 +25,7 @@ type GetMessages = () => Message[];
 export type FixtureLoaderTestArgs = {
   rendererId: RendererId;
   fixtures: ReactFixtureExportsByPath;
-  selectedFixtureId?: FixtureId;
+  selectedFixtureId?: null | FixtureId;
   decorators?: ReactDecoratorsByPath;
   onErrorReset?: () => unknown;
 };

@@ -33,6 +33,7 @@ export function NativeFixtureLoader({
       rendererId={rendererId}
       rendererConnect={createWebSocketsConnect(socketUrl)}
       fixtures={fixtures}
+      selectedFixtureId={null}
       systemDecorators={[]}
       userDecorators={decorators}
       renderMessage={renderMessage}

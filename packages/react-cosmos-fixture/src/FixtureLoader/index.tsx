@@ -26,7 +26,7 @@ export type Props = {
   rendererId: string;
   rendererConnect: RendererConnect;
   fixtures: ReactFixtureExportsByPath;
-  selectedFixtureId?: FixtureId;
+  selectedFixtureId: null | FixtureId;
   systemDecorators: ReactDecorator[];
   userDecorators: ReactDecoratorsByPath;
   renderMessage?: (args: { msg: string }) => React.ReactNode;
