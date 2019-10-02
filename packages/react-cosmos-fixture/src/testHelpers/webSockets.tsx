@@ -40,7 +40,7 @@ export async function mountWebSockets(
 function getElement({
   rendererId,
   fixtures,
-  selectedFixtureId,
+  selectedFixtureId = null,
   decorators = {},
   onErrorReset
 }: FixtureLoaderTestArgs) {

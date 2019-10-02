@@ -12,7 +12,7 @@ import './globalErrorHandler';
 import { rendererConnect } from './rendererConnect';
 import { rendererId } from './rendererId';
 import { renderMessage } from './renderMessage';
-import { getSelectedFixtureId } from './selectedFixtureId';
+import { selectedFixtureId } from './selectedFixtureId';
 
 type MountDomRendererOpts = {
   rendererConfig: DomRendererConfig;
@@ -35,7 +35,7 @@ export function mountDomRenderer({
       rendererId={rendererId}
       rendererConnect={rendererConnect}
       fixtures={fixtures}
-      selectedFixtureId={getSelectedFixtureId()}
+      selectedFixtureId={selectedFixtureId}
       systemDecorators={[ErrorCatch]}
       userDecorators={decorators}
       renderMessage={renderMessage}
