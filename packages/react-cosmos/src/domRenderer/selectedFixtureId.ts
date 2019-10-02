@@ -4,10 +4,10 @@ import { isInsideCosmosPreviewIframe } from './shared';
 
 export const selectedFixtureId = getSelectedFixtureId();
 
-// Fixture ID is stored in session because components might change the URL as
-// a side effect. This means that after the renderer stores a selected fixture
-// ID initially, the renderer window can be refreshed and the same fixture will
-// be selected even if the URL no longer contains the fixture ID.
+// The selected fixture ID is stored in session because components might change
+// the URL as a side effect. This means that after the renderer stores the
+// fixture ID initially, the renderer window can be refreshed and the same
+// fixture will be selected even if the URL no longer contains the fixture ID.
 function getSelectedFixtureId(): null | FixtureId {
   const urlParams = parseRendererUrlQuery(location.search);
   if (urlParams._fixtureId) {
