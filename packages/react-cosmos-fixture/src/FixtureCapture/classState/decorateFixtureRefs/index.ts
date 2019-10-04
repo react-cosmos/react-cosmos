@@ -4,7 +4,7 @@ import { findRelevantElementPaths } from '../../shared/findRelevantElementPaths'
 import { CachedRefHandlers } from '../shared';
 import { isRefSupported } from './isRefSupported';
 
-type ElementWithRef = React.ReactElement<any> & {
+type ElementWithRef = React.ReactElement & {
   ref: null | React.Ref<any>;
 };
 

@@ -7,7 +7,7 @@ import { getExpectedElementAtPath } from './getElementAtPath';
 export function setElementAtPath(
   node: React.ReactNode,
   elPath: string,
-  updater: (el: React.ReactElement<any>) => React.ReactElement<any>
+  updater: (el: React.ReactElement) => React.ReactElement
 ): React.ReactNode {
   const childEl = getExpectedElementAtPath(node, elPath);
   const newEl = updater(childEl);
@@ -27,7 +27,7 @@ function cloneNode(value: React.ReactNode): React.ReactNode {
   }
 
   if (isElement(value)) {
-    const el = value as React.ReactElement<any>;
+    const el = value as React.ReactElement;
     const { children, ...otherProps } = el.props;
 
     return {
