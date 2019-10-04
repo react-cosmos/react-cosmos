@@ -20,7 +20,7 @@ export function findElementPaths(
     return [];
   }
 
-  const element = node as React.ReactElement<any>;
+  const element = node as React.ReactElement;
   const { children } = element.props;
 
   const childElPaths =
