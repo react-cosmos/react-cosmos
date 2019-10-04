@@ -42,7 +42,7 @@ function areElementsEqual(
     element1.key === element2.key &&
     // @ts-ignore
     element1.ref === element2.ref &&
-    // children (and props in general) can contain Elements and other Nodes
+    // Children (and props in general) can contain Elements and other Nodes
     areNodesEqual(element1.props, element2.props, strictTypeCheck)
   );
 }
