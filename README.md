@@ -413,7 +413,7 @@ Check out the [full example](https://github.com/react-cosmos/react-cosmos/blob/4
 
 #### "localhost:3001/\_\_get-internal-source..." 404s?
 
-- Try changing your webpack `devtool` to something like `cheap-module-source-map`. [Longer explanation](https://github.com/react-cosmos/react-cosmos/issues/1045#issuecomment-535150617).
+- [Try changing your webpack `devtool` to something like `cheap-module-source-map`](https://github.com/react-cosmos/react-cosmos/issues/1045#issuecomment-535150617).
 
 ## Where's my old Cosmos?
 
