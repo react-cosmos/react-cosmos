@@ -1,14 +1,14 @@
 import React from 'react';
 import {
-  FixtureDecoratorId,
-  FixtureState,
   DEFAULT_RENDER_KEY,
   extendWithValues,
-  findFixtureStateProps
+  findFixtureStateProps,
+  FixtureDecoratorId,
+  FixtureState
 } from 'react-cosmos-shared2/fixtureState';
-import { setElementAtPath, getChildrenPath } from '../shared/nodeTree';
+import { getComponentName } from 'react-cosmos-shared2/react';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
-import { getComponentName } from '../shared/componentName';
+import { getChildrenPath, setElementAtPath } from '../shared/nodeTree';
 
 export function extendFixtureProps(
   fixture: React.ReactNode,

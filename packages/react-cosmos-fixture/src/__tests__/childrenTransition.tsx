@@ -11,101 +11,101 @@ const fixtures = {
 };
 const fixtureId = { path: 'first', name: null };
 
-testFixtureLoader(
-  'transitions string children into an element with children',
-  { rendererId, fixtures },
-  async ({ update, selectFixture, fixtureStateChange }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await fixtureStateChange({
-      rendererId,
-      fixtureId,
-      fixtureState: {
-        props: [
-          anyProps({
-            values: createValues({ children: 'yo' })
-          })
-        ]
-      }
-    });
-    update({
-      rendererId,
-      fixtures: {
-        first: (
-          <Wrapper>
-            <Wrapper>brah</Wrapper>
-          </Wrapper>
-        )
-      }
-    });
-    await fixtureStateChange({
-      rendererId,
-      fixtureId,
-      fixtureState: {
-        props: [
-          anyProps({
-            values: {
-              children: {
-                type: 'unserializable',
-                stringifiedValue: `<Wrapper>\n  brah\n</Wrapper>`
-              }
-            }
-          }),
-          anyProps({
-            values: createValues({ children: 'brah' })
-          })
-        ]
-      }
-    });
-  }
-);
+// testFixtureLoader(
+//   'transitions string children into an element with children',
+//   { rendererId, fixtures },
+//   async ({ update, selectFixture, fixtureStateChange }) => {
+//     await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+//     await fixtureStateChange({
+//       rendererId,
+//       fixtureId,
+//       fixtureState: {
+//         props: [
+//           anyProps({
+//             values: createValues({ children: 'yo' })
+//           })
+//         ]
+//       }
+//     });
+//     update({
+//       rendererId,
+//       fixtures: {
+//         first: (
+//           <Wrapper>
+//             <Wrapper>brah</Wrapper>
+//           </Wrapper>
+//         )
+//       }
+//     });
+//     await fixtureStateChange({
+//       rendererId,
+//       fixtureId,
+//       fixtureState: {
+//         props: [
+//           anyProps({
+//             values: {
+//               children: {
+//                 type: 'unserializable',
+//                 stringifiedValue: `<Wrapper>\n  brah\n</Wrapper>`
+//               }
+//             }
+//           }),
+//           anyProps({
+//             values: createValues({ children: 'brah' })
+//           })
+//         ]
+//       }
+//     });
+//   }
+// );
 
-testFixtureLoader(
-  'transitions string children into an element with children',
-  { rendererId, fixtures },
-  async ({ update, selectFixture, fixtureStateChange }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await fixtureStateChange({
-      rendererId,
-      fixtureId,
-      fixtureState: {
-        props: [
-          anyProps({
-            values: createValues({ children: 'yo' })
-          })
-        ]
-      }
-    });
-    update({
-      rendererId,
-      fixtures: {
-        first: (
-          <Wrapper>
-            <Wrapper>brah</Wrapper>
-          </Wrapper>
-        )
-      }
-    });
-    await fixtureStateChange({
-      rendererId,
-      fixtureId,
-      fixtureState: {
-        props: [
-          anyProps({
-            values: {
-              children: {
-                type: 'unserializable',
-                stringifiedValue: `<Wrapper>\n  brah\n</Wrapper>`
-              }
-            }
-          }),
-          anyProps({
-            values: createValues({ children: 'brah' })
-          })
-        ]
-      }
-    });
-  }
-);
+// testFixtureLoader(
+//   'transitions string children into an element with children',
+//   { rendererId, fixtures },
+//   async ({ update, selectFixture, fixtureStateChange }) => {
+//     await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+//     await fixtureStateChange({
+//       rendererId,
+//       fixtureId,
+//       fixtureState: {
+//         props: [
+//           anyProps({
+//             values: createValues({ children: 'yo' })
+//           })
+//         ]
+//       }
+//     });
+//     update({
+//       rendererId,
+//       fixtures: {
+//         first: (
+//           <Wrapper>
+//             <Wrapper>brah</Wrapper>
+//           </Wrapper>
+//         )
+//       }
+//     });
+//     await fixtureStateChange({
+//       rendererId,
+//       fixtureId,
+//       fixtureState: {
+//         props: [
+//           anyProps({
+//             values: {
+//               children: {
+//                 type: 'unserializable',
+//                 stringifiedValue: `<Wrapper>\n  brah\n</Wrapper>`
+//               }
+//             }
+//           }),
+//           anyProps({
+//             values: createValues({ children: 'brah' })
+//           })
+//         ]
+//       }
+//     });
+//   }
+// );
 
 testFixtureLoader(
   'transitions string children into an element with multiple children',
