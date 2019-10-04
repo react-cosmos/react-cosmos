@@ -411,7 +411,7 @@ Check out the [full example](https://github.com/react-cosmos/react-cosmos/blob/4
 
 - [You may have a URL instance in your state](https://github.com/react-cosmos/react-cosmos/issues/1002).
 
-#### "localhost:3001/\_\_get-internal-source?..." 404s?
+#### "localhost:3001/\_\_get-internal-source..." 404s?
 
 - Try changing your webpack `devtool` to something like `cheap-module-source-map`. [Longer explanation](https://github.com/react-cosmos/react-cosmos/issues/1045#issuecomment-535150617).
 
