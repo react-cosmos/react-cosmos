@@ -8,17 +8,17 @@ export function areNodesEqual(
   node2: React.ReactNode,
   strictTypeCheck: boolean
 ): boolean {
+  if (isReactElement(node1) && isReactElement(node2)) {
+    return areElementsEqual(node1, node2, strictTypeCheck);
+  }
+
   if (Array.isArray(node1) && Array.isArray(node2)) {
     return node1.every((node, nodeIndex) =>
       areNodesEqual(node, node2[nodeIndex], strictTypeCheck)
     );
   }
 
-  if (!isReactElement(node1) || !isReactElement(node2)) {
-    return isEqual(node1, node2);
-  }
-
-  return areElementsEqual(node1, node2, strictTypeCheck);
+  return isEqual(node1, node2);
 }
 
 function areElementsEqual(
@@ -30,10 +30,10 @@ function areElementsEqual(
     if (element1.type !== element2.type) {
       return false;
     }
-  } else {
-    if (getComponentName(element1.type) !== getComponentName(element2.type)) {
-      return false;
-    }
+  } else if (
+    getComponentName(element1.type) !== getComponentName(element2.type)
+  ) {
+    return false;
   }
 
   // Don't compare private element attrs like _owner and _store, which hold
