@@ -7,7 +7,7 @@ import { isRootPath } from './shared';
 export function setElementAtPath(
   node: React.ReactNode,
   elPath: string,
-  updater: (el: React.ReactElement) => React.ReactElement
+  updater: (el: React.ReactElement<any>) => React.ReactElement<any>
 ): React.ReactNode {
   const childEl = getExpectedElementAtPath(node, elPath);
   const newEl = updater(childEl);

@@ -18,7 +18,7 @@ type Args = {
 
 type RenderableFixture = {
   fixtureId: FixtureId;
-  getElement: () => React.ReactElement;
+  getElement: () => React.ReactElement<any>;
 };
 
 export async function getFixtures({ cosmosConfig }: Args) {
@@ -64,7 +64,7 @@ function createFixtureElementGetter(
   fixture: ReactFixture,
   fixturePath: string,
   decoratorsByPath: ReactDecoratorsByPath
-): () => React.ReactElement {
+): () => React.ReactElement<any> {
   const decorators: ReactDecorator[] = getSortedDecoratorsForFixturePath(
     fixturePath,
     decoratorsByPath

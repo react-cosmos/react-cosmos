@@ -22,8 +22,8 @@ export function areNodesEqual(
 }
 
 function areElementsEqual(
-  element1: React.ReactElement,
-  element2: React.ReactElement,
+  element1: React.ReactElement<any>,
+  element2: React.ReactElement<any>,
   strictTypeCheck: boolean
 ) {
   if (strictTypeCheck) {

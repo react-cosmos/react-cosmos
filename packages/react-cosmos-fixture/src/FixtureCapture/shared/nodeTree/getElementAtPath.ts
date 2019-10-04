@@ -11,12 +11,12 @@ import { isRootPath } from './shared';
 export function getElementAtPath(
   node: React.ReactNode,
   elPath: string
-): null | React.ReactElement {
+): null | React.ReactElement<any> {
   if (!isReactElement(node) && !Array.isArray(node)) {
     return null;
   }
 
-  const rootNode = node as React.ReactElement | React.ReactNode[];
+  const rootNode = node as React.ReactElement<any> | React.ReactNode[];
   const childNode = isRootPath(elPath) ? rootNode : get(rootNode, elPath);
 
   if (!isReactElement(childNode)) {
@@ -29,7 +29,7 @@ export function getElementAtPath(
 export function getExpectedElementAtPath(
   node: React.ReactNode,
   elPath: string
-): React.ReactElement {
+): React.ReactElement<any> {
   const el = getElementAtPath(node, elPath);
 
   if (!el) {
