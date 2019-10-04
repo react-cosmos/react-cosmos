@@ -18,8 +18,10 @@ export type ReactFixtureExportsByPath = ReactFixtureExportsByPath;
 export type ReactDecoratorsByPath = ReactDecoratorsByPath;
 
 export { areNodesEqual } from './areNodesEqual';
-export { isMultiFixture } from './isMultiFixture';
+export { getComponentName } from './getComponentName';
 export { getFixtureNamesByPath } from './getFixtureNamesByPath';
+export { isMultiFixture } from './isMultiFixture';
+export { isReactElement } from './isReactElement';
 export {
   getSortedDecoratorsForFixturePath
 } from './getSortedDecoratorsForFixturePath';
