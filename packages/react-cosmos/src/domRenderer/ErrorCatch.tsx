@@ -62,7 +62,7 @@ export class ErrorCatch extends React.Component<ReactDecoratorProps, State> {
 }
 
 function fixtureChanged(f1: React.ReactNode, f2: React.ReactNode) {
-  return !areNodesEqual(f1, f2, true);
+  return !areNodesEqual(f1, f2);
 }
 
 function fixtureStateChanged(fS1: React.ReactNode, fS2: React.ReactNode) {

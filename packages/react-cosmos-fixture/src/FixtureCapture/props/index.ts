@@ -1,17 +1,18 @@
 import React from 'react';
 import {
-  createFixtureStateProps,
-  createValues,
-  findFixtureStateProps,
   FixtureDecoratorId,
+  createValues,
   getFixtureStateProps,
-  removeFixtureStateProps,
-  updateFixtureStateProps
+  findFixtureStateProps,
+  createFixtureStateProps,
+  updateFixtureStateProps,
+  removeFixtureStateProps
 } from 'react-cosmos-shared2/fixtureState';
-import { areNodesEqual, getComponentName } from 'react-cosmos-shared2/react';
+import { areNodesEqual } from 'react-cosmos-shared2/react';
 import { FixtureContext } from '../../FixtureContext';
-import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
 import { getElementAtPath, getExpectedElementAtPath } from '../shared/nodeTree';
+import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
+import { getComponentName } from '../shared/componentName';
 import { extendFixtureProps } from './extendFixtureProps';
 
 export function usePropsCapture(
@@ -60,18 +61,20 @@ export function usePropsCapture(
             componentName
           })
         }));
-      } else {
-        const prevChildEl = getElementAtPath(prevFixtureRef.current, elPath);
-        if (!areNodesEqual(prevChildEl, childEl, false)) {
-          setFixtureState(prevFs => ({
-            ...prevFs,
-            props: updateFixtureStateProps({
-              fixtureState,
-              elementId,
-              values: createValues(childEl.props)
-            })
-          }));
-        }
+      } else if (
+        !areNodesEqual(
+          childEl,
+          getElementAtPath(prevFixtureRef.current, elPath)
+        )
+      ) {
+        setFixtureState(prevFs => ({
+          ...prevFs,
+          props: updateFixtureStateProps({
+            fixtureState,
+            elementId,
+            values: createValues(childEl.props)
+          })
+        }));
       }
     });
   }, [

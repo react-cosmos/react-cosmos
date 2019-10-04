@@ -1,13 +1,13 @@
-import { set } from 'lodash';
 import React from 'react';
-import { isReactElement } from 'react-cosmos-shared2/react';
-import { getExpectedElementAtPath } from './getElementAtPath';
+import { set } from 'lodash';
+import { isElement } from 'react-is';
 import { isRootPath } from './shared';
+import { getExpectedElementAtPath } from './getElementAtPath';
 
 export function setElementAtPath(
   node: React.ReactNode,
   elPath: string,
-  updater: (el: React.ReactElement) => React.ReactElement
+  updater: (el: React.ReactElement<any>) => React.ReactElement<any>
 ): React.ReactNode {
   const childEl = getExpectedElementAtPath(node, elPath);
   const newEl = updater(childEl);
@@ -26,11 +26,12 @@ function cloneNode(value: React.ReactNode): React.ReactNode {
     return value.map(n => cloneNode(n));
   }
 
-  if (isReactElement(value)) {
-    const { children, ...otherProps } = value.props;
+  if (isElement(value)) {
+    const el = value as React.ReactElement<any>;
+    const { children, ...otherProps } = el.props;
 
     return {
-      ...value,
+      ...el,
       props: {
         ...otherProps,
         children: cloneNode(children)

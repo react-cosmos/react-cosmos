@@ -1,26 +1,26 @@
-import { isEqual } from 'lodash';
 import React from 'react';
+import { isEqual } from 'lodash';
 import {
-  createFixtureStateClassState,
-  createValues,
-  extendWithValues,
-  findFixtureStateClassState,
   FixtureDecoratorId,
   FixtureState,
+  createValues,
+  extendWithValues,
   getFixtureStateClassState,
+  findFixtureStateClassState,
+  createFixtureStateClassState,
   removeFixtureStateClassState
 } from 'react-cosmos-shared2/fixtureState';
-import { getComponentName } from 'react-cosmos-shared2/react';
 import { FixtureContext } from '../../FixtureContext';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
-import { decorateFixtureRefs } from './decorateFixtureRefs';
+import { getComponentName } from '../shared/componentName';
 import {
-  CachedRefHandlers,
   ElRefs,
   InitialStates,
-  replaceState,
-  useUnmount
+  CachedRefHandlers,
+  useUnmount,
+  replaceState
 } from './shared';
+import { decorateFixtureRefs } from './decorateFixtureRefs';
 
 export function useFixtureState(
   fixture: React.ReactNode,
