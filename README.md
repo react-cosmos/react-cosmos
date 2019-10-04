@@ -402,14 +402,18 @@ Check out the [full example](https://github.com/react-cosmos/react-cosmos/blob/4
 
 ## Troubleshooting
 
-#### Failed to execute `postMessage` [...]?
-
-- [You may have a URL instance in your state](https://github.com/react-cosmos/react-cosmos/issues/1002)
-
 #### Using Next.js?
 
-- [Make sure you have html-webpack-plugin installed](https://github.com/react-cosmos/react-cosmos/issues/995#issuecomment-511883135)
-- [Override your webpack config with ProvidePlugin to support JSX without importing React](https://github.com/react-cosmos/react-cosmos/issues/1000#issuecomment-512575593)
+- [Make sure you have html-webpack-plugin installed](https://github.com/react-cosmos/react-cosmos/issues/995#issuecomment-511883135).
+- [Override your webpack config with ProvidePlugin to support JSX without importing React](https://github.com/react-cosmos/react-cosmos/issues/1000#issuecomment-512575593).
+
+#### "Failed to execute postMessage..."?
+
+- [You may have a URL instance in your state](https://github.com/react-cosmos/react-cosmos/issues/1002).
+
+#### "http://localhost:3001/__get-internal-source?..."?
+
+- Try changing your webpack `devtool` to something like `cheap-module-source-map`. [Longer explanation](https://github.com/react-cosmos/react-cosmos/issues/1045#issuecomment-535150617).
 
 ## Where's my old Cosmos?
 
