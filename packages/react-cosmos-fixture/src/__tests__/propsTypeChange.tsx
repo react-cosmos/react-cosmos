@@ -47,10 +47,7 @@ testFixtureLoader(
       }
     });
     await retry(() => expect(renderer.toJSON()).toBe('Hello Theo Von'));
-    update({
-      rendererId,
-      fixtures: createFixtures()
-    });
+    update({ rendererId, fixtures: createFixtures() });
     await retry(() => expect(renderer.toJSON()).toBe('Hello Theo Von'));
   }
 );
