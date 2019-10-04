@@ -1,4 +1,5 @@
 import importFrom from 'import-from';
+import { omit } from 'lodash';
 import webpack from 'webpack';
 import { CosmosConfig } from '../../../config';
 import { RENDERER_FILENAME } from '../../../shared/playgroundHtml';
@@ -59,8 +60,12 @@ function changeHtmlPluginFilename(htmlPlugin: HtmlWebpackPlugin) {
     return htmlPlugin;
   }
 
+  const safeOptions = omit(
+    htmlPlugin.options,
+    'chunks'
+  ) as HtmlWebpackPlugin['options'];
   return new htmlPlugin.constructor({
-    ...htmlPlugin.options,
+    ...safeOptions,
     filename: RENDERER_FILENAME
   });
 }
