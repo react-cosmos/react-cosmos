@@ -12,7 +12,7 @@ import {
   IllustrationContainer,
   OverlayContainer
 } from './shared';
-import { WelcomeCosmosNext } from './WelcomeCosmosNext';
+import { WelcomeCosmos } from './WelcomeCosmos';
 
 type Props = {
   fixtureSelected: boolean;
@@ -85,7 +85,7 @@ export function ContentOverlay({
 
   return (
     <OverlayContainer data-testid="welcome">
-      <WelcomeCosmosNext onDismissWelcome={onDismissWelcome} />
+      <WelcomeCosmos onDismissWelcome={onDismissWelcome} />
     </OverlayContainer>
   );
 }

@@ -13,25 +13,41 @@ type Props = {
   onDismissWelcome: () => unknown;
 };
 
-export function WelcomeCosmosNext({ onDismissWelcome }: Props) {
+export function WelcomeCosmos({ onDismissWelcome }: Props) {
   return (
     <ContentContainer>
       <TextContainer>
         <Header>
-          Welcome to <NoWrap>Cosmos Next</NoWrap>
+          Welcome to <NoWrap>React Cosmos</NoWrap>
         </Header>
         <List>
           <li>
             <Bullet />
             <span>
-              New to Cosmos or a long time user, make sure to
-              <br />
               <Link
                 href="https://github.com/react-cosmos/react-cosmos/blob/master/README.md"
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                check out the docs on getting started
+                <strong>Read the docs</strong>
+              </Link>{' '}
+              to get the most out of React Cosmos.
+              <br />
+              Chat with us on{' '}
+              <Link
+                href="https://join-react-cosmos.now.sh/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Slack
+              </Link>
+              . Report detailed issues on{' '}
+              <Link
+                href="https://github.com/react-cosmos/react-cosmos/issues"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                GitHub
               </Link>
               .
             </span>
@@ -39,8 +55,17 @@ export function WelcomeCosmosNext({ onDismissWelcome }: Props) {
           <li>
             <Bullet />
             <span>
-              {`It's`} still early days, but with your help Cosmos Next will
-              become <em>the</em> dev platform for React developers!
+              <Link
+                href="https://github.com/users/skidding/sponsorship"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <strong>Become a Sponsor</strong>
+              </Link>{' '}
+              to invest in the future of React Cosmos.
+              <br />
+              {`Don't worry if you can't. `}
+              <Highlight>React Cosmos will always be free.</Highlight>
             </span>
           </li>
         </List>
@@ -98,7 +123,7 @@ const List = styled.ul`
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    margin-bottom: 12px;
+    margin-bottom: 24px;
   }
 `;
 
@@ -134,6 +159,12 @@ const Bullet = styled.span`
 
 const Link = styled.a`
   color: var(--grey1);
+`;
+
+const Highlight = styled.span`
+  background: rgba(255, 255, 200, 0.64);
+  padding: 2px 4px;
+  color: black;
 `;
 
 const ActionLink = styled.a`

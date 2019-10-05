@@ -11,7 +11,7 @@ import {
   IllustrationContainer,
   OverlayContainer
 } from './shared';
-import { WelcomeCosmosNext } from './WelcomeCosmosNext';
+import { WelcomeCosmos } from './WelcomeCosmos';
 
 export default {
   waiting: (
@@ -38,9 +38,7 @@ export default {
 
   welcome: (
     <OverlayContainer>
-      <WelcomeCosmosNext
-        onDismissWelcome={() => console.log('dismiss welcome')}
-      />
+      <WelcomeCosmos onDismissWelcome={() => console.log('dismiss welcome')} />
     </OverlayContainer>
   ),
 
