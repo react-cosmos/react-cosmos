@@ -1,3 +1,5 @@
+// Chrome colors (neutral)
+
 export const grey8 = createGreyColor(8);
 export const grey24 = createGreyColor(24);
 export const grey32 = createGreyColor(32);
@@ -21,6 +23,19 @@ export const white95 = createGreyColor(255, 0.95);
 
 export const blue = '#3182ce';
 export const lightBlue = '#63b3ed';
+
+// Screen colors
+
+export const deprecated_grey1 = 'hsl(230, 21%, 16%)';
+export const deprecated_grey2 = 'hsl(230, 17%, 30%)';
+export const deprecated_grey3 = 'hsl(230, 12%, 49%)';
+export const deprecated_grey4 = 'hsl(230, 25%, 74%)';
+export const deprecated_grey5 = 'hsl(230, 32%, 85%)';
+export const deprecated_grey6 = 'hsl(230, 25%, 91%)';
+
+export const deprecated_primary2 = 'hsl(230, 54%, 32%)';
+export const deprecated_primary3 = 'hsl(230, 51%, 43%)';
+export const deprecated_primary4 = 'hsl(230, 65%, 63%)';
 
 export function selectedColors(defaultColor: string, selectedColor: string) {
   return (props: { selected?: boolean }) =>
