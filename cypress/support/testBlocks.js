@@ -5,7 +5,7 @@ export function homepageTests() {
     });
 
     it('displays welcome message', () => {
-      cy.contains('Welcome to Cosmos Next');
+      cy.contains('Welcome to React Cosmos');
     });
 
     it('shows renderer connected notification', () => {
