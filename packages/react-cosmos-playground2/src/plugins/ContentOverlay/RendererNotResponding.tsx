@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { ArtificialIntelligenceIllustration } from '../../shared/illustrations';
 import {
-  deprecated_grey3,
-  deprecated_grey5,
-  deprecated_primary3,
-  deprecated_primary4
+  screenGrey3,
+  screenGrey5,
+  screenPrimary2,
+  screenPrimary3
 } from '../../shared/ui/colors';
 import {
   ContentContainer,
@@ -63,7 +63,7 @@ export function RendererNotResponding() {
 const Header = styled.h1`
   position: relative;
   margin: 0 0 64px 0;
-  color: ${deprecated_primary3};
+  color: ${screenPrimary2};
   font-size: 30px;
   font-weight: 700;
   line-height: 1.2em;
@@ -77,7 +77,7 @@ const Header = styled.h1`
     left: 0;
     width: 64px;
     height: 3px;
-    background: ${deprecated_primary3};
+    background: ${screenPrimary2};
   }
 `;
 
@@ -111,8 +111,8 @@ const No = styled.span`
   border-radius: 100%;
   font-size: 18px;
   font-weight: 600;
-  background: ${deprecated_grey5};
-  color: ${deprecated_grey3};
+  background: ${screenGrey5};
+  color: ${screenGrey3};
 
   ::after {
     content: '.';
@@ -124,7 +124,7 @@ const ActionLink = styled.a`
   --size: 36px;
   height: var(--size);
   padding: 0 16px;
-  background: ${deprecated_primary4};
+  background: ${screenPrimary3};
   color: #fff;
   border-radius: 5px;
   font-size: 12px;

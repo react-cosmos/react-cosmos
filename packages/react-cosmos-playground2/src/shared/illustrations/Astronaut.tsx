@@ -1,10 +1,6 @@
 import React from 'react';
 import { Illustration } from '../svg';
-import {
-  deprecated_grey4,
-  deprecated_grey5,
-  deprecated_primary4
-} from '../ui/colors';
+import { screenGrey4, screenGrey5, screenPrimary3 } from '../ui/colors';
 
 export const AstronautIllustration = ({ title }: { title: string }) => (
   <Illustration viewBox="0 0 995.79 756.3">
@@ -17,9 +13,9 @@ export const AstronautIllustration = ({ title }: { title: string }) => (
         y2="208.45"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stopColor={deprecated_grey4} stopOpacity="0.25" />
-        <stop offset="0.54" stopColor={deprecated_grey4} stopOpacity="0.12" />
-        <stop offset="1" stopColor={deprecated_grey4} stopOpacity="0.1" />
+        <stop offset="0" stopColor={screenGrey4} stopOpacity="0.25" />
+        <stop offset="0.54" stopColor={screenGrey4} stopOpacity="0.12" />
+        <stop offset="1" stopColor={screenGrey4} stopOpacity="0.1" />
       </linearGradient>
       <linearGradient
         id="be82fdd5-66ab-49fc-8aef-9500b2c1a08e"
@@ -287,16 +283,16 @@ export const AstronautIllustration = ({ title }: { title: string }) => (
       width="150.17"
       height="255.21"
       rx="13"
-      fill={deprecated_primary4}
+      fill={screenPrimary3}
     />
     <polyline points="416.17 664.36 482.49 664.36 466.18 730.97" fill="none" />
     <polygon
       points="536.72 380.06 450.94 381.83 427.19 354.54 555.07 352.24 536.72 380.06"
-      fill={deprecated_grey5}
+      fill={screenGrey5}
     />
     <polygon
       points="555.07 354.37 427.19 354.37 452.71 340.72 527.86 338.24 555.07 354.37"
-      fill={deprecated_grey5}
+      fill={screenGrey5}
     />
     <path
       d="M751.58,462.48c-12.09-5.36-28.3,2-31.74,14.37-9.09-25.88-31.1-47-57.54-56.54-4.37-1.58-16.5-6.39-19.86-2.64-1.56,1.74-4.57,8.61-4.38,14.34H548.13c0-1.12,0-2.24,0-3.36,0-13.07-10.51-13.52-23.21-10.47a70.4,70.4,0,0,0-29.63,15.92c-13.51,11.91-22.9,27.45-32.08,42.72l-16-15.89c-1.76-1.75-3.86-3.63-6.39-3.51-2.68.13-4.62,2.44-6.18,4.54-7.06,9.52-14.34,19.53-16,31.12-1.66,11.41,2.31,22.81,6.23,33.69,3.82,10.64,8.9,25.68,19.89,29.47,11.83,4.09,24.31,4.57,34.55-2.44,16-11,32.49-22.37,44.17-37.42V630.64h1.35l-11,169.7,73.54-.38,5.25-169.32h2.16L598.31,800l74.82.38-11.21-169.7h2.32V515.24l2,1.66,36.29,30.35c7.55,6.32,16.19,13,26.17,12.51,7.17-.36,13.67-12.38,18.25-17.71s7.55-11.75,10.46-18.09c4.82-10.49,9.73-21.33,10.06-32.8S762.4,467.27,751.58,462.48Z"
@@ -318,7 +314,7 @@ export const AstronautIllustration = ({ title }: { title: string }) => (
       transform="translate(-102.11 -71.85)"
       fill="#fff"
     />
-    <circle cx="490.99" cy="297.12" r="49.62" fill={deprecated_primary4} />
+    <circle cx="490.99" cy="297.12" r="49.62" fill={screenPrimary3} />
     <path
       d="M588.92,802.13c0,16.57-17,13.73-37.89,13.73s-37.89,2.84-37.89-13.73,17-35.06,37.89-35.06S588.92,785.56,588.92,802.13Z"
       transform="translate(-102.11 -71.85)"
@@ -332,12 +328,12 @@ export const AstronautIllustration = ({ title }: { title: string }) => (
     <path
       d="M586.11,801.23c0,15.17-15.71,12.58-35.08,12.58s-35.09,2.59-35.09-12.58,15.71-32.08,35.09-32.08S586.11,786.06,586.11,801.23Z"
       transform="translate(-102.11 -71.85)"
-      fill={deprecated_grey4}
+      fill={screenGrey4}
     />
     <path
       d="M671.18,801.23c0,15.17-15.71,12.57-35.08,12.57S601,816.53,601,801.36s15.71-32.09,35.09-32.08S671.18,786.06,671.18,801.23Z"
       transform="translate(-102.11 -71.85)"
-      fill={deprecated_grey4}
+      fill={screenGrey4}
     />
     <path
       d="M758.05,265.64a12.72,12.72,0,1,0-21.92,8.76V823.6a4.56,4.56,0,0,0,4.55,4.55h8.13a4.57,4.57,0,0,0,4.55-4.55V275.51A12.69,12.69,0,0,0,758.05,265.64Z"
@@ -347,12 +343,12 @@ export const AstronautIllustration = ({ title }: { title: string }) => (
     <path
       d="M756.5,265.64a11.17,11.17,0,1,0-17,9.5V821A4.55,4.55,0,0,0,744,825.5h3.25a4.56,4.56,0,0,0,4.55-4.54V274.71A11.15,11.15,0,0,0,756.5,265.64Z"
       transform="translate(-102.11 -71.85)"
-      fill={deprecated_grey5}
+      fill={screenGrey5}
     />
     <path
       d="M738.29,472.72c-2,3.09-6,5.66-9.33,4-2.68-1.33-3.54-4.69-3.88-7.66a61.27,61.27,0,0,1,.95-19.94c.86-4,2.69-8.47,6.62-9.52,2.46-.65,5.07.28,7.23,1.63s4,3.1,6.23,4.37c4.24,2.44,9.4,2.88,14.24,2.17,2.4-.35,4.76-1,7.17-1.17a11.94,11.94,0,0,1,7.05,1.23,6.37,6.37,0,0,1,3.32,6c-.3,2.41-2.84,4.45-5.17,3.77a14.85,14.85,0,0,1,5.18,4.71,6.73,6.73,0,0,1,.38,6.71c-1.2,2-4.16,3-6.07,1.61,1.95,1.6,4,3.3,4.88,5.65s.17,5.53-2.18,6.45a20.37,20.37,0,0,1-3,.56c-1,.24-2,.92-2.13,1.95-.09,1.19,1.1,2,1.8,3,1.57,2.12.7,5.31-1.19,7.14s-4.52,2.65-7,3.41c-3.76,1.13-7.52,2.26-11.3,3.32-4.14,1.16-8.48,2.24-12.68,1.34a13.86,13.86,0,0,1-5.16-24.83c2.07-1.48,2.45-4,4.12-5.89a12.78,12.78,0,0,0,3.05-8.77c0-4.72,1.8-9.28.7-13.87-.26,0-.45.05-.71.1C741.14,458.07,743,465.57,738.29,472.72Z"
       transform="translate(-102.11 -71.85)"
-      fill={deprecated_primary4}
+      fill={screenPrimary3}
     />
     <path
       d="M1097.89,402.18c-115.32-130-230.64,130-346,0v-130c115.32,130,230.64-130,346,0Z"
@@ -362,7 +358,7 @@ export const AstronautIllustration = ({ title }: { title: string }) => (
     <path
       d="M1094.18,397.32C980.1,278.94,866,515.71,751.93,397.32V278.94c114.08,118.38,228.17-118.39,342.25,0Z"
       transform="translate(-102.11 -71.85)"
-      fill={deprecated_primary4}
+      fill={screenPrimary3}
     />
     <path
       d="M442,265.64a12.72,12.72,0,1,1,21.92,8.76V823.6a4.56,4.56,0,0,1-4.55,4.55h-8.13a4.57,4.57,0,0,1-4.55-4.55V275.51A12.69,12.69,0,0,1,442,265.64Z"
@@ -372,7 +368,7 @@ export const AstronautIllustration = ({ title }: { title: string }) => (
     <path
       d="M443.5,265.64a11.17,11.17,0,1,1,17,9.5V821A4.55,4.55,0,0,1,456,825.5h-3.25a4.56,4.56,0,0,1-4.55-4.54V274.71A11.15,11.15,0,0,1,443.5,265.64Z"
       transform="translate(-102.11 -71.85)"
-      fill={deprecated_grey5}
+      fill={screenGrey5}
     />
     <path
       d="M102.11,402.18c115.32,130,230.64-130,346,0v-130c-115.32-130-230.64,130-346,0Z"
@@ -382,7 +378,7 @@ export const AstronautIllustration = ({ title }: { title: string }) => (
     <path
       d="M105.82,397.32c114.08,118.39,228.17-118.38,342.25,0V278.94C334,160.55,219.9,397.32,105.82,278.94Z"
       transform="translate(-102.11 -71.85)"
-      fill={deprecated_primary4}
+      fill={screenPrimary3}
     />
     <rect
       x="441.39"
@@ -398,7 +394,7 @@ export const AstronautIllustration = ({ title }: { title: string }) => (
       width="97.13"
       height="102.82"
       rx="6.38"
-      fill={deprecated_primary4}
+      fill={screenPrimary3}
     />
     <rect x="456.08" y="426.88" width="17.8" height="47.46" opacity="0.2" />
     <rect x="494.72" y="444.2" width="23.41" height="16.02" opacity="0.2" />
@@ -412,7 +408,7 @@ export const AstronautIllustration = ({ title }: { title: string }) => (
     <path
       d="M467.71,472.72c2.05,3.09,6,5.66,9.33,4,2.68-1.33,3.54-4.69,3.88-7.66a61.27,61.27,0,0,0-.95-19.94c-.86-4-2.69-8.47-6.62-9.52-2.46-.65-5.07.28-7.23,1.63s-4,3.1-6.23,4.37c-4.24,2.44-9.4,2.88-14.24,2.17-2.4-.35-4.76-1-7.17-1.17a11.94,11.94,0,0,0-7.05,1.23,6.37,6.37,0,0,0-3.32,6c.3,2.41,2.84,4.45,5.17,3.77a14.85,14.85,0,0,0-5.18,4.71,6.73,6.73,0,0,0-.38,6.71c1.2,2,4.16,3,6.07,1.61-2,1.6-4,3.3-4.88,5.65s-.17,5.53,2.18,6.45a20.37,20.37,0,0,0,3,.56c1,.24,2.05.92,2.13,1.95.09,1.19-1.1,2-1.8,3-1.57,2.12-.7,5.31,1.19,7.14s4.52,2.65,7,3.41c3.76,1.13,7.52,2.26,11.3,3.32,4.14,1.16,8.48,2.24,12.68,1.34a13.86,13.86,0,0,0,5.16-24.83c-2.07-1.48-2.45-4-4.12-5.89a12.78,12.78,0,0,1-3-8.77c0-4.72-1.8-9.28-.7-13.87.26,0,.45.05.71.1C464.86,458.07,463,465.57,467.71,472.72Z"
       transform="translate(-102.11 -71.85)"
-      fill={deprecated_primary4}
+      fill={screenPrimary3}
     />
   </Illustration>
 );

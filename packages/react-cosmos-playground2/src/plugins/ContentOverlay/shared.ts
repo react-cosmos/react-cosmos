@@ -1,12 +1,12 @@
 import { PluginContext } from 'react-plugin';
 import styled from 'styled-components';
 import {
-  deprecated_grey1,
-  deprecated_grey2,
-  deprecated_grey5,
-  deprecated_grey6,
-  deprecated_primary3,
-  deprecated_primary4
+  screenGrey1,
+  screenGrey2,
+  screenGrey5,
+  screenGrey6,
+  screenPrimary2,
+  screenPrimary3
 } from '../../shared/ui/colors';
 import { ContentOverlaySpec } from './public';
 
@@ -22,7 +22,7 @@ export const OverlayContainer = styled.div`
   flex-direction: column;
   justify-items: flex-start;
   align-items: flex-start;
-  background: ${deprecated_grey6};
+  background: ${screenGrey6};
   overflow: auto;
 `;
 
@@ -43,7 +43,7 @@ export const TextContainer = styled.div`
   padding: 32px;
   font-size: 16px;
   line-height: 1.5em;
-  color: ${deprecated_grey1};
+  color: ${screenGrey1};
 
   strong {
     font-weight: 500;
@@ -66,8 +66,8 @@ export const SecondaryButton = styled.button`
   margin: 0 0 0 16px;
   padding: 0 16px;
   border: 0;
-  background: ${deprecated_grey5};
-  color: ${deprecated_grey2};
+  background: ${screenGrey5};
+  color: ${screenGrey2};
   border-radius: 5px;
   font-size: 12px;
   font-weight: 700;
@@ -78,8 +78,8 @@ export const SecondaryButton = styled.button`
   outline: none;
 
   :focus {
-    color: ${deprecated_primary3};
-    box-shadow: 0 0 0px 2px ${deprecated_primary4};
+    color: ${screenPrimary2};
+    box-shadow: 0 0 0px 2px ${screenPrimary3};
   }
 
   ::-moz-focus-inner {
