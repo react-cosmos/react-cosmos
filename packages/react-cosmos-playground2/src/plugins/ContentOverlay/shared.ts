@@ -2,9 +2,9 @@ import { PluginContext } from 'react-plugin';
 import styled from 'styled-components';
 import {
   screenGrey1,
-  screenGrey2,
   screenGrey5,
   screenGrey6,
+  screenPrimary1,
   screenPrimary2,
   screenPrimary3
 } from '../../shared/ui/colors';
@@ -67,7 +67,7 @@ export const SecondaryButton = styled.button`
   padding: 0 16px;
   border: 0;
   background: ${screenGrey5};
-  color: ${screenGrey2};
+  color: ${screenPrimary1};
   border-radius: 5px;
   font-size: 12px;
   font-weight: 700;

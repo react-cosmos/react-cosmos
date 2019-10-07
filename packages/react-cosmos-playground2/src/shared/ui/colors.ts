@@ -33,8 +33,8 @@ export const screenGrey4 = 'hsl(230, 25%, 74%)';
 export const screenGrey5 = 'hsl(230, 28%, 85%)';
 export const screenGrey6 = 'hsl(230, 32%, 93%)';
 
-export const screenPrimary1 = 'hsl(230, 54%, 32%)';
-export const screenPrimary2 = 'hsl(230, 59%, 46%)';
+export const screenPrimary1 = 'hsl(230, 48%, 32%)';
+export const screenPrimary2 = 'hsl(230, 51%, 43%)';
 export const screenPrimary3 = 'hsl(230, 65%, 61%)';
 
 export function selectedColors(defaultColor: string, selectedColor: string) {
