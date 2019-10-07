@@ -96,10 +96,11 @@ const Label = styled.span`
   line-height: 32px;
 `;
 
+const iconSize = 16;
+
 const IconContainer = styled.span`
-  --size: 16px;
-  width: var(--size);
-  height: var(--size);
+  width: ${iconSize}px;
+  height: ${iconSize}px;
   padding: 2px 0 0 2px;
   color: ${grey176};
 `;

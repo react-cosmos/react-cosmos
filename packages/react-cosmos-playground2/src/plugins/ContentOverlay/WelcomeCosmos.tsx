@@ -176,17 +176,18 @@ const Highlight = styled.span`
   color: black;
 `;
 
+const actionLinkHeight = 36;
+
 const ActionLink = styled.a`
   display: inline-block;
-  --size: 36px;
-  height: var(--size);
+  height: ${actionLinkHeight}px;
   padding: 0 16px;
   background: ${screenPrimary3};
   color: #fff;
   border-radius: 5px;
   font-size: 12px;
   font-weight: 700;
-  line-height: var(--size);
+  line-height: ${actionLinkHeight}px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   text-decoration: none;

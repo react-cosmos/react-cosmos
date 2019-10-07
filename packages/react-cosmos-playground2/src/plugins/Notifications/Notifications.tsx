@@ -74,10 +74,11 @@ const Item = styled.div`
   }
 `;
 
+const iconSize = 20;
+
 const IconContainer = styled.div`
-  --size: 20px;
-  width: var(--size);
-  height: var(--size);
+  width: ${iconSize}px;
+  height: ${iconSize}px;
   margin: 18px 16px;
   color: ${grey128};
 `;

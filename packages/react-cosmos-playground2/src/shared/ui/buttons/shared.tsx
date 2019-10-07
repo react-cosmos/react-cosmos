@@ -45,10 +45,11 @@ export const StyledButton = styled.button<StyledButtonProps>`
   }
 `;
 
+const iconSize = 16;
+
 export const StyledIcon = styled.span<{ color: string }>`
-  --size: 16px;
-  width: var(--size);
-  height: var(--size);
+  width: ${iconSize}px;
+  height: ${iconSize}px;
   padding: 2px 0 0 0;
   color: ${props => props.color};
   transition: color var(--quick);

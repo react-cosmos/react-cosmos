@@ -50,19 +50,21 @@ export const TextContainer = styled.div`
   }
 `;
 
+const illustrationSize = 320;
+
 export const IllustrationContainer = styled.div`
   flex-shrink: 0;
-  --size: 320px;
   display: flex;
-  width: var(--size);
-  height: var(--size);
+  width: ${illustrationSize}px;
+  height: ${illustrationSize}px;
   padding: 0 16px;
 `;
 
+const buttonHeight = 36;
+
 export const SecondaryButton = styled.button`
   display: inline-block;
-  --size: 36px;
-  height: var(--size);
+  height: ${buttonHeight}px;
   margin: 0 0 0 16px;
   padding: 0 16px;
   border: 0;
@@ -71,7 +73,7 @@ export const SecondaryButton = styled.button`
   border-radius: 5px;
   font-size: 12px;
   font-weight: 700;
-  line-height: var(--size);
+  line-height: ${buttonHeight}px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   cursor: pointer;
