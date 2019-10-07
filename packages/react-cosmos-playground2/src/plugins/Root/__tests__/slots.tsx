@@ -26,6 +26,7 @@ function registerTestPlugins() {
     })
   });
   mockRendererCore({
+    isRendererConnected: () => true,
     getFixtures: () => ({}),
     isValidFixtureSelected: () => true
   });
