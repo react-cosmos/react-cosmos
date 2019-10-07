@@ -73,7 +73,7 @@ export function Root({
     return <Container />;
   }
 
-  const showNav = navOpen || !validFixtureSelected;
+  const showNav = rendererConnected && (navOpen || !validFixtureSelected);
   const dragging = navDrag.dragging || panelDrag.dragging;
 
   // z-indexes are set here on purpose to show the layer hierarchy at a glance
@@ -87,7 +87,7 @@ export function Root({
         </Draggable>
       )}
       <MainContainer key="main" style={{ zIndex: 1 }}>
-        {!selectedFixtureId && (
+        {!validFixtureSelected && (
           <GlobalHeader
             selectedFixtureId={selectedFixtureId}
             rendererConnected={rendererConnected}
@@ -96,7 +96,7 @@ export function Root({
           />
         )}
         <RendererContainer key="rendererContainer">
-          {selectedFixtureId && (
+          {selectedFixtureId && validFixtureSelected && (
             <RendererHeader
               fixtureTree={fixtureTree}
               fixtureId={selectedFixtureId}

@@ -38,7 +38,9 @@ export function GlobalHeader({
       <Left />
       {getMessage()}
       <Right>
-        <ArraySlot name="globalAction" plugOrder={globalActionOrder} />
+        {rendererConnected && (
+          <ArraySlot name="globalAction" plugOrder={globalActionOrder} />
+        )}
       </Right>
     </Container>
   );
