@@ -80,10 +80,11 @@ const DirButton = styled.button`
   }
 `;
 
+const iconSize = 16;
+
 const IconContainer = styled(Unshirinkable)`
-  --size: 16px;
-  width: var(--size);
-  height: var(--size);
+  width: ${iconSize}px;
+  height: ${iconSize}px;
   color: ${grey128};
 `;
 

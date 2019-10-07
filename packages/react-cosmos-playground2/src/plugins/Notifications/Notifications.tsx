@@ -8,11 +8,12 @@ import {
 } from '../../shared/icons';
 import {
   grey128,
-  grey64,
   grey32,
+  grey64,
   grey8,
   white95
 } from '../../shared/ui/colors';
+import { quick } from '../../shared/ui/vars';
 import { Notification, NotificationType } from './public';
 
 type Props = {
@@ -56,7 +57,7 @@ const Item = styled.div`
   background: ${white95};
   box-shadow: 0 2px 10px -4px ${grey8};
   line-height: 20px;
-  animation: fadeScaleIn var(--quick) forwards;
+  animation: fadeScaleIn ${quick}s forwards;
 
   :first-child {
     margin-top: 0;
@@ -74,10 +75,11 @@ const Item = styled.div`
   }
 `;
 
+const iconSize = 20;
+
 const IconContainer = styled.div`
-  --size: 20px;
-  width: var(--size);
-  height: var(--size);
+  width: ${iconSize}px;
+  height: ${iconSize}px;
   margin: 18px 16px;
   color: ${grey128};
 `;

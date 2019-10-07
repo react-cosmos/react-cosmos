@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { blue } from '../colors';
+import { quick } from '../vars';
 
 type StyledButtonProps = {
   bg: string;
@@ -24,7 +25,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   white-space: nowrap;
   user-select: none;
   outline: none;
-  transition: background var(--quick), color var(--quick), opacity var(--quick);
+  transition: background ${quick}s, color ${quick}s, opacity ${quick}s;
 
   :hover {
     background: ${props => (props.selected ? props.bgSelect : props.bgHover)};
@@ -45,13 +46,14 @@ export const StyledButton = styled.button<StyledButtonProps>`
   }
 `;
 
+const iconSize = 16;
+
 export const StyledIcon = styled.span<{ color: string }>`
-  --size: 16px;
-  width: var(--size);
-  height: var(--size);
+  width: ${iconSize}px;
+  height: ${iconSize}px;
   padding: 2px 0 0 0;
   color: ${props => props.color};
-  transition: color var(--quick);
+  transition: color ${quick}s;
 `;
 
 export const Label = styled.span`

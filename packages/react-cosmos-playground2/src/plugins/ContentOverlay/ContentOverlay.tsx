@@ -1,18 +1,9 @@
 import React from 'react';
-import {
-  DreamerIllustration,
-  EmptyIllustration
-} from '../../shared/illustrations';
 import { RuntimeStatus, UrlStatus } from '../RendererPreview/public';
 import { NoFixtureSelected } from './NoFixtureSelected';
 import { RendererNotResponding } from './RendererNotResponding';
-import {
-  ContentContainer,
-  Delay,
-  IllustrationContainer,
-  OverlayContainer
-} from './shared';
-import { WelcomeCosmosNext } from './WelcomeCosmosNext';
+import { ContentContainer, OverlayContainer } from './shared';
+import { WelcomeCosmos } from './WelcomeCosmos';
 
 type Props = {
   fixtureSelected: boolean;
@@ -52,13 +43,7 @@ export function ContentOverlay({
     // states when renderer is already compiled and will respond immediately
     return (
       <OverlayContainer data-testid="waiting">
-        <ContentContainer>
-          <IllustrationContainer>
-            <Delay>
-              <DreamerIllustration title="waiting" />
-            </Delay>
-          </IllustrationContainer>
-        </ContentContainer>
+        <ContentContainer />
       </OverlayContainer>
     );
   }
@@ -66,11 +51,7 @@ export function ContentOverlay({
   if (fixtureSelected) {
     return (
       <OverlayContainer data-testid="notFound">
-        <ContentContainer>
-          <IllustrationContainer>
-            <EmptyIllustration title="not found" />
-          </IllustrationContainer>
-        </ContentContainer>
+        <ContentContainer />
       </OverlayContainer>
     );
   }
@@ -85,7 +66,7 @@ export function ContentOverlay({
 
   return (
     <OverlayContainer data-testid="welcome">
-      <WelcomeCosmosNext onDismissWelcome={onDismissWelcome} />
+      <WelcomeCosmos onDismissWelcome={onDismissWelcome} />
     </OverlayContainer>
   );
 }

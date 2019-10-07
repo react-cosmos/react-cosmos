@@ -2,6 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { AstronautIllustration } from '../../shared/illustrations';
 import {
+  screenGrey1,
+  screenGrey3,
+  screenGrey5,
+  screenPrimary1,
+  screenPrimary2,
+  screenPrimary3
+} from '../../shared/ui/colors';
+import {
   ContentContainer,
   IllustrationContainer,
   NoWrap,
@@ -13,25 +21,41 @@ type Props = {
   onDismissWelcome: () => unknown;
 };
 
-export function WelcomeCosmosNext({ onDismissWelcome }: Props) {
+export function WelcomeCosmos({ onDismissWelcome }: Props) {
   return (
     <ContentContainer>
       <TextContainer>
         <Header>
-          Welcome to <NoWrap>Cosmos Next</NoWrap>
+          Welcome to <NoWrap>React Cosmos</NoWrap>
         </Header>
         <List>
           <li>
             <Bullet />
             <span>
-              New to Cosmos or a long time user, make sure to
-              <br />
               <Link
                 href="https://github.com/react-cosmos/react-cosmos/blob/master/README.md"
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                check out the docs on getting started
+                <strong>Read the docs</strong>
+              </Link>{' '}
+              to get the most out of React Cosmos.
+              <br />
+              Chat with us on{' '}
+              <Link
+                href="https://join-react-cosmos.now.sh/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Slack
+              </Link>
+              . Report detailed issues on{' '}
+              <Link
+                href="https://github.com/react-cosmos/react-cosmos/issues"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                GitHub
               </Link>
               .
             </span>
@@ -39,8 +63,17 @@ export function WelcomeCosmosNext({ onDismissWelcome }: Props) {
           <li>
             <Bullet />
             <span>
-              {`It's`} still early days, but with your help Cosmos Next will
-              become <em>the</em> dev platform for React developers!
+              <Link
+                href="https://github.com/users/skidding/sponsorship"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <strong>Become a Sponsor</strong>
+              </Link>{' '}
+              to invest in the future of React Cosmos.
+              <br />
+              {`Don't worry if you can't. `}
+              <Highlight>React Cosmos will always be free.</Highlight>
             </span>
           </li>
         </List>
@@ -67,7 +100,7 @@ export function WelcomeCosmosNext({ onDismissWelcome }: Props) {
 const Header = styled.h1`
   position: relative;
   margin: 0 0 64px 0;
-  color: var(--primary3);
+  color: ${screenPrimary2};
   font-size: 30px;
   font-weight: 700;
   line-height: 1.2em;
@@ -81,7 +114,7 @@ const Header = styled.h1`
     left: 0;
     width: 64px;
     height: 3px;
-    background: var(--primary3);
+    background: ${screenPrimary2};
   }
 `;
 
@@ -98,7 +131,7 @@ const List = styled.ul`
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    margin-bottom: 12px;
+    margin-bottom: 24px;
   }
 `;
 
@@ -116,8 +149,8 @@ const Bullet = styled.span`
   border-radius: 100%;
   font-size: 18px;
   font-weight: 600;
-  background: var(--grey5);
-  color: var(--grey3);
+  background: ${screenGrey5};
+  color: ${screenGrey3};
 
   ::after {
     position: absolute;
@@ -127,26 +160,34 @@ const Bullet = styled.span`
     top: 13px;
     left: 13px;
     border-radius: 100%;
-    background: var(--grey3);
+    background: ${screenGrey3};
     transform: rotate(0deg);
   }
 `;
 
 const Link = styled.a`
-  color: var(--grey1);
+  color: ${screenGrey1};
 `;
+
+const Highlight = styled.span`
+  padding: 2px 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 200, 0.88);
+  color: black;
+`;
+
+const actionLinkHeight = 36;
 
 const ActionLink = styled.a`
   display: inline-block;
-  --size: 36px;
-  height: var(--size);
+  height: ${actionLinkHeight}px;
   padding: 0 16px;
-  background: var(--primary4);
+  background: ${screenPrimary3};
   color: #fff;
   border-radius: 5px;
   font-size: 12px;
   font-weight: 700;
-  line-height: var(--size);
+  line-height: ${actionLinkHeight}px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   text-decoration: none;
@@ -155,7 +196,7 @@ const ActionLink = styled.a`
   outline: none;
 
   :focus {
-    box-shadow: 0 0 0px 2px var(--primary2);
+    box-shadow: 0 0 0px 2px ${screenPrimary1};
   }
 
   ::-moz-focus-inner {
@@ -164,13 +205,13 @@ const ActionLink = styled.a`
 
   @keyframes pulse {
     21.25% {
-      background: var(--primary4);
+      background: ${screenPrimary3};
     }
     25% {
-      background: var(--primary3);
+      background: ${screenPrimary2};
     }
     30% {
-      background: var(--primary4);
+      background: ${screenPrimary3};
     }
   }
 `;

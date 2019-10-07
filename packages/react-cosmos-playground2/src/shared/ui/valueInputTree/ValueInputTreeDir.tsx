@@ -79,12 +79,12 @@ const Button = styled.button`
   }
 `;
 
-const ChevronContainer = styled.span`
-  --size: 16px;
+const iconSize = 16;
 
+const ChevronContainer = styled.span`
   flex-shrink: 0;
-  width: var(--size);
-  height: var(--size);
+  width: ${iconSize}px;
+  height: ${iconSize}px;
   margin: 0 0 0 -3px;
   padding: 2px 2px 0 0;
   color: ${grey160};

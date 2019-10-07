@@ -2,10 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import { ArtificialIntelligenceIllustration } from '../../shared/illustrations';
 import {
+  screenGrey3,
+  screenGrey5,
+  screenPrimary2,
+  screenPrimary3
+} from '../../shared/ui/colors';
+import {
   ContentContainer,
-  TextContainer,
   IllustrationContainer,
-  NoWrap
+  NoWrap,
+  TextContainer
 } from './shared';
 
 export function RendererNotResponding() {
@@ -57,7 +63,7 @@ export function RendererNotResponding() {
 const Header = styled.h1`
   position: relative;
   margin: 0 0 64px 0;
-  color: var(--primary3);
+  color: ${screenPrimary2};
   font-size: 30px;
   font-weight: 700;
   line-height: 1.2em;
@@ -71,7 +77,7 @@ const Header = styled.h1`
     left: 0;
     width: 64px;
     height: 3px;
-    background: var(--primary3);
+    background: ${screenPrimary2};
   }
 `;
 
@@ -105,25 +111,26 @@ const No = styled.span`
   border-radius: 100%;
   font-size: 18px;
   font-weight: 600;
-  background: var(--grey5);
-  color: var(--grey3);
+  background: ${screenGrey5};
+  color: ${screenGrey3};
 
   ::after {
     content: '.';
   }
 `;
 
+const actionLinkHeight = 36;
+
 const ActionLink = styled.a`
   display: inline-block;
-  --size: 36px;
-  height: var(--size);
+  height: ${actionLinkHeight}px;
   padding: 0 16px;
-  background: var(--primary4);
+  background: ${screenPrimary3};
   color: #fff;
   border-radius: 5px;
   font-size: 12px;
   font-weight: 700;
-  line-height: var(--size);
+  line-height: ${actionLinkHeight}px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   text-decoration: none;

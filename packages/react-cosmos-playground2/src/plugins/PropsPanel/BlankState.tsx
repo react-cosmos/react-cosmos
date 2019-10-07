@@ -27,13 +27,13 @@ const Container = styled.div`
   line-height: 22px;
 `;
 
-export const IconContainer = styled.div`
-  --size: 32px;
+const iconSize = 32;
 
+export const IconContainer = styled.div`
   margin: 16px auto;
   display: flex;
-  width: var(--size);
-  height: var(--size);
+  width: ${iconSize}px;
+  height: ${iconSize}px;
   color: ${grey64};
 `;
 

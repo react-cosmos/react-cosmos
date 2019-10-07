@@ -1,5 +1,13 @@
 import { PluginContext } from 'react-plugin';
 import styled from 'styled-components';
+import {
+  screenGrey1,
+  screenGrey5,
+  screenGrey6,
+  screenPrimary1,
+  screenPrimary2,
+  screenPrimary3
+} from '../../shared/ui/colors';
 import { ContentOverlaySpec } from './public';
 
 export type ContentOverlayContext = PluginContext<ContentOverlaySpec>;
@@ -14,7 +22,7 @@ export const OverlayContainer = styled.div`
   flex-direction: column;
   justify-items: flex-start;
   align-items: flex-start;
-  background: var(--grey6);
+  background: ${screenGrey6};
   overflow: auto;
 `;
 
@@ -35,43 +43,45 @@ export const TextContainer = styled.div`
   padding: 32px;
   font-size: 16px;
   line-height: 1.5em;
-  color: var(--grey1);
+  color: ${screenGrey1};
 
   strong {
     font-weight: 500;
   }
 `;
 
+const illustrationSize = 320;
+
 export const IllustrationContainer = styled.div`
   flex-shrink: 0;
-  --size: 320px;
   display: flex;
-  width: var(--size);
-  height: var(--size);
+  width: ${illustrationSize}px;
+  height: ${illustrationSize}px;
   padding: 0 16px;
 `;
 
+const buttonHeight = 36;
+
 export const SecondaryButton = styled.button`
   display: inline-block;
-  --size: 36px;
-  height: var(--size);
+  height: ${buttonHeight}px;
   margin: 0 0 0 16px;
   padding: 0 16px;
   border: 0;
-  background: var(--grey5);
-  color: var(--grey2);
+  background: ${screenGrey5};
+  color: ${screenPrimary1};
   border-radius: 5px;
   font-size: 12px;
   font-weight: 700;
-  line-height: var(--size);
+  line-height: ${buttonHeight}px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   cursor: pointer;
   outline: none;
 
   :focus {
-    color: var(--primary3);
-    box-shadow: 0 0 0px 2px var(--primary4);
+    color: ${screenPrimary2};
+    box-shadow: 0 0 0px 2px ${screenPrimary3};
   }
 
   ::-moz-focus-inner {
@@ -81,18 +91,4 @@ export const SecondaryButton = styled.button`
 
 export const NoWrap = styled.span`
   white-space: nowrap;
-`;
-
-export const Delay = styled.div`
-  opacity: 0;
-  animation: fadeIn var(--quick) linear 0.5s forwards;
-
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
 `;
