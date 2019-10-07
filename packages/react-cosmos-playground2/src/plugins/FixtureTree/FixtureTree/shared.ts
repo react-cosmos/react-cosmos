@@ -14,7 +14,7 @@ type ListItemProps = {
   selected?: boolean;
 };
 
-const itemHeight = 16;
+const itemHeight = 28;
 
 export const ListItem = styled.span<ListItemProps>`
   display: flex;
