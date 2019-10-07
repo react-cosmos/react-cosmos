@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { quick } from '../../global/style';
 import {
   AlertCircleIcon,
   CheckCircleIcon,
@@ -8,8 +9,8 @@ import {
 } from '../../shared/icons';
 import {
   grey128,
-  grey64,
   grey32,
+  grey64,
   grey8,
   white95
 } from '../../shared/ui/colors';
@@ -56,7 +57,7 @@ const Item = styled.div`
   background: ${white95};
   box-shadow: 0 2px 10px -4px ${grey8};
   line-height: 20px;
-  animation: fadeScaleIn var(--quick) forwards;
+  animation: fadeScaleIn ${quick}s forwards;
 
   :first-child {
     margin-top: 0;

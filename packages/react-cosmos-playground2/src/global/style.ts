@@ -2,9 +2,10 @@ import { createGlobalStyle } from 'styled-components';
 
 const fontFamily = `-apple-system, BlinkMacSystemFont, Ubuntu, 'Helvetica Neue', Helvetica, sans-serif`;
 
+export const quick = 0.32;
+
 export const GlobalStyle = createGlobalStyle`
   html {
-    --quick: 0.32s;
     font-family: ${fontFamily};
     font-size: 14px;
     -webkit-font-smoothing: antialiased;

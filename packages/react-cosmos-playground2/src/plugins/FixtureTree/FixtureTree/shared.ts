@@ -7,6 +7,7 @@ import {
   grey8,
   selectedColors
 } from '../../../shared/ui/colors';
+import { quick } from './../../../global/style';
 
 type ListItemProps = {
   indentLevel: number;
@@ -26,7 +27,7 @@ export const ListItem = styled.span<ListItemProps>`
   line-height: ${itemHeight}px;
   user-select: none;
   cursor: default;
-  transition: background var(--quick), color var(--quick);
+  transition: background ${quick}s, color ${quick}s;
 
   :hover {
     background: ${selectedColors(grey24, grey8)};
