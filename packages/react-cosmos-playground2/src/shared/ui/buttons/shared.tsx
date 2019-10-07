@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { quick } from '../../../global/style';
 import { blue } from '../colors';
+import { quick } from '../vars';
 
 type StyledButtonProps = {
   bg: string;

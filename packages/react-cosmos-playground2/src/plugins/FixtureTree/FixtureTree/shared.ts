@@ -7,7 +7,7 @@ import {
   grey8,
   selectedColors
 } from '../../../shared/ui/colors';
-import { quick } from './../../../global/style';
+import { quick } from '../../../shared/ui/vars';
 
 type ListItemProps = {
   indentLevel: number;

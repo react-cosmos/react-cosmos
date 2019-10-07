@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { quick } from '../../global/style';
 import {
   AlertCircleIcon,
   CheckCircleIcon,
@@ -14,6 +13,7 @@ import {
   grey8,
   white95
 } from '../../shared/ui/colors';
+import { quick } from '../../shared/ui/vars';
 import { Notification, NotificationType } from './public';
 
 type Props = {

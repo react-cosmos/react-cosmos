@@ -1,8 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-
-const fontFamily = `-apple-system, BlinkMacSystemFont, Ubuntu, 'Helvetica Neue', Helvetica, sans-serif`;
-
-export const quick = 0.32;
+import { fontFamily } from '../shared/ui/vars';
 
 export const GlobalStyle = createGlobalStyle`
   html {
