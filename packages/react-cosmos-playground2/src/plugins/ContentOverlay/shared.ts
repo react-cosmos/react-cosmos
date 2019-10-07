@@ -94,17 +94,3 @@ export const SecondaryButton = styled.button`
 export const NoWrap = styled.span`
   white-space: nowrap;
 `;
-
-export const Delay = styled.div`
-  opacity: 0;
-  animation: fadeIn var(--quick) linear 0.5s forwards;
-
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-`;
