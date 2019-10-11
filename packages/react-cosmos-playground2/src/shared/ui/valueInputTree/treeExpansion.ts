@@ -13,11 +13,13 @@ export type OnElementExpansionChange = (
   treeExpansion: TreeExpansion
 ) => unknown;
 
+const DEFAULT_EXPANSION = {};
+
 export function getFixtureExpansion(
   groupExpansion: FixtureExpansionGroup,
   fixtureId: FixtureId
 ): FixtureExpansion {
-  return groupExpansion[stringifyFixtureId(fixtureId)] || {};
+  return groupExpansion[stringifyFixtureId(fixtureId)] || DEFAULT_EXPANSION;
 }
 
 export function updateElementExpansion(

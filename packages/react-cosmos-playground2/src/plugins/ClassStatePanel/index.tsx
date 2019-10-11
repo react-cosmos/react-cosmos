@@ -56,10 +56,7 @@ function useFixtureExpansion(
     storage.getItem<FixtureExpansionGroup>(
       CLASS_STATE_TREE_EXPANSION_STORAGE_KEY
     ) || DEFAULT_TREE_EXPANSION;
-  const fixtureExpansion = React.useMemo(
-    () => getFixtureExpansion(classStateExpansion, fixtureId),
-    [fixtureId, classStateExpansion]
-  );
+  const fixtureExpansion = getFixtureExpansion(classStateExpansion, fixtureId);
 
   const onElementExpansionChange = React.useCallback(
     (elementId: FixtureElementId, treeExpansion: TreeExpansion) => {
