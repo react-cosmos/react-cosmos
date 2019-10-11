@@ -13,7 +13,7 @@ type Props = {
   controlPanelRowOrder: string[];
 };
 
-export function ControlPanel({
+export const ControlPanel = React.memo(function ControlPanel({
   fixtureId,
   fixtureState,
   onFixtureStateChange,
@@ -33,7 +33,7 @@ export function ControlPanel({
       </Content>
     </Container>
   );
-}
+});
 
 const Container = styled.div`
   height: 100%;
