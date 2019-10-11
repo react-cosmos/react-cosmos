@@ -27,6 +27,8 @@ plug('rendererPreviewOuter', ({ children, pluginContext }) => {
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const fixtureState = rendererCore.getFixtureState() as FixtureStateWithViewport;
   const viewportState = getViewportState(pluginContext);
+  const onViewportChange = useViewportChange(pluginContext);
+  const onScaledChange = useScaledChange(pluginContext);
 
   return (
     <ResponsivePreview
@@ -35,17 +37,8 @@ plug('rendererPreviewOuter', ({ children, pluginContext }) => {
       viewport={fixtureState.viewport || viewportState.viewport}
       scaled={viewportState.scaled}
       validFixtureSelected={rendererCore.isValidFixtureSelected()}
-      setViewport={newViewport => {
-        setViewportState(pluginContext, {
-          ...viewportState,
-          enabled: true,
-          viewport: newViewport
-        });
-        setFixtureStateViewport(pluginContext, newViewport);
-      }}
-      setScaled={scaled =>
-        setViewportState(pluginContext, { ...viewportState, scaled })
-      }
+      setViewport={onViewportChange}
+      setScaled={onScaledChange}
     >
       {children}
     </ResponsivePreview>
@@ -77,8 +70,35 @@ namedPlug('rendererAction', 'responsivePreview', ({ pluginContext }) => {
 
 export { register };
 
-function getViewportState(context: ResponsivePreviewContext): ViewportState {
-  const storage = context.getMethodsOf<StorageSpec>('storage');
+function useViewportChange(pluginContext: ResponsivePreviewContext) {
+  const viewportState = getViewportState(pluginContext);
+  return React.useCallback(
+    (viewport: Viewport) => {
+      setViewportState(pluginContext, {
+        ...viewportState,
+        enabled: true,
+        viewport
+      });
+      setFixtureStateViewport(pluginContext, viewport);
+    },
+    [pluginContext, viewportState]
+  );
+}
+
+function useScaledChange(pluginContext: ResponsivePreviewContext) {
+  const viewportState = getViewportState(pluginContext);
+  return React.useCallback(
+    (scaled: boolean) =>
+      setViewportState(pluginContext, { ...viewportState, scaled }),
+    [pluginContext, viewportState]
+  );
+}
+
+function getViewportState(
+  pluginContext: ResponsivePreviewContext
+): ViewportState {
+  const { getMethodsOf } = pluginContext;
+  const storage = getMethodsOf<StorageSpec>('storage');
   return (
     storage.getItem<ViewportState>(VIEWPORT_STORAGE_KEY) ||
     DEFAULT_VIEWPORT_STATE
@@ -86,17 +106,19 @@ function getViewportState(context: ResponsivePreviewContext): ViewportState {
 }
 
 function setViewportState(
-  context: ResponsivePreviewContext,
+  pluginContext: ResponsivePreviewContext,
   viewportState: ViewportState
 ) {
-  const storage = context.getMethodsOf<StorageSpec>('storage');
+  const { getMethodsOf } = pluginContext;
+  const storage = getMethodsOf<StorageSpec>('storage');
   storage.setItem(VIEWPORT_STORAGE_KEY, viewportState);
 }
 
 function setFixtureStateViewport(
-  context: ResponsivePreviewContext,
+  pluginContext: ResponsivePreviewContext,
   viewport: null | Viewport
 ) {
-  const rendererCore = context.getMethodsOf<RendererCoreSpec>('rendererCore');
+  const { getMethodsOf } = pluginContext;
+  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   rendererCore.setFixtureState(fixtureState => ({ ...fixtureState, viewport }));
 }

@@ -22,7 +22,7 @@ const numberInputStypes = {
   focusedBoxShadow: `0 0 0.5px 1px ${blue}`
 };
 
-export function Header({
+export const Header = React.memo(function Header({
   devices,
   selectedViewport,
   scaleFactor,
@@ -87,7 +87,7 @@ export function Header({
       )}
     </Container>
   );
-}
+});
 
 function stringifyViewport({ width, height }: Viewport) {
   return `${width}x${height}`;

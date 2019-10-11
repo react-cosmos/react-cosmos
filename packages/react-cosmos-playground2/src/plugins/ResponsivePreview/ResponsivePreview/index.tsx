@@ -35,7 +35,8 @@ export class ResponsivePreview extends React.Component<Props, State> {
       enabled,
       viewport,
       scaled,
-      validFixtureSelected
+      validFixtureSelected,
+      setViewport
     } = this.props;
     const { container } = this.state;
 
@@ -71,7 +72,7 @@ export class ResponsivePreview extends React.Component<Props, State> {
           selectedViewport={viewport}
           scaleFactor={scaleFactor}
           scaled={scaled}
-          selectViewport={this.props.setViewport}
+          selectViewport={setViewport}
           toggleScale={this.toggleScale}
         />
         <div
