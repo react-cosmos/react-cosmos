@@ -21,7 +21,7 @@ type Props = {
   rendererActionOrder: string[];
   onToggleNav: () => unknown;
   onTogglePanel: () => unknown;
-  onReload: () => unknown;
+  onFixtureSelect: (fixtureId: FixtureId) => unknown;
   onClose: () => unknown;
 };
 
@@ -33,7 +33,7 @@ export const RendererHeader = React.memo(function RendererHeader({
   rendererActionOrder,
   onToggleNav,
   onTogglePanel,
-  onReload,
+  onFixtureSelect,
   onClose
 }: Props) {
   const fixturePath = React.useMemo(
@@ -41,6 +41,11 @@ export const RendererHeader = React.memo(function RendererHeader({
     [fixtureTree, fixtureId]
   );
   const slotProps = React.useMemo(() => ({ fixtureId }), [fixtureId]);
+  const onReload = React.useCallback(() => onFixtureSelect(fixtureId), [
+    fixtureId,
+    onFixtureSelect
+  ]);
+
   return (
     <Container>
       <Left>

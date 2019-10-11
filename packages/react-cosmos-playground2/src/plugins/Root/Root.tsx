@@ -105,7 +105,7 @@ export function Root({
               rendererActionOrder={rendererActionOrder}
               onToggleNav={onToggleNav}
               onTogglePanel={onTogglePanel}
-              onReload={() => onFixtureSelect(selectedFixtureId)}
+              onFixtureSelect={onFixtureSelect}
               onClose={onFixtureClose}
             />
           )}
