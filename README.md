@@ -230,7 +230,7 @@ The [props panel](https://twitter.com/ReactCosmos/status/1139838627976843264) al
 
 ```jsx
 // CounterButton.fixture.js
-import { useValue } from 'react-cosmos/fixture';
+import { useValue } from 'react-cosmos/runtime';
 
 export default () => {
   const [count, setCount] = useValue('count', { defaultValue: 0 });

@@ -4,6 +4,7 @@
   "description": "Bundled runtime(s) for loading React Cosmos fixtures",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-runtime",
   "license": "MIT",
+  "main": "index.js",
   "dependencies": {
     "lodash": "^4.17.15",
     "react-cosmos-shared2": "^5.0.0-beta.5"
