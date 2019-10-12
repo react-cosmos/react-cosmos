@@ -8,6 +8,7 @@
     "lodash": "^4.17.15",
     "query-string": "^6.8.3",
     "react-element-to-jsx-string": "^14.1.0",
-    "react-is": "^16.10.2"
+    "react-is": "^16.10.2",
+    "socket.io-client": "^2.3.0"
   }
 }
