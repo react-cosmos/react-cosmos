@@ -1,4 +1,5 @@
 export { FixtureCapture } from './FixtureCapture';
+export { FixtureContext } from './FixtureContext';
 export { FixtureLoader } from './FixtureLoader';
 export { getDecoratedFixtureElement } from './getDecoratedFixtureElement';
 export { createPostMessageConnect } from './postMessage';
