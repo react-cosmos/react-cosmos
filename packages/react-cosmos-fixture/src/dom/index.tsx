@@ -4,8 +4,8 @@ import {
   ReactDecoratorsByPath,
   ReactFixtureExportsByPath
 } from 'react-cosmos-shared2/react';
+import { DomRendererConfig } from 'react-cosmos-shared2/renderer';
 import { render } from 'react-dom';
-import { DomRendererConfig } from '../shared/rendererConfig';
 import { getDomContainer } from './container';
 import { ErrorCatch } from './ErrorCatch';
 import './globalErrorHandler';

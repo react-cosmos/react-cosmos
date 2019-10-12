@@ -1,6 +1,6 @@
-import { DomRendererConfig } from '../../../shared/rendererConfig';
-import { generateUserDepsModule } from '../../../shared/userDeps';
+import { DomRendererConfig } from 'react-cosmos-shared2/renderer';
 import { detectCosmosConfig } from '../../../config';
+import { generateUserDepsModule } from '../../../shared/userDeps';
 import { createDomCosmosConfig } from '../cosmosConfig/dom';
 
 type WebpackLoaderContext = {

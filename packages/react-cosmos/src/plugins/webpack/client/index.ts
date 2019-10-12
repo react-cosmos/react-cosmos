@@ -1,4 +1,4 @@
-import { mountDomRenderer } from '../../../domRenderer';
+import { mountDomRenderer } from 'react-cosmos-fixture/dom';
 import { dismissErrorOverlay } from './errorOverlay';
 import './hmrErrorHandler';
 

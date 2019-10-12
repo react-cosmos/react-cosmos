@@ -102,4 +102,12 @@ export type RendererConnect<
   onMessage(handler: (msg: Request) => unknown): () => unknown;
 };
 
+export type DomRendererConfig = {
+  containerQuerySelector: null | string;
+};
+
+export type NativeRendererConfig = {
+  port: number;
+};
+
 export const RENDERER_MESSAGE_EVENT_NAME = 'cosmos-renderer-message';

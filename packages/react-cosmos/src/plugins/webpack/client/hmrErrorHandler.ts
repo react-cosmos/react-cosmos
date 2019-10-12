@@ -1,9 +1,9 @@
+import { rendererConnect, rendererId } from 'react-cosmos-fixture/dom';
 import {
-  RendererRequest,
-  RendererConnect
+  RendererConnect,
+  RendererRequest
 } from 'react-cosmos-shared2/renderer';
 import { WebpackRendererResponse } from 'react-cosmos-shared2/webpack';
-import { rendererId, rendererConnect } from '../../../domRenderer';
 
 declare var __DEV__: boolean;
 

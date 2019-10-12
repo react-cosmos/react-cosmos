@@ -64,10 +64,6 @@ export function getBaseWebpackConfig(
     : userConfigExport;
 }
 
-export function resolveDomRendererPath(relPath: string) {
-  return require.resolve(`../../../domRenderer/${relPath}`);
-}
-
 export function resolveClientPath(relPath: string) {
   return require.resolve(`../client/${relPath}`);
 }
