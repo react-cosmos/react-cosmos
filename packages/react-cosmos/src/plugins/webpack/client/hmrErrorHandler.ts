@@ -1,4 +1,4 @@
-import { rendererConnect, rendererId } from 'react-cosmos-fixture/dom';
+import { rendererConnect, rendererId } from 'react-cosmos-runtime/dom';
 import {
   RendererConnect,
   RendererRequest
