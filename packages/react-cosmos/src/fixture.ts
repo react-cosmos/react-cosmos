@@ -1,1 +1,1 @@
-export { Viewport, useValue } from 'react-cosmos-fixture';
+export { Viewport, useValue } from 'react-cosmos-shared2/FixtureLoader';

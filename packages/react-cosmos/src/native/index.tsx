@@ -1,10 +1,13 @@
 import React from 'react';
-import { createWebSocketsConnect, FixtureLoader } from 'react-cosmos-fixture';
+import {
+  createWebSocketsConnect,
+  FixtureLoader
+} from 'react-cosmos-shared2/FixtureLoader';
 import {
   ReactDecoratorsByPath,
   ReactFixtureExportsByPath
 } from 'react-cosmos-shared2/react';
-import { StyleSheet, View, Text, NativeModules, YellowBox } from 'react-native';
+import { NativeModules, StyleSheet, Text, View, YellowBox } from 'react-native';
 import parse from 'url-parse';
 import { NativeRendererConfig } from '../shared/rendererConfig';
 

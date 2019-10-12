@@ -1,5 +1,5 @@
 import React from 'react';
-import { getDecoratedFixtureElement } from 'react-cosmos-fixture';
+import { getDecoratedFixtureElement } from 'react-cosmos-shared2/FixtureLoader';
 import {
   getSortedDecoratorsForFixturePath,
   isMultiFixture,

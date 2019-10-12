@@ -1,5 +1,5 @@
 import React from 'react';
-import { FixtureLoader } from 'react-cosmos-fixture';
+import { FixtureLoader } from 'react-cosmos-shared2/FixtureLoader';
 import {
   ReactDecoratorsByPath,
   ReactFixtureExportsByPath
