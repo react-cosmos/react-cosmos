@@ -10,7 +10,7 @@ Exceptions are logging in Cosmos are ad-hoc and minimalistic. `throw new Error` 
 
 ## Pinned dependencies
 
-In general we try to keep all dependencies up to date. The following packages, however, need to be pinned to a specific version:
+In general we keep all dependencies up to date. The following packages, however, need to be pinned to a specific version:
 
 - `query-string@5.1.1` because 6.x is no longer compatible with IE11.
-- `socket.io@2.20` and `socket.io-client@2.20` because [2.3 upgraded to `debug` v4](https://github.com/socketio/socket.io-client/issues/1328#issuecomment-536525472), which is no longer compatible with IE11.
+- `socket.io@2.2` and `socket.io-client@2.2` because [2.3 upgraded to `debug@4`](https://github.com/socketio/socket.io-client/issues/1328#issuecomment-536525472), which is no longer compatible with IE11.
