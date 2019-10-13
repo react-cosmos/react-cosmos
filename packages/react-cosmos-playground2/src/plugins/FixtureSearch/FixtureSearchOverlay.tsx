@@ -205,7 +205,7 @@ export function FixtureSearchOverlay({
   }, []);
 
   return (
-    <Overlay data-testid="fixtureSearchOverlay" onClick={onClose}>
+    <OverlayIE11 data-testid="fixtureSearchOverlay" onClick={onClose}>
       <Content data-testid="fixtureSearchContent" onClick={onContentClick}>
         <InputContainer>
           <SearchIconContainer>
@@ -237,7 +237,7 @@ export function FixtureSearchOverlay({
           </ResultsContainer>
         </ResultsViewport>
       </Content>
-    </Overlay>
+    </OverlayIE11>
   );
 }
 
@@ -287,6 +287,10 @@ const Overlay = styled.div`
   background: ${black70};
 `;
 
+const OverlayIE11 = styled(Overlay)`
+  z-index: 1;
+`;
+
 const Content = styled.div`
   position: absolute;
   top: 20%;
@@ -334,7 +338,6 @@ const SearchInput = styled.input`
 `;
 
 const ResultsViewport = styled.div`
-  flex: 1;
   max-height: 336px;
   border-top: 1px solid ${grey208};
   background: ${grey224};

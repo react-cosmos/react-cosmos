@@ -17,7 +17,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   flex-direction: row;
   align-items: center;
   padding: 0 8px;
-  min-height: 32px;
+  height: 32px;
   border: 0;
   border-radius: 3px;
   background: ${props => (props.selected ? props.bgSelect : props.bg)};
