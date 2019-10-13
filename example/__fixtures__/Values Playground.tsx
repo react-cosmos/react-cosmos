@@ -1,5 +1,5 @@
 import React from 'react';
-import { useValue } from 'react-cosmos/runtime';
+import { useValue } from 'react-cosmos/fixture';
 
 export default () => {
   const [string] = useValue('string', { defaultValue: 'How are you doing?' });

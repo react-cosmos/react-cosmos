@@ -1,6 +1,6 @@
 import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { useValue } from 'react-cosmos/runtime';
+import { useValue } from 'react-cosmos/fixture';
 import { FixtureSearchOverlay } from './FixtureSearchOverlay';
 
 const fixtures = {

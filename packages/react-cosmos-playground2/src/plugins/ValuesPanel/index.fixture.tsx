@@ -1,6 +1,6 @@
 import React from 'react';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import { useValue } from 'react-cosmos/runtime';
+import { useValue } from 'react-cosmos/fixture';
 import { ValuesPanel } from './ValuesPanel';
 
 export default () => {
