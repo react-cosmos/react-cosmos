@@ -92,7 +92,11 @@ export function resolveLocalReactDeps(
   const { alias = {} } = resolve;
   return {
     ...resolve,
-    alias: { ...alias, react: reactPath, 'react-dom': reactDomPath }
+    alias: {
+      ...alias,
+      react: path.dirname(reactPath),
+      'react-dom': path.dirname(reactDomPath)
+    }
   };
 }
 
