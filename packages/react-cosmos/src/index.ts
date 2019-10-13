@@ -1,7 +1,8 @@
+import 'regenerator-runtime/runtime';
 export {
+  createCosmosConfig,
   detectCosmosConfig,
-  getCosmosConfigAtPath,
-  createCosmosConfig
+  getCosmosConfigAtPath
 } from './config';
-export { getFixtureUrls } from './getFixtureUrls';
 export { getFixtures } from './getFixtures';
+export { getFixtureUrls } from './getFixtureUrls';
