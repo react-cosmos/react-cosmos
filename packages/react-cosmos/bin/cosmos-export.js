@@ -3,6 +3,7 @@
 // Set the env before any code reads it
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
+require('regenerator-runtime/runtime');
 const { generateWebExport } = require('../dist/webExport');
 
 generateWebExport().catch(err => {

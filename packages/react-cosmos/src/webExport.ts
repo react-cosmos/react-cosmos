@@ -1,4 +1,3 @@
-import 'regenerator-runtime/runtime';
 import { generateExport } from './shared/export';
 import { webpackExport } from './plugins/webpack';
 
