@@ -1,10 +1,10 @@
 import {
   FixtureDecoratorId,
-  FixtureStateValues,
-  FixtureStateProps,
+  FixtureState,
   FixtureStateClassState,
-  FixtureState
-} from 'react-cosmos-shared2/fixtureState';
+  FixtureStateProps,
+  FixtureStateValues
+} from '../../fixtureState';
 
 export function anyProps(
   args: {

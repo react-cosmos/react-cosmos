@@ -1,9 +1,7 @@
 import until from 'async-until';
-import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import {
-  ReactDecoratorsByPath,
-  ReactFixtureExportsByPath
-} from 'react-cosmos-shared2/react';
+import { ReactTestRenderer } from 'react-test-renderer';
+import { FixtureState } from '../../fixtureState';
+import { ReactDecoratorsByPath, ReactFixtureExportsByPath } from '../../react';
 import {
   FixtureId,
   FixtureListUpdateResponse,
@@ -15,8 +13,7 @@ import {
   SelectFixtureRequest,
   SetFixtureStateRequest,
   UnselectFixtureRequest
-} from 'react-cosmos-shared2/renderer';
-import { ReactTestRenderer } from 'react-test-renderer';
+} from '../../renderer';
 
 export type Message = RendererResponse | RendererRequest;
 

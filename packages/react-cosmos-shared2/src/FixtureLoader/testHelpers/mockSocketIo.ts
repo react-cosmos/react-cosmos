@@ -1,5 +1,5 @@
 import { act } from 'react-test-renderer';
-import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
+import { RENDERER_MESSAGE_EVENT_NAME } from '../../renderer';
 
 type MsgHandler = (msg: {}) => {};
 
