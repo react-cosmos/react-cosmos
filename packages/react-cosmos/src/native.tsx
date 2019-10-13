@@ -7,9 +7,9 @@ import {
   ReactDecoratorsByPath,
   ReactFixtureExportsByPath
 } from 'react-cosmos-shared2/react';
-import { NativeRendererConfig } from 'react-cosmos-shared2/renderer';
 import { NativeModules, StyleSheet, Text, View, YellowBox } from 'react-native';
 import parse from 'url-parse';
+import { NativeRendererConfig } from './shared/rendererConfig';
 
 // https://stackoverflow.com/a/53655887/128816
 YellowBox.ignoreWarnings([
