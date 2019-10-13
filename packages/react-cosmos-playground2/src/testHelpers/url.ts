@@ -1,13 +1,13 @@
-import qs from 'query-string';
+import { parseUrlQuery, stringifyUrlQuery } from 'react-cosmos-shared2/url';
 
 type Params = Record<string, unknown>;
 
 export function getUrlParams() {
-  return qs.parse(location.search);
+  return parseUrlQuery(location.search);
 }
 
 export function pushUrlParams(params: Params) {
-  const query = qs.stringify(params);
+  const query = stringifyUrlQuery(params);
   history.pushState({}, '', `?${query}`);
 }
 

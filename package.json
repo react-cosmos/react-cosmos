@@ -90,7 +90,6 @@
     "lint-staged": "^9.4.1",
     "localforage": "^1.7.3",
     "prettier": "1.18.2",
-    "query-string": "^6.8.3",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-test-renderer": "16.10.2",

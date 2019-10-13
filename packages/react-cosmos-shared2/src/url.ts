@@ -63,6 +63,10 @@ export function parseRendererUrlQuery(query: string): RendererUrlParams {
   return decoded;
 }
 
-function parseUrlQuery<T extends {}>(query: string): T {
+export function parseUrlQuery<T extends {}>(query: string): T {
   return qs.parse(query) as T;
+}
+
+export function stringifyUrlQuery(params: {}): string {
+  return qs.stringify(params);
 }
