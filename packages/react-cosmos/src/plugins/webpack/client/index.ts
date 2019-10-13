@@ -1,4 +1,4 @@
-import { mountDomRenderer } from '../../../domRenderer';
+import { mountDomRenderer } from '../../../dom';
 import { dismissErrorOverlay } from './errorOverlay';
 import './hmrErrorHandler';
 

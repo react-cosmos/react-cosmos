@@ -9,7 +9,6 @@ import {
   getUserWebpackConfig,
   hasPlugin,
   resolveClientPath,
-  resolveDomRendererPath,
   resolveLocalReactDeps
 } from './shared';
 
@@ -35,7 +34,7 @@ function getEntry(cosmosConfig: CosmosConfig) {
   const { hotReload } = createWebpackCosmosConfig(cosmosConfig);
   // The React devtools hook needs to be imported before any other module that
   // might import React
-  const devtoolsHook = resolveDomRendererPath('reactDevtoolsHook');
+  const devtoolsHook = resolveClientPath('reactDevtoolsHook');
   const clientIndex = resolveClientPath('index');
 
   return hotReload

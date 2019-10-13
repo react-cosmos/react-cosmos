@@ -1,17 +1,17 @@
-import path from 'path';
+import { FSWatcher, watch } from 'chokidar';
 import { writeFile } from 'fs';
-import promisify from 'util.promisify';
-import { watch, FSWatcher } from 'chokidar';
 import { debounce } from 'lodash';
+import path from 'path';
+import promisify from 'util.promisify';
 import { CosmosConfig } from '../config';
 import { DevServerPluginArgs } from '../shared/devServer';
-import {
-  getFixturePatterns,
-  getDecoratorPatterns,
-  getIgnorePatterns,
-  generateUserDepsModule
-} from '../shared/userDeps';
 import { NativeRendererConfig } from '../shared/rendererConfig';
+import {
+  generateUserDepsModule,
+  getDecoratorPatterns,
+  getFixturePatterns,
+  getIgnorePatterns
+} from '../shared/userDeps';
 
 const writeFileAsync = promisify(writeFile);
 

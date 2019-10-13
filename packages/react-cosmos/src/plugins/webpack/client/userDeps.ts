@@ -1,6 +1,6 @@
 import {
-  ReactFixtureExportsByPath,
-  ReactDecoratorsByPath
+  ReactDecoratorsByPath,
+  ReactFixtureExportsByPath
 } from 'react-cosmos-shared2/react';
 import { DomRendererConfig } from '../../../shared/rendererConfig';
 

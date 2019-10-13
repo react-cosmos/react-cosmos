@@ -1,4 +1,4 @@
 {
-  "globalImports": ["./globalStyle.css"],
+  "globalImports": ["polyfills.ts", "globalStyle.css"],
   "staticPath": "static"
 }

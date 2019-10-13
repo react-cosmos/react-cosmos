@@ -17,7 +17,6 @@ const { stdout, stderr } = process;
 
 const BUILD_ORDER = [
   'react-cosmos-shared2',
-  'react-cosmos-fixture',
   'react-cosmos-playground2',
   'react-cosmos'
 ];

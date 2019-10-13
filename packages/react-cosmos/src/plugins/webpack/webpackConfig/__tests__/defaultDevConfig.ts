@@ -26,9 +26,7 @@ it('includes client entry', async () => {
 
 it('includes DOM devtooks hook entry', async () => {
   const { entry } = await getDefaultDevWebpackConfig();
-  expect(entry).toContain(
-    require.resolve('../../../../domRenderer/reactDevtoolsHook')
-  );
+  expect(entry).toContain(require.resolve('../../client/reactDevtoolsHook'));
 });
 
 it('includes webpack-hot-middleware entry', async () => {

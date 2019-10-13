@@ -126,7 +126,7 @@ it('extends partially serializable object key', () => {
         },
         fnProp: {
           type: 'unserializable',
-          stringifiedValue: '() => {}'
+          stringifiedValue: 'function () {}'
         }
       }
     }
@@ -150,7 +150,7 @@ it('extends partially serializable array key', () => {
         },
         {
           type: 'unserializable',
-          stringifiedValue: '() => {}'
+          stringifiedValue: 'function () {}'
         }
       ]
     }

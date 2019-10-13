@@ -7,7 +7,6 @@ import {
   getUserDepsLoaderRule,
   getUserWebpackConfig,
   resolveClientPath,
-  resolveDomRendererPath,
   resolveLocalReactDeps
 } from './shared';
 
@@ -32,7 +31,7 @@ export function getExportWebpackConfig(
 function getEntry() {
   // The React devtools hook needs to be imported before any other module that
   // might import React
-  const devtoolsHook = resolveDomRendererPath('reactDevtoolsHook');
+  const devtoolsHook = resolveClientPath('reactDevtoolsHook');
   const clientIndex = resolveClientPath('index');
   return [devtoolsHook, clientIndex];
 }
