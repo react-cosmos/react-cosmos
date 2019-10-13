@@ -18,6 +18,8 @@ const { stdout, stderr } = process;
 const BUILD_ORDER = [
   'react-cosmos-shared2',
   'react-cosmos-runtime',
+  'react-cosmos-runtime-dom',
+  'react-cosmos-runtime-native',
   'react-cosmos-playground2',
   'react-cosmos'
 ];

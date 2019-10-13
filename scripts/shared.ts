@@ -16,6 +16,8 @@ export const rimrafAsync = asyncify(rimraf);
 export const NODE_PACKAGES = [
   'react-cosmos-shared2',
   'react-cosmos-runtime',
+  'react-cosmos-runtime-dom',
+  'react-cosmos-runtime-native',
   'react-cosmos'
 ];
 export const BROWSER_PACKAGES = ['react-cosmos-playground2'];
