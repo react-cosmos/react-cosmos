@@ -1,5 +1,7 @@
 const envOptions = {
-  targets: { node: 8 }
+  useBuiltIns: 'entry',
+  corejs: 3,
+  targets: { ie: '11' }
 };
 
 module.exports = {
