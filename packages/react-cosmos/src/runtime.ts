@@ -1,1 +1,1 @@
-export { Viewport, useValue } from 'react-cosmos-runtime';
+export { Viewport, useValue } from 'react-cosmos-shared2/FixtureLoader';
