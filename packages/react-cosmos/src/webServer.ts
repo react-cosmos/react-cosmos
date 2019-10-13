@@ -1,4 +1,3 @@
-import 'regenerator-runtime/runtime';
 import { httpProxy } from './plugins/httpProxy';
 import { openFile } from './plugins/openFile';
 import { userDepsFile } from './plugins/userDepsFile';

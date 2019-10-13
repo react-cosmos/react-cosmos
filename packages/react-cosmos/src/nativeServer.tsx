@@ -1,4 +1,3 @@
-import 'regenerator-runtime/runtime';
 import { openFile } from './plugins/openFile';
 import { userDepsFile } from './plugins/userDepsFile';
 import { startDevServer } from './shared/devServer';

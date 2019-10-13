@@ -1,4 +1,3 @@
-import 'regenerator-runtime/runtime';
 export {
   createCosmosConfig,
   detectCosmosConfig,

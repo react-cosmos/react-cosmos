@@ -1,4 +1,3 @@
-import 'regenerator-runtime/runtime';
 export {
   FixtureContext,
   useValue,
