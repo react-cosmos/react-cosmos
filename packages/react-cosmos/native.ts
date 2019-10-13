@@ -1,1 +1,1 @@
-export * from './dist/native';
+module.exports = require('./dist/native');
