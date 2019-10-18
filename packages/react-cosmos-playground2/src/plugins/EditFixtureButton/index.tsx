@@ -35,11 +35,8 @@ namedPlug<RendererActionSlotProps>(
 
 export { register };
 
-function useOpen(
-  pluginContext: EditFixtureButtonContext,
-  fixtureId: FixtureId
-) {
-  const onError = useErrorNotification(pluginContext);
+function useOpen(context: EditFixtureButtonContext, fixtureId: FixtureId) {
+  const onError = useErrorNotification(context);
   return React.useCallback(() => {
     openFile(fixtureId.path)
       .then(httpStatus => {
@@ -61,8 +58,8 @@ function useOpen(
   }, [fixtureId.path, onError]);
 }
 
-function useErrorNotification(pluginContext: EditFixtureButtonContext) {
-  const { getMethodsOf } = pluginContext;
+function useErrorNotification(context: EditFixtureButtonContext) {
+  const { getMethodsOf } = context;
   const notifications = getMethodsOf<NotificationsSpec>('notifications');
   const { pushTimedNotification } = notifications;
   return React.useCallback(

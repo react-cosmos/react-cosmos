@@ -1,7 +1,7 @@
 import { omit } from 'lodash';
 import { registerShortcuts } from 'react-cosmos-shared2/playground';
 import { createPlugin, PluginContext } from 'react-plugin';
-import { CoreSpec } from './public';
+import { Commands, CoreSpec } from './public';
 
 type CoreContext = PluginContext<CoreSpec>;
 
@@ -33,11 +33,8 @@ onLoad(pluginContext =>
   registerShortcuts(command => runCommand(pluginContext, command))
 );
 
-function registerCommands(
-  { setState }: CoreContext,
-  commands: Record<string, () => unknown>
-) {
-  setState(prevState => {
+function registerCommands(context: CoreContext, commands: Commands) {
+  context.setState(prevState => {
     const existingCommandNames = Object.keys(prevState.commands);
     Object.keys(commands).forEach(commandName => {
       if (existingCommandNames.indexOf(commandName) !== -1)
@@ -49,14 +46,14 @@ function registerCommands(
     };
   });
   return () =>
-    setState(prevState => ({
+    context.setState(prevState => ({
       ...prevState,
       commands: omit(prevState.commands, ...Object.keys(commands))
     }));
 }
 
-function runCommand({ getState }: CoreContext, name: string) {
-  const { commands } = getState();
+function runCommand(context: CoreContext, name: string) {
+  const { commands } = context.getState();
   if (!commands[name])
     return console.warn(`Command "${name}" is not available`);
   commands[name]();

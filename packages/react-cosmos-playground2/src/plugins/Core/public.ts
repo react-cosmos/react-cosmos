@@ -1,3 +1,5 @@
+export type Commands = Record<string, () => unknown>;
+
 export type CoreSpec = {
   name: 'core';
   config: {
@@ -8,7 +10,7 @@ export type CoreSpec = {
     webRendererUrl: null | string;
   };
   state: {
-    commands: Record<string, () => unknown>;
+    commands: Commands;
   };
   methods: {
     registerCommands(commands: Record<string, () => unknown>): () => void;
