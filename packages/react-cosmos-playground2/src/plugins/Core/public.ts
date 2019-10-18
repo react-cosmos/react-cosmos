@@ -13,7 +13,7 @@ export type CoreSpec = {
     commands: Commands;
   };
   methods: {
-    registerCommands(commands: Record<string, () => unknown>): () => void;
+    registerCommands(commands: Commands): () => void;
     runCommand(name: string): unknown;
     getProjectId(): string;
     getFixtureFileVars(): { fixturesDir: string; fixtureFileSuffix: string };
