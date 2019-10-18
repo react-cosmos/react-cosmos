@@ -57,7 +57,8 @@ function registerCommands(
 
 function runCommand({ getState }: CoreContext, name: string) {
   const { commands } = getState();
-  if (!commands[name]) throw new Error(`Command "${name}" does not exist`);
+  if (!commands[name])
+    return console.warn(`Command "${name}" is not available`);
   commands[name]();
 }
 

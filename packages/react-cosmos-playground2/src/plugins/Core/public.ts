@@ -11,7 +11,7 @@ export type CoreSpec = {
     commands: Record<string, () => unknown>;
   };
   methods: {
-    registerCommands(commands: Record<string, () => unknown>): () => unknown;
+    registerCommands(commands: Record<string, () => unknown>): () => void;
     runCommand(name: string): unknown;
     getProjectId(): string;
     getFixtureFileVars(): { fixturesDir: string; fixtureFileSuffix: string };

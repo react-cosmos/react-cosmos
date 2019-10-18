@@ -25,6 +25,10 @@ namedPlug<RendererActionSlotProps>(
       window.open(fixtureUrl, '_blank');
     }, [fixtureId, rendererUrl]);
 
+    React.useEffect(() => {
+      return core.registerCommands({ goFullScreen: onSelect });
+    }, [core, onSelect]);
+
     return <FullScreenButton onClick={onSelect} />;
   }
 );

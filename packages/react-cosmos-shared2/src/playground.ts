@@ -1,6 +1,8 @@
 const KEY_CODES = {
-  P: 80,
-  K: 75
+  F: 70,
+  K: 75,
+  L: 76,
+  P: 80
 };
 
 export function registerShortcuts(runCommand: (command: string) => unknown) {
@@ -16,9 +18,15 @@ export function registerShortcuts(runCommand: (command: string) => unknown) {
     if (e.keyCode === KEY_CODES['P'] && metaKey) {
       e.preventDefault();
       runCommand('searchFixtures');
+    } else if (e.keyCode === KEY_CODES['L'] && metaKey && e.shiftKey) {
+      e.preventDefault();
+      runCommand('toggleFixtureList');
     } else if (e.keyCode === KEY_CODES['K'] && metaKey && e.shiftKey) {
       e.preventDefault();
       runCommand('toggleControlPanel');
+    } else if (e.keyCode === KEY_CODES['F'] && metaKey && e.shiftKey) {
+      e.preventDefault();
+      runCommand('goFullScreen');
     }
   }
 
