@@ -77,6 +77,8 @@ export function mockRouter(methods: MethodsOf<RouterSpec> = {}) {
 
 export function mockCore(methods: MethodsOf<CoreSpec> = {}) {
   const allMethods = {
+    registerCommands: () => jest.fn(),
+    runCommand: () => jest.fn(),
     getProjectId: jest.fn(),
     getFixtureFileVars: jest.fn(),
     isDevServerOn: jest.fn(),
