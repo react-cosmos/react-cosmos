@@ -1,7 +1,6 @@
 import { isEqual } from 'lodash';
 import React from 'react';
 import { FixtureState, SetFixtureState } from '../fixtureState';
-import { registerShortcuts } from '../playground';
 import {
   getFixtureNamesByPath,
   ReactDecorator,
@@ -61,20 +60,17 @@ export class FixtureLoader extends React.Component<Props, State> {
   };
 
   unsubscribe: null | (() => unknown) = null;
-  removeShortcuts: null | (() => unknown) = null;
 
   componentDidMount() {
     if (!this.props.selectedFixtureId) {
       const { rendererConnect } = this.props;
       this.unsubscribe = rendererConnect.onMessage(this.handleRequest);
       this.postReadyState();
-      this.removeShortcuts = registerShortcuts(this.postPlaygroundCommand);
     }
   }
 
   componentWillUnmount() {
     if (this.unsubscribe) this.unsubscribe();
-    if (this.removeShortcuts) this.removeShortcuts();
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -236,14 +232,6 @@ export class FixtureLoader extends React.Component<Props, State> {
         fixtureId,
         fixtureState
       }
-    });
-  };
-
-  postPlaygroundCommand = (command: string) => {
-    const { rendererId } = this.props;
-    this.postMessage({
-      type: 'playgroundCommand',
-      payload: { rendererId, command }
     });
   };
 

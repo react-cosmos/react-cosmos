@@ -91,7 +91,6 @@ export type FixtureStateChangeResponse = {
 export type PlaygroundCommandResponse = {
   type: 'playgroundCommand';
   payload: {
-    rendererId: RendererId;
     command: string;
   };
 };
