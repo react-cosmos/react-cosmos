@@ -1,4 +1,5 @@
 const KEY_CODES = {
+  E: 69,
   F: 70,
   K: 75,
   L: 76,
@@ -8,6 +9,11 @@ const KEY_CODES = {
 export function registerShortcuts(runCommand: (command: string) => unknown) {
   window.addEventListener('keydown', handleWindowKeyDown);
 
+  function run(e: KeyboardEvent, command: string) {
+    e.preventDefault();
+    runCommand(command);
+  }
+
   function handleWindowKeyDown(e: KeyboardEvent) {
     if (isEditing()) {
       return;
@@ -16,17 +22,15 @@ export function registerShortcuts(runCommand: (command: string) => unknown) {
     const metaKey = e.metaKey || e.ctrlKey;
 
     if (e.keyCode === KEY_CODES['P'] && metaKey) {
-      e.preventDefault();
-      runCommand('searchFixtures');
+      run(e, 'searchFixtures');
     } else if (e.keyCode === KEY_CODES['L'] && metaKey && e.shiftKey) {
-      e.preventDefault();
-      runCommand('toggleFixtureList');
+      run(e, 'toggleFixtureList');
     } else if (e.keyCode === KEY_CODES['K'] && metaKey && e.shiftKey) {
-      e.preventDefault();
-      runCommand('toggleControlPanel');
+      run(e, 'toggleControlPanel');
     } else if (e.keyCode === KEY_CODES['F'] && metaKey && e.shiftKey) {
-      e.preventDefault();
-      runCommand('goFullScreen');
+      run(e, 'goFullScreen');
+    } else if (e.keyCode === KEY_CODES['E'] && metaKey && e.shiftKey) {
+      run(e, 'editFixture');
     }
   }
 

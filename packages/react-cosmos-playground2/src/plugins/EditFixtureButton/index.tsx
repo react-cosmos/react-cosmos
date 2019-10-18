@@ -1,4 +1,5 @@
 import React from 'react';
+import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { RendererActionSlotProps } from '../../shared/slots/RendererActionSlot';
 import { CoreSpec } from '../Core/public';
@@ -12,27 +13,53 @@ const { namedPlug, register } = createPlugin<EditFixtureButtonSpec>({
   name: 'editFixtureButton'
 });
 
-const ERORR_TITLE = 'Failed to open fixture';
-
 namedPlug<RendererActionSlotProps>(
   'rendererAction',
   'editFixture',
   ({ pluginContext, slotProps }) => {
     const { getMethodsOf } = pluginContext;
     const core = getMethodsOf<CoreSpec>('core');
-    const onError = useErrorNotification(pluginContext);
+    const onOpen = useOpen(pluginContext, slotProps.fixtureId);
+
+    React.useEffect(() => {
+      return core.registerCommands({ editFixture: onOpen });
+    }, [core, onOpen]);
 
     if (!core.isDevServerOn()) {
       return null;
     }
 
-    return (
-      <EditFixtureButton fixtureId={slotProps.fixtureId} onError={onError} />
-    );
+    return <EditFixtureButton onClick={onOpen} />;
   }
 );
 
 export { register };
+
+function useOpen(
+  pluginContext: EditFixtureButtonContext,
+  fixtureId: FixtureId
+) {
+  const onError = useErrorNotification(pluginContext);
+  return React.useCallback(() => {
+    openFile(fixtureId.path)
+      .then(httpStatus => {
+        switch (httpStatus) {
+          case 200:
+            // No need to notify when everything is OK
+            return;
+          case 400:
+            return onError('This looks like a bug. Let us know please!');
+          case 404:
+            return onError('File is missing. Weird!');
+          default:
+            return onError(
+              'Does your OS know to open source files with your code editor?'
+            );
+        }
+      })
+      .catch(err => onError('Is the Cosmos server running?'));
+  }, [fixtureId.path, onError]);
+}
 
 function useErrorNotification(pluginContext: EditFixtureButtonContext) {
   const { getMethodsOf } = pluginContext;
@@ -43,9 +70,15 @@ function useErrorNotification(pluginContext: EditFixtureButtonContext) {
       pushTimedNotification({
         id: 'edit-fixture',
         type: 'error',
-        title: ERORR_TITLE,
+        title: 'Failed to open fixture',
         info
       }),
     [pushTimedNotification]
   );
+}
+
+async function openFile(filePath: string) {
+  const url = `/_open?filePath=${filePath}`;
+  const { status } = await fetch(url, { credentials: 'same-origin' });
+  return status;
 }
