@@ -88,11 +88,20 @@ export type FixtureStateChangeResponse = {
   };
 };
 
+export type PlaygroundCommandResponse = {
+  type: 'playgroundCommand';
+  payload: {
+    rendererId: RendererId;
+    command: string;
+  };
+};
+
 export type RendererResponse =
   | RendererReadyResponse
   | RendererErrorResponse
   | FixtureListUpdateResponse
-  | FixtureStateChangeResponse;
+  | FixtureStateChangeResponse
+  | PlaygroundCommandResponse;
 
 export type RendererConnect<
   Request = RendererRequest,

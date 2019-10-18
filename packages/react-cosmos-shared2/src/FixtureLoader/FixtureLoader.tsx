@@ -237,6 +237,14 @@ export class FixtureLoader extends React.Component<Props, State> {
     });
   };
 
+  postPlaygroundCommand = (command: string) => {
+    const { rendererId } = this.props;
+    this.postMessage({
+      type: 'playgroundCommand',
+      payload: { rendererId, command }
+    });
+  };
+
   setFixtureState: SetFixtureState = stateUpdate => {
     if (!this.state.selectedFixture) {
       console.warn(
