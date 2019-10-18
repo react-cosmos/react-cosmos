@@ -20,12 +20,22 @@ const { onLoad, namedPlug, register } = createPlugin<FixtureSearchSpec>({
   }
 });
 
-onLoad(({ setState }) => {
+onLoad(pluginContext => {
+  const { getMethodsOf, setState } = pluginContext;
+  const core = getMethodsOf<CoreSpec>('core');
+  return core.registerCommands({
+    searchFixtures: () => setState(prevState => ({ ...prevState, open: true }))
+  });
+});
+
+onLoad(pluginContext => {
+  const { getMethodsOf } = pluginContext;
+  const core = getMethodsOf<CoreSpec>('core');
   function handleWindowKeyDown(e: KeyboardEvent) {
     const metaKey = e.metaKey || e.ctrlKey;
     if (metaKey && (e.keyCode === KEY_P || e.keyCode === KEY_K)) {
       e.preventDefault();
-      setState(prevState => ({ ...prevState, open: true }));
+      core.runCommand('searchFixtures');
     }
   }
   window.addEventListener('keydown', handleWindowKeyDown);
