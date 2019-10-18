@@ -48,7 +48,7 @@ function useOpen(
             // No need to notify when everything is OK
             return;
           case 400:
-            return onError('This looks like a bug. Let us know please!');
+            return onError('This looks like a bug. Please let us know!');
           case 404:
             return onError('File is missing. Weird!');
           default:
