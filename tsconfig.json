@@ -6,7 +6,7 @@
 // 3. Used by global check-types command (which runs in CI)
 {
   "compilerOptions": {
-    "lib": ["dom", "es2015"],
+    "lib": ["dom", "es2015", "esnext"],
     "target": "es5",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,

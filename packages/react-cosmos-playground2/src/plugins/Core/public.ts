@@ -7,7 +7,12 @@ export type CoreSpec = {
     devServerOn: boolean;
     webRendererUrl: null | string;
   };
+  state: {
+    commands: Record<string, () => unknown>;
+  };
   methods: {
+    registerCommands(commands: Record<string, () => unknown>): () => unknown;
+    runCommand(name: string): unknown;
     getProjectId(): string;
     getFixtureFileVars(): { fixturesDir: string; fixtureFileSuffix: string };
     isDevServerOn(): boolean;
