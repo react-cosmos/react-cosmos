@@ -68,7 +68,7 @@ it('shows 400 error notification', async () => {
         id: expect.any(String),
         type: 'error',
         title: 'Failed to open fixture',
-        info: 'This looks like a bug. Let us know please!'
+        info: 'This looks like a bug. Please let us know!'
       })
     );
   });
