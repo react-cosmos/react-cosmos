@@ -1,10 +1,11 @@
 import { omit } from 'lodash';
+import { registerShortcuts } from 'react-cosmos-shared2/playground';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { CoreSpec } from './public';
 
 type CoreContext = PluginContext<CoreSpec>;
 
-const { register } = createPlugin<CoreSpec>({
+const { onLoad, register } = createPlugin<CoreSpec>({
   name: 'core',
   initialState: {
     commands: {}
@@ -27,6 +28,10 @@ const { register } = createPlugin<CoreSpec>({
 });
 
 export { register };
+
+onLoad(pluginContext =>
+  registerShortcuts(command => runCommand(pluginContext, command))
+);
 
 function registerCommands(
   { setState }: CoreContext,

@@ -1,7 +1,6 @@
 import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { createPlugin, PluginContext } from 'react-plugin';
-import { KEY_K, KEY_P } from '../../shared/keys';
 import { CoreSpec } from '../Core/public';
 import { FixtureTreeSpec } from '../FixtureTree/public';
 import { RendererCoreSpec } from '../RendererCore/public';
@@ -26,20 +25,6 @@ onLoad(pluginContext => {
   return core.registerCommands({
     searchFixtures: () => setState(prevState => ({ ...prevState, open: true }))
   });
-});
-
-onLoad(pluginContext => {
-  const { getMethodsOf } = pluginContext;
-  const core = getMethodsOf<CoreSpec>('core');
-  function handleWindowKeyDown(e: KeyboardEvent) {
-    const metaKey = e.metaKey || e.ctrlKey;
-    if (metaKey && (e.keyCode === KEY_P || e.keyCode === KEY_K)) {
-      e.preventDefault();
-      core.runCommand('searchFixtures');
-    }
-  }
-  window.addEventListener('keydown', handleWindowKeyDown);
-  return () => window.removeEventListener('keydown', handleWindowKeyDown);
 });
 
 namedPlug('navRow', 'fixtureSearch', ({ pluginContext }) => {
