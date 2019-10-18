@@ -1,3 +1,5 @@
+export type Commands = Record<string, () => unknown>;
+
 export type CoreSpec = {
   name: 'core';
   config: {
@@ -7,7 +9,12 @@ export type CoreSpec = {
     devServerOn: boolean;
     webRendererUrl: null | string;
   };
+  state: {
+    commands: Commands;
+  };
   methods: {
+    registerCommands(commands: Commands): () => void;
+    runCommand(name: string): unknown;
     getProjectId(): string;
     getFixtureFileVars(): { fixturesDir: string; fixtureFileSuffix: string };
     isDevServerOn(): boolean;

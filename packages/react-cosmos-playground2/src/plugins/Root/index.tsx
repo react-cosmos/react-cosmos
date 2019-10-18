@@ -34,6 +34,14 @@ onLoad(context => {
   });
 });
 
+onLoad(context => {
+  const core = context.getMethodsOf<CoreSpec>('core');
+  return core.registerCommands({
+    toggleFixtureList: () => openNav(context, !isNavOpen(context)),
+    toggleControlPanel: () => openPanel(context, !isPanelOpen(context))
+  });
+});
+
 plug('root', ({ pluginContext }) => {
   const { getConfig, getState, getMethodsOf } = pluginContext;
   const router = getMethodsOf<RouterSpec>('router');

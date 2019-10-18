@@ -83,6 +83,10 @@ const Header = styled.h1`
 
 const Paragraph = styled.p`
   margin: 16px 0;
+
+  :last-child {
+    margin-bottom: 0;
+  }
 `;
 
 const List = styled.ul`

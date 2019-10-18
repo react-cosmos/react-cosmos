@@ -1,17 +1,32 @@
-import { RendererConnect, RendererRequest } from '../renderer';
+import {
+  RendererConnect,
+  RendererRequest,
+  RendererResponse
+} from '../renderer';
+import { registerShortcuts } from '../playground';
 
 export function createPostMessageConnect(): RendererConnect {
+  function postMessage(msg: RendererResponse) {
+    parent.postMessage(msg, '*');
+  }
+
   return {
-    postMessage(msg) {
-      parent.postMessage(msg, '*');
-    },
+    postMessage,
 
     onMessage(onMessage) {
       function handleMessage(msg: { data: RendererRequest }) {
         onMessage(msg.data);
       }
       window.addEventListener('message', handleMessage, false);
-      return () => window.removeEventListener('message', handleMessage);
+
+      const removeShortcuts = registerShortcuts(command => {
+        postMessage({ type: 'playgroundCommand', payload: { command } });
+      });
+
+      return () => {
+        window.removeEventListener('message', handleMessage);
+        removeShortcuts();
+      };
     }
   };
 }

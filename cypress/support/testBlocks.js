@@ -52,6 +52,16 @@ export function selectFixtureTests() {
         .click()
         .should('have.text', '555555557 times');
     });
+
+    it('renders searched fixture', () => {
+      getRendererBody().type(`{meta}{shift}p`);
+      cy.get('[placeholder="Fixture search"]')
+        .type(`{downarrow}`)
+        .type('{enter}');
+      getRendererBody()
+        .find('#root')
+        .should('have.text', 'Hello World!');
+    });
   });
 }
 

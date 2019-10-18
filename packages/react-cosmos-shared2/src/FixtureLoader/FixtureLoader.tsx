@@ -70,9 +70,7 @@ export class FixtureLoader extends React.Component<Props, State> {
   }
 
   componentWillUnmount() {
-    if (this.unsubscribe) {
-      this.unsubscribe();
-    }
+    if (this.unsubscribe) this.unsubscribe();
   }
 
   componentDidUpdate(prevProps: Props) {
