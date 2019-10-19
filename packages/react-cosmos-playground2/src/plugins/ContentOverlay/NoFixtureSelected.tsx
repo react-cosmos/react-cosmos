@@ -21,7 +21,7 @@ export function NoFixtureSelected({ onShowWelcome }: Props) {
         <TextContainer>
           <KeyShortcut keys={['⌘', 'P']} label="Search fixtures" />
           <Subtitle>FIXTURE SELECTED</Subtitle>
-          <KeyShortcut keys={['⌘', '⇧', 'P']} label="Toggle fixture list" />
+          <KeyShortcut keys={['⌘', '⇧', 'L']} label="Toggle fixture list" />
           <KeyShortcut keys={['⌘', '⇧', 'K']} label="Toggle control panel" />
           <KeyShortcut keys={['⌘', '⇧', 'E']} label="Edit fixture" />
           <KeyShortcut keys={['⌘', '⇧', 'F']} label="Go full screen" />
