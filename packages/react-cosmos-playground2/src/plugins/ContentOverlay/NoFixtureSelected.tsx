@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { BlankCanvasIllustration } from '../../shared/illustrations';
+import { screenGrey3 } from '../../shared/ui/colors';
+import { KeyShortcut } from './KeyShortcut';
 import {
   ContentContainer,
   IllustrationContainer,
-  SecondaryButton
+  SecondaryButton,
+  TextContainer
 } from './shared';
 
 type Props = {
@@ -15,6 +18,14 @@ export function NoFixtureSelected({ onShowWelcome }: Props) {
   return (
     <>
       <ContentContainer>
+        <TextContainer>
+          <KeyShortcut keys={['⌘', 'P']} label="Search fixtures" />
+          <Subtitle>FIXTURE SELECTED</Subtitle>
+          <KeyShortcut keys={['⌘', '⇧', 'L']} label="Toggle fixture list" />
+          <KeyShortcut keys={['⌘', '⇧', 'K']} label="Toggle control panel" />
+          <KeyShortcut keys={['⌘', '⇧', 'E']} label="Edit fixture" />
+          <KeyShortcut keys={['⌘', '⇧', 'F']} label="Go full screen" />
+        </TextContainer>
         <IllustrationContainer>
           <BlankCanvasIllustration title="blank state" />
         </IllustrationContainer>
@@ -25,6 +36,16 @@ export function NoFixtureSelected({ onShowWelcome }: Props) {
     </>
   );
 }
+
+const Subtitle = styled.div`
+  margin: 40px 0 24px -82px;
+  padding-left: 50%;
+  color: ${screenGrey3};
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 14px;
+  letter-spacing: 0.5px;
+`;
 
 const ShowWelcomeButton = styled(SecondaryButton)`
   position: absolute;

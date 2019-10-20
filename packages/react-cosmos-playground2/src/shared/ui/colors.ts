@@ -27,7 +27,7 @@ export const lightBlue = '#63b3ed';
 // Screen colors
 
 export const screenGrey1 = 'hsl(230, 17%, 22%)';
-export const screenGrey2 = 'hsl(230, 19%, 23%)';
+export const screenGrey2 = 'hsl(230, 19%, 33%)';
 export const screenGrey3 = 'hsl(230, 22%, 49%)';
 export const screenGrey4 = 'hsl(230, 25%, 74%)';
 export const screenGrey5 = 'hsl(230, 28%, 85%)';
