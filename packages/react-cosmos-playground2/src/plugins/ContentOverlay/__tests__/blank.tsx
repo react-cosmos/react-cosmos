@@ -15,7 +15,7 @@ afterEach(resetPlugins);
 function registerTestPlugins() {
   register();
   const storage: Record<string, unknown> = {
-    [WELCOME_DISMISS_STORAGE_KEY]: true
+    [WELCOME_DISMISS_STORAGE_KEY]: Date.now() - 5000 // Dismissed 5s ago
   };
   mockStorage({
     getItem: (context, key: string) => storage[key]
