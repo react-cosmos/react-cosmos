@@ -1,9 +1,9 @@
-import { getCwdPath } from '../../testHelpers/cwd';
+import path from 'path';
 import { createCosmosConfig } from '..';
 
 it('returns resolved default watchDirs', () => {
   const cosmosConfig = createCosmosConfig(process.cwd());
-  expect(cosmosConfig.watchDirs).toEqual([getCwdPath('.')]);
+  expect(cosmosConfig.watchDirs).toEqual([process.cwd()]);
 });
 
 it('returns resolved custom watchDirs', () => {
@@ -11,7 +11,7 @@ it('returns resolved custom watchDirs', () => {
     watchDirs: ['src1', 'src2']
   });
   expect(cosmosConfig.watchDirs).toEqual([
-    getCwdPath('src1'),
-    getCwdPath('src2')
+    path.resolve(process.cwd(), 'src1'),
+    path.resolve(process.cwd(), 'src2')
   ]);
 });
