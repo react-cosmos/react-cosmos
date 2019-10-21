@@ -2,23 +2,23 @@ import React from 'react';
 import { StorageSpec } from '../Storage/public';
 import { ContentOverlayContext } from './shared';
 
-export const DISMISS_STATE_STORAGE_KEY = 'welcomeDismissed';
-const DISMISS_STATE_DEFAULT = false;
+export const WELCOME_DISMISS_STORAGE_KEY = 'welcomeDismissedAt';
+const SHOW_AGAIN_IN = 90 * 86400 * 1000; // ~3 months
 
-// TODO: Show welcome screen every 3 months (welcomeDismissedAt)
-export function useWelcomeDismissState(context: ContentOverlayContext) {
+export function useWelcomeDismiss(context: ContentOverlayContext) {
   const { getMethodsOf } = context;
   const storage = getMethodsOf<StorageSpec>('storage');
+  const welcomeDismissedAt =
+    storage.getItem<number>(WELCOME_DISMISS_STORAGE_KEY) || 0;
 
-  const welcomeDismissed =
-    storage.getItem<boolean>(DISMISS_STATE_STORAGE_KEY) ||
-    DISMISS_STATE_DEFAULT;
+  // Show welcome screen again after a while
+  const welcomeDismissed = welcomeDismissedAt > Date.now() - SHOW_AGAIN_IN;
   const onDismissWelcome = React.useCallback(
-    () => storage.setItem(DISMISS_STATE_STORAGE_KEY, true),
+    () => storage.setItem(WELCOME_DISMISS_STORAGE_KEY, Date.now()),
     [storage]
   );
   const onShowWelcome = React.useCallback(
-    () => storage.setItem(DISMISS_STATE_STORAGE_KEY, false),
+    () => storage.setItem(WELCOME_DISMISS_STORAGE_KEY, 0),
     [storage]
   );
 

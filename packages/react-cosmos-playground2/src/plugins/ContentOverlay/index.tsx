@@ -5,7 +5,7 @@ import { RouterSpec } from '../Router/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { RendererPreviewSpec } from '../RendererPreview/public';
 import { ContentOverlaySpec } from './public';
-import { useWelcomeDismissState } from './welcomeDismiss';
+import { useWelcomeDismiss } from './welcomeDismiss';
 
 const { plug, register } = createPlugin<ContentOverlaySpec>({
   name: 'contentOverlay'
@@ -21,7 +21,7 @@ plug('contentOverlay', ({ pluginContext }) => {
     welcomeDismissed,
     onDismissWelcome,
     onShowWelcome
-  } = useWelcomeDismissState(pluginContext);
+  } = useWelcomeDismiss(pluginContext);
 
   return (
     <ContentOverlay

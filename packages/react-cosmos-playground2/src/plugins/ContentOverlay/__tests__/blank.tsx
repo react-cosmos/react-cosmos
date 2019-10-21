@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import React from 'react';
-import { loadPlugins, Slot, resetPlugins } from 'react-plugin';
+import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { register } from '..';
 import {
   mockRendererCore,
@@ -8,14 +8,14 @@ import {
   mockRouter,
   mockStorage
 } from '../../../testHelpers/pluginMocks';
-import { DISMISS_STATE_STORAGE_KEY } from '../welcomeDismiss';
+import { WELCOME_DISMISS_STORAGE_KEY } from '../welcomeDismiss';
 
 afterEach(resetPlugins);
 
 function registerTestPlugins() {
   register();
   const storage: Record<string, unknown> = {
-    [DISMISS_STATE_STORAGE_KEY]: true
+    [WELCOME_DISMISS_STORAGE_KEY]: true
   };
   mockStorage({
     getItem: (context, key: string) => storage[key]
