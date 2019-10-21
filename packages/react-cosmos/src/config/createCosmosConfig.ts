@@ -1,3 +1,4 @@
+import path from 'path';
 import { getCliArgs } from '../shared/cli';
 import { resolveModule, resolvePath } from './resolve';
 import { CosmosConfig, CosmosConfigInput } from './shared';
@@ -49,7 +50,7 @@ function getFixtureFileSuffix({
 
 function getWatchDirs(cosmosConfigInput: CosmosConfigInput, rootDir: string) {
   const { watchDirs = ['.'] } = cosmosConfigInput;
-  return watchDirs.map(watchDir => resolvePath(rootDir, watchDir));
+  return watchDirs.map(watchDir => path.resolve(rootDir, watchDir));
 }
 
 function getUserDepsFilePath(
