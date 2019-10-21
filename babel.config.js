@@ -1,3 +1,6 @@
+// useBuiltIns: 'usage' would remove the need to import the core-js and
+// regenerator-runtime polyfills in every entry point, but it crashes on IE11
+// https://stackoverflow.com/q/40897966/128816
 const envOptions = {
   targets: { ie: '11' }
 };
