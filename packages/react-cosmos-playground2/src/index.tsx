@@ -1,5 +1,6 @@
-import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+import 'core-js/features/promise';
+import 'core-js/features/array/includes';
 import 'whatwg-fetch';
 
 import React from 'react';
