@@ -33,7 +33,11 @@ export function registerShortcuts(runCommand: (command: string) => unknown) {
 }
 
 function isEditing() {
-  const tags = ['input', 'textarea', 'select'];
   const activeElement = document.activeElement;
-  return activeElement && tags.includes(activeElement.tagName.toLowerCase());
+  return activeElement && isInputTag(activeElement.tagName);
+}
+
+function isInputTag(tagName: string) {
+  const inputTags = ['input', 'textarea', 'select'];
+  return inputTags.includes(tagName.toLowerCase());
 }

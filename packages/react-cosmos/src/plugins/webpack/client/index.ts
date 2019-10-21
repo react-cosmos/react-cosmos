@@ -1,3 +1,7 @@
+import 'regenerator-runtime/runtime';
+import 'core-js/features/promise';
+import 'core-js/features/array/includes';
+
 import { mountDomRenderer } from '../../../dom';
 import { dismissErrorOverlay } from './errorOverlay';
 import './hmrErrorHandler';
