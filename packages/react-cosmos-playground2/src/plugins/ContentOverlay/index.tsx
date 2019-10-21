@@ -5,7 +5,7 @@ import { RouterSpec } from '../Router/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { RendererPreviewSpec } from '../RendererPreview/public';
 import { ContentOverlaySpec } from './public';
-import { getWelcomeDismissState } from './welcomeDismissState';
+import { useWelcomeDismiss } from './welcomeDismiss';
 
 const { plug, register } = createPlugin<ContentOverlaySpec>({
   name: 'contentOverlay'
@@ -17,15 +17,11 @@ plug('contentOverlay', ({ pluginContext }) => {
   const fixtureSelected = router.getSelectedFixtureId() !== null;
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const rendererPreview = getMethodsOf<RendererPreviewSpec>('rendererPreview');
-  const { welcomeDismissed, setWelcomeDismissed } = getWelcomeDismissState(
-    pluginContext
-  );
-  const onDismissWelcome = React.useCallback(() => setWelcomeDismissed(true), [
-    setWelcomeDismissed
-  ]);
-  const onShowWelcome = React.useCallback(() => setWelcomeDismissed(false), [
-    setWelcomeDismissed
-  ]);
+  const {
+    welcomeDismissed,
+    onDismissWelcome,
+    onShowWelcome
+  } = useWelcomeDismiss(pluginContext);
 
   return (
     <ContentOverlay

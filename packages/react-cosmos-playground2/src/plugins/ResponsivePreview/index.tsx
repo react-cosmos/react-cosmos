@@ -70,34 +70,28 @@ namedPlug('rendererAction', 'responsivePreview', ({ pluginContext }) => {
 
 export { register };
 
-function useViewportChange(pluginContext: ResponsivePreviewContext) {
-  const viewportState = getViewportState(pluginContext);
+function useViewportChange(context: ResponsivePreviewContext) {
+  const viewportState = getViewportState(context);
   return React.useCallback(
     (viewport: Viewport) => {
-      setViewportState(pluginContext, {
-        ...viewportState,
-        enabled: true,
-        viewport
-      });
-      setFixtureStateViewport(pluginContext, viewport);
+      setViewportState(context, { ...viewportState, enabled: true, viewport });
+      setFixtureStateViewport(context, viewport);
     },
-    [pluginContext, viewportState]
+    [context, viewportState]
   );
 }
 
-function useScaledChange(pluginContext: ResponsivePreviewContext) {
-  const viewportState = getViewportState(pluginContext);
+function useScaledChange(context: ResponsivePreviewContext) {
+  const viewportState = getViewportState(context);
   return React.useCallback(
     (scaled: boolean) =>
-      setViewportState(pluginContext, { ...viewportState, scaled }),
-    [pluginContext, viewportState]
+      setViewportState(context, { ...viewportState, scaled }),
+    [context, viewportState]
   );
 }
 
-function getViewportState(
-  pluginContext: ResponsivePreviewContext
-): ViewportState {
-  const { getMethodsOf } = pluginContext;
+function getViewportState(context: ResponsivePreviewContext): ViewportState {
+  const { getMethodsOf } = context;
   const storage = getMethodsOf<StorageSpec>('storage');
   return (
     storage.getItem<ViewportState>(VIEWPORT_STORAGE_KEY) ||
@@ -106,19 +100,19 @@ function getViewportState(
 }
 
 function setViewportState(
-  pluginContext: ResponsivePreviewContext,
+  context: ResponsivePreviewContext,
   viewportState: ViewportState
 ) {
-  const { getMethodsOf } = pluginContext;
+  const { getMethodsOf } = context;
   const storage = getMethodsOf<StorageSpec>('storage');
   storage.setItem(VIEWPORT_STORAGE_KEY, viewportState);
 }
 
 function setFixtureStateViewport(
-  pluginContext: ResponsivePreviewContext,
+  context: ResponsivePreviewContext,
   viewport: null | Viewport
 ) {
-  const { getMethodsOf } = pluginContext;
+  const { getMethodsOf } = context;
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   rendererCore.setFixtureState(fixtureState => ({ ...fixtureState, viewport }));
 }

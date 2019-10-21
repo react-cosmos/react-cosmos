@@ -97,8 +97,8 @@ function useOnClose({ setState }: FixtureSearchContext) {
   );
 }
 
-function useOnSelect(pluginContext: FixtureSearchContext) {
-  const { setState, getMethodsOf } = pluginContext;
+function useOnSelect(context: FixtureSearchContext) {
+  const { setState, getMethodsOf } = context;
   const router = getMethodsOf<RouterSpec>('router');
   const fixtureTree = getMethodsOf<FixtureTreeSpec>('fixtureTree');
 

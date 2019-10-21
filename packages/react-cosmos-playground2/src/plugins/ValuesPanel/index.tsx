@@ -36,8 +36,8 @@ namedPlug<ControlPanelRowSlotProps>(
 export { register };
 
 // TODO: Persist tree expansion state per fixture ID
-function useTreeExpansionStorage(pluginContext: ValuesPanelContext) {
-  const { getMethodsOf } = pluginContext;
+function useTreeExpansionStorage(context: ValuesPanelContext) {
+  const { getMethodsOf } = context;
   const storage = getMethodsOf<StorageSpec>('storage');
 
   const treeExpansion =

@@ -8,7 +8,8 @@ const { plug, register } = createPlugin<RendererSelectSpec>({
   name: 'rendererSelect'
 });
 
-plug('controlPanelRow', ({ pluginContext: { getMethodsOf } }) => {
+plug('controlPanelRow', ({ pluginContext }) => {
+  const { getMethodsOf } = pluginContext;
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const primaryRendererId = rendererCore.getPrimaryRendererId();
   const connectedRendererIds = rendererCore.getConnectedRendererIds();
