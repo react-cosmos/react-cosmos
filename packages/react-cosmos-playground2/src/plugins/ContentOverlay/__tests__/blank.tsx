@@ -8,7 +8,7 @@ import {
   mockRouter,
   mockStorage
 } from '../../../testHelpers/pluginMocks';
-import { DISMISS_STATE_STORAGE_KEY } from '../welcomeDismissState';
+import { DISMISS_STATE_STORAGE_KEY } from '../welcomeDismiss';
 
 afterEach(resetPlugins);
 
