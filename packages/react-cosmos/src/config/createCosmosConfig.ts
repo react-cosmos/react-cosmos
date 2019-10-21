@@ -50,6 +50,11 @@ function getFixtureFileSuffix({
 
 function getWatchDirs(cosmosConfigInput: CosmosConfigInput, rootDir: string) {
   const { watchDirs = ['.'] } = cosmosConfigInput;
+  // Watchpack v1.6.0 (and by extensions webpack v4) has problems watching
+  // directories with forward slashes on Windows. Use backslashes until it gets
+  // fixed.
+  // See https://github.com/webpack/watchpack/issues/123 and
+  // https://github.com/react-cosmos/react-cosmos/issues/1069
   return watchDirs.map(watchDir => path.resolve(rootDir, watchDir));
 }
 
