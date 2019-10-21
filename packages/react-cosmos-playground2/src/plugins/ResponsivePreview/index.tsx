@@ -74,11 +74,7 @@ function useViewportChange(context: ResponsivePreviewContext) {
   const viewportState = getViewportState(context);
   return React.useCallback(
     (viewport: Viewport) => {
-      setViewportState(context, {
-        ...viewportState,
-        enabled: true,
-        viewport
-      });
+      setViewportState(context, { ...viewportState, enabled: true, viewport });
       setFixtureStateViewport(context, viewport);
     },
     [context, viewportState]
