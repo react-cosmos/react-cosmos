@@ -63,11 +63,8 @@ export { register };
 
 const DEFAULT_TREE_EXPANSION = {};
 
-function useFixtureExpansion(
-  pluginContext: PropsPanelContext,
-  fixtureId: FixtureId
-) {
-  const { getMethodsOf } = pluginContext;
+function useFixtureExpansion(context: PropsPanelContext, fixtureId: FixtureId) {
+  const { getMethodsOf } = context;
   const storage = getMethodsOf<StorageSpec>('storage');
 
   const propsExpansion =

@@ -13,11 +13,11 @@ import {
 } from './shared';
 
 export function revealFixture(
-  pluginContext: FixtureTreeContext,
+  context: FixtureTreeContext,
   fixtureId: FixtureId
 ) {
-  const { getMethodsOf } = pluginContext;
-  const storage = pluginContext.getMethodsOf<StorageSpec>('storage');
+  const { getMethodsOf } = context;
+  const storage = context.getMethodsOf<StorageSpec>('storage');
   const core = getMethodsOf<CoreSpec>('core');
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const { fixturesDir, fixtureFileSuffix } = core.getFixtureFileVars();

@@ -46,10 +46,10 @@ export { register };
 const DEFAULT_TREE_EXPANSION = {};
 
 function useFixtureExpansion(
-  pluginContext: ClassStatePanelContext,
+  context: ClassStatePanelContext,
   fixtureId: FixtureId
 ) {
-  const { getMethodsOf } = pluginContext;
+  const { getMethodsOf } = context;
   const storage = getMethodsOf<StorageSpec>('storage');
 
   const classStateExpansion =

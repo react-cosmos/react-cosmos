@@ -117,8 +117,8 @@ plug('root', ({ pluginContext }) => {
 
 export { register };
 
-function useFixtureTree(pluginContext: RootContext) {
-  const { getMethodsOf } = pluginContext;
+function useFixtureTree(context: RootContext) {
+  const { getMethodsOf } = context;
 
   const core = getMethodsOf<CoreSpec>('core');
   const { fixturesDir, fixtureFileSuffix } = core.getFixtureFileVars();
@@ -132,14 +132,14 @@ function useFixtureTree(pluginContext: RootContext) {
   );
 }
 
-function useOpenNav(pluginContext: RootContext) {
+function useOpenNav(context: RootContext) {
   return React.useCallback(() => {
-    openNav(pluginContext, !isNavOpen(pluginContext));
-  }, [pluginContext]);
+    openNav(context, !isNavOpen(context));
+  }, [context]);
 }
 
-function useOpenPanel(pluginContext: RootContext) {
+function useOpenPanel(context: RootContext) {
   return React.useCallback(() => {
-    openPanel(pluginContext, !isPanelOpen(pluginContext));
-  }, [pluginContext]);
+    openPanel(context, !isPanelOpen(context));
+  }, [context]);
 }
