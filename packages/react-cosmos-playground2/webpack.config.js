@@ -36,7 +36,7 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        include: [/packages\/react-cosmos-playground2\/src/],
+        include: src,
         use: {
           loader: 'babel-loader'
         }

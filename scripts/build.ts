@@ -216,7 +216,8 @@ function runAsyncTask({ cmd, args, env = {} }: RunAsyncTaskArgs) {
       env: {
         ...process.env,
         ...env
-      }
+      },
+      shell: true
     });
     cp.stdout.on('data', data => {
       stdout.write(data);
