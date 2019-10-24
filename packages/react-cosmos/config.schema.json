@@ -55,43 +55,40 @@
       "description": "Dev server port. [default: 5000]",
       "type": "number"
     },
-	"httpProxy": {
-	  "description": "Proxy some URLs to a different HTTP server (eg. an API backend dev server). Similar to devServer.proxy in webpack config.",
-	  "type": "object",
-	  "additionalProperties": true,
-	  "patternProperties": {
-		".*": {
-		  "type": "string"
-		},
-		"/.*": {
-		  "type": "object",
-		  "description": "advanced http proxy config",
-		  "additionalProperties": true,
-		  "required": [
-		    "target"
-		  ],
-		  "properties": {
-			"target": {
-			  "type": "string"
-			},
-			"secure": {
-			  "type": "boolean"
-			},
-			"pathRewrite": {
-			  "type": "object",
-			  "patternProperties": {
-				".*": {
-			      "type": "string"
-			    }
-		      }
-		    },
-		    "logLevel": {
-		      "type": "string"
-		    }
-	  	  }
-	    }
-	  }
-	},
+    "httpProxy": {
+      "description": "Proxy some URLs to a different HTTP server (eg. an API backend dev server). Similar to devServer.proxy in webpack config.",
+      "type": "object",
+      "additionalProperties": true,
+      "patternProperties": {
+        ".*": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "description": "Advanced HTTP proxy config",
+              "additionalProperties": true,
+              "required": ["target"],
+              "properties": {
+                "target": { "type": "string" },
+                "secure": { "type": "boolean" },
+                "pathRewrite": {
+                  "type": "object",
+                  "patternProperties": {
+                    ".*": { "type": "string" }
+                  }
+                },
+                "logLevel": {
+                  "type": "string",
+                  "enum": ["error", "debug", "info", "warn", "silent"]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
     "globalImports": {
       "description": "Modules to be imported before loading components. Stuff like reset.css, polyfills, etc.",
       "type": "array",
