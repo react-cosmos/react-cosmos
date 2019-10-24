@@ -67,7 +67,7 @@
             },
             {
               "type": "object",
-              "description": "Advanced HTTP proxy config",
+              "description": "Advanced HTTP proxy config.",
               "additionalProperties": true,
               "required": ["target"],
               "properties": {
