@@ -16,13 +16,12 @@ type HttpProxyConfig = {
 export function httpProxy({ cosmosConfig, expressApp }: DevServerPluginArgs) {
   const httpProxyConfig = getHttpProxyCosmosConfig(cosmosConfig);
   Object.keys(httpProxyConfig).forEach(context => {
-    let proxy = {};
-    if (typeof httpProxyConfig[context] === 'string') {
-      proxy = { target: httpProxyConfig[context] };
-    } else if (typeof httpProxyConfig[context] === 'object') {
-      proxy = httpProxyConfig[context];
+    const config = httpProxyConfig[context];
+    if (typeof config === 'string') {
+      expressApp.use(context, httpProxyMiddleware(context, { target: config }));
+    } else if (typeof config === 'object') {
+      expressApp.use(context, httpProxyMiddleware(context, config));
     }
-    expressApp.use(context, httpProxyMiddleware(proxy));
   });
 }
 
