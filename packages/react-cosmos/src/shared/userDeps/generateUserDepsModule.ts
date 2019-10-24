@@ -1,6 +1,6 @@
 import path from 'path';
 import { CosmosConfig } from '../../config';
-import { slash } from '../slash';
+import slash from 'slash';
 import { findUserModulePaths } from './findUserModulePaths';
 
 // Warning: Renderer config must be serializable!
@@ -34,11 +34,13 @@ function genGlobalRequires(paths: string[]) {
     return '';
   }
 
+  // Forward slashes are necessary via slash() to avoid double-escaping
+  // backslashes on Windows
   return [
     '',
     '// Keeping global imports here is superior to making them bundle entry points',
     '// because this way they become hot-reloadable',
-    ...paths.map(importPath => `require('${importPath}');`),
+    ...paths.map(importPath => `require('${slash(importPath)}');`),
     ''
   ].join(`\n`);
 }

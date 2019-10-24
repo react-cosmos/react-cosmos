@@ -1,5 +1,5 @@
-import { slash } from '../shared/slash';
+import path from 'path';
 
-export function getCwdPath(relPath?: string) {
-  return relPath ? slash(process.cwd(), relPath) : process.cwd();
+export function getCwdPath(relPath = '.') {
+  return path.resolve(process.cwd(), relPath);
 }

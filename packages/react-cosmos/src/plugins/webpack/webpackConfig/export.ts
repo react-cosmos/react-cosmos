@@ -39,9 +39,8 @@ function getEntry() {
 function getOutput({ exportPath, publicUrl }: CosmosConfig) {
   const filename = '[name].js';
   return {
-    // Most paths are created using forward slashes regardless of the OS for
-    // consistency, but this one needs to have backslashes on Windows!
-    path: path.join(exportPath, publicUrl),
+    // Remove leading slash to make a relative url, suitable for path.resolve
+    path: path.resolve(exportPath, publicUrl.replace(/^\/+/, '')),
     filename,
     publicPath: publicUrl
   };
