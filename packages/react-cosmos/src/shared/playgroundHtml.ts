@@ -1,9 +1,9 @@
 import fs from 'fs';
+import url from 'url';
 import pkgUp from 'pkg-up';
 import { PlaygroundConfig } from 'react-cosmos-playground2';
 import { CosmosConfig } from '../config';
 import { PlatformType, replaceKeys } from './shared';
-import { slash } from './slash';
 import { getStaticPath } from './static';
 
 export const RENDERER_FILENAME = '_renderer.html';
@@ -75,7 +75,7 @@ function getProjectId(rootDir: string) {
 }
 
 function getWebRendererUrl({ publicUrl }: CosmosConfig) {
-  return slash(publicUrl, RENDERER_FILENAME);
+  return url.resolve(publicUrl, RENDERER_FILENAME);
 }
 
 function getPlaygroundHtml(playgroundConfig: PlaygroundConfig) {

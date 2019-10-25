@@ -4,7 +4,6 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import { NextHandleFunction } from 'connect';
 import webpackHotMiddleware from '@skidding/webpack-hot-middleware';
 import { BuildMessage } from 'react-cosmos-shared2/build';
-import { resolvePath } from '../../config';
 import { DevServerPluginArgs } from '../../shared/devServer';
 import { getRootUrl, serveStaticDir } from '../../shared/static';
 import { getWebpack } from './shared';
@@ -48,7 +47,7 @@ export async function webpackDevServer({
     if (webpackDerivedStaticPath !== null) {
       serveStaticDir(
         expressApp,
-        resolvePath(cosmosConfig.rootDir, webpackDerivedStaticPath),
+        path.resolve(cosmosConfig.rootDir, webpackDerivedStaticPath),
         cosmosConfig.publicUrl
       );
     }

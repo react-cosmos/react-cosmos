@@ -1,6 +1,6 @@
 import path from 'path';
 import { getCliArgs } from '../shared/cli';
-import { resolveModule, resolvePath } from './resolve';
+import { resolveModule } from './resolve';
 import { CosmosConfig, CosmosConfigInput } from './shared';
 
 export function createCosmosConfig(
@@ -26,12 +26,12 @@ export function createCosmosConfig(
 
 function getExportPath(cosmosConfigInput: CosmosConfigInput, rootDir: string) {
   const { exportPath = 'cosmos-export' } = cosmosConfigInput;
-  return resolvePath(rootDir, exportPath);
+  return path.resolve(rootDir, exportPath);
 }
 
 function getStaticPath(cosmosConfigInput: CosmosConfigInput, rootDir: string) {
   const { staticPath = null } = cosmosConfigInput;
-  return staticPath && resolvePath(rootDir, staticPath);
+  return staticPath && path.resolve(rootDir, staticPath);
 }
 
 function getPublicUrl({ publicUrl = '/' }: CosmosConfigInput) {
@@ -50,11 +50,6 @@ function getFixtureFileSuffix({
 
 function getWatchDirs(cosmosConfigInput: CosmosConfigInput, rootDir: string) {
   const { watchDirs = ['.'] } = cosmosConfigInput;
-  // Watchpack v1.6.0 (and by extensions webpack v4) has problems watching
-  // directories with forward slashes on Windows. Use backslashes until it gets
-  // fixed.
-  // See https://github.com/webpack/watchpack/issues/123 and
-  // https://github.com/react-cosmos/react-cosmos/issues/1069
   return watchDirs.map(watchDir => path.resolve(rootDir, watchDir));
 }
 
@@ -63,7 +58,7 @@ function getUserDepsFilePath(
   rootDir: string
 ) {
   const { userDepsFilePath = 'cosmos.userdeps.js' } = cosmosConfigInput;
-  return resolvePath(rootDir, userDepsFilePath);
+  return path.resolve(rootDir, userDepsFilePath);
 }
 
 function getHostname({ hostname = null }: CosmosConfigInput) {

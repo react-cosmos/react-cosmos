@@ -57,10 +57,13 @@ function exportPlaygroundFiles(cosmosConfig: CosmosConfig) {
 
   fs.copySync(
     require.resolve('react-cosmos-playground2/dist'),
-    `${exportPath}/_playground.js`
+    path.resolve(exportPath, '_playground.js')
   );
-  fs.copySync(getStaticPath('favicon.ico'), `${exportPath}/_cosmos.ico`);
+  fs.copySync(
+    getStaticPath('favicon.ico'),
+    path.resolve(exportPath, '_cosmos.ico')
+  );
 
   const playgroundHtml = getExportPlaygroundHtml(cosmosConfig);
-  fs.writeFileSync(`${exportPath}/index.html`, playgroundHtml);
+  fs.writeFileSync(path.resolve(exportPath, 'index.html'), playgroundHtml);
 }

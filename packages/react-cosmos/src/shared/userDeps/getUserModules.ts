@@ -7,7 +7,7 @@ import {
 } from 'react-cosmos-shared2/react';
 import { findUserModulePaths } from '.';
 import { CosmosConfig } from '../../config';
-import { slash } from '../slash';
+import slash from 'slash';
 
 type UserModules = {
   fixtureExportsByPath: ReactFixtureExportsByPath;
@@ -39,6 +39,9 @@ export async function getUserModules({
 function getDefaultExportsByPath<T>(paths: string[], rootDir: string) {
   const exportsByPath: { [path: string]: T } = {};
   paths.forEach(p => {
+    // Converting to forward slashes on Windows is important because the
+    // slashes are used for generating a sorted list of fixtures and
+    // decorators.
     const relPath = slash(path.relative(rootDir, p));
     exportsByPath[relPath] = require(p).default;
   });
