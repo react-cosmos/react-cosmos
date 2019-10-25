@@ -7,7 +7,7 @@
   "repository": "https://github.com/react-cosmos/react-cosmos",
   "license": "MIT",
   "scripts": {
-    "prettify": "prettier --write \"{{packages/*/src,examples,cypress,scripts}/**/,}*.{js,jsx,ts,tsx,css,md}\"",
+    "prettify": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
     "check-types": "tsc",
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "test:unit": "jest --config .jest/config.js",

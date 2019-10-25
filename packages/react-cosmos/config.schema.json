@@ -60,7 +60,33 @@
       "type": "object",
       "additionalProperties": true,
       "patternProperties": {
-        ".*": { "type": "string" }
+        ".*": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "description": "Advanced HTTP proxy config.",
+              "additionalProperties": true,
+              "required": ["target"],
+              "properties": {
+                "target": { "type": "string" },
+                "secure": { "type": "boolean" },
+                "pathRewrite": {
+                  "type": "object",
+                  "patternProperties": {
+                    ".*": { "type": "string" }
+                  }
+                },
+                "logLevel": {
+                  "type": "string",
+                  "enum": ["error", "debug", "info", "warn", "silent"]
+                }
+              }
+            }
+          ]
+        }
       }
     },
     "globalImports": {
