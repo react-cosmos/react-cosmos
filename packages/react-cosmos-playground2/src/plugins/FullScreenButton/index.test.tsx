@@ -33,3 +33,11 @@ it('renders fullscreen button', async () => {
 
   windowOpenMock.unmock();
 });
+
+it('does not render fullscreen button without renderer URL', async () => {
+  register();
+  mockCore({ getWebRendererUrl: () => null });
+
+  const { queryByTitle } = loadTestPlugins();
+  expect(queryByTitle(/go fullscreen/i)).toBeNull();
+});
