@@ -5,7 +5,7 @@ import { StateUpdater } from 'react-cosmos-shared2/util';
 import { ArraySlot, Slot } from 'react-plugin';
 import styled from 'styled-components';
 import { TreeNode } from '../../shared/tree';
-import { grey32, white10 } from '../../shared/ui/colors';
+import { grey32, grey8, white10 } from '../../shared/ui/colors';
 import { useDrag } from '../../shared/ui/useDrag';
 import { ControlPanel } from './ControlPanel';
 import { GlobalHeader } from './GlobalHeader';
@@ -175,6 +175,8 @@ const RendererBody = styled.div`
   flex: 1;
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
+  background: ${grey8};
   overflow: hidden;
 `;
 
