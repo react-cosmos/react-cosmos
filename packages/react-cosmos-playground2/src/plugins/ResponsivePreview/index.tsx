@@ -1,5 +1,6 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
+import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { StorageSpec } from '../Storage/public';
 import { ResponsivePreviewSpec, Viewport } from './public';
@@ -47,10 +48,15 @@ plug('rendererPreviewOuter', ({ children, pluginContext }) => {
 
 namedPlug('rendererAction', 'responsivePreview', ({ pluginContext }) => {
   const { getMethodsOf } = pluginContext;
+  const core = getMethodsOf<CoreSpec>('core');
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const fixtureState = rendererCore.getFixtureState();
   const viewportState = getViewportState(pluginContext);
   const enabled = fixtureState.viewport ? true : viewportState.enabled;
+
+  if (!core.getWebRendererUrl()) {
+    return null;
+  }
 
   return (
     <ToggleButton

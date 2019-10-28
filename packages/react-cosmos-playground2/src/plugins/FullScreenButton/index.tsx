@@ -29,7 +29,7 @@ namedPlug<RendererActionSlotProps>(
       return core.registerCommands({ goFullScreen: onSelect });
     }, [core, onSelect]);
 
-    return <FullScreenButton onClick={onSelect} />;
+    return rendererUrl ? <FullScreenButton onClick={onSelect} /> : null;
   }
 );
 
