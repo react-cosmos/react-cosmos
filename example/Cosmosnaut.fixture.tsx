@@ -42,12 +42,15 @@ function Cosmosnaut({ transparency }: CosmosnautProps) {
       }}
     >
       <defs>
+        <clipPath id="mainCircleMask">
+          <circle cx="128" cy="128" r="128" />
+        </clipPath>
+        <clipPath id="planetMask">
+          <circle cx="24" cy="215" r="114" />
+        </clipPath>
         <linearGradient id="earthBaseGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" style={{ stopColor: '#2170a2', stopOpacity: 1 }} />
-          <stop
-            offset="100%"
-            style={{ stopColor: '#1573aa', stopOpacity: 1 }}
-          />
+          <stop offset="0%" stopColor="#2170a2" />
+          <stop offset="100%" stopColor="#1573aa" />
         </linearGradient>
         <radialGradient
           id="oceanGrad"
@@ -57,8 +60,8 @@ function Cosmosnaut({ transparency }: CosmosnautProps) {
           fx="43%"
           fy="65%"
         >
-          <stop offset="0%" style={{ stopColor: '#5ac1ea', stopOpacity: 1 }} />
-          <stop offset="89%" style={{ stopColor: '#064a87', stopOpacity: 1 }} />
+          <stop offset="0%" stopColor="#5ac1ea" />
+          <stop offset="89%" stopColor="#064a87" />
         </radialGradient>
         <filter id="earthGlow" y="-50%" width="150%">
           <feDropShadow
@@ -69,15 +72,9 @@ function Cosmosnaut({ transparency }: CosmosnautProps) {
             floodOpacity={1}
           />
         </filter>
-        <clipPath id="mainCircleMask">
-          <circle cx="128" cy="128" r="128" />
-        </clipPath>
-        <clipPath id="planetMask">
-          <circle cx="24" cy="215" r="114" />
-        </clipPath>
         <radialGradient id="earthGrad" cx={-7} cy={15} r={26}>
-          <stop offset="10%" style={{ stopColor: '#77db8f' }} />
-          <stop offset="99%" style={{ stopColor: '#419755' }} />
+          <stop offset="10%" stopColor="#77db8f" />
+          <stop offset="99%" stopColor="#419755" />
         </radialGradient>
       </defs>
       <rect
@@ -104,6 +101,96 @@ function Cosmosnaut({ transparency }: CosmosnautProps) {
         clipPath="url(#mainCircleMask)"
       />
       <Continents />
+
+      <defs>
+        <radialGradient id="helmetGrad" cx="55%" cy="55%" r={0.55}>
+          <stop offset="75%" stopColor="#eaedef" />
+          <stop offset="100%" stopColor="#a3bfd3" />
+        </radialGradient>
+        <linearGradient
+          id="helmetGlassGrad"
+          x1="0%"
+          y1="0%"
+          x2="100%"
+          y2="100%"
+        >
+          <stop offset="0%" stopColor="#092d45" />
+          <stop offset="100%" stopColor="#265980" />
+        </linearGradient>
+        <filter
+          id="helmentGlassShadow"
+          x="-50%"
+          width="200%"
+          y="-50%"
+          height="200%"
+        >
+          <feDropShadow
+            dx="-5"
+            dy="-3"
+            stdDeviation="2"
+            floodColor="rgb(163,192,211)"
+            floodOpacity={0.75}
+          />
+        </filter>
+        <clipPath id="helmentGlassMask">
+          <ellipse cx={208.5} cy={72} rx={36} ry={30.5} />
+        </clipPath>
+        <clipPath id="helmentGlassMask2">
+          <ellipse cx={188.5} cy={60} rx={36} ry={30.5} />
+        </clipPath>
+        <linearGradient id="helmetGlassGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="10%" stopColor="#125689" />
+          <stop offset="100%" stopColor="#073f67" />
+        </linearGradient>
+        <linearGradient id="helmetGlassGrad3" x1="30%" y1="0%" x2="0%" y2="50%">
+          <stop offset="0%" stopColor="#ffffff" stopOpacity={0.24} />
+          <stop offset="100%" stopColor="#125689" stopOpacity={0} />
+        </linearGradient>
+      </defs>
+      <ellipse cx="200" cy="54" rx="50" ry="47.5" fill="#c2d4df" />
+      <ellipse cx={201} cy={55} rx={49.5} ry={46.5} fill="url(#helmetGrad)" />
+      <ellipse
+        cx={208.5}
+        cy={72}
+        rx={37}
+        ry={31.5}
+        fill="#0a2e46"
+        strokeWidth="2"
+        stroke="url(#helmetGlassGrad)"
+        filter="url(#helmentGlassShadow)"
+      />
+      <ellipse
+        cx={212.5}
+        cy={83}
+        rx={36}
+        ry={30.5}
+        fill="url(#helmetGlassGrad2)"
+        clipPath="url(#helmentGlassMask)"
+      />
+      <ellipse
+        cx={204}
+        cy={65}
+        rx={36}
+        ry={30.5}
+        fill="url(#helmetGlassGrad3)"
+        clipPath="url(#helmentGlassMask)"
+      />
+      <ellipse
+        cx={188.5}
+        cy={60}
+        rx={36}
+        ry={30.5}
+        fill="#0a2e46"
+        clipPath="url(#helmentGlassMask)"
+      />
+      <ellipse
+        cx={212.5}
+        cy={83}
+        rx={36}
+        ry={30.5}
+        fill="url(#helmetGlassGrad2)"
+        clipPath="url(#helmentGlassMask2)"
+      />
     </CosmosnautSvg>
   );
 }
@@ -177,7 +264,22 @@ function PlaceholderCircle(props: PlaceholderCircleProps) {
   return <circle cx={cx} cy={cy} r={r} fill="red" />;
 }
 
-type RadialGradientProps = {
+type PlaceholderEllipseProps = {
+  cx: number;
+  cy: number;
+  rx: number;
+  ry: number;
+};
+
+function PlaceholderEllipse(props: PlaceholderEllipseProps) {
+  const [cx] = useValue('cx', { defaultValue: props.cx });
+  const [cy] = useValue('cy', { defaultValue: props.cy });
+  const [rx] = useValue('rx', { defaultValue: props.rx });
+  const [ry] = useValue('ry', { defaultValue: props.ry });
+  return <ellipse cx={cx} cy={cy} rx={rx} ry={ry} fill="red" />;
+}
+
+type PlaceholderRadialGradientProps = {
   id: string;
   cx: number;
   cy: number;
@@ -188,7 +290,7 @@ type RadialGradientProps = {
   stopColor2: string;
 };
 
-function RadialGradient(props: RadialGradientProps) {
+function PlaceholderRadialGradient(props: PlaceholderRadialGradientProps) {
   const [cx] = useValue('cx', { defaultValue: props.cx });
   const [cy] = useValue('cy', { defaultValue: props.cy });
   const [r] = useValue('r', { defaultValue: props.r });
@@ -206,8 +308,8 @@ function RadialGradient(props: RadialGradientProps) {
   });
   return (
     <radialGradient id={props.id} cx={cx} cy={cy} r={r}>
-      <stop offset={`${stopOffset1}%`} style={{ stopColor: stopColor1 }} />
-      <stop offset={`${stopOffset2}%`} style={{ stopColor: stopColor2 }} />
+      <stop offset={`${stopOffset1}%`} stopColor={stopColor1} />
+      <stop offset={`${stopOffset2}%`} stopColor={stopColor2} />
     </radialGradient>
   );
 }
