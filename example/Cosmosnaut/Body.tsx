@@ -10,6 +10,18 @@ const torsoPath2 = translatePath(
 const torsoPath3 = translatePath(
   'M391.93 423.49C375.59 426.45 364.12 440.66 363.98 456.72C357.74 451.75 353.19 444.6 351.66 436.12C348.32 417.58 360.59 399.84 379.08 396.49C397.57 393.13 415.27 405.44 418.61 423.98C419 426.14 419.15 428.27 419.13 430.38C411.74 424.49 401.96 421.67 391.93 423.49Z'
 );
+const leftLegPath = translatePath(
+  `M393.15 474.28C394.39 478 399.9 473.56 401.17 476.29C402.89 479.99 402.86 484.35 403.18 486.35C403.77 490.11 407.22 491.71 412.36 491.35C426.75 490.36 422.99 471.43 422 465C420.76 457 417.55 453.8 411.2 452.17C401.08 449.57 389.79 464.21 393.15 474.28Z`
+);
+const leftLegShadowPath = translatePath(
+  `M418 488C419.01 481.94 424.83 463.61 420 455C416.7 449.12 414.02 443.66 392.55 459.06C400.89 451.15 411.7 428.97 424.08 428.89C450.04 428.72 446.8 442.96 446.97 468.98C447.14 495 443.95 487.82 418 488Z`
+);
+const leftFootPath = translatePath(
+  `M406.39 473.47C394.75 488.46 401.16 494.74 409.55 499.42C415.42 502.68 422.97 503.78 427.24 498.41C431 493.67 425.14 483.04 419.36 479.2L413.65 473.32C407.86 469.49 410.59 468.05 406.39 473.47Z`
+);
+const leftFootShadowPath = translatePath(
+  `M418.59 513.29C420.17 507.36 428.28 501.34 419.97 489.27C416.15 483.71 404.9 482.98 396 491C401.06 472.19 418.32 453.78 430.65 454.9C456.5 457.23 451.9 471.09 449.57 497.01C447.24 522.93 444.44 515.63 418.59 513.29Z`
+);
 
 export function Body() {
   return (
@@ -27,7 +39,7 @@ export function Body() {
             <feFuncA type="table" tableValues="1 0" />
           </feComponentTransfer>
           <feGaussianBlur stdDeviation="3" />
-          <feOffset dx="6" dy="10" result="offsetblur" />
+          <feOffset dx="6" dy="6" result="offsetblur" />
           <feFlood floodColor="#95b5c9" floodOpacity={0.75} result="color" />
           <feComposite in2="offsetblur" operator="in" />
           <feComposite in2="SourceAlpha" operator="in" />
@@ -57,6 +69,31 @@ export function Body() {
         stroke="#c5d5df"
         strokeOpacity={0.89}
         clipPath="url(#torsoMask)"
+      />
+
+      <defs>
+        <linearGradient id="LeftLegGrad">
+          <stop offset="0" stopColor="#839eb3" stopOpacity={0.9} />
+          <stop offset="0.9" stopColor="#c3d3e1" stopOpacity={0.3} />
+        </linearGradient>
+        <clipPath id="leftLegMask">
+          <path d={leftLegPath} />
+        </clipPath>
+        <clipPath id="leftFootMask">
+          <path d={leftFootPath} />
+        </clipPath>
+      </defs>
+      <path d={leftFootPath} fill="#fff" filter="url(#torsoShadow)" />
+      <path
+        d={leftFootShadowPath}
+        fill="url(#LeftLegGrad)"
+        clipPath="url(#leftFootMask)"
+      />
+      <path d={leftLegPath} fill="#fff" filter="url(#torsoShadow)" />
+      <path
+        d={leftLegShadowPath}
+        fill="url(#LeftLegGrad)"
+        clipPath="url(#leftLegMask)"
       />
     </>
   );
