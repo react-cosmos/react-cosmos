@@ -23,6 +23,19 @@ const leftFootShadowPath = translatePath(
   `M418.59 513.29C420.17 507.36 428.28 501.34 419.97 489.27C416.15 483.71 404.9 482.98 396 491C401.06 472.19 418.32 453.78 430.65 454.9C456.5 457.23 451.9 471.09 449.57 497.01C447.24 522.93 444.44 515.63 418.59 513.29Z`
 );
 
+const rightFootPath = translatePath(
+  `M365.82 472.36C372.98 473.1 378.19 479.51 377.46 486.69L376.64 494.69C375.9 501.87 369.5 507.1 362.35 506.36C355.19 505.63 349.98 499.21 350.71 492.03L351.05 484.34C351.79 477.16 358.66 471.63 365.82 472.36Z`
+);
+const rightFootShadowPath = translatePath(
+  `M366.59 510.29C368.17 504.36 376.28 498.34 367.97 486.27C364.15 480.71 356.9 486.48 348 493C349.06 468.44 366.32 450.78 378.65 451.9C404.5 454.23 399.9 468.09 397.57 494.01C395.24 519.93 392.44 512.63 366.59 510.29Z`
+);
+const rightLegPath = translatePath(
+  `M369.1 454.18C375.56 456.3 383.23 466.65 381.12 474.28L376.18 484.07C374.08 491.7 367.14 496.17 360.67 494.05C347.63 489.78 354.06 462.72 355.06 454.18C356.06 445.63 362.63 452.06 369.1 454.18Z`
+);
+const rightLegShadowPath = translatePath(
+  `M418.15 473.68C417.26 475.66 416.19 477.49 415 479.22C412.2 470.59 405.73 463.46 395.98 460.3C369.64 451.77 358.3 457.1 352.92 470.5C350.17 462.35 350.33 453.2 354.13 444.74C362.1 427.01 382.89 419.12 400.57 427.11C418.25 435.1 426.12 455.95 418.15 473.68Z`
+);
+
 export function Body() {
   return (
     <>
@@ -72,7 +85,7 @@ export function Body() {
       />
 
       <defs>
-        <linearGradient id="LeftLegGrad">
+        <linearGradient id="leftLegGrad">
           <stop offset="0" stopColor="#839eb3" stopOpacity={0.9} />
           <stop offset="0.9" stopColor="#c3d3e1" stopOpacity={0.3} />
         </linearGradient>
@@ -86,14 +99,89 @@ export function Body() {
       <path d={leftFootPath} fill="#fff" filter="url(#torsoShadow)" />
       <path
         d={leftFootShadowPath}
-        fill="url(#LeftLegGrad)"
+        fill="url(#leftLegGrad)"
         clipPath="url(#leftFootMask)"
       />
       <path d={leftLegPath} fill="#fff" filter="url(#torsoShadow)" />
       <path
         d={leftLegShadowPath}
-        fill="url(#LeftLegGrad)"
+        fill="url(#leftLegGrad)"
         clipPath="url(#leftLegMask)"
+      />
+
+      <defs>
+        <filter
+          id="rightFootShadow"
+          x="-50%"
+          y="-50%"
+          width="200%"
+          height="200%"
+        >
+          <feComponentTransfer in="SourceAlpha">
+            <feFuncA type="table" tableValues="1 0" />
+          </feComponentTransfer>
+          <feGaussianBlur stdDeviation="5" />
+          <feOffset dx="0" dy="15" result="offsetblur" />
+          <feFlood floodColor="#8bb2cd" floodOpacity={0.71} result="color" />
+          <feComposite in2="offsetblur" operator="in" />
+          <feComposite in2="SourceAlpha" operator="in" />
+          <feMerge>
+            <feMergeNode in="SourceGraphic" />
+            <feMergeNode />
+          </feMerge>
+        </filter>
+        <filter
+          id="rightLegShadow"
+          x="-50%"
+          y="-50%"
+          width="200%"
+          height="200%"
+        >
+          <feComponentTransfer in="SourceAlpha">
+            <feFuncA type="table" tableValues="1 0" />
+          </feComponentTransfer>
+          <feGaussianBlur stdDeviation="4" />
+          <feOffset dx="5" dy="8" result="offsetblur" />
+          <feFlood floodColor="#8bb2cd" floodOpacity={0.71} result="color" />
+          <feComposite in2="offsetblur" operator="in" />
+          <feComposite in2="SourceAlpha" operator="in" />
+          <feMerge>
+            <feMergeNode in="SourceGraphic" />
+            <feMergeNode />
+          </feMerge>
+        </filter>
+        <clipPath id="rightFootMask">
+          <path d={rightFootPath} />
+        </clipPath>
+        <clipPath id="rightLegMask">
+          <path d={rightLegPath} />
+        </clipPath>
+        <linearGradient
+          id="rightFootShadowGrad"
+          x1="100%"
+          y1="0%"
+          x2="50%"
+          y2="100%"
+        >
+          <stop offset="0" stopColor="#839eb3" />
+          <stop offset="0.85" stopColor="#d3dfe7" />
+        </linearGradient>
+        <linearGradient id="rightLegShadowGrad" gradientTransform="rotate(55)">
+          <stop offset="0.3" stopColor="#839eb3" />
+          <stop offset="0.85" stopColor="#ffffff" />
+        </linearGradient>
+      </defs>
+      <path d={rightFootPath} fill="#fff" filter="url(#rightFootShadow)" />
+      <path
+        d={rightFootShadowPath}
+        fill="url(#rightFootShadowGrad)"
+        clipPath="url(#rightFootMask)"
+      />
+      <path d={rightLegPath} fill="#fff" filter="url(#rightLegShadow)" />
+      <path
+        d={rightLegShadowPath}
+        fill="url(#rightLegShadowGrad)"
+        clipPath="url(#rightLegMask)"
       />
     </>
   );
