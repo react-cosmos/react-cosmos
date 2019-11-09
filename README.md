@@ -16,25 +16,48 @@ A tool for ambitious UI developers.
 
 ---
 
-**Install `react-cosmos@next` to get started.**
-
-```
-npm run cosmos
-```
+**[Live demo.](https://cosmos.flatris.space)**
 
 [![Cosmos Next](next.png)](https://cosmos.flatris.space)
 
-> You may also run `npx react-cosmos@next` in your project without installing any deps.
-
-**[Live demo](https://cosmos.flatris.space)**. Keep in mind this is a static export. The dev environment, which requires a local server running, has more functionality.
+> Keep in mind this is a static export. The dev environment, which requires a local server running, has more functionality.
 
 ## Table of contents
 
-- Setup: [Requirements](#requirements) · [Config](#config) · [Compilation](#compilation) · [Webpack](#webpack)
+- Setup: [Getting started](#getting-started) · [Requirements](#requirements) · [Config](#config) · [Compilation](#compilation) · [Webpack](#webpack)
 - Usage: [Fixtures](#jsx-fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [UI controls](#ui-controlled-values) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
 - FAQ: [Troubleshooting](#troubleshooting) · [Where's my old Cosmos?](#wheres-my-old-cosmos) · [Why Cosmos?](#why-cosmos) · [Credits](#credits)
 
 The [example package](example) is a useful complement to this guide.
+
+## Getting started
+
+1. Install via npm
+
+```bash
+npm i --D react-cosmos@next
+```
+
+or Yarn
+
+```bash
+yarn add --dev react-cosmos@next
+```
+
+2. Create package.json scripts
+
+```diff
+"scripts": {
++  "cosmos": "cosmos",
++  "cosmos:export": "cosmos-export"
+}
+```
+
+3. Start dev server
+
+Run `npm run cosmos` or `yarn cosmos` and go to [localhost:5000](http://localhost:5000) 🚀
+
+> You may also run `npx react-cosmos@next` in your project without installing any deps.
 
 ## Requirements
 
