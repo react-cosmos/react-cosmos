@@ -25,7 +25,7 @@ A tool for ambitious UI developers.
 ## Table of contents
 
 - Setup: [Getting started](#getting-started) · [Requirements](#requirements) · [Config](#config) · [Compilation](#compilation) · [Webpack](#webpack)
-- Usage: [Fixtures](#jsx-fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [UI controls](#ui-controlled-values) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
+- Usage: [Fixtures](#fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [UI controls](#ui-controlled-values) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
 - FAQ: [Troubleshooting](#troubleshooting) · [Where's my old Cosmos?](#wheres-my-old-cosmos) · [Why Cosmos?](#why-cosmos) · [Credits](#credits)
 
 The [example package](example) is a useful complement to this guide.
@@ -77,7 +77,7 @@ export function Hello({ greeting, name }) {
 }
 ```
 
-Create a fixture file in a `__fixtures__` directory. You can [customize this convention](#how-to-create-fixture-files) later.
+Create a fixture file in a `__fixtures__` directory. You can [customize this convention](#how-to-create-fixture-files) later. Fixtures must contain a default export, which can be a React Component or any React Node;
 
 ```jsx
 // __fixtures__/hello.jsx
@@ -189,32 +189,24 @@ module.exports = (webpackConfig, env) => {
 };
 ```
 
-## JSX fixtures
+## Fixtures
 
-Cosmos Next introduces a more natural format for component fixtures: **React elements** and **React functions.**
+Cosmos Next introduces a more natural format for component fixtures: **React Nodes** and **React Components.**
 
-Some advantages compared to the old format in Cosmos Classic:
+> `React` must be imported in every fixture file.
 
-- Fixtures are no longer bound to a single component
-- Adding one or more component wrappers per fixture is easy
-- Fixtures can be copy pasted inside the project source code
-- Props are easier to type-check
-- Writing fixtures doesn't feel like writing code for Cosmos
+### Node fixtures
 
-The new fixtures formats also come with a minor drawback: `React` must be imported in every fixture file.
-
-### Element fixtures
-
-> Think of Element fixtures as the return value of a render function, or the first argument to `React.render`.
+> Think of Node fixtures as the return value of a component (or of a render function in the case of Class components), or the first argument to `React.render`.
 
 ```jsx
 // __fixtures__/disabled.js
 export default <Button disabled>Click me</Button>;
 ```
 
-### Function fixtures
+### Component fixtures
 
-Function fixtures are like a component with no props. They enable using Hooks inside fixtures, which is powerful for simulating state with stateless components.
+Component fixtures are just function components with no props. They enable using Hooks inside fixtures, which is powerful for simulating state with stateless components.
 
 ```jsx
 // CounterButton.fixture.js
@@ -260,7 +252,7 @@ Examples:
 
 ## Decorators
 
-Wrapping components inside JSX fixtures is easy, but can become repetitive. _Decorators_ can be used to apply one or more component wrappers to a group of fixtures automatically.
+Wrapping components inside fixtures is easy, but can become repetitive. _Decorators_ can be used to apply one or more component wrappers to a group of fixtures automatically.
 
 A `cosmos.decorator` file looks like this:
 
