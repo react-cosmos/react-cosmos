@@ -32,8 +32,6 @@ The [example package](example) is a useful complement to this guide.
 
 ## Getting started
 
-> You may also run `npx react-cosmos@next` in your project without installing any deps.
-
 1\. Install via npm
 
 ```bash
@@ -58,6 +56,10 @@ yarn add --dev react-cosmos@next
 3\. Start dev server
 
 Run `npm run cosmos` or `yarn cosmos` and go to [localhost:5000](http://localhost:5000) 🚀
+
+---
+
+> You may also run `npx react-cosmos@next` in your project without installing any deps.
 
 ## Requirements
 
