@@ -87,9 +87,9 @@ npm run cosmos
 yarn cosmos
 ```
 
-> You may also run `npx react-cosmos@next` in your project without installing any deps.
-
 🚀 **[localhost:5000](http://localhost:5000)**
+
+> You may also run `npx react-cosmos@next` in your project without installing any deps.
 
 5\. **Build amazing user interfaces**
 
