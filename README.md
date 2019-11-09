@@ -201,7 +201,7 @@ The file paths of your fixture files (relative to your project root) are used to
 
 ### Node fixtures
 
-> Think of Node fixtures as the return value of a component (or of a render function in the case of Class components), or the first argument to `React.render`.
+> Think of Node fixtures as the return value of a function component, or the first argument to `React.render`.
 
 ```jsx
 // __fixtures__/disabled.js
