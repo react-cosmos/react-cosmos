@@ -25,14 +25,14 @@ A tool for ambitious UI developers.
 ## Table of contents
 
 - Setup: [Getting started](#getting-started) · [Requirements](#requirements) · [Config](#config) · [Compilation](#compilation) · [Webpack](#webpack)
-- Usage: [Fixtures](#jsx-fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [UI controls](#ui-controlled-values) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
+- Usage: [Fixtures](#fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [UI controls](#ui-controlled-values) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
 - FAQ: [Troubleshooting](#troubleshooting) · [Where's my old Cosmos?](#wheres-my-old-cosmos) · [Why Cosmos?](#why-cosmos) · [Credits](#credits)
 
 The [example package](example) is a useful complement to this guide.
 
 ## Getting started
 
-1\. Install React Cosmos
+1\. **Install React Cosmos**
 
 ```bash
 # Using npm
@@ -41,7 +41,7 @@ npm i --D react-cosmos@next
 yarn add --dev react-cosmos@next
 ```
 
-2\. Create package.json scripts
+2\. **Create package.json scripts**
 
 ```diff
 "scripts": {
@@ -50,7 +50,7 @@ yarn add --dev react-cosmos@next
 }
 ```
 
-3\. Start React Cosmos
+3\. **Start React Cosmos**
 
 ```bash
 # Using npm
@@ -59,9 +59,43 @@ npm run cosmos
 yarn cosmos
 ```
 
+🚀 **[localhost:5000](http://localhost:5000)**
+
 > You may also run `npx react-cosmos@next` in your project without installing any deps.
 
-🚀 **[localhost:5000](http://localhost:5000)**
+4\. **Create your first fixture**
+
+Choose a simple component to get started.
+
+<!-- prettier-ignore -->
+```jsx
+// Hello.jsx
+import React from 'react';
+
+export function Hello({ greeting, name }) {
+  return <h1>{greeting}, {name}!</h1>;
+}
+```
+
+Create a fixture file in a `__fixtures__` directory. You can [customize this convention](#how-to-create-fixture-files) later.
+
+> Fixture files contain a default export, which can be a React Component or any React Node.
+
+```jsx
+// __fixtures__/hello.jsx
+import React from 'react';
+import { Hello } from '../Hello';
+
+export default <Hello greeting="Aloha" name="Alexa" />;
+```
+
+The `hello` fixture will show up in your React Cosmos UI and will render when you select it.
+
+5\. **Build amazing user interfaces**
+
+You've taken the first step towards designing reusable components. You can now prototype, test and interate on components in isolation. Use this to your advantage!
+
+_Something wrong?_ Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) (be helpful and include details) and to [join us on Slack](https://join-react-cosmos.now.sh/).
 
 ## Requirements
 
@@ -157,32 +191,26 @@ module.exports = (webpackConfig, env) => {
 };
 ```
 
-## JSX fixtures
+## Fixtures
 
-Cosmos Next introduces a more natural format for component fixtures: **React elements** and **React functions.**
+Fixture files contain a default export, which can be a React Component or any React Node.
 
-Some advantages compared to the old format in Cosmos Classic:
+> `React` must be imported in every fixture file.
 
-- Fixtures are no longer bound to a single component
-- Adding one or more component wrappers per fixture is easy
-- Fixtures can be copy pasted inside the project source code
-- Props are easier to type-check
-- Writing fixtures doesn't feel like writing code for Cosmos
+The file paths of your fixture files (relative to your project root) are used to create a tree view explorer in the React Cosmos UI.
 
-The new fixtures formats also come with a minor drawback: `React` must be imported in every fixture file.
+### Node fixtures
 
-### Element fixtures
-
-> Think of Element fixtures as the return value of a render function, or the first argument to `React.render`.
+> Think of Node fixtures as the return value of a function component, or the first argument to `React.render`.
 
 ```jsx
 // __fixtures__/disabled.js
 export default <Button disabled>Click me</Button>;
 ```
 
-### Function fixtures
+### Component fixtures
 
-Function fixtures are like a component with no props. They enable using Hooks inside fixtures, which is powerful for simulating state with stateless components.
+Component fixtures are just function components with no props. They enable using Hooks inside fixtures, which is powerful for simulating state with stateless components.
 
 ```jsx
 // CounterButton.fixture.js
@@ -228,7 +256,7 @@ Examples:
 
 ## Decorators
 
-Wrapping components inside JSX fixtures is easy, but can become repetitive. _Decorators_ can be used to apply one or more component wrappers to a group of fixtures automatically.
+Wrapping components inside fixtures is easy, but can become repetitive. _Decorators_ can be used to apply one or more component wrappers to a group of fixtures automatically.
 
 A `cosmos.decorator` file looks like this:
 
@@ -468,4 +496,4 @@ Shout-out to [Kreativa Studio](http://www.kreativa-studio.com/) for offering the
 
 ---
 
-For feedback [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new) or [join us on Slack](https://join-react-cosmos.now.sh/).
+For feedback [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) or [join us on Slack](https://join-react-cosmos.now.sh/).
