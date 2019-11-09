@@ -32,15 +32,12 @@ The [example package](example) is a useful complement to this guide.
 
 ## Getting started
 
-1\. Install via npm
+1\. Install React Cosmos
 
 ```bash
+# Using npm
 npm i --D react-cosmos@next
-```
-
-or Yarn
-
-```bash
+# or Yarn
 yarn add --dev react-cosmos@next
 ```
 
@@ -53,13 +50,18 @@ yarn add --dev react-cosmos@next
 }
 ```
 
-3\. Start dev server
+3\. Start React Cosmos
 
-Run `npm run cosmos` or `yarn cosmos` and go to [localhost:5000](http://localhost:5000) 🚀
-
----
+```bash
+# Using npm
+npm run cosmos
+# or Yarn
+yarn cosmos
+```
 
 > You may also run `npx react-cosmos@next` in your project without installing any deps.
+
+**Go to [localhost:5000](http://localhost:5000).**
 
 ## Requirements
 
