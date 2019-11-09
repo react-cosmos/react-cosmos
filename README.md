@@ -79,7 +79,7 @@ export function Hello({ greeting, name }) {
 
 Create a fixture file in a `__fixtures__` directory. You can [customize this convention](#how-to-create-fixture-files) later.
 
-> Fixtures contain a default export, which can be a React Component or any React Node.
+> Fixture files contain a default export, which can be a React Component or any React Node.
 
 ```jsx
 // __fixtures__/hello.jsx
@@ -193,9 +193,11 @@ module.exports = (webpackConfig, env) => {
 
 ## Fixtures
 
-Cosmos Next introduces a more natural format for component fixtures: **React Nodes** and **React Components.**
+Fixture files contain a default export, which can be a React Component or any React Node.
 
 > `React` must be imported in every fixture file.
+
+The file paths of your fixture files (relative to your project root) are used to create a tree view explorer in the React Cosmos UI.
 
 ### Node fixtures
 
