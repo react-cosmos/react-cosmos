@@ -50,7 +50,20 @@ yarn add --dev react-cosmos@next
 }
 ```
 
-3\. **Create your first fixture**
+3\. **Start React Cosmos**
+
+```bash
+# Using npm
+npm run cosmos
+# or Yarn
+yarn cosmos
+```
+
+🚀 **[localhost:5000](http://localhost:5000)**
+
+> You may also run `npx react-cosmos@next` in your project without installing any deps.
+
+4\. **Create your first fixture**
 
 Choose a simple component to get started.
 
@@ -77,19 +90,6 @@ export default <Hello greeting="Aloha" name="Alexa" />;
 ```
 
 The `hello` fixture will show up in your React Cosmos UI and will render when you select it.
-
-4\. **Start React Cosmos**
-
-```bash
-# Using npm
-npm run cosmos
-# or Yarn
-yarn cosmos
-```
-
-🚀 **[localhost:5000](http://localhost:5000)**
-
-> You may also run `npx react-cosmos@next` in your project without installing any deps.
 
 5\. **Build amazing user interfaces**
 
