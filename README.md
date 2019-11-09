@@ -32,7 +32,9 @@ The [example package](example) is a useful complement to this guide.
 
 ## Getting started
 
-1. Install via npm
+> You may also run `npx react-cosmos@next` in your project without installing any deps.
+
+1\. Install via npm
 
 ```bash
 npm i --D react-cosmos@next
@@ -44,7 +46,7 @@ or Yarn
 yarn add --dev react-cosmos@next
 ```
 
-2. Create package.json scripts
+2\. Create package.json scripts
 
 ```diff
 "scripts": {
@@ -53,11 +55,9 @@ yarn add --dev react-cosmos@next
 }
 ```
 
-3. Start dev server
+3\. Start dev server
 
 Run `npm run cosmos` or `yarn cosmos` and go to [localhost:5000](http://localhost:5000) 🚀
-
-> You may also run `npx react-cosmos@next` in your project without installing any deps.
 
 ## Requirements
 
