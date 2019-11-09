@@ -32,7 +32,7 @@ The [example package](example) is a useful complement to this guide.
 
 ## Getting started
 
-1\. Install React Cosmos
+1\. **Install React Cosmos**
 
 ```bash
 # Using npm
@@ -41,7 +41,7 @@ npm i --D react-cosmos@next
 yarn add --dev react-cosmos@next
 ```
 
-2\. Create package.json scripts
+2\. **Create package.json scripts**
 
 ```diff
 "scripts": {
@@ -50,7 +50,7 @@ yarn add --dev react-cosmos@next
 }
 ```
 
-3\. Start React Cosmos
+3\. **Start React Cosmos**
 
 ```bash
 # Using npm
@@ -62,6 +62,38 @@ yarn cosmos
 > You may also run `npx react-cosmos@next` in your project without installing any deps.
 
 🚀 **[localhost:5000](http://localhost:5000)**
+
+4\. **Create your first fixture**
+
+Choose a simple component to get started.
+
+<!-- prettier-ignore -->
+```jsx
+// Hello.jsx
+import React from 'react';
+
+export function Hello({ greeting, name }) {
+  return <h1>{greeting}, {name}!</h1>;
+}
+```
+
+Place your fixture file in a `__fixtures__` directory. You can [customize this convention](#how-to-create-fixture-files) later.
+
+```jsx
+// __fixtures__/hello.jsx
+import React from 'react';
+import { Hello } from '../Hello';
+
+export default <Hello greeting="Aloha" name="Alexa" />;
+```
+
+The `hello` fixture will shown up in your React Cosmos UI, and will render when you select it.
+
+5\. **Build amazing user interfaces**
+
+You've taken the first step towards designing reusable components. You can now prototype, test and interate on components in isolation. Use this to your advantage.
+
+Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new) (be helpful and include details) or to [join us on Slack](https://join-react-cosmos.now.sh/).
 
 ## Requirements
 
