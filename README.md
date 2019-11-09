@@ -16,7 +16,7 @@ A tool for ambitious UI developers.
 
 ---
 
-**👩‍🚀 [Live demo](https://cosmos.flatris.space)**
+👩‍🚀 **[Live demo](https://cosmos.flatris.space)**
 
 [![Cosmos Next](next.png)](https://cosmos.flatris.space)
 
@@ -61,7 +61,7 @@ yarn cosmos
 
 > You may also run `npx react-cosmos@next` in your project without installing any deps.
 
-**🚀 [localhost:5000](http://localhost:5000)**
+🚀 **[localhost:5000](http://localhost:5000)**
 
 ## Requirements
 
