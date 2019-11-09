@@ -77,7 +77,7 @@ export function Hello({ greeting, name }) {
 }
 ```
 
-Place your fixture file in a `__fixtures__` directory. You can [customize this convention](#how-to-create-fixture-files) later.
+Create a fixture file in a `__fixtures__` directory. You can [customize this convention](#how-to-create-fixture-files) later.
 
 ```jsx
 // __fixtures__/hello.jsx
@@ -87,13 +87,13 @@ import { Hello } from '../Hello';
 export default <Hello greeting="Aloha" name="Alexa" />;
 ```
 
-The `hello` fixture will shown up in your React Cosmos UI, and will render when you select it.
+The `hello` fixture will show up in your React Cosmos UI and will render when you select it.
 
 5\. **Build amazing user interfaces**
 
-You've taken the first step towards designing reusable components. You can now prototype, test and interate on components in isolation. Use this to your advantage.
+You've taken the first step towards designing reusable components. You can now prototype, test and interate on components in isolation. Use this to your advantage!
 
-Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new) (be helpful and include details) or to [join us on Slack](https://join-react-cosmos.now.sh/).
+_Something wrong?_ Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) (be helpful and include details) and to [join us on Slack](https://join-react-cosmos.now.sh/).
 
 ## Requirements
 
@@ -500,4 +500,4 @@ Shout-out to [Kreativa Studio](http://www.kreativa-studio.com/) for offering the
 
 ---
 
-For feedback [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new) or [join us on Slack](https://join-react-cosmos.now.sh/).
+For feedback [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) or [join us on Slack](https://join-react-cosmos.now.sh/).
