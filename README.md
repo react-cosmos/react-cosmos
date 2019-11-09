@@ -77,7 +77,9 @@ export function Hello({ greeting, name }) {
 }
 ```
 
-Create a fixture file in a `__fixtures__` directory. You can [customize this convention](#how-to-create-fixture-files) later. Fixtures must contain a default export, which can be a React Component or any React Node;
+Create a fixture file in a `__fixtures__` directory. You can [customize this convention](#how-to-create-fixture-files) later.
+
+> Fixtures contain a default export, which can be a React Component or any React Node.
 
 ```jsx
 // __fixtures__/hello.jsx
