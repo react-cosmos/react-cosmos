@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import { translatePath } from './helpers/translatePath';
 
 const torsoPath = translatePath(
@@ -50,6 +51,22 @@ const leftArmShadowPath = translatePath(
   `M444.74 434.23C441 431.59 438.88 424.33 428.29 427.06C423.42 428.32 420.03 435.17 417.03 441.76C414.43 433.57 403.04 419.08 407 410.69C415.3 393.11 423.81 399.92 441.34 408.24C458.87 416.56 453.04 416.65 444.74 434.23Z`
 );
 
+const leftHandDetailPath = translatePath(
+  `M352.05 438.09C357.04 438.09 361.08 440.79 361.08 444.13C361.08 447.46 357.04 450.16 352.05 450.16C347.07 450.16 343.03 447.46 343.03 444.13C343.03 440.79 347.07 438.09 352.05 438.09Z`
+);
+const rightHandDetailPath = translatePath(
+  `M438.26 438.09C443.25 438.09 447.29 440.79 447.29 444.13C447.29 447.46 443.25 450.16 438.26 450.16C433.28 450.16 429.24 447.46 429.24 444.13C429.24 440.79 433.28 438.09 438.26 438.09Z`
+);
+const leftLegDetailPath = translatePath(
+  `M417.21 464.23C420.53 464.23 423.23 468.73 423.23 474.28C423.23 479.83 420.53 484.34 417.21 484.34C413.89 484.34 411.2 479.83 411.2 474.28C411.2 468.73 413.89 464.23 417.21 464.23Z`
+);
+const rightLegDetailPath = translatePath(
+  `M365.09 468.25C368.41 468.25 371.1 472.75 371.1 478.3C371.1 483.86 368.41 488.36 365.09 488.36C361.76 488.36 359.07 483.86 359.07 478.3C359.07 472.75 361.76 468.25 365.09 468.25Z`
+);
+const torsoLinePath = translatePath(
+  `M405.18 415.98C405.18 415.98 396.21 436.08 395.16 444.13C392.83 461.96 389.52 472.65 387.14 476.29`
+);
+
 export function Body() {
   return (
     <>
@@ -58,8 +75,8 @@ export function Body() {
           <path d={leftArmPath} />
         </clipPath>
         <linearGradient id="leftArmShadowGrad" gradientTransform="rotate(55)">
-          <stop offset="0" stop-color="#839eb3" />
-          <stop offset="0.901" stop-color="#c3d3e1" />
+          <stop offset="0" stopColor="#839eb3" />
+          <stop offset="0.901" stopColor="#c3d3e1" />
         </linearGradient>
       </defs>
       <g filter="url(#rightFootShadow)">
@@ -241,6 +258,34 @@ export function Body() {
           clipPath="url(#rightArmMask)"
         />
       </g>
+
+      <defs>
+        <radialGradient id="legDetailGrad" r="0.6">
+          <stop offset="0" stopColor="#fff" />
+          <stop offset="1" stopColor="#f0f2f4" stopOpacity="0" />
+        </radialGradient>
+        <linearGradient id="handDetailGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#e9edef" stopOpacity="0" />
+          <stop offset="1" stopColor="#ffffff" stopOpacity="1" />
+        </linearGradient>
+        <linearGradient id="torsoLineGrad">
+          <stop offset="0" stopColor="#5895c5" />
+          <stop offset="1" stopColor="#47779b" />
+        </linearGradient>
+      </defs>
+      <path d={leftHandDetailPath} fill="url(#handDetailGrad)" opacity="0.7" />
+      <path d={rightHandDetailPath} fill="url(#handDetailGrad)" opacity="0.7" />
+      <path d={leftLegDetailPath} fill="url(#legDetailGrad)" opacity="0.5" />
+      <path d={rightLegDetailPath} fill="url(#legDetailGrad)" opacity="0.5" />
+      <TorsoLinePath d={torsoLinePath} fill="url(#torsoLineGrad)" />
     </>
   );
 }
+
+const TorsoLinePath = styled.path`
+  opacity: 0.2;
+  fill: none;
+  stroke: url(#torsoLineGrad);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+`;
