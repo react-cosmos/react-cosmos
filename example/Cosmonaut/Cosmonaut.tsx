@@ -7,19 +7,25 @@ import { Stars } from './Stars';
 
 export function Cosmonaut() {
   return (
-    <CosmonautSvg viewBox="0 0 256 256">
+    <SvgContainer viewBox="0 0 256 256">
+      <Sky />
       <Planet />
       <Stars />
       <Body />
       <Helmet />
-    </CosmonautSvg>
+    </SvgContainer>
   );
 }
 
-const CosmonautSvg = styled.svg`
+const SvgContainer = styled.svg`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+`;
+
+const Sky = styled.rect.attrs({ x: 0, y: 0, width: 256, height: 256 })`
+  fill: #093556;
+  clip-path: circle(50% at 50% 50%);
 `;

@@ -11,7 +11,9 @@ export function translatePath(originalPath: string) {
       .split(' ')
       .map(point => parseFloat(point));
     const convertedPoints = mapPathPoints(letter, points);
-    return `${letter}${convertedPoints.map(point => String(point)).join(' ')}`;
+    return `${letter}${convertedPoints
+      .map(point => point.toFixed(2))
+      .join(' ')}`;
   });
   return newPathPaths.join('');
 }
