@@ -34,7 +34,7 @@ export function Stars() {
             stdDeviation="1.6"
           ></feGaussianBlur>
           <feMerge>
-            <feMergeNode in="SourceGraphic"></feMergeNode>
+            {/* <feMergeNode in="SourceGraphic"></feMergeNode> */}
             <feMergeNode in="coloredBlur"></feMergeNode>
             <feMergeNode in="coloredBlur"></feMergeNode>
           </feMerge>
