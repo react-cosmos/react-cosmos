@@ -41,7 +41,7 @@ export function Planet() {
           <stop offset="100%" stopColor="#419755" />
         </radialGradient>
         <filter id="planetBlur" x="-100%" y="-100%" width="300%" height="300%">
-          <feGaussianBlur stdDeviation="1" />
+          <feGaussianBlur stdDeviation="0.75" />
         </filter>
       </defs>
 
