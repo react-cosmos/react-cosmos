@@ -77,9 +77,52 @@ const oxigenShadowPath = translatePath(
   `M350.19 413.48C352.86 407.95 361.95 403.56 356.06 390.14C353.34 383.96 343.59 380.97 334.25 378.43C344.47 373.2 361.08 354.97 372.98 358.39C397.93 365.55 390.82 378.3 383.68 403.32C376.53 428.34 375.14 420.64 350.19 413.48Z`
 );
 
+const tubePath = translatePath(
+  `M352 396C352 396 313.52 377.22 304 404C292.29 436.95 350.01 445.95 336 498C322 550 251.4 557 228 520`
+);
+
 export function Body() {
   return (
     <>
+      <defs>
+        <linearGradient id="tubeGrad" x1="0.7" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#92b1c7" />
+          <stop offset="1" stopColor="#d7e1e8" />
+        </linearGradient>
+        <filter id="tubeBevel" x="-100%" y="-100%" width="200%" height="300%">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur" />
+          <feSpecularLighting
+            in="blur"
+            surfaceScale="12"
+            specularConstant="1"
+            specularExponent="5"
+            result="specOut"
+            lighting-color="#92b1c7"
+          >
+            <fePointLight x="20000" y="20000" z="20000" />
+          </feSpecularLighting>
+          <feComposite
+            in="specOut"
+            in2="SourceAlpha"
+            operator="in"
+            result="specOut2"
+          />
+          <feComposite
+            in="SourceGraphic"
+            in2="specOut2"
+            operator="arithmetic"
+            k1="0"
+            k2="1"
+            k3="1"
+            k4="0"
+            result="litPaint"
+          />
+        </filter>
+      </defs>
+      <g clipPath="url(#mainCircleMask)">
+        <TubePath d={tubePath} filter="url(#tubeBevel)" />
+      </g>
+
       <defs>
         <clipPath id="oxigenMask">
           <path d={oxigenBgPath} />
@@ -313,4 +356,12 @@ const TorsoLinePath = styled.path`
   stroke: url(#torsoLineGrad);
   stroke-linecap: round;
   stroke-linejoin: round;
+`;
+
+const TubePath = styled.path`
+  fill: none;
+  stroke: url(#tubeGrad);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 6;
 `;
