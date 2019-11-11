@@ -97,7 +97,7 @@ export function Body() {
             specularConstant="1"
             specularExponent="5"
             result="specOut"
-            lighting-color="#92b1c7"
+            lightingColor="#92b1c7"
           >
             <fePointLight x="20000" y="20000" z="20000" />
           </feSpecularLighting>
