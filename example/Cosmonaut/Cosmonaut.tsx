@@ -5,18 +5,18 @@ import { Helmet } from './Helmet';
 import { Planet } from './Planet';
 import { Stars } from './Stars';
 
-export function Cosmosnaut() {
+export function Cosmonaut() {
   return (
-    <CosmosnautSvg viewBox="0 0 256 256">
+    <CosmonautSvg viewBox="0 0 256 256">
       <Planet />
       <Stars />
       <Body />
       <Helmet />
-    </CosmosnautSvg>
+    </CosmonautSvg>
   );
 }
 
-const CosmosnautSvg = styled.svg`
+const CosmonautSvg = styled.svg`
   position: absolute;
   top: 0;
   left: 0;

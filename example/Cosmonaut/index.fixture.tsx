@@ -1,9 +1,9 @@
 import React from 'react';
 import { useValue } from 'react-cosmos/fixture';
 import styled from 'styled-components';
-import { Cosmosnaut } from './Cosmosnaut';
+import { Cosmonaut } from './Cosmonaut';
 
-const CosmosnautContainer = styled.div`
+const CosmonautContainer = styled.div`
   position: relative;
   width: 512px;
   height: 512px;
@@ -19,15 +19,15 @@ export default () => {
   });
   return (
     <div onClick={() => setTransparency(!transparency)}>
-      <CosmosnautContainer>
+      <CosmonautContainer>
         <img src="/cosmos.png" />
         <div style={{ opacity: transparency ? 0.5 : 1 }}>
-          <Cosmosnaut />
+          <Cosmonaut />
         </div>
-      </CosmosnautContainer>
-      <CosmosnautContainer>
+      </CosmonautContainer>
+      <CosmonautContainer>
         <img src="/cosmos.png" />
-      </CosmosnautContainer>
+      </CosmonautContainer>
     </div>
   );
 };
