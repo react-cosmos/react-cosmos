@@ -67,9 +67,34 @@ const torsoLinePath = translatePath(
   `M405.18 415.98C405.18 415.98 396.21 436.08 395.16 444.13C392.83 461.96 389.52 472.65 387.14 476.29`
 );
 
+const oxigenBgPath = translatePath(
+  `M369.1 377.78C384.6 377.78 397.16 392.18 397.16 409.95C397.16 427.71 384.6 442.12 369.1 442.12C353.59 442.12 341.03 427.71 341.03 409.95C341.03 392.18 353.59 377.78 369.1 377.78Z`
+);
+const oxigenPath = translatePath(
+  `M372.11 375.78C387.61 375.78 400.17 390.18 400.17 407.95C400.17 425.71 387.61 440.12 372.11 440.12C356.6 440.12 344.04 425.71 344.04 407.95C344.04 390.18 356.6 375.78 372.11 375.78Z`
+);
+const oxigenShadowPath = translatePath(
+  `M350.19 413.48C352.86 407.95 361.95 403.56 356.06 390.14C353.34 383.96 343.59 380.97 334.25 378.43C344.47 373.2 361.08 354.97 372.98 358.39C397.93 365.55 390.82 378.3 383.68 403.32C376.53 428.34 375.14 420.64 350.19 413.48Z`
+);
+
 export function Body() {
   return (
     <>
+      <defs>
+        <clipPath id="oxigenMask">
+          <path d={oxigenBgPath} />
+        </clipPath>
+      </defs>
+      <path d={oxigenBgPath} fill="#c2d4df" />
+      <g filter="url(#rightFootShadow)">
+        <path d={oxigenPath} fill="#eaedef" />
+        <path
+          d={oxigenShadowPath}
+          fill="url(#leftArmShadowGrad)"
+          clipPath="url(#oxigenMask)"
+        />
+      </g>
+
       <defs>
         <clipPath id="leftArmMask">
           <path d={leftArmPath} />
@@ -277,7 +302,7 @@ export function Body() {
       <path d={rightHandDetailPath} fill="url(#handDetailGrad)" opacity="0.7" />
       <path d={leftLegDetailPath} fill="url(#legDetailGrad)" opacity="0.5" />
       <path d={rightLegDetailPath} fill="url(#legDetailGrad)" opacity="0.5" />
-      <TorsoLinePath d={torsoLinePath} fill="url(#torsoLineGrad)" />
+      <TorsoLinePath d={torsoLinePath} />
     </>
   );
 }
