@@ -3,11 +3,13 @@ import styled from 'styled-components';
 import { Body } from './Body';
 import { Helmet } from './Helmet';
 import { Planet } from './Planet';
+import { Stars } from './Stars';
 
 export function Cosmosnaut() {
   return (
     <CosmosnautSvg viewBox="0 0 256 256">
       <Planet />
+      <Stars />
       <Body />
       <Helmet />
     </CosmosnautSvg>
