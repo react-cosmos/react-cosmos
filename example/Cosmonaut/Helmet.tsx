@@ -44,7 +44,7 @@ export function Helmet() {
           <stop offset="100%" stopColor="#073f67" />
         </linearGradient>
         <linearGradient id="helmetGlassGrad3" x1="30%" y1="0%" x2="0%" y2="50%">
-          <stop offset="0%" stopColor="#ffffff" stopOpacity={0.25} />
+          <stop offset="0%" stopColor="#3bb4e1" stopOpacity={0.3} />
           <stop offset="100%" stopColor="#125689" stopOpacity={0} />
         </linearGradient>
       </defs>
