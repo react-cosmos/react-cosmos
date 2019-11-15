@@ -57,11 +57,15 @@ const leftArmShadowPath = translatePath(
   `M444.74 434.23C441 431.59 438.88 424.33 428.29 427.06C423.42 428.32 420.03 435.17 417.03 441.76C414.43 433.57 403.04 419.08 407 410.69C415.3 393.11 423.81 399.92 441.34 408.24C458.87 416.56 453.04 416.65 444.74 434.23Z`
 );
 
-const leftHandDetailPath = translatePath(
-  `M352.05 438.09C357.04 438.09 361.08 440.79 361.08 444.13C361.08 447.46 357.04 450.16 352.05 450.16C347.07 450.16 343.03 447.46 343.03 444.13C343.03 440.79 347.07 438.09 352.05 438.09Z`
-);
 const rightHandDetailPath = translatePath(
-  `M438.26 438.09C443.25 438.09 447.29 440.79 447.29 444.13C447.29 447.46 443.25 450.16 438.26 450.16C433.28 450.16 429.24 447.46 429.24 444.13C429.24 440.79 433.28 438.09 438.26 438.09Z`
+  `M352.05 438.09C357.04 438.09 361.08 440.79 361.08 444.13C361.08 447.46 357.04 450.16 352.05 450.16C347.07 450.16 343.03 447.46 343.03 444.13C343.03 440.79 347.07 438.09 352.05 438.09Z`,
+  -0.2,
+  -0.5
+);
+const leftHandDetailPath = translatePath(
+  `M438.26 438.09C443.25 438.09 447.29 440.79 447.29 444.13C447.29 447.46 443.25 450.16 438.26 450.16C433.28 450.16 429.24 447.46 429.24 444.13C429.24 440.79 433.28 438.09 438.26 438.09Z`,
+  0.7,
+  -1
 );
 const leftLegDetailPath = translatePath(
   `M417.21 464.23C420.53 464.23 423.23 468.73 423.23 474.28C423.23 479.83 420.53 484.34 417.21 484.34C413.89 484.34 411.2 479.83 411.2 474.28C411.2 468.73 413.89 464.23 417.21 464.23Z`
@@ -345,9 +349,28 @@ export function Body() {
           <stop offset="0" stopColor="#5895c5" />
           <stop offset="1" stopColor="#47779b" />
         </linearGradient>
+        <filter
+          id="handDetailBlur"
+          x="-100%"
+          y="-100%"
+          width="300%"
+          height="300%"
+        >
+          <feGaussianBlur stdDeviation="0.3" />
+        </filter>
       </defs>
-      <path d={leftHandDetailPath} fill="url(#handDetailGrad)" opacity="0.7" />
-      <path d={rightHandDetailPath} fill="url(#handDetailGrad)" opacity="0.7" />
+      <path
+        d={rightHandDetailPath}
+        fill="url(#handDetailGrad)"
+        filter="url(#handDetailBlur)"
+        opacity="0.7"
+      />
+      <path
+        d={leftHandDetailPath}
+        fill="url(#handDetailGrad)"
+        filter="url(#handDetailBlur)"
+        opacity="0.7"
+      />
       <path d={leftLegDetailPath} fill="url(#legDetailGrad)" opacity="0.5" />
       <path d={rightLegDetailPath} fill="url(#legDetailGrad)" opacity="0.5" />
       <TorsoLinePath d={torsoLinePath} />
