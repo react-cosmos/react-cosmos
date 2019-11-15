@@ -128,8 +128,11 @@ export function Body() {
             result="litPaint"
           />
         </filter>
+        <filter id="tubeBlur" x="-100%" y="-100%" width="300%" height="300%">
+          <feGaussianBlur stdDeviation="0.3" />
+        </filter>
       </defs>
-      <g clipPath="url(#mainCircleMask)">
+      <g clipPath="url(#mainCircleMask)" filter="url(#tubeBlur)">
         <TubePath d={tubePath} filter="url(#tubeBevel)" />
       </g>
 
