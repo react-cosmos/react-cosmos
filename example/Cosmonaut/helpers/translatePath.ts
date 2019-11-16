@@ -1,25 +1,35 @@
-const X_OFFSET = 208;
-const Y_OFFSET = 318;
+const ORIGINAL_X_OFFSET = -208;
+const ORIGINAL_Y_OFFSET = -318;
+
+export function translateOriginalPath(
+  originalPath: string,
+  xOffset: number = 0,
+  yOffset: number = 0
+) {
+  return translatePath(
+    originalPath,
+    ORIGINAL_X_OFFSET + xOffset,
+    ORIGINAL_Y_OFFSET + yOffset
+  );
+}
 
 export function translatePath(
   originalPath: string,
-  _xOffset: number = 0,
-  _yOffset: number = 0
+  xOffset: number,
+  yOffset: number
 ) {
   function mapPathPoints(letter: string, points: number[]): number[] {
-    let xOffset = X_OFFSET + _xOffset;
-    let yOffset = Y_OFFSET + _yOffset;
     if (letter === 'M' || letter === 'L') {
-      return [points[0] - xOffset, points[1] - yOffset];
+      return [points[0] + xOffset, points[1] + yOffset];
     }
 
     return [
-      points[0] - xOffset,
-      points[1] - yOffset,
-      points[2] - xOffset,
-      points[3] - yOffset,
-      points[4] - xOffset,
-      points[5] - yOffset
+      points[0] + xOffset,
+      points[1] + yOffset,
+      points[2] + xOffset,
+      points[3] + yOffset,
+      points[4] + xOffset,
+      points[5] + yOffset
     ];
   }
 
