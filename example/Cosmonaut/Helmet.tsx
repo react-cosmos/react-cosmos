@@ -77,8 +77,8 @@ export function Helmet() {
         clipPath="url(#helmentGlassMask)"
       />
       <ellipse
-        cx={188.5}
-        cy={60}
+        cx={188.4}
+        cy={59.9}
         rx={36}
         ry={30.5}
         fill="#0a2e46"
