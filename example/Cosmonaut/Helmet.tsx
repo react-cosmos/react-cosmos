@@ -84,14 +84,16 @@ export function Helmet() {
         fill="#0a2e46"
         clipPath="url(#helmentGlassMask)"
       />
-      <ellipse
-        cx={212.5}
-        cy={83}
-        rx={36}
-        ry={30.5}
-        fill="url(#helmetGlassGrad2)"
-        clipPath="url(#helmentGlassMask2)"
-      />
+      <g clipPath="url(#helmentGlassMask)">
+        <ellipse
+          cx={212.5}
+          cy={83}
+          rx={36}
+          ry={30.5}
+          fill="url(#helmetGlassGrad2)"
+          clipPath="url(#helmentGlassMask2)"
+        />
+      </g>
     </>
   );
 }
