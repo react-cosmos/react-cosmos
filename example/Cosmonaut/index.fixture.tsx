@@ -5,6 +5,7 @@ import { useValue } from 'react-cosmos/fixture';
 
 const LOGO_SIZE = 100;
 const LOGO_PADDING = 16;
+const STEPS = 100;
 
 type Viewport = {
   width: number;
@@ -15,7 +16,7 @@ export default () => {
   const viewport = useViewport();
   const [slider, setSlider] = useValue('ratio', { defaultValue: 0 });
 
-  const ratio = slider / 1000;
+  const ratio = slider / STEPS;
   const cropRatio = Math.min(1, ratio * 2);
   const minimizeRatio = Math.max(0, ratio - 0.5) * 2;
 
@@ -108,7 +109,7 @@ const CosmonautContainer = styled.div`
   left: 0;
 `;
 
-const Slider = styled.input.attrs({ type: 'range', min: 0, max: 1000 })`
+const Slider = styled.input.attrs({ type: 'range', min: 0, max: STEPS })`
   position: absolute;
   bottom: 6px;
   left: 6px;
