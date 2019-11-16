@@ -31,26 +31,39 @@ type SkyProps = {
 function Sky({ cropRatio, minimizeRatio }: SkyProps) {
   if (minimizeRatio > 0) {
     return (
-      <StyledSky
-        x={0}
-        y={0}
-        width={256}
-        height={256}
-        clipPath="circle(128px at 128px 128px)"
-      />
+      <>
+        <defs>
+          <clipPath id="skyMask">
+            <circle cx="128" cy="128" r="128" />
+          </clipPath>
+        </defs>
+        <StyledSky
+          x={0}
+          y={0}
+          width={256}
+          height={256}
+          clipPath="url(#skyMask)"
+        />
+      </>
     );
   }
 
   const radius = 512 - 384 * cropRatio;
-  const y = 384 - 128 * minimizeRatio;
   return (
-    <StyledSky
-      x={0}
-      y={-256}
-      width={512}
-      height={512}
-      clipPath={`circle(${radius} at 128px ${y})`}
-    />
+    <>
+      <defs>
+        <clipPath id="skyMask">
+          <circle cx="128" cy="128" r={radius} />
+        </clipPath>
+      </defs>
+      <StyledSky
+        x={0}
+        y={-256}
+        width={512}
+        height={512}
+        clipPath="url(#skyMask)"
+      />
+    </>
   );
 }
 
