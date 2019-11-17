@@ -87,14 +87,10 @@ const oxigenShadowPath = translateOriginalPath(
   `M350.19 413.48C352.86 407.95 361.95 403.56 356.06 390.14C353.34 383.96 343.59 380.97 334.25 378.43C344.47 373.2 361.08 354.97 372.98 358.39C397.93 365.55 390.82 378.3 383.68 403.32C376.53 428.34 375.14 420.64 350.19 413.48Z`
 );
 
-type Props = {
-  minimizeRatio: number;
-};
+const tubePath =
+  'M144.00 78.00C144.00 78.00 105.52 59.22 96.00 86.00C84.29 118.95 142.01 127.95 128.00 180.00C114.00 232.00 33.40 249.00 -5 182';
 
-export function Body({ minimizeRatio }: Props) {
-  const endX = 20 + 120 * (1 - minimizeRatio);
-  const endY = 202 + 150 * (1 - minimizeRatio);
-  const tubePath = `M144.00 78.00C144.00 78.00 105.52 59.22 96.00 86.00C84.29 118.95 142.01 127.95 128.00 180.00C114.00 232.00 43.40 239.00 ${endX} ${endY}`;
+export function Body() {
   return (
     <>
       <defs>

@@ -11,13 +11,13 @@ type Props = {
 };
 
 export function Cosmonaut({ cropRatio, minimizeRatio }: Props) {
-  const viewBox = minimizeRatio > 0 ? `0 0 256 256` : `0 -256 512 512`;
+  const viewBox = minimizeRatio > 0 ? `0 0 256 256` : `0 -128 512 512`;
   return (
     <SvgContainer viewBox={viewBox}>
       <Sky cropRatio={cropRatio} minimizeRatio={minimizeRatio} />
       <Stars />
       <Planet cropRatio={cropRatio} minimizeRatio={minimizeRatio} />
-      <Body minimizeRatio={minimizeRatio} />
+      <Body />
       <Helmet />
     </SvgContainer>
   );
@@ -60,7 +60,7 @@ function Sky({ cropRatio, minimizeRatio }: SkyProps) {
         x={0}
         y={-256}
         width={512}
-        height={512}
+        height={768}
         clipPath="url(#skyMask)"
       />
     </>

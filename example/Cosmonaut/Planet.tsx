@@ -8,8 +8,8 @@ type Props = {
 };
 
 export function Planet({ cropRatio, minimizeRatio }: Props) {
-  const offsetX = -20 + minimizeRatio * 20;
-  const offsetY = 30 - 30 * minimizeRatio;
+  const offsetX = -60 * (1 - minimizeRatio);
+  const offsetY = -70 * (1 - minimizeRatio);
   const maskRadius = 512 - 384 * cropRatio;
   return (
     <>

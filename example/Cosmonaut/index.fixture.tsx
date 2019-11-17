@@ -12,39 +12,41 @@ type Viewport = {
 };
 
 export default () => {
-  const viewport = useViewport();
-  const scrollRatio = useScroll();
+  const windowViewport = useWindowViewport();
+  const scrollRatio = useWindowScroll();
   const cropRatio = Math.min(1, scrollRatio * 2);
   const minimizeRatio = Math.max(0, scrollRatio - 0.5) * 2;
-  const contentRatio = Math.max(0, minimizeRatio - 0.8) * 20;
+  const contentRatio = Math.max(0, minimizeRatio - 0.9) * 10;
 
-  const cosmonautSize = getCosmonautSize(viewport, minimizeRatio);
-  const containerSize = getContainerSize(viewport, minimizeRatio);
-  const padding = HEADER_PADDING * minimizeRatio;
+  const headerPadding = HEADER_PADDING * minimizeRatio;
+  const containerViewport = getContainerViewport(windowViewport, minimizeRatio);
+  const cosmonautViewport = getCosmonautViewport(windowViewport, minimizeRatio);
+  const bottomOffset = getCosmonautBottomOffset(windowViewport, minimizeRatio);
 
   return (
     <Bg
       style={{
-        paddingTop: SCROLL_SIZE + HEADER_SIZE + 2 * HEADER_PADDING
+        paddingTop: SCROLL_SIZE + HEADER_SIZE + 2 * HEADER_PADDING,
+        background: cropRatio > 0.5 ? '#fff' : '#093556'
       }}
     >
-      <Container
+      <HeaderContainer
         style={{
-          width: containerSize.width,
-          height: containerSize.height + 2 * padding
+          width: containerViewport.width,
+          height: containerViewport.height + 2 * headerPadding
         }}
       >
         <CosmonautContainer
           style={{
-            width: cosmonautSize,
-            height: cosmonautSize,
-            bottom: padding,
-            left: padding
+            width: cosmonautViewport.width,
+            height: cosmonautViewport.height,
+            bottom: bottomOffset + headerPadding,
+            left: headerPadding
           }}
         >
           <Cosmonaut cropRatio={cropRatio} minimizeRatio={minimizeRatio} />
         </CosmonautContainer>
-      </Container>
+      </HeaderContainer>
       <div style={{ opacity: contentRatio }}>
         <p style={{ paddingTop: 128 }}>
           Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -58,7 +60,7 @@ export default () => {
           including versions of Lorem Ipsum.
         </p>
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(i => (
-          <p key={0}>
+          <p key={i}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
@@ -75,22 +77,72 @@ export default () => {
   );
 };
 
-function getContainerSize(viewport: Viewport, minimizeRatio: number) {
+function getViewportLength(viewport: Viewport) {
+  return Math.max(viewport.width, viewport.height);
+}
+
+function getMinimizedCosmonautSize(
+  windowViewport: Viewport,
+  minimizeRatio: number
+) {
+  const fullSize = Math.round(getViewportLength(windowViewport) / 2);
+  return fullSize - (fullSize - HEADER_SIZE) * minimizeRatio;
+}
+
+function getContainerViewport(windowViewport: Viewport, minimizeRatio: number) {
   if (minimizeRatio > 0) {
-    const cosmonautSize = getCosmonautSize(viewport, minimizeRatio);
+    const cosmonautSize = getMinimizedCosmonautSize(
+      windowViewport,
+      minimizeRatio
+    );
     const height =
-      viewport.height - (viewport.height - cosmonautSize) * minimizeRatio;
-    return { width: viewport.width, height };
+      windowViewport.height -
+      (windowViewport.height - cosmonautSize) * minimizeRatio;
+    return { width: windowViewport.width, height };
   }
+  return windowViewport;
+}
+
+function getCosmonautViewport(windowViewport: Viewport, minimizeRatio: number) {
+  if (minimizeRatio > 0) {
+    const cosmonautSize = getMinimizedCosmonautSize(
+      windowViewport,
+      minimizeRatio
+    );
+    return { width: cosmonautSize, height: cosmonautSize };
+  }
+
+  const width = getViewportLength(windowViewport);
+  return { width, height: width * 1.5 };
+}
+
+function getCosmonautBottomOffset(
+  windowViewport: Viewport,
+  minimizeRatio: number
+) {
+  return minimizeRatio > 0 ? 0 : -getViewportLength(windowViewport) * 0.5;
+}
+
+function useWindowViewport() {
+  const [viewport, setViewport] = React.useState(getWindowViewport());
+  React.useEffect(() => {
+    function handleWindowResize() {
+      const newViewport = getWindowViewport();
+      if (didViewportChange(viewport, newViewport)) {
+        setViewport(newViewport);
+      }
+    }
+    window.addEventListener('resize', handleWindowResize);
+    return () => window.removeEventListener('resize', handleWindowResize);
+  });
   return viewport;
 }
 
-function getCosmonautSize(viewport: Viewport, minimizeRatio: number) {
-  if (minimizeRatio > 0) {
-    const fullSize = Math.max(viewport.width, viewport.height) / 2;
-    return HEADER_SIZE + (fullSize - HEADER_SIZE) * (1 - minimizeRatio);
-  }
-  return Math.max(viewport.width, viewport.height);
+function getWindowViewport() {
+  return {
+    width: window.innerWidth,
+    height: window.innerHeight
+  };
 }
 
 function didViewportChange(oldViewport: Viewport, newViewport: Viewport) {
@@ -104,52 +156,28 @@ function didViewportChange(oldViewport: Viewport, newViewport: Viewport) {
   return heightDiff / newViewport.height >= 0.2;
 }
 
-function useViewport() {
-  const [viewport, setViewport] = React.useState(getViewport());
-  React.useEffect(() => {
-    function handleWindowResize() {
-      const newViewport = getViewport();
-      if (didViewportChange(viewport, newViewport)) {
-        setViewport(newViewport);
-      }
-    }
-    window.addEventListener('resize', handleWindowResize);
-    return () => window.removeEventListener('resize', handleWindowResize);
-  });
-  return viewport;
-}
-
-function useScroll() {
-  const [scrollRatio, setScrollRatio] = React.useState(0);
+function useWindowScroll() {
+  const [yScroll, setYScroll] = React.useState(window.pageYOffset);
   React.useEffect(() => {
     function handleScroll() {
-      const yScroll = window.pageYOffset;
-      setScrollRatio(Math.min(1, Math.max(0, yScroll / SCROLL_SIZE)));
+      setYScroll(window.pageYOffset);
     }
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  return scrollRatio;
-}
-
-function getViewport() {
-  return {
-    width: window.innerWidth,
-    height: window.innerHeight
-  };
+  return Math.min(1, Math.max(0, yScroll / SCROLL_SIZE));
 }
 
 const Bg = styled.div`
-  background: #fff;
   padding: 64px;
 `;
 
-const Container = styled.div`
+const HeaderContainer = styled.div`
   position: fixed;
+  z-index: 1;
   top: 0;
   left: 0;
-  overflow: hidden;
-  background: rgb(255, 255, 255);
+  background: #fff;
 `;
 
 const CosmonautContainer = styled.div`
