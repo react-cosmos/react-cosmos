@@ -30,10 +30,10 @@ export const Planet = React.memo(function Planet({ minimizeRatio }: Props) {
           <stop offset="0%" stopColor="#5ac1ea" />
           <stop offset="100%" stopColor="#064a87" />
         </radialGradient>
-        <radialGradient id="earthGlow" r={0.48}>
-          <stop offset="73%" stopColor="#2b7fc0" />
-          <stop offset="77%" stopColor="#2b7fc0" stopOpacity={0.8} />
-          <stop offset="85%" stopColor="#2b7fc0" stopOpacity={0.45} />
+        <radialGradient id="earthGlow" r={0.5}>
+          <stop offset="72%" stopColor="#2b7fc0" />
+          <stop offset="76%" stopColor="#2b7fc0" stopOpacity={0.8} />
+          <stop offset="84%" stopColor="#2b7fc0" stopOpacity={0.45} />
           <stop offset="100%" stopColor="#2b7fc0" stopOpacity={0} />
         </radialGradient>
         <radialGradient id="continentsGradient" cx={-7} cy={15} r={26}>
