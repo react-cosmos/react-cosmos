@@ -12,11 +12,18 @@ type Props = {
 
 export function Cosmonaut({ cropRatio, minimizeRatio }: Props) {
   const viewBox = minimizeRatio > 0 ? `0 0 256 256` : `0 -128 512 512`;
+  const skyMaskRadius = minimizeRatio > 0 ? 128 : getSkyMaskRadius(cropRatio);
   return (
     <SvgContainer viewBox={viewBox}>
-      <Sky cropRatio={cropRatio} minimizeRatio={minimizeRatio} />
+      <defs>
+        <clipPath id="skyMask">
+          <circle cx="128" cy="128" r={skyMaskRadius} />
+        </clipPath>
+      </defs>
+
+      <Sky minimizeRatio={minimizeRatio} />
       <Stars />
-      <Planet cropRatio={cropRatio} minimizeRatio={minimizeRatio} />
+      <Planet minimizeRatio={minimizeRatio} />
       <Body />
       <Helmet />
     </SvgContainer>
@@ -24,47 +31,35 @@ export function Cosmonaut({ cropRatio, minimizeRatio }: Props) {
 }
 
 type SkyProps = {
-  cropRatio: number;
   minimizeRatio: number;
 };
 
-function Sky({ cropRatio, minimizeRatio }: SkyProps) {
+function Sky({ minimizeRatio }: SkyProps) {
   if (minimizeRatio > 0) {
     return (
-      <>
-        <defs>
-          <clipPath id="skyMask">
-            <circle cx="128" cy="128" r="128" />
-          </clipPath>
-        </defs>
-        <StyledSky
-          x={0}
-          y={0}
-          width={256}
-          height={256}
-          clipPath="url(#skyMask)"
-        />
-      </>
+      <StyledSky
+        x={0}
+        y={0}
+        width={256}
+        height={256}
+        clipPath="url(#skyMask)"
+      />
     );
   }
 
-  const radius = 512 - 384 * cropRatio;
   return (
-    <>
-      <defs>
-        <clipPath id="skyMask">
-          <circle cx="128" cy="128" r={radius} />
-        </clipPath>
-      </defs>
-      <StyledSky
-        x={0}
-        y={-256}
-        width={512}
-        height={768}
-        clipPath="url(#skyMask)"
-      />
-    </>
+    <StyledSky
+      x={0}
+      y={-256}
+      width={512}
+      height={768}
+      clipPath="url(#skyMask)"
+    />
   );
+}
+
+function getSkyMaskRadius(cropRatio: number) {
+  return 128 + (640 - 128) * (1 - cropRatio);
 }
 
 const SvgContainer = styled.svg`
