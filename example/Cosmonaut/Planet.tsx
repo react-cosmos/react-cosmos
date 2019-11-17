@@ -56,8 +56,8 @@ export const Planet = React.memo(function Planet({ minimizeRatio }: Props) {
 
 function getPlanetOffset(minimizeRatio: number) {
   const inverseRatio = 1 - minimizeRatio;
-  const x = -Math.round(60 * inverseRatio);
-  const y = -Math.round(70 * inverseRatio);
+  const x = Math.round(-60 * inverseRatio);
+  const y = Math.round(-112 * inverseRatio);
   return { x, y };
 }
 
