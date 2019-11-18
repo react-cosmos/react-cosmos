@@ -53,57 +53,33 @@ exports[`Cosmonaut renders correctly 1`] = `
           x={0}
           y={-256}
         />
-        <defs>
-          <filter
-            height="500%"
-            id="starGlow"
-            width="500%"
-            x="-200%"
-            y="-200%"
-          >
-            <feGaussianBlur
-              result="coloredBlur"
-              stdDeviation="1.6"
-            />
-            <feMerge>
-              <feMergeNode
-                in="SourceGraphic"
-              />
-              <feMergeNode
-                in="coloredBlur"
-              />
-              <feMergeNode
-                in="coloredBlur"
-              />
-            </feMerge>
-          </filter>
-        </defs>
+        <defs />
         <path
-          className="sc-gzVnrw fXgdZx"
+          className="sc-gzVnrw hKIWH"
           d="M59.00 60.57C60.34 60.57 61.43 61.66 61.43 63.00C61.43 64.34 60.34 65.43 59.00 65.43C57.66 65.43 56.57 64.34 56.57 63.00C56.57 61.66 57.66 60.57 59.00 60.57"
         />
         <path
-          className="sc-gzVnrw fXgdZx"
+          className="sc-gzVnrw hKIWH"
           d="M203.00 202.57C204.34 202.57 205.43 203.66 205.43 205.00C205.43 206.34 204.34 207.43 203.00 207.43C201.66 207.43 200.57 206.34 200.57 205.00C200.57 203.66 201.66 202.57 203.00 202.57"
         />
         <path
-          className="sc-gzVnrw fXgdZx"
+          className="sc-gzVnrw hKIWH"
           d="M123.00 21.78C123.67 21.78 124.21 22.33 124.21 23.00C124.21 23.67 123.67 24.21 123.00 24.21C122.33 24.21 121.78 23.67 121.78 23.00C121.78 22.33 122.33 21.78 123.00 21.78"
         />
         <path
-          className="sc-gzVnrw fXgdZx"
+          className="sc-gzVnrw hKIWH"
           d="M77.00 81.78C77.67 81.78 78.21 82.33 78.21 83.00C78.21 83.67 77.67 84.21 77.00 84.21C76.33 84.21 75.78 83.67 75.78 83.00C75.78 82.33 76.33 81.78 77.00 81.78"
         />
         <path
-          className="sc-gzVnrw fXgdZx"
+          className="sc-gzVnrw hKIWH"
           d="M229.00 145.78C229.67 145.78 230.21 146.33 230.21 147.00C230.21 147.67 229.67 148.21 229.00 148.21C228.33 148.21 227.78 147.67 227.78 147.00C227.78 146.33 228.33 145.78 229.00 145.78"
         />
         <path
-          className="sc-gzVnrw fXgdZx"
+          className="sc-gzVnrw hKIWH"
           d="M171.00 195.78C171.67 195.78 172.21 196.33 172.21 197.00C172.21 197.67 171.67 198.21 171.00 198.21C170.33 198.21 169.78 197.67 169.78 197.00C169.78 196.33 170.33 195.78 171.00 195.78"
         />
         <path
-          className="sc-gzVnrw fXgdZx"
+          className="sc-gzVnrw hKIWH"
           d="M99.00 48.00C100.66 48.00 102.00 49.34 102.00 51.00C102.00 52.66 100.66 54.00 99.00 54.00C97.34 54.00 96.00 52.66 96.00 51.00C96.00 49.34 97.34 48.00 99.00 48.00"
         />
         <defs>
