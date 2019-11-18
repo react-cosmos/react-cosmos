@@ -16,7 +16,7 @@ export default () => {
   const scrollRatio = useWindowScroll();
   const cropRatio = Math.min(1, scrollRatio * 2);
   const minimizeRatio = Math.max(0, scrollRatio - 0.5) * 2;
-  const contentRatio = Math.max(0, minimizeRatio - 0.9) * 10;
+  const showContent = minimizeRatio >= 1;
 
   const headerPadding = Math.round(HEADER_PADDING * minimizeRatio);
   const containerViewport = getContainerViewport(windowViewport, minimizeRatio);
@@ -47,7 +47,7 @@ export default () => {
           <Cosmonaut cropRatio={cropRatio} minimizeRatio={minimizeRatio} />
         </CosmonautContainer>
       </HeaderContainer>
-      <div style={{ opacity: contentRatio }}>
+      <div style={{ opacity: showContent ? 1 : 0, transition: '0.4s opacity' }}>
         <p style={{ paddingTop: 128 }}>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry&apos;s standard dummy text
