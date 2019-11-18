@@ -179,13 +179,21 @@ function useWindowScroll() {
   const [yScroll, setYScroll] = React.useState(window.pageYOffset);
   React.useEffect(() => {
     function handleScroll() {
-      if (Math.abs(window.pageYOffset - yScroll) >= 10) {
-        setYScroll(window.pageYOffset);
+      const { pageYOffset } = window;
+      if (
+        getScrollRatio(yScroll) >= 1 ||
+        Math.abs(pageYOffset - yScroll) >= 10
+      ) {
+        setYScroll(pageYOffset);
       }
     }
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  return getScrollRatio(yScroll);
+}
+
+function getScrollRatio(yScroll: number) {
   return Math.min(1, Math.max(0, yScroll / SCROLL_SIZE));
 }
 
