@@ -186,7 +186,7 @@ function useWindowScroll() {
       const { pageYOffset } = window;
       if (
         getScrollRatio(yScroll) >= 1 ||
-        Math.abs(pageYOffset - yScroll) >= 10
+        Math.abs(pageYOffset - yScroll) >= 2
       ) {
         setYScroll(pageYOffset);
       }
