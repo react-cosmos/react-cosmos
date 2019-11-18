@@ -18,7 +18,7 @@ export default () => {
   const minimizeRatio = Math.max(0, scrollRatio - 0.5) * 2;
   const contentRatio = Math.max(0, minimizeRatio - 0.9) * 10;
 
-  const headerPadding = HEADER_PADDING * minimizeRatio;
+  const headerPadding = Math.round(HEADER_PADDING * minimizeRatio);
   const containerViewport = getContainerViewport(windowViewport, minimizeRatio);
   const cosmonautViewport = getCosmonautViewport(windowViewport, minimizeRatio);
   const bottomOffset = getCosmonautBottomOffset(windowViewport, minimizeRatio);
@@ -104,7 +104,7 @@ function getMinimizedCosmonautSize(
   minimizeRatio: number
 ) {
   const fullSize = Math.round(getViewportLength(windowViewport) / 2);
-  return fullSize - (fullSize - HEADER_SIZE) * minimizeRatio;
+  return Math.round(fullSize - (fullSize - HEADER_SIZE) * minimizeRatio);
 }
 
 function getContainerViewport(windowViewport: Viewport, minimizeRatio: number) {
@@ -113,9 +113,10 @@ function getContainerViewport(windowViewport: Viewport, minimizeRatio: number) {
       windowViewport,
       minimizeRatio
     );
-    const height =
+    const height = Math.round(
       windowViewport.height -
-      (windowViewport.height - cosmonautSize) * minimizeRatio;
+        (windowViewport.height - cosmonautSize) * minimizeRatio
+    );
     return { width: windowViewport.width, height };
   }
   return windowViewport;
