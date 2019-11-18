@@ -267,11 +267,3 @@ const TorsoLinePath = styled.path`
   stroke-linecap: round;
   stroke-linejoin: round;
 `;
-
-const TubePath = styled.path`
-  fill: none;
-  stroke: url(#tubeGrad);
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 6;
-`;
