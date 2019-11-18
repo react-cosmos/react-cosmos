@@ -179,7 +179,9 @@ function useWindowScroll() {
   const [yScroll, setYScroll] = React.useState(window.pageYOffset);
   React.useEffect(() => {
     function handleScroll() {
-      setYScroll(window.pageYOffset);
+      if (Math.abs(window.pageYOffset - yScroll) >= 10) {
+        setYScroll(window.pageYOffset);
+      }
     }
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
