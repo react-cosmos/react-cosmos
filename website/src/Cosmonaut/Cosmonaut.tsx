@@ -11,7 +11,7 @@ type Props = {
 };
 
 export function Cosmonaut({ cropRatio, minimizeRatio }: Props) {
-  const viewBox = minimizeRatio > 0 ? `0 0 256 256` : `0 -128 512 512`;
+  const viewBox = minimizeRatio > 0 ? `0 0 256 256` : `0 -512 768 1024`;
   const skyMaskRadius = minimizeRatio > 0 ? 128 : getSkyMaskRadius(cropRatio);
   return (
     <SvgContainer viewBox={viewBox}>
@@ -50,16 +50,18 @@ function Sky({ minimizeRatio }: SkyProps) {
   return (
     <StyledSky
       x={0}
-      y={-256}
-      width={512}
-      height={768}
+      y={-512}
+      width={768}
+      height={1024}
       clipPath="url(#skyMask)"
     />
   );
 }
 
+const MAX_SKY_RADIUS = Math.sqrt(2 * Math.pow(640, 2));
+
 function getSkyMaskRadius(cropRatio: number) {
-  return 128 + (640 - 128) * (1 - cropRatio);
+  return MAX_SKY_RADIUS - (MAX_SKY_RADIUS - 128) * cropRatio;
 }
 
 const SvgContainer = styled.svg`

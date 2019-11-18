@@ -99,11 +99,15 @@ function getViewportLength(viewport: Viewport) {
   return Math.max(viewport.width, viewport.height);
 }
 
+function getCosmonautSize(windowViewport: Viewport) {
+  return getViewportLength(windowViewport) / 3;
+}
+
 function getMinimizedCosmonautSize(
   windowViewport: Viewport,
   minimizeRatio: number
 ) {
-  const fullSize = Math.round(getViewportLength(windowViewport) / 2);
+  const fullSize = getCosmonautSize(windowViewport);
   return Math.round(fullSize - (fullSize - HEADER_SIZE) * minimizeRatio);
 }
 
@@ -132,14 +136,14 @@ function getCosmonautViewport(windowViewport: Viewport, minimizeRatio: number) {
   }
 
   const width = getViewportLength(windowViewport);
-  return { width, height: width * 1.5 };
+  return { width, height: Math.ceil(getCosmonautSize(windowViewport) * 4) };
 }
 
 function getCosmonautBottomOffset(
   windowViewport: Viewport,
   minimizeRatio: number
 ) {
-  return minimizeRatio > 0 ? 0 : -getViewportLength(windowViewport) * 0.5;
+  return minimizeRatio > 0 ? 0 : -Math.floor(getCosmonautSize(windowViewport));
 }
 
 function useWindowViewport() {
