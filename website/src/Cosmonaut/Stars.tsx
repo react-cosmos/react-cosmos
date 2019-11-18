@@ -28,7 +28,7 @@ export function Stars() {
   return (
     <>
       <defs>
-        <filter id="starGlow" x="-200%" y="-200%" width="500%" height="500%">
+        {/* <filter id="starGlow" x="-200%" y="-200%" width="500%" height="500%">
           <feGaussianBlur
             result="coloredBlur"
             stdDeviation="1.6"
@@ -38,7 +38,7 @@ export function Stars() {
             <feMergeNode in="coloredBlur"></feMergeNode>
             <feMergeNode in="coloredBlur"></feMergeNode>
           </feMerge>
-        </filter>
+        </filter> */}
       </defs>
       <Star d={star1Path} />
       <Star d={star2Path} />
@@ -53,5 +53,5 @@ export function Stars() {
 
 const Star = styled.path`
   fill: #bde0f6;
-  filter: url(#starGlow);
+  /* filter: url(#starGlow); */
 `;

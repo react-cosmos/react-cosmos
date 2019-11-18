@@ -2,7 +2,8 @@
   "private": true,
   "workspaces": [
     "packages/*",
-    "example"
+    "example",
+    "website"
   ],
   "repository": "https://github.com/react-cosmos/react-cosmos",
   "license": "MIT",
@@ -25,6 +26,7 @@
     "start:export": "http-server -p 5001 ./example/cosmos-export",
     "start:native": "yarn cosmos-native --root-dir example --port 5002",
     "start:playground": "yarn cosmos --root-dir packages/react-cosmos-playground2",
+    "start:website": "yarn cosmos --root-dir website",
     "release:check": "yarn build:clear && yarn build && yarn link-entries src && yarn lint && yarn link-entries dist && yarn test:unit",
     "release:lerna": "lerna publish --registry=https://registry.npmjs.org/",
     "release": "yarn release:check && yarn release:lerna",
