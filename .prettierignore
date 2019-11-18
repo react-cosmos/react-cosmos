@@ -1,3 +1,4 @@
+.vscode
 coverage
 example/cosmos-export
 example/cosmos.userdeps.js

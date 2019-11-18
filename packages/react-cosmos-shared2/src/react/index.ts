@@ -22,6 +22,4 @@ export { getComponentName } from './getComponentName';
 export { getFixtureNamesByPath } from './getFixtureNamesByPath';
 export { isMultiFixture } from './isMultiFixture';
 export { isReactElement } from './isReactElement';
-export {
-  getSortedDecoratorsForFixturePath
-} from './getSortedDecoratorsForFixturePath';
+export { getSortedDecoratorsForFixturePath } from './getSortedDecoratorsForFixturePath';

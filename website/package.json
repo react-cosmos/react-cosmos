@@ -1,8 +1,8 @@
 {
   "private": true,
-  "name": "react-cosmos-example",
+  "name": "react-cosmos-website",
   "version": "5.0.0-rc.0",
-  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/example",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/website",
   "license": "MIT",
   "scripts": {
     "start": "cosmos"

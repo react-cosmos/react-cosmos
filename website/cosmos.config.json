@@ -1,0 +1,4 @@
+{
+  "globalImports": ["src/polyfills.ts", "src/global.css"],
+  "staticPath": "static"
+}
