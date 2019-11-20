@@ -1,15 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Header } from './Header';
-import { Viewport } from './shared';
-
-const HEADER_SIZE = 128;
-const HEADER_PADDING = 16;
-const SCROLL_SIZE = 500;
+import { HEADER_PADDING_PX, HEADER_SIZE_PX } from './shared';
+import { useWindowViewport } from './use-window-viewport';
+import { HEADER_SCROLL_LENGTH_PX, useHeaderScroll } from './useHeaderScroll';
 
 export function Root() {
   const windowViewport = useWindowViewport();
-  const scrollRatio = useWindowScroll();
+  const scrollRatio = useHeaderScroll();
+  // TODO: Divide ratios unequally
   const cropRatio = Math.min(1, scrollRatio * 2);
   const minimizeRatio = Math.max(0, scrollRatio - 0.5) * 2;
   const showContent = minimizeRatio >= 1;
@@ -17,7 +16,8 @@ export function Root() {
   return (
     <Container
       style={{
-        paddingTop: SCROLL_SIZE + HEADER_SIZE + 2 * HEADER_PADDING,
+        paddingTop:
+          HEADER_SCROLL_LENGTH_PX + HEADER_SIZE_PX + 2 * HEADER_PADDING_PX,
         background: cropRatio > 0.5 ? '#fff' : '#093556'
       }}
     >
@@ -72,61 +72,6 @@ export function Root() {
       </div>
     </Container>
   );
-}
-
-function useWindowViewport() {
-  const [viewport, setViewport] = React.useState(getWindowViewport());
-  React.useEffect(() => {
-    function handleWindowResize() {
-      const newViewport = getWindowViewport();
-      if (didViewportChange(viewport, newViewport)) {
-        setViewport(newViewport);
-      }
-    }
-    window.addEventListener('resize', handleWindowResize);
-    return () => window.removeEventListener('resize', handleWindowResize);
-  });
-  return viewport;
-}
-
-function getWindowViewport() {
-  return {
-    width: window.innerWidth,
-    height: window.innerHeight
-  };
-}
-
-function didViewportChange(oldViewport: Viewport, newViewport: Viewport) {
-  if (newViewport.width !== oldViewport.width) {
-    return true;
-  }
-  // Ignore small height changes that occur on scroll in landscape mode.
-  // Eg. Safari on iOS minimizes the address bar and hides the bottom menu
-  // after initial scroll
-  const heightDiff = Math.abs(newViewport.height - oldViewport.height);
-  return heightDiff / newViewport.height >= 0.2;
-}
-
-function useWindowScroll() {
-  const [yScroll, setYScroll] = React.useState(window.pageYOffset);
-  React.useEffect(() => {
-    function handleScroll() {
-      const { pageYOffset } = window;
-      if (
-        getScrollRatio(yScroll) >= 1 ||
-        Math.abs(pageYOffset - yScroll) >= 2
-      ) {
-        setYScroll(pageYOffset);
-      }
-    }
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  });
-  return getScrollRatio(yScroll);
-}
-
-function getScrollRatio(yScroll: number) {
-  return Math.min(1, Math.max(0, yScroll / SCROLL_SIZE));
 }
 
 const Container = styled.div`
