@@ -88,6 +88,30 @@ exports[`returns fixture elements: CounterButton/index.fixture.tsx 1`] = `
 </button>
 `;
 
+exports[`returns fixture elements: NestedDecorators/index.fixture.tsx 1`] = `
+<span>
+  (layout:
+  wide
+   
+  <span>
+    (Formik 
+    <span>
+      (Intl 
+      <span>
+        (name: 
+        name
+        , label: 
+        Your Name
+        )
+      </span>
+      )
+    </span>
+    )
+  </span>
+  )
+</span>
+`;
+
 exports[`returns fixture elements: WelcomeMessage/index.fixture.tsx 1`] = `
 <div
   style={
