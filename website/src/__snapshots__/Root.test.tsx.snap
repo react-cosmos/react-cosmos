@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Cosmonaut renders correctly 1`] = `
+exports[`renders correctly 1`] = `
 <div
-  className="sc-dnqmqq fdnGbj"
+  className="sc-gZMcBi gfABQJ"
   style={
     Object {
       "background": "#093556",
@@ -11,7 +11,7 @@ exports[`Cosmonaut renders correctly 1`] = `
   }
 >
   <div
-    className="sc-iwsKbI kSSYeu"
+    className="sc-dnqmqq ikFDmJ"
     style={
       Object {
         "height": 768,
@@ -20,7 +20,7 @@ exports[`Cosmonaut renders correctly 1`] = `
     }
   >
     <div
-      className="sc-gZMcBi dXHZhV"
+      className="sc-iwsKbI kAobfv"
       style={
         Object {
           "bottom": -341,

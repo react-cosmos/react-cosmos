@@ -1,8 +1,8 @@
 import React from 'react';
 import { create } from 'react-test-renderer';
-import Fixture from './index.fixture';
+import { Root } from './Root';
 
-it('Cosmonaut renders correctly', () => {
-  const renderer = create(<Fixture />);
+it('renders correctly', () => {
+  const renderer = create(<Root />);
   expect(renderer.toJSON()).toMatchSnapshot();
 });
