@@ -8,7 +8,6 @@ import { HEADER_SCROLL_LENGTH_PX, useHeaderScroll } from './useHeaderScroll';
 export function Root() {
   const windowViewport = useWindowViewport();
   const scrollRatio = useHeaderScroll();
-  // TODO: Divide ratios unequally
   const cropRatio = Math.min(1, scrollRatio * 2);
   const minimizeRatio = Math.max(0, scrollRatio - 0.5) * 2;
   const showContent = minimizeRatio >= 1;

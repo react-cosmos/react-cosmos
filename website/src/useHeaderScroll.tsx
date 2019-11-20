@@ -1,6 +1,6 @@
 import { useWindowYScroll } from './useWindowYScroll';
 
-export const HEADER_SCROLL_LENGTH_PX = 1024;
+export const HEADER_SCROLL_LENGTH_PX = 512;
 const HEADER_SCROLL_STEP_PX = 4;
 
 export function useHeaderScroll() {
