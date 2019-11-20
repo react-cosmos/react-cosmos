@@ -1,7 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Cosmonaut } from './Cosmonaut/Cosmonaut';
-import { HEADER_PADDING_PX, HEADER_SIZE_PX, Viewport } from './shared';
+import { Viewport } from './shared';
+import {
+  MINIMIZED_HEADER_PADDING_PX,
+  MINIMIZED_HEADER_SIZE_PX
+} from './useHeaderScroll';
 
 type Props = {
   windowViewport: Viewport;
@@ -10,7 +14,7 @@ type Props = {
 };
 
 export function Header({ windowViewport, cropRatio, minimizeRatio }: Props) {
-  const headerPadding = Math.round(HEADER_PADDING_PX * minimizeRatio);
+  const headerPadding = Math.round(MINIMIZED_HEADER_PADDING_PX * minimizeRatio);
   const containerViewport = getContainerViewport(windowViewport, minimizeRatio);
   const cosmonautViewport = getCosmonautViewport(windowViewport, minimizeRatio);
   const bottomOffset = getCosmonautBottomOffset(windowViewport, minimizeRatio);
@@ -49,7 +53,9 @@ function getMinimizedCosmonautSize(
   minimizeRatio: number
 ) {
   const fullSize = getCosmonautSize(windowViewport);
-  return Math.round(fullSize - (fullSize - HEADER_SIZE_PX) * minimizeRatio);
+  return Math.round(
+    fullSize - (fullSize - MINIMIZED_HEADER_SIZE_PX) * minimizeRatio
+  );
 }
 
 function getContainerViewport(windowViewport: Viewport, minimizeRatio: number) {

@@ -1,22 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Header } from './Header';
-import { HEADER_PADDING_PX, HEADER_SIZE_PX } from './shared';
 import { useWindowViewport } from './use-window-viewport';
-import { HEADER_SCROLL_LENGTH_PX, useHeaderScroll } from './useHeaderScroll';
+import { CONTENT_TOP_PADDING_PX, useHeaderScroll } from './useHeaderScroll';
+import { useWindowYScroll } from './useWindowYScroll';
 
 export function Root() {
   const windowViewport = useWindowViewport();
-  const scrollRatio = useHeaderScroll();
-  const cropRatio = Math.min(1, scrollRatio * 2);
-  const minimizeRatio = Math.max(0, scrollRatio - 0.5) * 2;
+  const yScroll = useWindowYScroll();
+  const { cropRatio, minimizeRatio } = useHeaderScroll(yScroll);
   const showContent = minimizeRatio >= 1;
 
   return (
     <Container
       style={{
-        paddingTop:
-          HEADER_SCROLL_LENGTH_PX + HEADER_SIZE_PX + 2 * HEADER_PADDING_PX,
+        paddingTop: CONTENT_TOP_PADDING_PX,
         background: cropRatio > 0.5 ? '#fff' : '#093556'
       }}
     >
