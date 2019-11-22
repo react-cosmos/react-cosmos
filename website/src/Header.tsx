@@ -41,13 +41,13 @@ export function Header({ windowViewport, cropRatio, minimizeRatio }: Props) {
         }}
       >
         <Cosmonaut cropRatio={cropRatio} minimizeRatio={minimizeRatio} />
-        {cropRatio < 1 && (
-          <FullScreenHeader
-            windowViewport={windowViewport}
-            cropRatio={cropRatio}
-          />
-        )}
       </CosmonautContainer>
+      {cropRatio < 1 && (
+        <FullScreenHeader
+          windowViewport={windowViewport}
+          cropRatio={cropRatio}
+        />
+      )}
       {cropRatio === 1 && (
         <MinimizedHeader
           windowViewport={windowViewport}

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {
   getMinimizedCosmonautSize,
   MINIMIZED_HEADER_PADDING_PX,
+  MINIMIZED_HEADER_SIZE_PX,
   Viewport
 } from './shared';
 
@@ -10,6 +11,9 @@ type Props = {
   windowViewport: Viewport;
   minimizeRatio: number;
 };
+
+const HEADER_HEIGHT =
+  MINIMIZED_HEADER_SIZE_PX + 2 * MINIMIZED_HEADER_PADDING_PX;
 
 export function MinimizedHeader({ windowViewport, minimizeRatio }: Props) {
   const minimizedCosmonautSize = getMinimizedCosmonautSize(
@@ -21,6 +25,11 @@ export function MinimizedHeader({ windowViewport, minimizeRatio }: Props) {
     minimizedCosmonautSize + 2 * MINIMIZED_HEADER_PADDING_PX * minimizeRatio;
   const marginTop = (windowViewport.height - height) * (1 - minimizeRatio);
   const marginLeft = minimizedCosmonautSize + 2 * MINIMIZED_HEADER_PADDING_PX;
+  const innerScale = height / HEADER_HEIGHT;
+  const innerWidth =
+    windowViewport.width -
+    MINIMIZED_HEADER_SIZE_PX -
+    3 * MINIMIZED_HEADER_PADDING_PX;
   return (
     <Container
       style={{
@@ -28,11 +37,28 @@ export function MinimizedHeader({ windowViewport, minimizeRatio }: Props) {
         marginTop,
         marginLeft
       }}
-    />
+    >
+      <InnerContainer
+        style={{
+          width: innerWidth,
+          transform: `scale(${innerScale})`,
+          opacity: minimizeRatio
+        }}
+      >
+        <h1>React Cosmos</h1>
+      </InnerContainer>
+    </Container>
   );
 }
 
-const Container = styled.div`
-  margin: 0 ${MINIMIZED_HEADER_PADDING_PX}px 0 0;
-  background: rgb(0, 0, 255, 0.5);
+const Container = styled.div``;
+
+const InnerContainer = styled.div`
+  transform-origin: top left;
+  position: absolute;
+  height: ${HEADER_HEIGHT}px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;

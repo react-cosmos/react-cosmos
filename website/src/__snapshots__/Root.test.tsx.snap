@@ -2,7 +2,7 @@
 
 exports[`renders correctly 1`] = `
 <div
-  className="sc-VigVT eIfucP"
+  className="sc-jTzLTM fmojwm"
   style={
     Object {
       "background": "#093556",
@@ -11,7 +11,7 @@ exports[`renders correctly 1`] = `
   }
 >
   <div
-    className="sc-gZMcBi evlGif"
+    className="sc-gqjmRU jDgJMw"
     style={
       Object {
         "borderColor": "rgba(8, 8, 9, 0)",
@@ -21,7 +21,7 @@ exports[`renders correctly 1`] = `
     }
   >
     <div
-      className="sc-gqjmRU hLcfuu"
+      className="sc-VigVT hIngBl"
       style={
         Object {
           "bottom": -341,
@@ -909,18 +909,22 @@ exports[`renders correctly 1`] = `
           />
         </g>
       </svg>
-      <div
-        className="sc-dnqmqq jywhMU"
-        style={
-          Object {
-            "bottom": 341,
-            "clipPath": "circle(1206.7955732250412px at -170.66666666666666px 597.3333333333334px)",
-            "height": 768,
-            "left": 341,
-            "width": 683,
-          }
+    </div>
+    <div
+      className="sc-dnqmqq efGusN"
+      clipPath="circle(1206.7955732250412px at -170.66666666666666px 597.3333333333334px)"
+      style={
+        Object {
+          "bottom": 0,
+          "height": 768,
+          "left": 341,
+          "width": 683,
         }
-      />
+      }
+    >
+      <h1>
+        React Cosmos
+      </h1>
     </div>
   </div>
   <div
