@@ -21,9 +21,11 @@ export function Header({ windowViewport, cropRatio, minimizeRatio }: Props) {
 
   return (
     <Container
+      minimized={minimizeRatio === 1}
       style={{
         width: containerViewport.width,
-        height: containerViewport.height + 2 * headerPadding
+        height: containerViewport.height + 2 * headerPadding,
+        borderColor: `rgba(8, 8, 9, ${Math.max(0, minimizeRatio - 0.9)})`
       }}
     >
       <CosmonautContainer
@@ -93,12 +95,14 @@ function getCosmonautBottomOffset(
   return minimizeRatio > 0 ? 0 : -Math.floor(getCosmonautSize(windowViewport));
 }
 
-const Container = styled.div`
+const Container = styled.div<{ minimized: boolean }>`
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
-  background: #fff;
+  background: rgb(255, 255, 255, 0.9);
+  border-bottom: 1px solid transparent;
+  ${props => props.minimized && `backdrop-filter: saturate(180%) blur(20px);`}
 `;
 
 const CosmonautContainer = styled.div`
