@@ -2,25 +2,26 @@
 
 exports[`renders correctly 1`] = `
 <div
-  className="sc-gZMcBi gfABQJ"
+  className="sc-VigVT eIfucP"
   style={
     Object {
       "background": "#093556",
-      "paddingTop": 672,
+      "paddingTop": 624,
     }
   }
 >
   <div
-    className="sc-dnqmqq ikFDmJ"
+    className="sc-gZMcBi evlGif"
     style={
       Object {
+        "borderColor": "rgba(8, 8, 9, 0)",
         "height": 768,
         "width": 1024,
       }
     }
   >
     <div
-      className="sc-iwsKbI kAobfv"
+      className="sc-gqjmRU hLcfuu"
       style={
         Object {
           "bottom": -341,
@@ -908,6 +909,18 @@ exports[`renders correctly 1`] = `
           />
         </g>
       </svg>
+      <div
+        className="sc-dnqmqq jywhMU"
+        style={
+          Object {
+            "bottom": 341,
+            "clipPath": "circle(1206.7955732250412px at -170.66666666666666px 597.3333333333334px)",
+            "height": 768,
+            "left": 341,
+            "width": 683,
+          }
+        }
+      />
     </div>
   </div>
   <div

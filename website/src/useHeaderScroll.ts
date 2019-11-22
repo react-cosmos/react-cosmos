@@ -1,10 +1,11 @@
 import React from 'react';
+import {
+  MINIMIZED_HEADER_PADDING_PX,
+  MINIMIZED_HEADER_SIZE_PX
+} from './shared';
 
 const HEADER_SCROLL_LENGTH_PX = 512;
 const HEADER_SCROLL_STEP_PX = 4;
-
-export const MINIMIZED_HEADER_SIZE_PX = 128;
-export const MINIMIZED_HEADER_PADDING_PX = 16;
 
 export const CONTENT_TOP_PADDING_PX =
   HEADER_SCROLL_LENGTH_PX +
