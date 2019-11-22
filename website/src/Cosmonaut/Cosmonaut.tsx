@@ -51,7 +51,7 @@ function Sky({ minimizeRatio }: SkyProps) {
 
 const MAX_SKY_RADIUS = Math.sqrt(2 * Math.pow(640, 2));
 
-function getSkyMaskRadius(cropRatio: number) {
+export function getSkyMaskRadius(cropRatio: number) {
   return MAX_SKY_RADIUS - (MAX_SKY_RADIUS - 128) * cropRatio;
 }
 

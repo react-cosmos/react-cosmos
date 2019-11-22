@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Cosmonaut } from './Cosmonaut/Cosmonaut';
-import { Viewport } from './shared';
+import { FullScreenHeader } from './FullScreenHeader';
+import { getCosmonautSize, getViewportLength, Viewport } from './shared';
 import {
   MINIMIZED_HEADER_PADDING_PX,
   MINIMIZED_HEADER_SIZE_PX
@@ -37,17 +38,15 @@ export function Header({ windowViewport, cropRatio, minimizeRatio }: Props) {
         }}
       >
         <Cosmonaut cropRatio={cropRatio} minimizeRatio={minimizeRatio} />
+        {cropRatio < 1 && (
+          <FullScreenHeader
+            windowViewport={windowViewport}
+            cropRatio={cropRatio}
+          />
+        )}
       </CosmonautContainer>
     </Container>
   );
-}
-
-function getViewportLength(viewport: Viewport) {
-  return Math.max(viewport.width, viewport.height);
-}
-
-function getCosmonautSize(windowViewport: Viewport) {
-  return getViewportLength(windowViewport) / 3;
 }
 
 function getMinimizedCosmonautSize(
