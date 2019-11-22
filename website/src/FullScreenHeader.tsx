@@ -10,8 +10,23 @@ type Props = {
 
 export function FullScreenHeader({ windowViewport, cropRatio }: Props) {
   const cosmonautSize = Math.round(getCosmonautSize(windowViewport));
-  const clipPath = getClipPath(windowViewport, cropRatio);
 
+  if (windowViewport.height > windowViewport.width) {
+    const clipPath = getClipPath(windowViewport, cropRatio, true);
+    return (
+      <Container
+        style={{
+          bottom: cosmonautSize * 2,
+          left: 0,
+          width: windowViewport.width,
+          height: windowViewport.height - cosmonautSize,
+          clipPath
+        }}
+      />
+    );
+  }
+
+  const clipPath = getClipPath(windowViewport, cropRatio, false);
   return (
     <Container
       style={{
@@ -25,9 +40,13 @@ export function FullScreenHeader({ windowViewport, cropRatio }: Props) {
   );
 }
 
-function getClipPath(windowViewport: Viewport, cropRatio: number) {
+function getClipPath(
+  windowViewport: Viewport,
+  cropRatio: number,
+  portrait: boolean
+) {
   const cosmonautSize = getCosmonautSize(windowViewport);
-  const clipX = -cosmonautSize / 2;
+  const clipX = portrait ? cosmonautSize / 2 : -cosmonautSize / 2;
   const clipY = windowViewport.height - cosmonautSize + cosmonautSize / 2;
   const clipRadius = getSkyMaskRadius(cropRatio) * (cosmonautSize / 256);
   return `circle(${clipRadius}px at ${clipX}px ${clipY}px)`;
