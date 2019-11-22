@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Header } from './Header';
-import { useWindowViewport } from './use-window-viewport';
 import { CONTENT_TOP_PADDING_PX, useHeaderScroll } from './useHeaderScroll';
+import { useWindowViewport } from './useWindowViewport';
 import { useWindowYScroll } from './useWindowYScroll';
 
 export function Root() {
