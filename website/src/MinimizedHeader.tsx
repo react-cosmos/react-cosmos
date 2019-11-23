@@ -35,6 +35,7 @@ export function MinimizedHeader({ windowViewport, minimizeRatio }: Props) {
     Math.min(MAX_CONTENT_WIDTH_PX, windowViewport.width) -
     MINIMIZED_HEADER_SIZE_PX -
     3 * MINIMIZED_HEADER_HPADDING_PX;
+
   return (
     <Container
       style={{
@@ -51,7 +52,20 @@ export function MinimizedHeader({ windowViewport, minimizeRatio }: Props) {
         }}
       >
         <LeftContainer>
-          <Title>React Cosmos</Title>
+          <CosmonautButton onClick={scrollToTop} />
+          <Title>
+            <a
+              href="/"
+              onClick={e => {
+                e.preventDefault();
+                scrollToTop();
+              }}
+            >
+              React
+              <br />
+              Cosmos
+            </a>
+          </Title>
           <Links>
             <Link
               href="https://github.com/react-cosmos/react-cosmos"
@@ -84,15 +98,9 @@ export function MinimizedHeader({ windowViewport, minimizeRatio }: Props) {
   );
 }
 
-const Link = styled.a`
-  color: #093556;
-  font-weight: 500;
-  text-decoration: none;
-
-  :hover {
-    text-decoration: underline;
-  }
-`;
+function scrollToTop() {
+  window.scroll({ top: 0, behavior: 'smooth' });
+}
 
 const Container = styled.div``;
 
@@ -103,7 +111,7 @@ const InnerContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
 `;
 
 const LeftContainer = styled.div`
@@ -117,12 +125,28 @@ const RightContainer = styled.div`
   flex-direction: column;
 `;
 
+const CosmonautButton = styled.div`
+  position: absolute;
+  width: ${MINIMIZED_HEADER_SIZE_PX}px;
+  height: ${MINIMIZED_HEADER_SIZE_PX}px;
+  top: ${MINIMIZED_HEADER_VPADDING_PX}px;
+  left: -${MINIMIZED_HEADER_SIZE_PX + MINIMIZED_HEADER_HPADDING_PX}px;
+  background: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+`;
+
 const Title = styled.h1`
   font-size: 32px;
   letter-spacing: -0.03em;
-  line-height: 32px;
+  line-height: 30px;
   margin: 0;
-  padding: 0 0 12px 0;
+  padding: 0;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 `;
 
 const Links = styled.div`
@@ -131,13 +155,25 @@ const Links = styled.div`
   line-height: 16px;
   font-size: 16px;
   font-weight: 300;
+  margin: 0 0 0 2px;
+  padding: 12px 0;
 
   strong {
     font-weight: 500;
   }
 `;
 
+const Link = styled.a`
+  color: inherit;
+  font-weight: 500;
+  text-decoration: none;
+
+  :hover {
+    text-decoration: underline;
+  }
+`;
+
 const Separator = styled.div`
-  margin: 0 10px;
+  margin: 0 8px;
   opacity: 0.5;
 `;

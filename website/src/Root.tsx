@@ -11,20 +11,6 @@ export function Root() {
   const { cropRatio, minimizeRatio } = useHeaderScroll(yScroll);
   const showContent = minimizeRatio >= 1;
 
-  const Features = styled.div`
-    display: flex;
-    flex-direction: row;
-  `;
-
-  const Feature = styled.div`
-    &:first-child {
-      margin-right: 32px;
-    }
-    &:last-child {
-      margin-left: 32px;
-    }
-  `;
-
   return (
     <Container
       style={{
@@ -43,9 +29,9 @@ export function Root() {
             <Feature>
               <strong>Visual TDD.</strong>
               <br />
-              Develop one component at a time. Isolate the UI you're working on
-              and iterate quickly. Reloading your whole app on every change is
-              slowing you down!
+              Develop one component at a time. Isolate the UI you&apos;re
+              working on and iterate quickly. Reloading your whole app on every
+              change is slowing you down!
             </Feature>
             <Feature>
               <strong>Component library.</strong>
@@ -113,4 +99,18 @@ const Content = styled.div`
 
 const Section = styled.div`
   margin: 128px 0;
+`;
+
+const Features = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const Feature = styled.div`
+  &:first-child {
+    margin-right: 32px;
+  }
+  &:last-child {
+    margin-left: 32px;
+  }
 `;
