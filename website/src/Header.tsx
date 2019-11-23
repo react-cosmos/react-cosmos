@@ -9,9 +9,10 @@ import {
   getViewportLength,
   MAX_CONTENT_WIDTH_PX,
   MINIMIZED_HEADER_HPADDING_PX,
-  Viewport,
-  MINIMIZED_HEADER_VPADDING_PX
+  MINIMIZED_HEADER_VPADDING_PX,
+  Viewport
 } from './shared';
+import { useGitHubStars } from './useGitHubStars';
 
 type Props = {
   windowViewport: Viewport;
@@ -19,19 +20,32 @@ type Props = {
   minimizeRatio: number;
 };
 
+type MinimizedViewportRelativeSizes = {
+  containerViewport: Viewport;
+  cosmonautViewport: Viewport;
+  bottomOffset: number;
+  vPadding: number;
+  hPadding: number;
+  centerPadding: number;
+};
+
 export const Header = React.memo(function Header({
   windowViewport,
   cropRatio,
   minimizeRatio
 }: Props) {
-  const containerViewport = getContainerViewport(windowViewport, minimizeRatio);
-  const cosmonautViewport = getCosmonautViewport(windowViewport, minimizeRatio);
-  const bottomOffset = getCosmonautBottomOffset(windowViewport, minimizeRatio);
-  const vPadding = Math.round(MINIMIZED_HEADER_VPADDING_PX * minimizeRatio);
-  const hPadding = Math.round(MINIMIZED_HEADER_HPADDING_PX * minimizeRatio);
-  const centerPadding =
-    (Math.max(0, windowViewport.width - MAX_CONTENT_WIDTH_PX) / 2) *
-    minimizeRatio;
+  const gitHubStars = useGitHubStars();
+  const {
+    containerViewport,
+    cosmonautViewport,
+    bottomOffset,
+    vPadding,
+    hPadding,
+    centerPadding
+  } = React.useMemo(() => getRelativeSizes(windowViewport, minimizeRatio), [
+    windowViewport,
+    minimizeRatio
+  ]);
 
   return (
     <Container
@@ -56,6 +70,7 @@ export const Header = React.memo(function Header({
         <FullScreenHeader
           windowViewport={windowViewport}
           cropRatio={cropRatio}
+          gitHubStars={gitHubStars}
         />
       )}
       {cropRatio === 1 && (
@@ -67,6 +82,22 @@ export const Header = React.memo(function Header({
     </Container>
   );
 });
+
+function getRelativeSizes(
+  windowViewport: Viewport,
+  minimizeRatio: number
+): MinimizedViewportRelativeSizes {
+  return {
+    containerViewport: getContainerViewport(windowViewport, minimizeRatio),
+    cosmonautViewport: getCosmonautViewport(windowViewport, minimizeRatio),
+    bottomOffset: getCosmonautBottomOffset(windowViewport, minimizeRatio),
+    vPadding: Math.round(MINIMIZED_HEADER_VPADDING_PX * minimizeRatio),
+    hPadding: Math.round(MINIMIZED_HEADER_HPADDING_PX * minimizeRatio),
+    centerPadding:
+      (Math.max(0, windowViewport.width - MAX_CONTENT_WIDTH_PX) / 2) *
+      minimizeRatio
+  };
+}
 
 function getContainerViewport(windowViewport: Viewport, minimizeRatio: number) {
   if (minimizeRatio > 0) {

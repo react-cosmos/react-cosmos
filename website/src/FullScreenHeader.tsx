@@ -2,18 +2,31 @@ import React from 'react';
 import styled from 'styled-components';
 import { getSkyMaskRadius } from './Cosmonaut/Cosmonaut';
 import { getCosmonautSize, Viewport } from './shared';
-import { useGitHubStars } from './useGitHubStars';
 
 type Props = {
   windowViewport: Viewport;
   cropRatio: number;
+  gitHubStars: number;
+};
+
+type ViewportRelativeSizes = {
+  titleFontSize: number;
+  subtitleFontSize: number;
+  ctaMarginTop: number;
+  ctaPaddingTop: number;
+  ctaPaddingBottom: number;
+  ctaFontSize: number;
+  starSize: number;
+  starStrokeWidth: number;
+  starLeftMargin: number;
+  starRightMargin: number;
 };
 
 export const FullScreenHeader = React.memo(function FullScreenHeader({
   windowViewport,
-  cropRatio
+  cropRatio,
+  gitHubStars
 }: Props) {
-  const stars = useGitHubStars();
   const containerStyle = getContainerStyle(windowViewport);
   const clipPath = getClipPath(windowViewport, cropRatio);
   const {
@@ -27,9 +40,7 @@ export const FullScreenHeader = React.memo(function FullScreenHeader({
     starStrokeWidth,
     starLeftMargin,
     starRightMargin
-  } = React.useMemo(() => getViewportRelativeSizes(windowViewport), [
-    windowViewport
-  ]);
+  } = React.useMemo(() => getRelativeSizes(windowViewport), [windowViewport]);
 
   return (
     <Container clipPath={clipPath} style={containerStyle}>
@@ -57,11 +68,32 @@ export const FullScreenHeader = React.memo(function FullScreenHeader({
           leftMargin={starLeftMargin}
           rightMargin={starRightMargin}
         />
-        {stars}
+        {gitHubStars}
       </CallToAction>
     </Container>
   );
 });
+
+function getRelativeSizes(windowViewport: Viewport): ViewportRelativeSizes {
+  const cosmonautSize = getCosmonautSize(windowViewport);
+  const fontOffset = roundEven(cosmonautSize / 18);
+  const titleFontSize = 16 + fontOffset * 2;
+  const subtitleFontSize = 8 + fontOffset;
+  const ctaFontSize = roundEven(subtitleFontSize * 0.9);
+
+  return {
+    titleFontSize,
+    subtitleFontSize,
+    ctaMarginTop: fontOffset * 3,
+    ctaPaddingTop: fontOffset * 0.8,
+    ctaPaddingBottom: fontOffset * 1.2,
+    ctaFontSize,
+    starSize: Math.round(subtitleFontSize * 0.75),
+    starStrokeWidth: Math.max(2, Math.ceil(subtitleFontSize / 30)),
+    starLeftMargin: Math.round(subtitleFontSize / 2),
+    starRightMargin: Math.round(subtitleFontSize / 10)
+  };
+}
 
 function getContainerStyle(windowViewport: Viewport) {
   const cosmonautSize = Math.round(getCosmonautSize(windowViewport));
@@ -95,42 +127,6 @@ function getClipPath(windowViewport: Viewport, cropRatio: number) {
 
 function isPortrait(viewport: Viewport) {
   return viewport.height > viewport.width;
-}
-
-type ViewportRelativeSizes = {
-  titleFontSize: number;
-  subtitleFontSize: number;
-  ctaMarginTop: number;
-  ctaPaddingTop: number;
-  ctaPaddingBottom: number;
-  ctaFontSize: number;
-  starSize: number;
-  starStrokeWidth: number;
-  starLeftMargin: number;
-  starRightMargin: number;
-};
-
-function getViewportRelativeSizes(
-  windowViewport: Viewport
-): ViewportRelativeSizes {
-  const cosmonautSize = getCosmonautSize(windowViewport);
-  const fontOffset = roundEven(cosmonautSize / 18);
-  const titleFontSize = 16 + fontOffset * 2;
-  const subtitleFontSize = 8 + fontOffset;
-  const ctaFontSize = roundEven(subtitleFontSize * 0.9);
-
-  return {
-    titleFontSize,
-    subtitleFontSize,
-    ctaMarginTop: fontOffset * 3,
-    ctaPaddingTop: fontOffset * 0.8,
-    ctaPaddingBottom: fontOffset * 1.2,
-    ctaFontSize,
-    starSize: Math.round(subtitleFontSize * 0.75),
-    starStrokeWidth: Math.max(2, Math.ceil(subtitleFontSize / 30)),
-    starLeftMargin: Math.round(subtitleFontSize / 2),
-    starRightMargin: Math.round(subtitleFontSize / 10)
-  };
 }
 
 function roundEven(nr: number) {

@@ -29,7 +29,8 @@ export function MinimizedHeader({ windowViewport, minimizeRatio }: Props) {
   const marginLeft =
     minimizedCosmonautSize +
     2 * MINIMIZED_HEADER_HPADDING_PX +
-    Math.max(0, windowViewport.width - MAX_CONTENT_WIDTH_PX) / 2;
+    (Math.max(0, windowViewport.width - MAX_CONTENT_WIDTH_PX) / 2) *
+      minimizeRatio;
   const innerScale = height / HEADER_HEIGHT;
   const innerWidth =
     Math.min(MAX_CONTENT_WIDTH_PX, windowViewport.width) -
