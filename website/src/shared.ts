@@ -6,6 +6,8 @@ export type Viewport = {
 export const MINIMIZED_HEADER_SIZE_PX = 96;
 export const MINIMIZED_HEADER_PADDING_PX = 8;
 
+export const MAX_CONTENT_WIDTH_PX = 980;
+
 export function getViewportLength(viewport: Viewport) {
   return Math.max(viewport.width, viewport.height);
 }

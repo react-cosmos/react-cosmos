@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {
   getMinimizedCosmonautSize,
+  MAX_CONTENT_WIDTH_PX,
   MINIMIZED_HEADER_PADDING_PX,
   MINIMIZED_HEADER_SIZE_PX,
   Viewport
@@ -24,10 +25,13 @@ export function MinimizedHeader({ windowViewport, minimizeRatio }: Props) {
   const height =
     minimizedCosmonautSize + 2 * MINIMIZED_HEADER_PADDING_PX * minimizeRatio;
   const marginTop = (windowViewport.height - height) * (1 - minimizeRatio);
-  const marginLeft = minimizedCosmonautSize + 2 * MINIMIZED_HEADER_PADDING_PX;
+  const marginLeft =
+    minimizedCosmonautSize +
+    2 * MINIMIZED_HEADER_PADDING_PX +
+    Math.max(0, windowViewport.width - MAX_CONTENT_WIDTH_PX) / 2;
   const innerScale = height / HEADER_HEIGHT;
   const innerWidth =
-    windowViewport.width -
+    Math.min(MAX_CONTENT_WIDTH_PX, windowViewport.width) -
     MINIMIZED_HEADER_SIZE_PX -
     3 * MINIMIZED_HEADER_PADDING_PX;
   return (

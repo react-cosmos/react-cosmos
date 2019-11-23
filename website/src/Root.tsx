@@ -23,7 +23,14 @@ export function Root() {
         cropRatio={cropRatio}
         minimizeRatio={minimizeRatio}
       />
-      <div style={{ opacity: showContent ? 1 : 0, transition: '0.4s opacity' }}>
+      <div
+        style={{
+          maxWidth: 960,
+          margin: '0 auto',
+          opacity: showContent ? 1 : 0,
+          transition: '0.4s opacity'
+        }}
+      >
         <p style={{ paddingTop: 128 }}>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry&apos;s standard dummy text
@@ -71,6 +78,4 @@ export function Root() {
   );
 }
 
-const Container = styled.div`
-  padding: 64px;
-`;
+const Container = styled.div``;

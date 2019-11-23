@@ -7,6 +7,7 @@ import {
   getCosmonautSize,
   getMinimizedCosmonautSize,
   getViewportLength,
+  MAX_CONTENT_WIDTH_PX,
   MINIMIZED_HEADER_PADDING_PX,
   Viewport
 } from './shared';
@@ -17,11 +18,18 @@ type Props = {
   minimizeRatio: number;
 };
 
-export function Header({ windowViewport, cropRatio, minimizeRatio }: Props) {
-  const headerPadding = Math.round(MINIMIZED_HEADER_PADDING_PX * minimizeRatio);
+export const Header = React.memo(function Header({
+  windowViewport,
+  cropRatio,
+  minimizeRatio
+}: Props) {
   const containerViewport = getContainerViewport(windowViewport, minimizeRatio);
   const cosmonautViewport = getCosmonautViewport(windowViewport, minimizeRatio);
   const bottomOffset = getCosmonautBottomOffset(windowViewport, minimizeRatio);
+  const headerPadding = Math.round(MINIMIZED_HEADER_PADDING_PX * minimizeRatio);
+  const centerPadding =
+    (Math.max(0, windowViewport.width - MAX_CONTENT_WIDTH_PX) / 2) *
+    minimizeRatio;
 
   return (
     <Container
@@ -37,7 +45,7 @@ export function Header({ windowViewport, cropRatio, minimizeRatio }: Props) {
           width: cosmonautViewport.width,
           height: cosmonautViewport.height,
           bottom: bottomOffset + headerPadding,
-          left: headerPadding
+          left: headerPadding + centerPadding
         }}
       >
         <Cosmonaut cropRatio={cropRatio} minimizeRatio={minimizeRatio} />
@@ -56,7 +64,7 @@ export function Header({ windowViewport, cropRatio, minimizeRatio }: Props) {
       )}
     </Container>
   );
-}
+});
 
 function getContainerViewport(windowViewport: Viewport, minimizeRatio: number) {
   if (minimizeRatio > 0) {
