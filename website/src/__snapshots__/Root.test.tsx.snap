@@ -2,7 +2,7 @@
 
 exports[`renders correctly 1`] = `
 <div
-  className="sc-jTzLTM fmojwm"
+  className="sc-kAzzGY jHprQs"
   style={
     Object {
       "background": "#093556",
@@ -11,7 +11,7 @@ exports[`renders correctly 1`] = `
   }
 >
   <div
-    className="sc-gqjmRU jDgJMw"
+    className="sc-jzJRlG bkyaJx"
     style={
       Object {
         "borderColor": "rgba(8, 8, 9, 0)",
@@ -21,7 +21,7 @@ exports[`renders correctly 1`] = `
     }
   >
     <div
-      className="sc-VigVT hIngBl"
+      className="sc-cSHVUG kKgxHw"
       style={
         Object {
           "bottom": -341,
@@ -45,12 +45,28 @@ exports[`renders correctly 1`] = `
               r={905.0966799187809}
             />
           </clipPath>
+          <linearGradient
+            id="skyGradient"
+            x1={0}
+            x2={0}
+            y1={0}
+            y2={1}
+          >
+            <stop
+              offset="0.3"
+              stopColor="#093556"
+            />
+            <stop
+              offset="1"
+              stopColor="#0a2e46"
+            />
+          </linearGradient>
         </defs>
         <g
           clipPath="url(#skyMask)"
         >
           <rect
-            className="sc-htoDjs fZaTwu"
+            className="sc-htoDjs jDmIBD"
             height={1024}
             width={768}
             x={0}
@@ -172,7 +188,7 @@ exports[`renders correctly 1`] = `
               </radialGradient>
             </defs>
             <circle
-              className="sc-bwzfXH fAhvbA"
+              className="sc-bwzfXH kIGkxP"
               cx={24}
               cy={215}
               r={160}
@@ -911,7 +927,7 @@ exports[`renders correctly 1`] = `
       </svg>
     </div>
     <div
-      className="sc-dnqmqq efGusN"
+      className="sc-dnqmqq jmwrFU"
       clipPath="circle(1206.7955732250412px at -170.66666666666666px 597.3333333333334px)"
       style={
         Object {
@@ -922,14 +938,76 @@ exports[`renders correctly 1`] = `
         }
       }
     >
-      <h1>
-        React Cosmos
+      <h1
+        className="sc-iwsKbI eyNPak"
+        style={
+          Object {
+            "fontSize": 52,
+          }
+        }
+      >
+        Build UIs at 
+        <em>
+          scale
+        </em>
+        .
       </h1>
+      <p
+        className="sc-gZMcBi iEkbet"
+        style={
+          Object {
+            "fontSize": 26,
+          }
+        }
+      >
+        Introducing 
+        <strong>
+          React Cosmos 5
+        </strong>
+        <br />
+        a tool for ambitious UI developers
+      </p>
+      <a
+        className="sc-gqjmRU efKLYs"
+        href="https://github.com/react-cosmos/react-cosmos"
+        rel="noopener noreferrer"
+        style={
+          Object {
+            "fontSize": 24,
+            "marginTop": 54,
+            "padding": "14.4px 21.599999999999998px",
+          }
+        }
+        target="_blank"
+      >
+        <strong>
+          GitHub
+        </strong>
+        <svg
+          className="sc-VigVT cFEMra"
+          fill="none"
+          height={20}
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          viewBox="0 0 24 24"
+          width={20}
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <polygon
+            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+          />
+        </svg>
+        5600
+      </a>
     </div>
   </div>
   <div
     style={
       Object {
+        "margin": "0 auto",
+        "maxWidth": 960,
         "opacity": 0,
         "transition": "0.4s opacity",
       }
