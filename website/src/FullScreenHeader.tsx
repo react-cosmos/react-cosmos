@@ -127,7 +127,7 @@ function getViewportRelativeSizes(
     ctaPaddingBottom: fontOffset * 1.2,
     ctaFontSize,
     starSize: Math.round(subtitleFontSize * 0.75),
-    starStrokeWidth: Math.ceil(subtitleFontSize / 20),
+    starStrokeWidth: Math.max(2, Math.ceil(subtitleFontSize / 30)),
     starLeftMargin: Math.round(subtitleFontSize / 2),
     starRightMargin: Math.round(subtitleFontSize / 10)
   };
