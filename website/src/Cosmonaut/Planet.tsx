@@ -49,6 +49,7 @@ export const Planet = React.memo(function Planet() {
 
 const PlanetGlow = styled.circle.attrs({ cx: 24, cy: 215, r: 160 })`
   fill: url(#earthGlow);
+  opacity: 0.8;
 `;
 
 const PlanetAtmosphere = styled.circle.attrs({ cx: 24, cy: 215, r: 114 })`
