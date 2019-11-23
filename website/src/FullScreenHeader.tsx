@@ -145,8 +145,6 @@ const Container = styled.div<{ clipPath: string }>`
   justify-content: center;
   align-items: center;
   color: #fff;
-  font-family: -apple-system, BlinkMacSystemFont, Ubuntu, 'Helvetica Neue',
-    'Helvetica', 'Arial', sans-serif;
 `;
 
 const Title = styled.h1`

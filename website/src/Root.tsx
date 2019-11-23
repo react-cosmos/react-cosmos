@@ -28,6 +28,7 @@ export function Root() {
           maxWidth: 960,
           margin: '0 auto',
           opacity: showContent ? 1 : 0,
+          lineHeight: '1.5em',
           transition: '0.4s opacity'
         }}
       >

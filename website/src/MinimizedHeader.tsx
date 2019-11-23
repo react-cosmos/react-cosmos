@@ -49,7 +49,14 @@ export function MinimizedHeader({ windowViewport, minimizeRatio }: Props) {
           opacity: minimizeRatio
         }}
       >
-        <h1>React Cosmos</h1>
+        <LeftContainer>
+          <Title>React Cosmos</Title>
+          <Links>
+            <strong>GitHub</strong> / <strong>Slack</strong> /{' '}
+            <strong>Twitter</strong>
+          </Links>
+        </LeftContainer>
+        <RightContainer></RightContainer>
       </InnerContainer>
     </Container>
   );
@@ -63,6 +70,36 @@ const InnerContainer = styled.div`
   height: ${HEADER_HEIGHT}px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  color: #093556;
+`;
+
+const LeftContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 0 16px;
+`;
+
+const RightContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Title = styled.h1`
+  font-size: 32px;
+  letter-spacing: -0.03em;
+  line-height: 32px;
+  margin: 0;
+  padding: 0 0 10px 0;
+`;
+
+const Links = styled.div`
+  line-height: 16px;
+  font-size: 16px;
+  font-weight: 300;
+
+  strong {
+    font-weight: 500;
+  }
 `;
