@@ -1,6 +1,9 @@
 import React from 'react';
 import { Viewport } from './shared';
 
+// https://stackoverflow.com/a/24600597/128816
+const IS_MOBILE = /Mobi|Android/i.test(navigator.userAgent);
+
 export function useWindowViewport() {
   const [viewport, setViewport] = React.useState(getWindowViewport());
   React.useEffect(() => {
@@ -25,6 +28,9 @@ function getWindowViewport() {
 
 function didViewportChange(oldViewport: Viewport, newViewport: Viewport) {
   if (newViewport.width !== oldViewport.width) {
+    return true;
+  }
+  if (newViewport.height !== oldViewport.height && !IS_MOBILE) {
     return true;
   }
   // Ignore small height changes that occur on scroll in landscape mode.
