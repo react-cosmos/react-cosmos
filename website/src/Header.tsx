@@ -8,8 +8,9 @@ import {
   getMinimizedCosmonautSize,
   getViewportLength,
   MAX_CONTENT_WIDTH_PX,
-  MINIMIZED_HEADER_PADDING_PX,
-  Viewport
+  MINIMIZED_HEADER_HPADDING_PX,
+  Viewport,
+  MINIMIZED_HEADER_VPADDING_PX
 } from './shared';
 
 type Props = {
@@ -26,7 +27,8 @@ export const Header = React.memo(function Header({
   const containerViewport = getContainerViewport(windowViewport, minimizeRatio);
   const cosmonautViewport = getCosmonautViewport(windowViewport, minimizeRatio);
   const bottomOffset = getCosmonautBottomOffset(windowViewport, minimizeRatio);
-  const headerPadding = Math.round(MINIMIZED_HEADER_PADDING_PX * minimizeRatio);
+  const vPadding = Math.round(MINIMIZED_HEADER_VPADDING_PX * minimizeRatio);
+  const hPadding = Math.round(MINIMIZED_HEADER_HPADDING_PX * minimizeRatio);
   const centerPadding =
     (Math.max(0, windowViewport.width - MAX_CONTENT_WIDTH_PX) / 2) *
     minimizeRatio;
@@ -36,16 +38,16 @@ export const Header = React.memo(function Header({
       minimized={minimizeRatio === 1}
       style={{
         width: containerViewport.width,
-        height: containerViewport.height + 2 * headerPadding,
-        borderColor: `rgba(8, 8, 9, ${Math.max(0, minimizeRatio - 0.9)})`
+        height: containerViewport.height + 2 * vPadding,
+        borderColor: `rgba(9,53,86, ${Math.max(0, minimizeRatio - 0.8)})`
       }}
     >
       <CosmonautContainer
         style={{
           width: cosmonautViewport.width,
           height: cosmonautViewport.height,
-          bottom: bottomOffset + headerPadding,
-          left: headerPadding + centerPadding
+          bottom: bottomOffset + vPadding,
+          left: hPadding + centerPadding
         }}
       >
         <Cosmonaut cropRatio={cropRatio} minimizeRatio={minimizeRatio} />
