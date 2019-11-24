@@ -1,23 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
 import {
+  COSMONAUT_HPADDING_PX,
   COSMONAUT_SIZE_PX,
-  HEADER_HPADDING_PX,
-  HEADER_VPADDING_PX,
-  MAX_CONTENT_WIDTH_PX
+  COSMONAUT_VPADDING_PX,
+  MAX_HEADER_WIDTH_PX,
+  MIN_CENTER_HEADER_WIDTH_PX
 } from './shared';
 
 type Props = {
+  viewportWidth: number;
   visible: boolean;
 };
 
-const MINIMIZED_HEADER_HEIGHT_PX = COSMONAUT_SIZE_PX + 2 * HEADER_VPADDING_PX;
+const MINIMIZED_HEADER_HEIGHT_PX =
+  COSMONAUT_SIZE_PX + 2 * COSMONAUT_VPADDING_PX;
 
-export function MinimizedHeader({ visible }: Props) {
+export function MinimizedHeader({ viewportWidth, visible }: Props) {
+  const center = viewportWidth >= MIN_CENTER_HEADER_WIDTH_PX;
   return (
     <Container style={{ opacity: visible ? 1 : 0 }}>
       <CosmonautButton onClick={scrollToTop} />
-      <MainContent>
+      <MainContent center={center}>
         <Title>
           <a
             href="/"
@@ -64,7 +68,7 @@ function scrollToTop() {
 }
 
 const Container = styled.div`
-  max-width: ${MAX_CONTENT_WIDTH_PX}px;
+  max-width: ${MAX_HEADER_WIDTH_PX}px;
   height: ${MINIMIZED_HEADER_HEIGHT_PX}px;
   position: absolute;
   z-index: 1;
@@ -81,19 +85,22 @@ const CosmonautButton = styled.div`
   flex-shrink: 0;
   width: ${COSMONAUT_SIZE_PX}px;
   height: ${COSMONAUT_SIZE_PX}px;
-  margin-left: ${HEADER_HPADDING_PX}px;
+  margin-left: ${COSMONAUT_HPADDING_PX}px;
   background: transparent;
   border-radius: 50%;
   cursor: pointer;
 `;
 
-const MainContent = styled.div`
+const MainContent = styled.div<{ center: boolean }>`
   flex: 1;
   height: 56px;
-  padding: 0 16px 0 0;
+  padding: 0
+    ${props =>
+      props.center ? COSMONAUT_SIZE_PX + COSMONAUT_HPADDING_PX : 16}px
+    0 0;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: ${props => (props.center ? 'center' : 'flex-end')};
   justify-content: space-between;
 `;
 

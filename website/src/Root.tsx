@@ -13,7 +13,7 @@ export function Root() {
   const showContent = minimizeRatio === 1;
 
   return (
-    <Container style={{ background: cropRatio > 0.5 ? '#fff' : '#093556' }}>
+    <Container style={{ background: cropRatio > 0.5 ? '#fff' : '#0a2e46' }}>
       <Header
         windowViewport={windowViewport}
         cropRatio={cropRatio}
@@ -86,7 +86,7 @@ export function Root() {
 
 const Container = styled.div`
   padding-top: ${CONTENT_TOP_PADDING_PX}px;
-  color: #093556;
+  color: #0a2e46;
 `;
 
 const Content = styled.div`

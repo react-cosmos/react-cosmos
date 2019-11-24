@@ -4,12 +4,12 @@ import { Cosmonaut } from './Cosmonaut/Cosmonaut';
 import { FullScreenHeader } from './FullScreenHeader';
 import { MinimizedHeader } from './MinimizedHeader';
 import {
+  COSMONAUT_HPADDING_PX,
   COSMONAUT_SIZE_PX,
+  COSMONAUT_VPADDING_PX,
   getCosmonautSize,
   getViewportLength,
-  HEADER_HPADDING_PX,
-  HEADER_VPADDING_PX,
-  MAX_CONTENT_WIDTH_PX,
+  MAX_HEADER_WIDTH_PX,
   Viewport
 } from './shared';
 import { useGitHubStars } from './useGitHubStars';
@@ -72,7 +72,12 @@ export const Header = React.memo(function Header({
           gitHubStars={gitHubStars}
         />
       )}
-      {cropRatio === 1 && <MinimizedHeader visible={minimizeRatio === 1} />}
+      {cropRatio === 1 && (
+        <MinimizedHeader
+          viewportWidth={windowViewport.width}
+          visible={minimizeRatio === 1}
+        />
+      )}
     </Container>
   );
 });
@@ -94,10 +99,10 @@ function getHeaderSizes(
       minimizeRatio > 0
         ? 0
         : getFullScreenCosmonautBottomOffset(windowViewport),
-    vPadding: HEADER_VPADDING_PX * minimizeRatio,
-    hPadding: HEADER_HPADDING_PX * minimizeRatio,
+    vPadding: COSMONAUT_VPADDING_PX * minimizeRatio,
+    hPadding: COSMONAUT_HPADDING_PX * minimizeRatio,
     centerPadding:
-      (Math.max(0, windowViewport.width - MAX_CONTENT_WIDTH_PX) / 2) *
+      (Math.max(0, windowViewport.width - MAX_HEADER_WIDTH_PX) / 2) *
       minimizeRatio
   };
 }
