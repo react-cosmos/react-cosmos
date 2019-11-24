@@ -21,10 +21,6 @@ export function Cosmonaut({ cropRatio, minimizeRatio }: Props) {
         <clipPath id="skyMask">
           <circle cx="128" cy="128" r={skyMaskRadius} />
         </clipPath>
-        <linearGradient id="skyGradient" x1={0} y1={0} x2={0} y2={1}>
-          <stop offset="0.3" stopColor="#093556" />
-          <stop offset="1" stopColor="#0a2e46" />
-        </linearGradient>
       </defs>
 
       <g clipPath="url(#skyMask)">
@@ -72,5 +68,5 @@ const SvgContainer = styled.svg`
 `;
 
 const StyledSky = styled.rect`
-  fill: url(#skyGradient);
+  fill: #093556;
 `;

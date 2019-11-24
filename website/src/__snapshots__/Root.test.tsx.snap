@@ -2,12 +2,7 @@
 
 exports[`renders correctly 1`] = `
 <div
-  className="sc-dxgOiQ eLqCyy"
-  style={
-    Object {
-      "background": "#0a2e46",
-    }
-  }
+  className="sc-dxgOiQ kVBLPR"
 >
   <div
     className="sc-kGXeez iNbvqu"
@@ -43,28 +38,12 @@ exports[`renders correctly 1`] = `
               r={905.0966799187809}
             />
           </clipPath>
-          <linearGradient
-            id="skyGradient"
-            x1={0}
-            x2={0}
-            y1={0}
-            y2={1}
-          >
-            <stop
-              offset="0.3"
-              stopColor="#093556"
-            />
-            <stop
-              offset="1"
-              stopColor="#0a2e46"
-            />
-          </linearGradient>
         </defs>
         <g
           clipPath="url(#skyMask)"
         >
           <rect
-            className="sc-htoDjs jDmIBD"
+            className="sc-htoDjs fZaTwu"
             height={1024}
             width={768}
             x={0}
