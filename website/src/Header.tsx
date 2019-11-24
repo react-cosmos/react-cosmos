@@ -8,8 +8,8 @@ import {
   getMinimizedCosmonautSize,
   getViewportLength,
   MAX_CONTENT_WIDTH_PX,
-  MINIMIZED_HEADER_HPADDING_PX,
-  MINIMIZED_HEADER_VPADDING_PX,
+  HEADER_HPADDING_PX,
+  HEADER_VPADDING_PX,
   Viewport
 } from './shared';
 import { useGitHubStars } from './useGitHubStars';
@@ -20,7 +20,7 @@ type Props = {
   minimizeRatio: number;
 };
 
-type MinimizedViewportRelativeSizes = {
+type HeaderSizes = {
   containerViewport: Viewport;
   cosmonautViewport: Viewport;
   bottomOffset: number;
@@ -42,7 +42,7 @@ export const Header = React.memo(function Header({
     vPadding,
     hPadding,
     centerPadding
-  } = React.useMemo(() => getRelativeSizes(windowViewport, minimizeRatio), [
+  } = React.useMemo(() => getHeaderSizes(windowViewport, minimizeRatio), [
     windowViewport,
     minimizeRatio
   ]);
@@ -61,7 +61,7 @@ export const Header = React.memo(function Header({
           width: cosmonautViewport.width,
           height: cosmonautViewport.height,
           bottom: bottomOffset + vPadding,
-          left: hPadding + centerPadding
+          left: centerPadding + hPadding
         }}
       >
         <Cosmonaut cropRatio={cropRatio} minimizeRatio={minimizeRatio} />
@@ -83,55 +83,63 @@ export const Header = React.memo(function Header({
   );
 });
 
-function getRelativeSizes(
+function getHeaderSizes(
   windowViewport: Viewport,
   minimizeRatio: number
-): MinimizedViewportRelativeSizes {
+): HeaderSizes {
   return {
-    containerViewport: getContainerViewport(windowViewport, minimizeRatio),
-    cosmonautViewport: getCosmonautViewport(windowViewport, minimizeRatio),
-    bottomOffset: getCosmonautBottomOffset(windowViewport, minimizeRatio),
-    vPadding: Math.round(MINIMIZED_HEADER_VPADDING_PX * minimizeRatio),
-    hPadding: Math.round(MINIMIZED_HEADER_HPADDING_PX * minimizeRatio),
+    containerViewport:
+      minimizeRatio > 0
+        ? getMinimizedContainerViewport(windowViewport, minimizeRatio)
+        : windowViewport,
+    cosmonautViewport:
+      minimizeRatio > 0
+        ? getMinimizedCosmonautViewport(windowViewport, minimizeRatio)
+        : getFullScreenCosmonautViewport(windowViewport),
+    bottomOffset:
+      minimizeRatio > 0
+        ? 0
+        : getFullScreenCosmonautBottomOffset(windowViewport),
+    vPadding: HEADER_VPADDING_PX * minimizeRatio,
+    hPadding: HEADER_HPADDING_PX * minimizeRatio,
     centerPadding:
       (Math.max(0, windowViewport.width - MAX_CONTENT_WIDTH_PX) / 2) *
       minimizeRatio
   };
 }
 
-function getContainerViewport(windowViewport: Viewport, minimizeRatio: number) {
-  if (minimizeRatio > 0) {
-    const cosmonautSize = getMinimizedCosmonautSize(
-      windowViewport,
-      minimizeRatio
-    );
-    const height = Math.round(
-      windowViewport.height -
-        (windowViewport.height - cosmonautSize) * minimizeRatio
-    );
-    return { width: windowViewport.width, height };
-  }
-  return windowViewport;
+function getMinimizedContainerViewport(
+  windowViewport: Viewport,
+  minimizeRatio: number
+) {
+  const cosmonautSize = getMinimizedCosmonautSize(
+    windowViewport,
+    minimizeRatio
+  );
+  const height =
+    windowViewport.height -
+    (windowViewport.height - cosmonautSize) * minimizeRatio;
+  return { width: windowViewport.width, height };
 }
 
-function getCosmonautViewport(windowViewport: Viewport, minimizeRatio: number) {
-  if (minimizeRatio > 0) {
-    const cosmonautSize = getMinimizedCosmonautSize(
-      windowViewport,
-      minimizeRatio
-    );
-    return { width: cosmonautSize, height: cosmonautSize };
-  }
+function getMinimizedCosmonautViewport(
+  windowViewport: Viewport,
+  minimizeRatio: number
+) {
+  const cosmonautSize = getMinimizedCosmonautSize(
+    windowViewport,
+    minimizeRatio
+  );
+  return { width: cosmonautSize, height: cosmonautSize };
+}
 
+function getFullScreenCosmonautViewport(windowViewport: Viewport) {
   const width = getViewportLength(windowViewport);
   return { width, height: Math.ceil(getCosmonautSize(windowViewport) * 4) };
 }
 
-function getCosmonautBottomOffset(
-  windowViewport: Viewport,
-  minimizeRatio: number
-) {
-  return minimizeRatio > 0 ? 0 : -Math.floor(getCosmonautSize(windowViewport));
+function getFullScreenCosmonautBottomOffset(windowViewport: Viewport) {
+  return -Math.floor(getCosmonautSize(windowViewport));
 }
 
 const Container = styled.div<{ minimized: boolean }>`

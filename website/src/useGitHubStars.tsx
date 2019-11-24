@@ -5,6 +5,7 @@ export function useGitHubStars() {
 
   React.useEffect(() => {
     let mounted = true;
+    // TODO: https://developer.github.com/v3/#rate-limiting
     fetch(`https://api.github.com/repos/react-cosmos/react-cosmos`).then(
       async res => {
         const parsedRes = await res.json();

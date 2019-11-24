@@ -9,7 +9,7 @@ type Props = {
   gitHubStars: number;
 };
 
-type ViewportRelativeSizes = {
+type FullScreenHeaderSizes = {
   titleFontSize: number;
   subtitleFontSize: number;
   ctaMarginTop: number;
@@ -40,7 +40,9 @@ export const FullScreenHeader = React.memo(function FullScreenHeader({
     starStrokeWidth,
     starLeftMargin,
     starRightMargin
-  } = React.useMemo(() => getRelativeSizes(windowViewport), [windowViewport]);
+  } = React.useMemo(() => getFullScreenHeaderSizes(windowViewport), [
+    windowViewport
+  ]);
 
   return (
     <Container clipPath={clipPath} style={containerStyle}>
@@ -74,7 +76,9 @@ export const FullScreenHeader = React.memo(function FullScreenHeader({
   );
 });
 
-function getRelativeSizes(windowViewport: Viewport): ViewportRelativeSizes {
+function getFullScreenHeaderSizes(
+  windowViewport: Viewport
+): FullScreenHeaderSizes {
   const cosmonautSize = getCosmonautSize(windowViewport);
   const fontOffset = roundEven(cosmonautSize / 18);
   const titleFontSize = 16 + fontOffset * 2;

@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import {
   getMinimizedCosmonautSize,
   MAX_CONTENT_WIDTH_PX,
-  MINIMIZED_HEADER_HPADDING_PX,
-  MINIMIZED_HEADER_SIZE_PX,
-  MINIMIZED_HEADER_VPADDING_PX,
+  HEADER_HPADDING_PX,
+  COSMONAUT_SIZE_PX,
+  HEADER_VPADDING_PX,
   Viewport
 } from './shared';
 
@@ -14,28 +14,24 @@ type Props = {
   minimizeRatio: number;
 };
 
-const HEADER_HEIGHT =
-  MINIMIZED_HEADER_SIZE_PX + 2 * MINIMIZED_HEADER_VPADDING_PX;
+type MinimizedHeaderSizes = {
+  minimizeScale: number;
+  height: number;
+  marginTop: number;
+  marginLeft: number;
+  innerWidth: number;
+};
+
+const MINIMIZED_HEADER_HEIGHT_PX = COSMONAUT_SIZE_PX + 2 * HEADER_VPADDING_PX;
 
 export function MinimizedHeader({ windowViewport, minimizeRatio }: Props) {
-  const minimizedCosmonautSize = getMinimizedCosmonautSize(
-    windowViewport,
-    minimizeRatio
-  );
-
-  const height =
-    minimizedCosmonautSize + 2 * MINIMIZED_HEADER_VPADDING_PX * minimizeRatio;
-  const marginTop = (windowViewport.height - height) * (1 - minimizeRatio);
-  const marginLeft =
-    minimizedCosmonautSize +
-    2 * MINIMIZED_HEADER_HPADDING_PX +
-    (Math.max(0, windowViewport.width - MAX_CONTENT_WIDTH_PX) / 2) *
-      minimizeRatio;
-  const innerScale = height / HEADER_HEIGHT;
-  const innerWidth =
-    Math.min(MAX_CONTENT_WIDTH_PX, windowViewport.width) -
-    MINIMIZED_HEADER_SIZE_PX -
-    3 * MINIMIZED_HEADER_HPADDING_PX;
+  const {
+    minimizeScale,
+    height,
+    marginTop,
+    marginLeft,
+    innerWidth
+  } = getMinimizeHeaderSizes(windowViewport, minimizeRatio);
 
   return (
     <Container
@@ -48,12 +44,12 @@ export function MinimizedHeader({ windowViewport, minimizeRatio }: Props) {
       <InnerContainer
         style={{
           width: innerWidth,
-          transform: `scale(${innerScale})`,
+          transform: `scale(${minimizeScale})`,
           opacity: minimizeRatio
         }}
       >
+        <CosmonautButton onClick={scrollToTop} />
         <LeftContainer>
-          <CosmonautButton onClick={scrollToTop} />
           <Title>
             <a
               href="/"
@@ -93,10 +89,36 @@ export function MinimizedHeader({ windowViewport, minimizeRatio }: Props) {
             </Link>
           </Links>
         </LeftContainer>
-        <RightContainer></RightContainer>
       </InnerContainer>
     </Container>
   );
+}
+
+function getMinimizeHeaderSizes(
+  windowViewport: Viewport,
+  minimizeRatio: number
+): MinimizedHeaderSizes {
+  const minimizedCosmonautSize = getMinimizedCosmonautSize(
+    windowViewport,
+    minimizeRatio
+  );
+  const reverseMinimizeRatio = 1 - minimizeRatio;
+  const minimizeScale = minimizedCosmonautSize / COSMONAUT_SIZE_PX;
+  const height = MINIMIZED_HEADER_HEIGHT_PX * minimizeScale;
+  const outerWidth = Math.max(0, windowViewport.width - MAX_CONTENT_WIDTH_PX);
+  const remainingHeight = windowViewport.height - height;
+  const hPadding = HEADER_HPADDING_PX * minimizeScale;
+
+  return {
+    minimizeScale,
+    height,
+    marginTop:
+      (remainingHeight + HEADER_VPADDING_PX * minimizeScale) *
+      reverseMinimizeRatio,
+    marginLeft:
+      (outerWidth / 2) * minimizeRatio - hPadding * reverseMinimizeRatio,
+    innerWidth: Math.min(MAX_CONTENT_WIDTH_PX, windowViewport.width)
+  };
 }
 
 function scrollToTop() {
@@ -108,33 +130,26 @@ const Container = styled.div``;
 const InnerContainer = styled.div`
   transform-origin: top left;
   position: absolute;
-  height: ${HEADER_HEIGHT}px;
+  height: ${MINIMIZED_HEADER_HEIGHT_PX}px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: flex-end;
+`;
+
+const CosmonautButton = styled.div`
+  flex-shrink: 0;
+  width: ${COSMONAUT_SIZE_PX}px;
+  height: ${COSMONAUT_SIZE_PX}px;
+  margin: 0 0 ${HEADER_VPADDING_PX}px ${HEADER_HPADDING_PX}px;
+  background: transparent;
+  border-radius: 50%;
+  cursor: pointer;
 `;
 
 const LeftContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 0 0 8px;
-`;
-
-const RightContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const CosmonautButton = styled.div`
-  position: absolute;
-  width: ${MINIMIZED_HEADER_SIZE_PX}px;
-  height: ${MINIMIZED_HEADER_SIZE_PX}px;
-  top: ${MINIMIZED_HEADER_VPADDING_PX}px;
-  left: -${MINIMIZED_HEADER_SIZE_PX + MINIMIZED_HEADER_HPADDING_PX}px;
-  background: transparent;
-  border-radius: 50%;
-  cursor: pointer;
+  padding: 0 0 0 12px;
 `;
 
 const Title = styled.h1`
