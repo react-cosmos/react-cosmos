@@ -4,12 +4,12 @@ import { Cosmonaut } from './Cosmonaut/Cosmonaut';
 import { FullScreenHeader } from './FullScreenHeader';
 import { MinimizedHeader } from './MinimizedHeader';
 import {
+  COSMONAUT_SIZE_PX,
   getCosmonautSize,
-  getMinimizedCosmonautSize,
   getViewportLength,
-  MAX_CONTENT_WIDTH_PX,
   HEADER_HPADDING_PX,
   HEADER_VPADDING_PX,
+  MAX_CONTENT_WIDTH_PX,
   Viewport
 } from './shared';
 import { useGitHubStars } from './useGitHubStars';
@@ -52,8 +52,7 @@ export const Header = React.memo(function Header({
       minimized={minimizeRatio === 1}
       style={{
         width: containerViewport.width,
-        height: containerViewport.height + 2 * vPadding,
-        borderColor: `rgba(9,53,86, ${Math.max(0, minimizeRatio - 0.8)})`
+        height: containerViewport.height + 2 * vPadding
       }}
     >
       <CosmonautContainer
@@ -73,12 +72,7 @@ export const Header = React.memo(function Header({
           gitHubStars={gitHubStars}
         />
       )}
-      {cropRatio === 1 && (
-        <MinimizedHeader
-          windowViewport={windowViewport}
-          minimizeRatio={minimizeRatio}
-        />
-      )}
+      {cropRatio === 1 && <MinimizedHeader visible={minimizeRatio === 1} />}
     </Container>
   );
 });
@@ -133,6 +127,14 @@ function getMinimizedCosmonautViewport(
   return { width: cosmonautSize, height: cosmonautSize };
 }
 
+function getMinimizedCosmonautSize(
+  windowViewport: Viewport,
+  minimizeRatio: number
+) {
+  const fullSize = getCosmonautSize(windowViewport);
+  return fullSize - (fullSize - COSMONAUT_SIZE_PX) * minimizeRatio;
+}
+
 function getFullScreenCosmonautViewport(windowViewport: Viewport) {
   const width = getViewportLength(windowViewport);
   return { width, height: Math.ceil(getCosmonautSize(windowViewport) * 4) };
@@ -148,8 +150,10 @@ const Container = styled.div<{ minimized: boolean }>`
   top: 0;
   left: 0;
   background: rgb(255, 255, 255, 0.9);
-  border-bottom: 1px solid transparent;
-  ${props => props.minimized && `backdrop-filter: saturate(180%) blur(20px);`}
+  border-bottom: 1px solid
+    rgba(9, 53, 86, ${props => (props.minimized ? 0.2 : 0)});
+  backdrop-filter: ${props =>
+    props.minimized ? 'saturate(180%) blur(15px)' : 'none'};
 `;
 
 const CosmonautContainer = styled.div`

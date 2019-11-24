@@ -3,7 +3,7 @@ export type Viewport = {
   height: number;
 };
 
-export const COSMONAUT_SIZE_PX = 96;
+export const COSMONAUT_SIZE_PX = 64;
 export const HEADER_HPADDING_PX = 8;
 export const HEADER_VPADDING_PX = 8;
 
@@ -15,12 +15,4 @@ export function getViewportLength(viewport: Viewport) {
 
 export function getCosmonautSize(windowViewport: Viewport) {
   return getViewportLength(windowViewport) / 3;
-}
-
-export function getMinimizedCosmonautSize(
-  windowViewport: Viewport,
-  minimizeRatio: number
-) {
-  const fullSize = getCosmonautSize(windowViewport);
-  return fullSize - (fullSize - COSMONAUT_SIZE_PX) * minimizeRatio;
 }
