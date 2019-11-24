@@ -10,7 +10,7 @@ exports[`renders correctly 1`] = `
   }
 >
   <div
-    className="sc-kGXeez ceZUox"
+    className="sc-kGXeez iNbvqu"
     style={
       Object {
         "height": 768,
@@ -1002,65 +1002,56 @@ exports[`renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="sc-ckVGcZ ieDSDT"
+    className="sc-ckVGcZ epxWSR"
   >
     <div
-      className="sc-jKJlTe loXQau"
+      className="sc-jKJlTe hpznyl"
       style={
         Object {
-          "margin": "50vh 0 0 0",
+          "opacity": 0,
         }
       }
     >
       <div
-        className="sc-eNQAEJ kVCdSa"
-        style={
-          Object {
-            "opacity": 0,
-          }
-        }
+        className="sc-eNQAEJ bznJiz"
       >
-        <div
-          className="sc-hMqMXs hdEsVp"
+        <h2
+          className="sc-hMqMXs kXcCQP"
         >
-          <h2
-            className="sc-kEYyzF bOKqCN"
-          >
-            Visual TDD
-          </h2>
-          <div
-            className="sc-kkGfuU cbNcL"
-          >
-            Develop one component at a time. Isolate the UI you're working on and iterate quickly. Reloading your whole app on every change is slowing you down!
-          </div>
+          Visual TDD
+        </h2>
+        <div
+          className="sc-kEYyzF gaOBK"
+        >
+          Develop one component at a time. Isolate the UI you're working on and iterate quickly. Reloading your whole app on every change is slowing you down!
         </div>
-        <div
-          className="sc-hMqMXs hdEsVp"
+      </div>
+      <div
+        className="sc-eNQAEJ bznJiz"
+      >
+        <h2
+          className="sc-hMqMXs kXcCQP"
         >
-          <h2
-            className="sc-kEYyzF bOKqCN"
-          >
-            Component library
-          </h2>
-          <div
-            className="sc-kkGfuU cbNcL"
-          >
-            From blank states to edge cases, define component states to come back to. Your component library keeps you organized and makes a great foundation of test cases.
-          </div>
+          Component library
+        </h2>
+        <div
+          className="sc-kEYyzF gaOBK"
+        >
+          From blank states to edge cases, define component states to come back to. Your component library keeps you organized and provides a solid foundation of test cases.
         </div>
-        <div
-          className="sc-hMqMXs hdEsVp"
+      </div>
+      <div
+        className="sc-eNQAEJ bznJiz"
+      >
+        <h2
+          className="sc-hMqMXs kXcCQP"
         >
-          <h2
-            className="sc-kEYyzF bOKqCN"
-          >
-            Open platform
-          </h2>
-          <div
-            className="sc-kkGfuU cbNcL"
-          >
-            React Cosmos is simple, but can be used in powerful ways. Snapshot and visual regression tests are possible, as well as custom integrations tailored to your needs.
-          </div>
+          Open platform
+        </h2>
+        <div
+          className="sc-kEYyzF gaOBK"
+        >
+          React Cosmos can be used in powerful ways. Snapshot and visual regression tests are possible, as well as custom integrations tailored to your needs.
         </div>
       </div>
     </div>

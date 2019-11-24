@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {
   COSMONAUT_HPADDING_PX,
   COSMONAUT_SIZE_PX,
-  COSMONAUT_VPADDING_PX,
+  HEADER_HEIGHT_PX,
   MAX_HEADER_WIDTH_PX,
   MIN_CENTER_HEADER_WIDTH_PX
 } from './shared';
@@ -12,9 +12,6 @@ type Props = {
   viewportWidth: number;
   visible: boolean;
 };
-
-const MINIMIZED_HEADER_HEIGHT_PX =
-  COSMONAUT_SIZE_PX + 2 * COSMONAUT_VPADDING_PX;
 
 export function MinimizedHeader({ viewportWidth, visible }: Props) {
   const center = viewportWidth >= MIN_CENTER_HEADER_WIDTH_PX;
@@ -69,7 +66,7 @@ function scrollToTop() {
 
 const Container = styled.div`
   max-width: ${MAX_HEADER_WIDTH_PX}px;
-  height: ${MINIMIZED_HEADER_HEIGHT_PX}px;
+  height: ${HEADER_HEIGHT_PX}px;
   position: absolute;
   z-index: 1;
   left: 0;

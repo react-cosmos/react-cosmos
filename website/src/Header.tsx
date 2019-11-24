@@ -154,9 +154,9 @@ const Container = styled.div<{ minimized: boolean }>`
   z-index: 1;
   top: 0;
   left: 0;
-  background: rgb(255, 255, 255, 0.9);
+  background: rgb(255, 255, 255, ${props => (props.minimized ? 0.9 : 0)});
   border-bottom: 1px solid
-    rgba(9, 53, 86, ${props => (props.minimized ? 0.2 : 0)});
+    rgba(10, 46, 70, ${props => (props.minimized ? 0.24 : 0)});
   backdrop-filter: ${props =>
     props.minimized ? 'saturate(180%) blur(15px)' : 'none'};
 `;
