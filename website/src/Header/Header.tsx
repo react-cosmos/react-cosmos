@@ -1,8 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Cosmonaut } from './Cosmonaut/Cosmonaut';
-import { FullScreenHeader } from './FullScreenHeader';
-import { MinimizedHeader } from './MinimizedHeader';
 import {
   COSMONAUT_HPADDING_PX,
   COSMONAUT_SIZE_PX,
@@ -11,7 +8,10 @@ import {
   getViewportLength,
   MAX_HEADER_WIDTH_PX,
   Viewport
-} from './shared';
+} from '../shared';
+import { Cosmonaut } from './Cosmonaut/Cosmonaut';
+import { FullScreenHeader } from './FullScreenHeader';
+import { MinimizedHeader } from './MinimizedHeader';
 import { useGitHubStars } from './useGitHubStars';
 
 type Props = {

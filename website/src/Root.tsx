@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Header } from './Header';
+import { Header } from './Header/Header';
 import { HEADER_HEIGHT_PX, MAX_CONTENT_WIDTH_PX } from './shared';
 import { CONTENT_TOP_PADDING_PX, useHeaderScroll } from './useHeaderScroll';
 import { useWindowViewport } from './useWindowViewport';
