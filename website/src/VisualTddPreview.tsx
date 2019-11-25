@@ -8,7 +8,7 @@ import {
 } from 'react-cosmos-shared2/fixtureState';
 import styled from 'styled-components';
 
-const initialTreeExpansion: TreeExpansion = { positionOffset: true };
+const initialTreeExpansion: TreeExpansion = { position: true };
 const initialValues: FixtureStateValues = {
   color: {
     type: 'primitive',
@@ -26,7 +26,7 @@ const initialValues: FixtureStateValues = {
     type: 'primitive',
     value: 5
   },
-  positionOffset: {
+  position: {
     type: 'object',
     values: {
       x: {
@@ -49,8 +49,8 @@ export function VisualTddPreview() {
 
   const color = getPrimitiveValue(values.color, '#E7008A');
 
-  const x = getObjectValue(values.positionOffset, 'x', false);
-  const y = getObjectValue(values.positionOffset, 'y', false);
+  const x = getObjectValue(values.position, 'x', false);
+  const y = getObjectValue(values.position, 'y', false);
   const scale = getPrimitiveValue(values.scale, 100);
   const rotate = getPrimitiveValue(values.rotate, 0);
   const transform = `translate(${y}px, ${x}px) scale(${scale /
