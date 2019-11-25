@@ -6,6 +6,7 @@ import { HEADER_HEIGHT_PX, MAX_CONTENT_WIDTH_PX } from './shared';
 import { CONTENT_TOP_PADDING_PX, useHeaderScroll } from './useHeaderScroll';
 import { useWindowViewport } from './useWindowViewport';
 import { useWindowYScroll } from './useWindowYScroll';
+import { VisualTddPreview } from './VisualTddPreview';
 
 export function Root() {
   const windowViewport = useWindowViewport();
@@ -24,6 +25,19 @@ export function Root() {
         <Features style={{ opacity: showContent ? 1 : 0 }}>
           <Feature>
             <FeaturePreviewContainer>
+              <VisualTddPreview />
+            </FeaturePreviewContainer>
+            <FeatureTextOverlay>
+              <FeatureTitle>Visual TDD</FeatureTitle>
+              <FeatureDescription>
+                Develop one component at a time. Isolate the UI you&apos;re
+                working on and iterate quickly. Reloading your whole app on
+                every change is slowing you down!
+              </FeatureDescription>
+            </FeatureTextOverlay>
+          </Feature>
+          <Feature>
+            <FeaturePreviewContainer>
               <ComponentLibraryPreview />
             </FeaturePreviewContainer>
             <FeatureTextOverlay>
@@ -36,22 +50,6 @@ export function Root() {
             </FeatureTextOverlay>
           </Feature>
           {/* <Feature>
-            <FeatureTitle>Visual TDD</FeatureTitle>
-            <FeatureDescription>
-              Develop one component at a time. Isolate the UI you&apos;re
-                working on and iterate quickly. Reloading your whole app on
-                every change is slowing you down!
-            </FeatureDescription>
-          </Feature>
-          <Feature>
-            <FeatureTitle>Component library</FeatureTitle>
-            <FeatureDescription>
-              From blank states to edge cases, define component states to come
-              back to. Your component library keeps you organized and provides a
-              solid foundation of test cases.
-            </FeatureDescription>
-          </Feature>
-          <Feature>
             <FeatureTitle>Open platform</FeatureTitle>
             <FeatureDescription>
               React Cosmos can be used in powerful ways. Snapshot and visual

@@ -86,7 +86,7 @@ export function ComponentLibraryPreview() {
         />
       </Nav>
       <Preview>
-        <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 600 600">
           <g transform="translate(300,300)">
             <path d={shape.d} fill={shape.color} />
           </g>
@@ -104,10 +104,9 @@ const Container = styled.div`
 `;
 
 const Nav = styled.div`
-  background: rgb(32, 32, 32);
-  width: 30%;
   width: 240px;
   max-width: 50%;
+  background: rgb(32, 32, 32);
 `;
 
 const Preview = styled.div`
@@ -120,6 +119,7 @@ const Preview = styled.div`
 
   svg {
     width: 100%;
+    min-width: 480px;
   }
 
   path {
