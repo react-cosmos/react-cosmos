@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ComponentLibraryPreview } from './ComponentLibraryPreview';
 import { Header } from './Header/Header';
 import { HEADER_HEIGHT_PX, MAX_CONTENT_WIDTH_PX } from './shared';
 import { CONTENT_TOP_PADDING_PX, useHeaderScroll } from './useHeaderScroll';
@@ -22,11 +23,24 @@ export function Root() {
       <Content>
         <Features style={{ opacity: showContent ? 1 : 0 }}>
           <Feature>
+            <FeaturePreviewContainer>
+              <ComponentLibraryPreview />
+            </FeaturePreviewContainer>
+            <FeatureTextOverlay>
+              <FeatureTitle>Component library</FeatureTitle>
+              <FeatureDescription>
+                From blank states to edge cases, define component states to come
+                back to. Your component library keeps you organized and provides
+                a solid foundation of test cases.
+              </FeatureDescription>
+            </FeatureTextOverlay>
+          </Feature>
+          {/* <Feature>
             <FeatureTitle>Visual TDD</FeatureTitle>
             <FeatureDescription>
               Develop one component at a time. Isolate the UI you&apos;re
-              working on and iterate quickly. Reloading your whole app on every
-              change is slowing you down!
+                working on and iterate quickly. Reloading your whole app on
+                every change is slowing you down!
             </FeatureDescription>
           </Feature>
           <Feature>
@@ -44,7 +58,7 @@ export function Root() {
               regression tests are possible, as well as custom integrations
               tailored to your needs.
             </FeatureDescription>
-          </Feature>
+          </Feature> */}
         </Features>
       </Content>
     </Container>
@@ -55,6 +69,7 @@ const SECTION_PADDING_PX = 128;
 
 const Container = styled.div<{ white: boolean }>`
   padding-top: ${CONTENT_TOP_PADDING_PX}px;
+  padding-bottom: ${CONTENT_TOP_PADDING_PX}px;
   background: ${props => (props.white ? '#fff' : '#093556')};
   color: #0a2e46;
 `;
@@ -76,19 +91,34 @@ const Features = styled.div`
 
 const Feature = styled.div`
   width: 100%;
-  height: 640px;
+  height: 600px;
   margin-bottom: ${SECTION_PADDING_PX}px;
+  position: relative;
+`;
+
+const FeaturePreviewContainer = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
+const FeatureTextOverlay = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(20px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   text-align: center;
-  background: #ccc;
 `;
 
 const FeatureTitle = styled.h2`
   margin: 0;
-  padding: 0 0 8px 0;
+  padding: 32px 0 8px 0;
+  color: #fff;
   font-size: 36px;
   line-height: 36px;
   font-weight: 600;
@@ -97,8 +127,9 @@ const FeatureTitle = styled.h2`
 
 const FeatureDescription = styled.div`
   max-width: 640px;
-  padding: 0 24px 24px 24px;
+  padding: 0 24px 32px 24px;
+  color: #fff;
   font-size: 24px;
   line-height: 30px;
-  opacity: 0.8;
+  opacity: 0.9;
 `;

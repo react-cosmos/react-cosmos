@@ -65,8 +65,10 @@ function treeContainsFixture(
 const DirButton = styled.button`
   display: block;
   width: 100%;
+  padding: 0;
   border: 0;
   background: transparent;
+  font-size: 14px;
 
   :focus {
     outline: none;
