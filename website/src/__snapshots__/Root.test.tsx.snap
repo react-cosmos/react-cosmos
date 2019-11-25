@@ -1006,8 +1006,8 @@ exports[`renders correctly 1`] = `
               <svg
                 style={
                   Object {
-                    "filter": "blur(0px)",
-                    "transform": "translate(0px, 0px) scale(1) rotate(0deg)",
+                    "filter": "blur(5px)",
+                    "transform": "translate(22px, 6px) scale(1.29) rotate(72deg)",
                   }
                 }
                 viewBox="0 0 600 600"
@@ -1017,7 +1017,7 @@ exports[`renders correctly 1`] = `
                 >
                   <path
                     d="M63.6,-96.7C105.9,-71.7,179.8,-93.8,185.1,-84C190.3,-74.2,126.8,-32.6,108.1,7.199999999999999C89.3,46.9,115.3,84.7,108,94.2C100.7,103.7,60.1,85,27.1,96.7C-5.9,108.4,-31.3,150.6,-45.3,149C-59.4,147.3,-62.2,101.8,-67.6,71.8C-73,41.8,-81.1,27.299999999999997,-104.6,2.1999999999999993C-128.2,-22.9,-167.4,-58.6,-173.9,-94C-180.4,-129.3,-154.3,-164.4,-119.8,-193C-85.4,-221.6,-42.7,-243.8,-16,-218.8C10.600000000000001,-193.9,21.299999999999997,-121.8,63.6,-96.7Z"
-                    fill="#E7008A"
+                    fill="#e7008a"
                   />
                 </g>
               </svg>
@@ -1102,7 +1102,7 @@ exports[`renders correctly 1`] = `
                           <div
                             className="sc-kAzzGY igpLkx"
                           >
-                            0
+                            6
                           </div>
                           <textarea
                             className="sc-cSHVUG brWJKI"
@@ -1113,7 +1113,7 @@ exports[`renders correctly 1`] = `
                             onFocus={[Function]}
                             onKeyDown={[Function]}
                             rows={1}
-                            value={0}
+                            value={6}
                           />
                         </div>
                       </div>
@@ -1145,7 +1145,7 @@ exports[`renders correctly 1`] = `
                           <div
                             className="sc-kAzzGY igpLkx"
                           >
-                            0
+                            22
                           </div>
                           <textarea
                             className="sc-cSHVUG brWJKI"
@@ -1156,7 +1156,7 @@ exports[`renders correctly 1`] = `
                             onFocus={[Function]}
                             onKeyDown={[Function]}
                             rows={1}
-                            value={0}
+                            value={22}
                           />
                         </div>
                       </div>
@@ -1188,7 +1188,7 @@ exports[`renders correctly 1`] = `
                           <div
                             className="sc-kAzzGY gGCfS"
                           >
-                            #E7008A
+                            #e7008a
                           </div>
                           <textarea
                             className="sc-cSHVUG brWJKI"
@@ -1198,7 +1198,7 @@ exports[`renders correctly 1`] = `
                             onChange={[Function]}
                             onFocus={[Function]}
                             rows={1}
-                            value="#E7008A"
+                            value="#e7008a"
                           />
                         </div>
                       </div>
@@ -1230,7 +1230,7 @@ exports[`renders correctly 1`] = `
                           <div
                             className="sc-kAzzGY igpLkx"
                           >
-                            100
+                            129
                           </div>
                           <textarea
                             className="sc-cSHVUG brWJKI"
@@ -1241,7 +1241,7 @@ exports[`renders correctly 1`] = `
                             onFocus={[Function]}
                             onKeyDown={[Function]}
                             rows={1}
-                            value={100}
+                            value={129}
                           />
                         </div>
                       </div>
@@ -1273,7 +1273,7 @@ exports[`renders correctly 1`] = `
                           <div
                             className="sc-kAzzGY igpLkx"
                           >
-                            0
+                            72
                           </div>
                           <textarea
                             className="sc-cSHVUG brWJKI"
@@ -1284,7 +1284,7 @@ exports[`renders correctly 1`] = `
                             onFocus={[Function]}
                             onKeyDown={[Function]}
                             rows={1}
-                            value={0}
+                            value={72}
                           />
                         </div>
                       </div>
@@ -1316,7 +1316,7 @@ exports[`renders correctly 1`] = `
                           <div
                             className="sc-kAzzGY igpLkx"
                           >
-                            0
+                            5
                           </div>
                           <textarea
                             className="sc-cSHVUG brWJKI"
@@ -1327,7 +1327,7 @@ exports[`renders correctly 1`] = `
                             onFocus={[Function]}
                             onKeyDown={[Function]}
                             rows={1}
-                            value={0}
+                            value={5}
                           />
                         </div>
                       </div>

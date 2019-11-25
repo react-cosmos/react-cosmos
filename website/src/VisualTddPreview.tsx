@@ -12,30 +12,30 @@ const initialTreeExpansion: TreeExpansion = { positionOffset: true };
 const initialValues: FixtureStateValues = {
   color: {
     type: 'primitive',
-    value: '#E7008A'
+    value: '#e7008a'
   },
   scale: {
     type: 'primitive',
-    value: 100
+    value: 129
   },
   rotate: {
     type: 'primitive',
-    value: 0
+    value: 72
   },
   blur: {
     type: 'primitive',
-    value: 0
+    value: 5
   },
   positionOffset: {
     type: 'object',
     values: {
       x: {
         type: 'primitive',
-        value: 0
+        value: 6
       },
       y: {
         type: 'primitive',
-        value: 0
+        value: 22
       }
     }
   }
