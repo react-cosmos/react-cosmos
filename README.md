@@ -143,7 +143,9 @@ And if you use VS Code you can map the Cosmos config schema globally by [extendi
 
 How you compile your code is 100% your business. React Cosmos jumps through hoops to compile your code using your existing build pipeline, but it doesn't have opinions nor does it install dependencies your setup might require.
 
-Unless you use a framework like Create React App or Next.js, install build dependencies yourself. This include stuff like Babel, TypeScript, webpack loaders, etc. **Cosmos uses build dependencies already installed in your project.**
+Unless you use a framework like Create React App or Next.js, you need to install build dependencies yourself. This include stuff like Babel, TypeScript, webpack loaders, html-webpack-plugin, etc.
+
+**React Cosmos compiles your code using the build dependencies already installed in your project.**
 
 ## Webpack
 
@@ -460,6 +462,11 @@ fixtures.forEach(({ fixtureId, getElement }) => {
 Check out the [full example](https://github.com/react-cosmos/react-cosmos/blob/41f0b6972fd0cb2951c43839f4c37a6cf1881571/example/fixtures.test.ts) for more details on how to use the `getFixtures` API.
 
 ## Troubleshooting
+
+#### localhost:5000/\_renderer.html 404s?
+
+- Check for build errors in your terminal.
+- Make sure you have html-webpack-plugin installed, as well as [any other build dependency](#compilation).
 
 #### Using Next.js?
 
