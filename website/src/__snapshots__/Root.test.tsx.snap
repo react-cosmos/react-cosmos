@@ -996,19 +996,19 @@ exports[`renders correctly 1`] = `
         className="sc-dNLxif dvxhMQ"
       >
         <div
-          className="sc-jqCOkK fLHKIk"
+          className="sc-jqCOkK BTiku"
         >
           <div
             className="sc-ksYbfQ dBmbWL"
           >
             <div
-              className="sc-frDJqD hMtKBP"
+              className="sc-frDJqD eCWbzx"
             >
               <svg
                 style={
                   Object {
                     "filter": "blur(5px)",
-                    "transform": "translate(22px, 6px) scale(1.29) rotate(72deg)",
+                    "transform": "translate(6px, 22px) scale(1.29) rotate(72deg)",
                   }
                 }
                 viewBox="0 0 600 600"
@@ -1383,7 +1383,7 @@ exports[`renders correctly 1`] = `
         className="sc-dNLxif dvxhMQ"
       >
         <div
-          className="sc-jqCOkK fLHKIk"
+          className="sc-jqCOkK BTiku"
         >
           <div
             className="sc-jWBwVP dLKogo"
@@ -1564,7 +1564,7 @@ exports[`renders correctly 1`] = `
               </div>
             </div>
             <div
-              className="sc-cMljjf dFKgr"
+              className="sc-cMljjf liUbwO"
             >
               <svg
                 viewBox="0 0 600 600"
@@ -1593,6 +1593,27 @@ exports[`renders correctly 1`] = `
             className="sc-gGBfsJ fCxURH"
           >
             From blank states to edge cases, define component states to come back to. Your component library keeps you organized and provides a solid foundation of test cases.
+          </div>
+        </div>
+      </div>
+      <div
+        className="sc-dNLxif dvxhMQ"
+      >
+        <div
+          className="sc-jqCOkK BTiku"
+        />
+        <div
+          className="sc-uJMKN iKsMdn"
+        >
+          <h2
+            className="sc-bbmXgH gkZrAX"
+          >
+            Open platform
+          </h2>
+          <div
+            className="sc-gGBfsJ fCxURH"
+          >
+            React Cosmos can be used in powerful ways. Snapshot and visual regression tests are possible, as well as custom integrations tailored to your needs.
           </div>
         </div>
       </div>

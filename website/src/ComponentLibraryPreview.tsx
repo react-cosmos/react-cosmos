@@ -64,7 +64,6 @@ const Preview = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #e1e1e1;
   overflow: hidden;
 
   svg {

@@ -130,7 +130,6 @@ const Preview = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #e1e1e1;
   overflow: hidden;
 
   svg {

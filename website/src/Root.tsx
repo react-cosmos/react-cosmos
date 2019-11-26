@@ -49,14 +49,17 @@ export function Root() {
               </FeatureDescription>
             </FeatureTextOverlay>
           </Feature>
-          {/* <Feature>
-            <FeatureTitle>Open platform</FeatureTitle>
-            <FeatureDescription>
-              React Cosmos can be used in powerful ways. Snapshot and visual
-              regression tests are possible, as well as custom integrations
-              tailored to your needs.
-            </FeatureDescription>
-          </Feature> */}
+          <Feature>
+            <FeaturePreviewContainer></FeaturePreviewContainer>
+            <FeatureTextOverlay>
+              <FeatureTitle>Open platform</FeatureTitle>
+              <FeatureDescription>
+                React Cosmos can be used in powerful ways. Snapshot and visual
+                regression tests are possible, as well as custom integrations
+                tailored to your needs.
+              </FeatureDescription>
+            </FeatureTextOverlay>
+          </Feature>
         </Features>
       </Content>
     </Container>
@@ -96,6 +99,7 @@ const Feature = styled.div`
 const FeaturePreviewContainer = styled.div`
   width: 100%;
   height: 100%;
+  background-color: #e1e1e1;
 `;
 
 const FeatureTextOverlay = styled.div`
