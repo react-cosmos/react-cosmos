@@ -1,9 +1,7 @@
 import React from 'react';
 
-const HEADER_SCROLL_LENGTH_PX = 512;
+export const HEADER_SCROLL_LENGTH_PX = 512;
 const HEADER_SCROLL_STEP_PX = 4;
-
-export const CONTENT_TOP_PADDING_PX = HEADER_SCROLL_LENGTH_PX;
 
 export function useHeaderScroll(yScroll: number) {
   const roundedYScroll = yScroll - (yScroll % HEADER_SCROLL_STEP_PX);

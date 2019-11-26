@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { ComponentLibraryPreview } from './ComponentLibraryPreview';
 import { Header } from './Header/Header';
 import { HEADER_HEIGHT_PX, MAX_CONTENT_WIDTH_PX } from './shared';
-import { CONTENT_TOP_PADDING_PX, useHeaderScroll } from './useHeaderScroll';
+import { HEADER_SCROLL_LENGTH_PX, useHeaderScroll } from './useHeaderScroll';
 import { useWindowViewport } from './useWindowViewport';
 import { useWindowYScroll } from './useWindowYScroll';
 import { VisualTddPreview } from './VisualTddPreview';
@@ -66,8 +66,7 @@ export function Root() {
 const SECTION_PADDING_PX = 128;
 
 const Container = styled.div<{ white: boolean }>`
-  padding-top: ${CONTENT_TOP_PADDING_PX}px;
-  padding-bottom: ${CONTENT_TOP_PADDING_PX}px;
+  padding-top: ${HEADER_SCROLL_LENGTH_PX}px;
   background: ${props => (props.white ? '#fff' : '#093556')};
   color: #0a2e46;
 `;
