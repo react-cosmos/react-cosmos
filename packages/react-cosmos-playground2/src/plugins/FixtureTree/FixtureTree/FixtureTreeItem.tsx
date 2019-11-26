@@ -64,6 +64,7 @@ function openAnchorInNewTab(anchorEl: HTMLAnchorElement) {
 const FixtureLink = styled.a`
   display: block;
   width: 100%;
+  font-size: 14px;
   text-decoration: none;
 
   :focus {

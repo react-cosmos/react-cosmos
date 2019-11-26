@@ -50,9 +50,6 @@ const oxigenPath =
 const oxigenShadowPath =
   'M142.19 95.48C144.86 89.95 153.95 85.56 148.06 72.14C145.34 65.96 135.59 62.97 126.25 60.43C136.47 55.20 153.08 36.97 164.98 40.39C189.93 47.55 182.82 60.30 175.68 85.32C168.53 110.34 167.14 102.64 142.19 95.48';
 
-const tubePath =
-  'M144.00 78.00C144.00 78.00 105.52 59.22 96.00 86.00C84.29 118.95 142.01 127.95 128.00 180.00C114.00 232.00 33.40 249.00 -5 182';
-
 export const Body = React.memo(function Body() {
   return (
     <>
@@ -62,9 +59,6 @@ export const Body = React.memo(function Body() {
           <stop offset="1" stopColor="#d7e1e8" />
         </linearGradient>
       </defs>
-      <g clipPath="url(#skyMask)">
-        <TubePath d={tubePath} />
-      </g>
       <defs>
         <clipPath id="oxigenMask">
           <path d={oxigenBgPath} />
@@ -272,12 +266,4 @@ const TorsoLinePath = styled.path`
   stroke: url(#torsoLineGrad);
   stroke-linecap: round;
   stroke-linejoin: round;
-`;
-
-const TubePath = styled.path`
-  fill: none;
-  stroke: url(#tubeGrad);
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 6;
 `;

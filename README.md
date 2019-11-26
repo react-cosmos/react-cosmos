@@ -10,9 +10,15 @@
 
 A tool for ambitious UI developers.
 
-- **Laser focus.** Isolate the components you're working on and iterate quickly. Works for both UI primitives and entire app sections. Running your whole app on every change is slowing you down!
-- **Component library.** From blank states to normal states to edge cases, define component states to come back to. Your component library helps you stay organized and makes a great foundation of _test cases_.
-- **Long term design.** Keeping your components decoupled leads to reusable code, a robust architecture, and saves you from having to rewrite your UI every two years.
+- **Visual TDD.** Develop one component at a time. Isolate the UI you&apos;re
+  working on and iterate quickly. Reloading your whole app on
+  every change is slowing you down!
+- **Component library.** From blank states to edge cases, define component states to come
+  back to. Your component library keeps you organized and provides
+  a solid foundation of test cases.
+- **Open platform.** React Cosmos can be used in powerful ways. Snapshot and visual
+  regression tests are possible, as well as custom integrations
+  tailored to your needs.
 
 ---
 

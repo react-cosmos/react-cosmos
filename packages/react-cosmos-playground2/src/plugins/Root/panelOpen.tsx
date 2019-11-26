@@ -3,7 +3,7 @@ import { StorageSpec } from '../Storage/public';
 import { RootContext } from './shared';
 
 export const PANEL_OPEN_STORAGE_KEY = 'controlPanelOpen';
-const PANEL_OPEN_DEFAULT = true;
+const PANEL_OPEN_DEFAULT = false;
 
 export function isPanelOpen(context: RootContext) {
   const { getMethodsOf } = context;

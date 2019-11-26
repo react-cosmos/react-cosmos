@@ -25,9 +25,11 @@ export const TextField = styled.textarea<{ focused: boolean; color: string }>`
   left: 0;
   width: 100%;
   height: 100%;
+  padding: 0;
   border: 0;
   background: none;
   color: ${props => props.color};
+  font-size: 14px;
   line-height: 20px;
   white-space: pre;
   overflow: hidden;
@@ -41,6 +43,7 @@ export const TextMirror = styled.div<{ focused: boolean; minWidth: number }>`
   opacity: ${props => (props.focused ? 0 : 1)};
   min-width: ${props => props.minWidth}px;
   min-height: 20px;
+  font-size: 14px;
   line-height: 20px;
   white-space: pre;
   overflow: hidden;

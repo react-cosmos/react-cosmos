@@ -1,9 +1,12 @@
 body {
-  font-family: sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Ubuntu, 'Helvetica Neue',
+    'Helvetica', 'Arial', sans-serif;
+  font-size: 16px;
   margin: 0;
 }
 
 html,
 body {
   background: #093556;
+  color: #fff;
 }
