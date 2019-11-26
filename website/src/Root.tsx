@@ -70,6 +70,7 @@ const SECTION_PADDING_PX = 128;
 
 const Container = styled.div<{ white: boolean }>`
   padding-top: ${HEADER_SCROLL_LENGTH_PX}px;
+  padding-bottom: 50vh;
   background: ${props => (props.white ? '#fff' : '#093556')};
   color: #0a2e46;
 `;
