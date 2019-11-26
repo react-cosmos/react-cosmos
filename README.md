@@ -18,7 +18,7 @@ A tool for ambitious UI developers.
 
 👩‍🚀 **[Live demo](https://cosmos.flatris.space)**
 
-[![Cosmos Next](next.png)](https://cosmos.flatris.space)
+[![React Cosmos](next.png)](https://cosmos.flatris.space)
 
 > Keep in mind this is a static export. The dev environment, which requires a local server running, has more functionality.
 
@@ -103,13 +103,13 @@ The only hard requirements are React 16.8 and Node 6 (or newer).
 
 React Cosmos works best with webpack. It takes extra effort to make it work with other bundlers, but it's not as scary as it might seem. Don’t be afraid to ask for support.
 
-> [Browserify](https://github.com/react-cosmos/react-cosmos-classic/tree/14e1a258f746df401a41ab65429df0d296b910e4/examples/browserify) and [Parcel](https://github.com/react-cosmos/parcel-ts-example) examples are available for Cosmos Classic. Props to whoever adapts them to Cosmos Next!
+> [Browserify](https://github.com/react-cosmos/react-cosmos-classic/tree/14e1a258f746df401a41ab65429df0d296b910e4/examples/browserify) and [Parcel](https://github.com/react-cosmos/parcel-ts-example) examples are available for Cosmos Classic. Props to whoever adapts them to React Cosmos 5!
 
 ## Config
 
 No config is required to start. If you have custom needs or would like to convert a Cosmos Classic config, here's what you need to know.
 
-The Cosmos Next config is a **JSON** file, so it can only host serializable values. This design decision is meant to discourage complex configuration, make it easy to embed config options into the UI, and enable visual config management in the future.
+The React Cosmos config is a **JSON** file, so it can only host serializable values. This design decision is meant to discourage complex configuration, make it easy to embed config options into the UI, and enable visual config management in the future.
 
 By default, Cosmos reads `cosmos.config.json` from your root directory. You can pass a `--config` CLI arg for a custom config path.
 
@@ -269,7 +269,7 @@ export default ({ children }) => <Provider store={store}>{children}</Provider>;
 
 ### Redux state mock
 
-Check out [react-cosmos-redux](https://github.com/skidding/react-cosmos-redux) to see what a Cosmos Next decorator looks like.
+Check out [react-cosmos-redux](https://github.com/skidding/react-cosmos-redux) to see what an advanced React Cosmos decorator looks like.
 
 ## Declarative mocks
 
@@ -297,7 +297,7 @@ export default () => {
 
 ## UI plugins
 
-A main feature of the Cosmos Next redesign is the brand-new UI plugin architecture. While the new UI is created 100% from plugins, the plugin API is not yet documented nor made accessible. It will take a few big steps to get there, but this is the future.
+A main feature of the React Cosmos redesign is the brand-new UI plugin architecture. While the new UI is created 100% from plugins, the plugin API is not yet documented nor made accessible. It will take a few big steps to get there, but this is the future.
 
 ### Custom [responsive viewports](https://twitter.com/ReactCosmos/status/1158701342208208897)
 
@@ -332,7 +332,7 @@ Run `cosmos-export` and get a nice component library that you can deploy to any 
 npm run cosmos-native
 ```
 
-Cosmos Next works great with React Native. Put the following inside `App.js` to get started.
+React Cosmos works great with React Native. Put the following inside `App.js` to get started.
 
 ```jsx
 import React, { Component } from 'react';
@@ -472,7 +472,7 @@ Check out the [full example](https://github.com/react-cosmos/react-cosmos/blob/4
 
 ## Where's my old Cosmos?
 
-Cosmos Classic packages have been moved to [a dedicated repo](https://github.com/react-cosmos/react-cosmos-classic), which means we can continue to maintain Cosmos Classic or even run it alongside Cosmos Next in the same project (during the migration period).
+Cosmos Classic packages have been moved to [a dedicated repo](https://github.com/react-cosmos/react-cosmos-classic), which means we can continue to maintain Cosmos Classic or even run it alongside React Cosmos 5 in the same project (during the migration period).
 
 That said, it's ideal for all Cosmos users to use the latest version. Please [let me know](https://join-react-cosmos.now.sh/) if you need help upgrading.
 
