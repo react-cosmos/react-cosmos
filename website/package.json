@@ -7,7 +7,7 @@
   "scripts": {
     "start": "cosmos"
   },
-  "dependencies": {
+  "devDependencies": {
     "react-cosmos": "^5.0.0-rc.0",
     "react-cosmos-playground2": "^5.0.0-rc.0"
   }
