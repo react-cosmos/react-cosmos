@@ -57,7 +57,7 @@ export function VisualTddPreview() {
   const y = getObjectValue(values.position, 'y', false);
   const scale = getPrimitiveValue(values.scale, 100);
   const rotate = getPrimitiveValue(values.rotate, 0);
-  const transform = `translate(${y}px, ${x}px) scale(${scale /
+  const transform = `translate(${x}px, ${y}px) scale(${scale /
     100}) rotate(${rotate}deg)`;
 
   const blur = getPrimitiveValue(values.blur, false);
