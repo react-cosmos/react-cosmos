@@ -945,14 +945,16 @@ exports[`renders correctly 1`] = `
         a tool for ambitious UI developers
       </p>
       <a
-        className="sc-fMiknA cmflXp"
+        className="sc-fMiknA gZXTUV"
         href="https://github.com/react-cosmos/react-cosmos"
         rel="noopener noreferrer"
         style={
           Object {
             "fontSize": 24,
             "marginTop": 54,
+            "opacity": 0,
             "padding": "14.4px 21.599999999999998px",
+            "transform": "scale(0.8)",
           }
         }
         target="_blank"
@@ -976,7 +978,6 @@ exports[`renders correctly 1`] = `
             points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
           />
         </svg>
-        5600
       </a>
     </div>
   </div>
