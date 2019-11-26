@@ -267,6 +267,10 @@ export default ({ children }) => <Provider store={store}>{children}</Provider>;
 
 > A decorator only applies to fixture files contained in the decorator's directory. Decorators can be composed, in the order of their position in the file system hierarchy (from outer to inner).
 
+### Migrating _proxies_
+
+Migrating Cosmos Classic proxies to React Cosmos 5 is not intuitive. _Sorry for that!_ Check out the [nested decorators example](example/NestedDecorators) and join the `#proxies-upgrade` [Slack](https://join-react-cosmos.now.sh/) channel to learn more and get help with this.
+
 ### Redux state mock
 
 Check out [react-cosmos-redux](https://github.com/skidding/react-cosmos-redux) to see what an advanced React Cosmos decorator looks like.
