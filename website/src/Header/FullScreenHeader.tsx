@@ -6,7 +6,7 @@ import { getSkyMaskRadius } from './Cosmonaut/Cosmonaut';
 type Props = {
   windowViewport: Viewport;
   cropRatio: number;
-  gitHubStars: number;
+  gitHubStars: null | number;
 };
 
 type FullScreenHeaderSizes = {
@@ -60,7 +60,9 @@ export const FullScreenHeader = React.memo(function FullScreenHeader({
         style={{
           marginTop: ctaMarginTop,
           padding: `${ctaPaddingTop}px ${ctaPaddingBottom}px`,
-          fontSize: ctaFontSize
+          fontSize: ctaFontSize,
+          opacity: gitHubStars === null ? 0 : 1,
+          transform: `scale(${gitHubStars === null ? 0.8 : 1})`
         }}
       >
         <strong>GitHub</strong>
@@ -174,6 +176,7 @@ const CallToAction = styled.a`
   flex-direction: row;
   align-items: center;
   text-decoration: none;
+  transition: 0.8s opacity, 0.8s transform;
 
   strong {
     font-weight: 500;
