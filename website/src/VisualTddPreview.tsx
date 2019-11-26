@@ -24,6 +24,10 @@ const initialValues: FixtureStateValues = {
   },
   blur: {
     type: 'primitive',
+    value: true
+  },
+  blurRadius: {
+    type: 'primitive',
     value: 5
   },
   position: {
@@ -56,8 +60,9 @@ export function VisualTddPreview() {
   const transform = `translate(${y}px, ${x}px) scale(${scale /
     100}) rotate(${rotate}deg)`;
 
-  const blur = getPrimitiveValue(values.blur, 0);
-  const filter = `blur(${blur}px)`;
+  const blur = getPrimitiveValue(values.blur, false);
+  const blurRadius = getPrimitiveValue(values.blurRadius, 0);
+  const filter = blur ? `blur(${blurRadius}px)` : '';
 
   return (
     <Container>
