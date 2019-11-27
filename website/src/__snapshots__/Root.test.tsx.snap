@@ -2,7 +2,7 @@
 
 exports[`renders correctly 1`] = `
 <div
-  className="sc-kvZOFW bQzSZi"
+  className="sc-kvZOFW CmgHo"
 >
   <div
     className="sc-kgAjT ogYYp"
@@ -982,66 +982,431 @@ exports[`renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="sc-hqyNC gflpTy"
+    className="sc-hqyNC cYiotn"
   >
     <div
-      className="sc-jbKcbu ggqwIX"
-      style={
-        Object {
-          "opacity": 0,
-        }
-      }
+      className="sc-jbKcbu hnsTKQ"
     >
       <div
-        className="sc-dNLxif dvxhMQ"
+        className="sc-dNLxif gvHaCV"
+        style={
+          Object {
+            "opacity": 0,
+          }
+        }
       >
         <div
-          className="sc-jqCOkK BTiku"
+          className="sc-jqCOkK OrkxH"
         >
           <div
-            className="sc-ksYbfQ dBmbWL"
+            className="sc-uJMKN jXOoXy"
           >
             <div
-              className="sc-frDJqD eCWbzx"
-            >
-              <svg
-                style={
-                  Object {
-                    "filter": "blur(5px)",
-                    "transform": "translate(6px, 22px) scale(1.29) rotate(72deg)",
-                  }
-                }
-                viewBox="0 0 600 600"
-              >
-                <g
-                  transform="translate(300,300)"
-                >
-                  <path
-                    d="M63.6,-96.7C105.9,-71.7,179.8,-93.8,185.1,-84C190.3,-74.2,126.8,-32.6,108.1,7.199999999999999C89.3,46.9,115.3,84.7,108,94.2C100.7,103.7,60.1,85,27.1,96.7C-5.9,108.4,-31.3,150.6,-45.3,149C-59.4,147.3,-62.2,101.8,-67.6,71.8C-73,41.8,-81.1,27.299999999999997,-104.6,2.1999999999999993C-128.2,-22.9,-167.4,-58.6,-173.9,-94C-180.4,-129.3,-154.3,-164.4,-119.8,-193C-85.4,-221.6,-42.7,-243.8,-16,-218.8C10.600000000000001,-193.9,21.299999999999997,-121.8,63.6,-96.7Z"
-                    fill="#e7008a"
-                  />
-                </g>
-              </svg>
-            </div>
-            <div
-              className="sc-hmzhuo gOIjxx"
+              className="sc-ksYbfQ dBmbWL"
             >
               <div
-                className="sc-hMqMXs kFELIT"
+                className="sc-frDJqD eCWbzx"
+              >
+                <svg
+                  style={
+                    Object {
+                      "filter": "blur(5px)",
+                      "transform": "translate(6px, 22px) scale(1.29) rotate(72deg)",
+                    }
+                  }
+                  viewBox="0 0 600 600"
+                >
+                  <g
+                    transform="translate(300,300)"
+                  >
+                    <path
+                      d="M63.6,-96.7C105.9,-71.7,179.8,-93.8,185.1,-84C190.3,-74.2,126.8,-32.6,108.1,7.199999999999999C89.3,46.9,115.3,84.7,108,94.2C100.7,103.7,60.1,85,27.1,96.7C-5.9,108.4,-31.3,150.6,-45.3,149C-59.4,147.3,-62.2,101.8,-67.6,71.8C-73,41.8,-81.1,27.299999999999997,-104.6,2.1999999999999993C-128.2,-22.9,-167.4,-58.6,-173.9,-94C-180.4,-129.3,-154.3,-164.4,-119.8,-193C-85.4,-221.6,-42.7,-243.8,-16,-218.8C10.600000000000001,-193.9,21.299999999999997,-121.8,63.6,-96.7Z"
+                      fill="#e7008a"
+                    />
+                  </g>
+                </svg>
+              </div>
+              <div
+                className="sc-hmzhuo gOIjxx"
               >
                 <div
-                  className="sc-gZMcBi iLlLEI"
+                  className="sc-hMqMXs kFELIT"
                 >
                   <div
-                    className="sc-kGXeez cbbQaa"
+                    className="sc-gZMcBi iLlLEI"
                   >
-                    <button
-                      className="sc-kpOJdX dzslvV"
-                      disabled={false}
-                      onClick={[Function]}
+                    <div
+                      className="sc-kGXeez cbbQaa"
+                    >
+                      <button
+                        className="sc-kpOJdX dzslvV"
+                        disabled={false}
+                        onClick={[Function]}
+                      >
+                        <span
+                          className="sc-dxgOiQ jumsWQ"
+                        >
+                          <svg
+                            className="sc-bdVaJa gdncmD"
+                            fill="none"
+                            height="24"
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            viewBox="0 0 24 24"
+                            width="24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <polyline
+                              points="6 9 12 15 18 9"
+                            />
+                          </svg>
+                        </span>
+                        <span
+                          className="sc-ckVGcZ jWnPmW"
+                        >
+                          <span
+                            className="sc-jKJlTe jASmuy"
+                            disabled={false}
+                          >
+                            position
+                          </span>
+                          <span
+                            className="sc-eNQAEJ hVOssg"
+                          >
+                            { x, y }
+                          </span>
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    className="sc-gZMcBi bbzObT"
+                  >
+                    <div
+                      className="sc-kgoBCf cDrDJl"
+                    >
+                      <label
+                        className="sc-gqjmRU eQeQLP"
+                        htmlFor="values-position-x"
+                        title="x"
+                      >
+                        x
+                      </label>
+                      <div
+                        className="sc-VigVT fehqdo"
+                      >
+                        <div
+                          className="sc-fjdhpX kQBLdU"
+                        >
+                          <div
+                            className="sc-jzJRlG byHcWR"
+                          >
+                            <div
+                              className="sc-kAzzGY igpLkx"
+                            >
+                              6
+                            </div>
+                            <textarea
+                              className="sc-cSHVUG brWJKI"
+                              color="rgb(248, 248, 248)"
+                              id="values-position-x"
+                              onBlur={[Function]}
+                              onChange={[Function]}
+                              onFocus={[Function]}
+                              onKeyDown={[Function]}
+                              rows={1}
+                              value={6}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className="sc-gZMcBi bbzObT"
+                  >
+                    <div
+                      className="sc-kgoBCf cDrDJl"
+                    >
+                      <label
+                        className="sc-gqjmRU eQeQLP"
+                        htmlFor="values-position-y"
+                        title="y"
+                      >
+                        y
+                      </label>
+                      <div
+                        className="sc-VigVT fehqdo"
+                      >
+                        <div
+                          className="sc-fjdhpX kQBLdU"
+                        >
+                          <div
+                            className="sc-jzJRlG byHcWR"
+                          >
+                            <div
+                              className="sc-kAzzGY igpLkx"
+                            >
+                              22
+                            </div>
+                            <textarea
+                              className="sc-cSHVUG brWJKI"
+                              color="rgb(248, 248, 248)"
+                              id="values-position-y"
+                              onBlur={[Function]}
+                              onChange={[Function]}
+                              onFocus={[Function]}
+                              onKeyDown={[Function]}
+                              rows={1}
+                              value={22}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className="sc-gZMcBi iLlLEI"
+                  >
+                    <div
+                      className="sc-kgoBCf cDrDJl"
+                    >
+                      <label
+                        className="sc-gqjmRU eQeQLP"
+                        htmlFor="values-color"
+                        title="color"
+                      >
+                        color
+                      </label>
+                      <div
+                        className="sc-VigVT fehqdo"
+                      >
+                        <div
+                          className="sc-fjdhpX kQBLdU"
+                        >
+                          <div
+                            className="sc-jzJRlG byHcWR"
+                          >
+                            <div
+                              className="sc-kAzzGY gGCfS"
+                            >
+                              #e7008a
+                            </div>
+                            <textarea
+                              className="sc-cSHVUG brWJKI"
+                              color="rgb(248, 248, 248)"
+                              id="values-color"
+                              onBlur={[Function]}
+                              onChange={[Function]}
+                              onFocus={[Function]}
+                              rows={1}
+                              value="#e7008a"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className="sc-gZMcBi iLlLEI"
+                  >
+                    <div
+                      className="sc-kgoBCf cDrDJl"
+                    >
+                      <label
+                        className="sc-gqjmRU eQeQLP"
+                        htmlFor="values-scale"
+                        title="scale"
+                      >
+                        scale
+                      </label>
+                      <div
+                        className="sc-VigVT fehqdo"
+                      >
+                        <div
+                          className="sc-fjdhpX kQBLdU"
+                        >
+                          <div
+                            className="sc-jzJRlG byHcWR"
+                          >
+                            <div
+                              className="sc-kAzzGY igpLkx"
+                            >
+                              129
+                            </div>
+                            <textarea
+                              className="sc-cSHVUG brWJKI"
+                              color="rgb(248, 248, 248)"
+                              id="values-scale"
+                              onBlur={[Function]}
+                              onChange={[Function]}
+                              onFocus={[Function]}
+                              onKeyDown={[Function]}
+                              rows={1}
+                              value={129}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className="sc-gZMcBi iLlLEI"
+                  >
+                    <div
+                      className="sc-kgoBCf cDrDJl"
+                    >
+                      <label
+                        className="sc-gqjmRU eQeQLP"
+                        htmlFor="values-rotate"
+                        title="rotate"
+                      >
+                        rotate
+                      </label>
+                      <div
+                        className="sc-VigVT fehqdo"
+                      >
+                        <div
+                          className="sc-fjdhpX kQBLdU"
+                        >
+                          <div
+                            className="sc-jzJRlG byHcWR"
+                          >
+                            <div
+                              className="sc-kAzzGY igpLkx"
+                            >
+                              72
+                            </div>
+                            <textarea
+                              className="sc-cSHVUG brWJKI"
+                              color="rgb(248, 248, 248)"
+                              id="values-rotate"
+                              onBlur={[Function]}
+                              onChange={[Function]}
+                              onFocus={[Function]}
+                              onKeyDown={[Function]}
+                              rows={1}
+                              value={72}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className="sc-gZMcBi iLlLEI"
+                  >
+                    <div
+                      className="sc-kgoBCf cDrDJl"
                     >
                       <span
-                        className="sc-dxgOiQ jumsWQ"
+                        className="sc-gqjmRU eQeQLP"
+                        onClick={[Function]}
+                        title="blur"
+                      >
+                        blur
+                      </span>
+                      <div
+                        className="sc-VigVT fehqdo"
+                      >
+                        <button
+                          className="sc-chPdSV kgrChK"
+                          onClick={[Function]}
+                        >
+                          true
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className="sc-gZMcBi iLlLEI"
+                  >
+                    <div
+                      className="sc-kgoBCf cDrDJl"
+                    >
+                      <label
+                        className="sc-gqjmRU eQeQLP"
+                        htmlFor="values-blurRadius"
+                        title="blurRadius"
+                      >
+                        blurRadius
+                      </label>
+                      <div
+                        className="sc-VigVT fehqdo"
+                      >
+                        <div
+                          className="sc-fjdhpX kQBLdU"
+                        >
+                          <div
+                            className="sc-jzJRlG byHcWR"
+                          >
+                            <div
+                              className="sc-kAzzGY igpLkx"
+                            >
+                              5
+                            </div>
+                            <textarea
+                              className="sc-cSHVUG brWJKI"
+                              color="rgb(248, 248, 248)"
+                              id="values-blurRadius"
+                              onBlur={[Function]}
+                              onChange={[Function]}
+                              onFocus={[Function]}
+                              onKeyDown={[Function]}
+                              rows={1}
+                              value={5}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="sc-gGBfsJ AoTM"
+          >
+            <h2
+              className="sc-fYxtnH ixhLiZ"
+            >
+              Visual TDD
+            </h2>
+            <div
+              className="sc-tilXH iKdomJ"
+            >
+              Develop one component at a time. Isolate the UI you're working on and iterate quickly. Reloading your whole app on every change is slowing you down!
+            </div>
+          </div>
+        </div>
+        <div
+          className="sc-jqCOkK OrkxH"
+        >
+          <div
+            className="sc-uJMKN jXOoXy"
+          >
+            <div
+              className="sc-jWBwVP dLKogo"
+            >
+              <div
+                className="sc-brqgnP xvonm"
+              >
+                <div
+                  className="sc-iwsKbI hrCcNd"
+                >
+                  <button
+                    className="sc-ifAKCX gysmJk"
+                    onClick={[Function]}
+                  >
+                    <span
+                      className="sc-bwzfXH wnteA"
+                      selected={false}
+                    >
+                      <span
+                        className="sc-htpNat sc-EHOje sc-bZQynM kjToza"
                       >
                         <svg
                           className="sc-bdVaJa gdncmD"
@@ -1061,559 +1426,199 @@ exports[`renders correctly 1`] = `
                         </svg>
                       </span>
                       <span
-                        className="sc-ckVGcZ jWnPmW"
+                        className="sc-htpNat sc-EHOje sc-gzVnrw mzzuo"
                       >
-                        <span
-                          className="sc-jKJlTe jASmuy"
-                          disabled={false}
+                        <svg
+                          className="sc-bdVaJa gdncmD"
+                          fill="none"
+                          height="24"
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          viewBox="0 0 24 24"
+                          width="24"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
-                          position
-                        </span>
-                        <span
-                          className="sc-eNQAEJ hVOssg"
-                        >
-                          { x, y }
-                        </span>
+                          <path
+                            d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
+                          />
+                        </svg>
                       </span>
-                    </button>
-                  </div>
-                </div>
-                <div
-                  className="sc-gZMcBi bbzObT"
-                >
-                  <div
-                    className="sc-kgoBCf cDrDJl"
-                  >
-                    <label
-                      className="sc-gqjmRU eQeQLP"
-                      htmlFor="values-position-x"
-                      title="x"
-                    >
-                      x
-                    </label>
-                    <div
-                      className="sc-VigVT fehqdo"
-                    >
-                      <div
-                        className="sc-fjdhpX kQBLdU"
+                      <span
+                        className="sc-htpNat sc-bxivhb haHaNt"
                       >
-                        <div
-                          className="sc-jzJRlG byHcWR"
-                        >
-                          <div
-                            className="sc-kAzzGY igpLkx"
-                          >
-                            6
-                          </div>
-                          <textarea
-                            className="sc-cSHVUG brWJKI"
-                            color="rgb(248, 248, 248)"
-                            id="values-position-x"
-                            onBlur={[Function]}
-                            onChange={[Function]}
-                            onFocus={[Function]}
-                            onKeyDown={[Function]}
-                            rows={1}
-                            value={6}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="sc-gZMcBi bbzObT"
-                >
-                  <div
-                    className="sc-kgoBCf cDrDJl"
-                  >
-                    <label
-                      className="sc-gqjmRU eQeQLP"
-                      htmlFor="values-position-y"
-                      title="y"
-                    >
-                      y
-                    </label>
-                    <div
-                      className="sc-VigVT fehqdo"
-                    >
-                      <div
-                        className="sc-fjdhpX kQBLdU"
-                      >
-                        <div
-                          className="sc-jzJRlG byHcWR"
-                        >
-                          <div
-                            className="sc-kAzzGY igpLkx"
-                          >
-                            22
-                          </div>
-                          <textarea
-                            className="sc-cSHVUG brWJKI"
-                            color="rgb(248, 248, 248)"
-                            id="values-position-y"
-                            onBlur={[Function]}
-                            onChange={[Function]}
-                            onFocus={[Function]}
-                            onKeyDown={[Function]}
-                            rows={1}
-                            value={22}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="sc-gZMcBi iLlLEI"
-                >
-                  <div
-                    className="sc-kgoBCf cDrDJl"
-                  >
-                    <label
-                      className="sc-gqjmRU eQeQLP"
-                      htmlFor="values-color"
-                      title="color"
-                    >
-                      color
-                    </label>
-                    <div
-                      className="sc-VigVT fehqdo"
-                    >
-                      <div
-                        className="sc-fjdhpX kQBLdU"
-                      >
-                        <div
-                          className="sc-jzJRlG byHcWR"
-                        >
-                          <div
-                            className="sc-kAzzGY gGCfS"
-                          >
-                            #e7008a
-                          </div>
-                          <textarea
-                            className="sc-cSHVUG brWJKI"
-                            color="rgb(248, 248, 248)"
-                            id="values-color"
-                            onBlur={[Function]}
-                            onChange={[Function]}
-                            onFocus={[Function]}
-                            rows={1}
-                            value="#e7008a"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="sc-gZMcBi iLlLEI"
-                >
-                  <div
-                    className="sc-kgoBCf cDrDJl"
-                  >
-                    <label
-                      className="sc-gqjmRU eQeQLP"
-                      htmlFor="values-scale"
-                      title="scale"
-                    >
-                      scale
-                    </label>
-                    <div
-                      className="sc-VigVT fehqdo"
-                    >
-                      <div
-                        className="sc-fjdhpX kQBLdU"
-                      >
-                        <div
-                          className="sc-jzJRlG byHcWR"
-                        >
-                          <div
-                            className="sc-kAzzGY igpLkx"
-                          >
-                            129
-                          </div>
-                          <textarea
-                            className="sc-cSHVUG brWJKI"
-                            color="rgb(248, 248, 248)"
-                            id="values-scale"
-                            onBlur={[Function]}
-                            onChange={[Function]}
-                            onFocus={[Function]}
-                            onKeyDown={[Function]}
-                            rows={1}
-                            value={129}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="sc-gZMcBi iLlLEI"
-                >
-                  <div
-                    className="sc-kgoBCf cDrDJl"
-                  >
-                    <label
-                      className="sc-gqjmRU eQeQLP"
-                      htmlFor="values-rotate"
-                      title="rotate"
-                    >
-                      rotate
-                    </label>
-                    <div
-                      className="sc-VigVT fehqdo"
-                    >
-                      <div
-                        className="sc-fjdhpX kQBLdU"
-                      >
-                        <div
-                          className="sc-jzJRlG byHcWR"
-                        >
-                          <div
-                            className="sc-kAzzGY igpLkx"
-                          >
-                            72
-                          </div>
-                          <textarea
-                            className="sc-cSHVUG brWJKI"
-                            color="rgb(248, 248, 248)"
-                            id="values-rotate"
-                            onBlur={[Function]}
-                            onChange={[Function]}
-                            onFocus={[Function]}
-                            onKeyDown={[Function]}
-                            rows={1}
-                            value={72}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="sc-gZMcBi iLlLEI"
-                >
-                  <div
-                    className="sc-kgoBCf cDrDJl"
+                        Berries
+                      </span>
+                    </span>
+                  </button>
+                  <a
+                    className="sc-htoDjs llgMoj"
+                    href="?fixtureId=%7B%22path%22%3A%22Berries.ts%22%2C%22name%22%3A%22Strawberry%22%7D"
+                    onClick={[Function]}
                   >
                     <span
-                      className="sc-gqjmRU eQeQLP"
-                      onClick={[Function]}
-                      title="blur"
+                      className="sc-bwzfXH iRZiYe"
+                      selected={false}
                     >
-                      blur
+                      <span
+                        className="sc-htpNat sc-bxivhb sc-dnqmqq egpSkN"
+                      >
+                        Strawberry
+                      </span>
                     </span>
-                    <div
-                      className="sc-VigVT fehqdo"
-                    >
-                      <button
-                        className="sc-chPdSV kgrChK"
-                        onClick={[Function]}
-                      >
-                        true
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="sc-gZMcBi iLlLEI"
-                >
-                  <div
-                    className="sc-kgoBCf cDrDJl"
+                  </a>
+                  <a
+                    className="sc-htoDjs llgMoj"
+                    href="?fixtureId=%7B%22path%22%3A%22Berries.ts%22%2C%22name%22%3A%22Raspberry%22%7D"
+                    onClick={[Function]}
                   >
-                    <label
-                      className="sc-gqjmRU eQeQLP"
-                      htmlFor="values-blurRadius"
-                      title="blurRadius"
+                    <span
+                      className="sc-bwzfXH iRZiYe"
+                      selected={false}
                     >
-                      blurRadius
-                    </label>
-                    <div
-                      className="sc-VigVT fehqdo"
-                    >
-                      <div
-                        className="sc-fjdhpX kQBLdU"
+                      <span
+                        className="sc-htpNat sc-bxivhb sc-dnqmqq egpSkN"
                       >
-                        <div
-                          className="sc-jzJRlG byHcWR"
-                        >
-                          <div
-                            className="sc-kAzzGY igpLkx"
-                          >
-                            5
-                          </div>
-                          <textarea
-                            className="sc-cSHVUG brWJKI"
-                            color="rgb(248, 248, 248)"
-                            id="values-blurRadius"
-                            onBlur={[Function]}
-                            onChange={[Function]}
-                            onFocus={[Function]}
-                            onKeyDown={[Function]}
-                            rows={1}
-                            value={5}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                        Raspberry
+                      </span>
+                    </span>
+                  </a>
+                  <a
+                    className="sc-htoDjs llgMoj"
+                    href="?fixtureId=%7B%22path%22%3A%22Berries.ts%22%2C%22name%22%3A%22Blueberry%22%7D"
+                    onClick={[Function]}
+                  >
+                    <span
+                      className="sc-bwzfXH jXVVzA"
+                      selected={true}
+                    >
+                      <span
+                        className="sc-htpNat sc-bxivhb sc-dnqmqq egpSkN"
+                      >
+                        Blueberry
+                      </span>
+                    </span>
+                  </a>
+                  <a
+                    className="sc-htoDjs llgMoj"
+                    href="?fixtureId=%7B%22path%22%3A%22Avocado.ts%22%2C%22name%22%3Anull%7D"
+                    onClick={[Function]}
+                  >
+                    <span
+                      className="sc-bwzfXH wnteA"
+                      selected={false}
+                    >
+                      <span
+                        className="sc-htpNat sc-bxivhb sc-dnqmqq egpSkN"
+                      >
+                        Avocado
+                      </span>
+                    </span>
+                  </a>
+                  <a
+                    className="sc-htoDjs llgMoj"
+                    href="?fixtureId=%7B%22path%22%3A%22Banana.ts%22%2C%22name%22%3Anull%7D"
+                    onClick={[Function]}
+                  >
+                    <span
+                      className="sc-bwzfXH wnteA"
+                      selected={false}
+                    >
+                      <span
+                        className="sc-htpNat sc-bxivhb sc-dnqmqq egpSkN"
+                      >
+                        Banana
+                      </span>
+                    </span>
+                  </a>
+                  <a
+                    className="sc-htoDjs llgMoj"
+                    href="?fixtureId=%7B%22path%22%3A%22Beans.ts%22%2C%22name%22%3Anull%7D"
+                    onClick={[Function]}
+                  >
+                    <span
+                      className="sc-bwzfXH wnteA"
+                      selected={false}
+                    >
+                      <span
+                        className="sc-htpNat sc-bxivhb sc-dnqmqq egpSkN"
+                      >
+                        Beans
+                      </span>
+                    </span>
+                  </a>
+                  <a
+                    className="sc-htoDjs llgMoj"
+                    href="?fixtureId=%7B%22path%22%3A%22Watermelon.ts%22%2C%22name%22%3Anull%7D"
+                    onClick={[Function]}
+                  >
+                    <span
+                      className="sc-bwzfXH wnteA"
+                      selected={false}
+                    >
+                      <span
+                        className="sc-htpNat sc-bxivhb sc-dnqmqq egpSkN"
+                      >
+                        Watermelon
+                      </span>
+                    </span>
+                  </a>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="sc-uJMKN iKsMdn"
-        >
-          <h2
-            className="sc-bbmXgH gkZrAX"
-          >
-            Visual TDD
-          </h2>
-          <div
-            className="sc-gGBfsJ fCxURH"
-          >
-            Develop one component at a time. Isolate the UI you're working on and iterate quickly. Reloading your whole app on every change is slowing you down!
-          </div>
-        </div>
-      </div>
-      <div
-        className="sc-dNLxif dvxhMQ"
-      >
-        <div
-          className="sc-jqCOkK BTiku"
-        >
-          <div
-            className="sc-jWBwVP dLKogo"
-          >
-            <div
-              className="sc-brqgnP xvonm"
-            >
               <div
-                className="sc-iwsKbI hrCcNd"
+                className="sc-cMljjf liUbwO"
               >
-                <button
-                  className="sc-ifAKCX gysmJk"
-                  onClick={[Function]}
+                <svg
+                  viewBox="0 0 600 600"
                 >
-                  <span
-                    className="sc-bwzfXH wnteA"
-                    selected={false}
+                  <g
+                    transform="translate(300,300)"
                   >
-                    <span
-                      className="sc-htpNat sc-EHOje sc-bZQynM kjToza"
-                    >
-                      <svg
-                        className="sc-bdVaJa gdncmD"
-                        fill="none"
-                        height="24"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        viewBox="0 0 24 24"
-                        width="24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <polyline
-                          points="6 9 12 15 18 9"
-                        />
-                      </svg>
-                    </span>
-                    <span
-                      className="sc-htpNat sc-EHOje sc-gzVnrw mzzuo"
-                    >
-                      <svg
-                        className="sc-bdVaJa gdncmD"
-                        fill="none"
-                        height="24"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        viewBox="0 0 24 24"
-                        width="24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
-                        />
-                      </svg>
-                    </span>
-                    <span
-                      className="sc-htpNat sc-bxivhb haHaNt"
-                    >
-                      Berries
-                    </span>
-                  </span>
-                </button>
-                <a
-                  className="sc-htoDjs llgMoj"
-                  href="?fixtureId=%7B%22path%22%3A%22Berries.ts%22%2C%22name%22%3A%22Strawberry%22%7D"
-                  onClick={[Function]}
-                >
-                  <span
-                    className="sc-bwzfXH iRZiYe"
-                    selected={false}
-                  >
-                    <span
-                      className="sc-htpNat sc-bxivhb sc-dnqmqq egpSkN"
-                    >
-                      Strawberry
-                    </span>
-                  </span>
-                </a>
-                <a
-                  className="sc-htoDjs llgMoj"
-                  href="?fixtureId=%7B%22path%22%3A%22Berries.ts%22%2C%22name%22%3A%22Raspberry%22%7D"
-                  onClick={[Function]}
-                >
-                  <span
-                    className="sc-bwzfXH iRZiYe"
-                    selected={false}
-                  >
-                    <span
-                      className="sc-htpNat sc-bxivhb sc-dnqmqq egpSkN"
-                    >
-                      Raspberry
-                    </span>
-                  </span>
-                </a>
-                <a
-                  className="sc-htoDjs llgMoj"
-                  href="?fixtureId=%7B%22path%22%3A%22Berries.ts%22%2C%22name%22%3A%22Blueberry%22%7D"
-                  onClick={[Function]}
-                >
-                  <span
-                    className="sc-bwzfXH jXVVzA"
-                    selected={true}
-                  >
-                    <span
-                      className="sc-htpNat sc-bxivhb sc-dnqmqq egpSkN"
-                    >
-                      Blueberry
-                    </span>
-                  </span>
-                </a>
-                <a
-                  className="sc-htoDjs llgMoj"
-                  href="?fixtureId=%7B%22path%22%3A%22Avocado.ts%22%2C%22name%22%3Anull%7D"
-                  onClick={[Function]}
-                >
-                  <span
-                    className="sc-bwzfXH wnteA"
-                    selected={false}
-                  >
-                    <span
-                      className="sc-htpNat sc-bxivhb sc-dnqmqq egpSkN"
-                    >
-                      Avocado
-                    </span>
-                  </span>
-                </a>
-                <a
-                  className="sc-htoDjs llgMoj"
-                  href="?fixtureId=%7B%22path%22%3A%22Banana.ts%22%2C%22name%22%3Anull%7D"
-                  onClick={[Function]}
-                >
-                  <span
-                    className="sc-bwzfXH wnteA"
-                    selected={false}
-                  >
-                    <span
-                      className="sc-htpNat sc-bxivhb sc-dnqmqq egpSkN"
-                    >
-                      Banana
-                    </span>
-                  </span>
-                </a>
-                <a
-                  className="sc-htoDjs llgMoj"
-                  href="?fixtureId=%7B%22path%22%3A%22Beans.ts%22%2C%22name%22%3Anull%7D"
-                  onClick={[Function]}
-                >
-                  <span
-                    className="sc-bwzfXH wnteA"
-                    selected={false}
-                  >
-                    <span
-                      className="sc-htpNat sc-bxivhb sc-dnqmqq egpSkN"
-                    >
-                      Beans
-                    </span>
-                  </span>
-                </a>
-                <a
-                  className="sc-htoDjs llgMoj"
-                  href="?fixtureId=%7B%22path%22%3A%22Watermelon.ts%22%2C%22name%22%3Anull%7D"
-                  onClick={[Function]}
-                >
-                  <span
-                    className="sc-bwzfXH wnteA"
-                    selected={false}
-                  >
-                    <span
-                      className="sc-htpNat sc-bxivhb sc-dnqmqq egpSkN"
-                    >
-                      Watermelon
-                    </span>
-                  </span>
-                </a>
+                    <path
+                      d="M85.5,-85.8C113.5,-57.5,140.8,-28.8,140.6,-0.09999999999999964C140.5,28.5,113,57,85,83.9C57,110.7,28.5,135.9,-10.8,146.7C-50.2,157.5,-100.4,154.1,-139.1,127.2C-177.7,100.4,-204.9,50.2,-205.2,-0.3999999999999986C-205.6,-50.9,-179.2,-101.8,-140.5,-130.2C-101.8,-158.5,-50.9,-164.2,-11.099999999999998,-153.2C28.8,-142.1,57.5,-114.2,85.5,-85.8Z"
+                      fill="#5000CA"
+                    />
+                  </g>
+                </svg>
               </div>
             </div>
-            <div
-              className="sc-cMljjf liUbwO"
+          </div>
+          <div
+            className="sc-gGBfsJ AoTM"
+          >
+            <h2
+              className="sc-fYxtnH ixhLiZ"
             >
-              <svg
-                viewBox="0 0 600 600"
-              >
-                <g
-                  transform="translate(300,300)"
-                >
-                  <path
-                    d="M85.5,-85.8C113.5,-57.5,140.8,-28.8,140.6,-0.09999999999999964C140.5,28.5,113,57,85,83.9C57,110.7,28.5,135.9,-10.8,146.7C-50.2,157.5,-100.4,154.1,-139.1,127.2C-177.7,100.4,-204.9,50.2,-205.2,-0.3999999999999986C-205.6,-50.9,-179.2,-101.8,-140.5,-130.2C-101.8,-158.5,-50.9,-164.2,-11.099999999999998,-153.2C28.8,-142.1,57.5,-114.2,85.5,-85.8Z"
-                    fill="#5000CA"
-                  />
-                </g>
-              </svg>
+              Component library
+            </h2>
+            <div
+              className="sc-tilXH iKdomJ"
+            >
+              From blank states to edge cases, define component states to come back to. Your component library keeps you organized and provides a solid foundation of test cases.
             </div>
           </div>
         </div>
         <div
-          className="sc-uJMKN iKsMdn"
+          className="sc-jqCOkK OrkxH"
         >
-          <h2
-            className="sc-bbmXgH gkZrAX"
-          >
-            Component library
-          </h2>
           <div
-            className="sc-gGBfsJ fCxURH"
-          >
-            From blank states to edge cases, define component states to come back to. Your component library keeps you organized and provides a solid foundation of test cases.
-          </div>
-        </div>
-      </div>
-      <div
-        className="sc-dNLxif dvxhMQ"
-      >
-        <div
-          className="sc-jqCOkK BTiku"
-        />
-        <div
-          className="sc-uJMKN iKsMdn"
-        >
-          <h2
-            className="sc-bbmXgH gkZrAX"
-          >
-            Open platform
-          </h2>
+            className="sc-uJMKN sc-bbmXgH bAgAQx"
+            y={0}
+          />
           <div
-            className="sc-gGBfsJ fCxURH"
+            className="sc-gGBfsJ sc-jnlKLf wMWID"
           >
-            React Cosmos can be used in powerful ways. Snapshot and visual regression tests are possible, as well as custom integrations tailored to your needs.
+            <h2
+              className="sc-fYxtnH ixhLiZ"
+            >
+              Open platform
+            </h2>
+            <div
+              className="sc-tilXH iKdomJ"
+            >
+              React Cosmos can be used in powerful ways. Snapshot and visual regression tests are possible, as well as custom integrations tailored to your needs.
+            </div>
           </div>
         </div>
       </div>
