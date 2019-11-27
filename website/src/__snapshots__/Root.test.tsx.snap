@@ -2,10 +2,10 @@
 
 exports[`renders correctly 1`] = `
 <div
-  className="sc-kvZOFW CmgHo"
+  className="sc-hqyNC htLkLa"
 >
   <div
-    className="sc-kgAjT ogYYp"
+    className="sc-cJSrbW fwgmZx"
     style={
       Object {
         "height": 768,
@@ -14,7 +14,7 @@ exports[`renders correctly 1`] = `
     }
   >
     <div
-      className="sc-cJSrbW jGnohP"
+      className="sc-ksYbfQ cKKiTn"
       style={
         Object {
           "bottom": -341,
@@ -982,13 +982,13 @@ exports[`renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="sc-hqyNC cYiotn"
+    className="sc-jbKcbu ePAvEG"
   >
     <div
-      className="sc-jbKcbu hnsTKQ"
+      className="sc-dNLxif bQTQuC"
     >
       <div
-        className="sc-dNLxif gvHaCV"
+        className="sc-jqCOkK esKQDQ"
         style={
           Object {
             "opacity": 0,
@@ -996,16 +996,16 @@ exports[`renders correctly 1`] = `
         }
       >
         <div
-          className="sc-jqCOkK OrkxH"
+          className="sc-uJMKN kzoSSo"
         >
           <div
-            className="sc-uJMKN jXOoXy"
+            className="sc-bbmXgH fHUvii"
           >
             <div
-              className="sc-ksYbfQ dBmbWL"
+              className="sc-hmzhuo huRjlU"
             >
               <div
-                className="sc-frDJqD eCWbzx"
+                className="sc-kvZOFW cLIMRL"
               >
                 <svg
                   style={
@@ -1027,7 +1027,7 @@ exports[`renders correctly 1`] = `
                 </svg>
               </div>
               <div
-                className="sc-hmzhuo gOIjxx"
+                className="sc-frDJqD iAnSqr"
               >
                 <div
                   className="sc-hMqMXs kFELIT"
@@ -1368,25 +1368,25 @@ exports[`renders correctly 1`] = `
             </div>
           </div>
           <div
-            className="sc-gGBfsJ AoTM"
+            className="sc-jnlKLf cibaHf"
           >
             <h2
-              className="sc-fYxtnH ixhLiZ"
+              className="sc-tilXH PnCJB"
             >
               Visual TDD
             </h2>
             <div
-              className="sc-tilXH iKdomJ"
+              className="sc-hEsumM gzGMBG"
             >
               Develop one component at a time. Isolate the UI you're working on and iterate quickly. Reloading your whole app on every change is slowing you down!
             </div>
           </div>
         </div>
         <div
-          className="sc-jqCOkK OrkxH"
+          className="sc-uJMKN kzoSSo"
         >
           <div
-            className="sc-uJMKN jXOoXy"
+            className="sc-bbmXgH fHUvii"
           >
             <div
               className="sc-jWBwVP dLKogo"
@@ -1585,37 +1585,37 @@ exports[`renders correctly 1`] = `
             </div>
           </div>
           <div
-            className="sc-gGBfsJ AoTM"
+            className="sc-jnlKLf cibaHf"
           >
             <h2
-              className="sc-fYxtnH ixhLiZ"
+              className="sc-tilXH PnCJB"
             >
               Component library
             </h2>
             <div
-              className="sc-tilXH iKdomJ"
+              className="sc-hEsumM gzGMBG"
             >
               From blank states to edge cases, define component states to come back to. Your component library keeps you organized and provides a solid foundation of test cases.
             </div>
           </div>
         </div>
         <div
-          className="sc-jqCOkK OrkxH"
+          className="sc-uJMKN kzoSSo"
         >
           <div
-            className="sc-uJMKN sc-bbmXgH bAgAQx"
+            className="sc-bbmXgH sc-gGBfsJ coyvpI"
             y={0}
           />
           <div
-            className="sc-gGBfsJ sc-jnlKLf wMWID"
+            className="sc-jnlKLf sc-fYxtnH kGmfng"
           >
             <h2
-              className="sc-fYxtnH ixhLiZ"
+              className="sc-tilXH PnCJB"
             >
               Open platform
             </h2>
             <div
-              className="sc-tilXH iKdomJ"
+              className="sc-hEsumM gzGMBG"
             >
               React Cosmos can be used in powerful ways. Snapshot and visual regression tests are possible, as well as custom integrations tailored to your needs.
             </div>
