@@ -25,8 +25,8 @@ export function Cosmonaut({ cropRatio, minimizeRatio }: Props) {
 
       <g clipPath="url(#skyMask)">
         <Sky minimizeRatio={minimizeRatio} />
+        <Stars />
         <g transform={`translate(${offset.x}, ${offset.y})`}>
-          <Stars />
           <Planet />
         </g>
         <Tube />

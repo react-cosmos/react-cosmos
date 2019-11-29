@@ -49,38 +49,463 @@ exports[`renders correctly 1`] = `
             x={0}
             y={-512}
           />
+          <defs>
+            <radialGradient
+              id="starGlow"
+              r={0.5}
+            >
+              <stop
+                offset="30%"
+                stopColor="#bde0f6"
+              />
+              <stop
+                offset="100%"
+                stopColor="#2b7fc0"
+                stopOpacity={0}
+              />
+            </radialGradient>
+          </defs>
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={59.21}
+            cy={208.78}
+            r={2}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={396.12}
+            cy={180.2}
+            r={0}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={393.06}
+            cy={113.83}
+            r={1.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={436.96}
+            cy={-97.5}
+            r={1.5}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={365.5}
+            cy={-22.97}
+            r={0.5}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={552.33}
+            cy={148.55}
+            r={1}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={586.02}
+            cy={210.82}
+            r={0.75}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={670.76}
+            cy={190.4}
+            r={1.5}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={696.28}
+            cy={168.97}
+            r={0.5}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={761.62}
+            cy={216.95}
+            r={0.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={712.61}
+            cy={62.79}
+            r={1.75}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={619.71}
+            cy={22.97}
+            r={0.75}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={530.89}
+            cy={-9.7}
+            r={0.5}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={478.82}
+            cy={-41.35}
+            r={0.5}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={689.13}
+            cy={-79.12}
+            r={1}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={728.95}
+            cy={-86.27}
+            r={0.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={522.72}
+            cy={-114.86}
+            r={1.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={620.73}
+            cy={-133.23}
+            r={1}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={687.09}
+            cy={-189.38}
+            r={1.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={604.39}
+            cy={-261.87}
+            r={1.5}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={742.22}
+            cy={-329.25}
+            r={1}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={655.44}
+            cy={-411.95}
+            r={0.75}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={725.89}
+            cy={-467.08}
+            r={3.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={532.93}
+            cy={-347.63}
+            r={1.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={488.01}
+            cy={-272.08}
+            r={0.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={447.17}
+            cy={-395.61}
+            r={1.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={476.78}
+            cy={-432.37}
+            r={3.5}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={397.14}
+            cy={-479.33}
+            r={2.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={328.74}
+            cy={-367.03}
+            r={2.75}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={296.07}
+            cy={-413.99}
+            r={1.75}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={203.17}
+            cy={-366.01}
+            r={2.5}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={71.47}
+            cy={-431.35}
+            r={1}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={223.59}
+            cy={-330.27}
+            r={1}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={25.52}
+            cy={-237.37}
+            r={1}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={266.46}
+            cy={-256.77}
+            r={1}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={110.26}
+            cy={-286.37}
+            r={1.5}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={95.97}
+            cy={-181.22}
+            r={1.75}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={69.42}
+            cy={-173.05}
+            r={0.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={300.16}
+            cy={-46.45}
+            r={0.5}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={247.07}
+            cy={4.59}
+            r={0.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={280.76}
+            cy={55.64}
+            r={1.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={155.18}
+            cy={-88.31}
+            r={1.75}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={260.34}
+            cy={-145.48}
+            r={2.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={79.63}
+            cy={-4.59}
+            r={0.75}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={27.57}
+            cy={-18.89}
+            r={1.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={165.39}
+            cy={81.16}
+            r={0.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={122.51}
+            cy={99.54}
+            r={0.5}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={239.92}
+            cy={171.01}
+            r={0.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={255.23}
+            cy={224.1}
+            r={0.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={397.14}
+            cy={184.28}
+            r={0}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={398.17}
+            cy={187.34}
+            r={2}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={575.81}
+            cy={-490.56}
+            r={1.75}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={392.04}
+            cy={-268}
+            r={1}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={358.35}
+            cy={-236.35}
+            r={0.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={349.16}
+            cy={-172.03}
+            r={0.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={130.68}
+            cy={-495.67}
+            r={0.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={113.32}
+            cy={162.84}
+            r={0.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={39.2}
+            cy={-60.8}
+            r={2.5}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={63.2}
+            cy={-88}
+            r={1.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={1.2}
+            cy={-48.4}
+            r={1.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={270.8}
+            cy={47.6}
+            r={0.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={425.23}
+            cy={-192.29}
+            r={0.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={471.35}
+            cy={-166.5}
+            r={0.5}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={556.56}
+            cy={-211.84}
+            r={0.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={172.75}
+            cy={-211.05}
+            r={0.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={40.65}
+            cy={-338.47}
+            r={0.25}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={196.49}
+            cy={215.66}
+            r={2}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={162.95}
+            cy={203.68}
+            r={1}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={226.85}
+            cy={149.37}
+            r={0.75}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={48.72}
+            cy={56.71}
+            r={1.5}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={68.69}
+            cy={86.27}
+            r={0.75}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={123.01}
+            cy={14.38}
+            r={1}
+          />
+          <circle
+            className="sc-gipzik hGnmjt"
+            cx={96.65}
+            cy={52.72}
+            r={1.75}
+          />
           <g
             transform="translate(-60, -112)"
           >
-            <defs />
-            <path
-              className="sc-gipzik bGKbUw"
-              d="M59.00 60.57C60.34 60.57 61.43 61.66 61.43 63.00C61.43 64.34 60.34 65.43 59.00 65.43C57.66 65.43 56.57 64.34 56.57 63.00C56.57 61.66 57.66 60.57 59.00 60.57"
-            />
-            <path
-              className="sc-gipzik bGKbUw"
-              d="M203.00 202.57C204.34 202.57 205.43 203.66 205.43 205.00C205.43 206.34 204.34 207.43 203.00 207.43C201.66 207.43 200.57 206.34 200.57 205.00C200.57 203.66 201.66 202.57 203.00 202.57"
-            />
-            <path
-              className="sc-gipzik bGKbUw"
-              d="M123.00 21.78C123.67 21.78 124.21 22.33 124.21 23.00C124.21 23.67 123.67 24.21 123.00 24.21C122.33 24.21 121.78 23.67 121.78 23.00C121.78 22.33 122.33 21.78 123.00 21.78"
-            />
-            <path
-              className="sc-gipzik bGKbUw"
-              d="M77.00 81.78C77.67 81.78 78.21 82.33 78.21 83.00C78.21 83.67 77.67 84.21 77.00 84.21C76.33 84.21 75.78 83.67 75.78 83.00C75.78 82.33 76.33 81.78 77.00 81.78"
-            />
-            <path
-              className="sc-gipzik bGKbUw"
-              d="M229.00 145.78C229.67 145.78 230.21 146.33 230.21 147.00C230.21 147.67 229.67 148.21 229.00 148.21C228.33 148.21 227.78 147.67 227.78 147.00C227.78 146.33 228.33 145.78 229.00 145.78"
-            />
-            <path
-              className="sc-gipzik bGKbUw"
-              d="M171.00 195.78C171.67 195.78 172.21 196.33 172.21 197.00C172.21 197.67 171.67 198.21 171.00 198.21C170.33 198.21 169.78 197.67 169.78 197.00C169.78 196.33 170.33 195.78 171.00 195.78"
-            />
-            <path
-              className="sc-gipzik bGKbUw"
-              d="M99.00 48.00C100.66 48.00 102.00 49.34 102.00 51.00C102.00 52.66 100.66 54.00 99.00 54.00C97.34 54.00 96.00 52.66 96.00 51.00C96.00 49.34 97.34 48.00 99.00 48.00"
-            />
             <defs>
               <clipPath
                 id="planetMask"
@@ -916,7 +1341,7 @@ exports[`renders correctly 1`] = `
       }
     >
       <h1
-        className="sc-jhAzac dcjWAM"
+        className="sc-jhAzac dMibco"
         style={
           Object {
             "fontSize": 52,
@@ -930,7 +1355,7 @@ exports[`renders correctly 1`] = `
         .
       </h1>
       <p
-        className="sc-fBuWsC gpidIk"
+        className="sc-fBuWsC hafImK"
         style={
           Object {
             "fontSize": 26,
