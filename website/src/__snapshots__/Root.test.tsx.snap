@@ -2,7 +2,7 @@
 
 exports[`renders correctly 1`] = `
 <div
-  className="sc-fYxtnH kfffuF"
+  className="sc-iELTvK iEqVOi"
 >
   <div
     className="sc-gGBfsJ jpLwym"
@@ -1407,21 +1407,16 @@ exports[`renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="sc-tilXH cZIedG"
+    className="sc-cmTdod cxTXXN"
   >
     <div
-      className="sc-hEsumM jprvcq"
+      className="sc-jwKygS nlhSu"
     >
       <div
-        className="sc-iRbamj kvItpG"
-        style={
-          Object {
-            "opacity": 0,
-          }
-        }
+        className="sc-iRbamj dHKAYp"
       >
         <div
-          className="sc-jlyJG cIwkcE"
+          className="sc-jlyJG bkFKMG"
         >
           <div
             className="sc-gipzik hCaNVU"
@@ -1808,7 +1803,7 @@ exports[`renders correctly 1`] = `
           </div>
         </div>
         <div
-          className="sc-jlyJG cIwkcE"
+          className="sc-jlyJG bkFKMG"
         >
           <div
             className="sc-gipzik hCaNVU"
@@ -2025,7 +2020,7 @@ exports[`renders correctly 1`] = `
           </div>
         </div>
         <div
-          className="sc-jlyJG cIwkcE"
+          className="sc-jlyJG bkFKMG"
         >
           <div
             className="sc-gipzik sc-csuQGl eDIztw"
@@ -2044,6 +2039,70 @@ exports[`renders correctly 1`] = `
               React Cosmos can be used in powerful ways. Snapshot and visual regression tests are possible, as well as custom integrations tailored to your needs.
             </div>
           </div>
+        </div>
+      </div>
+      <div
+        className="sc-fYxtnH FvHRP"
+      >
+        <div
+          className="sc-tilXH sc-hEsumM fepNkI"
+        >
+          Don't settle for localhost:3000
+        </div>
+        <div
+          className="sc-tilXH sc-ktHwxA dUONpj"
+        >
+          Expect more from your dev environment.
+        </div>
+        <div
+          className="sc-tilXH sc-cIShpX kbDwRw"
+        >
+          <a
+            className="sc-kafWEX bqvYNp"
+            href="https://cosmos.flatris.space/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <span>
+              Live demo
+            </span>
+            <svg
+              className="sc-feJyhm hqrhlW"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <polyline
+                points="9 18 15 12 9 6"
+              />
+            </svg>
+          </a>
+          <a
+            className="sc-kafWEX bqvYNp"
+            href="https://twitter.com/ReactCosmos/status/1189127279533793281"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <span>
+              React Cosmos 5 in 21 tweets
+            </span>
+            <svg
+              className="sc-feJyhm hqrhlW"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <polyline
+                points="9 18 15 12 9 6"
+              />
+            </svg>
+          </a>
         </div>
       </div>
     </div>
