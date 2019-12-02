@@ -23,6 +23,7 @@ export function useWindowEnter(
         observerRef.current.observe(el);
       } else if (observerRef.current) {
         observerRef.current.disconnect();
+        observerRef.current = null;
       }
     },
     [options]

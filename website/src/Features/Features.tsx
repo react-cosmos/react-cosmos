@@ -4,10 +4,12 @@ import { useWindowEnter } from '../shared/useWindowEnter';
 import { ComponentLibraryPreview } from './ComponentLibraryPreview';
 import { VisualTddPreview } from './VisualTddPreview';
 
+const windowEnterOptions = { threshold: 0.5 };
+
 export function Features() {
-  const [f1Visible, f1Ref] = useWindowEnter({ threshold: 0.5 });
-  const [f2Visible, f2Ref] = useWindowEnter({ threshold: 0.5 });
-  const [f3Visible, f3Ref] = useWindowEnter({ threshold: 0.5 });
+  const [f1Visible, f1Ref] = useWindowEnter(windowEnterOptions);
+  const [f2Visible, f2Ref] = useWindowEnter(windowEnterOptions);
+  const [f3Visible, f3Ref] = useWindowEnter(windowEnterOptions);
 
   return (
     <Container>

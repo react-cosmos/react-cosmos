@@ -2,8 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { useWindowEnter } from './shared/useWindowEnter';
 
+const windowEnterOptions = { threshold: 0.5 };
+
 export function LinksScreen() {
-  const [visible, ref] = useWindowEnter({ threshold: 0.5 });
+  const [visible, ref] = useWindowEnter(windowEnterOptions);
   return (
     <Container ref={ref}>
       <Title visible={visible}>Don&apos;t settle for localhost:3000</Title>
