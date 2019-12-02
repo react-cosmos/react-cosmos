@@ -2029,7 +2029,6 @@ exports[`renders correctly 1`] = `
         >
           <div
             className="sc-bbmXgH sc-gGBfsJ coyvpI"
-            y={0}
           />
           <div
             className="sc-jnlKLf sc-fYxtnH kGmfng"

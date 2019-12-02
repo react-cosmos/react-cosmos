@@ -51,7 +51,7 @@ export function Root() {
               </DarkFeatureTextOverlay>
             </Feature>
             <Feature>
-              <OpenPlatformPreview y={(yScroll / 2) % 200} />
+              <OpenPlatformPreview />
               <LightFeatureTextOverlay>
                 <FeatureTitle>Open platform</FeatureTitle>
                 <FeatureDescription>
@@ -105,7 +105,7 @@ const FeaturePreviewContainer = styled.div`
   background-color: #e1e1e1;
 `;
 
-const OpenPlatformPreview = styled(FeaturePreviewContainer)<{ y: number }>`
+const OpenPlatformPreview = styled(FeaturePreviewContainer)`
   background-color: #093556;
   background-image: url('/space-pattern.png');
   background-repeat: repeat;
