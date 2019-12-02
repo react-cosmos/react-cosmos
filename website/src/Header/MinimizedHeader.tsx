@@ -6,7 +6,7 @@ import {
   HEADER_HEIGHT_PX,
   MAX_HEADER_WIDTH_PX,
   MIN_CENTER_HEADER_WIDTH_PX
-} from '../shared';
+} from './shared';
 
 type Props = {
   viewportWidth: number;

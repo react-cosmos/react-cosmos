@@ -2,36 +2,26 @@ import React from 'react';
 import styled from 'styled-components';
 import { Features } from './Features/Features';
 import { Header } from './Header/Header';
-import { MAX_CONTENT_WIDTH_PX } from './shared';
-import { HEADER_SCROLL_LENGTH_PX, useHeaderScroll } from './useHeaderScroll';
-import { useWindowViewport } from './useWindowViewport';
-import { useWindowYScroll } from './useWindowYScroll';
+import { MAX_CONTENT_WIDTH_PX } from './Header/shared';
+import { HEADER_SCROLL_LENGTH_PX } from './Header/useHeaderScroll';
+import { LinksScreen } from './LinksScreen';
 
 export function Root() {
-  const windowViewport = useWindowViewport();
-  const yScroll = useWindowYScroll();
-  const { cropRatio, minimizeRatio } = useHeaderScroll(yScroll);
-
   return (
-    <Container white={cropRatio > 0.1}>
-      <Header
-        windowViewport={windowViewport}
-        cropRatio={cropRatio}
-        minimizeRatio={minimizeRatio}
-      />
+    <Container>
+      <Header />
       <Content>
         <Center>
-          <Features visible={minimizeRatio === 1} />
+          <Features />
+          <LinksScreen />
         </Center>
       </Content>
     </Container>
   );
 }
 
-const Container = styled.div<{ white: boolean }>`
+const Container = styled.div`
   padding-top: ${HEADER_SCROLL_LENGTH_PX}px;
-  background: ${props => (props.white ? '#fff' : '#093556')};
-  color: #0a2e46;
 `;
 
 const Content = styled.div`

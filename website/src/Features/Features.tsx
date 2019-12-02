@@ -1,16 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useWindowEnter } from '../shared/useWindowEnter';
 import { ComponentLibraryPreview } from './ComponentLibraryPreview';
 import { VisualTddPreview } from './VisualTddPreview';
 
-type Props = {
-  visible: boolean;
-};
+export function Features() {
+  const [f1Visible, f1Ref] = useWindowEnter({ threshold: 0.5 });
+  const [f2Visible, f2Ref] = useWindowEnter({ threshold: 0.5 });
+  const [f3Visible, f3Ref] = useWindowEnter({ threshold: 0.5 });
 
-export function Features({ visible }: Props) {
   return (
-    <Container style={{ opacity: visible ? 1 : 0 }}>
-      <Feature>
+    <Container>
+      <Feature ref={f1Ref} visible={f1Visible}>
         <FeaturePreviewContainer>
           <VisualTddPreview />
         </FeaturePreviewContainer>
@@ -23,7 +24,7 @@ export function Features({ visible }: Props) {
           </FeatureDescription>
         </DarkFeatureTextOverlay>
       </Feature>
-      <Feature>
+      <Feature ref={f2Ref} visible={f2Visible}>
         <FeaturePreviewContainer>
           <ComponentLibraryPreview />
         </FeaturePreviewContainer>
@@ -36,7 +37,7 @@ export function Features({ visible }: Props) {
           </FeatureDescription>
         </DarkFeatureTextOverlay>
       </Feature>
-      <Feature>
+      <Feature ref={f3Ref} visible={f3Visible}>
         <OpenPlatformPreview />
         <LightFeatureTextOverlay>
           <FeatureTitle>Open platform</FeatureTitle>
@@ -55,14 +56,16 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: 0.4s opacity;
 `;
 
-const Feature = styled.div`
+const Feature = styled.div<{ visible: boolean }>`
   width: 100%;
   height: 600px;
   margin-bottom: 10vh;
   position: relative;
+  opacity: ${props => (props.visible ? 1 : 0)};
+  transform: translate(0, ${props => (props.visible ? 0 : 10)}vh);
+  transition: 0.6s opacity, 1.2s transform;
 `;
 
 const FeaturePreviewContainer = styled.div`

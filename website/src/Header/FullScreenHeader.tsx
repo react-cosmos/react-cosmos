@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { getCosmonautSize, Viewport } from '../shared';
 import { getSkyMaskRadius } from './Cosmonaut/Cosmonaut';
+import { getCosmonautSize, Viewport } from './shared';
 
 type Props = {
   windowViewport: Viewport;
