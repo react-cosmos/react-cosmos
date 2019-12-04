@@ -1,19 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useWindowEnter } from '../shared/useWindowEnter';
+import { useViewportEnter } from '../shared/useViewportEnter';
 import { ComponentLibraryPreview } from './ComponentLibraryPreview';
 import { VisualTddPreview } from './VisualTddPreview';
 
-const windowEnterOptions = { threshold: 0.5 };
-
 export function Features() {
-  const [f1Visible, f1Ref] = useWindowEnter(windowEnterOptions);
-  const [f2Visible, f2Ref] = useWindowEnter(windowEnterOptions);
-  const [f3Visible, f3Ref] = useWindowEnter(windowEnterOptions);
+  const [f1Ref, f1Entered] = useViewportEnter();
+  const [f2Ref, f2Entered] = useViewportEnter();
+  const [f3Ref, f3Entered] = useViewportEnter();
 
   return (
     <Container>
-      <Feature ref={f1Ref} visible={f1Visible}>
+      <Feature ref={f1Ref} visible={f1Entered}>
         <FeaturePreviewContainer>
           <VisualTddPreview />
         </FeaturePreviewContainer>
@@ -26,7 +24,7 @@ export function Features() {
           </FeatureDescription>
         </DarkFeatureTextOverlay>
       </Feature>
-      <Feature ref={f2Ref} visible={f2Visible}>
+      <Feature ref={f2Ref} visible={f2Entered}>
         <FeaturePreviewContainer>
           <ComponentLibraryPreview />
         </FeaturePreviewContainer>
@@ -39,7 +37,7 @@ export function Features() {
           </FeatureDescription>
         </DarkFeatureTextOverlay>
       </Feature>
-      <Feature ref={f3Ref} visible={f3Visible}>
+      <Feature ref={f3Ref} visible={f3Entered}>
         <OpenPlatformPreview />
         <LightFeatureTextOverlay>
           <FeatureTitle>Open platform</FeatureTitle>
@@ -67,7 +65,7 @@ const Feature = styled.div<{ visible: boolean }>`
   position: relative;
   opacity: ${props => (props.visible ? 1 : 0)};
   transform: translate(0, ${props => (props.visible ? 0 : 10)}vh);
-  transition: 0.6s opacity, 1.2s transform;
+  transition: 0.8s opacity, 1.2s transform;
 `;
 
 const FeaturePreviewContainer = styled.div`

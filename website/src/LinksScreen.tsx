@@ -1,18 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useWindowEnter } from './shared/useWindowEnter';
-
-const windowEnterOptions = { threshold: 0.5 };
+import { useViewportEnter } from './shared/useViewportEnter';
 
 export function LinksScreen() {
-  const [visible, ref] = useWindowEnter(windowEnterOptions);
+  const [ref, entered] = useViewportEnter();
   return (
     <Container ref={ref}>
-      <Title visible={visible}>Don&apos;t settle for localhost:3000</Title>
-      <Subtitle visible={visible}>
+      <Title visible={entered}>Don&apos;t settle for localhost:3000</Title>
+      <Subtitle visible={entered}>
         Expect more from your dev environment.
       </Subtitle>
-      <Links visible={visible}>
+      <Links visible={entered}>
         <Link
           href="https://cosmos.flatris.space/"
           rel="noopener noreferrer"
@@ -47,7 +45,7 @@ const Container = styled.div`
 const SlideIn = styled.div<{ visible: boolean }>`
   opacity: ${props => (props.visible ? 1 : 0)};
   transform: translate(0, ${props => (props.visible ? 0 : 40)}px);
-  transition: 0.6s opacity, 1.2s transform;
+  transition: 0.8s opacity, 1.2s transform;
 `;
 
 const Title = styled(SlideIn)`

@@ -1416,7 +1416,7 @@ exports[`renders correctly 1`] = `
         className="sc-iRbamj dHKAYp"
       >
         <div
-          className="sc-jlyJG bkFKMG"
+          className="sc-jlyJG dzkrDZ"
         >
           <div
             className="sc-gipzik hCaNVU"
@@ -1803,7 +1803,7 @@ exports[`renders correctly 1`] = `
           </div>
         </div>
         <div
-          className="sc-jlyJG bkFKMG"
+          className="sc-jlyJG dzkrDZ"
         >
           <div
             className="sc-gipzik hCaNVU"
@@ -2020,7 +2020,7 @@ exports[`renders correctly 1`] = `
           </div>
         </div>
         <div
-          className="sc-jlyJG bkFKMG"
+          className="sc-jlyJG dzkrDZ"
         >
           <div
             className="sc-gipzik sc-csuQGl eDIztw"
@@ -2045,17 +2045,17 @@ exports[`renders correctly 1`] = `
         className="sc-fYxtnH FvHRP"
       >
         <div
-          className="sc-tilXH sc-hEsumM bZWmgZ"
+          className="sc-tilXH sc-hEsumM iniyXR"
         >
           Don't settle for localhost:3000
         </div>
         <div
-          className="sc-tilXH sc-ktHwxA cXzNVw"
+          className="sc-tilXH sc-ktHwxA iTAQkw"
         >
           Expect more from your dev environment.
         </div>
         <div
-          className="sc-tilXH sc-cIShpX cMXsme"
+          className="sc-tilXH sc-cIShpX kGKdbD"
         >
           <a
             className="sc-kafWEX bqvYNp"
