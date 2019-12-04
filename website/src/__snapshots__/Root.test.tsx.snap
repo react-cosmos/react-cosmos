@@ -2045,17 +2045,17 @@ exports[`renders correctly 1`] = `
         className="sc-fYxtnH FvHRP"
       >
         <div
-          className="sc-tilXH sc-hEsumM fepNkI"
+          className="sc-tilXH sc-hEsumM bZWmgZ"
         >
           Don't settle for localhost:3000
         </div>
         <div
-          className="sc-tilXH sc-ktHwxA dUONpj"
+          className="sc-tilXH sc-ktHwxA cXzNVw"
         >
           Expect more from your dev environment.
         </div>
         <div
-          className="sc-tilXH sc-cIShpX kbDwRw"
+          className="sc-tilXH sc-cIShpX cMXsme"
         >
           <a
             className="sc-kafWEX bqvYNp"

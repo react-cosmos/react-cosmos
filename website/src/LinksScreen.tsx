@@ -51,19 +51,29 @@ const SlideIn = styled.div<{ visible: boolean }>`
 `;
 
 const Title = styled(SlideIn)`
-  font-size: 40px;
-  line-height: 40px;
+  font-size: 48px;
+  line-height: 48px;
   font-weight: 600;
   letter-spacing: -0.03em;
   padding: 0 0 12px 0;
+
+  @media (max-width: 400px) {
+    font-size: 40px;
+    line-height: 40px;
+  }
 `;
 
 const Subtitle = styled(SlideIn)`
-  font-size: 28px;
-  line-height: 28px;
+  font-size: 32px;
+  line-height: 32px;
   font-weight: 300;
   color: #566d7e;
   transition-delay: ${props => (props.visible ? 0.4 : 0)}s;
+
+  @media (max-width: 400px) {
+    font-size: 28px;
+    line-height: 28px;
+  }
 `;
 
 const Links = styled(SlideIn)`
@@ -72,9 +82,14 @@ const Links = styled(SlideIn)`
   flex-wrap: wrap;
   justify-content: center;
   padding: 48px 0 0 0;
-  font-size: 20px;
-  line-height: 20px;
+  font-size: 24px;
+  line-height: 24px;
   transition-delay: ${props => (props.visible ? 0.8 : 0)}s;
+
+  @media (max-width: 400px) {
+    font-size: 20px;
+    line-height: 20px;
+  }
 `;
 
 const Link = styled.a`
