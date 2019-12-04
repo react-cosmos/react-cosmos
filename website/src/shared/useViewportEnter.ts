@@ -28,5 +28,5 @@ export function useViewportEnter(): ViewportEnterReturn {
 }
 
 function hasEnteredViewport(elTop: number) {
-  return elTop <= window.pageYOffset + window.innerHeight * 0.5;
+  return elTop <= window.pageYOffset + window.innerHeight * 0.66;
 }

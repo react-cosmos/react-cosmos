@@ -66,7 +66,7 @@ const Subtitle = styled(SlideIn)`
   line-height: 32px;
   font-weight: 300;
   color: #566d7e;
-  transition-delay: ${props => (props.visible ? 0.4 : 0)}s;
+  transition-delay: ${props => (props.visible ? 0.2 : 0)}s;
 
   @media (max-width: 400px) {
     font-size: 28px;
@@ -82,7 +82,7 @@ const Links = styled(SlideIn)`
   padding: 48px 0 0 0;
   font-size: 24px;
   line-height: 24px;
-  transition-delay: ${props => (props.visible ? 0.8 : 0)}s;
+  transition-delay: ${props => (props.visible ? 0.4 : 0)}s;
 
   @media (max-width: 400px) {
     font-size: 20px;
