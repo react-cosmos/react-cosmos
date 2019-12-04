@@ -3,28 +3,24 @@ import React from 'react';
 type ViewportEnterReturn = [(el: HTMLElement | null) => void, boolean];
 
 export function useViewportEnter(): ViewportEnterReturn {
-  const [elTop, setElTop] = React.useState<number | null>(null);
+  const [el, setEl] = React.useState<HTMLElement | null>(null);
   const [entered, setEntered] = React.useState(false);
 
-  const elRef = React.useCallback(el => {
-    setElTop(el ? el.offsetTop : null);
-  }, []);
-
   React.useEffect(() => {
-    if (elTop === null) return () => {};
-    const capturedElTop = elTop;
+    if (el === null) return () => {};
+    const capturedEl = el;
 
     function updateEntered() {
-      const newEntered = hasEnteredViewport(capturedElTop);
+      const newEntered = hasEnteredViewport(capturedEl.offsetTop);
       if (newEntered !== entered) setEntered(newEntered);
     }
 
     updateEntered();
     window.addEventListener('scroll', updateEntered);
     return () => window.removeEventListener('scroll', updateEntered);
-  }, [elTop, entered]);
+  }, [el, entered]);
 
-  return [elRef, entered];
+  return [setEl, entered];
 }
 
 function hasEnteredViewport(elTop: number) {
