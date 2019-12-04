@@ -8,5 +8,8 @@ body {
 html,
 body {
   background: #093556;
-  color: #fff;
+}
+
+#root {
+  color: #0a2e46;
 }

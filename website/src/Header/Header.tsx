@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Cosmonaut } from './Cosmonaut/Cosmonaut';
+import { FullScreenHeader } from './FullScreenHeader';
+import { MinimizedHeader } from './MinimizedHeader';
 import {
   COSMONAUT_HPADDING_PX,
   COSMONAUT_SIZE_PX,
@@ -8,17 +11,10 @@ import {
   getViewportLength,
   MAX_HEADER_WIDTH_PX,
   Viewport
-} from '../shared';
-import { Cosmonaut } from './Cosmonaut/Cosmonaut';
-import { FullScreenHeader } from './FullScreenHeader';
-import { MinimizedHeader } from './MinimizedHeader';
+} from './shared';
 import { useGitHubStars } from './useGitHubStars';
-
-type Props = {
-  windowViewport: Viewport;
-  cropRatio: number;
-  minimizeRatio: number;
-};
+import { useHeaderScroll } from './useHeaderScroll';
+import { useWindowViewport } from './useWindowViewport';
 
 type HeaderSizes = {
   containerViewport: Viewport;
@@ -29,11 +25,10 @@ type HeaderSizes = {
   centerPadding: number;
 };
 
-export const Header = React.memo(function Header({
-  windowViewport,
-  cropRatio,
-  minimizeRatio
-}: Props) {
+export function Header() {
+  const windowViewport = useWindowViewport();
+  const { cropRatio, minimizeRatio } = useHeaderScroll();
+  useBodyBg(cropRatio);
   const gitHubStars = useGitHubStars();
   const {
     containerViewport,
@@ -80,7 +75,15 @@ export const Header = React.memo(function Header({
       )}
     </Container>
   );
-});
+}
+
+function useBodyBg(cropRatio: number) {
+  const bodyBg = cropRatio > 0.1 ? '#fff' : '#093556';
+  React.useEffect(() => {
+    const rootEl = document.getElementById('root');
+    if (rootEl) rootEl.style.background = bodyBg;
+  }, [bodyBg]);
+}
 
 function getHeaderSizes(
   windowViewport: Viewport,

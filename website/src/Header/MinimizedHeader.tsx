@@ -6,7 +6,7 @@ import {
   HEADER_HEIGHT_PX,
   MAX_HEADER_WIDTH_PX,
   MIN_CENTER_HEADER_WIDTH_PX
-} from '../shared';
+} from './shared';
 
 type Props = {
   viewportWidth: number;
@@ -56,6 +56,11 @@ export function MinimizedHeader({ viewportWidth, visible }: Props) {
           </Link>
         </Links>
       </MainContent>
+      {center && (
+        <HeartButton>
+          <Heart />
+        </HeartButton>
+      )}
     </Container>
   );
 }
@@ -88,13 +93,38 @@ const CosmonautButton = styled.div`
   cursor: pointer;
 `;
 
+const HeartButton = styled.div`
+  flex-shrink: 0;
+  width: ${COSMONAUT_SIZE_PX}px;
+  height: ${COSMONAUT_SIZE_PX}px;
+  margin: 0 ${COSMONAUT_HPADDING_PX}px 0 0;
+  background: rgba(231, 0, 138, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  svg {
+    margin-top: 2px;
+    width: 36px;
+    height: 36px;
+    fill: rgba(231, 0, 138, 0.8);
+  }
+`;
+
+const Heart = () => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+    </svg>
+  );
+};
+
 const MainContent = styled.div<{ center: boolean }>`
   flex: 1;
   height: 56px;
-  padding: 0
-    ${props =>
-      props.center ? COSMONAUT_SIZE_PX + COSMONAUT_HPADDING_PX : 16}px
-    0 0;
+  padding-right: ${props => (props.center ? 0 : 16)}px;
   display: flex;
   flex-direction: column;
   align-items: ${props => (props.center ? 'center' : 'flex-end')};

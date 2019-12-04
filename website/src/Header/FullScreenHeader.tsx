@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { getCosmonautSize, Viewport } from '../shared';
 import { getSkyMaskRadius } from './Cosmonaut/Cosmonaut';
+import { getCosmonautSize, Viewport } from './shared';
 
 type Props = {
   windowViewport: Viewport;
@@ -152,6 +152,7 @@ const Container = styled.div<{ clipPath: string }>`
 const Title = styled.h1`
   margin: 0;
   padding: 0;
+  background: rgb(9, 53, 86, 0.8);
   font-weight: 600;
   line-height: 2em;
   letter-spacing: -0.02em;
@@ -164,6 +165,7 @@ const Subtitle = styled.p`
   padding: 0;
   font-weight: 300;
   line-height: 1.6em;
+  background: rgb(9, 53, 86, 0.8);
   color: #b1dcfd;
   white-space: nowrap;
   text-align: center;
