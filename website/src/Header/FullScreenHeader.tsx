@@ -27,8 +27,7 @@ export const FullScreenHeader = React.memo(function FullScreenHeader({
   cropRatio,
   gitHubStars
 }: Props) {
-  const containerStyle = getContainerStyle(windowViewport);
-  const clipPath = getClipPath(windowViewport, cropRatio);
+  const containerStyle = getContainerStyle(windowViewport, cropRatio);
   const {
     titleFontSize,
     subtitleFontSize,
@@ -45,7 +44,7 @@ export const FullScreenHeader = React.memo(function FullScreenHeader({
   ]);
 
   return (
-    <Container clipPath={clipPath} style={containerStyle}>
+    <Container style={containerStyle}>
       <Title style={{ fontSize: titleFontSize }}>
         Build UIs at <em>scale</em>.
       </Title>
@@ -101,11 +100,14 @@ function getFullScreenHeaderSizes(
   };
 }
 
-function getContainerStyle(windowViewport: Viewport) {
+function getContainerStyle(windowViewport: Viewport, cropRatio: number) {
   const cosmonautSize = Math.round(getCosmonautSize(windowViewport));
+  const clipPath = getClipPath(windowViewport, cropRatio);
 
   if (isPortrait(windowViewport)) {
     return {
+      clipPath,
+      WebkitClipPath: clipPath,
       bottom: cosmonautSize,
       left: 0,
       width: windowViewport.width,
@@ -114,6 +116,8 @@ function getContainerStyle(windowViewport: Viewport) {
   }
 
   return {
+    clipPath,
+    WebkitClipPath: clipPath,
     bottom: 0,
     left: cosmonautSize,
     width: windowViewport.width - cosmonautSize,
@@ -139,9 +143,8 @@ function roundEven(nr: number) {
   return Math.round(nr / 2) * 2;
 }
 
-const Container = styled.div<{ clipPath: string }>`
+const Container = styled.div`
   position: absolute;
-  clip-path: ${props => props.clipPath};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -204,15 +207,15 @@ const Star = ({ size, strokeWidth, leftMargin, rightMargin }: StarProps) => {
       strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
-      leftMargin={leftMargin}
-      rightMargin={rightMargin}
+      style={{
+        margin: `0 ${rightMargin}px 0 ${leftMargin}px`
+      }}
     >
       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
     </StyledStar>
   );
 };
 
-const StyledStar = styled.svg<{ leftMargin: number; rightMargin: number }>`
-  margin: 0 ${props => props.rightMargin}px 0 ${props => props.leftMargin}px;
+const StyledStar = styled.svg`
   transform: translate(0, 3%);
 `;

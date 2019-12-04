@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
-<div
-  className="sc-cmTdod iuxFAU"
->
+Array [
   <div
     className="sc-gGBfsJ jpLwym"
     style={
@@ -1329,11 +1327,12 @@ exports[`renders correctly 1`] = `
       </svg>
     </div>
     <div
-      className="sc-TOsTZ hXNDvp"
-      clipPath="circle(1206.7955732250412px at -170.66666666666666px 597.3333333333334px)"
+      className="sc-TOsTZ bbfcGv"
       style={
         Object {
+          "WebkitClipPath": "circle(1206.7955732250412px at -170.66666666666666px 597.3333333333334px)",
           "bottom": 0,
+          "clipPath": "circle(1206.7955732250412px at -170.66666666666666px 597.3333333333334px)",
           "height": 768,
           "left": 341,
           "width": 683,
@@ -1388,13 +1387,18 @@ exports[`renders correctly 1`] = `
           GitHub
         </strong>
         <svg
-          className="sc-hmzhuo cqqSnu"
+          className="sc-hmzhuo ilwzWh"
           fill="none"
           height={20}
           stroke="currentColor"
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth={2}
+          style={
+            Object {
+              "margin": "0 3px 0 13px",
+            }
+          }
           viewBox="0 0 24 24"
           width={20}
           xmlns="http://www.w3.org/2000/svg"
@@ -1405,12 +1409,12 @@ exports[`renders correctly 1`] = `
         </svg>
       </a>
     </div>
-  </div>
+  </div>,
   <div
-    className="sc-jwKygS gkBhdr"
+    className="sc-cmTdod kNjIhb"
   >
     <div
-      className="sc-btzYZH bjodUp"
+      className="sc-jwKygS nlhSu"
     >
       <div
         className="sc-iRbamj dHKAYp"
@@ -2111,6 +2115,6 @@ exports[`renders correctly 1`] = `
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </div>,
+]
 `;

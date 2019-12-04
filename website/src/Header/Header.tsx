@@ -27,7 +27,7 @@ type HeaderSizes = {
 
 export function Header() {
   const windowViewport = useWindowViewport();
-  const { cropRatio, minimizeRatio } = useHeaderScroll();
+  const { cropRatio, minimizeRatio } = useHeaderScroll(windowViewport.height);
   useBodyBg(cropRatio);
   const gitHubStars = useGitHubStars();
   const {
