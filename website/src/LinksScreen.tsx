@@ -8,7 +8,7 @@ export function LinksScreen() {
     <Container ref={ref}>
       <Title visible={entered}>Don&apos;t settle for localhost:3000</Title>
       <Subtitle visible={entered}>
-        Expect more from your dev environment.
+        Expect more from your <NoWrap>dev environment</NoWrap>
       </Subtitle>
       <Links visible={entered}>
         <Link
@@ -121,4 +121,8 @@ const StyledChevron = styled.svg`
   height: 20px;
   margin: 0 0 0 0px;
   transform: translate(0, 1px);
+`;
+
+const NoWrap = styled.span`
+  white-space: nowrap;
 `;

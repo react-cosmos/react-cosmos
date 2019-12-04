@@ -2,7 +2,7 @@
 
 exports[`renders correctly 1`] = `
 <div
-  className="sc-iELTvK iEqVOi"
+  className="sc-cmTdod iuxFAU"
 >
   <div
     className="sc-gGBfsJ jpLwym"
@@ -1407,10 +1407,10 @@ exports[`renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="sc-cmTdod cxTXXN"
+    className="sc-jwKygS gkBhdr"
   >
     <div
-      className="sc-jwKygS nlhSu"
+      className="sc-btzYZH bjodUp"
     >
       <div
         className="sc-iRbamj dHKAYp"
@@ -2052,7 +2052,12 @@ exports[`renders correctly 1`] = `
         <div
           className="sc-tilXH sc-ktHwxA iTAQkw"
         >
-          Expect more from your dev environment.
+          Expect more from your 
+          <span
+            className="sc-iELTvK jYPXQu"
+          >
+            dev environment
+          </span>
         </div>
         <div
           className="sc-tilXH sc-cIShpX kGKdbD"
