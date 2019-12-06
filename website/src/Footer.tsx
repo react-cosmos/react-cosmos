@@ -17,18 +17,18 @@ export function Footer() {
         <Story visible={entered}>
           <Paragraph>
             The journey began in 2014 when I introduced React at Hootsuite,
-            where I was an Engineering Manager at the time. With React, the need
-            for a component-driven dev environment arose and gave birth to React
-            Cosmos. Over the years, I carried React Cosmos across projects and
+            where I was an Engineering Manager at the time. A component-driven
+            dev environment was the next natural step, and thus React Cosmos was
+            born. Over the years, I carried React Cosmos across projects and
             teams, slowly morphing it into the well rounded project you’re
             looking at.
           </Paragraph>
           <Paragraph>
             I use React Cosmos as a blank canvas for new UI components. I use it
             to ensure reusability at scale. I use React Cosmos to build React
-            Cosmos, and I used it to make this website. Most importantly, I get
-            a warm fuzzy feeling when other people become more productive with
-            React Cosmos.
+            Cosmos, and I used it to make this website. Above all, I get a warm
+            fuzzy feeling when other people become more productive with React
+            Cosmos.
           </Paragraph>
           <Paragraph>
             React Cosmos is licensed as MIT and will always be free. If you want
