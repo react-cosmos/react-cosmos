@@ -1,18 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Center } from './shared/ui';
+import { Center, SlideIn } from './shared/ui';
+import { useViewportEnter } from './shared/useViewportEnter';
 
 export function Footer() {
+  const [ref, entered] = useViewportEnter(0.7);
   return (
     <Container id="footer">
-      <Center>
-        <Title>Hi there!</Title>
-        <Subtitle>
+      <Center ref={ref}>
+        <Title visible={entered}>Hi there!</Title>
+        <Subtitle visible={entered}>
           <strong>I’m Ovidiu, a passionate developer from Romania.</strong>
           <br />
           Obsessed with details, I made React Cosmos for likeminded developers.
         </Subtitle>
-        <TextBody>
+        <Story visible={entered}>
           <Paragraph>
             The journey began in 2014 when I introduced React at Hootsuite,
             where I was an Engineering Manager at the time. With React, the need
@@ -33,7 +35,7 @@ export function Footer() {
             to support me, however, become a Sponsor and ensure this journey
             continues!
           </Paragraph>
-        </TextBody>
+        </Story>
       </Center>
     </Container>
   );
@@ -46,11 +48,7 @@ const Container = styled.div`
   color: #b1dcfd;
 `;
 
-const TextBody = styled.div`
-  max-width: 704px;
-`;
-
-const Title = styled.h3`
+const Title = styled(SlideIn)`
   margin: 0 0 32px 0;
   color: #4d9edc;
   font-size: 48px;
@@ -58,17 +56,23 @@ const Title = styled.h3`
   line-height: 56px;
 `;
 
-const Subtitle = styled.p`
+const Subtitle = styled(SlideIn)`
   margin: 0 0 32px 0;
   color: #dfeaf3;
   font-size: 24px;
   line-height: 38px;
   font-weight: 300;
+  transition-delay: ${props => (props.visible ? 0.2 : 0)}s;
 
   strong {
     font-weight: 500;
     color: #dfeaf3;
   }
+`;
+
+const Story = styled(SlideIn)`
+  max-width: 704px;
+  transition-delay: ${props => (props.visible ? 0.4 : 0)}s;
 `;
 
 const Paragraph = styled.p`

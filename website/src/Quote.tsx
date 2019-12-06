@@ -1,21 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
-import { NoWrap } from './shared/ui';
+import { NoWrap, SlideIn } from './shared/ui';
 import { useViewportEnter } from './shared/useViewportEnter';
 
 export function Quote() {
-  const [ref, entered] = useViewportEnter(0.8);
+  const [ref, entered] = useViewportEnter(0.7);
   return (
     <Container ref={ref}>
       <CenterContainer>
-        <WordsContainer>
+        <QuoteBubble visible={entered}>
           <LeftSlope />
-          <Words visible={entered}>
+          <Words>
             You&apos;re doing important work. <NoWrap>Keep rocking.</NoWrap>
           </Words>
           <RightSlope />
-        </WordsContainer>
-        <Dan visible={entered}>Dan Abramov</Dan>
+        </QuoteBubble>
+        <OneAndOnly visible={entered}>Dan Abramov</OneAndOnly>
       </CenterContainer>
     </Container>
   );
@@ -33,7 +33,7 @@ const CenterContainer = styled.div`
   align-items: flex-end;
 `;
 
-const WordsContainer = styled.div`
+const QuoteBubble = styled(SlideIn)`
   display: flex;
   flex-direction: row;
 `;
@@ -55,10 +55,10 @@ const RightSlope = styled(Slope)`
   clip-path: polygon(0 0, 100% 0, 0 100%);
 `;
 
-const Words = styled.div<{ visible: boolean }>`
+const Words = styled.div`
   padding: 20px 24px;
   background: rgba(255, 255, 255, 0.8);
-  color: rgba(10, 46, 70, ${props => (props.visible ? 0.9 : 0)});
+  color: rgba(10, 46, 70, 0.9);
   font-size: 32px;
   font-weight: 300;
   font-style: italic;
@@ -73,15 +73,15 @@ const Words = styled.div<{ visible: boolean }>`
   }
 `;
 
-const Dan = styled.div<{ visible: boolean }>`
+const OneAndOnly = styled(SlideIn)`
   padding: 16px 48px;
+  color: rgba(10, 46, 70, 0.8);
   font-size: 24px;
   line-height: 24px;
   font-weight: 400;
   text-align: center;
   letter-spacing: -0.01em;
-  opacity: ${props => (props.visible ? 0.85 : 0)};
-  transition: opacity 1.2s;
+  transition-delay: ${props => (props.visible ? 0.2 : 0)}s;
 
   @media (max-width: 696px) {
     padding: 16px 32px;

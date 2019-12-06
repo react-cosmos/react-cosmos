@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { NoWrap } from './shared/ui';
+import { NoWrap, SlideIn } from './shared/ui';
 import { useViewportEnter } from './shared/useViewportEnter';
 
 export function Hero() {
@@ -41,12 +41,6 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-`;
-
-const SlideIn = styled.div<{ visible: boolean }>`
-  opacity: ${props => (props.visible ? 1 : 0)};
-  transform: translate(0, ${props => (props.visible ? 0 : 40)}px);
-  transition: 0.8s opacity, 1.2s transform;
 `;
 
 const Title = styled(SlideIn)`
