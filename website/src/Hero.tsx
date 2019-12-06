@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { NoWrap } from './shared/ui';
 import { useViewportEnter } from './shared/useViewportEnter';
 
 export function Hero() {
@@ -100,6 +101,10 @@ const Link = styled.a`
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  @media (max-width: 400px) {
+    font-weight: 500;
+  }
 `;
 
 const Chevron = () => {
@@ -128,8 +133,4 @@ const StyledChevron = styled.svg`
     height: 20px;
     transform: translate(0, 1.5px);
   }
-`;
-
-const NoWrap = styled.span`
-  white-space: nowrap;
 `;

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { NoWrap } from './shared/ui';
 import { useViewportEnter } from './shared/useViewportEnter';
 
 export function Quote() {
@@ -21,7 +22,7 @@ export function Quote() {
 }
 
 const Container = styled.div`
-  padding: 10vh 0;
+  padding: 20vh 0;
   display: flex;
   justify-content: center;
 `;
@@ -55,20 +56,20 @@ const RightSlope = styled(Slope)`
 `;
 
 const Words = styled.div<{ visible: boolean }>`
-  padding: 24px;
+  padding: 20px 24px;
   background: rgba(255, 255, 255, 0.8);
   color: rgba(10, 46, 70, ${props => (props.visible ? 0.9 : 0)});
   font-size: 32px;
   font-weight: 300;
   font-style: italic;
-  line-height: 36px;
+  line-height: 38px;
   text-align: center;
   letter-spacing: -0.01em;
   transition: color 1.2s;
 
   @media (max-width: 400px) {
     font-size: 28px;
-    line-height: 32px;
+    line-height: 34px;
   }
 `;
 
@@ -90,8 +91,4 @@ const Dan = styled.div<{ visible: boolean }>`
     font-size: 20px;
     line-height: 20px;
   }
-`;
-
-const NoWrap = styled.span`
-  white-space: nowrap;
 `;

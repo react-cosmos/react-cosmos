@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Features } from './Features/Features';
+import { Footer } from './Footer';
 import { Header } from './Header/Header';
 import { Hero } from './Hero';
 import { Quote } from './Quote';
+import { Center } from './shared/ui';
 
 export function Root() {
   return (
@@ -17,7 +19,7 @@ export function Root() {
           <Hero />
           <Quote />
         </Gradient>
-        <Footer id="footer" />
+        <Footer />
       </Content>
     </>
   );
@@ -29,16 +31,6 @@ const Content = styled.div`
   line-height: 1.5em;
 `;
 
-const Center = styled.div`
-  max-width: 960px;
-  margin: 0 auto;
-`;
-
 const Gradient = styled.div`
   background: linear-gradient(#fff, #d6dde2);
-`;
-
-const Footer = styled.div`
-  background: #0a2e46;
-  height: 100vh;
 `;
