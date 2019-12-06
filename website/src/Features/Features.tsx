@@ -5,9 +5,9 @@ import { ComponentLibraryPreview } from './ComponentLibraryPreview';
 import { VisualTddPreview } from './VisualTddPreview';
 
 export function Features() {
-  const [f1Ref, f1Entered] = useViewportEnter();
-  const [f2Ref, f2Entered] = useViewportEnter();
-  const [f3Ref, f3Entered] = useViewportEnter();
+  const [f1Ref, f1Entered] = useViewportEnter(0.66);
+  const [f2Ref, f2Entered] = useViewportEnter(0.66);
+  const [f3Ref, f3Entered] = useViewportEnter(0.66);
 
   return (
     <Container>

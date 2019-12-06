@@ -1411,10 +1411,10 @@ Array [
     </div>
   </div>,
   <div
-    className="sc-cmTdod kNjIhb"
+    className="sc-gxMtzJ izIkEw"
   >
     <div
-      className="sc-jwKygS nlhSu"
+      className="sc-dfVpRl LdmEH"
     >
       <div
         className="sc-iRbamj dHKAYp"
@@ -2045,16 +2045,20 @@ Array [
           </div>
         </div>
       </div>
+    </div>
+    <div
+      className="sc-gzOgki dlxNNd"
+    >
       <div
         className="sc-fYxtnH FvHRP"
       >
         <div
-          className="sc-tilXH sc-hEsumM iniyXR"
+          className="sc-tilXH sc-hEsumM ekDLNQ"
         >
           Don't settle for localhost:3000
         </div>
         <div
-          className="sc-tilXH sc-ktHwxA iTAQkw"
+          className="sc-tilXH sc-ktHwxA gyThPe"
         >
           Expect more from your 
           <span
@@ -2064,7 +2068,7 @@ Array [
           </span>
         </div>
         <div
-          className="sc-tilXH sc-cIShpX kGKdbD"
+          className="sc-tilXH sc-cIShpX eBaowP"
         >
           <a
             className="sc-kafWEX bqvYNp"
@@ -2076,7 +2080,7 @@ Array [
               Live demo
             </span>
             <svg
-              className="sc-feJyhm hqrhlW"
+              className="sc-feJyhm kchiDF"
               fill="none"
               stroke="currentColor"
               strokeLinecap="round"
@@ -2099,7 +2103,7 @@ Array [
               React Cosmos 5 in 21 tweets
             </span>
             <svg
-              className="sc-feJyhm hqrhlW"
+              className="sc-feJyhm kchiDF"
               fill="none"
               stroke="currentColor"
               strokeLinecap="round"
@@ -2114,7 +2118,44 @@ Array [
           </a>
         </div>
       </div>
+      <div
+        className="sc-cmTdod cBxWvE"
+      >
+        <div
+          className="sc-jwKygS dXZlAA"
+        >
+          <div
+            className="sc-btzYZH dvKyqj"
+          >
+            <div
+              className="sc-lhVmIH sc-bYSBpT jyBVqW"
+            />
+            <div
+              className="sc-jtRfpW gAzKTG"
+            >
+              You're doing important work. 
+              <span
+                className="sc-dqBHgY iKIvbU"
+              >
+                Keep rocking.
+              </span>
+            </div>
+            <div
+              className="sc-lhVmIH sc-elJkPf cPdmlU"
+            />
+          </div>
+          <div
+            className="sc-kTUwUJ bmPwtx"
+          >
+            Dan Abramov
+          </div>
+        </div>
+      </div>
     </div>
+    <div
+      className="sc-iyvyFf idNqwe"
+      id="footer"
+    />
   </div>,
 ]
 `;

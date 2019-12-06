@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { useViewportEnter } from './shared/useViewportEnter';
 
-export function LinksScreen() {
-  const [ref, entered] = useViewportEnter();
+export function Hero() {
+  const [ref, entered] = useViewportEnter(0.66);
   return (
     <Container ref={ref}>
       <Title visible={entered}>Don&apos;t settle for localhost:3000</Title>
@@ -50,27 +50,27 @@ const SlideIn = styled.div<{ visible: boolean }>`
 
 const Title = styled(SlideIn)`
   font-size: 48px;
-  line-height: 48px;
+  line-height: 50px;
   font-weight: 600;
   letter-spacing: -0.03em;
   padding: 0 0 12px 0;
 
   @media (max-width: 400px) {
     font-size: 40px;
-    line-height: 40px;
+    line-height: 42px;
   }
 `;
 
 const Subtitle = styled(SlideIn)`
   font-size: 32px;
-  line-height: 32px;
+  line-height: 36px;
   font-weight: 300;
   color: #566d7e;
   transition-delay: ${props => (props.visible ? 0.2 : 0)}s;
 
   @media (max-width: 400px) {
     font-size: 28px;
-    line-height: 28px;
+    line-height: 32px;
   }
 `;
 
@@ -87,6 +87,7 @@ const Links = styled(SlideIn)`
   @media (max-width: 400px) {
     font-size: 20px;
     line-height: 20px;
+    font-weight: 500;
   }
 `;
 
@@ -117,10 +118,16 @@ const Chevron = () => {
 };
 
 const StyledChevron = styled.svg`
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   margin: 0 0 0 0px;
-  transform: translate(0, 1px);
+  transform: translate(0, 2.5px);
+
+  @media (max-width: 400px) {
+    width: 20px;
+    height: 20px;
+    transform: translate(0, 1.5px);
+  }
 `;
 
 const NoWrap = styled.span`
