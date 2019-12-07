@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Center, SlideIn } from './shared/ui';
+import { Center, Heart, SlideIn } from './shared/ui';
 import { useViewportEnter } from './shared/useViewportEnter';
 
 export function Footer() {
@@ -36,6 +36,16 @@ export function Footer() {
             continues!
           </Paragraph>
         </Story>
+        <CtaContainer visible={entered}>
+          <CallToAction
+            href="https://github.com/sponsors/skidding"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <Heart />
+            Sponsor
+          </CallToAction>
+        </CtaContainer>
       </Center>
     </Container>
   );
@@ -80,4 +90,56 @@ const Paragraph = styled.p`
   font-size: 20px;
   font-weight: 400;
   line-height: 34px;
+`;
+
+const CtaContainer = styled(SlideIn)`
+  margin-top: 64px;
+  max-width: 736px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  transition-delay: ${props => (props.visible ? 0.6 : 0)}s;
+
+  @media (max-width: 776px) {
+    justify-content: center;
+  }
+`;
+
+const CallToAction = styled.a`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #b1dcfd;
+  color: #0a2e46;
+  font-size: 28px;
+  line-height: 64px;
+  font-weight: 400;
+  padding: 0 28px;
+  text-decoration: none;
+  transition: 0.8s opacity, 0.8s transform;
+
+  strong {
+    font-weight: 500;
+  }
+
+  svg {
+    width: 28px;
+    height: 28px;
+    margin: 0 8px -2px -2px;
+    stroke: #0a2e46;
+    stroke-width: 2px;
+    fill: none;
+  }
+
+  @media (max-width: 400px) {
+    font-size: 24px;
+    line-height: 56px;
+    padding: 0 24px;
+
+    svg {
+      width: 24px;
+      height: 24px;
+      margin: 0 6px -2px -2px;
+    }
+  }
 `;
