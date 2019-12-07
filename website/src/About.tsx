@@ -35,17 +35,17 @@ export function About() {
             to support me, however, become a Sponsor and ensure this journey
             continues!
           </Paragraph>
+          <CtaContainer>
+            <CallToAction
+              href="https://github.com/sponsors/skidding"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <Heart />
+              Sponsor
+            </CallToAction>
+          </CtaContainer>
         </Story>
-        <CtaContainer visible={entered}>
-          <CallToAction
-            href="https://github.com/sponsors/skidding"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <Heart />
-            Sponsor
-          </CallToAction>
-        </CtaContainer>
       </Center>
     </Container>
   );
@@ -92,15 +92,13 @@ const Paragraph = styled.p`
   line-height: 34px;
 `;
 
-const CtaContainer = styled(SlideIn)`
-  margin-top: 64px;
-  max-width: 736px;
+const CtaContainer = styled.div`
+  margin-top: 48px;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  transition-delay: ${props => (props.visible ? 0.6 : 0)}s;
 
-  @media (max-width: 776px) {
+  @media (max-width: 744px) {
     justify-content: center;
   }
 `;
