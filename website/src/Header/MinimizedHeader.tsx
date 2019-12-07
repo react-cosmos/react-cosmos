@@ -58,7 +58,7 @@ export function MinimizedHeader({ viewportWidth, visible }: Props) {
         </Links>
       </MainContent>
       {center && (
-        <HeartButton onClick={scrollToFooter}>
+        <HeartButton onClick={scrollToAbout}>
           <Heart />
         </HeartButton>
       )}
@@ -70,9 +70,9 @@ function scrollToTop() {
   window.scroll({ top: 0, behavior: 'smooth' });
 }
 
-function scrollToFooter() {
-  const footer = document.getElementById('footer');
-  if (footer) window.scroll({ top: footer.offsetTop, behavior: 'smooth' });
+function scrollToAbout() {
+  const about = document.getElementById('about');
+  if (about) window.scroll({ top: about.offsetTop, behavior: 'smooth' });
 }
 
 const Container = styled.div`

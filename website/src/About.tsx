@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { Center, Heart, SlideIn } from './shared/ui';
 import { useViewportEnter } from './shared/useViewportEnter';
 
-export function Footer() {
+export function About() {
   const [ref, entered] = useViewportEnter(0.7);
   return (
-    <Container id="footer">
+    <Container id="about">
       <Center ref={ref}>
         <Title visible={entered}>Hi there!</Title>
         <Subtitle visible={entered}>
