@@ -111,7 +111,7 @@ const CallToAction = styled.a`
   color: #0a2e46;
   font-size: 28px;
   line-height: 64px;
-  font-weight: 400;
+  font-weight: 500;
   padding: 0 28px;
   text-decoration: none;
   transition: 0.8s opacity, 0.8s transform;
