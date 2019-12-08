@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ExternalLink } from '../shared/ExternalLink';
+import { InternalLink } from '../shared/InternalLink';
+import { Heart } from '../shared/ui';
 import {
   COSMONAUT_HPADDING_PX,
   COSMONAUT_SIZE_PX,
@@ -17,56 +20,28 @@ export function MinimizedHeader({ viewportWidth, visible }: Props) {
   const center = viewportWidth >= MIN_CENTER_HEADER_WIDTH_PX;
   return (
     <Container style={{ opacity: visible ? 1 : 0 }}>
-      <CosmonautButton onClick={scrollToTop} />
+      <CosmonautButton to="/" />
       <MainContent center={center}>
         <Title>
-          <a
-            href="/"
-            onClick={e => {
-              e.preventDefault();
-              scrollToTop();
-            }}
-          >
-            React Cosmos
-          </a>
+          <InternalLink to="/">React Cosmos</InternalLink>
         </Title>
         <Links>
-          <Link
-            href="https://github.com/react-cosmos/react-cosmos"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
+          <Link href="https://github.com/react-cosmos/react-cosmos">
             GitHub
           </Link>
           <Separator>/</Separator>
-          <Link
-            href="https://join-react-cosmos.now.sh/"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Slack
-          </Link>
+          <Link href="https://join-react-cosmos.now.sh">Slack</Link>
           <Separator>/</Separator>
-          <Link
-            href="https://twitter.com/ReactCosmos"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Twitter
-          </Link>
+          <Link href="https://twitter.com/ReactCosmos">Twitter</Link>
         </Links>
       </MainContent>
       {center && (
-        <HeartButton>
+        <HeartButton to="/about">
           <Heart />
         </HeartButton>
       )}
     </Container>
   );
-}
-
-function scrollToTop() {
-  window.scroll({ top: 0, behavior: 'smooth' });
 }
 
 const Container = styled.div`
@@ -83,7 +58,7 @@ const Container = styled.div`
   transition: 0.4s opacity;
 `;
 
-const CosmonautButton = styled.div`
+const CosmonautButton = styled(InternalLink)`
   flex-shrink: 0;
   width: ${COSMONAUT_SIZE_PX}px;
   height: ${COSMONAUT_SIZE_PX}px;
@@ -93,7 +68,7 @@ const CosmonautButton = styled.div`
   cursor: pointer;
 `;
 
-const HeartButton = styled.div`
+const HeartButton = styled(InternalLink)`
   flex-shrink: 0;
   width: ${COSMONAUT_SIZE_PX}px;
   height: ${COSMONAUT_SIZE_PX}px;
@@ -112,14 +87,6 @@ const HeartButton = styled.div`
     fill: rgba(231, 0, 138, 0.8);
   }
 `;
-
-const Heart = () => {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-    </svg>
-  );
-};
 
 const MainContent = styled.div<{ center: boolean }>`
   flex: 1;
@@ -154,7 +121,7 @@ const Links = styled.div`
   line-height: 20px;
 `;
 
-const Link = styled.a`
+const Link = styled(ExternalLink)`
   color: inherit;
   font-weight: 400;
   text-decoration: none;
@@ -165,7 +132,7 @@ const Link = styled.a`
   }
 `;
 
-const Separator = styled.div`
+const Separator = styled.span`
   margin: 0 8px;
   opacity: 0.5;
 `;

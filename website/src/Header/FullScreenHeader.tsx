@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ExternalLink } from '../shared/ExternalLink';
 import { getSkyMaskRadius } from './Cosmonaut/Cosmonaut';
 import { getCosmonautSize, Viewport } from './shared';
 
@@ -13,8 +14,8 @@ type FullScreenHeaderSizes = {
   titleFontSize: number;
   subtitleFontSize: number;
   ctaMarginTop: number;
-  ctaPaddingTop: number;
-  ctaPaddingBottom: number;
+  ctaHeight: number;
+  ctaPadding: number;
   ctaFontSize: number;
   starSize: number;
   starStrokeWidth: number;
@@ -32,8 +33,8 @@ export const FullScreenHeader = React.memo(function FullScreenHeader({
     titleFontSize,
     subtitleFontSize,
     ctaMarginTop,
-    ctaPaddingTop,
-    ctaPaddingBottom,
+    ctaHeight,
+    ctaPadding,
     ctaFontSize,
     starSize,
     starStrokeWidth,
@@ -54,12 +55,11 @@ export const FullScreenHeader = React.memo(function FullScreenHeader({
       </Subtitle>
       <CallToAction
         href="https://github.com/react-cosmos/react-cosmos"
-        rel="noopener noreferrer"
-        target="_blank"
         style={{
           marginTop: ctaMarginTop,
-          padding: `${ctaPaddingTop}px ${ctaPaddingBottom}px`,
+          padding: `0 ${ctaPadding}px`,
           fontSize: ctaFontSize,
+          lineHeight: `${ctaHeight}px`,
           opacity: gitHubStars === null ? 0 : 1,
           transform: `scale(${gitHubStars === null ? 0.8 : 1})`
         }}
@@ -90,8 +90,8 @@ function getFullScreenHeaderSizes(
     titleFontSize,
     subtitleFontSize,
     ctaMarginTop: fontOffset * 3,
-    ctaPaddingTop: fontOffset * 0.8,
-    ctaPaddingBottom: fontOffset * 1.2,
+    ctaPadding: ctaFontSize * 1,
+    ctaHeight: ctaFontSize * 2.3,
     ctaFontSize,
     starSize: Math.round(subtitleFontSize * 0.75),
     starStrokeWidth: Math.max(2, Math.ceil(subtitleFontSize / 30)),
@@ -174,7 +174,7 @@ const Subtitle = styled.p`
   text-align: center;
 `;
 
-const CallToAction = styled.a`
+const CallToAction = styled(ExternalLink)`
   background: #b1dcfd;
   color: #0a2e46;
   display: flex;

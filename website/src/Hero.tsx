@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ExternalLink } from './shared/ExternalLink';
+import { NoWrap, SlideIn } from './shared/ui';
 import { useViewportEnter } from './shared/useViewportEnter';
 
-export function LinksScreen() {
-  const [ref, entered] = useViewportEnter();
+export function Hero() {
+  const [ref, entered] = useViewportEnter(0.66);
   return (
     <Container ref={ref}>
       <Title visible={entered}>Don&apos;t settle for localhost:3000</Title>
@@ -11,19 +13,11 @@ export function LinksScreen() {
         Expect more from your <NoWrap>dev environment</NoWrap>
       </Subtitle>
       <Links visible={entered}>
-        <Link
-          href="https://cosmos.flatris.space/"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
+        <Link href="https://cosmos.flatris.space">
           <span>Live demo</span>
           <Chevron />
         </Link>
-        <Link
-          href="https://twitter.com/ReactCosmos/status/1189127279533793281"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
+        <Link href="https://twitter.com/ReactCosmos/status/1189127279533793281">
           <span>React Cosmos 5 in 21 tweets</span>
           <Chevron />
         </Link>
@@ -42,35 +36,29 @@ const Container = styled.div`
   text-align: center;
 `;
 
-const SlideIn = styled.div<{ visible: boolean }>`
-  opacity: ${props => (props.visible ? 1 : 0)};
-  transform: translate(0, ${props => (props.visible ? 0 : 40)}px);
-  transition: 0.8s opacity, 1.2s transform;
-`;
-
 const Title = styled(SlideIn)`
   font-size: 48px;
-  line-height: 48px;
+  line-height: 50px;
   font-weight: 600;
   letter-spacing: -0.03em;
   padding: 0 0 12px 0;
 
   @media (max-width: 400px) {
     font-size: 40px;
-    line-height: 40px;
+    line-height: 42px;
   }
 `;
 
 const Subtitle = styled(SlideIn)`
   font-size: 32px;
-  line-height: 32px;
+  line-height: 36px;
   font-weight: 300;
   color: #566d7e;
   transition-delay: ${props => (props.visible ? 0.2 : 0)}s;
 
   @media (max-width: 400px) {
     font-size: 28px;
-    line-height: 28px;
+    line-height: 32px;
   }
 `;
 
@@ -87,10 +75,11 @@ const Links = styled(SlideIn)`
   @media (max-width: 400px) {
     font-size: 20px;
     line-height: 20px;
+    font-weight: 500;
   }
 `;
 
-const Link = styled.a`
+const Link = styled(ExternalLink)`
   margin: 16px 12px 0 12px;
   color: #078383;
   font-weight: 400;
@@ -99,6 +88,10 @@ const Link = styled.a`
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  @media (max-width: 400px) {
+    font-weight: 500;
+  }
 `;
 
 const Chevron = () => {
@@ -117,12 +110,14 @@ const Chevron = () => {
 };
 
 const StyledChevron = styled.svg`
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   margin: 0 0 0 0px;
-  transform: translate(0, 1px);
-`;
+  transform: translate(0, 2.5px);
 
-const NoWrap = styled.span`
-  white-space: nowrap;
+  @media (max-width: 400px) {
+    width: 20px;
+    height: 20px;
+    transform: translate(0, 1.5px);
+  }
 `;

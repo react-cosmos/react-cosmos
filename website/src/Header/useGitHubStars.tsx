@@ -1,4 +1,5 @@
 import React from 'react';
+import { fetchGithub } from '../shared/gitHub';
 
 const DEFAULT_STARS = 5600;
 const TIMEOUT_TS = 500;
@@ -13,16 +14,13 @@ export function useGitHubStars() {
       if (mounted) setStars(DEFAULT_STARS);
     }, TIMEOUT_TS);
 
-    // https://developer.github.com/v3/#rate-limiting
-    fetch(`https://api.github.com/repos/react-cosmos/react-cosmos`).then(
-      async res => {
-        const parsedRes = await res.json();
-        if (mounted && !isNaN(parsedRes.stargazers_count)) {
-          clearTimeout(timeoutId);
-          setStars(Number(parsedRes.stargazers_count));
-        }
+    fetchGithub(`repos/react-cosmos/react-cosmos`).then(async res => {
+      const parsedRes = await res.json();
+      if (mounted && !isNaN(parsedRes.stargazers_count)) {
+        clearTimeout(timeoutId);
+        setStars(Number(parsedRes.stargazers_count));
       }
-    );
+    });
 
     return () => {
       clearTimeout(timeoutId);
