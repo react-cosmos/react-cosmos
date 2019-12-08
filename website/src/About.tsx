@@ -69,8 +69,8 @@ const Subtitle = styled(SlideIn)`
   margin: 0 0 32px 0;
   color: #dfeaf3;
   font-size: 24px;
-  line-height: 38px;
   font-weight: 300;
+  line-height: 38px;
   transition-delay: ${props => (props.visible ? 0.2 : 0)}s;
 
   strong {
@@ -105,12 +105,12 @@ const CallToAction = styled(ExternalLink)`
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding: 0 28px;
   background: #b1dcfd;
   color: #0a2e46;
   font-size: 28px;
-  line-height: 64px;
   font-weight: 500;
-  padding: 0 28px;
+  line-height: 64px;
   text-decoration: none;
   transition: 0.8s opacity, 0.8s transform;
 
@@ -128,9 +128,9 @@ const CallToAction = styled(ExternalLink)`
   }
 
   @media (max-width: 400px) {
+    padding: 0 24px;
     font-size: 24px;
     line-height: 56px;
-    padding: 0 24px;
 
     svg {
       width: 24px;

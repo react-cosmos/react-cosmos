@@ -77,8 +77,8 @@ const OneAndOnly = styled(SlideIn)`
   padding: 16px 48px;
   color: rgba(10, 46, 70, 0.8);
   font-size: 24px;
-  line-height: 24px;
   font-weight: 400;
+  line-height: 24px;
   text-align: center;
   letter-spacing: -0.01em;
   transition-delay: ${props => (props.visible ? 0.2 : 0)}s;

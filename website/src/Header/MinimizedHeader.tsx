@@ -132,7 +132,7 @@ const Link = styled(ExternalLink)`
   }
 `;
 
-const Separator = styled.div`
+const Separator = styled.span`
   margin: 0 8px;
   opacity: 0.5;
 `;

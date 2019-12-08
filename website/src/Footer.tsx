@@ -39,7 +39,7 @@ export function Footer() {
           </LinksColumn>
           <TextColumn>
             {contributors !== null && (
-              <span>
+              <>
                 <NoWrap>
                   Made with love by{' '}
                   <ExternalLink href="https://twitter.com/skidding">
@@ -51,7 +51,7 @@ export function Footer() {
                   {contributors - 1} exceptional humans
                 </ExternalLink>
                 .
-              </span>
+              </>
             )}
           </TextColumn>
         </Columns>
