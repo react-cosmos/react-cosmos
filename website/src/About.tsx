@@ -16,26 +16,28 @@ export function About() {
           Obsessed with details, I made React Cosmos for likeminded developers.
         </Subtitle>
         <Story visible={entered}>
-          <Paragraph>
-            The journey began in 2014 when I introduced React at Hootsuite,
-            where I was an Engineering Manager at the time. A component-driven
-            dev environment was the next natural step, and thus React Cosmos was
-            born. Over the years, I carried React Cosmos across projects and
-            teams, slowly morphing it into the well rounded project you’re
-            looking at.
-          </Paragraph>
-          <Paragraph>
-            I use React Cosmos as a blank canvas for new UI components. I use it
-            to ensure reusability at scale. I use React Cosmos to build React
-            Cosmos, and I used it to make this website. Above all, I get a warm
-            fuzzy feeling when other people become more productive with React
-            Cosmos.
-          </Paragraph>
-          <Paragraph>
-            React Cosmos is licensed as MIT and will always be free. If you want
-            to support me, however, become a Sponsor and ensure this journey
-            continues!
-          </Paragraph>
+          <StoryBody>
+            <Paragraph>
+              The journey began in 2014 when I introduced React at Hootsuite,
+              where I was an Engineering Manager at the time. A component-driven
+              dev environment was the next natural step, and thus React Cosmos
+              was born. Over the years, I carried React Cosmos across projects
+              and teams, slowly morphing it into the well rounded project you’re
+              looking at.
+            </Paragraph>
+            <Paragraph>
+              I use React Cosmos as a blank canvas for new UI components. I use
+              it to ensure reusability at scale. I use React Cosmos to build
+              React Cosmos, and I used it to make this website. Above all, I get
+              a warm fuzzy feeling when other people become more productive with
+              React Cosmos.
+            </Paragraph>
+            <Paragraph>
+              React Cosmos is licensed as MIT and will always be free. If you
+              want to support me, however, become a Sponsor and ensure this
+              journey continues!
+            </Paragraph>
+          </StoryBody>
           <CtaContainer>
             <CallToAction href="https://github.com/sponsors/skidding">
               <Heart />
@@ -78,8 +80,11 @@ const Subtitle = styled(SlideIn)`
 `;
 
 const Story = styled(SlideIn)`
-  max-width: 704px;
   transition-delay: ${props => (props.visible ? 0.4 : 0)}s;
+`;
+
+const StoryBody = styled.div`
+  max-width: 704px;
 `;
 
 const Paragraph = styled.p`
@@ -93,11 +98,7 @@ const CtaContainer = styled.div`
   margin-top: 48px;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-
-  @media (max-width: 744px) {
-    justify-content: center;
-  }
+  justify-content: center;
 `;
 
 const CallToAction = styled(ExternalLink)`

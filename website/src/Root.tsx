@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { About } from './About';
 import { Features } from './Features/Features';
+import { Footer } from './Footer';
 import { Header } from './Header/Header';
 import { Hero } from './Hero';
 import { Quote } from './Quote';
@@ -17,6 +18,7 @@ export function Root() {
           <Quote />
         </Gradient>
         <About />
+        <Footer />
       </Content>
     </>
   );
