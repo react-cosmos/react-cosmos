@@ -80,7 +80,7 @@ const Feature = styled.div<{ visible: boolean }>`
 const FeaturePreviewContainer = styled.div`
   width: 100%;
   height: 100%;
-  background-color: #e1e1e1;
+  background-color: #fff;
 `;
 
 const OpenPlatformPreview = styled(FeaturePreviewContainer)`

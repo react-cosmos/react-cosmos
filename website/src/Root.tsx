@@ -11,25 +11,24 @@ export function Root() {
   return (
     <>
       <Header />
-      <Content>
+      <Gradient1>
         <Features />
-        <Gradient>
-          <Hero />
-          <Quote />
-        </Gradient>
-        <About />
-        <Footer />
-      </Content>
+      </Gradient1>
+      <Gradient2>
+        <Hero />
+        <Quote />
+      </Gradient2>
+      <About />
+      <Footer />
     </>
   );
 }
 
-const Content = styled.div`
-  box-sizing: border-box;
+const Gradient1 = styled.div`
   padding: 100vh 0 0 0;
-  line-height: 1.5em;
+  background: linear-gradient(#d6dde2, #fff);
 `;
 
-const Gradient = styled.div`
+const Gradient2 = styled.div`
   background: linear-gradient(#fff, #d6dde2);
 `;

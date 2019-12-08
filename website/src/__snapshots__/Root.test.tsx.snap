@@ -1412,7 +1412,7 @@ Array [
     </div>
   </div>,
   <div
-    className="sc-epnACN bdOBaZ"
+    className="sc-epnACN ewesOH"
   >
     <div
       className="sc-bdVaJa sc-fAjcbJ gmaRFM"
@@ -1425,7 +1425,7 @@ Array [
           id="visual-tdd"
         />
         <div
-          className="sc-gisBJw IkSgf"
+          className="sc-gisBJw fauAzs"
         >
           <div
             className="sc-fBuWsC hFzipO"
@@ -1816,7 +1816,7 @@ Array [
           id="component-library"
         />
         <div
-          className="sc-gisBJw IkSgf"
+          className="sc-gisBJw fauAzs"
         >
           <div
             className="sc-bRBYWo dutuSu"
@@ -2037,7 +2037,7 @@ Array [
           id="open-platform"
         />
         <div
-          className="sc-gisBJw sc-kjoXOD hcuYaq"
+          className="sc-gisBJw sc-kjoXOD jAkUMF"
         />
         <div
           className="sc-cHGsZl sc-TOsTZ gvYeRH"
@@ -2055,391 +2055,391 @@ Array [
         </div>
       </div>
     </div>
+  </div>,
+  <div
+    className="sc-iQNlJl cXgoxL"
+  >
     <div
-      className="sc-iQNlJl cXgoxL"
+      className="sc-dfVpRl dZGXup"
     >
       <div
-        className="sc-dfVpRl dZGXup"
+        className="sc-gzOgki jDmCJq"
       >
         <div
-          className="sc-gzOgki jDmCJq"
+          className="sc-htpNat sc-iyvyFf bpBOep"
+        >
+          Don't settle for localhost:3000
+        </div>
+        <div
+          className="sc-htpNat sc-hwwEjo ieaHtt"
+        >
+          Expect more from your 
+          <span
+            className="sc-bwzfXH gxJYSe"
+          >
+            dev environment
+          </span>
+        </div>
+        <div
+          className="sc-htpNat sc-kPVwWT cxuoKV"
+        >
+          <a
+            className="sc-kfGgVZ bCvPjZ"
+            href="https://cosmos.flatris.space"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <span>
+              Live demo
+            </span>
+            <svg
+              className="sc-esjQYD dbDmux"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <polyline
+                points="9 18 15 12 9 6"
+              />
+            </svg>
+          </a>
+          <a
+            className="sc-kfGgVZ bCvPjZ"
+            href="https://twitter.com/ReactCosmos/status/1189127279533793281"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <span>
+              React Cosmos 5 in 21 tweets
+            </span>
+            <svg
+              className="sc-esjQYD dbDmux"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <polyline
+                points="9 18 15 12 9 6"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div
+        className="sc-htpNat sc-kIPQKe kHdcbn"
+      >
+        <a
+          href="https://cosmos.flatris.space"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <img
+            alt="React Cosmos in action"
+            className="sc-eXEjpC laUwRm"
+            src="/screenshot.png"
+          />
+        </a>
+      </div>
+    </div>
+    <div
+      className="sc-ibxdXY irHKva"
+    >
+      <div
+        className="sc-RefOD hISIHt"
+      >
+        <div
+          className="sc-htpNat sc-iQKALj exyUcl"
         >
           <div
-            className="sc-htpNat sc-iyvyFf bpBOep"
-          >
-            Don't settle for localhost:3000
-          </div>
+            className="sc-bwCtUz sc-hrWEMg iSxNip"
+          />
           <div
-            className="sc-htpNat sc-hwwEjo ieaHtt"
+            className="sc-gwVKww cVlfvM"
           >
-            Expect more from your 
+            You're doing important work. 
             <span
               className="sc-bwzfXH gxJYSe"
             >
-              dev environment
+              Keep rocking.
             </span>
           </div>
           <div
-            className="sc-htpNat sc-kPVwWT cxuoKV"
-          >
-            <a
-              className="sc-kfGgVZ bCvPjZ"
-              href="https://cosmos.flatris.space"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <span>
-                Live demo
-              </span>
-              <svg
-                className="sc-esjQYD dbDmux"
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-              >
-                <polyline
-                  points="9 18 15 12 9 6"
-                />
-              </svg>
-            </a>
-            <a
-              className="sc-kfGgVZ bCvPjZ"
-              href="https://twitter.com/ReactCosmos/status/1189127279533793281"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <span>
-                React Cosmos 5 in 21 tweets
-              </span>
-              <svg
-                className="sc-esjQYD dbDmux"
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-              >
-                <polyline
-                  points="9 18 15 12 9 6"
-                />
-              </svg>
-            </a>
-          </div>
+            className="sc-bwCtUz sc-eTuwsz jPnSpU"
+          />
         </div>
         <div
-          className="sc-htpNat sc-kIPQKe kHdcbn"
+          className="sc-htpNat sc-hXRMBi lgHpSY"
+        >
+          Dan Abramov
+        </div>
+      </div>
+    </div>
+  </div>,
+  <div
+    className="sc-bxivhb ghPVcR"
+    id="about"
+  >
+    <div
+      className="sc-bdVaJa iDXOlS"
+    >
+      <div
+        className="sc-htpNat sc-ifAKCX ksdPbx"
+      >
+        Hi there!
+      </div>
+      <div
+        className="sc-htpNat sc-EHOje kpHLJQ"
+      >
+        <strong>
+          I’m Ovidiu, a passionate developer from Romania.
+        </strong>
+        <br />
+        Obsessed with details, I made React Cosmos for likeminded developers.
+      </div>
+      <div
+        className="sc-htpNat sc-bZQynM grVhTk"
+      >
+        <div
+          className="sc-gzVnrw dYTPTR"
+        >
+          <p
+            className="sc-htoDjs dfgIYQ"
+          >
+            The journey began in 2014 when I introduced React at Hootsuite, where I was an Engineering Manager at the time. A component-driven dev environment was the next natural step, and thus React Cosmos was born. Over the years, I carried React Cosmos across projects and teams, slowly morphing it into the well rounded project you’re looking at.
+          </p>
+          <p
+            className="sc-htoDjs dfgIYQ"
+          >
+            I use React Cosmos as a blank canvas for new UI components. I use it to ensure reusability at scale. I use React Cosmos to build React Cosmos, and I used it to make this website. Above all, I get a warm fuzzy feeling when other people become more productive with React Cosmos.
+          </p>
+          <p
+            className="sc-htoDjs dfgIYQ"
+          >
+            React Cosmos is licensed as MIT and will always be free. If you want to support me, however, become a Sponsor and ensure this journey continues!
+          </p>
+        </div>
+        <div
+          className="sc-dnqmqq ebjBaK"
+        >
+          <a
+            className="sc-iwsKbI iQmmjq"
+            href="https://github.com/sponsors/skidding"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+              />
+            </svg>
+            Sponsor
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>,
+  <div
+    className="sc-ksYbfQ eoWVhG"
+  >
+    <div
+      className="sc-bdVaJa iDXOlS"
+    >
+      <div
+        className="sc-htpNat sc-hmzhuo etetOR"
+      >
+        <div
+          className="sc-frDJqD sc-kvZOFW cJResL"
+        >
+          <a
+            href="/visual-tdd"
+            onClick={[Function]}
+          >
+            Visual TDD
+          </a>
+          <a
+            href="/component-library"
+            onClick={[Function]}
+          >
+            Component library
+          </a>
+          <a
+            href="/open-platform"
+            onClick={[Function]}
+          >
+            Open platform
+          </a>
+        </div>
+        <div
+          className="sc-frDJqD sc-kvZOFW cJResL"
         >
           <a
             href="https://cosmos.flatris.space"
             rel="noopener noreferrer"
             target="_blank"
           >
-            <img
-              alt="React Cosmos in action"
-              className="sc-eXEjpC laUwRm"
-              src="/screenshot.png"
-            />
+            Live demo
+            <svg
+              className="sc-jbKcbu gaHPeB"
+              fill="none"
+              height="16"
+              stroke="#4d9edc"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              width="16"
+            >
+              <path
+                d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+              />
+              <polyline
+                points="15 3 21 3 21 9"
+              />
+              <line
+                x1="10"
+                x2="21"
+                y1="14"
+                y2="3"
+              />
+            </svg>
+          </a>
+          <a
+            href="https://twitter.com/ReactCosmos/status/1189127279533793281"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            React Cosmos 5 in 21 tweets
+            <svg
+              className="sc-jbKcbu gaHPeB"
+              fill="none"
+              height="16"
+              stroke="#4d9edc"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              width="16"
+            >
+              <path
+                d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+              />
+              <polyline
+                points="15 3 21 3 21 9"
+              />
+              <line
+                x1="10"
+                x2="21"
+                y1="14"
+                y2="3"
+              />
+            </svg>
+          </a>
+          <a
+            href="https://github.com/react-cosmos/react-cosmos"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            GitHub
+            <svg
+              className="sc-jbKcbu gaHPeB"
+              fill="none"
+              height="16"
+              stroke="#4d9edc"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              width="16"
+            >
+              <path
+                d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+              />
+              <polyline
+                points="15 3 21 3 21 9"
+              />
+              <line
+                x1="10"
+                x2="21"
+                y1="14"
+                y2="3"
+              />
+            </svg>
+          </a>
+          <a
+            href="https://join-react-cosmos.now.sh"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Slack
+            <svg
+              className="sc-jbKcbu gaHPeB"
+              fill="none"
+              height="16"
+              stroke="#4d9edc"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              width="16"
+            >
+              <path
+                d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+              />
+              <polyline
+                points="15 3 21 3 21 9"
+              />
+              <line
+                x1="10"
+                x2="21"
+                y1="14"
+                y2="3"
+              />
+            </svg>
+          </a>
+          <a
+            href="https://twitter.com/ReactCosmos"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Twitter
+            <svg
+              className="sc-jbKcbu gaHPeB"
+              fill="none"
+              height="16"
+              stroke="#4d9edc"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              width="16"
+            >
+              <path
+                d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+              />
+              <polyline
+                points="15 3 21 3 21 9"
+              />
+              <line
+                x1="10"
+                x2="21"
+                y1="14"
+                y2="3"
+              />
+            </svg>
           </a>
         </div>
-      </div>
-      <div
-        className="sc-ibxdXY irHKva"
-      >
         <div
-          className="sc-RefOD hISIHt"
-        >
-          <div
-            className="sc-htpNat sc-iQKALj exyUcl"
-          >
-            <div
-              className="sc-bwCtUz sc-hrWEMg iSxNip"
-            />
-            <div
-              className="sc-gwVKww cVlfvM"
-            >
-              You're doing important work. 
-              <span
-                className="sc-bwzfXH gxJYSe"
-              >
-                Keep rocking.
-              </span>
-            </div>
-            <div
-              className="sc-bwCtUz sc-eTuwsz jPnSpU"
-            />
-          </div>
-          <div
-            className="sc-htpNat sc-hXRMBi lgHpSY"
-          >
-            Dan Abramov
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      className="sc-bxivhb ghPVcR"
-      id="about"
-    >
-      <div
-        className="sc-bdVaJa iDXOlS"
-      >
-        <div
-          className="sc-htpNat sc-ifAKCX ksUejZ"
-        >
-          Hi there!
-        </div>
-        <div
-          className="sc-htpNat sc-EHOje lhdjwv"
-        >
-          <strong>
-            I’m Ovidiu, a passionate developer from Romania.
-          </strong>
-          <br />
-          Obsessed with details, I made React Cosmos for likeminded developers.
-        </div>
-        <div
-          className="sc-htpNat sc-bZQynM grVhTk"
-        >
-          <div
-            className="sc-gzVnrw dYTPTR"
-          >
-            <p
-              className="sc-htoDjs dfgIYQ"
-            >
-              The journey began in 2014 when I introduced React at Hootsuite, where I was an Engineering Manager at the time. A component-driven dev environment was the next natural step, and thus React Cosmos was born. Over the years, I carried React Cosmos across projects and teams, slowly morphing it into the well rounded project you’re looking at.
-            </p>
-            <p
-              className="sc-htoDjs dfgIYQ"
-            >
-              I use React Cosmos as a blank canvas for new UI components. I use it to ensure reusability at scale. I use React Cosmos to build React Cosmos, and I used it to make this website. Above all, I get a warm fuzzy feeling when other people become more productive with React Cosmos.
-            </p>
-            <p
-              className="sc-htoDjs dfgIYQ"
-            >
-              React Cosmos is licensed as MIT and will always be free. If you want to support me, however, become a Sponsor and ensure this journey continues!
-            </p>
-          </div>
-          <div
-            className="sc-dnqmqq ebjBaK"
-          >
-            <a
-              className="sc-iwsKbI iQmmjq"
-              href="https://github.com/sponsors/skidding"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-                />
-              </svg>
-              Sponsor
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      className="sc-ksYbfQ eoWVhG"
-    >
-      <div
-        className="sc-bdVaJa iDXOlS"
-      >
-        <div
-          className="sc-htpNat sc-hmzhuo etetOR"
-        >
-          <div
-            className="sc-frDJqD sc-kvZOFW cJResL"
-          >
-            <a
-              href="/visual-tdd"
-              onClick={[Function]}
-            >
-              Visual TDD
-            </a>
-            <a
-              href="/component-library"
-              onClick={[Function]}
-            >
-              Component library
-            </a>
-            <a
-              href="/open-platform"
-              onClick={[Function]}
-            >
-              Open platform
-            </a>
-          </div>
-          <div
-            className="sc-frDJqD sc-kvZOFW cJResL"
-          >
-            <a
-              href="https://cosmos.flatris.space"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Live demo
-              <svg
-                className="sc-jbKcbu gaHPeB"
-                fill="none"
-                height="16"
-                stroke="#4d9edc"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                width="16"
-              >
-                <path
-                  d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-                />
-                <polyline
-                  points="15 3 21 3 21 9"
-                />
-                <line
-                  x1="10"
-                  x2="21"
-                  y1="14"
-                  y2="3"
-                />
-              </svg>
-            </a>
-            <a
-              href="https://twitter.com/ReactCosmos/status/1189127279533793281"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              React Cosmos 5 in 21 tweets
-              <svg
-                className="sc-jbKcbu gaHPeB"
-                fill="none"
-                height="16"
-                stroke="#4d9edc"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                width="16"
-              >
-                <path
-                  d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-                />
-                <polyline
-                  points="15 3 21 3 21 9"
-                />
-                <line
-                  x1="10"
-                  x2="21"
-                  y1="14"
-                  y2="3"
-                />
-              </svg>
-            </a>
-            <a
-              href="https://github.com/react-cosmos/react-cosmos"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              GitHub
-              <svg
-                className="sc-jbKcbu gaHPeB"
-                fill="none"
-                height="16"
-                stroke="#4d9edc"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                width="16"
-              >
-                <path
-                  d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-                />
-                <polyline
-                  points="15 3 21 3 21 9"
-                />
-                <line
-                  x1="10"
-                  x2="21"
-                  y1="14"
-                  y2="3"
-                />
-              </svg>
-            </a>
-            <a
-              href="https://join-react-cosmos.now.sh"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Slack
-              <svg
-                className="sc-jbKcbu gaHPeB"
-                fill="none"
-                height="16"
-                stroke="#4d9edc"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                width="16"
-              >
-                <path
-                  d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-                />
-                <polyline
-                  points="15 3 21 3 21 9"
-                />
-                <line
-                  x1="10"
-                  x2="21"
-                  y1="14"
-                  y2="3"
-                />
-              </svg>
-            </a>
-            <a
-              href="https://twitter.com/ReactCosmos"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Twitter
-              <svg
-                className="sc-jbKcbu gaHPeB"
-                fill="none"
-                height="16"
-                stroke="#4d9edc"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                width="16"
-              >
-                <path
-                  d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-                />
-                <polyline
-                  points="15 3 21 3 21 9"
-                />
-                <line
-                  x1="10"
-                  x2="21"
-                  y1="14"
-                  y2="3"
-                />
-              </svg>
-            </a>
-          </div>
-          <div
-            className="sc-frDJqD sc-hqyNC LiDJA"
-          />
-        </div>
+          className="sc-frDJqD sc-hqyNC LiDJA"
+        />
       </div>
     </div>
   </div>,
