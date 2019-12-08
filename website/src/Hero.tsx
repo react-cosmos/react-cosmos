@@ -7,8 +7,8 @@ import { useViewportEnter } from './shared/useViewportEnter';
 export function Hero() {
   const [ref, entered] = useViewportEnter(0.66);
   return (
-    <Container ref={ref}>
-      <TextContainer>
+    <Container>
+      <TextContainer ref={ref}>
         <Title visible={entered}>Don&apos;t settle for localhost:3000</Title>
         <Subtitle visible={entered}>
           Expect more from your <NoWrap>dev environment</NoWrap>
