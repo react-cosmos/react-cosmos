@@ -1,17 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Center } from '../shared/ui';
 import { useViewportEnter } from '../shared/useViewportEnter';
 import { ComponentLibraryPreview } from './ComponentLibraryPreview';
 import { VisualTddPreview } from './VisualTddPreview';
 
+const Anchor = styled.div`
+  position: absolute;
+  top: -81px; /* minimized header height */
+`;
+
 export function Features() {
-  const [f1Ref, f1Entered] = useViewportEnter(0.66);
-  const [f2Ref, f2Entered] = useViewportEnter(0.66);
-  const [f3Ref, f3Entered] = useViewportEnter(0.66);
+  const [f1Ref, f1Entered] = useViewportEnter(0.7);
+  const [f2Ref, f2Entered] = useViewportEnter(0.7);
+  const [f3Ref, f3Entered] = useViewportEnter(0.7);
 
   return (
     <Container>
       <Feature ref={f1Ref} visible={f1Entered}>
+        <Anchor id="visual-tdd" />
         <FeaturePreviewContainer>
           <VisualTddPreview />
         </FeaturePreviewContainer>
@@ -25,6 +32,7 @@ export function Features() {
         </DarkFeatureTextOverlay>
       </Feature>
       <Feature ref={f2Ref} visible={f2Entered}>
+        <Anchor id="component-library" />
         <FeaturePreviewContainer>
           <ComponentLibraryPreview />
         </FeaturePreviewContainer>
@@ -38,6 +46,7 @@ export function Features() {
         </DarkFeatureTextOverlay>
       </Feature>
       <Feature ref={f3Ref} visible={f3Entered}>
+        <Anchor id="open-platform" />
         <OpenPlatformPreview />
         <LightFeatureTextOverlay>
           <FeatureTitle>Open platform</FeatureTitle>
@@ -52,7 +61,7 @@ export function Features() {
   );
 }
 
-const Container = styled.div`
+const Container = styled(Center)`
   display: flex;
   flex-direction: column;
   align-items: center;

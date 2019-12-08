@@ -5,16 +5,13 @@ import { Features } from './Features/Features';
 import { Header } from './Header/Header';
 import { Hero } from './Hero';
 import { Quote } from './Quote';
-import { Center } from './shared/ui';
 
 export function Root() {
   return (
     <>
       <Header />
       <Content>
-        <Center>
-          <Features />
-        </Center>
+        <Features />
         <Gradient>
           <Hero />
           <Quote />
