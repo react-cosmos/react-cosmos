@@ -15,7 +15,7 @@ export const InternalLink = ({ children, to, className, style }: Props) => {
     } else if (to.indexOf('/') === 0) {
       const id = to.substr(1);
       const element = document.getElementById(id);
-      if (element) scrollTo(element.offsetTop);
+      if (element) scrollTo(getElementTop(element));
     }
   }
 
@@ -25,6 +25,12 @@ export const InternalLink = ({ children, to, className, style }: Props) => {
     </a>
   );
 };
+
+function getElementTop(element: HTMLElement) {
+  return Math.ceil(
+    element.getBoundingClientRect().top + document.documentElement.scrollTop
+  );
+}
 
 function scrollTo(top: number) {
   window.scroll({ top, behavior: 'smooth' });
