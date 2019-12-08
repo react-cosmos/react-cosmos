@@ -505,7 +505,7 @@ You can also create a living style guide using React Cosmos, but it's a secondar
 
 Hi, this is [Ovidiu](https://twitter.com/skidding), the core maintainer of React Cosmos. I spend ridiculous amounts of time perfecting this project because I love building user interfaces and making useful stuff.
 
-React Cosmos is licensed as MIT and will always be free. If you want to support me, however, [become a Sponsor](https://github.com/users/skidding/sponsorship) and ensure this journey continues indefinitely!
+React Cosmos is licensed as MIT and will always be free. If you want to support me, however, [become a Sponsor](https://github.com/users/skidding/sponsorship) and ensure this journey continues!
 
 Special thanks to [@maxsalven](https://github.com/maxsalven) and [@xavxyz](https://github.com/xavxyz) for the long conversations and recurring interest in this project, as well as [@catalinmiron](https://github.com/catalinmiron), [@flaviusone](https://github.com/flaviusone), [@NiGhTTraX](https://github.com/NiGhTTraX), [@ovidiubute](https://github.com/ovidiubute), [@RadValentin](https://github.com/RadValentin), [@tkjone](https://github.com/tkjone), and all the other [contributors](https://github.com/react-cosmos/react-cosmos/graphs/contributors). You're a big reason why React Cosmos is still alive ❤️.
 
