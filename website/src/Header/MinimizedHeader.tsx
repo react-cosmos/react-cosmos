@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ExternalLink } from '../shared/ExternalLink';
+import { InternalLink } from '../shared/InternalLink';
 import { Heart } from '../shared/ui';
 import {
   COSMONAUT_HPADDING_PX,
@@ -18,61 +20,28 @@ export function MinimizedHeader({ viewportWidth, visible }: Props) {
   const center = viewportWidth >= MIN_CENTER_HEADER_WIDTH_PX;
   return (
     <Container style={{ opacity: visible ? 1 : 0 }}>
-      <CosmonautButton onClick={scrollToTop} />
+      <CosmonautButton to="/" />
       <MainContent center={center}>
         <Title>
-          <a
-            href="/"
-            onClick={e => {
-              e.preventDefault();
-              scrollToTop();
-            }}
-          >
-            React Cosmos
-          </a>
+          <InternalLink to="/">React Cosmos</InternalLink>
         </Title>
         <Links>
-          <Link
-            href="https://github.com/react-cosmos/react-cosmos"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
+          <Link href="https://github.com/react-cosmos/react-cosmos">
             GitHub
           </Link>
           <Separator>/</Separator>
-          <Link
-            href="https://join-react-cosmos.now.sh/"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Slack
-          </Link>
+          <Link href="https://join-react-cosmos.now.sh">Slack</Link>
           <Separator>/</Separator>
-          <Link
-            href="https://twitter.com/ReactCosmos"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Twitter
-          </Link>
+          <Link href="https://twitter.com/ReactCosmos">Twitter</Link>
         </Links>
       </MainContent>
       {center && (
-        <HeartButton onClick={scrollToAbout}>
+        <HeartButton to="/about">
           <Heart />
         </HeartButton>
       )}
     </Container>
   );
-}
-
-function scrollToTop() {
-  window.scroll({ top: 0, behavior: 'smooth' });
-}
-
-function scrollToAbout() {
-  const about = document.getElementById('about');
-  if (about) window.scroll({ top: about.offsetTop, behavior: 'smooth' });
 }
 
 const Container = styled.div`
@@ -89,7 +58,7 @@ const Container = styled.div`
   transition: 0.4s opacity;
 `;
 
-const CosmonautButton = styled.div`
+const CosmonautButton = styled(InternalLink)`
   flex-shrink: 0;
   width: ${COSMONAUT_SIZE_PX}px;
   height: ${COSMONAUT_SIZE_PX}px;
@@ -99,7 +68,7 @@ const CosmonautButton = styled.div`
   cursor: pointer;
 `;
 
-const HeartButton = styled.div`
+const HeartButton = styled(InternalLink)`
   flex-shrink: 0;
   width: ${COSMONAUT_SIZE_PX}px;
   height: ${COSMONAUT_SIZE_PX}px;
@@ -152,7 +121,7 @@ const Links = styled.div`
   line-height: 20px;
 `;
 
-const Link = styled.a`
+const Link = styled(ExternalLink)`
   color: inherit;
   font-weight: 400;
   text-decoration: none;

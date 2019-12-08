@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ExternalLink } from './shared/ExternalLink';
 import { NoWrap, SlideIn } from './shared/ui';
 import { useViewportEnter } from './shared/useViewportEnter';
 
@@ -12,19 +13,11 @@ export function Hero() {
         Expect more from your <NoWrap>dev environment</NoWrap>
       </Subtitle>
       <Links visible={entered}>
-        <Link
-          href="https://cosmos.flatris.space/"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
+        <Link href="https://cosmos.flatris.space">
           <span>Live demo</span>
           <Chevron />
         </Link>
-        <Link
-          href="https://twitter.com/ReactCosmos/status/1189127279533793281"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
+        <Link href="https://twitter.com/ReactCosmos/status/1189127279533793281">
           <span>React Cosmos 5 in 21 tweets</span>
           <Chevron />
         </Link>
@@ -86,7 +79,7 @@ const Links = styled(SlideIn)`
   }
 `;
 
-const Link = styled.a`
+const Link = styled(ExternalLink)`
   margin: 16px 12px 0 12px;
   color: #078383;
   font-weight: 400;

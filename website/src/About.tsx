@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ExternalLink } from './shared/ExternalLink';
 import { Center, Heart, SlideIn } from './shared/ui';
 import { useViewportEnter } from './shared/useViewportEnter';
 
@@ -36,11 +37,7 @@ export function About() {
             continues!
           </Paragraph>
           <CtaContainer>
-            <CallToAction
-              href="https://github.com/sponsors/skidding"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
+            <CallToAction href="https://github.com/sponsors/skidding">
               <Heart />
               Sponsor
             </CallToAction>
@@ -103,7 +100,7 @@ const CtaContainer = styled.div`
   }
 `;
 
-const CallToAction = styled.a`
+const CallToAction = styled(ExternalLink)`
   display: flex;
   flex-direction: row;
   align-items: center;

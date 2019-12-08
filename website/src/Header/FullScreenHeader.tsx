@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ExternalLink } from '../shared/ExternalLink';
 import { getSkyMaskRadius } from './Cosmonaut/Cosmonaut';
 import { getCosmonautSize, Viewport } from './shared';
 
@@ -54,8 +55,6 @@ export const FullScreenHeader = React.memo(function FullScreenHeader({
       </Subtitle>
       <CallToAction
         href="https://github.com/react-cosmos/react-cosmos"
-        rel="noopener noreferrer"
-        target="_blank"
         style={{
           marginTop: ctaMarginTop,
           padding: `0 ${ctaPadding}px`,
@@ -175,7 +174,7 @@ const Subtitle = styled.p`
   text-align: center;
 `;
 
-const CallToAction = styled.a`
+const CallToAction = styled(ExternalLink)`
   background: #b1dcfd;
   color: #0a2e46;
   display: flex;
