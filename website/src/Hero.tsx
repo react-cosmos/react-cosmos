@@ -8,32 +8,42 @@ export function Hero() {
   const [ref, entered] = useViewportEnter(0.66);
   return (
     <Container ref={ref}>
-      <Title visible={entered}>Don&apos;t settle for localhost:3000</Title>
-      <Subtitle visible={entered}>
-        Expect more from your <NoWrap>dev environment</NoWrap>
-      </Subtitle>
-      <Links visible={entered}>
-        <Link href="https://cosmos.flatris.space">
-          <span>Live demo</span>
-          <Chevron />
-        </Link>
-        <Link href="https://twitter.com/ReactCosmos/status/1189127279533793281">
-          <span>React Cosmos 5 in 21 tweets</span>
-          <Chevron />
-        </Link>
-      </Links>
+      <TextContainer>
+        <Title visible={entered}>Don&apos;t settle for localhost:3000</Title>
+        <Subtitle visible={entered}>
+          Expect more from your <NoWrap>dev environment</NoWrap>
+        </Subtitle>
+        <Links visible={entered}>
+          <Link href="https://cosmos.flatris.space">
+            <span>Live demo</span>
+            <Chevron />
+          </Link>
+          <Link href="https://twitter.com/ReactCosmos/status/1189127279533793281">
+            <span>React Cosmos 5 in 21 tweets</span>
+            <Chevron />
+          </Link>
+        </Links>
+      </TextContainer>
+      <PreviewContainer visible={entered}>
+        <ExternalLink href="https://cosmos.flatris.space">
+          <Preview src="/screenshot.png" alt="React Cosmos in action" />
+        </ExternalLink>
+      </PreviewContainer>
     </Container>
   );
 }
 
 const Container = styled.div`
-  min-height: 50vh;
-  padding: 10vh 16px;
+  padding: 30vh 0 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+`;
+
+const TextContainer = styled.div`
+  padding: 0 16px;
 `;
 
 const Title = styled(SlideIn)`
@@ -120,4 +130,15 @@ const StyledChevron = styled.svg`
     height: 20px;
     transform: translate(0, 1.5px);
   }
+`;
+
+const PreviewContainer = styled(SlideIn)`
+  margin: 10vh 0 0 0;
+  max-width: 960px;
+  transition-delay: ${props => (props.visible ? 0.6 : 0)}s;
+`;
+
+const Preview = styled.img`
+  display: block;
+  width: 100%;
 `;

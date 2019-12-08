@@ -1412,7 +1412,7 @@ Array [
     </div>
   </div>,
   <div
-    className="sc-eTuwsz camJgz"
+    className="sc-epnACN bdOBaZ"
   >
     <div
       className="sc-bdVaJa sc-fAjcbJ gmaRFM"
@@ -2056,91 +2056,110 @@ Array [
       </div>
     </div>
     <div
-      className="sc-gwVKww mZrjw"
+      className="sc-iQNlJl cXgoxL"
     >
       <div
-        className="sc-dfVpRl eQzidb"
+        className="sc-dfVpRl dZGXup"
       >
         <div
-          className="sc-htpNat sc-gzOgki fCCyEw"
+          className="sc-gzOgki jDmCJq"
         >
-          Don't settle for localhost:3000
-        </div>
-        <div
-          className="sc-htpNat sc-iyvyFf iJsnHc"
-        >
-          Expect more from your 
-          <span
-            className="sc-bwzfXH gxJYSe"
+          <div
+            className="sc-htpNat sc-iyvyFf bpBOep"
           >
-            dev environment
-          </span>
+            Don't settle for localhost:3000
+          </div>
+          <div
+            className="sc-htpNat sc-hwwEjo ieaHtt"
+          >
+            Expect more from your 
+            <span
+              className="sc-bwzfXH gxJYSe"
+            >
+              dev environment
+            </span>
+          </div>
+          <div
+            className="sc-htpNat sc-kPVwWT cxuoKV"
+          >
+            <a
+              className="sc-kfGgVZ bCvPjZ"
+              href="https://cosmos.flatris.space"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <span>
+                Live demo
+              </span>
+              <svg
+                className="sc-esjQYD dbDmux"
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <polyline
+                  points="9 18 15 12 9 6"
+                />
+              </svg>
+            </a>
+            <a
+              className="sc-kfGgVZ bCvPjZ"
+              href="https://twitter.com/ReactCosmos/status/1189127279533793281"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <span>
+                React Cosmos 5 in 21 tweets
+              </span>
+              <svg
+                className="sc-esjQYD dbDmux"
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <polyline
+                  points="9 18 15 12 9 6"
+                />
+              </svg>
+            </a>
+          </div>
         </div>
         <div
-          className="sc-htpNat sc-hwwEjo dMesiu"
+          className="sc-htpNat sc-kIPQKe kHdcbn"
         >
           <a
-            className="sc-kPVwWT kcwraa"
             href="https://cosmos.flatris.space"
             rel="noopener noreferrer"
             target="_blank"
           >
-            <span>
-              Live demo
-            </span>
-            <svg
-              className="sc-kfGgVZ evdXJt"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-            >
-              <polyline
-                points="9 18 15 12 9 6"
-              />
-            </svg>
-          </a>
-          <a
-            className="sc-kPVwWT kcwraa"
-            href="https://twitter.com/ReactCosmos/status/1189127279533793281"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <span>
-              React Cosmos 5 in 21 tweets
-            </span>
-            <svg
-              className="sc-kfGgVZ evdXJt"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-            >
-              <polyline
-                points="9 18 15 12 9 6"
-              />
-            </svg>
+            <img
+              alt="React Cosmos in action"
+              className="sc-eXEjpC laUwRm"
+              src="/screenshot.png"
+            />
           </a>
         </div>
       </div>
       <div
-        className="sc-esjQYD cKQDIM"
+        className="sc-ibxdXY irHKva"
       >
         <div
-          className="sc-kIPQKe eXGwaq"
+          className="sc-RefOD hISIHt"
         >
           <div
-            className="sc-htpNat sc-eXEjpC icEcLL"
+            className="sc-htpNat sc-iQKALj exyUcl"
           >
             <div
-              className="sc-ibxdXY sc-RefOD fZmZme"
+              className="sc-bwCtUz sc-hrWEMg iSxNip"
             />
             <div
-              className="sc-bwCtUz cQukmx"
+              className="sc-gwVKww cVlfvM"
             >
               You're doing important work. 
               <span
@@ -2150,11 +2169,11 @@ Array [
               </span>
             </div>
             <div
-              className="sc-ibxdXY sc-iQKALj bwqIhg"
+              className="sc-bwCtUz sc-eTuwsz jPnSpU"
             />
           </div>
           <div
-            className="sc-htpNat sc-hrWEMg ebPAfP"
+            className="sc-htpNat sc-hXRMBi lgHpSY"
           >
             Dan Abramov
           </div>
