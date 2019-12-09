@@ -19,16 +19,16 @@ export function Cosmonaut({ cropRatio, minimizeRatio }: Props) {
     <SvgContainer viewBox={viewBox}>
       <defs>
         <clipPath id="skyMask">
-          <circle cx="128" cy="128" r={skyMaskRadius} />
+          <SkyMaskCircle cx="128" cy="128" r={skyMaskRadius} />
         </clipPath>
       </defs>
 
       <g clipPath="url(#skyMask)">
         <Sky minimizeRatio={minimizeRatio} />
         <Stars />
-        <g transform={`translate(${offset.x}, ${offset.y})`}>
+        <PlanetContainer transform={`translate(${offset.x}, ${offset.y})`}>
           <Planet />
-        </g>
+        </PlanetContainer>
         <Tube />
       </g>
       <Body />
@@ -69,4 +69,12 @@ const SvgContainer = styled.svg`
 
 const StyledSky = styled.rect`
   fill: #093556;
+`;
+
+const SkyMaskCircle = styled.circle`
+  will-change: r;
+`;
+
+const PlanetContainer = styled.g`
+  will-change: transform;
 `;

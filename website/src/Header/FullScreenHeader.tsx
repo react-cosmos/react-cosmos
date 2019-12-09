@@ -150,6 +150,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   color: #fff;
+  will-change: clip-path, -webkit-clip-path;
 `;
 
 const Title = styled.h1`

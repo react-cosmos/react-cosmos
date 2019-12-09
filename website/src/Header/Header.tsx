@@ -166,10 +166,12 @@ const Container = styled.div<{ minimized: boolean }>`
     rgba(10, 46, 70, ${props => (props.minimized ? 0.24 : 0)});
   backdrop-filter: ${props =>
     props.minimized ? 'saturate(180%) blur(15px)' : 'none'};
+  will-change: height;
 `;
 
 const CosmonautContainer = styled.div`
   position: absolute;
   bottom: 0;
   left: 0;
+  will-change: width, height, bottom, left;
 `;

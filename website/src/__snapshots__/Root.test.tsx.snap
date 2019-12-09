@@ -3,7 +3,7 @@
 exports[`renders correctly 1`] = `
 Array [
   <div
-    className="sc-fMiknA fwriQB"
+    className="sc-eqIVtm bHgmjJ"
     style={
       Object {
         "height": 768,
@@ -12,7 +12,7 @@ Array [
     }
   >
     <div
-      className="sc-dVhcbM duzaji"
+      className="sc-fAjcbJ ccgaxP"
       style={
         Object {
           "bottom": -341,
@@ -31,6 +31,7 @@ Array [
             id="skyMask"
           >
             <circle
+              className="sc-brqgnP dfRxyd"
               cx="128"
               cy="128"
               r={905.0966799187809}
@@ -502,6 +503,7 @@ Array [
             r={1.75}
           />
           <g
+            className="sc-cMljjf fBVeEI"
             transform="translate(-60, -112)"
           >
             <defs>
@@ -1327,7 +1329,7 @@ Array [
       </svg>
     </div>
     <div
-      className="sc-brqgnP hmLynu"
+      className="sc-jAaTju dcJxEm"
       style={
         Object {
           "WebkitClipPath": "circle(1206.7955732250412px at -170.66666666666666px 597.3333333333334px)",
@@ -1340,7 +1342,7 @@ Array [
       }
     >
       <h1
-        className="sc-cMljjf eWSqOF"
+        className="sc-jDwBTQ hhPvJV"
         style={
           Object {
             "fontSize": 52,
@@ -1354,7 +1356,7 @@ Array [
         .
       </h1>
       <p
-        className="sc-jAaTju jBdCsi"
+        className="sc-gPEVay duogGU"
         style={
           Object {
             "fontSize": 26,
@@ -1369,7 +1371,7 @@ Array [
         a tool for ambitious UI developers
       </p>
       <a
-        className="sc-jDwBTQ eKtEYx"
+        className="sc-iRbamj hgaPTV"
         href="https://github.com/react-cosmos/react-cosmos"
         rel="noopener noreferrer"
         style={
@@ -1388,7 +1390,7 @@ Array [
           GitHub
         </strong>
         <svg
-          className="sc-gPEVay bZshSD"
+          className="sc-jlyJG eflWiY"
           fill="none"
           height={20}
           stroke="currentColor"
@@ -1411,7 +1413,7 @@ Array [
       </a>
     </div>
     <svg
-      className="sc-iRbamj jiJJfA"
+      className="sc-gipzik fxAIqx"
       fill="none"
       height={37}
       stroke="#fff"
@@ -1435,7 +1437,7 @@ Array [
     </svg>
   </div>,
   <div
-    className="sc-uJMKN CbLkz"
+    className="sc-gGBfsJ dutgUV"
     id="gradient1"
   >
     <div
@@ -1580,21 +1582,21 @@ Array [
     </div>
   </div>,
   <div
-    className="sc-bbmXgH kBcEQN"
+    className="sc-jnlKLf iRKgBZ"
   >
     <div
-      className="sc-eqIVtm YVTc"
+      className="sc-caSCKo lnMKSe"
     >
       <div
-        className="sc-fAjcbJ lfsFer"
+        className="sc-gisBJw edGXWX"
       >
         <div
-          className="sc-htpNat sc-caSCKo kRRFSN"
+          className="sc-htpNat sc-kjoXOD wUOtN"
         >
           Don't settle for localhost:3000
         </div>
         <div
-          className="sc-htpNat sc-gisBJw hJRNQc"
+          className="sc-htpNat sc-cHGsZl dIKJMd"
         >
           Expect more from your 
           <span
@@ -1604,10 +1606,10 @@ Array [
           </span>
         </div>
         <div
-          className="sc-htpNat sc-kjoXOD cqXOZD"
+          className="sc-htpNat sc-TOsTZ hdbTOD"
         >
           <a
-            className="sc-cHGsZl ewHdcK"
+            className="sc-kgAjT eiyCnu"
             href="https://cosmos.flatris.space"
             rel="noopener noreferrer"
             target="_blank"
@@ -1616,7 +1618,7 @@ Array [
               Live demo
             </span>
             <svg
-              className="sc-TOsTZ hqBNOF"
+              className="sc-cJSrbW cDqqzW"
               fill="none"
               stroke="currentColor"
               strokeLinecap="round"
@@ -1630,7 +1632,7 @@ Array [
             </svg>
           </a>
           <a
-            className="sc-cHGsZl ewHdcK"
+            className="sc-kgAjT eiyCnu"
             href="https://twitter.com/ReactCosmos/status/1189127279533793281"
             rel="noopener noreferrer"
             target="_blank"
@@ -1639,7 +1641,7 @@ Array [
               React Cosmos 5 in 21 tweets
             </span>
             <svg
-              className="sc-TOsTZ hqBNOF"
+              className="sc-cJSrbW cDqqzW"
               fill="none"
               stroke="currentColor"
               strokeLinecap="round"
@@ -1655,7 +1657,7 @@ Array [
         </div>
       </div>
       <div
-        className="sc-htpNat sc-kgAjT SPoHE"
+        className="sc-htpNat sc-ksYbfQ flAYjQ"
       >
         <a
           href="https://cosmos.flatris.space"
@@ -1664,26 +1666,26 @@ Array [
         >
           <img
             alt="React Cosmos in action"
-            className="sc-cJSrbW gUPAyt"
+            className="sc-hmzhuo fdKZaK"
             src="/screenshot.png"
           />
         </a>
       </div>
     </div>
     <div
-      className="sc-ksYbfQ gmetRK"
+      className="sc-frDJqD jtAsxs"
     >
       <div
-        className="sc-hmzhuo dxWsh"
+        className="sc-kvZOFW bPgIAo"
       >
         <div
-          className="sc-htpNat sc-frDJqD grrzaG"
+          className="sc-htpNat sc-hqyNC cVoAUz"
         >
           <div
-            className="sc-kvZOFW sc-hqyNC cEnTaG"
+            className="sc-jbKcbu sc-dNLxif dtXIbn"
           />
           <div
-            className="sc-dNLxif jAdIO"
+            className="sc-uJMKN louIrY"
           >
             You're doing important work. 
             <span
@@ -1693,11 +1695,11 @@ Array [
             </span>
           </div>
           <div
-            className="sc-kvZOFW sc-jbKcbu jlMYuU"
+            className="sc-jbKcbu sc-jqCOkK eONpZl"
           />
         </div>
         <div
-          className="sc-htpNat sc-jqCOkK gDUHwq"
+          className="sc-htpNat sc-bbmXgH hMCXhX"
         >
           Dan Abramov
         </div>
