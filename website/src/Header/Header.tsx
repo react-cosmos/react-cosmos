@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Cosmonaut } from './Cosmonaut/Cosmonaut';
 import { FullScreenHeader } from './FullScreenHeader';
+import { HeaderScrollIndicator } from './HeaderScrollIndicator';
 import { MinimizedHeader } from './MinimizedHeader';
 import {
   COSMONAUT_HPADDING_PX,
@@ -61,11 +62,14 @@ export function Header() {
         <Cosmonaut cropRatio={cropRatio} minimizeRatio={minimizeRatio} />
       </CosmonautContainer>
       {cropRatio < 1 && (
-        <FullScreenHeader
-          windowViewport={windowViewport}
-          cropRatio={cropRatio}
-          gitHubStars={gitHubStars}
-        />
+        <>
+          <FullScreenHeader
+            windowViewport={windowViewport}
+            cropRatio={cropRatio}
+            gitHubStars={gitHubStars}
+          />
+          <HeaderScrollIndicator windowViewport={windowViewport} />
+        </>
       )}
       {cropRatio === 1 && (
         <MinimizedHeader
