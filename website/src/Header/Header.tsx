@@ -78,10 +78,10 @@ export function Header() {
 }
 
 function useBodyBg(cropRatio: number) {
-  const bodyBg = cropRatio > 0.1 ? '#fff' : '#093556';
+  const bodyBg = cropRatio > 0.1 ? 'linear-gradient(#d6dde2, #fff)' : '#093556';
   React.useEffect(() => {
-    const rootEl = document.getElementById('root');
-    if (rootEl) rootEl.style.background = bodyBg;
+    const element = document.getElementById('gradient1');
+    if (element) element.style.background = bodyBg;
   }, [bodyBg]);
 }
 
