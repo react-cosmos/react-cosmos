@@ -58,8 +58,8 @@ const Container = styled.div`
 `;
 
 const Title = styled(SlideIn)`
+  color: #dfeaf3;
   margin: 0 0 32px 0;
-  color: #4d9edc;
   font-size: 48px;
   font-weight: 500;
   line-height: 56px;
@@ -75,7 +75,6 @@ const Subtitle = styled(SlideIn)`
 
   strong {
     font-weight: 500;
-    color: #dfeaf3;
   }
 `;
 

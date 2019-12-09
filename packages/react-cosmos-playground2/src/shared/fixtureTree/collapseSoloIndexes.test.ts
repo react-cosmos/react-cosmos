@@ -27,6 +27,52 @@ it('collapses solo index item', () => {
   expect(collapseSoloIndexes(tree)).toEqual(collapsedTree);
 });
 
+it('does not collapse solo index item with sub dirs', () => {
+  const tree = {
+    items: {},
+    dirs: {
+      SuccessMessage: {
+        items: {
+          index: {
+            path: 'SuccessMessage/index.fixture.js',
+            name: null
+          }
+        },
+        dirs: {
+          SpecialWelcome: {
+            items: {
+              index: {
+                path: 'SuccessMessage/AwesomeMessage/index.fixture.js',
+                name: null
+              }
+            },
+            dirs: {}
+          }
+        }
+      }
+    }
+  };
+  const collapsedTree = {
+    items: {},
+    dirs: {
+      SuccessMessage: {
+        items: {
+          index: {
+            path: 'SuccessMessage/index.fixture.js',
+            name: null
+          },
+          SpecialWelcome: {
+            path: 'SuccessMessage/AwesomeMessage/index.fixture.js',
+            name: null
+          }
+        },
+        dirs: {}
+      }
+    }
+  };
+  expect(collapseSoloIndexes(tree)).toEqual(collapsedTree);
+});
+
 it('collapses solo index dir', () => {
   const tree = {
     items: {},

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Cosmonaut } from './Cosmonaut/Cosmonaut';
 import { FullScreenHeader } from './FullScreenHeader';
+import { HeaderScrollIndicator } from './HeaderScrollIndicator';
 import { MinimizedHeader } from './MinimizedHeader';
 import {
   COSMONAUT_HPADDING_PX,
@@ -61,11 +62,14 @@ export function Header() {
         <Cosmonaut cropRatio={cropRatio} minimizeRatio={minimizeRatio} />
       </CosmonautContainer>
       {cropRatio < 1 && (
-        <FullScreenHeader
-          windowViewport={windowViewport}
-          cropRatio={cropRatio}
-          gitHubStars={gitHubStars}
-        />
+        <>
+          <FullScreenHeader
+            windowViewport={windowViewport}
+            cropRatio={cropRatio}
+            gitHubStars={gitHubStars}
+          />
+          <HeaderScrollIndicator windowViewport={windowViewport} />
+        </>
       )}
       {cropRatio === 1 && (
         <MinimizedHeader
@@ -78,10 +82,10 @@ export function Header() {
 }
 
 function useBodyBg(cropRatio: number) {
-  const bodyBg = cropRatio > 0.1 ? '#fff' : '#093556';
+  const bodyBg = cropRatio > 0.1 ? 'linear-gradient(#d6dde2, #fff)' : '#093556';
   React.useEffect(() => {
-    const rootEl = document.getElementById('root');
-    if (rootEl) rootEl.style.background = bodyBg;
+    const element = document.getElementById('gradient1');
+    if (element) element.style.background = bodyBg;
   }, [bodyBg]);
 }
 
@@ -162,10 +166,12 @@ const Container = styled.div<{ minimized: boolean }>`
     rgba(10, 46, 70, ${props => (props.minimized ? 0.24 : 0)});
   backdrop-filter: ${props =>
     props.minimized ? 'saturate(180%) blur(15px)' : 'none'};
+  will-change: height;
 `;
 
 const CosmonautContainer = styled.div`
   position: absolute;
   bottom: 0;
   left: 0;
+  will-change: width, height, bottom, left;
 `;
