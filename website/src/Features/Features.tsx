@@ -122,8 +122,8 @@ const OpenPlatformTextOverlay = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(5px);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
   color: #0a2e46;
   display: flex;
   flex-direction: column;
