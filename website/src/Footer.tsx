@@ -61,7 +61,7 @@ export function Footer() {
 }
 
 const Container = styled.div`
-  padding: 0 20px 10vh 20px;
+  padding: 10vh 20px;
   background: #093556;
   color: #4d9edc;
   font-size: 16px;

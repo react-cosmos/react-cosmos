@@ -71,12 +71,7 @@ export function Header() {
           <HeaderScrollIndicator windowViewport={windowViewport} />
         </>
       )}
-      {cropRatio === 1 && (
-        <MinimizedHeader
-          viewportWidth={windowViewport.width}
-          visible={minimizeRatio === 1}
-        />
-      )}
+      {cropRatio === 1 && <MinimizedHeader visible={minimizeRatio === 1} />}
     </Container>
   );
 }
