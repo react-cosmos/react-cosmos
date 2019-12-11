@@ -1,6 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
+export const grayToWhiteGradient = `linear-gradient(#d6dde2, #fff)`;
+export const whiteToGrayGradient = `linear-gradient(#fff, #d6dde2)`;
+
+export const headerBg = `rgba(255, 255, 255, 0.9)`;
+export const headerBorderBottom = `1px solid rgba(10, 46, 70, 0.24)`;
+export const headerBackdropFilter = `saturate(180%) blur(15px)`;
+
 export const Center = styled.div`
   max-width: 960px;
   margin: 0 auto;

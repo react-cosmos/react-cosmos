@@ -3,9 +3,12 @@
 exports[`renders correctly 1`] = `
 Array [
   <div
-    className="sc-eqIVtm bHgmjJ"
+    className="sc-eqIVtm jwJdNq"
     style={
       Object {
+        "backdropFilter": "none",
+        "background": "transparent",
+        "borderBottom": "none",
         "height": 768,
         "width": 1024,
       }
