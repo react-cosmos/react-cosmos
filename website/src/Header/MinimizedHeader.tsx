@@ -12,16 +12,14 @@ import {
 } from './shared';
 
 type Props = {
-  viewportWidth: number;
   visible: boolean;
 };
 
-export function MinimizedHeader({ viewportWidth, visible }: Props) {
-  const center = viewportWidth >= MIN_CENTER_HEADER_WIDTH_PX;
+export function MinimizedHeader({ visible }: Props) {
   return (
     <Container style={{ opacity: visible ? 1 : 0 }}>
       <CosmonautButton to="/" />
-      <MainContent center={center}>
+      <MainContent>
         <Title>
           <InternalLink to="/">React Cosmos</InternalLink>
         </Title>
@@ -35,11 +33,9 @@ export function MinimizedHeader({ viewportWidth, visible }: Props) {
           <Link href="https://twitter.com/ReactCosmos">Twitter</Link>
         </Links>
       </MainContent>
-      {center && (
-        <HeartButton to="/about">
-          <Heart />
-        </HeartButton>
-      )}
+      <HeartButton to="/about">
+        <Heart />
+      </HeartButton>
     </Container>
   );
 }
@@ -86,16 +82,24 @@ const HeartButton = styled(InternalLink)`
     height: 36px;
     fill: rgba(231, 0, 138, 0.8);
   }
+
+  @media (max-width: ${MIN_CENTER_HEADER_WIDTH_PX - 1}px) {
+    display: none;
+  }
 `;
 
-const MainContent = styled.div<{ center: boolean }>`
+const MainContent = styled.div`
   flex: 1;
   height: 56px;
-  padding-right: ${props => (props.center ? 0 : 16)}px;
   display: flex;
   flex-direction: column;
-  align-items: ${props => (props.center ? 'center' : 'flex-end')};
+  align-items: center;
   justify-content: space-between;
+
+  @media (max-width: ${MIN_CENTER_HEADER_WIDTH_PX - 1}px) {
+    padding-right: 16px;
+    align-items: flex-end;
+  }
 `;
 
 const Title = styled.h1`

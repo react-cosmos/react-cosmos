@@ -6,6 +6,7 @@ import { Footer } from './Footer';
 import { Header } from './Header/Header';
 import { Hero } from './Hero';
 import { Quote } from './Quote';
+import { grayToWhiteGradient, whiteToGrayGradient } from './shared/ui';
 
 export function Root() {
   return (
@@ -26,9 +27,9 @@ export function Root() {
 
 const Gradient1 = styled.div`
   padding: 100vh 0 0 0;
-  background: linear-gradient(#d6dde2, #fff);
+  background: ${grayToWhiteGradient};
 `;
 
 const Gradient2 = styled.div`
-  background: linear-gradient(#fff, #d6dde2);
+  background: ${whiteToGrayGradient};
 `;

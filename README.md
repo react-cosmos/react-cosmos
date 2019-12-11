@@ -105,7 +105,7 @@ _Something wrong?_ Don't hesitate to [create a GitHub issue](https://github.com/
 
 ## Requirements
 
-The only hard requirements are React 16.8 and Node 6 (or newer).
+The only hard requirements are React 16.8 and Node 8 (or newer).
 
 React Cosmos works best with webpack 4. It takes extra effort to make it work with other bundlers, but it's not as scary as it might seem. Don’t be afraid to ask for support.
 

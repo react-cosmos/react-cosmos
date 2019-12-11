@@ -3,9 +3,12 @@
 exports[`renders correctly 1`] = `
 Array [
   <div
-    className="sc-eqIVtm bHgmjJ"
+    className="sc-eqIVtm jwJdNq"
     style={
       Object {
+        "backdropFilter": "none",
+        "background": "transparent",
+        "borderBottom": "none",
         "height": 768,
         "width": 1024,
       }
@@ -1441,17 +1444,17 @@ Array [
     id="gradient1"
   >
     <div
-      className="sc-bdVaJa sc-gZMcBi kTqguD"
+      className="sc-bdVaJa sc-chPdSV icGuJN"
     >
       <div
-        className="sc-htpNat sc-VigVT lpIwj"
+        className="sc-htpNat sc-gqjmRU ekFdPE"
       >
         <div
-          className="sc-gqjmRU fDqPQF"
+          className="sc-gZMcBi huhkQs"
           id="visual-tdd"
         />
         <div
-          className="sc-jTzLTM iOSbXf"
+          className="sc-VigVT iInznV"
         >
           <svg
             fill="none"
@@ -1474,26 +1477,26 @@ Array [
         </div>
         <div>
           <h2
-            className="sc-kAzzGY ddIvXZ"
+            className="sc-jTzLTM eysneS"
           >
             Visual TDD
           </h2>
           <div
-            className="sc-chPdSV bheQTt"
+            className="sc-fjdhpX cHSFEY"
           >
             Develop one component at a time. Isolate the UI you're working on and iterate quickly. Reloading your whole app on every change is slowing you down!
           </div>
         </div>
       </div>
       <div
-        className="sc-htpNat sc-VigVT lpIwj"
+        className="sc-htpNat sc-gqjmRU ekFdPE"
       >
         <div
-          className="sc-gqjmRU fDqPQF"
+          className="sc-gZMcBi huhkQs"
           id="component-library"
         />
         <div
-          className="sc-jTzLTM iOSbXf"
+          className="sc-VigVT iInznV"
         >
           <svg
             fill="none"
@@ -1543,37 +1546,37 @@ Array [
         </div>
         <div>
           <h2
-            className="sc-kAzzGY ddIvXZ"
+            className="sc-jTzLTM eysneS"
           >
             Component library
           </h2>
           <div
-            className="sc-chPdSV bheQTt"
+            className="sc-fjdhpX cHSFEY"
           >
             From blank states to edge cases, define component states to come back to. Your component library keeps you organized and provides a solid foundation of test cases.
           </div>
         </div>
       </div>
       <div
-        className="sc-fjdhpX SnKdw"
+        className="sc-jzJRlG icWcrV"
       >
         <div
-          className="sc-gqjmRU fDqPQF"
+          className="sc-gZMcBi huhkQs"
           id="open-platform"
         />
         <div
-          className="sc-jzJRlG jNHHeS"
+          className="sc-cSHVUG eNuMOU"
         />
         <div
-          className="sc-cSHVUG jrhIFt"
+          className="sc-kAzzGY dHJgAL"
         >
           <h2
-            className="sc-kAzzGY ddIvXZ"
+            className="sc-jTzLTM eysneS"
           >
             Open platform
           </h2>
           <div
-            className="sc-chPdSV bheQTt"
+            className="sc-fjdhpX cHSFEY"
           >
             React Cosmos can be used in powerful ways. Snapshot and visual regression tests are possible, as well as custom integrations tailored to your needs.
           </div>
@@ -1585,7 +1588,7 @@ Array [
     className="sc-jnlKLf iRKgBZ"
   >
     <div
-      className="sc-caSCKo lnMKSe"
+      className="sc-caSCKo bltPf"
     >
       <div
         className="sc-gisBJw edGXWX"
@@ -1707,7 +1710,7 @@ Array [
     </div>
   </div>,
   <div
-    className="sc-bxivhb ghPVcR"
+    className="sc-bxivhb iJfOCC"
     id="about"
   >
     <div
@@ -1773,7 +1776,7 @@ Array [
     </div>
   </div>,
   <div
-    className="sc-kgoBCf enMUXW"
+    className="sc-kgoBCf cmkRSV"
   >
     <div
       className="sc-bdVaJa iDXOlS"

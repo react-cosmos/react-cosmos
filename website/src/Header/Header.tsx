@@ -1,5 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import {
+  grayToWhiteGradient,
+  headerBackdropFilter,
+  headerBg,
+  headerBorderBottom
+} from '../shared/ui';
 import { Cosmonaut } from './Cosmonaut/Cosmonaut';
 import { FullScreenHeader } from './FullScreenHeader';
 import { HeaderScrollIndicator } from './HeaderScrollIndicator';
@@ -42,13 +48,16 @@ export function Header() {
     windowViewport,
     minimizeRatio
   ]);
+  const minimized = minimizeRatio === 1;
 
   return (
     <Container
-      minimized={minimizeRatio === 1}
       style={{
         width: containerViewport.width,
-        height: containerViewport.height + 2 * vPadding
+        height: containerViewport.height + 2 * vPadding,
+        background: minimized ? headerBg : 'transparent',
+        borderBottom: minimized ? headerBorderBottom : 'none',
+        backdropFilter: minimized ? headerBackdropFilter : 'none'
       }}
     >
       <CosmonautContainer
@@ -71,18 +80,13 @@ export function Header() {
           <HeaderScrollIndicator windowViewport={windowViewport} />
         </>
       )}
-      {cropRatio === 1 && (
-        <MinimizedHeader
-          viewportWidth={windowViewport.width}
-          visible={minimizeRatio === 1}
-        />
-      )}
+      {cropRatio === 1 && <MinimizedHeader visible={minimizeRatio === 1} />}
     </Container>
   );
 }
 
 function useBodyBg(cropRatio: number) {
-  const bodyBg = cropRatio > 0.1 ? 'linear-gradient(#d6dde2, #fff)' : '#093556';
+  const bodyBg = cropRatio > 0.1 ? grayToWhiteGradient : '#093556';
   React.useEffect(() => {
     const element = document.getElementById('gradient1');
     if (element) element.style.background = bodyBg;
@@ -156,16 +160,11 @@ function getFullScreenCosmonautBottomOffset(windowViewport: Viewport) {
   return -Math.floor(getCosmonautSize(windowViewport));
 }
 
-const Container = styled.div<{ minimized: boolean }>`
+const Container = styled.div`
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
-  background: rgb(255, 255, 255, ${props => (props.minimized ? 0.9 : 0)});
-  border-bottom: 1px solid
-    rgba(10, 46, 70, ${props => (props.minimized ? 0.24 : 0)});
-  backdrop-filter: ${props =>
-    props.minimized ? 'saturate(180%) blur(15px)' : 'none'};
   will-change: height;
 `;
 
