@@ -17,10 +17,10 @@ type Props = {
 export function Page({ children }: Props) {
   return (
     <>
-      <Header>
+      <SimpleHeader>
         <MinimizedHeader visible={true} />
-      </Header>
-      <Gradient1 id="gradient1">
+      </SimpleHeader>
+      <Gradient1>
         <Center>{children}</Center>
       </Gradient1>
       <Footer />
@@ -28,7 +28,7 @@ export function Page({ children }: Props) {
   );
 }
 
-const Header = styled.div`
+const SimpleHeader = styled.div`
   position: fixed;
   z-index: 1;
   top: 0;
