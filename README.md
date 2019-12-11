@@ -107,7 +107,7 @@ _Something wrong?_ Don't hesitate to [create a GitHub issue](https://github.com/
 
 The only hard requirements are React 16.8 and Node 6 (or newer).
 
-React Cosmos works best with webpack. It takes extra effort to make it work with other bundlers, but it's not as scary as it might seem. Don’t be afraid to ask for support.
+React Cosmos works best with webpack 4. It takes extra effort to make it work with other bundlers, but it's not as scary as it might seem. Don’t be afraid to ask for support.
 
 > [Browserify](https://github.com/react-cosmos/react-cosmos-classic/tree/14e1a258f746df401a41ab65429df0d296b910e4/examples/browserify) and [Parcel](https://github.com/react-cosmos/parcel-ts-example) examples are available for Cosmos Classic. Props to whoever adapts them to React Cosmos 5!
 
