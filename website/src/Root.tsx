@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { About } from './About';
+import { Benefits } from './Benefits';
 import { Features } from './Features/Features';
 import { Footer } from './Footer';
 import { Header } from './Header/Header';
@@ -17,6 +18,7 @@ export function Root() {
       </Gradient1>
       <Gradient2>
         <Hero />
+        <Benefits />
         <Quote />
       </Gradient2>
       <About />

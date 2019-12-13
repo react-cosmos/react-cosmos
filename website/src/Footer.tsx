@@ -19,6 +19,7 @@ export function Footer() {
               Component library
             </InternalLink>
             <InternalLink to="/open-platform">Open platform</InternalLink>
+            <InternalLink to="/benefits">Benefits</InternalLink>
           </LinksColumn>
           <LinksColumn>
             <ExternalLink href="https://cosmos.flatris.space">

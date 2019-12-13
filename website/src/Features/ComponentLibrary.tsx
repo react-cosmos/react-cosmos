@@ -1,7 +1,6 @@
 import React from 'react';
 import { useViewportEnter } from '../shared/useViewportEnter';
 import {
-  Anchor,
   Feature,
   FeatureDescription,
   FeatureIconContainer,
@@ -11,8 +10,7 @@ import {
 export function ComponentLibrary() {
   const [ref, entered] = useViewportEnter(0.7);
   return (
-    <Feature ref={ref} visible={entered}>
-      <Anchor id="component-library" />
+    <Feature id="component-library" ref={ref} visible={entered}>
       <FeatureIconContainer>
         <ListIcon />
       </FeatureIconContainer>

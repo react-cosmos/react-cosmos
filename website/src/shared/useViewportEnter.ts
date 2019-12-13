@@ -17,7 +17,11 @@ export function useViewportEnter(vhThreshhold: number): ViewportEnterReturn {
 
     updateEntered();
     window.addEventListener('scroll', updateEntered);
-    return () => window.removeEventListener('scroll', updateEntered);
+    window.addEventListener('resize', updateEntered);
+    return () => {
+      window.removeEventListener('scroll', updateEntered);
+      window.removeEventListener('resize', updateEntered);
+    };
   }, [vhThreshhold, el, entered]);
 
   return [setEl, entered];

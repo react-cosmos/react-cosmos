@@ -1,7 +1,6 @@
 import React from 'react';
 import { useViewportEnter } from '../shared/useViewportEnter';
 import {
-  Anchor,
   Feature,
   FeatureDescription,
   FeatureIconContainer,
@@ -11,8 +10,7 @@ import {
 export function VisualTdd() {
   const [ref, entered] = useViewportEnter(0.7);
   return (
-    <Feature ref={ref} visible={entered}>
-      <Anchor id="visual-tdd" />
+    <Feature id="visual-tdd" ref={ref} visible={entered}>
       <FeatureIconContainer>
         <RefreshIcon />
       </FeatureIconContainer>

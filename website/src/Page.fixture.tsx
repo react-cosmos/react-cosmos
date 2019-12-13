@@ -3,6 +3,7 @@ import { ComponentLibrary } from './Features/ComponentLibrary';
 import { OpenPlatform } from './Features/OpenPlatform';
 import { VisualTdd } from './Features/VisualTdd';
 import { Page } from './Page';
+import { Benefits } from './Benefits';
 
 export default {
   'Visual TDD': (
@@ -18,6 +19,11 @@ export default {
   'Open platform': (
     <Page>
       <OpenPlatform />
+    </Page>
+  ),
+  Benefits: (
+    <Page>
+      <Benefits />
     </Page>
   )
 };

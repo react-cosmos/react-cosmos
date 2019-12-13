@@ -1,13 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useViewportEnter } from '../shared/useViewportEnter';
-import { Anchor, FeatureDescription, FeatureTitle } from './shared';
+import { FeatureDescription, FeatureTitle } from './shared';
 
 export function OpenPlatform() {
   const [ref, entered] = useViewportEnter(0.7);
   return (
-    <OpenPlatformFeature ref={ref} visible={entered}>
-      <Anchor id="open-platform" />
+    <OpenPlatformFeature id="open-platform" ref={ref} visible={entered}>
       <OpenPlatformPattern />
       <OpenPlatformTextOverlay>
         <FeatureTitle>Open platform</FeatureTitle>

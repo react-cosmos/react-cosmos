@@ -1,11 +1,6 @@
 import styled from 'styled-components';
 import { SlideIn } from '../shared/ui';
 
-export const Anchor = styled.div`
-  position: absolute;
-  top: -81px; /* minimized header height */
-`;
-
 export const Feature = styled(SlideIn)`
   display: flex;
   flex-direction: row;
