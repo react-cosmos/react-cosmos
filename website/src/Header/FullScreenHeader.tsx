@@ -82,17 +82,18 @@ function getFullScreenHeaderSizes(
   windowViewport: Viewport
 ): FullScreenHeaderSizes {
   const cosmonautSize = getCosmonautSize(windowViewport);
-  const fontOffset = roundEven(cosmonautSize / 18);
+  const fontOffset = Math.round(cosmonautSize / 18);
   const titleFontSize = 16 + fontOffset * 2;
-  const subtitleFontSize = 8 + fontOffset;
-  const ctaFontSize = roundEven(subtitleFontSize * 0.9);
+  const subtitleFontSize = 10 + fontOffset;
+  const ctaFontSize = 10 + fontOffset;
+  const ctaHeight = Math.round(ctaFontSize * 2.3);
 
   return {
     titleFontSize,
     subtitleFontSize,
-    ctaMarginTop: fontOffset * 3,
+    ctaMarginTop: fontOffset * 4,
     ctaPadding: ctaFontSize * 1,
-    ctaHeight: ctaFontSize * 2.3,
+    ctaHeight,
     ctaFontSize,
     starSize: Math.round(subtitleFontSize * 0.75),
     starStrokeWidth: Math.max(2, Math.ceil(subtitleFontSize / 30)),
@@ -138,10 +139,6 @@ function getClipPath(windowViewport: Viewport, cropRatio: number) {
 
 function isPortrait(viewport: Viewport) {
   return viewport.height > viewport.width;
-}
-
-function roundEven(nr: number) {
-  return Math.round(nr / 2) * 2;
 }
 
 const Container = styled.div`
