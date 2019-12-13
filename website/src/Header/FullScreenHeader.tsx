@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { ExternalLink } from '../shared/ExternalLink';
 import { slideInOpacityDuration, slideInYDuration } from '../shared/ui';
-import { getSkyMaskRadius } from './Cosmonaut/Cosmonaut';
 import { getCosmonautSize, Viewport } from './shared';
 
 type Props = {
