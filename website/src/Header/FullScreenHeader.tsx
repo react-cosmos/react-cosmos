@@ -83,7 +83,7 @@ function getFullScreenHeaderSizes(
 ): FullScreenHeaderSizes {
   const cosmonautSize = getCosmonautSize(windowViewport);
   const fontOffset = Math.round(cosmonautSize / 18);
-  const titleFontSize = 16 + fontOffset * 2;
+  const titleFontSize = 16 + Math.round(fontOffset * 2.4);
   const subtitleFontSize = 10 + fontOffset;
   const ctaFontSize = 10 + fontOffset;
   const ctaHeight = Math.round(ctaFontSize * 2.3);
@@ -143,7 +143,7 @@ const Title = styled.h1`
   margin: 0;
   padding: 0;
   font-weight: 600;
-  line-height: 2em;
+  line-height: 1.5em;
   letter-spacing: -0.02em;
   white-space: nowrap;
   text-align: center;

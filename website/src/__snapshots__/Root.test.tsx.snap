@@ -1344,11 +1344,11 @@ Array [
       }
     >
       <h1
-        className="sc-gipzik JRbUx"
+        className="sc-gipzik dywHIo"
         style={
           Object {
             "background": "rgb(9, 53, 86, 0.8)",
-            "fontSize": 54,
+            "fontSize": 62,
           }
         }
       >
