@@ -41,7 +41,7 @@ export function About() {
           <CtaContainer>
             <CallToAction href="https://github.com/sponsors/skidding">
               <Heart />
-              Sponsor
+              Become a Sponsor
             </CallToAction>
           </CtaContainer>
         </Story>
@@ -112,6 +112,7 @@ const CallToAction = styled(ExternalLink)`
   font-weight: 500;
   line-height: 64px;
   text-decoration: none;
+  white-space: nowrap;
 
   strong {
     font-weight: 500;
