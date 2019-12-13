@@ -42,7 +42,9 @@ export const FullScreenHeader = React.memo(function FullScreenHeader({
     starStrokeWidth,
     starLeftMargin,
     starRightMargin
-  } = getFullScreenHeaderSizes(windowViewport);
+  } = React.useMemo(() => getFullScreenHeaderSizes(windowViewport), [
+    windowViewport
+  ]);
   const textBg = cropRatio > 0 ? 'transparent' : visibleTextBg;
 
   return (
