@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { NoWrap, SlideIn } from './shared/ui';
+import { getSlideInStyle, NoWrap, slideInTransition } from './shared/ui';
 import { useViewportEnter } from './shared/useViewportEnter';
 
 export function Quote() {
@@ -8,14 +8,14 @@ export function Quote() {
   return (
     <Container ref={ref}>
       <CenterContainer>
-        <QuoteBubble visible={entered}>
+        <QuoteBubble style={getSlideInStyle(entered, 0)}>
           <LeftSlope />
           <Words>
             You&apos;re doing important work. <NoWrap>Keep rocking.</NoWrap>
           </Words>
           <RightSlope />
         </QuoteBubble>
-        <OneAndOnly visible={entered}>Dan Abramov</OneAndOnly>
+        <OneAndOnly style={getSlideInStyle(entered, 1)}>Dan Abramov</OneAndOnly>
       </CenterContainer>
     </Container>
   );
@@ -33,9 +33,10 @@ const CenterContainer = styled.div`
   align-items: flex-end;
 `;
 
-const QuoteBubble = styled(SlideIn)`
+const QuoteBubble = styled.div`
   display: flex;
   flex-direction: row;
+  transition: ${slideInTransition};
 `;
 
 const Slope = styled.div`
@@ -65,7 +66,6 @@ const Words = styled.div`
   line-height: 38px;
   text-align: center;
   letter-spacing: -0.01em;
-  transition: color 1.2s;
 
   @media (max-width: 400px) {
     font-size: 28px;
@@ -73,7 +73,7 @@ const Words = styled.div`
   }
 `;
 
-const OneAndOnly = styled(SlideIn)`
+const OneAndOnly = styled.div`
   padding: 16px 48px;
   color: rgba(10, 46, 70, 0.8);
   font-size: 24px;
@@ -81,7 +81,7 @@ const OneAndOnly = styled(SlideIn)`
   line-height: 24px;
   text-align: center;
   letter-spacing: -0.01em;
-  transition-delay: ${props => (props.visible ? 0.2 : 0)}s;
+  transition: ${slideInTransition};
 
   @media (max-width: 696px) {
     padding: 16px 32px;

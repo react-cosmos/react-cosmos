@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ExternalLink } from './shared/ExternalLink';
-import { NoWrap, SlideIn } from './shared/ui';
+import { getSlideInStyle, NoWrap, slideInTransition } from './shared/ui';
 import { useViewportEnter } from './shared/useViewportEnter';
 
 export function Hero() {
@@ -9,11 +9,13 @@ export function Hero() {
   return (
     <Container>
       <TextContainer ref={ref}>
-        <Title visible={entered}>Don&apos;t settle for localhost:3000</Title>
-        <Subtitle visible={entered}>
+        <Title style={getSlideInStyle(entered, 0)}>
+          Don&apos;t settle for localhost:3000
+        </Title>
+        <Subtitle style={getSlideInStyle(entered, 1)}>
           Expect more from your <NoWrap>dev environment</NoWrap>
         </Subtitle>
-        <Links visible={entered}>
+        <Links style={getSlideInStyle(entered, 2)}>
           <Link href="https://cosmos.flatris.space">
             <span>Live demo</span>
             <Chevron />
@@ -24,7 +26,7 @@ export function Hero() {
           </Link>
         </Links>
       </TextContainer>
-      <PreviewContainer visible={entered}>
+      <PreviewContainer style={getSlideInStyle(entered, 3)}>
         <ExternalLink href="https://cosmos.flatris.space">
           <Preview src="/screenshot.png" alt="React Cosmos in action" />
         </ExternalLink>
@@ -34,7 +36,7 @@ export function Hero() {
 }
 
 const Container = styled.div`
-  padding: 40vh 0 0 0;
+  padding: 40vh 0 20vh 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,12 +48,13 @@ const TextContainer = styled.div`
   padding: 0 16px;
 `;
 
-const Title = styled(SlideIn)`
+const Title = styled.div`
+  padding: 0 0 12px 0;
   font-size: 48px;
   line-height: 50px;
   font-weight: 600;
   letter-spacing: -0.03em;
-  padding: 0 0 12px 0;
+  transition: ${slideInTransition};
 
   @media (max-width: 400px) {
     font-size: 40px;
@@ -59,12 +62,12 @@ const Title = styled(SlideIn)`
   }
 `;
 
-const Subtitle = styled(SlideIn)`
+const Subtitle = styled.div`
   font-size: 32px;
   line-height: 36px;
   font-weight: 300;
   color: #566d7e;
-  transition-delay: ${props => (props.visible ? 0.2 : 0)}s;
+  transition: ${slideInTransition};
 
   @media (max-width: 400px) {
     font-size: 28px;
@@ -72,7 +75,7 @@ const Subtitle = styled(SlideIn)`
   }
 `;
 
-const Links = styled(SlideIn)`
+const Links = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -80,7 +83,7 @@ const Links = styled(SlideIn)`
   padding: 48px 0 0 0;
   font-size: 24px;
   line-height: 24px;
-  transition-delay: ${props => (props.visible ? 0.4 : 0)}s;
+  transition: ${slideInTransition};
 
   @media (max-width: 400px) {
     font-size: 20px;
@@ -132,10 +135,10 @@ const StyledChevron = styled.svg`
   }
 `;
 
-const PreviewContainer = styled(SlideIn)`
+const PreviewContainer = styled.div`
   margin: 10vh 0 0 0;
   max-width: 960px;
-  transition-delay: ${props => (props.visible ? 0.6 : 0)}s;
+  transition: ${slideInTransition};
 `;
 
 const Preview = styled.img`

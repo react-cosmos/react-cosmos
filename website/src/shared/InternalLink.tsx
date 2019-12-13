@@ -7,6 +7,8 @@ type Props = {
   className?: string;
 };
 
+const HEADER_HEIGHT = 81;
+
 export const InternalLink = ({ children, to, className, style }: Props) => {
   function handleClick(e: React.MouseEvent) {
     e.preventDefault();
@@ -15,7 +17,7 @@ export const InternalLink = ({ children, to, className, style }: Props) => {
     } else if (to.indexOf('/') === 0) {
       const id = to.substr(1);
       const element = document.getElementById(id);
-      if (element) scrollTo(getElementTop(element));
+      if (element) scrollTo(getElementTop(element) - HEADER_HEIGHT);
     }
   }
 

@@ -3,7 +3,12 @@ import styled from 'styled-components';
 import { useGitHubContributors } from './Header/useGitHubContributors';
 import { ExternalLink } from './shared/ExternalLink';
 import { InternalLink } from './shared/InternalLink';
-import { Center, NoWrap, SlideIn } from './shared/ui';
+import {
+  Center,
+  getSlideInStyle,
+  NoWrap,
+  slideInTransition
+} from './shared/ui';
 import { useViewportEnter } from './shared/useViewportEnter';
 
 export function Footer() {
@@ -12,13 +17,14 @@ export function Footer() {
   return (
     <Container>
       <Center>
-        <Columns ref={ref} visible={entered}>
+        <Columns ref={ref} style={getSlideInStyle(entered)}>
           <LinksColumn>
             <InternalLink to="/visual-tdd">Visual TDD</InternalLink>
             <InternalLink to="/component-library">
               Component library
             </InternalLink>
             <InternalLink to="/open-platform">Open platform</InternalLink>
+            <InternalLink to="/benefits">Benefits</InternalLink>
           </LinksColumn>
           <LinksColumn>
             <ExternalLink href="https://cosmos.flatris.space">
@@ -78,10 +84,11 @@ const Container = styled.div`
   }
 `;
 
-const Columns = styled(SlideIn)`
+const Columns = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  transition: ${slideInTransition};
 
   @media (max-width: 808px) {
     display: block;

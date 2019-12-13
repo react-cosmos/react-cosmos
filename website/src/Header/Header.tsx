@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import {
-  grayToWhiteGradient,
   headerBackdropFilter,
   headerBg,
   headerBorderBottom
@@ -26,7 +25,6 @@ import { useWindowViewport } from './useWindowViewport';
 type HeaderSizes = {
   containerViewport: Viewport;
   cosmonautViewport: Viewport;
-  bottomOffset: number;
   vPadding: number;
   hPadding: number;
   centerPadding: number;
@@ -35,12 +33,10 @@ type HeaderSizes = {
 export function Header() {
   const windowViewport = useWindowViewport();
   const { cropRatio, minimizeRatio } = useHeaderScroll(windowViewport.height);
-  useBodyBg(cropRatio);
   const gitHubStars = useGitHubStars();
   const {
     containerViewport,
     cosmonautViewport,
-    bottomOffset,
     vPadding,
     hPadding,
     centerPadding
@@ -61,10 +57,11 @@ export function Header() {
       }}
     >
       <CosmonautContainer
+        key="cosmonaut"
         style={{
           width: cosmonautViewport.width,
           height: cosmonautViewport.height,
-          bottom: bottomOffset + vPadding,
+          bottom: vPadding,
           left: centerPadding + hPadding
         }}
       >
@@ -85,14 +82,6 @@ export function Header() {
   );
 }
 
-function useBodyBg(cropRatio: number) {
-  const bodyBg = cropRatio > 0.1 ? grayToWhiteGradient : '#093556';
-  React.useEffect(() => {
-    const element = document.getElementById('gradient1');
-    if (element) element.style.background = bodyBg;
-  }, [bodyBg]);
-}
-
 function getHeaderSizes(
   windowViewport: Viewport,
   minimizeRatio: number
@@ -106,10 +95,6 @@ function getHeaderSizes(
       minimizeRatio > 0
         ? getMinimizedCosmonautViewport(windowViewport, minimizeRatio)
         : getFullScreenCosmonautViewport(windowViewport),
-    bottomOffset:
-      minimizeRatio > 0
-        ? 0
-        : getFullScreenCosmonautBottomOffset(windowViewport),
     vPadding: COSMONAUT_VPADDING_PX * minimizeRatio,
     hPadding: COSMONAUT_HPADDING_PX * minimizeRatio,
     centerPadding:
@@ -154,10 +139,6 @@ function getMinimizedCosmonautSize(
 function getFullScreenCosmonautViewport(windowViewport: Viewport) {
   const width = getViewportLength(windowViewport);
   return { width, height: Math.ceil(getCosmonautSize(windowViewport) * 4) };
-}
-
-function getFullScreenCosmonautBottomOffset(windowViewport: Viewport) {
-  return -Math.floor(getCosmonautSize(windowViewport));
 }
 
 const Container = styled.div`

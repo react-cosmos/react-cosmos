@@ -1,13 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
+import { slideInOpacityDuration, slideInYDuration } from '../shared/ui';
 import { useViewportEnter } from '../shared/useViewportEnter';
-import { Anchor, FeatureDescription, FeatureTitle } from './shared';
+import { FeatureDescription, FeatureTitle } from './shared';
 
 export function OpenPlatform() {
   const [ref, entered] = useViewportEnter(0.7);
   return (
-    <OpenPlatformFeature ref={ref} visible={entered}>
-      <Anchor id="open-platform" />
+    <OpenPlatformFeature
+      id="open-platform"
+      ref={ref}
+      style={getSlideInStyle(entered)}
+    >
       <OpenPlatformPattern />
       <OpenPlatformTextOverlay>
         <FeatureTitle>Open platform</FeatureTitle>
@@ -21,14 +25,19 @@ export function OpenPlatform() {
   );
 }
 
-const OpenPlatformFeature = styled.div<{ visible: boolean }>`
+function getSlideInStyle(visible: boolean, nth: number = 0) {
+  return {
+    transform: `translate(0, ${visible ? 0 : 10}vh)`,
+    opacity: visible ? 1 : 0
+  };
+}
+
+const OpenPlatformFeature = styled.div`
   width: 100%;
   height: 600px;
   margin-bottom: 10vh;
   position: relative;
-  opacity: ${props => (props.visible ? 1 : 0)};
-  transform: translate(0, ${props => (props.visible ? 0 : 10)}vh);
-  transition: 0.8s opacity, 1.2s transform;
+  transition: ${slideInOpacityDuration}s opacity, ${slideInYDuration}s transform;
 
   :last-child {
     margin-bottom: 0;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ExternalLink } from '../shared/ExternalLink';
-import { getSkyMaskRadius } from './Cosmonaut/Cosmonaut';
+import { slideInOpacityDuration, slideInYDuration } from '../shared/ui';
 import { getCosmonautSize, Viewport } from './shared';
 
 type Props = {
@@ -23,6 +23,8 @@ type FullScreenHeaderSizes = {
   starRightMargin: number;
 };
 
+const visibleTextBg = `rgb(9, 53, 86, 0.8)`;
+
 export const FullScreenHeader = React.memo(function FullScreenHeader({
   windowViewport,
   cropRatio,
@@ -43,13 +45,14 @@ export const FullScreenHeader = React.memo(function FullScreenHeader({
   } = React.useMemo(() => getFullScreenHeaderSizes(windowViewport), [
     windowViewport
   ]);
+  const textBg = cropRatio > 0 ? 'transparent' : visibleTextBg;
 
   return (
     <Container style={containerStyle}>
-      <Title style={{ fontSize: titleFontSize }}>
+      <Title style={{ background: textBg, fontSize: titleFontSize }}>
         Build UIs at <em>scale</em>.
       </Title>
-      <Subtitle style={{ fontSize: subtitleFontSize }}>
+      <Subtitle style={{ background: textBg, fontSize: subtitleFontSize }}>
         Introducing <strong>React Cosmos 5</strong>
         <br />a tool for ambitious UI developers
       </Subtitle>
@@ -81,17 +84,18 @@ function getFullScreenHeaderSizes(
   windowViewport: Viewport
 ): FullScreenHeaderSizes {
   const cosmonautSize = getCosmonautSize(windowViewport);
-  const fontOffset = roundEven(cosmonautSize / 18);
-  const titleFontSize = 16 + fontOffset * 2;
-  const subtitleFontSize = 8 + fontOffset;
-  const ctaFontSize = roundEven(subtitleFontSize * 0.9);
+  const fontOffset = Math.round(cosmonautSize / 18);
+  const titleFontSize = 16 + Math.round(fontOffset * 2.4);
+  const subtitleFontSize = 10 + fontOffset;
+  const ctaFontSize = 10 + fontOffset;
+  const ctaHeight = Math.round(ctaFontSize * 2.3);
 
   return {
     titleFontSize,
     subtitleFontSize,
-    ctaMarginTop: fontOffset * 3,
+    ctaMarginTop: fontOffset * 4,
     ctaPadding: ctaFontSize * 1,
-    ctaHeight: ctaFontSize * 2.3,
+    ctaHeight,
     ctaFontSize,
     starSize: Math.round(subtitleFontSize * 0.75),
     starStrokeWidth: Math.max(2, Math.ceil(subtitleFontSize / 30)),
@@ -102,12 +106,11 @@ function getFullScreenHeaderSizes(
 
 function getContainerStyle(windowViewport: Viewport, cropRatio: number) {
   const cosmonautSize = Math.round(getCosmonautSize(windowViewport));
-  const clipPath = getClipPath(windowViewport, cropRatio);
+  const opacity = cropRatio > 0.2 ? 0 : 1;
 
   if (isPortrait(windowViewport)) {
     return {
-      clipPath,
-      WebkitClipPath: clipPath,
+      opacity,
       bottom: cosmonautSize,
       left: 0,
       width: windowViewport.width,
@@ -116,8 +119,7 @@ function getContainerStyle(windowViewport: Viewport, cropRatio: number) {
   }
 
   return {
-    clipPath,
-    WebkitClipPath: clipPath,
+    opacity,
     bottom: 0,
     left: cosmonautSize,
     width: windowViewport.width - cosmonautSize,
@@ -125,22 +127,8 @@ function getContainerStyle(windowViewport: Viewport, cropRatio: number) {
   };
 }
 
-function getClipPath(windowViewport: Viewport, cropRatio: number) {
-  const cosmonautSize = getCosmonautSize(windowViewport);
-  const clipX = isPortrait(windowViewport)
-    ? cosmonautSize / 2
-    : -cosmonautSize / 2;
-  const clipY = windowViewport.height - cosmonautSize + cosmonautSize / 2;
-  const clipRadius = getSkyMaskRadius(cropRatio) * (cosmonautSize / 256);
-  return `circle(${clipRadius}px at ${clipX}px ${clipY}px)`;
-}
-
 function isPortrait(viewport: Viewport) {
   return viewport.height > viewport.width;
-}
-
-function roundEven(nr: number) {
-  return Math.round(nr / 2) * 2;
 }
 
 const Container = styled.div`
@@ -150,15 +138,14 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   color: #fff;
-  will-change: clip-path, -webkit-clip-path;
+  transition: opacity 0.4s;
 `;
 
 const Title = styled.h1`
   margin: 0;
   padding: 0;
-  background: rgb(9, 53, 86, 0.8);
   font-weight: 600;
-  line-height: 2em;
+  line-height: 1.5em;
   letter-spacing: -0.02em;
   white-space: nowrap;
   text-align: center;
@@ -169,7 +156,6 @@ const Subtitle = styled.p`
   padding: 0;
   font-weight: 300;
   line-height: 1.6em;
-  background: rgb(9, 53, 86, 0.8);
   color: #b1dcfd;
   white-space: nowrap;
   text-align: center;
@@ -182,7 +168,7 @@ const CallToAction = styled(ExternalLink)`
   flex-direction: row;
   align-items: center;
   text-decoration: none;
-  transition: 0.8s opacity, 0.8s transform;
+  transition: ${slideInOpacityDuration}s opacity, ${slideInYDuration}s transform;
 
   strong {
     font-weight: 500;
