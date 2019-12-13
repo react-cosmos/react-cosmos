@@ -104,7 +104,7 @@ function getFullScreenHeaderSizes(
 
 function getContainerStyle(windowViewport: Viewport, cropRatio: number) {
   const cosmonautSize = Math.round(getCosmonautSize(windowViewport));
-  const opacity = cropRatio > 0 ? 0 : 1;
+  const opacity = cropRatio > 0.2 ? 0 : 1;
 
   if (isPortrait(windowViewport)) {
     return {
