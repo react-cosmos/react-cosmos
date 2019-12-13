@@ -12,7 +12,7 @@ type Props = {
 };
 
 export function Cosmonaut({ cropRatio, minimizeRatio }: Props) {
-  const viewBox = minimizeRatio > 0 ? `0 0 256 256` : `0 -512 768 1024`;
+  const viewBox = minimizeRatio > 0 ? `0 0 256 256` : `0 -640 768 768`;
   const skyMaskRadius = minimizeRatio > 0 ? 128 : getSkyMaskRadius(cropRatio);
   const offset = getSkyOffset(minimizeRatio);
   return (

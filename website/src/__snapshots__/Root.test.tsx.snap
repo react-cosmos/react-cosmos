@@ -18,7 +18,7 @@ Array [
       className="sc-cHGsZl iXQQEB"
       style={
         Object {
-          "bottom": -341,
+          "bottom": 0,
           "height": 1366,
           "left": 0,
           "width": 1024,
@@ -27,7 +27,7 @@ Array [
     >
       <svg
         className="sc-jAaTju ePWrZE"
-        viewBox="0 -512 768 1024"
+        viewBox="0 -640 768 768"
       >
         <defs>
           <clipPath
