@@ -57,6 +57,7 @@ export function Header() {
       }}
     >
       <CosmonautContainer
+        key="cosmonaut"
         style={{
           width: cosmonautViewport.width,
           height: cosmonautViewport.height,
