@@ -1,13 +1,14 @@
 import styled from 'styled-components';
-import { SlideIn } from '../shared/ui';
+import { slideInTransition } from '../shared/ui';
 
-export const Feature = styled(SlideIn)`
+export const Feature = styled.div`
+  margin-bottom: 10vh;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 10vh;
+  transition: ${slideInTransition};
 
   :last-child {
     margin-bottom: 0;

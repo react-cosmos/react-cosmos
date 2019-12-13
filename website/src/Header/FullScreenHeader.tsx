@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ExternalLink } from '../shared/ExternalLink';
+import { slideInOpacityDuration, slideInYDuration } from '../shared/ui';
 import { getSkyMaskRadius } from './Cosmonaut/Cosmonaut';
 import { getCosmonautSize, Viewport } from './shared';
 
@@ -182,7 +183,7 @@ const CallToAction = styled(ExternalLink)`
   flex-direction: row;
   align-items: center;
   text-decoration: none;
-  transition: 0.8s opacity, 0.8s transform;
+  transition: ${slideInOpacityDuration}s opacity, ${slideInYDuration}s transform;
 
   strong {
     font-weight: 500;

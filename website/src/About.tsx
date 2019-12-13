@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ExternalLink } from './shared/ExternalLink';
-import { Center, Heart, SlideIn } from './shared/ui';
+import { Center, getSlideInStyle, Heart, slideInTransition } from './shared/ui';
 import { useViewportEnter } from './shared/useViewportEnter';
 
 export function About() {
@@ -9,13 +9,13 @@ export function About() {
   return (
     <Container id="about">
       <Center ref={ref}>
-        <Title visible={entered}>Hi there!</Title>
-        <Subtitle visible={entered}>
+        <Title style={getSlideInStyle(entered, 0)}>Hi there!</Title>
+        <Subtitle style={getSlideInStyle(entered, 1)}>
           <strong>I’m Ovidiu, a passionate developer from Romania.</strong>
           <br />
           Obsessed with details, I made React Cosmos for likeminded developers.
         </Subtitle>
-        <Story visible={entered}>
+        <Story style={getSlideInStyle(entered, 2)}>
           <StoryBody>
             <Paragraph>
               The journey began in 2014 when I introduced React at Hootsuite,
@@ -57,29 +57,30 @@ const Container = styled.div`
   color: #b1dcfd;
 `;
 
-const Title = styled(SlideIn)`
+const Title = styled.div`
   color: #dfeaf3;
   margin: 0 0 32px 0;
   font-size: 48px;
   font-weight: 500;
   line-height: 56px;
+  transition: ${slideInTransition};
 `;
 
-const Subtitle = styled(SlideIn)`
+const Subtitle = styled.div`
   margin: 0 0 32px 0;
   color: #dfeaf3;
   font-size: 24px;
   font-weight: 300;
   line-height: 38px;
-  transition-delay: ${props => (props.visible ? 0.2 : 0)}s;
+  transition: ${slideInTransition};
 
   strong {
     font-weight: 500;
   }
 `;
 
-const Story = styled(SlideIn)`
-  transition-delay: ${props => (props.visible ? 0.4 : 0)}s;
+const Story = styled.div`
+  transition: ${slideInTransition};
 `;
 
 const StoryBody = styled.div`
@@ -111,7 +112,6 @@ const CallToAction = styled(ExternalLink)`
   font-weight: 500;
   line-height: 64px;
   text-decoration: none;
-  transition: 0.8s opacity, 0.8s transform;
 
   strong {
     font-weight: 500;

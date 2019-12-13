@@ -1,4 +1,5 @@
 import React from 'react';
+import { getSlideInStyle } from '../shared/ui';
 import { useViewportEnter } from '../shared/useViewportEnter';
 import {
   Feature,
@@ -10,7 +11,7 @@ import {
 export function VisualTdd() {
   const [ref, entered] = useViewportEnter(0.7);
   return (
-    <Feature id="visual-tdd" ref={ref} visible={entered}>
+    <Feature id="visual-tdd" ref={ref} style={getSlideInStyle(entered)}>
       <FeatureIconContainer>
         <RefreshIcon />
       </FeatureIconContainer>

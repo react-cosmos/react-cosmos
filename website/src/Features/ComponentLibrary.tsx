@@ -1,4 +1,5 @@
 import React from 'react';
+import { getSlideInStyle } from '../shared/ui';
 import { useViewportEnter } from '../shared/useViewportEnter';
 import {
   Feature,
@@ -10,7 +11,7 @@ import {
 export function ComponentLibrary() {
   const [ref, entered] = useViewportEnter(0.7);
   return (
-    <Feature id="component-library" ref={ref} visible={entered}>
+    <Feature id="component-library" ref={ref} style={getSlideInStyle(entered)}>
       <FeatureIconContainer>
         <ListIcon />
       </FeatureIconContainer>

@@ -8,6 +8,20 @@ export const headerBg = `rgba(255, 255, 255, 0.9)`;
 export const headerBorderBottom = `1px solid rgba(10, 46, 70, 0.24)`;
 export const headerBackdropFilter = `saturate(180%) blur(15px)`;
 
+export const slideInYOffset = 40;
+export const slideInOpacityDuration = 0.8;
+export const slideInYDuration = 1.2;
+export const slideInDelay = 0.2;
+export const slideInTransition = `${slideInOpacityDuration}s opacity, ${slideInYDuration}s transform`;
+
+export function getSlideInStyle(visible: boolean, nth: number = 0) {
+  return {
+    transform: `translate(0, ${visible ? 0 : slideInYOffset}px)`,
+    opacity: visible ? 1 : 0,
+    transitionDelay: visible ? `${nth * slideInDelay}s` : '0s'
+  };
+}
+
 export const Center = styled.div`
   max-width: 960px;
   margin: 0 auto;
@@ -15,12 +29,6 @@ export const Center = styled.div`
 
 export const NoWrap = styled.span`
   white-space: nowrap;
-`;
-
-export const SlideIn = styled.div<{ visible: boolean }>`
-  opacity: ${props => (props.visible ? 1 : 0)};
-  transform: translate(0, ${props => (props.visible ? 0 : 40)}px);
-  transition: 0.8s opacity, 1.2s transform;
 `;
 
 export const Heart = () => {

@@ -1,5 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import {
+  slideInDelay,
+  slideInOpacityDuration,
+  slideInYDuration
+} from './shared/ui';
 import { useViewportEnter } from './shared/useViewportEnter';
 
 export function Benefits() {
@@ -54,7 +59,7 @@ function Benefit({ children, visible, nth }: BenefitProps) {
       style={{
         opacity: visible ? 1 : 0,
         transform: `translate(0, ${visible ? 0 : 40}px)`,
-        transitionDelay: visible ? `${nth * 0.2}s` : '0s'
+        transitionDelay: visible ? `${nth * slideInDelay}s` : '0s'
       }}
     >
       {children}
@@ -70,7 +75,7 @@ const StyledBenefit = styled.div`
   align-items: center;
   font-size: 24px;
   line-height: 30px;
-  transition: 0.8s opacity, 1.2s transform;
+  transition: ${slideInOpacityDuration}s opacity, ${slideInYDuration}s transform;
 
   :last-child {
     margin-bottom: 0;
@@ -101,7 +106,7 @@ function Check({ visible, nth, emphasized = false }: CheckProps) {
           strokeWidth="2"
           strokeDasharray="100"
           strokeDashoffset={strokeDashoffset}
-          style={{ transitionDelay: visible ? `${nth * 0.2}s` : '0s' }}
+          style={{ transitionDelay: visible ? `${nth * slideInDelay}s` : '0s' }}
         />
       </StyledCircleSvg>
       <StyledCheckSvg
