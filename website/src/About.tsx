@@ -13,7 +13,7 @@ export function About() {
         <Subtitle style={getSlideInStyle(entered, 1)}>
           <strong>I’m Ovidiu, a passionate developer from Romania.</strong>
           <br />
-          Obsessed with details, I made React Cosmos for likeminded developers.
+          Obsessed with details, I made React Cosmos for like-minded developers.
         </Subtitle>
         <Story style={getSlideInStyle(entered, 2)}>
           <StoryBody>
