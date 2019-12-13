@@ -24,6 +24,8 @@ type FullScreenHeaderSizes = {
   starRightMargin: number;
 };
 
+const visibleTextBg = `rgb(9, 53, 86, 0.8)`;
+
 export const FullScreenHeader = React.memo(function FullScreenHeader({
   windowViewport,
   cropRatio,
@@ -41,16 +43,15 @@ export const FullScreenHeader = React.memo(function FullScreenHeader({
     starStrokeWidth,
     starLeftMargin,
     starRightMargin
-  } = React.useMemo(() => getFullScreenHeaderSizes(windowViewport), [
-    windowViewport
-  ]);
+  } = getFullScreenHeaderSizes(windowViewport);
+  const textBg = cropRatio > 0 ? 'transparent' : visibleTextBg;
 
   return (
     <Container style={containerStyle}>
-      <Title style={{ fontSize: titleFontSize }}>
+      <Title style={{ background: textBg, fontSize: titleFontSize }}>
         Build UIs at <em>scale</em>.
       </Title>
-      <Subtitle style={{ fontSize: subtitleFontSize }}>
+      <Subtitle style={{ background: textBg, fontSize: subtitleFontSize }}>
         Introducing <strong>React Cosmos 5</strong>
         <br />a tool for ambitious UI developers
       </Subtitle>
@@ -104,12 +105,11 @@ function getFullScreenHeaderSizes(
 
 function getContainerStyle(windowViewport: Viewport, cropRatio: number) {
   const cosmonautSize = Math.round(getCosmonautSize(windowViewport));
-  const clipPath = getClipPath(windowViewport, cropRatio);
+  const opacity = cropRatio > 0 ? 0 : 1;
 
   if (isPortrait(windowViewport)) {
     return {
-      clipPath,
-      WebkitClipPath: clipPath,
+      opacity,
       bottom: cosmonautSize,
       left: 0,
       width: windowViewport.width,
@@ -118,23 +118,12 @@ function getContainerStyle(windowViewport: Viewport, cropRatio: number) {
   }
 
   return {
-    clipPath,
-    WebkitClipPath: clipPath,
+    opacity,
     bottom: 0,
     left: cosmonautSize,
     width: windowViewport.width - cosmonautSize,
     height: windowViewport.height
   };
-}
-
-function getClipPath(windowViewport: Viewport, cropRatio: number) {
-  const cosmonautSize = getCosmonautSize(windowViewport);
-  const clipX = isPortrait(windowViewport)
-    ? cosmonautSize / 2
-    : -cosmonautSize / 2;
-  const clipY = windowViewport.height - cosmonautSize + cosmonautSize / 2;
-  const clipRadius = getSkyMaskRadius(cropRatio) * (cosmonautSize / 256);
-  return `circle(${clipRadius}px at ${clipX}px ${clipY}px)`;
 }
 
 function isPortrait(viewport: Viewport) {
@@ -148,13 +137,12 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   color: #fff;
-  will-change: clip-path, -webkit-clip-path;
+  transition: opacity 0.4s;
 `;
 
 const Title = styled.h1`
   margin: 0;
   padding: 0;
-  background: rgb(9, 53, 86, 0.8);
   font-weight: 600;
   line-height: 2em;
   letter-spacing: -0.02em;
@@ -167,7 +155,6 @@ const Subtitle = styled.p`
   padding: 0;
   font-weight: 300;
   line-height: 1.6em;
-  background: rgb(9, 53, 86, 0.8);
   color: #b1dcfd;
   white-space: nowrap;
   text-align: center;

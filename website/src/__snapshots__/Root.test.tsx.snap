@@ -1332,22 +1332,22 @@ Array [
       </svg>
     </div>
     <div
-      className="sc-jlyJG cSWAGj"
+      className="sc-jlyJG iGYRNu"
       style={
         Object {
-          "WebkitClipPath": "circle(1206.7955732250412px at -170.66666666666666px 597.3333333333334px)",
           "bottom": 0,
-          "clipPath": "circle(1206.7955732250412px at -170.66666666666666px 597.3333333333334px)",
           "height": 768,
           "left": 341,
+          "opacity": 1,
           "width": 683,
         }
       }
     >
       <h1
-        className="sc-gipzik hETHLK"
+        className="sc-gipzik JRbUx"
         style={
           Object {
+            "background": "rgb(9, 53, 86, 0.8)",
             "fontSize": 54,
           }
         }
@@ -1359,9 +1359,10 @@ Array [
         .
       </h1>
       <p
-        className="sc-csuQGl dwchnu"
+        className="sc-csuQGl cbiUjZ"
         style={
           Object {
+            "background": "rgb(9, 53, 86, 0.8)",
             "fontSize": 29,
           }
         }
