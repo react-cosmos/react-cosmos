@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import {
   slideInDelay,
   slideInOpacityDuration,
-  slideInYDuration
+  slideInYDuration,
+  slideInYOffset
 } from './shared/ui';
 import { useViewportEnter } from './shared/useViewportEnter';
 
@@ -58,7 +59,7 @@ function Benefit({ children, visible, nth }: BenefitProps) {
     <StyledBenefit
       style={{
         opacity: visible ? 1 : 0,
-        transform: `translate(0, ${visible ? 0 : 40}px)`,
+        transform: `translate(0, ${visible ? 0 : slideInYOffset}px)`,
         transitionDelay: visible ? `${nth * slideInDelay}s` : '0s'
       }}
     >
