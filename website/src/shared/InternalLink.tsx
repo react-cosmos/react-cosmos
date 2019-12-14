@@ -11,13 +11,12 @@ const HEADER_HEIGHT = 81;
 
 export const InternalLink = ({ children, to, className, style }: Props) => {
   function handleClick(e: React.MouseEvent) {
-    e.preventDefault();
-    if (to === '/') {
-      scrollTo(0);
-    } else if (to.indexOf('/') === 0) {
-      const id = to.substr(1);
-      const element = document.getElementById(id);
-      if (element) scrollTo(getElementTop(element));
+    const element = getElementByPath(to);
+    if (element) {
+      e.preventDefault();
+      scrollTo(getElementTop(element));
+    } else {
+      // Follow link natively
     }
   }
 
@@ -27,6 +26,12 @@ export const InternalLink = ({ children, to, className, style }: Props) => {
     </a>
   );
 };
+
+function getElementByPath(path: string) {
+  if (path === '/') return document.getElementById('index');
+  if (path.indexOf('/') === 0) return document.getElementById(path.substr(1));
+  return null;
+}
 
 function getElementTop(element: HTMLElement) {
   const availWindowHeight = window.innerHeight - HEADER_HEIGHT;

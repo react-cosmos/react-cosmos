@@ -10,9 +10,29 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="theme-color" content="#0a2e46" />
     <link rel="icon" href="/favicon.ico" />
-    <title>React Cosmos</title>
+    <title>$TITLE</title>
+    <meta name="description" content="$DESCRIPTION" />
+    <meta property="og:title" content="$TITLE" />
+    <meta property="og:description" content="$DESCRIPTION" />
+    <meta property="og:image" content="https://reactcosmos.org/thumbnail.png" />
+    <meta property="og:url" content="https://reactcosmos.org" />
+    <meta property="og:site_name" content="React Cosmos" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@ReactCosmos" />
+    <meta name="twitter:creator" content="@skidding" />
+    <meta name="twitter:title" content="$TITLE" />
+    <meta name="twitter:description" content="$DESCRIPTION" />
+    <meta
+      name="twitter:image"
+      content="https://reactcosmos.org/thumbnail.png"
+    />
+    <meta name="twitter:image:alt" content="Build UIs at scale" />
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      window.pageName = $PAGE_NAME;
+    </script>
+    <script type="text/javascript" src="/index.js"></script>
   </body>
 </html>
