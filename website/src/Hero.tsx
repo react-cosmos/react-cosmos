@@ -69,10 +69,11 @@ const Title = styled.div`
 `;
 
 const Subtitle = styled.div`
-  font-size: 32px;
-  line-height: 36px;
-  font-weight: 300;
   color: #566d7e;
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 36px;
+  letter-spacing: -0.02em;
   transition: ${slideInTransition};
 
   @media (max-width: ${mobileWidthBreakpoint}px) {

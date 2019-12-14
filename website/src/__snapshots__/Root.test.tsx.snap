@@ -1487,7 +1487,7 @@ Array [
             Visual TDD
           </h2>
           <div
-            className="sc-kpOJdX gygUPp"
+            className="sc-kpOJdX bdWBjf"
           >
             Develop one component at a time. Isolate the UI you're working on and iterate quickly. Reloading your whole app on every change is slowing you down!
           </div>
@@ -1560,7 +1560,7 @@ Array [
             Component library
           </h2>
           <div
-            className="sc-kpOJdX gygUPp"
+            className="sc-kpOJdX bdWBjf"
           >
             From blank states to edge cases, define component states to come back to. Your component library keeps you organized and provides a solid foundation of test cases.
           </div>
@@ -1588,7 +1588,7 @@ Array [
             Open platform
           </h2>
           <div
-            className="sc-kpOJdX gygUPp"
+            className="sc-kpOJdX bdWBjf"
           >
             React Cosmos can be used in powerful ways. Snapshot and visual regression tests are possible, as well as custom integrations tailored to your needs.
           </div>
@@ -1628,7 +1628,7 @@ Array [
         className="sc-gZMcBi eKJawt"
       >
         <div
-          className="sc-jTzLTM kjEtiU"
+          className="sc-jTzLTM ieDOAc"
           style={
             Object {
               "opacity": 0,
@@ -1638,7 +1638,7 @@ Array [
           }
         >
           <div
-            className="sc-fjdhpX fhzOdl"
+            className="sc-fjdhpX cFABqF"
           >
             <svg
               className="sc-jzJRlG dLRtIt"
@@ -1681,7 +1681,7 @@ Array [
           </span>
         </div>
         <div
-          className="sc-jTzLTM kjEtiU"
+          className="sc-jTzLTM ieDOAc"
           style={
             Object {
               "opacity": 0,
@@ -1691,7 +1691,7 @@ Array [
           }
         >
           <div
-            className="sc-fjdhpX fhzOdl"
+            className="sc-fjdhpX cFABqF"
           >
             <svg
               className="sc-jzJRlG dLRtIt"
@@ -1734,7 +1734,7 @@ Array [
           </span>
         </div>
         <div
-          className="sc-jTzLTM kjEtiU"
+          className="sc-jTzLTM ieDOAc"
           style={
             Object {
               "opacity": 0,
@@ -1744,7 +1744,7 @@ Array [
           }
         >
           <div
-            className="sc-fjdhpX fhzOdl"
+            className="sc-fjdhpX cFABqF"
           >
             <svg
               className="sc-jzJRlG dLRtIt"
@@ -1787,7 +1787,7 @@ Array [
           </span>
         </div>
         <div
-          className="sc-jTzLTM kjEtiU"
+          className="sc-jTzLTM ieDOAc"
           style={
             Object {
               "opacity": 0,
@@ -1797,7 +1797,7 @@ Array [
           }
         >
           <div
-            className="sc-fjdhpX fhzOdl"
+            className="sc-fjdhpX cFABqF"
           >
             <svg
               className="sc-jzJRlG dLRtIt"
@@ -1840,7 +1840,7 @@ Array [
           </span>
         </div>
         <div
-          className="sc-jTzLTM kjEtiU"
+          className="sc-jTzLTM ieDOAc"
           style={
             Object {
               "opacity": 0,
@@ -1850,7 +1850,7 @@ Array [
           }
         >
           <div
-            className="sc-fjdhpX fhzOdl"
+            className="sc-fjdhpX cFABqF"
           >
             <svg
               className="sc-jzJRlG dLRtIt"
@@ -1893,7 +1893,7 @@ Array [
           </span>
         </div>
         <div
-          className="sc-jTzLTM kjEtiU"
+          className="sc-jTzLTM ieDOAc"
           style={
             Object {
               "opacity": 0,
@@ -1903,7 +1903,7 @@ Array [
           }
         >
           <div
-            className="sc-fjdhpX fhzOdl"
+            className="sc-fjdhpX cFABqF"
           >
             <svg
               className="sc-jzJRlG dLRtIt"
@@ -1970,7 +1970,7 @@ Array [
           Don't settle for localhost:3000
         </div>
         <div
-          className="sc-kvZOFW jmTsTR"
+          className="sc-kvZOFW duLKFS"
           style={
             Object {
               "opacity": 0,

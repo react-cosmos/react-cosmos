@@ -52,6 +52,7 @@ export const FeatureDescription = styled.div`
   font-size: 24px;
   line-height: 30px;
   opacity: 0.9;
+  letter-spacing: -0.02em;
 
   @media (max-width: ${columnsWidthBreakpoint}px) {
     font-size: 22px;

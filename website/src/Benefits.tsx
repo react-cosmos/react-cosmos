@@ -159,6 +159,7 @@ const StyledBenefit = styled.div`
   align-items: center;
   font-size: 24px;
   line-height: 28px;
+  letter-spacing: -0.02em;
   transition: ${slideInOpacityDuration}s opacity, ${slideInYDuration}s transform;
 
   :last-child {
@@ -166,7 +167,7 @@ const StyledBenefit = styled.div`
   }
 
   @media (max-width: ${columnsWidthBreakpoint}px) {
-    margin-bottom: 16px;
+    margin-bottom: 24px;
   }
 `;
 
@@ -214,6 +215,10 @@ const StyledCheck = styled.div`
   height: 32px;
   margin: 0 16px 0 0;
   opacity: 0.9;
+
+  @media (max-width: ${columnsWidthBreakpoint}px) {
+    margin-right: 12px;
+  }
 `;
 
 const StyledCircleSvg = styled.svg`
