@@ -17,7 +17,7 @@ export const InternalLink = ({ children, to, className, style }: Props) => {
     } else if (to.indexOf('/') === 0) {
       const id = to.substr(1);
       const element = document.getElementById(id);
-      if (element) scrollTo(getElementTop(element) - HEADER_HEIGHT);
+      if (element) scrollTo(getElementTop(element));
     }
   }
 
@@ -29,9 +29,17 @@ export const InternalLink = ({ children, to, className, style }: Props) => {
 };
 
 function getElementTop(element: HTMLElement) {
-  return Math.ceil(
-    element.getBoundingClientRect().top + document.documentElement.scrollTop
-  );
+  const availWindowHeight = window.innerHeight - HEADER_HEIGHT;
+  const elRect = element.getBoundingClientRect();
+  const elScrollTop =
+    elRect.top + document.documentElement.scrollTop - HEADER_HEIGHT;
+
+  if (elRect.height >= availWindowHeight) {
+    return Math.ceil(elScrollTop);
+  }
+
+  const yPadding = (availWindowHeight - elRect.height) / 2;
+  return Math.ceil(elScrollTop - yPadding);
 }
 
 function scrollTo(top: number) {
