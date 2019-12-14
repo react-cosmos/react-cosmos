@@ -41,6 +41,6 @@ const SimpleHeader = styled.div`
 `;
 
 const Gradient1 = styled.div`
-  padding: 20vh 0;
+  padding: calc(81px + 20vh) 0 20vh 0;
   background: ${grayToWhiteGradient};
 `;
