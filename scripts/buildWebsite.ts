@@ -55,9 +55,9 @@ type PageParams = {
 async function createPage({ pageName, title, description }: PageParams) {
   const indexTemplate = await readFile(`./website/src/index.html`, 'utf8');
   const indexPage = indexTemplate
-    .replace(`$PAGE_NAME`, pageName ? `"${pageName}"` : 'undefined')
-    .replace(`$TITLE`, title)
-    .replace('$DESCRIPTION', description);
+    .replace(/\$PAGE_NAME/g, pageName ? `"${pageName}"` : 'undefined')
+    .replace(/\$TITLE/g, title)
+    .replace(/\$DESCRIPTION/g, description);
   const outputPath = pageName ? `${pageName}.html` : 'index.html';
   await outputFile(`./website/dist/${outputPath}`, indexPage, 'utf8');
 }
