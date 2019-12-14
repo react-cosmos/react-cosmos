@@ -86,6 +86,7 @@ function getHeaderSizes(
   windowViewport: Viewport,
   minimizeRatio: number
 ): HeaderSizes {
+  const availableHeaderWidth = windowViewport.width - MAX_HEADER_WIDTH_PX;
   return {
     containerViewport:
       minimizeRatio > 0
@@ -98,8 +99,7 @@ function getHeaderSizes(
     vPadding: COSMONAUT_VPADDING_PX * minimizeRatio,
     hPadding: COSMONAUT_HPADDING_PX * minimizeRatio,
     centerPadding:
-      (Math.max(0, windowViewport.width - MAX_HEADER_WIDTH_PX) / 2) *
-      minimizeRatio
+      Math.max(0, Math.round(availableHeaderWidth / 2)) * minimizeRatio
   };
 }
 
