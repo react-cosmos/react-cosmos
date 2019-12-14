@@ -15,10 +15,10 @@ export function Root() {
       <Header />
       <Gradient1 id="gradient1">
         <Features />
+        <Benefits />
       </Gradient1>
       <Gradient2>
         <Hero />
-        <Benefits />
         <Quote />
       </Gradient2>
       <About />

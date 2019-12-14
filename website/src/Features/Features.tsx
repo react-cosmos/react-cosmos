@@ -17,6 +17,7 @@ export function Features() {
 const Container = styled.div`
   max-width: 960px;
   margin: 0 auto;
+  padding: 0 0 40vh 0;
   display: flex;
   flex-direction: column;
   align-items: center;

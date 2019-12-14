@@ -159,6 +159,10 @@ const Subtitle = styled.p`
   color: #b1dcfd;
   white-space: nowrap;
   text-align: center;
+
+  strong {
+    font-weight: 600;
+  }
 `;
 
 const CallToAction = styled(ExternalLink)`
