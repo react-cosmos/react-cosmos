@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import {
+  contentMaxWidth,
+  columnsWidthBreakpoint,
   slideInDelay,
   slideInOpacityDuration,
   slideInYDuration,
@@ -12,40 +14,121 @@ export function Benefits() {
   const [ref, entered] = useViewportEnter(0.66);
   return (
     <Container ref={ref} id="benefits">
-      <Benefit visible={entered} nth={0}>
-        <Check visible={entered} nth={0} />
-        <span>Prototype and iterate quickly</span>
-      </Benefit>
-      <Benefit visible={entered} nth={1}>
-        <Check visible={entered} nth={1} />
-        <span>Debug with ease</span>
-      </Benefit>
-      <Benefit visible={entered} nth={2}>
-        <Check visible={entered} nth={2} />
-        <span>Create reusable components</span>
-      </Benefit>
-      <Benefit visible={entered} nth={3}>
-        <Check visible={entered} nth={3} />
-        <span>Share UI across projects</span>
-      </Benefit>
-      <Benefit visible={entered} nth={4}>
-        <Check visible={entered} nth={4} />
-        <span>Publish component libraries</span>
-      </Benefit>
-      <Benefit visible={entered} nth={5}>
-        <Check visible={entered} nth={5} emphasized={true} />
-        <strong>Maintain quality at scale</strong>
-      </Benefit>
+      <RocketContainer
+        style={{
+          background: `rgba(10, 46, 70, ${entered ? 0.06 : 0})`,
+          transitionDelay: entered ? '1.2s' : '0s'
+        }}
+      >
+        <Rocket visible={entered} />
+      </RocketContainer>
+      <List>
+        <Benefit visible={entered} nth={0}>
+          <Check visible={entered} nth={0} />
+          <span>Prototype and iterate quickly</span>
+        </Benefit>
+        <Benefit visible={entered} nth={1}>
+          <Check visible={entered} nth={1} />
+          <span>Debug with ease</span>
+        </Benefit>
+        <Benefit visible={entered} nth={2}>
+          <Check visible={entered} nth={2} />
+          <span>Create reusable components</span>
+        </Benefit>
+        <Benefit visible={entered} nth={3}>
+          <Check visible={entered} nth={3} />
+          <span>Share UI across projects</span>
+        </Benefit>
+        <Benefit visible={entered} nth={4}>
+          <Check visible={entered} nth={4} />
+          <span>Publish component libraries</span>
+        </Benefit>
+        <Benefit visible={entered} nth={5}>
+          <Check visible={entered} nth={5} />
+          <span>Maintain quality at scale</span>
+        </Benefit>
+      </List>
     </Container>
   );
 }
 
 const Container = styled.div`
-  max-width: 512px;
+  max-width: ${contentMaxWidth}px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: ${columnsWidthBreakpoint}px) {
+    flex-direction: column-reverse;
+  }
+`;
+
+const List = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+`;
+
+const RocketContainer = styled.div`
+  flex-shrink: 0;
+  margin: 0 64px 0 0;
+  padding: 64px;
+  border-radius: 50%;
+  clip-path: circle(100px at 114px 114px);
+  transition: background 0.4s;
+
+  @media (max-width: ${columnsWidthBreakpoint}px) {
+    margin-top: 64px;
+    margin-right: 0;
+  }
+`;
+
+type RocketProps = {
+  visible: boolean;
+};
+
+function Rocket({ visible }: RocketProps) {
+  return (
+    <StyledRocketSvg
+      viewBox="0 0 24 24"
+      style={{
+        left: visible ? 0 : -120,
+        bottom: visible ? -5 : -125,
+        transitionDelay: visible ? '1.2s' : '0s'
+      }}
+    >
+      <path d="M8.566 17.842c-.945 2.462-3.678 4.012-6.563 4.161.139-2.772 1.684-5.608 4.209-6.563l.51.521c-1.534 1.523-2.061 2.765-2.144 3.461.704-.085 2.006-.608 3.483-2.096l.505.516zm-1.136-11.342c-1.778-.01-4.062.911-5.766 2.614-.65.649-1.222 1.408-1.664 2.258 1.538-1.163 3.228-1.485 5.147-.408.566-1.494 1.32-3.014 2.283-4.464zm5.204 17.5c.852-.44 1.61-1.013 2.261-1.664 1.708-1.706 2.622-4.001 2.604-5.782-1.575 1.03-3.125 1.772-4.466 2.296 1.077 1.92.764 3.614-.399 5.15zm11.312-23.956c-.428-.03-.848-.044-1.261-.044-9.338 0-14.465 7.426-16.101 13.009l4.428 4.428c5.78-1.855 12.988-6.777 12.988-15.993v-.059c-.002-.437-.019-.884-.054-1.341zm-5.946 7.956c-1.105 0-2-.895-2-2s.895-2 2-2 2 .895 2 2-.895 2-2 2z" />
+    </StyledRocketSvg>
+  );
+}
+
+const StyledRocketSvg = styled.svg`
+  position: relative;
+  width: 100px;
+  height: 100px;
+  fill: currentColor;
+  animation: hover 0.6s infinite ease;
+  transition: left, 0.4s ease-out, bottom 0.4s ease-out;
+
+  @keyframes hover {
+    0% {
+      transform: translateY(-0.6px) translateX(-0.6px);
+    }
+    25% {
+      transform: translateX(0.6px) translateY(0.6px);
+    }
+    50% {
+      transform: translateX(-0.6px) translateY(0.6px);
+    }
+    75% {
+      transform: translateX(0.6px) translateY(-0.6px);
+    }
+    100% {
+      transform: translateY(-0.6px) translateX(-0.6px);
+    }
+  }
 `;
 
 type BenefitProps = {
@@ -70,33 +153,33 @@ function Benefit({ children, visible, nth }: BenefitProps) {
 
 const StyledBenefit = styled.div`
   margin: 0 0 32px 0;
-  padding: 5px 20px 5px 16px;
+  padding: 5px 24px 0 16px;
   display: flex;
   flex-direction: row;
   align-items: center;
   font-size: 24px;
-  line-height: 30px;
+  line-height: 28px;
+  letter-spacing: -0.02em;
   transition: ${slideInOpacityDuration}s opacity, ${slideInYDuration}s transform;
 
   :last-child {
     margin-bottom: 0;
   }
 
-  strong {
-    font-weight: 500;
+  @media (max-width: ${columnsWidthBreakpoint}px) {
+    margin-bottom: 24px;
   }
 `;
 
 type CheckProps = {
   visible: boolean;
   nth: number;
-  emphasized?: boolean;
 };
 
-function Check({ visible, nth, emphasized = false }: CheckProps) {
+function Check({ visible, nth }: CheckProps) {
   const strokeDashoffset = visible ? 0 : 100;
   return (
-    <StyledCheck style={{ opacity: emphasized ? 1 : 0.8 }}>
+    <StyledCheck>
       <StyledCircleSvg>
         <StyledCircle
           cx="16"
@@ -131,6 +214,11 @@ const StyledCheck = styled.div`
   width: 32px;
   height: 32px;
   margin: 0 16px 0 0;
+  opacity: 0.9;
+
+  @media (max-width: ${columnsWidthBreakpoint}px) {
+    margin-right: 12px;
+  }
 `;
 
 const StyledCircleSvg = styled.svg`

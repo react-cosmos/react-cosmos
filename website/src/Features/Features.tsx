@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { contentMaxWidth } from '../shared/ui';
 import { ComponentLibrary } from './ComponentLibrary';
 import { OpenPlatform } from './OpenPlatform';
 import { VisualTdd } from './VisualTdd';
@@ -15,8 +16,9 @@ export function Features() {
 }
 
 const Container = styled.div`
-  max-width: 960px;
+  max-width: ${contentMaxWidth}px;
   margin: 0 auto;
+  padding: 0 0 40vh 0;
   display: flex;
   flex-direction: column;
   align-items: center;

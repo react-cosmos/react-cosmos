@@ -1,6 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { getSlideInStyle, NoWrap, slideInTransition } from './shared/ui';
+import {
+  columnsWidthBreakpoint,
+  getSlideInStyle,
+  NoWrap,
+  slideInTransition
+} from './shared/ui';
 import { useViewportEnter } from './shared/useViewportEnter';
 
 export function Quote() {
@@ -20,6 +25,8 @@ export function Quote() {
     </Container>
   );
 }
+
+const slopeMaxWidth = 696;
 
 const Container = styled.div`
   padding: 20vh 0;
@@ -43,7 +50,7 @@ const Slope = styled.div`
   width: 16px;
   background: rgba(255, 255, 255, 0.8);
 
-  @media (max-width: 696px) {
+  @media (max-width: ${slopeMaxWidth}px) {
     display: none;
   }
 `;
@@ -67,7 +74,7 @@ const Words = styled.div`
   text-align: center;
   letter-spacing: -0.01em;
 
-  @media (max-width: 400px) {
+  @media (max-width: ${columnsWidthBreakpoint}px) {
     font-size: 28px;
     line-height: 34px;
   }
@@ -83,11 +90,11 @@ const OneAndOnly = styled.div`
   letter-spacing: -0.01em;
   transition: ${slideInTransition};
 
-  @media (max-width: 696px) {
+  @media (max-width: ${slopeMaxWidth}px) {
     padding: 16px 32px;
   }
 
-  @media (max-width: 400px) {
+  @media (max-width: ${columnsWidthBreakpoint}px) {
     font-size: 20px;
     line-height: 20px;
   }

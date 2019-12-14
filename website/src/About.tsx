@@ -1,7 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ExternalLink } from './shared/ExternalLink';
-import { Center, getSlideInStyle, Heart, slideInTransition } from './shared/ui';
+import {
+  Center,
+  columnsWidthBreakpoint,
+  getSlideInStyle,
+  Heart,
+  slideInTransition
+} from './shared/ui';
 import { useViewportEnter } from './shared/useViewportEnter';
 
 export function About() {
@@ -127,7 +133,7 @@ const CallToAction = styled(ExternalLink)`
     fill: none;
   }
 
-  @media (max-width: 400px) {
+  @media (max-width: ${columnsWidthBreakpoint}px) {
     padding: 0 24px;
     font-size: 24px;
     line-height: 56px;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { slideInTransition } from '../shared/ui';
+import { columnsWidthBreakpoint, slideInTransition } from '../shared/ui';
 
 export const Feature = styled.div`
   margin-bottom: 10vh;
@@ -14,7 +14,7 @@ export const Feature = styled.div`
     margin-bottom: 0;
   }
 
-  @media (max-width: 791px) {
+  @media (max-width: ${columnsWidthBreakpoint}px) {
     text-align: center;
   }
 `;
@@ -52,4 +52,10 @@ export const FeatureDescription = styled.div`
   font-size: 24px;
   line-height: 30px;
   opacity: 0.9;
+  letter-spacing: -0.02em;
+
+  @media (max-width: ${columnsWidthBreakpoint}px) {
+    font-size: 22px;
+    line-height: 28px;
+  }
 `;

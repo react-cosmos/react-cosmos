@@ -66,6 +66,8 @@ export function Footer() {
   );
 }
 
+const columnsMaxWidth = 808;
+
 const Container = styled.div`
   padding: 10vh 20px;
   background: #093556;
@@ -90,7 +92,7 @@ const Columns = styled.div`
   justify-content: space-between;
   transition: ${slideInTransition};
 
-  @media (max-width: 808px) {
+  @media (max-width: ${columnsMaxWidth}px) {
     display: block;
   }
 `;
@@ -98,7 +100,7 @@ const Columns = styled.div`
 const Column = styled.div`
   width: 256px;
 
-  @media (max-width: 808px) {
+  @media (max-width: ${columnsMaxWidth}px) {
     width: auto;
     padding: 0 0 32px 0;
 
