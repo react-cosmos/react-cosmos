@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import {
+  contentMaxWidth,
+  columnsWidthBreakpoint,
   slideInDelay,
   slideInOpacityDuration,
   slideInYDuration,
@@ -51,12 +53,16 @@ export function Benefits() {
 }
 
 const Container = styled.div`
-  max-width: 960px;
+  max-width: ${contentMaxWidth}px;
   margin: 0 auto;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: ${columnsWidthBreakpoint}px) {
+    flex-direction: column-reverse;
+  }
 `;
 
 const List = styled.div`
@@ -72,6 +78,11 @@ const RocketContainer = styled.div`
   border-radius: 50%;
   clip-path: circle(100px at 114px 114px);
   transition: background 0.4s;
+
+  @media (max-width: ${columnsWidthBreakpoint}px) {
+    margin-top: 64px;
+    margin-right: 0;
+  }
 `;
 
 type RocketProps = {
@@ -142,20 +153,20 @@ function Benefit({ children, visible, nth }: BenefitProps) {
 
 const StyledBenefit = styled.div`
   margin: 0 0 32px 0;
-  padding: 5px 20px 5px 16px;
+  padding: 5px 24px 0 16px;
   display: flex;
   flex-direction: row;
   align-items: center;
   font-size: 24px;
-  line-height: 30px;
+  line-height: 28px;
   transition: ${slideInOpacityDuration}s opacity, ${slideInYDuration}s transform;
 
   :last-child {
     margin-bottom: 0;
   }
 
-  strong {
-    font-weight: 500;
+  @media (max-width: ${columnsWidthBreakpoint}px) {
+    margin-bottom: 16px;
   }
 `;
 
@@ -202,7 +213,7 @@ const StyledCheck = styled.div`
   width: 32px;
   height: 32px;
   margin: 0 16px 0 0;
-  opacity: 0.8;
+  opacity: 0.9;
 `;
 
 const StyledCircleSvg = styled.svg`

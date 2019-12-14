@@ -1,7 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ExternalLink } from './shared/ExternalLink';
-import { getSlideInStyle, NoWrap, slideInTransition } from './shared/ui';
+import {
+  contentMaxWidth,
+  getSlideInStyle,
+  mobileWidthBreakpoint,
+  NoWrap,
+  slideInTransition
+} from './shared/ui';
 import { useViewportEnter } from './shared/useViewportEnter';
 
 export function Hero() {
@@ -56,7 +62,7 @@ const Title = styled.div`
   letter-spacing: -0.03em;
   transition: ${slideInTransition};
 
-  @media (max-width: 400px) {
+  @media (max-width: ${mobileWidthBreakpoint}px) {
     font-size: 40px;
     line-height: 42px;
   }
@@ -69,7 +75,7 @@ const Subtitle = styled.div`
   color: #566d7e;
   transition: ${slideInTransition};
 
-  @media (max-width: 400px) {
+  @media (max-width: ${mobileWidthBreakpoint}px) {
     font-size: 28px;
     line-height: 32px;
   }
@@ -85,7 +91,7 @@ const Links = styled.div`
   line-height: 24px;
   transition: ${slideInTransition};
 
-  @media (max-width: 400px) {
+  @media (max-width: ${mobileWidthBreakpoint}px) {
     font-size: 20px;
     line-height: 20px;
     font-weight: 500;
@@ -102,7 +108,7 @@ const Link = styled(ExternalLink)`
   flex-direction: row;
   align-items: center;
 
-  @media (max-width: 400px) {
+  @media (max-width: ${mobileWidthBreakpoint}px) {
     font-weight: 500;
   }
 `;
@@ -128,7 +134,7 @@ const StyledChevron = styled.svg`
   margin: 0 0 0 0px;
   transform: translate(0, 2.5px);
 
-  @media (max-width: 400px) {
+  @media (max-width: ${mobileWidthBreakpoint}px) {
     width: 20px;
     height: 20px;
     transform: translate(0, 1.5px);
@@ -137,7 +143,7 @@ const StyledChevron = styled.svg`
 
 const PreviewContainer = styled.div`
   margin: 10vh 0 0 0;
-  max-width: 960px;
+  max-width: ${contentMaxWidth}px;
   transition: ${slideInTransition};
 `;
 

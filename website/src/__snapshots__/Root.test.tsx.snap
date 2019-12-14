@@ -1487,7 +1487,7 @@ Array [
             Visual TDD
           </h2>
           <div
-            className="sc-kpOJdX HDfHZ"
+            className="sc-kpOJdX gygUPp"
           >
             Develop one component at a time. Isolate the UI you're working on and iterate quickly. Reloading your whole app on every change is slowing you down!
           </div>
@@ -1560,7 +1560,7 @@ Array [
             Component library
           </h2>
           <div
-            className="sc-kpOJdX HDfHZ"
+            className="sc-kpOJdX gygUPp"
           >
             From blank states to edge cases, define component states to come back to. Your component library keeps you organized and provides a solid foundation of test cases.
           </div>
@@ -1588,7 +1588,7 @@ Array [
             Open platform
           </h2>
           <div
-            className="sc-kpOJdX HDfHZ"
+            className="sc-kpOJdX gygUPp"
           >
             React Cosmos can be used in powerful ways. Snapshot and visual regression tests are possible, as well as custom integrations tailored to your needs.
           </div>
@@ -1596,11 +1596,11 @@ Array [
       </div>
     </div>
     <div
-      className="sc-iwsKbI jnzQZF"
+      className="sc-iwsKbI gDXwpF"
       id="benefits"
     >
       <div
-        className="sc-gqjmRU eRzjZx"
+        className="sc-gqjmRU eEhvJr"
         style={
           Object {
             "background": "rgba(10, 46, 70, 0)",
@@ -1628,7 +1628,7 @@ Array [
         className="sc-gZMcBi eKJawt"
       >
         <div
-          className="sc-jTzLTM ipjBOS"
+          className="sc-jTzLTM kjEtiU"
           style={
             Object {
               "opacity": 0,
@@ -1638,7 +1638,7 @@ Array [
           }
         >
           <div
-            className="sc-fjdhpX LILsM"
+            className="sc-fjdhpX fhzOdl"
           >
             <svg
               className="sc-jzJRlG dLRtIt"
@@ -1681,7 +1681,7 @@ Array [
           </span>
         </div>
         <div
-          className="sc-jTzLTM ipjBOS"
+          className="sc-jTzLTM kjEtiU"
           style={
             Object {
               "opacity": 0,
@@ -1691,7 +1691,7 @@ Array [
           }
         >
           <div
-            className="sc-fjdhpX LILsM"
+            className="sc-fjdhpX fhzOdl"
           >
             <svg
               className="sc-jzJRlG dLRtIt"
@@ -1734,7 +1734,7 @@ Array [
           </span>
         </div>
         <div
-          className="sc-jTzLTM ipjBOS"
+          className="sc-jTzLTM kjEtiU"
           style={
             Object {
               "opacity": 0,
@@ -1744,7 +1744,7 @@ Array [
           }
         >
           <div
-            className="sc-fjdhpX LILsM"
+            className="sc-fjdhpX fhzOdl"
           >
             <svg
               className="sc-jzJRlG dLRtIt"
@@ -1787,7 +1787,7 @@ Array [
           </span>
         </div>
         <div
-          className="sc-jTzLTM ipjBOS"
+          className="sc-jTzLTM kjEtiU"
           style={
             Object {
               "opacity": 0,
@@ -1797,7 +1797,7 @@ Array [
           }
         >
           <div
-            className="sc-fjdhpX LILsM"
+            className="sc-fjdhpX fhzOdl"
           >
             <svg
               className="sc-jzJRlG dLRtIt"
@@ -1840,7 +1840,7 @@ Array [
           </span>
         </div>
         <div
-          className="sc-jTzLTM ipjBOS"
+          className="sc-jTzLTM kjEtiU"
           style={
             Object {
               "opacity": 0,
@@ -1850,7 +1850,7 @@ Array [
           }
         >
           <div
-            className="sc-fjdhpX LILsM"
+            className="sc-fjdhpX fhzOdl"
           >
             <svg
               className="sc-jzJRlG dLRtIt"
@@ -1893,7 +1893,7 @@ Array [
           </span>
         </div>
         <div
-          className="sc-jTzLTM ipjBOS"
+          className="sc-jTzLTM kjEtiU"
           style={
             Object {
               "opacity": 0,
@@ -1903,7 +1903,7 @@ Array [
           }
         >
           <div
-            className="sc-fjdhpX LILsM"
+            className="sc-fjdhpX fhzOdl"
           >
             <svg
               className="sc-jzJRlG dLRtIt"
@@ -2087,7 +2087,7 @@ Array [
             className="sc-fYxtnH sc-tilXH kbddkM"
           />
           <div
-            className="sc-ktHwxA dOUxFt"
+            className="sc-ktHwxA kKFnTI"
           >
             You're doing important work. 
             <span
@@ -2101,7 +2101,7 @@ Array [
           />
         </div>
         <div
-          className="sc-cIShpX jNhwBw"
+          className="sc-cIShpX iwJAQh"
           style={
             Object {
               "opacity": 0,
@@ -2183,7 +2183,7 @@ Array [
           className="sc-htoDjs dMsDce"
         >
           <a
-            className="sc-dnqmqq eOFpwu"
+            className="sc-dnqmqq VZoTk"
             href="https://github.com/sponsors/skidding"
             rel="noopener noreferrer"
             target="_blank"

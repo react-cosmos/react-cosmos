@@ -8,6 +8,10 @@ export const headerBg = `rgba(255, 255, 255, 0.9)`;
 export const headerBorderBottom = `1px solid rgba(10, 46, 70, 0.24)`;
 export const headerBackdropFilter = `saturate(180%) blur(15px)`;
 
+export const contentMaxWidth = 960;
+export const columnsWidthBreakpoint = 791;
+export const mobileWidthBreakpoint = 400;
+
 export const slideInYOffset = 40;
 export const slideInOpacityDuration = 0.8;
 export const slideInYDuration = 1.2;
@@ -23,7 +27,7 @@ export function getSlideInStyle(visible: boolean, nth: number = 0) {
 }
 
 export const Center = styled.div`
-  max-width: 960px;
+  max-width: ${contentMaxWidth}px;
   margin: 0 auto;
 `;
 
