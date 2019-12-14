@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Footer } from './Footer';
 import { MinimizedHeader } from './Header/MinimizedHeader';
 import {
-  Center,
   grayToWhiteGradient,
   headerBackdropFilter,
   headerBg,
@@ -20,9 +19,7 @@ export function Page({ children }: Props) {
       <SimpleHeader>
         <MinimizedHeader visible={true} />
       </SimpleHeader>
-      <Gradient1>
-        <Center>{children}</Center>
-      </Gradient1>
+      <Gradient1>{children}</Gradient1>
       <Footer />
     </>
   );
@@ -41,6 +38,5 @@ const SimpleHeader = styled.div`
 `;
 
 const Gradient1 = styled.div`
-  padding: calc(81px + 20vh) 0 20vh 0;
   background: ${grayToWhiteGradient};
 `;

@@ -13,7 +13,7 @@ export function Root() {
   return (
     <>
       <Header />
-      <Gradient1 id="gradient1">
+      <Gradient1 id="index">
         <Features />
         <Benefits />
       </Gradient1>

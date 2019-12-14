@@ -1,29 +1,51 @@
 import React from 'react';
+import styled from 'styled-components';
+import { About } from './About';
+import { Benefits } from './Benefits';
 import { ComponentLibrary } from './Features/ComponentLibrary';
 import { OpenPlatform } from './Features/OpenPlatform';
 import { VisualTdd } from './Features/VisualTdd';
 import { Page } from './Page';
-import { Benefits } from './Benefits';
+import { contentMaxWidth } from './shared/ui';
+
+const Center = styled.div`
+  max-width: ${contentMaxWidth}px;
+  margin: 0 auto;
+  padding: calc(81px + 20vh) 0 20vh 0;
+`;
 
 export default {
-  'Visual TDD': (
+  'visual-tdd': (
     <Page>
-      <VisualTdd />
+      <Center>
+        <VisualTdd />
+      </Center>
     </Page>
   ),
-  'Component library': (
+  'component-library': (
     <Page>
-      <ComponentLibrary />
+      <Center>
+        <ComponentLibrary />
+      </Center>
     </Page>
   ),
-  'Open platform': (
+  'open-platform': (
     <Page>
-      <OpenPlatform />
+      <Center>
+        <OpenPlatform />
+      </Center>
     </Page>
   ),
-  Benefits: (
+  benefits: (
     <Page>
-      <Benefits />
+      <Center>
+        <Benefits />
+      </Center>
+    </Page>
+  ),
+  about: (
+    <Page>
+      <About />
     </Page>
   )
 };

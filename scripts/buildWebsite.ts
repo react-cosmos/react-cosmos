@@ -36,6 +36,11 @@ process.env.NODE_ENV = 'production';
     title: `Build UIs at scale · React Cosmos`,
     description: `Prototype and iterate quickly. Debug with ease. Create reusable components. Share UI across projects. Publish component libraries. Maintain quality at scale.`
   });
+  await createPage({
+    pageName: 'about',
+    title: `About React Cosmos`,
+    description: `I’m Ovidiu, a passionate developer from Romania. Obsessed with details, I made React Cosmos for like-minded developers.`
+  });
 
   // Build source
   await buildWebpack();
