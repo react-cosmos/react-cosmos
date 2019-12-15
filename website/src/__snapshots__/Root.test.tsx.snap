@@ -15,18 +15,22 @@ Array [
     }
   >
     <div
-      className="sc-cJSrbW dJwawq"
+      className="sc-cJSrbW eQVQaf"
       style={
         Object {
           "bottom": 0,
-          "height": 1366,
           "left": 0,
-          "width": 1024,
         }
       }
     >
       <svg
-        className="sc-iRbamj gVbakW"
+        className="sc-iRbamj imzzRC"
+        style={
+          Object {
+            "height": 1366,
+            "width": 1024,
+          }
+        }
         viewBox="0 -640 768 768"
       >
         <defs>

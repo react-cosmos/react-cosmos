@@ -58,14 +58,14 @@ export function Header() {
     >
       <CosmonautContainer
         key="cosmonaut"
-        style={{
-          width: cosmonautViewport.width,
-          height: cosmonautViewport.height,
-          bottom: vPadding,
-          left: centerPadding + hPadding
-        }}
+        style={{ bottom: vPadding, left: centerPadding + hPadding }}
       >
-        <Cosmonaut cropRatio={cropRatio} minimizeRatio={minimizeRatio} />
+        <Cosmonaut
+          cropRatio={cropRatio}
+          minimizeRatio={minimizeRatio}
+          width={cosmonautViewport.width}
+          height={cosmonautViewport.height}
+        />
       </CosmonautContainer>
       {cropRatio < 1 && (
         <>
@@ -153,5 +153,5 @@ const CosmonautContainer = styled.div`
   position: absolute;
   bottom: 0;
   left: 0;
-  will-change: width, height, bottom, left;
+  will-change: bottom, left;
 `;
