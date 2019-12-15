@@ -4,7 +4,7 @@
 
 # React Cosmos
 
-[![npm version](https://img.shields.io/npm/v/react-cosmos/next.svg?style=flat)](https://www.npmjs.com/package/react-cosmos) [![CircleCI Status](https://circleci.com/gh/react-cosmos/react-cosmos.svg?style=shield)](https://circleci.com/gh/react-cosmos/react-cosmos) [![Twitter](https://img.shields.io/twitter/follow/ReactCosmos.svg?color=%2338A1F3&label=twitter&style=flat)](https://twitter.com/ReactCosmos) [![Slack](https://join-react-cosmos.now.sh/badge.svg)](https://join-react-cosmos.now.sh/) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/react-cosmos/react-cosmos/blob/master/CONTRIBUTING.md#how-to-contribute)
+[![npm version](https://img.shields.io/npm/v/react-cosmos/latest.svg?style=flat)](https://www.npmjs.com/package/react-cosmos) [![CircleCI Status](https://circleci.com/gh/react-cosmos/react-cosmos.svg?style=shield)](https://circleci.com/gh/react-cosmos/react-cosmos) [![Twitter](https://img.shields.io/twitter/follow/ReactCosmos.svg?color=%2338A1F3&label=twitter&style=flat)](https://twitter.com/ReactCosmos) [![Slack](https://join-react-cosmos.now.sh/badge.svg)](https://join-react-cosmos.now.sh/) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/react-cosmos/react-cosmos/blob/master/CONTRIBUTING.md#how-to-contribute)
 
 > [Become a Sponsor](https://github.com/users/skidding/sponsorship) to invest in the future of React Cosmos
 
@@ -42,9 +42,9 @@ The [example package](example) is a useful complement to this guide.
 
 ```bash
 # Using npm
-npm i --D react-cosmos@next
+npm i --D react-cosmos
 # or Yarn
-yarn add --dev react-cosmos@next
+yarn add --dev react-cosmos
 ```
 
 2\. **Create package.json scripts**
@@ -67,7 +67,7 @@ yarn cosmos
 
 🚀 **[localhost:5000](http://localhost:5000)**
 
-> You may also run `npx react-cosmos@next` in your project without installing any deps.
+> You may also run `npx react-cosmos` in your project without installing any deps.
 
 4\. **Create your first fixture**
 
