@@ -79,6 +79,8 @@ const RocketContainer = styled.div`
   border-radius: 50%;
   transition: background 0.4s;
   overflow: hidden;
+  /* https://stackoverflow.com/a/58283449/128816 */
+  transform: translateZ(0);
 
   @media (max-width: ${columnsWidthBreakpoint}px) {
     margin-top: 64px;
