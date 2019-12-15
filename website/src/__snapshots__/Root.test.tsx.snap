@@ -1600,7 +1600,7 @@ Array [
       id="benefits"
     >
       <div
-        className="sc-gqjmRU eEhvJr"
+        className="sc-gqjmRU bbsVLg"
         style={
           Object {
             "background": "rgba(10, 46, 70, 0)",
@@ -1612,8 +1612,8 @@ Array [
           className="sc-VigVT fBxUsG"
           style={
             Object {
-              "bottom": -125,
-              "left": -120,
+              "left": -74,
+              "top": 170,
               "transitionDelay": "0s",
             }
           }
