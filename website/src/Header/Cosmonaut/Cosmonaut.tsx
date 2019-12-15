@@ -9,14 +9,16 @@ import { Tube } from './Tube';
 type Props = {
   cropRatio: number;
   minimizeRatio: number;
+  width: number;
+  height: number;
 };
 
-export function Cosmonaut({ cropRatio, minimizeRatio }: Props) {
+export function Cosmonaut({ cropRatio, minimizeRatio, width, height }: Props) {
   const viewBox = minimizeRatio > 0 ? `0 0 256 256` : `0 -640 768 768`;
   const skyMaskRadius = minimizeRatio > 0 ? 128 : getSkyMaskRadius(cropRatio);
   const offset = getSkyOffset(minimizeRatio);
   return (
-    <SvgContainer viewBox={viewBox}>
+    <SvgContainer viewBox={viewBox} style={{ width, height }}>
       <defs>
         <clipPath id="skyMask">
           <SkyMaskCircle cx="128" cy="128" r={skyMaskRadius} />
@@ -63,8 +65,8 @@ function getSkyOffset(minimizeRatio: number) {
 }
 
 const SvgContainer = styled.svg`
-  width: 100%;
-  height: 100%;
+  display: block;
+  will-change: width, height;
 `;
 
 const StyledSky = styled.rect`

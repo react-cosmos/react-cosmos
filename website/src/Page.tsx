@@ -22,7 +22,7 @@ export function Page({ children }: Props) {
     <>
       <PageHeader>
         <CosmonautContainer style={{ left: getCosmonautLeft(windowViewport) }}>
-          <Cosmonaut cropRatio={1} minimizeRatio={1} />
+          <Cosmonaut cropRatio={1} minimizeRatio={1} width={64} height={64} />
         </CosmonautContainer>
         <MinimizedHeader visible={true} />
       </PageHeader>
