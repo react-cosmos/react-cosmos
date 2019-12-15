@@ -1183,6 +1183,22 @@ Array [
               stopColor="#a3bfd3"
             />
           </radialGradient>
+          <radialGradient
+            cx="55%"
+            cy="55%"
+            id="helmetGrad2"
+            r={0.55}
+          >
+            <stop
+              offset="82%"
+              stopColor="#a3bfd3"
+            />
+            <stop
+              offset="98%"
+              stopColor="#a3bfd3"
+              stopOpacity={0}
+            />
+          </radialGradient>
           <linearGradient
             id="helmetGlassGrad"
             x1="0%"
@@ -1199,21 +1215,6 @@ Array [
               stopColor="#265980"
             />
           </linearGradient>
-          <filter
-            height="200%"
-            id="helmentGlassShadow"
-            width="200%"
-            x="-50%"
-            y="-50%"
-          >
-            <feDropShadow
-              dx="-5"
-              dy="-3"
-              floodColor="rgb(163,192,211)"
-              floodOpacity={0.75}
-              stdDeviation="2"
-            />
-          </filter>
           <clipPath
             id="helmentGlassMask"
           >
@@ -1284,10 +1285,16 @@ Array [
           ry={46.5}
         />
         <ellipse
+          cx={202}
+          cy={67}
+          fill="url(#helmetGrad2)"
+          rx={37}
+          ry={32.5}
+        />
+        <ellipse
           cx={208.5}
           cy={72}
           fill="#0a2e46"
-          filter="url(#helmentGlassShadow)"
           rx={37}
           ry={31.5}
           stroke="url(#helmetGlassGrad)"
