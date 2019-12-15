@@ -74,10 +74,13 @@ const List = styled.div`
 const RocketContainer = styled.div`
   flex-shrink: 0;
   margin: 0 64px 0 0;
-  padding: 64px;
+  width: 192px;
+  height: 192px;
   border-radius: 50%;
-  clip-path: circle(100px at 114px 114px);
   transition: background 0.4s;
+  overflow: hidden;
+  /* https://stackoverflow.com/a/58283449/128816 */
+  transform: translateZ(0);
 
   @media (max-width: ${columnsWidthBreakpoint}px) {
     margin-top: 64px;
@@ -90,12 +93,13 @@ type RocketProps = {
 };
 
 function Rocket({ visible }: RocketProps) {
+  const offset = visible ? 0 : 120;
   return (
     <StyledRocketSvg
       viewBox="0 0 24 24"
       style={{
-        left: visible ? 0 : -120,
-        bottom: visible ? -5 : -125,
+        left: 46 - offset,
+        top: 50 + offset,
         transitionDelay: visible ? '1.2s' : '0s'
       }}
     >

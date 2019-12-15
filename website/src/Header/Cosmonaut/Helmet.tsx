@@ -8,6 +8,10 @@ export function Helmet() {
           <stop offset="75%" stopColor="#eaedef" />
           <stop offset="100%" stopColor="#a3bfd3" />
         </radialGradient>
+        <radialGradient id="helmetGrad2" cx="55%" cy="55%" r={0.55}>
+          <stop offset="82%" stopColor="#a3bfd3" />
+          <stop offset="98%" stopColor="#a3bfd3" stopOpacity={0} />
+        </radialGradient>
         <linearGradient
           id="helmetGlassGrad"
           x1="0%"
@@ -18,21 +22,6 @@ export function Helmet() {
           <stop offset="0%" stopColor="#092d45" />
           <stop offset="100%" stopColor="#265980" />
         </linearGradient>
-        <filter
-          id="helmentGlassShadow"
-          x="-50%"
-          width="200%"
-          y="-50%"
-          height="200%"
-        >
-          <feDropShadow
-            dx="-5"
-            dy="-3"
-            stdDeviation="2"
-            floodColor="rgb(163,192,211)"
-            floodOpacity={0.75}
-          />
-        </filter>
         <clipPath id="helmentGlassMask">
           <ellipse cx={208.5} cy={72} rx={36} ry={30.5} />
         </clipPath>
@@ -50,6 +39,7 @@ export function Helmet() {
       </defs>
       <ellipse cx="200" cy="54" rx="50" ry="47.5" fill="#c2d4df" />
       <ellipse cx={201} cy={55} rx={49.5} ry={46.5} fill="url(#helmetGrad)" />
+      <ellipse cx={202} cy={67} rx={37} ry={32.5} fill="url(#helmetGrad2)" />
       <ellipse
         cx={208.5}
         cy={72}
@@ -58,7 +48,6 @@ export function Helmet() {
         fill="#0a2e46"
         strokeWidth="2"
         stroke="url(#helmetGlassGrad)"
-        filter="url(#helmentGlassShadow)"
       />
       <ellipse
         cx={212.5}

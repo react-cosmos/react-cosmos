@@ -33,11 +33,14 @@ function getElementByPath(path: string) {
   return null;
 }
 
+// https://stackoverflow.com/questions/52276194/window-scrollto-with-options-not-working-on-microsoft-edge
+const supportsNativeSmoothScroll =
+  'scrollBehavior' in document.documentElement.style;
+
 function getElementTop(element: HTMLElement) {
   const availWindowHeight = window.innerHeight - HEADER_HEIGHT;
   const elRect = element.getBoundingClientRect();
-  const elScrollTop =
-    elRect.top + document.documentElement.scrollTop - HEADER_HEIGHT;
+  const elScrollTop = elRect.top + pageYOffset - HEADER_HEIGHT;
 
   if (elRect.height >= availWindowHeight) {
     return Math.ceil(elScrollTop);
@@ -48,5 +51,9 @@ function getElementTop(element: HTMLElement) {
 }
 
 function scrollTo(top: number) {
-  window.scroll({ top, behavior: 'smooth' });
+  if (supportsNativeSmoothScroll) {
+    window.scrollTo({ top, behavior: 'smooth' });
+  } else {
+    window.scroll(0, top);
+  }
 }
