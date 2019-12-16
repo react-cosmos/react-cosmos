@@ -28,7 +28,7 @@ export const InternalLink = ({ children, to, className, style }: Props) => {
 };
 
 function getElementByPath(path: string) {
-  if (path === '/') return document.getElementById('index');
+  if (path === '/') return document.getElementById('splash-screen');
   if (path.indexOf('/') === 0) return document.getElementById(path.substr(1));
   return null;
 }

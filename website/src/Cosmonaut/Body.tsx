@@ -108,7 +108,7 @@ export const Body = React.memo(function Body() {
 
       <defs>
         <clipPath id="torsoMask">
-          <path d={torsoPath} fill="url(#torsoGrad)" />
+          <path d={torsoPath} />
         </clipPath>
         <linearGradient id="torsoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="70%" stopColor="#eaedef" />
@@ -128,7 +128,7 @@ export const Body = React.memo(function Body() {
       <path d={torsoPath3} fill="url(#torsoGrad3)" clipPath="url(#torsoMask)" />
       <path
         d={torsoPath}
-        fill="transparent"
+        fill="none"
         strokeWidth="4"
         stroke="#c5d5df"
         clipPath="url(#torsoMask)"

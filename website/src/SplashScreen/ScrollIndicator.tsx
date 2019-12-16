@@ -1,31 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Viewport, getCosmonautSize } from './shared';
-
-type ScrollIndicatorSizes = {
-  bottom: number;
-  iconSize: number;
-};
+import { getCosmonautSize, Viewport } from './shared';
 
 type Props = {
   windowViewport: Viewport;
 };
 
-export function HeaderScrollIndicator({ windowViewport }: Props) {
-  const { bottom, iconSize } = React.useMemo(
-    () => getScrollIndicatorSizes(windowViewport),
-    [windowViewport]
-  );
-  return <ChevronsDownIcon size={iconSize} style={{ bottom }} />;
-}
-
-function getScrollIndicatorSizes(
-  windowViewport: Viewport
-): ScrollIndicatorSizes {
+// TODO: Scroll on click
+export function ScrollIndicator({ windowViewport }: Props) {
   const cosmonautSize = getCosmonautSize(windowViewport);
   const bottom = 8 + Math.round(cosmonautSize / 32);
   const iconSize = 16 + Math.round(cosmonautSize / 16);
-  return { bottom, iconSize };
+  return <ChevronsDownIcon size={iconSize} style={{ bottom }} />;
 }
 
 type ChevronsDownIconProps = {
