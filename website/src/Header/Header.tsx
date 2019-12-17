@@ -3,15 +3,23 @@ import styled from 'styled-components';
 import { ExternalLink } from '../shared/ExternalLink';
 import { Heart } from '../shared/Heart';
 import { InternalLink } from '../shared/InternalLink';
-import { useViewportEnter } from '../shared/useViewportEnter';
 
 const centerHeaderBreakpoint = 383;
 const maxHeaderWidth = 640;
 
-export function StickyHeader() {
-  const [ref, entered] = useViewportEnter(0.5);
+type Props = {
+  visible: boolean;
+  fixed: boolean;
+};
+
+export function Header({ visible, fixed }: Props) {
   return (
-    <Container ref={ref} style={{ opacity: entered ? 1 : 0 }}>
+    <Container
+      style={{
+        position: fixed ? 'fixed' : 'absolute',
+        opacity: visible ? 1 : 0
+      }}
+    >
       <Content>
         <CosmonautContainer>
           <CosmonautButton to="/" />
@@ -39,13 +47,13 @@ export function StickyHeader() {
 }
 
 const Container = styled.div`
-  position: sticky;
   z-index: 1;
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.9);
   border-bottom: 1px solid rgba(10, 46, 70, 0.24);
+  backdrop-filter: saturate(180%) blur(15px);
   transition: 0.4s opacity;
 `;
 

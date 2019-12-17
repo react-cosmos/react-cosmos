@@ -6,20 +6,16 @@ import { Features } from './Features/Features';
 import { Footer } from './Footer/Footer';
 import { Hero } from './Hero';
 import { Quote } from './Quote';
-import {
-  bgGray,
-  grayToWhiteGradient,
-  whiteToGrayGradient
-} from './shared/colors';
+import { grayToWhiteGradient, whiteToGrayGradient } from './shared/colors';
 import { SplashScreen } from './SplashScreen/SplashScreen';
-import { StickyHeader } from './StickyHeader/StickyHeader';
+import { StickyHeader } from './Header/StickyHeader';
 
 export function Root() {
   return (
-    <Container>
+    <>
       <SplashScreen />
-      <StickyHeader />
-      <Gradient1>
+      <Gradient1 id="gradient1">
+        <StickyHeader />
         <Features />
         <Benefits />
       </Gradient1>
@@ -29,15 +25,12 @@ export function Root() {
       </Gradient2>
       <About />
       <Footer />
-    </Container>
+    </>
   );
 }
 
-const Container = styled.div`
-  background: ${bgGray};
-`;
-
 const Gradient1 = styled.div`
+  position: relative;
   background: ${grayToWhiteGradient};
 `;
 

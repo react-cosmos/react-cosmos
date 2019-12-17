@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Footer } from './Footer/Footer';
-import { bgGray, grayToWhiteGradient } from './shared/colors';
-import { StickyHeader } from './StickyHeader/StickyHeader';
+import { grayToWhiteGradient } from './shared/colors';
+import { Header } from './Header/Header';
 
 type Props = {
   children: React.ReactNode;
@@ -10,17 +10,13 @@ type Props = {
 
 export function Page({ children }: Props) {
   return (
-    <Container>
-      <StickyHeader />
+    <>
+      <Header visible={true} fixed={true} />
       <Gradient1>{children}</Gradient1>
       <Footer />
-    </Container>
+    </>
   );
 }
-
-const Container = styled.div`
-  background: ${bgGray};
-`;
 
 const Gradient1 = styled.div`
   background: ${grayToWhiteGradient};
