@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { scrollToElement } from '../shared/scrollToElement';
 import { getCosmonautSize, Viewport } from '../shared/viewport';
 
 type Props = {
@@ -11,30 +12,30 @@ export function ScrollIndicator({ windowViewport }: Props) {
   const cosmonautSize = getCosmonautSize(windowViewport);
   const bottom = 8 + Math.round(cosmonautSize / 32);
   const iconSize = 16 + Math.round(cosmonautSize / 16);
-  return <ChevronsDownIcon size={iconSize} style={{ bottom }} />;
+
+  return (
+    <StyledChevronsDownIcon
+      width={iconSize}
+      height={iconSize}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#fff"
+      strokeWidth="1.5"
+      strokeLinecap="square"
+      strokeLinejoin="round"
+      style={{ bottom }}
+      onClick={scrollToFeatures}
+    >
+      <polyline points="7 13 12 18 17 13"></polyline>
+      <polyline points="7 6 12 11 17 6"></polyline>
+    </StyledChevronsDownIcon>
+  );
 }
 
-type ChevronsDownIconProps = {
-  size: number;
-  style?: {};
-};
-
-const ChevronsDownIcon = ({ size, style }: ChevronsDownIconProps) => (
-  <StyledChevronsDownIcon
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="#fff"
-    strokeWidth="1.5"
-    strokeLinecap="square"
-    strokeLinejoin="round"
-    style={style}
-  >
-    <polyline points="7 13 12 18 17 13"></polyline>
-    <polyline points="7 6 12 11 17 6"></polyline>
-  </StyledChevronsDownIcon>
-);
+function scrollToFeatures() {
+  const features = document.getElementById('features');
+  if (features) scrollToElement(features);
+}
 
 const StyledChevronsDownIcon = styled.svg`
   position: absolute;
@@ -49,6 +50,7 @@ const StyledChevronsDownIcon = styled.svg`
   align-items: center;
   user-select: none;
   animation: pulse 4s infinite ease-in-out;
+  cursor: pointer;
 
   @keyframes pulse {
     0% {

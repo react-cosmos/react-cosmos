@@ -1401,9 +1401,10 @@ exports[`renders correctly 1`] = `
       </a>
     </div>
     <svg
-      className="sc-kgAjT erUDrs"
+      className="sc-kgAjT jVWeAy"
       fill="none"
       height={37}
+      onClick={[Function]}
       stroke="#fff"
       strokeLinecap="square"
       strokeLinejoin="round"
@@ -1516,6 +1517,7 @@ exports[`renders correctly 1`] = `
   >
     <div
       className="sc-eNQAEJ jaKwmt"
+      id="features"
     >
       <div
         className="sc-chPdSV fYvLGZ"

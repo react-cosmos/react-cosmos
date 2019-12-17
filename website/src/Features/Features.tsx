@@ -7,7 +7,7 @@ import { VisualTdd } from './VisualTdd';
 
 export function Features() {
   return (
-    <Container>
+    <Container id="features">
       <VisualTdd />
       <ComponentLibrary />
       <OpenPlatform />
