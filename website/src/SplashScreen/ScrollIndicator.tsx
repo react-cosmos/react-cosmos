@@ -7,7 +7,6 @@ type Props = {
   windowViewport: Viewport;
 };
 
-// TODO: Scroll on click
 export function ScrollIndicator({ windowViewport }: Props) {
   const cosmonautSize = getCosmonautSize(windowViewport);
   const bottom = 8 + Math.round(cosmonautSize / 32);
