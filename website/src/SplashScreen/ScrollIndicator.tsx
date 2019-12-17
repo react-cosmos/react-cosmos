@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { scrollToElement } from '../shared/scrollToElement';
+import { scrollTo } from '../shared/scrollTo';
 import { getCosmonautSize, Viewport } from '../shared/viewport';
 
 type Props = {
@@ -33,7 +33,10 @@ export function ScrollIndicator({ windowViewport }: Props) {
 
 function scrollToFeatures() {
   const features = document.getElementById('features');
-  if (features) scrollToElement(features);
+  if (features) {
+    const elRect = features.getBoundingClientRect();
+    scrollTo(elRect.top);
+  }
 }
 
 const StyledChevronsDownIcon = styled.svg`

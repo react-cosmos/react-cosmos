@@ -1,5 +1,5 @@
 import React from 'react';
-import { scrollToElement } from './scrollToElement';
+import { scrollTo } from './scrollTo';
 
 type Props = {
   children?: React.ReactNode;
@@ -13,7 +13,7 @@ export const InternalLink = ({ children, to, className, style }: Props) => {
     const element = getElementByPath(to);
     if (element) {
       e.preventDefault();
-      scrollToElement(element);
+      scrollTo(getCenteredElementTop(element));
     } else {
       // Follow link natively
     }
@@ -30,4 +30,19 @@ function getElementByPath(path: string) {
   if (path === '/') return document.getElementById('splash-screen');
   if (path.indexOf('/') === 0) return document.getElementById(path.substr(1));
   return null;
+}
+
+const headerHeight = 81;
+
+function getCenteredElementTop(element: HTMLElement) {
+  const availWindowHeight = window.innerHeight - headerHeight;
+  const elRect = element.getBoundingClientRect();
+  const elScrollTop = elRect.top + pageYOffset - headerHeight;
+
+  if (elRect.height >= availWindowHeight) {
+    return Math.ceil(elScrollTop);
+  }
+
+  const yPadding = (availWindowHeight - elRect.height) / 2;
+  return Math.ceil(elScrollTop - yPadding);
 }
