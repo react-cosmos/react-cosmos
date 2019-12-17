@@ -67,6 +67,11 @@ const Title = styled.div`
   font-weight: 500;
   line-height: 56px;
   transition: ${slideInTransition};
+
+  @media (max-width: ${columnsWidthBreakpoint}px) {
+    font-size: 40px;
+    line-height: 46px;
+  }
 `;
 
 const Subtitle = styled.div`
@@ -79,6 +84,12 @@ const Subtitle = styled.div`
 
   strong {
     font-weight: 500;
+  }
+
+  @media (max-width: ${columnsWidthBreakpoint}px) {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 34px;
   }
 `;
 
