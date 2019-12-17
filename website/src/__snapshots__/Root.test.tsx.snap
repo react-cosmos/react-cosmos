@@ -1432,7 +1432,7 @@ Array [
         Object {
           "opacity": 0,
           "position": "absolute",
-          "top": 768,
+          "top": "auto",
         }
       }
     >
