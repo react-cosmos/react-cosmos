@@ -1424,95 +1424,99 @@ Array [
     </svg>
   </div>,
   <div
-    className="sc-cIShpX DXQjA"
+    className="sc-kafWEX fnGoLD"
     id="gradient1"
   >
     <div
-      className="sc-dNLxif fzKbOs"
-      style={
-        Object {
-          "opacity": 0,
-          "position": "absolute",
-        }
-      }
+      className="sc-cIShpX cjwjgb"
     >
       <div
-        className="sc-jqCOkK dSsYOL"
+        className="sc-dNLxif fzKbOs"
+        style={
+          Object {
+            "opacity": 0,
+            "position": "absolute",
+          }
+        }
       >
         <div
-          className="sc-uJMKN egYXHq"
+          className="sc-jqCOkK dSsYOL"
         >
-          <a
-            className="sc-bbmXgH efkFbs"
-            href="/"
-            onClick={[Function]}
-          />
-        </div>
-        <div
-          className="sc-jnlKLf kutTnP"
-        >
-          <h1
-            className="sc-fYxtnH bKBPMe"
+          <div
+            className="sc-uJMKN egYXHq"
           >
             <a
+              className="sc-bbmXgH efkFbs"
               href="/"
               onClick={[Function]}
-            >
-              React Cosmos
-            </a>
-          </h1>
-          <div
-            className="sc-tilXH krrXQb"
-          >
-            <a
-              className="sc-hEsumM eAimvk"
-              href="https://github.com/react-cosmos/react-cosmos"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              GitHub
-            </a>
-            <span
-              className="sc-ktHwxA ecQZsU"
-            >
-              /
-            </span>
-            <a
-              className="sc-hEsumM eAimvk"
-              href="https://join-react-cosmos.now.sh"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Slack
-            </a>
-            <span
-              className="sc-ktHwxA ecQZsU"
-            >
-              /
-            </span>
-            <a
-              className="sc-hEsumM eAimvk"
-              href="https://twitter.com/ReactCosmos"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Twitter
-            </a>
-          </div>
-        </div>
-        <a
-          className="sc-gGBfsJ fnWmwR"
-          href="/about"
-          onClick={[Function]}
-        >
-          <svg
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
             />
-          </svg>
-        </a>
+          </div>
+          <div
+            className="sc-jnlKLf kutTnP"
+          >
+            <h1
+              className="sc-fYxtnH bKBPMe"
+            >
+              <a
+                href="/"
+                onClick={[Function]}
+              >
+                React Cosmos
+              </a>
+            </h1>
+            <div
+              className="sc-tilXH krrXQb"
+            >
+              <a
+                className="sc-hEsumM eAimvk"
+                href="https://github.com/react-cosmos/react-cosmos"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                GitHub
+              </a>
+              <span
+                className="sc-ktHwxA ecQZsU"
+              >
+                /
+              </span>
+              <a
+                className="sc-hEsumM eAimvk"
+                href="https://join-react-cosmos.now.sh"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Slack
+              </a>
+              <span
+                className="sc-ktHwxA ecQZsU"
+              >
+                /
+              </span>
+              <a
+                className="sc-hEsumM eAimvk"
+                href="https://twitter.com/ReactCosmos"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Twitter
+              </a>
+            </div>
+          </div>
+          <a
+            className="sc-gGBfsJ fnWmwR"
+            href="/about"
+            onClick={[Function]}
+          >
+            <svg
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
     <div
@@ -2021,7 +2025,7 @@ Array [
     </div>
   </div>,
   <div
-    className="sc-kafWEX kKpMbN"
+    className="sc-feJyhm euVSDG"
   >
     <div
       className="sc-cvbbAY csLNkW"

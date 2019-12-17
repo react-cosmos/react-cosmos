@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import { Header } from './Header';
 
 export function StickyHeader() {
@@ -26,7 +27,11 @@ export function StickyHeader() {
     };
   }, [gradientRef]);
 
-  return <Header visible={visible} fixed={fixed} />;
+  return (
+    <Container>
+      <Header visible={visible} fixed={fixed} />
+    </Container>
+  );
 }
 
 function useGradientRef() {
@@ -36,3 +41,7 @@ function useGradientRef() {
   }, []);
   return ref;
 }
+
+const Container = styled.div`
+  position: relative;
+`;

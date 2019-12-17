@@ -33,10 +33,7 @@ export function ScrollIndicator({ windowViewport }: Props) {
 
 function scrollToFeatures() {
   const features = document.getElementById('features');
-  if (features) {
-    const elRect = features.getBoundingClientRect();
-    scrollTo(elRect.top);
-  }
+  if (features) scrollTo(features.offsetTop);
 }
 
 const StyledChevronsDownIcon = styled.svg`

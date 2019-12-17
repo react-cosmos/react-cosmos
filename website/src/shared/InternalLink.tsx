@@ -37,7 +37,7 @@ const headerHeight = 81;
 function getCenteredElementTop(element: HTMLElement) {
   const availWindowHeight = window.innerHeight - headerHeight;
   const elRect = element.getBoundingClientRect();
-  const elScrollTop = elRect.top + pageYOffset - headerHeight;
+  const elScrollTop = element.offsetTop - headerHeight;
 
   if (elRect.height >= availWindowHeight) {
     return Math.ceil(elScrollTop);

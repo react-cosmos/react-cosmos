@@ -30,7 +30,6 @@ export function Root() {
 }
 
 const Gradient1 = styled.div`
-  position: relative;
   background: ${grayToWhiteGradient};
 `;
 
