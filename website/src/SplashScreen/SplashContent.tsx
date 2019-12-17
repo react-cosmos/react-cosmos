@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { ExternalLink } from '../shared/ExternalLink';
 import { slideInOpacityDuration, slideInYDuration } from '../shared/ui';
-import { getCosmonautSize, Viewport } from './shared';
+import { getCosmonautSize, Viewport } from '../shared/viewport';
 
 type Props = {
   windowViewport: Viewport;

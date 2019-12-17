@@ -1319,7 +1319,7 @@ exports[`renders correctly 1`] = `
       </svg>
     </div>
     <div
-      className="sc-cJSrbW bQERyj"
+      className="sc-ksYbfQ fHMaMy"
       style={
         Object {
           "bottom": 0,
@@ -1330,7 +1330,7 @@ exports[`renders correctly 1`] = `
       }
     >
       <h1
-        className="sc-ksYbfQ idtcGU"
+        className="sc-hmzhuo crCsjE"
         style={
           Object {
             "fontSize": 62,
@@ -1344,7 +1344,7 @@ exports[`renders correctly 1`] = `
         .
       </h1>
       <p
-        className="sc-hmzhuo hGUzBT"
+        className="sc-frDJqD liVVBB"
         style={
           Object {
             "fontSize": 29,
@@ -1359,7 +1359,7 @@ exports[`renders correctly 1`] = `
         a tool for ambitious UI developers
       </p>
       <a
-        className="sc-frDJqD gcCnPe"
+        className="sc-kvZOFW lmwhvy"
         href="https://github.com/react-cosmos/react-cosmos"
         rel="noopener noreferrer"
         style={
@@ -1378,7 +1378,7 @@ exports[`renders correctly 1`] = `
           GitHub
         </strong>
         <svg
-          className="sc-kvZOFW gYCEaJ"
+          className="sc-hqyNC iHYXFP"
           fill="none"
           height={22}
           stroke="currentColor"
@@ -1401,7 +1401,7 @@ exports[`renders correctly 1`] = `
       </a>
     </div>
     <svg
-      className="sc-hqyNC jYmJje"
+      className="sc-cJSrbW kAlXuv"
       fill="none"
       height={37}
       stroke="#fff"

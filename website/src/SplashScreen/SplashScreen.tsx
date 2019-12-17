@@ -1,27 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FullScreenCosmonaut } from '../Cosmonaut/FullScreenCosmonaut';
-import { SplashContent } from './SplashContent';
+import { useWindowViewport } from '../shared/useWindowViewport';
 import { ScrollIndicator } from './ScrollIndicator';
-import { getCosmonautSize, getViewportLength, Viewport } from './shared';
+import { SplashContent } from './SplashContent';
 import { useGitHubStars } from './useGitHubStars';
-import { useWindowViewport } from './useWindowViewport';
 
 export function SplashScreen() {
   const gitHubStars = useGitHubStars();
   const windowViewport = useWindowViewport();
-  const cosmonautViewport = getFullScreenCosmonautViewport(windowViewport);
+  const { width, height } = windowViewport;
 
   return (
-    <Container
-      id="splash-screen"
-      style={{ width: windowViewport.width, height: windowViewport.height }}
-    >
+    <Container id="splash-screen" style={{ width, height }}>
       <CosmonautContainer>
-        <FullScreenCosmonaut
-          width={cosmonautViewport.width}
-          height={cosmonautViewport.height}
-        />
+        <FullScreenCosmonaut windowViewport={windowViewport} />
       </CosmonautContainer>
       <SplashContent
         windowViewport={windowViewport}
@@ -30,11 +23,6 @@ export function SplashScreen() {
       <ScrollIndicator windowViewport={windowViewport} />
     </Container>
   );
-}
-
-function getFullScreenCosmonautViewport(windowViewport: Viewport) {
-  const width = getViewportLength(windowViewport);
-  return { width, height: Math.ceil(getCosmonautSize(windowViewport) * 4) };
 }
 
 const Container = styled.div`
