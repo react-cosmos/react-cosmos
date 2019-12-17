@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ExternalLink } from '../shared/ExternalLink';
-import { slideInOpacityDuration, slideInYDuration } from '../shared/ui';
+import { slideInTransition } from '../shared/slideIn';
 import { getCosmonautSize, Viewport } from '../shared/viewport';
 
 type Props = {
@@ -161,7 +161,7 @@ const CallToAction = styled(ExternalLink)`
   flex-direction: row;
   align-items: center;
   text-decoration: none;
-  transition: ${slideInOpacityDuration}s opacity, ${slideInYDuration}s transform;
+  transition: ${slideInTransition};
 
   strong {
     font-weight: 500;

@@ -6,7 +6,11 @@ import { Features } from './Features/Features';
 import { Footer } from './Footer/Footer';
 import { Hero } from './Hero';
 import { Quote } from './Quote';
-import { grayToWhiteGradient, whiteToGrayGradient } from './shared/ui';
+import {
+  bgGray,
+  grayToWhiteGradient,
+  whiteToGrayGradient
+} from './shared/colors';
 import { SplashScreen } from './SplashScreen/SplashScreen';
 import { StickyHeader } from './StickyHeader/StickyHeader';
 
@@ -30,7 +34,7 @@ export function Root() {
 }
 
 const Container = styled.div`
-  background: #d6dde2;
+  background: ${bgGray};
 `;
 
 const Gradient1 = styled.div`

@@ -7,7 +7,7 @@ type Props = {
   className?: string;
 };
 
-const HEADER_HEIGHT = 81;
+const headerHeight = 81;
 
 export const InternalLink = ({ children, to, className, style }: Props) => {
   function handleClick(e: React.MouseEvent) {
@@ -38,9 +38,9 @@ const supportsNativeSmoothScroll =
   'scrollBehavior' in document.documentElement.style;
 
 function getElementTop(element: HTMLElement) {
-  const availWindowHeight = window.innerHeight - HEADER_HEIGHT;
+  const availWindowHeight = window.innerHeight - headerHeight;
   const elRect = element.getBoundingClientRect();
-  const elScrollTop = elRect.top + pageYOffset - HEADER_HEIGHT;
+  const elScrollTop = elRect.top + pageYOffset - headerHeight;
 
   if (elRect.height >= availWindowHeight) {
     return Math.ceil(elScrollTop);

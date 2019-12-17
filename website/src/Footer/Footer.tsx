@@ -2,12 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { ExternalLink } from '../shared/ExternalLink';
 import { InternalLink } from '../shared/InternalLink';
-import {
-  Center,
-  getSlideInStyle,
-  NoWrap,
-  slideInTransition
-} from '../shared/ui';
+import { getSlideInStyle, slideInTransition } from '../shared/slideIn';
+import { Center, NoWrap } from '../shared/styledPrimitives';
 import { useViewportEnter } from '../shared/useViewportEnter';
 import { useGitHubContributors } from './useGitHubContributors';
 

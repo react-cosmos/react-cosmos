@@ -1,13 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { contentMaxWidth, mobileWidthBreakpoint } from './shared/breakpoints';
 import { ExternalLink } from './shared/ExternalLink';
-import {
-  contentMaxWidth,
-  getSlideInStyle,
-  mobileWidthBreakpoint,
-  NoWrap,
-  slideInTransition
-} from './shared/ui';
+import { getSlideInStyle, slideInTransition } from './shared/slideIn';
+import { NoWrap } from './shared/styledPrimitives';
 import { useViewportEnter } from './shared/useViewportEnter';
 
 export function Hero() {

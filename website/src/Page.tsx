@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Footer } from './Footer/Footer';
-import { grayToWhiteGradient } from './shared/ui';
+import { bgGray, grayToWhiteGradient } from './shared/colors';
 import { StickyHeader } from './StickyHeader/StickyHeader';
 
 type Props = {
@@ -19,7 +19,7 @@ export function Page({ children }: Props) {
 }
 
 const Container = styled.div`
-  background: #d6dde2;
+  background: ${bgGray};
 `;
 
 const Gradient1 = styled.div`

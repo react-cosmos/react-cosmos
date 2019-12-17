@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { contentMaxWidth } from '../shared/ui';
+import { contentMaxWidth } from '../shared/breakpoints';
 import { ComponentLibrary } from './ComponentLibrary';
 import { OpenPlatform } from './OpenPlatform';
 import { VisualTdd } from './VisualTdd';

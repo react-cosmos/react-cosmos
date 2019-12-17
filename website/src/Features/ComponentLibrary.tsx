@@ -1,5 +1,5 @@
 import React from 'react';
-import { getSlideInStyle } from '../shared/ui';
+import { getSlideInStyle } from '../shared/slideIn';
 import { useViewportEnter } from '../shared/useViewportEnter';
 import {
   Feature,

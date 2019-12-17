@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { columnsWidthBreakpoint, slideInTransition } from '../shared/ui';
+import { columnsWidthBreakpoint } from '../shared/breakpoints';
+import { slideInTransition } from '../shared/slideIn';
 
 export const Feature = styled.div`
   margin-bottom: 10vh;

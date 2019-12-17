@@ -1,13 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { columnsWidthBreakpoint } from './shared/breakpoints';
 import { ExternalLink } from './shared/ExternalLink';
-import {
-  Center,
-  columnsWidthBreakpoint,
-  getSlideInStyle,
-  Heart,
-  slideInTransition
-} from './shared/ui';
+import { Heart } from './shared/Heart';
+import { getSlideInStyle, slideInTransition } from './shared/slideIn';
+import { Center } from './shared/styledPrimitives';
 import { useViewportEnter } from './shared/useViewportEnter';
 
 export function About() {
