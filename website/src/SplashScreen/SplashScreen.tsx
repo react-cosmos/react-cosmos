@@ -9,10 +9,10 @@ import { useGitHubStars } from './useGitHubStars';
 export function SplashScreen() {
   const gitHubStars = useGitHubStars();
   const windowViewport = useWindowViewport();
-  const { width, height } = windowViewport;
+  const { height } = windowViewport;
 
   return (
-    <Container id="splash-screen" style={{ width, height }}>
+    <Container id="splash-screen" style={{ height }}>
       <CosmonautContainer>
         <FullScreenCosmonaut windowViewport={windowViewport} />
       </CosmonautContainer>
