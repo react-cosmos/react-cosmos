@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { stars } from './shared/stars';
 
 export const Stars = React.memo(function Stars() {
@@ -12,12 +11,14 @@ export const Stars = React.memo(function Stars() {
         </radialGradient>
       </defs>
       {stars.map((star, index) => (
-        <Star key={index} cx={star.x} cy={star.y} r={star.r} />
+        <circle
+          key={index}
+          cx={star.x}
+          cy={star.y}
+          r={star.r}
+          fill="url(#starGlow)"
+        />
       ))}
     </>
   );
 });
-
-const Star = styled.circle`
-  fill: url(#starGlow);
-`;

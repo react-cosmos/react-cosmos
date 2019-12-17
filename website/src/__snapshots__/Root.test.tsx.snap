@@ -2,10 +2,10 @@
 
 exports[`renders correctly 1`] = `
 <div
-  className="sc-kafWEX bYbxrZ"
+  className="sc-cIShpX fdkZsA"
 >
   <div
-    className="sc-jbKcbu jJfOoe"
+    className="sc-hqyNC BXKaP"
     id="splash-screen"
     style={
       Object {
@@ -15,10 +15,10 @@ exports[`renders correctly 1`] = `
     }
   >
     <div
-      className="sc-dNLxif eXDayA"
+      className="sc-jbKcbu bRAqXt"
     >
       <svg
-        className="sc-TOsTZ eUYUbL"
+        className="sc-cHGsZl fFFzBK"
         style={
           Object {
             "height": 1366,
@@ -28,7 +28,7 @@ exports[`renders correctly 1`] = `
         viewBox="0 -640 768 768"
       >
         <rect
-          className="sc-kgAjT kSGHYw"
+          className="sc-TOsTZ khfmGH"
           height={1024}
           width={768}
           x={0}
@@ -51,441 +51,441 @@ exports[`renders correctly 1`] = `
           </radialGradient>
         </defs>
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={59.21}
           cy={208.78}
+          fill="url(#starGlow)"
           r={2}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={396.12}
           cy={180.2}
+          fill="url(#starGlow)"
           r={0}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={393.06}
           cy={113.83}
+          fill="url(#starGlow)"
           r={1.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={436.96}
           cy={-97.5}
+          fill="url(#starGlow)"
           r={1.5}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={365.5}
           cy={-22.97}
+          fill="url(#starGlow)"
           r={0.5}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={552.33}
           cy={148.55}
+          fill="url(#starGlow)"
           r={1}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={586.02}
           cy={210.82}
+          fill="url(#starGlow)"
           r={0.75}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={670.76}
           cy={190.4}
+          fill="url(#starGlow)"
           r={1.5}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={696.28}
           cy={168.97}
+          fill="url(#starGlow)"
           r={0.5}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={761.62}
           cy={216.95}
+          fill="url(#starGlow)"
           r={0.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={712.61}
           cy={62.79}
+          fill="url(#starGlow)"
           r={1.75}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={619.71}
           cy={22.97}
+          fill="url(#starGlow)"
           r={0.75}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={530.89}
           cy={-9.7}
+          fill="url(#starGlow)"
           r={0.5}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={478.82}
           cy={-41.35}
+          fill="url(#starGlow)"
           r={0.5}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={689.13}
           cy={-79.12}
+          fill="url(#starGlow)"
           r={1}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={728.95}
           cy={-86.27}
+          fill="url(#starGlow)"
           r={0.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={522.72}
           cy={-114.86}
+          fill="url(#starGlow)"
           r={1.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={620.73}
           cy={-133.23}
+          fill="url(#starGlow)"
           r={1}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={687.09}
           cy={-189.38}
+          fill="url(#starGlow)"
           r={1.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={604.39}
           cy={-261.87}
+          fill="url(#starGlow)"
           r={1.5}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={742.22}
           cy={-329.25}
+          fill="url(#starGlow)"
           r={1}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={655.44}
           cy={-411.95}
+          fill="url(#starGlow)"
           r={0.75}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={725.89}
           cy={-467.08}
+          fill="url(#starGlow)"
           r={3.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={532.93}
           cy={-347.63}
+          fill="url(#starGlow)"
           r={1.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={488.01}
           cy={-272.08}
+          fill="url(#starGlow)"
           r={0.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={447.17}
           cy={-395.61}
+          fill="url(#starGlow)"
           r={1.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={476.78}
           cy={-432.37}
+          fill="url(#starGlow)"
           r={3.5}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={397.14}
           cy={-479.33}
+          fill="url(#starGlow)"
           r={2.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={328.74}
           cy={-367.03}
+          fill="url(#starGlow)"
           r={2.75}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={296.07}
           cy={-413.99}
+          fill="url(#starGlow)"
           r={1.75}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={203.17}
           cy={-366.01}
+          fill="url(#starGlow)"
           r={2.5}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={71.47}
           cy={-431.35}
+          fill="url(#starGlow)"
           r={1}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={223.59}
           cy={-330.27}
+          fill="url(#starGlow)"
           r={1}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={25.52}
           cy={-237.37}
+          fill="url(#starGlow)"
           r={1}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={266.46}
           cy={-256.77}
+          fill="url(#starGlow)"
           r={1}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={110.26}
           cy={-286.37}
+          fill="url(#starGlow)"
           r={1.5}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={95.97}
           cy={-181.22}
+          fill="url(#starGlow)"
           r={1.75}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={69.42}
           cy={-173.05}
+          fill="url(#starGlow)"
           r={0.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={300.16}
           cy={-46.45}
+          fill="url(#starGlow)"
           r={0.5}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={247.07}
           cy={4.59}
+          fill="url(#starGlow)"
           r={0.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={280.76}
           cy={55.64}
+          fill="url(#starGlow)"
           r={1.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={155.18}
           cy={-88.31}
+          fill="url(#starGlow)"
           r={1.75}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={260.34}
           cy={-145.48}
+          fill="url(#starGlow)"
           r={2.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={79.63}
           cy={-4.59}
+          fill="url(#starGlow)"
           r={0.75}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={27.57}
           cy={-18.89}
+          fill="url(#starGlow)"
           r={1.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={165.39}
           cy={81.16}
+          fill="url(#starGlow)"
           r={0.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={122.51}
           cy={99.54}
+          fill="url(#starGlow)"
           r={0.5}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={239.92}
           cy={171.01}
+          fill="url(#starGlow)"
           r={0.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={255.23}
           cy={224.1}
+          fill="url(#starGlow)"
           r={0.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={397.14}
           cy={184.28}
+          fill="url(#starGlow)"
           r={0}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={398.17}
           cy={187.34}
+          fill="url(#starGlow)"
           r={2}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={575.81}
           cy={-490.56}
+          fill="url(#starGlow)"
           r={1.75}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={392.04}
           cy={-268}
+          fill="url(#starGlow)"
           r={1}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={358.35}
           cy={-236.35}
+          fill="url(#starGlow)"
           r={0.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={349.16}
           cy={-172.03}
+          fill="url(#starGlow)"
           r={0.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={130.68}
           cy={-495.67}
+          fill="url(#starGlow)"
           r={0.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={113.32}
           cy={162.84}
+          fill="url(#starGlow)"
           r={0.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={39.2}
           cy={-60.8}
+          fill="url(#starGlow)"
           r={2.5}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={63.2}
           cy={-88}
+          fill="url(#starGlow)"
           r={1.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={1.2}
           cy={-48.4}
+          fill="url(#starGlow)"
           r={1.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={270.8}
           cy={47.6}
+          fill="url(#starGlow)"
           r={0.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={425.23}
           cy={-192.29}
+          fill="url(#starGlow)"
           r={0.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={471.35}
           cy={-166.5}
+          fill="url(#starGlow)"
           r={0.5}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={556.56}
           cy={-211.84}
+          fill="url(#starGlow)"
           r={0.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={172.75}
           cy={-211.05}
+          fill="url(#starGlow)"
           r={0.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={40.65}
           cy={-338.47}
+          fill="url(#starGlow)"
           r={0.25}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={196.49}
           cy={215.66}
+          fill="url(#starGlow)"
           r={2}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={162.95}
           cy={203.68}
+          fill="url(#starGlow)"
           r={1}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={226.85}
           cy={149.37}
+          fill="url(#starGlow)"
           r={0.75}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={48.72}
           cy={56.71}
+          fill="url(#starGlow)"
           r={1.5}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={68.69}
           cy={86.27}
+          fill="url(#starGlow)"
           r={0.75}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={123.01}
           cy={14.38}
+          fill="url(#starGlow)"
           r={1}
         />
         <circle
-          className="sc-kjoXOD eYVRig"
           cx={96.65}
           cy={52.72}
+          fill="url(#starGlow)"
           r={1.75}
         />
         <g
@@ -619,7 +619,7 @@ exports[`renders correctly 1`] = `
           </linearGradient>
         </defs>
         <path
-          className="sc-cHGsZl asseG"
+          className="sc-kjoXOD lmXdvB"
           d="M144.00 78.00C144.00 78.00 105.52 59.22 96.00 86.00C84.29 118.95 142.01 127.95 128.00 180.00C114.00 232.00 33.40 249.00 -5 182"
         />
         <defs>
@@ -1319,7 +1319,7 @@ exports[`renders correctly 1`] = `
       </svg>
     </div>
     <div
-      className="sc-ksYbfQ fHMaMy"
+      className="sc-cJSrbW bQERyj"
       style={
         Object {
           "bottom": 0,
@@ -1330,7 +1330,7 @@ exports[`renders correctly 1`] = `
       }
     >
       <h1
-        className="sc-hmzhuo crCsjE"
+        className="sc-ksYbfQ idtcGU"
         style={
           Object {
             "fontSize": 62,
@@ -1344,7 +1344,7 @@ exports[`renders correctly 1`] = `
         .
       </h1>
       <p
-        className="sc-frDJqD liVVBB"
+        className="sc-hmzhuo hGUzBT"
         style={
           Object {
             "fontSize": 29,
@@ -1359,7 +1359,7 @@ exports[`renders correctly 1`] = `
         a tool for ambitious UI developers
       </p>
       <a
-        className="sc-kvZOFW lmwhvy"
+        className="sc-frDJqD gcCnPe"
         href="https://github.com/react-cosmos/react-cosmos"
         rel="noopener noreferrer"
         style={
@@ -1378,7 +1378,7 @@ exports[`renders correctly 1`] = `
           GitHub
         </strong>
         <svg
-          className="sc-hqyNC iHYXFP"
+          className="sc-kvZOFW gYCEaJ"
           fill="none"
           height={22}
           stroke="currentColor"
@@ -1401,7 +1401,7 @@ exports[`renders correctly 1`] = `
       </a>
     </div>
     <svg
-      className="sc-cJSrbW kAlXuv"
+      className="sc-kgAjT erUDrs"
       fill="none"
       height={37}
       stroke="#fff"
@@ -1425,7 +1425,7 @@ exports[`renders correctly 1`] = `
     </svg>
   </div>
   <div
-    className="sc-jqCOkK gyMoqk"
+    className="sc-dNLxif hzTgJn"
     style={
       Object {
         "opacity": 0,
@@ -1433,22 +1433,22 @@ exports[`renders correctly 1`] = `
     }
   >
     <div
-      className="sc-uJMKN iCgjSc"
+      className="sc-jqCOkK dSsYOL"
     >
       <div
-        className="sc-bbmXgH jCfrdQ"
+        className="sc-uJMKN egYXHq"
       >
         <a
-          className="sc-gGBfsJ fNbXZT"
+          className="sc-bbmXgH efkFbs"
           href="/"
           onClick={[Function]}
         />
       </div>
       <div
-        className="sc-fYxtnH iQdGHL"
+        className="sc-jnlKLf kutTnP"
       >
         <h1
-          className="sc-tilXH ilODUN"
+          className="sc-fYxtnH bKBPMe"
         >
           <a
             href="/"
@@ -1458,10 +1458,10 @@ exports[`renders correctly 1`] = `
           </a>
         </h1>
         <div
-          className="sc-hEsumM hZDWkn"
+          className="sc-tilXH krrXQb"
         >
           <a
-            className="sc-ktHwxA jfaAbZ"
+            className="sc-hEsumM eAimvk"
             href="https://github.com/react-cosmos/react-cosmos"
             rel="noopener noreferrer"
             target="_blank"
@@ -1469,12 +1469,12 @@ exports[`renders correctly 1`] = `
             GitHub
           </a>
           <span
-            className="sc-cIShpX dgHNZt"
+            className="sc-ktHwxA ecQZsU"
           >
             /
           </span>
           <a
-            className="sc-ktHwxA jfaAbZ"
+            className="sc-hEsumM eAimvk"
             href="https://join-react-cosmos.now.sh"
             rel="noopener noreferrer"
             target="_blank"
@@ -1482,12 +1482,12 @@ exports[`renders correctly 1`] = `
             Slack
           </a>
           <span
-            className="sc-cIShpX dgHNZt"
+            className="sc-ktHwxA ecQZsU"
           >
             /
           </span>
           <a
-            className="sc-ktHwxA jfaAbZ"
+            className="sc-hEsumM eAimvk"
             href="https://twitter.com/ReactCosmos"
             rel="noopener noreferrer"
             target="_blank"
@@ -1497,7 +1497,7 @@ exports[`renders correctly 1`] = `
         </div>
       </div>
       <a
-        className="sc-jnlKLf RAMWY"
+        className="sc-gGBfsJ fnWmwR"
         href="/about"
         onClick={[Function]}
       >
@@ -1512,7 +1512,7 @@ exports[`renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="sc-feJyhm jEjcQp"
+    className="sc-kafWEX fnGoLD"
   >
     <div
       className="sc-eNQAEJ jaKwmt"
@@ -2019,7 +2019,7 @@ exports[`renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="sc-iELTvK jLLbvK"
+    className="sc-feJyhm euVSDG"
   >
     <div
       className="sc-cvbbAY csLNkW"
