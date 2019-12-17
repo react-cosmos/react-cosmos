@@ -3,17 +3,19 @@ import styled from 'styled-components';
 import { About } from './About';
 import { Benefits } from './Benefits';
 import { Features } from './Features/Features';
-import { Footer } from './Footer';
-import { Header } from './Header/Header';
+import { Footer } from './Footer/Footer';
 import { Hero } from './Hero';
 import { Quote } from './Quote';
-import { grayToWhiteGradient, whiteToGrayGradient } from './shared/ui';
+import { grayToWhiteGradient, whiteToGrayGradient } from './shared/colors';
+import { SplashScreen } from './SplashScreen/SplashScreen';
+import { StickyHeader } from './Header/StickyHeader';
 
 export function Root() {
   return (
     <>
-      <Header />
-      <Gradient1 id="index">
+      <SplashScreen />
+      <Gradient1 id="gradient1">
+        <StickyHeader />
         <Features />
         <Benefits />
       </Gradient1>
@@ -28,7 +30,6 @@ export function Root() {
 }
 
 const Gradient1 = styled.div`
-  padding: 100vh 0 0 0;
   background: ${grayToWhiteGradient};
 `;
 

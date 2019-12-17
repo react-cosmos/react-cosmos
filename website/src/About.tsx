@@ -1,13 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { columnsWidthBreakpoint } from './shared/breakpoints';
 import { ExternalLink } from './shared/ExternalLink';
-import {
-  Center,
-  columnsWidthBreakpoint,
-  getSlideInStyle,
-  Heart,
-  slideInTransition
-} from './shared/ui';
+import { Heart } from './shared/Heart';
+import { getSlideInStyle, slideInTransition } from './shared/slideIn';
+import { Center } from './shared/styledPrimitives';
 import { useViewportEnter } from './shared/useViewportEnter';
 
 export function About() {
@@ -70,6 +67,11 @@ const Title = styled.div`
   font-weight: 500;
   line-height: 56px;
   transition: ${slideInTransition};
+
+  @media (max-width: ${columnsWidthBreakpoint}px) {
+    font-size: 40px;
+    line-height: 46px;
+  }
 `;
 
 const Subtitle = styled.div`
@@ -82,6 +84,12 @@ const Subtitle = styled.div`
 
   strong {
     font-weight: 500;
+  }
+
+  @media (max-width: ${columnsWidthBreakpoint}px) {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 34px;
   }
 `;
 

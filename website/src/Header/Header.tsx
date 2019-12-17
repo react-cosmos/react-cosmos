@@ -1,157 +1,165 @@
 import React from 'react';
 import styled from 'styled-components';
-import {
-  headerBackdropFilter,
-  headerBg,
-  headerBorderBottom
-} from '../shared/ui';
-import { Cosmonaut } from './Cosmonaut/Cosmonaut';
-import { FullScreenHeader } from './FullScreenHeader';
-import { HeaderScrollIndicator } from './HeaderScrollIndicator';
-import { MinimizedHeader } from './MinimizedHeader';
-import {
-  COSMONAUT_HPADDING_PX,
-  COSMONAUT_SIZE_PX,
-  COSMONAUT_VPADDING_PX,
-  getCosmonautSize,
-  getViewportLength,
-  MAX_HEADER_WIDTH_PX,
-  Viewport
-} from './shared';
-import { useGitHubStars } from './useGitHubStars';
-import { useHeaderScroll } from './useHeaderScroll';
-import { useWindowViewport } from './useWindowViewport';
+import { ExternalLink } from '../shared/ExternalLink';
+import { Heart } from '../shared/Heart';
+import { InternalLink } from '../shared/InternalLink';
+import { useWindowViewport } from '../shared/useWindowViewport';
 
-type HeaderSizes = {
-  containerViewport: Viewport;
-  cosmonautViewport: Viewport;
-  vPadding: number;
-  hPadding: number;
-  centerPadding: number;
+const centerHeaderBreakpoint = 383;
+const maxHeaderWidth = 640;
+
+type Props = {
+  visible: boolean;
+  fixed: boolean;
 };
 
-export function Header() {
+export function Header({ visible, fixed }: Props) {
   const windowViewport = useWindowViewport();
-  const { cropRatio, minimizeRatio } = useHeaderScroll(windowViewport.height);
-  const gitHubStars = useGitHubStars();
-  const {
-    containerViewport,
-    cosmonautViewport,
-    vPadding,
-    hPadding,
-    centerPadding
-  } = React.useMemo(() => getHeaderSizes(windowViewport, minimizeRatio), [
-    windowViewport,
-    minimizeRatio
-  ]);
-  const minimized = minimizeRatio === 1;
-
   return (
     <Container
       style={{
-        width: containerViewport.width,
-        height: containerViewport.height + 2 * vPadding,
-        background: minimized ? headerBg : 'transparent',
-        borderBottom: minimized ? headerBorderBottom : 'none',
-        backdropFilter: minimized ? headerBackdropFilter : 'none'
+        position: fixed ? 'fixed' : 'absolute',
+        top: fixed ? 0 : windowViewport.height,
+        opacity: visible ? 1 : 0
       }}
     >
-      <CosmonautContainer
-        key="cosmonaut"
-        style={{ bottom: vPadding, left: centerPadding + hPadding }}
-      >
-        <Cosmonaut
-          cropRatio={cropRatio}
-          minimizeRatio={minimizeRatio}
-          width={cosmonautViewport.width}
-          height={cosmonautViewport.height}
-        />
-      </CosmonautContainer>
-      {cropRatio < 1 && (
-        <>
-          <FullScreenHeader
-            windowViewport={windowViewport}
-            cropRatio={cropRatio}
-            gitHubStars={gitHubStars}
-          />
-          <HeaderScrollIndicator windowViewport={windowViewport} />
-        </>
-      )}
-      {cropRatio === 1 && <MinimizedHeader visible={minimizeRatio === 1} />}
+      <Content>
+        <CosmonautContainer>
+          <CosmonautButton to="/" />
+        </CosmonautContainer>
+        <Body>
+          <Title>
+            <InternalLink to="/">React Cosmos</InternalLink>
+          </Title>
+          <Links>
+            <Link href="https://github.com/react-cosmos/react-cosmos">
+              GitHub
+            </Link>
+            <Separator>/</Separator>
+            <Link href="https://join-react-cosmos.now.sh">Slack</Link>
+            <Separator>/</Separator>
+            <Link href="https://twitter.com/ReactCosmos">Twitter</Link>
+          </Links>
+        </Body>
+        <HeartButton to="/about">
+          <Heart />
+        </HeartButton>
+      </Content>
     </Container>
   );
 }
 
-function getHeaderSizes(
-  windowViewport: Viewport,
-  minimizeRatio: number
-): HeaderSizes {
-  const availableHeaderWidth = windowViewport.width - MAX_HEADER_WIDTH_PX;
-  return {
-    containerViewport:
-      minimizeRatio > 0
-        ? getMinimizedContainerViewport(windowViewport, minimizeRatio)
-        : windowViewport,
-    cosmonautViewport:
-      minimizeRatio > 0
-        ? getMinimizedCosmonautViewport(windowViewport, minimizeRatio)
-        : getFullScreenCosmonautViewport(windowViewport),
-    vPadding: COSMONAUT_VPADDING_PX * minimizeRatio,
-    hPadding: COSMONAUT_HPADDING_PX * minimizeRatio,
-    centerPadding:
-      Math.max(0, Math.round(availableHeaderWidth / 2)) * minimizeRatio
-  };
-}
-
-function getMinimizedContainerViewport(
-  windowViewport: Viewport,
-  minimizeRatio: number
-) {
-  const cosmonautSize = getMinimizedCosmonautSize(
-    windowViewport,
-    minimizeRatio
-  );
-  const height =
-    windowViewport.height -
-    (windowViewport.height - cosmonautSize) * minimizeRatio;
-  return { width: windowViewport.width, height };
-}
-
-function getMinimizedCosmonautViewport(
-  windowViewport: Viewport,
-  minimizeRatio: number
-) {
-  const cosmonautSize = getMinimizedCosmonautSize(
-    windowViewport,
-    minimizeRatio
-  );
-  return { width: cosmonautSize, height: cosmonautSize };
-}
-
-function getMinimizedCosmonautSize(
-  windowViewport: Viewport,
-  minimizeRatio: number
-) {
-  const fullSize = getCosmonautSize(windowViewport);
-  return fullSize - (fullSize - COSMONAUT_SIZE_PX) * minimizeRatio;
-}
-
-function getFullScreenCosmonautViewport(windowViewport: Viewport) {
-  const width = getViewportLength(windowViewport);
-  return { width, height: Math.ceil(getCosmonautSize(windowViewport) * 4) };
-}
-
 const Container = styled.div`
-  position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
-  will-change: height;
+  right: 0;
+  background: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid rgba(10, 46, 70, 0.24);
+  backdrop-filter: saturate(180%) blur(15px);
+  transition: 0.4s opacity;
+`;
+
+const Content = styled.div`
+  max-width: ${maxHeaderWidth}px;
+  height: 80px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
 
 const CosmonautContainer = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  will-change: bottom, left;
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  margin-left: 8px;
+  background-image: url('/cosmonaut128.png');
+  background-size: 64px;
+`;
+
+const CosmonautButton = styled(InternalLink)`
+  display: block;
+  width: 64px;
+  height: 64px;
+  background: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+`;
+
+const HeartButton = styled(InternalLink)`
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  margin: 0 8px 0 0;
+  background: rgba(231, 0, 138, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  svg {
+    margin-top: 2px;
+    width: 36px;
+    height: 36px;
+    fill: rgba(231, 0, 138, 0.8);
+  }
+
+  @media (max-width: ${centerHeaderBreakpoint}px) {
+    display: none;
+  }
+`;
+
+const Body = styled.div`
+  flex: 1;
+  height: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  @media (max-width: ${centerHeaderBreakpoint}px) {
+    padding-right: 16px;
+    align-items: flex-end;
+  }
+`;
+
+const Title = styled.h1`
+  margin: 0;
+  padding: 0;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 28px;
+  white-space: nowrap;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+`;
+
+const Links = styled.div`
+  display: flex;
+  flex-direction: row;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 20px;
+`;
+
+const Link = styled(ExternalLink)`
+  color: inherit;
+  font-weight: 400;
+  text-decoration: none;
+  opacity: 0.8;
+
+  :hover {
+    text-decoration: underline;
+  }
+`;
+
+const Separator = styled.span`
+  margin: 0 8px;
+  opacity: 0.5;
 `;

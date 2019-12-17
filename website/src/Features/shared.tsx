@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { columnsWidthBreakpoint, slideInTransition } from '../shared/ui';
+import { columnsWidthBreakpoint } from '../shared/breakpoints';
+import { slideInTransition } from '../shared/slideIn';
 
 export const Feature = styled.div`
   margin-bottom: 10vh;
@@ -44,6 +45,11 @@ export const FeatureTitle = styled.h2`
   line-height: 36px;
   font-weight: 600;
   letter-spacing: -0.03em;
+
+  @media (max-width: ${columnsWidthBreakpoint}px) {
+    font-size: 32px;
+    line-height: 32px;
+  }
 `;
 
 export const FeatureDescription = styled.div`

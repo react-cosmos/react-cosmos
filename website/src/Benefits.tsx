@@ -1,13 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { columnsWidthBreakpoint, contentMaxWidth } from './shared/breakpoints';
 import {
-  contentMaxWidth,
-  columnsWidthBreakpoint,
+  getSlideInStyle,
   slideInDelay,
-  slideInOpacityDuration,
-  slideInYDuration,
-  slideInYOffset
-} from './shared/ui';
+  slideInTransition
+} from './shared/slideIn';
 import { useViewportEnter } from './shared/useViewportEnter';
 
 export function Benefits() {
@@ -143,13 +141,7 @@ type BenefitProps = {
 
 function Benefit({ children, visible, nth }: BenefitProps) {
   return (
-    <StyledBenefit
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: `translate(0, ${visible ? 0 : slideInYOffset}px)`,
-        transitionDelay: visible ? `${nth * slideInDelay}s` : '0s'
-      }}
-    >
+    <StyledBenefit style={getSlideInStyle(visible, nth)}>
       {children}
     </StyledBenefit>
   );
@@ -164,7 +156,7 @@ const StyledBenefit = styled.div`
   font-size: 24px;
   line-height: 28px;
   letter-spacing: -0.02em;
-  transition: ${slideInOpacityDuration}s opacity, ${slideInYDuration}s transform;
+  transition: ${slideInTransition};
 
   :last-child {
     margin-bottom: 0;

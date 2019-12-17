@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ExternalLink } from '../shared/ExternalLink';
-import { slideInOpacityDuration, slideInYDuration } from '../shared/ui';
-import { getCosmonautSize, Viewport } from './shared';
+import { slideInTransition } from '../shared/slideIn';
+import { getCosmonautSize, Viewport } from '../shared/viewport';
 
 type Props = {
   windowViewport: Viewport;
-  cropRatio: number;
   gitHubStars: null | number;
 };
 
@@ -23,14 +22,8 @@ type FullScreenHeaderSizes = {
   starRightMargin: number;
 };
 
-const visibleTextBg = `rgb(9, 53, 86, 0.8)`;
-
-export const FullScreenHeader = React.memo(function FullScreenHeader({
-  windowViewport,
-  cropRatio,
-  gitHubStars
-}: Props) {
-  const containerStyle = getContainerStyle(windowViewport, cropRatio);
+export function SplashContent({ windowViewport, gitHubStars }: Props) {
+  const containerStyle = getContainerStyle(windowViewport);
   const {
     titleFontSize,
     subtitleFontSize,
@@ -42,17 +35,14 @@ export const FullScreenHeader = React.memo(function FullScreenHeader({
     starStrokeWidth,
     starLeftMargin,
     starRightMargin
-  } = React.useMemo(() => getFullScreenHeaderSizes(windowViewport), [
-    windowViewport
-  ]);
-  const textBg = cropRatio > 0 ? 'transparent' : visibleTextBg;
+  } = getFullScreenHeaderSizes(windowViewport);
 
   return (
     <Container style={containerStyle}>
-      <Title style={{ background: textBg, fontSize: titleFontSize }}>
+      <Title style={{ fontSize: titleFontSize }}>
         Build UIs at <em>scale</em>.
       </Title>
-      <Subtitle style={{ background: textBg, fontSize: subtitleFontSize }}>
+      <Subtitle style={{ fontSize: subtitleFontSize }}>
         Introducing <strong>React Cosmos 5</strong>
         <br />a tool for ambitious UI developers
       </Subtitle>
@@ -78,7 +68,7 @@ export const FullScreenHeader = React.memo(function FullScreenHeader({
       </CallToAction>
     </Container>
   );
-});
+}
 
 function getFullScreenHeaderSizes(
   windowViewport: Viewport
@@ -104,13 +94,11 @@ function getFullScreenHeaderSizes(
   };
 }
 
-function getContainerStyle(windowViewport: Viewport, cropRatio: number) {
+function getContainerStyle(windowViewport: Viewport) {
   const cosmonautSize = Math.round(getCosmonautSize(windowViewport));
-  const opacity = cropRatio > 0.2 ? 0 : 1;
 
   if (isPortrait(windowViewport)) {
     return {
-      opacity,
       bottom: cosmonautSize,
       left: 0,
       width: windowViewport.width,
@@ -119,7 +107,6 @@ function getContainerStyle(windowViewport: Viewport, cropRatio: number) {
   }
 
   return {
-    opacity,
     bottom: 0,
     left: cosmonautSize,
     width: windowViewport.width - cosmonautSize,
@@ -144,6 +131,7 @@ const Container = styled.div`
 const Title = styled.h1`
   margin: 0;
   padding: 0;
+  background: rgb(9, 53, 86, 0.8);
   font-weight: 600;
   line-height: 1.5em;
   letter-spacing: -0.02em;
@@ -154,6 +142,7 @@ const Title = styled.h1`
 const Subtitle = styled.p`
   margin: 0;
   padding: 0;
+  background: rgb(9, 53, 86, 0.8);
   font-weight: 300;
   line-height: 1.6em;
   color: #b1dcfd;
@@ -172,7 +161,7 @@ const CallToAction = styled(ExternalLink)`
   flex-direction: row;
   align-items: center;
   text-decoration: none;
-  transition: ${slideInOpacityDuration}s opacity, ${slideInYDuration}s transform;
+  transition: ${slideInTransition};
 
   strong {
     font-weight: 500;

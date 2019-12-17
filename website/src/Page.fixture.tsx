@@ -6,7 +6,7 @@ import { ComponentLibrary } from './Features/ComponentLibrary';
 import { OpenPlatform } from './Features/OpenPlatform';
 import { VisualTdd } from './Features/VisualTdd';
 import { Page } from './Page';
-import { contentMaxWidth } from './shared/ui';
+import { contentMaxWidth } from './shared/breakpoints';
 
 const Center = styled.div`
   max-width: ${contentMaxWidth}px;

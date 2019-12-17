@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { slideInOpacityDuration, slideInYDuration } from '../shared/ui';
+import { slideInTransition } from '../shared/slideIn';
 import { useViewportEnter } from '../shared/useViewportEnter';
 import { FeatureDescription, FeatureTitle } from './shared';
 
@@ -25,7 +25,7 @@ export function OpenPlatform() {
   );
 }
 
-function getSlideInStyle(visible: boolean, nth: number = 0) {
+function getSlideInStyle(visible: boolean) {
   return {
     transform: `translate(0, ${visible ? 0 : 10}vh)`,
     opacity: visible ? 1 : 0
@@ -37,7 +37,7 @@ const OpenPlatformFeature = styled.div`
   height: 600px;
   margin-bottom: 10vh;
   position: relative;
-  transition: ${slideInOpacityDuration}s opacity, ${slideInYDuration}s transform;
+  transition: ${slideInTransition};
 
   :last-child {
     margin-bottom: 0;
@@ -60,8 +60,7 @@ const OpenPlatformTextOverlay = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(4px);
+  background: rgba(255, 255, 255, 0.9);
   color: #0a2e46;
   display: flex;
   flex-direction: column;

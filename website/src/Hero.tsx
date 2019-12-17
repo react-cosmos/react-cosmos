@@ -1,13 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { columnsWidthBreakpoint, contentMaxWidth } from './shared/breakpoints';
 import { ExternalLink } from './shared/ExternalLink';
-import {
-  contentMaxWidth,
-  getSlideInStyle,
-  mobileWidthBreakpoint,
-  NoWrap,
-  slideInTransition
-} from './shared/ui';
+import { getSlideInStyle, slideInTransition } from './shared/slideIn';
+import { NoWrap } from './shared/styledPrimitives';
 import { useViewportEnter } from './shared/useViewportEnter';
 
 export function Hero() {
@@ -62,7 +58,7 @@ const Title = styled.div`
   letter-spacing: -0.03em;
   transition: ${slideInTransition};
 
-  @media (max-width: ${mobileWidthBreakpoint}px) {
+  @media (max-width: ${columnsWidthBreakpoint}px) {
     font-size: 40px;
     line-height: 42px;
   }
@@ -76,7 +72,7 @@ const Subtitle = styled.div`
   letter-spacing: -0.02em;
   transition: ${slideInTransition};
 
-  @media (max-width: ${mobileWidthBreakpoint}px) {
+  @media (max-width: ${columnsWidthBreakpoint}px) {
     font-size: 28px;
     line-height: 32px;
   }
@@ -92,7 +88,7 @@ const Links = styled.div`
   line-height: 24px;
   transition: ${slideInTransition};
 
-  @media (max-width: ${mobileWidthBreakpoint}px) {
+  @media (max-width: ${columnsWidthBreakpoint}px) {
     font-size: 20px;
     line-height: 20px;
     font-weight: 500;
@@ -109,7 +105,7 @@ const Link = styled(ExternalLink)`
   flex-direction: row;
   align-items: center;
 
-  @media (max-width: ${mobileWidthBreakpoint}px) {
+  @media (max-width: ${columnsWidthBreakpoint}px) {
     font-weight: 500;
   }
 `;
@@ -135,7 +131,7 @@ const StyledChevron = styled.svg`
   margin: 0 0 0 0px;
   transform: translate(0, 2.5px);
 
-  @media (max-width: ${mobileWidthBreakpoint}px) {
+  @media (max-width: ${columnsWidthBreakpoint}px) {
     width: 20px;
     height: 20px;
     transform: translate(0, 1.5px);

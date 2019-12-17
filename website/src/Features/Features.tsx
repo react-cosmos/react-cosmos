@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { contentMaxWidth } from '../shared/ui';
+import { contentMaxWidth } from '../shared/breakpoints';
 import { ComponentLibrary } from './ComponentLibrary';
 import { OpenPlatform } from './OpenPlatform';
 import { VisualTdd } from './VisualTdd';
 
 export function Features() {
   return (
-    <Container>
+    <Container id="features">
       <VisualTdd />
       <ComponentLibrary />
       <OpenPlatform />
@@ -18,7 +18,7 @@ export function Features() {
 const Container = styled.div`
   max-width: ${contentMaxWidth}px;
   margin: 0 auto;
-  padding: 0 0 40vh 0;
+  padding: 40vh 0;
   display: flex;
   flex-direction: column;
   align-items: center;

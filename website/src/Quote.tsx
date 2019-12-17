@@ -1,11 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import {
-  columnsWidthBreakpoint,
-  getSlideInStyle,
-  NoWrap,
-  slideInTransition
-} from './shared/ui';
+import { columnsWidthBreakpoint } from './shared/breakpoints';
+import { getSlideInStyle, slideInTransition } from './shared/slideIn';
+import { NoWrap } from './shared/styledPrimitives';
 import { useViewportEnter } from './shared/useViewportEnter';
 
 export function Quote() {
