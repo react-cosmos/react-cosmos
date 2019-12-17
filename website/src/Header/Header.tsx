@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { ExternalLink } from '../shared/ExternalLink';
 import { Heart } from '../shared/Heart';
 import { InternalLink } from '../shared/InternalLink';
+import { useWindowViewport } from '../shared/useWindowViewport';
 
 const centerHeaderBreakpoint = 383;
 const maxHeaderWidth = 640;
@@ -13,10 +14,12 @@ type Props = {
 };
 
 export function Header({ visible, fixed }: Props) {
+  const windowViewport = useWindowViewport();
   return (
     <Container
       style={{
         position: fixed ? 'fixed' : 'absolute',
+        top: fixed ? 0 : windowViewport.height,
         opacity: visible ? 1 : 0
       }}
     >
