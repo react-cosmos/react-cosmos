@@ -31,7 +31,7 @@ async function getCustomExportWebpackConfig() {
         configPath: 'mywebpack.config.js'
       }
     });
-    return getExportWebpackConfig(cosmosConfig, webpack);
+    return await getExportWebpackConfig(cosmosConfig, webpack);
   });
 }
 

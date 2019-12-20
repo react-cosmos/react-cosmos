@@ -36,10 +36,10 @@ export async function webpackDevServer({
     return;
   }
 
-  const webpackConfig = getDevWebpackConfig(
+  const webpackConfig = (await getDevWebpackConfig(
     cosmosConfig,
     userWebpack
-  ) as WebpackConfig;
+  )) as WebpackConfig;
 
   // Serve static path derived from devServer.contentBase webpack config
   if (cosmosConfig.staticPath === null) {

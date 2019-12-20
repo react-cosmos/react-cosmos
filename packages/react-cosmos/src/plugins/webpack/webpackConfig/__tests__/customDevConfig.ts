@@ -42,7 +42,7 @@ async function getCustomDevWebpackConfig() {
         overridePath: 'mywebpack.override.js'
       }
     });
-    return getDevWebpackConfig(cosmosConfig, webpack);
+    return await getDevWebpackConfig(cosmosConfig, webpack);
   });
 }
 

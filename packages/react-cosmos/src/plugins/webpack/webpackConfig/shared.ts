@@ -21,11 +21,14 @@ type WebpackOverride = (
   env: string
 ) => webpack.Configuration;
 
-export function getUserWebpackConfig(
+export async function getUserWebpackConfig(
   cosmosConfig: CosmosConfig,
   userWebpack: typeof webpack
 ) {
-  const baseWebpackConfig = getBaseWebpackConfig(cosmosConfig, userWebpack);
+  const baseWebpackConfig = await getBaseWebpackConfig(
+    cosmosConfig,
+    userWebpack
+  );
   const { overridePath } = createWebpackCosmosConfig(cosmosConfig);
 
   if (!overridePath || !moduleExists(overridePath)) {
@@ -41,7 +44,7 @@ export function getUserWebpackConfig(
   return webpackOverride(baseWebpackConfig, getNodeEnv());
 }
 
-export function getBaseWebpackConfig(
+export async function getBaseWebpackConfig(
   cosmosConfig: CosmosConfig,
   userWebpack: typeof webpack
 ) {
@@ -60,7 +63,7 @@ export function getBaseWebpackConfig(
     requireModule(configPath)
   ) as WebpackConfigExport;
   return typeof userConfigExport === 'function'
-    ? userConfigExport(argv.env || getNodeEnv(), argv)
+    ? await userConfigExport(argv.env || getNodeEnv(), argv)
     : userConfigExport;
 }
 
