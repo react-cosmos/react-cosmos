@@ -9,7 +9,7 @@ export async function webpackExport({ cosmosConfig }: ExportPluginArgs) {
     return;
   }
 
-  const webpackConfig = getExportWebpackConfig(cosmosConfig, userWebpack);
+  const webpackConfig = await getExportWebpackConfig(cosmosConfig, userWebpack);
   try {
     await runWebpackCompiler(userWebpack, webpackConfig);
   } catch (err) {

@@ -10,11 +10,14 @@ import {
   resolveLocalReactDeps
 } from './shared';
 
-export function getExportWebpackConfig(
+export async function getExportWebpackConfig(
   cosmosConfig: CosmosConfig,
   userWebpack: typeof webpack
-): webpack.Configuration {
-  const baseWebpackConfig = getUserWebpackConfig(cosmosConfig, userWebpack);
+): Promise<webpack.Configuration> {
+  const baseWebpackConfig = await getUserWebpackConfig(
+    cosmosConfig,
+    userWebpack
+  );
   return {
     ...baseWebpackConfig,
     entry: getEntry(),

@@ -16,7 +16,7 @@ async function getDefaultExportWebpackConfig() {
   return mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using default webpack config');
     const cosmosConfig = createCosmosConfig(process.cwd());
-    return getExportWebpackConfig(cosmosConfig, webpack);
+    return await getExportWebpackConfig(cosmosConfig, webpack);
   });
 }
 
