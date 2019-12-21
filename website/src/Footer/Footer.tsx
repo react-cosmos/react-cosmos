@@ -14,15 +14,15 @@ export function Footer() {
     <Container>
       <Center>
         <Columns ref={ref} style={getSlideInStyle(entered)}>
-          <LinksColumn>
+          <Column>
             <InternalLink to="/visual-tdd">Visual TDD</InternalLink>
             <InternalLink to="/component-library">
               Component library
             </InternalLink>
             <InternalLink to="/open-platform">Open platform</InternalLink>
             <InternalLink to="/benefits">Benefits</InternalLink>
-          </LinksColumn>
-          <LinksColumn>
+          </Column>
+          <Column>
             <ExternalLink href="https://cosmos.flatris.space">
               <ExternalLabel>Live demo</ExternalLabel>
             </ExternalLink>
@@ -38,24 +38,29 @@ export function Footer() {
             <ExternalLink href="https://twitter.com/ReactCosmos">
               <ExternalLabel>Twitter</ExternalLabel>
             </ExternalLink>
-          </LinksColumn>
-          <TextColumn>
-            {contributors !== null && (
-              <>
-                <NoWrap>
-                  Made with love by{' '}
-                  <ExternalLink href="https://twitter.com/skidding">
-                    @skidding
+          </Column>
+          <Column>
+            <Contributors>
+              {contributors !== null && (
+                <>
+                  <NoWrap>
+                    Made with love by{' '}
+                    <ExternalLink href="https://twitter.com/skidding">
+                      @skidding
+                    </ExternalLink>
+                  </NoWrap>{' '}
+                  and{' '}
+                  <ExternalLink href="https://github.com/react-cosmos/react-cosmos/graphs/contributors">
+                    {contributors - 1} exceptional humans
                   </ExternalLink>
-                </NoWrap>{' '}
-                and{' '}
-                <ExternalLink href="https://github.com/react-cosmos/react-cosmos/graphs/contributors">
-                  {contributors - 1} exceptional humans
-                </ExternalLink>
-                .
-              </>
-            )}
-          </TextColumn>
+                  .
+                </>
+              )}
+            </Contributors>
+            <ExternalLink href="https://www.producthunt.com/posts/react-cosmos-5">
+              <ExternalLabel>Product Hunt</ExternalLabel>
+            </ExternalLink>
+          </Column>
         </Columns>
       </Center>
     </Container>
@@ -95,6 +100,11 @@ const Columns = styled.div`
 
 const Column = styled.div`
   width: 256px;
+  line-height: 32px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 
   @media (max-width: ${columnsMaxWidth}px) {
     width: auto;
@@ -106,17 +116,7 @@ const Column = styled.div`
   }
 `;
 
-const LinksColumn = styled(Column)`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  line-height: 32px;
-`;
-
-const TextColumn = styled(Column)`
-  line-height: 32px;
-  text-align: left;
-`;
+const Contributors = styled.div``;
 
 function ExternalLabel({ children }: { children: string }) {
   return (
