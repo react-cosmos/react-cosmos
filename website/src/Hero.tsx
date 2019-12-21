@@ -17,7 +17,13 @@ export function Hero() {
         <Subtitle style={getSlideInStyle(entered, 1)}>
           Expect more from your <NoWrap>dev environment</NoWrap>
         </Subtitle>
-        <Links style={getSlideInStyle(entered, 2)}>
+        <CtaContainer style={getSlideInStyle(entered, 2)}>
+          <CallToAction href="https://github.com/react-cosmos/react-cosmos#getting-started">
+            <Play />
+            Get started
+          </CallToAction>
+        </CtaContainer>
+        <Links style={getSlideInStyle(entered, 3)}>
           <Link href="https://cosmos.flatris.space">
             <span>Live demo</span>
             <Chevron />
@@ -78,12 +84,63 @@ const Subtitle = styled.div`
   }
 `;
 
+const CtaContainer = styled.div`
+  margin-top: 48px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  transition: ${slideInTransition};
+`;
+
+const CallToAction = styled(ExternalLink)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 28px;
+  background: #078383;
+  color: #fff;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 64px;
+  text-decoration: none;
+  white-space: nowrap;
+
+  svg {
+    width: 28px;
+    height: 28px;
+    margin: 0 8px -2px -4px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2px;
+  }
+
+  @media (max-width: ${columnsWidthBreakpoint}px) {
+    padding: 0 24px;
+    font-size: 24px;
+    line-height: 56px;
+
+    svg {
+      width: 24px;
+      height: 24px;
+      margin: 0 6px -2px -4px;
+    }
+  }
+`;
+
+export function Play() {
+  return (
+    <svg viewBox="0 0 24 24" strokeLinecap="square" strokeLinejoin="round">
+      <polygon points="5 3 19 12 5 21 5 3"></polygon>
+    </svg>
+  );
+}
+
 const Links = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 48px 0 0 0;
+  padding: 32px 0 0 0;
   font-size: 24px;
   line-height: 24px;
   transition: ${slideInTransition};
@@ -117,7 +174,7 @@ const Chevron = () => {
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
-      strokeLinecap="round"
+      strokeLinecap="square"
       strokeLinejoin="round"
     >
       <polyline points="9 18 15 12 9 6"></polyline>
