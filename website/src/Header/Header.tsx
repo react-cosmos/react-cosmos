@@ -156,7 +156,7 @@ const Links = styled.div`
     color: inherit;
     font-weight: 400;
     text-decoration: none;
-    opacity: 0.8;
+    opacity: 0.9;
 
     :hover {
       text-decoration: underline;
