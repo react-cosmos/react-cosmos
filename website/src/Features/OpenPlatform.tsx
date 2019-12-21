@@ -53,6 +53,10 @@ const OpenPlatformPattern = styled.div`
   background-position: center center;
   background-size: 200px 200px;
   background-attachment: fixed;
+
+  @media (prefers-reduced-motion: reduce) {
+    background-attachment: scroll;
+  }
 `;
 
 const OpenPlatformTextOverlay = styled.div`
