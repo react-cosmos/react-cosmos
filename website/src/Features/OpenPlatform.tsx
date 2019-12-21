@@ -16,9 +16,9 @@ export function OpenPlatform() {
       <OpenPlatformTextOverlay>
         <FeatureTitle>Open platform</FeatureTitle>
         <FeatureDescription>
-          React Cosmos can be used in powerful ways. Snapshot and visual
-          regression tests are possible, as well as custom integrations tailored
-          to your needs.
+          React Cosmos can be used in powerful ways. Including snapshot and
+          visual regression tests, as well as custom integrations tailored to
+          your needs.
         </FeatureDescription>
       </OpenPlatformTextOverlay>
     </OpenPlatformFeature>
