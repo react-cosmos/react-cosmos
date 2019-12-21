@@ -128,10 +128,6 @@ const CallToAction = styled(ExternalLink)`
   text-decoration: none;
   white-space: nowrap;
 
-  strong {
-    font-weight: 500;
-  }
-
   svg {
     width: 28px;
     height: 28px;
