@@ -1320,6 +1320,7 @@ Array [
       style={
         Object {
           "bottom": 0,
+          "fontSize": 19,
           "height": 768,
           "left": 341,
           "width": 683,
@@ -1327,12 +1328,7 @@ Array [
       }
     >
       <h1
-        className="sc-frDJqD iqEoIM"
-        style={
-          Object {
-            "fontSize": 62,
-          }
-        }
+        className="sc-frDJqD eqcQWd"
       >
         Build UIs at 
         <em>
@@ -1341,12 +1337,7 @@ Array [
         .
       </h1>
       <p
-        className="sc-kvZOFW ivuDIr"
-        style={
-          Object {
-            "fontSize": 29,
-          }
-        }
+        className="sc-kvZOFW pLuH"
       >
         Introducing 
         <strong>
@@ -1356,16 +1347,12 @@ Array [
         a tool for ambitious UI developers
       </p>
       <a
-        className="sc-hqyNC ioOxrM"
+        className="sc-hqyNC gUClkB"
         href="https://github.com/react-cosmos/react-cosmos"
         rel="noopener noreferrer"
         style={
           Object {
-            "fontSize": 29,
-            "lineHeight": "67px",
-            "marginTop": 76,
             "opacity": 0,
-            "padding": "0 29px",
             "transform": "scale(0.8)",
           }
         }
@@ -1375,21 +1362,12 @@ Array [
           GitHub
         </strong>
         <svg
-          className="sc-jbKcbu hRAMqm"
+          className="sc-jbKcbu bbEWkL"
           fill="none"
-          height={22}
           stroke="currentColor"
           strokeLinecap="round"
           strokeLinejoin="round"
-          strokeWidth={2}
-          style={
-            Object {
-              "margin": "0 3px 0 15px",
-            }
-          }
           viewBox="0 0 24 24"
-          width={22}
-          xmlns="http://www.w3.org/2000/svg"
         >
           <polygon
             points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
