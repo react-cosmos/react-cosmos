@@ -3,7 +3,7 @@
 exports[`renders correctly 1`] = `
 Array [
   <div
-    className="sc-dNLxif MbWOO"
+    className="sc-uJMKN gXtahO"
     id="splash-screen"
     style={
       Object {
@@ -12,7 +12,7 @@ Array [
     }
   >
     <div
-      className="sc-jqCOkK fZBhoS"
+      className="sc-bbmXgH fYJqVS"
     >
       <svg
         className="sc-kgAjT bqkVr"
@@ -1316,13 +1316,16 @@ Array [
       </svg>
     </div>
     <div
-      className="sc-hmzhuo joZWBr"
+      className="sc-hmzhuo jlHkZS"
       style={
         Object {
           "bottom": 0,
           "fontSize": 19,
           "height": 768,
           "left": 341,
+          "opacity": 0,
+          "transform": "translate(0, 40px)",
+          "transitionDelay": "0s",
           "width": 683,
         }
       }
@@ -1347,22 +1350,16 @@ Array [
         a tool for ambitious UI developers
       </p>
       <a
-        className="sc-hqyNC gUClkB"
+        className="sc-hqyNC kzgIt"
         href="https://github.com/react-cosmos/react-cosmos"
         rel="noopener noreferrer"
-        style={
-          Object {
-            "opacity": 0,
-            "transform": "scale(0.8)",
-          }
-        }
         target="_blank"
       >
         <strong>
           GitHub
         </strong>
         <svg
-          className="sc-jbKcbu bbEWkL"
+          className="sc-jbKcbu fVtwUR"
           fill="none"
           stroke="currentColor"
           strokeLinecap="round"
@@ -1371,6 +1368,28 @@ Array [
         >
           <polygon
             points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+          />
+        </svg>
+      </a>
+      <a
+        className="sc-dNLxif eOCFTS"
+        href="https://github.com/react-cosmos/react-cosmos/blob/master/README.md#table-of-contents"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <span>
+          Docs
+        </span>
+        <svg
+          className="sc-jqCOkK izoWDe"
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="square"
+          strokeLinejoin="round"
+          viewBox="0 0 24 24"
+        >
+          <polyline
+            points="9 18 15 12 9 6"
           />
         </svg>
       </a>
@@ -1401,11 +1420,11 @@ Array [
     </svg>
   </div>,
   <div
-    className="sc-kafWEX fnGoLD"
+    className="sc-iELTvK qtAdh"
     id="gradient1"
   >
     <div
-      className="sc-uJMKN jzLgwU"
+      className="sc-gGBfsJ edCmmk"
       style={
         Object {
           "opacity": 0,
@@ -1415,22 +1434,22 @@ Array [
       }
     >
       <div
-        className="sc-bbmXgH dCFmrB"
+        className="sc-jnlKLf GEVDx"
       >
         <div
-          className="sc-gGBfsJ fAGkbX"
+          className="sc-fYxtnH iOolSl"
         >
           <a
-            className="sc-jnlKLf dcuctc"
+            className="sc-tilXH dwkeMX"
             href="/"
             onClick={[Function]}
           />
         </div>
         <div
-          className="sc-tilXH jQBSiT"
+          className="sc-ktHwxA cgkhSv"
         >
           <h1
-            className="sc-hEsumM esCilA"
+            className="sc-cIShpX fUcunV"
           >
             <a
               href="/"
@@ -1440,7 +1459,7 @@ Array [
             </a>
           </h1>
           <div
-            className="sc-ktHwxA kzTIYr"
+            className="sc-kafWEX gccdQN"
           >
             <a
               href="https://github.com/react-cosmos/react-cosmos/blob/master/README.md#table-of-contents"
@@ -1450,7 +1469,7 @@ Array [
               Docs
             </a>
             <span
-              className="sc-cIShpX hyeWZQ"
+              className="sc-feJyhm igXXoE"
             >
               /
             </span>
@@ -1461,7 +1480,7 @@ Array [
               About
             </a>
             <span
-              className="sc-cIShpX hyeWZQ"
+              className="sc-feJyhm igXXoE"
             >
               /
             </span>
@@ -1475,7 +1494,7 @@ Array [
           </div>
         </div>
         <a
-          className="sc-fYxtnH hZrSmq"
+          className="sc-hEsumM ejBGRY"
           href="https://github.com/react-cosmos/react-cosmos"
           rel="noopener noreferrer"
           target="_blank"
@@ -1998,7 +2017,7 @@ Array [
     </div>
   </div>,
   <div
-    className="sc-feJyhm euVSDG"
+    className="sc-cmTdod kuzAqK"
   >
     <div
       className="sc-cvbbAY csLNkW"
