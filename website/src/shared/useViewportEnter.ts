@@ -12,7 +12,11 @@ export function useViewportEnter(vhThreshhold: number): ViewportEnterReturn {
 
     function updateEntered() {
       const newEntered = hasEnteredViewport(capturedEl.offsetTop, vhThreshhold);
-      if (newEntered !== entered) setEntered(newEntered);
+      if (newEntered && !entered) {
+        setEntered(true);
+      } else if (entered && !newEntered && scrolledToTop()) {
+        setEntered(false);
+      }
     }
 
     updateEntered();
@@ -29,4 +33,8 @@ export function useViewportEnter(vhThreshhold: number): ViewportEnterReturn {
 
 function hasEnteredViewport(elTop: number, vhThreshhold: number) {
   return window.pageYOffset > elTop - window.innerHeight * vhThreshhold;
+}
+
+function scrolledToTop() {
+  return window.pageYOffset === 0;
 }

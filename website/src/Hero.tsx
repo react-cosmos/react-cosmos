@@ -34,7 +34,7 @@ export function Hero() {
           </Link>
         </Links>
       </TextContainer>
-      <PreviewContainer style={getSlideInStyle(entered, 3)}>
+      <PreviewContainer style={getSlideInStyle(entered, 4)}>
         <ExternalLink href="https://cosmos.flatris.space">
           <Preview src="/screenshot.png" alt="React Cosmos in action" />
         </ExternalLink>
