@@ -178,20 +178,18 @@ function Check({ visible, nth }: CheckProps) {
     <StyledCheck>
       <StyledCircleSvg>
         <StyledCircle
-          cx="16"
-          cy="16"
-          r="15"
+          cx="1em"
+          cy="1em"
+          r="calc(1em - 1px)"
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
-          strokeDasharray="100"
+          strokeDasharray="120"
           strokeDashoffset={strokeDashoffset}
           style={{ transitionDelay: visible ? `${nth * slideInDelay}s` : '0s' }}
         />
       </StyledCircleSvg>
       <StyledCheckSvg
-        width="24"
-        height="24"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -207,9 +205,10 @@ function Check({ visible, nth }: CheckProps) {
 
 const StyledCheck = styled.div`
   position: relative;
-  width: 32px;
-  height: 32px;
-  margin: 0 16px 0 0;
+  width: 2em;
+  height: 2em;
+  margin: 0 24px 0 0;
+  font-size: 20px;
   opacity: 0.9;
 
   @media (max-width: ${columnsWidthBreakpoint}px) {
@@ -219,8 +218,8 @@ const StyledCheck = styled.div`
 
 const StyledCircleSvg = styled.svg`
   flex-shrink: 0;
-  width: 32px;
-  height: 32px;
+  width: 100%;
+  height: 100%;
   transform: rotate(-90deg);
 `;
 
@@ -230,8 +229,8 @@ const StyledCircle = styled.circle`
 
 const StyledCheckSvg = styled.svg`
   position: absolute;
-  width: 24px;
-  height: 24px;
-  top: 5px;
-  left: 4px;
+  width: 1.5em;
+  height: 1.5em;
+  top: 0.35em;
+  left: 0.25em;
 `;
