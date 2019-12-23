@@ -16,8 +16,8 @@ A tool for ambitious UI developers.
 - **Component library.** From blank states to edge cases, define component states to come
   back to. Your component library keeps you organized and provides
   a solid foundation of test cases.
-- **Open platform.** React Cosmos can be used in powerful ways. Snapshot and visual
-  regression tests are possible, as well as custom integrations
+- **Open platform.** React Cosmos can be used in powerful ways. Including snapshot and
+  visual regression tests, as well as custom integrations
   tailored to your needs.
 
 ---
