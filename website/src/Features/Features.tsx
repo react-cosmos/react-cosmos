@@ -16,21 +16,23 @@ export function Features() {
   );
 }
 
+const headerHeight = 81;
+
 const Container = styled.div`
   max-width: ${maxFeatureColumnsWidth}px;
   margin: 0 auto;
-  padding: calc(81px + 96px) 0 192px 0;
+  padding: calc(${headerHeight}px + 96px) 0 192px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   @media (max-width: ${mobileMaxWidth}px) {
-    padding-top: calc(81px + 64px);
+    padding-top: calc(${headerHeight}px + 64px);
     padding-bottom: 128px;
   }
 
   @media (min-width: ${minFeatureColumnsWidth}px) {
-    display: flex;
+    padding-top: calc(${headerHeight}px + 192px);
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-around;
