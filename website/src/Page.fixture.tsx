@@ -6,7 +6,6 @@ import { ComponentLibrary } from './Features/ComponentLibrary';
 import { OpenPlatform } from './Features/OpenPlatform';
 import { VisualTdd } from './Features/VisualTdd';
 import { Page } from './Page';
-import { contentMaxWidth } from './shared/breakpoints';
 
 const Container = styled.div`
   padding: calc(81px + 256px) 0 256px 0;
