@@ -64,16 +64,17 @@ const Words = styled.div`
   padding: 20px 24px;
   background: rgba(255, 255, 255, 0.8);
   color: rgba(10, 46, 70, 0.9);
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 300;
   font-style: italic;
-  line-height: 38px;
+  line-height: 36px;
   text-align: center;
   letter-spacing: -0.01em;
 
   @media (max-width: ${columnsWidthBreakpoint}px) {
-    font-size: 28px;
-    line-height: 34px;
+    padding: 16px 20px;
+    font-size: 24px;
+    line-height: 30px;
   }
 `;
 
