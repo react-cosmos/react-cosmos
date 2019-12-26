@@ -53,7 +53,7 @@ export function About() {
 }
 
 const Container = styled.div`
-  padding: 20vh 20px 10vh 20px;
+  padding: 192px 20px 64px 20px;
   background: #0a2e46;
   background: linear-gradient(#0a2e46, #093556);
   color: #b1dcfd;

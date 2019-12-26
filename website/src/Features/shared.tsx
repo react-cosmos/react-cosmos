@@ -3,7 +3,7 @@ import { columnsWidthBreakpoint } from '../shared/breakpoints';
 import { slideInTransition } from '../shared/slideIn';
 
 export const Feature = styled.div`
-  margin-bottom: 10vh;
+  margin-bottom: 64px;
   display: flex;
   flex-direction: row;
   align-items: center;

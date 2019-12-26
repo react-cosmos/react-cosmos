@@ -26,7 +26,7 @@ export function Quote() {
 const slopeMaxWidth = 696;
 
 const Container = styled.div`
-  padding: 20vh 0;
+  padding: 256px 0 128px 0;
   display: flex;
   justify-content: center;
 `;

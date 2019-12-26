@@ -28,13 +28,8 @@ export function OpenPlatform() {
 const OpenPlatformFeature = styled.div`
   width: 100%;
   height: 600px;
-  margin-bottom: 10vh;
   position: relative;
   transition: ${slideInTransition};
-
-  :last-child {
-    margin-bottom: 0;
-  }
 `;
 
 const OpenPlatformPattern = styled.div`

@@ -9,7 +9,7 @@ import { Page } from './Page';
 import { contentMaxWidth } from './shared/breakpoints';
 
 const Container = styled.div`
-  padding: calc(81px + 20vh) 0 20vh 0;
+  padding: calc(81px + 256px) 0 256px 0;
 `;
 
 const Center = styled(Container)`

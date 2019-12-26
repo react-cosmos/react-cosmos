@@ -44,7 +44,7 @@ export function Hero() {
 }
 
 const Container = styled.div`
-  padding: 40vh 0 0 0;
+  padding: 384px 0 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;

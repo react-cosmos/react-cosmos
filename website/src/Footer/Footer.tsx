@@ -70,7 +70,7 @@ export function Footer() {
 const columnsMaxWidth = 808;
 
 const Container = styled.div`
-  padding: 10vh 20px;
+  padding: 96px 20px;
   background: #093556;
   color: #4d9edc;
   font-size: 16px;
@@ -84,6 +84,10 @@ const Container = styled.div`
     :hover {
       text-decoration: underline;
     }
+  }
+
+  @media (max-width: ${columnsMaxWidth}px) {
+    padding: 20px;
   }
 `;
 
