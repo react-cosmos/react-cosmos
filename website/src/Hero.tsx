@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { columnsWidthBreakpoint, contentMaxWidth } from './shared/breakpoints';
+import { contentMaxWidth, mobileMaxWidth } from './shared/breakpoints';
 import { ExternalLink } from './shared/ExternalLink';
 import { getSlideInStyle, slideInTransition } from './shared/slideIn';
 import { NoWrap } from './shared/styledPrimitives';
@@ -44,12 +44,16 @@ export function Hero() {
 }
 
 const Container = styled.div`
-  padding: 40vh 0 0 0;
+  padding: 384px 0 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+
+  @media (max-width: ${mobileMaxWidth}px) {
+    padding-top: 256px;
+  }
 `;
 
 const TextContainer = styled.div`
@@ -64,7 +68,7 @@ const Title = styled.div`
   letter-spacing: -0.03em;
   transition: ${slideInTransition};
 
-  @media (max-width: ${columnsWidthBreakpoint}px) {
+  @media (max-width: ${mobileMaxWidth}px) {
     font-size: 40px;
     line-height: 42px;
   }
@@ -78,7 +82,7 @@ const Subtitle = styled.div`
   letter-spacing: -0.02em;
   transition: ${slideInTransition};
 
-  @media (max-width: ${columnsWidthBreakpoint}px) {
+  @media (max-width: ${mobileMaxWidth}px) {
     font-size: 28px;
     line-height: 32px;
   }
@@ -114,7 +118,7 @@ const CallToAction = styled(ExternalLink)`
     stroke-width: 2px;
   }
 
-  @media (max-width: ${columnsWidthBreakpoint}px) {
+  @media (max-width: ${mobileMaxWidth}px) {
     padding: 0 24px;
     font-size: 24px;
     line-height: 56px;
@@ -145,7 +149,7 @@ const Links = styled.div`
   line-height: 24px;
   transition: ${slideInTransition};
 
-  @media (max-width: ${columnsWidthBreakpoint}px) {
+  @media (max-width: ${mobileMaxWidth}px) {
     font-size: 20px;
     line-height: 20px;
     font-weight: 500;
@@ -162,7 +166,7 @@ const Link = styled(ExternalLink)`
   flex-direction: row;
   align-items: center;
 
-  @media (max-width: ${columnsWidthBreakpoint}px) {
+  @media (max-width: ${mobileMaxWidth}px) {
     font-weight: 500;
   }
 `;
@@ -188,7 +192,7 @@ const StyledChevron = styled.svg`
   margin: 0 0 0 0px;
   transform: translate(0, 2.5px);
 
-  @media (max-width: ${columnsWidthBreakpoint}px) {
+  @media (max-width: ${mobileMaxWidth}px) {
     width: 20px;
     height: 20px;
     transform: translate(0, 1.5px);
@@ -196,7 +200,7 @@ const StyledChevron = styled.svg`
 `;
 
 const PreviewContainer = styled.div`
-  margin: 10vh 0 0 0;
+  margin: 64px 0 0 0;
   max-width: ${contentMaxWidth}px;
   transition: ${slideInTransition};
 `;

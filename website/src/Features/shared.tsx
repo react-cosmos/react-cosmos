@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { columnsWidthBreakpoint } from '../shared/breakpoints';
+import { mobileMaxWidth } from '../shared/breakpoints';
 import { slideInTransition } from '../shared/slideIn';
 
 export const Feature = styled.div`
-  margin-bottom: 10vh;
+  margin: 0 0 96px 0;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -15,7 +15,8 @@ export const Feature = styled.div`
     margin-bottom: 0;
   }
 
-  @media (max-width: ${columnsWidthBreakpoint}px) {
+  @media (max-width: ${mobileMaxWidth}px) {
+    margin-bottom: 64px;
     text-align: center;
   }
 `;
@@ -36,17 +37,21 @@ export const FeatureIconContainer = styled.div`
     height: 40px;
     opacity: 0.9;
   }
+
+  @media (max-width: ${mobileMaxWidth}px) {
+    margin-bottom: 16px;
+  }
 `;
 
 export const FeatureTitle = styled.h2`
   margin: 0;
-  padding: 32px 24px 8px 24px;
+  padding: 0 24px 8px 24px;
   font-size: 36px;
   line-height: 36px;
   font-weight: 600;
   letter-spacing: -0.03em;
 
-  @media (max-width: ${columnsWidthBreakpoint}px) {
+  @media (max-width: ${mobileMaxWidth}px) {
     font-size: 32px;
     line-height: 32px;
   }
@@ -54,13 +59,13 @@ export const FeatureTitle = styled.h2`
 
 export const FeatureDescription = styled.div`
   max-width: 640px;
-  padding: 0 24px 32px 24px;
+  padding: 0 24px 0 24px;
   font-size: 24px;
   line-height: 30px;
   opacity: 0.9;
   letter-spacing: -0.02em;
 
-  @media (max-width: ${columnsWidthBreakpoint}px) {
+  @media (max-width: ${mobileMaxWidth}px) {
     font-size: 22px;
     line-height: 28px;
   }

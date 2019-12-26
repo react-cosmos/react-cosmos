@@ -13,7 +13,7 @@ export function StickyHeader() {
         const { pageYOffset } = window;
         const { offsetTop } = gradientEl;
         setFixed(pageYOffset >= offsetTop);
-        setVisible(pageYOffset >= offsetTop / 2);
+        setVisible(pageYOffset >= offsetTop - 80);
       }
     }
 
