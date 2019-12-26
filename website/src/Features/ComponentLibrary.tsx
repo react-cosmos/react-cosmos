@@ -18,9 +18,9 @@ export function ComponentLibrary() {
       <div>
         <FeatureTitle>Component library</FeatureTitle>
         <FeatureDescription>
-          From blank states to edge cases, define component states to come back
-          to. Your component library keeps you organized and provides a solid
-          foundation of test cases.
+          Bookmark component states, from blank states to edge cases. Your
+          component library keeps you organized and provides a solid foundation
+          of test cases.
         </FeatureDescription>
       </div>
     </Feature>

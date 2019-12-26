@@ -6,37 +6,37 @@ import { ComponentLibrary } from './Features/ComponentLibrary';
 import { OpenPlatform } from './Features/OpenPlatform';
 import { VisualTdd } from './Features/VisualTdd';
 import { Page } from './Page';
-import { contentMaxWidth } from './shared/breakpoints';
 
 const Container = styled.div`
   padding: calc(81px + 256px) 0 256px 0;
 `;
 
-const Center = styled(Container)`
-  max-width: ${contentMaxWidth}px;
-  margin: 0 auto;
+const FeatureContainer = styled(Container)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export default {
   'visual-tdd': (
     <Page>
-      <Center>
+      <FeatureContainer>
         <VisualTdd />
-      </Center>
+      </FeatureContainer>
     </Page>
   ),
   'component-library': (
     <Page>
-      <Center>
+      <FeatureContainer>
         <ComponentLibrary />
-      </Center>
+      </FeatureContainer>
     </Page>
   ),
   'open-platform': (
     <Page>
-      <Center>
+      <FeatureContainer>
         <OpenPlatform />
-      </Center>
+      </FeatureContainer>
     </Page>
   ),
   benefits: (

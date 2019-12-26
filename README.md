@@ -13,11 +13,11 @@ A tool for ambitious UI developers.
 - **Visual TDD.** Develop one component at a time. Isolate the UI you&apos;re
   working on and iterate quickly. Reloading your whole app on
   every change is slowing you down!
-- **Component library.** From blank states to edge cases, define component states to come
-  back to. Your component library keeps you organized and provides
-  a solid foundation of test cases.
-- **Open platform.** React Cosmos can be used in powerful ways. Including snapshot and
-  visual regression tests, as well as custom integrations
+- **Component library.** Bookmark component states, from blank states to edge
+  cases. Your component library keeps you organized and provides a solid
+  foundation of test cases.
+- **Open platform.** React Cosmos can be used in powerful ways. Including
+  snapshot and visual regression testing, as well as custom integrations
   tailored to your needs.
 
 ---

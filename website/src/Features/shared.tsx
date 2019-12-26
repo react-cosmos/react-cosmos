@@ -1,23 +1,25 @@
 import styled from 'styled-components';
-import { mobileMaxWidth } from '../shared/breakpoints';
 import { slideInTransition } from '../shared/slideIn';
 
+export const minFeatureColumnsWidth = 1280 + 96;
+export const maxFeatureColumnsWidth = 1280 + 128;
+
 export const Feature = styled.div`
-  margin: 0 0 96px 0;
+  margin: 0 0 48px 0;
+  max-width: 600px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
   transition: ${slideInTransition};
 
   :last-child {
     margin-bottom: 0;
   }
 
-  @media (max-width: ${mobileMaxWidth}px) {
-    margin-bottom: 64px;
-    text-align: center;
+  @media (min-width: ${minFeatureColumnsWidth}px) {
+    max-width: 440px;
+    margin-bottom: 0;
   }
 `;
 
@@ -25,8 +27,8 @@ export const FeatureIconContainer = styled.div`
   flex-shrink: 0;
   width: 80px;
   height: 80px;
-  margin: 0 8px 0 16px;
-  background: rgba(10, 46, 70, 0.1);
+  margin: 0 8px 16px 16px;
+  background: rgba(10, 46, 70, 0.08);
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -37,36 +39,24 @@ export const FeatureIconContainer = styled.div`
     height: 40px;
     opacity: 0.9;
   }
-
-  @media (max-width: ${mobileMaxWidth}px) {
-    margin-bottom: 16px;
-  }
 `;
 
 export const FeatureTitle = styled.h2`
   margin: 0;
-  padding: 0 24px 8px 24px;
-  font-size: 36px;
-  line-height: 36px;
+  padding: 0 20px 8px 20px;
+  font-size: 32px;
+  line-height: 32px;
   font-weight: 600;
   letter-spacing: -0.03em;
-
-  @media (max-width: ${mobileMaxWidth}px) {
-    font-size: 32px;
-    line-height: 32px;
-  }
+  text-align: center;
 `;
 
 export const FeatureDescription = styled.div`
   max-width: 640px;
-  padding: 0 24px 0 24px;
-  font-size: 24px;
-  line-height: 30px;
-  opacity: 0.9;
+  padding: 0 20px 0 20px;
+  font-size: 22px;
+  line-height: 28px;
+  opacity: 0.85;
   letter-spacing: -0.02em;
-
-  @media (max-width: ${mobileMaxWidth}px) {
-    font-size: 22px;
-    line-height: 28px;
-  }
+  text-align: center;
 `;
