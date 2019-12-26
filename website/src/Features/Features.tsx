@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { contentMaxWidth } from '../shared/breakpoints';
+import { contentMaxWidth, mobileMaxWidth } from '../shared/breakpoints';
 import { ComponentLibrary } from './ComponentLibrary';
 import { OpenPlatform } from './OpenPlatform';
 import { VisualTdd } from './VisualTdd';
@@ -22,4 +22,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (max-width: ${mobileMaxWidth}px) {
+    padding-top: calc(81px + 64px);
+    padding-bottom: 128px;
+  }
 `;

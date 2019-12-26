@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { columnsWidthBreakpoint } from './shared/breakpoints';
+import { mobileMaxWidth } from './shared/breakpoints';
 import { getSlideInStyle, slideInTransition } from './shared/slideIn';
 import { NoWrap } from './shared/styledPrimitives';
 import { useViewportEnter } from './shared/useViewportEnter';
@@ -29,6 +29,10 @@ const Container = styled.div`
   padding: 256px 0 128px 0;
   display: flex;
   justify-content: center;
+
+  @media (max-width: ${mobileMaxWidth}px) {
+    padding: 96px 0 64px 0;
+  }
 `;
 
 const CenterContainer = styled.div`
@@ -71,7 +75,7 @@ const Words = styled.div`
   text-align: center;
   letter-spacing: -0.01em;
 
-  @media (max-width: ${columnsWidthBreakpoint}px) {
+  @media (max-width: ${mobileMaxWidth}px) {
     padding: 16px 20px;
     font-size: 24px;
     line-height: 30px;
@@ -92,7 +96,7 @@ const OneAndOnly = styled.div`
     padding: 16px 32px;
   }
 
-  @media (max-width: ${columnsWidthBreakpoint}px) {
+  @media (max-width: ${mobileMaxWidth}px) {
     font-size: 20px;
     line-height: 20px;
   }

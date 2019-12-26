@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { mobileMaxWidth } from './shared/breakpoints';
 import { useViewportEnter } from './shared/useViewportEnter';
 
 export function Rocket() {
@@ -34,6 +35,10 @@ const Container = styled.div`
   overflow: hidden;
   /* https://stackoverflow.com/a/58283449/128816 */
   transform: translateZ(0);
+
+  @media (max-width: ${mobileMaxWidth}px) {
+    margin-bottom: 64px;
+  }
 `;
 
 const StyledRocketSvg = styled.svg`

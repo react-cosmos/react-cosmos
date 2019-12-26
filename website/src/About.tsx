@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { columnsWidthBreakpoint } from './shared/breakpoints';
+import { mobileMaxWidth } from './shared/breakpoints';
 import { ExternalLink } from './shared/ExternalLink';
 import { getSlideInStyle, slideInTransition } from './shared/slideIn';
 import { Center } from './shared/styledPrimitives';
@@ -57,6 +57,10 @@ const Container = styled.div`
   background: #0a2e46;
   background: linear-gradient(#0a2e46, #093556);
   color: #b1dcfd;
+
+  @media (max-width: ${mobileMaxWidth}px) {
+    padding-top: 128px;
+  }
 `;
 
 const Title = styled.div`
@@ -67,7 +71,7 @@ const Title = styled.div`
   line-height: 56px;
   transition: ${slideInTransition};
 
-  @media (max-width: ${columnsWidthBreakpoint}px) {
+  @media (max-width: ${mobileMaxWidth}px) {
     font-size: 40px;
     line-height: 46px;
   }
@@ -85,7 +89,7 @@ const Subtitle = styled.div`
     font-weight: 500;
   }
 
-  @media (max-width: ${columnsWidthBreakpoint}px) {
+  @media (max-width: ${mobileMaxWidth}px) {
     font-size: 20px;
     font-weight: 400;
     line-height: 34px;
@@ -136,7 +140,7 @@ const CallToAction = styled(ExternalLink)`
     fill: none;
   }
 
-  @media (max-width: ${columnsWidthBreakpoint}px) {
+  @media (max-width: ${mobileMaxWidth}px) {
     padding: 0 24px;
     font-size: 24px;
     line-height: 56px;
