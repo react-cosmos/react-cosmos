@@ -162,7 +162,7 @@ type CheckProps = {
 };
 
 function Check({ visible, nth }: CheckProps) {
-  const strokeDashoffset = visible ? 0 : 100;
+  const strokeDashoffset = visible ? 0 : 120;
   return (
     <StyledCheck>
       <StyledCircleSvg>
