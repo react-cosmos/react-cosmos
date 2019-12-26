@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { contentMaxWidth, mobileMaxWidth } from '../shared/breakpoints';
+import { mobileMaxWidth } from '../shared/breakpoints';
 import { ComponentLibrary } from './ComponentLibrary';
 import { OpenPlatform } from './OpenPlatform';
+import { maxFeatureColumnsWidth, minFeatureColumnsWidth } from './shared';
 import { VisualTdd } from './VisualTdd';
 
 export function Features() {
@@ -16,9 +17,9 @@ export function Features() {
 }
 
 const Container = styled.div`
-  max-width: ${contentMaxWidth}px;
+  max-width: ${maxFeatureColumnsWidth}px;
   margin: 0 auto;
-  padding: calc(81px + 128px) 0 256px 0;
+  padding: calc(81px + 96px) 0 192px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,5 +27,12 @@ const Container = styled.div`
   @media (max-width: ${mobileMaxWidth}px) {
     padding-top: calc(81px + 64px);
     padding-bottom: 128px;
+  }
+
+  @media (min-width: ${minFeatureColumnsWidth}px) {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-around;
   }
 `;
