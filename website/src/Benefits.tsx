@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { columnsWidthBreakpoint, contentMaxWidth } from './shared/breakpoints';
 import {
   getSlideInStyle,
   slideInDelay,
@@ -9,19 +8,13 @@ import {
 import { useViewportEnter } from './shared/useViewportEnter';
 
 export function Benefits() {
-  const [ref, entered] = useViewportEnter(0.66);
+  const [ref1, entered1] = useViewportEnter(0.66);
+  const [ref2, entered2] = useViewportEnter(0.66);
   return (
-    <Container ref={ref} id="benefits">
-      <RocketContainer
-        style={{
-          background: `rgba(10, 46, 70, ${entered ? 0.06 : 0})`
-        }}
-      >
-        <Rocket visible={entered} />
-      </RocketContainer>
-      <List>
-        <Benefit visible={entered} nth={1}>
-          <Check visible={entered} nth={1} />
+    <Container id="benefits">
+      <Column ref={ref1}>
+        <Benefit visible={entered1} nth={0}>
+          <Check visible={entered1} nth={0} />
           <BenefitText>
             <BenefitTitle>Prototype and iterate quickly</BenefitTitle>
             <BenefitDescription>
@@ -30,8 +23,8 @@ export function Benefits() {
             </BenefitDescription>
           </BenefitText>
         </Benefit>
-        <Benefit visible={entered} nth={2}>
-          <Check visible={entered} nth={2} />
+        <Benefit visible={entered1} nth={1}>
+          <Check visible={entered1} nth={1} />
           <BenefitText>
             <BenefitTitle>Debug with ease</BenefitTitle>
             <BenefitDescription>
@@ -39,8 +32,8 @@ export function Benefits() {
             </BenefitDescription>
           </BenefitText>
         </Benefit>
-        <Benefit visible={entered} nth={3}>
-          <Check visible={entered} nth={3} />
+        <Benefit visible={entered1} nth={2}>
+          <Check visible={entered1} nth={2} />
           <BenefitText>
             <BenefitTitle>Create reusable components</BenefitTitle>
             <BenefitDescription>
@@ -48,106 +41,63 @@ export function Benefits() {
             </BenefitDescription>
           </BenefitText>
         </Benefit>
-        <Benefit visible={entered} nth={4}>
-          <Check visible={entered} nth={4} />
+      </Column>
+      <Column ref={ref2}>
+        <Benefit visible={entered2} nth={0}>
+          <Check visible={entered2} nth={0} />
           <BenefitText>
             <BenefitTitle>Share UI across projects</BenefitTitle>
             <BenefitDescription>{`Reuse components across projects and teams to prevent duplicate efforts and inconsistencies within a suite of products. A shared set of UI primitives also amounts to a solid visual foundation for your brand.`}</BenefitDescription>
           </BenefitText>
         </Benefit>
-        <Benefit visible={entered} nth={5}>
-          <Check visible={entered} nth={5} />
+        <Benefit visible={entered2} nth={1}>
+          <Check visible={entered2} nth={1} />
           <BenefitText>
             <BenefitTitle>Publish component libraries</BenefitTitle>
             <BenefitDescription>{`A component library is the cornerstone of design systems. You can share component libraries inside your organization, or make them public, and bridge the gap between designers and developers.`}</BenefitDescription>
           </BenefitText>
         </Benefit>
-        <Benefit visible={entered} nth={6}>
-          <Check visible={entered} nth={6} />
+        <Benefit visible={entered2} nth={2}>
+          <Check visible={entered2} nth={2} />
           <BenefitText>
             <BenefitTitle>Maintain quality at scale</BenefitTitle>
-            <BenefitDescription>{`Big projects are made out of small pieces. The quality of each unit, together with the clarity of their integration, dictates the overall success of the whole. Reusable components are the key to awesome user intefaces.`}</BenefitDescription>
+            <BenefitDescription>{`Big projects are made out of small pieces. The quality of each unit, together with the clarity of their integration, dictate the overall success of the whole. Reusable components are the key to awesome user intefaces.`}</BenefitDescription>
           </BenefitText>
         </Benefit>
-      </List>
+      </Column>
     </Container>
   );
 }
+
+const column = 640;
+const maxWidthCheckIcon = column + 48;
+const minColumnsWidth = column * 2 + 96;
+const maxColumnsWidth = column * 2 + 256;
 
 const Container = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-`;
+  max-width: ${maxColumnsWidth}px;
 
-const List = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-`;
-
-const RocketContainer = styled.div`
-  flex-shrink: 0;
-  margin: 0 0 64px 0;
-  width: 192px;
-  height: 192px;
-  border-radius: 50%;
-  transition: background 0.4s;
-  overflow: hidden;
-  /* https://stackoverflow.com/a/58283449/128816 */
-  transform: translateZ(0);
-
-  @media (max-width: ${columnsWidthBreakpoint}px) {
-    margin-top: 64px;
-    margin-right: 0;
+  @media (min-width: ${minColumnsWidth}px) {
+    flex-direction: row;
+    justify-content: space-around;
   }
 `;
 
-type RocketProps = {
-  visible: boolean;
-};
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 32px 0;
 
-function Rocket({ visible }: RocketProps) {
-  const offset = visible ? 0 : 120;
-  return (
-    <StyledRocketSvg
-      viewBox="0 0 24 24"
-      style={{
-        left: 46 - offset,
-        top: 50 + offset
-      }}
-    >
-      <path d="M8.566 17.842c-.945 2.462-3.678 4.012-6.563 4.161.139-2.772 1.684-5.608 4.209-6.563l.51.521c-1.534 1.523-2.061 2.765-2.144 3.461.704-.085 2.006-.608 3.483-2.096l.505.516zm-1.136-11.342c-1.778-.01-4.062.911-5.766 2.614-.65.649-1.222 1.408-1.664 2.258 1.538-1.163 3.228-1.485 5.147-.408.566-1.494 1.32-3.014 2.283-4.464zm5.204 17.5c.852-.44 1.61-1.013 2.261-1.664 1.708-1.706 2.622-4.001 2.604-5.782-1.575 1.03-3.125 1.772-4.466 2.296 1.077 1.92.764 3.614-.399 5.15zm11.312-23.956c-.428-.03-.848-.044-1.261-.044-9.338 0-14.465 7.426-16.101 13.009l4.428 4.428c5.78-1.855 12.988-6.777 12.988-15.993v-.059c-.002-.437-.019-.884-.054-1.341zm-5.946 7.956c-1.105 0-2-.895-2-2s.895-2 2-2 2 .895 2 2-.895 2-2 2z" />
-    </StyledRocketSvg>
-  );
-}
+  :last-child {
+    margin-bottom: 0;
+  }
 
-const StyledRocketSvg = styled.svg`
-  position: relative;
-  width: 100px;
-  height: 100px;
-  fill: currentColor;
-  animation: hover 0.6s infinite ease;
-  transition: left, 0.4s ease-out, bottom 0.4s ease-out;
-
-  @keyframes hover {
-    0% {
-      transform: translateY(-0.6px) translateX(-0.6px);
-    }
-    25% {
-      transform: translateX(0.6px) translateY(0.6px);
-    }
-    50% {
-      transform: translateX(-0.6px) translateY(0.6px);
-    }
-    75% {
-      transform: translateX(0.6px) translateY(-0.6px);
-    }
-    100% {
-      transform: translateY(-0.6px) translateX(-0.6px);
-    }
+  @media (min-width: ${minColumnsWidth}px) {
+    margin-bottom: 0;
   }
 `;
 
@@ -166,8 +116,8 @@ function Benefit({ children, visible, nth }: BenefitProps) {
 }
 
 const StyledBenefit = styled.div`
-  margin: 0 0 48px 0;
-  padding: 5px 24px 0 16px;
+  margin: 0 0 32px 0;
+  max-width: ${column}px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -177,24 +127,22 @@ const StyledBenefit = styled.div`
     margin-bottom: 0;
   }
 
-  @media (max-width: ${columnsWidthBreakpoint}px) {
-    margin-bottom: 24px;
+  @media (max-width: ${maxWidthCheckIcon}px) {
+    padding: 0 20px;
+  }
+
+  @media (min-width: ${minColumnsWidth}px) {
+    margin-bottom: 64px;
   }
 `;
 
 const BenefitText = styled.div`
-  max-width: 640px;
-  font-size: 24px;
-  line-height: 30px;
+  font-size: 22px;
+  line-height: 28px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-
-  @media (max-width: ${columnsWidthBreakpoint}px) {
-    font-size: 22px;
-    line-height: 28px;
-  }
 `;
 
 const BenefitTitle = styled.div`
@@ -219,9 +167,9 @@ function Check({ visible, nth }: CheckProps) {
     <StyledCheck>
       <StyledCircleSvg>
         <StyledCircle
-          cx="1em"
-          cy="1em"
-          r="calc(1em - 1px)"
+          cx="20px"
+          cy="20px"
+          r="19px"
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
@@ -247,13 +195,12 @@ function Check({ visible, nth }: CheckProps) {
 const StyledCheck = styled.div`
   flex-shrink: 0;
   position: relative;
-  width: 2em;
-  height: 2em;
+  width: 40px;
+  height: 40px;
   margin: 0 24px 0 0;
-  font-size: 20px;
   opacity: 0.9;
 
-  @media (max-width: ${columnsWidthBreakpoint}px) {
+  @media (max-width: ${maxWidthCheckIcon}px) {
     display: none;
   }
 `;
@@ -271,8 +218,8 @@ const StyledCircle = styled.circle`
 
 const StyledCheckSvg = styled.svg`
   position: absolute;
-  width: 1.5em;
-  height: 1.5em;
-  top: 0.35em;
-  left: 0.25em;
+  width: 30px;
+  height: 30px;
+  top: 7px;
+  left: 5px;
 `;

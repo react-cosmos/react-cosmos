@@ -196,7 +196,7 @@ const StyledChevron = styled.svg`
 `;
 
 const PreviewContainer = styled.div`
-  margin: 10vh 0 0 0;
+  margin: 64px 0 0 0;
   max-width: ${contentMaxWidth}px;
   transition: ${slideInTransition};
 `;

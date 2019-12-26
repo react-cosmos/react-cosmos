@@ -8,10 +8,13 @@ import { VisualTdd } from './Features/VisualTdd';
 import { Page } from './Page';
 import { contentMaxWidth } from './shared/breakpoints';
 
-const Center = styled.div`
+const Container = styled.div`
+  padding: calc(81px + 20vh) 0 20vh 0;
+`;
+
+const Center = styled(Container)`
   max-width: ${contentMaxWidth}px;
   margin: 0 auto;
-  padding: calc(81px + 20vh) 0 20vh 0;
 `;
 
 export default {
@@ -38,9 +41,9 @@ export default {
   ),
   benefits: (
     <Page>
-      <Center>
+      <Container>
         <Benefits />
-      </Center>
+      </Container>
     </Page>
   ),
   about: (

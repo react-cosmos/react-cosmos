@@ -36,11 +36,15 @@ export const FeatureIconContainer = styled.div`
     height: 40px;
     opacity: 0.9;
   }
+
+  @media (max-width: ${columnsWidthBreakpoint}px) {
+    margin-bottom: 16px;
+  }
 `;
 
 export const FeatureTitle = styled.h2`
   margin: 0;
-  padding: 32px 24px 8px 24px;
+  padding: 0 24px 8px 24px;
   font-size: 36px;
   line-height: 36px;
   font-weight: 600;
@@ -54,7 +58,7 @@ export const FeatureTitle = styled.h2`
 
 export const FeatureDescription = styled.div`
   max-width: 640px;
-  padding: 0 24px 32px 24px;
+  padding: 0 24px 0 24px;
   font-size: 24px;
   line-height: 30px;
   opacity: 0.9;

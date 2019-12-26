@@ -4,11 +4,12 @@ import { About } from './About';
 import { Benefits } from './Benefits';
 import { Features } from './Features/Features';
 import { Footer } from './Footer/Footer';
+import { StickyHeader } from './Header/StickyHeader';
 import { Hero } from './Hero';
 import { Quote } from './Quote';
+import { Rocket } from './Rocket';
 import { grayToWhiteGradient, whiteToGrayGradient } from './shared/colors';
 import { SplashScreen } from './SplashScreen/SplashScreen';
-import { StickyHeader } from './Header/StickyHeader';
 
 export function Root() {
   return (
@@ -17,6 +18,7 @@ export function Root() {
       <Gradient1 id="gradient1">
         <StickyHeader />
         <Features />
+        <Rocket />
         <Benefits />
       </Gradient1>
       <Gradient2>
