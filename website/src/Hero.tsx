@@ -9,7 +9,7 @@ import { useViewportEnter } from './shared/useViewportEnter';
 export function Hero() {
   const [ref, entered] = useViewportEnter(0.66);
   return (
-    <Container>
+    <Container id="demo">
       <TextContainer ref={ref}>
         <Title style={getSlideInStyle(entered, 0)}>
           Don&apos;t settle for localhost:3000
