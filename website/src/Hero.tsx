@@ -44,16 +44,11 @@ export function Hero() {
 }
 
 const Container = styled.div`
-  padding: 384px 0 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-
-  @media (max-width: ${mobileMaxWidth}px) {
-    padding-top: 256px;
-  }
 `;
 
 const TextContainer = styled.div`

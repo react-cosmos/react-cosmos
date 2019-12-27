@@ -5,6 +5,7 @@ import { Benefits } from './Benefits';
 import { ComponentLibrary } from './Features/ComponentLibrary';
 import { OpenPlatform } from './Features/OpenPlatform';
 import { VisualTdd } from './Features/VisualTdd';
+import { Hero } from './Hero';
 import { Page } from './Page';
 
 const Container = styled.div`
@@ -43,6 +44,13 @@ export default {
     <Page>
       <Container>
         <Benefits />
+      </Container>
+    </Page>
+  ),
+  demo: (
+    <Page>
+      <Container>
+        <Hero />
       </Container>
     </Page>
   ),

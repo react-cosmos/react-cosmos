@@ -1474,10 +1474,10 @@ Array [
               /
             </span>
             <a
-              href="/about"
+              href="/demo"
               onClick={[Function]}
             >
-              About
+              Demo
             </a>
             <span
               className="sc-jDwBTQ jdbwaW"
@@ -2101,10 +2101,10 @@ Array [
     </div>
   </div>,
   <div
-    className="sc-iELTvK jLLbvK"
+    className="sc-iELTvK gAqGjr"
   >
     <div
-      className="sc-gPEVay dHNjnI"
+      className="sc-gPEVay jwRCqA"
     >
       <div
         className="sc-iRbamj loaEIe"

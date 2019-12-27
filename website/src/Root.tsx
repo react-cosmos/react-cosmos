@@ -8,6 +8,7 @@ import { StickyHeader } from './Header/StickyHeader';
 import { Hero } from './Hero';
 import { Quote } from './Quote';
 import { Rocket } from './Rocket';
+import { mobileMaxWidth } from './shared/breakpoints';
 import { grayToWhiteGradient, whiteToGrayGradient } from './shared/colors';
 import { SplashScreen } from './SplashScreen/SplashScreen';
 
@@ -36,5 +37,10 @@ const Gradient1 = styled.div`
 `;
 
 const Gradient2 = styled.div`
+  padding: 384px 0 0 0;
   background: ${whiteToGrayGradient};
+
+  @media (max-width: ${mobileMaxWidth}px) {
+    padding-top: 256px;
+  }
 `;
