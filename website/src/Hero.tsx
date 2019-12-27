@@ -9,7 +9,7 @@ import { useViewportEnter } from './shared/useViewportEnter';
 export function Hero() {
   const [ref, entered] = useViewportEnter(0.66);
   return (
-    <Container>
+    <Container id="demo">
       <TextContainer ref={ref}>
         <Title style={getSlideInStyle(entered, 0)}>
           Don&apos;t settle for localhost:3000
@@ -44,16 +44,11 @@ export function Hero() {
 }
 
 const Container = styled.div`
-  padding: 384px 0 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-
-  @media (max-width: ${mobileMaxWidth}px) {
-    padding-top: 256px;
-  }
 `;
 
 const TextContainer = styled.div`
