@@ -1,3 +1,22 @@
+# Roadmap: React Cosmos 2020
+
+> **Dec 2019, 2019:** It took time, but React Cosmos 5 is released, together with a shinny new website 🎉. With 2020 right around the corner, it's time to take a step back, reflect, and lay down a plan for the future.
+
+## Dedicated RFCs repo
+
+Mixing bug with feature ideas leads a bad maintainer experience. Bugs and features have a different lifecycle and require a different mindset. Moreover, it's hard to create "inbox zero" for issues with long-standing feature issues in the mix.
+
+For some, managing bugs is the hard part of being an open source maintainer. Over time, however, I realized that feature ideas have a highest cognitive load. The decisition tree for a bug is clear: Can it be reproduced? Is the requested behavior expected? If both are true, you find the source of the problem and come up with a fix. Feature ideas are more fuzzy. You need to assess whether a feature aligns with the project's vision, and even when it does, if it matches the project's priorities enough to pause and meaninfully engage with the proposal. Often a feature idea is accompanied with a PR, or an eagerness to submit one. On paper this is great, but realistically it's almost impossible for a first-time contributor to properly develop a new feature without becoming intimate with the codebase first.
+
+The dedicated RFCs repo allows feature ideas to be proposed and addressed properly, while keeping the issues list nice and tidy. It will allow me and other maintainers to process issues with priority, without neglecting novel ideas from the community, which on the long run are invaluable.
+
+Finally, there's always [Slack](https://join-react-cosmos.now.sh/) for bouncing around ideas without formality.
+
+- [ ] Create react-cosmos/rfcs repo
+  - [ ] Research templates and practices from other repos like reactjs/rfcs
+- [ ] Update GitHub labels
+- [ ] Update GitHub issue templates
+
 # Roadmap: Cosmos 5
 
 Cosmos Next becomes _Cosmos_. The included features are meant to exceed everything Cosmos Classic offered and make use of the powerful new Cosmos platform.
