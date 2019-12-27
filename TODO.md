@@ -14,8 +14,43 @@ Finally, there's always [Slack](https://join-react-cosmos.now.sh/) for bouncing 
 
 - [ ] Create react-cosmos/rfcs repo
   - [ ] Research templates and practices from other repos like reactjs/rfcs
+- [ ] Move feature issues to RFCs repo
 - [ ] Update GitHub labels
 - [ ] Update GitHub issue templates
+
+## Website enhancements
+
+- [ ] Auto deploy on merge
+- [ ] Redesign header
+  - [ ] Include version number with link to releases
+- [ ] Embed Cosmos instance on desktop
+  - [ ] Add (portrait, cropped) screenshots on mobile
+- [ ] Extract docs from readme to docs.reactcosmos.org
+  - [ ] MD-powered, auto-generated from docs/ directory
+  - [ ] Sticky side nav
+
+## Parcel support
+
+TBD.
+
+## Responsive mode improvements
+
+- [ ] Update default devices
+- [ ] X/y drag handles to resize viewport
+
+## Input panel improvements
+
+- [ ] Support decimals in number input
+- [ ] Range input
+- [ ] Select input (dropdown with pre-defined options)
+
+## Expose plugin APIs
+
+TBD.
+
+## Multi fixture page
+
+TBD.
 
 # Roadmap: Cosmos 5
 
