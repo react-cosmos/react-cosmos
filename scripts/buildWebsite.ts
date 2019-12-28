@@ -37,6 +37,11 @@ process.env.NODE_ENV = 'production';
     description: `Prototype and iterate quickly. Debug with ease. Create reusable components. Share UI across projects. Publish component libraries. Maintain quality at scale.`
   });
   await createPage({
+    pageName: 'demo',
+    title: `Don't settle for localhost:3000 · React Cosmos`,
+    description: `A dev tool for building scalable, high-quality user interfaces.`
+  });
+  await createPage({
     pageName: 'about',
     title: `About React Cosmos`,
     description: `I’m Ovidiu, a passionate developer from Romania. Obsessed with details, I made React Cosmos for like-minded developers.`

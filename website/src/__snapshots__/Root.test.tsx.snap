@@ -1420,99 +1420,250 @@ Array [
     </svg>
   </div>,
   <div
-    className="sc-feJyhm jEjcQp"
+    className="sc-iAyFgw gRSWVQ"
+    style={
+      Object {
+        "opacity": 0,
+        "position": "absolute",
+        "top": "auto",
+      }
+    }
+  >
+    <div
+      className="sc-hSdWYo dufzTE"
+    >
+      <div
+        className="sc-eHgmQL enCOtp"
+      >
+        <a
+          className="sc-cvbbAY hqsHwI"
+          href="/"
+          onClick={[Function]}
+        />
+      </div>
+      <div
+        className="sc-brqgnP kLnweg"
+      >
+        <h1
+          className="sc-cMljjf jgrapB"
+        >
+          <a
+            href="/"
+            onClick={[Function]}
+          >
+            React Cosmos
+          </a>
+        </h1>
+        <div
+          className="sc-jAaTju kWgIAs"
+        >
+          <a
+            href="https://github.com/react-cosmos/react-cosmos/blob/master/README.md#table-of-contents"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Docs
+          </a>
+          <span
+            className="sc-jDwBTQ jdbwaW"
+          >
+            /
+          </span>
+          <a
+            href="/demo"
+            onClick={[Function]}
+          >
+            Demo
+          </a>
+          <span
+            className="sc-jDwBTQ jdbwaW"
+          >
+            /
+          </span>
+          <a
+            href="https://github.com/sponsors/skidding"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Sponsor
+          </a>
+        </div>
+      </div>
+      <a
+        className="sc-jWBwVP gqTIoz"
+        href="https://github.com/react-cosmos/react-cosmos"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <svg
+          fill="currentColor"
+          stroke="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
+          />
+        </svg>
+      </a>
+    </div>
+  </div>,
+  <div
+    className="sc-iELTvK bYAeEo"
     id="gradient1"
   >
     <div
-      className="sc-iAyFgw gRSWVQ"
-      style={
-        Object {
-          "opacity": 0,
-          "position": "absolute",
-          "top": "auto",
-        }
-      }
+      className="sc-feJyhm hDyMrf"
+    />
+    <div
+      className="sc-gPEVay jwRCqA"
+      id="demo"
     >
       <div
-        className="sc-hSdWYo dufzTE"
+        className="sc-iRbamj loaEIe"
       >
         <div
-          className="sc-eHgmQL enCOtp"
+          className="sc-jlyJG cOyccj"
+          style={
+            Object {
+              "opacity": 0,
+              "transform": "translate(0, 40px)",
+              "transitionDelay": "0s",
+            }
+          }
         >
-          <a
-            className="sc-cvbbAY hqsHwI"
-            href="/"
-            onClick={[Function]}
-          />
+          Don't settle for localhost:3000
         </div>
         <div
-          className="sc-brqgnP kLnweg"
+          className="sc-gipzik gWPPax"
+          style={
+            Object {
+              "opacity": 0,
+              "transform": "translate(0, 40px)",
+              "transitionDelay": "0s",
+            }
+          }
         >
-          <h1
-            className="sc-cMljjf jgrapB"
+          Expect more from your 
+          <span
+            className="sc-bwzfXH gxJYSe"
           >
-            <a
-              href="/"
-              onClick={[Function]}
-            >
-              React Cosmos
-            </a>
-          </h1>
-          <div
-            className="sc-jAaTju kWgIAs"
-          >
-            <a
-              href="https://github.com/react-cosmos/react-cosmos/blob/master/README.md#table-of-contents"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Docs
-            </a>
-            <span
-              className="sc-jDwBTQ jdbwaW"
-            >
-              /
-            </span>
-            <a
-              href="/about"
-              onClick={[Function]}
-            >
-              About
-            </a>
-            <span
-              className="sc-jDwBTQ jdbwaW"
-            >
-              /
-            </span>
-            <a
-              href="https://github.com/sponsors/skidding"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Sponsor
-            </a>
-          </div>
+            dev environment
+          </span>
         </div>
+        <div
+          className="sc-csuQGl dwXKoQ"
+          style={
+            Object {
+              "opacity": 0,
+              "transform": "translate(0, 40px)",
+              "transitionDelay": "0s",
+            }
+          }
+        >
+          <a
+            className="sc-Rmtcm caOvlr"
+            href="https://github.com/react-cosmos/react-cosmos#getting-started"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <svg
+              strokeLinecap="square"
+              strokeLinejoin="round"
+              viewBox="0 0 24 24"
+            >
+              <polygon
+                points="5 3 19 12 5 21 5 3"
+              />
+            </svg>
+            Get started
+          </a>
+        </div>
+        <div
+          className="sc-bRBYWo gayvos"
+          style={
+            Object {
+              "opacity": 0,
+              "transform": "translate(0, 40px)",
+              "transitionDelay": "0s",
+            }
+          }
+        >
+          <a
+            className="sc-hzDkRC dgVxUX"
+            href="https://cosmos.flatris.space"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <span>
+              Live demo
+            </span>
+            <svg
+              className="sc-jhAzac gQggbK"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="square"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <polyline
+                points="9 18 15 12 9 6"
+              />
+            </svg>
+          </a>
+          <a
+            className="sc-hzDkRC dgVxUX"
+            href="https://twitter.com/ReactCosmos/status/1189127279533793281"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <span>
+              React Cosmos 5 in 21 tweets
+            </span>
+            <svg
+              className="sc-jhAzac gQggbK"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="square"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <polyline
+                points="9 18 15 12 9 6"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div
+        className="sc-fBuWsC gVrXHU"
+        style={
+          Object {
+            "opacity": 0,
+            "transform": "translate(0, 40px)",
+            "transitionDelay": "0s",
+          }
+        }
+      >
         <a
-          className="sc-jWBwVP gqTIoz"
-          href="https://github.com/react-cosmos/react-cosmos"
+          href="https://cosmos.flatris.space"
           rel="noopener noreferrer"
           target="_blank"
         >
-          <svg
-            fill="currentColor"
-            stroke="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
-            />
-          </svg>
+          <img
+            alt="React Cosmos in action"
+            className="sc-fMiknA eqziQF"
+            src="/screenshot.png"
+          />
         </a>
       </div>
     </div>
     <div
-      className="sc-ckVGcZ dKMzmy"
+      className="sc-feJyhm jhTjqy"
+    />
+    <div
+      className="sc-ckVGcZ hkJqVk"
       id="features"
     >
       <div
@@ -1691,7 +1842,14 @@ Array [
       </div>
     </div>
     <div
-      className="sc-kgAjT dHqFvJ"
+      className="sc-feJyhm jhTjqy"
+    />
+  </div>,
+  <div
+    className="sc-cmTdod QZYqD"
+  >
+    <div
+      className="sc-kgAjT fuNiAm"
       style={
         Object {
           "background": "rgba(10, 46, 70, 0)",
@@ -1713,6 +1871,13 @@ Array [
         />
       </svg>
     </div>
+  </div>,
+  <div
+    className="sc-jwKygS kHMGFm"
+  >
+    <div
+      className="sc-feJyhm eEyUND"
+    />
     <div
       className="sc-iwsKbI gfYiye"
       id="benefits"
@@ -2099,156 +2264,11 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-  <div
-    className="sc-iELTvK jLLbvK"
-  >
     <div
-      className="sc-gPEVay dHNjnI"
-    >
-      <div
-        className="sc-iRbamj loaEIe"
-      >
-        <div
-          className="sc-jlyJG cOyccj"
-          style={
-            Object {
-              "opacity": 0,
-              "transform": "translate(0, 40px)",
-              "transitionDelay": "0s",
-            }
-          }
-        >
-          Don't settle for localhost:3000
-        </div>
-        <div
-          className="sc-gipzik gWPPax"
-          style={
-            Object {
-              "opacity": 0,
-              "transform": "translate(0, 40px)",
-              "transitionDelay": "0s",
-            }
-          }
-        >
-          Expect more from your 
-          <span
-            className="sc-bwzfXH gxJYSe"
-          >
-            dev environment
-          </span>
-        </div>
-        <div
-          className="sc-csuQGl dwXKoQ"
-          style={
-            Object {
-              "opacity": 0,
-              "transform": "translate(0, 40px)",
-              "transitionDelay": "0s",
-            }
-          }
-        >
-          <a
-            className="sc-Rmtcm caOvlr"
-            href="https://github.com/react-cosmos/react-cosmos#getting-started"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <svg
-              strokeLinecap="square"
-              strokeLinejoin="round"
-              viewBox="0 0 24 24"
-            >
-              <polygon
-                points="5 3 19 12 5 21 5 3"
-              />
-            </svg>
-            Get started
-          </a>
-        </div>
-        <div
-          className="sc-bRBYWo gayvos"
-          style={
-            Object {
-              "opacity": 0,
-              "transform": "translate(0, 40px)",
-              "transitionDelay": "0s",
-            }
-          }
-        >
-          <a
-            className="sc-hzDkRC dgVxUX"
-            href="https://cosmos.flatris.space"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <span>
-              Live demo
-            </span>
-            <svg
-              className="sc-jhAzac gQggbK"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="square"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-            >
-              <polyline
-                points="9 18 15 12 9 6"
-              />
-            </svg>
-          </a>
-          <a
-            className="sc-hzDkRC dgVxUX"
-            href="https://twitter.com/ReactCosmos/status/1189127279533793281"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <span>
-              React Cosmos 5 in 21 tweets
-            </span>
-            <svg
-              className="sc-jhAzac gQggbK"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="square"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-            >
-              <polyline
-                points="9 18 15 12 9 6"
-              />
-            </svg>
-          </a>
-        </div>
-      </div>
-      <div
-        className="sc-fBuWsC gVrXHU"
-        style={
-          Object {
-            "opacity": 0,
-            "transform": "translate(0, 40px)",
-            "transitionDelay": "0s",
-          }
-        }
-      >
-        <a
-          href="https://cosmos.flatris.space"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <img
-            alt="React Cosmos in action"
-            className="sc-fMiknA eqziQF"
-            src="/screenshot.png"
-          />
-        </a>
-      </div>
-    </div>
+      className="sc-feJyhm gsbmNV"
+    />
     <div
-      className="sc-dVhcbM LegAG"
+      className="sc-dVhcbM cJUAWS"
     >
       <div
         className="sc-eqIVtm isIevQ"
@@ -2294,6 +2314,9 @@ Array [
         </div>
       </div>
     </div>
+    <div
+      className="sc-feJyhm bLrPnm"
+    />
   </div>,
   <div
     className="sc-htpNat jIENTK"

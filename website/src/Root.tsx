@@ -10,20 +10,35 @@ import { Quote } from './Quote';
 import { Rocket } from './Rocket';
 import { grayToWhiteGradient, whiteToGrayGradient } from './shared/colors';
 import { SplashScreen } from './SplashScreen/SplashScreen';
+import { Height } from './shared/Height';
+
+const headerHeight = 81;
 
 export function Root() {
   return (
     <>
       <SplashScreen />
+      <StickyHeader />
       <Gradient1 id="gradient1">
-        <StickyHeader />
-        <Features />
-        <Rocket />
-        <Benefits />
-      </Gradient1>
-      <Gradient2>
+        <Height
+          mobile={headerHeight + 96}
+          tablet={headerHeight + 128}
+          desktop={headerHeight + 192}
+        />
         <Hero />
+        <Height mobile={96} tablet={128} desktop={192} />
+        <Features />
+        <Height mobile={96} tablet={128} desktop={192} />
+      </Gradient1>
+      <WhiteBg>
+        <Rocket />
+      </WhiteBg>
+      <Gradient2>
+        <Height mobile={32} tablet={64} desktop={96} />
+        <Benefits />
+        <Height mobile={128} tablet={160} desktop={192} />
         <Quote />
+        <Height mobile={64} tablet={96} desktop={128} />
       </Gradient2>
       <About />
       <Footer />
@@ -33,6 +48,10 @@ export function Root() {
 
 const Gradient1 = styled.div`
   background: ${grayToWhiteGradient};
+`;
+
+const WhiteBg = styled.div`
+  background: #fff;
 `;
 
 const Gradient2 = styled.div`

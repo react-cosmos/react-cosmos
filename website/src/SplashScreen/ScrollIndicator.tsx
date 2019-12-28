@@ -23,7 +23,7 @@ export function ScrollIndicator({ windowViewport }: Props) {
       strokeLinecap="square"
       strokeLinejoin="round"
       style={{ bottom }}
-      onClick={scrollToFeatures}
+      onClick={scrollToContent}
     >
       <polyline points="7 13 12 18 17 13"></polyline>
       <polyline points="7 6 12 11 17 6"></polyline>
@@ -31,9 +31,9 @@ export function ScrollIndicator({ windowViewport }: Props) {
   );
 }
 
-function scrollToFeatures() {
-  const features = document.getElementById('features');
-  if (features) scrollTo(features.offsetTop);
+function scrollToContent() {
+  const content = document.getElementById('gradient1');
+  if (content) scrollTo(content.offsetTop);
 }
 
 const StyledChevronsDownIcon = styled.svg`

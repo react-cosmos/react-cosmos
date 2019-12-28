@@ -33,7 +33,7 @@ export function Header({ visible, fixed }: Props) {
               Docs
             </ExternalLink>
             <Separator>/</Separator>
-            <InternalLink to="/about">About</InternalLink>
+            <InternalLink to="/demo">Demo</InternalLink>
             <Separator>/</Separator>
             <ExternalLink href="https://github.com/sponsors/skidding">
               Sponsor
