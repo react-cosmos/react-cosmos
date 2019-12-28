@@ -30,8 +30,10 @@ export function Root() {
         <Features />
         <Height mobile={96} tablet={128} desktop={192} />
       </Gradient1>
-      <Gradient2>
+      <WhiteBg>
         <Rocket />
+      </WhiteBg>
+      <Gradient2>
         <Height mobile={32} tablet={64} desktop={96} />
         <Benefits />
         <Height mobile={128} tablet={160} desktop={192} />
@@ -46,6 +48,10 @@ export function Root() {
 
 const Gradient1 = styled.div`
   background: ${grayToWhiteGradient};
+`;
+
+const WhiteBg = styled.div`
+  background: #fff;
 `;
 
 const Gradient2 = styled.div`
