@@ -26,13 +26,8 @@ export function Quote() {
 const slopeMaxWidth = 696;
 
 const Container = styled.div`
-  padding: 256px 0 128px 0;
   display: flex;
   justify-content: center;
-
-  @media (max-width: ${mobileMaxWidth}px) {
-    padding: 96px 0 64px 0;
-  }
 `;
 
 const CenterContainer = styled.div`
