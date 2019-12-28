@@ -4,7 +4,7 @@
 
 ## Dedicated RFCs repo
 
-Mixing bug with feature ideas leads a bad maintainer experience. Bugs and features have a different lifecycle and require a different mindset. Moreover, it's hard to create "inbox zero" for issues with long-standing feature issues in the mix.
+Mixing bugs with feature ideas leads a bad maintainer experience. Bugs and features have a different lifecycle and require a different mindset. Moreover, it's hard to create "inbox zero" for issues with long-standing feature issues in the mix.
 
 For some, managing bugs is the hard part of being an open source maintainer. Over time, however, I realized that feature ideas have a higher cognitive load. The decisition tree for a bug is clear: Can it be reproduced? Is the requested behavior expected? If both are true, you find the source of the problem and come up with a fix. Feature ideas are more fuzzy. You need to assess whether a feature aligns with the project's vision, and even when it does, if it matches the project's priorities enough to pause and meaninfully engage with the proposal. Often a feature idea is accompanied with a PR, or an eagerness to submit one. On paper this is great, but realistically it's almost impossible for a first-time contributor to properly develop a new feature without becoming intimate with the codebase first.
 
