@@ -27,7 +27,7 @@ export function Rocket() {
 }
 
 const Container = styled.div`
-  margin: 0 auto 96px auto;
+  margin: 0 auto;
   width: 192px;
   height: 192px;
   border-radius: 50%;
@@ -37,7 +37,6 @@ const Container = styled.div`
   transform: translateZ(0);
 
   @media (max-width: ${mobileMaxWidth}px) {
-    margin-bottom: 64px;
     width: 160px;
     height: 160px;
   }
