@@ -31,7 +31,9 @@ Finally, there's always [Slack](https://join-react-cosmos.now.sh/) for bouncing 
 
 ## Parcel support
 
-TBD.
+It's highly probable that a Parcel integration is a low hanging fruit, but some research is required to be sure.
+
+- [ ] Research Parcel integration (preferably as Express middleware attached to Cosmos server)
 
 ## Responsive mode improvements
 
@@ -46,7 +48,11 @@ TBD.
 
 ## Expose plugin APIs
 
-TBD.
+There are three types of plugins in React Cosmos. Exposing all three won't be easy, but it's important to make progress before adding more functionality.
+
+- **Fixture plugins**. Fixture _decorators_ are a basic example of fixture plugins. More functionality can be added to decorators by using the FixtureContext. This is all already possible, but isn't documented, and the API likely requires improvement before doing so. This type of plugin runs in user land and is thus compiled using the user's build pipeline.
+- **UI plugins**. The React Cosmos UI is already composed from plugins, using an unreleased but independent plugin system. The way UI plugins interact is already designed, but the way they are installed isn't. UI plugins have to be installed at runtime. This requires a plugin discovery system and a plugin definition format to be indentified by. Once these requirements are in place a user will be able to install an npm package with one or more React Cosmos plugins, and enable those plugins without having to restart the server or even reload the UI.
+- **Server plugins**. Same as UI plugins with regards to installation and the fact that the existing code is already organized around plugins. But the APIs are completely different for server plugins because they mainly revolve around an Express instance and its corresponding HTTP server.
 
 ## Multi fixture page
 
