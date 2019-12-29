@@ -1,12 +1,10 @@
 # Roadmap: React Cosmos 2020
 
-> **Dec 29, 2019:** It took time, but React Cosmos 5 is released, together with a shinny new website 🎉. With 2020 right around the corner, it's time to take a step back, reflect, and lay down a plan for the future.
-
 ## Dedicated RFCs repo
 
-Mixing bugs with feature ideas leads a bad maintainer experience. Bugs and features have a different lifecycle and require a different mindset. Moreover, it's hard to create "inbox zero" for issues with long-standing feature issues in the mix.
+Mixing bugs with feature ideas leads a bad maintainer experience. Bugs and features have a different lifecycle and require a different mindset. Moreover, it's hard to reach "inbox zero" for issues with long-standing feature issues in the mix.
 
-For some, managing bugs is the hard part of being an open source maintainer. Over time, however, I realized that feature ideas have a higher cognitive load. The decisition tree for a bug is clear: Can it be reproduced? Is the requested behavior expected? If both are true, you find the source of the problem and come up with a fix. Feature ideas are more fuzzy. You need to assess whether a feature aligns with the project's vision, and even when it does, if it matches the project's priorities enough to pause and meaninfully engage with the proposal. Often a feature idea is accompanied with a PR, or an eagerness to submit one. On paper this is great, but realistically it's almost impossible for a first-time contributor to properly develop a new feature without becoming intimate with the codebase first.
+For some, managing bugs is the hard part of being an open source maintainer. Over time, however, I realized that feature ideas have a higher cognitive load. The decisition tree for a bug is clear: Can it be reproduced? Is the requested behavior expected? If both are true, you try to find the source of the problem and come up with a fix. Feature ideas are more fuzzy. You need to assess whether a feature aligns with the project's mission, and even when it does, if it matches the project's priorities enough to pause and meaninfully engage with the proposal.
 
 The dedicated RFCs repo allows feature ideas to be proposed and addressed properly, while keeping the issues list nice and clean. It will allow me and other maintainers to process issues with priority, without neglecting novel ideas from the community, which on the long run are invaluable.
 
@@ -14,7 +12,7 @@ Finally, there's always [Slack](https://join-react-cosmos.now.sh/) for bouncing 
 
 - [ ] Create react-cosmos/rfcs repo
   - [ ] Research templates and practices from other repos like reactjs/rfcs
-- [ ] Move feature issues to RFCs repo
+- [ ] Move feature idea issues to RFCs repo
 - [ ] Update GitHub labels
 - [ ] Update GitHub issue templates
 
@@ -50,8 +48,8 @@ It's highly probable that a Parcel integration is a low hanging fruit, but some 
 
 There are three types of plugins in React Cosmos. Exposing all three won't be easy, but it's important to make progress before adding more functionality.
 
-- **Fixture plugins**. Fixture _decorators_ are a basic example of fixture plugins. More functionality can be added to decorators by using the FixtureContext. This is all already possible, but isn't documented, and the API likely requires improvement before doing so. This type of plugin runs in user land and is thus compiled using the user's build pipeline.
-- **UI plugins**. The React Cosmos UI is already composed from plugins, using an unreleased but independent plugin system. The way UI plugins interact is already designed, but the way they are installed isn't. UI plugins have to be installed at runtime. This requires a plugin discovery system and a plugin definition format to be indentified by. Once these requirements are in place a user will be able to install an npm package with one or more React Cosmos plugins, and enable those plugins without having to restart the server or even reload the UI.
+- **Fixture plugins**. Fixture _decorators_ are a basic example of fixture plugins. More functionality can be added to decorators by using the FixtureContext. This is already possible, but isn't documented, and the API likely requires improvement before doing so. This type of plugin runs in user land and is thus compiled using the user's build pipeline.
+- **UI plugins**. The React Cosmos UI is currently composed from plugins, using an unreleased but independent plugin system. The way UI plugins interact is designed, but the way they are installed isn't. UI plugins have to be installed at runtime. This requires a plugin discovery system and a plugin definition format to be indentified by. Once these requirements are in place a user will be able to install an npm package with one or more React Cosmos plugins, and enable those plugins without having to restart the server or even reload the UI.
 - **Server plugins**. Same as UI plugins with regards to installation and the fact that the existing code is already organized around plugins. But the APIs are completely different for server plugins because they mainly revolve around an Express instance and its corresponding HTTP server.
 
 ## Multi selected fixtures
@@ -65,12 +63,14 @@ Experimentation is required to determine the best form. Also something to consid
 
 ## Interesting but not a priority (for now)
 
-These are good ideas that come up often, which are more distant to the core React Cosmos mission than the functionality mentioned above. It's still good to explore these ideas for when the time is right, but it's also important to understand that these features will be treated with little priority and most likely are content for a future roadmap.
+These are good ideas that come up often that are more distant to the core React Cosmos mission than the functionality mentioned above. It's still good to explore these ideas for when the time is right, but it's also important to understand that these ideas will be treated with little priority and most likely are content for a future roadmap.
 
-- **Component docs**. Showing some component documentation when opening a fixture is indeed useful, and a number of solutions have already been implemented by the community using fixture decorators. A better solution, however, would be to show the docs in a Cosmos UI pane, outside the renderer iframe. This is a great candidate for a UI plugins, which is why no official solution will be released before an official UI plugin API.
+- **Component docs**. Showing some component documentation when opening a fixture is indeed useful, and a number of solutions have already been implemented by the community using fixture decorators. A better solution, however, would be to show the docs in a pane outside the renderer iframe. This is a great candidate for a UI plugins, which is why no official solution will be released before an official UI plugin API.
 - **MDX fixtures**. Can be different fixture format (.mdx fixture files), or a separate type of page that can reference fixtures inside. This is a promising idea, but it's unclear where it fits in the UI developer's workflow. _Is it strictly a documentation feature? Should it be a type of fixture or something on top of fixtures?_
 
 # Roadmap: Cosmos 5
+
+> **Dec 29, 2019:** It took time, but React Cosmos 5 is released, together with a shinny new website 🎉. With 2020 right around the corner, it's time to take a step back, reflect, and lay down a plan for the future.
 
 Cosmos Next becomes _Cosmos_. The included features are meant to exceed everything Cosmos Classic offered and make use of the powerful new Cosmos platform.
 
