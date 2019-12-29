@@ -1,6 +1,6 @@
 # Roadmap: React Cosmos 2020
 
-> **Dec 27, 2019:** It took time, but React Cosmos 5 is released, together with a shinny new website 🎉. With 2020 right around the corner, it's time to take a step back, reflect, and lay down a plan for the future.
+> **Dec 29, 2019:** It took time, but React Cosmos 5 is released, together with a shinny new website 🎉. With 2020 right around the corner, it's time to take a step back, reflect, and lay down a plan for the future.
 
 ## Dedicated RFCs repo
 
@@ -20,7 +20,7 @@ Finally, there's always [Slack](https://join-react-cosmos.now.sh/) for bouncing 
 
 ## Website enhancements
 
-- [ ] Auto deploy on merge
+- [x] Auto deploy on merge
 - [ ] Redesign header
   - [ ] Include version number with link to releases
 - [ ] Embed Cosmos instance on desktop
