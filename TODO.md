@@ -54,9 +54,14 @@ There are three types of plugins in React Cosmos. Exposing all three won't be ea
 - **UI plugins**. The React Cosmos UI is already composed from plugins, using an unreleased but independent plugin system. The way UI plugins interact is already designed, but the way they are installed isn't. UI plugins have to be installed at runtime. This requires a plugin discovery system and a plugin definition format to be indentified by. Once these requirements are in place a user will be able to install an npm package with one or more React Cosmos plugins, and enable those plugins without having to restart the server or even reload the UI.
 - **Server plugins**. Same as UI plugins with regards to installation and the fact that the existing code is already organized around plugins. But the APIs are completely different for server plugins because they mainly revolve around an Express instance and its corresponding HTTP server.
 
-## Multi fixture page
+## Multi selected fixtures
 
-TBD.
+There are (at least) two possible solutions:
+
+1. Allow selection of two or more fixtures in the current Cosmos UI (the _Playground_), and show multiple renderer iframes in a grid or a horizontal list in the center area of the layout.
+2. A brand new page where all fixtures are rendered one under another, with a search input at the top and possibly other fixture filters.
+
+Experimentation is required to determine the best form. Also something to consider is rendering the same fixture more than once under different screen sizes, similar to [Playroom](https://github.com/seek-oss/playroom). This is a "responsive" feature, but it also involves handling multiple renderer iframes on the same page so it's good to keep in mind while working on multi fixture functionality.
 
 # Roadmap: Cosmos 5
 
