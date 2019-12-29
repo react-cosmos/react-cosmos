@@ -63,7 +63,7 @@ Experimentation is required to determine the best form. Also something to consid
 
 ## Interesting but not a priority (for now)
 
-These are good ideas that come up often that are more distant to the core React Cosmos mission than the functionality mentioned above. It's still good to explore these ideas for when the time is right, but it's also important to understand that these ideas will be treated with little priority and most likely are content for a future roadmap.
+These are good ideas that come up often but are more distant to the core React Cosmos mission than the functionality mentioned above. It's still good to explore these ideas for when the time is right, but it's also important to understand that these ideas will be treated with little priority and most likely are content for a future roadmap.
 
 - **Component docs**. Showing some component documentation when opening a fixture is indeed useful, and a number of solutions have already been implemented by the community using fixture decorators. A better solution, however, would be to show the docs in a pane outside the renderer iframe. This is a great candidate for a UI plugins, which is why no official solution will be released before an official UI plugin API.
 - **MDX fixtures**. Can be different fixture format (.mdx fixture files), or a separate type of page that can reference fixtures inside. This is a promising idea, but it's unclear where it fits in the UI developer's workflow. _Is it strictly a documentation feature? Should it be a type of fixture or something on top of fixtures?_
