@@ -6,9 +6,16 @@ type Props = {
   style?: {};
   to: string;
   className?: string;
+  VisuallyOnly?: boolean;
 };
 
-export const InternalLink = ({ children, to, className, style }: Props) => {
+export const InternalLink = ({
+  children,
+  to,
+  className,
+  style,
+  VisuallyOnly = false
+}: Props) => {
   function handleClick(e: React.MouseEvent) {
     const element = getElementByPath(to);
     if (element) {
@@ -20,7 +27,14 @@ export const InternalLink = ({ children, to, className, style }: Props) => {
   }
 
   return (
-    <a href={to} className={className} style={style} onClick={handleClick}>
+    <a
+      href={to}
+      className={className}
+      style={style}
+      onClick={handleClick}
+      tabIndex={VisuallyOnly ? -1 : 0}
+      aria-hidden={VisuallyOnly}
+    >
       {children}
     </a>
   );
