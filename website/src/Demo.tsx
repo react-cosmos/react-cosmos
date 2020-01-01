@@ -12,7 +12,7 @@ const minPreviewWidth = 960;
 const previewPadding = 32;
 const maxPreviewWidth = 1280 + 96 + 2 * previewPadding;
 
-export function Hero() {
+export function Demo() {
   const [ref, entered] = useViewportEnter(0.66);
   const showLivePreview = useLivePreview();
   return (
