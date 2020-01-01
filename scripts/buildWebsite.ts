@@ -1,4 +1,5 @@
-import { copy, mkdir, readFile, remove, outputFile } from 'fs-extra';
+import { execSync } from 'child_process';
+import { copy, mkdir, outputFile, readFile, remove } from 'fs-extra';
 import webpack from 'webpack';
 
 process.env.NODE_ENV = 'production';
@@ -49,6 +50,9 @@ process.env.NODE_ENV = 'production';
 
   // Build source
   await buildWebpack();
+
+  // Export live demo instance
+  execSync('yarn cosmos-export --root-dir website');
 })();
 
 type PageParams = {

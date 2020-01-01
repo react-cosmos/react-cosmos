@@ -6,7 +6,10 @@ import { getSlideInStyle, slideInTransition } from './shared/slideIn';
 import { NoWrap } from './shared/styledPrimitives';
 import { useViewportEnter } from './shared/useViewportEnter';
 
-const livePreviewUrl = '/live-demo/';
+const livePreviewUrl =
+  process.env.NODE_ENV === 'production'
+    ? '/live-demo/'
+    : 'http://localhost:5000';
 
 const minPreviewWidth = 960;
 const previewPadding = 32;
