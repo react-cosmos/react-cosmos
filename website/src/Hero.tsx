@@ -1,13 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
-import { contentMaxWidth, mobileMaxWidth } from './shared/breakpoints';
+import { mobileMaxWidth } from './shared/breakpoints';
 import { ExternalLink } from './shared/ExternalLink';
 import { getSlideInStyle, slideInTransition } from './shared/slideIn';
 import { NoWrap } from './shared/styledPrimitives';
 import { useViewportEnter } from './shared/useViewportEnter';
 
+const livePreviewUrl = '/live-demo/';
+
+const minPreviewWidth = 960;
+const previewPadding = 32;
+const maxPreviewWidth = 1280 + 96 + 2 * previewPadding;
+
 export function Hero() {
   const [ref, entered] = useViewportEnter(0.66);
+  const showLivePreview = useLivePreview();
   return (
     <Container id="demo">
       <TextContainer ref={ref}>
@@ -24,10 +31,12 @@ export function Hero() {
           </CallToAction>
         </CtaContainer>
         <Links style={getSlideInStyle(entered, 3)}>
-          <Link href="https://cosmos.flatris.space">
-            <span>Live demo</span>
-            <Chevron />
-          </Link>
+          {!showLivePreview && (
+            <Link href="https://cosmos.flatris.space">
+              <span>Live demo</span>
+              <Chevron />
+            </Link>
+          )}
           <Link href="https://twitter.com/ReactCosmos/status/1189127279533793281">
             <span>React Cosmos 5 in 21 tweets</span>
             <Chevron />
@@ -35,12 +44,31 @@ export function Hero() {
         </Links>
       </TextContainer>
       <PreviewContainer style={getSlideInStyle(entered, 4)}>
-        <ExternalLink href="https://cosmos.flatris.space">
-          <Preview src="/screenshot.png" alt="React Cosmos in action" />
-        </ExternalLink>
+        {showLivePreview && <PreviewIframe src={livePreviewUrl} />}
+        {!showLivePreview && (
+          <ExternalLink href={livePreviewUrl}>
+            <PreviewImage src="/screenshot.png" alt="React Cosmos in action" />
+          </ExternalLink>
+        )}
       </PreviewContainer>
     </Container>
   );
+}
+
+function useLivePreview() {
+  const [showPreview, setShowPreview] = React.useState(shouldShowLivePreview());
+  React.useEffect(() => {
+    function handleWindowResize() {
+      setShowPreview(shouldShowLivePreview());
+    }
+    window.addEventListener('resize', handleWindowResize);
+    return () => window.removeEventListener('resize', handleWindowResize);
+  });
+  return showPreview;
+}
+
+function shouldShowLivePreview() {
+  return window.innerWidth >= minPreviewWidth;
 }
 
 const Container = styled.div`
@@ -195,12 +223,26 @@ const StyledChevron = styled.svg`
 `;
 
 const PreviewContainer = styled.div`
-  margin: 64px 0 0 0;
-  max-width: ${contentMaxWidth}px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: ${maxPreviewWidth}px;
+  padding: 64px 0 0 0;
   transition: ${slideInTransition};
+
+  @media (min-width: ${minPreviewWidth}px) {
+    padding-left: ${previewPadding}px;
+    padding-right: ${previewPadding}px;
+  }
 `;
 
-const Preview = styled.img`
+const PreviewIframe = styled.iframe`
+  display: block;
+  width: 100%;
+  height: 688px;
+  border: none;
+`;
+
+const PreviewImage = styled.img`
   display: block;
   width: 100%;
 `;
