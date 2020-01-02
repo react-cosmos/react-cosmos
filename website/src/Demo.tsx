@@ -46,7 +46,9 @@ export function Demo() {
         {showLivePreview && <PreviewIframe src={livePreviewUrl} />}
         {!showLivePreview && (
           <ExternalLink href={livePreviewUrl}>
-            <PreviewImage src="/screenshot.png" alt="React Cosmos in action" />
+            <PreviewImage src="/screenshot1.png" alt="Props panel" />
+            <PreviewImage src="/screenshot2.png" alt="Fixture search" />
+            <PreviewImage src="/screenshot3.png" alt="Responsive mode" />
           </ExternalLink>
         )}
       </PreviewContainer>
@@ -244,4 +246,9 @@ const PreviewIframe = styled.iframe`
 const PreviewImage = styled.img`
   display: block;
   width: 100%;
+  margin: 0 0 32px 0;
+
+  :last-child {
+    margin-bottom: 0;
+  }
 `;

@@ -22,7 +22,7 @@ Finally, there's always [Slack](https://join-react-cosmos.now.sh/) for bouncing 
 - [x] Redesign header
   - [x] Include version number with link to releases
 - [x] Embed Cosmos instance on desktop
-  - [ ] Add (portrait, cropped) screenshots on mobile
+  - [x] Add multiple screenshots on mobile
 - [ ] SSR?
 - [ ] Extract docs from readme to docs.reactcosmos.org
   - [ ] MD-powered, auto-generated from docs/ directory
