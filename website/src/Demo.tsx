@@ -2,14 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { mobileMaxWidth } from './shared/breakpoints';
 import { ExternalLink } from './shared/ExternalLink';
+import { livePreviewUrl } from './shared/livePreviewUrl';
 import { getSlideInStyle, slideInTransition } from './shared/slideIn';
 import { NoWrap } from './shared/styledPrimitives';
 import { useViewportEnter } from './shared/useViewportEnter';
-
-const livePreviewUrl =
-  process.env.NODE_ENV === 'production'
-    ? '/live-demo/'
-    : 'http://localhost:5000';
 
 const minPreviewWidth = 960;
 const previewPadding = 32;
@@ -35,7 +31,7 @@ export function Demo() {
         </CtaContainer>
         <Links style={getSlideInStyle(entered, 3)}>
           {!showLivePreview && (
-            <Link href="https://cosmos.flatris.space">
+            <Link href={livePreviewUrl}>
               <span>Live demo</span>
               <Chevron />
             </Link>
