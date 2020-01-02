@@ -18,12 +18,13 @@ export function collapseSoloIndexes(treeNode: FixtureNode): FixtureNode {
 
   forEach(treeNode.dirs, (dirNode, dirName) => {
     const dirItems = dirNode.items;
+    const dirIndexItem = dirItems.index || dirItems[dirName];
     const containsSoloIndexItem =
-      Object.keys(dirItems).length === 1 && dirItems.index;
+      Object.keys(dirItems).length === 1 && dirIndexItem;
     const hasSubdirs = Object.keys(dirNode.dirs).length > 0;
 
     if (containsSoloIndexItem && !items[dirName] && !hasSubdirs) {
-      items[dirName] = dirItems.index;
+      items[dirName] = dirIndexItem;
     } else {
       dirs[dirName] = collapseSoloIndexes(dirNode);
     }
