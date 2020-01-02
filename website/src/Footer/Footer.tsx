@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { ExternalLink } from '../shared/ExternalLink';
 import { InternalLink } from '../shared/InternalLink';
+import { livePreviewUrl } from '../shared/livePreviewUrl';
 import { getSlideInStyle, slideInTransition } from '../shared/slideIn';
 import { Center, NoWrap } from '../shared/styledPrimitives';
 import { useViewportEnter } from '../shared/useViewportEnter';
@@ -23,7 +24,7 @@ export function Footer() {
             <InternalLink to="/benefits">Benefits</InternalLink>
           </Column>
           <Column>
-            <ExternalLink href="https://cosmos.flatris.space">
+            <ExternalLink href={livePreviewUrl}>
               <ExternalLabel>Live demo</ExternalLabel>
             </ExternalLink>
             <ExternalLink href="https://twitter.com/ReactCosmos/status/1189127279533793281">
