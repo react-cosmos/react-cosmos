@@ -47,6 +47,8 @@ npm i --D react-cosmos
 yarn add --dev react-cosmos
 ```
 
+> Please see [Compilation][#compilation] to make sure you installed all necessary dependencies.
+
 2\. **Create package.json scripts**
 
 ```diff
@@ -149,9 +151,21 @@ And if you use VS Code you can map the Cosmos config schema globally by [extendi
 
 How you compile your code is 100% your business. React Cosmos jumps through hoops to compile your code using your existing build pipeline, but it doesn't have opinions nor does it install dependencies your setup might require.
 
+**React Cosmos compiles your code using the build dependencies already installed in your project.**
+
 Unless you use a framework like Create React App or Next.js, you need to install build dependencies yourself. This include stuff like Babel, TypeScript, webpack loaders, html-webpack-plugin, etc.
 
-**React Cosmos compiles your code using the build dependencies already installed in your project.**
+Here is a common list of packages required to build React with webpack and Babel:
+
+> @babel/core @babel/preset-env @babel/preset-react babel-loader style-loader css-loader html-webpack-plugin
+
+And unless you use a framework that does it under the hood, create a `.babelrc` (or similar) config in your project root.
+
+```
+{
+  "presets": ["@babel/env", "@babel/react"]
+}
+```
 
 ## Webpack
 
