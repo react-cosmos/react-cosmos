@@ -1436,9 +1436,11 @@ Array [
         className="sc-Rmtcm dZsjza"
       >
         <a
+          aria-hidden={true}
           className="sc-bRBYWo boZGRx"
           href="/"
           onClick={[Function]}
+          tabIndex={-1}
         />
       </div>
       <div
@@ -1448,8 +1450,10 @@ Array [
           className="sc-jhAzac dCFWaQ"
         >
           <a
+            aria-hidden={false}
             href="/"
             onClick={[Function]}
+            tabIndex={0}
           >
             React Cosmos
           </a>
@@ -1470,8 +1474,10 @@ Array [
             /
           </span>
           <a
+            aria-hidden={false}
             href="/demo"
             onClick={[Function]}
+            tabIndex={0}
           >
             Demo
           </a>
@@ -2400,26 +2406,34 @@ Array [
           className="sc-gPEVay hFpZL"
         >
           <a
+            aria-hidden={false}
             href="/visual-tdd"
             onClick={[Function]}
+            tabIndex={0}
           >
             Visual TDD
           </a>
           <a
+            aria-hidden={false}
             href="/component-library"
             onClick={[Function]}
+            tabIndex={0}
           >
             Component library
           </a>
           <a
+            aria-hidden={false}
             href="/open-platform"
             onClick={[Function]}
+            tabIndex={0}
           >
             Open platform
           </a>
           <a
+            aria-hidden={false}
             href="/benefits"
             onClick={[Function]}
+            tabIndex={0}
           >
             Benefits
           </a>
