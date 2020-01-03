@@ -47,7 +47,7 @@ npm i --D react-cosmos
 yarn add --dev react-cosmos
 ```
 
-> Please see [Compilation][#compilation] to make sure you installed all necessary dependencies.
+> Please see [Compilation](#compilation) to make sure you installed all necessary dependencies.
 
 2\. **Create package.json scripts**
 
