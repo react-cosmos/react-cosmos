@@ -483,6 +483,8 @@ Check out the [full example](https://github.com/react-cosmos/react-cosmos/blob/4
 
 ## Troubleshooting
 
+> **Warning**: Most React Cosmos issues are related to missing build dependencies. Please see [Compilation](#compilation).
+
 #### localhost:5000/\_renderer.html 404s?
 
 - Check for build errors in your terminal.
