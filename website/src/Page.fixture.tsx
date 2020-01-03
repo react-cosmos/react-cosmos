@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { About } from './About';
 import { Benefits } from './Benefits';
+import { Demo } from './Demo';
 import { ComponentLibrary } from './Features/ComponentLibrary';
 import { OpenPlatform } from './Features/OpenPlatform';
 import { VisualTdd } from './Features/VisualTdd';
-import { Hero } from './Hero';
 import { Page } from './Page';
 
 const Container = styled.div`
@@ -50,7 +50,7 @@ export default {
   demo: (
     <Page>
       <Container>
-        <Hero />
+        <Demo />
       </Container>
     </Page>
   ),

@@ -112,6 +112,7 @@ const SelectInput = styled.select`
   left: 0;
   width: 100%;
   height: 100%;
+  -webkit-appearance: none;
   outline: none;
   opacity: 0;
 `;

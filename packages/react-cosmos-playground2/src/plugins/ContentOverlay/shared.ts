@@ -39,7 +39,7 @@ export const ContentContainer = styled.div`
 
 export const TextContainer = styled.div`
   flex-shrink: 0;
-  width: 480px;
+  width: 512px;
   padding: 32px;
   font-size: 16px;
   line-height: 1.5em;
