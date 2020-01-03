@@ -3,10 +3,10 @@ import { scrollTo } from './scrollTo';
 
 type Props = {
   children?: React.ReactNode;
-  style?: {};
   to: string;
   className?: string;
-  visuallyOnly?: boolean;
+  style?: {};
+  visualOnly?: boolean;
 };
 
 export const InternalLink = ({
@@ -14,7 +14,7 @@ export const InternalLink = ({
   to,
   className,
   style,
-  visuallyOnly = false
+  visualOnly = false
 }: Props) => {
   function handleClick(e: React.MouseEvent) {
     const element = getElementByPath(to);
@@ -26,15 +26,23 @@ export const InternalLink = ({
     }
   }
 
+  if (visualOnly) {
+    return (
+      <a
+        href={to}
+        className={className}
+        style={style}
+        onClick={handleClick}
+        tabIndex={-1}
+        aria-hidden={true}
+      >
+        {children}
+      </a>
+    );
+  }
+
   return (
-    <a
-      href={to}
-      className={className}
-      style={style}
-      onClick={handleClick}
-      tabIndex={visuallyOnly ? -1 : 0}
-      aria-hidden={visuallyOnly}
-    >
+    <a href={to} className={className} style={style} onClick={handleClick}>
       {children}
     </a>
   );
