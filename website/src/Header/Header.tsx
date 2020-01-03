@@ -23,7 +23,7 @@ export function Header({ visible, fixed }: Props) {
     >
       <Content>
         <CosmonautContainer>
-          <CosmonautButton to="/" visuallyOnly />
+          <CosmonautButton to="/" visualOnly />
         </CosmonautContainer>
         <Body>
           <Title>
