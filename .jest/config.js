@@ -5,7 +5,7 @@ module.exports = {
   rootDir: join(__dirname, '..'),
   testMatch: ['**/__tests__/**/*.{ts,tsx}', '**/?(*.)test.{ts,tsx}'],
   testPathIgnorePatterns: ['<rootDir>/node_modules/'],
-  setupFilesAfterEnv: ['<rootDir>/.jest/setup-framework.ts'],
+  setupFilesAfterEnv: ['<rootDir>/.jest/setup.ts'],
   collectCoverageFrom: [
     '**/src/**/*.{ts,tsx}',
     '!**/__fixtures__/**',
