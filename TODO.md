@@ -23,10 +23,10 @@ Finally, there's always [Slack](https://join-react-cosmos.now.sh/) for bouncing 
   - [x] Include version number with link to releases
 - [x] Embed Cosmos instance on desktop
   - [x] Add multiple screenshots on mobile
-- [ ] SSR?
 - [ ] Extract docs from readme to docs.reactcosmos.org
   - [ ] MD-powered, auto-generated from docs/ directory
   - [ ] Sticky side nav
+  - [ ] SSG
 
 ## Parcel support
 
@@ -61,6 +61,10 @@ There are (at least) two possible solutions:
 2. A brand new page where all fixtures are rendered one under another, with a search input at the top and possibly other fixture filters.
 
 Experimentation is required to determine the best form. Also something to consider is rendering the same fixture more than once under different screen sizes, similar to [Playroom](https://github.com/seek-oss/playroom). This is a "responsive" feature, but it also involves handling multiple renderer iframes on the same page so it's good to keep in mind while working on multi fixture functionality.
+
+## Misc
+
+- [ ] Experiment with [https://github.com/igor-dv/jest-specific-snapshot](jest-specific-snapshot) to create one snapshot file per each fixture
 
 ## Interesting but not a priority (for now)
 
