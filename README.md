@@ -149,7 +149,7 @@ And if you use VS Code you can map the Cosmos config schema globally by [extendi
 
 ## Compilation
 
-How you compile your code is 100% your business. React Cosmos jumps through hoops to compile your code using your existing build pipeline, but it doesn't have opinions nor does it install dependencies your setup might require.
+How you compile your code is 100% your business. React Cosmos jumps through hoops to compile your code using your existing build pipeline, but it doesn't install any additional dependencies that your setup requires to compile your code.
 
 **React Cosmos compiles your code using the build dependencies already installed in your project.**
 
