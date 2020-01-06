@@ -23,7 +23,7 @@ export function createRendererRequestHandler() {
       const iframeWindow = iframeRef.contentWindow;
       if (
         msg.type === 'selectFixture' &&
-        didIframeUrlChange(iframeWindow, iframeRef.src)
+        iframeLocationChanged(iframeWindow, iframeRef.src)
       ) {
         const notifications = getNotificationMethods(pluginContext);
         notifications.removeStickyNotification(notificationId);
@@ -46,7 +46,7 @@ export function createRendererRequestHandler() {
         onIframeLoad(e: Event) {
           const iframe = e.target as HTMLIFrameElement;
           const iframeWindow = iframe.contentWindow;
-          if (iframeWindow && didIframeUrlChange(iframeWindow, iframe.src)) {
+          if (iframeWindow && iframeLocationChanged(iframeWindow, iframe.src)) {
             const notifications = getNotificationMethods(pluginContext);
             notifications.pushStickyNotification({
               id: notificationId,
@@ -66,7 +66,7 @@ export function createRendererRequestHandler() {
   return { postRendererRequest, setIframeRef };
 }
 
-function didIframeUrlChange(iframeWindow: Window, iframeSrc: string) {
+function iframeLocationChanged(iframeWindow: Window, iframeSrc: string) {
   try {
     const { href } = iframeWindow.location;
     return href.substring(href.length - iframeSrc.length) !== iframeSrc;
