@@ -41,10 +41,13 @@ onLoad((context: RendererPreviewContext) => {
 });
 
 plug('rendererPreview', ({ pluginContext }) => {
+  function handleIframeRef(ref: null | HTMLIFrameElement) {
+    setIframeRef(pluginContext, ref);
+  }
   return (
     <RendererPreview
       rendererUrl={getRendererUrl(pluginContext)}
-      onIframeRef={setIframeRef}
+      onIframeRef={handleIframeRef}
     />
   );
 });
