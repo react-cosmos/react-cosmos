@@ -51,10 +51,6 @@ jobs:
       - store_artifacts:
           path: /root/app/cypress/videos
 
-  node-v6:
-    <<: *node-base
-    docker:
-      - image: cypress/base:6
   node-v8:
     <<: *node-base
     docker:
@@ -70,6 +66,5 @@ workflows:
   node-multi-build:
     jobs:
       # Limitting CircleCI usage
-      # - node-v6
       - node-v8
       - node-v10
