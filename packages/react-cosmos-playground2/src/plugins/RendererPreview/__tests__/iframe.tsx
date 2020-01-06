@@ -49,48 +49,53 @@ it('renders iframe with src set to renderer web url', async () => {
   await wait(() => expect(getIframe(renderer).src).toMatch('mockRendererUrl'));
 });
 
-it('shows notification when renderer iframe location changes', async () => {
-  registerTestPlugins();
-  const { pushStickyNotification } = mockNotifications();
-  const renderer = loadTestPlugins();
+// XXX: For some reason `mockRendererLocation` fails to redefine the location
+// of the iframe content window in Node 8
+const nodeVersion = parseInt(process.version.substr(1), 10);
+if (nodeVersion >= 10) {
+  it('shows notification when renderer iframe location changes', async () => {
+    registerTestPlugins();
+    const { pushStickyNotification } = mockNotifications();
+    const renderer = loadTestPlugins();
 
-  mockRendererLocation(getIframe(renderer));
-  await fireIframeLoadEvent(getIframe(renderer));
+    mockRendererLocation(getIframe(renderer));
+    await fireIframeLoadEvent(getIframe(renderer));
 
-  expect(pushStickyNotification).toBeCalledWith(expect.any(Object), {
-    id: 'renderer-location-change',
-    type: 'info',
-    title: 'Renderer iframe location changed',
-    info: `Reload or select another fixture to reset your preview.`
+    expect(pushStickyNotification).toBeCalledWith(expect.any(Object), {
+      id: 'renderer-location-change',
+      type: 'info',
+      title: 'Renderer iframe location changed',
+      info: `Reload or select another fixture to reset your preview.`
+    });
   });
-});
 
-it('removes location change notification on fixture select', async () => {
-  registerTestPlugins();
-  const { removeStickyNotification } = mockNotifications();
-  const renderer = loadTestPlugins();
+  it('removes location change notification on fixture select', async () => {
+    registerTestPlugins();
+    const { removeStickyNotification } = mockNotifications();
+    const renderer = loadTestPlugins();
 
-  mockRendererLocation(getIframe(renderer));
-  await fireIframeLoadEvent(getIframe(renderer));
-  getRendererCoreContext().emit('request', selectFixtureMsg);
+    mockRendererLocation(getIframe(renderer));
+    await fireIframeLoadEvent(getIframe(renderer));
+    getRendererCoreContext().emit('request', selectFixtureMsg);
 
-  expect(removeStickyNotification).toBeCalledWith(
-    expect.any(Object),
-    'renderer-location-change'
-  );
-});
+    expect(removeStickyNotification).toBeCalledWith(
+      expect.any(Object),
+      'renderer-location-change'
+    );
+  });
 
-it('resets renderer iframe location on fixture select', async () => {
-  registerTestPlugins();
-  mockNotifications();
-  const renderer = loadTestPlugins();
+  it('resets renderer iframe location on fixture select', async () => {
+    registerTestPlugins();
+    mockNotifications();
+    const renderer = loadTestPlugins();
 
-  mockRendererLocation(getIframe(renderer));
-  await fireIframeLoadEvent(getIframe(renderer));
-  getRendererCoreContext().emit('request', selectFixtureMsg);
+    mockRendererLocation(getIframe(renderer));
+    await fireIframeLoadEvent(getIframe(renderer));
+    getRendererCoreContext().emit('request', selectFixtureMsg);
 
-  const { location } = getIframe(renderer).contentWindow!;
-  expect(location.replace).toBeCalledWith(
-    expect.stringMatching(/mockRendererUrl$/)
-  );
-});
+    const { location } = getIframe(renderer).contentWindow!;
+    expect(location.replace).toBeCalledWith(
+      expect.stringMatching(/mockRendererUrl$/)
+    );
+  });
+}
