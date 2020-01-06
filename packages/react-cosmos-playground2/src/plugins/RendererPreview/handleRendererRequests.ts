@@ -25,9 +25,9 @@ export function createRendererRequestHandler() {
         msg.type === 'selectFixture' &&
         didIframeUrlChange(iframeWindow, iframeRef.src)
       ) {
-        iframeWindow.location.replace(iframeRef.src);
         const notifications = getNotificationMethods(pluginContext);
         notifications.removeStickyNotification(notificationId);
+        iframeWindow.location.replace(iframeRef.src);
       } else {
         iframeWindow.postMessage(msg, '*');
       }
