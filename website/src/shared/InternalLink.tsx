@@ -31,10 +31,10 @@ export const InternalLink = ({
       <a
         href={to}
         className={className}
-        style={style}
         onClick={handleClick}
         tabIndex={-1}
         aria-hidden={true}
+        style={{ outline: 'none', ...style }}
       >
         {children}
       </a>

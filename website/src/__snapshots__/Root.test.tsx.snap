@@ -1840,6 +1840,11 @@ Array [
           className="c3"
           href="/"
           onClick={[Function]}
+          style={
+            Object {
+              "outline": "none",
+            }
+          }
           tabIndex={-1}
         />
       </div>
