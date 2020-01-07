@@ -29,7 +29,7 @@ export function SplashContent({ windowViewport, gitHubStars }: Props) {
         <Star />
         {gitHubStars}
       </CallToAction>
-      <DocsLink href="https://github.com/react-cosmos/react-cosmos/blob/master/README.md#table-of-contents">
+      <DocsLink href="https://github.com/react-cosmos/react-cosmos/tree/master/docs">
         <span>Docs</span>
         <Chevron />
       </DocsLink>

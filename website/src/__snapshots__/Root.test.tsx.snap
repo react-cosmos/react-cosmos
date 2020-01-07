@@ -1583,7 +1583,7 @@ Array [
       </a>
       <a
         className="c15"
-        href="https://github.com/react-cosmos/react-cosmos/blob/master/README.md#table-of-contents"
+        href="https://github.com/react-cosmos/react-cosmos/tree/master/docs"
         rel="noopener noreferrer"
         target="_blank"
       >
@@ -1865,7 +1865,7 @@ Array [
           className="c6"
         >
           <a
-            href="https://github.com/react-cosmos/react-cosmos/blob/master/README.md#table-of-contents"
+            href="https://github.com/react-cosmos/react-cosmos/tree/master/docs"
             rel="noopener noreferrer"
             target="_blank"
           >
@@ -3987,6 +3987,37 @@ Array [
             target="_blank"
           >
             Product Hunt
+            <svg
+              className="c4"
+              fill="none"
+              height="16"
+              stroke="#4d9edc"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              width="16"
+            >
+              <path
+                d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+              />
+              <polyline
+                points="15 3 21 3 21 9"
+              />
+              <line
+                x1="10"
+                x2="21"
+                y1="14"
+                y2="3"
+              />
+            </svg>
+          </a>
+          <a
+            href="https://github.com/react-cosmos/react-cosmos/blob/master/README.md#-why-react-cosmos"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Why React Cosmos?
             <svg
               className="c4"
               fill="none"
