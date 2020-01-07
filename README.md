@@ -28,7 +28,7 @@ React Cosmos
 
 - **Makes developers more productive**
 - **Leads to high-quality, reusable UI components**
-- **Makes it easy to share component libraries**
+- Makes it easy to share component libraries
 - Helps with automated testing
 
 React Cosmos is
