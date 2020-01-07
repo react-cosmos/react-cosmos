@@ -48,7 +48,7 @@ React Cosmos is **not**
 
 > [Many other](https://react-styleguidist.js.org/docs/cookbook.html#are-there-any-other-projects-like-this) similar tools have emerged since React Cosmos was [created](https://www.youtube.com/watch?v=t9V2oKK83Kg). Choose wisely based on your unique needs and personal taste.
 
-## ❤️ Credits
+## 🎞 Credits
 
 Hi there. I'm [Ovidiu](https://twitter.com/skidding), the core maintainer of React Cosmos. I spend ridiculous amounts of time perfecting this project because I love building user interfaces and making useful stuff.
 
@@ -60,8 +60,8 @@ Special thanks to
 - [@catalinmiron](https://github.com/catalinmiron), [@flaviusone](https://github.com/flaviusone), [@NiGhTTraX](https://github.com/NiGhTTraX), [@ovidiubute](https://github.com/ovidiubute), [@RadValentin](https://github.com/RadValentin), [@tkjone](https://github.com/tkjone), and all the other [contributors](https://github.com/react-cosmos/react-cosmos/graphs/contributors).
 - [Kreativa Studio](http://www.kreativa-studio.com/) for the iconic Cosmonaut illustration.
 
-**React Cosmos is still alive because of you!**
+**❤️ React Cosmos is still alive because of you!**
 
 <p align="center">🌤</p>
 
-**💬 [Join us on Slack](https://join-react-cosmos.now.sh/)**
+💬 [Join us on Slack](https://join-react-cosmos.now.sh/)
