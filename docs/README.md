@@ -2,7 +2,7 @@
 
 - Setup: [Getting started](#getting-started) · [Requirements](#requirements) · [Config](#config) · [Compilation](#compilation) · [Webpack](#webpack)
 - Usage: [Fixtures](#fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [UI controls](#ui-controlled-values) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
-- FAQ: [Troubleshooting](#troubleshooting) · [Where's my old Cosmos?](#wheres-my-old-cosmos) · [Roadmap](TODO.md)
+- FAQ: [Troubleshooting](#troubleshooting) · [Where's my old Cosmos?](#wheres-my-old-cosmos) · [Roadmap](../TODO.md)
 
 The [example package](../example) is a useful complement to this guide.
 
