@@ -48,7 +48,7 @@ React Cosmos is **not**
 
 ## 🎞 Credits
 
-Hi there. I'm [Ovidiu](https://twitter.com/skidding), the core maintainer of React Cosmos. I spend ridiculous amounts of time perfecting this project because I love building user interfaces and making useful stuff.
+Hi there. I'm [Ovidiu](https://twitter.com/skidding), the core maintainer of React Cosmos. I spend ridiculous amounts of time perfecting this project because I love building user interfaces and making useful things.
 
 React Cosmos is licensed as MIT and will always be free. If you want to support me, however, [become a Sponsor](https://github.com/users/skidding/sponsorship) and ensure this journey continues!
 
