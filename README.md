@@ -20,6 +20,8 @@ A tool for ambitious UI developers.
   snapshot and visual regression testing, as well as custom integrations
   tailored to your needs.
 
+<p align="center">🚀</p>
+
 [![React Cosmos](next.png)](https://reactcosmos.org)
 
 ## 🤔 Why React Cosmos?
@@ -54,6 +56,6 @@ Special thanks to [@maxsalven](https://github.com/maxsalven) and [@xavxyz](https
 
 Thanks to [Kreativa Studio](http://www.kreativa-studio.com/) for the iconic Cosmonaut illustration.
 
----
+<p align="center">🌤</p>
 
 **💬 [Join us on Slack](https://join-react-cosmos.now.sh/)**
