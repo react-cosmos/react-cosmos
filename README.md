@@ -42,9 +42,9 @@ React Cosmos is
 
 React Cosmos is **not**
 
-- A [styleguide tool](https://react-styleguidist.js.org)
-- A [documentation tool](https://www.docz.site)
-- A [testing framework](https://github.com/testing-library/react-testing-library)
+- A [style guide](https://react-styleguidist.js.org) generator
+- A [documentation](https://www.docz.site) tool
+- A [testing](https://github.com/testing-library/react-testing-library) framework
 
 > [Many other](https://react-styleguidist.js.org/docs/cookbook.html#are-there-any-other-projects-like-this) similar tools have emerged since React Cosmos was [created](https://www.youtube.com/watch?v=t9V2oKK83Kg). Choose wisely based on your unique needs and personal taste.
 
