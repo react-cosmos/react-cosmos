@@ -50,11 +50,9 @@ React Cosmos is **not**
 
 ## ❤️ Credits
 
-Special thanks to [@maxsalven](https://github.com/maxsalven) and [@xavxyz](https://github.com/xavxyz) for the long conversations and continued support. Thanks to [@catalinmiron](https://github.com/catalinmiron), [@flaviusone](https://github.com/flaviusone), [@NiGhTTraX](https://github.com/NiGhTTraX), [@ovidiubute](https://github.com/ovidiubute), [@RadValentin](https://github.com/RadValentin), [@tkjone](https://github.com/tkjone), and all the other [contributors](https://github.com/react-cosmos/react-cosmos/graphs/contributors).
+Special thanks to [@maxsalven](https://github.com/maxsalven) and [@xavxyz](https://github.com/xavxyz) for the long conversations and continued support. Thanks to [@catalinmiron](https://github.com/catalinmiron), [@flaviusone](https://github.com/flaviusone), [@NiGhTTraX](https://github.com/NiGhTTraX), [@ovidiubute](https://github.com/ovidiubute), [@RadValentin](https://github.com/RadValentin), [@tkjone](https://github.com/tkjone), and all the other [contributors](https://github.com/react-cosmos/react-cosmos/graphs/contributors). Thanks to [Kreativa Studio](http://www.kreativa-studio.com/) for the iconic Cosmonaut illustration.
 
 **React Cosmos is still alive because of you!**
-
-Thanks to [Kreativa Studio](http://www.kreativa-studio.com/) for the iconic Cosmonaut illustration.
 
 <p align="center">🌤</p>
 
