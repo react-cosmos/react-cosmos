@@ -63,5 +63,3 @@ Special thanks to
 **❤️ React Cosmos is still alive because of you!**
 
 <p align="center">🌤</p>
-
-💬 [Join us on Slack](https://join-react-cosmos.now.sh/)
