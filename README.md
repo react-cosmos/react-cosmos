@@ -27,12 +27,13 @@ A tool for ambitious UI developers.
 React Cosmos
 
 - **Makes developers more productive**
-- Leads to high-quality UIs
+- **Leads to high-quality, reusable UI components**
 - Makes it easy to share component libraries
 - Helps with automated testing
 
 React Cosmos is
 
+- **An isolated component environment**
 - **Simple, detail-oriented and battle-tested**
 - The result of over 5 years of fine-tuning
 - React-only
