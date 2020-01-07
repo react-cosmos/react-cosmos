@@ -1583,7 +1583,7 @@ Array [
       </a>
       <a
         className="c15"
-        href="https://github.com/react-cosmos/react-cosmos/blob/master/README.md#table-of-contents"
+        href="https://github.com/react-cosmos/react-cosmos/tree/master/docs"
         rel="noopener noreferrer"
         target="_blank"
       >
@@ -1865,7 +1865,7 @@ Array [
           className="c6"
         >
           <a
-            href="https://github.com/react-cosmos/react-cosmos/blob/master/README.md#table-of-contents"
+            href="https://github.com/react-cosmos/react-cosmos/tree/master/docs"
             rel="noopener noreferrer"
             target="_blank"
           >
