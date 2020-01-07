@@ -6,8 +6,6 @@
 
 [![npm version](https://img.shields.io/npm/v/react-cosmos.svg?style=flat)](https://www.npmjs.com/package/react-cosmos) [![CircleCI Status](https://circleci.com/gh/react-cosmos/react-cosmos.svg?style=shield)](https://circleci.com/gh/react-cosmos/react-cosmos) [![Twitter](https://img.shields.io/twitter/follow/ReactCosmos.svg?color=%2338A1F3&label=twitter&style=flat)](https://twitter.com/ReactCosmos) [![Slack](https://join-react-cosmos.now.sh/badge.svg)](https://join-react-cosmos.now.sh/) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/react-cosmos/react-cosmos/blob/master/CONTRIBUTING.md#how-to-contribute)
 
-👩‍🚀 [Live demo](https://reactcosmos.org/live-demo/) · 📜 [Documentation](docs) · 💰[Sponsor](https://github.com/users/skidding/sponsorship)
-
 A tool for ambitious UI developers.
 
 - **Visual TDD.** Develop one component at a time. Isolate the UI you&apos;re
@@ -20,7 +18,7 @@ A tool for ambitious UI developers.
   snapshot and visual regression testing, as well as custom integrations
   tailored to your needs.
 
-<p align="center">🚀</p>
+<p align="center">👩‍🚀 <a href="https://reactcosmos.org/live-demo/">Live demo</a> · 📜 <a href="docs">Documentation</a> · 💰 <a href="https://github.com/users/skidding/sponsorship">Sponsor</a></p>
 
 [![React Cosmos](next.png)](https://reactcosmos.org)
 
