@@ -47,6 +47,15 @@ React Cosmos is **not**
 
 > [Many other](https://react-styleguidist.js.org/docs/cookbook.html#are-there-any-other-projects-like-this) similar tools have emerged since React Cosmos was [created](https://www.youtube.com/watch?v=t9V2oKK83Kg). Choose wisely based on your unique needs and personal taste.
 
+### A Brief History of React Cosmos
+
+- 📢 May 2014 [Cosmos.js, autonomous components for scaling user interfaces](https://www.reddit.com/r/javascript/comments/252cdy/cosmosjs_autonomous_components_for_scaling_user/) | Reddit
+- 📺 Jul 2015 [Can components by truly encapsulated?](https://www.youtube.com/watch?v=t9V2oKK83Kg) | React Europe
+- 📄 Nov 2016 [Fighting for Component Independence](https://medium.com/@skidding/fighting-for-component-independence-2a762ee53272) | Medium
+- 📺 Jun 2017 [UI Development Made Simple](https://www.youtube.com/watch?v=C3tx999wbgM) | JSHeroes
+- 🐦 Oct 2019 [React Cosmos 5 in 21 tweets](https://twitter.com/ReactCosmos/status/1189127279533793281) | Twitter
+- 💬 Dec 2019 [I made a tool for creating React components with visual TDD](https://sourcesort.com/interview/ovidiu-chereches-react-cosmos) | SourceSort
+
 ## 🎞 Credits
 
 Hi there. I'm [Ovidiu](https://twitter.com/skidding), the core maintainer of React Cosmos. I spend ridiculous amounts of time perfecting this project because I love building user interfaces and making useful things.
