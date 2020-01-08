@@ -49,12 +49,12 @@ React Cosmos is **not**
 
 ### A Brief History of React Cosmos
 
-- 📢 May 2014 [Cosmos.js, autonomous components for scaling user interfaces](https://www.reddit.com/r/javascript/comments/252cdy/cosmosjs_autonomous_components_for_scaling_user/) | Reddit
-- 📺 Jul 2015 [Can components by truly encapsulated?](https://www.youtube.com/watch?v=t9V2oKK83Kg) | React Europe
-- 📄 Nov 2016 [Fighting for Component Independence](https://medium.com/@skidding/fighting-for-component-independence-2a762ee53272) | Medium
-- 📺 Jun 2017 [UI Development Made Simple](https://www.youtube.com/watch?v=C3tx999wbgM) | JSHeroes
-- 🐦 Oct 2019 [React Cosmos 5 in 21 tweets](https://twitter.com/ReactCosmos/status/1189127279533793281) | Twitter
-- 💬 Dec 2019 [I made a tool for creating React components with visual TDD](https://sourcesort.com/interview/ovidiu-chereches-react-cosmos) | SourceSort
+- 📢 2014 [Cosmos.js, autonomous components for scaling user interfaces](https://www.reddit.com/r/javascript/comments/252cdy/cosmosjs_autonomous_components_for_scaling_user/) | Reddit
+- 📺 2015 [Can components by truly encapsulated?](https://www.youtube.com/watch?v=t9V2oKK83Kg) | React Europe
+- 📝 2016 [Fighting for Component Independence](https://medium.com/@skidding/fighting-for-component-independence-2a762ee53272) | Medium
+- 📺 2017 [UI Development Made Simple](https://www.youtube.com/watch?v=C3tx999wbgM) | JSHeroes
+- 🐦 2019 [React Cosmos 5 in 21 tweets](https://twitter.com/ReactCosmos/status/1189127279533793281) | Twitter
+- 💬 2019 [I made a tool for creating React components with visual TDD](https://sourcesort.com/interview/ovidiu-chereches-react-cosmos) | SourceSort
 
 ## 🎞 Credits
 
