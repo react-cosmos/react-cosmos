@@ -18,7 +18,7 @@ A tool for ambitious UI developers.
   snapshot and visual regression testing, as well as custom integrations
   tailored to your needs.
 
-📜 [Docs](docs) · 👩‍🚀 [Live demo](https://reactcosmos.org/live-demo/) · 💰[Sponsor](https://github.com/users/skidding/sponsorship)
+📜 **[Docs](docs)** · 👩‍🚀 **[Demo](https://reactcosmos.org/live-demo/)** · 💰**[Sponsor](https://github.com/users/skidding/sponsorship)**
 
 [![React Cosmos](next.png)](https://reactcosmos.org)
 
