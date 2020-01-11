@@ -1,3 +1,4 @@
+import { isEqual, mapValues } from 'lodash';
 import React from 'react';
 import {
   DEFAULT_RENDER_KEY,
@@ -10,11 +11,17 @@ import { getComponentName } from '../../../react';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
 import { getChildrenPath, setElementAtPath } from '../shared/nodeTree';
 
-export function extendFixtureProps(
+export function useFixtureProps(
   fixture: React.ReactNode,
   fixtureState: FixtureState,
   decoratorId: FixtureDecoratorId
 ): React.ReactNode {
+  // React.useMemo is used as a cache invalidated by decoratorId
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const propCache: Record<string, unknown> = React.useMemo(() => ({}), [
+    decoratorId
+  ]);
+
   const elPaths = findRelevantElementPaths(fixture);
 
   return elPaths.reduce((extendedFixture, elPath): React.ReactNode => {
@@ -35,6 +42,18 @@ export function extendFixtureProps(
       const originalProps = element.props;
       const extendedProps = extendWithValues(originalProps, fsProps.values);
 
+      // Preserve identity between renders for indentical non-primitive props
+      const cachedProps = mapValues(extendedProps, (value, propName) => {
+        const key = getPropCacheKey(elPath, propName);
+        if (!propCache.hasOwnProperty(key))
+          propCache[key] = originalProps[propName];
+
+        if (isEqual(propCache[key], value)) return propCache[key];
+
+        propCache[key] = value;
+        return value;
+      });
+
       // HACK alert: Editing React Element by hand
       // This is blasphemy, but there are two reasons why React.cloneElement
       // isn't ideal:
@@ -52,8 +71,8 @@ export function extendFixtureProps(
       return {
         ...element,
         props: hasChildElPaths(elPaths, elPath)
-          ? { ...extendedProps, children: originalProps.children }
-          : extendedProps,
+          ? { ...cachedProps, children: originalProps.children }
+          : cachedProps,
         key: getElRenderKey(elPath, fsProps.renderKey)
       };
 
@@ -62,6 +81,10 @@ export function extendFixtureProps(
       }
     });
   }, fixture);
+}
+
+function getPropCacheKey(elPath: string, propName: string) {
+  return elPath ? `${elPath}-${propName}` : propName;
 }
 
 function getElRenderKey(elPath: string, renderKey: number) {
