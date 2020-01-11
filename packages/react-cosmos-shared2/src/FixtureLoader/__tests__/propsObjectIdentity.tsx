@@ -1,53 +1,72 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
+import { createValues, updateFixtureStateProps } from '../../fixtureState';
 import { uuid } from '../../util';
 import { testFixtureLoader } from '../testHelpers';
+import { getProps } from '../testHelpers/fixtureState';
 
 const rendererId = uuid();
 const fixtureId = { path: 'first', name: null };
 
 type Props = {
   obj: {};
-  arr: [];
-  cb: (obj: {}, arr: []) => unknown;
+  cb: (obj: {}) => unknown;
 };
 
-function TestComponent({ obj, arr, cb }: Props) {
-  cb(obj, arr);
+function TestComponent({ obj, cb }: Props) {
+  cb(obj);
   return null;
+}
+
+function createFixtures(obj: {}, cb: (obj: {}) => unknown) {
+  return {
+    first: <TestComponent obj={obj} cb={cb} />
+  };
 }
 
 testFixtureLoader(
   'preserves object reference',
   { rendererId, fixtures: {} },
   async ({ update, selectFixture }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const obj = {};
     const cb = jest.fn();
-    update({
-      rendererId,
-      fixtures: {
-        first: <TestComponent obj={obj} arr={[]} cb={cb} />
-      }
-    });
+    update({ rendererId, fixtures: createFixtures(obj, cb) });
+    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await retry(() => expect(getLastMockCall(cb)[0]).toBe(obj));
   }
 );
 
 testFixtureLoader(
-  'preserves array reference',
+  'preserves updated object reference',
   { rendererId, fixtures: {} },
-  async ({ update, selectFixture }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    const arr: [] = [];
+  async ({
+    renderer,
+    update,
+    selectFixture,
+    getLastFixtureState,
+    setFixtureState
+  }) => {
+    const obj = {};
     const cb = jest.fn();
-    update({
+    update({ rendererId, fixtures: createFixtures(obj, cb) });
+    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    const fixtureState = await getLastFixtureState();
+    const [{ elementId }] = getProps(fixtureState);
+    await setFixtureState({
       rendererId,
-      fixtures: {
-        first: <TestComponent obj={{}} arr={arr} cb={cb} />
+      fixtureId,
+      fixtureState: {
+        props: updateFixtureStateProps({
+          fixtureState,
+          elementId,
+          values: createValues({ obj: { name: 'Tim' }, cb })
+        })
       }
     });
-    await retry(() => expect(getLastMockCall(cb)[1]).toBe(arr));
+    await retry(() => expect(cb).lastCalledWith({ name: 'Tim' }));
+    const updatedObj: {} = getLastMockCall(cb)[0];
+    update({ rendererId, fixtures: createFixtures(obj, cb) });
+    await retry(() => expect(getLastMockCall(cb)[0]).toBe(updatedObj));
   }
 );
 
