@@ -44,7 +44,7 @@ export function useFixtureProps(
 
       // Preserve identity between renders for indentical non-primitive props
       const cachedProps = mapValues(extendedProps, (value, propName) => {
-        const key = getPropCacheKey(decoratorId, elPath, propName);
+        const key = getPropCacheKey(elPath, propName);
         if (!propCache.hasOwnProperty(key))
           propCache[key] = originalProps[propName];
 
@@ -83,14 +83,8 @@ export function useFixtureProps(
   }, fixture);
 }
 
-function getPropCacheKey(
-  decoratorId: string,
-  elPath: string,
-  propName: string
-) {
-  return elPath
-    ? `${decoratorId}-${elPath}-${propName}`
-    : `${decoratorId}-${propName}`;
+function getPropCacheKey(elPath: string, propName: string) {
+  return elPath ? `${elPath}-${propName}` : propName;
 }
 
 function getElRenderKey(elPath: string, renderKey: number) {
