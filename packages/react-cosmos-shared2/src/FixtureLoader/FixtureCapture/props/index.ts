@@ -12,7 +12,7 @@ import { areNodesEqual, getComponentName } from '../../../react';
 import { FixtureContext } from '../../FixtureContext';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
 import { getElementAtPath, getExpectedElementAtPath } from '../shared/nodeTree';
-import { extendFixtureProps } from './extendFixtureProps';
+import { useFixtureProps } from './useFixtureProps';
 
 export function usePropsCapture(
   fixture: React.ReactNode,
@@ -87,5 +87,5 @@ export function usePropsCapture(
     prevFixtureRef.current = fixture;
   });
 
-  return extendFixtureProps(fixture, fixtureState, decoratorId);
+  return useFixtureProps(fixture, fixtureState, decoratorId);
 }
