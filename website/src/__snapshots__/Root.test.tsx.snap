@@ -2093,7 +2093,29 @@ Array [
   border: none;
 }
 
+.c15 {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 20px;
+  -webkit-transition: 0.8s opacity,1.2s -webkit-transform;
+  -webkit-transition: 0.8s opacity,1.2s transform;
+  transition: 0.8s opacity,1.2s transform;
+}
+
 .c16 {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 40px;
+  -webkit-letter-spacing: -0.02em;
+  -moz-letter-spacing: -0.02em;
+  -ms-letter-spacing: -0.02em;
+  letter-spacing: -0.02em;
+  text-align: center;
+  opacity: 0.85;
+}
+
+.c19 {
   margin: 0 0 48px 0;
   max-width: 600px;
   display: -webkit-box;
@@ -2116,11 +2138,11 @@ Array [
   transition: 0.8s opacity,1.2s transform;
 }
 
-.c16:last-child {
+.c19:last-child {
   margin-bottom: 0;
 }
 
-.c17 {
+.c20 {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -2143,13 +2165,13 @@ Array [
   align-items: center;
 }
 
-.c17 svg {
+.c20 svg {
   width: 40px;
   height: 40px;
   opacity: 0.9;
 }
 
-.c18 {
+.c21 {
   margin: 0;
   padding: 0 20px 8px 20px;
   font-size: 32px;
@@ -2162,7 +2184,7 @@ Array [
   text-align: center;
 }
 
-.c19 {
+.c22 {
   max-width: 640px;
   padding: 0 20px 0 20px;
   font-size: 22px;
@@ -2175,7 +2197,7 @@ Array [
   text-align: center;
 }
 
-.c15 {
+.c18 {
   max-width: 1408px;
   margin: 0 auto;
   display: -webkit-box;
@@ -2197,6 +2219,10 @@ Array [
 
 .c14 {
   height: 128px;
+}
+
+.c17 {
+  height: 64px;
 }
 
 .c0 {
@@ -2262,15 +2288,28 @@ Array [
   }
 }
 
-@media (min-width:1376px) {
+@media (max-width:791px) {
+  .c15 {
+    max-width: 600px;
+  }
+}
+
+@media (max-width:791px) {
   .c16 {
+    font-size: 32px;
+    line-height: 36px;
+  }
+}
+
+@media (min-width:1376px) {
+  .c19 {
     max-width: 440px;
     margin-bottom: 0;
   }
 }
 
 @media (min-width:1376px) {
-  .c15 {
+  .c18 {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
@@ -2306,6 +2345,18 @@ Array [
 @media (min-width:1376px) {
   .c14 {
     height: 192px;
+  }
+}
+
+@media (max-width:791px) {
+  .c17 {
+    height: 64px;
+  }
+}
+
+@media (min-width:1376px) {
+  .c17 {
+    height: 96px;
   }
 }
 
@@ -2436,10 +2487,29 @@ Array [
     />
     <div
       className="c15"
+      style={
+        Object {
+          "opacity": 0,
+          "transform": "translate(0, 40px)",
+          "transitionDelay": "0s",
+        }
+      }
+    >
+      <p
+        className="c16"
+      >
+        A dev environment for building scalable, high-quality user interfaces.
+      </p>
+    </div>
+    <div
+      className="c17"
+    />
+    <div
+      className="c18"
       id="features"
     >
       <div
-        className="c16"
+        className="c19"
         id="visual-tdd"
         style={
           Object {
@@ -2450,7 +2520,7 @@ Array [
         }
       >
         <div
-          className="c17"
+          className="c20"
         >
           <svg
             fill="none"
@@ -2473,19 +2543,19 @@ Array [
         </div>
         <div>
           <h2
-            className="c18"
+            className="c21"
           >
             Visual TDD
           </h2>
           <div
-            className="c19"
+            className="c22"
           >
             Develop one component at a time. Isolate the UI you're working on and iterate quickly. Reloading your whole app on every change is slowing you down!
           </div>
         </div>
       </div>
       <div
-        className="c16"
+        className="c19"
         id="component-library"
         style={
           Object {
@@ -2496,7 +2566,7 @@ Array [
         }
       >
         <div
-          className="c17"
+          className="c20"
         >
           <svg
             fill="none"
@@ -2546,19 +2616,19 @@ Array [
         </div>
         <div>
           <h2
-            className="c18"
+            className="c21"
           >
             Component library
           </h2>
           <div
-            className="c19"
+            className="c22"
           >
             Bookmark component states, from blank states to edge cases. Your component library keeps you organized and provides a solid foundation of test cases.
           </div>
         </div>
       </div>
       <div
-        className="c16"
+        className="c19"
         id="open-platform"
         style={
           Object {
@@ -2569,7 +2639,7 @@ Array [
         }
       >
         <div
-          className="c17"
+          className="c20"
         >
           <svg
             fill="none"
@@ -2601,12 +2671,12 @@ Array [
         </div>
         <div>
           <h2
-            className="c18"
+            className="c21"
           >
             Open platform
           </h2>
           <div
-            className="c19"
+            className="c22"
           >
             React Cosmos can be used in powerful ways. Including snapshot and visual regression testing, as well as custom integrations tailored to your needs.
           </div>
