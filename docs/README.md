@@ -460,6 +460,10 @@ Check out the [full example](https://github.com/react-cosmos/react-cosmos/blob/4
 - Check for build errors in your terminal.
 - Make sure you have html-webpack-plugin installed, as well as [any other build dependency](#compilation).
 
+#### Using Create React App?
+
+- Set `webpack.configPath` to `react-scripts/config/webpack.config`. See example in [custom webpack config](#custom-webpack-config).
+
 #### Using Next.js?
 
 - [Make sure you have html-webpack-plugin installed](https://github.com/react-cosmos/react-cosmos/issues/995#issuecomment-511883135).
