@@ -463,6 +463,7 @@ Check out the [full example](https://github.com/react-cosmos/react-cosmos/blob/4
 #### Using Create React App?
 
 - Set `webpack.configPath` to `react-scripts/config/webpack.config`. See example in [custom webpack config](#custom-webpack-config).
+- Make sure to place fixture and decorator files in the `src` directory.
 
 #### Using Next.js?
 
