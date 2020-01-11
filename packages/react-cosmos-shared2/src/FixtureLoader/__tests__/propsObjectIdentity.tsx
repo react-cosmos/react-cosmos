@@ -52,8 +52,8 @@ testFixtureLoader(
 );
 
 function getLastMockCall(mockFn: jest.Mock) {
-  // This helper is required mockFn.lastCalledWith check deep equality instead
-  // of reference equality, which we need in this test.
+  // This helper is required because mockFn.lastCalledWith checks deep equality
+  // instead of reference equality, which we need in this test
   const { calls } = mockFn.mock;
   return calls[calls.length - 1];
 }
