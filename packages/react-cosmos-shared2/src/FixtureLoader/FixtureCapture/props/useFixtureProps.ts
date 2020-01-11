@@ -51,7 +51,6 @@ export function useFixtureProps(
         if (isEqual(propCache[key], value)) return propCache[key];
 
         propCache[key] = value;
-        console.log(key);
         return value;
       });
 
