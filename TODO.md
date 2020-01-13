@@ -1,20 +1,21 @@
 # Roadmap: React Cosmos 2020
 
-## Dedicated RFCs repo
+## RFCs repo
 
 Mixing bugs with feature ideas leads a bad maintainer experience. Bugs and features have a different lifecycle and require a different mindset. Moreover, it's hard to reach "inbox zero" for issues with long-standing feature issues in the mix.
 
 For some, managing bugs is the hard part of being an open source maintainer. Over time, however, I realized that feature ideas have a higher cognitive load. The decisition tree for a bug is clear: Can it be reproduced? Is the requested behavior expected? If both are true, you try to find the source of the problem and come up with a fix. Feature ideas are more fuzzy. You need to assess whether a feature aligns with the project's mission, and even when it does, if it matches the project's priorities enough to pause and meaninfully engage with the proposal.
 
-The dedicated RFCs repo allows feature ideas to be proposed and addressed properly, while keeping the issues list nice and clean. It will allow me and other maintainers to process issues with priority, without neglecting novel ideas from the community, which on the long run are invaluable.
+The RFCs repo allows feature ideas to be proposed and addressed properly, while keeping the issues list nice and clean. It will allow me and other maintainers to process issues with priority, without neglecting novel ideas from the community, which on the long run are invaluable.
 
-Finally, there's always [Slack](https://join-react-cosmos.now.sh/) for bouncing around ideas without formality.
+Finally, we have an `#ideas` channel on [Slack](https://join-react-cosmos.now.sh/) for bouncing around ideas without formality.
 
-- [ ] Create react-cosmos/rfcs repo
-  - [ ] Research templates and practices from other repos like reactjs/rfcs
-- [ ] Move feature idea issues to RFCs repo
-- [ ] Update GitHub labels
-- [ ] Update GitHub issue templates
+- [x] Create react-cosmos/rfcs repo
+  - [x] Research templates and practices from other repos like reactjs/rfcs
+- [x] Move feature idea issues to RFCs repo
+- [x] Update CONTRIBUTING.md
+- [x] Update GitHub labels
+- [x] Update GitHub issue templates
 
 ## Website enhancements
 
