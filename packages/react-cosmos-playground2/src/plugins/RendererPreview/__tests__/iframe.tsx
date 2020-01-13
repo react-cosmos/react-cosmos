@@ -17,7 +17,7 @@ afterEach(resetPlugins);
 function registerTestPlugins() {
   register();
   mockCore({
-    getWebRendererUrl: () => 'mockRendererUrl'
+    getWebRendererUrl: () => 'http://localhost:5000/_renderer.html'
   });
   mockRendererCore();
 }
@@ -30,9 +30,9 @@ function loadTestPlugins() {
   return render(<Slot name="rendererPreview" />);
 }
 
-function mockRendererLocation(iframe: HTMLIFrameElement) {
+function mockRendererLocation(iframe: HTMLIFrameElement, newPath: string) {
   Object.defineProperty(iframe.contentWindow, 'location', {
-    value: { href: `mockRendererUrl2`, replace: jest.fn() }
+    value: { href: `http://localhost:5000${newPath}`, replace: jest.fn() }
   });
 }
 
@@ -46,7 +46,9 @@ it('renders iframe with src set to renderer web url', async () => {
   registerTestPlugins();
   const renderer = loadTestPlugins();
 
-  await wait(() => expect(getIframe(renderer).src).toMatch('mockRendererUrl'));
+  await wait(() =>
+    expect(getIframe(renderer).src).toBe('http://localhost:5000/_renderer.html')
+  );
 });
 
 // XXX: For some reason `mockRendererLocation` fails to redefine the location
@@ -58,7 +60,7 @@ if (nodeVersion >= 10) {
     const { pushStickyNotification } = mockNotifications();
     const renderer = loadTestPlugins();
 
-    mockRendererLocation(getIframe(renderer));
+    mockRendererLocation(getIframe(renderer), `/route`);
     await fireIframeLoadEvent(getIframe(renderer));
 
     expect(pushStickyNotification).toBeCalledWith(expect.any(Object), {
@@ -74,7 +76,7 @@ if (nodeVersion >= 10) {
     const { removeStickyNotification } = mockNotifications();
     const renderer = loadTestPlugins();
 
-    mockRendererLocation(getIframe(renderer));
+    mockRendererLocation(getIframe(renderer), `/route`);
     await fireIframeLoadEvent(getIframe(renderer));
     getRendererCoreContext().emit('request', selectFixtureMsg);
 
@@ -89,13 +91,24 @@ if (nodeVersion >= 10) {
     mockNotifications();
     const renderer = loadTestPlugins();
 
-    mockRendererLocation(getIframe(renderer));
+    mockRendererLocation(getIframe(renderer), `/route`);
     await fireIframeLoadEvent(getIframe(renderer));
     getRendererCoreContext().emit('request', selectFixtureMsg);
 
     const { location } = getIframe(renderer).contentWindow!;
     expect(location.replace).toBeCalledWith(
-      expect.stringMatching(/mockRendererUrl$/)
+      `http://localhost:5000/_renderer.html`
     );
+  });
+
+  it('does not show notification when renderer iframe location hash changes', async () => {
+    registerTestPlugins();
+    const { pushStickyNotification } = mockNotifications();
+    const renderer = loadTestPlugins();
+
+    mockRendererLocation(getIframe(renderer), `/_renderer.html#/`);
+    await fireIframeLoadEvent(getIframe(renderer));
+
+    expect(pushStickyNotification).not.toBeCalled();
   });
 }
