@@ -3,10 +3,6 @@ name: Feature request
 about: Suggest an idea for React Cosmos
 ---
 
-### What's up?
+👉 Please submit ideas at https://github.com/react-cosmos/rfcs. It keeps a clean issue list here, which makes it easier for maintainers to prioritize questions and bugs. Thank you!
 
-Describe the value proposition.
-
-### Mkay, tell me more...
-
-Do you have an implementation detail in mind? Is there anything else we should know?
+You can also join the `#ideas` channel on Slack if you want to bounce around ideas without formality https://join-react-cosmos.now.sh.

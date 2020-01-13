@@ -15,7 +15,7 @@ Finally, we have an `#ideas` channel on [Slack](https://join-react-cosmos.now.sh
 - [x] Move feature idea issues to RFCs repo
 - [x] Update CONTRIBUTING.md
 - [x] Update GitHub labels
-- [ ] Update GitHub issue templates
+- [x] Update GitHub issue templates
 
 ## Website enhancements
 
