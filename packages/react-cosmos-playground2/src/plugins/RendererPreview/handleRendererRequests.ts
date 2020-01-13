@@ -69,7 +69,9 @@ export function createRendererRequestHandler() {
 function iframeLocationChanged(iframeWindow: Window, iframeSrc: string) {
   try {
     const { href } = iframeWindow.location;
-    return href.substring(href.length - iframeSrc.length) !== iframeSrc;
+    const locationWithoutHash = href.split('#')[0];
+    const locationCompareStart = locationWithoutHash.length - iframeSrc.length;
+    return locationWithoutHash.substring(locationCompareStart) !== iframeSrc;
   } catch (err) {
     // An exception is thrown when trying to access the location of a
     // cross-origin frame, which signals that the iframe location host changed.
