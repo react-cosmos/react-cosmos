@@ -1,13 +1,13 @@
 {
   "private": true,
   "name": "react-cosmos-example",
-  "version": "5.0.4",
+  "version": "5.0.5",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/example",
   "license": "MIT",
   "scripts": {
     "start": "cosmos"
   },
   "dependencies": {
-    "react-cosmos": "^5.0.4"
+    "react-cosmos": "^5.0.5"
   }
 }
