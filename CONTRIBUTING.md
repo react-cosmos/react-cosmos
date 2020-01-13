@@ -45,6 +45,8 @@ We're all short on time, so be realistic and don't expect special treatment. The
 
 ### Ask for review
 
+👉 **[Use the RFCs process for substantial changes](https://github.com/react-cosmos/rfcs)**
+
 **Please propose an idea before coding it.** Otherwise your work might get rejected, which is never fun. Save everybody's time by asking for feedback _before_ implementing something.
 
 ### CI failed on your PR?
