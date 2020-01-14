@@ -2039,7 +2039,7 @@ Array [
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 32px 0 0 0;
+  padding: 16px 0 0 0;
   font-size: 24px;
   line-height: 24px;
   -webkit-transition: 0.8s opacity,1.2s -webkit-transform;
