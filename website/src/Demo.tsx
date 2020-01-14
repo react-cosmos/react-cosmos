@@ -168,7 +168,7 @@ const Links = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 32px 0 0 0;
+  padding: 16px 0 0 0;
   font-size: 24px;
   line-height: 24px;
   transition: ${slideInTransition};
