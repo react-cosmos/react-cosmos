@@ -19,13 +19,14 @@ namedPlug<RendererActionSlotProps>(
   ({ pluginContext, slotProps }) => {
     const { getMethodsOf } = pluginContext;
     const core = getMethodsOf<CoreSpec>('core');
-    const onOpen = useOpen(pluginContext, slotProps.fixtureId);
+    const devServerOn = core.isDevServerOn();
+    const onOpen = useOpen(pluginContext, slotProps.fixtureId, devServerOn);
 
     React.useEffect(() => {
       return core.registerCommands({ editFixture: onOpen });
     }, [core, onOpen]);
 
-    if (!core.isDevServerOn()) {
+    if (!devServerOn) {
       return null;
     }
 
@@ -35,9 +36,16 @@ namedPlug<RendererActionSlotProps>(
 
 export { register };
 
-function useOpen(context: EditFixtureButtonContext, fixtureId: FixtureId) {
+function useOpen(
+  context: EditFixtureButtonContext,
+  fixtureId: FixtureId,
+  devServerOn: boolean
+) {
   const onError = useErrorNotification(context);
   return React.useCallback(() => {
+    if (!devServerOn)
+      return onError('Static exports cannot access source files.');
+
     openFile(fixtureId.path)
       .then(httpStatus => {
         switch (httpStatus) {
@@ -55,7 +63,7 @@ function useOpen(context: EditFixtureButtonContext, fixtureId: FixtureId) {
         }
       })
       .catch(err => onError('Is the Cosmos server running?'));
-  }, [fixtureId.path, onError]);
+  }, [fixtureId.path, onError, devServerOn]);
 }
 
 function useErrorNotification(context: EditFixtureButtonContext) {
