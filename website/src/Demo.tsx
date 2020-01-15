@@ -20,16 +20,16 @@ export function Demo() {
         <Title style={getSlideInStyle(entered, 0)}>
           Don&apos;t settle for localhost:3000
         </Title>
-        <Subtitle style={getSlideInStyle(entered, 1)}>
+        <Subtitle style={getSlideInStyle(entered, 0)}>
           Expect more from your <NoWrap>dev environment</NoWrap>
         </Subtitle>
-        <CtaContainer style={getSlideInStyle(entered, 2)}>
+        <CtaContainer style={getSlideInStyle(entered, 1)}>
           <CallToAction href="https://github.com/react-cosmos/react-cosmos#getting-started">
             <Play />
             Get started
           </CallToAction>
         </CtaContainer>
-        <Links style={getSlideInStyle(entered, 3)}>
+        <Links style={getSlideInStyle(entered, 1)}>
           {!showLivePreview && (
             <Link href={livePreviewUrl}>
               <span>Live demo</span>
@@ -42,7 +42,7 @@ export function Demo() {
           </Link>
         </Links>
       </TextContainer>
-      <PreviewContainer style={getSlideInStyle(entered, 4)}>
+      <PreviewContainer style={getSlideInStyle(entered, 2)}>
         {showLivePreview && <PreviewIframe src={livePreviewUrl} />}
         {!showLivePreview && (
           <ExternalLink href={livePreviewUrl}>
