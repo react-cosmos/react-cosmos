@@ -13,7 +13,7 @@ import {
   KEY_UP
 } from '../../shared/keys';
 import {
-  black70,
+  black60,
   grey128,
   grey160,
   grey176,
@@ -284,7 +284,7 @@ const Overlay = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  background: ${black70};
+  background: ${black60};
 `;
 
 const OverlayIE11 = styled(Overlay)`
@@ -298,10 +298,12 @@ const Content = styled.div`
   transform: translate(-50%, 0);
   width: 80%;
   max-width: 512px;
-  border-radius: 8px;
+  border-radius: 3px;
+  background: ${grey248};
+  box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px,
+    rgba(15, 15, 15, 0.1) 0px 5px 10px, rgba(15, 15, 15, 0.2) 0px 15px 40px;
   display: flex;
   flex-direction: column;
-  background: ${grey248};
   overflow: hidden;
 `;
 
