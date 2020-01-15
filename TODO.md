@@ -69,7 +69,7 @@ Experimentation is required to determine the best form. Also something to consid
 ## Misc
 
 - [ ] Experiment with [jest-specific-snapshot](https://github.com/igor-dv/jest-specific-snapshot) to create one snapshot file per each fixture
-- [ ] Experiment with Lazy loading fixtures
+- [ ] Experiment with lazy loading fixtures
 - [ ] Experiment with ES6 modules (React Cosmos with no bundler and no compiler)
 
 ## Interesting but not a priority (for now)
