@@ -47,6 +47,7 @@ It's highly probable that a Parcel integration is a low hanging fruit, but some 
 - [ ] Support decimals in number input
 - [ ] Range input
 - [ ] Select input (dropdown with pre-defined options)
+- [ ] Auto save toggle for props panel
 
 ## Expose plugin APIs
 
@@ -68,6 +69,8 @@ Experimentation is required to determine the best form. Also something to consid
 ## Misc
 
 - [ ] Experiment with [jest-specific-snapshot](https://github.com/igor-dv/jest-specific-snapshot) to create one snapshot file per each fixture
+- [ ] Experiment with Lazy loading fixtures
+- [ ] Experiment with ES6 modules (React Cosmos with no bundler and no compiler)
 
 ## Interesting but not a priority (for now)
 
