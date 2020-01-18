@@ -1,4 +1,10 @@
-import { act, fireEvent, render, wait } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  RenderResult,
+  wait
+} from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { register } from '..';
@@ -30,10 +36,13 @@ function loadTestPlugins() {
   return render(<Slot name="rendererPreview" />);
 }
 
-function mockRendererLocation(iframe: HTMLIFrameElement, newPath: string) {
+async function mockRendererLocation(renderer: RenderResult, newPath: string) {
+  const iframe = getIframe(renderer);
   Object.defineProperty(iframe.contentWindow, 'location', {
-    value: { href: `http://localhost:5000${newPath}`, replace: jest.fn() }
+    value: { href: `http://localhost:5000${newPath}`, replace: jest.fn() },
+    writable: true
   });
+  await fireIframeLoadEvent(iframe);
 }
 
 async function fireIframeLoadEvent(iframe: HTMLIFrameElement) {
@@ -60,8 +69,7 @@ if (nodeVersion >= 10) {
     const { pushStickyNotification } = mockNotifications();
     const renderer = loadTestPlugins();
 
-    mockRendererLocation(getIframe(renderer), `/route`);
-    await fireIframeLoadEvent(getIframe(renderer));
+    await mockRendererLocation(renderer, `/route`);
 
     expect(pushStickyNotification).toBeCalledWith(expect.any(Object), {
       id: 'renderer-location-change',
@@ -71,13 +79,26 @@ if (nodeVersion >= 10) {
     });
   });
 
+  it('removes location change notification on location revert', async () => {
+    registerTestPlugins();
+    const { removeStickyNotification } = mockNotifications();
+    const renderer = loadTestPlugins();
+
+    await mockRendererLocation(renderer, `/route`);
+    await mockRendererLocation(renderer, `/_renderer.html`);
+
+    expect(removeStickyNotification).toBeCalledWith(
+      expect.any(Object),
+      'renderer-location-change'
+    );
+  });
+
   it('removes location change notification on fixture select', async () => {
     registerTestPlugins();
     const { removeStickyNotification } = mockNotifications();
     const renderer = loadTestPlugins();
 
-    mockRendererLocation(getIframe(renderer), `/route`);
-    await fireIframeLoadEvent(getIframe(renderer));
+    await mockRendererLocation(renderer, `/route`);
     getRendererCoreContext().emit('request', selectFixtureMsg);
 
     expect(removeStickyNotification).toBeCalledWith(
@@ -91,8 +112,7 @@ if (nodeVersion >= 10) {
     mockNotifications();
     const renderer = loadTestPlugins();
 
-    mockRendererLocation(getIframe(renderer), `/route`);
-    await fireIframeLoadEvent(getIframe(renderer));
+    await mockRendererLocation(renderer, `/route`);
     getRendererCoreContext().emit('request', selectFixtureMsg);
 
     const { location } = getIframe(renderer).contentWindow!;
@@ -106,8 +126,7 @@ if (nodeVersion >= 10) {
     const { pushStickyNotification } = mockNotifications();
     const renderer = loadTestPlugins();
 
-    mockRendererLocation(getIframe(renderer), `/_renderer.html#/`);
-    await fireIframeLoadEvent(getIframe(renderer));
+    await mockRendererLocation(renderer, `/_renderer.html#/`);
 
     expect(pushStickyNotification).not.toBeCalled();
   });

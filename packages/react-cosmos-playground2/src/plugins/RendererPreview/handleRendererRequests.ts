@@ -56,8 +56,7 @@ export function createRendererRequestHandler() {
                 info: `Reload or select another fixture to reset your preview.`
               });
             } else {
-              // TODO: Test first
-              // notifications.removeStickyNotification(notificationId);
+              notifications.removeStickyNotification(notificationId);
             }
           }
         }
