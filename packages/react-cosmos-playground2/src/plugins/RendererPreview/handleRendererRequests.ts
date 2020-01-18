@@ -46,14 +46,18 @@ export function createRendererRequestHandler() {
         onIframeLoad(e: Event) {
           const iframe = e.target as HTMLIFrameElement;
           const iframeWindow = iframe.contentWindow;
-          if (iframeWindow && iframeLocationChanged(iframeWindow, iframe.src)) {
+          if (iframeWindow) {
             const notifications = getNotificationMethods(pluginContext);
-            notifications.pushStickyNotification({
-              id: notificationId,
-              type: 'info',
-              title: 'Renderer iframe location changed',
-              info: `Reload or select another fixture to reset your preview.`
-            });
+            if (iframeLocationChanged(iframeWindow, iframe.src)) {
+              notifications.pushStickyNotification({
+                id: notificationId,
+                type: 'info',
+                title: 'Renderer iframe location changed',
+                info: `Reload or select another fixture to reset your preview.`
+              });
+            } else {
+              notifications.removeStickyNotification(notificationId);
+            }
           }
         }
       };
