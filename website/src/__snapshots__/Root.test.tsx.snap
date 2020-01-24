@@ -2683,44 +2683,101 @@ Array [
         </div>
       </div>
     </div>
-    <div
-      className="c14"
-    />
   </div>,
-  .c1 {
+  .c2 {
   margin: 0 auto;
-  width: 192px;
-  height: 192px;
-  border-radius: 50%;
-  -webkit-transition: background 0.8s;
-  transition: background 0.8s;
-  overflow: hidden;
-  -webkit-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  transform: translateZ(0);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 
-.c2 {
+.c3 {
   position: relative;
-  width: 50%;
-  height: 50%;
-  fill: currentColor;
-  -webkit-animation: hover 0.6s infinite ease;
-  animation: hover 0.6s infinite ease;
-  -webkit-transition: left,0.4s ease-out,bottom 0.4s ease-out;
-  transition: left,0.4s ease-out,bottom 0.4s ease-out;
-  -webkit-transition-delay: 0.4s;
-  transition-delay: 0.4s;
+  max-width: 400px;
+  margin: 0 auto 56px auto;
+  -webkit-transition: 0.8s opacity,1.2s -webkit-transform;
+  -webkit-transition: 0.8s opacity,1.2s transform;
+  transition: 0.8s opacity,1.2s transform;
+}
+
+.c3:nth-child(4) {
+  margin-bottom: 0;
+}
+
+.c4 {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+}
+
+.c5 {
+  padding: 12px 20px 0 20px;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 28px;
+  -webkit-letter-spacing: -0.02em;
+  -moz-letter-spacing: -0.02em;
+  -ms-letter-spacing: -0.02em;
+  letter-spacing: -0.02em;
+  text-align: center;
+  opacity: 0.9;
+}
+
+.c1 {
+  height: 128px;
 }
 
 .c0 {
   background: #fff;
 }
 
+@media (min-width:896px) {
+  .c2 {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    width: 832px;
+  }
+}
+
+@media (min-width:1760px) {
+  .c2 {
+    width: 1696px;
+  }
+}
+
+@media (min-width:896px) {
+  .c3:nth-child(3) {
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width:1760px) {
+  .c3 {
+    margin-bottom: 0;
+  }
+}
+
 @media (max-width:791px) {
   .c1 {
-    width: 160px;
-    height: 160px;
+    height: 96px;
+  }
+}
+
+@media (min-width:1376px) {
+  .c1 {
+    height: 192px;
   }
 }
 
@@ -2729,33 +2786,104 @@ Array [
   >
     <div
       className="c1"
-      style={
-        Object {
-          "background": "rgba(10, 46, 70, 0)",
-        }
-      }
+    />
+    <div
+      className="c2"
     >
-      <svg
-        className="c2"
+      <div
+        className="c3"
         style={
           Object {
-            "left": "-50%",
-            "top": "102%",
+            "opacity": 0,
+            "transform": "translate(0, 40px)",
+            "transitionDelay": "0s",
           }
         }
-        viewBox="0 0 24 24"
       >
-        <path
-          d="M8.566 17.842c-.945 2.462-3.678 4.012-6.563 4.161.139-2.772 1.684-5.608 4.209-6.563l.51.521c-1.534 1.523-2.061 2.765-2.144 3.461.704-.085 2.006-.608 3.483-2.096l.505.516zm-1.136-11.342c-1.778-.01-4.062.911-5.766 2.614-.65.649-1.222 1.408-1.664 2.258 1.538-1.163 3.228-1.485 5.147-.408.566-1.494 1.32-3.014 2.283-4.464zm5.204 17.5c.852-.44 1.61-1.013 2.261-1.664 1.708-1.706 2.622-4.001 2.604-5.782-1.575 1.03-3.125 1.772-4.466 2.296 1.077 1.92.764 3.614-.399 5.15zm11.312-23.956c-.428-.03-.848-.044-1.261-.044-9.338 0-14.465 7.426-16.101 13.009l4.428 4.428c5.78-1.855 12.988-6.777 12.988-15.993v-.059c-.002-.437-.019-.884-.054-1.341zm-5.946 7.956c-1.105 0-2-.895-2-2s.895-2 2-2 2 .895 2 2-.895 2-2 2z"
+        <img
+          alt="Fixture tree view"
+          className="c4"
+          src="/fixture-list.png"
         />
-      </svg>
+        <div
+          className="c5"
+        >
+          Browse components using your existing file structure.
+        </div>
+      </div>
+      <div
+        className="c3"
+        style={
+          Object {
+            "opacity": 0,
+            "transform": "translate(0, 40px)",
+            "transitionDelay": "0s",
+          }
+        }
+      >
+        <img
+          alt="Global fixture search"
+          className="c4"
+          src="/fixture-search.png"
+        />
+        <div
+          className="c5"
+        >
+          ⌘ + P from anywhere to search for a component fixture.
+        </div>
+      </div>
+      <div
+        className="c3"
+        style={
+          Object {
+            "opacity": 0,
+            "transform": "translate(0, 40px)",
+            "transitionDelay": "0s",
+          }
+        }
+      >
+        <img
+          alt="Props input panel"
+          className="c4"
+          src="/props-panel.png"
+        />
+        <div
+          className="c5"
+        >
+          Test prop values in real time using auto inferred input types.
+        </div>
+      </div>
+      <div
+        className="c3"
+        style={
+          Object {
+            "opacity": 0,
+            "transform": "translate(0, 40px)",
+            "transitionDelay": "0s",
+          }
+        }
+      >
+        <img
+          alt="Responsive preview mode"
+          className="c4"
+          src="/responsive-mode.png"
+        />
+        <div
+          className="c5"
+        >
+          Preview components under any viewport size.
+        </div>
+      </div>
     </div>
+    <div
+      className="c1"
+    />
   </div>,
-  .c18 {
+  .c19 {
   white-space: nowrap;
 }
 
-.c2 {
+.c1 {
   margin: 0 auto;
   display: -webkit-box;
   display: -webkit-flex;
@@ -2771,7 +2899,7 @@ Array [
   max-width: 1536px;
 }
 
-.c3 {
+.c2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -2782,11 +2910,11 @@ Array [
   margin: 0 0 32px 0;
 }
 
-.c3:last-child {
+.c2:last-child {
   margin-bottom: 0;
 }
 
-.c4 {
+.c3 {
   margin: 0 0 32px 0;
   max-width: 640px;
   display: -webkit-box;
@@ -2805,11 +2933,11 @@ Array [
   transition: 0.8s opacity,1.2s transform;
 }
 
-.c4:last-child {
+.c3:last-child {
   margin-bottom: 0;
 }
 
-.c9 {
+.c8 {
   font-size: 22px;
   line-height: 28px;
   display: -webkit-box;
@@ -2829,7 +2957,7 @@ Array [
   justify-content: flex-start;
 }
 
-.c10 {
+.c9 {
   font-weight: 600;
   -webkit-letter-spacing: -0.02em;
   -moz-letter-spacing: -0.02em;
@@ -2837,7 +2965,7 @@ Array [
   letter-spacing: -0.02em;
 }
 
-.c11 {
+.c10 {
   margin-top: 4px;
   -webkit-letter-spacing: -0.02em;
   -moz-letter-spacing: -0.02em;
@@ -2846,7 +2974,7 @@ Array [
   opacity: 0.8;
 }
 
-.c5 {
+.c4 {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -2857,7 +2985,7 @@ Array [
   opacity: 0.9;
 }
 
-.c6 {
+.c5 {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -2868,12 +2996,12 @@ Array [
   transform: rotate(-90deg);
 }
 
-.c7 {
+.c6 {
   -webkit-transition: 1s stroke-dashoffset;
   transition: 1s stroke-dashoffset;
 }
 
-.c8 {
+.c7 {
   position: absolute;
   width: 30px;
   height: 30px;
@@ -2881,7 +3009,7 @@ Array [
   left: 5px;
 }
 
-.c13 {
+.c14 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -2892,7 +3020,7 @@ Array [
   justify-content: center;
 }
 
-.c14 {
+.c15 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -2906,7 +3034,7 @@ Array [
   align-items: flex-end;
 }
 
-.c15 {
+.c16 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -2919,21 +3047,21 @@ Array [
   transition: 0.8s opacity,1.2s transform;
 }
 
-.c16 {
+.c17 {
   width: 16px;
   background: rgba(255,255,255,0.8);
   -webkit-clip-path: polygon(100% 0,100% 100%,0 100%);
   clip-path: polygon(100% 0,100% 100%,0 100%);
 }
 
-.c19 {
+.c20 {
   width: 16px;
   background: rgba(255,255,255,0.8);
   -webkit-clip-path: polygon(0 0,100% 0,0 100%);
   clip-path: polygon(0 0,100% 0,0 100%);
 }
 
-.c17 {
+.c18 {
   padding: 20px 24px;
   background: rgba(255,255,255,0.8);
   color: rgba(10,46,70,0.9);
@@ -2948,7 +3076,7 @@ Array [
   letter-spacing: -0.01em;
 }
 
-.c20 {
+.c21 {
   padding: 16px 48px;
   color: rgba(10,46,70,0.8);
   font-size: 24px;
@@ -2964,15 +3092,33 @@ Array [
   transition: 0.8s opacity,1.2s transform;
 }
 
-.c1 {
-  height: 64px;
-}
-
 .c12 {
-  height: 160px;
+  margin: 0 auto;
+  width: 192px;
+  height: 192px;
+  border-radius: 50%;
+  -webkit-transition: background 0.8s;
+  transition: background 0.8s;
+  overflow: hidden;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
-.c21 {
+.c13 {
+  position: relative;
+  width: 50%;
+  height: 50%;
+  fill: currentColor;
+  -webkit-animation: hover 0.6s infinite ease;
+  animation: hover 0.6s infinite ease;
+  -webkit-transition: left,0.4s ease-out,bottom 0.4s ease-out;
+  transition: left,0.4s ease-out,bottom 0.4s ease-out;
+  -webkit-transition-delay: 0.4s;
+  transition-delay: 0.4s;
+}
+
+.c11 {
   height: 96px;
 }
 
@@ -2981,7 +3127,7 @@ Array [
 }
 
 @media (min-width:1376px) {
-  .c2 {
+  .c1 {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
@@ -2993,43 +3139,43 @@ Array [
 }
 
 @media (min-width:1376px) {
-  .c3 {
+  .c2 {
     margin-bottom: 0;
   }
 }
 
 @media (max-width:688px) {
-  .c4 {
+  .c3 {
     padding: 0 20px;
   }
 }
 
 @media (min-width:1376px) {
-  .c4 {
+  .c3 {
     margin-bottom: 64px;
   }
 }
 
 @media (max-width:688px) {
-  .c5 {
+  .c4 {
     display: none;
   }
 }
 
 @media (max-width:696px) {
-  .c16 {
+  .c17 {
     display: none;
   }
 }
 
 @media (max-width:696px) {
-  .c19 {
+  .c20 {
     display: none;
   }
 }
 
 @media (max-width:791px) {
-  .c17 {
+  .c18 {
     padding: 16px 20px;
     font-size: 24px;
     line-height: 30px;
@@ -3037,50 +3183,33 @@ Array [
 }
 
 @media (max-width:696px) {
-  .c20 {
+  .c21 {
     padding: 16px 32px;
   }
 }
 
 @media (max-width:791px) {
-  .c20 {
+  .c21 {
     font-size: 20px;
     line-height: 20px;
   }
 }
 
 @media (max-width:791px) {
-  .c1 {
-    height: 32px;
-  }
-}
-
-@media (min-width:1376px) {
-  .c1 {
-    height: 96px;
+  .c12 {
+    width: 160px;
+    height: 160px;
   }
 }
 
 @media (max-width:791px) {
-  .c12 {
-    height: 128px;
-  }
-}
-
-@media (min-width:1376px) {
-  .c12 {
-    height: 192px;
-  }
-}
-
-@media (max-width:791px) {
-  .c21 {
+  .c11 {
     height: 64px;
   }
 }
 
 @media (min-width:1376px) {
-  .c21 {
+  .c11 {
     height: 128px;
   }
 }
@@ -3090,16 +3219,13 @@ Array [
   >
     <div
       className="c1"
-    />
-    <div
-      className="c2"
       id="benefits"
     >
       <div
-        className="c3"
+        className="c2"
       >
         <div
-          className="c4"
+          className="c3"
           style={
             Object {
               "opacity": 0,
@@ -3109,13 +3235,13 @@ Array [
           }
         >
           <div
-            className="c5"
+            className="c4"
           >
             <svg
-              className="c6"
+              className="c5"
             >
               <circle
-                className="c7"
+                className="c6"
                 cx="20px"
                 cy="20px"
                 fill="none"
@@ -3132,7 +3258,7 @@ Array [
               />
             </svg>
             <svg
-              className="c8"
+              className="c7"
               fill="none"
               stroke="currentColor"
               strokeLinecap="square"
@@ -3146,15 +3272,15 @@ Array [
             </svg>
           </div>
           <div
-            className="c9"
+            className="c8"
           >
             <div
-              className="c10"
+              className="c9"
             >
               Prototype and iterate quickly
             </div>
             <div
-              className="c11"
+              className="c10"
             >
               New components require your undivided attention.
               Minimize the feedback loop by zooming in on the feature you're building. Running unrelated code and reloading your whole app on every change is a waste of time.
@@ -3162,7 +3288,7 @@ Array [
           </div>
         </div>
         <div
-          className="c4"
+          className="c3"
           style={
             Object {
               "opacity": 0,
@@ -3172,13 +3298,13 @@ Array [
           }
         >
           <div
-            className="c5"
+            className="c4"
           >
             <svg
-              className="c6"
+              className="c5"
             >
               <circle
-                className="c7"
+                className="c6"
                 cx="20px"
                 cy="20px"
                 fill="none"
@@ -3195,7 +3321,7 @@ Array [
               />
             </svg>
             <svg
-              className="c8"
+              className="c7"
               fill="none"
               stroke="currentColor"
               strokeLinecap="square"
@@ -3209,22 +3335,22 @@ Array [
             </svg>
           </div>
           <div
-            className="c9"
+            className="c8"
           >
             <div
-              className="c10"
+              className="c9"
             >
               Debug with ease
             </div>
             <div
-              className="c11"
+              className="c10"
             >
               The complexity of user interfaces is overwhelming. It's hard to tell what went wrong with dozens of components affecting each other. You find the source of bugs much quicker when you isolate components.
             </div>
           </div>
         </div>
         <div
-          className="c4"
+          className="c3"
           style={
             Object {
               "opacity": 0,
@@ -3234,13 +3360,13 @@ Array [
           }
         >
           <div
-            className="c5"
+            className="c4"
           >
             <svg
-              className="c6"
+              className="c5"
             >
               <circle
-                className="c7"
+                className="c6"
                 cx="20px"
                 cy="20px"
                 fill="none"
@@ -3257,7 +3383,7 @@ Array [
               />
             </svg>
             <svg
-              className="c8"
+              className="c7"
               fill="none"
               stroke="currentColor"
               strokeLinecap="square"
@@ -3271,15 +3397,15 @@ Array [
             </svg>
           </div>
           <div
-            className="c9"
+            className="c8"
           >
             <div
-              className="c10"
+              className="c9"
             >
               Create reusable components
             </div>
             <div
-              className="c11"
+              className="c10"
             >
               Why bother making standalone components? Because decoupled components lead to reusable code and a robust architecture, which saves you from having to rewrite your UI every other year.
             </div>
@@ -3287,10 +3413,10 @@ Array [
         </div>
       </div>
       <div
-        className="c3"
+        className="c2"
       >
         <div
-          className="c4"
+          className="c3"
           style={
             Object {
               "opacity": 0,
@@ -3300,13 +3426,13 @@ Array [
           }
         >
           <div
-            className="c5"
+            className="c4"
           >
             <svg
-              className="c6"
+              className="c5"
             >
               <circle
-                className="c7"
+                className="c6"
                 cx="20px"
                 cy="20px"
                 fill="none"
@@ -3323,7 +3449,7 @@ Array [
               />
             </svg>
             <svg
-              className="c8"
+              className="c7"
               fill="none"
               stroke="currentColor"
               strokeLinecap="square"
@@ -3337,22 +3463,22 @@ Array [
             </svg>
           </div>
           <div
-            className="c9"
+            className="c8"
           >
             <div
-              className="c10"
+              className="c9"
             >
               Share UI across projects
             </div>
             <div
-              className="c11"
+              className="c10"
             >
               Reuse components across projects and teams to prevent duplicate efforts and inconsistencies within a suite of products. A shared set of UI primitives also amounts to a solid visual foundation for your brand.
             </div>
           </div>
         </div>
         <div
-          className="c4"
+          className="c3"
           style={
             Object {
               "opacity": 0,
@@ -3362,13 +3488,13 @@ Array [
           }
         >
           <div
-            className="c5"
+            className="c4"
           >
             <svg
-              className="c6"
+              className="c5"
             >
               <circle
-                className="c7"
+                className="c6"
                 cx="20px"
                 cy="20px"
                 fill="none"
@@ -3385,7 +3511,7 @@ Array [
               />
             </svg>
             <svg
-              className="c8"
+              className="c7"
               fill="none"
               stroke="currentColor"
               strokeLinecap="square"
@@ -3399,22 +3525,22 @@ Array [
             </svg>
           </div>
           <div
-            className="c9"
+            className="c8"
           >
             <div
-              className="c10"
+              className="c9"
             >
               Publish component libraries
             </div>
             <div
-              className="c11"
+              className="c10"
             >
               A component library is the cornerstone of design systems. You can share component libraries inside your organization, or make them public, and bridge the gap between designers and developers.
             </div>
           </div>
         </div>
         <div
-          className="c4"
+          className="c3"
           style={
             Object {
               "opacity": 0,
@@ -3424,13 +3550,13 @@ Array [
           }
         >
           <div
-            className="c5"
+            className="c4"
           >
             <svg
-              className="c6"
+              className="c5"
             >
               <circle
-                className="c7"
+                className="c6"
                 cx="20px"
                 cy="20px"
                 fill="none"
@@ -3447,7 +3573,7 @@ Array [
               />
             </svg>
             <svg
-              className="c8"
+              className="c7"
               fill="none"
               stroke="currentColor"
               strokeLinecap="square"
@@ -3461,15 +3587,15 @@ Array [
             </svg>
           </div>
           <div
-            className="c9"
+            className="c8"
           >
             <div
-              className="c10"
+              className="c9"
             >
               Maintain quality at scale
             </div>
             <div
-              className="c11"
+              className="c10"
             >
               Big projects are made out of small pieces. The quality of each unit, together with the clarity of their integration, dictate the overall success of the whole. Reusable components are the key to awesome user intefaces.
             </div>
@@ -3478,16 +3604,42 @@ Array [
       </div>
     </div>
     <div
-      className="c12"
+      className="c11"
     />
     <div
-      className="c13"
+      className="c12"
+      style={
+        Object {
+          "background": "rgba(10, 46, 70, 0)",
+        }
+      }
+    >
+      <svg
+        className="c13"
+        style={
+          Object {
+            "left": "-50%",
+            "top": "102%",
+          }
+        }
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M8.566 17.842c-.945 2.462-3.678 4.012-6.563 4.161.139-2.772 1.684-5.608 4.209-6.563l.51.521c-1.534 1.523-2.061 2.765-2.144 3.461.704-.085 2.006-.608 3.483-2.096l.505.516zm-1.136-11.342c-1.778-.01-4.062.911-5.766 2.614-.65.649-1.222 1.408-1.664 2.258 1.538-1.163 3.228-1.485 5.147-.408.566-1.494 1.32-3.014 2.283-4.464zm5.204 17.5c.852-.44 1.61-1.013 2.261-1.664 1.708-1.706 2.622-4.001 2.604-5.782-1.575 1.03-3.125 1.772-4.466 2.296 1.077 1.92.764 3.614-.399 5.15zm11.312-23.956c-.428-.03-.848-.044-1.261-.044-9.338 0-14.465 7.426-16.101 13.009l4.428 4.428c5.78-1.855 12.988-6.777 12.988-15.993v-.059c-.002-.437-.019-.884-.054-1.341zm-5.946 7.956c-1.105 0-2-.895-2-2s.895-2 2-2 2 .895 2 2-.895 2-2 2z"
+        />
+      </svg>
+    </div>
+    <div
+      className="c11"
+    />
+    <div
+      className="c14"
     >
       <div
-        className="c14"
+        className="c15"
       >
         <div
-          className="c15"
+          className="c16"
           style={
             Object {
               "opacity": 0,
@@ -3497,24 +3649,24 @@ Array [
           }
         >
           <div
-            className="c16"
+            className="c17"
           />
           <div
-            className="c17"
+            className="c18"
           >
             You're doing important work. 
             <span
-              className="c18"
+              className="c19"
             >
               Keep rocking.
             </span>
           </div>
           <div
-            className="c19"
+            className="c20"
           />
         </div>
         <div
-          className="c20"
+          className="c21"
           style={
             Object {
               "opacity": 0,
@@ -3528,7 +3680,7 @@ Array [
       </div>
     </div>
     <div
-      className="c21"
+      className="c11"
     />
   </div>,
   .c1 {
