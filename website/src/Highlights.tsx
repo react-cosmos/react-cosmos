@@ -32,10 +32,10 @@ export function Highlights() {
   );
 }
 
-const blockWidth = 400;
+const boxWidth = 400;
 const padding = 32;
-const halfWidth = blockWidth * 2 + padding;
-const fullWidth = blockWidth * 4 + padding * 3;
+const halfWidth = boxWidth * 2 + padding;
+const fullWidth = boxWidth * 4 + padding * 3;
 const sideMargin = padding * 2;
 
 const Container = styled.div`
