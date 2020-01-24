@@ -7,6 +7,7 @@ import { Description } from './Description';
 import { Features } from './Features/Features';
 import { Footer } from './Footer/Footer';
 import { StickyHeader } from './Header/StickyHeader';
+import { Highlights } from './Highlights';
 import { Quote } from './Quote';
 import { Rocket } from './Rocket';
 import { grayToWhiteGradient, whiteToGrayGradient } from './shared/colors';
@@ -31,15 +32,17 @@ export function Root() {
         <Description />
         <Height mobile={64} tablet={64} desktop={96} />
         <Features />
-        <Height mobile={96} tablet={128} desktop={192} />
       </Gradient1>
       <WhiteBg>
-        <Rocket />
+        <Height mobile={96} tablet={128} desktop={192} />
+        <Highlights />
+        <Height mobile={96} tablet={128} desktop={192} />
       </WhiteBg>
       <Gradient2>
-        <Height mobile={32} tablet={64} desktop={96} />
         <Benefits />
-        <Height mobile={128} tablet={160} desktop={192} />
+        <Height mobile={64} tablet={96} desktop={128} />
+        <Rocket />
+        <Height mobile={64} tablet={96} desktop={128} />
         <Quote />
         <Height mobile={64} tablet={96} desktop={128} />
       </Gradient2>
