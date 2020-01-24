@@ -6,26 +6,28 @@ import { getSlideInStyle, slideInTransition } from './shared/slideIn';
 export function Highlights() {
   return (
     <Container>
-      <Highlight
-        src="/fixture-list.png"
-        altText="Fixture tree view"
-        caption="Browse components using your existing file structure."
-      />
-      <Highlight
-        src="/fixture-search.png"
-        altText="Global fixture search"
-        caption="⌘ + P from anywhere to search for a component fixture."
-      />
-      <Highlight
-        src="/props-panel.png"
-        altText="Props input panel"
-        caption="Test prop values in real time using auto inferred input types."
-      />
-      <Highlight
-        src="/responsive-mode.png"
-        altText="Responsive preview mode"
-        caption="Preview components under any viewport size."
-      />
+      <Boxes>
+        <Box
+          src="/fixture-list.png"
+          altText="Fixture tree view"
+          caption="Browse components using your existing file structure."
+        />
+        <Box
+          src="/fixture-search.png"
+          altText="Global fixture search"
+          caption="⌘ + P from anywhere to search for a component fixture."
+        />
+        <Box
+          src="/props-panel.png"
+          altText="Props input panel"
+          caption="Test prop values in real time using auto inferred input types."
+        />
+        <Box
+          src="/responsive-mode.png"
+          altText="Responsive preview mode"
+          caption="Preview components under any viewport size."
+        />
+      </Boxes>
     </Container>
   );
 }
@@ -37,15 +39,19 @@ const fullWidth = blockWidth * 4 + padding * 3;
 const sideMargin = padding * 2;
 
 const Container = styled.div`
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+`;
+
+const Boxes = styled.div`
   display: flex;
   flex-direction: column;
 
   @media (min-width: ${halfWidth + sideMargin}px) {
+    width: ${halfWidth}px;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: ${halfWidth}px;
   }
 
   @media (min-width: ${fullWidth + sideMargin}px) {
@@ -53,26 +59,26 @@ const Container = styled.div`
   }
 `;
 
-type HighlightProps = {
+type BoxProps = {
   src: string;
   altText: string;
   caption: string;
 };
 
-function Highlight({ src, altText, caption }: HighlightProps) {
+function Box({ src, altText, caption }: BoxProps) {
   const [ref, entered] = useViewportEnter(0.66);
   return (
-    <HighlightContainer ref={ref} style={getSlideInStyle(entered)}>
+    <BoxContainer ref={ref} style={getSlideInStyle(entered)}>
       <Image src={src} alt={altText} />
       <Caption>{caption}</Caption>
-    </HighlightContainer>
+    </BoxContainer>
   );
 }
 
-const HighlightContainer = styled.div`
+const BoxContainer = styled.div`
   position: relative;
   max-width: 400px;
-  margin: 0 auto 56px auto;
+  margin: 0 0 56px 0;
   transition: ${slideInTransition};
 
   :nth-child(4) {
