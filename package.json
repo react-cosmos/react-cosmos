@@ -28,7 +28,7 @@
     "start:playground": "yarn cosmos --root-dir packages/react-cosmos-playground2",
     "website:start": "yarn cosmos --root-dir website",
     "website:build": "yarn babel-ts-node ./scripts/buildWebsite.ts",
-    "release:check": "yarn build:clear && yarn build && yarn link-entries src && yarn lint && yarn link-entries dist && yarn test:unit",
+    "release:check": "yarn build:clear && yarn build && yarn src && yarn lint && yarn dist && yarn test:unit",
     "release:lerna": "lerna publish --registry=https://registry.npmjs.org/",
     "release": "yarn release:check && yarn release:lerna",
     "release:next": "yarn release:check && yarn release:lerna --dist-tag=next"
@@ -88,11 +88,9 @@
     "eslint-plugin-react-hooks": "^2.3.0",
     "glob": "^7.1.6",
     "http-server": "^0.12.0",
-    "husky": "^3.1.0",
     "jest": "^24.9.0",
     "jest-styled-components": "^6.3.4",
     "lerna": "^3.20.2",
-    "lint-staged": "^9.5.0",
     "localforage": "^1.7.3",
     "prettier": "1.19.1",
     "react": "^16.12.0",
@@ -106,16 +104,5 @@
     "webpack-cli": "^3.3.10",
     "whatwg-fetch": "^3.0.0",
     "yargs": "^15.1.0"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,css,md}": [
-      "prettier --single-quote --write",
-      "git add"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn dist && lint-staged"
-    }
   }
 }
