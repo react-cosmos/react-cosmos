@@ -1,6 +1,7 @@
 import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { createPlugin, PluginContext } from 'react-plugin';
+import { NavRowSlotProps } from '../../shared/slots/NavRowSlot';
 import { CoreSpec } from '../Core/public';
 import { FixtureTreeSpec } from '../FixtureTree/public';
 import { RendererCoreSpec } from '../RendererCore/public';
@@ -27,19 +28,30 @@ onLoad(pluginContext => {
   });
 });
 
-namedPlug('navRow', 'fixtureSearch', ({ pluginContext }) => {
-  const { getMethodsOf } = pluginContext;
-  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
-  const fixtures = rendererCore.getFixtures();
-  const onOpen = useOnOpen(pluginContext);
+namedPlug<NavRowSlotProps>(
+  'navRow',
+  'fixtureSearch',
+  ({ pluginContext, slotProps }) => {
+    const { getMethodsOf } = pluginContext;
+    const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
+    const fixtures = rendererCore.getFixtures();
+    const onOpen = useOnOpen(pluginContext);
+    const { onCloseNav } = slotProps;
 
-  // No point in showing fixture search button unless user has fixtures
-  if (Object.keys(fixtures).length === 0) {
-    return null;
+    // No point in showing fixture search button unless user has fixtures
+    if (Object.keys(fixtures).length === 0) {
+      return null;
+    }
+
+    return (
+      <FixtureSearchHeader
+        validFixtureSelected={rendererCore.isValidFixtureSelected()}
+        onOpen={onOpen}
+        onCloseNav={onCloseNav}
+      />
+    );
   }
-
-  return <FixtureSearchHeader onOpen={onOpen} />;
-});
+);
 
 namedPlug('global', 'fixtureSearch', ({ pluginContext }) => {
   const { getState, getMethodsOf } = pluginContext;
