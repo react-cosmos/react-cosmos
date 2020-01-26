@@ -49,13 +49,17 @@ export const RendererHeader = React.memo(function RendererHeader({
   return (
     <Container>
       <Left>
-        <IconButton32
-          icon={<MenuIcon />}
-          title="Toggle fixture list"
-          selected={navOpen}
-          onClick={onToggleNav}
-        />
-        <ButtonSeparator />
+        {!navOpen && (
+          <>
+            <IconButton32
+              icon={<MenuIcon />}
+              title="Toggle fixture list"
+              selected={false}
+              onClick={onToggleNav}
+            />
+            <ButtonSeparator />
+          </>
+        )}
         <IconButton32
           icon={<XCircleIcon />}
           title="Close fixture"
