@@ -1,13 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SearchIcon } from '../../shared/icons';
+import { ChevronLeftIcon, SearchIcon } from '../../shared/icons';
+import { IconButton32 } from '../../shared/ui/buttons';
 import { blue, grey160, grey32, white10 } from '../../shared/ui/colors';
 
 type Props = {
+  validFixtureSelected: boolean;
   onOpen: () => unknown;
+  onCloseNav: () => unknown;
 };
 
-export function FixtureSearchHeader({ onOpen }: Props) {
+export function FixtureSearchHeader({
+  validFixtureSelected,
+  onOpen,
+  onCloseNav
+}: Props) {
   return (
     <Container>
       <SearchButton onClick={onOpen}>
@@ -16,12 +23,23 @@ export function FixtureSearchHeader({ onOpen }: Props) {
         </SearchIconContainer>
         <SearchLabel>Search fixtures</SearchLabel>
       </SearchButton>
+      <NavButtonContainer>
+        <IconButton32
+          icon={<ChevronLeftIcon />}
+          title="Hide fixture list"
+          disabled={!validFixtureSelected}
+          selected={false}
+          onClick={onCloseNav}
+        />
+      </NavButtonContainer>
     </Container>
   );
 }
 
 const Container = styled.div`
   display: flex;
+  flex-direction: row;
+  align-items: center;
   height: 40px;
   margin: 0 1px 0 0;
   border-bottom: 1px solid ${white10};
@@ -30,6 +48,7 @@ const Container = styled.div`
 
 const SearchButton = styled.button`
   flex: 1;
+  height: 32px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -63,4 +82,8 @@ const SearchLabel = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: left;
+`;
+
+const NavButtonContainer = styled.div`
+  padding: 0 4px;
 `;

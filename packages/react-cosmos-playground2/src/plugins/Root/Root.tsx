@@ -4,6 +4,7 @@ import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import { ArraySlot, Slot } from 'react-plugin';
 import styled from 'styled-components';
+import { NavSlot } from '../../shared/slots/NavSlot';
 import { TreeNode } from '../../shared/tree';
 import { grey32, grey8, white10 } from '../../shared/ui/colors';
 import { useDrag } from '../../shared/ui/useDrag';
@@ -81,7 +82,7 @@ export function Root({
     <Container dragging={dragging}>
       {showNav && (
         <Draggable style={{ width: navWidth, zIndex: 2 }}>
-          <Slot name="nav" />
+          <NavSlot slotProps={{ onCloseNav: onToggleNav }} />
           {navDrag.dragging && <DragOverlay />}
           <NavDragHandle ref={navDrag.dragElRef} />
         </Draggable>
@@ -103,7 +104,7 @@ export function Root({
               navOpen={navOpen}
               panelOpen={panelOpen}
               rendererActionOrder={rendererActionOrder}
-              onToggleNav={onToggleNav}
+              onOpenNav={onToggleNav}
               onTogglePanel={onTogglePanel}
               onFixtureSelect={onFixtureSelect}
               onClose={onFixtureClose}

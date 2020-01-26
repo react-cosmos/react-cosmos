@@ -1,21 +1,22 @@
 import React from 'react';
-import { ArraySlot } from 'react-plugin';
 import styled from 'styled-components';
+import { NavRowSlot } from '../../shared/slots/NavRowSlot';
 import { grey32 } from '../../shared/ui/colors';
 
 type Props = {
   rendererConnected: boolean;
   navRowOrder: string[];
+  onCloseNav: () => unknown;
 };
 
-export function Nav({ rendererConnected, navRowOrder }: Props) {
+export function Nav({ rendererConnected, navRowOrder, onCloseNav }: Props) {
   if (!rendererConnected) {
     return <Container />;
   }
 
   return (
     <Container>
-      <ArraySlot name="navRow" plugOrder={navRowOrder} />
+      <NavRowSlot slotProps={{ onCloseNav }} plugOrder={navRowOrder} />
     </Container>
   );
 }

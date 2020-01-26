@@ -2,6 +2,7 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { register } from '.';
+import { NavRowSlot } from '../../shared/slots/NavRowSlot';
 import {
   mockCore,
   mockFixtureTree,
@@ -35,7 +36,7 @@ function loadTestPlugins() {
   loadPlugins();
   return render(
     <>
-      <Slot name="navRow" />
+      <NavRowSlot slotProps={{ onCloseNav: () => {} }} plugOrder={[]} />
       <Slot name="global" />
     </>
   );
