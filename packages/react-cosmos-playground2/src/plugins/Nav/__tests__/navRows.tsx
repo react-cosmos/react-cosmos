@@ -1,7 +1,8 @@
 import { render } from '@testing-library/react';
 import React from 'react';
-import { loadPlugins, Slot, resetPlugins } from 'react-plugin';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '..';
+import { NavSlot } from '../../../shared/slots/NavSlot';
 import { mockPlug } from '../../../testHelpers/plugin';
 import { mockRendererCore } from '../../../testHelpers/pluginMocks';
 
@@ -9,7 +10,7 @@ afterEach(resetPlugins);
 
 function loadTestPlugins() {
   loadPlugins();
-  return render(<Slot name="nav" />);
+  return render(<NavSlot slotProps={{ onCloseNav: () => {} }} />);
 }
 
 function mockNavRow(rowMock: React.ReactNode) {

@@ -1,7 +1,8 @@
 import { fireEvent, render, waitForElement } from '@testing-library/react';
 import React from 'react';
-import { loadPlugins, Slot, resetPlugins } from 'react-plugin';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '.';
+import { NavRowSlot } from '../../shared/slots/NavRowSlot';
 import {
   mockCore,
   mockRendererCore,
@@ -26,7 +27,9 @@ function registerTestPlugins() {
 
 async function loadTestPlugins() {
   loadPlugins();
-  return render(<Slot name="navRow" />);
+  return render(
+    <NavRowSlot slotProps={{ onCloseNav: () => {} }} plugOrder={[]} />
+  );
 }
 
 it('renders fixture list from renderer state', async () => {
