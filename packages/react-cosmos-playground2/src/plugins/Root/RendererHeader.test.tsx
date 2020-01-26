@@ -8,20 +8,20 @@ const propDefaults = {
   panelOpen: false,
   navOpen: false,
   rendererActionOrder: [],
-  onToggleNav: () => {},
+  onOpenNav: () => {},
   onTogglePanel: () => {},
   onFixtureSelect: () => {},
   onClose: () => {}
 };
 
 it('renders toggle nav button', async () => {
-  const onToggleNav = jest.fn();
+  const onOpenNav = jest.fn();
   const { getByTitle } = render(
-    <RendererHeader {...propDefaults} onToggleNav={onToggleNav} />
+    <RendererHeader {...propDefaults} onOpenNav={onOpenNav} />
   );
 
-  fireEvent.click(getByTitle(/toggle fixture list/i));
-  expect(onToggleNav).toBeCalled();
+  fireEvent.click(getByTitle(/show fixture list/i));
+  expect(onOpenNav).toBeCalled();
 });
 
 it('renders toggle panel button', async () => {

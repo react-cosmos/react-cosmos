@@ -19,7 +19,7 @@ type Props = {
   navOpen: boolean;
   panelOpen: boolean;
   rendererActionOrder: string[];
-  onToggleNav: () => unknown;
+  onOpenNav: () => unknown;
   onTogglePanel: () => unknown;
   onFixtureSelect: (fixtureId: FixtureId) => unknown;
   onClose: () => unknown;
@@ -31,7 +31,7 @@ export const RendererHeader = React.memo(function RendererHeader({
   navOpen,
   panelOpen,
   rendererActionOrder,
-  onToggleNav,
+  onOpenNav,
   onTogglePanel,
   onFixtureSelect,
   onClose
@@ -53,9 +53,9 @@ export const RendererHeader = React.memo(function RendererHeader({
           <>
             <IconButton32
               icon={<MenuIcon />}
-              title="Toggle fixture list"
+              title="Show fixture list"
               selected={false}
-              onClick={onToggleNav}
+              onClick={onOpenNav}
             />
             <ButtonSeparator />
           </>

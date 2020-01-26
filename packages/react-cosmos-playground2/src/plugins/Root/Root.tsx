@@ -104,7 +104,7 @@ export function Root({
               navOpen={navOpen}
               panelOpen={panelOpen}
               rendererActionOrder={rendererActionOrder}
-              onToggleNav={onToggleNav}
+              onOpenNav={onToggleNav}
               onTogglePanel={onTogglePanel}
               onFixtureSelect={onFixtureSelect}
               onClose={onFixtureClose}
