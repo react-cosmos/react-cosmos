@@ -1,8 +1,9 @@
-import path from 'path';
 import fs from 'fs-extra';
+import path from 'path';
 import { CosmosConfig, detectCosmosConfig } from '../config';
-import { getStaticPath } from './static';
 import { getExportPlaygroundHtml } from './playgroundHtml';
+import { removeLeadingSlash } from './shared';
+import { getStaticPath } from './static';
 
 export type ExportPluginArgs = {
   cosmosConfig: CosmosConfig;
@@ -48,7 +49,10 @@ function copyStaticAssets(cosmosConfig: CosmosConfig) {
   }
 
   const { publicUrl } = cosmosConfig;
-  const exportStaticPath = path.join(exportPath, publicUrl);
+  const exportStaticPath = path.resolve(
+    exportPath,
+    removeLeadingSlash(publicUrl)
+  );
   fs.copySync(staticPath, exportStaticPath);
 }
 

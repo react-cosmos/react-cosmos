@@ -1,13 +1,14 @@
+import webpackHotMiddleware from '@skidding/webpack-hot-middleware';
+import { NextHandleFunction } from 'connect';
 import path from 'path';
+import { BuildMessage } from 'react-cosmos-shared2/build';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-import { NextHandleFunction } from 'connect';
-import webpackHotMiddleware from '@skidding/webpack-hot-middleware';
-import { BuildMessage } from 'react-cosmos-shared2/build';
 import { DevServerPluginArgs } from '../../shared/devServer';
-import { getRootUrl, serveStaticDir } from '../../shared/static';
-import { getWebpack } from './shared';
+import { removeLeadingDot } from '../../shared/shared';
+import { serveStaticDir } from '../../shared/static';
 import { createWebpackCosmosConfig } from './cosmosConfig/webpack';
+import { getWebpack } from './shared';
 import { getDevWebpackConfig } from './webpackConfig';
 
 type WebpackConfig = webpack.Configuration & {
@@ -89,7 +90,7 @@ export async function webpackDevServer({
   const wdmInst = wdm(webpackCompiler, {
     // publicPath is the base path for the webpack assets and has to match
     // webpack.output.path
-    publicPath: getRootUrl(cosmosConfig.publicUrl),
+    publicPath: removeLeadingDot(cosmosConfig.publicUrl),
     logLevel: 'warn'
   });
 
