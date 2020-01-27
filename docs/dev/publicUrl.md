@@ -24,4 +24,4 @@
 - https://github.com/react-cosmos/react-cosmos/issues/777
 - https://github.com/react-cosmos/react-cosmos/issues/1149
 
-> [0] Before `5.1.0`, it was required for `publicURL` to have a leading dot for static exports to work from a nested path.
+> [0] The `publicUrl` must have a trailing dot (eg. `"./"`) in order to server static exports from a nested path (eg. `http://mydomain.com/cosmos-export/`).

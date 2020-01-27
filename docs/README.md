@@ -478,6 +478,10 @@ Check out the [full example](https://github.com/react-cosmos/react-cosmos/blob/4
 
 - [Try changing your webpack `devtool` to something like `cheap-module-source-map`](https://github.com/react-cosmos/react-cosmos/issues/1045#issuecomment-535150617).
 
+### Serving a static export from a nested path?
+
+- [Set `publicUrl` to a relative path, like `"./"`](https://github.com/react-cosmos/react-cosmos/issues/1149).
+
 ## Where's my old Cosmos?
 
 Cosmos Classic packages have been moved to [a dedicated repo](https://github.com/react-cosmos/react-cosmos-classic), which means we can continue to maintain Cosmos Classic or even run it alongside React Cosmos 5 in the same project (during the migration period).
