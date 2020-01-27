@@ -1,6 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import { CosmosConfig } from '../../../config';
+import { removeLeadingSlash } from '../../../shared/shared';
 import { ensureHtmlWebackPlugin } from './htmlPlugin';
 import {
   getGlobalsPlugin,
@@ -42,8 +43,7 @@ function getEntry() {
 function getOutput({ exportPath, publicUrl }: CosmosConfig) {
   const filename = '[name].js';
   return {
-    // Remove leading slash to make a relative url, suitable for path.resolve
-    path: path.resolve(exportPath, publicUrl.replace(/^\/+/, '')),
+    path: path.resolve(exportPath, removeLeadingSlash(publicUrl)),
     filename,
     publicPath: publicUrl
   };
