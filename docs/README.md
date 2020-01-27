@@ -478,7 +478,7 @@ Check out the [full example](https://github.com/react-cosmos/react-cosmos/blob/4
 
 - [Try changing your webpack `devtool` to something like `cheap-module-source-map`](https://github.com/react-cosmos/react-cosmos/issues/1045#issuecomment-535150617).
 
-### Serving a static export from a nested path?
+#### Serving a static export from a nested path?
 
 - [Set `publicUrl` to a relative path, like `"./"`](https://github.com/react-cosmos/react-cosmos/issues/1149).
 
