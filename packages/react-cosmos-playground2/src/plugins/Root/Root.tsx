@@ -4,7 +4,7 @@ import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import { ArraySlot, Slot } from 'react-plugin';
 import styled from 'styled-components';
-import { NavSlot } from '../../shared/slots/NavSlot';
+import { NavRowSlot } from '../../shared/slots/NavRowSlot';
 import { TreeNode } from '../../shared/tree';
 import { grey32, grey8, white10 } from '../../shared/ui/colors';
 import { useDrag } from '../../shared/ui/useDrag';
@@ -23,10 +23,11 @@ type Props = {
   panelOpen: boolean;
   navWidth: number;
   panelWidth: number;
-  globalOrder: string[];
-  globalActionOrder: string[];
-  rendererActionOrder: string[];
   controlPanelRowOrder: string[];
+  globalActionOrder: string[];
+  globalOrder: string[];
+  navRowOrder: string[];
+  rendererActionOrder: string[];
   onToggleNav: () => unknown;
   onTogglePanel: () => unknown;
   onFixtureSelect: (fixtureId: FixtureId) => unknown;
@@ -47,10 +48,11 @@ export function Root({
   panelOpen,
   navWidth,
   panelWidth,
-  globalOrder,
-  globalActionOrder,
-  rendererActionOrder,
   controlPanelRowOrder,
+  globalActionOrder,
+  globalOrder,
+  navRowOrder,
+  rendererActionOrder,
   onToggleNav,
   onTogglePanel,
   onFixtureSelect,
@@ -82,7 +84,14 @@ export function Root({
     <Container dragging={dragging}>
       {showNav && (
         <Draggable style={{ width: navWidth, zIndex: 2 }}>
-          <NavSlot slotProps={{ onCloseNav: onToggleNav }} />
+          <Nav>
+            {rendererConnected && (
+              <NavRowSlot
+                slotProps={{ onCloseNav: onToggleNav }}
+                plugOrder={navRowOrder}
+              />
+            )}
+          </Nav>
           {navDrag.dragging && <DragOverlay />}
           <NavDragHandle ref={navDrag.dragElRef} />
         </Draggable>
@@ -154,6 +163,14 @@ const Container = styled.div.attrs({ 'data-testid': 'root' })<ContainerProps>`
 const Draggable = styled.div`
   flex-shrink: 0;
   position: relative;
+`;
+
+const Nav = styled.div`
+  width: 100%;
+  height: 100%;
+  background: ${grey32};
+  display: flex;
+  flex-direction: column;
 `;
 
 const MainContainer = styled.div`

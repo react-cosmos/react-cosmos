@@ -1,10 +1,11 @@
 export type RootSpec = {
   name: 'root';
   config: {
-    globalOrder: string[];
-    globalActionOrder: string[];
-    rendererActionOrder: string[];
     controlPanelRowOrder: string[];
+    globalActionOrder: string[];
+    globalOrder: string[];
+    navRowOrder: string[];
+    rendererActionOrder: string[];
   };
   state: {
     storageCacheReady: boolean;

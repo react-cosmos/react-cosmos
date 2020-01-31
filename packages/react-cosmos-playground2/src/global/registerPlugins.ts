@@ -14,7 +14,6 @@ require('../plugins/FixtureSearch').register();
 require('../plugins/FixtureTree').register();
 require('../plugins/FullScreenButton').register();
 require('../plugins/MessageHandler').register();
-require('../plugins/Nav').register();
 require('../plugins/Notifications').register();
 require('../plugins/PluginList').register();
 require('../plugins/PropsPanel').register();

@@ -1,11 +1,9 @@
 export const DEFAULT_PLUGIN_CONFIG = {
   root: {
-    globalOrder: ['fixtureSearch', 'notifications'],
+    controlPanelRowOrder: ['values', 'props', 'classState'],
     globalActionOrder: ['remoteRenderer'],
-    rendererActionOrder: ['editFixture', 'fullScreen', 'responsivePreview'],
-    controlPanelRowOrder: ['values', 'props', 'classState']
-  },
-  nav: {
-    navRowOrder: ['fixtureSearch', 'fixtureTree']
+    globalOrder: ['fixtureSearch', 'notifications'],
+    navRowOrder: ['fixtureSearch', 'fixtureTree'],
+    rendererActionOrder: ['editFixture', 'fullScreen', 'responsivePreview']
   }
 };
