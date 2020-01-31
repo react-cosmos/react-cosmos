@@ -16,10 +16,11 @@ import { createFixtureTree } from '../../shared/fixtureTree';
 const { onLoad, plug, register } = createPlugin<RootSpec>({
   name: 'root',
   defaultConfig: {
-    globalOrder: [],
+    controlPanelRowOrder: [],
     globalActionOrder: [],
-    rendererActionOrder: [],
-    controlPanelRowOrder: []
+    globalOrder: [],
+    navRowOrder: [],
+    rendererActionOrder: []
   },
   initialState: {
     storageCacheReady: false
@@ -65,10 +66,11 @@ plug('root', ({ pluginContext }) => {
         panelOpen={false}
         navWidth={0}
         panelWidth={0}
-        globalOrder={[]}
-        globalActionOrder={[]}
-        rendererActionOrder={[]}
         controlPanelRowOrder={[]}
+        globalActionOrder={[]}
+        globalOrder={[]}
+        navRowOrder={[]}
+        rendererActionOrder={[]}
         onToggleNav={() => {}}
         onTogglePanel={() => {}}
         onFixtureSelect={() => {}}
@@ -83,10 +85,11 @@ plug('root', ({ pluginContext }) => {
   const { navWidth, setNavWidth } = getNavWidthApi(pluginContext);
   const { panelWidth, setPanelWidth } = getPanelWidthApi(pluginContext);
   const {
-    globalOrder,
+    controlPanelRowOrder,
     globalActionOrder,
-    rendererActionOrder,
-    controlPanelRowOrder
+    globalOrder,
+    navRowOrder,
+    rendererActionOrder
   } = getConfig();
   return (
     <Root
@@ -100,10 +103,11 @@ plug('root', ({ pluginContext }) => {
       panelOpen={isPanelOpen(pluginContext)}
       navWidth={navWidth}
       panelWidth={panelWidth}
-      globalOrder={globalOrder}
-      globalActionOrder={globalActionOrder}
-      rendererActionOrder={rendererActionOrder}
       controlPanelRowOrder={controlPanelRowOrder}
+      globalActionOrder={globalActionOrder}
+      globalOrder={globalOrder}
+      navRowOrder={navRowOrder}
+      rendererActionOrder={rendererActionOrder}
       onToggleNav={onToggleNav}
       onTogglePanel={onTogglePanel}
       onFixtureSelect={router.selectFixture}
