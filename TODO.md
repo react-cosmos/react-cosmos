@@ -44,9 +44,9 @@ Auto generating fixtures completely is a pipe dream, but some parts can be autom
 - Detect all components inside user codebase.
 - Extract prop types for each component (statically).
 - "Add fixture" action in UI, which shows a list of all components.
-- When selects component and create fixture using relevant inputs for each prop type.
+- User selects component from list and create fixture visually using relevant inputs for each prop type.
 - User saves fixture and fixture file is generated.
-- Bonus: User can use the same flow to edit existing fixtures. Some dynamically generated and hard to parse fixtures would always fail this step, so there must be some _editable_ detection per fixture file.
+- Bonus: User can use the same flow to edit existing fixtures. Dynamically-generated and hard to parse fixtures would always fail this step, so there must be some _editable_ detection per fixture file.
 
 ## Responsive mode improvements
 
