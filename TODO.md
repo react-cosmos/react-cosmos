@@ -37,6 +37,17 @@ It's highly probable that a Parcel integration is a low hanging fruit, but some 
 
 - [ ] Research Parcel integration (preferably as Express middleware attached to Cosmos server)
 
+## UI-based fixture generation
+
+Auto generating fixtures completely is a pipe dream, but some parts can be automated, especially for TypeScript users. A scenario that could work:
+
+- Detect all components inside user codebase.
+- Extract prop types for each component (statically).
+- "Add fixture" action in UI, which shows a list of all components.
+- User selects component from list and creates fixture visually using relevant inputs for each prop type.
+- User saves fixture and fixture file is generated.
+- Bonus: User can use the same flow to edit existing fixtures. Dynamically-generated and hard to parse fixtures would always fail this step, so there must be some _editable_ detection per fixture file.
+
 ## Responsive mode improvements
 
 - [ ] Update default devices
