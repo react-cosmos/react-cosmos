@@ -8,6 +8,7 @@ import { Features } from './Features/Features';
 import { Footer } from './Footer/Footer';
 import { StickyHeader } from './Header/StickyHeader';
 import { Highlights } from './Highlights';
+import { Logos } from './Logos';
 import { Quote } from './Quote';
 import { Rocket } from './Rocket';
 import { grayToWhiteGradient, whiteToGrayGradient } from './shared/colors';
@@ -44,6 +45,8 @@ export function Root() {
         <Rocket />
         <Height mobile={64} tablet={96} desktop={128} />
         <Quote />
+        <Height mobile={64} tablet={96} desktop={128} />
+        <Logos />
         <Height mobile={64} tablet={96} desktop={128} />
       </Gradient2>
       <About />
