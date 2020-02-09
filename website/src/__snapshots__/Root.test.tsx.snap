@@ -3084,7 +3084,7 @@ Array [
 }
 
 .c27 {
-  margin-top: -6px;
+  margin-top: -4px;
   color: #0a2e46;
   font-size: 40px;
   font-weight: 500;
@@ -3262,12 +3262,6 @@ Array [
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
-  }
-}
-
-@media (max-width:960px) {
-  .c27 {
-    font-size: 38px;
   }
 }
 

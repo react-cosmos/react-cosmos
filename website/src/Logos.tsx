@@ -77,7 +77,7 @@ const LogoImage = styled.img`
 `;
 
 const YouLink = styled.a`
-  margin-top: -6px;
+  margin-top: -4px;
   color: #0a2e46;
   font-size: 40px;
   font-weight: 500;
@@ -89,9 +89,5 @@ const YouLink = styled.a`
 
   :hover {
     opacity: 0.9;
-  }
-
-  @media (max-width: ${contentMaxWidth}px) {
-    font-size: 38px;
   }
 `;
