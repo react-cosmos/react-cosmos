@@ -62,7 +62,7 @@ const RightSlope = styled(Slope)`
 const Words = styled.div`
   padding: 20px 24px;
   background: rgba(255, 255, 255, 0.8);
-  color: rgba(10, 46, 70, 0.9);
+  color: rgba(10, 46, 70, 0.8);
   font-size: 30px;
   font-weight: 300;
   font-style: italic;
@@ -79,7 +79,7 @@ const Words = styled.div`
 
 const OneAndOnly = styled.div`
   padding: 16px 48px;
-  color: rgba(10, 46, 70, 0.8);
+  color: rgba(10, 46, 70, 0.7);
   font-size: 24px;
   font-weight: 400;
   line-height: 24px;

@@ -3023,6 +3023,87 @@ Array [
   left: 5px;
 }
 
+.c22 {
+  -webkit-transition: 0.8s opacity,1.2s -webkit-transform;
+  -webkit-transition: 0.8s opacity,1.2s transform;
+  transition: 0.8s opacity,1.2s transform;
+}
+
+.c23 {
+  padding: 16px 0;
+  color: #0a2e46;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: center;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+
+.c24 {
+  margin: 0 auto;
+  max-width: 1024px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.c25 {
+  width: 320px;
+  padding: 16px 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.c26 {
+  width: 288px;
+  opacity: 0.7;
+}
+
+.c27 {
+  margin-top: -4px;
+  color: #0a2e46;
+  font-size: 40px;
+  font-weight: 500;
+  -webkit-letter-spacing: -0.04em;
+  -moz-letter-spacing: -0.04em;
+  -ms-letter-spacing: -0.04em;
+  letter-spacing: -0.04em;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  white-space: nowrap;
+  opacity: 0.7;
+  -webkit-transition: 0.4s opacity;
+  transition: 0.4s opacity;
+}
+
+.c27:hover {
+  opacity: 0.9;
+}
+
 .c14 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -3078,7 +3159,7 @@ Array [
 .c18 {
   padding: 20px 24px;
   background: rgba(255,255,255,0.8);
-  color: rgba(10,46,70,0.9);
+  color: rgba(10,46,70,0.8);
   font-size: 30px;
   font-weight: 300;
   font-style: italic;
@@ -3092,7 +3173,7 @@ Array [
 
 .c21 {
   padding: 16px 48px;
-  color: rgba(10,46,70,0.8);
+  color: rgba(10,46,70,0.7);
   font-size: 24px;
   font-weight: 400;
   line-height: 24px;
@@ -3173,6 +3254,14 @@ Array [
 @media (max-width:688px) {
   .c4 {
     display: none;
+  }
+}
+
+@media (max-width:960px) {
+  .c24 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
   }
 }
 
@@ -3690,6 +3779,57 @@ Array [
           }
         >
           Dan Abramov
+        </div>
+      </div>
+    </div>
+    <div
+      className="c11"
+    />
+    <div
+      className="c22"
+      style={
+        Object {
+          "opacity": 0,
+          "transform": "translate(0, 40px)",
+          "transitionDelay": "0s",
+        }
+      }
+    >
+      <div
+        className="c23"
+      >
+        Trusted by
+      </div>
+      <div
+        className="c24"
+      >
+        <div
+          className="c25"
+        >
+          <img
+            alt="Stadium Goods"
+            className="c26"
+            src="/logos/stadiumgoods.svg"
+          />
+        </div>
+        <div
+          className="c25"
+        >
+          <img
+            alt="Hootsuite"
+            className="c26"
+            src="/logos/hootsuite.png"
+          />
+        </div>
+        <div
+          className="c25"
+        >
+          <a
+            className="c27"
+            href="#"
+          >
+            Your company?
+          </a>
         </div>
       </div>
     </div>
