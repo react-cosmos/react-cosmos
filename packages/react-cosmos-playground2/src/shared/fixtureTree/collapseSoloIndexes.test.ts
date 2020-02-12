@@ -144,3 +144,48 @@ it('collapses solo index dir', () => {
   };
   expect(collapseSoloIndexes(tree)).toEqual(collapsedTree);
 });
+
+it('collapses solo named dir', () => {
+  const tree = {
+    items: {},
+    dirs: {
+      WelcomeMessage: {
+        items: {},
+        dirs: {
+          WelcomeMessage: {
+            items: {
+              Susan: {
+                path: 'WelcomeMessage/WelcomeMessage.fixture.js',
+                name: 'Susan'
+              },
+              Sarah: {
+                path: 'WelcomeMessage/WelcomeMessage.fixture.js',
+                name: 'Sarah'
+              }
+            },
+            dirs: {}
+          }
+        }
+      }
+    }
+  };
+  const collapsedTree = {
+    items: {},
+    dirs: {
+      WelcomeMessage: {
+        items: {
+          Susan: {
+            path: 'WelcomeMessage/WelcomeMessage.fixture.js',
+            name: 'Susan'
+          },
+          Sarah: {
+            path: 'WelcomeMessage/WelcomeMessage.fixture.js',
+            name: 'Sarah'
+          }
+        },
+        dirs: {}
+      }
+    }
+  };
+  expect(collapseSoloIndexes(tree)).toEqual(collapsedTree);
+});
