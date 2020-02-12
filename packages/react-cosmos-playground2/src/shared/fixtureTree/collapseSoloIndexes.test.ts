@@ -27,7 +27,7 @@ it('collapses solo index item', () => {
   expect(collapseSoloIndexes(tree)).toEqual(collapsedTree);
 });
 
-it('collapses solo named index item', () => {
+it('collapses solo named item', () => {
   const tree = {
     items: {},
     dirs: {
