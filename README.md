@@ -55,6 +55,7 @@ React Cosmos is **not**
 - 📺 2017 [UI Development Made Simple](https://www.youtube.com/watch?v=C3tx999wbgM) | JSHeroes
 - 🐦 2019 [React Cosmos 5 in 21 tweets](https://twitter.com/ReactCosmos/status/1189127279533793281) | Twitter
 - 💬 2019 [I made a tool for creating React components with visual TDD](https://sourcesort.com/interview/ovidiu-chereches-react-cosmos) | SourceSort
+- 💬 2020 [A development environment for ambitious developers](https://survivejs.com/blog/cosmos-interview) | SurviveJS
 
 ## 🎞 Credits
 
