@@ -18,17 +18,24 @@ export function collapseSoloIndexes(treeNode: FixtureNode): FixtureNode {
 
   forEach(treeNode.dirs, (dirNode, dirName) => {
     const dirItems = dirNode.items;
-    const dirMainItem = dirItems.index || dirItems[dirName];
-    const containsSoloItem = Object.keys(dirItems).length === 1 && dirMainItem;
+    const dirItemNames = Object.keys(dirItems);
+    const soloIndexItem = dirItemNames.length === 1 && dirItems.index;
+    const soloNamedItem =
+      dirItemNames.length === 1 && noCaseEqual(dirName, dirItemNames[0]);
     const hasSubdirs = Object.keys(dirNode.dirs).length > 0;
 
-    if (containsSoloItem && !items[dirName] && !hasSubdirs) {
-      items[dirName] = dirMainItem;
+    if (soloIndexItem && !items[dirName] && !hasSubdirs) {
+      items[dirName] = dirItems.index;
+    } else if (soloNamedItem && !items[dirItemNames[0]] && !hasSubdirs) {
+      items[dirItemNames[0]] = dirItems[dirItemNames[0]];
     } else {
-      const containsSoloNamedDir =
-        Object.keys(dirNode.dirs).length === 1 && dirNode.dirs[dirName];
-      if (containsSoloNamedDir) {
-        dirs[dirName] = collapseSoloIndexes(dirNode.dirs[dirName]);
+      const subDirNames = Object.keys(dirNode.dirs);
+      const soloNamedDir =
+        subDirNames.length === 1 && noCaseEqual(dirName, subDirNames[0]);
+      if (soloNamedDir) {
+        dirs[subDirNames[0]] = collapseSoloIndexes(
+          dirNode.dirs[subDirNames[0]]
+        );
       } else {
         dirs[dirName] = collapseSoloIndexes(dirNode);
       }
@@ -36,4 +43,8 @@ export function collapseSoloIndexes(treeNode: FixtureNode): FixtureNode {
   });
 
   return { items, dirs };
+}
+
+function noCaseEqual(a: string, b: string) {
+  return a.toUpperCase() === b.toUpperCase();
 }

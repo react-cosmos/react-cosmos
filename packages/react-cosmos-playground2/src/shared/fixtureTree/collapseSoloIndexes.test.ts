@@ -54,6 +54,33 @@ it('collapses solo named item', () => {
   expect(collapseSoloIndexes(tree)).toEqual(collapsedTree);
 });
 
+it('collapses solo named item (case insensitive)', () => {
+  const tree = {
+    items: {},
+    dirs: {
+      successMessage: {
+        items: {
+          SuccessMessage: {
+            path: 'successMessage/SuccessMessage.fixture.js',
+            name: null
+          }
+        },
+        dirs: {}
+      }
+    }
+  };
+  const collapsedTree = {
+    items: {
+      SuccessMessage: {
+        path: 'successMessage/SuccessMessage.fixture.js',
+        name: null
+      }
+    },
+    dirs: {}
+  };
+  expect(collapseSoloIndexes(tree)).toEqual(collapsedTree);
+});
+
 it('does not collapse solo index item with sub dirs', () => {
   const tree = {
     items: {},
@@ -180,6 +207,51 @@ it('collapses solo named dir', () => {
           },
           Sarah: {
             path: 'WelcomeMessage/WelcomeMessage.fixture.js',
+            name: 'Sarah'
+          }
+        },
+        dirs: {}
+      }
+    }
+  };
+  expect(collapseSoloIndexes(tree)).toEqual(collapsedTree);
+});
+
+it('collapses solo named dir (case insensitive)', () => {
+  const tree = {
+    items: {},
+    dirs: {
+      welcomeMessage: {
+        items: {},
+        dirs: {
+          WelcomeMessage: {
+            items: {
+              Susan: {
+                path: 'welcomeMessage/WelcomeMessage.fixture.js',
+                name: 'Susan'
+              },
+              Sarah: {
+                path: 'welcomeMessage/WelcomeMessage.fixture.js',
+                name: 'Sarah'
+              }
+            },
+            dirs: {}
+          }
+        }
+      }
+    }
+  };
+  const collapsedTree = {
+    items: {},
+    dirs: {
+      WelcomeMessage: {
+        items: {
+          Susan: {
+            path: 'welcomeMessage/WelcomeMessage.fixture.js',
+            name: 'Susan'
+          },
+          Sarah: {
+            path: 'welcomeMessage/WelcomeMessage.fixture.js',
             name: 'Sarah'
           }
         },
