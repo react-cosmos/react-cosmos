@@ -11,7 +11,7 @@ export function hideSingleChildDirs(rootNode: FixtureNode): FixtureNode {
     return hideSingleChildDirs(dirs[dirNames[0]]);
   }
 
-  let newDirs: TreeNodeDirs<FixtureId> = {};
+  const newDirs: TreeNodeDirs<FixtureId> = {};
   forEach(dirs, (dir, dirName) => {
     const subDirNames = Object.keys(dir.dirs);
     if (containsSingleDir(dir) && !newDirs[subDirNames[0]]) {

@@ -1,8 +1,9 @@
 import { FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
-import { createRawFixtureTree } from './createRawFixtureTree';
 import { collapseDirs } from './collapseDirs';
-import { hideFixtureSuffix } from './hideFixtureSuffix';
 import { collapseSoloIndexes } from './collapseSoloIndexes';
+import { collapseSoloNamedItems } from './collapseSoloNamedItems';
+import { createRawFixtureTree } from './createRawFixtureTree';
+import { hideFixtureSuffix } from './hideFixtureSuffix';
 import { hideSingleChildDirs } from './hideSingleChildDirs';
 import { FixtureNode } from './shared';
 
@@ -22,6 +23,7 @@ export function createFixtureTree({
   tree = collapseDirs(tree, fixturesDir);
   tree = hideFixtureSuffix(tree, fixtureFileSuffix);
   tree = collapseSoloIndexes(tree);
+  tree = collapseSoloNamedItems(tree);
   tree = hideSingleChildDirs(tree);
   return tree;
 }

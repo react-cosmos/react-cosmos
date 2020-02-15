@@ -27,60 +27,6 @@ it('collapses solo index item', () => {
   expect(collapseSoloIndexes(tree)).toEqual(collapsedTree);
 });
 
-it('collapses solo named item', () => {
-  const tree = {
-    items: {},
-    dirs: {
-      SuccessMessage: {
-        items: {
-          SuccessMessage: {
-            path: 'SuccessMessage/SuccessMessage.fixture.js',
-            name: null
-          }
-        },
-        dirs: {}
-      }
-    }
-  };
-  const collapsedTree = {
-    items: {
-      SuccessMessage: {
-        path: 'SuccessMessage/SuccessMessage.fixture.js',
-        name: null
-      }
-    },
-    dirs: {}
-  };
-  expect(collapseSoloIndexes(tree)).toEqual(collapsedTree);
-});
-
-it('collapses solo named item (case insensitive)', () => {
-  const tree = {
-    items: {},
-    dirs: {
-      successMessage: {
-        items: {
-          SuccessMessage: {
-            path: 'successMessage/SuccessMessage.fixture.js',
-            name: null
-          }
-        },
-        dirs: {}
-      }
-    }
-  };
-  const collapsedTree = {
-    items: {
-      SuccessMessage: {
-        path: 'successMessage/SuccessMessage.fixture.js',
-        name: null
-      }
-    },
-    dirs: {}
-  };
-  expect(collapseSoloIndexes(tree)).toEqual(collapsedTree);
-});
-
 it('does not collapse solo index item with sub dirs', () => {
   const tree = {
     items: {},
