@@ -1,7 +1,7 @@
 import { forEach } from 'lodash';
-import { FixtureNode } from './shared';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { TreeNodeDirs } from '../tree';
+import { FixtureNode } from './shared';
 
 export function hideSingleChildDirs(rootNode: FixtureNode): FixtureNode {
   const { items, dirs } = rootNode;
