@@ -5,8 +5,8 @@ import { FixtureNode } from './shared';
 
 export function hideSingleChildDirs(rootNode: FixtureNode): FixtureNode {
   const { items, dirs } = rootNode;
-  const dirNames = Object.keys(dirs);
 
+  const dirNames = Object.keys(dirs);
   if (containsSingleDir(rootNode)) {
     return hideSingleChildDirs(dirs[dirNames[0]]);
   }
