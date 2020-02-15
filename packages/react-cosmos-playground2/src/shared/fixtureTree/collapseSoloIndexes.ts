@@ -29,16 +29,7 @@ export function collapseSoloIndexes(treeNode: FixtureNode): FixtureNode {
     } else if (soloNamedItem && !items[dirItemNames[0]] && !hasSubdirs) {
       items[dirItemNames[0]] = dirItems[dirItemNames[0]];
     } else {
-      const subDirNames = Object.keys(dirNode.dirs);
-      const soloNamedDir =
-        subDirNames.length === 1 && noCaseEqual(dirName, subDirNames[0]);
-      if (soloNamedDir) {
-        dirs[subDirNames[0]] = collapseSoloIndexes(
-          dirNode.dirs[subDirNames[0]]
-        );
-      } else {
-        dirs[dirName] = collapseSoloIndexes(dirNode);
-      }
+      dirs[dirName] = collapseSoloIndexes(dirNode);
     }
   });
 
