@@ -1,6 +1,6 @@
 import { hideSingleChildDirs } from './hideSingleChildDirs';
 
-it('hides one root dir', () => {
+it('hides one single-child root dir', () => {
   const tree = {
     dirs: {
       dir0: {
@@ -26,7 +26,7 @@ it('hides one root dir', () => {
   });
 });
 
-it('hide all root dirs', () => {
+it('hide all single-child root dirs', () => {
   const tree = {
     dirs: {
       dir0: {
@@ -59,5 +59,62 @@ it('hide all root dirs', () => {
         name: null
       }
     }
+  });
+});
+
+it('hides nested single-child dir', () => {
+  const tree = {
+    dirs: {
+      src: {
+        dirs: {
+          header: {
+            dirs: {
+              Header: {
+                dirs: {},
+                items: {
+                  mobileHeader: {
+                    path: 'src/header/Header/Header.fixture',
+                    name: 'mobileHeader'
+                  },
+                  desktopHeader: {
+                    path: 'src/header/Header/Header.fixture',
+                    name: 'mobileHeader'
+                  }
+                }
+              }
+            },
+            items: {}
+          },
+          footer: {
+            dirs: {},
+            items: {}
+          }
+        },
+        items: {}
+      }
+    },
+    items: {}
+  };
+  expect(hideSingleChildDirs(tree)).toEqual({
+    dirs: {
+      Header: {
+        dirs: {},
+        items: {
+          mobileHeader: {
+            path: 'src/header/Header/Header.fixture',
+            name: 'mobileHeader'
+          },
+          desktopHeader: {
+            path: 'src/header/Header/Header.fixture',
+            name: 'mobileHeader'
+          }
+        }
+      },
+      footer: {
+        dirs: {},
+        items: {}
+      }
+    },
+    items: {}
   });
 });
