@@ -12,7 +12,9 @@ export default () => {
   const [viewport, setViewport] = useValue('viewport', {
     defaultValue: initialViewport
   });
-  const [scaled, setScaled] = useValue('scaled', { defaultValue: false });
+  const [scaled, setScaled] = useValue<boolean>('scaled', {
+    defaultValue: false
+  });
   const scaleFactor = getViewportScaleFactor(viewport, containerViewport);
   return (
     <Header
