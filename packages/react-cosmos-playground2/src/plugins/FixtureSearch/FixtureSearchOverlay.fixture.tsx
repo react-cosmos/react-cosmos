@@ -34,7 +34,7 @@ export default {
 
 function createFixture(fixtureId: null | FixtureId = null) {
   return () => {
-    const [searchText, setSearchText] = useValue('searchText', {
+    const [searchText, setSearchText] = useValue<string>('searchText', {
       defaultValue: ''
     });
     return (

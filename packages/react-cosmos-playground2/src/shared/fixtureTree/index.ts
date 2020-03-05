@@ -7,8 +7,7 @@ import { hideFixtureSuffix } from './hideFixtureSuffix';
 import { hideSingleChildDirs } from './hideSingleChildDirs';
 import { FixtureNode } from './shared';
 
-// Types can't be re-exported because Babel (see root tsconfig.json)
-export type FixtureNode = FixtureNode;
+export { FixtureNode } from './shared';
 
 export function createFixtureTree({
   fixtures,
