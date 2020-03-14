@@ -14,8 +14,12 @@ function getDecoratorsForFixturePath(
   fixturePath: string
 ) {
   return Object.keys(decoratorsByPath)
-    .filter(dPath => fixturePath.indexOf(`${getParentPath(dPath)}/`) === 0)
+    .filter(dPath => isParentDir(getParentPath(dPath), fixturePath))
     .reduce((acc, dPath) => ({ ...acc, [dPath]: decoratorsByPath[dPath] }), {});
+}
+
+function isParentDir(parentPath: string, filePath: string) {
+  return parentPath === '' || filePath.indexOf(`${parentPath}/`) === 0;
 }
 
 function getParentPath(nestedPath: string) {
