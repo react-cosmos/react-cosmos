@@ -35,9 +35,13 @@ export async function findUserModulePaths({
   const fixturePaths = getMatchingPaths(paths, fixturePatterns);
   const decoratorPaths = getMatchingPaths(paths, getDecoratorPatterns());
 
-  // IDEA: Omit fixture paths that are also decorator paths. Relevant only if
-  // it becomes useful to put decorator files inside fixture dirs.
-  return { fixturePaths, decoratorPaths };
+  // Omit decorators from fixture paths, which happens when decorators are
+  // placed inside fixture dirs.
+  const nonDecoratorFixturePaths = fixturePaths.filter(
+    fixturePath => decoratorPaths.indexOf(fixturePath) === -1
+  );
+
+  return { fixturePaths: nonDecoratorFixturePaths, decoratorPaths };
 }
 
 function getMatchingPaths(paths: string[], patterns: string[]): string[] {
