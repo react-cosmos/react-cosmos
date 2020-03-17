@@ -4,10 +4,10 @@ import slash from 'slash';
 import { findUserModulePaths } from './findUserModulePaths';
 
 // Warning: Renderer config must be serializable!
-export async function generateUserDepsModule(
+export function generateUserDepsModule(
   cosmosConfig: CosmosConfig,
   rendererConfig: {}
-): Promise<string> {
+): string {
   const {
     rootDir,
     fixturesDir,
@@ -15,7 +15,7 @@ export async function generateUserDepsModule(
     globalImports
   } = cosmosConfig;
 
-  const { fixturePaths, decoratorPaths } = await findUserModulePaths({
+  const { fixturePaths, decoratorPaths } = findUserModulePaths({
     rootDir,
     fixturesDir,
     fixtureFileSuffix

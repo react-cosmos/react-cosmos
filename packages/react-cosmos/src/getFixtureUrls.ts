@@ -7,16 +7,16 @@ import {
 import { CosmosConfig } from './config';
 import { RENDERER_FILENAME } from './shared/playgroundHtml';
 import { getUserModules } from './shared/userDeps';
+import { asyncify } from './shared/shared';
 
 type Args = {
   cosmosConfig: CosmosConfig;
   fullScreen?: boolean;
 };
 
-export async function getFixtureUrls({
-  cosmosConfig,
-  fullScreen = false
-}: Args) {
+export const getFixtureUrls = asyncify(getFixtureUrlsSync);
+
+export function getFixtureUrlsSync({ cosmosConfig, fullScreen = false }: Args) {
   const host = getPlaygroundHost(cosmosConfig);
   const fixtureUrls: string[] = [];
 
@@ -24,7 +24,7 @@ export async function getFixtureUrls({
     fixtureUrls.push(createFixtureUrl(host, fixtureId, fullScreen));
   }
 
-  const { fixtureExportsByPath } = await getUserModules(cosmosConfig);
+  const { fixtureExportsByPath } = getUserModules(cosmosConfig);
   const fixtureNamesByPath = getFixtureNamesByPath(fixtureExportsByPath);
   Object.keys(fixtureNamesByPath).forEach(fixturePath => {
     const fixtureNames = fixtureNamesByPath[fixturePath];

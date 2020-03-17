@@ -11,3 +11,10 @@ export function removeLeadingSlash(fromPath: string) {
 export function removeLeadingDot(fromPath: string) {
   return fromPath.indexOf('.') === 0 ? fromPath.slice(1) : fromPath;
 }
+
+export function asyncify<T extends (args: any) => any>(fn: T) {
+  return async (args: Parameters<T>[0]): Promise<ReturnType<T>> => {
+    const result = fn(args);
+    return Promise.resolve(result);
+  };
+}

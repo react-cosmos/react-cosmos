@@ -1,6 +1,5 @@
 import glob from 'glob';
 import micromatch from 'micromatch';
-import promisify from 'util.promisify';
 import {
   getFixturePatterns,
   getDecoratorPatterns,
@@ -18,14 +17,12 @@ type UserModulePaths = {
   decoratorPaths: string[];
 };
 
-const globAsync = promisify(glob);
-
-export async function findUserModulePaths({
+export function findUserModulePaths({
   rootDir,
   fixturesDir,
   fixtureFileSuffix
-}: FindUserModulePathsArgs): Promise<UserModulePaths> {
-  const paths = await globAsync('**/*', {
+}: FindUserModulePathsArgs): UserModulePaths {
+  const paths = glob.sync('**/*', {
     cwd: rootDir,
     absolute: true,
     ignore: getIgnorePatterns()

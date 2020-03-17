@@ -11,6 +11,7 @@ import {
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { CosmosConfig } from './config';
 import { getUserModules } from './shared/userDeps';
+import { asyncify } from './shared/shared';
 
 type Args = {
   cosmosConfig: CosmosConfig;
@@ -21,8 +22,10 @@ type RenderableFixture = {
   getElement: () => React.ReactElement<any>;
 };
 
-export async function getFixtures({ cosmosConfig }: Args) {
-  const { fixtureExportsByPath, decoratorsByPath } = await getUserModules(
+export const getFixtures = asyncify(getFixturesSync);
+
+export function getFixturesSync({ cosmosConfig }: Args) {
+  const { fixtureExportsByPath, decoratorsByPath } = getUserModules(
     cosmosConfig
   );
 

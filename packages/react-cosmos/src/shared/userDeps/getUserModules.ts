@@ -14,12 +14,12 @@ type UserModules = {
   decoratorsByPath: ReactDecoratorsByPath;
 };
 
-export async function getUserModules({
+export function getUserModules({
   rootDir,
   fixturesDir,
   fixtureFileSuffix
-}: CosmosConfig): Promise<UserModules> {
-  const { fixturePaths, decoratorPaths } = await findUserModulePaths({
+}: CosmosConfig): UserModules {
+  const { fixturePaths, decoratorPaths } = findUserModulePaths({
     rootDir,
     fixturesDir,
     fixtureFileSuffix
