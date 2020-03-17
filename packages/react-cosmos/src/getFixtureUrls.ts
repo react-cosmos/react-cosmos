@@ -7,14 +7,13 @@ import {
 import { CosmosConfig } from './config';
 import { RENDERER_FILENAME } from './shared/playgroundHtml';
 import { getUserModules } from './shared/userDeps';
-import { asyncify } from './shared/shared';
 
 type Args = {
   cosmosConfig: CosmosConfig;
   fullScreen?: boolean;
 };
 
-export const getFixtureUrls = asyncify(getFixtureUrlsSync);
+export const getFixtureUrls = async (args: Args) => getFixtureUrlsSync(args);
 
 export function getFixtureUrlsSync({ cosmosConfig, fullScreen = false }: Args) {
   const host = getPlaygroundHost(cosmosConfig);
