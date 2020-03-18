@@ -1,8 +1,8 @@
 import { FSWatcher, watch } from 'chokidar';
 import { writeFile } from 'fs';
 import { debounce } from 'lodash';
-import path from 'path';
 import promisify from 'util.promisify';
+import path from 'path';
 import { CosmosConfig } from '../config';
 import { DevServerPluginArgs } from '../shared/devServer';
 import { NativeRendererConfig } from '../shared/rendererConfig';
@@ -51,10 +51,7 @@ async function generateUserDepsFile(cosmosConfig: CosmosConfig) {
   const { userDepsFilePath, port } = cosmosConfig;
 
   const rendererConfig: NativeRendererConfig = { port };
-  const userDepsModule = await generateUserDepsModule(
-    cosmosConfig,
-    rendererConfig
-  );
+  const userDepsModule = generateUserDepsModule(cosmosConfig, rendererConfig);
   await writeFileAsync(userDepsFilePath, userDepsModule, 'utf8');
 
   const relUserDepsFilePath = path.relative(process.cwd(), userDepsFilePath);

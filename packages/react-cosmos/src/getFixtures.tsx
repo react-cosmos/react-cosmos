@@ -21,8 +21,10 @@ type RenderableFixture = {
   getElement: () => React.ReactElement<any>;
 };
 
-export async function getFixtures({ cosmosConfig }: Args) {
-  const { fixtureExportsByPath, decoratorsByPath } = await getUserModules(
+export const getFixtures = async (args: Args) => getFixturesSync(args);
+
+export function getFixturesSync({ cosmosConfig }: Args) {
+  const { fixtureExportsByPath, decoratorsByPath } = getUserModules(
     cosmosConfig
   );
 

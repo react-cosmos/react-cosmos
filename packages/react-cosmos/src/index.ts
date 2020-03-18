@@ -3,5 +3,5 @@ export {
   detectCosmosConfig,
   getCosmosConfigAtPath
 } from './config';
-export { getFixtures } from './getFixtures';
-export { getFixtureUrls } from './getFixtureUrls';
+export { getFixtures, getFixturesSync } from './getFixtures';
+export { getFixtureUrls, getFixtureUrlsSync } from './getFixtureUrls';
