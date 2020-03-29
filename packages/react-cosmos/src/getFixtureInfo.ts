@@ -7,6 +7,8 @@ import {
 import { CosmosConfig } from './config';
 import { RENDERER_FILENAME } from './shared/playgroundHtml';
 import { getUserModules } from './shared/userDeps';
+import { createFixtureTree } from 'react-cosmos-playground2/src/shared/fixtureTree';
+import { flattenFixtureTree } from 'react-cosmos-playground2/src/plugins/FixtureSearch/flattenFixtureTree';
 
 type Args = {
   cosmosConfig: CosmosConfig;
@@ -14,34 +16,34 @@ type Args = {
 };
 
 type FixtureInfo = {
+  cleanPath: string;
   fixtureId: FixtureId;
   playgroundUrl: string;
   rendererUrl: string;
 };
 
+// TODO: Move createFixtureTree & flattenFixtureTree to shared package
 export function getFixtureInfo({ cosmosConfig }: Args) {
+  const { fixturesDir, fixtureFileSuffix } = cosmosConfig;
   const host = getPlaygroundHost(cosmosConfig);
-  const fixtureInfo: FixtureInfo[] = [];
 
-  function pushFixtureInfo(fixtureId: FixtureId) {
+  const fixtureInfo: FixtureInfo[] = [];
+  const { fixtureExportsByPath } = getUserModules(cosmosConfig);
+  const fixtureNamesByPath = getFixtureNamesByPath(fixtureExportsByPath);
+  const fixtureTree = createFixtureTree({
+    fixtures: fixtureNamesByPath,
+    fixturesDir,
+    fixtureFileSuffix
+  });
+  const fixtureIdsByCleanPath = flattenFixtureTree(fixtureTree);
+  Object.keys(fixtureIdsByCleanPath).forEach(cleanPath => {
+    const fixtureId = fixtureIdsByCleanPath[cleanPath];
     fixtureInfo.push({
+      cleanPath,
       fixtureId,
       playgroundUrl: getRendererUrl(host, fixtureId),
       rendererUrl: getPlaygroundUrl(host, fixtureId)
     });
-  }
-
-  const { fixtureExportsByPath } = getUserModules(cosmosConfig);
-  const fixtureNamesByPath = getFixtureNamesByPath(fixtureExportsByPath);
-  Object.keys(fixtureNamesByPath).forEach(fixturePath => {
-    const fixtureNames = fixtureNamesByPath[fixturePath];
-    if (fixtureNames === null) {
-      pushFixtureInfo({ path: fixturePath, name: null });
-    } else {
-      fixtureNames.forEach(fixtureName => {
-        pushFixtureInfo({ path: fixturePath, name: fixtureName });
-      });
-    }
   });
 
   return fixtureInfo;
@@ -58,5 +60,5 @@ function getRendererUrl(host: string, fixtureId: FixtureId) {
 }
 
 function getPlaygroundHost({ hostname, port }: CosmosConfig) {
-  return `${hostname || 'localhost'}:${port}`;
+  return `http://${hostname || 'localhost'}:${port}`;
 }

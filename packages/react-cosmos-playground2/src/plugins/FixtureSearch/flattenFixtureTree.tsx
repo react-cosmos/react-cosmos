@@ -18,6 +18,7 @@ export function flattenFixtureTree(
   });
 
   Object.keys(fixtureTree.items).forEach(itemName => {
+    // TODO: Allow customization of parents & itemName
     const cleanPath = [...parents, itemName].join(' ');
     fixtureIds[cleanPath] = fixtureTree.items[itemName];
   });
