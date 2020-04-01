@@ -1,7 +1,7 @@
 import resolveFrom from 'resolve-from';
 import webpack from 'webpack';
 import { RENDERER_FILENAME } from '../../../shared/playgroundHtml';
-import { getNodeEnv } from './shared';
+import { getNodeEnv, resolveClientPath } from './shared';
 import { getHtmlWebpackPlugin } from './htmlPlugin';
 
 // This config doesn't have entry and output set up because it's not meant to
@@ -112,6 +112,7 @@ export function getDefaultWebpackConfig(
 
   return {
     ...config,
+    entry: [resolveClientPath('reactDevtoolsHook'), resolveClientPath('index')],
     mode: getNodeEnv(),
     optimization: {
       // Cosmos reads component names at run-time, so it is crucial to not

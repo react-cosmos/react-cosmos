@@ -7,7 +7,6 @@ import {
   getGlobalsPlugin,
   getUserDepsLoaderRule,
   getUserWebpackConfig,
-  resolveClientPath,
   resolveLocalReactDeps
 } from './shared';
 
@@ -21,7 +20,6 @@ export async function getExportWebpackConfig(
   );
   return {
     ...baseWebpackConfig,
-    entry: getEntry(),
     output: getOutput(cosmosConfig),
     module: {
       ...baseWebpackConfig.module,
@@ -30,14 +28,6 @@ export async function getExportWebpackConfig(
     resolve: resolveLocalReactDeps(cosmosConfig, baseWebpackConfig),
     plugins: getPlugins(cosmosConfig, baseWebpackConfig, userWebpack)
   };
-}
-
-function getEntry() {
-  // The React devtools hook needs to be imported before any other module that
-  // might import React
-  const devtoolsHook = resolveClientPath('reactDevtoolsHook');
-  const clientIndex = resolveClientPath('index');
-  return [devtoolsHook, clientIndex];
 }
 
 function getOutput({ exportPath, publicUrl }: CosmosConfig) {
