@@ -1,11 +1,4 @@
-export type TreeNode<Item> = {
-  items: { [itemName: string]: Item };
-  dirs: TreeNodeDirs<Item>;
-};
-
-export type TreeNodeDirs<Item> = {
-  [dirName: string]: TreeNode<Item>;
-};
+import { TreeNode, TreeNodeDirs } from './types';
 
 export function getSortedNodeDirNames(nodeDirs: TreeNodeDirs<any>): string[] {
   return (

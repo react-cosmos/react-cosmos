@@ -1,7 +1,9 @@
 import { isEqual } from 'lodash';
+import {
+  createFixtureTree,
+  FixtureNode
+} from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { createFixtureTree } from '../../shared/fixtureTree';
-import { FixtureNode } from '../../shared/fixtureTree/shared';
 import { TreeExpansion } from '../../shared/ui/TreeView';
 import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';

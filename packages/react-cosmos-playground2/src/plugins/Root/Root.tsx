@@ -1,11 +1,11 @@
 import React from 'react';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
+import { TreeNode } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import { ArraySlot, Slot } from 'react-plugin';
 import styled from 'styled-components';
 import { NavRowSlot } from '../../shared/slots/NavRowSlot';
-import { TreeNode } from '../../shared/tree';
 import { grey32, grey8, white10 } from '../../shared/ui/colors';
 import { useDrag } from '../../shared/ui/useDrag';
 import { ControlPanel } from './ControlPanel';

@@ -1,5 +1,5 @@
 import { FixtureStateValues } from 'react-cosmos-shared2/fixtureState';
-import { TreeNodeDirs } from '../../tree';
+import { TreeNodeDirs } from 'react-cosmos-shared2/fixtureTree';
 import { TreeItemValue, ValueNode } from './shared';
 
 export type ValueNodeDirs = TreeNodeDirs<TreeItemValue>;

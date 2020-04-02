@@ -1,8 +1,8 @@
 import { isEqual } from 'lodash';
 import React from 'react';
+import { FixtureNode } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
-import { FixtureNode } from '../../../shared/fixtureTree';
 import {
   ChevronDownIcon,
   ChevronRightIcon,

@@ -1,3 +1,5 @@
+import { flattenFixtureTree } from 'react-cosmos-playground2/src/plugins/FixtureSearch/flattenFixtureTree';
+import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
 import { getFixtureNamesByPath } from 'react-cosmos-shared2/react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import {
@@ -7,8 +9,6 @@ import {
 import { CosmosConfig } from './config';
 import { RENDERER_FILENAME } from './shared/playgroundHtml';
 import { getUserModules } from './shared/userDeps';
-import { createFixtureTree } from 'react-cosmos-playground2/src/shared/fixtureTree';
-import { flattenFixtureTree } from 'react-cosmos-playground2/src/plugins/FixtureSearch/flattenFixtureTree';
 
 type Args = {
   cosmosConfig: CosmosConfig;

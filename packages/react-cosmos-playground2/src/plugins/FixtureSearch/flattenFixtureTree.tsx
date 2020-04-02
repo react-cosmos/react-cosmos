@@ -1,5 +1,8 @@
+import {
+  getSortedNodeDirNames,
+  TreeNode
+} from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { getSortedNodeDirNames, TreeNode } from '../../shared/tree';
 
 export type FixtureIdsByPath = Record<string, FixtureId>;
 

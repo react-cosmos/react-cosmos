@@ -1,4 +1,4 @@
-import { createFixtureTree } from '../../shared/fixtureTree';
+import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
 import { flattenFixtureTree } from './flattenFixtureTree';
 
 const fixtures = {

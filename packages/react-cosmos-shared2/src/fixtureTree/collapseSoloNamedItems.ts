@@ -1,5 +1,5 @@
 import { forEach } from 'lodash';
-import { FixtureNode, FixtureNodeDirs } from './shared';
+import { FixtureNode, FixtureNodeDirs } from './shared/types';
 
 export function collapseSoloNamedItems(treeNode: FixtureNode): FixtureNode {
   const items = { ...treeNode.items };

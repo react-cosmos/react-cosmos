@@ -1,9 +1,9 @@
 import { filter } from 'fuzzaldrin-plus';
 import { isEqual } from 'lodash';
 import React from 'react';
+import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
-import { createFixtureTree } from '../../shared/fixtureTree';
 import { SearchIcon } from '../../shared/icons';
 import {
   KEY_DOWN,

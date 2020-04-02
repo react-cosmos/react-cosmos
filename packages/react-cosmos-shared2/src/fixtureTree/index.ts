@@ -1,13 +1,14 @@
-import { FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
+import { FixtureNamesByPath } from '../renderer';
 import { collapseDirs } from './collapseDirs';
 import { collapseSoloIndexes } from './collapseSoloIndexes';
 import { collapseSoloNamedItems } from './collapseSoloNamedItems';
 import { createRawFixtureTree } from './createRawFixtureTree';
 import { hideFixtureSuffix } from './hideFixtureSuffix';
 import { hideSingleChildDirs } from './hideSingleChildDirs';
-import { FixtureNode } from './shared';
+import { FixtureNode } from './shared/types';
 
-export { FixtureNode } from './shared';
+export { getSortedNodeDirNames } from './shared/getSortedNodeDirNames';
+export { FixtureNode, TreeNode, TreeNodeDirs } from './shared/types';
 
 export function createFixtureTree({
   fixtures,

@@ -1,4 +1,5 @@
 import React from 'react';
+import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
 import { createPlugin } from 'react-plugin';
 import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
@@ -11,7 +12,6 @@ import { getPanelWidthApi } from './panelWidth';
 import { RootSpec } from './public';
 import { Root } from './Root';
 import { RootContext } from './shared';
-import { createFixtureTree } from '../../shared/fixtureTree';
 
 const { onLoad, plug, register } = createPlugin<RootSpec>({
   name: 'root',
