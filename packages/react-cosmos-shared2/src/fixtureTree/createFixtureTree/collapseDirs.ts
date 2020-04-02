@@ -1,12 +1,12 @@
 import { forEach } from 'lodash';
-import { FixtureNode, FixtureNodeDirs } from '../shared/types';
+import { FixtureNode, FixtureNodes } from '../shared/types';
 
 export function collapseDirs(
   treeNode: FixtureNode,
   collapsedDirName: string
 ): FixtureNode {
   let items = { ...treeNode.items };
-  const dirs: FixtureNodeDirs = {};
+  const dirs: FixtureNodes = {};
 
   forEach(treeNode.dirs, (dirNode, dirName) => {
     if (dirName !== collapsedDirName) {

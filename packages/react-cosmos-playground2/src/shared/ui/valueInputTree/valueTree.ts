@@ -1,14 +1,14 @@
 import { FixtureStateValues } from 'react-cosmos-shared2/fixtureState';
-import { TreeNodeDirs } from 'react-cosmos-shared2/fixtureTree';
+import { TreeNodes } from 'react-cosmos-shared2/fixtureTree';
 import { TreeItemValue, ValueNode } from './shared';
 
-export type ValueNodeDirs = TreeNodeDirs<TreeItemValue>;
+export type ValueNodes = TreeNodes<TreeItemValue>;
 
 export function getFixtureStateValueTree(
   values: FixtureStateValues
 ): ValueNode {
   const items: Record<string, TreeItemValue> = {};
-  const dirs: ValueNodeDirs = {};
+  const dirs: ValueNodes = {};
 
   Object.keys(values).forEach(key => {
     const value = values[key];

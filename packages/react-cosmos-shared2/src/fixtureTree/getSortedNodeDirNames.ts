@@ -1,6 +1,6 @@
-import { TreeNode, TreeNodeDirs } from './shared/types';
+import { TreeNode, TreeNodes } from './shared/types';
 
-export function getSortedNodeDirNames(nodeDirs: TreeNodeDirs<any>): string[] {
+export function getSortedNodeDirNames(nodeDirs: TreeNodes<any>): string[] {
   return (
     Object.keys(nodeDirs)
       .slice()
