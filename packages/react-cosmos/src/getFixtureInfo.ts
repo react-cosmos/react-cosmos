@@ -1,3 +1,4 @@
+import path from 'path';
 import {
   createFixtureTree,
   flattenFixtureTree
@@ -18,14 +19,14 @@ type Args = {
 };
 
 type FixtureInfo = {
-  cleanPath: string;
-  fixtureId: FixtureId;
+  cleanPath: string[];
+  filePath: string;
   playgroundUrl: string;
   rendererUrl: string;
 };
 
 export function getFixtureInfo({ cosmosConfig }: Args) {
-  const { fixturesDir, fixtureFileSuffix } = cosmosConfig;
+  const { fixturesDir, fixtureFileSuffix, rootDir } = cosmosConfig;
   const host = getPlaygroundHost(cosmosConfig);
 
   const fixtureInfo: FixtureInfo[] = [];
@@ -36,12 +37,11 @@ export function getFixtureInfo({ cosmosConfig }: Args) {
     fixturesDir,
     fixtureFileSuffix
   });
-  const fixtureIdsByCleanPath = flattenFixtureTree(fixtureTree);
-  Object.keys(fixtureIdsByCleanPath).forEach(cleanPath => {
-    const fixtureId = fixtureIdsByCleanPath[cleanPath];
+  const flatFixtureTree = flattenFixtureTree(fixtureTree);
+  flatFixtureTree.forEach(({ fixtureId, cleanPath }) => {
     fixtureInfo.push({
       cleanPath,
-      fixtureId,
+      filePath: path.join(rootDir, fixtureId.path),
       playgroundUrl: getRendererUrl(host, fixtureId),
       rendererUrl: getPlaygroundUrl(host, fixtureId)
     });

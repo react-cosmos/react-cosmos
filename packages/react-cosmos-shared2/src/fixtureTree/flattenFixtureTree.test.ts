@@ -14,16 +14,22 @@ const fixtureTree = createFixtureTree({
 });
 
 it('flattens fixture tree', () => {
-  expect(flattenFixtureTree(fixtureTree)).toEqual({
-    fixture1: { path: 'src/__fixtures__/fixture1.ts', name: null },
-    fixture2: { path: 'src/__fixtures__/fixture2.ts', name: null },
-    'foobar fixture3a': {
-      path: 'src/foobar/index.fixture.ts',
-      name: 'fixture3a'
+  expect(flattenFixtureTree(fixtureTree)).toEqual([
+    {
+      fixtureId: { path: 'src/foobar/index.fixture.ts', name: 'fixture3a' },
+      cleanPath: ['foobar', 'fixture3a']
     },
-    'foobar fixture3b': {
-      path: 'src/foobar/index.fixture.ts',
-      name: 'fixture3b'
+    {
+      fixtureId: { path: 'src/foobar/index.fixture.ts', name: 'fixture3b' },
+      cleanPath: ['foobar', 'fixture3b']
+    },
+    {
+      fixtureId: { path: 'src/__fixtures__/fixture1.ts', name: null },
+      cleanPath: ['fixture1']
+    },
+    {
+      fixtureId: { path: 'src/__fixtures__/fixture2.ts', name: null },
+      cleanPath: ['fixture2']
     }
-  });
+  ]);
 });

@@ -2,27 +2,26 @@ import { FixtureId } from '../renderer';
 import { getSortedNodeDirNames } from './getSortedNodeDirNames';
 import { TreeNode } from './shared/types';
 
-export type FixtureIdsByPath = Record<string, FixtureId>;
+export type FlatFixtureTreeItem = { fixtureId: FixtureId; cleanPath: string[] };
+export type FlatFixtureTree = FlatFixtureTreeItem[];
 
 export function flattenFixtureTree(
-  fixtureTree: TreeNode<FixtureId>,
+  treeNode: TreeNode<FixtureId>,
   parents: string[] = []
-): FixtureIdsByPath {
-  const fixtureIds: FixtureIdsByPath = {};
+): FlatFixtureTree {
+  const flatFixtureTree: FlatFixtureTree = [];
 
-  getSortedNodeDirNames(fixtureTree.dirs).forEach(dirName => {
-    const dir = fixtureTree.dirs[dirName];
-    const dirFlatItems = flattenFixtureTree(dir, [...parents, dirName]);
-    Object.keys(dirFlatItems).forEach(dirItemCleanPath => {
-      fixtureIds[dirItemCleanPath] = dirFlatItems[dirItemCleanPath];
+  getSortedNodeDirNames(treeNode.dirs).forEach(dirName => {
+    const dirNode = treeNode.dirs[dirName];
+    flatFixtureTree.push(...flattenFixtureTree(dirNode, [...parents, dirName]));
+  });
+
+  Object.keys(treeNode.items).forEach(itemName => {
+    flatFixtureTree.push({
+      fixtureId: treeNode.items[itemName],
+      cleanPath: [...parents, itemName]
     });
   });
 
-  Object.keys(fixtureTree.items).forEach(itemName => {
-    // TODO: Allow customization of parents & itemName
-    const cleanPath = [...parents, itemName].join(' ');
-    fixtureIds[cleanPath] = fixtureTree.items[itemName];
-  });
-
-  return fixtureIds;
+  return flatFixtureTree;
 }
