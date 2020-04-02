@@ -1,4 +1,4 @@
-import { TreeNode, TreeNodeDirs } from './types';
+import { TreeNode, TreeNodeDirs } from './shared/types';
 
 export function getSortedNodeDirNames(nodeDirs: TreeNodeDirs<any>): string[] {
   return (

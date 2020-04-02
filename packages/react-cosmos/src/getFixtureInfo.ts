@@ -1,5 +1,7 @@
-import { flattenFixtureTree } from 'react-cosmos-playground2/src/plugins/FixtureSearch/flattenFixtureTree';
-import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
+import {
+  createFixtureTree,
+  flattenFixtureTree
+} from 'react-cosmos-shared2/fixtureTree';
 import { getFixtureNamesByPath } from 'react-cosmos-shared2/react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import {
@@ -22,7 +24,6 @@ type FixtureInfo = {
   rendererUrl: string;
 };
 
-// TODO: Move createFixtureTree & flattenFixtureTree to shared package
 export function getFixtureInfo({ cosmosConfig }: Args) {
   const { fixturesDir, fixtureFileSuffix } = cosmosConfig;
   const host = getPlaygroundHost(cosmosConfig);

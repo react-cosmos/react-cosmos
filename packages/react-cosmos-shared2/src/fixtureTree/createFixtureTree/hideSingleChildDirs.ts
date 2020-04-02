@@ -1,6 +1,6 @@
 import { forEach } from 'lodash';
-import { FixtureId } from '../renderer';
-import { FixtureNode, TreeNodeDirs } from './shared/types';
+import { FixtureId } from '../../renderer';
+import { FixtureNode, TreeNodeDirs } from '../shared/types';
 
 export function hideSingleChildDirs(rootNode: FixtureNode): FixtureNode {
   const { items, dirs } = rootNode;

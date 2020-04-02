@@ -1,5 +1,5 @@
 import { mapKeys } from 'lodash';
-import { FixtureNode } from './shared/types';
+import { FixtureNode } from '../shared/types';
 
 export function hideFixtureSuffix(
   treeNode: FixtureNode,

@@ -1,7 +1,11 @@
 import { filter } from 'fuzzaldrin-plus';
 import { isEqual } from 'lodash';
 import React from 'react';
-import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
+import {
+  createFixtureTree,
+  FixtureIdsByPath,
+  flattenFixtureTree
+} from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
 import { SearchIcon } from '../../shared/icons';
@@ -23,7 +27,6 @@ import {
   grey64
 } from '../../shared/ui/colors';
 import { FixtureSearchResult } from './FixtureSearchResult';
-import { FixtureIdsByPath, flattenFixtureTree } from './flattenFixtureTree';
 
 type Props = {
   searchText: string;
