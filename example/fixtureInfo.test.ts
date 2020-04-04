@@ -8,6 +8,7 @@ it('returns fixture info', async () => {
     {
       filePath: expect.stringContaining('/example/Counter/index.fixture.tsx'),
       fileName: 'index',
+      getElement: expect.any(Function),
       name: 'default',
       playgroundUrl:
         'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22default%22%7D',
@@ -18,6 +19,7 @@ it('returns fixture info', async () => {
     {
       filePath: expect.stringContaining('/example/Counter/index.fixture.tsx'),
       fileName: 'index',
+      getElement: expect.any(Function),
       name: 'small number',
       playgroundUrl:
         'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22small%20number%22%7D',
@@ -28,6 +30,7 @@ it('returns fixture info', async () => {
     {
       filePath: expect.stringContaining('/example/Counter/index.fixture.tsx'),
       fileName: 'index',
+      getElement: expect.any(Function),
       name: 'large number',
       playgroundUrl:
         'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22large%20number%22%7D',
@@ -38,6 +41,7 @@ it('returns fixture info', async () => {
     {
       filePath: expect.stringContaining('/example/__fixtures__/Hello World.ts'),
       fileName: 'Hello World',
+      getElement: expect.any(Function),
       name: null,
       playgroundUrl:
         'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22__fixtures__%2FHello%20World.ts%22%2C%22name%22%3Anull%7D',
@@ -50,6 +54,7 @@ it('returns fixture info', async () => {
         '/example/__fixtures__/Props Playground.tsx'
       ),
       fileName: 'Props Playground',
+      getElement: expect.any(Function),
       name: null,
       playgroundUrl:
         'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22__fixtures__%2FProps%20Playground.tsx%22%2C%22name%22%3Anull%7D',
@@ -62,6 +67,7 @@ it('returns fixture info', async () => {
         '/example/__fixtures__/Values Playground.tsx'
       ),
       fileName: 'Values Playground',
+      getElement: expect.any(Function),
       name: null,
       playgroundUrl:
         'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22__fixtures__%2FValues%20Playground.tsx%22%2C%22name%22%3Anull%7D',
@@ -71,6 +77,7 @@ it('returns fixture info', async () => {
     },
     {
       fileName: 'index',
+      getElement: expect.any(Function),
       filePath: expect.stringContaining(
         '/example/CounterButton/index.fixture.tsx'
       ),
@@ -83,6 +90,7 @@ it('returns fixture info', async () => {
     },
     {
       fileName: 'index',
+      getElement: expect.any(Function),
       filePath: expect.stringContaining(
         '/example/NestedDecorators/index.fixture.tsx'
       ),
@@ -95,6 +103,7 @@ it('returns fixture info', async () => {
     },
     {
       fileName: 'index',
+      getElement: expect.any(Function),
       filePath: expect.stringContaining(
         '/example/WelcomeMessage/index.fixture.tsx'
       ),

@@ -1,11 +1,19 @@
 import path from 'path';
+import { getDecoratedFixtureElement } from 'react-cosmos-shared2/FixtureLoader';
 import {
   createFixtureTree,
   flattenFixtureTree,
   removeFixtureNameExtension,
   removeFixtureNameSuffix
 } from 'react-cosmos-shared2/fixtureTree';
-import { getFixtureNamesByPath } from 'react-cosmos-shared2/react';
+import {
+  getFixtureNamesByPath,
+  getSortedDecoratorsForFixturePath,
+  ReactDecorator,
+  ReactDecoratorsByPath,
+  ReactFixture,
+  ReactFixtureMap
+} from 'react-cosmos-shared2/react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import {
   stringifyPlaygroundUrlQuery,
@@ -23,6 +31,7 @@ type Args = {
 type FixtureApi = {
   fileName: string;
   filePath: string;
+  getElement: () => React.ReactElement<any>;
   name: string | null;
   playgroundUrl: string;
   rendererUrl: string;
@@ -34,7 +43,9 @@ export function getFixtureInfo({ cosmosConfig }: Args) {
   const host = getPlaygroundHost(cosmosConfig);
 
   const fixtureInfo: FixtureApi[] = [];
-  const { fixtureExportsByPath } = getUserModules(cosmosConfig);
+  const { fixtureExportsByPath, decoratorsByPath } = getUserModules(
+    cosmosConfig
+  );
   const fixtureNamesByPath = getFixtureNamesByPath(fixtureExportsByPath);
   const fixtureTree = createFixtureTree({
     fixtures: fixtureNamesByPath,
@@ -48,9 +59,19 @@ export function getFixtureInfo({ cosmosConfig }: Args) {
       removeFixtureNameExtension(rawFileName),
       fixtureFileSuffix
     );
+    const fixtureExport = fixtureExportsByPath[fixtureId.path];
+    const fixture: ReactFixture =
+      fixtureId.name === null
+        ? fixtureExport
+        : (fixtureExport as ReactFixtureMap)[fixtureId.name];
     fixtureInfo.push({
       fileName: cleanFileName,
       filePath: path.join(rootDir, fixtureId.path),
+      getElement: createFixtureElementGetter(
+        fixture,
+        fixtureId.path,
+        decoratorsByPath
+      ),
       name: fixtureId.name,
       playgroundUrl: getRendererUrl(host, fixtureId),
       rendererUrl: getPlaygroundUrl(host, fixtureId),
@@ -73,4 +94,21 @@ function getRendererUrl(host: string, fixtureId: FixtureId) {
 
 function getPlaygroundHost({ hostname, port }: CosmosConfig) {
   return `http://${hostname || 'localhost'}:${port}`;
+}
+
+function createFixtureElementGetter(
+  fixture: ReactFixture,
+  fixturePath: string,
+  decoratorsByPath: ReactDecoratorsByPath
+): () => React.ReactElement<any> {
+  const decorators: ReactDecorator[] = getSortedDecoratorsForFixturePath(
+    fixturePath,
+    decoratorsByPath
+  );
+  return () =>
+    getDecoratedFixtureElement(fixture, decorators, {
+      fixtureState: {},
+      setFixtureState: () => {},
+      onErrorReset: () => {}
+    });
 }
