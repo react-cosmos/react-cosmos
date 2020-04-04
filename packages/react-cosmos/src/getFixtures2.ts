@@ -38,7 +38,7 @@ type FixtureApi = {
   treePath: string[];
 };
 
-export function getFixtureInfo({ cosmosConfig }: Args) {
+export function getFixtures2({ cosmosConfig }: Args) {
   const { fixturesDir, fixtureFileSuffix, rootDir } = cosmosConfig;
   const host = getPlaygroundHost(cosmosConfig);
 
