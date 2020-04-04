@@ -21,7 +21,7 @@ export function hideFixtureSuffix(
   return { items, dirs };
 }
 
-function removeFixtureNameSuffix(
+export function removeFixtureNameSuffix(
   fixtureNameWithoutExtension: string,
   suffix: string
 ) {

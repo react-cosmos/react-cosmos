@@ -1,7 +1,9 @@
 import path from 'path';
 import {
   createFixtureTree,
-  flattenFixtureTree
+  flattenFixtureTree,
+  removeFixtureNameExtension,
+  removeFixtureNameSuffix
 } from 'react-cosmos-shared2/fixtureTree';
 import { getFixtureNamesByPath } from 'react-cosmos-shared2/react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
@@ -18,18 +20,20 @@ type Args = {
   nameFormatter?: (fixtureId: FixtureId) => string;
 };
 
-type FixtureInfo = {
-  cleanPath: string[];
+type FixtureApi = {
+  fileName: string;
   filePath: string;
+  name: string | null;
   playgroundUrl: string;
   rendererUrl: string;
+  treePath: string[];
 };
 
 export function getFixtureInfo({ cosmosConfig }: Args) {
   const { fixturesDir, fixtureFileSuffix, rootDir } = cosmosConfig;
   const host = getPlaygroundHost(cosmosConfig);
 
-  const fixtureInfo: FixtureInfo[] = [];
+  const fixtureInfo: FixtureApi[] = [];
   const { fixtureExportsByPath } = getUserModules(cosmosConfig);
   const fixtureNamesByPath = getFixtureNamesByPath(fixtureExportsByPath);
   const fixtureTree = createFixtureTree({
@@ -39,11 +43,18 @@ export function getFixtureInfo({ cosmosConfig }: Args) {
   });
   const flatFixtureTree = flattenFixtureTree(fixtureTree);
   flatFixtureTree.forEach(({ fixtureId, cleanPath }) => {
+    const rawFileName = fixtureId.path.split('/').pop()!;
+    const cleanFileName = removeFixtureNameSuffix(
+      removeFixtureNameExtension(rawFileName),
+      fixtureFileSuffix
+    );
     fixtureInfo.push({
-      cleanPath,
+      fileName: cleanFileName,
       filePath: path.join(rootDir, fixtureId.path),
+      name: fixtureId.name,
       playgroundUrl: getRendererUrl(host, fixtureId),
-      rendererUrl: getPlaygroundUrl(host, fixtureId)
+      rendererUrl: getPlaygroundUrl(host, fixtureId),
+      treePath: cleanPath
     });
   });
 
