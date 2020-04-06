@@ -1,5 +1,5 @@
 import { forEach } from 'lodash';
-import { FixtureNode, FixtureNodeDirs } from './shared';
+import { FixtureNode, FixtureNodes } from '../shared/types';
 
 export function collapseSoloIndexes(treeNode: FixtureNode): FixtureNode {
   const containsSoloIndexDir =
@@ -15,7 +15,7 @@ export function collapseSoloIndexes(treeNode: FixtureNode): FixtureNode {
   }
 
   const items = { ...treeNode.items };
-  const dirs: FixtureNodeDirs = {};
+  const dirs: FixtureNodes = {};
 
   forEach(treeNode.dirs, (dirNode, dirName) => {
     const dirItems = dirNode.items;

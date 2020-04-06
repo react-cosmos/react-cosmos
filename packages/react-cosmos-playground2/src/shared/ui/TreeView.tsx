@@ -1,6 +1,9 @@
 import { map } from 'lodash';
 import React from 'react';
-import { getSortedNodeDirNames, TreeNode } from '../tree';
+import {
+  getSortedNodeDirNames,
+  TreeNode
+} from 'react-cosmos-shared2/fixtureTree';
 
 export type TreeExpansion = {
   [nodePath: string]: boolean;

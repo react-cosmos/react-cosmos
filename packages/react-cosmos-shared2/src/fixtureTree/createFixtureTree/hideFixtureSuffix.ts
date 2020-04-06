@@ -1,5 +1,5 @@
 import { mapKeys } from 'lodash';
-import { FixtureNode } from './shared';
+import { FixtureNode } from '../shared/types';
 
 export function hideFixtureSuffix(
   treeNode: FixtureNode,
@@ -21,7 +21,7 @@ export function hideFixtureSuffix(
   return { items, dirs };
 }
 
-function removeFixtureNameSuffix(
+export function removeFixtureNameSuffix(
   fixtureNameWithoutExtension: string,
   suffix: string
 ) {

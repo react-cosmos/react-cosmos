@@ -1,9 +1,12 @@
 import { filter } from 'fuzzaldrin-plus';
 import { isEqual } from 'lodash';
 import React from 'react';
+import {
+  createFixtureTree,
+  flattenFixtureTree
+} from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
-import { createFixtureTree } from '../../shared/fixtureTree';
 import { SearchIcon } from '../../shared/icons';
 import {
   KEY_DOWN,
@@ -23,7 +26,6 @@ import {
   grey64
 } from '../../shared/ui/colors';
 import { FixtureSearchResult } from './FixtureSearchResult';
-import { FixtureIdsByPath, flattenFixtureTree } from './flattenFixtureTree';
 
 type Props = {
   searchText: string;
@@ -38,6 +40,8 @@ type Props = {
 
 type ActiveFixturePath = null | string;
 
+type FixtureIdsByPath = Record<string, FixtureId>;
+
 export function FixtureSearchOverlay({
   searchText,
   fixturesDir,
@@ -49,13 +53,16 @@ export function FixtureSearchOverlay({
   onSelect
 }: Props) {
   // Flattened fixture IDs are memoized purely to minimize computation
-  const fixtureIds = React.useMemo(() => {
+  const fixtureIds = React.useMemo<FixtureIdsByPath>(() => {
     const fixtureTree = createFixtureTree({
       fixtures,
       fixturesDir,
       fixtureFileSuffix
     });
-    return flattenFixtureTree(fixtureTree);
+    const flatFixtureTree = flattenFixtureTree(fixtureTree);
+    return flatFixtureTree.reduce((acc, { fixtureId, cleanPath }) => {
+      return { ...acc, [cleanPath.join(' ')]: fixtureId };
+    }, {});
   }, [fixtures, fixturesDir, fixtureFileSuffix]);
 
   const onInputChange = React.useCallback(

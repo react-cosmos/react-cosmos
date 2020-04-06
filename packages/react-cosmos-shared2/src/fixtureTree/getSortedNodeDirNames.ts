@@ -1,13 +1,6 @@
-export type TreeNode<Item> = {
-  items: { [itemName: string]: Item };
-  dirs: TreeNodeDirs<Item>;
-};
+import { TreeNode, TreeNodes } from './shared/types';
 
-export type TreeNodeDirs<Item> = {
-  [dirName: string]: TreeNode<Item>;
-};
-
-export function getSortedNodeDirNames(nodeDirs: TreeNodeDirs<any>): string[] {
+export function getSortedNodeDirNames(nodeDirs: TreeNodes<any>): string[] {
   return (
     Object.keys(nodeDirs)
       .slice()
