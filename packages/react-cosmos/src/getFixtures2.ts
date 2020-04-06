@@ -29,11 +29,12 @@ type Args = {
 };
 
 type FixtureApi = {
+  absoluteFilePath: string;
   fileName: string;
-  filePath: string;
   getElement: () => React.ReactElement<any>;
   name: string | null;
   playgroundUrl: string;
+  relativeFilePath: string;
   rendererUrl: string;
   treePath: string[];
 };
@@ -65,14 +66,15 @@ export function getFixtures2({ cosmosConfig }: Args) {
         ? fixtureExport
         : (fixtureExport as ReactFixtureMap)[fixtureId.name];
     fixtureInfo.push({
+      absoluteFilePath: path.join(rootDir, fixtureId.path),
       fileName: cleanFileName,
-      filePath: path.join(rootDir, fixtureId.path),
       getElement: createFixtureElementGetter(
         fixture,
         fixtureId.path,
         decoratorsByPath
       ),
       name: fixtureId.name,
+      relativeFilePath: fixtureId.path,
       playgroundUrl: getRendererUrl(host, fixtureId),
       rendererUrl: getPlaygroundUrl(host, fixtureId),
       treePath: cleanPath
