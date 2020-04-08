@@ -3,8 +3,8 @@ import { getCosmosConfigAtPath, getFixtures2 } from 'react-cosmos';
 const cosmosConfig = getCosmosConfigAtPath(require.resolve('./cosmos.config'));
 
 it('returns fixture info', async () => {
-  const rendererUrls = getFixtures2({ cosmosConfig });
-  expect(rendererUrls).toEqual([
+  const fixtures = getFixtures2({ cosmosConfig });
+  expect(fixtures).toEqual([
     {
       absoluteFilePath: `${__dirname}/Counter/index.fixture.tsx`,
       fileName: 'index',
