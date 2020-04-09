@@ -28,7 +28,7 @@ type Args = {
   nameFormatter?: (fixtureId: FixtureId) => string;
 };
 
-type FixtureApi = {
+export type FixtureApi = {
   absoluteFilePath: string;
   fileName: string;
   getElement: () => React.ReactElement<any>;
