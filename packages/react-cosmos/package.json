@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos",
-  "version": "5.2.0-alpha.1",
+  "version": "5.2.0-alpha.2",
   "description": "CLI for running React Cosmos inside webpack-powered apps",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos",
   "license": "MIT",
@@ -19,8 +19,8 @@
     "micromatch": "^4.0.2",
     "open": "^7.0.0",
     "pkg-up": "^3.1.0",
-    "react-cosmos-playground2": "^5.2.0-alpha.0",
-    "react-cosmos-shared2": "^5.2.0-alpha.0",
+    "react-cosmos-playground2": "^5.2.0-alpha.2",
+    "react-cosmos-shared2": "^5.2.0-alpha.2",
     "react-error-overlay": "^6.0.4",
     "regenerator-runtime": "^0.13.3",
     "resolve-from": "^5.0.0",
