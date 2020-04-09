@@ -1,1 +1,1 @@
-export * from './dist/fixtureTree';
+module.exports = require('./dist/fixtureTree');
