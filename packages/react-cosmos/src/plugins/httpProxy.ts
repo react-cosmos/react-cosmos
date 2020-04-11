@@ -1,5 +1,5 @@
+import { createProxyMiddleware } from 'http-proxy-middleware';
 import { CosmosConfig } from '../config/shared';
-import httpProxyMiddleware from 'http-proxy-middleware';
 import { DevServerPluginArgs } from '../shared/devServer';
 
 type HttpProxyConfig = {
@@ -18,9 +18,12 @@ export function httpProxy({ cosmosConfig, expressApp }: DevServerPluginArgs) {
   Object.keys(httpProxyConfig).forEach(context => {
     const config = httpProxyConfig[context];
     if (typeof config === 'string') {
-      expressApp.use(context, httpProxyMiddleware(context, { target: config }));
+      expressApp.use(
+        context,
+        createProxyMiddleware(context, { target: config })
+      );
     } else if (typeof config === 'object') {
-      expressApp.use(context, httpProxyMiddleware(context, config));
+      expressApp.use(context, createProxyMiddleware(context, config));
     }
   });
 }
