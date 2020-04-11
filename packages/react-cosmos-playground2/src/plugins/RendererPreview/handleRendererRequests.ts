@@ -76,6 +76,8 @@ function iframeLocationChanged(iframeWindow: Window, iframeSrc: string) {
     const locationWithoutHash = href.split('#')[0];
     return (
       locationWithoutHash !== iframeSrc &&
+      // Some static servers strip .html extensions automatically
+      // https://github.com/zeit/serve-handler/tree/ce35fcd4e1c67356348f4735eed88fb084af9b43#cleanurls-booleanarray
       locationWithoutHash !== iframeSrc.replace(/\.html$/, '')
     );
   } catch (err) {
