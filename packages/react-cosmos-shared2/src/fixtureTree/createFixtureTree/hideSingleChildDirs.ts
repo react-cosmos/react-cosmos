@@ -1,6 +1,4 @@
-import { forEach } from 'lodash';
-import { FixtureId } from '../../renderer';
-import { FixtureNode, TreeNodes } from '../shared/types';
+import { FixtureNode } from '../shared/types';
 
 export function hideSingleChildDirs(rootNode: FixtureNode): FixtureNode {
   const { items, dirs } = rootNode;
@@ -10,17 +8,7 @@ export function hideSingleChildDirs(rootNode: FixtureNode): FixtureNode {
     return hideSingleChildDirs(dirs[dirNames[0]]);
   }
 
-  const newDirs: TreeNodes<FixtureId> = {};
-  forEach(dirs, (dir, dirName) => {
-    const subDirNames = Object.keys(dir.dirs);
-    if (containsSingleDir(dir) && !newDirs[subDirNames[0]]) {
-      newDirs[subDirNames[0]] = hideSingleChildDirs(dir.dirs[subDirNames[0]]);
-    } else {
-      newDirs[dirName] = hideSingleChildDirs(dir);
-    }
-  });
-
-  return { items, dirs: newDirs };
+  return { items, dirs };
 }
 
 function containsSingleDir({ items, dirs }: FixtureNode) {
