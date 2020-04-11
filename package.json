@@ -74,7 +74,7 @@
     "@typescript-eslint/parser": "^2.27.0",
     "async-until": "^2.0.0",
     "babel-loader": "^8.1.0",
-    "chalk": "^4.0.0",
+    "chalk": "3.0.0",
     "codecov": "^3.6.5",
     "core-js": "^3.6.5",
     "cpy": "^8.1.0",
