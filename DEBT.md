@@ -13,6 +13,7 @@ Exceptions are logging in Cosmos are ad-hoc and minimalistic. `throw new Error` 
 In general we keep dependencies up to date. The following packages, however, need to be pinned to a specific version:
 
 - `@types/express@4.17.1` because newer versions [are broken](https://github.com/DefinitelyTyped/DefinitelyTyped/issues/42812).
+- `fs-extra@8.1.0` because 9.x is no longer compatible with Node 8.
 - `query-string@5.1.1` because 6.x is no longer compatible with IE11.
 - `react-element-to-jsx-string@14.1.0` because `tsc` breaks when newer version is installed.
 - `socket.io@2.2` and `socket.io-client@2.2` because [2.3 upgraded to `debug@4`](https://github.com/socketio/socket.io-client/issues/1328#issuecomment-536525472), which is no longer compatible with IE11.
