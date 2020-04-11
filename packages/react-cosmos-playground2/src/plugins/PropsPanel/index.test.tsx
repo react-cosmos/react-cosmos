@@ -1,4 +1,5 @@
-import { fireEvent, render, wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import {
   FixtureState,
@@ -62,7 +63,7 @@ it('updates string value', async () => {
   const input = getByLabelText('myStrValue');
 
   fireEvent.change(input, { target: { value: 'bar' } });
-  await wait(() =>
+  await waitFor(() =>
     expect(fixtureState.props[0].values).toEqual({
       myStrValue: { type: 'primitive', value: 'bar' }
     })
@@ -81,7 +82,7 @@ it('updates boolean value', async () => {
   const button = getByText('false');
 
   fireEvent.click(button);
-  await wait(() =>
+  await waitFor(() =>
     expect(fixtureState.props[0].values).toEqual({
       myBoolValue: { type: 'primitive', value: true }
     })
@@ -158,7 +159,7 @@ it('updates number input nested in object', async () => {
   const input = getByLabelText('myNumValue');
 
   fireEvent.change(input, { target: { value: 6789 } });
-  await wait(() =>
+  await waitFor(() =>
     expect(fixtureState.props[0].values).toEqual({
       myObjValue: {
         type: 'object',

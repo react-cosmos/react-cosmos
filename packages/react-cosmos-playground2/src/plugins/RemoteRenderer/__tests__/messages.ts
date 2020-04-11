@@ -1,5 +1,5 @@
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
 import {
   SelectFixtureRequest,
   RendererReadyResponse
@@ -39,7 +39,7 @@ it('sends renderer request to message handler', async () => {
   };
   getRendererCoreContext().emit('request', selectFixtureReq);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(postRendererRequest).toBeCalledWith(
       expect.any(Object),
       selectFixtureReq
@@ -63,7 +63,7 @@ it('sends renderer response to renderer core', async () => {
   };
   getMessageHandlerContext().emit('rendererResponse', rendererReadyRes);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(receiveResponse).toBeCalledWith(expect.any(Object), rendererReadyRes)
   );
 });
@@ -74,7 +74,7 @@ it('posts "pingRenderers" renderer request on load', async () => {
 
   loadPlugins();
 
-  await wait(() =>
+  await waitFor(() =>
     expect(postRendererRequest).toBeCalledWith(expect.any(Object), {
       type: 'pingRenderers'
     })

@@ -1,7 +1,7 @@
 // NOTE: Mock files need to imported before modules that use the mocked APIs
 import { mockSocketIo } from './testHelpers/mockSocketIo';
 
-import { wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
 import {
   BuildErrorMessage,
   SERVER_MESSAGE_EVENT_NAME
@@ -40,7 +40,7 @@ it('emits renderer request externally', async () => {
   messageHandler.postRendererRequest(selectFixtureReq);
 
   await mockSocketIo(async ({ emit }) => {
-    await wait(() =>
+    await waitFor(() =>
       expect(emit).toBeCalledWith(RENDERER_MESSAGE_EVENT_NAME, selectFixtureReq)
     );
   });
@@ -62,7 +62,7 @@ it('emits renderer response internally', async () => {
     const { rendererResponse } = onMessageHandler();
     fakeEvent(RENDERER_MESSAGE_EVENT_NAME, rendererReadyRes);
 
-    await wait(() =>
+    await waitFor(() =>
       expect(rendererResponse).toBeCalledWith(
         expect.any(Object),
         rendererReadyRes
@@ -83,7 +83,7 @@ it('emits server message internally', async () => {
     const { serverMessage } = onMessageHandler();
     fakeEvent(SERVER_MESSAGE_EVENT_NAME, buildErrorMsg);
 
-    await wait(() =>
+    await waitFor(() =>
       expect(serverMessage).toBeCalledWith(expect.any(Object), buildErrorMsg)
     );
   });

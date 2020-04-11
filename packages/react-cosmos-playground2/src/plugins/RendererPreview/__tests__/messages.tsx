@@ -1,5 +1,6 @@
 import React from 'react';
-import { wait, render } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
+import { render } from '@testing-library/react';
 import { loadPlugins, Slot, resetPlugins } from 'react-plugin';
 import {
   mockCore,
@@ -34,7 +35,7 @@ it('posts renderer request message to iframe', async () => {
   getRendererCoreContext().emit('request', selectFixtureMsg);
 
   await mockIframeMessage(getIframe(renderer), async ({ onMessage }) => {
-    await wait(() =>
+    await waitFor(() =>
       // NOTE: toBeCalledWith doesn't work because trying to compare the
       // message event leads to out of memory errors
       expect(onMessage.mock.calls[0][0].data).toEqual(selectFixtureMsg)
@@ -50,7 +51,7 @@ it('sends renderer response message to renderer core', async () => {
   loadTestPlugins();
   window.postMessage(rendererReadyMsg, '*');
 
-  await wait(() =>
+  await waitFor(() =>
     expect(receiveResponse).toBeCalledWith(expect.any(Object), rendererReadyMsg)
   );
 });
@@ -64,7 +65,7 @@ it('makes connected renderer the primary renderer', async () => {
   window.postMessage(rendererReadyMsg, '*');
 
   const { rendererId } = rendererReadyMsg.payload;
-  await wait(() =>
+  await waitFor(() =>
     expect(selectPrimaryRenderer).toBeCalledWith(expect.any(Object), rendererId)
   );
 });

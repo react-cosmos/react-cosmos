@@ -1,7 +1,7 @@
-import { wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { getUrlParams, resetUrl } from '../../../testHelpers/url';
 import { getRouterMethods, onRouter } from '../../../testHelpers/pluginMocks';
+import { getUrlParams, resetUrl } from '../../../testHelpers/url';
 import { register } from '..';
 
 afterEach(() => {
@@ -17,7 +17,7 @@ it('updates selected fixture ID', async () => {
   const router = getRouterMethods();
   router.selectFixture(fixtureId);
 
-  await wait(() => expect(router.getSelectedFixtureId()).toBe(fixtureId));
+  await waitFor(() => expect(router.getSelectedFixtureId()).toBe(fixtureId));
 });
 
 it('sets URL params', async () => {
@@ -25,7 +25,7 @@ it('sets URL params', async () => {
   loadPlugins();
   getRouterMethods().selectFixture(fixtureId);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getUrlParams()).toEqual({ fixtureId: JSON.stringify(fixtureId) })
   );
 });
@@ -37,7 +37,7 @@ it('emits "fixtureChange" event', async () => {
   loadPlugins();
   getRouterMethods().selectFixture(fixtureId);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(fixtureChange).toBeCalledWith(expect.any(Object), fixtureId)
   );
 });

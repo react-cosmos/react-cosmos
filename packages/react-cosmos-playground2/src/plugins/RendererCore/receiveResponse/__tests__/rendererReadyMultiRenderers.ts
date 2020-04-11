@@ -1,4 +1,4 @@
-import { wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
@@ -32,7 +32,7 @@ function loadTestPlugins() {
 it('returns connected renderer IDs', async () => {
   registerTestPlugins();
   loadTestPlugins();
-  await wait(() =>
+  await waitFor(() =>
     expect(getRendererCoreMethods().getConnectedRendererIds()).toEqual([
       'mockRendererId1',
       'mockRendererId2'
@@ -43,7 +43,7 @@ it('returns connected renderer IDs', async () => {
 it('returns primary renderer ID', async () => {
   registerTestPlugins();
   loadTestPlugins();
-  await wait(() =>
+  await waitFor(() =>
     expect(getRendererCoreMethods().getPrimaryRendererId()).toEqual(
       'mockRendererId1'
     )
@@ -53,7 +53,7 @@ it('returns primary renderer ID', async () => {
 it('returns fixtures', async () => {
   registerTestPlugins();
   loadTestPlugins();
-  await wait(() =>
+  await waitFor(() =>
     expect(getRendererCoreMethods().getFixtures()).toEqual(fixtures)
   );
 });
@@ -61,7 +61,7 @@ it('returns fixtures', async () => {
 it('returns fixture state', async () => {
   registerTestPlugins();
   loadTestPlugins();
-  await wait(() =>
+  await waitFor(() =>
     expect(getRendererCoreMethods().getFixtureState()).toEqual(fixtureState)
   );
 });
@@ -70,7 +70,7 @@ it('resets fixtures state when primary renderer re-connects', async () => {
   registerTestPlugins();
   loadTestPlugins();
   mockRendererReady('mockRendererId1', fixtures);
-  await wait(() =>
+  await waitFor(() =>
     expect(getRendererCoreMethods().getFixtureState()).toEqual({})
   );
 });

@@ -2357,7 +2357,7 @@
     querystring "^0.2.0"
     strip-ansi "^3.0.0"
 
-"@testing-library/dom@^7.1.0":
+"@testing-library/dom@^7.1.0", "@testing-library/dom@^7.2.1":
   version "7.2.1"
   resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.2.1.tgz#bb3b31d669bbe0c4939dadd95d69caa3c1d0b372"
   integrity sha512-xIGoHlQ2ZiEL1dJIFKNmLDypzYF+4OJTTASRctl/aoIDaS5y/pRVHRigoqvPUV11mdJoR71IIgi/6UviMgyz4g==

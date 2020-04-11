@@ -1,5 +1,6 @@
 import React from 'react';
-import { wait, render } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
+import { render } from '@testing-library/react';
 import { loadPlugins, Slot, resetPlugins } from 'react-plugin';
 import {
   mockCore,
@@ -38,7 +39,7 @@ it('sets "error" runtime status', async () => {
 
   window.postMessage(rendererErrorMsg, '*');
 
-  await wait(() => expect(getRuntimeStatus()).toBe('error'));
+  await waitFor(() => expect(getRuntimeStatus()).toBe('error'));
 });
 
 it('sets "connected" runtime status', async () => {
@@ -48,7 +49,7 @@ it('sets "connected" runtime status', async () => {
   window.postMessage(rendererErrorMsg, '*');
   window.postMessage(rendererReadyMsg, '*');
 
-  await wait(() => expect(getRuntimeStatus()).toBe('connected'));
+  await waitFor(() => expect(getRuntimeStatus()).toBe('connected'));
 });
 
 it('keeps "connected" runtime status once set', async () => {
@@ -58,5 +59,5 @@ it('keeps "connected" runtime status once set', async () => {
   window.postMessage(rendererReadyMsg, '*');
   window.postMessage(rendererErrorMsg, '*');
 
-  await wait(() => expect(getRuntimeStatus()).toBe('connected'));
+  await waitFor(() => expect(getRuntimeStatus()).toBe('connected'));
 });

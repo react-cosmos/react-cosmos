@@ -1,4 +1,4 @@
-import { wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { mockRendererReady, mockFixtureStateChange } from '../../testHelpers';
 import { register } from '../..';
@@ -34,7 +34,7 @@ it('posts "selectFixture" renderer request', async () => {
   loadTestPlugins();
   mockRendererReady('mockRendererId', fixtures);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(request).toBeCalledWith(expect.any(Object), {
       type: 'selectFixture',
       payload: {
@@ -54,7 +54,7 @@ it('posts "selectFixture" renderer request with fixture state', async () => {
   mockFixtureStateChange('mockRendererId1', fixtureId, fixtureState);
   mockRendererReady('mockRendererId2', fixtures);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(request).toBeCalledWith(expect.any(Object), {
       type: 'selectFixture',
       payload: {

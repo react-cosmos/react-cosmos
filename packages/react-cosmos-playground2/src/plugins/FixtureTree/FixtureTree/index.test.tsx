@@ -1,10 +1,6 @@
+import { waitFor } from '@testing-library/dom';
 import React from 'react';
-import {
-  render,
-  waitForElement,
-  wait,
-  fireEvent
-} from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { FixtureTree } from '.';
 
 const fixturesDir = 'fixtures';
@@ -28,11 +24,11 @@ it('hides fixture under non-expanded dir', async () => {
       setTreeExpansion={jest.fn()}
     />
   );
-  await wait(() => expect(queryByText('drei')).toBeNull());
+  await waitFor(() => expect(queryByText('drei')).toBeNull());
 });
 
 it('shows fixture under expanded dir', async () => {
-  const { getByText } = render(
+  const { findByText } = render(
     <FixtureTree
       fixturesDir={fixturesDir}
       fixtureFileSuffix={fixtureFileSuffix}
@@ -43,7 +39,7 @@ it('shows fixture under expanded dir', async () => {
       setTreeExpansion={jest.fn()}
     />
   );
-  await waitForElement(() => getByText('drei'));
+  await findByText('drei');
 });
 
 it('expands hidden dir on click', async () => {

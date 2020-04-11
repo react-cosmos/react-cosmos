@@ -1,4 +1,4 @@
-import { wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
@@ -31,7 +31,7 @@ it('sets primary renderer ID in state', async () => {
   registerTestPlugins();
   loadTestPlugins();
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getRendererCoreMethods().getPrimaryRendererId()).toEqual(
       'mockRendererId2'
     )

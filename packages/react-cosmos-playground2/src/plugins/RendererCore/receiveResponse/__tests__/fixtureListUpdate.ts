@@ -1,4 +1,4 @@
-import { wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { RendererId } from 'react-cosmos-shared2/renderer';
 import {
@@ -45,7 +45,7 @@ it('updates fixtures in renderer state', async () => {
   loadTestPlugins();
   mockFixtureListUpdateResponse('mockRendererId1');
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getRendererCoreMethods().getFixtures()).toEqual({
       ...fixtures,
       'vier.js': null
@@ -58,7 +58,7 @@ it('ignores update from secondary renderer', async () => {
   loadTestPlugins();
   mockFixtureListUpdateResponse('mockRendererId2');
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getRendererCoreMethods().getFixtures()).toEqual(fixtures)
   );
 });

@@ -1,4 +1,4 @@
-import { wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   mockNotifications,
@@ -26,7 +26,7 @@ it('notifies HMR fail', async () => {
   loadPlugins();
   emitRendererCoreResponse();
 
-  await wait(() =>
+  await waitFor(() =>
     expect(pushTimedNotification).toBeCalledWith(expect.any(Object), {
       id: 'renderer-hmr-fail',
       type: 'error',

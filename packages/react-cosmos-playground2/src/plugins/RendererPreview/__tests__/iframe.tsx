@@ -1,10 +1,5 @@
-import {
-  act,
-  fireEvent,
-  render,
-  RenderResult,
-  wait
-} from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
+import { act, fireEvent, render, RenderResult } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { register } from '..';
@@ -55,7 +50,7 @@ it('renders iframe with src set to renderer web url', async () => {
   registerTestPlugins();
   const renderer = loadTestPlugins();
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getIframe(renderer).src).toBe('http://localhost:5000/_renderer.html')
   );
 });

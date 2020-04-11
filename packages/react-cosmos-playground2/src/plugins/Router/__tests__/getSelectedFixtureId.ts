@@ -1,6 +1,6 @@
-import { wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { resetUrl, pushUrlParams } from '../../../testHelpers/url';
+import { pushUrlParams, resetUrl } from '../../../testHelpers/url';
 import { getRouterMethods } from '../../../testHelpers/pluginMocks';
 import { register } from '..';
 
@@ -17,7 +17,7 @@ it('returns fixtureId', async () => {
   pushUrlParams({ fixtureId: JSON.stringify(fixtureId) });
   loadPlugins();
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getRouterMethods().getSelectedFixtureId()).toEqual(fixtureId)
   );
 });
@@ -26,7 +26,7 @@ it('returns null', async () => {
   register();
   loadPlugins();
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getRouterMethods().getSelectedFixtureId()).toBe(null)
   );
 });

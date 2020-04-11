@@ -1,4 +1,4 @@
-import { wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
@@ -38,7 +38,7 @@ it('resets fixture state', async () => {
   loadTestPlugins();
   emitRouterFixtureChange();
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getRendererCoreMethods().getFixtureState()).toEqual({})
   );
 });
@@ -50,7 +50,7 @@ it('posts "unselectFixture" renderer requests', async () => {
   loadTestPlugins();
   emitRouterFixtureChange();
 
-  await wait(() =>
+  await waitFor(() =>
     expect(request).toBeCalledWith(expect.any(Object), {
       type: 'unselectFixture',
       payload: {
@@ -59,7 +59,7 @@ it('posts "unselectFixture" renderer requests', async () => {
     })
   );
 
-  await wait(() =>
+  await waitFor(() =>
     expect(request).toBeCalledWith(expect.any(Object), {
       type: 'unselectFixture',
       payload: {

@@ -1,4 +1,4 @@
-import { wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   mockRouter,
@@ -30,7 +30,7 @@ it('emits response event', async () => {
   loadPlugins();
   getRendererCoreMethods().receiveResponse(rendererReadyMsg);
 
-  await wait(() =>
+  await waitFor(() =>
     expect(response).toBeCalledWith(expect.any(Object), rendererReadyMsg)
   );
 });

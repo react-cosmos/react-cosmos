@@ -1,4 +1,4 @@
-import { wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
@@ -43,7 +43,7 @@ it('posts "selectFixture" renderer requests', async () => {
   loadTestPlugins();
   emitRouterFixtureChange();
 
-  await wait(() =>
+  await waitFor(() =>
     expect(request).toBeCalledWith(expect.any(Object), {
       type: 'selectFixture',
       payload: {
@@ -54,7 +54,7 @@ it('posts "selectFixture" renderer requests', async () => {
     })
   );
 
-  await wait(() =>
+  await waitFor(() =>
     expect(request).toBeCalledWith(expect.any(Object), {
       type: 'selectFixture',
       payload: {
