@@ -1,4 +1,4 @@
-import { wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { RendererId } from 'react-cosmos-shared2/renderer';
 import {
@@ -45,7 +45,7 @@ it('sets fixtureState in renderer state', async () => {
   loadTestPlugins();
   mockFixtureStateChangeResponse('mockRendererId1');
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getRendererCoreMethods().getFixtureState()).toEqual(fixtureState)
   );
 });
@@ -55,7 +55,7 @@ it('ignores update from secondary renderer', async () => {
   loadTestPlugins();
   mockFixtureStateChangeResponse('mockRendererId2');
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getRendererCoreMethods().getFixtureState()).toEqual({})
   );
 });
@@ -67,7 +67,7 @@ it('posts "setFixtureState" request to secondary renderer', async () => {
   loadTestPlugins();
   mockFixtureStateChangeResponse('mockRendererId1');
 
-  await wait(() =>
+  await waitFor(() =>
     expect(request).toBeCalledWith(expect.any(Object), {
       type: 'setFixtureState',
       payload: {

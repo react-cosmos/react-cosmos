@@ -1,4 +1,5 @@
-import { fireEvent, render, RenderResult, wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
+import { fireEvent, render, RenderResult } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '.';
@@ -49,7 +50,7 @@ it(`shows error notification when dev server is off`, async () => {
   await loadTestPlugins();
   registeredCommands.editFixture();
 
-  await wait(() =>
+  await waitFor(() =>
     expect(pushTimedNotification).toBeCalledWith(expect.any(Object), {
       id: expect.any(String),
       type: 'error',
@@ -91,7 +92,7 @@ it('shows 400 error notification', async () => {
     const renderer = await loadTestPlugins();
     clickButton(renderer);
 
-    await wait(() =>
+    await waitFor(() =>
       expect(pushTimedNotification).toBeCalledWith(expect.any(Object), {
         id: expect.any(String),
         type: 'error',
@@ -111,7 +112,7 @@ it('shows 404 error notification', async () => {
     const renderer = await loadTestPlugins();
     clickButton(renderer);
 
-    await wait(() =>
+    await waitFor(() =>
       expect(pushTimedNotification).toBeCalledWith(expect.any(Object), {
         id: expect.any(String),
         type: 'error',
@@ -131,7 +132,7 @@ it('shows 500 error notification', async () => {
     const renderer = await loadTestPlugins();
     clickButton(renderer);
 
-    await wait(() =>
+    await waitFor(() =>
       expect(pushTimedNotification).toBeCalledWith(expect.any(Object), {
         id: expect.any(String),
         type: 'error',

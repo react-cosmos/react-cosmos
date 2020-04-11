@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitForElement } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { Slot, loadPlugins, resetPlugins } from 'react-plugin';
 import { mockPlug } from '../../../testHelpers/plugin';
 import {
@@ -36,7 +36,7 @@ function registerTestPlugins() {
 async function loadTestPlugins() {
   loadPlugins();
   const utils = render(<Slot name="root" />);
-  await waitForElement(() => utils.getByTestId('root'));
+  await utils.findByTestId('root');
   return utils;
 }
 

@@ -1,4 +1,4 @@
-import { wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import {
@@ -52,7 +52,7 @@ it('sets fixture state in plugin state', async () => {
   loadTestPlugins();
   mockSetFixtureStateCall();
 
-  await wait(() =>
+  await waitFor(() =>
     expect(getRendererCoreMethods().getFixtureState()).toEqual(
       expectedFixtureState
     )
@@ -66,7 +66,7 @@ it('posts "setFixtureState" renderer requests', async () => {
   loadTestPlugins();
   mockSetFixtureStateCall();
 
-  await wait(() =>
+  await waitFor(() =>
     expect(request).toBeCalledWith(expect.any(Object), {
       type: 'setFixtureState',
       payload: {
@@ -77,7 +77,7 @@ it('posts "setFixtureState" renderer requests', async () => {
     })
   );
 
-  await wait(() =>
+  await waitFor(() =>
     expect(request).toBeCalledWith(expect.any(Object), {
       type: 'setFixtureState',
       payload: {

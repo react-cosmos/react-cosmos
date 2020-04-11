@@ -1,4 +1,4 @@
-import { wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getUrlParams,
@@ -26,7 +26,7 @@ it('updates selected fixture ID', async () => {
   const router = getRouterMethods();
   router.unselectFixture();
 
-  await wait(() => expect(router.getSelectedFixtureId()).toEqual(null));
+  await waitFor(() => expect(router.getSelectedFixtureId()).toEqual(null));
 });
 
 it('sets URL params', async () => {
@@ -34,7 +34,7 @@ it('sets URL params', async () => {
   loadTestPlugins();
   getRouterMethods().unselectFixture();
 
-  await wait(() => expect(getUrlParams()).toEqual({}));
+  await waitFor(() => expect(getUrlParams()).toEqual({}));
 });
 
 it('emits "fixtureChange" event', async () => {
@@ -44,7 +44,7 @@ it('emits "fixtureChange" event', async () => {
   loadTestPlugins();
   getRouterMethods().unselectFixture();
 
-  await wait(() =>
+  await waitFor(() =>
     expect(fixtureChange).toBeCalledWith(expect.any(Object), null)
   );
 });

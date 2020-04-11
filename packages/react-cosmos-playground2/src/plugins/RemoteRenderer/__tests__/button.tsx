@@ -1,6 +1,7 @@
 import React from 'react';
 import { loadPlugins, ArraySlot, resetPlugins } from 'react-plugin';
-import { render, fireEvent, wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
+import { render, fireEvent } from '@testing-library/react';
 import {
   mockCore,
   mockMessageHandler,
@@ -68,7 +69,7 @@ it('notifies copy error on button click', async () => {
 
   // Clipboard API isn't available in jsdom so we only test the error path
   fireEvent.click(button);
-  await wait(() =>
+  await waitFor(() =>
     expect(pushTimedNotification).toBeCalledWith(expect.any(Object), {
       id: 'renderer-url-copy',
       type: 'error',

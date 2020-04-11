@@ -1,4 +1,4 @@
-import { fireEvent, render, waitForElement } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '.';
@@ -42,10 +42,10 @@ it('renders fixture list from renderer state', async () => {
     getFixtures: () => fixtures
   });
 
-  const { getByText } = await loadTestPlugins();
-  await waitForElement(() => getByText(/ein/i));
-  await waitForElement(() => getByText(/zwei/i));
-  await waitForElement(() => getByText(/drei/i));
+  const { findByText } = await loadTestPlugins();
+  await findByText(/ein/i);
+  await findByText(/zwei/i);
+  await findByText(/drei/i);
 });
 
 it('sends fixtureId to router on fixture click', async () => {

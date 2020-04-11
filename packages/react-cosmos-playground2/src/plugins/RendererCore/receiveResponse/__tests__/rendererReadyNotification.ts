@@ -1,4 +1,4 @@
-import { wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { mockRendererReady } from '../../testHelpers';
 import { register } from '../..';
@@ -23,7 +23,7 @@ it('notifies renderer connection', async () => {
   loadPlugins();
   mockRendererReady('mockRendererId1', {});
 
-  await wait(() =>
+  await waitFor(() =>
     expect(pushTimedNotification).toBeCalledWith(expect.any(Object), {
       id: 'renderer-connect-mockRendererId1',
       type: 'info',
