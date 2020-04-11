@@ -88,7 +88,7 @@
     "eslint-plugin-react-hooks": "^2.3.0",
     "glob": "^7.1.6",
     "http-server": "^0.12.1",
-    "jest": "^25.1.0",
+    "jest": "^25.3.0",
     "jest-styled-components": "^6.3.4",
     "lerna": "^3.20.2",
     "localforage": "^1.7.3",
