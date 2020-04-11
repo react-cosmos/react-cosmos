@@ -103,6 +103,6 @@
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "whatwg-fetch": "^3.0.0",
-    "yargs": "^15.1.0"
+    "yargs": "^15.3.1"
   }
 }
