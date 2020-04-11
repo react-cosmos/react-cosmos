@@ -125,4 +125,14 @@ if (nodeVersion >= 10) {
 
     expect(pushStickyNotification).not.toBeCalled();
   });
+
+  it('does not show notification when renderer iframe .html extension is stripped', async () => {
+    registerTestPlugins();
+    const { pushStickyNotification } = mockNotifications();
+    const renderer = loadTestPlugins();
+
+    await mockRendererLocation(renderer, `/_renderer`);
+
+    expect(pushStickyNotification).not.toBeCalled();
+  });
 }

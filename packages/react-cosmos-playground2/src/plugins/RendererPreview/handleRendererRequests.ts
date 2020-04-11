@@ -74,8 +74,12 @@ function iframeLocationChanged(iframeWindow: Window, iframeSrc: string) {
   try {
     const { href } = iframeWindow.location;
     const locationWithoutHash = href.split('#')[0];
-    const locationCompareStart = locationWithoutHash.length - iframeSrc.length;
-    return locationWithoutHash.substring(locationCompareStart) !== iframeSrc;
+    return (
+      locationWithoutHash !== iframeSrc &&
+      // Some static servers strip .html extensions automatically
+      // https://github.com/zeit/serve-handler/tree/ce35fcd4e1c67356348f4735eed88fb084af9b43#cleanurls-booleanarray
+      locationWithoutHash !== iframeSrc.replace(/\.html$/, '')
+    );
   } catch (err) {
     // An exception is thrown when trying to access the location of a
     // cross-origin frame, which signals that the iframe location host changed.
