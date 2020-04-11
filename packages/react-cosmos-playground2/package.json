@@ -10,9 +10,9 @@
     "html-webpack-plugin": "^3.2.0",
     "localforage": "^1.7.3",
     "lodash": "^4.17.15",
-    "react": "16.12.0",
+    "react": "16.13.1",
     "react-cosmos-shared2": "^5.2.0-alpha.3",
-    "react-dom": "16.12.0",
+    "react-dom": "16.13.1",
     "react-plugin": "^2.0.0-alpha.8",
     "socket.io-client": "2.2.0",
     "styled-components": "^4.4.1"
