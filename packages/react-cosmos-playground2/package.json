@@ -13,8 +13,9 @@
     "react": "16.13.1",
     "react-cosmos-shared2": "^5.2.0-alpha.3",
     "react-dom": "16.13.1",
+    "react-is": "^16.13.1",
     "react-plugin": "^2.0.0-alpha.8",
     "socket.io-client": "2.2.0",
-    "styled-components": "^4.4.1"
+    "styled-components": "^5.1.0"
   }
 }
