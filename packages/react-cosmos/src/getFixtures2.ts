@@ -74,9 +74,9 @@ export function getFixtures2({ cosmosConfig }: Args) {
         decoratorsByPath
       ),
       name: fixtureId.name,
+      playgroundUrl: getPlaygroundUrl(host, fixtureId),
       relativeFilePath: fixtureId.path,
-      playgroundUrl: getRendererUrl(host, fixtureId),
-      rendererUrl: getPlaygroundUrl(host, fixtureId),
+      rendererUrl: getRendererUrl(host, fixtureId),
       treePath: cleanPath
     });
   });
