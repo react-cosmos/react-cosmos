@@ -1,14 +1,14 @@
 {
   "private": true,
   "name": "react-cosmos-website",
-  "version": "5.2.0-alpha.4",
+  "version": "5.2.0-alpha.5",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/website",
   "license": "MIT",
   "scripts": {
     "start": "cosmos"
   },
   "devDependencies": {
-    "react-cosmos": "^5.2.0-alpha.4",
+    "react-cosmos": "^5.2.0-alpha.5",
     "react-cosmos-playground2": "^5.2.0-alpha.4"
   }
 }
