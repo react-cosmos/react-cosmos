@@ -1,8 +1,7 @@
 import React from 'react';
-import { fetchGithub } from '../shared/gitHub';
+import { getGitHubStars } from '../shared/gitHub';
 
-const DEFAULT_STARS = 5600;
-const TIMEOUT_TS = 500;
+const TIMEOUT_TS = 1000;
 
 export function useGitHubStars() {
   const [stars, setStars] = React.useState<null | number>(null);
@@ -11,16 +10,20 @@ export function useGitHubStars() {
     let mounted = true;
 
     const timeoutId = setTimeout(() => {
-      if (mounted) setStars(DEFAULT_STARS);
+      if (mounted) setStars(getDefaultGhStars());
     }, TIMEOUT_TS);
 
-    fetchGithub(`repos/react-cosmos/react-cosmos`).then(async res => {
-      const parsedRes = await res.json();
-      if (mounted && !isNaN(parsedRes.stargazers_count)) {
-        clearTimeout(timeoutId);
-        setStars(Number(parsedRes.stargazers_count));
-      }
-    });
+    try {
+      getGitHubStars().then(ghStars => {
+        if (mounted) {
+          clearTimeout(timeoutId);
+          setStars(ghStars);
+        }
+      });
+    } catch (err) {
+      console.log('Failed to fetch GH stars:');
+      console.log(err);
+    }
 
     return () => {
       clearTimeout(timeoutId);
@@ -29,4 +32,9 @@ export function useGitHubStars() {
   }, []);
 
   return stars;
+}
+
+function getDefaultGhStars(): number {
+  // @ts-ignore
+  return typeof GH_STARS === 'number' ? GH_STARS : 5600;
 }

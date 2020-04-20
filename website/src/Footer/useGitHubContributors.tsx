@@ -1,8 +1,7 @@
 import React from 'react';
-import { fetchGithub } from '../shared/gitHub';
+import { getGitHubContributors } from '../shared/gitHub';
 
-const DEFAULT_CONTRIBUTORS = 74;
-const TIMEOUT_TS = 500;
+const TIMEOUT_TS = 1000;
 
 export function useGitHubContributors() {
   const [contributors, setContributors] = React.useState<null | number>(null);
@@ -11,18 +10,20 @@ export function useGitHubContributors() {
     let mounted = true;
 
     const timeoutId = setTimeout(() => {
-      if (mounted) setContributors(DEFAULT_CONTRIBUTORS);
+      if (mounted) setContributors(getDefaultGhContributors());
     }, TIMEOUT_TS);
 
-    fetchGithub(
-      `repos/react-cosmos/react-cosmos/contributors?per_page=1000`
-    ).then(async res => {
-      const parsedRes = await res.json();
-      if (mounted && Array.isArray(parsedRes)) {
-        clearTimeout(timeoutId);
-        setContributors(parsedRes.length);
-      }
-    });
+    try {
+      getGitHubContributors().then(ghContributors => {
+        if (mounted) {
+          clearTimeout(timeoutId);
+          setContributors(ghContributors);
+        }
+      });
+    } catch (err) {
+      console.log('Failed to fetch GH contributors:');
+      console.log(err);
+    }
 
     return () => {
       clearTimeout(timeoutId);
@@ -31,4 +32,9 @@ export function useGitHubContributors() {
   }, []);
 
   return contributors;
+}
+
+function getDefaultGhContributors(): number {
+  // @ts-ignore
+  return typeof GH_CONTRIBUTORS === 'number' ? GH_CONTRIBUTORS : 74;
 }
