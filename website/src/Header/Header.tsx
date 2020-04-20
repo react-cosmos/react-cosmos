@@ -150,7 +150,7 @@ const LinkSeparator = styled.span`
 
 const RightSide = styled.div`
   flex-shrink: 0;
-  width: 64px;
+  max-width: 64px;
   height: 56px;
   margin: 0 8px 0 0;
   display: flex;
@@ -164,6 +164,8 @@ const RightSide = styled.div`
 `;
 
 const ReleasesLink = styled(ExternalLink)`
+  align-self: flex-end;
+  max-width: 64px;
   background: rgba(10, 46, 70, 0.08);
   color: inherit;
   border-radius: 3px;
@@ -172,6 +174,9 @@ const ReleasesLink = styled(ExternalLink)`
   text-decoration: none;
   font-weight: 500;
   line-height: 28px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   :hover {
     text-decoration: underline;

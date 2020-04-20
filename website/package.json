@@ -8,6 +8,7 @@
     "start": "cosmos"
   },
   "devDependencies": {
+    "isomorphic-fetch": "^2.2.1",
     "react-cosmos": "^5.2.0-alpha.6",
     "react-cosmos-playground2": "^5.2.0-alpha.6"
   }

@@ -1,6 +1,11 @@
 const path = require('path');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+require('isomorphic-fetch');
+const {
+  getGitHubStars,
+  getGitHubContributors,
+} = require('./src/shared/gitHub');
 
 const src = path.join(__dirname, 'src');
 const dist = path.join(__dirname, 'dist');
@@ -8,33 +13,41 @@ const dist = path.join(__dirname, 'dist');
 const env = process.env.NODE_ENV || 'development';
 const { version } = require('../lerna.json');
 
-module.exports = {
-  mode: env,
-  entry: [path.join(src, 'index')],
-  output: {
-    path: dist,
-    filename: 'index.js',
-  },
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js'],
-  },
-  module: {
-    rules: [
-      { test: /\.tsx?$/, include: [src], loader: 'babel-loader' },
-      { test: /\.css$/, include: src, loader: 'style-loader!css-loader' },
+module.exports = async () => {
+  const ghStars = await getGitHubStars();
+  const ghContributors = await getGitHubContributors();
+  const config = {
+    mode: env,
+    entry: [path.join(src, 'index')],
+    output: {
+      path: dist,
+      filename: 'index.js',
+    },
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js'],
+    },
+    module: {
+      rules: [
+        { test: /\.tsx?$/, include: [src], loader: 'babel-loader' },
+        { test: /\.css$/, include: src, loader: 'style-loader!css-loader' },
+      ],
+    },
+    plugins: [
+      new webpack.DefinePlugin({
+        RC_VERSION: JSON.stringify(version),
+        GH_STARS: JSON.stringify(ghStars),
+        GH_CONTRIBUTORS: JSON.stringify(ghContributors),
+      }),
     ],
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-      RC_VERSION: JSON.stringify(version),
-    }),
-  ],
-};
+  };
 
-if (env === 'development') {
-  module.exports.plugins.push(
-    new HtmlWebpackPlugin({
-      template: path.join(src, 'index.dev.html'),
-    })
-  );
-}
+  if (env === 'development') {
+    config.plugins.push(
+      new HtmlWebpackPlugin({
+        template: path.join(src, 'index.dev.html'),
+      })
+    );
+  }
+
+  return config;
+};
