@@ -19,7 +19,7 @@ export const Viewport: React.FC<Props> = function Viewport({
   const { setFixtureState } = React.useContext(FixtureContext);
 
   React.useEffect(() => {
-    setFixtureState((fixtureState) => ({
+    setFixtureState(fixtureState => ({
       ...fixtureState,
       viewport: { width, height },
     }));

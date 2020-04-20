@@ -28,7 +28,7 @@ function createFixtures({
     });
     return (
       <>
-        <button onClick={() => setCount((prevCount) => prevCount + 1)}>
+        <button onClick={() => setCount(prevCount => prevCount + 1)}>
           {count}
         </button>
         <button onClick={() => setToggled(!toggled)}>{String(toggled)}</button>

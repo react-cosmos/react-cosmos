@@ -29,14 +29,14 @@ const { onLoad, register } = createPlugin<CoreSpec>({
 
 export { register };
 
-onLoad((pluginContext) =>
-  registerShortcuts((command) => runCommand(pluginContext, command))
+onLoad(pluginContext =>
+  registerShortcuts(command => runCommand(pluginContext, command))
 );
 
 function registerCommands(context: CoreContext, commands: Commands) {
-  context.setState((prevState) => {
+  context.setState(prevState => {
     const existingCommandNames = Object.keys(prevState.commands);
-    Object.keys(commands).forEach((commandName) => {
+    Object.keys(commands).forEach(commandName => {
       if (existingCommandNames.indexOf(commandName) !== -1)
         throw new Error(`Command "${commandName} already registered`);
     });
@@ -46,7 +46,7 @@ function registerCommands(context: CoreContext, commands: Commands) {
     };
   });
   return () =>
-    context.setState((prevState) => ({
+    context.setState(prevState => ({
       ...prevState,
       commands: omit(prevState.commands, ...Object.keys(commands)),
     }));

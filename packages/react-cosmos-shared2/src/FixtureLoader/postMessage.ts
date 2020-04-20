@@ -19,7 +19,7 @@ export function createPostMessageConnect(): RendererConnect {
       }
       window.addEventListener('message', handleMessage, false);
 
-      const removeShortcuts = registerShortcuts((command) => {
+      const removeShortcuts = registerShortcuts(command => {
         postMessage({ type: 'playgroundCommand', payload: { command } });
       });
 

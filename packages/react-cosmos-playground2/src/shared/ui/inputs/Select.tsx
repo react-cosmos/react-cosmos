@@ -27,7 +27,7 @@ export function Select<Option extends BaseOption>({
 
   const onInputChange = React.useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
-      const option = options.find((o) => o.value === e.target.value);
+      const option = options.find(o => o.value === e.target.value);
       if (!option) {
         throw new Error(`Select value doesn't match any option`);
       }
@@ -36,7 +36,7 @@ export function Select<Option extends BaseOption>({
     [onChange, options]
   );
 
-  const selectedOption = options.find((o) => o.value === value);
+  const selectedOption = options.find(o => o.value === value);
   const selectedLabel = selectedOption ? selectedOption.label : CUSTOM_LABEL;
   return (
     <Container focused={focused} bg={grey32}>
@@ -79,8 +79,8 @@ type StyledSelectProps = {
 const Container = styled.div<StyledSelectProps>`
   position: relative;
   border-radius: 3px;
-  background: ${(props) => props.bg};
-  box-shadow: ${(props) => (props.focused ? `0 0 0.5px 1px ${blue}` : 'none')};
+  background: ${props => props.bg};
+  box-shadow: ${props => (props.focused ? `0 0 0.5px 1px ${blue}` : 'none')};
 `;
 
 const VisibleButton = styled.div`

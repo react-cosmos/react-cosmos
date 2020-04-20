@@ -48,7 +48,7 @@ testFixtureLoader(
     });
     // Do not remove this line: It captures a regression regarding an error
     // that occurred when component state was read asynchronously
-    await new Promise((res) => setTimeout(res, 500));
+    await new Promise(res => setTimeout(res, 500));
     await fixtureStateChange({
       rendererId,
       fixtureId,

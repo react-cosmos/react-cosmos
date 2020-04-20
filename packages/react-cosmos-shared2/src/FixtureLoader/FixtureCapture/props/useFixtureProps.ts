@@ -28,7 +28,7 @@ export function useFixtureProps(
     const elementId = { decoratorId, elPath };
     const fsProps = findFixtureStateProps(fixtureState, elementId);
 
-    return setElementAtPath(extendedFixture, elPath, (element) => {
+    return setElementAtPath(extendedFixture, elPath, element => {
       if (!fsProps || componentTypeChanged(fsProps.componentName)) {
         return {
           ...element,
@@ -92,5 +92,5 @@ function getElRenderKey(elPath: string, renderKey: number) {
 }
 
 function hasChildElPaths(elPaths: string[], elPath: string) {
-  return elPaths.some((p) => p.indexOf(getChildrenPath(elPath)) === 0);
+  return elPaths.some(p => p.indexOf(getChildrenPath(elPath)) === 0);
 }

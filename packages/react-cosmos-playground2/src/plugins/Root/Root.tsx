@@ -157,7 +157,7 @@ const Container = styled.div.attrs({ 'data-testid': 'root' })<ContainerProps>`
   right: 0;
   display: flex;
   background: ${grey32};
-  cursor: ${(props) => (props.dragging ? 'col-resize' : 'default')};
+  cursor: ${props => (props.dragging ? 'col-resize' : 'default')};
 `;
 
 const Draggable = styled.div`

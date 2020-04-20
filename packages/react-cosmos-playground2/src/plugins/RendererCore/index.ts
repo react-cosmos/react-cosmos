@@ -57,5 +57,5 @@ function selectPrimaryRenderer(
   { setState }: RendererCoreContext,
   primaryRendererId: RendererId
 ) {
-  setState((prevState) => ({ ...prevState, primaryRendererId }));
+  setState(prevState => ({ ...prevState, primaryRendererId }));
 }

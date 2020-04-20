@@ -15,7 +15,7 @@ type HttpProxyConfig = {
 
 export function httpProxy({ cosmosConfig, expressApp }: DevServerPluginArgs) {
   const httpProxyConfig = getHttpProxyCosmosConfig(cosmosConfig);
-  Object.keys(httpProxyConfig).forEach((context) => {
+  Object.keys(httpProxyConfig).forEach(context => {
     const config = httpProxyConfig[context];
     if (typeof config === 'string') {
       expressApp.use(

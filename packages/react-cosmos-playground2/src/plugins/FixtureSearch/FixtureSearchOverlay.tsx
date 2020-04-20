@@ -229,7 +229,7 @@ export function FixtureSearchOverlay({
         </InputContainer>
         <ResultsViewport>
           <ResultsContainer>
-            {matchingFixturePaths.map((cleanFixturePath) => (
+            {matchingFixturePaths.map(cleanFixturePath => (
               <FixtureSearchResult
                 key={cleanFixturePath}
                 cleanFixturePath={cleanFixturePath}
@@ -250,7 +250,7 @@ export function FixtureSearchOverlay({
 
 function getFixturePath(fixtureIds: FixtureIdsByPath, fixtureId: FixtureId) {
   const fixturePaths = Object.keys(fixtureIds);
-  return fixturePaths.find((fixturePath) =>
+  return fixturePaths.find(fixturePath =>
     isEqual(fixtureIds[fixturePath], fixtureId)
   );
 }
@@ -270,7 +270,7 @@ function getMatchingFixturePaths(
   }
 
   const fixtureSearchTexts: string[] = [];
-  fixturePaths.forEach((cleanFixturePath) => {
+  fixturePaths.forEach(cleanFixturePath => {
     const fixtureId = fixtureIds[cleanFixturePath];
     const { path, name } = fixtureId;
     // Allow fixtures to be searched by their entire file path, suffixed by
@@ -279,7 +279,7 @@ function getMatchingFixturePaths(
   });
 
   const machingFixtureSearchTexts = filter(fixtureSearchTexts, searchText);
-  return machingFixtureSearchTexts.map((fixtureSearchText) => {
+  return machingFixtureSearchTexts.map(fixtureSearchText => {
     const fixtureIndex = fixtureSearchTexts.indexOf(fixtureSearchText);
     return fixturePaths[fixtureIndex];
   });

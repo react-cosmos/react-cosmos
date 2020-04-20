@@ -9,11 +9,11 @@ import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
 export function createMessageHandler(httpServer: http.Server) {
   const io = ioServer(httpServer);
 
-  io.on('connection', (socket) => {
+  io.on('connection', socket => {
     // Forward commands between connected clients. Parties involved can be the
     // - The Cosmos UI, which acts as a remote control
     // - The web iframe or the React Native component renderers
-    socket.on(RENDERER_MESSAGE_EVENT_NAME, (msg) => {
+    socket.on(RENDERER_MESSAGE_EVENT_NAME, msg => {
       socket.broadcast.emit(RENDERER_MESSAGE_EVENT_NAME, msg);
     });
   });
@@ -24,7 +24,7 @@ export function createMessageHandler(httpServer: http.Server) {
 
   function cleanUp() {
     const { sockets } = io.sockets;
-    Object.keys(sockets).forEach((id) => {
+    Object.keys(sockets).forEach(id => {
       sockets[id].disconnect(true);
     });
   }

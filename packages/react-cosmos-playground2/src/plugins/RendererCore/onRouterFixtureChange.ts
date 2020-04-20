@@ -11,7 +11,7 @@ export function onRouterFixtureChange(
 ) {
   if (fixtureId === null) {
     return context.setState(emptyFixtureState, () => {
-      getConnectedRendererIds(context).forEach((rendererId) =>
+      getConnectedRendererIds(context).forEach(rendererId =>
         postUnselectFixtureRequest(context, rendererId)
       );
     });
@@ -19,7 +19,7 @@ export function onRouterFixtureChange(
 
   // Clear fixture state between fixtures
   context.setState(emptyFixtureState, () => {
-    getConnectedRendererIds(context).forEach((rendererId) =>
+    getConnectedRendererIds(context).forEach(rendererId =>
       postSelectFixtureRequest(context, rendererId, fixtureId, {})
     );
   });

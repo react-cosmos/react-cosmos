@@ -12,7 +12,7 @@ export function extendWithValues(
   values: FixtureStateValues
 ): FixtureStateObjectValueType {
   const extendedObj: FixtureStateObjectValueType = {};
-  Object.keys(values).forEach((key) => {
+  Object.keys(values).forEach(key => {
     extendedObj[key] = extendWithValue(obj[key], values[key]);
   });
   return extendedObj;

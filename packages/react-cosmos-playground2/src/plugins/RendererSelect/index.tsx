@@ -20,7 +20,7 @@ plug('controlPanelRow', ({ pluginContext }) => {
 
   return (
     <Container>
-      {connectedRendererIds.map((rendererId) => (
+      {connectedRendererIds.map(rendererId => (
         <li key={rendererId}>
           <small
             onClick={() => rendererCore.selectPrimaryRenderer(rendererId)}

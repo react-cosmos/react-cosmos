@@ -24,7 +24,7 @@ beforeEach(() => {
 const getFixtures = () => ({
   first: (
     <HelloMessageCls
-      ref={(elRef) => {
+      ref={elRef => {
         if (elRef) {
           refs.push(elRef);
         }

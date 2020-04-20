@@ -219,13 +219,13 @@ function runAsyncTask({ cmd, args, env = {} }: RunAsyncTaskArgs) {
       },
       shell: true,
     });
-    cp.stdout.on('data', (data) => {
+    cp.stdout.on('data', data => {
       stdout.write(data);
     });
-    cp.stderr.on('data', (data) => {
+    cp.stderr.on('data', data => {
       stderr.write(data);
     });
-    cp.on('close', (code) => {
+    cp.on('close', code => {
       if (code) {
         reject();
       } else {

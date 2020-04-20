@@ -235,7 +235,7 @@ export class FixtureLoader extends React.Component<Props, State> {
     });
   };
 
-  setFixtureState: SetFixtureState = (stateUpdate) => {
+  setFixtureState: SetFixtureState = stateUpdate => {
     if (!this.state.selectedFixture) {
       console.warn(
         '[FixtureLoader] Trying to set fixture state with no fixture selected'

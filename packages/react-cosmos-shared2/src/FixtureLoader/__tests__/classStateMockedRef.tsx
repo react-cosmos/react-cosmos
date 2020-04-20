@@ -19,7 +19,7 @@ const getFixtures = () => ({
   first: (
     <StateMock state={{ count: 5 }}>
       <Counter
-        ref={(elRef) => {
+        ref={elRef => {
           if (elRef) {
             counterRef = elRef;
           }

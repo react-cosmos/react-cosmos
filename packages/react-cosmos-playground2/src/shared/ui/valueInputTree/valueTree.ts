@@ -10,7 +10,7 @@ export function getFixtureStateValueTree(
   const items: Record<string, TreeItemValue> = {};
   const dirs: ValueNodes = {};
 
-  Object.keys(values).forEach((key) => {
+  Object.keys(values).forEach(key => {
     const value = values[key];
     if (value.type === 'object') {
       dirs[key] = getFixtureStateValueTree(value.values);

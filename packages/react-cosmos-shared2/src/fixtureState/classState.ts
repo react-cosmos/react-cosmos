@@ -14,7 +14,7 @@ export function getFixtureStateClassState(
 ): FixtureStateClassState[] {
   const { classState } = fixtureState;
   return classState
-    ? classState.filter((s) => s.elementId.decoratorId === decoratorId)
+    ? classState.filter(s => s.elementId.decoratorId === decoratorId)
     : [];
 }
 
@@ -23,7 +23,7 @@ export function findFixtureStateClassState(
   elementId: FixtureElementId
 ): void | FixtureStateClassState {
   const { classState } = fixtureState;
-  return classState && find(classState, (s) => isEqual(s.elementId, elementId));
+  return classState && find(classState, s => isEqual(s.elementId, elementId));
 }
 
 type CreateFixtureStateClassStateArgs = {

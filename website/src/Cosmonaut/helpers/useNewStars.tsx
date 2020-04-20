@@ -25,13 +25,13 @@ export function useNewStars() {
       stroke="rgba(255, 255, 255, 0.1)"
       strokeWidth={10}
       fill="#bde0f6"
-      onClick={(e) => {
+      onClick={e => {
         e.stopPropagation();
         if (e.altKey) {
-          setNewStars(newStars.filter((s) => (s === newStar ? false : true)));
+          setNewStars(newStars.filter(s => (s === newStar ? false : true)));
         } else {
           setNewStars(
-            newStars.map((s) => {
+            newStars.map(s => {
               if (s !== newStar) return s;
               return {
                 ...s,
@@ -46,7 +46,7 @@ export function useNewStars() {
 
   console.log(
     JSON.stringify(
-      newStars.map((s) => ({
+      newStars.map(s => ({
         ...s,
         x: +s.x.toFixed(2),
         y: +s.y.toFixed(2),

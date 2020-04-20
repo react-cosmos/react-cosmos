@@ -16,7 +16,7 @@ const rendererId = uuid();
 const getFixtures = () => ({
   first: (
     <SuffixCounter
-      ref={(elRef) => {
+      ref={elRef => {
         if (elRef) {
           counterRef = elRef;
         }

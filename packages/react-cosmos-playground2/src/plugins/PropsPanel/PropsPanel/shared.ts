@@ -11,7 +11,7 @@ export function createPropsFsUpdater(
   elementId: FixtureElementId,
   cb: (prevFs: FixtureState) => FixtureStateProps[]
 ): StateUpdater<FixtureState> {
-  return (prevFs) => {
+  return prevFs => {
     const fsProps = findFixtureStateProps(prevFs, elementId);
     if (!fsProps) {
       const elId = stringifyElementId(elementId);

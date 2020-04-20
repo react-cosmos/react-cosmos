@@ -26,7 +26,7 @@ export function usePropsCapture(
     // Create empty fixture state
     if (!fixtureState.props && elPaths.length === 0) {
       // Make sure not to override any (currently pending) fixture state props
-      setFixtureState((prevFs) => ({ ...prevFs, props: prevFs.props || [] }));
+      setFixtureState(prevFs => ({ ...prevFs, props: prevFs.props || [] }));
       return;
     }
 
@@ -36,14 +36,14 @@ export function usePropsCapture(
     const fsProps = getFixtureStateProps(fixtureState, decoratorId);
     fsProps.forEach(({ elementId }) => {
       if (elPaths.indexOf(elementId.elPath) === -1) {
-        setFixtureState((prevFs) => ({
+        setFixtureState(prevFs => ({
           ...prevFs,
           props: removeFixtureStateProps(fixtureState, elementId),
         }));
       }
     });
 
-    elPaths.forEach((elPath) => {
+    elPaths.forEach(elPath => {
       const childEl = getExpectedElementAtPath(fixture, elPath);
       const elementId = { decoratorId, elPath };
       // Component fixture state can be provided before the fixture mounts (eg.
@@ -51,7 +51,7 @@ export function usePropsCapture(
       // from another renderer)
       if (!findFixtureStateProps(fixtureState, elementId)) {
         const componentName = getComponentName(childEl.type);
-        setFixtureState((prevFs) => ({
+        setFixtureState(prevFs => ({
           ...prevFs,
           props: createFixtureStateProps({
             fixtureState: prevFs,
@@ -63,7 +63,7 @@ export function usePropsCapture(
       } else {
         const prevChildEl = getElementAtPath(prevFixtureRef.current, elPath);
         if (!areNodesEqual(prevChildEl, childEl, false)) {
-          setFixtureState((prevFs) => ({
+          setFixtureState(prevFs => ({
             ...prevFs,
             props: updateFixtureStateProps({
               fixtureState,

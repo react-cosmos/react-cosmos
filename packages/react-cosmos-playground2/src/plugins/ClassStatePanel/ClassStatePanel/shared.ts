@@ -11,7 +11,7 @@ export function createClassStateFsUpdater(
   elementId: FixtureElementId,
   cb: (prevFs: FixtureState) => FixtureStateClassState[]
 ): StateUpdater<FixtureState> {
-  return (prevFs) => {
+  return prevFs => {
     const fsClassState = findFixtureStateClassState(prevFs, elementId);
     if (!fsClassState) {
       const elId = stringifyElementId(elementId);

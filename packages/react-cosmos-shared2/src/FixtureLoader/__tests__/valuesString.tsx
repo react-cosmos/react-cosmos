@@ -13,7 +13,7 @@ function createFixtures({ defaultValue }: { defaultValue: string }) {
       <input
         type="text"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={e => setValue(e.target.value)}
       />
     );
   };

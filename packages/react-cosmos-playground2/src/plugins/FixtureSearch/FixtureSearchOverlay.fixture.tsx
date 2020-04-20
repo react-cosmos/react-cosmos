@@ -46,7 +46,7 @@ function createFixture(fixtureId: null | FixtureId = null) {
         selectedFixtureId={fixtureId}
         onSetSearchText={setSearchText}
         onClose={() => console.log('Close fixture search overlay')}
-        onSelect={(selectedFixtureId) =>
+        onSelect={selectedFixtureId =>
           console.log('Select fixture', selectedFixtureId)
         }
       />

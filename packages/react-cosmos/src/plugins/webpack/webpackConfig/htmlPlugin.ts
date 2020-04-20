@@ -23,7 +23,7 @@ export function ensureHtmlWebackPlugin(
   plugins: webpack.Plugin[]
 ): webpack.Plugin[] {
   if (hasPlugin(plugins, 'HtmlWebpackPlugin')) {
-    return plugins.map((plugin) =>
+    return plugins.map(plugin =>
       isHtmlWebpackPlugin(plugin) ? changeHtmlPluginFilename(plugin) : plugin
     );
   }

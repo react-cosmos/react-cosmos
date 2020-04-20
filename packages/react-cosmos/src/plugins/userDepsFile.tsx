@@ -33,7 +33,7 @@ async function startFixtureFileWatcher(
     ...getFixturePatterns(fixturesDir, fixtureFileSuffix),
     ...getDecoratorPatterns(),
   ];
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const watcher: FSWatcher = watch(FILE_PATTERNS, {
       ignored: getIgnorePatterns(),
       ignoreInitial: true,

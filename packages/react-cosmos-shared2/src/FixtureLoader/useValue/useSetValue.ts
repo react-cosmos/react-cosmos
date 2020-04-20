@@ -15,8 +15,8 @@ export function useSetValue<T extends FixtureStateValueType>(
 ): SetValue<T> {
   const { setFixtureState } = React.useContext(FixtureContext);
   return React.useCallback(
-    (stateChange) => {
-      setFixtureState((prevFsState) => {
+    stateChange => {
+      setFixtureState(prevFsState => {
         const currentValue: FixtureStateValueType =
           typeof stateChange === 'function'
             ? stateChange(

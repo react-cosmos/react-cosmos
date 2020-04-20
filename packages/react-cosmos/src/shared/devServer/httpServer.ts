@@ -14,7 +14,7 @@ export function createHttpServer(
   const server = http.createServer(requestListener);
 
   async function start() {
-    await new Promise((resolve) => {
+    await new Promise(resolve => {
       if (hostname === null) {
         server.listen(port, resolve);
       } else {
@@ -27,7 +27,7 @@ export function createHttpServer(
   }
 
   async function stop() {
-    await new Promise((resolve) => server.close(resolve));
+    await new Promise(resolve => server.close(resolve));
   }
 
   return { server, start, stop };

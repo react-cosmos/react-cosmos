@@ -49,7 +49,7 @@ export function TreeView<Item>({
       {!isRootNode && renderDir({ node, parents, isExpanded, onToggle })}
       {isExpanded && (
         <>
-          {getSortedNodeDirNames(dirs).map((dirName) => {
+          {getSortedNodeDirNames(dirs).map(dirName => {
             const nextParents = [...parents, dirName];
             return (
               <TreeView

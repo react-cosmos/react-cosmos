@@ -38,7 +38,7 @@ export function getUserModules({
 
 function getDefaultExportsByPath<T>(paths: string[], rootDir: string) {
   const exportsByPath: { [path: string]: T } = {};
-  paths.forEach((p) => {
+  paths.forEach(p => {
     // Converting to forward slashes on Windows is important because the
     // slashes are used for generating a sorted list of fixtures and
     // decorators.

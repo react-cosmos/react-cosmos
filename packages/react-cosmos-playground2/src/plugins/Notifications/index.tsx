@@ -22,7 +22,7 @@ const { register, onLoad, namedPlug } = createPlugin<NotificationsSpec>({
   },
 });
 
-onLoad((context) => {
+onLoad(context => {
   return () => {
     // Clean up timed notifications when plugin unloads
     const { timedNotifications } = context.getState();

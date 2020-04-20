@@ -70,7 +70,7 @@ it('renders button', async () => {
 });
 
 it('calls server endpoint on button click', async () => {
-  await mockFetch(200, async (fetchMock) => {
+  await mockFetch(200, async fetchMock => {
     register();
     mockCore({ isDevServerOn: () => true });
     mockNotifications();

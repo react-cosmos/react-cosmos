@@ -23,7 +23,7 @@ const { onLoad, register } = createPlugin<RouterSpec>({
   },
 });
 
-onLoad((context) => {
+onLoad(context => {
   const { setState } = context;
   setState({ urlParams: getUrlParams() });
 

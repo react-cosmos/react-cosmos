@@ -29,13 +29,13 @@ export function getFixturesSync({ cosmosConfig }: Args) {
   );
 
   const fixtures: RenderableFixture[] = [];
-  Object.keys(fixtureExportsByPath).forEach((fixturePath) => {
+  Object.keys(fixtureExportsByPath).forEach(fixturePath => {
     const fixtureExport = fixtureExportsByPath[fixturePath];
     if (isMultiFixture(fixtureExport)) {
       // FIXME: Why does fixtureExport need to be cast as ReactFixtureMap when
       // the type predicate returned by isMultiFixture already ensures it?
       const multiFixtureExport: ReactFixtureMap = fixtureExport;
-      Object.keys(fixtureExport).forEach((fixtureName) => {
+      Object.keys(fixtureExport).forEach(fixtureName => {
         const fixtureId = { path: fixturePath, name: fixtureName };
         fixtures.push({
           fixtureId,

@@ -54,7 +54,7 @@ export function useFixtureState(
     fsProps.forEach(({ elementId }) => {
       const { elPath } = elementId;
       if (elPaths.indexOf(elementId.elPath) === -1) {
-        setFixtureState((prevFs) => ({
+        setFixtureState(prevFs => ({
           ...prevFs,
           classState: removeFixtureStateClassState(fixtureState, elementId),
         }));
@@ -66,7 +66,7 @@ export function useFixtureState(
       }
     });
 
-    elPaths.forEach((elPath) => {
+    elPaths.forEach(elPath => {
       const elementId = { decoratorId, elPath };
       // Component fixture state can be provided before the fixture mounts (eg.
       // a previous snapshot of a fixture state or the current fixture state
@@ -81,7 +81,7 @@ export function useFixtureState(
             replaceState(elRef, state);
           }
 
-          setFixtureState((prevFs) => ({
+          setFixtureState(prevFs => ({
             ...prevFs,
             classState: createFixtureStateClassState({
               fixtureState: prevFs,
@@ -160,7 +160,7 @@ export function useFixtureState(
       elementId
     );
     if (!fsClassState) {
-      setFixtureState((prevFs) => ({
+      setFixtureState(prevFs => ({
         ...prevFs,
         classState: createFixtureStateClassState({
           fixtureState: prevFs,

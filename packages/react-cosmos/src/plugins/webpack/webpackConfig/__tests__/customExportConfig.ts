@@ -86,7 +86,7 @@ it('includes user deps loader', async () => {
 it('includes HtmlWebpackPlugin', async () => {
   const { plugins } = await getCustomExportWebpackConfig();
   const htmlWebpackPlugin = plugins!.find(
-    (p) => p.constructor.name === 'HtmlWebpackPlugin'
+    p => p.constructor.name === 'HtmlWebpackPlugin'
   ) as HtmlWebpackPlugin;
   expect(htmlWebpackPlugin).toBeDefined();
   expect(htmlWebpackPlugin.options.filename).toBe(RENDERER_FILENAME);
@@ -95,7 +95,7 @@ it('includes HtmlWebpackPlugin', async () => {
 it('does not include HotModuleReplacementPlugin', async () => {
   const { plugins } = await getCustomExportWebpackConfig();
   const hotModuleReplacementPlugin = plugins!.find(
-    (p) => p.constructor.name === 'HotModuleReplacementPlugin'
+    p => p.constructor.name === 'HotModuleReplacementPlugin'
   );
   expect(hotModuleReplacementPlugin).not.toBeDefined();
 });

@@ -26,7 +26,7 @@ on<RendererCoreSpec>('rendererCore', {
   },
 });
 
-onLoad((context) => {
+onLoad(context => {
   // Discover remote renderers by asking all to announce themselves
   postRendererRequest(context, {
     type: 'pingRenderers',

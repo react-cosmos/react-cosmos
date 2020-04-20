@@ -33,14 +33,14 @@ export function receiveFixtureStateChangeResponse(
   }
 
   context.setState(
-    (prevState) => ({ ...prevState, fixtureState }),
+    prevState => ({ ...prevState, fixtureState }),
     afterStateChanged
   );
 
   function afterStateChanged() {
     // Sync secondary renderers with changed primary renderer fixture state
     const { connectedRendererIds } = context.getState();
-    connectedRendererIds.forEach((curRendererId) => {
+    connectedRendererIds.forEach(curRendererId => {
       if (curRendererId !== rendererId) {
         postSetFixtureStateRequest(
           context,

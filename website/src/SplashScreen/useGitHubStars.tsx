@@ -14,7 +14,7 @@ export function useGitHubStars() {
       if (mounted) setStars(DEFAULT_STARS);
     }, TIMEOUT_TS);
 
-    fetchGithub(`repos/react-cosmos/react-cosmos`).then(async (res) => {
+    fetchGithub(`repos/react-cosmos/react-cosmos`).then(async res => {
       const parsedRes = await res.json();
       if (mounted && !isNaN(parsedRes.stargazers_count)) {
         clearTimeout(timeoutId);

@@ -31,7 +31,7 @@ export function setFixtureState(
 
   function postRendererRequest(selectedFixtureId: FixtureId) {
     const { connectedRendererIds, fixtureState } = context.getState();
-    connectedRendererIds.forEach((rendererId) =>
+    connectedRendererIds.forEach(rendererId =>
       postSetFixtureStateRequest(
         context,
         rendererId,

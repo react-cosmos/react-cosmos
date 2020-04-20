@@ -43,7 +43,7 @@ export function ComponentClassState({
   const onResetValues = React.useCallback(
     () =>
       onFixtureStateChange(
-        createClassStateFsUpdater(elementId, (prevFs) =>
+        createClassStateFsUpdater(elementId, prevFs =>
           updateFixtureStateClassState({
             fixtureState: prevFs,
             elementId,
@@ -57,7 +57,7 @@ export function ComponentClassState({
   const onValueChange = React.useCallback(
     (newValues: FixtureStateValues) => {
       onFixtureStateChange(
-        createClassStateFsUpdater(elementId, (prevFs) =>
+        createClassStateFsUpdater(elementId, prevFs =>
           updateFixtureStateClassState({
             fixtureState: prevFs,
             elementId,

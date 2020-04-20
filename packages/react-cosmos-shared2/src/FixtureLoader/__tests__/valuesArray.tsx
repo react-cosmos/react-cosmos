@@ -105,7 +105,7 @@ async function rendered(
 ) {
   await retry(() => {
     const renderedText = getRenderedText(renderer);
-    profiles.forEach((profile) => {
+    profiles.forEach(profile => {
       expect(renderedText).toMatch(`"isAdmin": ${profile.isAdmin}`);
       expect(renderedText).toMatch(`"name": "${profile.name}"`);
       expect(renderedText).toMatch(`"age": ${profile.age}`);

@@ -68,5 +68,5 @@ export function staticTests() {
 }
 
 function getRendererBody() {
-  return cy.get('iframe').then(($iframe) => $iframe.contents().find('body'));
+  return cy.get('iframe').then($iframe => $iframe.contents().find('body'));
 }

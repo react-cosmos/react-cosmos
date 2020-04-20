@@ -23,7 +23,7 @@ function loadTestPlugins(fixtureState: FixtureState) {
       slotProps={{
         fixtureId,
         fixtureState,
-        onFixtureStateChange: (stateUpdater) => {
+        onFixtureStateChange: stateUpdater => {
           fixtureState.props = stateUpdater(fixtureState).props;
         },
       }}

@@ -15,7 +15,7 @@ export async function webpackExport({ cosmosConfig }: ExportPluginArgs) {
   } catch (err) {
     const webpackError = err as WebpackCompilationError;
     if (webpackError.webpackErrors) {
-      webpackError.webpackErrors.forEach((error) => {
+      webpackError.webpackErrors.forEach(error => {
         console.error(`${error}\n`);
       });
     }

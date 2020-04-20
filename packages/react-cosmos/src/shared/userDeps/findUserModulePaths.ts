@@ -35,7 +35,7 @@ export function findUserModulePaths({
   // Omit decorators from fixture paths, which happens when decorators are
   // placed inside fixture dirs.
   const nonDecoratorFixturePaths = fixturePaths.filter(
-    (fixturePath) => decoratorPaths.indexOf(fixturePath) === -1
+    fixturePath => decoratorPaths.indexOf(fixturePath) === -1
   );
 
   return { fixturePaths: nonDecoratorFixturePaths, decoratorPaths };

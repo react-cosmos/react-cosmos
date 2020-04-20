@@ -120,7 +120,7 @@ function setFixtureStateViewport(
 ) {
   const { getMethodsOf } = context;
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
-  rendererCore.setFixtureState((fixtureState) => ({
+  rendererCore.setFixtureState(fixtureState => ({
     ...fixtureState,
     viewport,
   }));

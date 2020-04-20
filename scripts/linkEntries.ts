@@ -24,7 +24,7 @@ type TargetDir = typeof SRC_DIR | typeof DIST_DIR;
 
     const entryPoints = await getPackageEntryPoints(targetPackages);
     await Promise.all(
-      entryPoints.map((f) => linkFileRequiresToDir(f, targetDir))
+      entryPoints.map(f => linkFileRequiresToDir(f, targetDir))
     );
 
     console.log(done(`Linked entry points to ${chalk.bold(targetDir)}.`));

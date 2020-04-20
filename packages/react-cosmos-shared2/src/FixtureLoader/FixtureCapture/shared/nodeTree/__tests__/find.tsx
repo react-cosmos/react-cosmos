@@ -6,7 +6,7 @@ import { findElementPaths } from '..';
 it('finds no paths on empty node', () => {
   const noChildrenNodes: React.ReactNode[] = [null, true, false, 'Hello', 7];
 
-  noChildrenNodes.forEach((node) => {
+  noChildrenNodes.forEach(node => {
     expect(findElementPaths(node)).toEqual([]);
   });
 });
@@ -66,7 +66,7 @@ it('finds nested paths', () => {
   ]);
 
   // Ensure paths are valid
-  paths.forEach((path) => {
+  paths.forEach(path => {
     expect(isElement(path === '' ? node : get(node, path))).toBe(true);
   });
 });

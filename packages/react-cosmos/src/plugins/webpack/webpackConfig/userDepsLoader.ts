@@ -15,7 +15,7 @@ module.exports = function injectUserDeps(this: loader.LoaderContext) {
   // automatically bundles new files that match the watcher's query.
   // https://github.com/webpack/webpack/issues/222#issuecomment-40691546
   const watchDirs = cosmosConfig.watchDirs;
-  watchDirs.forEach((watchDir) => this.addContextDependency(watchDir));
+  watchDirs.forEach(watchDir => this.addContextDependency(watchDir));
 
   const { containerQuerySelector } = createDomCosmosConfig(cosmosConfig);
   const rendererConfig: DomRendererConfig = { containerQuerySelector };

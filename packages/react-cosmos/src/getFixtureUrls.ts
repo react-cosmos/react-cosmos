@@ -25,12 +25,12 @@ export function getFixtureUrlsSync({ cosmosConfig, fullScreen = false }: Args) {
 
   const { fixtureExportsByPath } = getUserModules(cosmosConfig);
   const fixtureNamesByPath = getFixtureNamesByPath(fixtureExportsByPath);
-  Object.keys(fixtureNamesByPath).forEach((fixturePath) => {
+  Object.keys(fixtureNamesByPath).forEach(fixturePath => {
     const fixtureNames = fixtureNamesByPath[fixturePath];
     if (fixtureNames === null) {
       pushFixtureUrl({ path: fixturePath, name: null });
     } else {
-      fixtureNames.forEach((fixtureName) => {
+      fixtureNames.forEach(fixtureName => {
         pushFixtureUrl({ path: fixturePath, name: fixtureName });
       });
     }

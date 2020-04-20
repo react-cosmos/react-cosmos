@@ -24,7 +24,7 @@ export default () => {
       <Select
         options={planets}
         value={planet}
-        onChange={(option) => setPlanet(option.value)}
+        onChange={option => setPlanet(option.value)}
       />
     </Container>
   );

@@ -49,7 +49,7 @@ function getFixtureDirNodePath(
   atPath: string[] = []
 ): null | string[] {
   const itemNames = Object.keys(items);
-  const dirPath = itemNames.find((itemName) =>
+  const dirPath = itemNames.find(itemName =>
     isEqual(items[itemName], fixtureId)
   );
   if (dirPath) {

@@ -45,7 +45,7 @@ export const Header = React.memo(function Header({
         testId="viewportSelect"
         options={options}
         value={stringifyViewport(selectedViewport)}
-        onChange={(option) =>
+        onChange={option =>
           selectViewport({ width: option.width, height: option.height })
         }
       />
@@ -55,7 +55,7 @@ export const Header = React.memo(function Header({
           minValue={1}
           maxValue={5120}
           styles={numberInputStypes}
-          onChange={(width) => selectViewport({ ...selectedViewport, width })}
+          onChange={width => selectViewport({ ...selectedViewport, width })}
         />
         <ViewportX>×</ViewportX>
         <NumberInput
@@ -63,7 +63,7 @@ export const Header = React.memo(function Header({
           minValue={1}
           maxValue={5120}
           styles={numberInputStypes}
-          onChange={(height) => selectViewport({ ...selectedViewport, height })}
+          onChange={height => selectViewport({ ...selectedViewport, height })}
         />
       </ViewportSize>
       {canScale ? (

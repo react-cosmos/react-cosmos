@@ -110,7 +110,7 @@ function getItem(
 }
 
 function getValuePath(valueKey: string, parentKeys: string[]) {
-  return [...parentKeys.map((p) => `${p}.values`), valueKey].join('.');
+  return [...parentKeys.map(p => `${p}.values`), valueKey].join('.');
 }
 
 function setValueAtPath(

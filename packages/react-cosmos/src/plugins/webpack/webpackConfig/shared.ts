@@ -124,8 +124,7 @@ export function hasPlugin(
   pluginName: string
 ) {
   return (
-    plugins &&
-    plugins.filter((p) => isInstanceOfPlugin(p, pluginName)).length > 0
+    plugins && plugins.filter(p => isInstanceOfPlugin(p, pluginName)).length > 0
   );
 }
 

@@ -11,7 +11,7 @@ export function KeyShortcut({ keys, label }: Props) {
   return (
     <Container>
       <Keys>
-        {keys.map((key) => (
+        {keys.map(key => (
           <KeyBox key={key}>{key}</KeyBox>
         ))}
       </Keys>

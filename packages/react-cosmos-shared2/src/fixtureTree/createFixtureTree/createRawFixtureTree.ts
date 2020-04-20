@@ -6,7 +6,7 @@ export function createRawFixtureTree(
   fixtures: FixtureNamesByPath
 ): FixtureNode {
   const rootNode = getBlankNode();
-  Object.keys(fixtures).forEach((fixturePath) =>
+  Object.keys(fixtures).forEach(fixturePath =>
     addFixturePathToTree(rootNode, fixturePath, fixtures[fixturePath])
   );
 
@@ -40,7 +40,7 @@ function addFixturePathToTree(
     });
   }
 
-  fixtureNames.forEach((fixtureName) => {
+  fixtureNames.forEach(fixtureName => {
     addFixtureIdToTree(rootNode, [...namespace, fileName], fixtureName, {
       path: fixturePath,
       name: fixtureName,
@@ -63,7 +63,7 @@ function addFixtureIdToTree(
   let curNode: FixtureNode;
   do {
     const partialNamespace = namespace.slice(0, curNodeDepth);
-    const partialPath = partialNamespace.map((p) => `dirs["${p}"]`).join('.');
+    const partialPath = partialNamespace.map(p => `dirs["${p}"]`).join('.');
 
     curNode = get(rootNode, partialPath);
     if (!curNode) {

@@ -10,7 +10,7 @@ function createFixtures({ defaultValue }: { defaultValue: number }) {
   const MyComponent = () => {
     const [count, setCount] = useValue('count', { defaultValue });
     return (
-      <button onClick={() => setCount((prevCount) => prevCount + 1)}>
+      <button onClick={() => setCount(prevCount => prevCount + 1)}>
         {count} clicks
       </button>
     );

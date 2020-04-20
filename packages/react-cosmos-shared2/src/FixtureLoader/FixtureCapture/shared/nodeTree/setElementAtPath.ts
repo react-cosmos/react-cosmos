@@ -23,7 +23,7 @@ export function setElementAtPath(
 
 function cloneNode(value: React.ReactNode): React.ReactNode {
   if (Array.isArray(value)) {
-    return value.map((n) => cloneNode(n));
+    return value.map(n => cloneNode(n));
   }
 
   if (isReactElement(value)) {

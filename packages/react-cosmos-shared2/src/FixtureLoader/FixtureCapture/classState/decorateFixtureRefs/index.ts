@@ -17,7 +17,7 @@ export function decorateFixtureRefs(
 ) {
   const elPaths = findRelevantElementPaths(fixture);
   return elPaths.reduce((decoratedFixture, elPath): React.ReactNode => {
-    return setElementAtPath(decoratedFixture, elPath, (element) => {
+    return setElementAtPath(decoratedFixture, elPath, element => {
       if (!isRefSupported(element.type)) {
         return element;
       }

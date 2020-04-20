@@ -17,7 +17,7 @@ export function getFixtureStateProps(
 ): FixtureStateProps[] {
   const { props } = fixtureState;
   return props
-    ? props.filter((p) => p.elementId.decoratorId === decoratorId)
+    ? props.filter(p => p.elementId.decoratorId === decoratorId)
     : [];
 }
 
@@ -26,7 +26,7 @@ export function findFixtureStateProps(
   elementId: FixtureElementId
 ): void | FixtureStateProps {
   const { props } = fixtureState;
-  return props && find(props, (p) => isEqual(p.elementId, elementId));
+  return props && find(props, p => isEqual(p.elementId, elementId));
 }
 
 type CreateFixtureStatePropsArgs = {

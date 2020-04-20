@@ -30,7 +30,7 @@ export const PropsPanel = React.memo(function PropsPanel({
   const propsWithValues = fixtureState.props.filter(hasFsValues);
   return (
     <>
-      {sortFsValueGroups(propsWithValues).map((fsProps) => {
+      {sortFsValueGroups(propsWithValues).map(fsProps => {
         const strElementId = stringifyElementId(fsProps.elementId);
         return (
           <ComponentProps

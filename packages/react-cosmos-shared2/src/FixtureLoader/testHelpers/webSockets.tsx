@@ -25,7 +25,7 @@ export async function mountWebSockets(
   try {
     await cb({
       renderer,
-      update: (newArgs) =>
+      update: newArgs =>
         act(() => {
           renderer.update(getElement(newArgs));
         }),

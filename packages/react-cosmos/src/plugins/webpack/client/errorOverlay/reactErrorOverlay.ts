@@ -18,7 +18,7 @@ export function init() {
   ErrorOverlay.startReportingRuntimeErrors({
     filename: process.env.PUBLIC_URL + '/main.js',
   });
-  ErrorOverlay.setEditorHandler((errorLocation) =>
+  ErrorOverlay.setEditorHandler(errorLocation =>
     window.fetch(getLaunchEditorUrl(errorLocation))
   );
   setUpBuildErrorReporting();

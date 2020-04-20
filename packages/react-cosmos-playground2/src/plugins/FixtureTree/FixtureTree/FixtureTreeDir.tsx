@@ -52,12 +52,12 @@ function treeContainsFixture(
   fixtureId: FixtureId
 ): boolean {
   const itemNames = Object.keys(items);
-  if (itemNames.some((itemName) => isEqual(items[itemName], fixtureId))) {
+  if (itemNames.some(itemName => isEqual(items[itemName], fixtureId))) {
     return true;
   }
 
   const dirNames = Object.keys(dirs);
-  return dirNames.some((dirName) =>
+  return dirNames.some(dirName =>
     treeContainsFixture(dirs[dirName], fixtureId)
   );
 }

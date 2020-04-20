@@ -16,7 +16,7 @@ export async function mountPostMessage(
   window.addEventListener('message', onMessage, false);
 
   function getMessages() {
-    return onMessage.mock.calls.map((call) => call[0].data);
+    return onMessage.mock.calls.map(call => call[0].data);
   }
 
   function postMessage(msg: Message) {
@@ -38,7 +38,7 @@ export async function mountPostMessage(
   try {
     await cb({
       renderer,
-      update: (newArgs) =>
+      update: newArgs =>
         act(() => {
           renderer.update(getElement(newArgs));
         }),

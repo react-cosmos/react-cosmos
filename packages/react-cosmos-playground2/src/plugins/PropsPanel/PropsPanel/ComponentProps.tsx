@@ -47,7 +47,7 @@ export function ComponentProps({
   const onResetValues = React.useCallback(
     () =>
       onFixtureStateChange(
-        createPropsFsUpdater(elementId, (prevFs) =>
+        createPropsFsUpdater(elementId, prevFs =>
           resetFixtureStateProps({
             fixtureState: prevFs,
             elementId,
@@ -62,7 +62,7 @@ export function ComponentProps({
     (newValues: FixtureStateValues) => {
       const changeFn = reset ? resetFixtureStateProps : updateFixtureStateProps;
       onFixtureStateChange(
-        createPropsFsUpdater(elementId, (prevFs) =>
+        createPropsFsUpdater(elementId, prevFs =>
           changeFn({
             fixtureState: prevFs,
             elementId,

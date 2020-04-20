@@ -27,7 +27,7 @@ const { onLoad, plug, register } = createPlugin<RootSpec>({
   },
 });
 
-onLoad((context) => {
+onLoad(context => {
   const storage = context.getMethodsOf<StorageSpec>('storage');
   const core = context.getMethodsOf<CoreSpec>('core');
   storage.loadCache(core.getProjectId()).then(() => {
@@ -35,7 +35,7 @@ onLoad((context) => {
   });
 });
 
-onLoad((context) => {
+onLoad(context => {
   const core = context.getMethodsOf<CoreSpec>('core');
   return core.registerCommands({
     toggleFixtureList: () => openNav(context, !isNavOpen(context)),

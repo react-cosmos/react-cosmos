@@ -40,7 +40,7 @@ function genGlobalRequires(paths: string[]) {
     '',
     '// Keeping global imports here is superior to making them bundle entry points',
     '// because this way they become hot-reloadable',
-    ...paths.map((importPath) => `require('${slash(importPath)}');`),
+    ...paths.map(importPath => `require('${slash(importPath)}');`),
     '',
   ].join(`\n`);
 }
@@ -50,7 +50,7 @@ function genRequireMap(paths: string[], rootDir: string) {
     return '{}';
   }
 
-  const requireRows = paths.map((p) => {
+  const requireRows = paths.map(p => {
     const relPath = slash(path.relative(rootDir, p));
     return `
   '${relPath}': require('${p}').default`;

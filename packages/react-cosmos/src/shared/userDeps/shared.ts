@@ -12,7 +12,7 @@ export function getFixturePatterns(
   fixturesDir: string,
   fixtureFileSuffix: string
 ): string[] {
-  return FIXTURE_PATTERNS.map((pattern) =>
+  return FIXTURE_PATTERNS.map(pattern =>
     replaceKeys(pattern, {
       '<fixturesDir>': fixturesDir,
       '<fixtureFileSuffix>': fixtureFileSuffix,
