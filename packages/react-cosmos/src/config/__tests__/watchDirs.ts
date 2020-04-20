@@ -8,10 +8,10 @@ it('returns resolved default watchDirs', () => {
 
 it('returns resolved custom watchDirs', () => {
   const cosmosConfig = createCosmosConfig(process.cwd(), {
-    watchDirs: ['src1', 'src2']
+    watchDirs: ['src1', 'src2'],
   });
   expect(cosmosConfig.watchDirs).toEqual([
     path.resolve(process.cwd(), 'src1'),
-    path.resolve(process.cwd(), 'src2')
+    path.resolve(process.cwd(), 'src2'),
   ]);
 });

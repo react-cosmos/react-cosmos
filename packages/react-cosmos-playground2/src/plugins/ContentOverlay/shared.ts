@@ -6,7 +6,7 @@ import {
   screenGrey5,
   screenGrey6,
   screenPrimary2,
-  screenPrimary3
+  screenPrimary3,
 } from '../../shared/ui/colors';
 import { ContentOverlaySpec } from './public';
 

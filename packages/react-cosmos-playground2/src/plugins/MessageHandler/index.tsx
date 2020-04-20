@@ -5,8 +5,8 @@ import { initSocket, postRendererRequest } from './socket';
 const { onLoad, register } = createPlugin<MessageHandlerSpec>({
   name: 'messageHandler',
   methods: {
-    postRendererRequest
-  }
+    postRendererRequest,
+  },
 });
 
 onLoad(initSocket);

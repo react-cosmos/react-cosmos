@@ -13,8 +13,8 @@ import { getTreeExpansion, setTreeExpansion } from './shared';
 const { namedPlug, register } = createPlugin<FixtureTreeSpec>({
   name: 'fixtureTree',
   methods: {
-    revealFixture
-  }
+    revealFixture,
+  },
 });
 
 namedPlug('navRow', 'fixtureTree', ({ pluginContext }) => {

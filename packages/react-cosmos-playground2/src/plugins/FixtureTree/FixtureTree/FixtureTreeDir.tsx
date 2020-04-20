@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import {
   ChevronDownIcon,
   ChevronRightIcon,
-  FolderIcon
+  FolderIcon,
 } from '../../../shared/icons';
 import { blue, grey128 } from '../../../shared/ui/colors';
 import { Label, ListItem, Unshirinkable } from './shared';
@@ -24,7 +24,7 @@ export function FixtureTreeDir({
   parents,
   selectedFixtureId,
   isExpanded,
-  onToggle
+  onToggle,
 }: Props) {
   const dirName = parents[parents.length - 1];
   const containsSelectedFixture =

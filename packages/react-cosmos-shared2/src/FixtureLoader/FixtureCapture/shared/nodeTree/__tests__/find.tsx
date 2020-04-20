@@ -32,7 +32,7 @@ it('finds multi fragment child paths', () => {
 
   expect(findElementPaths(node)).toEqual([
     'props.children[0]',
-    'props.children[2]'
+    'props.children[2]',
   ]);
 });
 
@@ -62,7 +62,7 @@ it('finds nested paths', () => {
     'props.children[2]',
     'props.children[2].props.children.props.children',
     'props.children[2].props.children.props.children.props.children[0]',
-    'props.children[2].props.children.props.children.props.children[1]'
+    'props.children[2].props.children.props.children.props.children[1]',
   ]);
 
   // Ensure paths are valid

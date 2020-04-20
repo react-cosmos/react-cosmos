@@ -5,7 +5,7 @@ import {
   mockRouter,
   mockNotifications,
   getRouterContext,
-  onRendererCore
+  onRendererCore,
 } from '../../../testHelpers/pluginMocks';
 import { mockRendererReady } from '../testHelpers';
 import { register } from '..';
@@ -17,7 +17,7 @@ const fixtures = {};
 function registerTestPlugins() {
   register();
   mockRouter({
-    getSelectedFixtureId: () => null
+    getSelectedFixtureId: () => null,
   });
   mockNotifications();
 }
@@ -54,8 +54,8 @@ it('posts "unselectFixture" renderer requests', async () => {
     expect(request).toBeCalledWith(expect.any(Object), {
       type: 'unselectFixture',
       payload: {
-        rendererId: 'mockRendererId1'
-      }
+        rendererId: 'mockRendererId1',
+      },
     })
   );
 
@@ -63,8 +63,8 @@ it('posts "unselectFixture" renderer requests', async () => {
     expect(request).toBeCalledWith(expect.any(Object), {
       type: 'unselectFixture',
       payload: {
-        rendererId: 'mockRendererId2'
-      }
+        rendererId: 'mockRendererId2',
+      },
     })
   );
 });

@@ -15,16 +15,16 @@ const { onLoad, on, plug, register } = createPlugin<RendererPreviewSpec>({
   name: 'rendererPreview',
   initialState: {
     urlStatus: 'unknown',
-    runtimeStatus: 'pending'
+    runtimeStatus: 'pending',
   },
   methods: {
     getUrlStatus,
-    getRuntimeStatus
-  }
+    getRuntimeStatus,
+  },
 });
 
 on<RendererCoreSpec>('rendererCore', {
-  request: postRendererRequest
+  request: postRendererRequest,
 });
 
 onLoad((context: RendererPreviewContext) => {
@@ -36,7 +36,7 @@ onLoad((context: RendererPreviewContext) => {
 
   return [
     checkRendererStatus(context, rendererUrl),
-    handleWindowMessages(context)
+    handleWindowMessages(context),
   ];
 });
 

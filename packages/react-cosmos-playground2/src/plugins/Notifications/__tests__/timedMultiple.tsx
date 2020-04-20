@@ -24,13 +24,13 @@ function pushTimedNotifications() {
       id: 'one',
       type: 'info',
       title: 'Check this out',
-      info: 'Lorem ipsum.'
+      info: 'Lorem ipsum.',
     });
     pushTimedNotification({
       id: 'two',
       type: 'info',
       title: 'Take a look at this',
-      info: 'Lorem ipsum.'
+      info: 'Lorem ipsum.',
     });
   });
 }

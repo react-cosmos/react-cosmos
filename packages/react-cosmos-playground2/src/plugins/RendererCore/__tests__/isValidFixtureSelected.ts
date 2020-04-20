@@ -3,7 +3,7 @@ import { FixtureId } from 'react-cosmos-shared2/renderer';
 import {
   getRendererCoreMethods,
   mockRouter,
-  mockNotifications
+  mockNotifications,
 } from '../../../testHelpers/pluginMocks';
 import { mockRendererReady } from '../testHelpers';
 import { register } from '..';
@@ -14,12 +14,12 @@ const rendererId = 'mockRendererId';
 const fixtures = {
   'ein.js': ['a', 'b', 'c'],
   'zwei.js': null,
-  'drei.js': null
+  'drei.js': null,
 };
 
 function mockFixtureId(fixtureId: null | FixtureId = null) {
   mockRouter({
-    getSelectedFixtureId: () => fixtureId
+    getSelectedFixtureId: () => fixtureId,
   });
   mockNotifications();
 }

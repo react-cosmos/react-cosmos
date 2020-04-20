@@ -1,6 +1,6 @@
 import {
   createPostMessageConnect,
-  createWebSocketsConnect
+  createWebSocketsConnect,
 } from 'react-cosmos-shared2/FixtureLoader';
 import { isInsideCosmosPreviewIframe } from './shared';
 

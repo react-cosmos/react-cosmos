@@ -12,7 +12,7 @@ import {
   RendererResponse,
   SelectFixtureRequest,
   SetFixtureStateRequest,
-  UnselectFixtureRequest
+  UnselectFixtureRequest,
 } from '../../renderer';
 
 export type Message = RendererResponse | RendererRequest;
@@ -73,94 +73,94 @@ export function createRendererConnectMockApi(
     rendererReady,
     fixtureListUpdate,
     fixtureStateChange,
-    getLastFixtureState
+    getLastFixtureState,
   };
 
   async function pingRenderers() {
     return postMessage({
-      type: 'pingRenderers'
+      type: 'pingRenderers',
     });
   }
 
   async function selectFixture({
     rendererId,
     fixtureId,
-    fixtureState
+    fixtureState,
   }: SelectFixtureRequest['payload']) {
     return postMessage({
       type: 'selectFixture',
       payload: {
         rendererId,
         fixtureId,
-        fixtureState
-      }
+        fixtureState,
+      },
     });
   }
 
   async function unselectFixture({
-    rendererId
+    rendererId,
   }: UnselectFixtureRequest['payload']) {
     return postMessage({
       type: 'unselectFixture',
       payload: {
-        rendererId
-      }
+        rendererId,
+      },
     });
   }
 
   async function setFixtureState({
     rendererId,
     fixtureId,
-    fixtureState
+    fixtureState,
   }: SetFixtureStateRequest['payload']) {
     return postMessage({
       type: 'setFixtureState',
       payload: {
         rendererId,
         fixtureId,
-        fixtureState
-      }
+        fixtureState,
+      },
     });
   }
 
   async function rendererReady({
     rendererId,
-    fixtures
+    fixtures,
   }: RendererReadyResponse['payload']) {
     await untilMessage({
       type: 'rendererReady',
       payload: {
         rendererId,
-        fixtures
-      }
+        fixtures,
+      },
     });
   }
 
   async function fixtureListUpdate({
     rendererId,
-    fixtures
+    fixtures,
   }: FixtureListUpdateResponse['payload']) {
     await untilMessage({
       type: 'fixtureListUpdate',
       payload: {
         rendererId,
-        fixtures
-      }
+        fixtures,
+      },
     });
   }
 
   async function fixtureStateChange({
     rendererId,
     fixtureId,
-    fixtureState
+    fixtureState,
   }: FixtureStateChangeResponse['payload']) {
     await untilMessage({
       type: 'fixtureStateChange',
       payload: {
         rendererId,
         fixtureId,
-        fixtureState
-      }
+        fixtureState,
+      },
     });
   }
 

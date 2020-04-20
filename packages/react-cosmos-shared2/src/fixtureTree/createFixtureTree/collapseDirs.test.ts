@@ -11,28 +11,28 @@ it('collapses dirs', () => {
             items: {
               largeNumber: {
                 path: 'Counter/__fixtures__/largeNumber.js',
-                name: null
-              }
+                name: null,
+              },
             },
             dirs: {
               smallNumbers: {
                 items: {
                   five: {
                     path: 'Counter/__fixtures__/smallNumbers.js',
-                    name: 'five'
+                    name: 'five',
                   },
                   fiftyFive: {
                     path: 'Counter/__fixtures__/smallNumbers.js',
-                    name: 'fiftyFive'
-                  }
+                    name: 'fiftyFive',
+                  },
                 },
-                dirs: {}
-              }
-            }
-          }
-        }
-      }
-    }
+                dirs: {},
+              },
+            },
+          },
+        },
+      },
+    },
   };
   const collapsedTree = {
     items: {},
@@ -41,26 +41,26 @@ it('collapses dirs', () => {
         items: {
           largeNumber: {
             path: 'Counter/__fixtures__/largeNumber.js',
-            name: null
-          }
+            name: null,
+          },
         },
         dirs: {
           smallNumbers: {
             items: {
               five: {
                 path: 'Counter/__fixtures__/smallNumbers.js',
-                name: 'five'
+                name: 'five',
               },
               fiftyFive: {
                 path: 'Counter/__fixtures__/smallNumbers.js',
-                name: 'fiftyFive'
-              }
+                name: 'fiftyFive',
+              },
             },
-            dirs: {}
-          }
-        }
-      }
-    }
+            dirs: {},
+          },
+        },
+      },
+    },
   };
   expect(collapseDirs(tree, '__fixtures__')).toEqual(collapsedTree);
 });

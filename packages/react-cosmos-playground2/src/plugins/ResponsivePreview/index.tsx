@@ -11,15 +11,15 @@ import {
   FixtureStateWithViewport,
   ResponsivePreviewContext,
   ViewportState,
-  VIEWPORT_STORAGE_KEY
+  VIEWPORT_STORAGE_KEY,
 } from './shared';
 import { ToggleButton } from './ToggleButton';
 
 const { plug, namedPlug, register } = createPlugin<ResponsivePreviewSpec>({
   name: 'responsivePreview',
   defaultConfig: {
-    devices: DEFAULT_DEVICES
-  }
+    devices: DEFAULT_DEVICES,
+  },
 });
 
 plug('rendererPreviewOuter', ({ children, pluginContext }) => {
@@ -120,5 +120,8 @@ function setFixtureStateViewport(
 ) {
   const { getMethodsOf } = context;
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
-  rendererCore.setFixtureState(fixtureState => ({ ...fixtureState, viewport }));
+  rendererCore.setFixtureState(fixtureState => ({
+    ...fixtureState,
+    viewport,
+  }));
 }

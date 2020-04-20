@@ -4,7 +4,7 @@ import { testFixtureLoader } from '../testHelpers';
 
 const rendererId = uuid();
 const fixtures = {
-  first: () => <input type="text" />
+  first: () => <input type="text" />,
 };
 const fixtureId = { path: 'first', name: null };
 
@@ -17,8 +17,8 @@ testFixtureLoader(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: []
-      }
+        props: [],
+      },
     });
   }
 );

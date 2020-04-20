@@ -8,21 +8,21 @@ it('hides one single-child root dir', () => {
         items: {
           foo: {
             path: 'foo',
-            name: null
-          }
-        }
-      }
+            name: null,
+          },
+        },
+      },
     },
-    items: {}
+    items: {},
   };
   expect(hideSingleChildDirs(tree)).toEqual({
     dirs: {},
     items: {
       foo: {
         path: 'foo',
-        name: null
-      }
-    }
+        name: null,
+      },
+    },
   });
 });
 
@@ -38,26 +38,26 @@ it('hide all single-child root dirs', () => {
                 items: {
                   foo: {
                     path: 'foo',
-                    name: null
-                  }
-                }
-              }
+                    name: null,
+                  },
+                },
+              },
             },
-            items: {}
-          }
+            items: {},
+          },
         },
-        items: {}
-      }
+        items: {},
+      },
     },
-    items: {}
+    items: {},
   };
   expect(hideSingleChildDirs(tree)).toEqual({
     dirs: {},
     items: {
       foo: {
         path: 'foo',
-        name: null
-      }
-    }
+        name: null,
+      },
+    },
   });
 });

@@ -2,7 +2,7 @@ import {
   findFixtureStateProps,
   FixtureElementId,
   FixtureState,
-  FixtureStateProps
+  FixtureStateProps,
 } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import { stringifyElementId } from '../../../shared/ui/valueInputTree';
@@ -21,7 +21,7 @@ export function createPropsFsUpdater(
 
     return {
       ...prevFs,
-      props: cb(prevFs)
+      props: cb(prevFs),
     };
   };
 }

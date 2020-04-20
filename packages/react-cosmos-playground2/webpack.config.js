@@ -11,7 +11,7 @@ if (env === 'development') {
   // Used by Cosmos config (when loading Playground inside Playground)
   plugins.push(
     new HtmlWebpackPlugin({
-      title: 'React Cosmos'
+      title: 'React Cosmos',
     })
   );
 }
@@ -27,10 +27,10 @@ module.exports = {
     libraryExport: 'default',
     library: 'mountPlayground',
     path: dist,
-    filename: 'index.js'
+    filename: 'index.js',
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js']
+    extensions: ['.ts', '.tsx', '.js'],
   },
   module: {
     rules: [
@@ -38,10 +38,10 @@ module.exports = {
         test: /\.tsx?$/,
         include: src,
         use: {
-          loader: 'babel-loader'
-        }
-      }
-    ]
+          loader: 'babel-loader',
+        },
+      },
+    ],
   },
-  plugins
+  plugins,
 };

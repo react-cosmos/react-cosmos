@@ -3,7 +3,7 @@ import {
   FixtureState,
   FixtureStateClassState,
   FixtureStateProps,
-  FixtureStateValues
+  FixtureStateValues,
 } from '../../fixtureState';
 
 export function anyProps(
@@ -18,13 +18,13 @@ export function anyProps(
     decoratorId = expect.any(String),
     elPath = expect.any(String),
     componentName = expect.any(String),
-    values = expect.any(Object)
+    values = expect.any(Object),
   } = args;
   return {
     elementId: { decoratorId, elPath },
     componentName,
     renderKey: expect.any(Number),
-    values
+    values,
   };
 }
 
@@ -38,12 +38,12 @@ export function anyClassState(args: {
     decoratorId = expect.any(String),
     componentName = expect.any(String),
     elPath = expect.any(String),
-    values
+    values,
   } = args;
   return {
     elementId: { decoratorId, elPath },
     componentName,
-    values
+    values,
   };
 }
 

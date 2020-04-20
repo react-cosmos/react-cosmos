@@ -14,14 +14,14 @@ type Props = {
 export const Viewport: React.FC<Props> = function Viewport({
   children,
   width,
-  height
+  height,
 }: Props) {
   const { setFixtureState } = React.useContext(FixtureContext);
 
   React.useEffect(() => {
     setFixtureState(fixtureState => ({
       ...fixtureState,
-      viewport: { width, height }
+      viewport: { width, height },
     }));
   }, [setFixtureState, width, height]);
 

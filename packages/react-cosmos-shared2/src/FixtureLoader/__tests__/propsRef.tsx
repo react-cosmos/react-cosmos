@@ -4,7 +4,7 @@ import React from 'react';
 import {
   createValues,
   resetFixtureStateProps,
-  updateFixtureStateProps
+  updateFixtureStateProps,
 } from '../../fixtureState';
 import { uuid } from '../../util';
 import { testFixtureLoader } from '../testHelpers';
@@ -31,7 +31,7 @@ const getFixtures = () => ({
       }}
       name="Bianca"
     />
-  )
+  ),
 });
 
 testFixtureLoader(
@@ -42,7 +42,7 @@ testFixtureLoader(
     update,
     selectFixture,
     setFixtureState,
-    getLastFixtureState
+    getLastFixtureState,
   }) => {
     await selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
@@ -54,9 +54,9 @@ testFixtureLoader(
         props: updateFixtureStateProps({
           fixtureState,
           elementId,
-          values: createValues({ name: 'B' })
-        })
-      }
+          values: createValues({ name: 'B' }),
+        }),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toEqual('Hello B'));
     update({ rendererId, fixtures: getFixtures() });
@@ -75,7 +75,7 @@ testFixtureLoader(
     update,
     selectFixture,
     setFixtureState,
-    getLastFixtureState
+    getLastFixtureState,
   }) => {
     await selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
@@ -87,9 +87,9 @@ testFixtureLoader(
         props: resetFixtureStateProps({
           fixtureState,
           elementId,
-          values: createValues({ name: 'B' })
-        })
-      }
+          values: createValues({ name: 'B' }),
+        }),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toEqual('Hello B'));
     update({ rendererId, fixtures: getFixtures() });

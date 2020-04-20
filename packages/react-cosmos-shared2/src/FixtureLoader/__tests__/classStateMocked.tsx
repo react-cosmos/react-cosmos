@@ -4,7 +4,7 @@ import React from 'react';
 import {
   createValues,
   removeFixtureStateClassState,
-  updateFixtureStateClassState
+  updateFixtureStateClassState,
 } from '../../fixtureState';
 import { uuid } from '../../util';
 import { testFixtureLoader } from '../testHelpers';
@@ -12,7 +12,7 @@ import { CoolCounter, Counter } from '../testHelpers/components';
 import {
   anyClassState,
   anyProps,
-  getClassState
+  getClassState,
 } from '../testHelpers/fixtureState';
 
 const rendererId = uuid();
@@ -21,7 +21,7 @@ const fixtures = {
     <StateMock state={{ count: 5 }}>
       <Counter />
     </StateMock>
-  )
+  ),
 };
 const fixtureId = { path: 'first', name: null };
 
@@ -39,10 +39,10 @@ testFixtureLoader(
         classState: [
           anyClassState({
             values: createValues({ count: 5 }),
-            componentName: 'Counter'
-          })
-        ]
-      }
+            componentName: 'Counter',
+          }),
+        ],
+      },
     });
   }
 );
@@ -61,9 +61,9 @@ testFixtureLoader(
         classState: updateFixtureStateClassState({
           fixtureState,
           elementId,
-          values: createValues({ count: 100 })
-        })
-      }
+          values: createValues({ count: 100 }),
+        }),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('100 times'));
     // A second update will provide code coverage for a different branch:
@@ -75,9 +75,9 @@ testFixtureLoader(
         classState: updateFixtureStateClassState({
           fixtureState,
           elementId,
-          values: createValues({ count: 200 })
-        })
-      }
+          values: createValues({ count: 200 }),
+        }),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('200 times'));
   }
@@ -97,9 +97,9 @@ testFixtureLoader(
         classState: updateFixtureStateClassState({
           fixtureState,
           elementId,
-          values: {}
-        })
-      }
+          values: {},
+        }),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('Missing count'));
   }
@@ -113,7 +113,7 @@ testFixtureLoader(
     selectFixture,
     setFixtureState,
     fixtureStateChange,
-    getLastFixtureState
+    getLastFixtureState,
   }) => {
     await selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
@@ -125,17 +125,17 @@ testFixtureLoader(
         classState: updateFixtureStateClassState({
           fixtureState,
           elementId,
-          values: createValues({ count: 10 })
-        })
-      }
+          values: createValues({ count: 10 }),
+        }),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('10 times'));
     await setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: removeFixtureStateClassState(fixtureState, elementId)
-      }
+        classState: removeFixtureStateClassState(fixtureState, elementId),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('5 times'));
     // After the state is removed from the fixture state, the original
@@ -148,10 +148,10 @@ testFixtureLoader(
         classState: [
           anyClassState({
             values: createValues({ count: 5 }),
-            componentName: 'Counter'
-          })
-        ]
-      }
+            componentName: 'Counter',
+          }),
+        ],
+      },
     });
   }
 );
@@ -164,7 +164,7 @@ testFixtureLoader(
     update,
     selectFixture,
     setFixtureState,
-    getLastFixtureState
+    getLastFixtureState,
   }) => {
     await selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
@@ -176,9 +176,9 @@ testFixtureLoader(
         classState: updateFixtureStateClassState({
           fixtureState,
           elementId,
-          values: createValues({ count: 50 })
-        })
-      }
+          values: createValues({ count: 50 }),
+        }),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('50 times'));
     update({
@@ -188,8 +188,8 @@ testFixtureLoader(
           <StateMock state={{ count: 5 }}>
             <CoolCounter />
           </StateMock>
-        )
-      }
+        ),
+      },
     });
     expect(renderer.toJSON()).toBe('50 timez');
   }
@@ -204,7 +204,7 @@ testFixtureLoader(
     selectFixture,
     setFixtureState,
     fixtureStateChange,
-    getLastFixtureState
+    getLastFixtureState,
   }) => {
     await selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
@@ -216,9 +216,9 @@ testFixtureLoader(
         classState: updateFixtureStateClassState({
           fixtureState,
           elementId,
-          values: createValues({ count: 6 })
-        })
-      }
+          values: createValues({ count: 6 }),
+        }),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('6 times'));
     // When the fixture changes the fixture state follows along
@@ -229,8 +229,8 @@ testFixtureLoader(
           <StateMock state={{ count: 50 }}>
             <Counter />
           </StateMock>
-        )
-      }
+        ),
+      },
     });
     await fixtureStateChange({
       rendererId,
@@ -240,10 +240,10 @@ testFixtureLoader(
         classState: [
           anyClassState({
             values: createValues({ count: 50 }),
-            componentName: 'Counter'
-          })
-        ]
-      }
+            componentName: 'Counter',
+          }),
+        ],
+      },
     });
     expect(renderer.toJSON()).toBe('50 times');
   }
@@ -262,18 +262,18 @@ testFixtureLoader(
         classState: [
           anyClassState({
             values: createValues({ count: 5 }),
-            componentName: 'Counter'
-          })
-        ]
-      }
+            componentName: 'Counter',
+          }),
+        ],
+      },
     });
     update({
       rendererId,
       fixtures: {
         // Counter element from fixture is gone, and so should the
         // fixture state related to it.
-        first: 'No counts for you.'
-      }
+        first: 'No counts for you.',
+      },
     });
     expect(renderer.toJSON()).toBe('No counts for you.');
     await fixtureStateChange({
@@ -281,8 +281,8 @@ testFixtureLoader(
       fixtureId,
       fixtureState: {
         props: [],
-        classState: []
-      }
+        classState: [],
+      },
     });
   }
 );

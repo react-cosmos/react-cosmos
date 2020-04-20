@@ -3,7 +3,7 @@ import React from 'react';
 import {
   FixtureState,
   FixtureStateValuePairs,
-  FixtureStateValues
+  FixtureStateValues,
 } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import { RotateCcwIcon } from '../../shared/icons';
@@ -15,7 +15,7 @@ import {
   Container,
   Header,
   Title,
-  ValueInputTree
+  ValueInputTree,
 } from '../../shared/ui/valueInputTree';
 
 type Props = {
@@ -29,7 +29,7 @@ export const ValuesPanel = React.memo(function ClassStatePanel({
   fixtureState,
   treeExpansion,
   onFixtureStateChange,
-  onTreeExpansionChange
+  onTreeExpansionChange,
 }: Props) {
   const onValueChange = React.useCallback(
     (newValues: FixtureStateValues) => {

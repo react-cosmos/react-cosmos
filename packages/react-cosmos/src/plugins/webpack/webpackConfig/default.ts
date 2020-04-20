@@ -32,14 +32,14 @@ export function getDefaultWebpackConfig(
       use: {
         loader: babelLoaderPath,
         options: {
-          root: rootDir
-        }
-      }
+          root: rootDir,
+        },
+      },
     });
   } else if (tsLoaderPath) {
     rules.push({
       test: /\.tsx?$/,
-      loader: tsLoaderPath
+      loader: tsLoaderPath,
     });
   }
 
@@ -50,15 +50,15 @@ export function getDefaultWebpackConfig(
         use: [
           styleLoaderPath,
           { loader: cssLoaderPath, options: { importLoaders: 1 } },
-          postcssLoaderPath
+          postcssLoaderPath,
         ],
-        exclude: /node_modules/
+        exclude: /node_modules/,
       });
     } else {
       rules.push({
         test: /\.css$/,
         loader: `${styleLoaderPath}!${cssLoaderPath}`,
-        exclude: /node_modules/
+        exclude: /node_modules/,
       });
     }
 
@@ -66,7 +66,7 @@ export function getDefaultWebpackConfig(
     rules.push({
       test: /\.css$/,
       loader: `${styleLoaderPath}!${cssLoaderPath}`,
-      include: /node_modules/
+      include: /node_modules/,
     });
   }
 
@@ -74,7 +74,7 @@ export function getDefaultWebpackConfig(
     rules.push({
       test: /\.json$/,
       loader: jsonLoaderPath,
-      exclude: /node_modules/
+      exclude: /node_modules/,
     });
   }
 
@@ -83,7 +83,7 @@ export function getDefaultWebpackConfig(
     plugins.push(
       new htmlWebpackPlugin({
         title: 'React Cosmos',
-        filename: RENDERER_FILENAME
+        filename: RENDERER_FILENAME,
       })
     );
   }
@@ -94,14 +94,14 @@ export function getDefaultWebpackConfig(
     devtool: 'cheap-module-source-map',
     resolve: {
       // Warning: webpack 1.x expects ['', '.js', '.jsx']
-      extensions: ['.js', '.jsx', '.ts', '.tsx']
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
     },
     module: {
       // Note: `module.rules` only works with webpack >=2.x. For 1.x
       // compatibility a custom webpack config (with module.loaders) is required
-      rules
+      rules,
     },
-    plugins
+    plugins,
   };
 
   const webpack4 =
@@ -117,7 +117,7 @@ export function getDefaultWebpackConfig(
       // Cosmos reads component names at run-time, so it is crucial to not
       // minify even when building with production env (ie. when exporting)
       // https://github.com/react-cosmos/react-cosmos/issues/701
-      minimize: false
-    }
+      minimize: false,
+    },
   };
 }

@@ -3,7 +3,7 @@ import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   mockNotifications,
   getRendererCoreContext,
-  mockRendererCore
+  mockRendererCore,
 } from '../../testHelpers/pluginMocks';
 import { register } from '.';
 
@@ -13,8 +13,8 @@ function emitRendererCoreResponse() {
   getRendererCoreContext().emit('response', {
     type: 'rendererHmrFail',
     payload: {
-      rendererId: 'mockRendererId1'
-    }
+      rendererId: 'mockRendererId1',
+    },
   });
 }
 
@@ -32,7 +32,7 @@ it('notifies HMR fail', async () => {
       type: 'error',
       title: 'Hot reload failed',
       info:
-        'Check the browser console to see which module failed to hot reload.'
+        'Check the browser console to see which module failed to hot reload.',
     })
   );
 });

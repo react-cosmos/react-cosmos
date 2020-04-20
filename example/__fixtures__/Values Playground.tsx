@@ -6,13 +6,13 @@ export default () => {
   const [number] = useValue('number', { defaultValue: 1989 });
   const [boolean] = useValue('boolean', { defaultValue: true });
   const [object] = useValue('object', {
-    defaultValue: { isAdmin: true, name: 'Pat D', age: 44 }
+    defaultValue: { isAdmin: true, name: 'Pat D', age: 44 },
   });
   const [array] = useValue('array', {
     defaultValue: [
       { isAdmin: true, name: 'Pat D', age: 44 },
-      { isAdmin: false, name: 'Dan B', age: 39 }
-    ]
+      { isAdmin: false, name: 'Dan B', age: 39 },
+    ],
   });
 
   return (

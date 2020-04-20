@@ -12,7 +12,7 @@ export function receiveFixtureStateChangeResponse(
   const selectedFixtureId = getSelectedFixtureId(context);
   const {
     primaryRendererId,
-    fixtureState: prevFixtureState
+    fixtureState: prevFixtureState,
   } = context.getState();
 
   if (!isEqual(fixtureId, selectedFixtureId)) {

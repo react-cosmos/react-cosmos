@@ -1,7 +1,7 @@
 import {
   FixtureElementId,
   FixtureStatePrimitiveValue,
-  FixtureStateUnserializableValue
+  FixtureStateUnserializableValue,
 } from 'react-cosmos-shared2/fixtureState';
 import { TreeNode } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';

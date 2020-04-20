@@ -23,7 +23,7 @@ const getFixtures = () => ({
       }}
       suffix="times"
     />
-  )
+  ),
 });
 const fixtureId = { path: 'first', name: null };
 
@@ -35,7 +35,7 @@ testFixtureLoader(
     selectFixture,
     setFixtureState,
     fixtureStateChange,
-    getLastFixtureState
+    getLastFixtureState,
   }) => {
     await selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
@@ -48,9 +48,9 @@ testFixtureLoader(
         props: updateFixtureStateProps({
           fixtureState,
           elementId,
-          values: createValues({ suffix: 'timez' })
-        })
-      }
+          values: createValues({ suffix: 'timez' }),
+        }),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('0 timez'));
 
@@ -64,15 +64,15 @@ testFixtureLoader(
       fixtureState: {
         props: [
           anyProps({
-            values: createValues({ suffix: 'timez' })
-          })
+            values: createValues({ suffix: 'timez' }),
+          }),
         ],
         classState: [
           anyClassState({
-            values: createValues({ count: 7 })
-          })
-        ]
-      }
+            values: createValues({ count: 7 }),
+          }),
+        ],
+      },
     });
   }
 );

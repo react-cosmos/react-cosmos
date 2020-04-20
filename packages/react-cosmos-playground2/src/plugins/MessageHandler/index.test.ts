@@ -4,7 +4,7 @@ import { mockSocketIo } from './testHelpers/mockSocketIo';
 import { waitFor } from '@testing-library/dom';
 import {
   BuildErrorMessage,
-  SERVER_MESSAGE_EVENT_NAME
+  SERVER_MESSAGE_EVENT_NAME,
 } from 'react-cosmos-shared2/build';
 import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
 import { loadPlugins, resetPlugins } from 'react-plugin';
@@ -12,7 +12,7 @@ import { register } from '.';
 import {
   getMessageHandlerMethods,
   mockCore,
-  onMessageHandler
+  onMessageHandler,
 } from '../../testHelpers/pluginMocks';
 
 afterEach(resetPlugins);
@@ -20,7 +20,7 @@ afterEach(resetPlugins);
 function registerTestPlugins() {
   register();
   mockCore({
-    isDevServerOn: () => true
+    isDevServerOn: () => true,
   });
 }
 
@@ -33,8 +33,8 @@ it('emits renderer request externally', async () => {
     payload: {
       rendererId: 'mockRendererId',
       fixtureId: { path: 'mockFixturePath', name: null },
-      fixtureState: {}
-    }
+      fixtureState: {},
+    },
   };
   const messageHandler = getMessageHandlerMethods();
   messageHandler.postRendererRequest(selectFixtureReq);
@@ -55,8 +55,8 @@ it('emits renderer response internally', async () => {
       type: 'rendererReady',
       payload: {
         rendererId: 'mockRendererId',
-        fixtures: { 'ein.js': null, 'zwei.js': null, 'drei.js': null }
-      }
+        fixtures: { 'ein.js': null, 'zwei.js': null, 'drei.js': null },
+      },
     };
 
     const { rendererResponse } = onMessageHandler();
@@ -77,7 +77,7 @@ it('emits server message internally', async () => {
 
   await mockSocketIo(async ({ fakeEvent }) => {
     const buildErrorMsg: BuildErrorMessage = {
-      type: 'buildError'
+      type: 'buildError',
     };
 
     const { serverMessage } = onMessageHandler();

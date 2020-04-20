@@ -51,7 +51,7 @@ export async function startDevServer(
         cosmosConfig,
         httpServer: httpServer.server,
         expressApp: app,
-        sendMessage: msgHandler.sendMessage
+        sendMessage: msgHandler.sendMessage,
       });
       if (typeof pluginReturn === 'function') {
         pluginCleanupCallbacks.push(pluginReturn);

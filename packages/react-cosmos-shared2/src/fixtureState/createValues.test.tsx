@@ -6,8 +6,8 @@ it('creates string value', () => {
   expect(values).toEqual({
     myProp: {
       type: 'primitive',
-      value: 'foo'
-    }
+      value: 'foo',
+    },
   });
 });
 
@@ -16,8 +16,8 @@ it('creates number value', () => {
   expect(values).toEqual({
     myProp: {
       type: 'primitive',
-      value: 56
-    }
+      value: 56,
+    },
   });
 });
 
@@ -26,8 +26,8 @@ it('creates boolean value', () => {
   expect(values).toEqual({
     myProp: {
       type: 'primitive',
-      value: false
-    }
+      value: false,
+    },
   });
 });
 
@@ -41,8 +41,8 @@ it('creates null value', () => {
   expect(values).toEqual({
     myProp: {
       type: 'primitive',
-      value: null
-    }
+      value: null,
+    },
   });
 });
 
@@ -51,8 +51,8 @@ it('creates unserializable function value', () => {
   expect(values).toEqual({
     myProp: {
       type: 'unserializable',
-      stringifiedValue: 'function myProp() {}'
-    }
+      stringifiedValue: 'function myProp() {}',
+    },
   });
 });
 
@@ -61,8 +61,8 @@ it('creates unserializable regexp value', () => {
   expect(values).toEqual({
     myProp: {
       type: 'unserializable',
-      stringifiedValue: '/impossible/g'
-    }
+      stringifiedValue: '/impossible/g',
+    },
   });
 });
 
@@ -71,8 +71,8 @@ it('creates unserializable React element value', () => {
   expect(values).toEqual({
     myProp: {
       type: 'unserializable',
-      stringifiedValue: '<div />'
-    }
+      stringifiedValue: '<div />',
+    },
   });
 });
 
@@ -81,14 +81,14 @@ it('creates empty object value', () => {
   expect(values).toEqual({
     myProp: {
       type: 'object',
-      values: {}
-    }
+      values: {},
+    },
   });
 });
 
 it('creates serializable object value', () => {
   const values = createValues({
-    myProp: { strProp: 'foo', numProp: 56, boolProp: false }
+    myProp: { strProp: 'foo', numProp: 56, boolProp: false },
   });
   expect(values).toEqual({
     myProp: {
@@ -96,24 +96,24 @@ it('creates serializable object value', () => {
       values: {
         strProp: {
           type: 'primitive',
-          value: 'foo'
+          value: 'foo',
         },
         numProp: {
           type: 'primitive',
-          value: 56
+          value: 56,
         },
         boolProp: {
           type: 'primitive',
-          value: false
-        }
-      }
-    }
+          value: false,
+        },
+      },
+    },
   });
 });
 
 it('creates partially serializable object value', () => {
   const values = createValues({
-    myProp: { strProp: 'foo', fnProp: () => {} }
+    myProp: { strProp: 'foo', fnProp: () => {} },
   });
   expect(values).toEqual({
     myProp: {
@@ -121,20 +121,20 @@ it('creates partially serializable object value', () => {
       values: {
         strProp: {
           type: 'primitive',
-          value: 'foo'
+          value: 'foo',
         },
         fnProp: {
           type: 'unserializable',
-          stringifiedValue: 'function fnProp() {}'
-        }
-      }
-    }
+          stringifiedValue: 'function fnProp() {}',
+        },
+      },
+    },
   });
 });
 
 it('creates array value', () => {
   const values = createValues({
-    myProp: ['foo', () => {}]
+    myProp: ['foo', () => {}],
   });
   expect(values).toEqual({
     myProp: {
@@ -142,13 +142,13 @@ it('creates array value', () => {
       values: [
         {
           type: 'primitive',
-          value: 'foo'
+          value: 'foo',
         },
         {
           type: 'unserializable',
-          stringifiedValue: 'function () {}'
-        }
-      ]
-    }
+          stringifiedValue: 'function () {}',
+        },
+      ],
+    },
   });
 });

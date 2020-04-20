@@ -2,7 +2,7 @@ import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   mockStorage,
   mockCore,
-  mockRendererCore
+  mockRendererCore,
 } from '../../../testHelpers/pluginMocks';
 import { register } from '..';
 
@@ -12,10 +12,10 @@ it('loads storage cache', () => {
   const mockLoadCache = jest.fn(() => Promise.resolve(null));
   mockStorage({ loadCache: mockLoadCache });
   mockCore({
-    getProjectId: () => 'mockProjectId'
+    getProjectId: () => 'mockProjectId',
   });
   mockRendererCore({
-    isValidFixtureSelected: () => false
+    isValidFixtureSelected: () => false,
   });
   register();
   loadPlugins();

@@ -5,11 +5,11 @@ import {
   getRendererCoreMethods,
   mockNotifications,
   mockRouter,
-  onRendererCore
+  onRendererCore,
 } from '../../../../testHelpers/pluginMocks';
 import {
   createFixtureStateChangeResponse,
-  mockRendererReady
+  mockRendererReady,
 } from '../../testHelpers';
 import { register } from '../..';
 
@@ -22,7 +22,7 @@ const fixtureState = { props: [] };
 function registerTestPlugins() {
   register();
   mockRouter({
-    getSelectedFixtureId: () => fixtureId
+    getSelectedFixtureId: () => fixtureId,
   });
   mockNotifications();
 }
@@ -73,8 +73,8 @@ it('posts "setFixtureState" request to secondary renderer', async () => {
       payload: {
         rendererId: 'mockRendererId2',
         fixtureId,
-        fixtureState
-      }
+        fixtureState,
+      },
     })
   );
 });

@@ -2,23 +2,23 @@ import { createRawFixtureTree } from './createRawFixtureTree';
 
 it('create tree with single fixture', () => {
   const paths = {
-    'helloWorld.fixture.js': null
+    'helloWorld.fixture.js': null,
   };
   const tree = {
     dirs: {},
     items: {
       'helloWorld.fixture': {
         name: null,
-        path: 'helloWorld.fixture.js'
-      }
-    }
+        path: 'helloWorld.fixture.js',
+      },
+    },
   };
   expect(createRawFixtureTree(paths)).toEqual(tree);
 });
 
 it('create tree with multi fixture', () => {
   const paths = {
-    'index.fixture.js': ['Susan', 'Sarah']
+    'index.fixture.js': ['Susan', 'Sarah'],
   };
   const tree = {
     dirs: {
@@ -27,16 +27,16 @@ it('create tree with multi fixture', () => {
         items: {
           Susan: {
             name: 'Susan',
-            path: 'index.fixture.js'
+            path: 'index.fixture.js',
           },
           Sarah: {
             name: 'Sarah',
-            path: 'index.fixture.js'
-          }
-        }
-      }
+            path: 'index.fixture.js',
+          },
+        },
+      },
     },
-    items: {}
+    items: {},
   };
   expect(createRawFixtureTree(paths)).toEqual(tree);
 });

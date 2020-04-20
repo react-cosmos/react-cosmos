@@ -7,7 +7,7 @@ it('returns default fixturesDir', () => {
 
 it('returns custom fixturesDir', () => {
   const cosmosConfig = createCosmosConfig(process.cwd(), {
-    fixturesDir: '__jsxfixtures__'
+    fixturesDir: '__jsxfixtures__',
   });
   expect(cosmosConfig.fixturesDir).toBe('__jsxfixtures__');
 });

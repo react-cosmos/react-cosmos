@@ -1,7 +1,7 @@
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import {
   postSelectFixtureRequest,
-  postUnselectFixtureRequest
+  postUnselectFixtureRequest,
 } from './shared/postRequest';
 import { RendererCoreContext, State } from './shared';
 

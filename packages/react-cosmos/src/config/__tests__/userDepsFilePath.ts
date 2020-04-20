@@ -8,7 +8,7 @@ it('returns resolved default getUserDepsFilePath', () => {
 
 it('returns resolved custom getUserDepsFilePath', () => {
   const cosmosConfig = createCosmosConfig(process.cwd(), {
-    userDepsFilePath: 'heremydeps.js'
+    userDepsFilePath: 'heremydeps.js',
   });
   expect(cosmosConfig.userDepsFilePath).toBe(getCwdPath('heremydeps.js'));
 });

@@ -1,7 +1,7 @@
 export {
   getDecoratorPatterns,
   getFixturePatterns,
-  getIgnorePatterns
+  getIgnorePatterns,
 } from './shared';
 export { findUserModulePaths } from './findUserModulePaths';
 export { getUserModules } from './getUserModules';

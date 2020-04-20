@@ -33,8 +33,8 @@ function cloneNode(value: React.ReactNode): React.ReactNode {
       ...value,
       props: {
         ...otherProps,
-        children: cloneNode(children)
-      }
+        children: cloneNode(children),
+      },
     };
   }
 

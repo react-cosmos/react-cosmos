@@ -16,7 +16,7 @@ function mount() {
     rendererConfig,
     fixtures,
     decorators,
-    onErrorReset: dismissErrorOverlay
+    onErrorReset: dismissErrorOverlay,
   });
 }
 

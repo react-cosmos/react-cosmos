@@ -13,7 +13,7 @@ type Props = {
 export function FixtureSearchHeader({
   validFixtureSelected,
   onOpen,
-  onCloseNav
+  onCloseNav,
 }: Props) {
   return (
     <Container>

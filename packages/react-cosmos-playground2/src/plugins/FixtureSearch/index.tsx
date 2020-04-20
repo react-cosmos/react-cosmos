@@ -16,15 +16,15 @@ const { onLoad, namedPlug, register } = createPlugin<FixtureSearchSpec>({
   name: 'fixtureSearch',
   initialState: {
     open: false,
-    searchText: ''
-  }
+    searchText: '',
+  },
 });
 
 onLoad(pluginContext => {
   const { getMethodsOf, setState } = pluginContext;
   const core = getMethodsOf<CoreSpec>('core');
   return core.registerCommands({
-    searchFixtures: () => setState(prevState => ({ ...prevState, open: true }))
+    searchFixtures: () => setState(prevState => ({ ...prevState, open: true })),
   });
 });
 

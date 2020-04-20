@@ -14,7 +14,7 @@ function createFixtures({ defaultValue }: { defaultValue: boolean }) {
     );
   };
   return {
-    first: <MyComponent />
+    first: <MyComponent />,
   };
 }
 
@@ -44,10 +44,10 @@ testFixtureLoader(
         values: {
           toggled: {
             defaultValue: createValue(false),
-            currentValue: createValue(false)
-          }
-        }
-      }
+            currentValue: createValue(false),
+          },
+        },
+      },
     });
   }
 );
@@ -67,10 +67,10 @@ testFixtureLoader(
         values: {
           toggled: {
             defaultValue: createValue(false),
-            currentValue: createValue(true)
-          }
-        }
-      }
+            currentValue: createValue(true),
+          },
+        },
+      },
     });
   }
 );
@@ -83,7 +83,7 @@ testFixtureLoader(
     await rendered(renderer, 'false');
     update({
       rendererId,
-      fixtures: createFixtures({ defaultValue: true })
+      fixtures: createFixtures({ defaultValue: true }),
     });
     await fixtureStateChange({
       rendererId,
@@ -93,10 +93,10 @@ testFixtureLoader(
         values: {
           toggled: {
             defaultValue: createValue(true),
-            currentValue: createValue(true)
-          }
-        }
-      }
+            currentValue: createValue(true),
+          },
+        },
+      },
     });
   }
 );

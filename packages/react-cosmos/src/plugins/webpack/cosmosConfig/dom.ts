@@ -11,12 +11,12 @@ export function createDomCosmosConfig(
 ): DomCosmosConfig {
   const configInput = (cosmosConfig.dom || {}) as DomCosmosConfigInput;
   return {
-    containerQuerySelector: getContainerQuerySelector(configInput)
+    containerQuerySelector: getContainerQuerySelector(configInput),
   };
 }
 
 function getContainerQuerySelector({
-  containerQuerySelector = null
+  containerQuerySelector = null,
 }: DomCosmosConfigInput) {
   return containerQuerySelector;
 }

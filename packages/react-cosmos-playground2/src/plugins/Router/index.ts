@@ -5,7 +5,7 @@ import { PlaygroundUrlParams } from 'react-cosmos-shared2/url';
 import {
   getUrlParams,
   pushUrlParams,
-  subscribeToLocationChanges
+  subscribeToLocationChanges,
 } from '../../shared/url';
 import { RouterSpec } from './public';
 
@@ -14,13 +14,13 @@ type RouterContext = PluginContext<RouterSpec>;
 const { onLoad, register } = createPlugin<RouterSpec>({
   name: 'router',
   initialState: {
-    urlParams: {}
+    urlParams: {},
   },
   methods: {
     getSelectedFixtureId,
     selectFixture,
-    unselectFixture
-  }
+    unselectFixture,
+  },
 });
 
 onLoad(context => {

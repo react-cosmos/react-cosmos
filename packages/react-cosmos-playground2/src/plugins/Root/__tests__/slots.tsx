@@ -6,7 +6,7 @@ import {
   mockStorage,
   mockRouter,
   mockCore,
-  mockRendererCore
+  mockRendererCore,
 } from '../../../testHelpers/pluginMocks';
 import { register } from '..';
 
@@ -14,21 +14,21 @@ afterEach(resetPlugins);
 
 function registerTestPlugins() {
   mockStorage({
-    loadCache: () => Promise.resolve(null)
+    loadCache: () => Promise.resolve(null),
   });
   mockRouter({
-    getSelectedFixtureId: () => ({ path: 'foo.js', name: null })
+    getSelectedFixtureId: () => ({ path: 'foo.js', name: null }),
   });
   mockCore({
     getFixtureFileVars: () => ({
       fixturesDir: '__fixtures__',
-      fixtureFileSuffix: 'fixture'
-    })
+      fixtureFileSuffix: 'fixture',
+    }),
   });
   mockRendererCore({
     isRendererConnected: () => true,
     getFixtures: () => ({}),
-    isValidFixtureSelected: () => true
+    isValidFixtureSelected: () => true,
   });
   register();
 }

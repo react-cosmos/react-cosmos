@@ -2,7 +2,7 @@ import React from 'react';
 import {
   extendWithValue,
   findFixtureStateValue,
-  FixtureStateValueType
+  FixtureStateValueType,
 } from '../../fixtureState';
 import { FixtureContext } from '../FixtureContext';
 

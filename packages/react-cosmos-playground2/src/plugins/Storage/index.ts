@@ -7,13 +7,13 @@ type StorageContext = PluginContext<StorageSpec>;
 const { register } = createPlugin<StorageSpec>({
   name: 'storage',
   initialState: {
-    cache: null
+    cache: null,
   },
   methods: {
     loadCache,
     getItem,
-    setItem
-  }
+    setItem,
+  },
 });
 
 export { register };

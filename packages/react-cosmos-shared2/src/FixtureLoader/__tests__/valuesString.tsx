@@ -18,7 +18,7 @@ function createFixtures({ defaultValue }: { defaultValue: string }) {
     );
   };
   return {
-    first: <MyComponent />
+    first: <MyComponent />,
   };
 }
 
@@ -48,10 +48,10 @@ testFixtureLoader(
         values: {
           name: {
             defaultValue: createValue('Fu Barr'),
-            currentValue: createValue('Fu Barr')
-          }
-        }
-      }
+            currentValue: createValue('Fu Barr'),
+          },
+        },
+      },
     });
   }
 );
@@ -71,10 +71,10 @@ testFixtureLoader(
         values: {
           name: {
             defaultValue: createValue('Fu Barr'),
-            currentValue: createValue('Fu Barr Bhaz')
-          }
-        }
-      }
+            currentValue: createValue('Fu Barr Bhaz'),
+          },
+        },
+      },
     });
   }
 );
@@ -87,7 +87,7 @@ testFixtureLoader(
     await rendered(renderer, 'Fu Barr');
     update({
       rendererId,
-      fixtures: createFixtures({ defaultValue: 'Fu Barr Bhaz' })
+      fixtures: createFixtures({ defaultValue: 'Fu Barr Bhaz' }),
     });
     await fixtureStateChange({
       rendererId,
@@ -97,10 +97,10 @@ testFixtureLoader(
         values: {
           name: {
             defaultValue: createValue('Fu Barr Bhaz'),
-            currentValue: createValue('Fu Barr Bhaz')
-          }
-        }
-      }
+            currentValue: createValue('Fu Barr Bhaz'),
+          },
+        },
+      },
     });
   }
 );

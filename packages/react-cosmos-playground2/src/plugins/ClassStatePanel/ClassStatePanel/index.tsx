@@ -6,7 +6,7 @@ import {
   hasFsValues,
   OnElementExpansionChange,
   sortFsValueGroups,
-  stringifyElementId
+  stringifyElementId,
 } from '../../../shared/ui/valueInputTree';
 import { ComponentClassState } from './ComponentClassState';
 
@@ -21,7 +21,7 @@ export const ClassStatePanel = React.memo(function ClassStatePanel({
   fixtureState,
   fixtureExpansion,
   onFixtureStateChange,
-  onElementExpansionChange
+  onElementExpansionChange,
 }: Props) {
   if (!fixtureState.classState) {
     return null;

@@ -5,7 +5,7 @@ import {
   TextContainer,
   TextField,
   TextInputContainer,
-  TextMirror
+  TextMirror,
 } from './shared';
 
 type Styles = {
@@ -30,7 +30,7 @@ export function NumberInput({
   minValue = -Infinity,
   maxValue = Infinity,
   styles,
-  onChange
+  onChange,
 }: Props) {
   const { focused, onFocus, onBlur } = useFocus();
 

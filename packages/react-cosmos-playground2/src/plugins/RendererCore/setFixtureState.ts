@@ -25,7 +25,7 @@ export function setFixtureState(
   function change(prevState: State) {
     return {
       ...prevState,
-      fixtureState: stateUpdater(prevState.fixtureState)
+      fixtureState: stateUpdater(prevState.fixtureState),
     };
   }
 

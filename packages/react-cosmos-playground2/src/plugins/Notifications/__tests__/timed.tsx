@@ -4,7 +4,7 @@ import {
   ArraySlot,
   enablePlugin,
   loadPlugins,
-  resetPlugins
+  resetPlugins,
 } from 'react-plugin';
 import { register } from '..';
 import { getNotificationsMethods } from '../../../testHelpers/pluginMocks';
@@ -28,7 +28,7 @@ function pushTimedNotification() {
       id: 'renderer-connect',
       type: 'success',
       title: 'Renderer connected',
-      info: 'Your fixtures are ready to use.'
+      info: 'Your fixtures are ready to use.',
     })
   );
 }

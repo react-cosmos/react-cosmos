@@ -5,7 +5,7 @@ import {
   grey248,
   grey32,
   grey8,
-  selectedColors
+  selectedColors,
 } from '../../../shared/ui/colors';
 import { quick } from '../../../shared/ui/vars';
 

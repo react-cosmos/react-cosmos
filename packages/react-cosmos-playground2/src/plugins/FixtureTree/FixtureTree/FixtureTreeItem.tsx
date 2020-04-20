@@ -19,7 +19,7 @@ export function FixtureTreeItem({
   item,
   itemName,
   selectedFixtureId,
-  onSelect
+  onSelect,
 }: Props) {
   const onClick = React.useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>) => {

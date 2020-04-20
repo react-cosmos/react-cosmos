@@ -7,7 +7,7 @@ import {
   getRendererCoreContext,
   mockCore,
   mockNotifications,
-  mockRendererCore
+  mockRendererCore,
 } from '../../../testHelpers/pluginMocks';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { getIframe } from '../testHelpers/iframe';
@@ -18,7 +18,7 @@ afterEach(resetPlugins);
 function registerTestPlugins() {
   register();
   mockCore({
-    getWebRendererUrl: () => 'http://localhost:5000/_renderer.html'
+    getWebRendererUrl: () => 'http://localhost:5000/_renderer.html',
   });
   mockRendererCore();
 }
@@ -35,7 +35,7 @@ async function mockRendererLocation(renderer: RenderResult, newPath: string) {
   const iframe = getIframe(renderer);
   Object.defineProperty(iframe.contentWindow, 'location', {
     value: { href: `http://localhost:5000${newPath}`, replace: jest.fn() },
-    writable: true
+    writable: true,
   });
   await fireIframeLoadEvent(iframe);
 }
@@ -70,7 +70,7 @@ if (nodeVersion >= 10) {
       id: 'renderer-location-change',
       type: 'info',
       title: 'Renderer iframe location changed',
-      info: `Reload or select another fixture to reset your preview.`
+      info: `Reload or select another fixture to reset your preview.`,
     });
   });
 

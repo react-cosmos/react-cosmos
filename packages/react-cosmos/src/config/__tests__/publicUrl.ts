@@ -7,7 +7,7 @@ it('returns default publicUrl', () => {
 
 it('returns custom publicUrl', () => {
   const { publicUrl } = createCosmosConfig(process.cwd(), {
-    publicUrl: '/path/'
+    publicUrl: '/path/',
   });
   expect(publicUrl).toBe('/path/');
 });

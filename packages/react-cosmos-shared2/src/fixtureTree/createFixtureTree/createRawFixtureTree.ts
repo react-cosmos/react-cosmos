@@ -16,7 +16,7 @@ export function createRawFixtureTree(
 function getBlankNode(): FixtureNode {
   return {
     items: {},
-    dirs: {}
+    dirs: {},
   };
 }
 
@@ -36,14 +36,14 @@ function addFixturePathToTree(
   if (!fixtureNames) {
     return addFixtureIdToTree(rootNode, namespace, fileName, {
       path: fixturePath,
-      name: null
+      name: null,
     });
   }
 
   fixtureNames.forEach(fixtureName => {
     addFixtureIdToTree(rootNode, [...namespace, fileName], fixtureName, {
       path: fixturePath,
-      name: fixtureName
+      name: fixtureName,
     });
   });
 }

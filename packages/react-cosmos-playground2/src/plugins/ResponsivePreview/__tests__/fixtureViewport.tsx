@@ -4,13 +4,13 @@ import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { register } from '..';
 import {
   mockRendererCore,
-  mockStorage
+  mockStorage,
 } from '../../../testHelpers/pluginMocks';
 
 afterEach(resetPlugins);
 
 const fixtureState = {
-  viewport: { width: 420, height: 420 }
+  viewport: { width: 420, height: 420 },
 };
 
 function registerTestPlugins() {
@@ -18,7 +18,7 @@ function registerTestPlugins() {
   mockStorage();
   mockRendererCore({
     getFixtureState: () => fixtureState,
-    isValidFixtureSelected: () => true
+    isValidFixtureSelected: () => true,
   });
 }
 

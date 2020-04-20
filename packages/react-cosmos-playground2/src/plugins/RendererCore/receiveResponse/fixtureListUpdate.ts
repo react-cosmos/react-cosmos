@@ -12,7 +12,7 @@ export function receiveFixtureListUpdateResponse(
   if (rendererId === primaryRendererId) {
     context.setState(prevState => ({
       ...prevState,
-      fixtures
+      fixtures,
     }));
   }
 }

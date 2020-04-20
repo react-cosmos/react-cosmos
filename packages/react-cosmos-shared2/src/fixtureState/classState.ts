@@ -5,7 +5,7 @@ import {
   FixtureStateValues,
   FixtureElementId,
   FixtureStateClassState,
-  FixtureState
+  FixtureState,
 } from './shared';
 
 export function getFixtureStateClassState(
@@ -36,13 +36,13 @@ export function createFixtureStateClassState({
   fixtureState,
   elementId,
   values,
-  componentName
+  componentName,
 }: CreateFixtureStateClassStateArgs) {
   const { classState = [] } = fixtureState;
   return replaceOrAddItem(classState, createClassStateMatcher(elementId), {
     elementId,
     values,
-    componentName
+    componentName,
   });
 }
 
@@ -54,11 +54,11 @@ type UpdateFixtureStateClassStateArgs = {
 export function updateFixtureStateClassState({
   fixtureState,
   elementId,
-  values
+  values,
 }: UpdateFixtureStateClassStateArgs) {
   const classStateItem = expectFixtureStateClassState(fixtureState, elementId);
   return updateItem(fixtureState.classState!, classStateItem, {
-    values
+    values,
   });
 }
 

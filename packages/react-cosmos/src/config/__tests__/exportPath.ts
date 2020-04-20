@@ -13,7 +13,7 @@ it('returns default export path from custom root dir', () => {
 
 it('returns custom export path', () => {
   const { exportPath } = createCosmosConfig(process.cwd(), {
-    exportPath: 'my-export-path'
+    exportPath: 'my-export-path',
   });
   expect(exportPath).toBe(getCwdPath('my-export-path'));
 });

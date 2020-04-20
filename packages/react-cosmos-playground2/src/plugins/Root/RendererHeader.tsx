@@ -7,7 +7,7 @@ import {
   MenuIcon,
   RefreshCwIcon,
   SlidersIcon,
-  XCircleIcon
+  XCircleIcon,
 } from '../../shared/icons';
 import { RendererActionSlot } from '../../shared/slots/RendererActionSlot';
 import { IconButton32 } from '../../shared/ui/buttons';
@@ -34,7 +34,7 @@ export const RendererHeader = React.memo(function RendererHeader({
   onOpenNav,
   onTogglePanel,
   onFixtureSelect,
-  onClose
+  onClose,
 }: Props) {
   const fixturePath = React.useMemo(
     () => getFixtureTreePath(fixtureTree, fixtureId),
@@ -43,7 +43,7 @@ export const RendererHeader = React.memo(function RendererHeader({
   const slotProps = React.useMemo(() => ({ fixtureId }), [fixtureId]);
   const onReload = React.useCallback(() => onFixtureSelect(fixtureId), [
     fixtureId,
-    onFixtureSelect
+    onFixtureSelect,
   ]);
 
   return (

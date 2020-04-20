@@ -26,7 +26,7 @@ function MyComponent() {
 
 const rendererId = uuid();
 const fixtures = {
-  first: MyComponent
+  first: MyComponent,
 };
 
 testFixtureLoader(
@@ -36,7 +36,7 @@ testFixtureLoader(
     await selectFixture({
       rendererId,
       fixtureId: { path: 'first', name: null },
-      fixtureState: { props: [] }
+      fixtureState: { props: [] },
     });
 
     // Retry until button is rendered
@@ -44,7 +44,7 @@ testFixtureLoader(
     await fixtureStateChange({
       rendererId,
       fixtureId: { path: 'first', name: null },
-      fixtureState: { props: [], customFixtureState: true }
+      fixtureState: { props: [], customFixtureState: true },
     });
 
     // Catches regression where changed state wouldn't be properly handled
@@ -53,7 +53,7 @@ testFixtureLoader(
     await fixtureStateChange({
       rendererId,
       fixtureId: { path: 'first', name: null },
-      fixtureState: { props: [] }
+      fixtureState: { props: [] },
     });
   }
 );

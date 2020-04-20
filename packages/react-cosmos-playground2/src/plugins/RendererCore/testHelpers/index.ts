@@ -4,7 +4,7 @@ import {
   RendererId,
   RendererReadyResponse,
   FixtureListUpdateResponse,
-  FixtureStateChangeResponse
+  FixtureStateChangeResponse,
 } from 'react-cosmos-shared2/renderer';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { getRendererCoreMethods } from '../../../testHelpers/pluginMocks';
@@ -17,8 +17,8 @@ export function createRendererReadyResponse(
     type: 'rendererReady',
     payload: {
       rendererId,
-      fixtures
-    }
+      fixtures,
+    },
   };
 }
 
@@ -30,8 +30,8 @@ export function createFixtureListUpdateResponse(
     type: 'fixtureListUpdate',
     payload: {
       rendererId,
-      fixtures
-    }
+      fixtures,
+    },
   };
 }
 
@@ -45,8 +45,8 @@ export function createFixtureStateChangeResponse(
     payload: {
       rendererId,
       fixtureId,
-      fixtureState
-    }
+      fixtureState,
+    },
   };
 }
 

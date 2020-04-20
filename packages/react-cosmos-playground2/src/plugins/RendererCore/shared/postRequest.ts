@@ -2,7 +2,7 @@ import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import {
   FixtureId,
   RendererId,
-  RendererRequest
+  RendererRequest,
 } from 'react-cosmos-shared2/renderer';
 import { RendererCoreContext } from '../shared';
 
@@ -17,8 +17,8 @@ export function postSelectFixtureRequest(
     payload: {
       rendererId,
       fixtureId,
-      fixtureState
-    }
+      fixtureState,
+    },
   });
 }
 
@@ -29,8 +29,8 @@ export function postUnselectFixtureRequest(
   postRendererRequest(context, {
     type: 'unselectFixture',
     payload: {
-      rendererId
-    }
+      rendererId,
+    },
   });
 }
 
@@ -45,8 +45,8 @@ export function postSetFixtureStateRequest(
     payload: {
       rendererId,
       fixtureId,
-      fixtureState
-    }
+      fixtureState,
+    },
   });
 }
 

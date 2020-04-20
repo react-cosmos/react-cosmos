@@ -13,7 +13,7 @@ const fixtures = {
       <HelloMessage name="Bianca" />
       <HelloMessage name="B" />
     </>
-  )
+  ),
 };
 const fixtureId = { path: 'first', name: null };
 
@@ -24,7 +24,7 @@ testFixtureLoader(
     await selectFixture({
       rendererId,
       fixtureId,
-      fixtureState: {}
+      fixtureState: {},
     });
     await retry(() =>
       expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B'])
@@ -37,15 +37,15 @@ testFixtureLoader(
           anyProps({
             componentName: 'HelloMessage',
             elPath: 'props.children[0]',
-            values: createValues({ name: 'Bianca' })
+            values: createValues({ name: 'Bianca' }),
           }),
           anyProps({
             componentName: 'HelloMessage',
             elPath: 'props.children[1]',
-            values: createValues({ name: 'B' })
-          })
-        ]
-      }
+            values: createValues({ name: 'B' }),
+          }),
+        ],
+      },
     });
   }
 );
@@ -57,7 +57,7 @@ testFixtureLoader(
     await selectFixture({
       rendererId,
       fixtureId,
-      fixtureState: {}
+      fixtureState: {},
     });
     const fixtureState = await getLastFixtureState();
     const [, { elementId }] = getProps(fixtureState, 2);
@@ -68,9 +68,9 @@ testFixtureLoader(
         props: updateFixtureStateProps({
           fixtureState,
           elementId,
-          values: createValues({ name: 'Petec' })
-        })
-      }
+          values: createValues({ name: 'Petec' }),
+        }),
+      },
     });
     await retry(() =>
       expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello Petec'])

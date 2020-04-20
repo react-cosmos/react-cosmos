@@ -28,7 +28,7 @@ export function decorateFixtureRefs(
           spyRef,
           elPath,
           cachedRefHandlers
-        )
+        ),
       });
     });
   }, fixture);

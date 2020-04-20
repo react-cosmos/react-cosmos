@@ -1,7 +1,7 @@
 import {
   RendererConnect,
   RendererRequest,
-  RendererResponse
+  RendererResponse,
 } from '../renderer';
 import { registerShortcuts } from '../playground';
 
@@ -27,6 +27,6 @@ export function createPostMessageConnect(): RendererConnect {
         window.removeEventListener('message', handleMessage);
         removeShortcuts();
       };
-    }
+    },
   };
 }

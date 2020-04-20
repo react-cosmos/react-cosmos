@@ -3,7 +3,7 @@ import { FixtureState, SetFixtureState } from '../fixtureState';
 import {
   getSortedDecoratorsForFixturePath,
   ReactDecorator,
-  ReactDecoratorsByPath
+  ReactDecoratorsByPath,
 } from '../react';
 import { FixtureId } from '../renderer';
 import { FixtureContext } from './FixtureContext';
@@ -27,7 +27,7 @@ export function FixtureProvider({
   userDecorators,
   fixtureState,
   setFixtureState,
-  onErrorReset
+  onErrorReset,
 }: Props) {
   // Prevent unintentional renders https://reactjs.org/docs/context.html#caveats
   const contextValue = React.useMemo(
@@ -60,6 +60,6 @@ function mergeDecorators(
 ) {
   return [
     ...systemDecorators,
-    ...getSortedDecoratorsForFixturePath(fixtureId.path, userDecorators)
+    ...getSortedDecoratorsForFixturePath(fixtureId.path, userDecorators),
   ];
 }

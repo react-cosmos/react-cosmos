@@ -15,7 +15,7 @@ export function Fixture({
   intlValues,
   formik,
   formikValues,
-  layout
+  layout,
 }: FixtureProps) {
   let newChildren = children;
 

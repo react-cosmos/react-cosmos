@@ -21,7 +21,7 @@ export function Select<Option extends BaseOption>({
   testId,
   options,
   value,
-  onChange
+  onChange,
 }: Props<Option>) {
   const { focused, onFocus, onBlur } = useFocus();
 

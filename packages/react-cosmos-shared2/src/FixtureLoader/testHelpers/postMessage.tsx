@@ -5,7 +5,7 @@ import {
   createRendererConnectMockApi,
   FixtureLoaderTestCallback,
   Message,
-  FixtureLoaderTestArgs
+  FixtureLoaderTestArgs,
 } from './shared';
 
 export async function mountPostMessage(
@@ -42,7 +42,7 @@ export async function mountPostMessage(
         act(() => {
           renderer.update(getElement(newArgs));
         }),
-      ...createRendererConnectMockApi({ getMessages, postMessage })
+      ...createRendererConnectMockApi({ getMessages, postMessage }),
     });
   } finally {
     renderer.unmount();
@@ -55,7 +55,7 @@ function getElement({
   fixtures,
   selectedFixtureId = null,
   decorators = {},
-  onErrorReset
+  onErrorReset,
 }: FixtureLoaderTestArgs) {
   return (
     <FixtureLoader

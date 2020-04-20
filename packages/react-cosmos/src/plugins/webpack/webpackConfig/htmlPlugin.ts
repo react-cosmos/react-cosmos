@@ -37,8 +37,8 @@ export function ensureHtmlWebackPlugin(
     ...plugins,
     new htmlWebpackPlugin({
       title: 'React Cosmos',
-      filename: RENDERER_FILENAME
-    })
+      filename: RENDERER_FILENAME,
+    }),
   ];
 }
 
@@ -66,6 +66,6 @@ function changeHtmlPluginFilename(htmlPlugin: HtmlWebpackPlugin) {
   ) as HtmlWebpackPlugin['options'];
   return new htmlPlugin.constructor({
     ...safeOptions,
-    filename: RENDERER_FILENAME
+    filename: RENDERER_FILENAME,
   });
 }

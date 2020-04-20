@@ -1,11 +1,11 @@
 import React from 'react';
 import {
   createWebSocketsConnect,
-  FixtureLoader
+  FixtureLoader,
 } from 'react-cosmos-shared2/FixtureLoader';
 import {
   ReactDecoratorsByPath,
-  ReactFixtureExportsByPath
+  ReactFixtureExportsByPath,
 } from 'react-cosmos-shared2/react';
 import { NativeModules, StyleSheet, Text, View, YellowBox } from 'react-native';
 import parse from 'url-parse';
@@ -13,7 +13,7 @@ import { NativeRendererConfig } from './shared/rendererConfig';
 
 // https://stackoverflow.com/a/53655887/128816
 YellowBox.ignoreWarnings([
-  'Unrecognized WebSocket connection option(s) `agent`, `perMessageDeflate`, `pfx`, `key`, `passphrase`, `cert`, `ca`, `ciphers`, `rejectUnauthorized`. Did you mean to put these under `headers`?'
+  'Unrecognized WebSocket connection option(s) `agent`, `perMessageDeflate`, `pfx`, `key`, `passphrase`, `cert`, `ca`, `ciphers`, `rejectUnauthorized`. Did you mean to put these under `headers`?',
 ]);
 
 // TODO: Generate unique ID per device
@@ -28,7 +28,7 @@ type Props = {
 export function NativeFixtureLoader({
   rendererConfig: { port },
   fixtures,
-  decorators
+  decorators,
 }: Props) {
   const socketUrl = getSocketUrl(port);
   return (
@@ -62,6 +62,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });

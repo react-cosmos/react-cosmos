@@ -22,7 +22,7 @@ export function useWindowViewport() {
 function getWindowViewport() {
   return {
     width: window.innerWidth,
-    height: window.innerHeight
+    height: window.innerHeight,
   };
 }
 

@@ -13,28 +13,28 @@ module.exports = {
   entry: [path.join(src, 'index')],
   output: {
     path: dist,
-    filename: 'index.js'
+    filename: 'index.js',
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js']
+    extensions: ['.ts', '.tsx', '.js'],
   },
   module: {
     rules: [
       { test: /\.tsx?$/, include: [src], loader: 'babel-loader' },
-      { test: /\.css$/, include: src, loader: 'style-loader!css-loader' }
-    ]
+      { test: /\.css$/, include: src, loader: 'style-loader!css-loader' },
+    ],
   },
   plugins: [
     new webpack.DefinePlugin({
-      RC_VERSION: JSON.stringify(version)
-    })
-  ]
+      RC_VERSION: JSON.stringify(version),
+    }),
+  ],
 };
 
 if (env === 'development') {
   module.exports.plugins.push(
     new HtmlWebpackPlugin({
-      template: path.join(src, 'index.dev.html')
+      template: path.join(src, 'index.dev.html'),
     })
   );
 }

@@ -5,7 +5,7 @@ import { loadPlugins, Slot, resetPlugins } from 'react-plugin';
 import {
   mockCore,
   mockRendererCore,
-  getRendererCoreContext
+  getRendererCoreContext,
 } from '../../../testHelpers/pluginMocks';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { mockIframeMessage, getIframe } from '../testHelpers/iframe';
@@ -22,7 +22,7 @@ function loadTestPlugins() {
 
 function mockRendererUrl() {
   mockCore({
-    getWebRendererUrl: () => 'mockRendererUrl'
+    getWebRendererUrl: () => 'mockRendererUrl',
   });
 }
 

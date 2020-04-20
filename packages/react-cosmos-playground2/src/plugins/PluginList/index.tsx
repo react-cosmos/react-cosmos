@@ -4,7 +4,7 @@ import { createPlugin, PluginsConsumer } from 'react-plugin';
 import { PluginListSpec } from './public';
 
 const { plug, register } = createPlugin<PluginListSpec>({
-  name: 'pluginList'
+  name: 'pluginList',
 });
 
 plug('controlPanelRow', () => {

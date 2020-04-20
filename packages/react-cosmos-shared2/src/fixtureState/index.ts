@@ -16,7 +16,7 @@ export {
   FixtureStateProps,
   FixtureStateClassState,
   FixtureState,
-  SetFixtureState
+  SetFixtureState,
 } from './shared';
 export {
   isString,
@@ -25,7 +25,7 @@ export {
   isNull,
   isPrimitiveValue,
   isObject,
-  isArray
+  isArray,
 } from './shared';
 export { createValues, createValue } from './createValues';
 export { extendWithValues, extendWithValue } from './extendWithValues';
@@ -36,13 +36,13 @@ export {
   createFixtureStateProps,
   resetFixtureStateProps,
   updateFixtureStateProps,
-  removeFixtureStateProps
+  removeFixtureStateProps,
 } from './props';
 export {
   getFixtureStateClassState,
   findFixtureStateClassState,
   createFixtureStateClassState,
   updateFixtureStateClassState,
-  removeFixtureStateClassState
+  removeFixtureStateClassState,
 } from './classState';
 export { findFixtureStateValue } from './values';

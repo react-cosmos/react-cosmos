@@ -5,7 +5,7 @@ import {
   extendWithValue,
   findFixtureStateValue,
   FixtureStateValue,
-  FixtureStateValueType
+  FixtureStateValueType,
 } from '../../fixtureState';
 import { FixtureContext } from '../FixtureContext';
 
@@ -33,9 +33,9 @@ export function useCreateFixtureState(
           ...prevFsState.values,
           [inputName]: {
             defaultValue: createValue(defaultValue),
-            currentValue: createValue(defaultValue)
-          }
-        }
+            currentValue: createValue(defaultValue),
+          },
+        },
       };
     });
   }, [setFixtureState, inputName, defaultValue]);

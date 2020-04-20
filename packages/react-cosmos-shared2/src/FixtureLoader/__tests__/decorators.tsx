@@ -9,7 +9,7 @@ type Props = {
 
 const rendererId = uuid();
 const fixtures = {
-  'src/foo/__fixtures__/default.js': 'Hello!'
+  'src/foo/__fixtures__/default.js': 'Hello!',
 };
 // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/18051
 const decorators = {
@@ -19,7 +19,7 @@ const decorators = {
   ),
   'src/bar/decorator.js': ({ children }: Props) => (
     <>Decorated at src/bar{children}</>
-  )
+  ),
 };
 
 testFixtureLoader(
@@ -30,7 +30,7 @@ testFixtureLoader(
     await selectFixture({
       rendererId,
       fixtureId: { path, name: null },
-      fixtureState: {}
+      fixtureState: {},
     });
     // "src/bar/decorator" should be omitted because it's not a placed in
     // a parent directory of the selected fixture
@@ -38,7 +38,7 @@ testFixtureLoader(
       expect(renderer.toJSON()).toEqual([
         'Decorated at src',
         'Decorated at src/foo',
-        'Hello!'
+        'Hello!',
       ])
     );
   }

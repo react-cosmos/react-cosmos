@@ -7,7 +7,7 @@ import {
   ContentContainer,
   IllustrationContainer,
   SecondaryButton,
-  TextContainer
+  TextContainer,
 } from './shared';
 
 type Props = {

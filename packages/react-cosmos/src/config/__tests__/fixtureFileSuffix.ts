@@ -7,7 +7,7 @@ it('returns default fixtureFileSuffix', () => {
 
 it('returns custom fixtureFileSuffix', () => {
   const cosmosConfig = createCosmosConfig(process.cwd(), {
-    fixtureFileSuffix: 'jsxfixture'
+    fixtureFileSuffix: 'jsxfixture',
   });
   expect(cosmosConfig.fixtureFileSuffix).toBe('jsxfixture');
 });

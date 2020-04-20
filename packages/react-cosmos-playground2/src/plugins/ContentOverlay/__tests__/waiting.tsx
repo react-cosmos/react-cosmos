@@ -6,7 +6,7 @@ import {
   mockRendererCore,
   mockRendererPreview,
   mockRouter,
-  mockStorage
+  mockStorage,
 } from '../../../testHelpers/pluginMocks';
 
 afterEach(resetPlugins);
@@ -15,15 +15,15 @@ function registerTestPlugins() {
   register();
   mockStorage();
   mockRouter({
-    getSelectedFixtureId: () => null
+    getSelectedFixtureId: () => null,
   });
   mockRendererCore({
     isRendererConnected: () => false,
-    isValidFixtureSelected: () => false
+    isValidFixtureSelected: () => false,
   });
   mockRendererPreview({
     getUrlStatus: () => 'unknown',
-    getRuntimeStatus: () => 'pending'
+    getRuntimeStatus: () => 'pending',
   });
 }
 

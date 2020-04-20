@@ -18,7 +18,7 @@ function mockSocketIo(url: string) {
   return {
     on,
     off: () => {},
-    emit
+    emit,
   };
 }
 
@@ -26,7 +26,7 @@ mockSocketIo.__getMockApi = () => ({
   WS_URL,
   getMessages,
   postMessage,
-  resetMessages
+  resetMessages,
 });
 
 function on(evt: string, cb: MsgHandler) {

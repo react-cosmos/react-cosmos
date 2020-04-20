@@ -9,6 +9,6 @@ export function getSlideInStyle(visible: boolean, nth: number = 0) {
   return {
     transform: `translate(0, ${visible ? 0 : slideInYOffset}px)`,
     opacity: visible ? 1 : 0,
-    transitionDelay: visible ? `${nth * slideInDelay}s` : '0s'
+    transitionDelay: visible ? `${nth * slideInDelay}s` : '0s',
   };
 }

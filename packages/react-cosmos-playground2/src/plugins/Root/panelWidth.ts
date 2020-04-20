@@ -13,7 +13,7 @@ export function getPanelWidthApi({ getMethodsOf }: RootContext) {
     panelWidth:
       storage.getItem<number>(PANEL_WIDTH_STORAGE_KEY) || PANEL_WIDTH_DEFAULT,
     setPanelWidth: (newWidth: number) =>
-      storage.setItem(PANEL_WIDTH_STORAGE_KEY, restrictPanelWidth(newWidth))
+      storage.setItem(PANEL_WIDTH_STORAGE_KEY, restrictPanelWidth(newWidth)),
   };
 }
 

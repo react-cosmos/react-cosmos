@@ -10,7 +10,7 @@ import {
   generateUserDepsModule,
   getDecoratorPatterns,
   getFixturePatterns,
-  getIgnorePatterns
+  getIgnorePatterns,
 } from '../shared/userDeps';
 
 const writeFileAsync = promisify(writeFile);
@@ -31,13 +31,13 @@ async function startFixtureFileWatcher(
   const { fixturesDir, fixtureFileSuffix } = cosmosConfig;
   const FILE_PATTERNS = [
     ...getFixturePatterns(fixturesDir, fixtureFileSuffix),
-    ...getDecoratorPatterns()
+    ...getDecoratorPatterns(),
   ];
   return new Promise(resolve => {
     const watcher: FSWatcher = watch(FILE_PATTERNS, {
       ignored: getIgnorePatterns(),
       ignoreInitial: true,
-      cwd: cosmosConfig.rootDir
+      cwd: cosmosConfig.rootDir,
     })
       .on('ready', () => resolve(watcher))
       .on(

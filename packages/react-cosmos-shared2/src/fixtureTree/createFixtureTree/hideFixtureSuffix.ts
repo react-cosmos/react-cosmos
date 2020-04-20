@@ -10,7 +10,7 @@ export function hideFixtureSuffix(
     const cleanDirName = removeFixtureNameSuffix(dirName, suffix);
     return {
       ...prev,
-      [cleanDirName]: hideFixtureSuffix(treeNode.dirs[dirName], suffix)
+      [cleanDirName]: hideFixtureSuffix(treeNode.dirs[dirName], suffix),
     };
   }, {});
 

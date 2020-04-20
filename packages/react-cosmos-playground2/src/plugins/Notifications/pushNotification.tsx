@@ -14,7 +14,7 @@ export function pushStickyNotification(
       prevState.stickyNotifications,
       i => i.id === notification.id,
       notification
-    )
+    ),
   }));
 }
 
@@ -27,7 +27,7 @@ export function removeStickyNotification(
     stickyNotifications: removeItemMatch(
       prevState.stickyNotifications,
       i => i.id === notificationId
-    )
+    ),
   }));
 }
 
@@ -48,15 +48,15 @@ export function pushTimedNotification(
         getTimedNotifications(prevState),
         i => i.id === notification.id,
         notification
-      )
-    }
+      ),
+    },
   }));
 }
 
 export function clearTimedNotification(context: NotificationsContext) {
   context.setState(prevState => ({
     ...prevState,
-    timedNotifications: null
+    timedNotifications: null,
   }));
 }
 

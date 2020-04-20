@@ -8,7 +8,7 @@ import {
   getUserDepsLoaderRule,
   getUserWebpackConfig,
   resolveClientPath,
-  resolveLocalReactDeps
+  resolveLocalReactDeps,
 } from './shared';
 
 export async function getExportWebpackConfig(
@@ -25,10 +25,10 @@ export async function getExportWebpackConfig(
     output: getOutput(cosmosConfig),
     module: {
       ...baseWebpackConfig.module,
-      rules: getRules(baseWebpackConfig)
+      rules: getRules(baseWebpackConfig),
     },
     resolve: resolveLocalReactDeps(cosmosConfig, baseWebpackConfig),
-    plugins: getPlugins(cosmosConfig, baseWebpackConfig, userWebpack)
+    plugins: getPlugins(cosmosConfig, baseWebpackConfig, userWebpack),
   };
 }
 
@@ -45,7 +45,7 @@ function getOutput({ exportPath, publicUrl }: CosmosConfig) {
   return {
     path: path.resolve(exportPath, removeLeadingSlash(publicUrl)),
     filename,
-    publicPath: publicUrl
+    publicPath: publicUrl,
   };
 }
 
@@ -67,6 +67,6 @@ function getPlugins(
   return ensureHtmlWebackPlugin(cosmosConfig, [
     ...existingPlugins,
     globalsPlugin,
-    noEmitErrorsPlugin
+    noEmitErrorsPlugin,
   ]);
 }

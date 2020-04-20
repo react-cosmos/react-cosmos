@@ -5,13 +5,13 @@ import {
   screenGrey3,
   screenGrey5,
   screenPrimary2,
-  screenPrimary3
+  screenPrimary3,
 } from '../../shared/ui/colors';
 import {
   ContentContainer,
   IllustrationContainer,
   NoWrap,
-  TextContainer
+  TextContainer,
 } from './shared';
 
 export function RendererNotResponding() {

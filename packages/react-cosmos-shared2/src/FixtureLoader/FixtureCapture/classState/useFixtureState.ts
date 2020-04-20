@@ -8,7 +8,7 @@ import {
   FixtureDecoratorId,
   FixtureState,
   getFixtureStateClassState,
-  removeFixtureStateClassState
+  removeFixtureStateClassState,
 } from '../../../fixtureState';
 import { getComponentName } from '../../../react';
 import { FixtureContext } from '../../FixtureContext';
@@ -19,7 +19,7 @@ import {
   ElRefs,
   InitialStates,
   replaceState,
-  useUnmount
+  useUnmount,
 } from './shared';
 
 export function useFixtureState(
@@ -56,7 +56,7 @@ export function useFixtureState(
       if (elPaths.indexOf(elementId.elPath) === -1) {
         setFixtureState(prevFs => ({
           ...prevFs,
-          classState: removeFixtureStateClassState(fixtureState, elementId)
+          classState: removeFixtureStateClassState(fixtureState, elementId),
         }));
         if (elRefs.current[elPath]) {
           delete elRefs.current[elPath];
@@ -89,8 +89,8 @@ export function useFixtureState(
               values: createValues(state),
               componentName: getComponentName(
                 elRef.constructor as React.ComponentType
-              )
-            })
+              ),
+            }),
           }));
         }
       } else {
@@ -129,7 +129,7 @@ export function useFixtureState(
     elRefs,
     fixtureState,
     fixtureState.classState,
-    setFixtureState
+    setFixtureState,
   ]);
 
   // Update prev fixture state ref *after* running effects that reference it
@@ -168,8 +168,8 @@ export function useFixtureState(
           values: createValues(state),
           componentName: getComponentName(
             elRef.constructor as React.ComponentType
-          )
-        })
+          ),
+        }),
       }));
     } else {
       replaceState(elRef, extendWithValues(state, fsClassState.values));

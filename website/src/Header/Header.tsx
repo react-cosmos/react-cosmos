@@ -18,7 +18,7 @@ export function Header({ visible, fixed }: Props) {
       style={{
         position: fixed ? 'fixed' : 'absolute',
         top: fixed ? 0 : 'auto',
-        opacity: visible ? 1 : 0
+        opacity: visible ? 1 : 0,
       }}
     >
       <Content>

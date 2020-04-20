@@ -29,7 +29,7 @@ export function translatePath(
       points[2] + xOffset,
       points[3] + yOffset,
       points[4] + xOffset,
-      points[5] + yOffset
+      points[5] + yOffset,
     ];
   }
 

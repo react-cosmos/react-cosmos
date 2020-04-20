@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   FixtureElementId,
-  FixtureState
+  FixtureState,
 } from 'react-cosmos-shared2/fixtureState';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { createPlugin, PluginContext } from 'react-plugin';
@@ -11,7 +11,7 @@ import {
   FixtureExpansionGroup,
   getFixtureExpansion,
   hasFsValues,
-  updateElementExpansion
+  updateElementExpansion,
 } from '../../shared/ui/valueInputTree';
 import { StorageSpec } from '../Storage/public';
 import { BlankState } from './BlankState';
@@ -22,7 +22,7 @@ import { PROPS_TREE_EXPANSION_STORAGE_KEY } from './shared';
 type PropsPanelContext = PluginContext<PropsPanelSpec>;
 
 const { namedPlug, register } = createPlugin<PropsPanelSpec>({
-  name: 'propsPanel'
+  name: 'propsPanel',
 });
 
 namedPlug<ControlPanelRowSlotProps>(
@@ -89,7 +89,7 @@ function useFixtureExpansion(context: PropsPanelContext, fixtureId: FixtureId) {
 
   return {
     fixtureExpansion,
-    onElementExpansionChange
+    onElementExpansionChange,
   };
 }
 

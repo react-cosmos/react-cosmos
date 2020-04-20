@@ -7,7 +7,7 @@ module.exports = {
   testPathIgnorePatterns: ['<rootDir>/node_modules/'],
   setupFilesAfterEnv: ['<rootDir>/.jest/setup.ts'],
   collectCoverageFrom: [
-    '**/src/**/*.{ts,tsx}',
+    'packages/*/src/**/*.{ts,tsx}',
     '!**/__fixtures__/**',
     '!**/*.fixture.{js,ts,tsx}',
     '!**/cosmos.decorator.{js,ts,tsx}',
@@ -16,6 +16,6 @@ module.exports = {
     '!**/react-cosmos-playground2/src/shared/illustrations/**',
     // Ignore coverage from dark launched plugins
     '!**/react-cosmos-playground2/src/plugins/PluginList/**',
-    '!**/react-cosmos-playground2/src/plugins/RendererSelect/**'
-  ]
+    '!**/react-cosmos-playground2/src/plugins/RendererSelect/**',
+  ],
 };

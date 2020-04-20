@@ -10,10 +10,10 @@ const containerViewport = { width: 640, height: 480 };
 
 export default () => {
   const [viewport, setViewport] = useValue('viewport', {
-    defaultValue: initialViewport
+    defaultValue: initialViewport,
   });
   const [scaled, setScaled] = useValue<boolean>('scaled', {
-    defaultValue: false
+    defaultValue: false,
   });
   const scaleFactor = getViewportScaleFactor(viewport, containerViewport);
   return (

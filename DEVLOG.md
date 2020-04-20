@@ -22,17 +22,17 @@ type Viewport = { width: number, height: number };
 
 type Enabled = {
   enabled: true,
-  viewport: Viewport
+  viewport: Viewport,
 };
 
 type DisabledViewport = {
   enabled: false,
-  viewport: Viewport
+  viewport: Viewport,
 };
 
 type DisabledNoViewport = {
   enabled: false,
-  viewport: null
+  viewport: null,
 };
 
 export type ResponsivePreviewState =

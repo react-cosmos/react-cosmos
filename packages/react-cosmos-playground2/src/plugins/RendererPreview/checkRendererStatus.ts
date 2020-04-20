@@ -22,7 +22,7 @@ export function checkRendererStatus(
 
     context.setState(state => ({
       ...state,
-      urlStatus: status === 200 ? 'ok' : 'error'
+      urlStatus: status === 200 ? 'ok' : 'error',
     }));
   });
 

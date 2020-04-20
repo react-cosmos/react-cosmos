@@ -14,7 +14,7 @@ const { on, register } = createPlugin<RendererCoreSpec>({
     connectedRendererIds: [],
     primaryRendererId: null,
     fixtures: {},
-    fixtureState: {}
+    fixtureState: {},
   },
   methods: {
     getConnectedRendererIds,
@@ -25,8 +25,8 @@ const { on, register } = createPlugin<RendererCoreSpec>({
     isValidFixtureSelected,
     setFixtureState,
     selectPrimaryRenderer,
-    receiveResponse
-  }
+    receiveResponse,
+  },
 });
 
 on<RouterSpec>('router', { fixtureChange: onRouterFixtureChange });

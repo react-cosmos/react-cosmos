@@ -25,7 +25,7 @@ export function FixtureTreeContainer({
   fixtures,
   treeExpansion,
   selectFixture,
-  setTreeExpansion
+  setTreeExpansion,
 }: Props) {
   if (!rendererConnected) {
     return <Container />;

@@ -59,17 +59,17 @@ export function Root({
   onFixtureClose,
   onFixtureStateChange,
   setNavWidth,
-  setPanelWidth
+  setPanelWidth,
 }: Props) {
   const navDrag = useDrag({
     value: navWidth,
     reverse: false,
-    onChange: setNavWidth
+    onChange: setNavWidth,
   });
   const panelDrag = useDrag({
     value: panelWidth,
     reverse: true,
-    onChange: setPanelWidth
+    onChange: setPanelWidth,
   });
 
   if (!storageCacheReady) {

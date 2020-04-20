@@ -6,7 +6,7 @@ import {
   FixtureDecoratorId,
   getFixtureStateProps,
   removeFixtureStateProps,
-  updateFixtureStateProps
+  updateFixtureStateProps,
 } from '../../../fixtureState';
 import { areNodesEqual, getComponentName } from '../../../react';
 import { FixtureContext } from '../../FixtureContext';
@@ -38,7 +38,7 @@ export function usePropsCapture(
       if (elPaths.indexOf(elementId.elPath) === -1) {
         setFixtureState(prevFs => ({
           ...prevFs,
-          props: removeFixtureStateProps(fixtureState, elementId)
+          props: removeFixtureStateProps(fixtureState, elementId),
         }));
       }
     });
@@ -57,8 +57,8 @@ export function usePropsCapture(
             fixtureState: prevFs,
             elementId,
             values: createValues(childEl.props),
-            componentName
-          })
+            componentName,
+          }),
         }));
       } else {
         const prevChildEl = getElementAtPath(prevFixtureRef.current, elPath);
@@ -68,8 +68,8 @@ export function usePropsCapture(
             props: updateFixtureStateProps({
               fixtureState,
               elementId,
-              values: createValues(childEl.props)
-            })
+              values: createValues(childEl.props),
+            }),
           }));
         }
       }
@@ -80,7 +80,7 @@ export function usePropsCapture(
     elPaths,
     fixtureState,
     fixtureState.props,
-    setFixtureState
+    setFixtureState,
   ]);
 
   React.useEffect(() => {

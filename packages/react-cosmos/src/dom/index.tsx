@@ -2,7 +2,7 @@ import React from 'react';
 import { FixtureLoader } from 'react-cosmos-shared2/FixtureLoader';
 import {
   ReactDecoratorsByPath,
-  ReactFixtureExportsByPath
+  ReactFixtureExportsByPath,
 } from 'react-cosmos-shared2/react';
 import { render } from 'react-dom';
 import { DomRendererConfig } from '../shared/rendererConfig';
@@ -27,7 +27,7 @@ export function mountDomRenderer({
   rendererConfig,
   fixtures,
   decorators,
-  onErrorReset
+  onErrorReset,
 }: MountDomRendererOpts) {
   const domContainer = getDomContainer(rendererConfig.containerQuerySelector);
   render(

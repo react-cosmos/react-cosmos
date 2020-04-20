@@ -11,7 +11,7 @@ type Props = {
 
 export const RendererPreview = React.memo(function RendererPreview({
   rendererUrl,
-  onIframeRef
+  onIframeRef,
 }: Props) {
   if (!rendererUrl) {
     return null;

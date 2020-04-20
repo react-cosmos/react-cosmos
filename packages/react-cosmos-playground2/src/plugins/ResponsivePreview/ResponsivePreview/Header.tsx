@@ -19,7 +19,7 @@ type Props = {
 const numberInputStypes = {
   focusedColor: grey248,
   focusedBg: grey8,
-  focusedBoxShadow: `0 0 0.5px 1px ${blue}`
+  focusedBoxShadow: `0 0 0.5px 1px ${blue}`,
 };
 
 export const Header = React.memo(function Header({
@@ -28,7 +28,7 @@ export const Header = React.memo(function Header({
   scaleFactor,
   scaled,
   selectViewport,
-  toggleScale
+  toggleScale,
 }: Props) {
   const options = React.useMemo(
     () =>

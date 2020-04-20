@@ -10,7 +10,7 @@ import {
   getBoolArg,
   done,
   error,
-  rimrafAsync
+  rimrafAsync,
 } from './shared';
 
 const { stdout, stderr } = process;
@@ -18,7 +18,7 @@ const { stdout, stderr } = process;
 const BUILD_ORDER = [
   'react-cosmos-shared2',
   'react-cosmos-playground2',
-  'react-cosmos'
+  'react-cosmos',
 ];
 
 const SOURCE_IGNORE_PATHS = [
@@ -30,7 +30,7 @@ const SOURCE_IGNORE_PATHS = [
   '**/*.test.tsx',
   '**/*.fixture.ts',
   '**/*.fixture.tsx',
-  '**/testHelpers/**'
+  '**/testHelpers/**',
 ];
 
 const watch = getBoolArg('watch');
@@ -120,7 +120,7 @@ async function buildNodePackage(pkgName: string) {
   await copyStaticAssets(pkgName);
   await Promise.all([
     await buildNodePackageSource(pkgName),
-    await buildPackageHeaders(pkgName)
+    await buildPackageHeaders(pkgName),
   ]);
 }
 
@@ -136,7 +136,7 @@ async function buildBrowserPackage(pkgName: string) {
   await clearPreviousBuild(pkgName);
   await Promise.all([
     await buildBrowserPackageSource(pkgName),
-    await buildPackageHeaders(pkgName)
+    await buildPackageHeaders(pkgName),
   ]);
 }
 
@@ -155,7 +155,7 @@ function buildNodePackageSource(pkgName: string) {
     '--extensions',
     '.ts,.tsx',
     '--ignore',
-    SOURCE_IGNORE_PATHS.join(',')
+    SOURCE_IGNORE_PATHS.join(','),
   ];
   return runAsyncTask({ cmd: 'babel', args });
 }
@@ -169,7 +169,7 @@ function watchNodePackageSource(pkgName: string) {
     '.ts,.tsx',
     '--ignore',
     SOURCE_IGNORE_PATHS.join(','),
-    '--watch'
+    '--watch',
   ];
   return runAsyncTask({ cmd: 'babel', args });
 }
@@ -179,7 +179,7 @@ async function buildBrowserPackageSource(pkgName: string) {
     '--config',
     `packages/${pkgName}/webpack.config.js`,
     '--display',
-    'errors-only'
+    'errors-only',
   ];
   const env = { NODE_ENV: 'production' };
   return runAsyncTask({ cmd: 'webpack', args, env });
@@ -215,9 +215,9 @@ function runAsyncTask({ cmd, args, env = {} }: RunAsyncTaskArgs) {
       cwd: path.join(__dirname, '..'),
       env: {
         ...process.env,
-        ...env
+        ...env,
       },
-      shell: true
+      shell: true,
     });
     cp.stdout.on('data', data => {
       stdout.write(data);
@@ -245,7 +245,7 @@ async function copyStaticAssets(pkgName: string) {
   if (pkgName === 'react-cosmos') {
     await cpy(`src/${STATIC_PATH}/**`, `dist/${STATIC_PATH}`, {
       cwd: path.join(__dirname, `../packages/react-cosmos`),
-      parents: false
+      parents: false,
     });
   }
 }

@@ -3,7 +3,7 @@ import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getUrlParams,
   pushUrlParams,
-  resetUrl
+  resetUrl,
 } from '../../../testHelpers/url';
 import { getRouterMethods, onRouter } from '../../../testHelpers/pluginMocks';
 import { register } from '..';

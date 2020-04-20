@@ -20,7 +20,7 @@ export function createCosmosConfig(
     hostname: getHostname(cosmosConfigInput),
     port: getPort(cosmosConfigInput),
     globalImports: getGlobalImports(cosmosConfigInput, rootDir),
-    ui: cosmosConfigInput.ui || {}
+    ui: cosmosConfigInput.ui || {},
   };
 }
 
@@ -43,7 +43,7 @@ function getFixturesDir({ fixturesDir = '__fixtures__' }: CosmosConfigInput) {
 }
 
 function getFixtureFileSuffix({
-  fixtureFileSuffix = 'fixture'
+  fixtureFileSuffix = 'fixture',
 }: CosmosConfigInput) {
   return fixtureFileSuffix;
 }

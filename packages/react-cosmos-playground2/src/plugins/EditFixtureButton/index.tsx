@@ -10,7 +10,7 @@ import { EditFixtureButtonSpec } from './public';
 type EditFixtureButtonContext = PluginContext<EditFixtureButtonSpec>;
 
 const { namedPlug, register } = createPlugin<EditFixtureButtonSpec>({
-  name: 'editFixtureButton'
+  name: 'editFixtureButton',
 });
 
 namedPlug<RendererActionSlotProps>(
@@ -76,7 +76,7 @@ function useErrorNotification(context: EditFixtureButtonContext) {
         id: 'edit-fixture',
         type: 'error',
         title: 'Failed to open fixture',
-        info
+        info,
       }),
     [pushTimedNotification]
   );

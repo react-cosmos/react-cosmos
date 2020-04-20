@@ -18,7 +18,7 @@ export function createWebpackCosmosConfig(
   return {
     configPath: getWebpackConfigPath(configInput, rootDir),
     overridePath: getWebpackOverridePath(configInput, rootDir),
-    hotReload: getHotReload(configInput)
+    hotReload: getHotReload(configInput),
   };
 }
 

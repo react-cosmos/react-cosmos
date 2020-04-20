@@ -6,7 +6,7 @@ import {
   ReactDecorator,
   ReactDecoratorsByPath,
   ReactFixture,
-  ReactFixtureMap
+  ReactFixtureMap,
 } from 'react-cosmos-shared2/react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { CosmosConfig } from './config';
@@ -43,7 +43,7 @@ export function getFixturesSync({ cosmosConfig }: Args) {
             multiFixtureExport[fixtureName],
             fixturePath,
             decoratorsByPath
-          )
+          ),
         });
       });
     } else {
@@ -54,7 +54,7 @@ export function getFixturesSync({ cosmosConfig }: Args) {
           fixtureExport,
           fixturePath,
           decoratorsByPath
-        )
+        ),
       });
     }
   });
@@ -75,6 +75,6 @@ function createFixtureElementGetter(
     getDecoratedFixtureElement(fixture, decorators, {
       fixtureState: {},
       setFixtureState: () => {},
-      onErrorReset: () => {}
+      onErrorReset: () => {},
     });
 }

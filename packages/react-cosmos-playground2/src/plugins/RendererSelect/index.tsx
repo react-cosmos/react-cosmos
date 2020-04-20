@@ -5,7 +5,7 @@ import { RendererCoreSpec } from '../RendererCore/public';
 import { RendererSelectSpec } from './public';
 
 const { plug, register } = createPlugin<RendererSelectSpec>({
-  name: 'rendererSelect'
+  name: 'rendererSelect',
 });
 
 plug('controlPanelRow', ({ pluginContext }) => {
@@ -26,7 +26,7 @@ plug('controlPanelRow', ({ pluginContext }) => {
             onClick={() => rendererCore.selectPrimaryRenderer(rendererId)}
             style={{
               cursor: 'pointer',
-              fontWeight: rendererId === primaryRendererId ? 'bold' : 'normal'
+              fontWeight: rendererId === primaryRendererId ? 'bold' : 'normal',
             }}
           >
             {rendererId}

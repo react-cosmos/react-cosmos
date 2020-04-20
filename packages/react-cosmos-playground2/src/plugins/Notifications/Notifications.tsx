@@ -4,14 +4,14 @@ import {
   AlertCircleIcon,
   CheckCircleIcon,
   InfoIcon,
-  LoaderIcon
+  LoaderIcon,
 } from '../../shared/icons';
 import {
   grey128,
   grey32,
   grey64,
   grey8,
-  white95
+  white95,
 } from '../../shared/ui/colors';
 import { quick } from '../../shared/ui/vars';
 import { Notification, NotificationType } from './public';
@@ -105,5 +105,5 @@ const IconTypes: { [key in NotificationType]: React.ComponentType } = {
   success: CheckCircleIcon,
   error: AlertCircleIcon,
   info: InfoIcon,
-  loading: LoaderIcon
+  loading: LoaderIcon,
 };

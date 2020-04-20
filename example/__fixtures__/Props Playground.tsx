@@ -9,10 +9,10 @@ export default (
       string: "Pretty good can't complain",
       number: 1337,
       object: {
-        number: 555
+        number: 555,
       },
       null: null,
-      unserializable: /findmeifukanye/g
+      unserializable: /findmeifukanye/g,
     }}
     unserializable={() => 'yes'}
   />

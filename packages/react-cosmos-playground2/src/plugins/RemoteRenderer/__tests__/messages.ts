@@ -2,14 +2,14 @@ import { loadPlugins, resetPlugins } from 'react-plugin';
 import { waitFor } from '@testing-library/dom';
 import {
   SelectFixtureRequest,
-  RendererReadyResponse
+  RendererReadyResponse,
 } from 'react-cosmos-shared2/renderer';
 import {
   mockCore,
   mockRendererCore,
   mockMessageHandler,
   getMessageHandlerContext,
-  getRendererCoreContext
+  getRendererCoreContext,
 } from '../../../testHelpers/pluginMocks';
 import { register } from '..';
 
@@ -18,7 +18,7 @@ afterEach(resetPlugins);
 function registerTestPlugins() {
   register();
   mockCore({
-    isDevServerOn: () => true
+    isDevServerOn: () => true,
   });
 }
 
@@ -34,8 +34,8 @@ it('sends renderer request to message handler', async () => {
     payload: {
       rendererId: 'mockRendererId',
       fixtureId: { path: 'mockFixturePath', name: null },
-      fixtureState: {}
-    }
+      fixtureState: {},
+    },
   };
   getRendererCoreContext().emit('request', selectFixtureReq);
 
@@ -58,8 +58,8 @@ it('sends renderer response to renderer core', async () => {
     type: 'rendererReady',
     payload: {
       rendererId: 'mockRendererId',
-      fixtures: { 'ein.js': null, 'zwei.js': null, 'drei.js': null }
-    }
+      fixtures: { 'ein.js': null, 'zwei.js': null, 'drei.js': null },
+    },
   };
   getMessageHandlerContext().emit('rendererResponse', rendererReadyRes);
 
@@ -76,7 +76,7 @@ it('posts "pingRenderers" renderer request on load', async () => {
 
   await waitFor(() =>
     expect(postRendererRequest).toBeCalledWith(expect.any(Object), {
-      type: 'pingRenderers'
+      type: 'pingRenderers',
     })
   );
 });

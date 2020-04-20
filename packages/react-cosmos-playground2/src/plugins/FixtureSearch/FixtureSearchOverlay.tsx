@@ -3,7 +3,7 @@ import { isEqual } from 'lodash';
 import React from 'react';
 import {
   createFixtureTree,
-  flattenFixtureTree
+  flattenFixtureTree,
 } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
@@ -13,7 +13,7 @@ import {
   KEY_ENTER,
   KEY_ESC,
   KEY_TAB,
-  KEY_UP
+  KEY_UP,
 } from '../../shared/keys';
 import {
   black60,
@@ -23,7 +23,7 @@ import {
   grey208,
   grey224,
   grey248,
-  grey64
+  grey64,
 } from '../../shared/ui/colors';
 import { FixtureSearchResult } from './FixtureSearchResult';
 
@@ -50,14 +50,14 @@ export function FixtureSearchOverlay({
   selectedFixtureId,
   onSetSearchText,
   onClose,
-  onSelect
+  onSelect,
 }: Props) {
   // Flattened fixture IDs are memoized purely to minimize computation
   const fixtureIds = React.useMemo<FixtureIdsByPath>(() => {
     const fixtureTree = createFixtureTree({
       fixtures,
       fixturesDir,
-      fixtureFileSuffix
+      fixtureFileSuffix,
     });
     const flatFixtureTree = flattenFixtureTree(fixtureTree);
     return flatFixtureTree.reduce((acc, { fixtureId, cleanPath }) => {

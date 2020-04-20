@@ -11,7 +11,7 @@ const fixtures = {
     'waiting',
     'not found',
     'welcome',
-    'renderer not responding'
+    'renderer not responding',
   ],
   'src/plugins/FixtureSearch/FixtureSearchOverlay.fixture.tsx': null,
   'src/plugins/FixtureTree/BlankState.fixture.tsx': null,
@@ -20,7 +20,7 @@ const fixtures = {
   'src/plugins/PropsPanel/PropsPanel/index.fixture.tsx': null,
   'src/plugins/slots.fixture.tsx': ['root', 'nav', 'rendererHeader'],
   'src/shared/ui/buttons/index.fixture.tsx': null,
-  'src/shared/ui/valueInputTree/index.fixture.tsx': null
+  'src/shared/ui/valueInputTree/index.fixture.tsx': null,
 };
 
 export default {
@@ -28,14 +28,14 @@ export default {
 
   'fixture selected': createFixture({
     path: 'src/plugins/Notifications/index.fixture.tsx',
-    name: 'multiple'
-  })
+    name: 'multiple',
+  }),
 };
 
 function createFixture(fixtureId: null | FixtureId = null) {
   return () => {
     const [searchText, setSearchText] = useValue<string>('searchText', {
-      defaultValue: ''
+      defaultValue: '',
     });
     return (
       <FixtureSearchOverlay

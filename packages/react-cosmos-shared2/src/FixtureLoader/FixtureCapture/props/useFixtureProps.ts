@@ -5,7 +5,7 @@ import {
   extendWithValues,
   findFixtureStateProps,
   FixtureDecoratorId,
-  FixtureState
+  FixtureState,
 } from '../../../fixtureState';
 import { getComponentName } from '../../../react';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
@@ -19,7 +19,7 @@ export function useFixtureProps(
   // React.useMemo is used as a cache invalidated by decoratorId
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const propCache: Record<string, unknown> = React.useMemo(() => ({}), [
-    decoratorId
+    decoratorId,
   ]);
 
   const elPaths = findRelevantElementPaths(fixture);
@@ -32,7 +32,7 @@ export function useFixtureProps(
       if (!fsProps || componentTypeChanged(fsProps.componentName)) {
         return {
           ...element,
-          key: getElRenderKey(elPath, DEFAULT_RENDER_KEY)
+          key: getElRenderKey(elPath, DEFAULT_RENDER_KEY),
         };
       }
 
@@ -73,7 +73,7 @@ export function useFixtureProps(
         props: hasChildElPaths(elPaths, elPath)
           ? { ...cachedProps, children: originalProps.children }
           : cachedProps,
-        key: getElRenderKey(elPath, fsProps.renderKey)
+        key: getElRenderKey(elPath, fsProps.renderKey),
       };
 
       function componentTypeChanged(componentName: string) {

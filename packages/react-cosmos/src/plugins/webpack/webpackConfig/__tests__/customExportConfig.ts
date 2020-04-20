@@ -12,7 +12,7 @@ import { getExportWebpackConfig } from '..';
 beforeAll(() => {
   mockFile('mywebpack.config.js', {
     module: { rules: [MY_RULE] },
-    plugins: [MY_PLUGIN]
+    plugins: [MY_PLUGIN],
   });
 });
 
@@ -28,8 +28,8 @@ async function getCustomExportWebpackConfig() {
     expectLog('[Cosmos] Using webpack config found at mywebpack.config.js');
     const cosmosConfig = createCosmosConfig(process.cwd(), {
       webpack: {
-        configPath: 'mywebpack.config.js'
-      }
+        configPath: 'mywebpack.config.js',
+      },
     });
     return await getExportWebpackConfig(cosmosConfig, webpack);
   });
@@ -70,7 +70,7 @@ it('create output', async () => {
     expect.objectContaining({
       filename: '[name].js',
       path: getCwdPath('cosmos-export/'),
-      publicPath: '/'
+      publicPath: '/',
     })
   );
 });
@@ -79,7 +79,7 @@ it('includes user deps loader', async () => {
   const { module } = await getCustomExportWebpackConfig();
   expect(module!.rules).toContainEqual({
     loader: require.resolve('../userDepsLoader'),
-    include: require.resolve('../../client/userDeps')
+    include: require.resolve('../../client/userDeps'),
   });
 });
 

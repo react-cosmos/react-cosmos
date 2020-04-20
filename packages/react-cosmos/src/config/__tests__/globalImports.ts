@@ -9,14 +9,14 @@ it('returns default empty globalImports', () => {
 
 it('returns resolved (explicit) relative globalImports', () => {
   const { globalImports } = createCosmosConfig(process.cwd(), {
-    globalImports: ['./src1']
+    globalImports: ['./src1'],
   });
   expect(globalImports).toEqual([getCwdPath('./src1')]);
 });
 
 it('returns resolved (implicit) relative globalImports', () => {
   const { globalImports } = createCosmosConfig(process.cwd(), {
-    globalImports: ['src1']
+    globalImports: ['src1'],
   });
   expect(globalImports).toEqual([getCwdPath('src1')]);
 });
@@ -24,14 +24,14 @@ it('returns resolved (implicit) relative globalImports', () => {
 it('returns absolute globalImports', () => {
   const absImport = path.join(__dirname, '/src1');
   const { globalImports } = createCosmosConfig(process.cwd(), {
-    globalImports: [absImport]
+    globalImports: [absImport],
   });
   expect(globalImports).toEqual([absImport]);
 });
 
 it('returns resolved module globalImports', () => {
   const { globalImports } = createCosmosConfig(process.cwd(), {
-    globalImports: ['react']
+    globalImports: ['react'],
   });
   expect(globalImports).toEqual([require.resolve('react')]);
 });

@@ -52,7 +52,7 @@ function getContainerStyle(
       left: 0,
       width: windowViewport.width,
       height: windowViewport.height - cosmonautSize,
-      fontSize
+      fontSize,
     };
   }
 
@@ -62,7 +62,7 @@ function getContainerStyle(
     left: cosmonautSize,
     width: windowViewport.width - cosmonautSize,
     height: windowViewport.height,
-    fontSize
+    fontSize,
   };
 }
 

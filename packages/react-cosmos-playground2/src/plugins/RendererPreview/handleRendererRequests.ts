@@ -53,13 +53,13 @@ export function createRendererRequestHandler() {
                 id: notificationId,
                 type: 'info',
                 title: 'Renderer iframe location changed',
-                info: `Reload or select another fixture to reset your preview.`
+                info: `Reload or select another fixture to reset your preview.`,
               });
             } else {
               notifications.removeStickyNotification(notificationId);
             }
           }
-        }
+        },
       };
       iframeRef.addEventListener('load', state.onIframeLoad);
     } else {

@@ -7,7 +7,7 @@ import { TreeExpansion } from '../../shared/ui/TreeView';
 import {
   FixtureExpansionGroup,
   getFixtureExpansion,
-  updateElementExpansion
+  updateElementExpansion,
 } from '../../shared/ui/valueInputTree';
 import { StorageSpec } from '../Storage/public';
 import { ClassStatePanel } from './ClassStatePanel';
@@ -17,7 +17,7 @@ import { CLASS_STATE_TREE_EXPANSION_STORAGE_KEY } from './shared';
 type ClassStatePanelContext = PluginContext<ClassStatePanelSpec>;
 
 const { namedPlug, register } = createPlugin<ClassStatePanelSpec>({
-  name: 'classStatePanel'
+  name: 'classStatePanel',
 });
 
 namedPlug<ControlPanelRowSlotProps>(
@@ -75,6 +75,6 @@ function useFixtureExpansion(
 
   return {
     fixtureExpansion,
-    onElementExpansionChange
+    onElementExpansionChange,
   };
 }

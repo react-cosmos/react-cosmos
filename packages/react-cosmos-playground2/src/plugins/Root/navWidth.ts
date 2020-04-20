@@ -13,7 +13,7 @@ export function getNavWidthApi({ getMethodsOf }: RootContext) {
     navWidth:
       storage.getItem<number>(NAV_WIDTH_STORAGE_KEY) || NAV_WIDTH_DEFAULT,
     setNavWidth: (newWidth: number) =>
-      storage.setItem(NAV_WIDTH_STORAGE_KEY, restrictNavWidth(newWidth))
+      storage.setItem(NAV_WIDTH_STORAGE_KEY, restrictNavWidth(newWidth)),
   };
 }
 

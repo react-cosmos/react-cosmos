@@ -10,12 +10,12 @@ const coreConfig: CoreSpec['config'] = {
   fixturesDir: 'mockFixturesDir',
   fixtureFileSuffix: 'mockFixturesFileSuffix',
   devServerOn: true,
-  webRendererUrl: 'mockWebUrl'
+  webRendererUrl: 'mockWebUrl',
 };
 
 function registerTestPlugins() {
   mockStorage({
-    loadCache: () => Promise.resolve(null)
+    loadCache: () => Promise.resolve(null),
   });
   register();
 }
@@ -23,8 +23,8 @@ function registerTestPlugins() {
 function loadTestPlugins() {
   loadPlugins({
     config: {
-      core: coreConfig
-    }
+      core: coreConfig,
+    },
   });
 }
 
@@ -39,7 +39,7 @@ it('returns fixture file vars', () => {
   loadTestPlugins();
   expect(getCoreMethods().getFixtureFileVars()).toEqual({
     fixturesDir: 'mockFixturesDir',
-    fixtureFileSuffix: 'mockFixturesFileSuffix'
+    fixtureFileSuffix: 'mockFixturesFileSuffix',
   });
 });
 

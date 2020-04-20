@@ -24,7 +24,7 @@ export const FixtureTree = React.memo(function FixtureTree({
   selectedFixtureId,
   treeExpansion,
   onSelect,
-  setTreeExpansion
+  setTreeExpansion,
 }: Props) {
   const rootNode = React.useMemo(
     () => createFixtureTree({ fixtures, fixturesDir, fixtureFileSuffix }),

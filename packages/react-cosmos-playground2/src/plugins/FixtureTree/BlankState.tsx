@@ -6,7 +6,7 @@ import {
   grey224,
   grey32,
   grey64,
-  grey8
+  grey8,
 } from '../../shared/ui/colors';
 
 type Props = {

@@ -16,7 +16,7 @@ function createFixtures({ defaultValue }: { defaultValue: number }) {
     );
   };
   return {
-    first: <MyComponent />
+    first: <MyComponent />,
   };
 }
 
@@ -46,10 +46,10 @@ testFixtureLoader(
         values: {
           count: {
             defaultValue: createValue(0),
-            currentValue: createValue(0)
-          }
-        }
-      }
+            currentValue: createValue(0),
+          },
+        },
+      },
     });
   }
 );
@@ -70,10 +70,10 @@ testFixtureLoader(
         values: {
           count: {
             defaultValue: createValue(0),
-            currentValue: createValue(2)
-          }
-        }
-      }
+            currentValue: createValue(2),
+          },
+        },
+      },
     });
   }
 );
@@ -86,7 +86,7 @@ testFixtureLoader(
     await rendered(renderer, '0 clicks');
     update({
       rendererId,
-      fixtures: createFixtures({ defaultValue: 5 })
+      fixtures: createFixtures({ defaultValue: 5 }),
     });
     await fixtureStateChange({
       rendererId,
@@ -96,10 +96,10 @@ testFixtureLoader(
         values: {
           count: {
             defaultValue: createValue(5),
-            currentValue: createValue(5)
-          }
-        }
-      }
+            currentValue: createValue(5),
+          },
+        },
+      },
     });
   }
 );

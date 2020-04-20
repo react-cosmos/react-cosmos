@@ -5,7 +5,7 @@ import { testFixtureLoader } from '../testHelpers';
 const rendererId = uuid();
 const fixtures = {
   first: { one: 'First' },
-  second: 'Second'
+  second: 'Second',
 };
 
 testFixtureLoader(
@@ -15,7 +15,7 @@ testFixtureLoader(
     await selectFixture({
       rendererId,
       fixtureId: { path: 'second', name: null },
-      fixtureState: {}
+      fixtureState: {},
     });
     await retry(() => expect(renderer.toJSON()).toBe('Second'));
   }
@@ -28,7 +28,7 @@ testFixtureLoader(
     await selectFixture({
       rendererId,
       fixtureId: { path: 'first', name: 'one' },
-      fixtureState: {}
+      fixtureState: {},
     });
     await retry(() => expect(renderer.toJSON()).toBe('First'));
   }
@@ -41,14 +41,14 @@ testFixtureLoader(
     await selectFixture({
       rendererId,
       fixtureId: { path: 'second', name: null },
-      fixtureState: {}
+      fixtureState: {},
     });
     await fixtureStateChange({
       rendererId,
       fixtureId: { path: 'second', name: null },
       fixtureState: {
-        props: []
-      }
+        props: [],
+      },
     });
   }
 );
@@ -60,7 +60,7 @@ testFixtureLoader(
     await selectFixture({
       rendererId,
       fixtureId: { path: 'first', name: 'one' },
-      fixtureState: {}
+      fixtureState: {},
     });
     await retry(() => expect(renderer.toJSON()).toBe('First'));
     await unselectFixture({ rendererId });
@@ -75,7 +75,7 @@ testFixtureLoader(
     await selectFixture({
       rendererId: 'foobar',
       fixtureId: { path: 'second', name: null },
-      fixtureState: {}
+      fixtureState: {},
     });
     await retry(() => expect(renderer.toJSON()).toBe('No fixture selected.'));
   }
@@ -88,7 +88,7 @@ testFixtureLoader(
     await selectFixture({
       rendererId,
       fixtureId: { path: 'third', name: null },
-      fixtureState: {}
+      fixtureState: {},
     });
     await retry(() =>
       expect(renderer.toJSON()).toBe('Fixture path not found: third')

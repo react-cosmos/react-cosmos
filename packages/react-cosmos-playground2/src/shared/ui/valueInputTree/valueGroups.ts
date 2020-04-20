@@ -1,6 +1,6 @@
 import {
   FixtureElementId,
-  FixtureStateValues
+  FixtureStateValues,
 } from 'react-cosmos-shared2/fixtureState';
 import { stringifyElementId } from './shared';
 

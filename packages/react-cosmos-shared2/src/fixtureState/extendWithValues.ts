@@ -3,7 +3,7 @@ import {
   FixtureStateValue,
   FixtureStateValues,
   isArray,
-  isObject
+  isObject,
 } from './shared';
 
 // Use fixture state for serializable values and fall back to base values

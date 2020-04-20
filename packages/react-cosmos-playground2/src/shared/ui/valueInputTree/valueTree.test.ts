@@ -1,38 +1,38 @@
 import {
   FixtureStateValue,
-  FixtureStateValues
+  FixtureStateValues,
 } from 'react-cosmos-shared2/fixtureState';
 import { ValueNode } from './shared';
 import { getFixtureStateValueTree } from './valueTree';
 
 const str1: FixtureStateValue = {
   type: 'primitive',
-  value: 'foo'
+  value: 'foo',
 };
 
 const str2: FixtureStateValue = {
   type: 'primitive',
-  value: 'bar'
+  value: 'bar',
 };
 
 const str3: FixtureStateValue = {
   type: 'primitive',
-  value: 'baz'
+  value: 'baz',
 };
 
 const num: FixtureStateValue = {
   type: 'primitive',
-  value: 56
+  value: 56,
 };
 
 const bool: FixtureStateValue = {
   type: 'primitive',
-  value: false
+  value: false,
 };
 
 const jsx: FixtureStateValue = {
   type: 'unserializable',
-  stringifiedValue: '<div />'
+  stringifiedValue: '<div />',
 };
 
 const values: FixtureStateValues = {
@@ -45,14 +45,14 @@ const values: FixtureStateValues = {
       bool,
       object2: {
         type: 'object',
-        values: { str3, jsx }
+        values: { str3, jsx },
       },
       array1: {
         type: 'array',
-        values: [num, bool]
-      }
-    }
-  }
+        values: [num, bool],
+      },
+    },
+  },
 };
 
 const rootNode: ValueNode = {
@@ -63,15 +63,15 @@ const rootNode: ValueNode = {
       dirs: {
         object2: {
           items: { str3, jsx },
-          dirs: {}
+          dirs: {},
         },
         array1: {
           items: { 0: num, 1: bool },
-          dirs: {}
-        }
-      }
-    }
-  }
+          dirs: {},
+        },
+      },
+    },
+  },
 };
 
 it('creates value tree', () => {

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {
   getSlideInStyle,
   slideInDelay,
-  slideInTransition
+  slideInTransition,
 } from './shared/slideIn';
 import { useViewportEnter } from './shared/useViewportEnter';
 

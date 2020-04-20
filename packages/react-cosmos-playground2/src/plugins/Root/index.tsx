@@ -20,11 +20,11 @@ const { onLoad, plug, register } = createPlugin<RootSpec>({
     globalActionOrder: [],
     globalOrder: [],
     navRowOrder: [],
-    rendererActionOrder: []
+    rendererActionOrder: [],
   },
   initialState: {
-    storageCacheReady: false
-  }
+    storageCacheReady: false,
+  },
 });
 
 onLoad(context => {
@@ -39,7 +39,7 @@ onLoad(context => {
   const core = context.getMethodsOf<CoreSpec>('core');
   return core.registerCommands({
     toggleFixtureList: () => openNav(context, !isNavOpen(context)),
-    toggleControlPanel: () => openPanel(context, !isPanelOpen(context))
+    toggleControlPanel: () => openPanel(context, !isPanelOpen(context)),
   });
 });
 
@@ -89,7 +89,7 @@ plug('root', ({ pluginContext }) => {
     globalActionOrder,
     globalOrder,
     navRowOrder,
-    rendererActionOrder
+    rendererActionOrder,
   } = getConfig();
   return (
     <Root

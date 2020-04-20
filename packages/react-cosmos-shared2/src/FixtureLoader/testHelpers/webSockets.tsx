@@ -5,7 +5,7 @@ import { createWebSocketsConnect, FixtureLoader } from '..';
 import {
   createRendererConnectMockApi,
   FixtureLoaderTestCallback,
-  FixtureLoaderTestArgs
+  FixtureLoaderTestArgs,
 } from './shared';
 
 // __getMockApi is defined in mockSocketIo.js
@@ -13,7 +13,7 @@ const {
   WS_URL,
   getMessages,
   postMessage,
-  resetMessages
+  resetMessages,
 } = (io as any).__getMockApi();
 
 export async function mountWebSockets(
@@ -29,7 +29,7 @@ export async function mountWebSockets(
         act(() => {
           renderer.update(getElement(newArgs));
         }),
-      ...createRendererConnectMockApi({ getMessages, postMessage })
+      ...createRendererConnectMockApi({ getMessages, postMessage }),
     });
   } finally {
     renderer.unmount();
@@ -42,7 +42,7 @@ function getElement({
   fixtures,
   selectedFixtureId = null,
   decorators = {},
-  onErrorReset
+  onErrorReset,
 }: FixtureLoaderTestArgs) {
   return (
     <FixtureLoader

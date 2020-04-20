@@ -9,7 +9,7 @@ export const stretchStyle = { display: 'flex', flex: 1 };
 export function getStyles({
   container,
   viewport,
-  scaled
+  scaled,
 }: {
   container: Viewport;
   viewport: Viewport;
@@ -28,7 +28,7 @@ export function getStyles({
     maskContainerStyle: getMaskContainerStyle(scaled, widthScale, heightScale),
     padContainerStyle: getPadContainerStyle(),
     alignContainerStyle: getAlignContainerStyle(scaledWidth, scaledHeight),
-    scaleContainerStyle: getScaleContainerStyle(width, height, scaleFactor)
+    scaleContainerStyle: getScaleContainerStyle(width, height, scaleFactor),
   };
 }
 
@@ -46,7 +46,7 @@ export function getViewportScaleFactor(
 function getAvailableViewport(container: Viewport) {
   return {
     width: container.width - getHorPadding(),
-    height: container.height - getVerPadding()
+    height: container.height - getVerPadding(),
   };
 }
 
@@ -60,7 +60,7 @@ function getMaskContainerStyle(
     display: 'flex',
     justifyContent: scale || widthScale === 1 ? 'space-around' : 'flex-start',
     alignItems: scale || heightScale === 1 ? 'center' : 'flex-start',
-    overflow: scale ? 'hidden' : 'scroll'
+    overflow: scale ? 'hidden' : 'scroll',
   };
 }
 
@@ -71,7 +71,7 @@ function getPadContainerStyle() {
     paddingTop,
     paddingBottom,
     paddingLeft,
-    paddingRight
+    paddingRight,
   };
 }
 
@@ -80,7 +80,7 @@ function getAlignContainerStyle(scaledWidth: number, scaledHeight: number) {
     width: scaledWidth,
     height: scaledHeight,
     border: `${BORDER_WIDTH}px solid ${white20}`,
-    overflow: 'hidden'
+    overflow: 'hidden',
   };
 }
 
@@ -93,7 +93,7 @@ function getScaleContainerStyle(
     width,
     height,
     transformOrigin: '0% 0%',
-    transform: `scale(${scaleFactor})`
+    transform: `scale(${scaleFactor})`,
   };
 }
 

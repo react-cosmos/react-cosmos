@@ -9,7 +9,7 @@ const fixtures = {
   'ein.js': null,
   'zwei.js': null,
   'nested/drei.js': null,
-  'deeply/nested/vier.js': null
+  'deeply/nested/vier.js': null,
 };
 
 it('hides fixture under non-expanded dir', async () => {

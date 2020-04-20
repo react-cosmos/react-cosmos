@@ -58,5 +58,5 @@ export default {
     <Page>
       <About />
     </Page>
-  )
+  ),
 };

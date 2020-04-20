@@ -19,7 +19,7 @@ export function flattenFixtureTree(
   Object.keys(treeNode.items).forEach(itemName => {
     flatFixtureTree.push({
       fixtureId: treeNode.items[itemName],
-      cleanPath: [...parents, itemName]
+      cleanPath: [...parents, itemName],
     });
   });
 

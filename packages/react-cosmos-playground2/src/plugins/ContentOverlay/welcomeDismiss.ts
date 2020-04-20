@@ -25,6 +25,6 @@ export function useWelcomeDismiss(context: ContentOverlayContext) {
   return {
     welcomeDismissed,
     onDismissWelcome,
-    onShowWelcome
+    onShowWelcome,
   };
 }

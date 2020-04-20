@@ -8,11 +8,11 @@ import { BuildNotificationsSpec } from './public';
 type BuildNotificationsContext = PluginContext<BuildNotificationsSpec>;
 
 const { on, register } = createPlugin<BuildNotificationsSpec>({
-  name: 'buildNotifications'
+  name: 'buildNotifications',
 });
 
 on<MessageHandlerSpec>('messageHandler', {
-  serverMessage: onServerMessage
+  serverMessage: onServerMessage,
 });
 
 export { register };
@@ -28,7 +28,7 @@ function onServerMessage(context: BuildNotificationsContext, msg: Message) {
         id: 'build',
         type: 'loading',
         title: 'Rebuilding...',
-        info: 'Your code is updating.'
+        info: 'Your code is updating.',
       });
 
     case 'buildError':
@@ -36,7 +36,7 @@ function onServerMessage(context: BuildNotificationsContext, msg: Message) {
         id: 'build',
         type: 'error',
         title: 'Build failed',
-        info: 'Check your terminal for more information.'
+        info: 'Check your terminal for more information.',
       });
 
     case 'buildDone':

@@ -3,7 +3,7 @@ import micromatch from 'micromatch';
 import {
   getFixturePatterns,
   getDecoratorPatterns,
-  getIgnorePatterns
+  getIgnorePatterns,
 } from './shared';
 
 type FindUserModulePathsArgs = {
@@ -20,12 +20,12 @@ type UserModulePaths = {
 export function findUserModulePaths({
   rootDir,
   fixturesDir,
-  fixtureFileSuffix
+  fixtureFileSuffix,
 }: FindUserModulePathsArgs): UserModulePaths {
   const paths = glob.sync('**/*', {
     cwd: rootDir,
     absolute: true,
-    ignore: getIgnorePatterns()
+    ignore: getIgnorePatterns(),
   });
 
   const fixturePatterns = getFixturePatterns(fixturesDir, fixtureFileSuffix);

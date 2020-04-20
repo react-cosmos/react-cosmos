@@ -3,7 +3,7 @@ import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
   mockRouter,
-  mockNotifications
+  mockNotifications,
 } from '../../../testHelpers/pluginMocks';
 import { mockRendererReady } from '../testHelpers';
 import { register } from '..';
@@ -15,7 +15,7 @@ const fixtures = {};
 function registerTestPlugins() {
   register();
   mockRouter({
-    getSelectedFixtureId: () => null
+    getSelectedFixtureId: () => null,
   });
   mockNotifications();
 }

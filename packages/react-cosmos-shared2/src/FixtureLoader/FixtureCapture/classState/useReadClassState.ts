@@ -6,7 +6,7 @@ import {
   findFixtureStateClassState,
   FixtureDecoratorId,
   FixtureStateClassState,
-  updateFixtureStateClassState
+  updateFixtureStateClassState,
 } from '../../../fixtureState';
 import { FixtureContext } from '../../FixtureContext';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
@@ -65,8 +65,8 @@ export function useReadClassState(
           classState: updateFixtureStateClassState({
             fixtureState: prevFs,
             elementId,
-            values: createValues(state)
-          })
+            values: createValues(state),
+          }),
         }));
       }
     });

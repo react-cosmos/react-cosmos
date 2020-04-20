@@ -10,7 +10,7 @@ import { hideSingleChildDirs } from './hideSingleChildDirs';
 export function createFixtureTree({
   fixtures,
   fixturesDir,
-  fixtureFileSuffix
+  fixtureFileSuffix,
 }: {
   fixtures: FixtureNamesByPath;
   fixturesDir: string;

@@ -10,7 +10,7 @@ export async function mockConsole<R>(
 
   const expectedLogs: string[] = [];
   const ret = await cb({
-    expectLog: (msg: string) => expectedLogs.push(msg)
+    expectLog: (msg: string) => expectedLogs.push(msg),
   });
   expectedLogs.forEach(msg => expect(console.log).toBeCalledWith(msg));
 

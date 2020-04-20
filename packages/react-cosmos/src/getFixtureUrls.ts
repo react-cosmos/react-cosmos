@@ -2,7 +2,7 @@ import { getFixtureNamesByPath } from 'react-cosmos-shared2/react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import {
   stringifyPlaygroundUrlQuery,
-  stringifyRendererUrlQuery
+  stringifyRendererUrlQuery,
 } from 'react-cosmos-shared2/url';
 import { CosmosConfig } from './config';
 import { RENDERER_FILENAME } from './shared/playgroundHtml';

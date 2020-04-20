@@ -6,7 +6,7 @@ import {
   mockRendererCore,
   mockRendererPreview,
   mockRouter,
-  mockStorage
+  mockStorage,
 } from '../../../testHelpers/pluginMocks';
 
 afterEach(resetPlugins);
@@ -15,15 +15,15 @@ function registerTestPlugins() {
   register();
   mockStorage();
   mockRouter({
-    getSelectedFixtureId: () => ({ path: 'foo.js', name: null })
+    getSelectedFixtureId: () => ({ path: 'foo.js', name: null }),
   });
   mockRendererCore({
     isRendererConnected: () => true,
-    isValidFixtureSelected: () => true
+    isValidFixtureSelected: () => true,
   });
   mockRendererPreview({
     getUrlStatus: () => 'ok',
-    getRuntimeStatus: () => 'connected'
+    getRuntimeStatus: () => 'connected',
   });
 }
 

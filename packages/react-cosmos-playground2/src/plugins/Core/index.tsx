@@ -8,14 +8,14 @@ type CoreContext = PluginContext<CoreSpec>;
 const { onLoad, register } = createPlugin<CoreSpec>({
   name: 'core',
   initialState: {
-    commands: {}
+    commands: {},
   },
   defaultConfig: {
     projectId: 'defaultProjectId',
     fixturesDir: '__fixtures__',
     fixtureFileSuffix: 'fixture',
     devServerOn: false,
-    webRendererUrl: null
+    webRendererUrl: null,
   },
   methods: {
     registerCommands,
@@ -23,8 +23,8 @@ const { onLoad, register } = createPlugin<CoreSpec>({
     getProjectId,
     getFixtureFileVars,
     isDevServerOn,
-    getWebRendererUrl
-  }
+    getWebRendererUrl,
+  },
 });
 
 export { register };
@@ -42,13 +42,13 @@ function registerCommands(context: CoreContext, commands: Commands) {
     });
     return {
       ...prevState,
-      commands: { ...prevState.commands, ...commands }
+      commands: { ...prevState.commands, ...commands },
     };
   });
   return () =>
     context.setState(prevState => ({
       ...prevState,
-      commands: omit(prevState.commands, ...Object.keys(commands))
+      commands: omit(prevState.commands, ...Object.keys(commands)),
     }));
 }
 

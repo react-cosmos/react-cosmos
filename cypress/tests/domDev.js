@@ -2,7 +2,7 @@ import {
   homepageTests,
   navTests,
   selectFixtureTests,
-  staticTests
+  staticTests,
 } from '../support/testBlocks';
 
 describe('DOM dev', () => {

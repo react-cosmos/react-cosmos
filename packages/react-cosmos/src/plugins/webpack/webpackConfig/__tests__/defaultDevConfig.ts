@@ -44,7 +44,7 @@ it('create output', async () => {
     expect.objectContaining({
       filename: '[name].js',
       path: '/',
-      publicPath: '/'
+      publicPath: '/',
     })
   );
 });
@@ -53,7 +53,7 @@ it('includes user deps loader', async () => {
   const { module } = await getDefaultDevWebpackConfig();
   expect(module!.rules).toContainEqual({
     loader: require.resolve('../userDepsLoader'),
-    include: require.resolve('../../client/userDeps')
+    include: require.resolve('../../client/userDeps'),
   });
 });
 

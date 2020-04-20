@@ -8,11 +8,11 @@ import { WebpackHmrNotificationSpec } from './public';
 type WebpackHmrNotificationContext = PluginContext<WebpackHmrNotificationSpec>;
 
 const { on, register } = createPlugin<WebpackHmrNotificationSpec>({
-  name: 'webpackHmrNotification'
+  name: 'webpackHmrNotification',
 });
 
 on<RendererCoreSpec>('rendererCore', {
-  response: onRendererResponse
+  response: onRendererResponse,
 });
 
 export { register };
@@ -36,7 +36,7 @@ function onRendererResponse(
         type: 'error',
         title: 'Hot reload failed',
         info:
-          'Check the browser console to see which module failed to hot reload.'
+          'Check the browser console to see which module failed to hot reload.',
       });
 
     default:

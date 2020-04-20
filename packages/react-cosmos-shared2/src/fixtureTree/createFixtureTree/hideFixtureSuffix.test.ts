@@ -11,18 +11,18 @@ it('hides fixture suffix in dir name', () => {
             items: {
               Susan: {
                 path: 'WelcomeMessage/index.fixture.js',
-                name: 'Susan'
+                name: 'Susan',
               },
               Sarah: {
                 path: 'WelcomeMessage/index.fixture.js',
-                name: 'Sarah'
-              }
+                name: 'Sarah',
+              },
             },
-            dirs: {}
-          }
-        }
-      }
-    }
+            dirs: {},
+          },
+        },
+      },
+    },
   };
   const cleanTree = {
     items: {},
@@ -34,18 +34,18 @@ it('hides fixture suffix in dir name', () => {
             items: {
               Susan: {
                 path: 'WelcomeMessage/index.fixture.js',
-                name: 'Susan'
+                name: 'Susan',
               },
               Sarah: {
                 path: 'WelcomeMessage/index.fixture.js',
-                name: 'Sarah'
-              }
+                name: 'Sarah',
+              },
             },
-            dirs: {}
-          }
-        }
-      }
-    }
+            dirs: {},
+          },
+        },
+      },
+    },
   };
   expect(hideFixtureSuffix(tree, 'fixture')).toEqual(cleanTree);
 });
@@ -58,12 +58,12 @@ it('hides fixture suffix in item name', () => {
         items: {
           'index.fixture': {
             path: 'WelcomeMessage/index.fixture.js',
-            name: null
-          }
+            name: null,
+          },
         },
-        dirs: {}
-      }
-    }
+        dirs: {},
+      },
+    },
   };
   const cleanTree = {
     items: {},
@@ -72,12 +72,12 @@ it('hides fixture suffix in item name', () => {
         items: {
           index: {
             path: 'WelcomeMessage/index.fixture.js',
-            name: null
-          }
+            name: null,
+          },
         },
-        dirs: {}
-      }
-    }
+        dirs: {},
+      },
+    },
   };
   expect(hideFixtureSuffix(tree, 'fixture')).toEqual(cleanTree);
 });

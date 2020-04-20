@@ -2,7 +2,7 @@ import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
   mockRouter,
-  mockNotifications
+  mockNotifications,
 } from '../../../testHelpers/pluginMocks';
 import { mockRendererReady, mockFixtureStateChange } from '../testHelpers';
 import { register } from '..';
@@ -16,7 +16,7 @@ const fixtureState = { props: [] };
 function registerTestPlugins() {
   register();
   mockRouter({
-    getSelectedFixtureId: () => fixtureId
+    getSelectedFixtureId: () => fixtureId,
   });
   mockNotifications();
 }
@@ -34,7 +34,7 @@ it('returns connected renderer IDs', () => {
   loadTestPlugins();
   expect(getRendererCoreMethods().getConnectedRendererIds()).toEqual([
     'mockRendererId1',
-    'mockRendererId2'
+    'mockRendererId2',
   ]);
 });
 
@@ -52,7 +52,7 @@ it('returns fixtures', () => {
   expect(getRendererCoreMethods().getFixtures()).toEqual({
     'ein.js': null,
     'zwei.js': null,
-    'drei.js': null
+    'drei.js': null,
   });
 });
 
@@ -60,6 +60,6 @@ it('returns fixture state', () => {
   registerTestPlugins();
   loadTestPlugins();
   expect(getRendererCoreMethods().getFixtureState()).toEqual({
-    props: []
+    props: [],
   });
 });

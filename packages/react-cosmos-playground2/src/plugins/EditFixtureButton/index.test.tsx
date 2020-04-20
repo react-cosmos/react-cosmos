@@ -43,7 +43,7 @@ it(`shows error notification when dev server is off`, async () => {
       return () => {
         registeredCommands = {};
       };
-    }
+    },
   });
   const { pushTimedNotification } = mockNotifications();
 
@@ -55,7 +55,7 @@ it(`shows error notification when dev server is off`, async () => {
       id: expect.any(String),
       type: 'error',
       title: 'Failed to open fixture',
-      info: 'Static exports cannot access source files.'
+      info: 'Static exports cannot access source files.',
     })
   );
 });
@@ -97,7 +97,7 @@ it('shows 400 error notification', async () => {
         id: expect.any(String),
         type: 'error',
         title: 'Failed to open fixture',
-        info: 'This looks like a bug. Please let us know!'
+        info: 'This looks like a bug. Please let us know!',
       })
     );
   });
@@ -117,7 +117,7 @@ it('shows 404 error notification', async () => {
         id: expect.any(String),
         type: 'error',
         title: 'Failed to open fixture',
-        info: 'File is missing. Weird!'
+        info: 'File is missing. Weird!',
       })
     );
   });
@@ -137,7 +137,7 @@ it('shows 500 error notification', async () => {
         id: expect.any(String),
         type: 'error',
         title: 'Failed to open fixture',
-        info: 'Does your OS know to open source files with your code editor?'
+        info: 'Does your OS know to open source files with your code editor?',
       })
     );
   });

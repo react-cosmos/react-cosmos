@@ -8,7 +8,7 @@ import { ContentOverlaySpec } from './public';
 import { useWelcomeDismiss } from './welcomeDismiss';
 
 const { plug, register } = createPlugin<ContentOverlaySpec>({
-  name: 'contentOverlay'
+  name: 'contentOverlay',
 });
 
 plug('contentOverlay', ({ pluginContext }) => {
@@ -20,7 +20,7 @@ plug('contentOverlay', ({ pluginContext }) => {
   const {
     welcomeDismissed,
     onDismissWelcome,
-    onShowWelcome
+    onShowWelcome,
   } = useWelcomeDismiss(pluginContext);
 
   return (

@@ -30,7 +30,7 @@ type WebpackDevMiddleware = (
 export async function webpackDevServer({
   cosmosConfig,
   expressApp,
-  sendMessage
+  sendMessage,
 }: DevServerPluginArgs) {
   const userWebpack = getWebpack(cosmosConfig.rootDir);
   if (!userWebpack) {
@@ -91,7 +91,7 @@ export async function webpackDevServer({
     // publicPath is the base path for the webpack assets and has to match
     // webpack.output.path
     publicPath: removeLeadingDot(cosmosConfig.publicUrl),
-    logLevel: 'warn'
+    logLevel: 'warn',
   });
 
   expressApp.use(wdmInst);

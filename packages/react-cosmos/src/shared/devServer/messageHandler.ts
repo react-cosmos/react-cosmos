@@ -2,7 +2,7 @@ import http from 'http';
 import ioServer from 'socket.io';
 import {
   BuildMessage,
-  SERVER_MESSAGE_EVENT_NAME
+  SERVER_MESSAGE_EVENT_NAME,
 } from 'react-cosmos-shared2/build';
 import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
 

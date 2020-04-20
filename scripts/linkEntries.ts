@@ -9,7 +9,7 @@ import {
   getFormattedPackageList,
   getUnnamedArg,
   done,
-  error
+  error,
 } from './shared';
 
 const SRC_DIR = 'src';

@@ -45,7 +45,7 @@ it('create output', async () => {
     expect.objectContaining({
       filename: '[name].js',
       path: getCwdPath('cosmos-export/'),
-      publicPath: '/'
+      publicPath: '/',
     })
   );
 });
@@ -54,7 +54,7 @@ it('includes user deps loader', async () => {
   const { module } = await getDefaultExportWebpackConfig();
   expect(module!.rules).toContainEqual({
     loader: require.resolve('../userDepsLoader'),
-    include: require.resolve('../../client/userDeps')
+    include: require.resolve('../../client/userDeps'),
   });
 });
 

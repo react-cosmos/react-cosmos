@@ -5,7 +5,7 @@ import { loadPlugins, Slot, resetPlugins } from 'react-plugin';
 import {
   mockCore,
   mockRendererCore,
-  getRendererPreviewMethods
+  getRendererPreviewMethods,
 } from '../../../testHelpers/pluginMocks';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { rendererReadyMsg, rendererErrorMsg } from '../testHelpers/messages';
@@ -16,7 +16,7 @@ afterEach(resetPlugins);
 function registerTestPlugins() {
   register();
   mockCore({
-    getWebRendererUrl: () => 'mockRendererUrl'
+    getWebRendererUrl: () => 'mockRendererUrl',
   });
   mockRendererCore();
 }

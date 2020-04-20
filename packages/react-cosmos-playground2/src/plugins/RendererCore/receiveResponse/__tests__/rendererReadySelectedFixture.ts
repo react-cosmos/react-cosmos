@@ -5,7 +5,7 @@ import { register } from '../..';
 import {
   mockRouter,
   mockNotifications,
-  onRendererCore
+  onRendererCore,
 } from '../../../../testHelpers/pluginMocks';
 
 afterEach(resetPlugins);
@@ -17,7 +17,7 @@ const fixtureState = { props: [] };
 function registerTestPlugins() {
   register();
   mockRouter({
-    getSelectedFixtureId: () => fixtureId
+    getSelectedFixtureId: () => fixtureId,
   });
   mockNotifications();
   const { request } = onRendererCore();
@@ -40,8 +40,8 @@ it('posts "selectFixture" renderer request', async () => {
       payload: {
         rendererId: 'mockRendererId',
         fixtureId,
-        fixtureState: {}
-      }
+        fixtureState: {},
+      },
     })
   );
 });
@@ -60,8 +60,8 @@ it('posts "selectFixture" renderer request with fixture state', async () => {
       payload: {
         rendererId: 'mockRendererId2',
         fixtureId,
-        fixtureState
-      }
+        fixtureState,
+      },
     })
   );
 });
