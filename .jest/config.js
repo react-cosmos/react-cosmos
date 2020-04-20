@@ -7,7 +7,7 @@ module.exports = {
   testPathIgnorePatterns: ['<rootDir>/node_modules/'],
   setupFilesAfterEnv: ['<rootDir>/.jest/setup.ts'],
   collectCoverageFrom: [
-    '**/src/**/*.{ts,tsx}',
+    'packages/src/**/*.{ts,tsx}',
     '!**/__fixtures__/**',
     '!**/*.fixture.{js,ts,tsx}',
     '!**/cosmos.decorator.{js,ts,tsx}',
