@@ -36,16 +36,12 @@ export function selectFixtureTests() {
   context('select fixture', () => {
     it('renders selected fixtures', () => {
       cy.contains('Hello World').click();
-      getRendererBody()
-        .find('#root')
-        .should('have.text', 'Hello World!');
+      getRendererBody().find('#root').should('have.text', 'Hello World!');
     });
 
     it('renders updated fixture', () => {
       cy.contains('large number').click();
-      getRendererBody()
-        .find('button')
-        .should('have.text', '555555555 times');
+      getRendererBody().find('button').should('have.text', '555555555 times');
       getRendererBody()
         .find('button')
         .click()
@@ -58,9 +54,7 @@ export function selectFixtureTests() {
       cy.get('[placeholder="Fixture search"]')
         .type(`{downarrow}`)
         .type('{enter}');
-      getRendererBody()
-        .find('#root')
-        .should('have.text', 'Hello World!');
+      getRendererBody().find('#root').should('have.text', 'Hello World!');
     });
   });
 }
@@ -68,13 +62,11 @@ export function selectFixtureTests() {
 export function staticTests() {
   context('static path', () => {
     it('server static asset', () => {
-      cy.request('/cookie.txt')
-        .its('body')
-        .should('include', 'nom nom nom');
+      cy.request('/cookie.txt').its('body').should('include', 'nom nom nom');
     });
   });
 }
 
 function getRendererBody() {
-  return cy.get('iframe').then($iframe => $iframe.contents().find('body'));
+  return cy.get('iframe').then(($iframe) => $iframe.contents().find('body'));
 }

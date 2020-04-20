@@ -5,7 +5,7 @@ import { testFixtureLoader } from '../testHelpers';
 const rendererId = uuid();
 const fixtures = {
   first: { one: 'First' },
-  second: 'Second'
+  second: 'Second',
 };
 
 testFixtureLoader(

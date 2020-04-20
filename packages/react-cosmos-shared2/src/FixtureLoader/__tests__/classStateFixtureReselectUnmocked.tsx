@@ -7,7 +7,7 @@ import { anyClassState, anyProps } from '../testHelpers/fixtureState';
 
 const rendererId = uuid();
 const fixtures = {
-  first: <Counter />
+  first: <Counter />,
 };
 const fixtureId = { path: 'first', name: null };
 
@@ -31,10 +31,10 @@ testFixtureLoader(
         props: [anyProps()],
         classState: [
           anyClassState({
-            values: createValues({ count: 0 })
-          })
-        ]
-      }
+            values: createValues({ count: 0 }),
+          }),
+        ],
+      },
     });
   }
 );

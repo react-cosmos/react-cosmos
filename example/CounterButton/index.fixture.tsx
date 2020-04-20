@@ -8,7 +8,7 @@ export default () => {
     <CounterButton
       suffix="times"
       count={count}
-      increment={() => setCount(prevCount => prevCount + 1)}
+      increment={() => setCount((prevCount) => prevCount + 1)}
     />
   );
 };

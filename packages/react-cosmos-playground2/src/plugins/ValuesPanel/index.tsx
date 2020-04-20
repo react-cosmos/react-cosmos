@@ -11,7 +11,7 @@ type ValuesPanelContext = PluginContext<ValuesPanelSpec>;
 export const VALUES_TREE_EXPANSION_STORAGE_KEY = 'valuesTreeExpansion';
 
 const { namedPlug, register } = createPlugin<ValuesPanelSpec>({
-  name: 'valuesPanel'
+  name: 'valuesPanel',
 });
 
 namedPlug<ControlPanelRowSlotProps>(

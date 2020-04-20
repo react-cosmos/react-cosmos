@@ -10,7 +10,7 @@ const fixtures = {
     <Viewport width={320} height={240}>
       yo
     </Viewport>
-  )
+  ),
 };
 const fixtureId = { path: 'first', name: null };
 
@@ -21,7 +21,7 @@ testFixtureLoader(
     await selectFixture({
       rendererId,
       fixtureId,
-      fixtureState: {}
+      fixtureState: {},
     });
     await retry(() => expect(renderer.toJSON()).toBe('yo'));
   }
@@ -34,15 +34,15 @@ testFixtureLoader(
     await selectFixture({
       rendererId,
       fixtureId,
-      fixtureState: {}
+      fixtureState: {},
     });
     await fixtureStateChange({
       rendererId,
       fixtureId,
       fixtureState: {
         props: [],
-        viewport: { width: 320, height: 240 }
-      }
+        viewport: { width: 320, height: 240 },
+      },
     });
   }
 );
@@ -54,7 +54,7 @@ testFixtureLoader(
     await selectFixture({
       rendererId,
       fixtureId,
-      fixtureState: {}
+      fixtureState: {},
     });
     update({
       rendererId,
@@ -63,16 +63,16 @@ testFixtureLoader(
           <Viewport width={640} height={480}>
             yo
           </Viewport>
-        )
-      }
+        ),
+      },
     });
     await fixtureStateChange({
       rendererId,
       fixtureId,
       fixtureState: {
         props: [],
-        viewport: { width: 640, height: 480 }
-      }
+        viewport: { width: 640, height: 480 },
+      },
     });
   }
 );

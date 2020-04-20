@@ -44,7 +44,7 @@ it('create output', async () => {
     expect.objectContaining({
       filename: '[name].js',
       path: '/',
-      publicPath: '/'
+      publicPath: '/',
     })
   );
 });
@@ -53,14 +53,14 @@ it('includes user deps loader', async () => {
   const { module } = await getDefaultDevWebpackConfig();
   expect(module!.rules).toContainEqual({
     loader: require.resolve('../userDepsLoader'),
-    include: require.resolve('../../client/userDeps')
+    include: require.resolve('../../client/userDeps'),
   });
 });
 
 it('includes HtmlWebpackPlugin', async () => {
   const { plugins } = await getDefaultDevWebpackConfig();
   const htmlWebpackPlugin = plugins!.find(
-    p => p.constructor.name === 'HtmlWebpackPlugin'
+    (p) => p.constructor.name === 'HtmlWebpackPlugin'
   ) as HtmlWebpackPlugin;
   expect(htmlWebpackPlugin).toBeDefined();
   expect(htmlWebpackPlugin.options.filename).toBe(RENDERER_FILENAME);
@@ -69,7 +69,7 @@ it('includes HtmlWebpackPlugin', async () => {
 it('includes HotModuleReplacementPlugin', async () => {
   const { plugins } = await getDefaultDevWebpackConfig();
   const hotModuleReplacementPlugin = plugins!.find(
-    p => p.constructor.name === 'HotModuleReplacementPlugin'
+    (p) => p.constructor.name === 'HotModuleReplacementPlugin'
   );
   expect(hotModuleReplacementPlugin).toBeDefined();
 });

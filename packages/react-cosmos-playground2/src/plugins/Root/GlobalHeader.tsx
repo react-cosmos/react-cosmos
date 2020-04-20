@@ -15,7 +15,7 @@ export function GlobalHeader({
   selectedFixtureId,
   rendererConnected,
   validFixtureSelected,
-  globalActionOrder
+  globalActionOrder,
 }: Props) {
   function getMessage() {
     if (!rendererConnected) {

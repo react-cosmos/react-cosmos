@@ -1,7 +1,7 @@
 export {
   createCosmosConfig,
   detectCosmosConfig,
-  getCosmosConfigAtPath
+  getCosmosConfigAtPath,
 } from './config';
 export { getFixtures, getFixturesSync } from './getFixtures';
 export { FixtureApi, getFixtures2 } from './getFixtures2';

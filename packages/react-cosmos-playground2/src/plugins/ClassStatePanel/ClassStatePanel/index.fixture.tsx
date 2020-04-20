@@ -12,29 +12,29 @@ export default () => {
         values: {
           string: {
             type: 'primitive',
-            value: 'hello world'
+            value: 'hello world',
           },
           number: {
             type: 'primitive',
-            value: 1337
+            value: 1337,
           },
           boolean: {
             type: 'primitive',
-            value: false
+            value: false,
           },
           null: {
             type: 'primitive',
-            value: null
+            value: null,
           },
           unserializable: {
             type: 'unserializable',
-            stringifiedValue: `<div>\n  <div />\n  <div />\n</div>`
+            stringifiedValue: `<div>\n  <div />\n  <div />\n</div>`,
           },
           unserializable2: {
             type: 'unserializable',
-            stringifiedValue: `/whatyouseeiswhatyougetsometimes/i`
-          }
-        }
+            stringifiedValue: `/whatyouseeiswhatyougetsometimes/i`,
+          },
+        },
       },
       {
         componentName: '',
@@ -45,58 +45,58 @@ export default () => {
             values: [
               {
                 type: 'primitive',
-                value: 'hello world'
+                value: 'hello world',
               },
               {
                 type: 'primitive',
-                value: 1337
+                value: 1337,
               },
               {
                 type: 'primitive',
-                value: false
-              }
-            ]
+                value: false,
+              },
+            ],
           },
           object: {
             type: 'object',
             values: {
               string: {
                 type: 'primitive',
-                value: 'hello world'
+                value: 'hello world',
               },
               number: {
                 type: 'primitive',
-                value: 1337
+                value: 1337,
               },
               boolean: {
                 type: 'primitive',
-                value: false
-              }
-            }
+                value: false,
+              },
+            },
           },
           emptyObject: {
             type: 'object',
-            values: {}
+            values: {},
           },
           emptyArray: {
             type: 'array',
-            values: []
+            values: [],
           },
           string: {
             type: 'primitive',
-            value: 'hello world hello world hello world hello world'
+            value: 'hello world hello world hello world hello world',
           },
           numberWithAVeryVeryVeeeryLongName: {
             type: 'primitive',
-            value: 1337
+            value: 1337,
           },
           boolean: {
             type: 'primitive',
-            value: false
-          }
-        }
-      }
-    ]
+            value: false,
+          },
+        },
+      },
+    ],
   });
   const [fixtureExpansion, setFixtureExpansion] = React.useState({});
 
@@ -108,7 +108,7 @@ export default () => {
       onElementExpansionChange={(elementId, treeExpansion) => {
         setFixtureExpansion({
           ...fixtureExpansion,
-          [stringifyElementId(elementId)]: treeExpansion
+          [stringifyElementId(elementId)]: treeExpansion,
         });
       }}
     />

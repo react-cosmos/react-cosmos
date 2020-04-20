@@ -15,7 +15,7 @@ export function ValueInputTreeDir({
   node,
   parents,
   isExpanded,
-  onToggle
+  onToggle,
 }: Props) {
   const dirName = parents[parents.length - 1];
   const childNames = getChildNames(node);

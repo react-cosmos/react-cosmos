@@ -2,7 +2,7 @@ import { map } from 'lodash';
 import React from 'react';
 import {
   getSortedNodeDirNames,
-  TreeNode
+  TreeNode,
 } from 'react-cosmos-shared2/fixtureTree';
 
 export type TreeExpansion = {
@@ -33,7 +33,7 @@ export function TreeView<Item>({
   treeExpansion,
   renderDir,
   renderItem,
-  onTreeExpansionChange
+  onTreeExpansionChange,
 }: Props<Item>) {
   const { items, dirs } = node;
   const nodePath = getNodePath(parents);
@@ -49,7 +49,7 @@ export function TreeView<Item>({
       {!isRootNode && renderDir({ node, parents, isExpanded, onToggle })}
       {isExpanded && (
         <>
-          {getSortedNodeDirNames(dirs).map(dirName => {
+          {getSortedNodeDirNames(dirs).map((dirName) => {
             const nextParents = [...parents, dirName];
             return (
               <TreeView

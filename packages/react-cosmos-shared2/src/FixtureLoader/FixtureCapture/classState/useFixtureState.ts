@@ -8,7 +8,7 @@ import {
   FixtureDecoratorId,
   FixtureState,
   getFixtureStateClassState,
-  removeFixtureStateClassState
+  removeFixtureStateClassState,
 } from '../../../fixtureState';
 import { getComponentName } from '../../../react';
 import { FixtureContext } from '../../FixtureContext';
@@ -19,7 +19,7 @@ import {
   ElRefs,
   InitialStates,
   replaceState,
-  useUnmount
+  useUnmount,
 } from './shared';
 
 export function useFixtureState(
@@ -54,9 +54,9 @@ export function useFixtureState(
     fsProps.forEach(({ elementId }) => {
       const { elPath } = elementId;
       if (elPaths.indexOf(elementId.elPath) === -1) {
-        setFixtureState(prevFs => ({
+        setFixtureState((prevFs) => ({
           ...prevFs,
-          classState: removeFixtureStateClassState(fixtureState, elementId)
+          classState: removeFixtureStateClassState(fixtureState, elementId),
         }));
         if (elRefs.current[elPath]) {
           delete elRefs.current[elPath];
@@ -66,7 +66,7 @@ export function useFixtureState(
       }
     });
 
-    elPaths.forEach(elPath => {
+    elPaths.forEach((elPath) => {
       const elementId = { decoratorId, elPath };
       // Component fixture state can be provided before the fixture mounts (eg.
       // a previous snapshot of a fixture state or the current fixture state
@@ -81,7 +81,7 @@ export function useFixtureState(
             replaceState(elRef, state);
           }
 
-          setFixtureState(prevFs => ({
+          setFixtureState((prevFs) => ({
             ...prevFs,
             classState: createFixtureStateClassState({
               fixtureState: prevFs,
@@ -89,8 +89,8 @@ export function useFixtureState(
               values: createValues(state),
               componentName: getComponentName(
                 elRef.constructor as React.ComponentType
-              )
-            })
+              ),
+            }),
           }));
         }
       } else {
@@ -129,7 +129,7 @@ export function useFixtureState(
     elRefs,
     fixtureState,
     fixtureState.classState,
-    setFixtureState
+    setFixtureState,
   ]);
 
   // Update prev fixture state ref *after* running effects that reference it
@@ -160,7 +160,7 @@ export function useFixtureState(
       elementId
     );
     if (!fsClassState) {
-      setFixtureState(prevFs => ({
+      setFixtureState((prevFs) => ({
         ...prevFs,
         classState: createFixtureStateClassState({
           fixtureState: prevFs,
@@ -168,8 +168,8 @@ export function useFixtureState(
           values: createValues(state),
           componentName: getComponentName(
             elRef.constructor as React.ComponentType
-          )
-        })
+          ),
+        }),
       }));
     } else {
       replaceState(elRef, extendWithValues(state, fsClassState.values));

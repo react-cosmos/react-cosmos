@@ -11,8 +11,8 @@ export default {
         createInfoNotification({
           id: 'renderer-connect-1',
           title: 'Renderer connected',
-          info: 'Your fixtures are ready to use.'
-        })
+          info: 'Your fixtures are ready to use.',
+        }),
       ]}
     />
   ),
@@ -22,32 +22,32 @@ export default {
         createSuccessNotification({
           id: 'renderer-url-copy',
           title: 'Renderer URL copied to clipboard',
-          info: 'Paste the renderer URL in the address bar of another browser.'
+          info: 'Paste the renderer URL in the address bar of another browser.',
         }),
         createInfoNotification({
           id: 'renderer-connect-1',
           title: 'Renderer connected',
-          info: 'Your fixtures are ready to use.'
+          info: 'Your fixtures are ready to use.',
         }),
         createInfoNotification({
           id: 'renderer-connect-2',
           title: 'Renderer connected',
-          info: 'Your fixtures are ready to use.'
+          info: 'Your fixtures are ready to use.',
         }),
         createLoadingNotification({
           id: 'build',
           title: 'Rebuilding...',
-          info: 'Your code is updating.'
+          info: 'Your code is updating.',
         }),
         createErrorNotification({
           id: 'build-error',
           title: 'Build failed',
           info:
-            'Open the browser console or check your terminal for more information.'
-        })
+            'Open the browser console or check your terminal for more information.',
+        }),
       ]}
     />
-  )
+  ),
 };
 
 function createSuccessNotification({ id, title, info }: Args): Notification {

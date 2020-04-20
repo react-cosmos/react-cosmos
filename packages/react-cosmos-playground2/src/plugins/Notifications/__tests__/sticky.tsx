@@ -17,7 +17,7 @@ function pushStickyNotification() {
       id: 'build',
       type: 'loading',
       title: 'Rebuilding...',
-      info: 'Your code is updating.'
+      info: 'Your code is updating.',
     })
   );
 }

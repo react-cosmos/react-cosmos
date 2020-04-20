@@ -14,12 +14,12 @@ export function FixtureSearchResult({
   cleanFixturePath,
   fixtureId,
   active,
-  onSelect
+  onSelect,
 }: Props) {
   const containerRef = useScrollToActive(cleanFixturePath, active);
   const onClick = React.useCallback(() => onSelect(fixtureId, false), [
     fixtureId,
-    onSelect
+    onSelect,
   ]);
 
   return (

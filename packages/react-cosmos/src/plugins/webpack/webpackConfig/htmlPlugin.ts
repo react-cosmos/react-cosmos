@@ -23,7 +23,7 @@ export function ensureHtmlWebackPlugin(
   plugins: webpack.Plugin[]
 ): webpack.Plugin[] {
   if (hasPlugin(plugins, 'HtmlWebpackPlugin')) {
-    return plugins.map(plugin =>
+    return plugins.map((plugin) =>
       isHtmlWebpackPlugin(plugin) ? changeHtmlPluginFilename(plugin) : plugin
     );
   }
@@ -37,8 +37,8 @@ export function ensureHtmlWebackPlugin(
     ...plugins,
     new htmlWebpackPlugin({
       title: 'React Cosmos',
-      filename: RENDERER_FILENAME
-    })
+      filename: RENDERER_FILENAME,
+    }),
   ];
 }
 
@@ -66,6 +66,6 @@ function changeHtmlPluginFilename(htmlPlugin: HtmlWebpackPlugin) {
   ) as HtmlWebpackPlugin['options'];
   return new htmlPlugin.constructor({
     ...safeOptions,
-    filename: RENDERER_FILENAME
+    filename: RENDERER_FILENAME,
   });
 }

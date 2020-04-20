@@ -14,7 +14,7 @@ function getDecoratorsForFixturePath(
   fixturePath: string
 ) {
   return Object.keys(decoratorsByPath)
-    .filter(dPath => isParentDir(getParentPath(dPath), fixturePath))
+    .filter((dPath) => isParentDir(getParentPath(dPath), fixturePath))
     .reduce((acc, dPath) => ({ ...acc, [dPath]: decoratorsByPath[dPath] }), {});
 }
 
@@ -32,7 +32,7 @@ function getSortedDecorators(
   decoratorsByPath: ReactDecoratorsByPath
 ): ReactDecorator[] {
   return sortPathsByDepthAsc(Object.keys(decoratorsByPath)).map(
-    decoratorPath => decoratorsByPath[decoratorPath]
+    (decoratorPath) => decoratorsByPath[decoratorPath]
   );
 }
 

@@ -222,7 +222,7 @@ export default {
   primary: <PrimaryButton>Click me</PrimaryButton>,
   primaryDisabled: <PrimaryButton disabled>Click me</PrimaryButton>,
   secondary: <SecondaryButton>Click me</SecondaryButton>,
-  secondaryDisabled: <SecondaryButton disabled>Click me</SecondaryButton>
+  secondaryDisabled: <SecondaryButton disabled>Click me</SecondaryButton>,
 };
 ```
 

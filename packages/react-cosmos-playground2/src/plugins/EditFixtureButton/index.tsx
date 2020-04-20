@@ -10,7 +10,7 @@ import { EditFixtureButtonSpec } from './public';
 type EditFixtureButtonContext = PluginContext<EditFixtureButtonSpec>;
 
 const { namedPlug, register } = createPlugin<EditFixtureButtonSpec>({
-  name: 'editFixtureButton'
+  name: 'editFixtureButton',
 });
 
 namedPlug<RendererActionSlotProps>(
@@ -47,7 +47,7 @@ function useOpen(
       return onError('Static exports cannot access source files.');
 
     openFile(fixtureId.path)
-      .then(httpStatus => {
+      .then((httpStatus) => {
         switch (httpStatus) {
           case 200:
             // No need to notify when everything is OK
@@ -62,7 +62,7 @@ function useOpen(
             );
         }
       })
-      .catch(err => onError('Is the Cosmos server running?'));
+      .catch((err) => onError('Is the Cosmos server running?'));
   }, [fixtureId.path, onError, devServerOn]);
 }
 
@@ -71,12 +71,12 @@ function useErrorNotification(context: EditFixtureButtonContext) {
   const notifications = getMethodsOf<NotificationsSpec>('notifications');
   const { pushTimedNotification } = notifications;
   return React.useCallback(
-    info =>
+    (info) =>
       pushTimedNotification({
         id: 'edit-fixture',
         type: 'error',
         title: 'Failed to open fixture',
-        info
+        info,
       }),
     [pushTimedNotification]
   );

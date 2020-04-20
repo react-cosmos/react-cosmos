@@ -1,5 +1,5 @@
 export {
   FixtureContext,
   useValue,
-  Viewport
+  Viewport,
 } from 'react-cosmos-shared2/FixtureLoader';

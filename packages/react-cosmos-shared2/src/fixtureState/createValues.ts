@@ -6,7 +6,7 @@ import {
   FixtureStateValues,
   isArray,
   isObject,
-  isPrimitiveValue
+  isPrimitiveValue,
 } from './shared';
 
 export function createValues(
@@ -16,8 +16,8 @@ export function createValues(
   Object.keys(obj)
     // Ignore noise from attrs defined as undefined (eg. props.children is
     // often `undefined` if element has no children)
-    .filter(key => obj[key] !== undefined)
-    .forEach(key => {
+    .filter((key) => obj[key] !== undefined)
+    .forEach((key) => {
       values[key] = createValue(obj[key]);
     });
   return values;
@@ -31,14 +31,14 @@ export function createValue(value: unknown): FixtureStateValue {
   if (isArray(value)) {
     return {
       type: 'array',
-      values: (value as unknown[]).map(v => createValue(v))
+      values: (value as unknown[]).map((v) => createValue(v)),
     };
   }
 
   if (isObject(value)) {
     return {
       type: 'object',
-      values: createValues(value)
+      values: createValues(value),
     };
   }
 
@@ -50,7 +50,7 @@ export function createValue(value: unknown): FixtureStateValue {
   //   still be removed.
   return {
     type: 'unserializable',
-    stringifiedValue: stringifyUnserializableValue(value)
+    stringifiedValue: stringifyUnserializableValue(value),
   };
 }
 

@@ -11,7 +11,7 @@ const containerStyle: React.CSSProperties = {
   alignItems: 'center',
   fontFamily:
     '-apple-system, BlinkMacSystemFont, Ubuntu, "Helvetica Neue", Helvetica, sans-serif',
-  fontSize: 14
+  fontSize: 14,
 };
 
 export function renderMessage({ msg }: { msg: string }) {

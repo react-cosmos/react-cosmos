@@ -15,5 +15,5 @@ export default {
     <StateMock state={{ count: 555555555 }}>
       <Counter suffix="times" />
     </StateMock>
-  )
+  ),
 };

@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import {
   FixtureState,
-  FixtureStateValues
+  FixtureStateValues,
 } from 'react-cosmos-shared2/fixtureState';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '.';
@@ -23,9 +23,9 @@ function loadTestPlugins(fixtureState: FixtureState) {
       slotProps={{
         fixtureId,
         fixtureState,
-        onFixtureStateChange: stateUpdater => {
+        onFixtureStateChange: (stateUpdater) => {
           fixtureState.props = stateUpdater(fixtureState).props;
-        }
+        },
       }}
       plugOrder={[]}
     />
@@ -46,7 +46,7 @@ it('renders component name', async () => {
   mockStorage();
 
   const fixtureState = createFsState({
-    myValue: { type: 'primitive', value: 'foo' }
+    myValue: { type: 'primitive', value: 'foo' },
   });
   const { getByText } = loadTestPlugins(fixtureState);
   getByText('MyComponent');
@@ -57,7 +57,7 @@ it('updates string value', async () => {
   mockStorage();
 
   const fixtureState = createFsState({
-    myStrValue: { type: 'primitive', value: 'foo' }
+    myStrValue: { type: 'primitive', value: 'foo' },
   });
   const { getByLabelText } = loadTestPlugins(fixtureState);
   const input = getByLabelText('myStrValue');
@@ -65,7 +65,7 @@ it('updates string value', async () => {
   fireEvent.change(input, { target: { value: 'bar' } });
   await waitFor(() =>
     expect(fixtureState.props[0].values).toEqual({
-      myStrValue: { type: 'primitive', value: 'bar' }
+      myStrValue: { type: 'primitive', value: 'bar' },
     })
   );
 });
@@ -75,7 +75,7 @@ it('updates boolean value', async () => {
   mockStorage();
 
   const fixtureState = createFsState({
-    myBoolValue: { type: 'primitive', value: false }
+    myBoolValue: { type: 'primitive', value: false },
   });
   const { getByText } = loadTestPlugins(fixtureState);
   getByText('myBoolValue');
@@ -84,7 +84,7 @@ it('updates boolean value', async () => {
   fireEvent.click(button);
   await waitFor(() =>
     expect(fixtureState.props[0].values).toEqual({
-      myBoolValue: { type: 'primitive', value: true }
+      myBoolValue: { type: 'primitive', value: true },
     })
   );
 });
@@ -94,7 +94,7 @@ it('renders null value', async () => {
   mockStorage();
 
   const fixtureState = createFsState({
-    myNullValue: { type: 'primitive', value: null }
+    myNullValue: { type: 'primitive', value: null },
   });
   const { getByText } = loadTestPlugins(fixtureState);
   getByText('myNullValue');
@@ -108,8 +108,8 @@ it('renders unserializable value', async () => {
   const fixtureState = createFsState({
     myRegexpValue: {
       type: 'unserializable',
-      stringifiedValue: '/canttouchthis/i'
-    }
+      stringifiedValue: '/canttouchthis/i',
+    },
   });
   const { getByText } = loadTestPlugins(fixtureState);
   getByText('myRegexpValue');
@@ -124,9 +124,9 @@ it('toggles nested object', async () => {
     myObjValue: {
       type: 'object',
       values: {
-        myNumValue: { type: 'primitive', value: 1234 }
-      }
-    }
+        myNumValue: { type: 'primitive', value: 1234 },
+      },
+    },
   });
   const { getByText } = loadTestPlugins(fixtureState);
   fireEvent.click(getParentButton(getByText('myObjValue')));
@@ -144,16 +144,16 @@ it('updates number input nested in object', async () => {
     getItem: (context, key) =>
       key === PROPS_TREE_EXPANSION_STORAGE_KEY
         ? { [fixtureId.path]: { root: { myObjValue: true } } }
-        : null
+        : null,
   });
 
   const fixtureState = createFsState({
     myObjValue: {
       type: 'object',
       values: {
-        myNumValue: { type: 'primitive', value: 1234 }
-      }
-    }
+        myNumValue: { type: 'primitive', value: 1234 },
+      },
+    },
   });
   const { getByLabelText } = loadTestPlugins(fixtureState);
   const input = getByLabelText('myNumValue');
@@ -164,9 +164,9 @@ it('updates number input nested in object', async () => {
       myObjValue: {
         type: 'object',
         values: {
-          myNumValue: { type: 'primitive', value: 6789 }
-        }
-      }
+          myNumValue: { type: 'primitive', value: 6789 },
+        },
+      },
     })
   );
 });
@@ -178,8 +178,8 @@ function createFsState(propsValues: FixtureStateValues) {
         elementId: { decoratorId: 'root', elPath: '' },
         renderKey: 0,
         componentName: 'MyComponent',
-        values: propsValues
-      }
-    ]
+        values: propsValues,
+      },
+    ],
   };
 }

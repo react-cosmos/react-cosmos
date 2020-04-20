@@ -12,7 +12,7 @@ const fixtures = {
     <StateMock state={{ count: 5 }}>
       <Counter />
     </StateMock>
-  )
+  ),
 };
 const fixtureId = { path: 'first', name: null };
 
@@ -36,10 +36,10 @@ testFixtureLoader(
         props: [anyProps()],
         classState: [
           anyClassState({
-            values: createValues({ count: 5 })
-          })
-        ]
-      }
+            values: createValues({ count: 5 }),
+          }),
+        ],
+      },
     });
   }
 );

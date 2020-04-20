@@ -4,7 +4,7 @@ import {
   TextContainer,
   TextField,
   TextInputContainer,
-  TextMirror
+  TextMirror,
 } from '../../inputs/shared';
 import { useFocus } from '../../useFocus';
 import { Label, ValueContainer } from './shared';

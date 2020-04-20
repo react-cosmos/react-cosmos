@@ -3,7 +3,7 @@ import {
   FixtureStateValue,
   FixtureStateValues,
   isArray,
-  isObject
+  isObject,
 } from './shared';
 
 // Use fixture state for serializable values and fall back to base values
@@ -12,7 +12,7 @@ export function extendWithValues(
   values: FixtureStateValues
 ): FixtureStateObjectValueType {
   const extendedObj: FixtureStateObjectValueType = {};
-  Object.keys(values).forEach(key => {
+  Object.keys(values).forEach((key) => {
     extendedObj[key] = extendWithValue(obj[key], values[key]);
   });
   return extendedObj;

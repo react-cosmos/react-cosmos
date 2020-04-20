@@ -2,7 +2,7 @@ import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   pushUrlParams,
   popUrlParams,
-  resetUrl
+  resetUrl,
 } from '../../../testHelpers/url';
 import { onRouter } from '../../../testHelpers/pluginMocks';
 import { register } from '..';

@@ -8,7 +8,7 @@ type ExtendedComponentClass = React.ComponentClass & {
 export function findRelevantElementPaths(node: React.ReactNode): string[] {
   const elPaths = findElementPaths(node);
 
-  return elPaths.filter(elPath => {
+  return elPaths.filter((elPath) => {
     const { type } = getExpectedElementAtPath(node, elPath);
 
     if (typeof type === 'string') {

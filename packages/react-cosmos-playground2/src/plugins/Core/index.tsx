@@ -8,14 +8,14 @@ type CoreContext = PluginContext<CoreSpec>;
 const { onLoad, register } = createPlugin<CoreSpec>({
   name: 'core',
   initialState: {
-    commands: {}
+    commands: {},
   },
   defaultConfig: {
     projectId: 'defaultProjectId',
     fixturesDir: '__fixtures__',
     fixtureFileSuffix: 'fixture',
     devServerOn: false,
-    webRendererUrl: null
+    webRendererUrl: null,
   },
   methods: {
     registerCommands,
@@ -23,32 +23,32 @@ const { onLoad, register } = createPlugin<CoreSpec>({
     getProjectId,
     getFixtureFileVars,
     isDevServerOn,
-    getWebRendererUrl
-  }
+    getWebRendererUrl,
+  },
 });
 
 export { register };
 
-onLoad(pluginContext =>
-  registerShortcuts(command => runCommand(pluginContext, command))
+onLoad((pluginContext) =>
+  registerShortcuts((command) => runCommand(pluginContext, command))
 );
 
 function registerCommands(context: CoreContext, commands: Commands) {
-  context.setState(prevState => {
+  context.setState((prevState) => {
     const existingCommandNames = Object.keys(prevState.commands);
-    Object.keys(commands).forEach(commandName => {
+    Object.keys(commands).forEach((commandName) => {
       if (existingCommandNames.indexOf(commandName) !== -1)
         throw new Error(`Command "${commandName} already registered`);
     });
     return {
       ...prevState,
-      commands: { ...prevState.commands, ...commands }
+      commands: { ...prevState.commands, ...commands },
     };
   });
   return () =>
-    context.setState(prevState => ({
+    context.setState((prevState) => ({
       ...prevState,
-      commands: omit(prevState.commands, ...Object.keys(commands))
+      commands: omit(prevState.commands, ...Object.keys(commands)),
     }));
 }
 

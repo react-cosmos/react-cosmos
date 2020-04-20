@@ -8,7 +8,7 @@ const fixtures = {
   'src/fixture1.ts': null,
   'src/fixture2.ts': null,
   'src/dir1/fixture3.ts': null,
-  'src/dir1/fixture4.ts': ['fixtureA', 'fixtureB']
+  'src/dir1/fixture4.ts': ['fixtureA', 'fixtureB'],
 };
 
 const fixtureBId = { path: 'src/dir1/fixture4.ts', name: 'fixtureB' };
@@ -27,7 +27,7 @@ export default {
   'selected expanded2': createFixtureTree(
     { dir1: true, 'dir1/fixture4': true },
     fixtureBId
-  )
+  ),
 };
 
 function createFixtureTree(
@@ -37,10 +37,10 @@ function createFixtureTree(
   return () => {
     const [
       selectedFixtureId,
-      setSelectedFixtureId
+      setSelectedFixtureId,
     ] = useValue('selectedFixtureId', { defaultValue: fixtureId });
     const [treeExpansion, setTreeExpansion] = useValue('treeExpansion', {
-      defaultValue: initialTreeExpansion
+      defaultValue: initialTreeExpansion,
     });
     return (
       <FixtureTree

@@ -37,11 +37,11 @@ testFixtureLoader(
     await rendererReady({ rendererId, fixtures });
     update({
       rendererId,
-      fixtures: { ...fixtures, third: null }
+      fixtures: { ...fixtures, third: null },
     });
     await fixtureListUpdate({
       rendererId,
-      fixtures: { ...fixtures, third: null }
+      fixtures: { ...fixtures, third: null },
     });
   }
 );

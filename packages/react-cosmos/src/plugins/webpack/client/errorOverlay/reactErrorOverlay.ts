@@ -16,9 +16,9 @@ const LAUNCH_EDITOR_ENDPOINT = '/_open';
 
 export function init() {
   ErrorOverlay.startReportingRuntimeErrors({
-    filename: process.env.PUBLIC_URL + '/main.js'
+    filename: process.env.PUBLIC_URL + '/main.js',
   });
-  ErrorOverlay.setEditorHandler(errorLocation =>
+  ErrorOverlay.setEditorHandler((errorLocation) =>
     window.fetch(getLaunchEditorUrl(errorLocation))
   );
   setUpBuildErrorReporting();
@@ -32,7 +32,7 @@ function getLaunchEditorUrl(errorLocation: ErrorOverlay.ErrorLocation) {
   return `${LAUNCH_EDITOR_ENDPOINT}?${stringifyUrlQuery({
     filePath: errorLocation.fileName,
     line: errorLocation.lineNumber || 1,
-    column: errorLocation.colNumber || 1
+    column: errorLocation.colNumber || 1,
   })}`;
 }
 
@@ -53,6 +53,6 @@ function setUpBuildErrorReporting() {
     },
     clear() {
       ErrorOverlay.dismissBuildError();
-    }
+    },
   });
 }

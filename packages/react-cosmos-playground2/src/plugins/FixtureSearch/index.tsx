@@ -16,15 +16,16 @@ const { onLoad, namedPlug, register } = createPlugin<FixtureSearchSpec>({
   name: 'fixtureSearch',
   initialState: {
     open: false,
-    searchText: ''
-  }
+    searchText: '',
+  },
 });
 
-onLoad(pluginContext => {
+onLoad((pluginContext) => {
   const { getMethodsOf, setState } = pluginContext;
   const core = getMethodsOf<CoreSpec>('core');
   return core.registerCommands({
-    searchFixtures: () => setState(prevState => ({ ...prevState, open: true }))
+    searchFixtures: () =>
+      setState((prevState) => ({ ...prevState, open: true })),
   });
 });
 
@@ -89,7 +90,7 @@ export { register };
 function useOnSetSearchText({ setState }: FixtureSearchContext) {
   return React.useCallback(
     (newSearchText: string) => {
-      setState(prevState => ({ ...prevState, searchText: newSearchText }));
+      setState((prevState) => ({ ...prevState, searchText: newSearchText }));
     },
     [setState]
   );
@@ -97,14 +98,14 @@ function useOnSetSearchText({ setState }: FixtureSearchContext) {
 
 function useOnOpen({ setState }: FixtureSearchContext) {
   return React.useCallback(
-    () => setState(prevState => ({ ...prevState, open: true })),
+    () => setState((prevState) => ({ ...prevState, open: true })),
     [setState]
   );
 }
 
 function useOnClose({ setState }: FixtureSearchContext) {
   return React.useCallback(
-    () => setState(prevState => ({ ...prevState, open: false })),
+    () => setState((prevState) => ({ ...prevState, open: false })),
     [setState]
   );
 }
@@ -120,7 +121,7 @@ function useOnSelect(context: FixtureSearchContext) {
       if (revealFixture) {
         fixtureTree.revealFixture(fixtureId);
       }
-      setState(prevState => ({ ...prevState, open: false }));
+      setState((prevState) => ({ ...prevState, open: false }));
     },
     [setState, fixtureTree, router]
   );

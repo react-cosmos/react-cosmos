@@ -19,10 +19,10 @@ testFixtureLoader(
         props: [
           anyProps({
             componentName: 'input',
-            values: createValues({ type: 'text' })
-          })
-        ]
-      }
+            values: createValues({ type: 'text' }),
+          }),
+        ],
+      },
     });
   }
 );
@@ -36,8 +36,8 @@ testFixtureLoader(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: []
-      }
+        props: [],
+      },
     });
   }
 );

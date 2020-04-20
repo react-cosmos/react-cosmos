@@ -20,15 +20,15 @@ export const StyledButton = styled.button<StyledButtonProps>`
   height: 32px;
   border: 0;
   border-radius: 3px;
-  background: ${props => (props.selected ? props.bgSelect : props.bg)};
-  color: ${props => (props.selected ? props.colorSelect : props.color)};
+  background: ${(props) => (props.selected ? props.bgSelect : props.bg)};
+  color: ${(props) => (props.selected ? props.colorSelect : props.color)};
   white-space: nowrap;
   user-select: none;
   outline: none;
   transition: background ${quick}s, color ${quick}s, opacity ${quick}s;
 
   :hover {
-    background: ${props => (props.selected ? props.bgSelect : props.bgHover)};
+    background: ${(props) => (props.selected ? props.bgSelect : props.bgHover)};
   }
 
   :focus {
@@ -36,7 +36,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   }
 
   :disabled {
-    background: ${props => (props.selected ? props.bgSelect : props.bg)};
+    background: ${(props) => (props.selected ? props.bgSelect : props.bg)};
     cursor: default;
     opacity: 0.5;
   }
@@ -52,7 +52,7 @@ export const StyledIcon = styled.span<{ color: string }>`
   width: ${iconSize}px;
   height: ${iconSize}px;
   padding: 2px 0 0 0;
-  color: ${props => props.color};
+  color: ${(props) => props.color};
   transition: color ${quick}s;
 `;
 

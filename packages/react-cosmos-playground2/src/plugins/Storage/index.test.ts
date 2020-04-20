@@ -8,14 +8,14 @@ const mockSetItem = jest.fn();
 
 jest.mock('localforage', () => {
   const storageMock: { [key: string]: object } = {
-    'cosmos-fooProjectId': { fooKey: 'fooValue' }
+    'cosmos-fooProjectId': { fooKey: 'fooValue' },
   };
   return {
     getItem: (projectId: string) => Promise.resolve(storageMock[projectId]),
     setItem: async (projectId: string, value: unknown) => {
       await Promise.resolve();
       mockSetItem(projectId, value);
-    }
+    },
   };
 });
 
@@ -46,7 +46,7 @@ it('sets item to localForage', async () => {
   await retry(() =>
     expect(mockSetItem).toBeCalledWith('cosmos-fooProjectId', {
       fooKey: 'fooValue',
-      barKey: 'barValue'
+      barKey: 'barValue',
     })
   );
 });

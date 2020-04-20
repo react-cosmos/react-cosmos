@@ -10,26 +10,26 @@ import { RemoteRendererContext } from './shared';
 import { RemoteButton } from './RemoteButton';
 
 const { onLoad, on, namedPlug, register } = createPlugin<RemoteRendererSpec>({
-  name: 'remoteRenderer'
+  name: 'remoteRenderer',
 });
 
 on<MessageHandlerSpec>('messageHandler', {
   rendererResponse: (context: RemoteRendererContext, msg: Message) => {
     const rendererCore = context.getMethodsOf<RendererCoreSpec>('rendererCore');
     rendererCore.receiveResponse(msg);
-  }
+  },
 });
 
 on<RendererCoreSpec>('rendererCore', {
   request: (context: RemoteRendererContext, msg: Message) => {
     postRendererRequest(context, msg);
-  }
+  },
 });
 
-onLoad(context => {
+onLoad((context) => {
   // Discover remote renderers by asking all to announce themselves
   postRendererRequest(context, {
-    type: 'pingRenderers'
+    type: 'pingRenderers',
   });
 });
 

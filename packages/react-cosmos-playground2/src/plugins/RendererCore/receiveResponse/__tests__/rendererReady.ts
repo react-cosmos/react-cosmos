@@ -3,7 +3,7 @@ import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
   mockRouter,
-  mockNotifications
+  mockNotifications,
 } from '../../../../testHelpers/pluginMocks';
 import { mockRendererReady, mockFixtureStateChange } from '../../testHelpers';
 import { register } from '../..';
@@ -17,7 +17,7 @@ const fixtureState = { props: [] };
 function registerTestPlugins() {
   register();
   mockRouter({
-    getSelectedFixtureId: () => fixtureId
+    getSelectedFixtureId: () => fixtureId,
   });
   mockNotifications();
 }
@@ -32,7 +32,7 @@ it('returns connected renderer IDs', async () => {
   loadTestPlugins();
   await waitFor(() =>
     expect(getRendererCoreMethods().getConnectedRendererIds()).toEqual([
-      'mockRendererId1'
+      'mockRendererId1',
     ])
   );
 });

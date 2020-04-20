@@ -17,7 +17,7 @@ export const ControlPanel = React.memo(function ControlPanel({
   fixtureId,
   fixtureState,
   onFixtureStateChange,
-  controlPanelRowOrder
+  controlPanelRowOrder,
 }: Props) {
   const slotProps = React.useMemo(
     () => ({ fixtureId, fixtureState, onFixtureStateChange }),

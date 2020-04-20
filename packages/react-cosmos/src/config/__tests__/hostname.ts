@@ -7,7 +7,7 @@ it('returns default hostname', () => {
 
 it('returns custom hostname', () => {
   const { hostname } = createCosmosConfig(process.cwd(), {
-    hostname: 'localhost'
+    hostname: 'localhost',
   });
   expect(hostname).toBe('localhost');
 });

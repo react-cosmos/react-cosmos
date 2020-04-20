@@ -3,7 +3,7 @@ import { isEqual } from 'lodash';
 import React from 'react';
 import {
   createFixtureTree,
-  flattenFixtureTree
+  flattenFixtureTree,
 } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
@@ -13,7 +13,7 @@ import {
   KEY_ENTER,
   KEY_ESC,
   KEY_TAB,
-  KEY_UP
+  KEY_UP,
 } from '../../shared/keys';
 import {
   black60,
@@ -23,7 +23,7 @@ import {
   grey208,
   grey224,
   grey248,
-  grey64
+  grey64,
 } from '../../shared/ui/colors';
 import { FixtureSearchResult } from './FixtureSearchResult';
 
@@ -50,14 +50,14 @@ export function FixtureSearchOverlay({
   selectedFixtureId,
   onSetSearchText,
   onClose,
-  onSelect
+  onSelect,
 }: Props) {
   // Flattened fixture IDs are memoized purely to minimize computation
   const fixtureIds = React.useMemo<FixtureIdsByPath>(() => {
     const fixtureTree = createFixtureTree({
       fixtures,
       fixturesDir,
-      fixtureFileSuffix
+      fixtureFileSuffix,
     });
     const flatFixtureTree = flattenFixtureTree(fixtureTree);
     return flatFixtureTree.reduce((acc, { fixtureId, cleanPath }) => {
@@ -229,7 +229,7 @@ export function FixtureSearchOverlay({
         </InputContainer>
         <ResultsViewport>
           <ResultsContainer>
-            {matchingFixturePaths.map(cleanFixturePath => (
+            {matchingFixturePaths.map((cleanFixturePath) => (
               <FixtureSearchResult
                 key={cleanFixturePath}
                 cleanFixturePath={cleanFixturePath}
@@ -250,7 +250,7 @@ export function FixtureSearchOverlay({
 
 function getFixturePath(fixtureIds: FixtureIdsByPath, fixtureId: FixtureId) {
   const fixturePaths = Object.keys(fixtureIds);
-  return fixturePaths.find(fixturePath =>
+  return fixturePaths.find((fixturePath) =>
     isEqual(fixtureIds[fixturePath], fixtureId)
   );
 }
@@ -270,7 +270,7 @@ function getMatchingFixturePaths(
   }
 
   const fixtureSearchTexts: string[] = [];
-  fixturePaths.forEach(cleanFixturePath => {
+  fixturePaths.forEach((cleanFixturePath) => {
     const fixtureId = fixtureIds[cleanFixturePath];
     const { path, name } = fixtureId;
     // Allow fixtures to be searched by their entire file path, suffixed by
@@ -279,7 +279,7 @@ function getMatchingFixturePaths(
   });
 
   const machingFixtureSearchTexts = filter(fixtureSearchTexts, searchText);
-  return machingFixtureSearchTexts.map(fixtureSearchText => {
+  return machingFixtureSearchTexts.map((fixtureSearchText) => {
     const fixtureIndex = fixtureSearchTexts.indexOf(fixtureSearchText);
     return fixturePaths[fixtureIndex];
   });

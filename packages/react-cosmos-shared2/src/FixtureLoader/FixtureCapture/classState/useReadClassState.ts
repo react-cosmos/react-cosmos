@@ -6,7 +6,7 @@ import {
   findFixtureStateClassState,
   FixtureDecoratorId,
   FixtureStateClassState,
-  updateFixtureStateClassState
+  updateFixtureStateClassState,
 } from '../../../fixtureState';
 import { FixtureContext } from '../../FixtureContext';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
@@ -44,7 +44,7 @@ export function useReadClassState(
 
   function checkState() {
     let fixtureStateChangeScheduled = false;
-    Object.keys(elRefs.current).map(async elPath => {
+    Object.keys(elRefs.current).map(async (elPath) => {
       if (elPaths.indexOf(elPath) === -1) {
         throw new Error(
           `[FixtureCapture] Child ref exists for missing element path "${elPath}"`
@@ -60,13 +60,13 @@ export function useReadClassState(
         !doesFixtureStateMatchClassState(fsClassState, state)
       ) {
         fixtureStateChangeScheduled = true;
-        setFixtureState(prevFs => ({
+        setFixtureState((prevFs) => ({
           ...prevFs,
           classState: updateFixtureStateClassState({
             fixtureState: prevFs,
             elementId,
-            values: createValues(state)
-          })
+            values: createValues(state),
+          }),
         }));
       }
     });

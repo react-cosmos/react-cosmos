@@ -4,7 +4,7 @@ export { removeFixtureNameSuffix } from './createFixtureTree/hideFixtureSuffix';
 export {
   FlatFixtureTree,
   FlatFixtureTreeItem,
-  flattenFixtureTree
+  flattenFixtureTree,
 } from './flattenFixtureTree';
 export { getSortedNodeDirNames } from './getSortedNodeDirNames';
 export { FixtureNode, TreeNode, TreeNodes } from './shared/types';

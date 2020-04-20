@@ -4,7 +4,7 @@ import {
   MethodHandlers,
   EventHandlers,
   createPlugin,
-  getPluginContext
+  getPluginContext,
 } from 'react-plugin';
 
 export function getMethodsOf<Spec extends PluginSpec>(

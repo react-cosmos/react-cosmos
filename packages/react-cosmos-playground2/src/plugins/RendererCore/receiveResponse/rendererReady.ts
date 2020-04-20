@@ -1,6 +1,6 @@
 import {
   RendererId,
-  RendererReadyResponse
+  RendererReadyResponse,
 } from 'react-cosmos-shared2/renderer';
 import { NotificationsSpec } from '../../Notifications/public';
 import { postSelectFixtureRequest } from '../shared/postRequest';
@@ -25,7 +25,7 @@ export function receiveRendererReadyResponse(
       connectedRendererIds: addToSet(connectedRendererIds, rendererId),
       primaryRendererId,
       fixtures,
-      fixtureState: isPrimaryRenderer ? {} : fixtureState
+      fixtureState: isPrimaryRenderer ? {} : fixtureState,
     };
   }
 
@@ -55,7 +55,7 @@ function notifyRendererConnection(
     id: `renderer-connect-${rendererId}`,
     type: 'info',
     title: 'Renderer connected',
-    info: 'Your fixtures are ready to use.'
+    info: 'Your fixtures are ready to use.',
   });
 }
 

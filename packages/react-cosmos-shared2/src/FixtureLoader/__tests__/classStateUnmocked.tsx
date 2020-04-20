@@ -3,7 +3,7 @@ import React from 'react';
 import {
   createValues,
   removeFixtureStateClassState,
-  updateFixtureStateClassState
+  updateFixtureStateClassState,
 } from '../../fixtureState';
 import { uuid } from '../../util';
 import { testFixtureLoader } from '../testHelpers';
@@ -11,12 +11,12 @@ import { Counter } from '../testHelpers/components';
 import {
   anyClassState,
   anyProps,
-  getClassState
+  getClassState,
 } from '../testHelpers/fixtureState';
 
 const rendererId = uuid();
 const fixtures = {
-  first: <Counter />
+  first: <Counter />,
 };
 const fixtureId = { path: 'first', name: null };
 
@@ -34,10 +34,10 @@ testFixtureLoader(
         classState: [
           anyClassState({
             values: createValues({ count: 0 }),
-            componentName: 'Counter'
-          })
-        ]
-      }
+            componentName: 'Counter',
+          }),
+        ],
+      },
     });
   }
 );
@@ -56,9 +56,9 @@ testFixtureLoader(
         classState: updateFixtureStateClassState({
           fixtureState,
           elementId,
-          values: createValues({ count: 5 })
-        })
-      }
+          values: createValues({ count: 5 }),
+        }),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('5 times'));
   }
@@ -78,9 +78,9 @@ testFixtureLoader(
         classState: updateFixtureStateClassState({
           fixtureState,
           elementId,
-          values: {}
-        })
-      }
+          values: {},
+        }),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('Missing count'));
   }
@@ -100,17 +100,17 @@ testFixtureLoader(
         classState: updateFixtureStateClassState({
           fixtureState,
           elementId,
-          values: createValues({ count: 5 })
-        })
-      }
+          values: createValues({ count: 5 }),
+        }),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('5 times'));
     await setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: removeFixtureStateClassState(fixtureState, elementId)
-      }
+        classState: removeFixtureStateClassState(fixtureState, elementId),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('0 times'));
   }

@@ -6,7 +6,7 @@ export function getFixtureNamesByPath(
   fixtureExportsByPath: ReactFixtureExportsByPath
 ): FixtureNamesByPath {
   const fixtureNamesByPath: FixtureNamesByPath = {};
-  Object.keys(fixtureExportsByPath).forEach(fixturePath => {
+  Object.keys(fixtureExportsByPath).forEach((fixturePath) => {
     const fixtureExport = fixtureExportsByPath[fixturePath];
     fixtureNamesByPath[fixturePath] = isMultiFixture(fixtureExport)
       ? Object.keys(fixtureExport)

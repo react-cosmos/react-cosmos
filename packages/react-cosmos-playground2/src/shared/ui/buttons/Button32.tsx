@@ -6,7 +6,7 @@ import {
   grey24,
   grey248,
   grey32,
-  grey8
+  grey8,
 } from '../colors';
 import { Label, StyledButton, StyledIcon } from './shared';
 
@@ -25,7 +25,7 @@ export function Button32({
   title,
   disabled = false,
   selected = false,
-  onClick
+  onClick,
 }: Props) {
   return (
     <StyledButton

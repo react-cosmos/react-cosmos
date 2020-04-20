@@ -10,7 +10,7 @@ export function collapseSoloIndexes(treeNode: FixtureNode): FixtureNode {
     const indexDirNode = treeNode.dirs.index;
     return collapseSoloIndexes({
       items: indexDirNode.items,
-      dirs: indexDirNode.dirs
+      dirs: indexDirNode.dirs,
     });
   }
 

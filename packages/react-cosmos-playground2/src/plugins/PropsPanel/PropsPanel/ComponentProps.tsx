@@ -6,7 +6,7 @@ import {
   FixtureStateValues,
   FixtureStateProps,
   updateFixtureStateProps,
-  resetFixtureStateProps
+  resetFixtureStateProps,
 } from 'react-cosmos-shared2/fixtureState';
 import { TreeExpansion } from '../../../shared/ui/TreeView';
 import { IconButton32 } from '../../../shared/ui/buttons';
@@ -19,7 +19,7 @@ import {
   Header,
   Title,
   Actions,
-  Body
+  Body,
 } from '../../../shared/ui/valueInputTree';
 import { RotateCcwIcon, CopyIcon } from '../../../shared/icons';
 import { createPropsFsUpdater } from './shared';
@@ -35,7 +35,7 @@ export function ComponentProps({
   fsProps,
   fixtureExpansion,
   onFixtureStateChange,
-  onElementExpansionChange
+  onElementExpansionChange,
 }: Props) {
   const { componentName, elementId, values } = fsProps;
   const strElementId = stringifyElementId(elementId);
@@ -47,11 +47,11 @@ export function ComponentProps({
   const onResetValues = React.useCallback(
     () =>
       onFixtureStateChange(
-        createPropsFsUpdater(elementId, prevFs =>
+        createPropsFsUpdater(elementId, (prevFs) =>
           resetFixtureStateProps({
             fixtureState: prevFs,
             elementId,
-            values: initialValues
+            values: initialValues,
           })
         )
       ),
@@ -62,11 +62,11 @@ export function ComponentProps({
     (newValues: FixtureStateValues) => {
       const changeFn = reset ? resetFixtureStateProps : updateFixtureStateProps;
       onFixtureStateChange(
-        createPropsFsUpdater(elementId, prevFs =>
+        createPropsFsUpdater(elementId, (prevFs) =>
           changeFn({
             fixtureState: prevFs,
             elementId,
-            values: newValues
+            values: newValues,
           })
         )
       );

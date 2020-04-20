@@ -4,7 +4,7 @@ import { mockRendererReady } from '../../testHelpers';
 import { register } from '../..';
 import {
   mockRouter,
-  mockNotifications
+  mockNotifications,
 } from '../../../../testHelpers/pluginMocks';
 
 afterEach(resetPlugins);
@@ -12,7 +12,7 @@ afterEach(resetPlugins);
 function registerTestPlugins() {
   register();
   mockRouter({
-    getSelectedFixtureId: () => null
+    getSelectedFixtureId: () => null,
   });
 }
 
@@ -28,7 +28,7 @@ it('notifies renderer connection', async () => {
       id: 'renderer-connect-mockRendererId1',
       type: 'info',
       title: 'Renderer connected',
-      info: 'Your fixtures are ready to use.'
+      info: 'Your fixtures are ready to use.',
     })
   );
 });

@@ -19,13 +19,13 @@ function createFixtures({ defaultValue }: { defaultValue: Profile[] }) {
     return <>{JSON.stringify(profiles, null, 2)}</>;
   };
   return {
-    first: <MyComponent />
+    first: <MyComponent />,
   };
 }
 
 const rendererId = uuid();
 const fixtures = createFixtures({
-  defaultValue: [{ isAdmin: true, name: 'Pat D', age: 45, onClick: () => {} }]
+  defaultValue: [{ isAdmin: true, name: 'Pat D', age: 45, onClick: () => {} }],
 });
 const fixtureId = { path: 'first', name: null };
 
@@ -51,14 +51,14 @@ testFixtureLoader(
         values: {
           profiles: {
             defaultValue: createValue([
-              { isAdmin: true, name: 'Pat D', age: 45, onClick: () => {} }
+              { isAdmin: true, name: 'Pat D', age: 45, onClick: () => {} },
             ]),
             currentValue: createValue([
-              { isAdmin: true, name: 'Pat D', age: 45, onClick: () => {} }
-            ])
-          }
-        }
-      }
+              { isAdmin: true, name: 'Pat D', age: 45, onClick: () => {} },
+            ]),
+          },
+        },
+      },
     });
   }
 );
@@ -73,9 +73,9 @@ testFixtureLoader(
       fixtures: createFixtures({
         defaultValue: [
           { isAdmin: false, name: 'Pat D', age: 45, onClick: () => {} },
-          { isAdmin: true, name: 'Dan B', age: 39, onClick: () => {} }
-        ]
-      })
+          { isAdmin: true, name: 'Dan B', age: 39, onClick: () => {} },
+        ],
+      }),
     });
     await fixtureStateChange({
       rendererId,
@@ -86,15 +86,15 @@ testFixtureLoader(
           profiles: {
             defaultValue: createValue([
               { isAdmin: false, name: 'Pat D', age: 45, onClick: () => {} },
-              { isAdmin: true, name: 'Dan B', age: 39, onClick: () => {} }
+              { isAdmin: true, name: 'Dan B', age: 39, onClick: () => {} },
             ]),
             currentValue: createValue([
               { isAdmin: false, name: 'Pat D', age: 45, onClick: () => {} },
-              { isAdmin: true, name: 'Dan B', age: 39, onClick: () => {} }
-            ])
-          }
-        }
-      }
+              { isAdmin: true, name: 'Dan B', age: 39, onClick: () => {} },
+            ]),
+          },
+        },
+      },
     });
   }
 );
@@ -105,7 +105,7 @@ async function rendered(
 ) {
   await retry(() => {
     const renderedText = getRenderedText(renderer);
-    profiles.forEach(profile => {
+    profiles.forEach((profile) => {
       expect(renderedText).toMatch(`"isAdmin": ${profile.isAdmin}`);
       expect(renderedText).toMatch(`"name": "${profile.name}"`);
       expect(renderedText).toMatch(`"age": ${profile.age}`);

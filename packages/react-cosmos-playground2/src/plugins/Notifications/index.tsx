@@ -6,23 +6,23 @@ import {
   clearTimedNotification,
   pushStickyNotification,
   pushTimedNotification,
-  removeStickyNotification
+  removeStickyNotification,
 } from './pushNotification';
 
 const { register, onLoad, namedPlug } = createPlugin<NotificationsSpec>({
   name: 'notifications',
   initialState: {
     stickyNotifications: [],
-    timedNotifications: null
+    timedNotifications: null,
   },
   methods: {
     pushStickyNotification,
     removeStickyNotification,
-    pushTimedNotification
-  }
+    pushTimedNotification,
+  },
 });
 
-onLoad(context => {
+onLoad((context) => {
   return () => {
     // Clean up timed notifications when plugin unloads
     const { timedNotifications } = context.getState();

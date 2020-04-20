@@ -28,13 +28,13 @@ function createFixtures({ defaultValue }: { defaultValue: Profile }) {
     );
   };
   return {
-    first: <MyComponent />
+    first: <MyComponent />,
   };
 }
 
 const rendererId = uuid();
 const fixtures = createFixtures({
-  defaultValue: { isAdmin: true, name: 'Pat D', age: 45, onClick: () => {} }
+  defaultValue: { isAdmin: true, name: 'Pat D', age: 45, onClick: () => {} },
 });
 const fixtureId = { path: 'first', name: null };
 
@@ -63,17 +63,17 @@ testFixtureLoader(
               isAdmin: true,
               name: 'Pat D',
               age: 45,
-              onClick: () => {}
+              onClick: () => {},
             }),
             currentValue: createValue({
               isAdmin: true,
               name: 'Pat D',
               age: 45,
-              onClick: () => {}
-            })
-          }
-        }
-      }
+              onClick: () => {},
+            }),
+          },
+        },
+      },
     });
   }
 );
@@ -96,17 +96,17 @@ testFixtureLoader(
               isAdmin: true,
               name: 'Pat D',
               age: 45,
-              onClick: () => {}
+              onClick: () => {},
             }),
             currentValue: createValue({
               isAdmin: false,
               name: 'Pat D',
               age: 45,
-              onClick: () => {}
-            })
-          }
-        }
-      }
+              onClick: () => {},
+            }),
+          },
+        },
+      },
     });
   }
 );
@@ -124,9 +124,9 @@ testFixtureLoader(
           isAdmin: false,
           name: 'Pat D',
           age: 45,
-          onClick: () => {}
-        }
-      })
+          onClick: () => {},
+        },
+      }),
     });
     await fixtureStateChange({
       rendererId,
@@ -139,17 +139,17 @@ testFixtureLoader(
               isAdmin: false,
               name: 'Pat D',
               age: 45,
-              onClick: () => {}
+              onClick: () => {},
             }),
             currentValue: createValue({
               isAdmin: false,
               name: 'Pat D',
               age: 45,
-              onClick: () => {}
-            })
-          }
-        }
-      }
+              onClick: () => {},
+            }),
+          },
+        },
+      },
     });
   }
 );

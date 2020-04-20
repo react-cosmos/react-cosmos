@@ -12,6 +12,6 @@ export function createWebSocketsConnect(url: string): RendererConnect {
     onMessage(onMessage) {
       socket.on(RENDERER_MESSAGE_EVENT_NAME, onMessage);
       return () => socket.off(RENDERER_MESSAGE_EVENT_NAME, onMessage);
-    }
+    },
   };
 }

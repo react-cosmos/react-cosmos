@@ -17,7 +17,7 @@ export function collapseDirs(
     if (dirNode.items) {
       items = {
         ...items,
-        ...dirNode.items
+        ...dirNode.items,
       };
     }
 

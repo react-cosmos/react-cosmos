@@ -4,11 +4,11 @@ import { RendererId } from 'react-cosmos-shared2/renderer';
 import {
   getRendererCoreMethods,
   mockRouter,
-  mockNotifications
+  mockNotifications,
 } from '../../../../testHelpers/pluginMocks';
 import {
   createFixtureListUpdateResponse,
-  mockRendererReady
+  mockRendererReady,
 } from '../../testHelpers';
 import { register } from '../..';
 
@@ -19,7 +19,7 @@ const fixtures = { 'ein.js': null, 'zwei.js': null, 'drei.js': null };
 function registerTestPlugins() {
   register();
   mockRouter({
-    getSelectedFixtureId: () => null
+    getSelectedFixtureId: () => null,
   });
   mockNotifications();
 }
@@ -35,7 +35,7 @@ function mockFixtureListUpdateResponse(rendererId: RendererId) {
   methods.receiveResponse(
     createFixtureListUpdateResponse(rendererId, {
       ...fixtures,
-      'vier.js': null
+      'vier.js': null,
     })
   );
 }
@@ -48,7 +48,7 @@ it('updates fixtures in renderer state', async () => {
   await waitFor(() =>
     expect(getRendererCoreMethods().getFixtures()).toEqual({
       ...fixtures,
-      'vier.js': null
+      'vier.js': null,
     })
   );
 });

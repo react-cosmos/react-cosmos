@@ -3,7 +3,7 @@ import React from 'react';
 import {
   FixtureState,
   FixtureStateValuePairs,
-  FixtureStateValues
+  FixtureStateValues,
 } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import { RotateCcwIcon } from '../../shared/icons';
@@ -15,7 +15,7 @@ import {
   Container,
   Header,
   Title,
-  ValueInputTree
+  ValueInputTree,
 } from '../../shared/ui/valueInputTree';
 
 type Props = {
@@ -29,11 +29,13 @@ export const ValuesPanel = React.memo(function ClassStatePanel({
   fixtureState,
   treeExpansion,
   onFixtureStateChange,
-  onTreeExpansionChange
+  onTreeExpansionChange,
 }: Props) {
   const onValueChange = React.useCallback(
     (newValues: FixtureStateValues) => {
-      onFixtureStateChange(prevFsState => updateValues(prevFsState, newValues));
+      onFixtureStateChange((prevFsState) =>
+        updateValues(prevFsState, newValues)
+      );
     },
     [onFixtureStateChange]
   );
@@ -77,7 +79,7 @@ function extractCurrentValuesFromValuePairs(
   fsValuePairs: FixtureStateValuePairs
 ): FixtureStateValues {
   const fsValues: FixtureStateValues = {};
-  Object.keys(fsValuePairs).forEach(valueName => {
+  Object.keys(fsValuePairs).forEach((valueName) => {
     fsValues[valueName] = fsValuePairs[valueName].currentValue;
   });
   return fsValues;
@@ -89,7 +91,7 @@ function updateValues(
 ) {
   const prevValues = fixtureState.values || {};
   const values: FixtureStateValuePairs = {};
-  Object.keys(fsValues).forEach(valueName => {
+  Object.keys(fsValues).forEach((valueName) => {
     const fsValue = prevValues[valueName];
     if (!fsValue) {
       console.warn(`Matching fixture state value missing for "${valueName}"`);
@@ -103,7 +105,7 @@ function updateValues(
 function resetValues(fixtureState: FixtureState) {
   const prevValues = fixtureState.values || {};
   const values: FixtureStateValuePairs = {};
-  Object.keys(prevValues).forEach(valueName => {
+  Object.keys(prevValues).forEach((valueName) => {
     const fsValue = prevValues[valueName];
     values[valueName] = { ...fsValue, currentValue: fsValue.defaultValue };
   });
@@ -111,7 +113,7 @@ function resetValues(fixtureState: FixtureState) {
 }
 
 function areValuesEqual(fsValuePairs: FixtureStateValuePairs) {
-  return Object.keys(fsValuePairs).every(valueName =>
+  return Object.keys(fsValuePairs).every((valueName) =>
     isEqual(
       fsValuePairs[valueName].currentValue,
       fsValuePairs[valueName].defaultValue

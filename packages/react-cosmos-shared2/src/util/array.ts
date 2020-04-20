@@ -9,7 +9,7 @@ export function updateItem<T>(
   return [
     ...items.slice(0, index),
     { ...item, ...update },
-    ...items.slice(index + 1)
+    ...items.slice(index + 1),
   ];
 }
 

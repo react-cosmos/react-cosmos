@@ -10,12 +10,12 @@ import { getDevWebpackConfig } from '..';
 
 const mockWebpackConfig = jest.fn(() => ({
   module: { rules: [MY_RULE] },
-  plugins: [MY_PLUGIN]
+  plugins: [MY_PLUGIN],
 }));
 
 const mockWebpackOverride = jest.fn((webpackConfig: webpack.Configuration) => ({
   ...webpackConfig,
-  plugins: [...(webpackConfig.plugins || []), MY_PLUGIN2]
+  plugins: [...(webpackConfig.plugins || []), MY_PLUGIN2],
 }));
 
 beforeAll(() => {
@@ -39,8 +39,8 @@ async function getCustomDevWebpackConfig() {
     const cosmosConfig = createCosmosConfig(process.cwd(), {
       webpack: {
         configPath: 'mywebpack.config.js',
-        overridePath: 'mywebpack.override.js'
-      }
+        overridePath: 'mywebpack.override.js',
+      },
     });
     return await getDevWebpackConfig(cosmosConfig, webpack);
   });
@@ -98,7 +98,7 @@ it('create output', async () => {
     expect.objectContaining({
       filename: '[name].js',
       path: '/',
-      publicPath: '/'
+      publicPath: '/',
     })
   );
 });
@@ -107,14 +107,14 @@ it('includes user deps loader', async () => {
   const { module } = await getCustomDevWebpackConfig();
   expect(module!.rules).toContainEqual({
     loader: require.resolve('../userDepsLoader'),
-    include: require.resolve('../../client/userDeps')
+    include: require.resolve('../../client/userDeps'),
   });
 });
 
 it('includes HtmlWebpackPlugin', async () => {
   const { plugins } = await getCustomDevWebpackConfig();
   const htmlWebpackPlugin = plugins!.find(
-    p => p.constructor.name === 'HtmlWebpackPlugin'
+    (p) => p.constructor.name === 'HtmlWebpackPlugin'
   ) as HtmlWebpackPlugin;
   expect(htmlWebpackPlugin).toBeDefined();
   expect(htmlWebpackPlugin.options.filename).toBe(RENDERER_FILENAME);
@@ -123,7 +123,7 @@ it('includes HtmlWebpackPlugin', async () => {
 it('includes HotModuleReplacementPlugin', async () => {
   const { plugins } = await getCustomDevWebpackConfig();
   const hotModuleReplacementPlugin = plugins!.find(
-    p => p.constructor.name === 'HotModuleReplacementPlugin'
+    (p) => p.constructor.name === 'HotModuleReplacementPlugin'
   );
   expect(hotModuleReplacementPlugin).toBeDefined();
 });

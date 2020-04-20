@@ -5,7 +5,7 @@ import {
   FixtureState,
   FixtureStateValues,
   FixtureStateClassState,
-  updateFixtureStateClassState
+  updateFixtureStateClassState,
 } from 'react-cosmos-shared2/fixtureState';
 import { TreeExpansion } from '../../../shared/ui/TreeView';
 import { IconButton32 } from '../../../shared/ui/buttons';
@@ -18,7 +18,7 @@ import {
   Header,
   Title,
   Actions,
-  Body
+  Body,
 } from '../../../shared/ui/valueInputTree';
 import { RotateCcwIcon } from '../../../shared/icons';
 import { createClassStateFsUpdater } from './shared';
@@ -34,7 +34,7 @@ export function ComponentClassState({
   fsClassState,
   fixtureExpansion,
   onFixtureStateChange,
-  onElementExpansionChange
+  onElementExpansionChange,
 }: Props) {
   const { componentName, elementId, values } = fsClassState;
   const strElementId = stringifyElementId(elementId);
@@ -43,11 +43,11 @@ export function ComponentClassState({
   const onResetValues = React.useCallback(
     () =>
       onFixtureStateChange(
-        createClassStateFsUpdater(elementId, prevFs =>
+        createClassStateFsUpdater(elementId, (prevFs) =>
           updateFixtureStateClassState({
             fixtureState: prevFs,
             elementId,
-            values: initialValues
+            values: initialValues,
           })
         )
       ),
@@ -57,11 +57,11 @@ export function ComponentClassState({
   const onValueChange = React.useCallback(
     (newValues: FixtureStateValues) => {
       onFixtureStateChange(
-        createClassStateFsUpdater(elementId, prevFs =>
+        createClassStateFsUpdater(elementId, (prevFs) =>
           updateFixtureStateClassState({
             fixtureState: prevFs,
             elementId,
-            values: newValues
+            values: newValues,
           })
         )
       );

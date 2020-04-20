@@ -3,7 +3,7 @@ import { BuildMessage } from 'react-cosmos-shared2/build';
 import {
   mockMessageHandler,
   mockNotifications,
-  getMessageHandlerContext
+  getMessageHandlerContext,
 } from '../../testHelpers/pluginMocks';
 import { register } from '.';
 
@@ -25,7 +25,7 @@ it('pushes build start notification', () => {
     id: 'build',
     type: 'loading',
     title: 'Rebuilding...',
-    info: 'Your code is updating.'
+    info: 'Your code is updating.',
   });
 });
 
@@ -41,7 +41,7 @@ it('pushes build error notification', () => {
     id: 'build',
     type: 'error',
     title: 'Build failed',
-    info: 'Check your terminal for more information.'
+    info: 'Check your terminal for more information.',
   });
 });
 

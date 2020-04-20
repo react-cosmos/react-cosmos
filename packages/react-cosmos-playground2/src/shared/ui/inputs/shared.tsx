@@ -10,8 +10,8 @@ export const TextInputContainer = styled.div<{
   max-width: 100%;
   padding: 2px 4px;
   border-radius: 3px;
-  background: ${props => (props.focused ? props.focusedBg : 'transparent')};
-  box-shadow: ${props => (props.focused ? props.focusedBoxShadow : 'none')};
+  background: ${(props) => (props.focused ? props.focusedBg : 'transparent')};
+  box-shadow: ${(props) => (props.focused ? props.focusedBoxShadow : 'none')};
 `;
 
 export const TextContainer = styled.div`
@@ -28,20 +28,20 @@ export const TextField = styled.textarea<{ focused: boolean; color: string }>`
   padding: 0;
   border: 0;
   background: none;
-  color: ${props => props.color};
+  color: ${(props) => props.color};
   font-size: 14px;
   line-height: 20px;
   white-space: pre;
   overflow: hidden;
   outline: none;
   resize: none;
-  opacity: ${props => (props.focused ? 1 : 0)};
+  opacity: ${(props) => (props.focused ? 1 : 0)};
 `;
 
 export const TextMirror = styled.div<{ focused: boolean; minWidth: number }>`
   color: ${lightBlue};
-  opacity: ${props => (props.focused ? 0 : 1)};
-  min-width: ${props => props.minWidth}px;
+  opacity: ${(props) => (props.focused ? 0 : 1)};
+  min-width: ${(props) => props.minWidth}px;
   min-height: 20px;
   font-size: 14px;
   line-height: 20px;

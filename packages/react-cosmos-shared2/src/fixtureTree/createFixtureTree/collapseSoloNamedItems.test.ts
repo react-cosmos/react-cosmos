@@ -8,21 +8,21 @@ it('collapses solo named item', () => {
         items: {
           SuccessMessage: {
             path: 'SuccessMessage/SuccessMessage.fixture.js',
-            name: null
-          }
+            name: null,
+          },
         },
-        dirs: {}
-      }
-    }
+        dirs: {},
+      },
+    },
   };
   const collapsedTree = {
     items: {
       SuccessMessage: {
         path: 'SuccessMessage/SuccessMessage.fixture.js',
-        name: null
-      }
+        name: null,
+      },
     },
-    dirs: {}
+    dirs: {},
   };
   expect(collapseSoloNamedItems(tree)).toEqual(collapsedTree);
 });
@@ -35,21 +35,21 @@ it('collapses solo named item (case insensitive)', () => {
         items: {
           SuccessMessage: {
             path: 'successMessage/SuccessMessage.fixture.js',
-            name: null
-          }
+            name: null,
+          },
         },
-        dirs: {}
-      }
-    }
+        dirs: {},
+      },
+    },
   };
   const collapsedTree = {
     items: {
       SuccessMessage: {
         path: 'successMessage/SuccessMessage.fixture.js',
-        name: null
-      }
+        name: null,
+      },
     },
-    dirs: {}
+    dirs: {},
   };
   expect(collapseSoloNamedItems(tree)).toEqual(collapsedTree);
 });

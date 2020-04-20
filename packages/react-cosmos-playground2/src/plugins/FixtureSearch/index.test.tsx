@@ -7,7 +7,7 @@ import {
   mockCore,
   mockFixtureTree,
   mockRendererCore,
-  mockRouter
+  mockRouter,
 } from '../../testHelpers/pluginMocks';
 
 afterEach(resetPlugins);
@@ -15,7 +15,7 @@ afterEach(resetPlugins);
 const fixtures = {
   'src/__fixtures__/fixture1.ts': null,
   'src/__fixtures__/fixture2.ts': null,
-  'src/foobar/index.fixture.ts': ['fixture3a', 'fixture3b']
+  'src/foobar/index.fixture.ts': ['fixture3a', 'fixture3b'],
 };
 
 function registerTestPlugins() {
@@ -23,11 +23,11 @@ function registerTestPlugins() {
   mockCore({
     getFixtureFileVars: () => ({
       fixturesDir: '__fixtures__',
-      fixtureFileSuffix: 'fixture'
-    })
+      fixtureFileSuffix: 'fixture',
+    }),
   });
   mockRendererCore({
-    getFixtures: () => fixtures
+    getFixtures: () => fixtures,
   });
   mockFixtureTree();
 }
@@ -61,7 +61,7 @@ it('open fixture list and selects fixture', async () => {
   fireEvent.click(getByText('foobar fixture3b'));
   const fixtureId = {
     path: 'src/foobar/index.fixture.ts',
-    name: 'fixture3b'
+    name: 'fixture3b',
   };
   expect(selectFixture).toBeCalledWith(expect.any(Object), fixtureId);
 
@@ -93,7 +93,7 @@ it('filters fixture list', async () => {
 
   // Filter fixtures
   fireEvent.change(getByPlaceholderText('Fixture search'), {
-    target: { value: 'foobar' }
+    target: { value: 'foobar' },
   });
 
   // Shows only matching fixtures

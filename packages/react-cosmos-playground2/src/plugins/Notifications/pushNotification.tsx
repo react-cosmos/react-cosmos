@@ -8,13 +8,13 @@ export function pushStickyNotification(
   context: NotificationsContext,
   notification: Notification
 ) {
-  context.setState(prevState => ({
+  context.setState((prevState) => ({
     ...prevState,
     stickyNotifications: replaceOrAddItem(
       prevState.stickyNotifications,
-      i => i.id === notification.id,
+      (i) => i.id === notification.id,
       notification
-    )
+    ),
   }));
 }
 
@@ -22,12 +22,12 @@ export function removeStickyNotification(
   context: NotificationsContext,
   notificationId: string
 ) {
-  context.setState(prevState => ({
+  context.setState((prevState) => ({
     ...prevState,
     stickyNotifications: removeItemMatch(
       prevState.stickyNotifications,
-      i => i.id === notificationId
-    )
+      (i) => i.id === notificationId
+    ),
   }));
 }
 
@@ -40,23 +40,23 @@ export function pushTimedNotification(
     window.clearTimeout(timedNotifications.timeoutId);
   }
 
-  context.setState(prevState => ({
+  context.setState((prevState) => ({
     ...prevState,
     timedNotifications: {
       timeoutId: createNotificationTimeout(context),
       items: replaceOrAddItem(
         getTimedNotifications(prevState),
-        i => i.id === notification.id,
+        (i) => i.id === notification.id,
         notification
-      )
-    }
+      ),
+    },
   }));
 }
 
 export function clearTimedNotification(context: NotificationsContext) {
-  context.setState(prevState => ({
+  context.setState((prevState) => ({
     ...prevState,
-    timedNotifications: null
+    timedNotifications: null,
   }));
 }
 

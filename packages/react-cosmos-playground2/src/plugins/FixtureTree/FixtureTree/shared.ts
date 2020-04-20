@@ -5,7 +5,7 @@ import {
   grey248,
   grey32,
   grey8,
-  selectedColors
+  selectedColors,
 } from '../../../shared/ui/colors';
 import { quick } from '../../../shared/ui/vars';
 
@@ -21,7 +21,7 @@ export const ListItem = styled.span<ListItemProps>`
   flex-direction: row;
   align-items: center;
   height: ${itemHeight}px;
-  padding: 0 16px 0 ${props => getLeftPadding(props.indentLevel)}px;
+  padding: 0 16px 0 ${(props) => getLeftPadding(props.indentLevel)}px;
   background: ${selectedColors(grey32, grey8)};
   color: ${selectedColors(grey224, grey248)};
   line-height: ${itemHeight}px;

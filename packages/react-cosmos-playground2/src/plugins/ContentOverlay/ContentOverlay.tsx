@@ -24,7 +24,7 @@ export function ContentOverlay({
   rendererPreviewRuntimeStatus,
   welcomeDismissed,
   onDismissWelcome,
-  onShowWelcome
+  onShowWelcome,
 }: Props) {
   if (rendererPreviewUrlStatus === 'error') {
     return (

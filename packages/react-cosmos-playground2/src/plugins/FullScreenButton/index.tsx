@@ -7,7 +7,7 @@ import { FullScreenButton } from './FullScreenButton';
 import { FullScreenButtonSpec } from './public';
 
 const { namedPlug, register } = createPlugin<FullScreenButtonSpec>({
-  name: 'fullScreenButton'
+  name: 'fullScreenButton',
 });
 
 namedPlug<RendererActionSlotProps>(

@@ -1,7 +1,7 @@
 import {
   PlaygroundUrlParams,
   stringifyPlaygroundUrlQuery,
-  parsePlaygroundUrlQuery
+  parsePlaygroundUrlQuery,
 } from 'react-cosmos-shared2/url';
 
 export function getUrlParams(): PlaygroundUrlParams {

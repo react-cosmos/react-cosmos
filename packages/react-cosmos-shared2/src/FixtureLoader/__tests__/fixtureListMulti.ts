@@ -10,7 +10,7 @@ testFixtureLoader(
   async ({ rendererReady }) => {
     await rendererReady({
       rendererId,
-      fixtures: { first: ['a', 'b', 'c'], second: null }
+      fixtures: { first: ['a', 'b', 'c'], second: null },
     });
   }
 );

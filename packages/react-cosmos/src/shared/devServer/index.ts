@@ -40,7 +40,7 @@ export async function startDevServer(
   const msgHandler = createMessageHandler(httpServer.server);
 
   async function cleanUp() {
-    await pluginCleanupCallbacks.map(cleanup => cleanup());
+    await pluginCleanupCallbacks.map((cleanup) => cleanup());
     await httpServer.stop();
     msgHandler.cleanUp();
   }
@@ -51,7 +51,7 @@ export async function startDevServer(
         cosmosConfig,
         httpServer: httpServer.server,
         expressApp: app,
-        sendMessage: msgHandler.sendMessage
+        sendMessage: msgHandler.sendMessage,
       });
       if (typeof pluginReturn === 'function') {
         pluginCleanupCallbacks.push(pluginReturn);

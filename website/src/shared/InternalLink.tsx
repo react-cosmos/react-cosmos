@@ -14,7 +14,7 @@ export const InternalLink = ({
   to,
   className,
   style,
-  visualOnly = false
+  visualOnly = false,
 }: Props) => {
   function handleClick(e: React.MouseEvent) {
     const element = getElementByPath(to);

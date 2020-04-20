@@ -20,7 +20,7 @@ export function createCosmosConfig(
     hostname: getHostname(cosmosConfigInput),
     port: getPort(cosmosConfigInput),
     globalImports: getGlobalImports(cosmosConfigInput, rootDir),
-    ui: cosmosConfigInput.ui || {}
+    ui: cosmosConfigInput.ui || {},
   };
 }
 
@@ -43,14 +43,14 @@ function getFixturesDir({ fixturesDir = '__fixtures__' }: CosmosConfigInput) {
 }
 
 function getFixtureFileSuffix({
-  fixtureFileSuffix = 'fixture'
+  fixtureFileSuffix = 'fixture',
 }: CosmosConfigInput) {
   return fixtureFileSuffix;
 }
 
 function getWatchDirs(cosmosConfigInput: CosmosConfigInput, rootDir: string) {
   const { watchDirs = ['.'] } = cosmosConfigInput;
-  return watchDirs.map(watchDir => path.resolve(rootDir, watchDir));
+  return watchDirs.map((watchDir) => path.resolve(rootDir, watchDir));
 }
 
 function getUserDepsFilePath(
@@ -80,7 +80,7 @@ function getGlobalImports(
   rootDir: string
 ) {
   const { globalImports = [] } = cosmosConfigInput;
-  return globalImports.map(globalImport =>
+  return globalImports.map((globalImport) =>
     resolveModule(rootDir, globalImport)
   );
 }

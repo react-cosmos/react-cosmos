@@ -34,7 +34,7 @@ export function useDrag({ value, reverse, onChange }: UseDragArgs) {
     (e: MouseEvent) => {
       setDragState({
         startValue: value,
-        startX: e.clientX
+        startX: e.clientX,
       });
     },
     [value]

@@ -9,7 +9,7 @@ import {
   getUserWebpackConfig,
   hasPlugin,
   resolveClientPath,
-  resolveLocalReactDeps
+  resolveLocalReactDeps,
 } from './shared';
 
 export async function getDevWebpackConfig(
@@ -26,10 +26,10 @@ export async function getDevWebpackConfig(
     output: getOutput(cosmosConfig),
     module: {
       ...baseWebpackConfig.module,
-      rules: getRules(baseWebpackConfig)
+      rules: getRules(baseWebpackConfig),
     },
     resolve: resolveLocalReactDeps(cosmosConfig, baseWebpackConfig),
-    plugins: getPlugins(cosmosConfig, baseWebpackConfig, userWebpack)
+    plugins: getPlugins(cosmosConfig, baseWebpackConfig, userWebpack),
   };
 }
 
@@ -55,7 +55,7 @@ function getOutput({ publicUrl }: CosmosConfig) {
     publicPath: publicUrl,
     // Enable click-to-open source in react-error-overlay
     devtoolModuleFilenameTemplate: (info: { absoluteResourcePath: string }) =>
-      path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
+      path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
   };
 }
 

@@ -23,7 +23,7 @@ type State = {
 
 export class ResponsivePreview extends React.Component<Props, State> {
   state: State = {
-    container: null
+    container: null,
   };
 
   containerEl: null | HTMLElement = null;
@@ -36,7 +36,7 @@ export class ResponsivePreview extends React.Component<Props, State> {
       viewport,
       scaled,
       validFixtureSelected,
-      setViewport
+      setViewport,
     } = this.props;
     const { container } = this.state;
 
@@ -63,7 +63,7 @@ export class ResponsivePreview extends React.Component<Props, State> {
       maskContainerStyle,
       padContainerStyle,
       alignContainerStyle,
-      scaleContainerStyle
+      scaleContainerStyle,
     } = getStyles({ container, viewport, scaled });
     return (
       <Container>
@@ -120,7 +120,7 @@ export class ResponsivePreview extends React.Component<Props, State> {
 
     if (!isEqual(container, this.state.container)) {
       this.setState({
-        container
+        container,
       });
     }
   }

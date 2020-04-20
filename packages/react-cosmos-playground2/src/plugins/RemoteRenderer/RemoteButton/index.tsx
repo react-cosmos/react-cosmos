@@ -13,7 +13,7 @@ type Props = {
 export function RemoteButton({
   devServerOn,
   webRendererUrl,
-  pushNotification
+  pushNotification,
 }: Props) {
   if (!devServerOn || !webRendererUrl) {
     return null;
@@ -35,14 +35,14 @@ export function RemoteButton({
         id: 'renderer-url-copy',
         type: 'success',
         title: `Renderer URL copied to clipboard`,
-        info: 'Paste the renderer URL in the address bar of another browser.'
+        info: 'Paste the renderer URL in the address bar of another browser.',
       });
     } catch (err) {
       pushNotification({
         id: 'renderer-url-copy',
         type: 'error',
         title: `Failed to copy renderer URL to clipboard`,
-        info: 'Make sure your browser supports clipboard operations.'
+        info: 'Make sure your browser supports clipboard operations.',
       });
     }
   }

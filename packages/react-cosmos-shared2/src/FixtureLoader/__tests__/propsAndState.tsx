@@ -3,7 +3,7 @@ import React from 'react';
 import {
   createValues,
   updateFixtureStateClassState,
-  updateFixtureStateProps
+  updateFixtureStateProps,
 } from '../../fixtureState';
 import { uuid } from '../../util';
 import { testFixtureLoader } from '../testHelpers';
@@ -20,7 +20,7 @@ const fixtures = {
         <SuffixCounter suffix="times" />
       </>
     </>
-  )
+  ),
 };
 const fixtureId = { path: 'first', name: null };
 
@@ -36,8 +36,8 @@ testFixtureLoader(
       classState: updateFixtureStateClassState({
         fixtureState,
         elementId,
-        values: createValues({ count: 5 })
-      })
+        values: createValues({ count: 5 }),
+      }),
     };
     await setFixtureState({ rendererId, fixtureId, fixtureState });
     await retry(() => expect(renderer.toJSON()).toBe('5 times'));
@@ -49,9 +49,9 @@ testFixtureLoader(
         props: updateFixtureStateProps({
           fixtureState,
           elementId,
-          values: createValues({ suffix: 'timez' })
-        })
-      }
+          values: createValues({ suffix: 'timez' }),
+        }),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('5 timez'));
   }
@@ -69,8 +69,8 @@ testFixtureLoader(
       classState: updateFixtureStateClassState({
         fixtureState,
         elementId,
-        values: createValues({ count: 5 })
-      })
+        values: createValues({ count: 5 }),
+      }),
     };
     await setFixtureState({ rendererId, fixtureId, fixtureState });
     await retry(() => expect(renderer.toJSON()).toBe('5 times'));
@@ -82,9 +82,9 @@ testFixtureLoader(
         props: updateFixtureStateProps({
           fixtureState,
           elementId,
-          values: createValues({ suffix: 'timez' })
-        })
-      }
+          values: createValues({ suffix: 'timez' }),
+        }),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('5 timez'));
   }
@@ -102,8 +102,8 @@ testFixtureLoader(
       props: updateFixtureStateProps({
         fixtureState,
         elementId,
-        values: createValues({ suffix: 'timez' })
-      })
+        values: createValues({ suffix: 'timez' }),
+      }),
     };
     await setFixtureState({ rendererId, fixtureId, fixtureState });
     await retry(() => expect(renderer.toJSON()).toBe('0 timez'));
@@ -115,9 +115,9 @@ testFixtureLoader(
         classState: updateFixtureStateClassState({
           fixtureState,
           elementId,
-          values: createValues({ count: 5 })
-        })
-      }
+          values: createValues({ count: 5 }),
+        }),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('5 timez'));
   }
@@ -131,8 +131,8 @@ testFixtureLoader(
     update({
       rendererId,
       fixtures: {
-        first: <SuffixCounter suffix="timez" />
-      }
+        first: <SuffixCounter suffix="timez" />,
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('0 timez'));
     await fixtureStateChange({
@@ -141,15 +141,15 @@ testFixtureLoader(
       fixtureState: {
         props: [
           anyProps({
-            values: createValues({ suffix: 'timez' })
-          })
+            values: createValues({ suffix: 'timez' }),
+          }),
         ],
         classState: [
           anyClassState({
-            values: createValues({ count: 0 })
-          })
-        ]
-      }
+            values: createValues({ count: 0 }),
+          }),
+        ],
+      },
     });
   }
 );

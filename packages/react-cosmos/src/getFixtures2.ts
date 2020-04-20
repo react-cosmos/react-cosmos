@@ -4,7 +4,7 @@ import {
   createFixtureTree,
   flattenFixtureTree,
   removeFixtureNameExtension,
-  removeFixtureNameSuffix
+  removeFixtureNameSuffix,
 } from 'react-cosmos-shared2/fixtureTree';
 import {
   getFixtureNamesByPath,
@@ -12,12 +12,12 @@ import {
   ReactDecorator,
   ReactDecoratorsByPath,
   ReactFixture,
-  ReactFixtureMap
+  ReactFixtureMap,
 } from 'react-cosmos-shared2/react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import {
   stringifyPlaygroundUrlQuery,
-  stringifyRendererUrlQuery
+  stringifyRendererUrlQuery,
 } from 'react-cosmos-shared2/url';
 import { CosmosConfig } from './config';
 import { RENDERER_FILENAME } from './shared/playgroundHtml';
@@ -51,7 +51,7 @@ export function getFixtures2({ cosmosConfig }: Args) {
   const fixtureTree = createFixtureTree({
     fixtures: fixtureNamesByPath,
     fixturesDir,
-    fixtureFileSuffix
+    fixtureFileSuffix,
   });
   const flatFixtureTree = flattenFixtureTree(fixtureTree);
   flatFixtureTree.forEach(({ fixtureId, cleanPath }) => {
@@ -77,7 +77,7 @@ export function getFixtures2({ cosmosConfig }: Args) {
       playgroundUrl: getPlaygroundUrl(host, fixtureId),
       relativeFilePath: fixtureId.path,
       rendererUrl: getRendererUrl(host, fixtureId),
-      treePath: cleanPath
+      treePath: cleanPath,
     });
   });
 
@@ -111,6 +111,6 @@ function createFixtureElementGetter(
     getDecoratedFixtureElement(fixture, decorators, {
       fixtureState: {},
       setFixtureState: () => {},
-      onErrorReset: () => {}
+      onErrorReset: () => {},
     });
 }

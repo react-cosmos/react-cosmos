@@ -6,6 +6,6 @@ export function mockWindowOpen() {
     value: mock,
     unmock: () => {
       window.open = windowOpen;
-    }
+    },
   };
 }

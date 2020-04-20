@@ -8,12 +8,12 @@ type State = {
 
 export class ErrorCatch extends React.Component<ReactDecoratorProps, State> {
   state: State = {
-    error: null
+    error: null,
   };
 
   componentDidCatch(error: Error, info: { componentStack: string }) {
     this.setState({
-      error: `${error.message}\n${info.componentStack}`
+      error: `${error.message}\n${info.componentStack}`,
     });
   }
 

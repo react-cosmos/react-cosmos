@@ -7,13 +7,13 @@ export const Height = styled.div<{
   tablet: number;
   desktop: number;
 }>`
-  height: ${props => props.tablet}px;
+  height: ${(props) => props.tablet}px;
 
   @media (max-width: ${mobileMaxWidth}px) {
-    height: ${props => props.mobile}px;
+    height: ${(props) => props.mobile}px;
   }
 
   @media (min-width: ${minFeatureColumnsWidth}px) {
-    height: ${props => props.desktop}px;
+    height: ${(props) => props.desktop}px;
   }
 `;

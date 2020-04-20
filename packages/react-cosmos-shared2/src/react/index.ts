@@ -5,7 +5,7 @@ export {
   ReactDecoratorProps,
   ReactDecorator,
   ReactFixtureExportsByPath,
-  ReactDecoratorsByPath
+  ReactDecoratorsByPath,
 } from './shared';
 export { areNodesEqual } from './areNodesEqual';
 export { getComponentName } from './getComponentName';

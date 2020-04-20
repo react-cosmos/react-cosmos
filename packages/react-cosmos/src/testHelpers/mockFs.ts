@@ -44,7 +44,7 @@ jest.mock('../shared/fs', () => {
     __unmockFs() {
       fileMocks = {};
       dirMocks = [];
-    }
+    },
   };
 });
 

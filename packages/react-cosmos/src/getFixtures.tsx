@@ -6,7 +6,7 @@ import {
   ReactDecorator,
   ReactDecoratorsByPath,
   ReactFixture,
-  ReactFixtureMap
+  ReactFixtureMap,
 } from 'react-cosmos-shared2/react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { CosmosConfig } from './config';
@@ -29,13 +29,13 @@ export function getFixturesSync({ cosmosConfig }: Args) {
   );
 
   const fixtures: RenderableFixture[] = [];
-  Object.keys(fixtureExportsByPath).forEach(fixturePath => {
+  Object.keys(fixtureExportsByPath).forEach((fixturePath) => {
     const fixtureExport = fixtureExportsByPath[fixturePath];
     if (isMultiFixture(fixtureExport)) {
       // FIXME: Why does fixtureExport need to be cast as ReactFixtureMap when
       // the type predicate returned by isMultiFixture already ensures it?
       const multiFixtureExport: ReactFixtureMap = fixtureExport;
-      Object.keys(fixtureExport).forEach(fixtureName => {
+      Object.keys(fixtureExport).forEach((fixtureName) => {
         const fixtureId = { path: fixturePath, name: fixtureName };
         fixtures.push({
           fixtureId,
@@ -43,7 +43,7 @@ export function getFixturesSync({ cosmosConfig }: Args) {
             multiFixtureExport[fixtureName],
             fixturePath,
             decoratorsByPath
-          )
+          ),
         });
       });
     } else {
@@ -54,7 +54,7 @@ export function getFixturesSync({ cosmosConfig }: Args) {
           fixtureExport,
           fixturePath,
           decoratorsByPath
-        )
+        ),
       });
     }
   });
@@ -75,6 +75,6 @@ function createFixtureElementGetter(
     getDecoratedFixtureElement(fixture, decorators, {
       fixtureState: {},
       setFixtureState: () => {},
-      onErrorReset: () => {}
+      onErrorReset: () => {},
     });
 }

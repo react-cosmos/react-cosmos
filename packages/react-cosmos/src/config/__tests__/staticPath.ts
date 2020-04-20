@@ -9,14 +9,14 @@ it('returns default null static path', () => {
 
 it('returns custom static path', () => {
   const { staticPath } = createCosmosConfig(process.cwd(), {
-    staticPath: 'static'
+    staticPath: 'static',
   });
   expect(staticPath).toBe(getCwdPath('static'));
 });
 
 it('returns custom static path from custom root dir', () => {
   const { staticPath } = createCosmosConfig(join(process.cwd(), 'subdir'), {
-    staticPath: 'static'
+    staticPath: 'static',
   });
   expect(staticPath).toBe(getCwdPath('subdir/static'));
 });

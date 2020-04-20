@@ -3,7 +3,7 @@ import { Illustration } from '../svg';
 import { screenGrey5, screenPrimary3 } from '../ui/colors';
 
 export const ArtificialIntelligenceIllustration = ({
-  title
+  title,
 }: {
   title: string;
 }) => (

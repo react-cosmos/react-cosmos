@@ -15,7 +15,7 @@ export function getDevPlaygroundHtml(
   const { ui } = cosmosConfig;
   return getPlaygroundHtml({
     ...ui,
-    core: getDevCoreConfig(platformType, cosmosConfig)
+    core: getDevCoreConfig(platformType, cosmosConfig),
   });
 }
 
@@ -23,7 +23,7 @@ export function getExportPlaygroundHtml(cosmosConfig: CosmosConfig) {
   const { ui } = cosmosConfig;
   return getPlaygroundHtml({
     ...ui,
-    core: getExportCoreConfig(cosmosConfig)
+    core: getExportCoreConfig(cosmosConfig),
   });
 }
 
@@ -36,13 +36,13 @@ function getDevCoreConfig(
       return {
         ...getSharedCoreConfig(cosmosConfig),
         devServerOn: true,
-        webRendererUrl: null
+        webRendererUrl: null,
       };
     case 'web':
       return {
         ...getSharedCoreConfig(cosmosConfig),
         devServerOn: true,
-        webRendererUrl: getWebRendererUrl(cosmosConfig)
+        webRendererUrl: getWebRendererUrl(cosmosConfig),
       };
     default:
       throw new Error(`Invalid platform type: ${platformType}`);
@@ -55,7 +55,7 @@ function getExportCoreConfig(
   return {
     ...getSharedCoreConfig(cosmosConfig),
     devServerOn: false,
-    webRendererUrl: getWebRendererUrl(cosmosConfig)
+    webRendererUrl: getWebRendererUrl(cosmosConfig),
   };
 }
 
@@ -80,7 +80,7 @@ function getWebRendererUrl({ publicUrl }: CosmosConfig) {
 
 function getPlaygroundHtml(playgroundConfig: PlaygroundConfig) {
   return replaceKeys(getPlaygroundHtmlTemplate(), {
-    __PLAYGROUND_CONFIG: JSON.stringify(playgroundConfig)
+    __PLAYGROUND_CONFIG: JSON.stringify(playgroundConfig),
   });
 }
 

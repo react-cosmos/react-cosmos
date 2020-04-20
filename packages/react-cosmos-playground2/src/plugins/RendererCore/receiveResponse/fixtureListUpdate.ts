@@ -10,9 +10,9 @@ export function receiveFixtureListUpdateResponse(
 
   // Discard updates from secondary renderers
   if (rendererId === primaryRendererId) {
-    context.setState(prevState => ({
+    context.setState((prevState) => ({
       ...prevState,
-      fixtures
+      fixtures,
     }));
   }
 }

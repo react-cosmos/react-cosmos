@@ -14,7 +14,7 @@ const fixtures = {
         <Counter />
       </StateMock>
     </>
-  )
+  ),
 };
 const fixtureId = { path: 'first', name: null };
 
@@ -43,29 +43,29 @@ testFixtureLoader(
               <Counter />
             </StateMock>
           </>
-        )
-      }
+        ),
+      },
     });
     // Do not remove this line: It captures a regression regarding an error
     // that occurred when component state was read asynchronously
-    await new Promise(res => setTimeout(res, 500));
+    await new Promise((res) => setTimeout(res, 500));
     await fixtureStateChange({
       rendererId,
       fixtureId,
       fixtureState: {
         props: [
           anyProps({ values: createValues({}) }),
-          anyProps({ values: createValues({}) })
+          anyProps({ values: createValues({}) }),
         ],
         classState: [
           anyClassState({
-            values: createValues({ count: 5 })
+            values: createValues({ count: 5 }),
           }),
           anyClassState({
-            values: createValues({ count: 10 })
-          })
-        ]
-      }
+            values: createValues({ count: 10 }),
+          }),
+        ],
+      },
     });
   }
 );

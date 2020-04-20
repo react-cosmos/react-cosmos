@@ -10,7 +10,7 @@ const planets = [
   { value: 'Jupiter', label: 'Jupiter' },
   { value: 'Saturn', label: 'Saturn' },
   { value: 'Uranus', label: 'Uranus' },
-  { value: 'Neptune', label: 'Neptune' }
+  { value: 'Neptune', label: 'Neptune' },
 ];
 
 const Container = styled.div`
@@ -24,7 +24,7 @@ export default () => {
       <Select
         options={planets}
         value={planet}
-        onChange={option => setPlanet(option.value)}
+        onChange={(option) => setPlanet(option.value)}
       />
     </Container>
   );

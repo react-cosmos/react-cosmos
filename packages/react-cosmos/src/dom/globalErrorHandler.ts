@@ -4,6 +4,6 @@ import { rendererConnect } from './rendererConnect';
 window.addEventListener('error', () => {
   rendererConnect.postMessage({
     type: 'rendererError',
-    payload: { rendererId }
+    payload: { rendererId },
   });
 });

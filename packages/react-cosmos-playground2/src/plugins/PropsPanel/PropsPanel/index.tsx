@@ -6,7 +6,7 @@ import {
   OnElementExpansionChange,
   stringifyElementId,
   hasFsValues,
-  sortFsValueGroups
+  sortFsValueGroups,
 } from '../../../shared/ui/valueInputTree';
 import { ComponentProps } from './ComponentProps';
 
@@ -21,7 +21,7 @@ export const PropsPanel = React.memo(function PropsPanel({
   fixtureState,
   fixtureExpansion,
   onFixtureStateChange,
-  onElementExpansionChange
+  onElementExpansionChange,
 }: Props) {
   if (!fixtureState.props) {
     return null;
@@ -30,7 +30,7 @@ export const PropsPanel = React.memo(function PropsPanel({
   const propsWithValues = fixtureState.props.filter(hasFsValues);
   return (
     <>
-      {sortFsValueGroups(propsWithValues).map(fsProps => {
+      {sortFsValueGroups(propsWithValues).map((fsProps) => {
         const strElementId = stringifyElementId(fsProps.elementId);
         return (
           <ComponentProps

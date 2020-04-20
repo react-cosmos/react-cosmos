@@ -8,7 +8,7 @@ import { Counter } from '../testHelpers/components';
 import {
   anyClassState,
   anyProps,
-  getClassState
+  getClassState,
 } from '../testHelpers/fixtureState';
 
 const rendererId = uuid();
@@ -22,7 +22,7 @@ const fixtures = {
         <Counter />
       </StateMock>
     </>
-  )
+  ),
 };
 const fixtureId = { path: 'first', name: null };
 
@@ -39,14 +39,14 @@ testFixtureLoader(
         classState: [
           anyClassState({
             values: createValues({ count: 5 }),
-            componentName: 'Counter'
+            componentName: 'Counter',
           }),
           anyClassState({
             values: createValues({ count: 10 }),
-            componentName: 'Counter'
-          })
-        ]
-      }
+            componentName: 'Counter',
+          }),
+        ],
+      },
     });
   }
 );
@@ -65,9 +65,9 @@ testFixtureLoader(
         classState: updateFixtureStateClassState({
           fixtureState,
           elementId,
-          values: createValues({ count: 100 })
-        })
-      }
+          values: createValues({ count: 100 }),
+        }),
+      },
     });
     await retry(() =>
       expect(renderer.toJSON()).toEqual(['5 times', '100 times'])

@@ -5,7 +5,7 @@ import {
   Feature,
   FeatureDescription,
   FeatureIconContainer,
-  FeatureTitle
+  FeatureTitle,
 } from './shared';
 
 export function ComponentLibrary() {

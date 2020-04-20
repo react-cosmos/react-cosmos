@@ -58,15 +58,15 @@ function updateRuntimeStatus(
 
   switch (response.type) {
     case 'rendererReady': {
-      return setState(prevState => ({
+      return setState((prevState) => ({
         ...prevState,
-        runtimeStatus: 'connected'
+        runtimeStatus: 'connected',
       }));
     }
     case 'rendererError': {
-      return setState(prevState => ({
+      return setState((prevState) => ({
         ...prevState,
-        runtimeStatus: 'error'
+        runtimeStatus: 'error',
       }));
     }
     default:

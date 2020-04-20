@@ -11,7 +11,7 @@ const propDefaults = {
   onOpenNav: () => {},
   onTogglePanel: () => {},
   onFixtureSelect: () => {},
-  onClose: () => {}
+  onClose: () => {},
 };
 
 it('renders toggle nav button', async () => {

@@ -5,7 +5,7 @@ import {
   getFixtureNamesByPath,
   ReactDecorator,
   ReactDecoratorsByPath,
-  ReactFixtureExportsByPath
+  ReactFixtureExportsByPath,
 } from '../react';
 import {
   FixtureId,
@@ -14,7 +14,7 @@ import {
   RendererRequest,
   RendererResponse,
   SelectFixtureRequest,
-  SetFixtureStateRequest
+  SetFixtureStateRequest,
 } from '../renderer';
 import { getFixture } from './fixtureHelpers';
 import { FixtureProvider } from './FixtureProvider';
@@ -53,10 +53,10 @@ export class FixtureLoader extends React.Component<Props, State> {
       ? {
           fixtureId: this.props.selectedFixtureId,
           fixtureState: {},
-          syncedFixtureState: {}
+          syncedFixtureState: {},
         }
       : null,
-    renderKey: 0
+    renderKey: 0,
   };
 
   unsubscribe: null | (() => unknown) = null;
@@ -170,16 +170,16 @@ export class FixtureLoader extends React.Component<Props, State> {
       selectedFixture: {
         fixtureId,
         fixtureState,
-        syncedFixtureState: fixtureState
+        syncedFixtureState: fixtureState,
       },
-      renderKey: this.state.renderKey + 1
+      renderKey: this.state.renderKey + 1,
     });
   }
 
   handleUnselectFixtureRequest() {
     this.setState({
       selectedFixture: null,
-      renderKey: 0
+      renderKey: 0,
     });
   }
 
@@ -192,8 +192,8 @@ export class FixtureLoader extends React.Component<Props, State> {
         selectedFixture: {
           fixtureId,
           fixtureState,
-          syncedFixtureState: fixtureState
-        }
+          syncedFixtureState: fixtureState,
+        },
       });
     }
   }
@@ -204,8 +204,8 @@ export class FixtureLoader extends React.Component<Props, State> {
       type: 'rendererReady',
       payload: {
         rendererId,
-        fixtures: this.getFixtureNamesByPath()
-      }
+        fixtures: this.getFixtureNamesByPath(),
+      },
     });
   }
 
@@ -215,8 +215,8 @@ export class FixtureLoader extends React.Component<Props, State> {
       type: 'fixtureListUpdate',
       payload: {
         rendererId,
-        fixtures: this.getFixtureNamesByPath()
-      }
+        fixtures: this.getFixtureNamesByPath(),
+      },
     });
   }
 
@@ -230,12 +230,12 @@ export class FixtureLoader extends React.Component<Props, State> {
       payload: {
         rendererId,
         fixtureId,
-        fixtureState
-      }
+        fixtureState,
+      },
     });
   };
 
-  setFixtureState: SetFixtureState = stateUpdate => {
+  setFixtureState: SetFixtureState = (stateUpdate) => {
     if (!this.state.selectedFixture) {
       console.warn(
         '[FixtureLoader] Trying to set fixture state with no fixture selected'
@@ -257,8 +257,8 @@ export class FixtureLoader extends React.Component<Props, State> {
       return {
         selectedFixture: {
           ...selectedFixture,
-          fixtureState: stateUpdate(selectedFixture.fixtureState)
-        }
+          fixtureState: stateUpdate(selectedFixture.fixtureState),
+        },
       };
     });
   };
@@ -287,8 +287,8 @@ export class FixtureLoader extends React.Component<Props, State> {
       return {
         selectedFixture: {
           ...selectedFixture,
-          syncedFixtureState
-        }
+          syncedFixtureState,
+        },
       };
     });
   }

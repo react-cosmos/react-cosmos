@@ -5,7 +5,7 @@ import { render, fireEvent } from '@testing-library/react';
 import {
   mockCore,
   mockMessageHandler,
-  mockNotifications
+  mockNotifications,
 } from '../../../testHelpers/pluginMocks';
 import { register } from '..';
 
@@ -20,7 +20,7 @@ it(`doesn't render button when web renderer url is empty`, async () => {
   register();
   mockCore({
     isDevServerOn: () => true,
-    getWebRendererUrl: () => null
+    getWebRendererUrl: () => null,
   });
   mockMessageHandler();
   mockNotifications();
@@ -33,7 +33,7 @@ it(`doesn't render button when dev server is off`, async () => {
   register();
   mockCore({
     isDevServerOn: () => false,
-    getWebRendererUrl: () => 'mockWebUrl'
+    getWebRendererUrl: () => 'mockWebUrl',
   });
   mockMessageHandler();
   mockNotifications();
@@ -46,7 +46,7 @@ it('renders button', async () => {
   register();
   mockCore({
     isDevServerOn: () => true,
-    getWebRendererUrl: () => 'mockWebUrl'
+    getWebRendererUrl: () => 'mockWebUrl',
   });
   mockMessageHandler();
   mockNotifications();
@@ -59,7 +59,7 @@ it('notifies copy error on button click', async () => {
   register();
   mockCore({
     isDevServerOn: () => true,
-    getWebRendererUrl: () => 'mockWebUrl'
+    getWebRendererUrl: () => 'mockWebUrl',
   });
   mockMessageHandler();
   const { pushTimedNotification } = mockNotifications();
@@ -74,7 +74,7 @@ it('notifies copy error on button click', async () => {
       id: 'renderer-url-copy',
       type: 'error',
       title: 'Failed to copy renderer URL to clipboard',
-      info: 'Make sure your browser supports clipboard operations.'
+      info: 'Make sure your browser supports clipboard operations.',
     })
   );
 });

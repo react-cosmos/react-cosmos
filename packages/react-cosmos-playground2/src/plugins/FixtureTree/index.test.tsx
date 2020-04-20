@@ -7,7 +7,7 @@ import {
   mockCore,
   mockRendererCore,
   mockRouter,
-  mockStorage
+  mockStorage,
 } from '../../testHelpers/pluginMocks';
 
 afterEach(resetPlugins);
@@ -20,8 +20,8 @@ function registerTestPlugins() {
   mockCore({
     getFixtureFileVars: () => ({
       fixturesDir: 'fixtures',
-      fixtureFileSuffix: 'fixture'
-    })
+      fixtureFileSuffix: 'fixture',
+    }),
   });
 }
 
@@ -35,11 +35,11 @@ async function loadTestPlugins() {
 it('renders fixture list from renderer state', async () => {
   registerTestPlugins();
   mockRouter({
-    getSelectedFixtureId: () => null
+    getSelectedFixtureId: () => null,
   });
   mockRendererCore({
     isRendererConnected: () => true,
-    getFixtures: () => fixtures
+    getFixtures: () => fixtures,
   });
 
   const { findByText } = await loadTestPlugins();
@@ -51,11 +51,11 @@ it('renders fixture list from renderer state', async () => {
 it('sends fixtureId to router on fixture click', async () => {
   registerTestPlugins();
   const { selectFixture } = mockRouter({
-    getSelectedFixtureId: () => null
+    getSelectedFixtureId: () => null,
   });
   mockRendererCore({
     isRendererConnected: () => true,
-    getFixtures: () => fixtures
+    getFixtures: () => fixtures,
   });
 
   const { getByText } = await loadTestPlugins();
@@ -63,18 +63,18 @@ it('sends fixtureId to router on fixture click', async () => {
 
   expect(selectFixture).toBeCalledWith(expect.any(Object), {
     path: 'zwei.js',
-    name: null
+    name: null,
   });
 });
 
 it('renders blank state', async () => {
   registerTestPlugins();
   mockRouter({
-    getSelectedFixtureId: () => null
+    getSelectedFixtureId: () => null,
   });
   mockRendererCore({
     isRendererConnected: () => true,
-    getFixtures: () => ({})
+    getFixtures: () => ({}),
   });
 
   const { getByTestId } = await loadTestPlugins();

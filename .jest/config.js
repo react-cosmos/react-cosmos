@@ -16,6 +16,6 @@ module.exports = {
     '!**/react-cosmos-playground2/src/shared/illustrations/**',
     // Ignore coverage from dark launched plugins
     '!**/react-cosmos-playground2/src/plugins/PluginList/**',
-    '!**/react-cosmos-playground2/src/plugins/RendererSelect/**'
-  ]
+    '!**/react-cosmos-playground2/src/plugins/RendererSelect/**',
+  ],
 };

@@ -23,7 +23,7 @@ export function NumberItem({ id, label, value, onChange }: Props) {
           styles={{
             focusedColor: grey248,
             focusedBg: grey8,
-            focusedBoxShadow: `0 0 0.5px 1px ${blue}`
+            focusedBoxShadow: `0 0 0.5px 1px ${blue}`,
           }}
           onChange={onChange}
         />

@@ -25,7 +25,7 @@ const fixtures = {
         )}
       </Wrap>
     </>
-  )
+  ),
 };
 const fixtureId = { path: 'first', name: null };
 
@@ -44,10 +44,10 @@ testFixtureLoader(
         props: [
           anyProps({
             decoratorId: 'mockDecoratorId',
-            values: createValues({ name: 'B' })
-          })
-        ]
-      }
+            values: createValues({ name: 'B' }),
+          }),
+        ],
+      },
     });
   }
 );

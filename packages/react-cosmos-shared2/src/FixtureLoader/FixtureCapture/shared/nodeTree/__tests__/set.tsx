@@ -3,11 +3,11 @@ import { setElementAtPath } from '..';
 
 it('sets root child', () => {
   const node = <div />;
-  const newNode = setElementAtPath(node, '', element => ({
+  const newNode = setElementAtPath(node, '', (element) => ({
     ...element,
     props: {
-      className: 'root'
-    }
+      className: 'root',
+    },
   }));
 
   expect(newNode).toEqual(<div className="root" />);
@@ -22,11 +22,11 @@ it('sets fragment child', () => {
       <div />
     </>
   );
-  const newNode = setElementAtPath(node, 'props.children', element => ({
+  const newNode = setElementAtPath(node, 'props.children', (element) => ({
     ...element,
     props: {
-      className: 'root'
-    }
+      className: 'root',
+    },
   }));
 
   expect(newNode).toEqual(
@@ -45,11 +45,11 @@ it('sets fragment child', () => {
 
 it('sets array child', () => {
   const node = [<div key="0" />];
-  const newNode = setElementAtPath(node, '[0]', element => ({
+  const newNode = setElementAtPath(node, '[0]', (element) => ({
     ...element,
     props: {
-      className: 'root'
-    }
+      className: 'root',
+    },
   }));
 
   expect(newNode).toEqual([<div key="0" className="root" />]);
@@ -79,22 +79,22 @@ it('sets nested children', () => {
   let newNode = setElementAtPath(
     node,
     'props.children[0].props.children',
-    element => ({
+    (element) => ({
       ...element,
       props: {
-        className: 'deep'
-      }
+        className: 'deep',
+      },
     })
   );
 
   newNode = setElementAtPath(
     newNode,
     'props.children[2].props.children.props.children.props.children[1]',
-    element => ({
+    (element) => ({
       ...element,
       props: {
-        className: 'deeper'
-      }
+        className: 'deeper',
+      },
     })
   );
 

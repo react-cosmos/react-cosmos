@@ -1,7 +1,7 @@
 import { isEqual } from 'lodash';
 import {
   createFixtureTree,
-  FixtureNode
+  FixtureNode,
 } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { TreeExpansion } from '../../shared/ui/TreeView';
@@ -11,7 +11,7 @@ import { StorageSpec } from '../Storage/public';
 import {
   FixtureTreeContext,
   getTreeExpansion,
-  setTreeExpansion
+  setTreeExpansion,
 } from './shared';
 
 export function revealFixture(
@@ -28,7 +28,7 @@ export function revealFixture(
   const rootFixtureNode = createFixtureTree({
     fixtures,
     fixturesDir,
-    fixtureFileSuffix
+    fixtureFileSuffix,
   });
   const nodePath = getFixtureDirNodePath(rootFixtureNode, fixtureId);
   if (nodePath) {
@@ -49,7 +49,7 @@ function getFixtureDirNodePath(
   atPath: string[] = []
 ): null | string[] {
   const itemNames = Object.keys(items);
-  const dirPath = itemNames.find(itemName =>
+  const dirPath = itemNames.find((itemName) =>
     isEqual(items[itemName], fixtureId)
   );
   if (dirPath) {
@@ -61,7 +61,7 @@ function getFixtureDirNodePath(
     const dirName = dirNames[dirIndex];
     const childDirPath = getFixtureDirNodePath(dirs[dirName], fixtureId, [
       ...atPath,
-      dirName
+      dirName,
     ]);
     if (childDirPath) {
       return childDirPath;

@@ -31,8 +31,8 @@ export function openFile({ cosmosConfig, expressApp }: DevServerPluginArgs) {
       // Fall back to open in case launchEditor fails. launchEditor only works
       // when the editor app is already open, but is favorable because it can
       // open a code file on a specific line & column.
-      .catch(err => open(absFilePath))
-      .catch(err => res.status(500).send('Failed to open file'))
+      .catch((err) => open(absFilePath))
+      .catch((err) => res.status(500).send('Failed to open file'))
       .then(() => res.send());
   });
 }

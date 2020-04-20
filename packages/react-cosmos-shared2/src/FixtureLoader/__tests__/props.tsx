@@ -3,7 +3,7 @@ import React from 'react';
 import {
   createValues,
   removeFixtureStateProps,
-  updateFixtureStateProps
+  updateFixtureStateProps,
 } from '../../fixtureState';
 import { uuid } from '../../util';
 import { testFixtureLoader } from '../testHelpers';
@@ -12,7 +12,7 @@ import { anyProps, getProps } from '../testHelpers/fixtureState';
 
 const rendererId = uuid();
 const fixtures = {
-  first: <HelloMessage name="Bianca" />
+  first: <HelloMessage name="Bianca" />,
 };
 const fixtureId = { path: 'first', name: null };
 
@@ -29,10 +29,10 @@ testFixtureLoader(
         props: [
           anyProps({
             componentName: 'HelloMessage',
-            values: createValues({ name: 'Bianca' })
-          })
-        ]
-      }
+            values: createValues({ name: 'Bianca' }),
+          }),
+        ],
+      },
     });
   }
 );
@@ -51,9 +51,9 @@ testFixtureLoader(
         props: updateFixtureStateProps({
           fixtureState,
           elementId,
-          values: createValues({ name: 'B' })
-        })
-      }
+          values: createValues({ name: 'B' }),
+        }),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('Hello B'));
   }
@@ -73,9 +73,9 @@ testFixtureLoader(
         props: updateFixtureStateProps({
           fixtureState,
           elementId,
-          values: {}
-        })
-      }
+          values: {},
+        }),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('Hello Stranger'));
   }
@@ -89,7 +89,7 @@ testFixtureLoader(
     selectFixture,
     setFixtureState,
     fixtureStateChange,
-    getLastFixtureState
+    getLastFixtureState,
   }) => {
     await selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
@@ -101,17 +101,17 @@ testFixtureLoader(
         props: updateFixtureStateProps({
           fixtureState,
           elementId,
-          values: createValues({ name: 'B' })
-        })
-      }
+          values: createValues({ name: 'B' }),
+        }),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('Hello B'));
     await setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
-        props: removeFixtureStateProps(fixtureState, elementId)
-      }
+        props: removeFixtureStateProps(fixtureState, elementId),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('Hello Bianca'));
     // After the props are removed from the fixture state, the original
@@ -123,10 +123,10 @@ testFixtureLoader(
         props: [
           anyProps({
             componentName: 'HelloMessage',
-            values: createValues({ name: 'Bianca' })
-          })
-        ]
-      }
+            values: createValues({ name: 'Bianca' }),
+          }),
+        ],
+      },
     });
   }
 );
@@ -140,7 +140,7 @@ testFixtureLoader(
     selectFixture,
     setFixtureState,
     fixtureStateChange,
-    getLastFixtureState
+    getLastFixtureState,
   }) => {
     await selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
@@ -152,16 +152,16 @@ testFixtureLoader(
         props: updateFixtureStateProps({
           fixtureState,
           elementId,
-          values: createValues({ name: 'B' })
-        })
-      }
+          values: createValues({ name: 'B' }),
+        }),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('Hello B'));
     update({
       rendererId,
       fixtures: {
-        first: <HelloMessage name="Petec" />
-      }
+        first: <HelloMessage name="Petec" />,
+      },
     });
     await fixtureStateChange({
       rendererId,
@@ -170,10 +170,10 @@ testFixtureLoader(
         props: [
           anyProps({
             componentName: 'HelloMessage',
-            values: createValues({ name: 'Petec' })
-          })
-        ]
-      }
+            values: createValues({ name: 'Petec' }),
+          }),
+        ],
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('Hello Petec'));
   }
@@ -191,26 +191,26 @@ testFixtureLoader(
         props: [
           anyProps({
             componentName: 'HelloMessage',
-            values: createValues({ name: 'Bianca' })
-          })
-        ]
-      }
+            values: createValues({ name: 'Bianca' }),
+          }),
+        ],
+      },
     });
     update({
       rendererId,
       fixtures: {
         // HelloMessage element from fixture is gone, and so should the
         // fixture state related to it.
-        first: 'Hello all'
-      }
+        first: 'Hello all',
+      },
     });
     expect(renderer.toJSON()).toBe('Hello all');
     await fixtureStateChange({
       rendererId,
       fixtureId,
       fixtureState: {
-        props: []
-      }
+        props: [],
+      },
     });
   }
 );

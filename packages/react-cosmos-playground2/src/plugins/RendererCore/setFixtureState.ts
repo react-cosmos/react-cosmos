@@ -25,13 +25,13 @@ export function setFixtureState(
   function change(prevState: State) {
     return {
       ...prevState,
-      fixtureState: stateUpdater(prevState.fixtureState)
+      fixtureState: stateUpdater(prevState.fixtureState),
     };
   }
 
   function postRendererRequest(selectedFixtureId: FixtureId) {
     const { connectedRendererIds, fixtureState } = context.getState();
-    connectedRendererIds.forEach(rendererId =>
+    connectedRendererIds.forEach((rendererId) =>
       postSetFixtureStateRequest(
         context,
         rendererId,

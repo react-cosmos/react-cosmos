@@ -21,5 +21,5 @@ export default {
     <OverlayContainer>
       <RendererNotResponding />
     </OverlayContainer>
-  )
+  ),
 };

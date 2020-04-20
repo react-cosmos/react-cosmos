@@ -6,7 +6,7 @@ import { findElementPaths } from '..';
 it('finds no paths on empty node', () => {
   const noChildrenNodes: React.ReactNode[] = [null, true, false, 'Hello', 7];
 
-  noChildrenNodes.forEach(node => {
+  noChildrenNodes.forEach((node) => {
     expect(findElementPaths(node)).toEqual([]);
   });
 });
@@ -32,7 +32,7 @@ it('finds multi fragment child paths', () => {
 
   expect(findElementPaths(node)).toEqual([
     'props.children[0]',
-    'props.children[2]'
+    'props.children[2]',
   ]);
 });
 
@@ -62,11 +62,11 @@ it('finds nested paths', () => {
     'props.children[2]',
     'props.children[2].props.children.props.children',
     'props.children[2].props.children.props.children.props.children[0]',
-    'props.children[2].props.children.props.children.props.children[1]'
+    'props.children[2].props.children.props.children.props.children[1]',
   ]);
 
   // Ensure paths are valid
-  paths.forEach(path => {
+  paths.forEach((path) => {
     expect(isElement(path === '' ? node : get(node, path))).toBe(true);
   });
 });

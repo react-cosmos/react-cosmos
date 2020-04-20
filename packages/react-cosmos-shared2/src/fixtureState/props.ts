@@ -6,7 +6,7 @@ import {
   FixtureStateValues,
   FixtureRenderKey,
   FixtureStateProps,
-  FixtureState
+  FixtureState,
 } from './shared';
 
 export const DEFAULT_RENDER_KEY: FixtureRenderKey = 0;
@@ -17,7 +17,7 @@ export function getFixtureStateProps(
 ): FixtureStateProps[] {
   const { props } = fixtureState;
   return props
-    ? props.filter(p => p.elementId.decoratorId === decoratorId)
+    ? props.filter((p) => p.elementId.decoratorId === decoratorId)
     : [];
 }
 
@@ -26,7 +26,7 @@ export function findFixtureStateProps(
   elementId: FixtureElementId
 ): void | FixtureStateProps {
   const { props } = fixtureState;
-  return props && find(props, p => isEqual(p.elementId, elementId));
+  return props && find(props, (p) => isEqual(p.elementId, elementId));
 }
 
 type CreateFixtureStatePropsArgs = {
@@ -39,14 +39,14 @@ export function createFixtureStateProps({
   fixtureState,
   elementId,
   values,
-  componentName
+  componentName,
 }: CreateFixtureStatePropsArgs) {
   const { props = [] } = fixtureState;
   return replaceOrAddItem(props, createPropsMatcher(elementId), {
     elementId,
     values,
     renderKey: DEFAULT_RENDER_KEY,
-    componentName
+    componentName,
   });
 }
 
@@ -58,12 +58,12 @@ type ResetFixtureStatePropsArgs = {
 export function resetFixtureStateProps({
   fixtureState,
   elementId,
-  values
+  values,
 }: ResetFixtureStatePropsArgs) {
   const propsItem = expectFixtureStateProps(fixtureState, elementId);
   return updateItem(fixtureState.props!, propsItem, {
     values,
-    renderKey: propsItem.renderKey + 1
+    renderKey: propsItem.renderKey + 1,
   });
 }
 
@@ -75,11 +75,11 @@ type UpdateFixtureStatePropsArgs = {
 export function updateFixtureStateProps({
   fixtureState,
   elementId,
-  values
+  values,
 }: UpdateFixtureStatePropsArgs) {
   const propsItem = expectFixtureStateProps(fixtureState, elementId);
   return updateItem(fixtureState.props!, propsItem, {
-    values
+    values,
   });
 }
 

@@ -18,13 +18,13 @@ function pushStickyNotifications() {
       id: 'one',
       type: 'info',
       title: 'Check this out',
-      info: 'Lorem ipsum.'
+      info: 'Lorem ipsum.',
     });
     pushStickyNotification({
       id: 'two',
       type: 'info',
       title: 'Take a look at this',
-      info: 'Lorem ipsum.'
+      info: 'Lorem ipsum.',
     });
   });
 }

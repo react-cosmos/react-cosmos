@@ -4,7 +4,7 @@ import {
   mockRouter,
   mockNotifications,
   getRendererCoreMethods,
-  onRendererCore
+  onRendererCore,
 } from '../../../testHelpers/pluginMocks';
 import { createRendererReadyResponse } from '../testHelpers';
 import { register } from '..';
@@ -18,7 +18,7 @@ const rendererReadyMsg = createRendererReadyResponse(rendererId, fixtures);
 function registerTestPlugins() {
   register();
   mockRouter({
-    getSelectedFixtureId: () => null
+    getSelectedFixtureId: () => null,
   });
   mockNotifications();
 }

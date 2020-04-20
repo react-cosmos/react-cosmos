@@ -17,18 +17,18 @@ function createFixtures({
   countName = 'count',
   toggledName = 'toggled',
   defaultCount = 0,
-  defaultToggled = false
+  defaultToggled = false,
 }: CreateFixtureArgs = {}) {
   const MyComponent = () => {
     const [count, setCount] = useValue(countName, {
-      defaultValue: defaultCount
+      defaultValue: defaultCount,
     });
     const [toggled, setToggled] = useValue(toggledName, {
-      defaultValue: defaultToggled
+      defaultValue: defaultToggled,
     });
     return (
       <>
-        <button onClick={() => setCount(prevCount => prevCount + 1)}>
+        <button onClick={() => setCount((prevCount) => prevCount + 1)}>
           {count}
         </button>
         <button onClick={() => setToggled(!toggled)}>{String(toggled)}</button>
@@ -36,7 +36,7 @@ function createFixtures({
     );
   };
   return {
-    first: <MyComponent />
+    first: <MyComponent />,
   };
 }
 
@@ -55,7 +55,7 @@ testFixtureLoader(
     await rendered(renderer, { countText: '1', toggledText: 'true' });
     update({
       rendererId,
-      fixtures: createFixtures({ defaultCount: 2, defaultToggled: false })
+      fixtures: createFixtures({ defaultCount: 2, defaultToggled: false }),
     });
     await fixtureStateChange({
       rendererId,
@@ -66,14 +66,14 @@ testFixtureLoader(
           // `count` was reset, `toggled` was preserved
           count: {
             defaultValue: createValue(2),
-            currentValue: createValue(2)
+            currentValue: createValue(2),
           },
           toggled: {
             defaultValue: createValue(false),
-            currentValue: createValue(true)
-          }
-        }
-      }
+            currentValue: createValue(true),
+          },
+        },
+      },
     });
   }
 );
@@ -87,7 +87,7 @@ testFixtureLoader(
     selectFixture,
     setFixtureState,
     getLastFixtureState,
-    fixtureStateChange
+    fixtureStateChange,
   }) => {
     await selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await rendered(renderer, { countText: '0', toggledText: 'false' });
@@ -101,15 +101,15 @@ testFixtureLoader(
           ...fixtureState.values,
           count: {
             defaultValue: createValue(0),
-            currentValue: createValue(1)
-          }
-        }
-      }
+            currentValue: createValue(1),
+          },
+        },
+      },
     });
     await rendered(renderer, { countText: '1', toggledText: 'false' });
     update({
       rendererId,
-      fixtures: createFixtures({ defaultCount: 0, defaultToggled: true })
+      fixtures: createFixtures({ defaultCount: 0, defaultToggled: true }),
     });
     await fixtureStateChange({
       rendererId,
@@ -120,14 +120,14 @@ testFixtureLoader(
           // `count` was preserved, `toggled` was reset
           count: {
             defaultValue: createValue(0),
-            currentValue: createValue(1)
+            currentValue: createValue(1),
           },
           toggled: {
             defaultValue: createValue(true),
-            currentValue: createValue(true)
-          }
-        }
-      }
+            currentValue: createValue(true),
+          },
+        },
+      },
     });
   }
 );
@@ -147,21 +147,21 @@ testFixtureLoader(
         values: {
           count: {
             defaultValue: createValue(0),
-            currentValue: createValue(1)
+            currentValue: createValue(1),
           },
           toggled: {
             defaultValue: createValue(false),
-            currentValue: createValue(false)
-          }
-        }
-      }
+            currentValue: createValue(false),
+          },
+        },
+      },
     });
     update({
       rendererId,
       fixtures: createFixtures({
         toggledName: 'confirmed',
-        defaultToggled: true
-      })
+        defaultToggled: true,
+      }),
     });
     await rendered(renderer, { countText: '1', toggledText: 'true' });
     await fixtureStateChange({
@@ -172,20 +172,20 @@ testFixtureLoader(
         values: {
           count: {
             defaultValue: createValue(0),
-            currentValue: createValue(1)
+            currentValue: createValue(1),
           },
           confirmed: {
             defaultValue: createValue(true),
-            currentValue: createValue(true)
+            currentValue: createValue(true),
           },
           // KNOWN LIMITATION: `toggled` is still present in the fixture
           // state until the user resets the fixture state.
           toggled: {
             defaultValue: createValue(false),
-            currentValue: createValue(false)
-          }
-        }
-      }
+            currentValue: createValue(false),
+          },
+        },
+      },
     });
   }
 );

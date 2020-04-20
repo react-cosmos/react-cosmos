@@ -35,7 +35,7 @@ export function Icon({ children }: { children: SvgChildren }) {
 
 export function Illustration({
   children,
-  viewBox
+  viewBox,
 }: {
   children: SvgChildren;
   viewBox: string;

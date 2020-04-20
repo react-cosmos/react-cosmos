@@ -16,7 +16,7 @@ export function useGitHubContributors() {
 
     fetchGithub(
       `repos/react-cosmos/react-cosmos/contributors?per_page=1000`
-    ).then(async res => {
+    ).then(async (res) => {
       const parsedRes = await res.json();
       if (mounted && Array.isArray(parsedRes)) {
         clearTimeout(timeoutId);

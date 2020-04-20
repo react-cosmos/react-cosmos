@@ -7,14 +7,14 @@ import {
   screenGrey5,
   screenPrimary1,
   screenPrimary2,
-  screenPrimary3
+  screenPrimary3,
 } from '../../shared/ui/colors';
 import {
   ContentContainer,
   IllustrationContainer,
   NoWrap,
   SecondaryButton,
-  TextContainer
+  TextContainer,
 } from './shared';
 
 type Props = {

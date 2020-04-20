@@ -19,14 +19,14 @@ const getFixtures = () => ({
   first: (
     <StateMock state={{ count: 5 }}>
       <Counter
-        ref={elRef => {
+        ref={(elRef) => {
           if (elRef) {
             counterRef = elRef;
           }
         }}
       />
     </StateMock>
-  )
+  ),
 });
 const fixtureId = { path: 'first', name: null };
 
@@ -37,7 +37,7 @@ testFixtureLoader(
     await selectFixture({
       rendererId,
       fixtureId,
-      fixtureState: {}
+      fixtureState: {},
     });
     await until(() => counterRef);
     counterRef!.setState({ count: 7 });

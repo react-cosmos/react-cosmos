@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import {
   ChevronDownIcon,
   ChevronRightIcon,
-  FolderIcon
+  FolderIcon,
 } from '../../../shared/icons';
 import { blue, grey128 } from '../../../shared/ui/colors';
 import { Label, ListItem, Unshirinkable } from './shared';
@@ -24,7 +24,7 @@ export function FixtureTreeDir({
   parents,
   selectedFixtureId,
   isExpanded,
-  onToggle
+  onToggle,
 }: Props) {
   const dirName = parents[parents.length - 1];
   const containsSelectedFixture =
@@ -52,12 +52,12 @@ function treeContainsFixture(
   fixtureId: FixtureId
 ): boolean {
   const itemNames = Object.keys(items);
-  if (itemNames.some(itemName => isEqual(items[itemName], fixtureId))) {
+  if (itemNames.some((itemName) => isEqual(items[itemName], fixtureId))) {
     return true;
   }
 
   const dirNames = Object.keys(dirs);
-  return dirNames.some(dirName =>
+  return dirNames.some((dirName) =>
     treeContainsFixture(dirs[dirName], fixtureId)
   );
 }

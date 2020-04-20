@@ -6,7 +6,7 @@ import {
   mockRendererCore,
   mockRendererPreview,
   mockRouter,
-  mockStorage
+  mockStorage,
 } from '../../../testHelpers/pluginMocks';
 import { WELCOME_DISMISS_STORAGE_KEY } from '../welcomeDismiss';
 
@@ -15,21 +15,21 @@ afterEach(resetPlugins);
 function registerTestPlugins() {
   register();
   const storage: Record<string, unknown> = {
-    [WELCOME_DISMISS_STORAGE_KEY]: Date.now() - 5000 // Dismissed 5s ago
+    [WELCOME_DISMISS_STORAGE_KEY]: Date.now() - 5000, // Dismissed 5s ago
   };
   mockStorage({
-    getItem: (context, key: string) => storage[key]
+    getItem: (context, key: string) => storage[key],
   });
   mockRouter({
-    getSelectedFixtureId: () => null
+    getSelectedFixtureId: () => null,
   });
   mockRendererCore({
     isRendererConnected: () => true,
-    isValidFixtureSelected: () => false
+    isValidFixtureSelected: () => false,
   });
   mockRendererPreview({
     getUrlStatus: () => 'ok',
-    getRuntimeStatus: () => 'connected'
+    getRuntimeStatus: () => 'connected',
   });
 }
 

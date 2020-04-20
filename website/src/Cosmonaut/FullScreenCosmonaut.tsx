@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {
   getCosmonautSize,
   getViewportLength,
-  Viewport
+  Viewport,
 } from '../shared/viewport';
 import { Body } from './Body';
 import { Helmet } from './Helmet';

@@ -92,7 +92,7 @@
     "jest-styled-components": "^6.3.4",
     "lerna": "^3.20.2",
     "localforage": "^1.7.3",
-    "prettier": "1.19.1",
+    "prettier": "2.0.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-test-renderer": "16.13.1",

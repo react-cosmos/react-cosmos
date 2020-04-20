@@ -14,7 +14,7 @@ function createFixtures() {
     return <>{`Hello ${name}`}</>;
   }
   return {
-    first: <HelloMessage name="Theo" />
+    first: <HelloMessage name="Theo" />,
   };
 }
 
@@ -26,7 +26,7 @@ testFixtureLoader(
     update,
     selectFixture,
     getLastFixtureState,
-    setFixtureState
+    setFixtureState,
   }) => {
     await selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await retry(() => expect(renderer.toJSON()).toBe('Hello Theo'));
@@ -39,9 +39,9 @@ testFixtureLoader(
         props: updateFixtureStateProps({
           fixtureState,
           elementId,
-          values: createValues({ name: 'Theo Von' })
-        })
-      }
+          values: createValues({ name: 'Theo Von' }),
+        }),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('Hello Theo Von'));
     update({ rendererId, fixtures: createFixtures() });

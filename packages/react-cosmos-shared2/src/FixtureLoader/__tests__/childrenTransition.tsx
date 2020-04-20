@@ -7,7 +7,7 @@ import { anyProps } from '../testHelpers/fixtureState';
 
 const rendererId = uuid();
 const fixtures = {
-  first: <Wrapper>yo</Wrapper>
+  first: <Wrapper>yo</Wrapper>,
 };
 const fixtureId = { path: 'first', name: null };
 
@@ -22,10 +22,10 @@ testFixtureLoader(
       fixtureState: {
         props: [
           anyProps({
-            values: createValues({ children: 'yo' })
-          })
-        ]
-      }
+            values: createValues({ children: 'yo' }),
+          }),
+        ],
+      },
     });
     update({
       rendererId,
@@ -34,8 +34,8 @@ testFixtureLoader(
           <Wrapper>
             <Wrapper>brah</Wrapper>
           </Wrapper>
-        )
-      }
+        ),
+      },
     });
     await fixtureStateChange({
       rendererId,
@@ -46,15 +46,15 @@ testFixtureLoader(
             values: {
               children: {
                 type: 'unserializable',
-                stringifiedValue: `<Wrapper>\n  brah\n</Wrapper>`
-              }
-            }
+                stringifiedValue: `<Wrapper>\n  brah\n</Wrapper>`,
+              },
+            },
           }),
           anyProps({
-            values: createValues({ children: 'brah' })
-          })
-        ]
-      }
+            values: createValues({ children: 'brah' }),
+          }),
+        ],
+      },
     });
   }
 );
@@ -70,10 +70,10 @@ testFixtureLoader(
       fixtureState: {
         props: [
           anyProps({
-            values: createValues({ children: 'yo' })
-          })
-        ]
-      }
+            values: createValues({ children: 'yo' }),
+          }),
+        ],
+      },
     });
     update({
       rendererId,
@@ -82,8 +82,8 @@ testFixtureLoader(
           <Wrapper>
             <Wrapper>brah</Wrapper>
           </Wrapper>
-        )
-      }
+        ),
+      },
     });
     await fixtureStateChange({
       rendererId,
@@ -94,15 +94,15 @@ testFixtureLoader(
             values: {
               children: {
                 type: 'unserializable',
-                stringifiedValue: `<Wrapper>\n  brah\n</Wrapper>`
-              }
-            }
+                stringifiedValue: `<Wrapper>\n  brah\n</Wrapper>`,
+              },
+            },
           }),
           anyProps({
-            values: createValues({ children: 'brah' })
-          })
-        ]
-      }
+            values: createValues({ children: 'brah' }),
+          }),
+        ],
+      },
     });
   }
 );
@@ -114,7 +114,7 @@ testFixtureLoader(
     await selectFixture({
       rendererId,
       fixtureId,
-      fixtureState: {}
+      fixtureState: {},
     });
     await fixtureStateChange({
       rendererId,
@@ -122,10 +122,10 @@ testFixtureLoader(
       fixtureState: {
         props: [
           anyProps({
-            values: createValues({ children: 'yo' })
-          })
-        ]
-      }
+            values: createValues({ children: 'yo' }),
+          }),
+        ],
+      },
     });
     update({
       rendererId,
@@ -135,8 +135,8 @@ testFixtureLoader(
             <Wrapper>brah</Wrapper>
             <Wrapper>brah</Wrapper>
           </Wrapper>
-        )
-      }
+        ),
+      },
     });
     await fixtureStateChange({
       rendererId,
@@ -149,19 +149,19 @@ testFixtureLoader(
                 type: 'array',
                 values: [
                   createValue(<Wrapper>brah</Wrapper>),
-                  createValue(<Wrapper>brah</Wrapper>)
-                ]
-              }
-            }
+                  createValue(<Wrapper>brah</Wrapper>),
+                ],
+              },
+            },
           }),
           anyProps({
-            values: createValues({ children: 'brah' })
+            values: createValues({ children: 'brah' }),
           }),
           anyProps({
-            values: createValues({ children: 'brah' })
-          })
-        ]
-      }
+            values: createValues({ children: 'brah' }),
+          }),
+        ],
+      },
     });
   }
 );

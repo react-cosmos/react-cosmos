@@ -23,7 +23,7 @@ export const DEFAULT_DEVICES = [
   { label: 'iPhone 6+', width: 414, height: 736 },
   { label: 'Medium', width: 1024, height: 768 },
   { label: 'Large', width: 1440, height: 900 },
-  { label: '1080p', width: 1920, height: 1080 }
+  { label: '1080p', width: 1920, height: 1080 },
 ];
 
 export const VIEWPORT_STORAGE_KEY = 'responsiveViewportState';
@@ -31,5 +31,5 @@ export const VIEWPORT_STORAGE_KEY = 'responsiveViewportState';
 export const DEFAULT_VIEWPORT_STATE: ViewportState = {
   enabled: false,
   scaled: true,
-  viewport: { width: 320, height: 568 }
+  viewport: { width: 320, height: 568 },
 };

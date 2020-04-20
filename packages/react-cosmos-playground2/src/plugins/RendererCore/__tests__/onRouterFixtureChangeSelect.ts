@@ -5,7 +5,7 @@ import {
   mockRouter,
   mockNotifications,
   getRouterContext,
-  onRendererCore
+  onRendererCore,
 } from '../../../testHelpers/pluginMocks';
 import { mockRendererReady } from '../testHelpers';
 import { register } from '..';
@@ -17,7 +17,7 @@ const fixtures = {};
 function registerTestPlugins() {
   register();
   mockRouter({
-    getSelectedFixtureId: () => null
+    getSelectedFixtureId: () => null,
   });
   mockNotifications();
 }
@@ -32,7 +32,7 @@ function loadTestPlugins() {
 function emitRouterFixtureChange() {
   getRouterContext().emit('fixtureChange', {
     path: 'zwei.js',
-    name: null
+    name: null,
   });
 }
 
@@ -49,8 +49,8 @@ it('posts "selectFixture" renderer requests', async () => {
       payload: {
         rendererId: 'mockRendererId1',
         fixtureId: { path: 'zwei.js', name: null },
-        fixtureState: {}
-      }
+        fixtureState: {},
+      },
     })
   );
 
@@ -60,8 +60,8 @@ it('posts "selectFixture" renderer requests', async () => {
       payload: {
         rendererId: 'mockRendererId2',
         fixtureId: { path: 'zwei.js', name: null },
-        fixtureState: {}
-      }
+        fixtureState: {},
+      },
     })
   );
 });

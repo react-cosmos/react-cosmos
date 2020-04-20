@@ -8,7 +8,7 @@ jest.mock('yargs', () => {
     argv: {},
     __mockArgsv: (newArgv: {}) => {
       yargs.argv = newArgv;
-    }
+    },
   };
   return yargs;
 });

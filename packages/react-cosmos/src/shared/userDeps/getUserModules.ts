@@ -3,7 +3,7 @@ import {
   ReactFixtureExportsByPath,
   ReactDecoratorsByPath,
   ReactDecorator,
-  ReactFixtureExport
+  ReactFixtureExport,
 } from 'react-cosmos-shared2/react';
 import { findUserModulePaths } from '.';
 import { CosmosConfig } from '../../config';
@@ -17,12 +17,12 @@ type UserModules = {
 export function getUserModules({
   rootDir,
   fixturesDir,
-  fixtureFileSuffix
+  fixtureFileSuffix,
 }: CosmosConfig): UserModules {
   const { fixturePaths, decoratorPaths } = findUserModulePaths({
     rootDir,
     fixturesDir,
-    fixtureFileSuffix
+    fixtureFileSuffix,
   });
   return {
     fixtureExportsByPath: getDefaultExportsByPath<ReactFixtureExport>(
@@ -32,13 +32,13 @@ export function getUserModules({
     decoratorsByPath: getDefaultExportsByPath<ReactDecorator>(
       decoratorPaths,
       rootDir
-    )
+    ),
   };
 }
 
 function getDefaultExportsByPath<T>(paths: string[], rootDir: string) {
   const exportsByPath: { [path: string]: T } = {};
-  paths.forEach(p => {
+  paths.forEach((p) => {
     // Converting to forward slashes on Windows is important because the
     // slashes are used for generating a sorted list of fixtures and
     // decorators.

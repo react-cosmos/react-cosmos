@@ -5,7 +5,7 @@ import {
   FixtureStateValues,
   FixtureElementId,
   FixtureStateClassState,
-  FixtureState
+  FixtureState,
 } from './shared';
 
 export function getFixtureStateClassState(
@@ -14,7 +14,7 @@ export function getFixtureStateClassState(
 ): FixtureStateClassState[] {
   const { classState } = fixtureState;
   return classState
-    ? classState.filter(s => s.elementId.decoratorId === decoratorId)
+    ? classState.filter((s) => s.elementId.decoratorId === decoratorId)
     : [];
 }
 
@@ -23,7 +23,7 @@ export function findFixtureStateClassState(
   elementId: FixtureElementId
 ): void | FixtureStateClassState {
   const { classState } = fixtureState;
-  return classState && find(classState, s => isEqual(s.elementId, elementId));
+  return classState && find(classState, (s) => isEqual(s.elementId, elementId));
 }
 
 type CreateFixtureStateClassStateArgs = {
@@ -36,13 +36,13 @@ export function createFixtureStateClassState({
   fixtureState,
   elementId,
   values,
-  componentName
+  componentName,
 }: CreateFixtureStateClassStateArgs) {
   const { classState = [] } = fixtureState;
   return replaceOrAddItem(classState, createClassStateMatcher(elementId), {
     elementId,
     values,
-    componentName
+    componentName,
   });
 }
 
@@ -54,11 +54,11 @@ type UpdateFixtureStateClassStateArgs = {
 export function updateFixtureStateClassState({
   fixtureState,
   elementId,
-  values
+  values,
 }: UpdateFixtureStateClassStateArgs) {
   const classStateItem = expectFixtureStateClassState(fixtureState, elementId);
   return updateItem(fixtureState.classState!, classStateItem, {
-    values
+    values,
   });
 }
 

@@ -5,7 +5,7 @@ import {
   createRendererConnectMockApi,
   FixtureLoaderTestCallback,
   Message,
-  FixtureLoaderTestArgs
+  FixtureLoaderTestArgs,
 } from './shared';
 
 export async function mountPostMessage(
@@ -16,7 +16,7 @@ export async function mountPostMessage(
   window.addEventListener('message', onMessage, false);
 
   function getMessages() {
-    return onMessage.mock.calls.map(call => call[0].data);
+    return onMessage.mock.calls.map((call) => call[0].data);
   }
 
   function postMessage(msg: Message) {
@@ -38,11 +38,11 @@ export async function mountPostMessage(
   try {
     await cb({
       renderer,
-      update: newArgs =>
+      update: (newArgs) =>
         act(() => {
           renderer.update(getElement(newArgs));
         }),
-      ...createRendererConnectMockApi({ getMessages, postMessage })
+      ...createRendererConnectMockApi({ getMessages, postMessage }),
     });
   } finally {
     renderer.unmount();
@@ -55,7 +55,7 @@ function getElement({
   fixtures,
   selectedFixtureId = null,
   decorators = {},
-  onErrorReset
+  onErrorReset,
 }: FixtureLoaderTestArgs) {
   return (
     <FixtureLoader

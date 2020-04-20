@@ -2,17 +2,17 @@
 // regenerator-runtime polyfills in every entry point, but it crashes on IE11
 // https://stackoverflow.com/q/40897966/128816
 const envOptions = {
-  targets: { ie: '11' }
+  targets: { ie: '11' },
 };
 
 module.exports = {
   presets: [
     ['@babel/preset-env', envOptions],
     '@babel/preset-react',
-    '@babel/preset-typescript'
+    '@babel/preset-typescript',
   ],
   plugins: [
     '@babel/plugin-proposal-class-properties',
-    '@babel/plugin-proposal-object-rest-spread'
-  ]
+    '@babel/plugin-proposal-object-rest-spread',
+  ],
 };

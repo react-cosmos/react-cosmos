@@ -30,7 +30,7 @@ type WebpackDevMiddleware = (
 export async function webpackDevServer({
   cosmosConfig,
   expressApp,
-  sendMessage
+  sendMessage,
 }: DevServerPluginArgs) {
   const userWebpack = getWebpack(cosmosConfig.rootDir);
   if (!userWebpack) {
@@ -59,7 +59,7 @@ export async function webpackDevServer({
   }
 
   const webpackCompiler = userWebpack(webpackConfig);
-  webpackCompiler.hooks.invalid.tap('Cosmos', filePath => {
+  webpackCompiler.hooks.invalid.tap('Cosmos', (filePath) => {
     const relFilePath = path.relative(process.cwd(), filePath);
     console.log('[Cosmos] webpack build invalidated by', relFilePath);
     sendBuildMessage({ type: 'buildStart' });
@@ -67,8 +67,8 @@ export async function webpackDevServer({
   webpackCompiler.hooks.failed.tap('Cosmos', () => {
     sendBuildMessage({ type: 'buildError' });
   });
-  const onCompilationDone: Promise<void> = new Promise(resolve => {
-    webpackCompiler.hooks.done.tap('Cosmos', stats => {
+  const onCompilationDone: Promise<void> = new Promise((resolve) => {
+    webpackCompiler.hooks.done.tap('Cosmos', (stats) => {
       resolve();
       if (stats.hasErrors()) {
         sendBuildMessage({ type: 'buildError' });
@@ -91,7 +91,7 @@ export async function webpackDevServer({
     // publicPath is the base path for the webpack assets and has to match
     // webpack.output.path
     publicPath: removeLeadingDot(cosmosConfig.publicUrl),
-    logLevel: 'warn'
+    logLevel: 'warn',
   });
 
   expressApp.use(wdmInst);
@@ -104,7 +104,7 @@ export async function webpackDevServer({
   await onCompilationDone;
 
   return async () => {
-    await new Promise(res => wdmInst.close(res));
+    await new Promise((res) => wdmInst.close(res));
   };
 }
 

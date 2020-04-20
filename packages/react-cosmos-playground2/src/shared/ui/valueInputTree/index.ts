@@ -3,7 +3,7 @@ export {
   FixtureExpansionGroup,
   OnElementExpansionChange,
   getFixtureExpansion,
-  updateElementExpansion
+  updateElementExpansion,
 } from './treeExpansion';
 export { hasFsValues, sortFsValueGroups } from './valueGroups';
 export { ValueInputTree } from './ValueInputTree';

@@ -59,17 +59,17 @@ export function Root({
   onFixtureClose,
   onFixtureStateChange,
   setNavWidth,
-  setPanelWidth
+  setPanelWidth,
 }: Props) {
   const navDrag = useDrag({
     value: navWidth,
     reverse: false,
-    onChange: setNavWidth
+    onChange: setNavWidth,
   });
   const panelDrag = useDrag({
     value: panelWidth,
     reverse: true,
-    onChange: setPanelWidth
+    onChange: setPanelWidth,
   });
 
   if (!storageCacheReady) {
@@ -157,7 +157,7 @@ const Container = styled.div.attrs({ 'data-testid': 'root' })<ContainerProps>`
   right: 0;
   display: flex;
   background: ${grey32};
-  cursor: ${props => (props.dragging ? 'col-resize' : 'default')};
+  cursor: ${(props) => (props.dragging ? 'col-resize' : 'default')};
 `;
 
 const Draggable = styled.div`

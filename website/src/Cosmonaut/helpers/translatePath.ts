@@ -29,21 +29,21 @@ export function translatePath(
       points[2] + xOffset,
       points[3] + yOffset,
       points[4] + xOffset,
-      points[5] + yOffset
+      points[5] + yOffset,
     ];
   }
 
   const pathParts = originalPath.replace(/(M|L|C)/g, `\n$1`).split(`\n`);
   pathParts.shift();
-  const newPathPaths = pathParts.map(part => {
+  const newPathPaths = pathParts.map((part) => {
     const letter = part[0];
     const points = part
       .slice(1)
       .split(' ')
-      .map(point => parseFloat(point));
+      .map((point) => parseFloat(point));
     const convertedPoints = mapPathPoints(letter, points);
     return `${letter}${convertedPoints
-      .map(point => point.toFixed(2))
+      .map((point) => point.toFixed(2))
       .join(' ')}`;
   });
   return newPathPaths.join('');

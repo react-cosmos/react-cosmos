@@ -1,6 +1,6 @@
 import {
   RendererConnect,
-  RendererRequest
+  RendererRequest,
 } from 'react-cosmos-shared2/renderer';
 import { WebpackRendererResponse } from 'react-cosmos-shared2/webpack';
 import { rendererConnect, rendererId } from '../../../dom';
@@ -17,6 +17,6 @@ if (__DEV__) {
   (window as any).onHotReloadError = () =>
     webpackRendererConnect.postMessage({
       type: 'rendererHmrFail',
-      payload: { rendererId }
+      payload: { rendererId },
     });
 }

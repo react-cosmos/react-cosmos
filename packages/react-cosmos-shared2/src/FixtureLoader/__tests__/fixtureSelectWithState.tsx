@@ -7,7 +7,7 @@ import { HelloMessage } from '../testHelpers/components';
 
 const rendererId = uuid();
 const fixtures = {
-  first: <HelloMessage name="Bianca" />
+  first: <HelloMessage name="Bianca" />,
 };
 const fixtureId = { path: 'first', name: null };
 
@@ -23,9 +23,9 @@ testFixtureLoader(
           fixtureState: {},
           elementId: { decoratorId: 'root', elPath: '' },
           values: createValues({ name: 'B' }),
-          componentName: 'HelloMessage'
-        })
-      }
+          componentName: 'HelloMessage',
+        }),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('Hello B'));
   }

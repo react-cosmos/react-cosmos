@@ -20,7 +20,7 @@ function TestComponent({ obj, cb }: Props) {
 
 function createFixtures(obj: {}, cb: (obj: {}) => unknown) {
   return {
-    first: <TestComponent obj={obj} cb={cb} />
+    first: <TestComponent obj={obj} cb={cb} />,
   };
 }
 
@@ -44,7 +44,7 @@ testFixtureLoader(
     update,
     selectFixture,
     getLastFixtureState,
-    setFixtureState
+    setFixtureState,
   }) => {
     const obj = {};
     const cb = jest.fn();
@@ -59,9 +59,9 @@ testFixtureLoader(
         props: updateFixtureStateProps({
           fixtureState,
           elementId,
-          values: createValues({ obj: { name: 'Tim' }, cb })
-        })
-      }
+          values: createValues({ obj: { name: 'Tim' }, cb }),
+        }),
+      },
     });
     await retry(() => expect(cb).lastCalledWith({ name: 'Tim' }));
     const updatedObj: {} = getLastMockCall(cb)[0];

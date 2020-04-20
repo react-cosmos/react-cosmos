@@ -74,7 +74,7 @@ export function resolveClientPath(relPath: string) {
 export function getUserDepsLoaderRule() {
   return {
     loader: require.resolve('./userDepsLoader'),
-    include: resolveClientPath('userDeps')
+    include: resolveClientPath('userDeps'),
   };
 }
 
@@ -98,8 +98,8 @@ export function resolveLocalReactDeps(
     alias: {
       ...alias,
       react: path.dirname(reactPath),
-      'react-dom': path.dirname(reactDomPath)
-    }
+      'react-dom': path.dirname(reactDomPath),
+    },
   };
 }
 
@@ -114,8 +114,8 @@ export function getGlobalsPlugin(
     __DEV__: JSON.stringify(devServerOn),
     'process.env': {
       NODE_ENV: JSON.stringify(getNodeEnv()),
-      PUBLIC_URL: JSON.stringify(cleanPublicUrl)
-    }
+      PUBLIC_URL: JSON.stringify(cleanPublicUrl),
+    },
   });
 }
 
@@ -124,7 +124,8 @@ export function hasPlugin(
   pluginName: string
 ) {
   return (
-    plugins && plugins.filter(p => isInstanceOfPlugin(p, pluginName)).length > 0
+    plugins &&
+    plugins.filter((p) => isInstanceOfPlugin(p, pluginName)).length > 0
   );
 }
 

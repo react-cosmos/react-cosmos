@@ -4,7 +4,7 @@ import { clone, setWith } from 'lodash';
 import {
   FixtureStatePrimitiveValueType,
   FixtureStateValue,
-  FixtureStateValues
+  FixtureStateValues,
 } from 'react-cosmos-shared2/fixtureState';
 import { TreeItemValue, TreeItemContainer } from '../shared';
 import { UnserializableItem } from './UnserializableItem';
@@ -28,7 +28,7 @@ export function ValueInputTreeItem({
   parents,
   item,
   itemName,
-  onValueChange
+  onValueChange,
 }: Props) {
   const itemId = getItemId(treeId, parents, itemName);
 
@@ -110,7 +110,7 @@ function getItem(
 }
 
 function getValuePath(valueKey: string, parentKeys: string[]) {
-  return [...parentKeys.map(p => `${p}.values`), valueKey].join('.');
+  return [...parentKeys.map((p) => `${p}.values`), valueKey].join('.');
 }
 
 function setValueAtPath(
