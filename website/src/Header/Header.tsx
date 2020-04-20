@@ -42,7 +42,10 @@ export function Header({ visible, fixed }: Props) {
           </Links>
         </Body>
         <RightSide>
-          <ReleasesLink href="https://github.com/react-cosmos/react-cosmos/releases">
+          <ReleasesLink
+            href="https://github.com/react-cosmos/react-cosmos/releases"
+            title={`v${version}`}
+          >
             v{version}
           </ReleasesLink>
           <GitHubLink href="https://github.com/react-cosmos/react-cosmos">

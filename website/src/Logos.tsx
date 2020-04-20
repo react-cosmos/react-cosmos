@@ -6,10 +6,6 @@ import { useViewportEnter } from './shared/useViewportEnter';
 
 export function Logos() {
   const [ref, entered] = useViewportEnter(0.7);
-  const linkRef = React.useRef<HTMLAnchorElement>(null);
-  React.useEffect(() => {
-    if (entered && linkRef.current) linkRef.current.href = getEmailAddress();
-  }, [entered]);
   return (
     <Container ref={ref} style={getSlideInStyle(entered)}>
       <Title>Trusted by</Title>
@@ -18,20 +14,14 @@ export function Logos() {
           <LogoImage src="/logos/stadiumgoods.svg" alt="Stadium Goods" />
         </Item>
         <Item>
-          <LogoImage src="/logos/hootsuite.png" alt="Hootsuite" />
+          <LogoImage src="/logos/formidable.svg" alt="Formidable" />
         </Item>
         <Item>
-          <YouLink ref={linkRef} href="#">
-            Your company?
-          </YouLink>
+          <LogoImage src="/logos/hootsuite.svg" alt="Hootsuite" />
         </Item>
       </List>
     </Container>
   );
-}
-
-function getEmailAddress() {
-  return ['mail', 'to:', 'hello', '@', 'reactcosmos.org'].join('');
 }
 
 const Container = styled.div`
@@ -74,20 +64,4 @@ const Item = styled.div`
 const LogoImage = styled.img`
   width: 288px;
   opacity: 0.7;
-`;
-
-const YouLink = styled.a`
-  margin-top: -4px;
-  color: #0a2e46;
-  font-size: 40px;
-  font-weight: 500;
-  letter-spacing: -0.04em;
-  text-decoration: none;
-  white-space: nowrap;
-  opacity: 0.7;
-  transition: 0.4s opacity;
-
-  :hover {
-    opacity: 0.9;
-  }
 `;
