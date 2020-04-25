@@ -51,14 +51,18 @@ jobs:
       - store_artifacts:
           path: /root/app/cypress/videos
 
-  node-v8:
-    <<: *node-base
-    docker:
-      - image: cypress/base:8
   node-v10:
     <<: *node-base
     docker:
       - image: cypress/base:10
+  node-v12:
+    <<: *node-base
+    docker:
+      - image: cypress/base:12
+  node-v14:
+    <<: *node-base
+    docker:
+      - image: cypress/base:14
 
 # https://github.com/teppeis-sandbox/circleci2-multiple-node-versions/tree/yarn-with-test-report
 workflows:
@@ -66,5 +70,6 @@ workflows:
   node-multi-build:
     jobs:
       # Limitting CircleCI usage
-      - node-v8
       - node-v10
+      - node-v12
+      - node-v14
