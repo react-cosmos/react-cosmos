@@ -54,15 +54,15 @@ jobs:
   node-v10:
     <<: *node-base
     docker:
-      - image: cypress/base:10
+      - image: cypress/base:10.16.3
   node-v12:
     <<: *node-base
     docker:
-      - image: cypress/base:12
+      - image: cypress/base:12.16.1
   node-v14:
     <<: *node-base
     docker:
-      - image: cypress/base:14
+      - image: cypress/base:14.0.0
 
 # https://github.com/teppeis-sandbox/circleci2-multiple-node-versions/tree/yarn-with-test-report
 workflows:
