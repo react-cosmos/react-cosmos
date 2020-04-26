@@ -7,3 +7,4 @@ lerna.json
 package.json
 packages/*/dist
 packages/*/package.json
+website/dist

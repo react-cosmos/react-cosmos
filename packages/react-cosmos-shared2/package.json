@@ -7,7 +7,7 @@
   "dependencies": {
     "lodash": "^4.17.15",
     "query-string": "5.1.1",
-    "react-element-to-jsx-string": "^14.1.0",
+    "react-element-to-jsx-string": "^14.3.1",
     "react-is": "^16.13.1",
     "socket.io-client": "2.2.0"
   }

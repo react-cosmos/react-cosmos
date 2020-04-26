@@ -4,6 +4,4 @@ declare module 'react-element-to-jsx-string' {
   export default function reactElementToJSXString(
     element: React.ReactElement<any>
   ): string;
-
-  export = reactElementToJSXString;
 }

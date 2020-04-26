@@ -38,10 +38,13 @@ export function openFile({ cosmosConfig, expressApp }: DevServerPluginArgs) {
 }
 
 function getReqQuery(req: express.Request): ReqQuery {
-  const filePath = req.query.filePath;
-  const line = req.query.line ? parseInt(req.query.line, 10) : 1;
-  const column = req.query.column ? parseInt(req.query.column, 10) : 1;
-  return { filePath, line, column };
+  const { filePath, line, column } = req.query;
+  if (typeof filePath !== 'string') throw new Error('filePath missing');
+  return {
+    filePath,
+    line: typeof line === 'string' ? parseInt(line, 10) : 1,
+    column: typeof column === 'string' ? parseInt(column, 10) : 1,
+  };
 }
 
 function resolveFilePath(cosmosConfig: CosmosConfig, filePath: string) {
