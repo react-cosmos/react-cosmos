@@ -12,7 +12,6 @@ Exceptions are logging in Cosmos are ad-hoc and minimalistic. `throw new Error` 
 
 In general we keep dependencies up to date. The following packages, however, need to be pinned to a specific version:
 
-- `@types/express@4.17.1` because newer versions [are broken](https://github.com/DefinitelyTyped/DefinitelyTyped/issues/42812).
 - `chalk@3.0.0` because 4.x is no longer compatible with Node 8.
 - `fs-extra@8.1.0` because 9.x is no longer compatible with Node 8.
 - `query-string@5.1.1` because 6.x is no longer compatible with IE11.
