@@ -168,5 +168,4 @@ const FixtureName = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  direction: rtl;
 `;
