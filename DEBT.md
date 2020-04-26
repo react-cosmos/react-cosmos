@@ -15,5 +15,4 @@ In general we keep dependencies up to date. The following packages, however, nee
 - `chalk@3.0.0` because 4.x is no longer compatible with Node 8.
 - `fs-extra@8.1.0` because 9.x is no longer compatible with Node 8.
 - `query-string@5.1.1` because 6.x is no longer compatible with IE11.
-- `react-element-to-jsx-string@14.1.0` because `tsc` breaks when newer version is installed.
 - `socket.io@2.2` and `socket.io-client@2.2` because [2.3 upgraded to `debug@4`](https://github.com/socketio/socket.io-client/issues/1328#issuecomment-536525472), which is no longer compatible with IE11.
