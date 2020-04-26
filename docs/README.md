@@ -413,43 +413,34 @@ const cosmosConfig = createCosmosConfig(__dirname, {
 });
 ```
 
-### Fixture URLs
+### Fixtures
 
-A list with one Playground URL for each fixture, optionally in full-screen mode. A common use case for `getFixtureUrls` is to create visual snapshots for each fixture, and potentially to diff them between deploys.
-
-```js
-import { getFixtureUrls } from 'react-cosmos';
-
-const fixtureUrls = await getFixtureUrls({ cosmosConfig, fullScreen: true });
-
-console.log(fixtureUrls);
-// localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22\_\_fixtures\_\_%2FHello%20World.ts%22%2C%22name%22%3Anull%7D
-// localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22\_\_fixtures\_\_%2FProps%20Playground.tsx%22%2C%22name%22%3Anull%7D
-// localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22\_\_fixtures\_\_%2FState%20Playground.tsx%22%2C%22name%22%3Anull%7D
-// localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22default%22%7D
-// localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22small%20number%22%7D
-// localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22large%20number%22%7D
-// localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22CounterButton%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D
-// localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22WelcomeMessage%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D
-// ...
-```
-
-### Fixture elements (rendered anywhere)
-
-A list of fixture elements to render by hand. A common use case for `getFixtures` is to run snapshot tests in alternative environments like jsdom.
+Get all your fixtures programatically. A ton of information is provided for each fixture, enabling you to hack away on top of React Cosmos. To generate visual snapshots from your fixtures, you load `rendererUrl` in a headless browser like [Puppeteer](https://github.com/puppeteer/puppeteer) and take a screenshot on page load. You can compare visual snapshots between deploys to catch sneaky UI regressions.
 
 ```js
-import { getFixtures } from 'react-cosmos';
+import { getFixtures2 } from 'react-cosmos';
 
-const fixtures = await getFixtures({ cosmosConfig });
+const fixtures = await getFixtures2(cosmosConfig);
 
-fixtures.forEach(({ fixtureId, getElement }) => {
-  const renderer = create(getElement());
-  expect(renderer.toJSON()).toMatchSnapshot(stringifyFixtureId(fixtureId));
-});
+console.log(fixtures);
+// [
+//   {
+//     "absoluteFilePath": "/path/to/components/pages/Error/__fixtures__/not-found.js",
+//     "fileName": "not-found",
+//     "name": null,
+//     "playgroundUrl": "http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2Fpages%2FError%2F__fixtures__%2Fnot-found.js%22%2C%22name%22%3Anull%7D",
+//     "relativeFilePath": "components/pages/Error/__fixtures__/not-found.js",
+//     "rendererUrl": "http://localhost:5000/static/_renderer.html?_fixtureId=%7B%22path%22%3A%22components%2Fpages%2FError%2F__fixtures__%2Fnot-found.js%22%2C%22name%22%3Anull%7D",
+//     "treePath": ["pages", "Error", "not-found"]
+//   },
+//   ...
 ```
 
-Check out the [full example](https://github.com/react-cosmos/react-cosmos/blob/41f0b6972fd0cb2951c43839f4c37a6cf1881571/example/fixtures.test.ts) for more details on how to use the `getFixtures` API.
+> See a more complete output example [here](https://github.com/react-cosmos/react-cosmos/blob/d8b94c4f088cc7b0fdbab3e080858ed4dbb04bcb/example/fixtures2.test.ts).
+
+Aside from the fixture information showcased above, each fixture object returned also contains a `getElement` function property, which takes no arguments. `getElement` allows you to render fixtures in your own time, in environments like jsdom. Just as in the React Cosmos UI, the fixture element will include any decorators you've defined for your fixtures. `getElement` can be used for Jest snapshot testing.
+
+> The function is called `getFixtures2` because it supersedes a previous function that's no longer documented, but wasn't removed for backwards compatibility.
 
 ## Troubleshooting
 
