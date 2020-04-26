@@ -420,7 +420,7 @@ Get all your fixtures programatically. A ton of information is provided for each
 ```js
 import { getFixtures2 } from 'react-cosmos';
 
-const fixtures = await getFixtures2(cosmosConfig);
+const fixtures = getFixtures2(cosmosConfig);
 
 console.log(fixtures);
 // [
