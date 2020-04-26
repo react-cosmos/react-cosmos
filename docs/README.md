@@ -415,7 +415,7 @@ const cosmosConfig = createCosmosConfig(__dirname, {
 
 ### Fixtures
 
-Get all your fixtures programatically. A ton of information is provided for each fixture, enabling you to hack away on top of React Cosmos. To generate visual snapshots from your fixtures, you load `rendererUrl` in headless browser like [Puppeteer](https://github.com/puppeteer/puppeteer) and take a screenshot on page load. You can compare visual snapshots between deploys to catch sneaky UI regressions.
+Get all your fixtures programatically. A ton of information is provided for each fixture, enabling you to hack away on top of React Cosmos. To generate visual snapshots from your fixtures, you load `rendererUrl` in a headless browser like [Puppeteer](https://github.com/puppeteer/puppeteer) and take a screenshot on page load. You can compare visual snapshots between deploys to catch sneaky UI regressions.
 
 ```js
 import { getFixtures2 } from 'react-cosmos';
@@ -436,7 +436,7 @@ console.log(fixtures);
 //   ...
 ```
 
-> See a more complete output example [here](https://github.com/react-cosmos/react-cosmos/blob/6029a1047f47e8e5e945d9ccc845f01a1775e44d/example/fixtures2.test.ts).
+> See a more complete output example [here](https://github.com/react-cosmos/react-cosmos/blob/d8b94c4f088cc7b0fdbab3e080858ed4dbb04bcb/example/fixtures2.test.ts).
 
 Aside from the fixture information showcased above, each fixture object returned also contains a `getElement` function property, which takes no arguments. `getElement` allows you to render fixtures in your own time, in environments like jsdom. Just as in the React Cosmos UI, the fixture element will include any decorators you've defined for your fixtures. `getElement` can be used for Jest snapshot testing.
 
