@@ -415,7 +415,7 @@ const cosmosConfig = createCosmosConfig(__dirname, {
 
 ### Fixtures
 
-Get all your fixtures programatically. A ton of information is provided for each fixture, enabling you to hack away on top of React Cosmos. A common use case is to generate visual snapshots for each fixture. You can compare the visual snapshots between deploys to catch sneaky regressions in your UI.
+Get all your fixtures programatically. A ton of information is provided for each fixture, enabling you to hack away on top of React Cosmos. To generate visual snapshots from your fixtures, you load `rendererUrl` in headless browser like [Puppeteer](https://github.com/puppeteer/puppeteer) and take a screenshot on page load. You can compare visual snapshots between deploys to catch sneaky regressions in your UI.
 
 ```js
 import { getFixtures2 } from 'react-cosmos';
@@ -435,9 +435,9 @@ console.log(fixtures);
   },
 ```
 
-Aside from the fixture information showcased above, each fixture object returned also contains a `getElement` function property, which takes no arguments. **`getElement` returns the corresponding fixture element**, which you can render in your own time, in any environment (eg. jsdom). Just as in the React Cosmos UI, the fixture element will include any decorators you've defined for your fixtures. `getElement` can be used for Jest snapshot testing.
+Aside from the fixture information showcased above, each fixture object returned also contains a `getElement` function property, which takes no arguments. `getElement` allows you to render fixtures in your own time, in environments like jsdom. Just as in the React Cosmos UI, the fixture element will include any decorators you've defined for your fixtures. `getElement` can be used for Jest snapshot testing.
 
-> The function is called `getFixtures2` because it supersedes a previous function that is no longer documented, but wasn't removed for backwards compatibility.
+> The function is called `getFixtures2` because it supersedes a previous function that's no longer documented, but wasn't removed for backwards compatibility.
 
 ## Troubleshooting
 
