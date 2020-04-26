@@ -423,17 +423,20 @@ import { getFixtures2 } from 'react-cosmos';
 const fixtures = await getFixtures2({ cosmosConfig });
 
 console.log(fixtures);
-[
-  {
-    "absoluteFilePath": "/path/to/components/pages/Error/__fixtures__/not-found.js",
-    "fileName": "not-found",
-    "name": null,
-    "playgroundUrl": "http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2Fpages%2FError%2F__fixtures__%2Fnot-found.js%22%2C%22name%22%3Anull%7D",
-    "relativeFilePath": "components/pages/Error/__fixtures__/not-found.js",
-    "rendererUrl": "http://localhost:5000/static/_renderer.html?_fixtureId=%7B%22path%22%3A%22components%2Fpages%2FError%2F__fixtures__%2Fnot-found.js%22%2C%22name%22%3Anull%7D",
-    "treePath": ["pages", "Error", "not-found"]
-  },
+// [
+//   {
+//     "absoluteFilePath": "/path/to/components/pages/Error/__fixtures__/not-found.js",
+//     "fileName": "not-found",
+//     "name": null,
+//     "playgroundUrl": "http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2Fpages%2FError%2F__fixtures__%2Fnot-found.js%22%2C%22name%22%3Anull%7D",
+//     "relativeFilePath": "components/pages/Error/__fixtures__/not-found.js",
+//     "rendererUrl": "http://localhost:5000/static/_renderer.html?_fixtureId=%7B%22path%22%3A%22components%2Fpages%2FError%2F__fixtures__%2Fnot-found.js%22%2C%22name%22%3Anull%7D",
+//     "treePath": ["pages", "Error", "not-found"]
+//   },
+//   ...
 ```
+
+> See a more complete output example [here](https://github.com/react-cosmos/react-cosmos/blob/6029a1047f47e8e5e945d9ccc845f01a1775e44d/packages/react-cosmos/src/getFixtures2.ts).
 
 Aside from the fixture information showcased above, each fixture object returned also contains a `getElement` function property, which takes no arguments. `getElement` allows you to render fixtures in your own time, in environments like jsdom. Just as in the React Cosmos UI, the fixture element will include any decorators you've defined for your fixtures. `getElement` can be used for Jest snapshot testing.
 
