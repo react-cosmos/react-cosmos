@@ -413,7 +413,7 @@ const cosmosConfig = createCosmosConfig(__dirname, {
 });
 ```
 
-### Get fixtures
+### Fixtures
 
 Get all your fixtures programatically. A ton of information is provided for each fixture, enabling you to hack away on top of React Cosmos. A common use case is to generate visual snapshots for each fixture. You can compare the visual snapshots between deploys to catch sneaky regressions in your UI.
 
@@ -435,7 +435,7 @@ console.log(fixtures);
   },
 ```
 
-Aside from the fixture information showcased above, each fixture object returned also contains a `getElement` function property, which takes no arguments. `getElement` returns the corresponding fixture element, which you can render in your own time, in any environment (eg. jsdom). Just as in the React Cosmos UI, the fixture element will include any decorators you've defined for your fixtures. `getElement` can be used for Jest snapshot testing.
+Aside from the fixture information showcased above, each fixture object returned also contains a `getElement` function property, which takes no arguments. **`getElement` returns the corresponding fixture element**, which you can render in your own time, in any environment (eg. jsdom). Just as in the React Cosmos UI, the fixture element will include any decorators you've defined for your fixtures. `getElement` can be used for Jest snapshot testing.
 
 > The function is called `getFixtures2` because it supersedes a previous function that is no longer documented, but wasn't removed for backwards compatibility.
 
