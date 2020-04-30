@@ -455,11 +455,13 @@ Aside from the fixture information showcased above, each fixture object returned
 
 - Set `webpack.configPath` to `react-scripts/config/webpack.config`. See example in [custom webpack config](#custom-webpack-config).
 - Make sure to place fixture and decorator files in the `src` directory.
+- Set `staticPath` to `public`.
 
 #### Using Next.js?
 
 - [Make sure you have html-webpack-plugin installed](https://github.com/react-cosmos/react-cosmos/issues/995#issuecomment-511883135).
 - [Override your webpack config with ProvidePlugin to support JSX without importing React](https://github.com/react-cosmos/react-cosmos/issues/1000#issuecomment-512575593).
+- Set `staticPath` to `public`.
 
 #### "Failed to execute postMessage..."?
 
