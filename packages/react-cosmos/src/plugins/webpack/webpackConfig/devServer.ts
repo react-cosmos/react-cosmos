@@ -20,7 +20,8 @@ export async function getDevWebpackConfig(
     cosmosConfig,
     userWebpack
   );
-  return {
+
+  const webpackConfig = {
     ...baseWebpackConfig,
     entry: getEntry(cosmosConfig),
     output: getOutput(cosmosConfig),
@@ -31,6 +32,20 @@ export async function getDevWebpackConfig(
     resolve: resolveLocalReactDeps(cosmosConfig, baseWebpackConfig),
     plugins: getPlugins(cosmosConfig, baseWebpackConfig, userWebpack),
   };
+
+  // optimization.splitChunks.name = false partially breaks fixture hot reload.
+  // Existing fixtures are hot reloaded fine, but added/removed fixture files
+  // don't (dis)appear in the Cosmos UI without a page refresh. The build gets
+  // updated, but our module.hot.accept callback doesn't get called. I don't
+  // know _why_ this setting has this effect, but I discovered this bug in
+  // Create React App, which uses this setting:
+  // https://github.com/facebook/create-react-app/blob/37712374bcaa6ccb168eeaf4fe8bd52d120dbc58/packages/react-scripts/config/webpack.config.js#L286
+  if (webpackConfig.optimization?.splitChunks) {
+    const { name } = webpackConfig.optimization.splitChunks;
+    if (name === false) delete webpackConfig.optimization.splitChunks.name;
+  }
+
+  return webpackConfig;
 }
 
 function getEntry(cosmosConfig: CosmosConfig) {
