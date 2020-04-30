@@ -24,7 +24,7 @@ const fixtures = {
 };
 
 export default {
-  'no fixure selected': createFixture(),
+  'no fixture selected': createFixture(),
 
   'fixture selected': createFixture({
     path: 'src/plugins/Notifications/index.fixture.tsx',
