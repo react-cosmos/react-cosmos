@@ -33,8 +33,8 @@ export async function getDevWebpackConfig(
     plugins: getPlugins(cosmosConfig, baseWebpackConfig, userWebpack),
   };
 
-  // optimization.splitChunks.name = false partially breaks auto fixture file
-  // discovery. Existing fixtures hot reload, but added/removed fixture files
+  // optimization.splitChunks.name = false breaks auto fixture file discovery.
+  // Existing fixtures hot reload just fine, but added/removed fixture files
   // wouldn't (dis)appear in the Cosmos UI without a page refresh. The webpack
   // build would update, but our module.hot.accept callback didn't get called:
   // https://github.com/react-cosmos/react-cosmos/blob/548e9b7e9ca9fbc66f3915861cf1ae9d60222b28/packages/react-cosmos/src/plugins/webpack/client/index.ts#L24-L29
