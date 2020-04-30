@@ -60,9 +60,14 @@ export function FixtureSearchOverlay({
       fixtureFileSuffix,
     });
     const flatFixtureTree = flattenFixtureTree(fixtureTree);
-    return flatFixtureTree.reduce((acc, { fixtureId, cleanPath }) => {
-      return { ...acc, [cleanPath.join(' ')]: fixtureId };
-    }, {});
+    return flatFixtureTree.reduce(
+      (acc, { fileName, fixtureId, parents, name }) => {
+        const treePath = [...parents, fileName];
+        if (name) treePath.push(name);
+        return { ...acc, [treePath.join(' ')]: fixtureId };
+      },
+      {}
+    );
   }, [fixtures, fixturesDir, fixtureFileSuffix]);
 
   const onInputChange = React.useCallback(

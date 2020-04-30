@@ -3,8 +3,6 @@ import { getDecoratedFixtureElement } from 'react-cosmos-shared2/FixtureLoader';
 import {
   createFixtureTree,
   flattenFixtureTree,
-  removeFixtureNameExtension,
-  removeFixtureNameSuffix,
 } from 'react-cosmos-shared2/fixtureTree';
 import {
   getFixtureNamesByPath,
@@ -29,6 +27,7 @@ export type FixtureApi = {
   fileName: string;
   getElement: () => React.ReactElement<any>;
   name: string | null;
+  parents: string[];
   playgroundUrl: string;
   relativeFilePath: string;
   rendererUrl: string;
@@ -49,30 +48,30 @@ export function getFixtures2(cosmosConfig: CosmosConfig) {
     fixtureFileSuffix,
   });
   const flatFixtureTree = flattenFixtureTree(fixtureTree);
-  flatFixtureTree.forEach(({ fixtureId, cleanPath }) => {
-    const rawFileName = fixtureId.path.split('/').pop()!;
-    const cleanFileName = removeFixtureNameSuffix(
-      removeFixtureNameExtension(rawFileName),
-      fixtureFileSuffix
-    );
+  flatFixtureTree.forEach(({ fileName, fixtureId, name, parents }) => {
     const fixtureExport = fixtureExportsByPath[fixtureId.path];
     const fixture: ReactFixture =
       fixtureId.name === null
         ? fixtureExport
         : (fixtureExport as ReactFixtureMap)[fixtureId.name];
+
+    const treePath = [...parents, fileName];
+    if (name) treePath.push(name);
+
     fixtureInfo.push({
       absoluteFilePath: path.join(rootDir, fixtureId.path),
-      fileName: cleanFileName,
+      fileName,
       getElement: createFixtureElementGetter(
         fixture,
         fixtureId.path,
         decoratorsByPath
       ),
-      name: fixtureId.name,
+      name,
+      parents,
       playgroundUrl: getPlaygroundUrl(cosmosConfig, fixtureId),
       relativeFilePath: fixtureId.path,
       rendererUrl: getRendererUrl(cosmosConfig, fixtureId),
-      treePath: cleanPath,
+      treePath,
     });
   });
 
