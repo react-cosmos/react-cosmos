@@ -3,6 +3,7 @@ import { isEqual } from 'lodash';
 import React from 'react';
 import {
   createFixtureTree,
+  FlatFixtureTreeItem,
   flattenFixtureTree,
 } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
@@ -40,7 +41,7 @@ type Props = {
 
 type ActiveFixturePath = null | string;
 
-type FixtureIdsByPath = Record<string, FixtureId>;
+type FixtureItemsByPath = Record<string, FlatFixtureTreeItem>;
 
 export function FixtureSearchOverlay({
   searchText,
@@ -52,16 +53,18 @@ export function FixtureSearchOverlay({
   onClose,
   onSelect,
 }: Props) {
-  // Flattened fixture IDs are memoized purely to minimize computation
-  const fixtureIds = React.useMemo<FixtureIdsByPath>(() => {
+  // Fixture items are memoized purely to minimize computation
+  const fixtureItems = React.useMemo<FixtureItemsByPath>(() => {
     const fixtureTree = createFixtureTree({
       fixtures,
       fixturesDir,
       fixtureFileSuffix,
     });
     const flatFixtureTree = flattenFixtureTree(fixtureTree);
-    return flatFixtureTree.reduce((acc, { fixtureId, cleanPath }) => {
-      return { ...acc, [cleanPath.join(' ')]: fixtureId };
+    return flatFixtureTree.reduce((acc, item) => {
+      const cleanPath = [...item.parents, item.fileName];
+      if (item.name) cleanPath.push(item.name);
+      return { ...acc, [cleanPath.join(' ')]: item };
     }, {});
   }, [fixtures, fixturesDir, fixtureFileSuffix]);
 
@@ -73,20 +76,20 @@ export function FixtureSearchOverlay({
   );
 
   const [matchingFixturePaths, setMatchingFixturePaths] = React.useState(
-    getMatchingFixturePaths(fixtureIds, searchText)
+    getMatchingFixturePaths(fixtureItems, searchText)
   );
 
   const [activeFixturePath, setActiveFixturePath] = React.useState<
     ActiveFixturePath
   >(() => {
     const selectedFixturePath =
-      selectedFixtureId && getFixturePath(fixtureIds, selectedFixtureId);
+      selectedFixtureId && findFixturePath(fixtureItems, selectedFixtureId);
     return selectedFixturePath || getFirstFixturePath(matchingFixturePaths);
   });
 
   React.useEffect(() => {
     const newMatchingFixturePaths = getMatchingFixturePaths(
-      fixtureIds,
+      fixtureItems,
       searchText
     );
 
@@ -101,7 +104,7 @@ export function FixtureSearchOverlay({
       // be updated to equal the first of the new list of matching fixture paths.
       setActiveFixturePath(getFirstFixturePath(newMatchingFixturePaths));
     }
-  }, [fixtureIds, matchingFixturePaths, searchText]);
+  }, [fixtureItems, matchingFixturePaths, searchText]);
 
   const onInputKeyDown = React.useMemo(() => {
     function handleEscape() {
@@ -110,7 +113,7 @@ export function FixtureSearchOverlay({
 
     function handleEnter(revealFixture: boolean) {
       if (activeFixturePath !== null) {
-        const fixtureId = fixtureIds[activeFixturePath];
+        const { fixtureId } = fixtureItems[activeFixturePath];
         onSelect(fixtureId, revealFixture);
       }
     }
@@ -190,7 +193,13 @@ export function FixtureSearchOverlay({
         // Nada
       }
     };
-  }, [onClose, activeFixturePath, fixtureIds, onSelect, matchingFixturePaths]);
+  }, [
+    onClose,
+    activeFixturePath,
+    fixtureItems,
+    onSelect,
+    matchingFixturePaths,
+  ]);
 
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -233,7 +242,7 @@ export function FixtureSearchOverlay({
               <FixtureSearchResult
                 key={cleanFixturePath}
                 cleanFixturePath={cleanFixturePath}
-                fixtureId={fixtureIds[cleanFixturePath]}
+                fixtureItem={fixtureItems[cleanFixturePath]}
                 active={cleanFixturePath === activeFixturePath}
                 onSelect={onSelect}
               />
@@ -248,10 +257,13 @@ export function FixtureSearchOverlay({
   );
 }
 
-function getFixturePath(fixtureIds: FixtureIdsByPath, fixtureId: FixtureId) {
-  const fixturePaths = Object.keys(fixtureIds);
+function findFixturePath(
+  fixtureItems: FixtureItemsByPath,
+  fixtureId: FixtureId
+) {
+  const fixturePaths = Object.keys(fixtureItems);
   return fixturePaths.find(fixturePath =>
-    isEqual(fixtureIds[fixturePath], fixtureId)
+    isEqual(fixtureItems[fixturePath].fixtureId, fixtureId)
   );
 }
 
@@ -260,10 +272,10 @@ function getFirstFixturePath(fixturePaths: string[]): null | string {
 }
 
 function getMatchingFixturePaths(
-  fixtureIds: FixtureIdsByPath,
+  fixtureItems: FixtureItemsByPath,
   searchText: string
 ): string[] {
-  const fixturePaths = Object.keys(fixtureIds);
+  const fixturePaths = Object.keys(fixtureItems);
 
   if (searchText === '') {
     return fixturePaths;
@@ -271,11 +283,15 @@ function getMatchingFixturePaths(
 
   const fixtureSearchTexts: string[] = [];
   fixturePaths.forEach(cleanFixturePath => {
-    const fixtureId = fixtureIds[cleanFixturePath];
+    const { fixtureId, parents } = fixtureItems[cleanFixturePath];
     const { path, name } = fixtureId;
     // Allow fixtures to be searched by their entire file path, suffixed by
-    // their name in the case of named fixtures.
-    fixtureSearchTexts.push(name !== null ? `${path} ${name}` : path);
+    // their name in the case of named fixtures, as well as by parent path,
+    // allowing users to query results in the format they are displayed
+    const searchPath = [path];
+    if (name) searchPath.push(name);
+    searchPath.push(...parents);
+    fixtureSearchTexts.push(searchPath.join(' '));
   });
 
   const machingFixtureSearchTexts = filter(fixtureSearchTexts, searchText);
@@ -304,7 +320,7 @@ const Content = styled.div`
   left: 50%;
   transform: translate(-50%, 0);
   width: 80%;
-  max-width: 512px;
+  max-width: 640px;
   border-radius: 3px;
   background: ${grey248};
   box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px,

@@ -2,7 +2,12 @@ import { FixtureId } from '../renderer';
 import { getSortedNodeDirNames } from './getSortedNodeDirNames';
 import { TreeNode } from './shared/types';
 
-export type FlatFixtureTreeItem = { fixtureId: FixtureId; cleanPath: string[] };
+export type FlatFixtureTreeItem = {
+  fileName: string;
+  fixtureId: FixtureId;
+  name: string | null;
+  parents: string[];
+};
 export type FlatFixtureTree = FlatFixtureTreeItem[];
 
 export function flattenFixtureTree(
@@ -17,10 +22,25 @@ export function flattenFixtureTree(
   });
 
   Object.keys(treeNode.items).forEach(itemName => {
-    flatFixtureTree.push({
-      fixtureId: treeNode.items[itemName],
-      cleanPath: [...parents, itemName],
-    });
+    const fixtureId = treeNode.items[itemName];
+    if (fixtureId.name) {
+      const newParents = [...parents];
+      const fileName = newParents.pop();
+      if (fileName)
+        flatFixtureTree.push({
+          fileName,
+          fixtureId,
+          parents: newParents,
+          name: itemName,
+        });
+    } else {
+      flatFixtureTree.push({
+        fileName: itemName,
+        fixtureId,
+        parents,
+        name: null,
+      });
+    }
   });
 
   return flatFixtureTree;

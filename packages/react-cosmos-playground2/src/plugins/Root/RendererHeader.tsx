@@ -1,6 +1,6 @@
 import { isEqual } from 'lodash';
 import React from 'react';
-import { TreeNode } from 'react-cosmos-shared2/fixtureTree';
+import { FlatFixtureTreeItem } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
 import {
@@ -14,7 +14,7 @@ import { IconButton32 } from '../../shared/ui/buttons';
 import { grey176, grey32, white10 } from '../../shared/ui/colors';
 
 type Props = {
-  fixtureTree: TreeNode<FixtureId>;
+  fixtureItems: FlatFixtureTreeItem[];
   fixtureId: FixtureId;
   navOpen: boolean;
   panelOpen: boolean;
@@ -26,7 +26,7 @@ type Props = {
 };
 
 export const RendererHeader = React.memo(function RendererHeader({
-  fixtureTree,
+  fixtureItems,
   fixtureId,
   navOpen,
   panelOpen,
@@ -36,10 +36,7 @@ export const RendererHeader = React.memo(function RendererHeader({
   onFixtureSelect,
   onClose,
 }: Props) {
-  const fixturePath = React.useMemo(
-    () => getFixtureTreePath(fixtureTree, fixtureId),
-    [fixtureTree, fixtureId]
-  );
+  const fixtureItem = findFixtureItemById(fixtureItems, fixtureId);
   const slotProps = React.useMemo(() => ({ fixtureId }), [fixtureId]);
   const onReload = React.useCallback(() => onFixtureSelect(fixtureId), [
     fixtureId,
@@ -71,9 +68,7 @@ export const RendererHeader = React.memo(function RendererHeader({
           onClick={onReload}
         />
       </Left>
-      {fixturePath !== null && (
-        <FixtureName>{fixturePath.join(' ')}</FixtureName>
-      )}
+      {fixtureItem && <FixtureName>{getFixtureName(fixtureItem)}</FixtureName>}
       <Right>
         <RendererActionSlot
           slotProps={slotProps}
@@ -90,30 +85,17 @@ export const RendererHeader = React.memo(function RendererHeader({
   );
 });
 
-function getFixtureTreePath(
-  fixtureTree: TreeNode<FixtureId>,
-  fixtureId: FixtureId,
-  parents: string[] = []
-): string[] | null {
-  const { items, dirs } = fixtureTree;
+function findFixtureItemById(
+  fixtureItems: FlatFixtureTreeItem[],
+  fixtureId: FixtureId
+) {
+  return fixtureItems.find(fixtureItem =>
+    isEqual(fixtureItem.fixtureId, fixtureId)
+  );
+}
 
-  const itemNames = Object.keys(items);
-  for (let itemName of itemNames) {
-    if (isEqual(items[itemName], fixtureId)) {
-      return [...parents, itemName];
-    }
-  }
-
-  const dirNames = Object.keys(dirs);
-  for (let dirName of dirNames) {
-    const dirParents = [...parents, dirName];
-    const foundPath = getFixtureTreePath(dirs[dirName], fixtureId, dirParents);
-    if (foundPath) {
-      return foundPath;
-    }
-  }
-
-  return null;
+function getFixtureName({ name, fileName }: FlatFixtureTreeItem) {
+  return name ? `${fileName} ${name}` : fileName;
 }
 
 const Container = styled.div`
@@ -168,5 +150,4 @@ const FixtureName = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  direction: rtl;
 `;

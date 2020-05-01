@@ -1,5 +1,8 @@
 import React from 'react';
-import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
+import {
+  createFixtureTree,
+  flattenFixtureTree,
+} from 'react-cosmos-shared2/fixtureTree';
 import { createPlugin } from 'react-plugin';
 import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
@@ -48,7 +51,7 @@ plug('root', ({ pluginContext }) => {
   const router = getMethodsOf<RouterSpec>('router');
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
 
-  const fixtureTree = useFixtureTree(pluginContext);
+  const fixtureItems = useFixtureItems(pluginContext);
   const onToggleNav = useOpenNav(pluginContext);
   const onTogglePanel = useOpenPanel(pluginContext);
 
@@ -57,7 +60,7 @@ plug('root', ({ pluginContext }) => {
     return (
       <Root
         storageCacheReady={false}
-        fixtureTree={fixtureTree}
+        fixtureItems={[]}
         selectedFixtureId={null}
         rendererConnected={false}
         validFixtureSelected={false}
@@ -94,7 +97,7 @@ plug('root', ({ pluginContext }) => {
   return (
     <Root
       storageCacheReady={true}
-      fixtureTree={fixtureTree}
+      fixtureItems={fixtureItems}
       selectedFixtureId={router.getSelectedFixtureId()}
       rendererConnected={rendererCore.isRendererConnected()}
       validFixtureSelected={rendererCore.isValidFixtureSelected()}
@@ -121,7 +124,7 @@ plug('root', ({ pluginContext }) => {
 
 export { register };
 
-function useFixtureTree(context: RootContext) {
+function useFixtureItems(context: RootContext) {
   const { getMethodsOf } = context;
 
   const core = getMethodsOf<CoreSpec>('core');
@@ -131,7 +134,10 @@ function useFixtureTree(context: RootContext) {
   const fixtures = rendererCore.getFixtures();
 
   return React.useMemo(
-    () => createFixtureTree({ fixturesDir, fixtureFileSuffix, fixtures }),
+    () =>
+      flattenFixtureTree(
+        createFixtureTree({ fixturesDir, fixtureFileSuffix, fixtures })
+      ),
     [fixtureFileSuffix, fixtures, fixturesDir]
   );
 }

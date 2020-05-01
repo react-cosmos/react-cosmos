@@ -77,6 +77,6 @@ function addFixtureIdToTree(
   curNode.items[nodeName] = fixtureId;
 }
 
-export function removeFixtureNameExtension(fixtureName: string) {
+function removeFixtureNameExtension(fixtureName: string) {
   return fixtureName.replace(/\.(j|t)sx?$/, '');
 }

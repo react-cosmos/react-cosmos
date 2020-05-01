@@ -1,6 +1,6 @@
 import React from 'react';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import { TreeNode } from 'react-cosmos-shared2/fixtureTree';
+import { FlatFixtureTreeItem } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import { ArraySlot, Slot } from 'react-plugin';
@@ -14,7 +14,7 @@ import { RendererHeader } from './RendererHeader';
 
 type Props = {
   storageCacheReady: boolean;
-  fixtureTree: TreeNode<FixtureId>;
+  fixtureItems: FlatFixtureTreeItem[];
   selectedFixtureId: FixtureId | null;
   rendererConnected: boolean;
   validFixtureSelected: boolean;
@@ -39,7 +39,7 @@ type Props = {
 
 export function Root({
   storageCacheReady,
-  fixtureTree,
+  fixtureItems,
   selectedFixtureId,
   rendererConnected,
   validFixtureSelected,
@@ -108,7 +108,7 @@ export function Root({
         <RendererContainer key="rendererContainer">
           {selectedFixtureId && validFixtureSelected && (
             <RendererHeader
-              fixtureTree={fixtureTree}
+              fixtureItems={fixtureItems}
               fixtureId={selectedFixtureId}
               navOpen={navOpen}
               panelOpen={panelOpen}
