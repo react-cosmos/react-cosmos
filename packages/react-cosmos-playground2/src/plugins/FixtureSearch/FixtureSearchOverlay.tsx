@@ -320,7 +320,7 @@ const Content = styled.div`
   left: 50%;
   transform: translate(-50%, 0);
   width: 80%;
-  max-width: 512px;
+  max-width: 640px;
   border-radius: 3px;
   background: ${grey248};
   box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px,
