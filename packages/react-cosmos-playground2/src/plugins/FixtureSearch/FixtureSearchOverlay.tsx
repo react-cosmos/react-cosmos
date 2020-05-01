@@ -83,7 +83,7 @@ export function FixtureSearchOverlay({
     ActiveFixturePath
   >(() => {
     const selectedFixturePath =
-      selectedFixtureId && getFixturePath(fixtureItems, selectedFixtureId);
+      selectedFixtureId && findFixturePath(fixtureItems, selectedFixtureId);
     return selectedFixturePath || getFirstFixturePath(matchingFixturePaths);
   });
 
@@ -257,7 +257,7 @@ export function FixtureSearchOverlay({
   );
 }
 
-function getFixturePath(
+function findFixturePath(
   fixtureItems: FixtureItemsByPath,
   fixtureId: FixtureId
 ) {
