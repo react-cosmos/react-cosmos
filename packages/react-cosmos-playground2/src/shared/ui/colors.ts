@@ -47,7 +47,7 @@ export function disabledColors(defaultColor: string, disabledColor: string) {
     props.disabled ? disabledColor : defaultColor;
 }
 
-function createGreyColor(intensity: number, alpha: number = 1) {
+export function createGreyColor(intensity: number, alpha: number = 1) {
   return alpha !== 1
     ? `rgba(${intensity}, ${intensity}, ${intensity}, ${alpha})`
     : `rgb(${intensity}, ${intensity}, ${intensity})`;
