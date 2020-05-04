@@ -1,6 +1,6 @@
 import React from 'react';
 import { FixtureDecoratorId } from '../../../fixtureState';
-import { ElRefs, useUnmount } from './shared';
+import { ElRefs } from './shared';
 import { useFixtureState } from './useFixtureState';
 import { useReadClassState } from './useReadClassState';
 
@@ -9,9 +9,11 @@ export function useClassStateCapture(
   decoratorId: FixtureDecoratorId
 ) {
   const elRefs = React.useRef<ElRefs>({});
-  useUnmount(() => {
-    elRefs.current = {};
-  });
+  React.useEffect(() => {
+    return () => {
+      elRefs.current = {};
+    };
+  }, []);
 
   useReadClassState(fixture, decoratorId, elRefs);
   return useFixtureState(fixture, decoratorId, elRefs);

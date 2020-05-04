@@ -21,11 +21,6 @@ export type CachedRefHandlers = {
   [elPath: string]: CachedRefHandler;
 };
 
-export function useUnmount(cb: () => void) {
-  const onUnmount = React.useCallback(cb, []);
-  React.useEffect(() => onUnmount, [onUnmount]);
-}
-
 // We need to do this because React doesn't provide a replaceState method
 // (anymore) https://reactjs.org/docs/react-component.html#setstate
 export function replaceState(elRef: React.Component, nextState: {}) {

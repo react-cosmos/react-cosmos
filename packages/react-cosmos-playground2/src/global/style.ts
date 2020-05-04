@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
+import { grey8, white3 } from '../shared/ui/colors';
 import { fontFamily } from '../shared/ui/vars';
-import { grey8, white3 } from './../shared/ui/colors';
 
 export const GlobalStyle = createGlobalStyle`
   html {

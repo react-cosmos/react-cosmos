@@ -19,7 +19,6 @@ import {
   ElRefs,
   InitialStates,
   replaceState,
-  useUnmount,
 } from './shared';
 
 export function useFixtureState(
@@ -41,10 +40,12 @@ export function useFixtureState(
   // on every render loop results in unwanted operations and race conditions.
   const cachedRefHandlers = React.useRef<CachedRefHandlers>({});
 
-  useUnmount(() => {
-    initialStates.current = {};
-    cachedRefHandlers.current = {};
-  });
+  React.useEffect(() => {
+    return () => {
+      initialStates.current = {};
+      cachedRefHandlers.current = {};
+    };
+  }, []);
 
   React.useEffect(() => {
     // Remove fixture state for removed child elements (likely via HMR)
