@@ -1,5 +1,5 @@
 import { isEqual } from 'lodash';
-import React from 'react';
+import React, { RefObject } from 'react';
 import { FixtureNode } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
@@ -16,24 +16,28 @@ type Props = {
   parents: string[];
   isExpanded: boolean;
   selectedFixtureId: null | FixtureId;
+  focusRef: RefObject<HTMLElement>;
   onToggle: () => unknown;
 };
 
 export function FixtureTreeDir({
   node,
   parents,
-  selectedFixtureId,
   isExpanded,
+  selectedFixtureId,
+  focusRef,
   onToggle,
 }: Props) {
   const dirName = parents[parents.length - 1];
   const containsSelectedFixture =
     selectedFixtureId !== null && treeContainsFixture(node, selectedFixtureId);
+  const selected = !isExpanded && containsSelectedFixture;
   return (
     <DirButton onClick={onToggle}>
       <ListItem
+        ref={selected ? focusRef : undefined}
         indentLevel={parents.length - 1}
-        selected={!isExpanded && containsSelectedFixture}
+        selected={selected}
       >
         <CevronContainer>
           {isExpanded ? <ChevronDownIcon /> : <ChevronRightIcon />}

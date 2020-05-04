@@ -1,5 +1,5 @@
 import { isEqual } from 'lodash';
-import React from 'react';
+import React, { RefObject } from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
 import { blue } from '../../../shared/ui/colors';
@@ -11,6 +11,7 @@ type Props = {
   item: FixtureId;
   itemName: string;
   selectedFixtureId: null | FixtureId;
+  focusRef: RefObject<HTMLElement>;
   onSelect: (path: FixtureId) => unknown;
 };
 
@@ -19,6 +20,7 @@ export function FixtureTreeItem({
   item,
   itemName,
   selectedFixtureId,
+  focusRef,
   onSelect,
 }: Props) {
   const onClick = React.useCallback(
@@ -34,6 +36,7 @@ export function FixtureTreeItem({
   );
 
   const itemKey = stringifyFixtureId(item);
+  const selected = isEqual(item, selectedFixtureId);
   return (
     <FixtureLink
       key={itemKey}
@@ -41,8 +44,9 @@ export function FixtureTreeItem({
       onClick={onClick}
     >
       <ListItem
+        ref={selected ? focusRef : undefined}
         indentLevel={parents.length}
-        selected={isEqual(item, selectedFixtureId)}
+        selected={selected}
       >
         <FixtureLabel>{itemName}</FixtureLabel>
       </ListItem>
