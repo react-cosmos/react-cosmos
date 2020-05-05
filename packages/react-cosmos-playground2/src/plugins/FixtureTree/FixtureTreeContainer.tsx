@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
 import { grey32 } from '../../shared/ui/colors';
@@ -27,6 +27,8 @@ export function FixtureTreeContainer({
   selectFixture,
   setTreeExpansion,
 }: Props) {
+  const { containerRef, selectedRef } = useScrollToSelected(selectedFixtureId);
+
   if (!rendererConnected) {
     return <Container />;
   }
@@ -43,17 +45,41 @@ export function FixtureTreeContainer({
   }
 
   return (
-    <Container>
+    <Container ref={containerRef}>
       <FixtureTree
         fixturesDir={fixturesDir}
         fixtureFileSuffix={fixtureFileSuffix}
         fixtures={fixtures}
         selectedFixtureId={selectedFixtureId}
         treeExpansion={treeExpansion}
+        selectedRef={selectedRef}
         onSelect={selectFixture}
         setTreeExpansion={setTreeExpansion}
       />
     </Container>
+  );
+}
+
+function useScrollToSelected(selectedFixtureId: FixtureId | null) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const selectedRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const { current: selectedEl } = selectedRef;
+    const { current: containerEl } = containerRef;
+    if (containerEl && selectedEl && !isVisibleInside(selectedEl, containerEl))
+      selectedEl.scrollIntoView({ block: 'center' });
+  }, [selectedFixtureId]);
+
+  return { containerRef, selectedRef };
+}
+
+function isVisibleInside(element: HTMLElement, container: HTMLElement) {
+  const containerRect = container.getBoundingClientRect();
+  const elementRect = element.getBoundingClientRect();
+  return (
+    containerRect.top < elementRect.top &&
+    elementRect.bottom < containerRect.bottom
   );
 }
 

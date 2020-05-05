@@ -16,7 +16,7 @@ type Props = {
   parents: string[];
   isExpanded: boolean;
   selectedFixtureId: null | FixtureId;
-  focusRef: RefObject<HTMLElement>;
+  selectedRef: RefObject<HTMLElement>;
   onToggle: () => unknown;
 };
 
@@ -25,7 +25,7 @@ export function FixtureTreeDir({
   parents,
   isExpanded,
   selectedFixtureId,
-  focusRef,
+  selectedRef,
   onToggle,
 }: Props) {
   const dirName = parents[parents.length - 1];
@@ -35,7 +35,7 @@ export function FixtureTreeDir({
   return (
     <DirButton onClick={onToggle}>
       <ListItem
-        ref={selected ? focusRef : undefined}
+        ref={selected ? selectedRef : undefined}
         indentLevel={parents.length - 1}
         selected={selected}
       >

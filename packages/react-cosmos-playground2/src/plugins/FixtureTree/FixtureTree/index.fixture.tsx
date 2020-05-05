@@ -48,6 +48,7 @@ function createFixtureTree(
         fixtureFileSuffix="fixture"
         fixtures={fixtures}
         selectedFixtureId={selectedFixtureId}
+        selectedRef={{ current: null }}
         treeExpansion={treeExpansion}
         onSelect={setSelectedFixtureId}
         setTreeExpansion={setTreeExpansion}
