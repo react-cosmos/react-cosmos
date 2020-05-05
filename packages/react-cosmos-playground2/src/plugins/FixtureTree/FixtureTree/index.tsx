@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useEffect } from 'react';
+import React, { RefObject, useMemo } from 'react';
 import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
@@ -12,6 +12,7 @@ type Props = {
   fixtureFileSuffix: string;
   fixtures: FixtureNamesByPath;
   selectedFixtureId: null | FixtureId;
+  selectedRef: RefObject<HTMLElement>;
   treeExpansion: TreeExpansion;
   onSelect: (path: FixtureId) => unknown;
   setTreeExpansion: (treeExpansion: TreeExpansion) => unknown;
@@ -22,6 +23,7 @@ export const FixtureTree = React.memo(function FixtureTree({
   fixtureFileSuffix,
   fixtures,
   selectedFixtureId,
+  selectedRef,
   treeExpansion,
   onSelect,
   setTreeExpansion,
@@ -30,13 +32,6 @@ export const FixtureTree = React.memo(function FixtureTree({
     () => createFixtureTree({ fixtures, fixturesDir, fixtureFileSuffix }),
     [fixtures, fixturesDir, fixtureFileSuffix]
   );
-
-  // Auto-focus selected fixture on load
-  const focusRef = useRef<HTMLElement>(null);
-  useEffect(() => {
-    if (focusRef.current) focusRef.current.scrollIntoView({ block: 'center' });
-  }, []);
-
   return (
     <Container>
       <TreeView
@@ -48,7 +43,7 @@ export const FixtureTree = React.memo(function FixtureTree({
             parents={parents}
             isExpanded={isExpanded}
             selectedFixtureId={selectedFixtureId}
-            focusRef={focusRef}
+            selectedRef={selectedRef}
             onToggle={onToggle}
           />
         )}
@@ -58,7 +53,7 @@ export const FixtureTree = React.memo(function FixtureTree({
             item={item}
             itemName={itemName}
             selectedFixtureId={selectedFixtureId}
-            focusRef={focusRef}
+            selectedRef={selectedRef}
             onSelect={onSelect}
           />
         )}

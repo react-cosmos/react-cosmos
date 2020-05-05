@@ -11,7 +11,7 @@ type Props = {
   item: FixtureId;
   itemName: string;
   selectedFixtureId: null | FixtureId;
-  focusRef: RefObject<HTMLElement>;
+  selectedRef: RefObject<HTMLElement>;
   onSelect: (path: FixtureId) => unknown;
 };
 
@@ -20,7 +20,7 @@ export function FixtureTreeItem({
   item,
   itemName,
   selectedFixtureId,
-  focusRef,
+  selectedRef,
   onSelect,
 }: Props) {
   const onClick = React.useCallback(
@@ -44,7 +44,7 @@ export function FixtureTreeItem({
       onClick={onClick}
     >
       <ListItem
-        ref={selected ? focusRef : undefined}
+        ref={selected ? selectedRef : undefined}
         indentLevel={parents.length}
         selected={selected}
       >
