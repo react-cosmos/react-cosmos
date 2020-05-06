@@ -21,6 +21,7 @@ import {
   KEY_ESC,
   KEY_TAB,
   KEY_UP,
+  KEY_FWD_SLASH,
 } from '../../shared/keys';
 import {
   black60,
@@ -180,6 +181,13 @@ export function FixtureSearchOverlay({
       }
     }
 
+    function handleQuestionMark(e: React.KeyboardEvent) {
+      if (e.shiftKey) {
+        e.preventDefault();
+        setShowShortcuts(prev => !prev);
+      }
+    }
+
     return (e: React.KeyboardEvent) => {
       switch (e.keyCode) {
         case KEY_ESC:
@@ -197,6 +205,8 @@ export function FixtureSearchOverlay({
         case KEY_TAB:
           e.preventDefault();
           return e.shiftKey ? handleTabReverse() : handleTab();
+        case KEY_FWD_SLASH:
+          return handleQuestionMark(e);
         default:
         // Nada
       }
