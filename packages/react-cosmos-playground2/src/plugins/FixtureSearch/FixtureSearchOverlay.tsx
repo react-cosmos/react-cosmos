@@ -1,6 +1,12 @@
 import { filter } from 'fuzzaldrin-plus';
 import { isEqual } from 'lodash';
-import React from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   createFixtureTree,
   FlatFixtureTreeItem,
@@ -8,7 +14,7 @@ import {
 } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
-import { SearchIcon } from '../../shared/icons';
+import { HelpCircleIcon, SearchIcon } from '../../shared/icons';
 import {
   KEY_DOWN,
   KEY_ENTER,
@@ -26,6 +32,7 @@ import {
   grey248,
   grey64,
 } from '../../shared/ui/colors';
+import { quick } from '../../shared/ui/vars';
 import { FixtureSearchResult } from './FixtureSearchResult';
 import { FixtureSearchShortcuts } from './FixtureSearchShortcuts';
 
@@ -55,7 +62,7 @@ export function FixtureSearchOverlay({
   onSelect,
 }: Props) {
   // Fixture items are memoized purely to minimize computation
-  const fixtureItems = React.useMemo<FixtureItemsByPath>(() => {
+  const fixtureItems = useMemo<FixtureItemsByPath>(() => {
     const fixtureTree = createFixtureTree({
       fixtures,
       fixturesDir,
@@ -69,26 +76,26 @@ export function FixtureSearchOverlay({
     }, {});
   }, [fixtures, fixturesDir, fixtureFileSuffix]);
 
-  const onInputChange = React.useCallback(
+  const onInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       onSetSearchText(e.currentTarget.value);
     },
     [onSetSearchText]
   );
 
-  const [matchingFixturePaths, setMatchingFixturePaths] = React.useState(
+  const [matchingFixturePaths, setMatchingFixturePaths] = useState(
     getMatchingFixturePaths(fixtureItems, searchText)
   );
 
-  const [activeFixturePath, setActiveFixturePath] = React.useState<
-    ActiveFixturePath
-  >(() => {
-    const selectedFixturePath =
-      selectedFixtureId && findFixturePath(fixtureItems, selectedFixtureId);
-    return selectedFixturePath || getFirstFixturePath(matchingFixturePaths);
-  });
+  const [activeFixturePath, setActiveFixturePath] = useState<ActiveFixturePath>(
+    () => {
+      const selectedFixturePath =
+        selectedFixtureId && findFixturePath(fixtureItems, selectedFixtureId);
+      return selectedFixturePath || getFirstFixturePath(matchingFixturePaths);
+    }
+  );
 
-  React.useEffect(() => {
+  useEffect(() => {
     const newMatchingFixturePaths = getMatchingFixturePaths(
       fixtureItems,
       searchText
@@ -107,7 +114,7 @@ export function FixtureSearchOverlay({
     }
   }, [fixtureItems, matchingFixturePaths, searchText]);
 
-  const onInputKeyDown = React.useMemo(() => {
+  const onInputKeyDown = useMemo(() => {
     function handleEscape() {
       onClose();
     }
@@ -202,10 +209,10 @@ export function FixtureSearchOverlay({
     matchingFixturePaths,
   ]);
 
-  const inputRef = React.useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Auto focus when search input is created
-  React.useEffect(() => {
+  useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
       inputRef.current.select();
@@ -214,11 +221,17 @@ export function FixtureSearchOverlay({
 
   // 1. Prevent click propagation to overlay element (which calls onClose)
   // 2. Keep user focused on search input while search is open
-  const onContentClick = React.useCallback((e: React.MouseEvent) => {
+  const onContentClick = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     if (inputRef.current) {
       inputRef.current.focus();
     }
+  }, []);
+
+  const [showShortcuts, setShowShortcuts] = useState(false);
+
+  const handleToggleHelp = useCallback(() => {
+    setShowShortcuts(prev => !prev);
   }, []);
 
   return (
@@ -236,8 +249,13 @@ export function FixtureSearchOverlay({
             onChange={onInputChange}
             onKeyDown={onInputKeyDown}
           />
+          <HelpButton selected={showShortcuts} onClick={handleToggleHelp}>
+            <HelpCircleIcon />
+          </HelpButton>
         </InputContainer>
-        <FixtureSearchShortcuts />
+        <ShortcutsContainer visible={showShortcuts}>
+          <FixtureSearchShortcuts />
+        </ShortcutsContainer>
         <ResultsViewport>
           <ResultsContainer>
             {matchingFixturePaths.map(cleanFixturePath => (
@@ -336,9 +354,10 @@ const InputContainer = styled.div`
   flex-shrink: 0;
   display: flex;
   flex-direction: row;
-  box-sizing: border-box;
+  align-items: center;
   height: 48px;
-  padding: 8px 16px;
+  padding: 0 12px;
+  user-select: none;
   cursor: text;
 `;
 
@@ -346,7 +365,8 @@ const SearchIconContainer = styled.div`
   flex-shrink: 0;
   width: 20px;
   height: 20px;
-  padding: 7px 12px 0 2px;
+  margin: 2px 0 0 0;
+  padding: 0 10px 0 6px;
   color: ${grey176};
 `;
 
@@ -362,6 +382,31 @@ const SearchInput = styled.input`
   ::placeholder {
     color: ${grey160};
   }
+`;
+
+const HelpButton = styled.div<{ selected: boolean }>`
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin: 2px 0 0 0;
+  padding: 6px;
+  border-radius: 50%;
+  background: ${props => (props.selected ? grey224 : 'transparent')};
+  color: ${props => (props.selected ? grey128 : grey176)};
+  cursor: pointer;
+  transition: background ${quick}s, color ${quick}s;
+
+  :hover {
+    color: ${grey128};
+  }
+`;
+
+const ShortcutsContainer = styled.div<{ visible: boolean }>`
+  height: ${props => (props.visible ? 104 : 0)}px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  opacity: ${props => (props.visible ? 1 : 0)};
+  transition: height ${quick}s, opacity ${quick}s;
 `;
 
 const ResultsViewport = styled.div`

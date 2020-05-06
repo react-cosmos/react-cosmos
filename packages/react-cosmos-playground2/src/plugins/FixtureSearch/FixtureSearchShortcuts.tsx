@@ -8,7 +8,7 @@ export function FixtureSearchShortcuts() {
       <Column>
         <Shortcut
           keys={['↑', '↓']}
-          label="Navigate results"
+          label="Navigate"
           title="Navigate up and down through results"
         />
         <Shortcut keys={['Tab']} label="Cycle" title="Cycle through results" />
@@ -45,7 +45,6 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
-  user-select: none;
   cursor: text;
 `;
 
