@@ -27,6 +27,7 @@ import {
   grey64,
 } from '../../shared/ui/colors';
 import { FixtureSearchResult } from './FixtureSearchResult';
+import { FixtureSearchShortcuts } from './FixtureSearchShortcuts';
 
 type Props = {
   searchText: string;
@@ -236,6 +237,7 @@ export function FixtureSearchOverlay({
             onKeyDown={onInputKeyDown}
           />
         </InputContainer>
+        <FixtureSearchShortcuts />
         <ResultsViewport>
           <ResultsContainer>
             {matchingFixturePaths.map(cleanFixturePath => (
