@@ -177,3 +177,11 @@ export const ExternalIcon = () => (
     <line x1="10" y1="14" x2="21" y2="3"></line>
   </Icon>
 );
+
+export const HelpCircleIcon = () => (
+  <Icon>
+    <circle cx="12" cy="12" r="10"></circle>
+    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+    <line x1="12" y1="17" x2="12" y2="17"></line>
+  </Icon>
+);

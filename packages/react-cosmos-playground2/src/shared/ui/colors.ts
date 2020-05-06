@@ -4,6 +4,7 @@ export const grey8 = createGreyColor(8);
 export const grey24 = createGreyColor(24);
 export const grey32 = createGreyColor(32);
 export const grey64 = createGreyColor(64);
+export const grey96 = createGreyColor(96);
 export const grey128 = createGreyColor(128);
 export const grey160 = createGreyColor(160);
 export const grey144 = createGreyColor(144);
