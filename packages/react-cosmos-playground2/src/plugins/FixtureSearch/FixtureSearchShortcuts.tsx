@@ -12,22 +12,12 @@ export function FixtureSearchShortcuts() {
           title="Navigate up and down through results"
         />
         <Shortcut keys={['Tab']} label="Cycle" title="Cycle through results" />
-        <Shortcut
-          keys={['⇧', 'Tab']}
-          label="Reverse cycle"
-          title="Cycle through results in reverse"
-        />
       </Column>
       <Column>
         <Shortcut
           keys={['Enter']}
           label="Open fixture"
           title="Open selected fixture"
-        />
-        <Shortcut
-          keys={['⇧', 'Enter']}
-          label="Open and reveal"
-          title="Open selected fixture and reveal in tree view"
         />
         <Shortcut
           keys={['Esc']}
@@ -51,7 +41,7 @@ const Container = styled.div`
 const Column = styled.div`
   flex: 1;
   padding: 0 0 8px 0;
-  max-width: 256px;
+  max-width: 224px;
   display: flex;
   flex-direction: column;
 `;
@@ -96,7 +86,7 @@ const Keys = styled.div`
 `;
 
 const Label = styled.div`
-  flex: 1.3;
+  flex: 1.4;
   padding: 0 0 0 10px;
   color: ${grey96};
   font-size: 14px;

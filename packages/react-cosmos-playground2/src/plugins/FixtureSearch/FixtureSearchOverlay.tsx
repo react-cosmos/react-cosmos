@@ -412,7 +412,7 @@ const HelpButton = styled.div<{ selected: boolean }>`
 `;
 
 const ShortcutsContainer = styled.div<{ visible: boolean }>`
-  height: ${props => (props.visible ? 104 : 0)}px;
+  height: ${props => (props.visible ? 72 : 0)}px;
   overflow-x: hidden;
   overflow-y: auto;
   opacity: ${props => (props.visible ? 1 : 0)};
