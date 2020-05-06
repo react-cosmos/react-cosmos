@@ -120,10 +120,10 @@ export function FixtureSearchOverlay({
       onClose();
     }
 
-    function handleEnter(revealFixture: boolean) {
+    function handleEnter() {
       if (activeFixturePath !== null) {
         const { fixtureId } = fixtureItems[activeFixturePath];
-        onSelect(fixtureId, revealFixture);
+        onSelect(fixtureId, true);
       }
     }
 
@@ -195,7 +195,7 @@ export function FixtureSearchOverlay({
           return handleEscape();
         case KEY_ENTER:
           e.preventDefault();
-          return handleEnter(e.shiftKey);
+          return handleEnter();
         case KEY_UP:
           e.preventDefault();
           return handleUp();
