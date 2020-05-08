@@ -1,17 +1,18 @@
-import React from 'react';
-import styled from 'styled-components';
 import { clone, setWith } from 'lodash';
+import React from 'react';
 import {
   FixtureStatePrimitiveValueType,
   FixtureStateValue,
   FixtureStateValues,
 } from 'react-cosmos-shared2/fixtureState';
-import { TreeItemValue, TreeItemContainer } from '../shared';
-import { UnserializableItem } from './UnserializableItem';
-import { StringItem } from './StringItem';
-import { NumberItem } from './NumberItem';
+import styled from 'styled-components';
+import { TreeItemContainer, TreeItemValue } from '../shared';
 import { BooleanItem } from './BooleanItem';
 import { NullItem } from './NullItem';
+import { NumberItem } from './NumberItem';
+import { StringItem } from './StringItem';
+import { UndefinedItem } from './UndefinedItem';
+import { UnserializableItem } from './UnserializableItem';
 
 type Props = {
   treeId: string;
@@ -104,6 +105,10 @@ function getItem(
 
   if (item.value === null) {
     return <NullItem label={label} />;
+  }
+
+  if (item.value === undefined) {
+    return <UndefinedItem label={label} />;
   }
 
   throw new Error(`Invalid primitive value: ${item.value}`);

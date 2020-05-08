@@ -14,7 +14,12 @@ export type FixtureStateUnserializableValue = {
   stringifiedValue: string;
 };
 
-export type FixtureStatePrimitiveValueType = string | number | boolean | null;
+export type FixtureStatePrimitiveValueType =
+  | string
+  | number
+  | boolean
+  | null
+  | undefined;
 
 export type FixtureStateObjectValueType = Record<string, unknown>;
 
@@ -94,11 +99,19 @@ export function isNull(value: unknown): value is null {
   return value === null;
 }
 
+export function isUndefined(value: unknown): value is undefined {
+  return value === undefined;
+}
+
 export function isPrimitiveValue(
   value: unknown
 ): value is FixtureStatePrimitiveValueType {
   return (
-    isString(value) || isNumber(value) || isBoolean(value) || isNull(value)
+    isString(value) ||
+    isNumber(value) ||
+    isBoolean(value) ||
+    isNull(value) ||
+    isUndefined(value)
   );
 }
 
