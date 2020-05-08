@@ -13,13 +13,9 @@ export function createValues(
   obj: FixtureStateObjectValueType
 ): FixtureStateValues {
   const values: FixtureStateValues = {};
-  Object.keys(obj)
-    // Ignore noise from attrs defined as undefined (eg. props.children is
-    // often `undefined` if element has no children)
-    .filter(key => obj[key] !== undefined)
-    .forEach(key => {
-      values[key] = createValue(obj[key]);
-    });
+  Object.keys(obj).forEach(key => {
+    values[key] = createValue(obj[key]);
+  });
   return values;
 }
 

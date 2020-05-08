@@ -31,9 +31,14 @@ it('creates boolean value', () => {
   });
 });
 
-it('ignores undefined value', () => {
+it('creates undefined value', () => {
   const values = createValues({ myProp: undefined });
-  expect(values).toEqual({});
+  expect(values).toEqual({
+    myProp: {
+      type: 'primitive',
+      value: undefined,
+    },
+  });
 });
 
 it('creates null value', () => {

@@ -25,6 +25,10 @@ export default () => {
             defaultValue: { type: 'primitive', value: null },
             currentValue: { type: 'primitive', value: null },
           },
+          undefined: {
+            defaultValue: { type: 'primitive', value: undefined },
+            currentValue: { type: 'primitive', value: undefined },
+          },
           object: {
             defaultValue: {
               type: 'object',
