@@ -9,6 +9,7 @@ import { BlankState } from './BlankState';
 import { FixtureTree } from './FixtureTree';
 import {
   getFullTreeExpansion,
+  hasDirs,
   isFullyCollapsed,
   isFullyExpanded,
 } from './fixtureTreeExpansion';
@@ -56,20 +57,22 @@ export function FixtureTreeContainer({
 
   return (
     <>
-      <ExpansionMenu>
-        <Button32
-          title="Reuse instances on prop changes"
-          label={'collapse all'}
-          disabled={isFullyCollapsed(treeExpansion)}
-          onClick={() => setTreeExpansion({})}
-        />
-        <Button32
-          title="Reuse instances on prop changes"
-          label={'expand all'}
-          disabled={isFullyExpanded(rootNode, treeExpansion)}
-          onClick={() => setTreeExpansion(getFullTreeExpansion(rootNode))}
-        />
-      </ExpansionMenu>
+      {hasDirs(rootNode) && (
+        <ExpansionMenu>
+          <Button32
+            title="Reuse instances on prop changes"
+            label={'collapse all'}
+            disabled={isFullyCollapsed(treeExpansion)}
+            onClick={() => setTreeExpansion({})}
+          />
+          <Button32
+            title="Reuse instances on prop changes"
+            label={'expand all'}
+            disabled={isFullyExpanded(rootNode, treeExpansion)}
+            onClick={() => setTreeExpansion(getFullTreeExpansion(rootNode))}
+          />
+        </ExpansionMenu>
+      )}
       <TreeContainer ref={containerRef}>
         <FixtureTree
           rootNode={rootNode}

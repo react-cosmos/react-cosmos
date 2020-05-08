@@ -25,6 +25,10 @@ export function getFullTreeExpansion(
   );
 }
 
+export function hasDirs(rootNode: TreeNode<any>) {
+  return getTreeDirNames(rootNode).length > 0;
+}
+
 function getTreeDirNames(treeNode: TreeNode<any>, parentPath: string[] = []) {
   const dirNames: string[] = [];
 
