@@ -48,6 +48,6 @@ const Keys = styled.div`
 `;
 
 const Label = styled.div`
-  flex: 1;
+  flex: 1.4;
   text-indent: 10px;
 `;

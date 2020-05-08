@@ -38,12 +38,12 @@ export function NoFixtureSelected({ onShowWelcome }: Props) {
 }
 
 const Subtitle = styled.div`
-  margin: 40px 0 24px -88px;
-  padding-left: 50%;
+  margin: 40px 0 24px 0;
   color: ${screenGrey3};
   font-size: 14px;
   font-weight: 500;
   line-height: 14px;
+  text-align: center;
   letter-spacing: 0.5px;
 `;
 
