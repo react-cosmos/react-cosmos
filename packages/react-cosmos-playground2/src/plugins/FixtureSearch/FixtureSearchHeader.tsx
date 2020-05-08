@@ -23,8 +23,8 @@ export function FixtureSearchHeader({
           <SearchIcon />
         </SearchIconContainer>
         <SearchLabel>Search fixtures</SearchLabel>
-        <KeyBox value={'⌘'} bgColor={white10} textColor={grey160} />
-        <KeyBox value={'P'} bgColor={white10} textColor={grey160} />
+        <KeyBox value={'⌘'} bgColor={white10} textColor={grey160} size={20} />
+        <KeyBox value={'P'} bgColor={white10} textColor={grey160} size={20} />
       </SearchButton>
       <NavButtonContainer>
         <IconButton32
