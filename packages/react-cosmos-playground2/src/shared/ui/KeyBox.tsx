@@ -22,13 +22,12 @@ export function KeyBox({
   fontSize = 14,
 }: Props) {
   const displayValue = value === '⌘' && !isMacLike ? 'Ctrl' : value;
-  const minWidth = size - 2 * padding;
   return (
     <Container
       style={{
         backgroundColor: bgColor,
         color: textColor,
-        minWidth,
+        minWidth: size - 2 * padding,
         height: size,
         padding: `0 ${padding}px`,
         fontSize,
