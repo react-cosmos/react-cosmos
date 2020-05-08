@@ -34,7 +34,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  flex-wrap: wrap;
   cursor: text;
 `;
 
@@ -80,6 +79,7 @@ const ShortcutContainer = styled.div`
 
 const Keys = styled.div`
   flex: 1;
+  min-width: 53px;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;

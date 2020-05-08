@@ -413,10 +413,10 @@ const HelpButton = styled.div<{ selected: boolean }>`
 
 const ShortcutsContainer = styled.div<{ visible: boolean }>`
   height: ${props => (props.visible ? 72 : 0)}px;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
   opacity: ${props => (props.visible ? 1 : 0)};
   transition: height ${quick}s, opacity ${quick}s;
+  user-select: none;
 `;
 
 const ResultsViewport = styled.div`
