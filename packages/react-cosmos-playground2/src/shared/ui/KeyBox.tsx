@@ -12,6 +12,8 @@ type Props = {
 // https://stackoverflow.com/a/11752084/128816
 const isMacLike = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
 
+const padding = 5;
+
 export function KeyBox({
   value,
   textColor,
@@ -20,18 +22,15 @@ export function KeyBox({
   fontSize = 14,
 }: Props) {
   const displayValue = value === '⌘' && !isMacLike ? 'Ctrl' : value;
-  const padding = Math.floor(size / 4);
   const minWidth = size - 2 * padding;
   return (
     <Container
       style={{
         backgroundColor: bgColor,
         color: textColor,
-        marginLeft: Math.round(size / 5),
         minWidth,
         height: size,
         padding: `0 ${padding}px`,
-        borderRadius: Math.round(size / 5),
         fontSize,
         lineHeight: `${size}px`,
       }}
@@ -42,9 +41,12 @@ export function KeyBox({
 }
 
 const Container = styled.span`
+  margin: 0 0 0 5px;
+  padding: 0 ${padding}px;
+  border-radius: 5px;
   text-align: center;
 
   :first-child {
-    margin-left: 0 !important;
+    margin-left: 0;
   }
 `;
