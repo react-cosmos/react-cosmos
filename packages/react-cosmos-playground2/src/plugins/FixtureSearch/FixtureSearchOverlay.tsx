@@ -341,7 +341,7 @@ const Overlay = styled.div`
 `;
 
 const OverlayIE11 = styled(Overlay)`
-  z-index: 1;
+  z-index: 10;
 `;
 
 const Content = styled.div`
