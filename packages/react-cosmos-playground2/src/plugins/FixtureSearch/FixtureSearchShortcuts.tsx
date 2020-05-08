@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { grey224, grey64, grey96 } from '../../shared/ui/colors';
+import { KeyBox } from '../../shared/ui/KeyBox';
 
 export function FixtureSearchShortcuts() {
   return (
@@ -56,7 +57,7 @@ function Shortcut({ keys, label, title }: ShortcutProps) {
     <ShortcutContainer title={title}>
       <Keys>
         {keys.map(key => (
-          <KeyBox key={key}>{key}</KeyBox>
+          <KeyBox key={key} value={key} textColor={grey64} bgColor={grey224} />
         ))}
       </Keys>
       <Label>{label}</Label>
@@ -93,19 +94,4 @@ const Label = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-`;
-
-const KeyBox = styled.span`
-  min-width: 12px;
-  height: 24px;
-  margin: 0 0 0 5px;
-  padding: 0 6px;
-  background: ${grey224};
-  color: ${grey64};
-  border-radius: 5px;
-  text-align: center;
-
-  :first-child {
-    margin-left: 0;
-  }
 `;
