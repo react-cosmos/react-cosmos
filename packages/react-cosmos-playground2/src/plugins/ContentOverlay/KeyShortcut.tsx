@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { screenGrey1, screenGrey5 } from '../../shared/ui/colors';
+import { KeyBox } from '../../shared/ui/KeyBox';
 
 type Props = {
   keys: string[];
@@ -12,7 +13,14 @@ export function KeyShortcut({ keys, label }: Props) {
     <Container>
       <Keys>
         {keys.map(key => (
-          <KeyBox key={key}>{key}</KeyBox>
+          <KeyBox
+            key={key}
+            value={key}
+            bgColor={screenGrey5}
+            textColor={screenGrey1}
+            size={26}
+            fontSize={16}
+          />
         ))}
       </Keys>
       <Label>{label}</Label>
@@ -23,13 +31,9 @@ export function KeyShortcut({ keys, label }: Props) {
 const Container = styled.div`
   display: flex;
   flex-direction: row;
-  height: 24px;
-  margin: 8px 0 16px 0;
-  line-height: 24px;
-
-  :first-child {
-    margin-top: 0;
-  }
+  height: 26px;
+  margin: 0 0 16px 0;
+  line-height: 26px;
 
   :last-child {
     margin-bottom: 0;
@@ -44,20 +48,6 @@ const Keys = styled.div`
 `;
 
 const Label = styled.div`
-  flex: 1;
+  flex: 1.4;
   text-indent: 10px;
-`;
-
-const KeyBox = styled.span`
-  width: 24px;
-  height: 24px;
-  margin: 0 0 0 5px;
-  background: ${screenGrey5};
-  color: ${screenGrey1};
-  border-radius: 5px;
-  text-align: center;
-
-  :first-child {
-    margin-left: 0;
-  }
 `;

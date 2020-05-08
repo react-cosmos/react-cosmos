@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { ChevronLeftIcon, SearchIcon } from '../../shared/icons';
 import { IconButton32 } from '../../shared/ui/buttons';
 import { blue, grey160, grey32, white10 } from '../../shared/ui/colors';
+import { KeyBox } from '../../shared/ui/KeyBox';
 
 type Props = {
   validFixtureSelected: boolean;
@@ -22,6 +23,8 @@ export function FixtureSearchHeader({
           <SearchIcon />
         </SearchIconContainer>
         <SearchLabel>Search fixtures</SearchLabel>
+        <KeyBox value={'⌘'} bgColor={white10} textColor={grey160} />
+        <KeyBox value={'P'} bgColor={white10} textColor={grey160} />
       </SearchButton>
       <NavButtonContainer>
         <IconButton32
@@ -56,7 +59,8 @@ const SearchButton = styled.button`
   border: none;
   background: transparent;
   color: ${grey160};
-  padding: 0 16px;
+  padding: 0 0 0 16px;
+  overflow: hidden;
   cursor: text;
 
   :focus {
@@ -78,6 +82,8 @@ const SearchIconContainer = styled.span`
 `;
 
 const SearchLabel = styled.span`
+  padding: 0 3px 0 0;
+  line-height: 24px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
