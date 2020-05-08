@@ -57,7 +57,7 @@ function Shortcut({ keys, label, title }: ShortcutProps) {
     <ShortcutContainer title={title}>
       <Keys>
         {keys.map(key => (
-          <KeyBox key={key} value={key} textColor={grey64} bgColor={grey224} />
+          <KeyBox key={key} value={key} bgColor={grey224} textColor={grey64} />
         ))}
       </Keys>
       <Label>{label}</Label>

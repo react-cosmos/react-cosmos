@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 type Props = {
   value: string;
-  textColor: string;
   bgColor: string;
+  textColor: string;
   size?: number;
   fontSize?: number;
 };
@@ -16,8 +16,8 @@ const padding = 5;
 
 export function KeyBox({
   value,
-  textColor,
   bgColor,
+  textColor,
   size = 24,
   fontSize = 14,
 }: Props) {
@@ -40,6 +40,7 @@ export function KeyBox({
 }
 
 const Container = styled.span`
+  flex-shrink: 0;
   margin: 0 0 0 5px;
   padding: 0 ${padding}px;
   border-radius: 5px;

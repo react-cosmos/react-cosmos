@@ -16,8 +16,8 @@ export function KeyShortcut({ keys, label }: Props) {
           <KeyBox
             key={key}
             value={key}
-            textColor={screenGrey1}
             bgColor={screenGrey5}
+            textColor={screenGrey1}
             size={26}
             fontSize={16}
           />
