@@ -3,6 +3,7 @@ import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { useValue } from 'react-cosmos/fixture';
 import { FixtureTree } from '.';
 import { TreeExpansion } from '../../../shared/ui/TreeView';
+import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
 
 const fixtures = {
   'src/fixture1.ts': null,
@@ -10,27 +11,32 @@ const fixtures = {
   'src/dir1/fixture3.ts': null,
   'src/dir1/fixture4.ts': ['fixtureA', 'fixtureB'],
 };
+const rootNode = createFixtureTree({
+  fixtures,
+  fixturesDir: '__fixtures__',
+  fixtureFileSuffix: 'fixture',
+});
 
 const fixtureBId = { path: 'src/dir1/fixture4.ts', name: 'fixtureB' };
 
 export default {
-  collapsed: createFixtureTree(),
+  collapsed: createTreeFixture(),
 
-  expanded1: createFixtureTree({ dir1: true }),
+  expanded1: createTreeFixture({ dir1: true }),
 
-  expanded2: createFixtureTree({ dir1: true, 'dir1/fixture4': true }),
+  expanded2: createTreeFixture({ dir1: true, 'dir1/fixture4': true }),
 
-  'selected collapsed': createFixtureTree({}, fixtureBId),
+  'selected collapsed': createTreeFixture({}, fixtureBId),
 
-  'selected expanded1': createFixtureTree({ dir1: true }, fixtureBId),
+  'selected expanded1': createTreeFixture({ dir1: true }, fixtureBId),
 
-  'selected expanded2': createFixtureTree(
+  'selected expanded2': createTreeFixture(
     { dir1: true, 'dir1/fixture4': true },
     fixtureBId
   ),
 };
 
-function createFixtureTree(
+function createTreeFixture(
   initialTreeExpansion: TreeExpansion = {},
   fixtureId: null | FixtureId = null
 ) {
@@ -44,9 +50,7 @@ function createFixtureTree(
     });
     return (
       <FixtureTree
-        fixturesDir="__fixtures__"
-        fixtureFileSuffix="fixture"
-        fixtures={fixtures}
+        rootNode={rootNode}
         selectedFixtureId={selectedFixtureId}
         selectedRef={{ current: null }}
         treeExpansion={treeExpansion}

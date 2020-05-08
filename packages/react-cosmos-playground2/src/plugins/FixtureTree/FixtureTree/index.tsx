@@ -1,6 +1,6 @@
-import React, { RefObject, useMemo } from 'react';
-import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
-import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
+import React, { RefObject } from 'react';
+import { FixtureNode } from 'react-cosmos-shared2/fixtureTree';
+import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
 import { grey32 } from '../../../shared/ui/colors';
 import { TreeExpansion, TreeView } from '../../../shared/ui/TreeView';
@@ -8,9 +8,7 @@ import { FixtureTreeDir } from './FixtureTreeDir';
 import { FixtureTreeItem } from './FixtureTreeItem';
 
 type Props = {
-  fixturesDir: string;
-  fixtureFileSuffix: string;
-  fixtures: FixtureNamesByPath;
+  rootNode: FixtureNode;
   selectedFixtureId: null | FixtureId;
   selectedRef: RefObject<HTMLElement>;
   treeExpansion: TreeExpansion;
@@ -19,19 +17,13 @@ type Props = {
 };
 
 export const FixtureTree = React.memo(function FixtureTree({
-  fixturesDir,
-  fixtureFileSuffix,
-  fixtures,
+  rootNode,
   selectedFixtureId,
   selectedRef,
   treeExpansion,
   onSelect,
   setTreeExpansion,
 }: Props) {
-  const rootNode = useMemo(
-    () => createFixtureTree({ fixtures, fixturesDir, fixtureFileSuffix }),
-    [fixtures, fixturesDir, fixtureFileSuffix]
-  );
   return (
     <Container>
       <TreeView
