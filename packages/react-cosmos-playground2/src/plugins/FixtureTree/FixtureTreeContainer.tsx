@@ -4,7 +4,7 @@ import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
 import { MinusSquareIcon, PlusSquareIcon } from '../../shared/icons';
 import { IconButton32 } from '../../shared/ui/buttons';
-import { grey160, grey32, white10 } from '../../shared/ui/colors';
+import { grey128, grey32, white10 } from '../../shared/ui/colors';
 import { TreeExpansion } from '../../shared/ui/TreeView';
 import { BlankState } from './BlankState';
 import { FixtureTree } from './FixtureTree';
@@ -92,8 +92,7 @@ export function FixtureTreeContainer({
 
 const ProjectName = styled.div`
   padding: 0 4px 0 16px;
-  color: ${grey160};
-  font-weight: 500;
+  color: ${grey128};
   line-height: 24px;
   white-space: nowrap;
   overflow: hidden;
