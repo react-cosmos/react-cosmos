@@ -90,15 +90,6 @@ export function FixtureTreeContainer({
   );
 }
 
-const ProjectName = styled.div`
-  padding: 0 4px 0 16px;
-  color: ${grey128};
-  line-height: 24px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
 const Menu = styled.div`
   flex-shrink: 0;
   height: 40px;
@@ -106,9 +97,18 @@ const Menu = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 8px;
+  padding: 0 4px;
   border-bottom: 1px solid ${white10};
   background: ${grey32};
+`;
+
+const ProjectName = styled.div`
+  padding: 0 4px 0 20px;
+  color: ${grey128};
+  line-height: 24px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 // The background color is required for the proper scroll bar color theme
