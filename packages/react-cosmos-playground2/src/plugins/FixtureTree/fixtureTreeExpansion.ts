@@ -7,14 +7,6 @@ export function isFullyCollapsed(treeExpansion: TreeExpansion) {
   );
 }
 
-export function isFullyExpanded(
-  rootNode: TreeNode<any>,
-  treeExpansion: TreeExpansion
-) {
-  const dirNames = getTreeDirNames(rootNode);
-  return dirNames.every(dirName => treeExpansion[dirName] === true);
-}
-
 export function getFullTreeExpansion(
   rootNode: TreeNode<any>
 ): Record<string, boolean> {
