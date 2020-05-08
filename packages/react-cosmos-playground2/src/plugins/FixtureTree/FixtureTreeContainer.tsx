@@ -60,13 +60,13 @@ export function FixtureTreeContainer({
       {hasDirs(rootNode) && (
         <ExpansionMenu>
           <Button32
-            title="Reuse instances on prop changes"
+            title="Collapse all fixture tree folders"
             label={'collapse all'}
             disabled={isFullyCollapsed(treeExpansion)}
             onClick={() => setTreeExpansion({})}
           />
           <Button32
-            title="Reuse instances on prop changes"
+            title="Expand all fixture tree folders"
             label={'expand all'}
             disabled={isFullyExpanded(rootNode, treeExpansion)}
             onClick={() => setTreeExpansion(getFullTreeExpansion(rootNode))}
