@@ -2,7 +2,8 @@ import React, { useMemo } from 'react';
 import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
-import { grey32 } from '../../shared/ui/colors';
+import { Button32 } from '../../shared/ui/buttons';
+import { grey32, white10 } from '../../shared/ui/colors';
 import { TreeExpansion } from '../../shared/ui/TreeView';
 import { BlankState } from './BlankState';
 import { FixtureTree } from './FixtureTree';
@@ -55,20 +56,20 @@ export function FixtureTreeContainer({
 
   return (
     <>
-      <MenuContainer>
-        <button
+      <ExpansionMenu>
+        <Button32
+          title="Reuse instances on prop changes"
+          label={'collapse all'}
           disabled={isFullyCollapsed(treeExpansion)}
           onClick={() => setTreeExpansion({})}
-        >
-          collapse all
-        </button>
-        <button
+        />
+        <Button32
+          title="Reuse instances on prop changes"
+          label={'expand all'}
           disabled={isFullyExpanded(rootNode, treeExpansion)}
           onClick={() => setTreeExpansion(getFullTreeExpansion(rootNode))}
-        >
-          expand all
-        </button>
-      </MenuContainer>
+        />
+      </ExpansionMenu>
       <TreeContainer ref={containerRef}>
         <FixtureTree
           rootNode={rootNode}
@@ -83,8 +84,15 @@ export function FixtureTreeContainer({
   );
 }
 
-const MenuContainer = styled.div`
+const ExpansionMenu = styled.div`
   flex-shrink: 0;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  border-bottom: 1px solid ${white10};
   background: ${grey32};
 `;
 
