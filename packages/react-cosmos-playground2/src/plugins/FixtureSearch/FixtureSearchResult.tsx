@@ -25,7 +25,7 @@ export function FixtureSearchResult({
   const { fixtureId, fileName, name, parents } = fixtureItem;
 
   const containerRef = useScrollToActive(cleanFixturePath, active);
-  const onClick = React.useCallback(() => onSelect(fixtureId, false), [
+  const onClick = React.useCallback(() => onSelect(fixtureId, true), [
     fixtureId,
     onSelect,
   ]);
