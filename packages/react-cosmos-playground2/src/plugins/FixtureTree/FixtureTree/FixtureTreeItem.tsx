@@ -2,10 +2,9 @@ import { isEqual } from 'lodash';
 import React, { RefObject } from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
-import { blue, grey128 } from '../../../shared/ui/colors';
+import { blue } from '../../../shared/ui/colors';
 import { createRelativePlaygroundUrl } from '../../../shared/url';
-import { Label, ListItem, Unshirinkable } from './shared';
-import { FileIcon, HexagonIcon } from '../../../shared/icons';
+import { Label, ListItem } from './shared';
 
 type Props = {
   parents: string[];
