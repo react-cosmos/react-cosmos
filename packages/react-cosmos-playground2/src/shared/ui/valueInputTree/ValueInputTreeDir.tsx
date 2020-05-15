@@ -86,8 +86,7 @@ const ChevronContainer = styled.span`
   flex-shrink: 0;
   width: ${iconSize}px;
   height: ${iconSize}px;
-  margin: 0 0 0 -3px;
-  padding: 2px 2px 0 0;
+  padding: 0px 2px 0 0;
   color: ${grey160};
 `;
 
@@ -99,6 +98,7 @@ const Text = styled.span`
 
 const DirName = styled.span<{ disabled: boolean }>`
   color: ${disabledColors(grey224, grey128)};
+  padding: 0 0 0 ${props => (props.disabled ? 18 : 0)}px;
 `;
 
 const ChildrenInfo = styled.span`

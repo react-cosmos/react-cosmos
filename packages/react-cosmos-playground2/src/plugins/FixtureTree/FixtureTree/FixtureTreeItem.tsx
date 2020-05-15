@@ -2,9 +2,10 @@ import { isEqual } from 'lodash';
 import React, { RefObject } from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
-import { blue } from '../../../shared/ui/colors';
+import { blue, grey128 } from '../../../shared/ui/colors';
 import { createRelativePlaygroundUrl } from '../../../shared/url';
-import { Label, ListItem } from './shared';
+import { Label, ListItem, Unshirinkable } from './shared';
+import { FileIcon, HexagonIcon } from '../../../shared/icons';
 
 type Props = {
   parents: string[];
@@ -84,5 +85,5 @@ const FixtureLink = styled.a`
 `;
 
 const FixtureLabel = styled(Label)`
-  padding-left: 16px;
+  padding-left: 18px;
 `;

@@ -43,5 +43,5 @@ export const Label = styled(Unshirinkable)`
 `;
 
 function getLeftPadding(depth: number) {
-  return 8 + depth * 16;
+  return 8 + depth * 12;
 }

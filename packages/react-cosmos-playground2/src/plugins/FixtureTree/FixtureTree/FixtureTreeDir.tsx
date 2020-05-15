@@ -3,11 +3,7 @@ import React, { RefObject } from 'react';
 import { FixtureNode } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
-import {
-  ChevronDownIcon,
-  ChevronRightIcon,
-  FolderIcon,
-} from '../../../shared/icons';
+import { ChevronDownIcon, ChevronRightIcon } from '../../../shared/icons';
 import { blue, grey128 } from '../../../shared/ui/colors';
 import { Label, ListItem, Unshirinkable } from './shared';
 
@@ -42,9 +38,6 @@ export function FixtureTreeDir({
         <CevronContainer>
           {isExpanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
         </CevronContainer>
-        <FolderContainer>
-          <FolderIcon />
-        </FolderContainer>
         <Label>{dirName}</Label>
       </ListItem>
     </DirButton>
@@ -96,9 +89,4 @@ const IconContainer = styled(Unshirinkable)`
 
 const CevronContainer = styled(IconContainer)`
   padding-right: 2px;
-  margin-left: -2px;
-`;
-
-const FolderContainer = styled(IconContainer)`
-  padding-right: 6px;
 `;

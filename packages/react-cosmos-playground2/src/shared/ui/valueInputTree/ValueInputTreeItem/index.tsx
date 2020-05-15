@@ -57,7 +57,7 @@ export const ItemContainer = styled.div`
   align-items: flex-start;
   min-height: 28px;
   line-height: 28px;
-  padding: 0;
+  padding: 0 0 0 18px;
 `;
 
 function getItem(
