@@ -60,7 +60,7 @@ const Button = styled.button`
   align-items: center;
   max-width: 100%;
   height: 24px;
-  margin: 0 0 0 -5px;
+  margin: 0;
   padding: 0 4px;
   border: none;
   border-radius: 3px;
