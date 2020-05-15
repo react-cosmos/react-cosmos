@@ -84,5 +84,5 @@ const FixtureLink = styled.a`
 `;
 
 const FixtureLabel = styled(Label)`
-  padding-left: 16px;
+  padding-left: 18px;
 `;

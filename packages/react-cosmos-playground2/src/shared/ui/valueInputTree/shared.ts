@@ -32,5 +32,5 @@ export function stringifyFixtureId(fixtureId: FixtureId) {
 }
 
 function getLeftPadding(depth: number) {
-  return depth * 16;
+  return depth * 12;
 }
