@@ -54,12 +54,6 @@ export const Body = React.memo(function Body() {
   return (
     <>
       <defs>
-        <linearGradient id="tubeGrad" x1="0.7" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#92b1c7" />
-          <stop offset="1" stopColor="#d7e1e8" />
-        </linearGradient>
-      </defs>
-      <defs>
         <clipPath id="oxigenMask">
           <path d={oxigenBgPath} />
         </clipPath>
@@ -252,9 +246,22 @@ export const Body = React.memo(function Body() {
           <stop offset="0" stopColor="#5895c5" />
           <stop offset="1" stopColor="#47779b" />
         </linearGradient>
+        <filter id="handDetailBlur" x="0" y="0">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
+        </filter>
       </defs>
-      <path d={rightHandDetailPath} fill="url(#handDetailGrad)" opacity="0.6" />
-      <path d={leftHandDetailPath} fill="url(#handDetailGrad)" opacity="0.6" />
+      <path
+        d={rightHandDetailPath}
+        fill="url(#handDetailGrad)"
+        filter="url(#handDetailBlur)"
+        opacity="0.6"
+      />
+      <path
+        d={leftHandDetailPath}
+        fill="url(#handDetailGrad)"
+        filter="url(#handDetailBlur)"
+        opacity="0.6"
+      />
       <TorsoLinePath d={torsoLinePath} />
     </>
   );
