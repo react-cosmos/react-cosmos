@@ -12,13 +12,8 @@ export const Tube = React.memo(function Tube() {
           <stop offset="0" stopColor="#92b1c7" />
           <stop offset="1" stopColor="#d7e1e8" />
         </linearGradient>
-        <filter id="tubeBlur" x="0" y="-0.05">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="0.2" />
-        </filter>
       </defs>
-      <g filter="url(#tubeBlur)">
-        <TubePath d={tubePath} />
-      </g>
+      <TubePath d={tubePath} />
     </>
   );
 });

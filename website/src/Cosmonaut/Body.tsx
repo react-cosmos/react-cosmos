@@ -246,22 +246,9 @@ export const Body = React.memo(function Body() {
           <stop offset="0" stopColor="#5895c5" />
           <stop offset="1" stopColor="#47779b" />
         </linearGradient>
-        <filter id="handDetailBlur" x="0" y="0">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
-        </filter>
       </defs>
-      <path
-        d={rightHandDetailPath}
-        fill="url(#handDetailGrad)"
-        filter="url(#handDetailBlur)"
-        opacity="0.6"
-      />
-      <path
-        d={leftHandDetailPath}
-        fill="url(#handDetailGrad)"
-        filter="url(#handDetailBlur)"
-        opacity="0.6"
-      />
+      <path d={rightHandDetailPath} fill="url(#handDetailGrad)" opacity="0.6" />
+      <path d={leftHandDetailPath} fill="url(#handDetailGrad)" opacity="0.6" />
       <TorsoLinePath d={torsoLinePath} />
     </>
   );
