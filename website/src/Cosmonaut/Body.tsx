@@ -54,12 +54,6 @@ export const Body = React.memo(function Body() {
   return (
     <>
       <defs>
-        <linearGradient id="tubeGrad" x1="0.7" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#92b1c7" />
-          <stop offset="1" stopColor="#d7e1e8" />
-        </linearGradient>
-      </defs>
-      <defs>
         <clipPath id="oxigenMask">
           <path d={oxigenBgPath} />
         </clipPath>

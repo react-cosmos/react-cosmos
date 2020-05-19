@@ -17,6 +17,7 @@ export const Stars = React.memo(function Stars() {
           cy={star.y}
           r={star.r}
           fill="url(#starGlow)"
+          opacity={0.8}
         />
       ))}
     </>

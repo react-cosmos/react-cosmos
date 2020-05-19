@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://reactcosmos.org"><img alt="Cosmos" src="cosmos.png"></a>
+  <a href="https://reactcosmos.org"><img alt="Cosmos" width="150" height="150" src="cosmos.png"></a>
 </p>
 
 # React Cosmos
