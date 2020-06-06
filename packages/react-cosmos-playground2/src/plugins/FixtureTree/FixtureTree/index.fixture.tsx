@@ -3,7 +3,7 @@ import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { useValue } from 'react-cosmos/fixture';
 import { FixtureTree } from '.';
-import { TreeExpansion } from '../../../shared/ui/TreeView';
+import { TreeExpansion } from '../../../shared/TreeView';
 
 const fixtures = {
   'src/fixture1.ts': null,

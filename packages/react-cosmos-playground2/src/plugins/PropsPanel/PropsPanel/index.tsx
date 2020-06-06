@@ -3,11 +3,11 @@ import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import {
   FixtureExpansion,
-  OnElementExpansionChange,
-  stringifyElementId,
   hasFsValues,
+  OnElementExpansionChange,
   sortFsValueGroups,
-} from '../../../shared/ui/valueInputTree';
+  stringifyElementId,
+} from '../../../shared/valueInputTree';
 import { ComponentProps } from './ComponentProps';
 
 type Props = {

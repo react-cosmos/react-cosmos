@@ -3,6 +3,8 @@ import React from 'react';
 import { FlatFixtureTreeItem } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
+import { IconButton32 } from '../../shared/buttons';
+import { grey176, grey32, white10 } from '../../shared/colors';
 import {
   MenuIcon,
   RefreshCwIcon,
@@ -10,8 +12,6 @@ import {
   XCircleIcon,
 } from '../../shared/icons';
 import { RendererActionSlot } from '../../shared/slots/RendererActionSlot';
-import { IconButton32 } from '../../shared/ui/buttons';
-import { grey176, grey32, white10 } from '../../shared/ui/colors';
 
 type Props = {
   fixtureItems: FlatFixtureTreeItem[];

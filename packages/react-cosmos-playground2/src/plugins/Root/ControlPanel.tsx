@@ -3,8 +3,8 @@ import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import styled from 'styled-components';
+import { grey32 } from '../../shared/colors';
 import { ControlPanelRowSlot } from '../../shared/slots/ControlPanelRowSlot';
-import { grey32 } from '../../shared/ui/colors';
 
 type Props = {
   fixtureId: FixtureId;

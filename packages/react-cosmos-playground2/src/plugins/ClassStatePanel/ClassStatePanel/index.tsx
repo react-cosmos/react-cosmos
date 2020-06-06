@@ -7,7 +7,7 @@ import {
   OnElementExpansionChange,
   sortFsValueGroups,
   stringifyElementId,
-} from '../../../shared/ui/valueInputTree';
+} from '../../../shared/valueInputTree';
 import { ComponentClassState } from './ComponentClassState';
 
 type Props = {

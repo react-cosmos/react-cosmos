@@ -6,9 +6,9 @@ import {
   FixtureStateValues,
 } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
+import { IconButton32 } from '../../shared/buttons';
 import { RotateCcwIcon } from '../../shared/icons';
-import { IconButton32 } from '../../shared/ui/buttons';
-import { TreeExpansion } from '../../shared/ui/TreeView';
+import { TreeExpansion } from '../../shared/TreeView';
 import {
   Actions,
   Body,
@@ -16,7 +16,7 @@ import {
   Header,
   Title,
   ValueInputTree,
-} from '../../shared/ui/valueInputTree';
+} from '../../shared/valueInputTree';
 
 type Props = {
   fixtureState: FixtureState;

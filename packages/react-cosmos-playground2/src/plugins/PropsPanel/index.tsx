@@ -6,13 +6,13 @@ import {
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { ControlPanelRowSlotProps } from '../../shared/slots/ControlPanelRowSlot';
-import { TreeExpansion } from '../../shared/ui/TreeView';
+import { TreeExpansion } from '../../shared/TreeView';
 import {
   FixtureExpansionGroup,
   getFixtureExpansion,
   hasFsValues,
   updateElementExpansion,
-} from '../../shared/ui/valueInputTree';
+} from '../../shared/valueInputTree';
 import { StorageSpec } from '../Storage/public';
 import { BlankState } from './BlankState';
 import { PropsPanel } from './PropsPanel';

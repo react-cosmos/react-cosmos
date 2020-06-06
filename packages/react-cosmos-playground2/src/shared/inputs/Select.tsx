@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ChevronDownIcon } from '../../icons';
 import { blue, grey176, grey248, grey32 } from '../colors';
+import { ChevronDownIcon } from '../icons';
 import { useFocus } from '../useFocus';
 
 type BaseOption = { value: string; label: string };

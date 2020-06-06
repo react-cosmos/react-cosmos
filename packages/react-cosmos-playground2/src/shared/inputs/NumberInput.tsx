@@ -1,5 +1,5 @@
 import React from 'react';
-import { KEY_DOWN, KEY_UP } from '../../keys';
+import { KEY_DOWN, KEY_UP } from '../keys';
 import { useFocus } from '../useFocus';
 import {
   TextContainer,

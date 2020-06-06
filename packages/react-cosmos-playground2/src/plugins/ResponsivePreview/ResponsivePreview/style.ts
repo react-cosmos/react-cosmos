@@ -1,4 +1,4 @@
-import { white20 } from '../../../shared/ui/colors';
+import { white20 } from '../../../shared/colors';
 import { Viewport } from '../public';
 
 const PADDING = [8, 12, 12, 12];

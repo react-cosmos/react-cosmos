@@ -3,12 +3,12 @@ import { FixtureElementId } from 'react-cosmos-shared2/fixtureState';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { ControlPanelRowSlotProps } from '../../shared/slots/ControlPanelRowSlot';
-import { TreeExpansion } from '../../shared/ui/TreeView';
+import { TreeExpansion } from '../../shared/TreeView';
 import {
   FixtureExpansionGroup,
   getFixtureExpansion,
   updateElementExpansion,
-} from '../../shared/ui/valueInputTree';
+} from '../../shared/valueInputTree';
 import { StorageSpec } from '../Storage/public';
 import { ClassStatePanel } from './ClassStatePanel';
 import { ClassStatePanelSpec } from './public';

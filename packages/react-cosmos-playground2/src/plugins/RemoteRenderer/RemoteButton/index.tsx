@@ -1,6 +1,6 @@
 import React from 'react';
+import { IconButton32 } from '../../../shared/buttons';
 import { CastIcon } from '../../../shared/icons';
-import { IconButton32 } from '../../../shared/ui/buttons';
 import { Notification } from '../../Notifications/public';
 import { copyToClipboard } from './copyToClipboard';
 

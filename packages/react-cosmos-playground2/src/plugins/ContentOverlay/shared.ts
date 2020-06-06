@@ -7,7 +7,7 @@ import {
   screenGrey6,
   screenPrimary2,
   screenPrimary3,
-} from '../../shared/ui/colors';
+} from '../../shared/colors';
 import { ContentOverlaySpec } from './public';
 
 export type ContentOverlayContext = PluginContext<ContentOverlaySpec>;

@@ -6,8 +6,8 @@ import {
   grey32,
   grey8,
   selectedColors,
-} from '../../../shared/ui/colors';
-import { quick } from '../../../shared/ui/vars';
+} from '../../../shared/colors';
+import { quick } from '../../../shared/vars';
 
 type ListItemProps = {
   indentLevel: number;

@@ -2,15 +2,15 @@ import React, { useMemo } from 'react';
 import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
+import { IconButton32 } from '../../shared/buttons';
+import { grey128, grey32, white10 } from '../../shared/colors';
 import { MinusSquareIcon, PlusSquareIcon } from '../../shared/icons';
-import { IconButton32 } from '../../shared/ui/buttons';
-import { grey128, grey32, white10 } from '../../shared/ui/colors';
-import { hasDirs } from '../../shared/ui/tree';
+import { hasDirs } from '../../shared/tree';
 import {
   getFullTreeExpansion,
   isFullyCollapsed,
-} from '../../shared/ui/treeExpansion';
-import { TreeExpansion } from '../../shared/ui/TreeView';
+} from '../../shared/treeExpansion';
+import { TreeExpansion } from '../../shared/TreeView';
 import { BlankState } from './BlankState';
 import { FixtureTree } from './FixtureTree';
 import { useScrollToSelected } from './useScrollToSelected';

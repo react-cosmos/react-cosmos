@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ChevronDownIcon, ChevronRightIcon } from '../../icons';
 import { blue, disabledColors, grey128, grey160, grey224 } from '../colors';
+import { ChevronDownIcon, ChevronRightIcon } from '../icons';
 import { TreeItemContainer, ValueNode } from './shared';
 
 type Props = {

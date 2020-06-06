@@ -1,27 +1,27 @@
-import React from 'react';
 import { isEqual } from 'lodash';
-import { StateUpdater } from 'react-cosmos-shared2/util';
+import React from 'react';
 import {
   FixtureState,
-  FixtureStateValues,
   FixtureStateProps,
-  updateFixtureStateProps,
+  FixtureStateValues,
   resetFixtureStateProps,
+  updateFixtureStateProps,
 } from 'react-cosmos-shared2/fixtureState';
-import { TreeExpansion } from '../../../shared/ui/TreeView';
-import { IconButton32 } from '../../../shared/ui/buttons';
+import { StateUpdater } from 'react-cosmos-shared2/util';
+import { IconButton32 } from '../../../shared/buttons';
+import { CopyIcon, RotateCcwIcon } from '../../../shared/icons';
+import { TreeExpansion } from '../../../shared/TreeView';
 import {
-  ValueInputTree,
-  FixtureExpansion,
-  OnElementExpansionChange,
-  stringifyElementId,
-  Container,
-  Header,
-  Title,
   Actions,
   Body,
-} from '../../../shared/ui/valueInputTree';
-import { RotateCcwIcon, CopyIcon } from '../../../shared/icons';
+  Container,
+  FixtureExpansion,
+  Header,
+  OnElementExpansionChange,
+  stringifyElementId,
+  Title,
+  ValueInputTree,
+} from '../../../shared/valueInputTree';
 import { createPropsFsUpdater } from './shared';
 
 type Props = {
