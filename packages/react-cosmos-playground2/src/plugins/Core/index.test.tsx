@@ -54,3 +54,9 @@ it('returns web renderer URL', () => {
   loadTestPlugins();
   expect(getCoreMethods().getWebRendererUrl()).toBe('mockWebUrl');
 });
+
+it('sets document title to project ID', () => {
+  registerTestPlugins();
+  loadTestPlugins();
+  expect(document.title).toBe('mockProjectId');
+});
