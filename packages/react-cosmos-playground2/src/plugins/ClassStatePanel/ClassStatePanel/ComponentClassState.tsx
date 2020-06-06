@@ -21,6 +21,7 @@ import {
   Title,
   ValueInputTree,
 } from '../../../shared/valueInputTree';
+import { ExpandCollapseValues } from '../../../shared/valueInputTree/ExpandCollapseValues';
 import { createClassStateFsUpdater } from './shared';
 
 type Props = {
@@ -37,10 +38,9 @@ export function ComponentClassState({
   onElementExpansionChange,
 }: Props) {
   const { componentName, elementId, values } = fsClassState;
-  const strElementId = stringifyElementId(elementId);
 
   const [initialValues] = React.useState(() => values);
-  const onResetValues = React.useCallback(
+  const handleValuesReset = React.useCallback(
     () =>
       onFixtureStateChange(
         createClassStateFsUpdater(elementId, prevFs =>
@@ -54,7 +54,7 @@ export function ComponentClassState({
     [elementId, initialValues, onFixtureStateChange]
   );
 
-  const onValueChange = React.useCallback(
+  const handleValueChange = React.useCallback(
     (newValues: FixtureStateValues) => {
       onFixtureStateChange(
         createClassStateFsUpdater(elementId, prevFs =>
@@ -69,7 +69,9 @@ export function ComponentClassState({
     [elementId, onFixtureStateChange]
   );
 
-  const onTreeExpansionChange = React.useCallback(
+  const strElementId = stringifyElementId(elementId);
+  const treeExpansion = fixtureExpansion[strElementId] || {};
+  const handleTreeExpansionChange = React.useCallback(
     (newTreeExpansion: TreeExpansion) =>
       onElementExpansionChange(elementId, newTreeExpansion),
     [elementId, onElementExpansionChange]
@@ -84,7 +86,12 @@ export function ComponentClassState({
             title="Reset to initial values"
             icon={<RotateCcwIcon />}
             disabled={isEqual(values, initialValues)}
-            onClick={onResetValues}
+            onClick={handleValuesReset}
+          />
+          <ExpandCollapseValues
+            values={values}
+            treeExpansion={treeExpansion}
+            onTreeExpansionChange={handleTreeExpansionChange}
           />
         </Actions>
       </Header>
@@ -93,8 +100,8 @@ export function ComponentClassState({
           id={strElementId}
           values={values}
           treeExpansion={fixtureExpansion[strElementId] || {}}
-          onValueChange={onValueChange}
-          onTreeExpansionChange={onTreeExpansionChange}
+          onValueChange={handleValueChange}
+          onTreeExpansionChange={handleTreeExpansionChange}
         />
       </Body>
     </Container>

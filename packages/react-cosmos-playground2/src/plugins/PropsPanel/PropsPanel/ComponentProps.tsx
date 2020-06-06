@@ -9,17 +9,7 @@ import {
 } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import { IconButton32 } from '../../../shared/buttons';
-import {
-  CopyIcon,
-  MinusSquareIcon,
-  PlusSquareIcon,
-  RotateCcwIcon,
-} from '../../../shared/icons';
-import { hasDirs } from '../../../shared/tree';
-import {
-  getFullTreeExpansion,
-  isTreeFullyCollapsed,
-} from '../../../shared/treeExpansion';
+import { CopyIcon, RotateCcwIcon } from '../../../shared/icons';
 import { TreeExpansion } from '../../../shared/TreeView';
 import {
   Actions,
@@ -32,7 +22,7 @@ import {
   Title,
   ValueInputTree,
 } from '../../../shared/valueInputTree';
-import { getFixtureStateValueTree } from '../../../shared/valueInputTree/valueTree';
+import { ExpandCollapseValues } from '../../../shared/valueInputTree/ExpandCollapseValues';
 import { createPropsFsUpdater } from './shared';
 
 type Props = {
@@ -49,13 +39,12 @@ export function ComponentProps({
   onElementExpansionChange,
 }: Props) {
   const { componentName, elementId, values } = fsProps;
-  const strElementId = stringifyElementId(elementId);
 
   const [reset, setReset] = React.useState(true);
-  const onResetChange = React.useCallback(() => setReset(!reset), [reset]);
+  const handleResetToggle = React.useCallback(() => setReset(!reset), [reset]);
 
   const [initialValues] = React.useState(() => values);
-  const handleResetValues = React.useCallback(
+  const handleValuesReset = React.useCallback(
     () =>
       onFixtureStateChange(
         createPropsFsUpdater(elementId, prevFs =>
@@ -85,14 +74,13 @@ export function ComponentProps({
     [elementId, reset, onFixtureStateChange]
   );
 
+  const strElementId = stringifyElementId(elementId);
   const treeExpansion = fixtureExpansion[strElementId] || {};
   const handleTreeExpansionChange = React.useCallback(
     (newTreeExpansion: TreeExpansion) =>
       onElementExpansionChange(elementId, newTreeExpansion),
     [elementId, onElementExpansionChange]
   );
-
-  const rootNode = getFixtureStateValueTree(values);
 
   return (
     <Container>
@@ -103,30 +91,20 @@ export function ComponentProps({
             title="Reset to initial values"
             icon={<RotateCcwIcon />}
             disabled={isEqual(values, initialValues)}
-            onClick={handleResetValues}
+            onClick={handleValuesReset}
           />
           <IconButton32
             title="Reuse instances on prop changes"
             icon={<CopyIcon />}
             selected={!reset}
             disabled={false}
-            onClick={onResetChange}
+            onClick={handleResetToggle}
           />
-          {!hasDirs(rootNode) ? null : isTreeFullyCollapsed(treeExpansion) ? (
-            <IconButton32
-              title="Expand all fixture tree folders"
-              icon={<PlusSquareIcon />}
-              onClick={() =>
-                handleTreeExpansionChange(getFullTreeExpansion(rootNode))
-              }
-            />
-          ) : (
-            <IconButton32
-              title="Collapse all fixture tree folders"
-              icon={<MinusSquareIcon />}
-              onClick={() => handleTreeExpansionChange({})}
-            />
-          )}
+          <ExpandCollapseValues
+            values={values}
+            treeExpansion={treeExpansion}
+            onTreeExpansionChange={handleTreeExpansionChange}
+          />
         </Actions>
       </Header>
       <Body>
