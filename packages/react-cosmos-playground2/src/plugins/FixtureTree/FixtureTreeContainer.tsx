@@ -61,7 +61,14 @@ export function FixtureTreeContainer({
     <>
       <Menu>
         <ProjectName title={projectId}>{projectId}</ProjectName>
-        {isFullyCollapsed(treeExpansion) ? (
+        {!hasDirs(rootNode) ? (
+          <IconButton32
+            title="Collapse all fixture tree folders"
+            icon={<MinusSquareIcon />}
+            disabled
+            onClick={() => {}}
+          />
+        ) : isFullyCollapsed(treeExpansion) ? (
           <IconButton32
             title="Expand all fixture tree folders"
             icon={<PlusSquareIcon />}
@@ -71,7 +78,6 @@ export function FixtureTreeContainer({
           <IconButton32
             title="Collapse all fixture tree folders"
             icon={<MinusSquareIcon />}
-            disabled={!hasDirs(rootNode)}
             onClick={() => setTreeExpansion({})}
           />
         )}
