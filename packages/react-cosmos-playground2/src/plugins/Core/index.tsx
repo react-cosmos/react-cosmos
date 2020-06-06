@@ -33,6 +33,11 @@ onLoad(pluginContext =>
   registerShortcuts(command => runCommand(pluginContext, command))
 );
 
+onLoad(pluginContext => {
+  const { projectId } = pluginContext.getConfig();
+  document.title = projectId;
+});
+
 function registerCommands(context: CoreContext, commands: Commands) {
   context.setState(prevState => {
     const existingCommandNames = Object.keys(prevState.commands);
