@@ -9,7 +9,7 @@ describe('Native', () => {
 
   context('homepage', () => {
     it('has document title', () => {
-      cy.title().should('include', 'React Cosmos');
+      cy.title().should('include', 'react-cosmos-example');
     });
 
     it('displays pending renderer message', () => {
