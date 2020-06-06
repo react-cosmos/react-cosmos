@@ -8,7 +8,7 @@ import { MinusSquareIcon, PlusSquareIcon } from '../../shared/icons';
 import { hasDirs } from '../../shared/tree';
 import {
   getFullTreeExpansion,
-  isFullyCollapsed,
+  isTreeFullyCollapsed,
 } from '../../shared/treeExpansion';
 import { TreeExpansion } from '../../shared/TreeView';
 import { BlankState } from './BlankState';
@@ -68,7 +68,7 @@ export function FixtureTreeContainer({
             disabled
             onClick={() => {}}
           />
-        ) : isFullyCollapsed(treeExpansion) ? (
+        ) : isTreeFullyCollapsed(treeExpansion) ? (
           <IconButton32
             title="Expand all fixture tree folders"
             icon={<PlusSquareIcon />}
