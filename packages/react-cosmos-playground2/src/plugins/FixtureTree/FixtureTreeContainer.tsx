@@ -5,14 +5,14 @@ import styled from 'styled-components';
 import { MinusSquareIcon, PlusSquareIcon } from '../../shared/icons';
 import { IconButton32 } from '../../shared/ui/buttons';
 import { grey128, grey32, white10 } from '../../shared/ui/colors';
+import { hasDirs } from '../../shared/ui/tree';
+import {
+  getFullTreeExpansion,
+  isFullyCollapsed,
+} from '../../shared/ui/treeExpansion';
 import { TreeExpansion } from '../../shared/ui/TreeView';
 import { BlankState } from './BlankState';
 import { FixtureTree } from './FixtureTree';
-import {
-  getFullTreeExpansion,
-  hasDirs,
-  isFullyCollapsed,
-} from './fixtureTreeExpansion';
 import { useScrollToSelected } from './useScrollToSelected';
 
 type Props = {
