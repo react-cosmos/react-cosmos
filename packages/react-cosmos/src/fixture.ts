@@ -1,5 +1,4 @@
 export {
-  FixtureCapture,
   FixtureContext,
   useValue,
   Viewport,
