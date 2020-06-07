@@ -60,8 +60,12 @@ export async function webpackDevServer({
 
   const webpackCompiler = userWebpack(webpackConfig);
   webpackCompiler.hooks.invalid.tap('Cosmos', filePath => {
-    const relFilePath = path.relative(process.cwd(), filePath);
-    console.log('[Cosmos] webpack build invalidated by', relFilePath);
+    if (typeof filePath === 'string') {
+      const relFilePath = path.relative(process.cwd(), filePath);
+      console.log('[Cosmos] webpack build invalidated by', relFilePath);
+    } else {
+      console.log('[Cosmos] webpack build invalidated by unknown file');
+    }
     sendBuildMessage({ type: 'buildStart' });
   });
   webpackCompiler.hooks.failed.tap('Cosmos', () => {
