@@ -43,9 +43,11 @@ const Container = styled.div`
   background: ${grey32};
 `;
 
+// The background color is required for the proper scroll bar color theme
 const Content = styled.div`
   width: 100%;
   max-height: 100%;
+  background: ${grey32};
   overflow-x: hidden;
   overflow-y: auto;
 `;
