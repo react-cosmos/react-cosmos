@@ -1,26 +1,27 @@
-import React from 'react';
 import { isEqual } from 'lodash';
-import { StateUpdater } from 'react-cosmos-shared2/util';
+import React from 'react';
 import {
   FixtureState,
-  FixtureStateValues,
   FixtureStateClassState,
+  FixtureStateValues,
   updateFixtureStateClassState,
 } from 'react-cosmos-shared2/fixtureState';
-import { TreeExpansion } from '../../../shared/ui/TreeView';
-import { IconButton32 } from '../../../shared/ui/buttons';
+import { StateUpdater } from 'react-cosmos-shared2/util';
+import { IconButton32 } from '../../../shared/buttons';
+import { RotateCcwIcon } from '../../../shared/icons';
+import { TreeExpansion } from '../../../shared/TreeView';
 import {
-  ValueInputTree,
-  FixtureExpansion,
-  OnElementExpansionChange,
-  stringifyElementId,
-  Container,
-  Header,
-  Title,
   Actions,
   Body,
-} from '../../../shared/ui/valueInputTree';
-import { RotateCcwIcon } from '../../../shared/icons';
+  Container,
+  FixtureExpansion,
+  Header,
+  OnElementExpansionChange,
+  stringifyElementId,
+  Title,
+  ValueInputTree,
+} from '../../../shared/valueInputTree';
+import { ExpandCollapseValues } from '../../../shared/valueInputTree/ExpandCollapseValues';
 import { createClassStateFsUpdater } from './shared';
 
 type Props = {
@@ -37,10 +38,9 @@ export function ComponentClassState({
   onElementExpansionChange,
 }: Props) {
   const { componentName, elementId, values } = fsClassState;
-  const strElementId = stringifyElementId(elementId);
 
   const [initialValues] = React.useState(() => values);
-  const onResetValues = React.useCallback(
+  const handleValuesReset = React.useCallback(
     () =>
       onFixtureStateChange(
         createClassStateFsUpdater(elementId, prevFs =>
@@ -54,7 +54,7 @@ export function ComponentClassState({
     [elementId, initialValues, onFixtureStateChange]
   );
 
-  const onValueChange = React.useCallback(
+  const handleValueChange = React.useCallback(
     (newValues: FixtureStateValues) => {
       onFixtureStateChange(
         createClassStateFsUpdater(elementId, prevFs =>
@@ -69,7 +69,9 @@ export function ComponentClassState({
     [elementId, onFixtureStateChange]
   );
 
-  const onTreeExpansionChange = React.useCallback(
+  const strElementId = stringifyElementId(elementId);
+  const treeExpansion = fixtureExpansion[strElementId] || {};
+  const handleTreeExpansionChange = React.useCallback(
     (newTreeExpansion: TreeExpansion) =>
       onElementExpansionChange(elementId, newTreeExpansion),
     [elementId, onElementExpansionChange]
@@ -84,7 +86,12 @@ export function ComponentClassState({
             title="Reset to initial values"
             icon={<RotateCcwIcon />}
             disabled={isEqual(values, initialValues)}
-            onClick={onResetValues}
+            onClick={handleValuesReset}
+          />
+          <ExpandCollapseValues
+            values={values}
+            treeExpansion={treeExpansion}
+            onTreeExpansionChange={handleTreeExpansionChange}
           />
         </Actions>
       </Header>
@@ -93,8 +100,8 @@ export function ComponentClassState({
           id={strElementId}
           values={values}
           treeExpansion={fixtureExpansion[strElementId] || {}}
-          onValueChange={onValueChange}
-          onTreeExpansionChange={onTreeExpansionChange}
+          onValueChange={handleValueChange}
+          onTreeExpansionChange={handleTreeExpansionChange}
         />
       </Body>
     </Container>

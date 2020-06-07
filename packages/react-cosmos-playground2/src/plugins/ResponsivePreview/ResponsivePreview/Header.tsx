@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Button8 } from '../../../shared/buttons';
+import { blue, grey128, grey248, grey8 } from '../../../shared/colors';
 import { Minimize2Icon } from '../../../shared/icons';
-import { Button8 } from '../../../shared/ui/buttons';
-import { blue, grey128, grey248, grey8 } from '../../../shared/ui/colors';
-import { NumberInput } from '../../../shared/ui/inputs/NumberInput';
-import { Select } from '../../../shared/ui/inputs/Select';
+import { NumberInput } from '../../../shared/inputs/NumberInput';
+import { Select } from '../../../shared/inputs/Select';
 import { Device, Viewport } from '../public';
 
 type Props = {

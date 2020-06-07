@@ -1,19 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { grey128, grey32, grey64, grey8, white95 } from '../../shared/colors';
 import {
   AlertCircleIcon,
   CheckCircleIcon,
   InfoIcon,
   LoaderIcon,
 } from '../../shared/icons';
-import {
-  grey128,
-  grey32,
-  grey64,
-  grey8,
-  white95,
-} from '../../shared/ui/colors';
-import { quick } from '../../shared/ui/vars';
+import { quick } from '../../shared/vars';
 import { Notification, NotificationType } from './public';
 
 type Props = {

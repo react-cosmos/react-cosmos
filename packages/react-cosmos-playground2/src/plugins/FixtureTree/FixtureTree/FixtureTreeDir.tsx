@@ -3,8 +3,8 @@ import React, { RefObject } from 'react';
 import { FixtureNode } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
+import { blue, grey128 } from '../../../shared/colors';
 import { ChevronDownIcon, ChevronRightIcon } from '../../../shared/icons';
-import { blue, grey128 } from '../../../shared/ui/colors';
 import { Label, ListItem, Unshirinkable } from './shared';
 
 type Props = {

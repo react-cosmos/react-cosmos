@@ -1,7 +1,7 @@
 import React from 'react';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { ControlPanelRowSlotProps } from '../../shared/slots/ControlPanelRowSlot';
-import { TreeExpansion } from '../../shared/ui/TreeView';
+import { TreeExpansion } from '../../shared/TreeView';
 import { StorageSpec } from '../Storage/public';
 import { ValuesPanelSpec } from './public';
 import { ValuesPanel } from './ValuesPanel';

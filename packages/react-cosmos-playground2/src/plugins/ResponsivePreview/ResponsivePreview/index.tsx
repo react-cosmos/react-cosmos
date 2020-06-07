@@ -1,10 +1,10 @@
 import { isEqual } from 'lodash';
 import React from 'react';
 import styled from 'styled-components';
+import { grey8 } from '../../../shared/colors';
 import { Device, Viewport } from '../public';
 import { Header } from './Header';
-import { getViewportScaleFactor, getStyles, stretchStyle } from './style';
-import { grey8 } from '../../../shared/ui/colors';
+import { getStyles, getViewportScaleFactor, stretchStyle } from './style';
 
 type Props = {
   children: React.ReactNode;

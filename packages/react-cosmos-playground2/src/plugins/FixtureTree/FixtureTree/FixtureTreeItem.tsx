@@ -2,7 +2,7 @@ import { isEqual } from 'lodash';
 import React, { RefObject } from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
-import { blue } from '../../../shared/ui/colors';
+import { blue } from '../../../shared/colors';
 import { createRelativePlaygroundUrl } from '../../../shared/url';
 import { Label, ListItem } from './shared';
 

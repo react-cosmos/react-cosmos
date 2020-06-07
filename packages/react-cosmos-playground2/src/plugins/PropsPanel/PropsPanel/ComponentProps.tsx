@@ -1,27 +1,28 @@
-import React from 'react';
 import { isEqual } from 'lodash';
-import { StateUpdater } from 'react-cosmos-shared2/util';
+import React from 'react';
 import {
   FixtureState,
-  FixtureStateValues,
   FixtureStateProps,
-  updateFixtureStateProps,
+  FixtureStateValues,
   resetFixtureStateProps,
+  updateFixtureStateProps,
 } from 'react-cosmos-shared2/fixtureState';
-import { TreeExpansion } from '../../../shared/ui/TreeView';
-import { IconButton32 } from '../../../shared/ui/buttons';
+import { StateUpdater } from 'react-cosmos-shared2/util';
+import { IconButton32 } from '../../../shared/buttons';
+import { CopyIcon, RotateCcwIcon } from '../../../shared/icons';
+import { TreeExpansion } from '../../../shared/TreeView';
 import {
-  ValueInputTree,
-  FixtureExpansion,
-  OnElementExpansionChange,
-  stringifyElementId,
-  Container,
-  Header,
-  Title,
   Actions,
   Body,
-} from '../../../shared/ui/valueInputTree';
-import { RotateCcwIcon, CopyIcon } from '../../../shared/icons';
+  Container,
+  FixtureExpansion,
+  Header,
+  OnElementExpansionChange,
+  stringifyElementId,
+  Title,
+  ValueInputTree,
+} from '../../../shared/valueInputTree';
+import { ExpandCollapseValues } from '../../../shared/valueInputTree/ExpandCollapseValues';
 import { createPropsFsUpdater } from './shared';
 
 type Props = {
@@ -38,13 +39,12 @@ export function ComponentProps({
   onElementExpansionChange,
 }: Props) {
   const { componentName, elementId, values } = fsProps;
-  const strElementId = stringifyElementId(elementId);
 
   const [reset, setReset] = React.useState(true);
-  const onResetChange = React.useCallback(() => setReset(!reset), [reset]);
+  const handleResetToggle = React.useCallback(() => setReset(!reset), [reset]);
 
   const [initialValues] = React.useState(() => values);
-  const onResetValues = React.useCallback(
+  const handleValuesReset = React.useCallback(
     () =>
       onFixtureStateChange(
         createPropsFsUpdater(elementId, prevFs =>
@@ -58,7 +58,7 @@ export function ComponentProps({
     [elementId, initialValues, onFixtureStateChange]
   );
 
-  const onValueChange = React.useCallback(
+  const handleValueChange = React.useCallback(
     (newValues: FixtureStateValues) => {
       const changeFn = reset ? resetFixtureStateProps : updateFixtureStateProps;
       onFixtureStateChange(
@@ -74,7 +74,9 @@ export function ComponentProps({
     [elementId, reset, onFixtureStateChange]
   );
 
-  const onTreeExpansionChange = React.useCallback(
+  const strElementId = stringifyElementId(elementId);
+  const treeExpansion = fixtureExpansion[strElementId] || {};
+  const handleTreeExpansionChange = React.useCallback(
     (newTreeExpansion: TreeExpansion) =>
       onElementExpansionChange(elementId, newTreeExpansion),
     [elementId, onElementExpansionChange]
@@ -89,14 +91,19 @@ export function ComponentProps({
             title="Reset to initial values"
             icon={<RotateCcwIcon />}
             disabled={isEqual(values, initialValues)}
-            onClick={onResetValues}
+            onClick={handleValuesReset}
           />
           <IconButton32
             title="Reuse instances on prop changes"
             icon={<CopyIcon />}
             selected={!reset}
             disabled={false}
-            onClick={onResetChange}
+            onClick={handleResetToggle}
+          />
+          <ExpandCollapseValues
+            values={values}
+            treeExpansion={treeExpansion}
+            onTreeExpansionChange={handleTreeExpansionChange}
           />
         </Actions>
       </Header>
@@ -104,9 +111,9 @@ export function ComponentProps({
         <ValueInputTree
           id={strElementId}
           values={values}
-          treeExpansion={fixtureExpansion[strElementId] || {}}
-          onValueChange={onValueChange}
-          onTreeExpansionChange={onTreeExpansionChange}
+          treeExpansion={treeExpansion}
+          onValueChange={handleValueChange}
+          onTreeExpansionChange={handleTreeExpansionChange}
         />
       </Body>
     </Container>

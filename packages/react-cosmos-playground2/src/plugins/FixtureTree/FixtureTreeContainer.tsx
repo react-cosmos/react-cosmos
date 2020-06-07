@@ -2,17 +2,17 @@ import React, { useMemo } from 'react';
 import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
+import { IconButton32 } from '../../shared/buttons';
+import { grey128, grey32, white10 } from '../../shared/colors';
 import { MinusSquareIcon, PlusSquareIcon } from '../../shared/icons';
-import { IconButton32 } from '../../shared/ui/buttons';
-import { grey128, grey32, white10 } from '../../shared/ui/colors';
-import { TreeExpansion } from '../../shared/ui/TreeView';
-import { BlankState } from './BlankState';
-import { FixtureTree } from './FixtureTree';
+import { hasNonEmptyDirs } from '../../shared/tree';
 import {
   getFullTreeExpansion,
-  hasDirs,
-  isFullyCollapsed,
-} from './fixtureTreeExpansion';
+  isTreeFullyCollapsed,
+} from '../../shared/treeExpansion';
+import { TreeExpansion } from '../../shared/TreeView';
+import { BlankState } from './BlankState';
+import { FixtureTree } from './FixtureTree';
 import { useScrollToSelected } from './useScrollToSelected';
 
 type Props = {
@@ -61,7 +61,14 @@ export function FixtureTreeContainer({
     <>
       <Menu>
         <ProjectName title={projectId}>{projectId}</ProjectName>
-        {isFullyCollapsed(treeExpansion) ? (
+        {!hasNonEmptyDirs(rootNode) ? (
+          <IconButton32
+            title="Collapse all fixture tree folders"
+            icon={<MinusSquareIcon />}
+            disabled
+            onClick={() => {}}
+          />
+        ) : isTreeFullyCollapsed(treeExpansion) ? (
           <IconButton32
             title="Expand all fixture tree folders"
             icon={<PlusSquareIcon />}
@@ -71,7 +78,6 @@ export function FixtureTreeContainer({
           <IconButton32
             title="Collapse all fixture tree folders"
             icon={<MinusSquareIcon />}
-            disabled={!hasDirs(rootNode)}
             onClick={() => setTreeExpansion({})}
           />
         )}

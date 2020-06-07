@@ -5,7 +5,7 @@ import {
   FixtureStateClassState,
 } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
-import { stringifyElementId } from '../../../shared/ui/valueInputTree';
+import { stringifyElementId } from '../../../shared/valueInputTree';
 
 export function createClassStateFsUpdater(
   elementId: FixtureElementId,

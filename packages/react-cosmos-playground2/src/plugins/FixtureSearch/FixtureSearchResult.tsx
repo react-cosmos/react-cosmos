@@ -7,7 +7,7 @@ import {
   createGreyColor,
   grey64,
   selectedColors,
-} from '../../shared/ui/colors';
+} from '../../shared/colors';
 
 type Props = {
   active: boolean;

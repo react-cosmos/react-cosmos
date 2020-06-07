@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { IconButton32 } from '../../shared/buttons';
+import { blue, grey160, grey32, white10 } from '../../shared/colors';
 import { ChevronLeftIcon, SearchIcon } from '../../shared/icons';
-import { IconButton32 } from '../../shared/ui/buttons';
-import { blue, grey160, grey32, white10 } from '../../shared/ui/colors';
-import { KeyBox } from '../../shared/ui/KeyBox';
+import { KeyBox } from '../../shared/KeyBox';
 
 type Props = {
   validFixtureSelected: boolean;

@@ -3,8 +3,8 @@ import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import styled from 'styled-components';
+import { grey32 } from '../../shared/colors';
 import { ControlPanelRowSlot } from '../../shared/slots/ControlPanelRowSlot';
-import { grey32 } from '../../shared/ui/colors';
 
 type Props = {
   fixtureId: FixtureId;
@@ -43,9 +43,11 @@ const Container = styled.div`
   background: ${grey32};
 `;
 
+// The background color is required for the proper scroll bar color theme
 const Content = styled.div`
   width: 100%;
   max-height: 100%;
+  background: ${grey32};
   overflow-x: hidden;
   overflow-y: auto;
 `;

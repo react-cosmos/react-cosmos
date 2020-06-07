@@ -6,9 +6,9 @@ import {
   FixtureStateValues,
 } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
+import { IconButton32 } from '../../shared/buttons';
 import { RotateCcwIcon } from '../../shared/icons';
-import { IconButton32 } from '../../shared/ui/buttons';
-import { TreeExpansion } from '../../shared/ui/TreeView';
+import { TreeExpansion } from '../../shared/TreeView';
 import {
   Actions,
   Body,
@@ -16,7 +16,8 @@ import {
   Header,
   Title,
   ValueInputTree,
-} from '../../shared/ui/valueInputTree';
+} from '../../shared/valueInputTree';
+import { ExpandCollapseValues } from '../../shared/valueInputTree/ExpandCollapseValues';
 
 type Props = {
   fixtureState: FixtureState;
@@ -31,21 +32,20 @@ export const ValuesPanel = React.memo(function ClassStatePanel({
   onFixtureStateChange,
   onTreeExpansionChange,
 }: Props) {
-  const onValueChange = React.useCallback(
-    (newValues: FixtureStateValues) => {
-      onFixtureStateChange(prevFsState => updateValues(prevFsState, newValues));
-    },
+  const handleValueChange = React.useCallback(
+    (newValues: FixtureStateValues) =>
+      onFixtureStateChange(prevFsState => updateValues(prevFsState, newValues)),
     [onFixtureStateChange]
   );
 
-  const onResetValues = React.useCallback(() => {
+  const handleValuesReset = React.useCallback(() => {
     onFixtureStateChange(resetValues);
   }, [onFixtureStateChange]);
 
   const fsValuePairs = fixtureState.values || {};
-  if (Object.keys(fsValuePairs).length === 0) {
-    return null;
-  }
+  if (Object.keys(fsValuePairs).length === 0) return null;
+
+  const values = extractCurrentValuesFromValuePairs(fsValuePairs);
 
   return (
     <Container>
@@ -56,16 +56,21 @@ export const ValuesPanel = React.memo(function ClassStatePanel({
             title="Reset to default values"
             icon={<RotateCcwIcon />}
             disabled={areValuesEqual(fsValuePairs)}
-            onClick={onResetValues}
+            onClick={handleValuesReset}
+          />
+          <ExpandCollapseValues
+            values={values}
+            treeExpansion={treeExpansion}
+            onTreeExpansionChange={onTreeExpansionChange}
           />
         </Actions>
       </Header>
       <Body>
         <ValueInputTree
           id="values"
-          values={extractCurrentValuesFromValuePairs(fsValuePairs)}
+          values={values}
           treeExpansion={treeExpansion}
-          onValueChange={onValueChange}
+          onValueChange={handleValueChange}
           onTreeExpansionChange={onTreeExpansionChange}
         />
       </Body>
