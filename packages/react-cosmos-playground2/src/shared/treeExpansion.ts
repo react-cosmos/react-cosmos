@@ -1,5 +1,5 @@
 import { TreeNode } from 'react-cosmos-shared2/fixtureTree';
-import { getTreeDirNames } from './tree';
+import { getNonEmptyTreeDirNames } from './tree';
 import { TreeExpansion } from './TreeView';
 
 export function isTreeFullyCollapsed(treeExpansion: TreeExpansion) {
@@ -11,7 +11,7 @@ export function isTreeFullyCollapsed(treeExpansion: TreeExpansion) {
 export function getFullTreeExpansion(
   rootNode: TreeNode<any>
 ): Record<string, boolean> {
-  const dirNames = getTreeDirNames(rootNode);
+  const dirNames = getNonEmptyTreeDirNames(rootNode);
   return dirNames.reduce(
     (treeExpansion, dirName) => ({ ...treeExpansion, [dirName]: true }),
     {}

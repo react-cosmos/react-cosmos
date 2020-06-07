@@ -1,10 +1,10 @@
 import { TreeNode } from 'react-cosmos-shared2/fixtureTree';
 
-export function hasDirs(rootNode: TreeNode<any>) {
-  return getTreeDirNames(rootNode).length > 0;
+export function hasNonEmptyDirs(rootNode: TreeNode<any>) {
+  return getNonEmptyTreeDirNames(rootNode).length > 0;
 }
 
-export function getTreeDirNames(
+export function getNonEmptyTreeDirNames(
   treeNode: TreeNode<any>,
   parentPath: string[] = []
 ) {
@@ -12,9 +12,19 @@ export function getTreeDirNames(
 
   const { dirs } = treeNode;
   Object.keys(dirs).forEach(dirName => {
-    dirNames.push([...parentPath, dirName].join('/'));
-    dirNames.push(...getTreeDirNames(dirs[dirName], [...parentPath, dirName]));
+    const dirNode = dirs[dirName];
+    if (!isTreeNodeEmpty(dirNode)) {
+      dirNames.push([...parentPath, dirName].join('/'));
+      dirNames.push(
+        ...getNonEmptyTreeDirNames(dirNode, [...parentPath, dirName])
+      );
+    }
   });
 
   return dirNames;
+}
+
+function isTreeNodeEmpty(treeNode: TreeNode<any>) {
+  const { dirs, items } = treeNode;
+  return Object.keys(dirs).length === 0 && Object.keys(items).length === 0;
 }
