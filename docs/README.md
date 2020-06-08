@@ -442,7 +442,7 @@ Aside from the fixture information showcased above, each fixture object returned
 
 ## Create React App
 
-- Set `webpack.configPath` to `react-scripts/config/webpack.config`.
+- Set `webpack.configPath` to `react-scripts/config/webpack.config`. Unless you use react-app-rewired (see below).
 - Make sure to place fixture and decorator files in the `src` directory.
 - Set `staticPath` to `public` to load static assets inside React Cosmos.
 - Restrict `watchDirs` to `src` to ignore file changes outside the source directory.
@@ -458,6 +458,21 @@ This is a `cosmos.config.json` example for Create React App:
   }
 }
 ```
+
+### Using react-app-rewired
+
+In a standard Create React App setup you config React Cosmos to use CRA's internal webpack config (see above). With react-app-rewired, however, create the following webpack config in your project root instead.
+
+```js
+// webpack.config.js
+const { paths } = require('react-app-rewired');
+const overrides = require('react-app-rewired/config-overrides');
+const config = require(paths.scriptVersion + '/config/webpack.config.dev');
+
+module.exports = overrides.webpack(config, process.env.NODE_ENV);
+```
+
+> React Cosmos picks up `webpack.config.js` automatically. Use `webpack.configPath` if you prefer to customize the webpack config path.
 
 ## Next.js
 
