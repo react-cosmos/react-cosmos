@@ -505,6 +505,8 @@ module.exports = (config, { env }) => {
 };
 ```
 
+> React Cosmos picks up `webpack.override.js` automatically. Use `webpack.overridePath` if you prefer to customize the webpack config path.
+
 ## Troubleshooting
 
 > **Warning**: Most React Cosmos issues are related to missing build dependencies. Please see [Compilation](#compilation).
