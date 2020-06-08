@@ -2,7 +2,7 @@
 
 - Setup: [Getting started](#getting-started) · [Requirements](#requirements) · [Config](#config) · [Compilation](#compilation) · [Webpack](#webpack)
 - Usage: [Fixtures](#fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [UI controls](#ui-controlled-values) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
-- FAQ: [Troubleshooting](#troubleshooting) · [Where's my old Cosmos?](#wheres-my-old-cosmos) · [Roadmap](../TODO.md)
+- FAQ: [Create React App](#create-react-app) · [Next.js](#nextjs) · [Troubleshooting](#troubleshooting) · [Where's my old Cosmos?](#wheres-my-old-cosmos) · [Roadmap](../TODO.md)
 
 The [example package](../example) is a useful complement to this guide.
 
@@ -149,18 +149,15 @@ In many cases Cosmos manages to get webpack working without human intervention. 
 
 Probably the most common scenario. Most of us end up with a hairy webpack config sooner or later. Use the `webpack.configPath` setting to point to an existing webpack config.
 
-You can also point to a module inside a dependency, like in the following Create React App example.
-
 ```json
 {
-  "watchDirs": ["src"],
   "webpack": {
-    "configPath": "react-scripts/config/webpack.config"
+    "configPath": "./webpack.config.js"
   }
 }
 ```
 
-> Both `watchDirs` and `webpack.configPath` options are recommended for a seamless integration with Create React App.
+> You can also point to a module inside a dependency, like in the [Create React App](#create-react-app) example.
 
 ### Webpack config override
 
@@ -443,6 +440,56 @@ Aside from the fixture information showcased above, each fixture object returned
 
 > The function is called `getFixtures2` because it supersedes a previous function that's no longer documented, but wasn't removed for backwards compatibility.
 
+## Create React App
+
+- Set `webpack.configPath` to `react-scripts/config/webpack.config`.
+- Make sure to place fixture and decorator files in the `src` directory.
+- Set `staticPath` to `public` to load static assets inside React Cosmos.
+- Restrict `watchDirs` to `src` to ignore file changes outside the source directory.
+
+This is a `cosmos.config.json` example for Create React App:
+
+```json
+{
+  "staticPath": "public",
+  "watchDirs": ["src"],
+  "webpack": {
+    "configPath": "react-scripts/config/webpack.config"
+  }
+}
+```
+
+## Next.js
+
+- Install `html-webpack-plugin` as a dev dependency.
+- Override the React Cosmos webpack config with `ProvidePlugin` to support JSX without importing React.
+- Set `staticPath` to `public` to load static assets inside React Cosmos.
+
+This is a `cosmos.config.json` example for Next.js:
+
+```json
+{
+  "staticPath": "public"
+}
+```
+
+And this is the webpack override config:
+
+```js
+// webpack.override.js
+var webpack = require('webpack');
+
+module.exports = (config, { env }) => {
+  return {
+    ...config,
+    plugins: [
+      ...(config.plugins || []),
+      new webpack.ProvidePlugin({ React: 'react' }),
+    ],
+  };
+};
+```
+
 ## Troubleshooting
 
 > **Warning**: Most React Cosmos issues are related to missing build dependencies. Please see [Compilation](#compilation).
@@ -451,18 +498,6 @@ Aside from the fixture information showcased above, each fixture object returned
 
 - Check for build errors in your terminal.
 - Make sure you have html-webpack-plugin installed, as well as [any other build dependency](#compilation).
-
-#### Using Create React App?
-
-- Set `webpack.configPath` to `react-scripts/config/webpack.config`. See example in [custom webpack config](#custom-webpack-config).
-- Make sure to place fixture and decorator files in the `src` directory.
-- Set `staticPath` to `public`.
-
-#### Using Next.js?
-
-- [Make sure you have html-webpack-plugin installed](https://github.com/react-cosmos/react-cosmos/issues/995#issuecomment-511883135).
-- [Override your webpack config with ProvidePlugin to support JSX without importing React](https://github.com/react-cosmos/react-cosmos/issues/1000#issuecomment-512575593).
-- Set `staticPath` to `public`.
 
 #### "Failed to execute postMessage..."?
 
