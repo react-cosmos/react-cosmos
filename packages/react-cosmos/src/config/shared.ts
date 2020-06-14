@@ -12,6 +12,12 @@ export type CosmosConfig = {
   // unspecified IPv4 address (0.0.0.0) otherwise.
   hostname: null | string;
   port: number;
+  https?: boolean;
+  httpsOptions?: {
+    key: string;
+    cert: string;
+    ca: string;
+  };
   rootDir: string;
   staticPath: null | string;
   publicUrl: string;

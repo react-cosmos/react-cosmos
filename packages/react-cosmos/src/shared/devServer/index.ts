@@ -34,7 +34,7 @@ export async function startDevServer(
   }
 
   const pluginCleanupCallbacks: PluginCleanupCallback[] = [];
-  const httpServer = createHttpServer(cosmosConfig, app);
+  const httpServer = await createHttpServer(cosmosConfig, app);
   await httpServer.start();
 
   const msgHandler = createMessageHandler(httpServer.server);

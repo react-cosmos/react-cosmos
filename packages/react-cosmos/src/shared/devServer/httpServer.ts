@@ -1,4 +1,7 @@
-import http from 'http';
+import http, { Server } from 'http';
+import https from 'https';
+import fs from 'fs';
+const pem = require('pem');
 import { CosmosConfig } from '../../config';
 
 type RequestListener = (
@@ -6,12 +9,54 @@ type RequestListener = (
   response: http.ServerResponse
 ) => void;
 
-export function createHttpServer(
+export async function createHttpServer(
   cosmosConfig: CosmosConfig,
   requestListener: RequestListener
 ) {
-  const { port, hostname } = cosmosConfig;
-  const server = http.createServer(requestListener);
+  const { port, hostname, https: httpsEnabled, httpsOptions } = cosmosConfig;
+
+  let server: Server;
+  if (httpsEnabled) {
+    let credentials: {
+      key: string;
+      cert: string;
+    };
+
+    if (httpsOptions?.key && httpsOptions?.cert) {
+      credentials = {
+        key: fs.readFileSync(httpsOptions.key, 'utf8'),
+        cert: fs.readFileSync(httpsOptions.cert, 'utf8'),
+      };
+    } else {
+      credentials = await new Promise((resolve, reject) => {
+        pem.createCertificate(
+          {
+            days: 1000,
+            selfSigned: true,
+          },
+          (
+            err: Error,
+            keys: {
+              serviceKey: string;
+              certificate: string;
+            }
+          ) => {
+            if (err) {
+              return reject(err);
+            }
+            return resolve({
+              key: keys.serviceKey,
+              cert: keys.certificate,
+            });
+          }
+        );
+      });
+    }
+
+    server = https.createServer(credentials, requestListener);
+  } else {
+    server = http.createServer(requestListener);
+  }
 
   async function start() {
     await new Promise(resolve => {
@@ -23,7 +68,8 @@ export function createHttpServer(
     });
 
     const hostnameDisplay = hostname || 'localhost';
-    console.log(`[Cosmos] See you at http://${hostnameDisplay}:${port}`);
+    const protocol = httpsEnabled ? 'https' : 'http';
+    console.log(`[Cosmos] See you at ${protocol}://${hostnameDisplay}:${port}`);
   }
 
   async function stop() {
