@@ -64,11 +64,11 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "cert": {
+        "certPath": {
           "description": "Path of a certificate file",
           "type": "string"
         },
-        "key": {
+        "keyPath": {
           "description": "Path of a certificate's key file",
           "type": "string"
         }

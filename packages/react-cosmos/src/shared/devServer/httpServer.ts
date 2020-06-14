@@ -13,7 +13,13 @@ export async function createHttpServer(
   cosmosConfig: CosmosConfig,
   requestListener: RequestListener
 ) {
-  const { port, hostname, https: httpsEnabled, httpsOptions } = cosmosConfig;
+  const {
+    port,
+    hostname,
+    https: httpsEnabled,
+    httpsKeyPath,
+    httpsCertPath,
+  } = cosmosConfig;
 
   let server: Server;
   if (httpsEnabled) {
@@ -22,10 +28,10 @@ export async function createHttpServer(
       cert: string;
     };
 
-    if (httpsOptions?.key && httpsOptions?.cert) {
+    if (httpsKeyPath && httpsCertPath) {
       credentials = {
-        key: fs.readFileSync(httpsOptions.key, 'utf8'),
-        cert: fs.readFileSync(httpsOptions.cert, 'utf8'),
+        key: fs.readFileSync(httpsKeyPath, 'utf8'),
+        cert: fs.readFileSync(httpsCertPath, 'utf8'),
       };
     } else {
       credentials = await new Promise((resolve, reject) => {

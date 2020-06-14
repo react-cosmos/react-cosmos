@@ -14,10 +14,11 @@ export type CosmosConfig = {
   port: number;
   https?: boolean;
   httpsOptions?: {
-    key: string;
-    cert: string;
-    ca: string;
+    keyPath?: string;
+    certPath?: string;
   };
+  httpsKeyPath?: string;
+  httpsCertPath?: string;
   rootDir: string;
   staticPath: null | string;
   publicUrl: string;
