@@ -1,5 +1,10 @@
 import { requireModule } from '../shared/fs';
 
+interface HttpsOptions {
+  keyPath: string;
+  certPath: string;
+}
+
 export type CosmosConfig = {
   exportPath: string;
   fixtureFileSuffix: string;
@@ -12,13 +17,7 @@ export type CosmosConfig = {
   // unspecified IPv4 address (0.0.0.0) otherwise.
   hostname: null | string;
   port: number;
-  https?: boolean;
-  httpsOptions?: {
-    keyPath?: string;
-    certPath?: string;
-  };
-  httpsKeyPath?: string;
-  httpsCertPath?: string;
+  httpsOptions: null | HttpsOptions;
   rootDir: string;
   staticPath: null | string;
   publicUrl: string;

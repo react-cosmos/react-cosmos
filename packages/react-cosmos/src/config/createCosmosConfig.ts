@@ -12,8 +12,7 @@ export function createCosmosConfig(
     rootDir,
     exportPath: getExportPath(cosmosConfigInput, rootDir),
     staticPath: getStaticPath(cosmosConfigInput, rootDir),
-    httpsKeyPath: getHttpsKeyPath(cosmosConfigInput, rootDir),
-    httpsCertPath: getHttpsCertPath(cosmosConfigInput, rootDir),
+    httpsOptions: getHttpsOptions(cosmosConfigInput, rootDir),
     publicUrl: getPublicUrl(cosmosConfigInput),
     fixturesDir: getFixturesDir(cosmosConfigInput),
     fixtureFileSuffix: getFixtureFileSuffix(cosmosConfigInput),
@@ -36,20 +35,20 @@ function getStaticPath(cosmosConfigInput: CosmosConfigInput, rootDir: string) {
   return staticPath && path.resolve(rootDir, staticPath);
 }
 
-function getHttpsKeyPath(
+function getHttpsOptions(
   cosmosConfigInput: CosmosConfigInput,
   rootDir: string
 ) {
-  const httpsKeyPath = cosmosConfigInput?.httpsOptions?.keyPath;
-  return httpsKeyPath && path.resolve(rootDir, httpsKeyPath);
-}
-
-function getHttpsCertPath(
-  cosmosConfigInput: CosmosConfigInput,
-  rootDir: string
-) {
-  const httpsCertPath = cosmosConfigInput.httpsOptions?.certPath;
-  return httpsCertPath && path.resolve(rootDir, httpsCertPath);
+  if (
+    cosmosConfigInput.httpsOptions?.keyPath &&
+    cosmosConfigInput.httpsOptions?.certPath
+  ) {
+    return {
+      keyPath: path.resolve(rootDir, cosmosConfigInput.httpsOptions.keyPath),
+      certPath: path.resolve(rootDir, cosmosConfigInput.httpsOptions.certPath),
+    };
+  }
+  return null;
 }
 
 function getPublicUrl({ publicUrl = '/' }: CosmosConfigInput) {
