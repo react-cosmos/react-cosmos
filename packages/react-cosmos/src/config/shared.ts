@@ -16,11 +16,12 @@ export type CosmosConfig = {
   // This is particularly useful when running Cosmos inside a Docker container
   // unspecified IPv4 address (0.0.0.0) otherwise.
   hostname: null | string;
-  port: number;
+  https: boolean;
   httpsOptions: null | HttpsOptions;
+  port: number;
+  publicUrl: string;
   rootDir: string;
   staticPath: null | string;
-  publicUrl: string;
   // Only used by the React Native server, userDepsFilePath specifies where to
   // generate the file with global imports, fixtures and decorators.
   // Whereas most of the other paths are used to import modules, userDepsFilePath
