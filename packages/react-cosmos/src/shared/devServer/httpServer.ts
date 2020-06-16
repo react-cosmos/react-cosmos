@@ -50,6 +50,7 @@ async function getHttpsOpts(cosmosConfig: CosmosConfig): Promise<Credentials> {
       cert: fs.readFileSync(httpsOptions.certPath, 'utf8'),
     };
 
+  console.log('[Cosmos] Generating HTTPS certificate');
   return await new Promise((resolve, reject) => {
     pem.createCertificate({ days: 1000, selfSigned: true }, (err, keys) => {
       if (err) return reject(err);
