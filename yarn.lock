@@ -2554,6 +2554,13 @@
   resolved "https://registry.yarnpkg.com/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
   integrity sha512-f5j5b/Gf71L+dbqxIpQ4Z2WlmI/mPJ0fOkGGmFgtb6sAu97EPczzbS3/tJKxmcYDj55OX6ssqwDAWOHIYDRDGA==
 
+"@types/pem@^1.9.5":
+  version "1.9.5"
+  resolved "https://registry.yarnpkg.com/@types/pem/-/pem-1.9.5.tgz#cd5548b5e0acb4b41a9e21067e9fcd8c57089c99"
+  integrity sha512-C0txxEw8B7DCoD85Ko7SEvzUogNd5VDJ5/YBG8XUcacsOGqxr5Oo4g3OUAfdEDUbhXanwUoVh/ZkMFw77FGPQQ==
+  dependencies:
+    "@types/node" "*"
+
 "@types/prettier@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.0.0.tgz#dc85454b953178cc6043df5208b9e949b54a3bc4"
