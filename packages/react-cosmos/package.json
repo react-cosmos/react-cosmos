@@ -18,6 +18,7 @@
     "lodash": "^4.17.15",
     "micromatch": "^4.0.2",
     "open": "^7.0.3",
+    "pem": "^1.14.4",
     "pkg-up": "^3.1.0",
     "react-cosmos-playground2": "^5.4.0",
     "react-cosmos-shared2": "^5.4.0",
