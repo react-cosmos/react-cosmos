@@ -512,9 +512,12 @@ module.exports = (config, { env }) => {
 > **Warning**: Most React Cosmos issues are related to missing build dependencies. Please see [Compilation](#compilation).
 
 #### localhost:5000/\_renderer.html 404s?
-
 - Check for build errors in your terminal.
 - Make sure you have html-webpack-plugin installed, as well as [any other build dependency](#compilation).
+
+#### Renderer not responding?
+
+- Try renaming `filename` in HTMLWebpackPlugin options to `index.html`, or alternatively remove HTMLWebpackPlugin from your webpack config since Cosmos will create one for you if none is found. For more details see [this issue](https://github.com/react-cosmos/react-cosmos/issues/1220).
 
 #### "Failed to execute postMessage..."?
 
@@ -527,6 +530,11 @@ module.exports = (config, { env }) => {
 #### Serving a static export from a nested path?
 
 - [Set `publicUrl` to a relative path, like `"./"`](https://github.com/react-cosmos/react-cosmos/issues/1149).
+
+#### Your fixtures aren not being detected?
+
+- Run cosmos with the `--external-userdeps` flag. This should result in a `cosmos.userdeps.js` being generated in the folder you ran the `cosmos` command from. Check that file to see if your fixtures are being picked up by cosmos. 
+- Check your directory structure. If you are using a cosmos config file, cosmos will use the directory of the config file as the root to resolve the location of your fixtures. If your config file is nested in a deeper directory than your fixture files cosmos will not be able to find them. To solve this add a `rootDir` entry to your config file pointing to the root directory cosmos should use to resolve fixtures.
 
 ## Where's my old Cosmos?
 
