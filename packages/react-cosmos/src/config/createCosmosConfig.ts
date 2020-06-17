@@ -11,15 +11,17 @@ export function createCosmosConfig(
     ...cosmosConfigInput,
     rootDir,
     exportPath: getExportPath(cosmosConfigInput, rootDir),
-    staticPath: getStaticPath(cosmosConfigInput, rootDir),
-    publicUrl: getPublicUrl(cosmosConfigInput),
-    fixturesDir: getFixturesDir(cosmosConfigInput),
     fixtureFileSuffix: getFixtureFileSuffix(cosmosConfigInput),
-    watchDirs: getWatchDirs(cosmosConfigInput, rootDir),
-    userDepsFilePath: getUserDepsFilePath(cosmosConfigInput, rootDir),
-    hostname: getHostname(cosmosConfigInput),
-    port: getPort(cosmosConfigInput),
+    fixturesDir: getFixturesDir(cosmosConfigInput),
     globalImports: getGlobalImports(cosmosConfigInput, rootDir),
+    hostname: getHostname(cosmosConfigInput),
+    https: getHttps(cosmosConfigInput),
+    httpsOptions: getHttpsOptions(cosmosConfigInput, rootDir),
+    port: getPort(cosmosConfigInput),
+    publicUrl: getPublicUrl(cosmosConfigInput),
+    staticPath: getStaticPath(cosmosConfigInput, rootDir),
+    userDepsFilePath: getUserDepsFilePath(cosmosConfigInput, rootDir),
+    watchDirs: getWatchDirs(cosmosConfigInput, rootDir),
     ui: cosmosConfigInput.ui || {},
   };
 }
@@ -32,6 +34,27 @@ function getExportPath(cosmosConfigInput: CosmosConfigInput, rootDir: string) {
 function getStaticPath(cosmosConfigInput: CosmosConfigInput, rootDir: string) {
   const { staticPath = null } = cosmosConfigInput;
   return staticPath && path.resolve(rootDir, staticPath);
+}
+
+function getHttps(cosmosConfigInput: CosmosConfigInput) {
+  const { https = false } = cosmosConfigInput;
+  return https;
+}
+
+function getHttpsOptions(
+  cosmosConfigInput: CosmosConfigInput,
+  rootDir: string
+) {
+  if (
+    cosmosConfigInput.httpsOptions?.keyPath &&
+    cosmosConfigInput.httpsOptions?.certPath
+  ) {
+    return {
+      keyPath: path.resolve(rootDir, cosmosConfigInput.httpsOptions.keyPath),
+      certPath: path.resolve(rootDir, cosmosConfigInput.httpsOptions.certPath),
+    };
+  }
+  return null;
 }
 
 function getPublicUrl({ publicUrl = '/' }: CosmosConfigInput) {

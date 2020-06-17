@@ -54,6 +54,7 @@
     "@types/jest": "^25.2.1",
     "@types/lodash": "^4.14.150",
     "@types/micromatch": "^4.0.1",
+    "@types/pem": "^1.9.5",
     "@types/query-string": "^6.3.0",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.7",

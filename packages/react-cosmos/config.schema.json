@@ -55,6 +55,25 @@
       "description": "Dev server port. [default: 5000]",
       "type": "number"
     },
+    "https": {
+      "description": "Server will be served over HTTPS",
+      "type": "boolean"
+    },
+    "httpsOptions": {
+      "description": "Additional options for HTTPS server",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "certPath": {
+          "description": "Path of a certificate file",
+          "type": "string"
+        },
+        "keyPath": {
+          "description": "Path of a certificate's key file",
+          "type": "string"
+        }
+      }
+    },
     "httpProxy": {
       "description": "Proxy some URLs to a different HTTP server (eg. an API backend dev server). Similar to devServer.proxy in webpack config.",
       "type": "object",

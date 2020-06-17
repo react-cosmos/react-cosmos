@@ -92,8 +92,8 @@ function getRendererUrl(cosmosConfig: CosmosConfig, fixtureId: FixtureId) {
   return `${host}${urlPath}?${query}`;
 }
 
-function getPlaygroundHost({ hostname, port }: CosmosConfig) {
-  return `http://${hostname || 'localhost'}:${port}`;
+function getPlaygroundHost({ hostname, port, https }: CosmosConfig) {
+  return `${https ? 'https' : 'http'}://${hostname || 'localhost'}:${port}`;
 }
 
 function createFixtureElementGetter(
