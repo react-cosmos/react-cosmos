@@ -18,7 +18,7 @@ A dev environment for building scalable, high-quality user interfaces.
   snapshot and visual regression testing, as well as custom integrations
   tailored to your needs.
 
-👩‍🚀 [Live demo](https://reactcosmos.org/live-demo/) · 📜 [Documentation](docs) · 💰[Sponsor](https://github.com/users/skidding/sponsorship)
+👩‍🚀 [Live demo](https://reactcosmos.org/live-demo/) · 📜 [Documentation](docs) · ❤️ [Sponsor](https://github.com/users/skidding/sponsorship)
 
 [![React Cosmos](next.png)](https://reactcosmos.org)
 
@@ -69,6 +69,6 @@ Special thanks to
 - [@catalinmiron](https://github.com/catalinmiron), [@flaviusone](https://github.com/flaviusone), [@NiGhTTraX](https://github.com/NiGhTTraX), [@ovidiubute](https://github.com/ovidiubute), [@RadValentin](https://github.com/RadValentin), [@tkjone](https://github.com/tkjone), and all the other [contributors](https://github.com/react-cosmos/react-cosmos/graphs/contributors).
 - [Kreativa Studio](http://www.kreativa-studio.com/) for the iconic Cosmonaut illustration.
 
-**❤️ React Cosmos is still alive because of you!**
+**React Cosmos is still alive because of you!**
 
 <p align="center">🌤</p>
