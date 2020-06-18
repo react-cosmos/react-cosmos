@@ -1,13 +1,15 @@
 import { isEqual } from 'lodash';
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   FixtureState,
+  FixtureStateSelect,
   FixtureStateValuePairs,
   FixtureStateValues,
 } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import { IconButton32 } from '../../shared/buttons';
 import { RotateCcwIcon } from '../../shared/icons';
+import { Select } from '../../shared/inputs/Select';
 import { TreeExpansion } from '../../shared/TreeView';
 import {
   Actions,
@@ -18,6 +20,11 @@ import {
   ValueInputTree,
 } from '../../shared/valueInputTree';
 import { ExpandCollapseValues } from '../../shared/valueInputTree/ExpandCollapseValues';
+import { ItemContainer } from '../../shared/valueInputTree/ValueInputTreeItem';
+import {
+  Label,
+  ValueContainer,
+} from '../../shared/valueInputTree/ValueInputTreeItem/shared';
 
 type Props = {
   fixtureState: FixtureState;
@@ -32,9 +39,18 @@ export const ValuesPanel = React.memo(function ClassStatePanel({
   onFixtureStateChange,
   onTreeExpansionChange,
 }: Props) {
-  const handleValueChange = React.useCallback(
+  const handleValueChange = useCallback(
     (newValues: FixtureStateValues) =>
       onFixtureStateChange(prevFsState => updateValues(prevFsState, newValues)),
+    [onFixtureStateChange]
+  );
+
+  const handleSelectChange = useCallback(
+    (selectName: string, fsSelect: FixtureStateSelect) =>
+      onFixtureStateChange(prevFsState => ({
+        ...prevFsState,
+        selects: { ...prevFsState.selects, [selectName]: fsSelect },
+      })),
     [onFixtureStateChange]
   );
 
@@ -43,7 +59,10 @@ export const ValuesPanel = React.memo(function ClassStatePanel({
   }, [onFixtureStateChange]);
 
   const fsValuePairs = fixtureState.values || {};
-  if (Object.keys(fsValuePairs).length === 0) return null;
+  const fsSelects = fixtureState.selects || {};
+
+  if (Object.keys(fsValuePairs).length + Object.keys(fsSelects).length === 0)
+    return null;
 
   const values = extractCurrentValuesFromValuePairs(fsValuePairs);
 
@@ -73,6 +92,34 @@ export const ValuesPanel = React.memo(function ClassStatePanel({
           onValueChange={handleValueChange}
           onTreeExpansionChange={onTreeExpansionChange}
         />
+        {Object.keys(fsSelects).map(selectName => {
+          const fsSelect = fsSelects[selectName];
+          const { options, currentValue } = fsSelect;
+          const id = `select-${selectName}`;
+          return (
+            <ItemContainer key={selectName}>
+              <Label title={selectName} htmlFor={id}>
+                {selectName}
+              </Label>
+              <ValueContainer>
+                <Select
+                  id={id}
+                  options={options.map(option => ({
+                    value: option,
+                    label: option,
+                  }))}
+                  value={currentValue}
+                  onChange={newValue =>
+                    handleSelectChange(selectName, {
+                      ...fsSelect,
+                      currentValue: newValue.value,
+                    })
+                  }
+                />
+              </ValueContainer>
+            </ItemContainer>
+          );
+        })}
       </Body>
     </Container>
   );
