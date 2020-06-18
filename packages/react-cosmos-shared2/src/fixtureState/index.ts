@@ -48,3 +48,4 @@ export {
   removeFixtureStateClassState,
 } from './classState';
 export { findFixtureStateValue } from './values';
+export { findFixtureStateSelect } from './selects';

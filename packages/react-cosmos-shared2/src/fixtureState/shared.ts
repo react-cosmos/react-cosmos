@@ -77,8 +77,8 @@ export type FixtureStateValuePairs = Record<string, FixtureStateValuePair>;
 
 export type FixtureStateSelect = {
   options: string[];
-  defaultValue: string[];
-  currentValue: string[];
+  defaultValue: string;
+  currentValue: string;
 };
 
 export type FixtureStateSelects = Record<string, FixtureStateSelect>;
