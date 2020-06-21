@@ -56,9 +56,7 @@ function isHtmlWebpackPlugin(
 }
 
 function changeHtmlPluginFilename(htmlPlugin: HtmlWebpackPlugin) {
-  if (htmlPlugin.options.filename !== 'index.html') {
-    return htmlPlugin;
-  }
+  if (!isIndexHtmlWebpackPlugin(htmlPlugin)) return htmlPlugin;
 
   const safeOptions = omit(
     htmlPlugin.options,
@@ -68,4 +66,9 @@ function changeHtmlPluginFilename(htmlPlugin: HtmlWebpackPlugin) {
     ...safeOptions,
     filename: RENDERER_FILENAME,
   });
+}
+
+function isIndexHtmlWebpackPlugin(htmlPlugin: HtmlWebpackPlugin) {
+  const { filename } = htmlPlugin.options;
+  return filename === 'index.html' || filename.endsWith('/index.html');
 }
