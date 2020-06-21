@@ -18,7 +18,7 @@ export const ValueContainer = styled.div`
   min-width: 44px;
   min-height: 28px;
   box-sizing: border-box;
-  padding: 2px;
+  padding: 2px 2px 2px 3px;
   overflow: hidden;
 `;
 
