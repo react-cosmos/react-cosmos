@@ -3,6 +3,7 @@ import React, { useCallback } from 'react';
 import {
   FixtureState,
   FixtureStateSelect,
+  FixtureStateSelects,
   FixtureStateValuePairs,
   FixtureStateValues,
 } from 'react-cosmos-shared2/fixtureState';
@@ -51,6 +52,7 @@ export const ValuesPanel = React.memo(function ClassStatePanel({
 
   const handleValuesReset = React.useCallback(() => {
     onFixtureStateChange(resetValues);
+    onFixtureStateChange(resetSelects);
   }, [onFixtureStateChange]);
 
   const fsValuePairs = fixtureState.values || {};
@@ -69,7 +71,9 @@ export const ValuesPanel = React.memo(function ClassStatePanel({
           <IconButton32
             title="Reset to default values"
             icon={<RotateCcwIcon />}
-            disabled={areValuesEqual(fsValuePairs)}
+            disabled={
+              areValuesUnchanged(fsValuePairs) && areSelectsUnchanged(fsSelects)
+            }
             onClick={handleValuesReset}
           />
           <ExpandCollapseValues
@@ -137,11 +141,30 @@ function resetValues(fixtureState: FixtureState) {
   return { ...fixtureState, values };
 }
 
-function areValuesEqual(fsValuePairs: FixtureStateValuePairs) {
+function areValuesUnchanged(fsValuePairs: FixtureStateValuePairs) {
   return Object.keys(fsValuePairs).every(valueName =>
     isEqual(
       fsValuePairs[valueName].currentValue,
       fsValuePairs[valueName].defaultValue
+    )
+  );
+}
+
+function resetSelects(fixtureState: FixtureState) {
+  const prevSelects = fixtureState.selects || {};
+  const selects: FixtureStateSelects = {};
+  Object.keys(prevSelects).forEach(selectName => {
+    const fsSelect = prevSelects[selectName];
+    selects[selectName] = { ...fsSelect, currentValue: fsSelect.defaultValue };
+  });
+  return { ...fixtureState, selects };
+}
+
+function areSelectsUnchanged(fsSelects: FixtureStateSelects) {
+  return Object.keys(fsSelects).every(selectName =>
+    isEqual(
+      fsSelects[selectName].currentValue,
+      fsSelects[selectName].defaultValue
     )
   );
 }
