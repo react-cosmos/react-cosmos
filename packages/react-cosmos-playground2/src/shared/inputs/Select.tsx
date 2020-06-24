@@ -47,7 +47,9 @@ export function Select<Option extends BaseOption>({
   return (
     <Container focused={focused} bg={grey32}>
       <VisibleButton height={height} padding={padding}>
-        <Label color={color}>{selectedLabel}</Label>
+        <Label height={height} color={color}>
+          {selectedLabel}
+        </Label>
         <IconContainer color={color}>
           <ChevronDownIcon />
         </IconContainer>
@@ -98,9 +100,9 @@ const VisibleButton = styled.div<{ height: number; padding: number }>`
   height: ${props => props.height}px;
 `;
 
-const Label = styled.span<{ color: string }>`
+const Label = styled.span<{ height: number; color: string }>`
   color: ${props => props.color};
-  line-height: 32px;
+  line-height: ${props => props.height}px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
