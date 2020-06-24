@@ -45,6 +45,9 @@ export const Header = React.memo(function Header({
         testId="viewportSelect"
         options={options}
         value={stringifyViewport(selectedViewport)}
+        color={grey248}
+        height={32}
+        padding={8}
         onChange={option =>
           selectViewport({ width: option.width, height: option.height })
         }

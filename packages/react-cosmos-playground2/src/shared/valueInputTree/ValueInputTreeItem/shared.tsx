@@ -25,7 +25,7 @@ export const ValueContainer = styled.div`
 export const UneditableInput = styled.span`
   box-sizing: border-box;
   height: 24px;
-  padding: 2px 4px;
+  padding: 2px 5px;
   line-height: 20px;
   color: ${grey128};
   font-style: italic;

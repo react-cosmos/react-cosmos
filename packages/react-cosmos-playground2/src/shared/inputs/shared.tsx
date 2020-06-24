@@ -8,7 +8,7 @@ export const TextInputContainer = styled.div<{
 }>`
   box-sizing: border-box;
   max-width: 100%;
-  padding: 2px 4px;
+  padding: 2px 5px;
   border-radius: 3px;
   background: ${props => (props.focused ? props.focusedBg : 'transparent')};
   box-shadow: ${props => (props.focused ? props.focusedBoxShadow : 'none')};

@@ -30,7 +30,7 @@ export function BooleanItem({ id, label, value, onChange }: Props) {
 const BooleanButton = styled.button`
   height: 24px;
   margin: 0;
-  padding: 0 4px;
+  padding: 0 5px;
   border: none;
   border-radius: 3px;
   background: transparent;

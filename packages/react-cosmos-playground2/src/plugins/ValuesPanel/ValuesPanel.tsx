@@ -8,6 +8,7 @@ import {
 } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import { IconButton32 } from '../../shared/buttons';
+import { lightBlue } from '../../shared/colors';
 import { RotateCcwIcon } from '../../shared/icons';
 import { Select } from '../../shared/inputs/Select';
 import { TreeExpansion } from '../../shared/TreeView';
@@ -109,6 +110,9 @@ export const ValuesPanel = React.memo(function ClassStatePanel({
                     label: option,
                   }))}
                   value={currentValue}
+                  color={lightBlue}
+                  height={24}
+                  padding={5}
                   onChange={newValue =>
                     handleSelectChange(selectName, {
                       ...fsSelect,
