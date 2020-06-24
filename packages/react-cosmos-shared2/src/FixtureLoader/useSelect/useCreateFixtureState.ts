@@ -3,9 +3,9 @@ import { findFixtureStateSelect } from '../../fixtureState';
 import { FixtureContext } from '../FixtureContext';
 import { UseSelectArgs, UseSelectOptions } from './shared';
 
-export function useCreateFixtureState<O extends UseSelectOptions>(
+export function useCreateFixtureState<Options extends UseSelectOptions>(
   selectName: string,
-  args: UseSelectArgs<O>
+  args: UseSelectArgs<Options>
 ) {
   const { setFixtureState } = React.useContext(FixtureContext);
   useEffect(() => {

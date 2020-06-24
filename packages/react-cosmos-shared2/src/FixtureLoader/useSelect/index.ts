@@ -3,12 +3,12 @@ import { useCreateFixtureState } from './useCreateFixtureState';
 import { useCurrentValue } from './useCurrentValue';
 import { useSetValue } from './useSetValue';
 
-export function useSelect<O extends UseSelectOptions>(
+export function useSelect<Options extends UseSelectOptions>(
   selectName: string,
-  args: UseSelectArgs<O>
-): [keyof O, SetSelectValue<O>] {
+  args: UseSelectArgs<Options>
+): [keyof Options, SetSelectValue<Options>] {
   useCreateFixtureState(selectName, args);
   const currentValue = useCurrentValue(selectName, args);
-  const setValue = useSetValue<O>(selectName);
+  const setValue = useSetValue<Options>(selectName);
   return [currentValue, setValue];
 }

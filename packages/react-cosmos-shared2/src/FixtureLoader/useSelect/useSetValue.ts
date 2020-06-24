@@ -3,9 +3,9 @@ import { findFixtureStateSelect } from '../../fixtureState';
 import { FixtureContext } from '../FixtureContext';
 import { SetSelectValue, UseSelectOptions } from './shared';
 
-export function useSetValue<O extends UseSelectOptions>(
+export function useSetValue<Options extends UseSelectOptions>(
   selectName: string
-): SetSelectValue<O> {
+): SetSelectValue<Options> {
   const { setFixtureState } = useContext(FixtureContext);
   return useCallback(
     value => {

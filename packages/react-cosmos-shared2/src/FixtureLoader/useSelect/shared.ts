@@ -1,10 +1,10 @@
 export type UseSelectOptions = Record<string, unknown>;
 
-export type UseSelectArgs<O extends UseSelectOptions> = {
-  defaultValue: keyof O;
-  options: O;
+export type UseSelectArgs<Options extends UseSelectOptions> = {
+  defaultValue: keyof Options;
+  options: Options;
 };
 
-export type SetSelectValue<O extends UseSelectOptions> = (
-  value: keyof O
+export type SetSelectValue<Options extends UseSelectOptions> = (
+  value: keyof Options
 ) => void;
