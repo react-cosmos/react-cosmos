@@ -8,9 +8,7 @@ import {
 } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import { IconButton32 } from '../../shared/buttons';
-import { lightBlue } from '../../shared/colors';
 import { RotateCcwIcon } from '../../shared/icons';
-import { Select } from '../../shared/inputs/Select';
 import { TreeExpansion } from '../../shared/TreeView';
 import {
   Actions,
@@ -21,11 +19,7 @@ import {
   ValueInputTree,
 } from '../../shared/valueInputTree';
 import { ExpandCollapseValues } from '../../shared/valueInputTree/ExpandCollapseValues';
-import { ItemContainer } from '../../shared/valueInputTree/ValueInputTreeItem';
-import {
-  Label,
-  ValueContainer,
-} from '../../shared/valueInputTree/ValueInputTreeItem/shared';
+import { SelectItem } from './SelectItem';
 
 type Props = {
   fixtureState: FixtureState;
@@ -93,37 +87,14 @@ export const ValuesPanel = React.memo(function ClassStatePanel({
           onValueChange={handleValueChange}
           onTreeExpansionChange={onTreeExpansionChange}
         />
-        {Object.keys(fsSelects).map(selectName => {
-          const fsSelect = fsSelects[selectName];
-          const { options, currentValue } = fsSelect;
-          const id = `select-${selectName}`;
-          return (
-            <ItemContainer key={selectName}>
-              <Label title={selectName} htmlFor={id}>
-                {selectName}
-              </Label>
-              <ValueContainer>
-                <Select
-                  id={id}
-                  options={options.map(option => ({
-                    value: option,
-                    label: option,
-                  }))}
-                  value={currentValue}
-                  color={lightBlue}
-                  height={24}
-                  padding={5}
-                  onChange={newValue =>
-                    handleSelectChange(selectName, {
-                      ...fsSelect,
-                      currentValue: newValue.value,
-                    })
-                  }
-                />
-              </ValueContainer>
-            </ItemContainer>
-          );
-        })}
+        {Object.keys(fsSelects).map(selectName => (
+          <SelectItem
+            key={selectName}
+            selectName={selectName}
+            fsSelect={fsSelects[selectName]}
+            onSelectChange={handleSelectChange}
+          />
+        ))}
       </Body>
     </Container>
   );
