@@ -18,14 +18,14 @@ export const ValueContainer = styled.div`
   min-width: 44px;
   min-height: 28px;
   box-sizing: border-box;
-  padding: 2px;
+  padding: 2px 2px 2px 3px;
   overflow: hidden;
 `;
 
 export const UneditableInput = styled.span`
   box-sizing: border-box;
   height: 24px;
-  padding: 2px 4px;
+  padding: 2px 5px;
   line-height: 20px;
   color: ${grey128};
   font-style: italic;

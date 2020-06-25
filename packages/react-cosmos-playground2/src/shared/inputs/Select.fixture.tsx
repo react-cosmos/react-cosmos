@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { grey248 } from '../colors';
 import { Select } from './Select';
 
 const planets = [
@@ -24,6 +25,9 @@ export default () => {
       <Select
         options={planets}
         value={planet}
+        color={grey248}
+        height={32}
+        padding={8}
         onChange={option => setPlanet(option.value)}
       />
     </Container>

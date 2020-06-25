@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { blue, grey176, grey248, grey32 } from '../colors';
+import { blue, grey32 } from '../colors';
 import { ChevronDownIcon } from '../icons';
 import { useFocus } from '../useFocus';
 
@@ -11,6 +11,9 @@ type Props<Option extends BaseOption> = {
   testId?: string;
   options: Option[];
   value: string;
+  color: string;
+  height: number;
+  padding: number;
   onChange: (newValue: Option) => unknown;
 };
 
@@ -21,6 +24,9 @@ export function Select<Option extends BaseOption>({
   testId,
   options,
   value,
+  color,
+  height,
+  padding,
   onChange,
 }: Props<Option>) {
   const { focused, onFocus, onBlur } = useFocus();
@@ -40,9 +46,11 @@ export function Select<Option extends BaseOption>({
   const selectedLabel = selectedOption ? selectedOption.label : CUSTOM_LABEL;
   return (
     <Container focused={focused} bg={grey32}>
-      <VisibleButton>
-        <Label>{selectedLabel}</Label>
-        <IconContainer>
+      <VisibleButton height={height} padding={padding}>
+        <Label height={height} color={color}>
+          {selectedLabel}
+        </Label>
+        <IconContainer color={color}>
           <ChevronDownIcon />
         </IconContainer>
       </VisibleButton>
@@ -81,28 +89,34 @@ const Container = styled.div<StyledSelectProps>`
   border-radius: 3px;
   background: ${props => props.bg};
   box-shadow: ${props => (props.focused ? `0 0 0.5px 1px ${blue}` : 'none')};
+  overflow: hidden;
 `;
 
-const VisibleButton = styled.div`
+const VisibleButton = styled.div<{ height: number; padding: number }>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0 6px 0 8px;
-  height: 32px;
+  padding: 0 ${props => props.padding - 2}px 0 ${props => props.padding}px;
+  height: ${props => props.height}px;
 `;
 
-const Label = styled.span`
-  color: ${grey248};
-  line-height: 32px;
+const Label = styled.span<{ height: number; color: string }>`
+  color: ${props => props.color};
+  line-height: ${props => props.height}px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 const iconSize = 16;
 
-const IconContainer = styled.span`
+const IconContainer = styled.span<{ color: string }>`
+  flex-shrink: 0;
   width: ${iconSize}px;
   height: ${iconSize}px;
   padding: 2px 0 0 2px;
-  color: ${grey176};
+  color: ${props => props.color};
+  opacity: 0.7;
 `;
 
 const SelectInput = styled.select`

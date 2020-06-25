@@ -71,6 +71,19 @@ it('returns fixture info', async () => {
       treePath: ['Props Playground'],
     },
     {
+      absoluteFilePath: `${__dirname}/__fixtures__/Select Playground.tsx`,
+      fileName: 'Select Playground',
+      getElement: expect.any(Function),
+      name: null,
+      parents: [],
+      playgroundUrl:
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22__fixtures__%2FSelect%20Playground.tsx%22%2C%22name%22%3Anull%7D',
+      relativeFilePath: '__fixtures__/Select Playground.tsx',
+      rendererUrl:
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22__fixtures__%2FSelect%20Playground.tsx%22%2C%22name%22%3Anull%7D',
+      treePath: ['Select Playground'],
+    },
+    {
       absoluteFilePath: `${__dirname}/__fixtures__/Values Playground.tsx`,
       fileName: 'Values Playground',
       getElement: expect.any(Function),

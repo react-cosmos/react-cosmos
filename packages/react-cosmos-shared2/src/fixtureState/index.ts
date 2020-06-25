@@ -11,10 +11,12 @@ export {
   FixtureStateArrayValue,
   FixtureStateValue,
   FixtureStateValues,
-  FixtureStateValuePair,
-  FixtureStateValuePairs,
   FixtureStateProps,
   FixtureStateClassState,
+  FixtureStateValuePair,
+  FixtureStateValuePairs,
+  FixtureStateSelect,
+  FixtureStateSelects,
   FixtureState,
   SetFixtureState,
 } from './shared';
@@ -46,3 +48,4 @@ export {
   removeFixtureStateClassState,
 } from './classState';
 export { findFixtureStateValue } from './values';
+export { findFixtureStateSelect } from './selects';

@@ -1,7 +1,9 @@
 import { isEqual } from 'lodash';
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   FixtureState,
+  FixtureStateSelect,
+  FixtureStateSelects,
   FixtureStateValuePairs,
   FixtureStateValues,
 } from 'react-cosmos-shared2/fixtureState';
@@ -18,6 +20,7 @@ import {
   ValueInputTree,
 } from '../../shared/valueInputTree';
 import { ExpandCollapseValues } from '../../shared/valueInputTree/ExpandCollapseValues';
+import { SelectItem } from './SelectItem';
 
 type Props = {
   fixtureState: FixtureState;
@@ -32,18 +35,31 @@ export const ValuesPanel = React.memo(function ClassStatePanel({
   onFixtureStateChange,
   onTreeExpansionChange,
 }: Props) {
-  const handleValueChange = React.useCallback(
+  const handleValueChange = useCallback(
     (newValues: FixtureStateValues) =>
       onFixtureStateChange(prevFsState => updateValues(prevFsState, newValues)),
     [onFixtureStateChange]
   );
 
+  const handleSelectChange = useCallback(
+    (selectName: string, fsSelect: FixtureStateSelect) =>
+      onFixtureStateChange(prevFsState => ({
+        ...prevFsState,
+        selects: { ...prevFsState.selects, [selectName]: fsSelect },
+      })),
+    [onFixtureStateChange]
+  );
+
   const handleValuesReset = React.useCallback(() => {
     onFixtureStateChange(resetValues);
+    onFixtureStateChange(resetSelects);
   }, [onFixtureStateChange]);
 
   const fsValuePairs = fixtureState.values || {};
-  if (Object.keys(fsValuePairs).length === 0) return null;
+  const fsSelects = fixtureState.selects || {};
+
+  if (Object.keys(fsValuePairs).length + Object.keys(fsSelects).length === 0)
+    return null;
 
   const values = extractCurrentValuesFromValuePairs(fsValuePairs);
 
@@ -55,7 +71,9 @@ export const ValuesPanel = React.memo(function ClassStatePanel({
           <IconButton32
             title="Reset to default values"
             icon={<RotateCcwIcon />}
-            disabled={areValuesEqual(fsValuePairs)}
+            disabled={
+              areValuesUnchanged(fsValuePairs) && areSelectsUnchanged(fsSelects)
+            }
             onClick={handleValuesReset}
           />
           <ExpandCollapseValues
@@ -73,6 +91,14 @@ export const ValuesPanel = React.memo(function ClassStatePanel({
           onValueChange={handleValueChange}
           onTreeExpansionChange={onTreeExpansionChange}
         />
+        {Object.keys(fsSelects).map(selectName => (
+          <SelectItem
+            key={selectName}
+            selectName={selectName}
+            fsSelect={fsSelects[selectName]}
+            onSelectChange={handleSelectChange}
+          />
+        ))}
       </Body>
     </Container>
   );
@@ -115,11 +141,30 @@ function resetValues(fixtureState: FixtureState) {
   return { ...fixtureState, values };
 }
 
-function areValuesEqual(fsValuePairs: FixtureStateValuePairs) {
+function areValuesUnchanged(fsValuePairs: FixtureStateValuePairs) {
   return Object.keys(fsValuePairs).every(valueName =>
     isEqual(
       fsValuePairs[valueName].currentValue,
       fsValuePairs[valueName].defaultValue
+    )
+  );
+}
+
+function resetSelects(fixtureState: FixtureState) {
+  const prevSelects = fixtureState.selects || {};
+  const selects: FixtureStateSelects = {};
+  Object.keys(prevSelects).forEach(selectName => {
+    const fsSelect = prevSelects[selectName];
+    selects[selectName] = { ...fsSelect, currentValue: fsSelect.defaultValue };
+  });
+  return { ...fixtureState, selects };
+}
+
+function areSelectsUnchanged(fsSelects: FixtureStateSelects) {
+  return Object.keys(fsSelects).every(selectName =>
+    isEqual(
+      fsSelects[selectName].currentValue,
+      fsSelects[selectName].defaultValue
     )
   );
 }

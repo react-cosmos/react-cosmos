@@ -48,6 +48,18 @@ export default () => {
             },
           },
         },
+        selects: {
+          select: {
+            options: [
+              'one',
+              'two',
+              'three',
+              'Lorem ipsum dolor sit amet, consectetur adipisicing elit',
+            ],
+            defaultValue: 'one',
+            currentValue: 'one',
+          },
+        },
       },
     }
   );
