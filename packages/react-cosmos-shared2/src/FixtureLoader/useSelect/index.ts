@@ -1,14 +1,14 @@
-import { SetSelectValue, UseSelectArgs, UseSelectOptions } from './shared';
+import { SetSelectValue, UseSelectArgs } from './shared';
 import { useCreateFixtureState } from './useCreateFixtureState';
 import { useCurrentValue } from './useCurrentValue';
 import { useSetValue } from './useSetValue';
 
-export function useSelect<Options extends UseSelectOptions>(
+export function useSelect<Option extends string>(
   selectName: string,
-  args: UseSelectArgs<Options>
-): [keyof Options, SetSelectValue<Options>] {
+  args: UseSelectArgs<Option>
+): [Option, SetSelectValue<Option>] {
   useCreateFixtureState(selectName, args);
   const currentValue = useCurrentValue(selectName, args);
-  const setValue = useSetValue<Options>(selectName);
+  const setValue = useSetValue<Option>(selectName);
   return [currentValue, setValue];
 }
