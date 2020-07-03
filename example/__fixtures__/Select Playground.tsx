@@ -1,31 +1,24 @@
 import React from 'react';
 import { useSelect } from 'react-cosmos/fixture';
 
-const options = {
-  one: 'Option 1',
-  two: 'Option 2',
-  three: 'Option 3',
-};
-
 export default () => {
   const [value, setValue] = useSelect('mySelect', {
-    defaultValue: 'one',
-    options,
+    options: ['Option 1', 'Option 2', 'Option 3'],
   });
 
-  function renderButton(option: keyof typeof options) {
+  function renderButton(option: typeof value) {
     return (
       <button disabled={value === option} onClick={() => setValue(option)}>
-        {options[option]}
+        {option}
       </button>
     );
   }
 
   return (
     <div>
-      {renderButton('one')}
-      {renderButton('two')}
-      {renderButton('three')}
+      {renderButton('Option 1')}
+      {renderButton('Option 2')}
+      {renderButton('Option 3')}
     </div>
   );
 };

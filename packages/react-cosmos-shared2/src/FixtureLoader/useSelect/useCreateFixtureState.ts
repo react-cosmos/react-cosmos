@@ -1,20 +1,21 @@
 import React, { useEffect } from 'react';
 import { findFixtureStateSelect } from '../../fixtureState';
 import { FixtureContext } from '../FixtureContext';
-import { UseSelectArgs, UseSelectOptions } from './shared';
+import { getDefaultSelectValue, UseSelectArgs } from './shared';
 
-export function useCreateFixtureState<Options extends UseSelectOptions>(
+export function useCreateFixtureState<Option extends string>(
   selectName: string,
-  args: UseSelectArgs<Options>
+  args: UseSelectArgs<Option>
 ) {
   const { setFixtureState } = React.useContext(FixtureContext);
+  const defaultValue = getDefaultSelectValue(args);
   useEffect(() => {
     // The fixture state for this select is (re)created in two situations:
     // 1. Initially: No corresponding fixture state select is found
     // 2: Default value change: Current value is reset to new default value
     setFixtureState(prevFsState => {
       const fsSelect = findFixtureStateSelect(prevFsState, selectName);
-      if (fsSelect && fsSelect.defaultValue === args.defaultValue)
+      if (fsSelect && fsSelect.defaultValue === defaultValue)
         return prevFsState;
 
       return {
@@ -22,12 +23,12 @@ export function useCreateFixtureState<Options extends UseSelectOptions>(
         selects: {
           ...prevFsState.selects,
           [selectName]: {
-            options: Object.keys(args.options),
-            defaultValue: args.defaultValue as string,
-            currentValue: args.defaultValue as string,
+            options: args.options,
+            defaultValue,
+            currentValue: defaultValue,
           },
         },
       };
     });
-  }, [args.defaultValue, args.options, selectName, setFixtureState]);
+  }, [args.options, defaultValue, selectName, setFixtureState]);
 }

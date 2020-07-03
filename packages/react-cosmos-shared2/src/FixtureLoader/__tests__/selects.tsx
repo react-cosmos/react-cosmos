@@ -5,13 +5,9 @@ import { uuid } from '../../util';
 import { testFixtureLoader } from '../testHelpers';
 import { useSelect } from '../useSelect';
 
-const options = {
-  first: 'First option',
-  second: 'Second option',
-  third: 'Third option',
-};
+type Option = 'first' | 'second' | 'third';
 
-type Option = keyof typeof options;
+const options: Option[] = ['first', 'second', 'third'];
 
 function createFixtures({ defaultValue }: { defaultValue: Option }) {
   const MyComponent = () => {
@@ -22,7 +18,7 @@ function createFixtures({ defaultValue }: { defaultValue: Option }) {
     return (
       <input
         type="text"
-        value={options[value]}
+        value={value}
         onChange={e => setValue(e.target.value as Option)}
       />
     );
@@ -41,7 +37,7 @@ testFixtureLoader(
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
     await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, 'First option');
+    await rendered(renderer, 'first');
   }
 );
 
@@ -72,7 +68,7 @@ testFixtureLoader(
   { rendererId, fixtures },
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
     await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, 'First option');
+    await rendered(renderer, 'first');
     const fixtureState = await getLastFixtureState();
     await setFixtureState({
       rendererId,
@@ -89,7 +85,7 @@ testFixtureLoader(
         },
       },
     });
-    await rendered(renderer, 'Second option');
+    await rendered(renderer, 'second');
   }
 );
 
@@ -98,9 +94,9 @@ testFixtureLoader(
   { rendererId, fixtures },
   async ({ renderer, selectFixture, fixtureStateChange }) => {
     await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, 'First option');
+    await rendered(renderer, 'first');
     changeValue(renderer, 'second');
-    await rendered(renderer, 'Second option');
+    await rendered(renderer, 'second');
     await fixtureStateChange({
       rendererId,
       fixtureId,
@@ -123,12 +119,12 @@ testFixtureLoader(
   { rendererId, fixtures },
   async ({ renderer, update, selectFixture, fixtureStateChange }) => {
     await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, 'First option');
+    await rendered(renderer, 'first');
     update({
       rendererId,
       fixtures: createFixtures({ defaultValue: 'third' }),
     });
-    await rendered(renderer, 'Third option');
+    await rendered(renderer, 'third');
     await fixtureStateChange({
       rendererId,
       fixtureId,

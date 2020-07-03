@@ -1,13 +1,15 @@
 import { useContext } from 'react';
 import { findFixtureStateSelect } from '../../fixtureState';
 import { FixtureContext } from '../FixtureContext';
-import { UseSelectArgs, UseSelectOptions } from './shared';
+import { getDefaultSelectValue, UseSelectArgs } from './shared';
 
-export function useCurrentValue<Options extends UseSelectOptions>(
+export function useCurrentValue<Option extends string>(
   selectName: string,
-  args: UseSelectArgs<Options>
-): keyof Options {
+  args: UseSelectArgs<Option>
+): Option {
   const { fixtureState } = useContext(FixtureContext);
   const fsSelect = findFixtureStateSelect(fixtureState, selectName);
-  return fsSelect ? fsSelect.currentValue : args.defaultValue;
+  return fsSelect
+    ? (fsSelect.currentValue as Option)
+    : getDefaultSelectValue(args);
 }

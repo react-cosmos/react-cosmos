@@ -1,11 +1,11 @@
 import { useCallback, useContext } from 'react';
 import { findFixtureStateSelect } from '../../fixtureState';
 import { FixtureContext } from '../FixtureContext';
-import { SetSelectValue, UseSelectOptions } from './shared';
+import { SetSelectValue } from './shared';
 
-export function useSetValue<Options extends UseSelectOptions>(
+export function useSetValue<Option extends string>(
   selectName: string
-): SetSelectValue<Options> {
+): SetSelectValue<Option> {
   const { setFixtureState } = useContext(FixtureContext);
   return useCallback(
     value => {
@@ -22,7 +22,7 @@ export function useSetValue<Options extends UseSelectOptions>(
             ...prevFsState.selects,
             [selectName]: {
               ...fsSelect,
-              currentValue: value as string,
+              currentValue: value,
             },
           },
         };
