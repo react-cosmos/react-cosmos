@@ -3,7 +3,6 @@ import { useSelect } from 'react-cosmos/fixture';
 
 export default () => {
   const [value, setValue] = useSelect('mySelect', {
-    defaultValue: 'Option 1',
     options: ['Option 1', 'Option 2', 'Option 3'],
   });
 
