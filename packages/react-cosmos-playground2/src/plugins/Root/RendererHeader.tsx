@@ -11,6 +11,7 @@ import {
   SlidersIcon,
   XCircleIcon,
 } from '../../shared/icons';
+import { FixtureActionSlot } from '../../shared/slots/FixtureActionSlot';
 import { RendererActionSlot } from '../../shared/slots/RendererActionSlot';
 
 type Props = {
@@ -18,6 +19,7 @@ type Props = {
   fixtureId: FixtureId;
   navOpen: boolean;
   panelOpen: boolean;
+  fixtureActionOrder: string[];
   rendererActionOrder: string[];
   onOpenNav: () => unknown;
   onTogglePanel: () => unknown;
@@ -30,6 +32,7 @@ export const RendererHeader = React.memo(function RendererHeader({
   fixtureId,
   navOpen,
   panelOpen,
+  fixtureActionOrder,
   rendererActionOrder,
   onOpenNav,
   onTogglePanel,
@@ -66,6 +69,10 @@ export const RendererHeader = React.memo(function RendererHeader({
           icon={<RefreshCwIcon />}
           title="Reload fixture"
           onClick={onReload}
+        />
+        <FixtureActionSlot
+          slotProps={slotProps}
+          plugOrder={fixtureActionOrder}
         />
       </Left>
       {fixtureItem && <FixtureName>{getFixtureName(fixtureItem)}</FixtureName>}

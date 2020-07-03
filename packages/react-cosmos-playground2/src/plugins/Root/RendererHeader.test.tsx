@@ -22,6 +22,7 @@ const propDefaults = {
   },
   panelOpen: false,
   navOpen: false,
+  fixtureActionOrder: [],
   rendererActionOrder: [],
   onOpenNav: () => {},
   onTogglePanel: () => {},

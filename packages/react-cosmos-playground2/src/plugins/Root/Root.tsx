@@ -27,6 +27,7 @@ type Props = {
   globalActionOrder: string[];
   globalOrder: string[];
   navRowOrder: string[];
+  fixtureActionOrder: string[];
   rendererActionOrder: string[];
   onToggleNav: () => unknown;
   onTogglePanel: () => unknown;
@@ -52,6 +53,7 @@ export function Root({
   globalActionOrder,
   globalOrder,
   navRowOrder,
+  fixtureActionOrder,
   rendererActionOrder,
   onToggleNav,
   onTogglePanel,
@@ -112,6 +114,7 @@ export function Root({
               fixtureId={selectedFixtureId}
               navOpen={navOpen}
               panelOpen={panelOpen}
+              fixtureActionOrder={fixtureActionOrder}
               rendererActionOrder={rendererActionOrder}
               onOpenNav={onToggleNav}
               onTogglePanel={onTogglePanel}

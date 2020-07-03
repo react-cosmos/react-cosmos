@@ -5,6 +5,7 @@ export type RootSpec = {
     globalActionOrder: string[];
     globalOrder: string[];
     navRowOrder: string[];
+    fixtureActionOrder: string[];
     rendererActionOrder: string[];
   };
   state: {
