@@ -5,22 +5,16 @@ import { uuid } from '../../util';
 import { testFixtureLoader } from '../testHelpers';
 import { useSelect } from '../useSelect';
 
-const options = {
-  first: 'First option',
-  second: 'Second option',
-  third: 'Third option',
-};
-
-type Option = keyof typeof options;
-
 function createFixtures() {
   const MyComponent = () => {
-    const [value, setValue] = useSelect('selectName', { options });
+    const [value, setValue] = useSelect('selectName', {
+      options: ['first', 'second', 'third'],
+    });
     return (
       <input
         type="text"
-        value={options[value]}
-        onChange={e => setValue(e.target.value as Option)}
+        value={value}
+        onChange={e => setValue(e.target.value as typeof value)}
       />
     );
   };
@@ -38,7 +32,7 @@ testFixtureLoader(
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
     await selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, 'First option');
+    await rendered(renderer, 'first');
   }
 );
 

@@ -1,11 +1,7 @@
 import React, { useEffect } from 'react';
 import { findFixtureStateSelect } from '../../fixtureState';
 import { FixtureContext } from '../FixtureContext';
-import {
-  getDefaultSelectValue,
-  getNormalizedSelectOptions,
-  UseSelectArgs,
-} from './shared';
+import { getDefaultSelectValue, UseSelectArgs } from './shared';
 
 export function useCreateFixtureState<Option extends string>(
   selectName: string,
@@ -22,7 +18,7 @@ export function useCreateFixtureState<Option extends string>(
       if (fsSelect && fsSelect.defaultValue === defaultValue)
         return prevFsState;
 
-      const options = getNormalizedSelectOptions(args.options);
+      const { options } = args;
       return {
         ...prevFsState,
         selects: {
