@@ -57,7 +57,7 @@ Auto generating fixtures completely is a pipe dream, but some parts can be autom
 
 - [ ] Support decimals in number input
 - [ ] Range input
-- [ ] Select input (dropdown with pre-defined options)
+- [x] Select input (dropdown with pre-defined options)
 - [ ] Auto save toggle for props panel
 
 ## Expose plugin APIs
