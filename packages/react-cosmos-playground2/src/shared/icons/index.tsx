@@ -25,6 +25,13 @@ export const FolderIcon = () => (
   </Icon>
 );
 
+export const XIcon = () => (
+  <Icon>
+    <line x1="18" y1="6" x2="6" y2="18"></line>
+    <line x1="6" y1="6" x2="18" y2="18"></line>
+  </Icon>
+);
+
 export const XCircleIcon = () => (
   <Icon>
     <circle cx="12" cy="12" r="10" />

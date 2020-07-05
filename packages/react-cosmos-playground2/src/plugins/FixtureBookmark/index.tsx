@@ -1,10 +1,18 @@
 import { isEqual } from 'lodash';
 import React from 'react';
+import {
+  createFixtureTree,
+  flattenFixtureTree,
+} from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { FixtureActionSlotProps } from '../../shared/slots/FixtureActionSlot';
+import { CoreSpec } from '../Core/public';
+import { RendererCoreSpec } from '../RendererCore/public';
+import { RouterSpec } from '../Router/public';
 import { StorageSpec } from '../Storage/public';
 import { BookmarkFixtureButton } from './BookmarkFixtureButton';
+import { FixtureBookmarks } from './FixtureBookmarks';
 import { FixtureBookmarkSpec } from './public';
 
 type FixtureBookmarkContext = PluginContext<FixtureBookmarkSpec>;
@@ -37,6 +45,47 @@ namedPlug<FixtureActionSlotProps>(
     );
   }
 );
+
+namedPlug<FixtureActionSlotProps>(
+  'navRow',
+  'fixtureBookmarks',
+  ({ pluginContext }) => {
+    const router = pluginContext.getMethodsOf<RouterSpec>('router');
+    const { getBookmarks, setBookmarks } = getStorageApi(pluginContext);
+    const bookmarks = getBookmarks();
+    const fixtureItems = useFixtureItems(pluginContext);
+
+    return (
+      <FixtureBookmarks
+        fixtureItems={fixtureItems}
+        bookmarks={bookmarks}
+        selectedFixtureId={router.getSelectedFixtureId()}
+        onFixtureSelect={router.selectFixture}
+        onBookmarkDelete={fixtureId =>
+          setBookmarks(bookmarks.filter(b => !isEqual(b, fixtureId)))
+        }
+      />
+    );
+  }
+);
+
+function useFixtureItems(pluginContext: FixtureBookmarkContext) {
+  const { getMethodsOf } = pluginContext;
+
+  const core = getMethodsOf<CoreSpec>('core');
+  const { fixturesDir, fixtureFileSuffix } = core.getFixtureFileVars();
+
+  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
+  const fixtures = rendererCore.getFixtures();
+
+  return React.useMemo(
+    () =>
+      flattenFixtureTree(
+        createFixtureTree({ fixturesDir, fixtureFileSuffix, fixtures })
+      ),
+    [fixtureFileSuffix, fixtures, fixturesDir]
+  );
+}
 
 export { register };
 
