@@ -77,7 +77,7 @@ const SearchIconContainer = styled.span`
   flex-shrink: 0;
   width: 16px;
   height: 16px;
-  margin: 1px 8px 0 8px;
+  margin: 1px 8px 0 6px;
   opacity: 0.64;
 `;
 
