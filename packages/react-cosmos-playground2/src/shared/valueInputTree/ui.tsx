@@ -12,11 +12,12 @@ export const Container = styled.div`
 `;
 
 export const Header = styled.div`
+  height: 40px;
+  padding: 0 4px 0 24px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 8px 8px 0 16px;
-  line-height: 32px;
+  align-items: center;
 `;
 
 type TitleProps = {
@@ -27,7 +28,7 @@ type TitleProps = {
 export function Title({ label, componentName }: TitleProps) {
   return (
     <TitleContainer>
-      <strong>{label}</strong>
+      <TitleLabel>{label}</TitleLabel>
       {typeof componentName === 'string' && (
         <ComponentName>
           {componentName ? componentName : <em>Unnamed</em>}
@@ -38,21 +39,19 @@ export function Title({ label, componentName }: TitleProps) {
 }
 
 const TitleContainer = styled.div`
-  padding-right: 8px;
   color: ${grey128};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
 
-  strong {
-    font-weight: 500;
-    color: ${grey160};
-    text-transform: uppercase;
-  }
+const TitleLabel = styled.span`
+  text-transform: uppercase;
 `;
 
 const ComponentName = styled.span`
   padding-left: 8px;
+  color: ${grey160};
 `;
 
 export const Actions = styled.div`
@@ -69,5 +68,5 @@ export const Actions = styled.div`
 `;
 
 export const Body = styled.div`
-  padding: 8px;
+  padding: 0 4px 8px 4px;
 `;

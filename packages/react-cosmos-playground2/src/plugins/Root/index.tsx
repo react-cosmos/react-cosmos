@@ -23,6 +23,7 @@ const { onLoad, plug, register } = createPlugin<RootSpec>({
     globalActionOrder: [],
     globalOrder: [],
     navRowOrder: [],
+    fixtureActionOrder: [],
     rendererActionOrder: [],
   },
   initialState: {
@@ -73,6 +74,7 @@ plug('root', ({ pluginContext }) => {
         globalActionOrder={[]}
         globalOrder={[]}
         navRowOrder={[]}
+        fixtureActionOrder={[]}
         rendererActionOrder={[]}
         onToggleNav={() => {}}
         onTogglePanel={() => {}}
@@ -92,6 +94,7 @@ plug('root', ({ pluginContext }) => {
     globalActionOrder,
     globalOrder,
     navRowOrder,
+    fixtureActionOrder,
     rendererActionOrder,
   } = getConfig();
   return (
@@ -110,6 +113,7 @@ plug('root', ({ pluginContext }) => {
       globalActionOrder={globalActionOrder}
       globalOrder={globalOrder}
       navRowOrder={navRowOrder}
+      fixtureActionOrder={fixtureActionOrder}
       rendererActionOrder={rendererActionOrder}
       onToggleNav={onToggleNav}
       onTogglePanel={onTogglePanel}

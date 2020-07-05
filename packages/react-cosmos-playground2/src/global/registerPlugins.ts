@@ -10,6 +10,7 @@ require('../plugins/ClassStatePanel').register();
 require('../plugins/ContentOverlay').register();
 require('../plugins/Core').register();
 require('../plugins/EditFixtureButton').register();
+require('../plugins/FixtureBookmark').register();
 require('../plugins/FixtureSearch').register();
 require('../plugins/FixtureTree').register();
 require('../plugins/FullScreenButton').register();

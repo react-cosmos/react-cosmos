@@ -81,12 +81,12 @@ const DirButton = styled.button`
 
 const iconSize = 16;
 
-const IconContainer = styled(Unshirinkable)`
+const CevronContainer = styled(Unshirinkable)`
   width: ${iconSize}px;
   height: ${iconSize}px;
   color: ${grey128};
-`;
 
-const CevronContainer = styled(IconContainer)`
-  padding-right: 2px;
+  svg {
+    margin-left: -2px;
+  }
 `;

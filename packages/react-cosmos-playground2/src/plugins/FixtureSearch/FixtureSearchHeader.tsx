@@ -45,7 +45,6 @@ const Container = styled.div`
   align-items: center;
   height: 40px;
   margin: 0 1px 0 0;
-  border-bottom: 1px solid ${white10};
   background: ${grey32};
 `;
 
@@ -77,7 +76,7 @@ const SearchIconContainer = styled.span`
   flex-shrink: 0;
   width: 16px;
   height: 16px;
-  margin: 1px 8px 0 8px;
+  margin: 1px 8px 0 6px;
   opacity: 0.64;
 `;
 

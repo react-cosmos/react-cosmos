@@ -4,6 +4,7 @@ import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
 import { blue } from '../../../shared/colors';
 import { createRelativePlaygroundUrl } from '../../../shared/url';
+import { stringifyFixtureId } from '../../../shared/valueInputTree';
 import { Label, ListItem } from './shared';
 
 type Props = {
@@ -54,12 +55,6 @@ export function FixtureTreeItem({
   );
 }
 
-function stringifyFixtureId(fixtureId: FixtureId) {
-  return fixtureId.name
-    ? `${fixtureId.path}-${fixtureId.name}`
-    : fixtureId.path;
-}
-
 function openAnchorInNewTab(anchorEl: HTMLAnchorElement) {
   // Allow users to cmd+click to open fixtures in new tab
   window.open(anchorEl.href, '_blank');
@@ -84,5 +79,5 @@ const FixtureLink = styled.a`
 `;
 
 const FixtureLabel = styled(Label)`
-  padding-left: 18px;
+  padding-left: 16px;
 `;
