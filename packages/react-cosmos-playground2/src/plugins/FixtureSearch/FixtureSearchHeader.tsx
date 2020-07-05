@@ -45,7 +45,6 @@ const Container = styled.div`
   align-items: center;
   height: 40px;
   margin: 0 1px 0 0;
-  border-bottom: 1px solid ${white10};
   background: ${grey32};
 `;
 

@@ -2,17 +2,11 @@ import React, { useMemo } from 'react';
 import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
-import { IconButton32 } from '../../shared/buttons';
-import { grey128, grey32, white10 } from '../../shared/colors';
-import { MinusSquareIcon, PlusSquareIcon } from '../../shared/icons';
-import { hasNonEmptyDirs } from '../../shared/tree';
-import {
-  getFullTreeExpansion,
-  isTreeFullyCollapsed,
-} from '../../shared/treeExpansion';
+import { grey32 } from '../../shared/colors';
 import { TreeExpansion } from '../../shared/TreeView';
 import { BlankState } from './BlankState';
 import { FixtureTree } from './FixtureTree';
+import { FixtureTreeHeader } from './FixtureTreeHeader';
 import { useScrollToSelected } from './useScrollToSelected';
 
 type Props = {
@@ -59,29 +53,13 @@ export function FixtureTreeContainer({
 
   return (
     <>
-      <Menu>
-        <ProjectName title={projectId}>{projectId}</ProjectName>
-        {!hasNonEmptyDirs(rootNode) ? (
-          <IconButton32
-            title="Collapse all fixture tree folders"
-            icon={<MinusSquareIcon />}
-            disabled
-            onClick={() => {}}
-          />
-        ) : isTreeFullyCollapsed(treeExpansion) ? (
-          <IconButton32
-            title="Expand all fixture tree folders"
-            icon={<PlusSquareIcon />}
-            onClick={() => setTreeExpansion(getFullTreeExpansion(rootNode))}
-          />
-        ) : (
-          <IconButton32
-            title="Collapse all fixture tree folders"
-            icon={<MinusSquareIcon />}
-            onClick={() => setTreeExpansion({})}
-          />
-        )}
-      </Menu>
+      <FixtureTreeHeader
+        fixturesDir={fixturesDir}
+        fixtureFileSuffix={fixtureFileSuffix}
+        fixtures={fixtures}
+        treeExpansion={treeExpansion}
+        setTreeExpansion={setTreeExpansion}
+      />
       <TreeContainer ref={containerRef}>
         <FixtureTree
           rootNode={rootNode}
@@ -95,27 +73,6 @@ export function FixtureTreeContainer({
     </>
   );
 }
-
-const Menu = styled.div`
-  flex-shrink: 0;
-  height: 40px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 4px;
-  border-bottom: 1px solid ${white10};
-  background: ${grey32};
-`;
-
-const ProjectName = styled.div`
-  padding: 0 4px 0 20px;
-  color: ${grey128};
-  line-height: 24px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
 
 // The background color is required for the proper scroll bar color theme
 const TreeContainer = styled.div`
