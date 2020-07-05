@@ -74,11 +74,9 @@ const Container = styled.div`
 const Title = styled.div`
   padding: 0 4px 0 20px;
   color: ${grey128};
-  font-size: 13px;
   line-height: 24px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   text-transform: uppercase;
-  user-select: none;
 `;
