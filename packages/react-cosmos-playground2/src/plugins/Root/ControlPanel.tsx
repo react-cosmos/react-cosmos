@@ -37,6 +37,7 @@ export const ControlPanel = React.memo(function ControlPanel({
 
 const Container = styled.div`
   height: 100%;
+  padding: 0 0 0 1px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
