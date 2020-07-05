@@ -69,6 +69,22 @@ namedPlug<FixtureActionSlotProps>(
   }
 );
 
+export { register };
+
+function getStorageApi(pluginContext: FixtureBookmarkContext) {
+  const storage = pluginContext.getMethodsOf<StorageSpec>('storage');
+
+  function getBookmarks() {
+    return storage.getItem<FixtureId[]>('fixtureBookmarks') || [];
+  }
+
+  function setBookmarks(bookmarks: FixtureId[]) {
+    storage.setItem<FixtureId[]>('fixtureBookmarks', bookmarks);
+  }
+
+  return { getBookmarks, setBookmarks };
+}
+
 function useFixtureItems(pluginContext: FixtureBookmarkContext) {
   const { getMethodsOf } = pluginContext;
 
@@ -85,20 +101,4 @@ function useFixtureItems(pluginContext: FixtureBookmarkContext) {
       ),
     [fixtureFileSuffix, fixtures, fixturesDir]
   );
-}
-
-export { register };
-
-function getStorageApi(pluginContext: FixtureBookmarkContext) {
-  const storage = pluginContext.getMethodsOf<StorageSpec>('storage');
-
-  function getBookmarks() {
-    return storage.getItem<FixtureId[]>('fixtureBookmarks') || [];
-  }
-
-  function setBookmarks(bookmarks: FixtureId[]) {
-    storage.setItem<FixtureId[]>('fixtureBookmarks', bookmarks);
-  }
-
-  return { getBookmarks, setBookmarks };
 }
