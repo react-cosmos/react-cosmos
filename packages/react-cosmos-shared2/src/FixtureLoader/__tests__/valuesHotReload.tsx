@@ -62,13 +62,15 @@ testFixtureLoader(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        values: {
+        controls: {
           // `count` was reset, `toggled` was preserved
           count: {
+            type: 'standard',
             defaultValue: createValue(2),
             currentValue: createValue(2),
           },
           toggled: {
+            type: 'standard',
             defaultValue: createValue(false),
             currentValue: createValue(true),
           },
@@ -97,9 +99,10 @@ testFixtureLoader(
       fixtureId,
       fixtureState: {
         ...setFixtureState,
-        values: {
-          ...fixtureState.values,
+        controls: {
+          ...fixtureState.controls,
           count: {
+            type: 'standard',
             defaultValue: createValue(0),
             currentValue: createValue(1),
           },
@@ -116,13 +119,15 @@ testFixtureLoader(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        values: {
+        controls: {
           // `count` was preserved, `toggled` was reset
           count: {
+            type: 'standard',
             defaultValue: createValue(0),
             currentValue: createValue(1),
           },
           toggled: {
+            type: 'standard',
             defaultValue: createValue(true),
             currentValue: createValue(true),
           },
@@ -144,12 +149,14 @@ testFixtureLoader(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        values: {
+        controls: {
           count: {
+            type: 'standard',
             defaultValue: createValue(0),
             currentValue: createValue(1),
           },
           toggled: {
+            type: 'standard',
             defaultValue: createValue(false),
             currentValue: createValue(false),
           },
@@ -169,18 +176,21 @@ testFixtureLoader(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        values: {
+        controls: {
           count: {
+            type: 'standard',
             defaultValue: createValue(0),
             currentValue: createValue(1),
           },
           confirmed: {
+            type: 'standard',
             defaultValue: createValue(true),
             currentValue: createValue(true),
           },
           // KNOWN LIMITATION: `toggled` is still present in the fixture
           // state until the user resets the fixture state.
           toggled: {
+            type: 'standard',
             defaultValue: createValue(false),
             currentValue: createValue(false),
           },

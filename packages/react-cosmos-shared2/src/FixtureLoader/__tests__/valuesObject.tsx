@@ -57,8 +57,9 @@ testFixtureLoader(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        values: {
+        controls: {
           profile: {
+            type: 'standard',
             defaultValue: createValue({
               isAdmin: true,
               name: 'Pat D',
@@ -90,8 +91,9 @@ testFixtureLoader(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        values: {
+        controls: {
           profile: {
+            type: 'standard',
             defaultValue: createValue({
               isAdmin: true,
               name: 'Pat D',
@@ -133,8 +135,9 @@ testFixtureLoader(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        values: {
+        controls: {
           profile: {
+            type: 'standard',
             defaultValue: createValue({
               isAdmin: false,
               name: 'Pat D',

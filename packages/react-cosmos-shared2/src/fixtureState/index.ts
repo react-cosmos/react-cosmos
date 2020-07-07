@@ -13,10 +13,10 @@ export {
   FixtureStateValues,
   FixtureStateProps,
   FixtureStateClassState,
-  FixtureStateValuePair,
-  FixtureStateValuePairs,
-  FixtureStateSelect,
-  FixtureStateSelects,
+  FixtureStateStandardControl,
+  FixtureStateSelectControl,
+  FixtureStateControl,
+  FixtureStateControls,
   FixtureState,
   SetFixtureState,
 } from './shared';
@@ -47,5 +47,4 @@ export {
   updateFixtureStateClassState,
   removeFixtureStateClassState,
 } from './classState';
-export { findFixtureStateValue } from './values';
-export { findFixtureStateSelect } from './selects';
+export { findFixtureStateControl } from './controls';
