@@ -1,5 +1,5 @@
 import React from 'react';
-import { FixtureStateSelect } from 'react-cosmos-shared2/fixtureState';
+import { FixtureStateSelectControl } from 'react-cosmos-shared2/fixtureState';
 import { lightBlue } from '../../shared/colors';
 import { Select } from '../../shared/inputs/Select';
 import { ItemContainer } from '../../shared/valueInputTree/ValueInputTreeItem';
@@ -10,12 +10,15 @@ import {
 
 type Props = {
   selectName: string;
-  fsSelect: FixtureStateSelect;
-  onSelectChange: (selectName: string, fsSelect: FixtureStateSelect) => unknown;
+  select: FixtureStateSelectControl;
+  onSelectChange: (
+    selectName: string,
+    select: FixtureStateSelectControl
+  ) => unknown;
 };
 
-export function SelectItem({ selectName, fsSelect, onSelectChange }: Props) {
-  const { options, currentValue } = fsSelect;
+export function SelectItem({ selectName, select, onSelectChange }: Props) {
+  const { options, currentValue } = select;
   const id = `select-${selectName}`;
   return (
     <ItemContainer key={selectName}>
@@ -35,7 +38,7 @@ export function SelectItem({ selectName, fsSelect, onSelectChange }: Props) {
           padding={5}
           onChange={newValue =>
             onSelectChange(selectName, {
-              ...fsSelect,
+              ...select,
               currentValue: newValue.value,
             })
           }

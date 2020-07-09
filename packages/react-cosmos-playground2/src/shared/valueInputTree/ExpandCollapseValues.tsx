@@ -13,6 +13,7 @@ type Props = {
   onTreeExpansionChange: (treeExpansion: TreeExpansion) => unknown;
 };
 
+// TODO: Turn this into a slot plug
 export function ExpandCollapseValues({
   values,
   treeExpansion,

@@ -1,53 +1,109 @@
-import React from 'react';
-import { createPlugin, PluginContext } from 'react-plugin';
+import React, { useCallback } from 'react';
+import {
+  FixtureState,
+  FixtureStateControl,
+  FixtureStateSelectControl,
+  FixtureStateStandardControl,
+  FixtureStateValues,
+} from 'react-cosmos-shared2/fixtureState';
+import { StateUpdater } from 'react-cosmos-shared2/util';
+import { createPlugin } from 'react-plugin';
 import { ControlPanelRowSlotProps } from '../../shared/slots/ControlPanelRowSlot';
-import { TreeExpansion } from '../../shared/TreeView';
-import { StorageSpec } from '../Storage/public';
+import { ValueInputTree } from '../../shared/valueInputTree';
 import { ValuesPanelSpec } from './public';
+import { SelectItem } from './SelectItem';
 import { ValuesPanel } from './ValuesPanel';
-
-type ValuesPanelContext = PluginContext<ValuesPanelSpec>;
 
 export const VALUES_TREE_EXPANSION_STORAGE_KEY = 'valuesTreeExpansion';
 
-const { namedPlug, register } = createPlugin<ValuesPanelSpec>({
+// TODO: Rename to ControlPanel
+const { plug, namedPlug, register } = createPlugin<ValuesPanelSpec>({
   name: 'valuesPanel',
 });
 
 namedPlug<ControlPanelRowSlotProps>(
   'controlPanelRow',
   'values',
-  ({ pluginContext, slotProps }) => {
+  ({ slotProps }) => {
     const { fixtureState, onFixtureStateChange } = slotProps;
-    const { treeExpansion, onTreeExpansionChange } = useTreeExpansionStorage(
-      pluginContext
-    );
     return (
       <ValuesPanel
         fixtureState={fixtureState}
-        treeExpansion={treeExpansion}
         onFixtureStateChange={onFixtureStateChange}
-        onTreeExpansionChange={onTreeExpansionChange}
       />
     );
   }
 );
 
-export { register };
+export type ControlSlotProps<TControl extends FixtureStateControl> = {
+  controlName: string;
+  control: TControl;
+  onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
+};
 
-// TODO: Persist tree expansion state per fixture ID
-function useTreeExpansionStorage(context: ValuesPanelContext) {
-  const { getMethodsOf } = context;
-  const storage = getMethodsOf<StorageSpec>('storage');
+type StandardControlSlotProps = ControlSlotProps<FixtureStateStandardControl>;
 
-  const treeExpansion =
-    storage.getItem<TreeExpansion>(VALUES_TREE_EXPANSION_STORAGE_KEY) || {};
-  const onTreeExpansionChange = React.useCallback(
-    (newTreeExpansion: TreeExpansion) => {
-      storage.setItem(VALUES_TREE_EXPANSION_STORAGE_KEY, newTreeExpansion);
+plug<StandardControlSlotProps>('control-standard', ({ slotProps }) => {
+  const { controlName, control, onFixtureStateChange } = slotProps;
+
+  // TODO: Is this performant enough?
+  const handleValueChange = useCallback(
+    (values: FixtureStateValues) => {
+      onFixtureStateChange(fixtureState => {
+        return {
+          ...fixtureState,
+          controls: {
+            ...fixtureState.controls,
+            [controlName]: {
+              ...control,
+              currentValue: values[controlName],
+            },
+          },
+        };
+      });
     },
-    [storage]
+    [control, controlName, onFixtureStateChange]
   );
 
-  return { treeExpansion, onTreeExpansionChange };
-}
+  // TODO: treeExpansion/onTreeExpansionChange
+
+  return (
+    <ValueInputTree
+      id={`controls-${controlName}`}
+      values={{ [controlName]: control.currentValue }}
+      treeExpansion={{}}
+      onValueChange={handleValueChange}
+      onTreeExpansionChange={() => {}}
+    />
+  );
+});
+
+type SelectControlSlotProps = ControlSlotProps<FixtureStateSelectControl>;
+
+plug<SelectControlSlotProps>('control-select', ({ slotProps }) => {
+  const { controlName, control, onFixtureStateChange } = slotProps;
+
+  const handleSelectChange = useCallback(
+    (selectName: string, updatedControl: FixtureStateSelectControl) => {
+      onFixtureStateChange(fixtureState => ({
+        ...fixtureState,
+        controls: {
+          ...fixtureState.controls,
+          [selectName]: updatedControl,
+        },
+      }));
+    },
+    [onFixtureStateChange]
+  );
+
+  return (
+    <SelectItem
+      key={controlName}
+      selectName={controlName}
+      select={control}
+      onSelectChange={handleSelectChange}
+    />
+  );
+});
+
+export { register };

@@ -104,13 +104,9 @@ function shouldShowBlankState(fixtureState: FixtureState) {
     fixtureState.classState && fixtureState.classState.some(hasFsValues);
   if (hasClassState) return false;
 
-  const hasValues =
-    fixtureState.values && Object.keys(fixtureState.values).length > 0;
-  if (hasValues) return false;
-
-  const hasSelects =
-    fixtureState.selects && Object.keys(fixtureState.selects).length > 0;
-  if (hasSelects) return false;
+  const hasControls =
+    fixtureState.controls && Object.keys(fixtureState.controls).length > 0;
+  if (hasControls) return false;
 
   return true;
 }

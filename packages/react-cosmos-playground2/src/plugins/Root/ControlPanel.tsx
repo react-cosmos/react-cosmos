@@ -13,6 +13,7 @@ type Props = {
   controlPanelRowOrder: string[];
 };
 
+// TODO: Rename to SidePanel
 export const ControlPanel = React.memo(function ControlPanel({
   fixtureId,
   fixtureState,
