@@ -1,5 +1,5 @@
 import React from 'react';
-import { useValue } from 'react-cosmos/fixture';
+import { useSelect, useValue } from 'react-cosmos/fixture';
 
 export default () => {
   const [string] = useValue('string', { defaultValue: 'How are you doing?' });
@@ -8,6 +8,9 @@ export default () => {
   const [object] = useValue('object', {
     defaultValue: { isAdmin: true, name: 'Pat D', age: 44 },
   });
+  const [value, setValue] = useSelect('mySelect', {
+    options: ['Option 1', 'Option 2', 'Option 3'],
+  });
   const [array] = useValue('array', {
     defaultValue: [
       { isAdmin: true, name: 'Pat D', age: 44 },
@@ -15,14 +18,29 @@ export default () => {
     ],
   });
 
+  function renderButton(option: typeof value) {
+    return (
+      <button disabled={value === option} onClick={() => setValue(option)}>
+        {option}
+      </button>
+    );
+  }
+
   return (
-    <MyComponent
-      string={string}
-      number={number}
-      boolean={boolean}
-      object={object}
-      array={array}
-    />
+    <>
+      <MyComponent
+        string={string}
+        number={number}
+        boolean={boolean}
+        object={object}
+        array={array}
+      />
+      <div>
+        {renderButton('Option 1')}
+        {renderButton('Option 2')}
+        {renderButton('Option 3')}
+      </div>
+    </>
   );
 };
 
