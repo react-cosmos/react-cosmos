@@ -5,7 +5,7 @@ import {
 } from 'react-cosmos-shared2/fixtureState';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { createPlugin, PluginContext } from 'react-plugin';
-import { ControlPanelRowSlotProps } from '../../shared/slots/ControlPanelRowSlot';
+import { SidePanelRowSlotProps } from '../../shared/slots/SidePanelRowSlot';
 import { TreeExpansion } from '../../shared/TreeView';
 import {
   FixtureExpansionGroup,
@@ -25,8 +25,8 @@ const { namedPlug, register } = createPlugin<PropsPanelSpec>({
   name: 'propsPanel',
 });
 
-namedPlug<ControlPanelRowSlotProps>(
-  'controlPanelRow',
+namedPlug<SidePanelRowSlotProps>(
+  'sidePanelRow',
   'props',
   ({ pluginContext, slotProps }) => {
     const { fixtureId, fixtureState, onFixtureStateChange } = slotProps;
@@ -50,8 +50,8 @@ namedPlug<ControlPanelRowSlotProps>(
 // when none is available
 // TODO: Replace this with a more generic blank state (controls in general not
 // just props)
-namedPlug<ControlPanelRowSlotProps>(
-  'controlPanelRow',
+namedPlug<SidePanelRowSlotProps>(
+  'sidePanelRow',
   'blankState',
   ({ slotProps }) => {
     const { fixtureState } = slotProps;

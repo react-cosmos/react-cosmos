@@ -20,10 +20,15 @@ import {
 
 type Props = {
   fixtureState: FixtureState;
+  controlActionOrder: string[];
   onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
 };
 
-export function ValuesPanel({ fixtureState, onFixtureStateChange }: Props) {
+export function ControlPanel({
+  fixtureState,
+  controlActionOrder,
+  onFixtureStateChange,
+}: Props) {
   const handleControlsReset = React.useCallback(
     () => onFixtureStateChange(resetControls),
     [onFixtureStateChange]
@@ -32,8 +37,6 @@ export function ValuesPanel({ fixtureState, onFixtureStateChange }: Props) {
   const controls = fixtureState.controls || {};
   if (Object.keys(controls).length === 0) return null;
 
-  // TODO: plugOrder
-  const controlActionOrder: string[] = [];
   return (
     <Container>
       <Header>

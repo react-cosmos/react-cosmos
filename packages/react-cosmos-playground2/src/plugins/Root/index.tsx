@@ -19,7 +19,7 @@ import { RootContext } from './shared';
 const { onLoad, plug, register } = createPlugin<RootSpec>({
   name: 'root',
   defaultConfig: {
-    controlPanelRowOrder: [],
+    sidePanelRowOrder: [],
     globalActionOrder: [],
     globalOrder: [],
     navRowOrder: [],
@@ -70,7 +70,7 @@ plug('root', ({ pluginContext }) => {
         panelOpen={false}
         navWidth={0}
         panelWidth={0}
-        controlPanelRowOrder={[]}
+        sidePanelRowOrder={[]}
         globalActionOrder={[]}
         globalOrder={[]}
         navRowOrder={[]}
@@ -90,7 +90,7 @@ plug('root', ({ pluginContext }) => {
   const { navWidth, setNavWidth } = getNavWidthApi(pluginContext);
   const { panelWidth, setPanelWidth } = getPanelWidthApi(pluginContext);
   const {
-    controlPanelRowOrder,
+    sidePanelRowOrder,
     globalActionOrder,
     globalOrder,
     navRowOrder,
@@ -109,7 +109,7 @@ plug('root', ({ pluginContext }) => {
       panelOpen={isPanelOpen(pluginContext)}
       navWidth={navWidth}
       panelWidth={panelWidth}
-      controlPanelRowOrder={controlPanelRowOrder}
+      sidePanelRowOrder={sidePanelRowOrder}
       globalActionOrder={globalActionOrder}
       globalOrder={globalOrder}
       navRowOrder={navRowOrder}

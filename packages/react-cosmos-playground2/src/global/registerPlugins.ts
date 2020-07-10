@@ -8,6 +8,7 @@ resetPlugins();
 require('../plugins/BuildNotifications').register();
 require('../plugins/ClassStatePanel').register();
 require('../plugins/ContentOverlay').register();
+require('../plugins/ControlPanel').register();
 require('../plugins/Core').register();
 require('../plugins/EditFixtureButton').register();
 require('../plugins/FixtureBookmark').register();
@@ -28,7 +29,6 @@ require('../plugins/Router').register();
 require('../plugins/SelectControl').register();
 require('../plugins/StandardControl').register();
 require('../plugins/Storage').register();
-require('../plugins/ValuesPanel').register();
 require('../plugins/WebpackHmrNotification').register();
 
 // TODO: Read list of disabled plugins from user config

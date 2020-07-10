@@ -2,8 +2,8 @@ import { RendererCoreSpec } from '../RendererCore/public';
 import { StorageSpec } from '../Storage/public';
 import { RootContext } from './shared';
 
-export const PANEL_OPEN_STORAGE_KEY = 'controlPanelOpen';
-const PANEL_OPEN_DEFAULT = false;
+export const PANEL_OPEN_STORAGE_KEY = 'sidePanelOpen';
+const PANEL_OPEN_DEFAULT = true;
 
 export function isPanelOpen(context: RootContext) {
   const { getMethodsOf } = context;

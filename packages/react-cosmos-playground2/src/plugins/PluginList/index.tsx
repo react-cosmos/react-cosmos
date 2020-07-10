@@ -7,7 +7,7 @@ const { plug, register } = createPlugin<PluginListSpec>({
   name: 'pluginList',
 });
 
-plug('controlPanelRow', () => {
+plug('sidePanelRow', () => {
   return (
     <Container>
       <p>Plugins</p>

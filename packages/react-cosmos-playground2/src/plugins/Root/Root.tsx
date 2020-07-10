@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { grey32, grey8, white10 } from '../../shared/colors';
 import { NavRowSlot } from '../../shared/slots/NavRowSlot';
 import { useDrag } from '../../shared/useDrag';
-import { ControlPanel } from './ControlPanel';
+import { SidePanel } from './SidePanel';
 import { GlobalHeader } from './GlobalHeader';
 import { RendererHeader } from './RendererHeader';
 
@@ -23,7 +23,7 @@ type Props = {
   panelOpen: boolean;
   navWidth: number;
   panelWidth: number;
-  controlPanelRowOrder: string[];
+  sidePanelRowOrder: string[];
   globalActionOrder: string[];
   globalOrder: string[];
   navRowOrder: string[];
@@ -49,7 +49,7 @@ export function Root({
   panelOpen,
   navWidth,
   panelWidth,
-  controlPanelRowOrder,
+  sidePanelRowOrder,
   globalActionOrder,
   globalOrder,
   navRowOrder,
@@ -127,10 +127,10 @@ export function Root({
             {dragging && <DragOverlay />}
             {panelOpen && selectedFixtureId && (
               <ControlPanelContainer style={{ width: panelWidth, zIndex: 3 }}>
-                <ControlPanel
+                <SidePanel
                   fixtureId={selectedFixtureId}
                   fixtureState={fixtureState}
-                  controlPanelRowOrder={controlPanelRowOrder}
+                  sidePanelRowOrder={sidePanelRowOrder}
                   onFixtureStateChange={onFixtureStateChange}
                 />
                 {panelDrag.dragging && <DragOverlay />}

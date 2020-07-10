@@ -1,7 +1,7 @@
 export type RootSpec = {
   name: 'root';
   config: {
-    controlPanelRowOrder: string[];
+    sidePanelRowOrder: string[];
     globalActionOrder: string[];
     globalOrder: string[];
     navRowOrder: string[];

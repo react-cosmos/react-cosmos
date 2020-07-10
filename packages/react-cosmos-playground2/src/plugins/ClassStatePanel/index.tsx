@@ -2,7 +2,7 @@ import React from 'react';
 import { FixtureElementId } from 'react-cosmos-shared2/fixtureState';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { createPlugin, PluginContext } from 'react-plugin';
-import { ControlPanelRowSlotProps } from '../../shared/slots/ControlPanelRowSlot';
+import { SidePanelRowSlotProps } from '../../shared/slots/SidePanelRowSlot';
 import { TreeExpansion } from '../../shared/TreeView';
 import {
   FixtureExpansionGroup,
@@ -20,8 +20,8 @@ const { namedPlug, register } = createPlugin<ClassStatePanelSpec>({
   name: 'classStatePanel',
 });
 
-namedPlug<ControlPanelRowSlotProps>(
-  'controlPanelRow',
+namedPlug<SidePanelRowSlotProps>(
+  'sidePanelRow',
   'classState',
   ({ pluginContext, slotProps }) => {
     const { fixtureId, fixtureState, onFixtureStateChange } = slotProps;
