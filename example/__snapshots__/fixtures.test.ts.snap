@@ -1,52 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`returns fixture elements: __fixtures__/Hello World.ts 1`] = `"Hello World!"`;
-
-exports[`returns fixture elements: __fixtures__/Props Playground.tsx 1`] = `
-<pre>
-  {
-  "string": "How are you doing?",
-  "number": 1989,
-  "boolean": false,
-  "object": {
-    "string": "Pretty good can't complain",
-    "number": 1337,
-    "object": {
-      "number": 555
-    },
-    "null": null,
-    "unserializable": {}
-  }
-}
-</pre>
-`;
-
-exports[`returns fixture elements: __fixtures__/Select Playground.tsx 1`] = `
-<div>
-  <button
-    disabled={true}
-    onClick={[Function]}
-  >
-    Option 1
-  </button>
-  <button
-    disabled={false}
-    onClick={[Function]}
-  >
-    Option 2
-  </button>
-  <button
-    disabled={false}
-    onClick={[Function]}
-  >
-    Option 3
-  </button>
-</div>
-`;
-
-exports[`returns fixture elements: __fixtures__/Values Playground.tsx 1`] = `
-<pre>
-  {
+exports[`returns fixture elements: __fixtures__/Controls playground.tsx 1`] = `
+Array [
+  <pre>
+    {
   "string": "How are you doing?",
   "number": 1989,
   "boolean": true,
@@ -67,6 +24,48 @@ exports[`returns fixture elements: __fixtures__/Values Playground.tsx 1`] = `
       "age": 39
     }
   ]
+}
+  </pre>,
+  <div>
+    <button
+      disabled={true}
+      onClick={[Function]}
+    >
+      Option 1
+    </button>
+    <button
+      disabled={false}
+      onClick={[Function]}
+    >
+      Option 2
+    </button>
+    <button
+      disabled={false}
+      onClick={[Function]}
+    >
+      Option 3
+    </button>
+  </div>,
+]
+`;
+
+exports[`returns fixture elements: __fixtures__/Hello World.ts 1`] = `"Hello World!"`;
+
+exports[`returns fixture elements: __fixtures__/Props playground.tsx 1`] = `
+<pre>
+  {
+  "string": "How are you doing?",
+  "number": 1989,
+  "boolean": false,
+  "object": {
+    "string": "Pretty good can't complain",
+    "number": 1337,
+    "object": {
+      "number": 555
+    },
+    "null": null,
+    "unserializable": {}
+  }
 }
 </pre>
 `;
