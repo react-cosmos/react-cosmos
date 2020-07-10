@@ -13,19 +13,19 @@ export function useCreateFixtureState<Option extends string>(
     // The fixture state for this select is (re)created in two situations:
     // 1. Initially: No corresponding fixture state select is found
     // 2: Default value change: Current value is reset to new default value
-    setFixtureState(fsState => {
-      const fsControl = findFixtureStateControl(fsState, selectName);
+    setFixtureState(prevFs => {
+      const fsControl = findFixtureStateControl(prevFs, selectName);
       if (
         fsControl &&
         fsControl.type === 'select' &&
         fsControl.defaultValue === defaultValue
       )
-        return fsState;
+        return prevFs;
 
       return {
-        ...fsState,
+        ...prevFs,
         controls: {
-          ...fsState.controls,
+          ...prevFs.controls,
           [selectName]: {
             type: 'select',
             options: args.options,

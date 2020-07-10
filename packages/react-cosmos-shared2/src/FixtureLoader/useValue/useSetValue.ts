@@ -16,7 +16,7 @@ export function useSetValue<T extends FixtureStateValueType>(
   const { setFixtureState } = React.useContext(FixtureContext);
   return React.useCallback(
     stateChange => {
-      setFixtureState(fsState => {
+      setFixtureState(prevFs => {
         const currentValue: FixtureStateValueType =
           typeof stateChange === 'function'
             ? stateChange(
@@ -24,7 +24,7 @@ export function useSetValue<T extends FixtureStateValueType>(
                 // time, which means that tampering with the fixture state can
                 // cause runtime errors
                 getCurrentValueFromFixtureState(
-                  fsState,
+                  prevFs,
                   inputName,
                   defaultValue
                 ) as T
@@ -32,9 +32,9 @@ export function useSetValue<T extends FixtureStateValueType>(
             : stateChange;
 
         return {
-          ...fsState,
+          ...prevFs,
           controls: {
-            ...fsState.controls,
+            ...prevFs.controls,
             [inputName]: {
               type: 'standard',
               defaultValue: createValue(defaultValue),
@@ -49,11 +49,11 @@ export function useSetValue<T extends FixtureStateValueType>(
 }
 
 function getCurrentValueFromFixtureState(
-  fsState: FixtureState,
+  fixtureState: FixtureState,
   inputName: string,
   defaultValue: FixtureStateValueType
 ): unknown {
-  const fsControl = findFixtureStateControl(fsState, inputName);
+  const fsControl = findFixtureStateControl(fixtureState, inputName);
   return fsControl && fsControl.type === 'standard'
     ? extendWithValue(defaultValue, fsControl.currentValue)
     : defaultValue;

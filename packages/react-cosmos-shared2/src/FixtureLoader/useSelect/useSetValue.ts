@@ -9,17 +9,17 @@ export function useSetValue<Option extends string>(
   const { setFixtureState } = useContext(FixtureContext);
   return useCallback(
     value => {
-      setFixtureState(fsState => {
-        const fsControl = findFixtureStateControl(fsState, selectName);
+      setFixtureState(prevFs => {
+        const fsControl = findFixtureStateControl(prevFs, selectName);
         if (!fsControl || fsControl.type !== 'select') {
           console.warn(`Invalid fixture state for select: ${selectName}`);
-          return fsState;
+          return prevFs;
         }
 
         return {
-          ...fsState,
+          ...prevFs,
           controls: {
-            ...fsState.controls,
+            ...prevFs.controls,
             [selectName]: {
               ...fsControl,
               currentValue: value,
