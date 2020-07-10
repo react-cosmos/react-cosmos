@@ -25,6 +25,8 @@ require('../plugins/RendererSelect').register();
 require('../plugins/ResponsivePreview').register();
 require('../plugins/Root').register();
 require('../plugins/Router').register();
+require('../plugins/SelectControl').register();
+require('../plugins/StandardControl').register();
 require('../plugins/Storage').register();
 require('../plugins/ValuesPanel').register();
 require('../plugins/WebpackHmrNotification').register();

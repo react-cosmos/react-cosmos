@@ -6,10 +6,10 @@ import {
   FixtureStateControls,
 } from 'react-cosmos-shared2/fixtureState';
 import { StateUpdater } from 'react-cosmos-shared2/util';
-import { Slot } from 'react-plugin';
-import { ControlSlotProps } from '.';
 import { IconButton32 } from '../../shared/buttons';
 import { RotateCcwIcon } from '../../shared/icons';
+import { ControlActionSlot } from '../../shared/slots/ControlActionSlot';
+import { ControlSlot } from '../../shared/slots/ControlSlot';
 import {
   Actions,
   Body,
@@ -32,6 +32,8 @@ export function ValuesPanel({ fixtureState, onFixtureStateChange }: Props) {
   const controls = fixtureState.controls || {};
   if (Object.keys(controls).length === 0) return null;
 
+  // TODO: plugOrder
+  const controlActionOrder: string[] = [];
   return (
     <Container>
       <Header>
@@ -43,25 +45,23 @@ export function ValuesPanel({ fixtureState, onFixtureStateChange }: Props) {
             disabled={areControlsUnchanged(controls)}
             onClick={handleControlsReset}
           />
+          <ControlActionSlot
+            slotProps={{ controls }}
+            plugOrder={controlActionOrder}
+          />
         </Actions>
       </Header>
       <Body>
-        {Object.keys(controls).map(controlName => {
-          const control = controls[controlName];
-          // TODO: Create ControlSlot component
-          const slotProps: ControlSlotProps<typeof control> = {
-            controlName,
-            control,
-            onFixtureStateChange,
-          };
-          return (
-            <Slot
-              key={controlName}
-              name={`control-${control.type}`}
-              slotProps={slotProps}
-            />
-          );
-        })}
+        {Object.keys(controls).map(controlName => (
+          <ControlSlot
+            key={controlName}
+            slotProps={{
+              controlName,
+              control: controls[controlName],
+              onFixtureStateChange,
+            }}
+          />
+        ))}
       </Body>
     </Container>
   );
