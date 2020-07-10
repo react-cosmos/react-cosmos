@@ -28,10 +28,7 @@ export function SelectItem({ selectName, select, onSelectChange }: Props) {
       <ValueContainer>
         <Select
           id={id}
-          options={options.map(option => ({
-            value: option,
-            label: option,
-          }))}
+          options={options.map(option => ({ value: option, label: option }))}
           value={currentValue}
           color={lightBlue}
           height={24}

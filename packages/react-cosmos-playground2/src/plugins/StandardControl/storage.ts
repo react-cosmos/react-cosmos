@@ -7,7 +7,7 @@ import { StandardControlSpec } from './public';
 const treeExpansionStorageKey = 'standardControlTreeExpansion';
 const emptyTreeExpansion = {};
 
-// TODO: Persist tree expansion state per fixture ID
+// TODO: Persist tree expansion state per fixture ID?
 export function useTreeExpansionStorage(
   pluginContext: PluginContext<StandardControlSpec>
 ) {

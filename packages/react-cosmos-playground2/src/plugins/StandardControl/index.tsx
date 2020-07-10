@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   FixtureStateControls,
   FixtureStateStandardControl,
@@ -24,17 +24,20 @@ plug<StandardControlSlotProps>(
     const { controlName, control, onFixtureStateChange } = slotProps;
     const treeExpansionApi = useTreeExpansionStorage(pluginContext);
 
-    // TODO: Is this performant enough?
-    // TODO: Why can't I type in the middle of a string input?
+    const values = useMemo(() => ({ [controlName]: control.currentValue }), [
+      control.currentValue,
+      controlName,
+    ]);
+
     const handleValueChange = useCallback(
-      (values: FixtureStateValues) => {
+      (updatedValues: FixtureStateValues) => {
         onFixtureStateChange(fixtureState => ({
           ...fixtureState,
           controls: {
             ...fixtureState.controls,
             [controlName]: {
               ...control,
-              currentValue: values[controlName],
+              currentValue: updatedValues[controlName],
             },
           },
         }));
@@ -45,7 +48,7 @@ plug<StandardControlSlotProps>(
     return (
       <ValueInputTree
         id={`control-${controlName}`}
-        values={{ [controlName]: control.currentValue }}
+        values={values}
         onValueChange={handleValueChange}
         {...treeExpansionApi}
       />
