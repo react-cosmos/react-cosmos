@@ -8,15 +8,15 @@ import {
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import { IconButton32 } from '../../shared/buttons';
 import { RotateCcwIcon } from '../../shared/icons';
-import { ControlActionSlot } from '../../shared/slots/ControlActionSlot';
-import { ControlSlot } from '../../shared/slots/ControlSlot';
 import {
   Actions,
   Body,
   Container,
   Header,
   Title,
-} from '../../shared/valueInputTree';
+} from '../../shared/sidePanelUi';
+import { ControlActionSlot } from '../../shared/slots/ControlActionSlot';
+import { ControlSlot } from '../../shared/slots/ControlSlot';
 
 type Props = {
   fixtureState: FixtureState;

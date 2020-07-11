@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { grey128, grey160, grey32, white10 } from '../colors';
+import { grey128, grey160, grey32, white10 } from './colors';
 
-// TODO: Move this file outside valueInputTree?
 export const Container = styled.div`
   background: ${grey32};
   border-top: 1px solid ${white10};
