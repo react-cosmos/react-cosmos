@@ -9,16 +9,18 @@ import {
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import { IconButton32 } from '../../../shared/buttons';
 import { RotateCcwIcon } from '../../../shared/icons';
-import { TreeExpansion } from '../../../shared/TreeView';
 import {
   Actions,
   Body,
   Container,
-  FixtureExpansion,
   Header,
+  Title,
+} from '../../../shared/sidePanelUi';
+import { TreeExpansion } from '../../../shared/TreeView';
+import {
+  FixtureExpansion,
   OnElementExpansionChange,
   stringifyElementId,
-  Title,
   ValueInputTree,
 } from '../../../shared/valueInputTree';
 import { ExpandCollapseValues } from '../../../shared/valueInputTree/ExpandCollapseValues';

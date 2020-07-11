@@ -46,8 +46,9 @@ testFixtureLoader(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        selects: {
+        controls: {
           selectName: {
+            type: 'select',
             options: ['first', 'second', 'third'],
             defaultValue: 'first',
             currentValue: 'first',

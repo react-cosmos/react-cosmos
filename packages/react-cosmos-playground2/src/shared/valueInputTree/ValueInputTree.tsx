@@ -1,11 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
 import { FixtureStateValues } from 'react-cosmos-shared2/fixtureState';
-import { TreeView, TreeExpansion } from '../TreeView';
-import { getFixtureStateValueTree } from './valueTree';
-import { ValueInputTreeItem } from './ValueInputTreeItem';
+import styled from 'styled-components';
+import { grey248, grey32 } from '../colors';
+import { TreeExpansion, TreeView } from '../TreeView';
 import { ValueInputTreeDir } from './ValueInputTreeDir';
-import { grey32, grey248 } from '../colors';
+import { ValueInputTreeItem } from './ValueInputTreeItem';
+import { getFixtureStateValueTree } from './valueTree';
 
 type Props = {
   id: string;

@@ -7,7 +7,7 @@ import {
 } from 'react-cosmos-shared2/fixtureState';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '.';
-import { ControlPanelRowSlot } from '../../shared/slots/ControlPanelRowSlot';
+import { SidePanelRowSlot } from '../../shared/slots/SidePanelRowSlot';
 import { mockStorage } from '../../testHelpers/pluginMocks';
 import { getParentButton } from '../../testHelpers/selectors';
 import { PROPS_TREE_EXPANSION_STORAGE_KEY } from './shared';
@@ -19,7 +19,7 @@ const fixtureId = { path: 'foo.js', name: null };
 function loadTestPlugins(fixtureState: FixtureState) {
   loadPlugins();
   return render(
-    <ControlPanelRowSlot
+    <SidePanelRowSlot
       slotProps={{
         fixtureId,
         fixtureState,

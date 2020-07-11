@@ -2,7 +2,7 @@ import React from 'react';
 import {
   createValue,
   extendWithValue,
-  findFixtureStateValue,
+  findFixtureStateControl,
   FixtureState,
   FixtureStateValueType,
 } from '../../fixtureState';
@@ -16,7 +16,7 @@ export function useSetValue<T extends FixtureStateValueType>(
   const { setFixtureState } = React.useContext(FixtureContext);
   return React.useCallback(
     stateChange => {
-      setFixtureState(prevFsState => {
+      setFixtureState(prevFs => {
         const currentValue: FixtureStateValueType =
           typeof stateChange === 'function'
             ? stateChange(
@@ -24,17 +24,19 @@ export function useSetValue<T extends FixtureStateValueType>(
                 // time, which means that tampering with the fixture state can
                 // cause runtime errors
                 getCurrentValueFromFixtureState(
-                  prevFsState,
+                  prevFs,
                   inputName,
                   defaultValue
                 ) as T
               )
             : stateChange;
+
         return {
-          ...prevFsState,
-          values: {
-            ...prevFsState.values,
+          ...prevFs,
+          controls: {
+            ...prevFs.controls,
             [inputName]: {
+              type: 'standard',
               defaultValue: createValue(defaultValue),
               currentValue: createValue(currentValue),
             },
@@ -47,13 +49,12 @@ export function useSetValue<T extends FixtureStateValueType>(
 }
 
 function getCurrentValueFromFixtureState(
-  fsState: FixtureState,
+  fixtureState: FixtureState,
   inputName: string,
   defaultValue: FixtureStateValueType
 ): unknown {
-  const fsValue = findFixtureStateValue(fsState, inputName);
-  if (!fsValue)
-    throw new Error(`Fixture state value missing for name: ${inputName}`);
-
-  return extendWithValue(defaultValue, fsValue.currentValue);
+  const fsControl = findFixtureStateControl(fixtureState, inputName);
+  return fsControl && fsControl.type === 'standard'
+    ? extendWithValue(defaultValue, fsControl.currentValue)
+    : defaultValue;
 }

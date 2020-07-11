@@ -1,5 +1,5 @@
 import React from 'react';
-import { FixtureStateSelect } from 'react-cosmos-shared2/fixtureState';
+import { FixtureStateSelectControl } from 'react-cosmos-shared2/fixtureState';
 import { lightBlue } from '../../shared/colors';
 import { Select } from '../../shared/inputs/Select';
 import { ItemContainer } from '../../shared/valueInputTree/ValueInputTreeItem';
@@ -10,12 +10,15 @@ import {
 
 type Props = {
   selectName: string;
-  fsSelect: FixtureStateSelect;
-  onSelectChange: (selectName: string, fsSelect: FixtureStateSelect) => unknown;
+  select: FixtureStateSelectControl;
+  onSelectChange: (
+    selectName: string,
+    select: FixtureStateSelectControl
+  ) => unknown;
 };
 
-export function SelectItem({ selectName, fsSelect, onSelectChange }: Props) {
-  const { options, currentValue } = fsSelect;
+export function SelectItem({ selectName, select, onSelectChange }: Props) {
+  const { options, currentValue } = select;
   const id = `select-${selectName}`;
   return (
     <ItemContainer key={selectName}>
@@ -25,17 +28,14 @@ export function SelectItem({ selectName, fsSelect, onSelectChange }: Props) {
       <ValueContainer>
         <Select
           id={id}
-          options={options.map(option => ({
-            value: option,
-            label: option,
-          }))}
+          options={options.map(option => ({ value: option, label: option }))}
           value={currentValue}
           color={lightBlue}
           height={24}
           padding={5}
           onChange={newValue =>
             onSelectChange(selectName, {
-              ...fsSelect,
+              ...select,
               currentValue: newValue.value,
             })
           }

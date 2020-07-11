@@ -3,7 +3,7 @@ import React from 'react';
 import {
   createValue,
   extendWithValue,
-  findFixtureStateValue,
+  findFixtureStateControl,
   FixtureStateValue,
   FixtureStateValueType,
 } from '../../fixtureState';
@@ -18,20 +18,21 @@ export function useCreateFixtureState(
     // The fixture state for this value is (re)created in two situations:
     // 1. Initially: No corresponding fixture state value is found
     // 2: Default value change: Current value is reset to new default value
-    setFixtureState(prevFsState => {
-      const fsValuePair = findFixtureStateValue(prevFsState, inputName);
+    setFixtureState(prevFs => {
+      const fsControl = findFixtureStateControl(prevFs, inputName);
       if (
-        fsValuePair &&
-        fsValueExtendsBaseValue(fsValuePair.defaultValue, defaultValue)
-      ) {
-        return prevFsState;
-      }
+        fsControl &&
+        fsControl.type === 'standard' &&
+        fsValueExtendsBaseValue(fsControl.defaultValue, defaultValue)
+      )
+        return prevFs;
 
       return {
-        ...prevFsState,
-        values: {
-          ...prevFsState.values,
+        ...prevFs,
+        controls: {
+          ...prevFs.controls,
           [inputName]: {
+            type: 'standard',
             defaultValue: createValue(defaultValue),
             currentValue: createValue(defaultValue),
           },

@@ -68,26 +68,29 @@ export type FixtureStateClassState = {
   componentName: string;
 };
 
-export type FixtureStateValuePair = {
+export type FixtureStateStandardControl = {
+  type: 'standard';
   defaultValue: FixtureStateValue;
   currentValue: FixtureStateValue;
 };
 
-export type FixtureStateValuePairs = Record<string, FixtureStateValuePair>;
-
-export type FixtureStateSelect = {
+export type FixtureStateSelectControl = {
+  type: 'select';
   options: string[];
   defaultValue: string;
   currentValue: string;
 };
 
-export type FixtureStateSelects = Record<string, FixtureStateSelect>;
+export type FixtureStateControl =
+  | FixtureStateStandardControl
+  | FixtureStateSelectControl;
+
+export type FixtureStateControls = Record<string, FixtureStateControl>;
 
 export type FixtureState = {
   props?: FixtureStateProps[];
   classState?: FixtureStateClassState[];
-  values?: FixtureStateValuePairs;
-  selects?: FixtureStateSelects;
+  controls?: FixtureStateControls;
 } & Record<string, unknown>;
 
 export type SetFixtureState = (update: StateUpdater<FixtureState>) => unknown;

@@ -51,8 +51,9 @@ testFixtureLoader(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        selects: {
+        controls: {
           selectName: {
+            type: 'select',
             options: ['first', 'second', 'third'],
             defaultValue: 'first',
             currentValue: 'first',
@@ -75,9 +76,10 @@ testFixtureLoader(
       fixtureId,
       fixtureState: {
         ...setFixtureState,
-        selects: {
-          ...fixtureState.selects,
+        controls: {
+          ...fixtureState.controls,
           selectName: {
+            type: 'select',
             options: ['first', 'second', 'third'],
             defaultValue: 'first',
             currentValue: 'second',
@@ -102,8 +104,9 @@ testFixtureLoader(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        selects: {
+        controls: {
           selectName: {
+            type: 'select',
             options: ['first', 'second', 'third'],
             defaultValue: 'first',
             currentValue: 'second',
@@ -130,8 +133,9 @@ testFixtureLoader(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        selects: {
+        controls: {
           selectName: {
+            type: 'select',
             options: ['first', 'second', 'third'],
             defaultValue: 'third',
             currentValue: 'third',

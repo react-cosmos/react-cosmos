@@ -4,20 +4,20 @@ import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import styled from 'styled-components';
 import { grey32 } from '../../shared/colors';
-import { ControlPanelRowSlot } from '../../shared/slots/ControlPanelRowSlot';
+import { SidePanelRowSlot } from '../../shared/slots/SidePanelRowSlot';
 
 type Props = {
   fixtureId: FixtureId;
   fixtureState: FixtureState;
   onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
-  controlPanelRowOrder: string[];
+  sidePanelRowOrder: string[];
 };
 
-export const ControlPanel = React.memo(function ControlPanel({
+export const SidePanel = React.memo(function SidePanel({
   fixtureId,
   fixtureState,
   onFixtureStateChange,
-  controlPanelRowOrder,
+  sidePanelRowOrder,
 }: Props) {
   const slotProps = React.useMemo(
     () => ({ fixtureId, fixtureState, onFixtureStateChange }),
@@ -26,10 +26,7 @@ export const ControlPanel = React.memo(function ControlPanel({
   return (
     <Container>
       <Content>
-        <ControlPanelRowSlot
-          slotProps={slotProps}
-          plugOrder={controlPanelRowOrder}
-        />
+        <SidePanelRowSlot slotProps={slotProps} plugOrder={sidePanelRowOrder} />
       </Content>
     </Container>
   );

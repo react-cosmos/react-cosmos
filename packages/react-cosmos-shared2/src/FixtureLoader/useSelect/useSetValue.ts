@@ -1,5 +1,5 @@
 import { useCallback, useContext } from 'react';
-import { findFixtureStateSelect } from '../../fixtureState';
+import { findFixtureStateControl } from '../../fixtureState';
 import { FixtureContext } from '../FixtureContext';
 import { SetSelectValue } from './shared';
 
@@ -9,19 +9,19 @@ export function useSetValue<Option extends string>(
   const { setFixtureState } = useContext(FixtureContext);
   return useCallback(
     value => {
-      setFixtureState(prevFsState => {
-        const fsSelect = findFixtureStateSelect(prevFsState, selectName);
-        if (!fsSelect)
-          throw new Error(
-            `Fixture state select missing for name: ${selectName}`
-          );
+      setFixtureState(prevFs => {
+        const fsControl = findFixtureStateControl(prevFs, selectName);
+        if (!fsControl || fsControl.type !== 'select') {
+          console.warn(`Invalid fixture state for select: ${selectName}`);
+          return prevFs;
+        }
 
         return {
-          ...prevFsState,
-          selects: {
-            ...prevFsState.selects,
+          ...prevFs,
+          controls: {
+            ...prevFs.controls,
             [selectName]: {
-              ...fsSelect,
+              ...fsControl,
               currentValue: value,
             },
           },

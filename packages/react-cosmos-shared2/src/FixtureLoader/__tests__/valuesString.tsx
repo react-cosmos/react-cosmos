@@ -45,8 +45,9 @@ testFixtureLoader(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        values: {
+        controls: {
           name: {
+            type: 'standard',
             defaultValue: createValue('Fu Barr'),
             currentValue: createValue('Fu Barr'),
           },
@@ -68,8 +69,9 @@ testFixtureLoader(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        values: {
+        controls: {
           name: {
+            type: 'standard',
             defaultValue: createValue('Fu Barr'),
             currentValue: createValue('Fu Barr Bhaz'),
           },
@@ -94,8 +96,9 @@ testFixtureLoader(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        values: {
+        controls: {
           name: {
+            type: 'standard',
             defaultValue: createValue('Fu Barr Bhaz'),
             currentValue: createValue('Fu Barr Bhaz'),
           },

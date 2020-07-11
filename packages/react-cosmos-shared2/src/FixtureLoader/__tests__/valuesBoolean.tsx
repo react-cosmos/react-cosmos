@@ -41,8 +41,9 @@ testFixtureLoader(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        values: {
+        controls: {
           toggled: {
+            type: 'standard',
             defaultValue: createValue(false),
             currentValue: createValue(false),
           },
@@ -64,8 +65,9 @@ testFixtureLoader(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        values: {
+        controls: {
           toggled: {
+            type: 'standard',
             defaultValue: createValue(false),
             currentValue: createValue(true),
           },
@@ -90,8 +92,9 @@ testFixtureLoader(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        values: {
+        controls: {
           toggled: {
+            type: 'standard',
             defaultValue: createValue(true),
             currentValue: createValue(true),
           },
