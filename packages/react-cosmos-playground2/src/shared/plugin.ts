@@ -7,4 +7,7 @@ export const DEFAULT_PLUGIN_CONFIG = {
     fixtureActionOrder: ['bookmarkFixture'],
     rendererActionOrder: ['editFixture', 'fullScreen', 'responsivePreview'],
   },
+  controlPanel: {
+    controlActionOrder: ['expandCollapse'],
+  },
 };
