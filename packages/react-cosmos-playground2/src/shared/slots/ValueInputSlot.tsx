@@ -3,10 +3,11 @@ import { FixtureStatePrimitiveValueType } from 'react-cosmos-shared2/fixtureStat
 import { Slot } from 'react-plugin';
 import { TreeItemValue } from '../valueInputTree/shared';
 
-type ValueInputSlotProps = {
+export type ValueInputSlotProps = {
   item: TreeItemValue;
   itemId: string;
   itemName: string;
+  parents: string[];
   onInputChange: (value: FixtureStatePrimitiveValueType) => unknown;
 };
 

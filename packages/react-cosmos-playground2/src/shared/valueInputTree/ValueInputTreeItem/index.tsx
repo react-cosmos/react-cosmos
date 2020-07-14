@@ -44,7 +44,9 @@ export function ValueInputTreeItem({
   );
 
   return (
-    <ValueInputSlot slotProps={{ item, itemId, itemName, onInputChange }}>
+    <ValueInputSlot
+      slotProps={{ item, itemId, itemName, parents, onInputChange }}
+    >
       <TreeItemContainer indentLevel={parents.length}>
         <ItemContainer>
           {getItem(item, itemId, itemName, onInputChange)}
