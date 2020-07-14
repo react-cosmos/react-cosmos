@@ -13,11 +13,11 @@
     "express": "^4.17.1",
     "fs-extra": "8.1.0",
     "glob": "^7.1.6",
-    "http-proxy-middleware": "^1.0.3",
+    "http-proxy-middleware": "^1.0.5",
     "import-from": "^3.0.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "micromatch": "^4.0.2",
-    "open": "^7.0.3",
+    "open": "^7.0.4",
     "pem": "^1.14.4",
     "pkg-up": "^3.1.0",
     "react-cosmos-playground2": "^5.5.0-alpha.5",
@@ -30,7 +30,7 @@
     "url-parse": "^1.4.7",
     "util.promisify": "^1.0.1",
     "webpack-dev-middleware": "^3.7.2",
-    "yargs": "^15.3.1"
+    "yargs": "^15.4.1"
   },
   "bin": {
     "cosmos": "./bin/cosmos.js",
