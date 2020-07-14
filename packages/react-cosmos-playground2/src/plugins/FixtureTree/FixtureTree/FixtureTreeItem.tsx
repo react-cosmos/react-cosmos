@@ -69,7 +69,7 @@ const FixtureLink = styled.a`
   :focus {
     outline: none;
     > span {
-      box-shadow: inset 3px 0px 0 0 ${blue};
+      box-shadow: inset 2px 0px 0 0 ${blue};
     }
   }
 

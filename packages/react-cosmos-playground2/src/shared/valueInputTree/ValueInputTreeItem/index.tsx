@@ -6,6 +6,7 @@ import {
   FixtureStateValues,
 } from 'react-cosmos-shared2/fixtureState';
 import styled from 'styled-components';
+import { ValueInputSlot } from '../../slots/ValueInputSlot';
 import { TreeItemContainer, TreeItemValue } from '../shared';
 import { BooleanItem } from './BooleanItem';
 import { NullItem } from './NullItem';
@@ -43,11 +44,15 @@ export function ValueInputTreeItem({
   );
 
   return (
-    <TreeItemContainer indentLevel={parents.length}>
-      <ItemContainer>
-        {getItem(item, itemId, itemName, onInputChange)}
-      </ItemContainer>
-    </TreeItemContainer>
+    <ValueInputSlot
+      slotProps={{ item, itemId, itemName, parents, onInputChange }}
+    >
+      <TreeItemContainer indentLevel={parents.length}>
+        <ItemContainer>
+          {getItem(item, itemId, itemName, onInputChange)}
+        </ItemContainer>
+      </TreeItemContainer>
+    </ValueInputSlot>
   );
 }
 
@@ -62,54 +67,48 @@ export const ItemContainer = styled.div`
 
 function getItem(
   item: TreeItemValue,
-  id: string,
-  label: string,
+  itemId: string,
+  itemName: string,
   onInputChange: (value: FixtureStatePrimitiveValueType) => unknown
 ) {
-  if (item.type === 'unserializable') {
-    return <UnserializableItem label={label} value={item.stringifiedValue} />;
-  }
+  if (item.type === 'unserializable')
+    return (
+      <UnserializableItem label={itemName} value={item.stringifiedValue} />
+    );
 
-  if (typeof item.value === 'string') {
+  if (typeof item.value === 'string')
     return (
       <StringItem
-        id={id}
-        label={label}
+        id={itemId}
+        label={itemName}
         value={item.value}
         onChange={onInputChange}
       />
     );
-  }
 
-  if (typeof item.value === 'number') {
+  if (typeof item.value === 'number')
     return (
       <NumberItem
-        id={id}
-        label={label}
+        id={itemId}
+        label={itemName}
         value={item.value}
         onChange={onInputChange}
       />
     );
-  }
 
-  if (typeof item.value === 'boolean') {
+  if (typeof item.value === 'boolean')
     return (
       <BooleanItem
-        id={id}
-        label={label}
+        id={itemId}
+        label={itemName}
         value={item.value}
         onChange={onInputChange}
       />
     );
-  }
 
-  if (item.value === null) {
-    return <NullItem label={label} />;
-  }
+  if (item.value === null) return <NullItem label={itemName} />;
 
-  if (item.value === undefined) {
-    return <UndefinedItem label={label} />;
-  }
+  if (item.value === undefined) return <UndefinedItem label={itemName} />;
 
   throw new Error(`Invalid primitive value: ${item.value}`);
 }
