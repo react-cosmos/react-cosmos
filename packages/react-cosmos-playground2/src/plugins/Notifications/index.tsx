@@ -43,4 +43,4 @@ namedPlug('global', 'notifications', ({ pluginContext }) => {
   return <Notifications notifications={notifications} />;
 });
 
-export { register };
+register();

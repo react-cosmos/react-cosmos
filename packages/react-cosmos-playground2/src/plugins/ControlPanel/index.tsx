@@ -27,4 +27,4 @@ namedPlug<SidePanelRowSlotProps>(
   }
 );
 
-export { register };
+register();

@@ -10,14 +10,14 @@ import {
   createFixtureListUpdateResponse,
   mockRendererReady,
 } from '../../testHelpers';
-import { register } from '../..';
+
+beforeEach(() => jest.isolateModules(() => require('../..')));
 
 afterEach(resetPlugins);
 
 const fixtures = { 'ein.js': null, 'zwei.js': null, 'drei.js': null };
 
 function registerTestPlugins() {
-  register();
   mockRouter({
     getSelectedFixtureId: () => null,
   });

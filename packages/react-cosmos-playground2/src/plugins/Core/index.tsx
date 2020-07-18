@@ -27,7 +27,7 @@ const { onLoad, register } = createPlugin<CoreSpec>({
   },
 });
 
-export { register };
+register();
 
 onLoad(pluginContext =>
   registerShortcuts(command => runCommand(pluginContext, command))

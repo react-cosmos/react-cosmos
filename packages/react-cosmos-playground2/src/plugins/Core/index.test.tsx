@@ -1,7 +1,8 @@
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { mockStorage, getCoreMethods } from '../../testHelpers/pluginMocks';
 import { CoreSpec } from './public';
-import { register } from '.';
+
+beforeEach(() => jest.isolateModules(() => require('.')));
 
 afterEach(resetPlugins);
 
@@ -17,7 +18,6 @@ function registerTestPlugins() {
   mockStorage({
     loadCache: () => Promise.resolve(null),
   });
-  register();
 }
 
 function loadTestPlugins() {

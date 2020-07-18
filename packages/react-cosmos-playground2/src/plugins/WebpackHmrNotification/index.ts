@@ -15,7 +15,7 @@ on<RendererCoreSpec>('rendererCore', {
   response: onRendererResponse,
 });
 
-export { register };
+register();
 
 function onRendererResponse(
   context: WebpackHmrNotificationContext,

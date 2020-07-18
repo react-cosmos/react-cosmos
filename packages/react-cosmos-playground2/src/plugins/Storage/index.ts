@@ -16,7 +16,7 @@ const { register } = createPlugin<StorageSpec>({
   },
 });
 
-export { register };
+register();
 
 async function loadCache(context: StorageContext, projectId: string) {
   const items: {} = (await localForage.getItem(getProjectKey(projectId))) || {};

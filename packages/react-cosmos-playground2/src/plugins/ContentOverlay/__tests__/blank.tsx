@@ -1,7 +1,6 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
-import { register } from '..';
 import {
   mockRendererCore,
   mockRendererPreview,
@@ -10,10 +9,11 @@ import {
 } from '../../../testHelpers/pluginMocks';
 import { WELCOME_DISMISS_STORAGE_KEY } from '../welcomeDismiss';
 
+beforeEach(() => jest.isolateModules(() => require('..')));
+
 afterEach(resetPlugins);
 
 function registerTestPlugins() {
-  register();
   const storage: Record<string, unknown> = {
     [WELCOME_DISMISS_STORAGE_KEY]: Date.now() - 5000, // Dismissed 5s ago
   };

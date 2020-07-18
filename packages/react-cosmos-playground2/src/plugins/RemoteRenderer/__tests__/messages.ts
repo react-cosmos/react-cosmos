@@ -11,12 +11,12 @@ import {
   getMessageHandlerContext,
   getRendererCoreContext,
 } from '../../../testHelpers/pluginMocks';
-import { register } from '..';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(resetPlugins);
 
 function registerTestPlugins() {
-  register();
   mockCore({
     isDevServerOn: () => true,
   });

@@ -1,7 +1,6 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, Slot, resetPlugins } from 'react-plugin';
-import { register } from '..';
 import {
   mockRendererCore,
   mockRendererPreview,
@@ -9,10 +8,11 @@ import {
   mockStorage,
 } from '../../../testHelpers/pluginMocks';
 
+beforeEach(() => jest.isolateModules(() => require('..')));
+
 afterEach(resetPlugins);
 
 function registerTestPlugins() {
-  register();
   mockStorage();
   mockRouter({
     getSelectedFixtureId: () => ({ path: 'foo.js', name: null }),

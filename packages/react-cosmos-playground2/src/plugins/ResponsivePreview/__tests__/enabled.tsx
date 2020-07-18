@@ -1,7 +1,6 @@
 import { fireEvent, render, RenderResult } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
-import { register } from '..';
 import { RendererActionSlot } from '../../../shared/slots/RendererActionSlot';
 import {
   mockCore,
@@ -16,6 +15,8 @@ import {
   VIEWPORT_STORAGE_KEY,
 } from '../shared';
 import { StorageMock } from '../testHelpers';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(resetPlugins);
 
@@ -78,7 +79,6 @@ async function selectViewport({ getByTestId }: RenderResult, value: string) {
 }
 
 it('renders children of "rendererPreviewOuter" slot', async () => {
-  register();
   mockStorage();
   mockRendererUrl();
   mockRendererCore({
@@ -92,7 +92,6 @@ it('renders children of "rendererPreviewOuter" slot', async () => {
 });
 
 it('does not render responsive header when no fixture is selected', async () => {
-  register();
   mockEnabledViewportStorage();
   mockRendererUrl();
   mockRendererCore({
@@ -105,7 +104,6 @@ it('does not render responsive header when no fixture is selected', async () => 
 });
 
 it('renders responsive header', async () => {
-  register();
   mockEnabledViewportStorage();
   mockRendererUrl();
   mockRendererCore({
@@ -118,7 +116,6 @@ it('renders responsive header', async () => {
 });
 
 it('renders responsive device labels', async () => {
-  register();
   mockEnabledViewportStorage();
   mockRendererUrl();
   mockRendererCore({
@@ -133,7 +130,6 @@ it('renders responsive device labels', async () => {
 });
 
 it('sets viewport in fixture state on device select', async () => {
-  register();
   mockEnabledViewportStorage();
   mockRendererUrl();
   const mocks = mockViewportFixtureState();
@@ -148,7 +144,6 @@ it('sets viewport in fixture state on device select', async () => {
 });
 
 it('saves viewport in storage on device select', async () => {
-  register();
   const storageMock = mockEnabledViewportStorage();
   mockRendererUrl();
   mockRendererCore({
@@ -167,7 +162,6 @@ it('saves viewport in storage on device select', async () => {
 });
 
 it('clears viewport in fixture state on untoggle', async () => {
-  register();
   mockEnabledViewportStorage();
   mockRendererUrl();
   const mocks = mockViewportFixtureState();
@@ -179,7 +173,6 @@ it('clears viewport in fixture state on untoggle', async () => {
 });
 
 it('sets disabled viewport state on untoggle', async () => {
-  register();
   const storageMock = mockEnabledViewportStorage();
   mockRendererUrl();
   mockViewportFixtureState();

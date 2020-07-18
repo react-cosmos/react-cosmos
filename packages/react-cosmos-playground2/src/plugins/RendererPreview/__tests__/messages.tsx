@@ -10,7 +10,8 @@ import {
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { mockIframeMessage, getIframe } from '../testHelpers/iframe';
 import { selectFixtureMsg, rendererReadyMsg } from '../testHelpers/messages';
-import { register } from '..';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(resetPlugins);
 
@@ -27,7 +28,6 @@ function mockRendererUrl() {
 }
 
 it('posts renderer request message to iframe', async () => {
-  register();
   mockRendererUrl();
   mockRendererCore();
 
@@ -44,7 +44,6 @@ it('posts renderer request message to iframe', async () => {
 });
 
 it('sends renderer response message to renderer core', async () => {
-  register();
   mockRendererUrl();
   const { receiveResponse } = mockRendererCore();
 
@@ -57,7 +56,6 @@ it('sends renderer response message to renderer core', async () => {
 });
 
 it('makes connected renderer the primary renderer', async () => {
-  register();
   mockRendererUrl();
   const { selectPrimaryRenderer } = mockRendererCore();
 

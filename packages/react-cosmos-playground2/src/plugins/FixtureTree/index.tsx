@@ -47,4 +47,4 @@ namedPlug('navRow', 'fixtureTree', ({ pluginContext }) => {
   );
 });
 
-export { register };
+register();

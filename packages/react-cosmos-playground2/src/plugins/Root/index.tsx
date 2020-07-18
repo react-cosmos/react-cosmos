@@ -126,7 +126,7 @@ plug('root', ({ pluginContext }) => {
   );
 });
 
-export { register };
+register();
 
 function useFixtureItems(context: RootContext) {
   const { getMethodsOf } = context;

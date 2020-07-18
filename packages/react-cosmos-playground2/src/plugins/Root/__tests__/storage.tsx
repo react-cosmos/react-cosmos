@@ -4,7 +4,8 @@ import {
   mockCore,
   mockRendererCore,
 } from '../../../testHelpers/pluginMocks';
-import { register } from '..';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(resetPlugins);
 
@@ -17,7 +18,6 @@ it('loads storage cache', () => {
   mockRendererCore({
     isValidFixtureSelected: () => false,
   });
-  register();
   loadPlugins();
   expect(mockLoadCache).toBeCalledWith(expect.any(Object), 'mockProjectId');
 });

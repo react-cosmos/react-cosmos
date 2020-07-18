@@ -1,8 +1,9 @@
 import { act, render } from '@testing-library/react';
 import React from 'react';
 import { ArraySlot, loadPlugins, resetPlugins } from 'react-plugin';
-import { register } from '..';
 import { getNotificationsMethods } from '../../../testHelpers/pluginMocks';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(resetPlugins);
 
@@ -30,7 +31,6 @@ function pushStickyNotifications() {
 }
 
 it('renders multiple sticky notifications', async () => {
-  register();
   const { getByText } = loadTestPlugins();
 
   pushStickyNotifications();

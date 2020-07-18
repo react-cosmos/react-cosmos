@@ -34,7 +34,7 @@ namedPlug<RendererActionSlotProps>(
   }
 );
 
-export { register };
+register();
 
 function useOpen(
   context: EditFixtureButtonContext,

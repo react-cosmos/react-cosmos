@@ -6,11 +6,12 @@ import {
   FixtureStateValues,
 } from 'react-cosmos-shared2/fixtureState';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { register } from '.';
 import { SidePanelRowSlot } from '../../shared/slots/SidePanelRowSlot';
 import { mockStorage } from '../../testHelpers/pluginMocks';
 import { getParentButton } from '../../testHelpers/selectors';
 import { PROPS_TREE_EXPANSION_STORAGE_KEY } from './shared';
+
+beforeEach(() => jest.isolateModules(() => require('.')));
 
 afterEach(resetPlugins);
 
@@ -33,7 +34,6 @@ function loadTestPlugins(fixtureState: FixtureState) {
 }
 
 it('renders blank state', async () => {
-  register();
   mockStorage();
 
   const fixtureState = createFsState({});
@@ -42,7 +42,6 @@ it('renders blank state', async () => {
 });
 
 it('renders component name', async () => {
-  register();
   mockStorage();
 
   const fixtureState = createFsState({
@@ -53,7 +52,6 @@ it('renders component name', async () => {
 });
 
 it('updates string value', async () => {
-  register();
   mockStorage();
 
   const fixtureState = createFsState({
@@ -71,7 +69,6 @@ it('updates string value', async () => {
 });
 
 it('updates boolean value', async () => {
-  register();
   mockStorage();
 
   const fixtureState = createFsState({
@@ -90,7 +87,6 @@ it('updates boolean value', async () => {
 });
 
 it('renders null value', async () => {
-  register();
   mockStorage();
 
   const fixtureState = createFsState({
@@ -102,7 +98,6 @@ it('renders null value', async () => {
 });
 
 it('renders unserializable value', async () => {
-  register();
   mockStorage();
 
   const fixtureState = createFsState({
@@ -117,7 +112,6 @@ it('renders unserializable value', async () => {
 });
 
 it('toggles nested object', async () => {
-  register();
   const { setItem } = mockStorage();
 
   const fixtureState = createFsState({
@@ -139,7 +133,6 @@ it('toggles nested object', async () => {
 });
 
 it('updates number input nested in object', async () => {
-  register();
   mockStorage({
     getItem: (context, key) =>
       key === PROPS_TREE_EXPANSION_STORAGE_KEY

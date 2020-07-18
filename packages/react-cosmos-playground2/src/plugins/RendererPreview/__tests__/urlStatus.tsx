@@ -7,12 +7,12 @@ import {
   getRendererPreviewMethods,
 } from '../../../testHelpers/pluginMocks';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
-import { register } from '..';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(resetPlugins);
 
 function registerTestPlugins() {
-  register();
   mockCore({
     getWebRendererUrl: () => 'mockRendererUrl',
   });

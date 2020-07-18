@@ -5,12 +5,12 @@ import {
   mockNotifications,
 } from '../../../testHelpers/pluginMocks';
 import { mockRendererReady } from '../testHelpers';
-import { register } from '..';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(resetPlugins);
 
 function registerTestPlugins() {
-  register();
   mockRouter({
     getSelectedFixtureId: () => null,
   });

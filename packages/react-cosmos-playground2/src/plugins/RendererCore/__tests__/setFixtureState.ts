@@ -8,7 +8,8 @@ import {
   onRendererCore,
 } from '../../../testHelpers/pluginMocks';
 import { mockRendererReady, mockFixtureStateChange } from '../testHelpers';
-import { register } from '..';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(resetPlugins);
 
@@ -21,7 +22,6 @@ const expectedFixtureState = {
 };
 
 function registerTestPlugins() {
-  register();
   mockSelectedFixture();
   mockNotifications();
 }

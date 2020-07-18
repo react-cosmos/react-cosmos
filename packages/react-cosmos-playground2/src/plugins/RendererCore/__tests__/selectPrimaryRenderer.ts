@@ -6,14 +6,14 @@ import {
   mockNotifications,
 } from '../../../testHelpers/pluginMocks';
 import { mockRendererReady } from '../testHelpers';
-import { register } from '..';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(resetPlugins);
 
 const fixtures = {};
 
 function registerTestPlugins() {
-  register();
   mockRouter({
     getSelectedFixtureId: () => null,
   });

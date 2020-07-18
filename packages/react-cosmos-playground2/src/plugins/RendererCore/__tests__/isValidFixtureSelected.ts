@@ -6,7 +6,8 @@ import {
   mockNotifications,
 } from '../../../testHelpers/pluginMocks';
 import { mockRendererReady } from '../testHelpers';
-import { register } from '..';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(resetPlugins);
 
@@ -34,7 +35,6 @@ function isValidFixtureSelected() {
 }
 
 it('returns false on no fixture selected', async () => {
-  register();
   mockFixtureId();
   loadTestPlugins();
 
@@ -42,7 +42,6 @@ it('returns false on no fixture selected', async () => {
 });
 
 it('returns false on missing fixture', async () => {
-  register();
   mockFixtureId({ path: 'sechs.js', name: null });
   loadTestPlugins();
 
@@ -50,7 +49,6 @@ it('returns false on missing fixture', async () => {
 });
 
 it('returns true on existing fixture', async () => {
-  register();
   mockFixtureId({ path: 'drei.js', name: null });
   loadTestPlugins();
 
@@ -58,7 +56,6 @@ it('returns true on existing fixture', async () => {
 });
 
 it('returns false on missing named fixture', async () => {
-  register();
   mockFixtureId({ path: 'ein.js', name: 'd' });
   loadTestPlugins();
 
@@ -66,7 +63,6 @@ it('returns false on missing named fixture', async () => {
 });
 
 it('returns true on existing named fixture', async () => {
-  register();
   mockFixtureId({ path: 'ein.js', name: 'a' });
   loadTestPlugins();
 

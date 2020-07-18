@@ -8,7 +8,8 @@ import {
   mockCore,
   mockRendererCore,
 } from '../../../testHelpers/pluginMocks';
-import { register } from '..';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(resetPlugins);
 
@@ -30,7 +31,6 @@ function registerTestPlugins() {
     getFixtures: () => ({}),
     isValidFixtureSelected: () => true,
   });
-  register();
 }
 
 async function loadTestPlugins() {

@@ -39,4 +39,4 @@ plug('contentOverlay', ({ pluginContext }) => {
   );
 });
 
-export { register };
+register();

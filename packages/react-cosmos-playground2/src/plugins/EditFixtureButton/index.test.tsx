@@ -2,11 +2,12 @@ import { waitFor } from '@testing-library/dom';
 import { fireEvent, render, RenderResult } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { register } from '.';
 import { RendererActionSlot } from '../../shared/slots/RendererActionSlot';
 import { mockCore, mockNotifications } from '../../testHelpers/pluginMocks';
 import { Commands } from '../Core/public';
 import { mockFetch } from './testHelpers';
+
+beforeEach(() => jest.isolateModules(() => require('.')));
 
 afterEach(resetPlugins);
 
@@ -25,7 +26,6 @@ function clickButton({ getByTitle }: RenderResult) {
 }
 
 it(`doesn't render button when dev server is off`, async () => {
-  register();
   mockCore({ isDevServerOn: () => false });
   mockNotifications();
 
@@ -34,7 +34,6 @@ it(`doesn't render button when dev server is off`, async () => {
 });
 
 it(`shows error notification when dev server is off`, async () => {
-  register();
   let registeredCommands: Commands = {};
   mockCore({
     isDevServerOn: () => false,
@@ -61,7 +60,6 @@ it(`shows error notification when dev server is off`, async () => {
 });
 
 it('renders button', async () => {
-  register();
   mockCore({ isDevServerOn: () => true });
   mockNotifications();
 
@@ -71,7 +69,6 @@ it('renders button', async () => {
 
 it('calls server endpoint on button click', async () => {
   await mockFetch(200, async fetchMock => {
-    register();
     mockCore({ isDevServerOn: () => true });
     mockNotifications();
 
@@ -85,7 +82,6 @@ it('calls server endpoint on button click', async () => {
 
 it('shows 400 error notification', async () => {
   await mockFetch(400, async () => {
-    register();
     mockCore({ isDevServerOn: () => true });
     const { pushTimedNotification } = mockNotifications();
 
@@ -105,7 +101,6 @@ it('shows 400 error notification', async () => {
 
 it('shows 404 error notification', async () => {
   await mockFetch(404, async () => {
-    register();
     mockCore({ isDevServerOn: () => true });
     const { pushTimedNotification } = mockNotifications();
 
@@ -125,7 +120,6 @@ it('shows 404 error notification', async () => {
 
 it('shows 500 error notification', async () => {
   await mockFetch(500, async () => {
-    register();
     mockCore({ isDevServerOn: () => true });
     const { pushTimedNotification } = mockNotifications();
 

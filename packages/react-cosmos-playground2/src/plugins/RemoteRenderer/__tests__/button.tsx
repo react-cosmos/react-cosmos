@@ -7,7 +7,8 @@ import {
   mockMessageHandler,
   mockNotifications,
 } from '../../../testHelpers/pluginMocks';
-import { register } from '..';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(resetPlugins);
 
@@ -17,7 +18,6 @@ function loadTestPlugins() {
 }
 
 it(`doesn't render button when web renderer url is empty`, async () => {
-  register();
   mockCore({
     isDevServerOn: () => true,
     getWebRendererUrl: () => null,
@@ -30,7 +30,6 @@ it(`doesn't render button when web renderer url is empty`, async () => {
 });
 
 it(`doesn't render button when dev server is off`, async () => {
-  register();
   mockCore({
     isDevServerOn: () => false,
     getWebRendererUrl: () => 'mockWebUrl',
@@ -43,7 +42,6 @@ it(`doesn't render button when dev server is off`, async () => {
 });
 
 it('renders button', async () => {
-  register();
   mockCore({
     isDevServerOn: () => true,
     getWebRendererUrl: () => 'mockWebUrl',
@@ -56,7 +54,6 @@ it('renders button', async () => {
 });
 
 it('notifies copy error on button click', async () => {
-  register();
   mockCore({
     isDevServerOn: () => true,
     getWebRendererUrl: () => 'mockWebUrl',

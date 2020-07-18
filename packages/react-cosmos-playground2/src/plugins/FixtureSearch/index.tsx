@@ -84,7 +84,7 @@ namedPlug('global', 'fixtureSearch', ({ pluginContext }) => {
   );
 });
 
-export { register };
+register();
 
 function useOnSetSearchText({ setState }: FixtureSearchContext) {
   return React.useCallback(

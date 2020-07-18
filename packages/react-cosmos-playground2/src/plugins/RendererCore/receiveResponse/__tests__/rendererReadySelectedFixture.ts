@@ -1,12 +1,13 @@
 import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { mockRendererReady, mockFixtureStateChange } from '../../testHelpers';
-import { register } from '../..';
 import {
   mockRouter,
   mockNotifications,
   onRendererCore,
 } from '../../../../testHelpers/pluginMocks';
+
+beforeEach(() => jest.isolateModules(() => require('../..')));
 
 afterEach(resetPlugins);
 
@@ -15,7 +16,6 @@ const fixtures = { [fixtureId.path]: null };
 const fixtureState = { props: [] };
 
 function registerTestPlugins() {
-  register();
   mockRouter({
     getSelectedFixtureId: () => fixtureId,
   });

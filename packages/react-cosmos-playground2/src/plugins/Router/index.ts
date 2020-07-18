@@ -39,7 +39,7 @@ onLoad(context => {
   });
 });
 
-export { register };
+register();
 
 function getSelectedFixtureId({ getState }: RouterContext) {
   return getState().urlParams.fixtureId || null;

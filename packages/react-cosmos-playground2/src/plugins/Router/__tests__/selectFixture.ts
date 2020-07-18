@@ -2,7 +2,8 @@ import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { getRouterMethods, onRouter } from '../../../testHelpers/pluginMocks';
 import { getUrlParams, resetUrl } from '../../../testHelpers/url';
-import { register } from '..';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(() => {
   resetPlugins();
@@ -12,7 +13,6 @@ afterEach(() => {
 const fixtureId = { path: 'zwei.js', name: null };
 
 it('updates selected fixture ID', async () => {
-  register();
   loadPlugins();
   const router = getRouterMethods();
   router.selectFixture(fixtureId);
@@ -21,7 +21,6 @@ it('updates selected fixture ID', async () => {
 });
 
 it('sets URL params', async () => {
-  register();
   loadPlugins();
   getRouterMethods().selectFixture(fixtureId);
 
@@ -31,7 +30,6 @@ it('sets URL params', async () => {
 });
 
 it('emits "fixtureChange" event', async () => {
-  register();
   const { fixtureChange } = onRouter();
 
   loadPlugins();
