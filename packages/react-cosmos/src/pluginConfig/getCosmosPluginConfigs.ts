@@ -7,7 +7,7 @@ type RawCosmosPluginConfig = {
   ui: string[] | string;
 };
 
-type CosmosPluginConfig = {
+export type CosmosPluginConfig = {
   name: string;
   ui: string[];
 };

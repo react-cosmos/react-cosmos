@@ -1,1 +1,4 @@
-export { getCosmosPluginConfigs } from './getCosmosPluginConfigs';
+export {
+  CosmosPluginConfig,
+  getCosmosPluginConfigs,
+} from './getCosmosPluginConfigs';
