@@ -21,7 +21,7 @@ module.exports = {
   // Besides other advantages, cheap-module-source-map is compatible with
   // React.componentDidCatch https://github.com/facebook/react/issues/10441
   devtool: 'cheap-module-source-map',
-  entry: [src],
+  entry: src,
   output: {
     libraryTarget: 'umd',
     libraryExport: 'default',
