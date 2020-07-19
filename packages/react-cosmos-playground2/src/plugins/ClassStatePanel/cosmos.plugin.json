@@ -1,0 +1,4 @@
+{
+  "name": "Class state panel",
+  "ui": "./index.tsx"
+}

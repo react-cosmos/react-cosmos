@@ -1,0 +1,4 @@
+{
+  "name": "Plugin list",
+  "ui": "./index.tsx"
+}

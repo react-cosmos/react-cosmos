@@ -1,0 +1,4 @@
+{
+  "name": "Build notifications",
+  "ui": "./index.ts"
+}
