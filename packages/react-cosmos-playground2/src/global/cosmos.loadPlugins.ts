@@ -1,7 +1,7 @@
 import { loadPlugins } from 'react-plugin';
 import { DEFAULT_PLUGIN_CONFIG } from '../shared/plugin';
 
-import './plugins/pluginEntry';
+import '../plugins/pluginEntry';
 
 loadPlugins({
   config: {
