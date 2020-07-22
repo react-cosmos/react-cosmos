@@ -37,7 +37,7 @@ plug('sidePanelRow', ({ pluginContext }) => {
   );
 });
 
-export { register };
+register();
 
 const Container = styled.ul`
   padding: 8px 12px;

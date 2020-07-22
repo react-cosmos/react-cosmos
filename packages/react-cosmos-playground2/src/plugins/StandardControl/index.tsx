@@ -83,4 +83,4 @@ function extractValuesFromStandardControls(
   return values;
 }
 
-export { register };
+register();

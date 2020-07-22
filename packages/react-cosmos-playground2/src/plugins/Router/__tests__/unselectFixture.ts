@@ -6,7 +6,8 @@ import {
   resetUrl,
 } from '../../../testHelpers/url';
 import { getRouterMethods, onRouter } from '../../../testHelpers/pluginMocks';
-import { register } from '..';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(() => {
   resetPlugins();
@@ -21,7 +22,6 @@ function loadTestPlugins() {
 }
 
 it('updates selected fixture ID', async () => {
-  register();
   loadTestPlugins();
   const router = getRouterMethods();
   router.unselectFixture();
@@ -30,7 +30,6 @@ it('updates selected fixture ID', async () => {
 });
 
 it('sets URL params', async () => {
-  register();
   loadTestPlugins();
   getRouterMethods().unselectFixture();
 
@@ -38,7 +37,6 @@ it('sets URL params', async () => {
 });
 
 it('emits "fixtureChange" event', async () => {
-  register();
   const { fixtureChange } = onRouter();
 
   loadTestPlugins();

@@ -1,8 +1,7 @@
 import { loadPlugins } from 'react-plugin';
 import { DEFAULT_PLUGIN_CONFIG } from '../shared/plugin';
 
-// Statefulness alert!
-import './registerPlugins';
+import '../plugins/pluginEntry';
 
 loadPlugins({
   config: {

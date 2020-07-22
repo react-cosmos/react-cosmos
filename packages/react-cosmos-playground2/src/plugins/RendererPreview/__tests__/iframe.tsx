@@ -2,7 +2,6 @@ import { waitFor } from '@testing-library/dom';
 import { act, fireEvent, render, RenderResult } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
-import { register } from '..';
 import {
   getRendererCoreContext,
   mockCore,
@@ -13,10 +12,11 @@ import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { getIframe } from '../testHelpers/iframe';
 import { rendererReadyMsg, selectFixtureMsg } from '../testHelpers/messages';
 
+beforeEach(() => jest.isolateModules(() => require('..')));
+
 afterEach(resetPlugins);
 
 function registerTestPlugins() {
-  register();
   mockCore({
     getWebRendererUrl: () => 'http://localhost:5000/_renderer.html',
   });

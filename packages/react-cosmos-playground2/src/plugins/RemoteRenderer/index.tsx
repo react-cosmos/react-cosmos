@@ -46,7 +46,7 @@ namedPlug('globalAction', 'remoteRenderer', ({ pluginContext }) => {
   );
 });
 
-export { register };
+register();
 
 function postRendererRequest(context: RemoteRendererContext, msg: Message) {
   const msgHandler = context.getMethodsOf<MessageHandlerSpec>('messageHandler');

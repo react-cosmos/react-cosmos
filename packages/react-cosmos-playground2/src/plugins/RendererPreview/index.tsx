@@ -52,7 +52,7 @@ plug('rendererPreview', ({ pluginContext }) => {
   );
 });
 
-export { register };
+register();
 
 function getUrlStatus({ getState }: RendererPreviewContext) {
   return getState().urlStatus;

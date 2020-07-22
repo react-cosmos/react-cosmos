@@ -15,7 +15,7 @@ on<MessageHandlerSpec>('messageHandler', {
   serverMessage: onServerMessage,
 });
 
-export { register };
+register();
 
 function onServerMessage(context: BuildNotificationsContext, msg: Message) {
   const { getMethodsOf } = context;

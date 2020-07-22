@@ -11,4 +11,4 @@ const { onLoad, register } = createPlugin<MessageHandlerSpec>({
 
 onLoad(initSocket);
 
-export { register };
+register();

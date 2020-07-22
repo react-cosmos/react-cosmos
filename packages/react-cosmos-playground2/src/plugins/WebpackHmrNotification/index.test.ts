@@ -5,7 +5,8 @@ import {
   getRendererCoreContext,
   mockRendererCore,
 } from '../../testHelpers/pluginMocks';
-import { register } from '.';
+
+beforeEach(() => jest.isolateModules(() => require('.')));
 
 afterEach(resetPlugins);
 
@@ -19,7 +20,6 @@ function emitRendererCoreResponse() {
 }
 
 it('notifies HMR fail', async () => {
-  register();
   mockRendererCore();
   const { pushTimedNotification } = mockNotifications();
 

@@ -8,17 +8,17 @@ import {
 } from 'react-cosmos-shared2/build';
 import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { register } from '.';
 import {
   getMessageHandlerMethods,
   mockCore,
   onMessageHandler,
 } from '../../testHelpers/pluginMocks';
 
+beforeEach(() => jest.isolateModules(() => require('.')));
+
 afterEach(resetPlugins);
 
 function registerTestPlugins() {
-  register();
   mockCore({
     isDevServerOn: () => true,
   });

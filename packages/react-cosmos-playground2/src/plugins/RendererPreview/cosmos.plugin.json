@@ -1,0 +1,4 @@
+{
+  "name": "Renderer preview",
+  "ui": "./index.tsx"
+}

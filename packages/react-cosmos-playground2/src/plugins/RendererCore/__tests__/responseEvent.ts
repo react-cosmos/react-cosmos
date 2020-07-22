@@ -7,7 +7,8 @@ import {
   onRendererCore,
 } from '../../../testHelpers/pluginMocks';
 import { createRendererReadyResponse } from '../testHelpers';
-import { register } from '..';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(resetPlugins);
 
@@ -16,7 +17,6 @@ const fixtures = { 'ein.js': null, 'zwei.js': null, 'drei.js': null };
 const rendererReadyMsg = createRendererReadyResponse(rendererId, fixtures);
 
 function registerTestPlugins() {
-  register();
   mockRouter({
     getSelectedFixtureId: () => null,
   });

@@ -5,7 +5,8 @@ import {
   resetUrl,
 } from '../../../testHelpers/url';
 import { onRouter } from '../../../testHelpers/pluginMocks';
-import { register } from '..';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(() => {
   resetPlugins();
@@ -15,7 +16,6 @@ afterEach(() => {
 const fixtureId = { path: 'zwei.js', name: null };
 
 it('emits "fixtureChange" event on "fixtureId" URL param change', () => {
-  register();
   const { fixtureChange } = onRouter();
 
   loadPlugins();
@@ -25,7 +25,6 @@ it('emits "fixtureChange" event on "fixtureId" URL param change', () => {
 });
 
 it('emits "fixtureChange" event on removed "fixtureId" URL param', async () => {
-  register();
   const { fixtureChange } = onRouter();
 
   pushUrlParams({ fixtureId: JSON.stringify(fixtureId) });

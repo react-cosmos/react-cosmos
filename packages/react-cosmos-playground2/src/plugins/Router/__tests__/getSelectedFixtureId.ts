@@ -2,7 +2,8 @@ import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { pushUrlParams, resetUrl } from '../../../testHelpers/url';
 import { getRouterMethods } from '../../../testHelpers/pluginMocks';
-import { register } from '..';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(() => {
   resetPlugins();
@@ -12,8 +13,6 @@ afterEach(() => {
 const fixtureId = { path: 'zwei.js', name: null };
 
 it('returns fixtureId', async () => {
-  register();
-
   pushUrlParams({ fixtureId: JSON.stringify(fixtureId) });
   loadPlugins();
 
@@ -23,7 +22,6 @@ it('returns fixtureId', async () => {
 });
 
 it('returns null', async () => {
-  register();
   loadPlugins();
 
   await waitFor(() =>

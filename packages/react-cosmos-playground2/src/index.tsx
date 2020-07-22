@@ -11,8 +11,7 @@ import { GlobalStyle } from './global/style';
 import { CoreSpec } from './plugins/Core/public';
 import { DEFAULT_PLUGIN_CONFIG } from './shared/plugin';
 
-// Statefulness alert!
-import './global/registerPlugins';
+import './plugins/pluginEntry';
 
 // Config can also contain keys for 3rd party plugins
 export type PlaygroundConfig = {

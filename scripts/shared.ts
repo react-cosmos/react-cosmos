@@ -13,7 +13,11 @@ export const readFileAsync = asyncify(readFile);
 export const writeFileAsync = asyncify(writeFile);
 export const rimrafAsync = asyncify(rimraf);
 
-export const NODE_PACKAGES = ['react-cosmos-shared2', 'react-cosmos'];
+export const NODE_PACKAGES = [
+  'react-cosmos-shared2',
+  'react-cosmos-plugin',
+  'react-cosmos',
+];
 export const BROWSER_PACKAGES = ['react-cosmos-playground2'];
 
 export function getFormattedPackageList(pkgNames: PackageNames) {

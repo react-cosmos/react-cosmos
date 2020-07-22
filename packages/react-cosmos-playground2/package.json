@@ -11,6 +11,7 @@
     "localforage": "^1.7.4",
     "lodash": "^4.17.19",
     "react": "16.13.1",
+    "react-cosmos-plugin": "^5.5.0-alpha.6",
     "react-cosmos-shared2": "^5.5.0-alpha.6",
     "react-dom": "16.13.1",
     "react-is": "^16.13.1",

@@ -6,8 +6,9 @@ import {
   loadPlugins,
   resetPlugins,
 } from 'react-plugin';
-import { register } from '..';
 import { getNotificationsMethods } from '../../../testHelpers/pluginMocks';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(() => {
   act(() => {
@@ -34,7 +35,6 @@ function pushTimedNotification() {
 }
 
 it('renders timed notification', async () => {
-  register();
   const { getByText } = loadTestPlugins();
 
   pushTimedNotification();
@@ -42,7 +42,6 @@ it('renders timed notification', async () => {
 });
 
 it('clears timed notification after timeout expires', async () => {
-  register();
   const { queryByText } = loadTestPlugins();
 
   pushTimedNotification();
@@ -54,7 +53,6 @@ it('clears timed notification after timeout expires', async () => {
 });
 
 it('behaves peacefully when timeout expires after plugin unloads', async () => {
-  register();
   loadTestPlugins();
 
   pushTimedNotification();

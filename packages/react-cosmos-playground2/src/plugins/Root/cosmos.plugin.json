@@ -1,0 +1,4 @@
+{
+  "name": "Root",
+  "ui": "./index.tsx"
+}

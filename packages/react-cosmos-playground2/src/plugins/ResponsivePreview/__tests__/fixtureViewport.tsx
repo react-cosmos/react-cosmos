@@ -1,11 +1,12 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
-import { register } from '..';
 import {
   mockRendererCore,
   mockStorage,
 } from '../../../testHelpers/pluginMocks';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(resetPlugins);
 
@@ -14,7 +15,6 @@ const fixtureState = {
 };
 
 function registerTestPlugins() {
-  register();
   mockStorage();
   mockRendererCore({
     getFixtureState: () => fixtureState,

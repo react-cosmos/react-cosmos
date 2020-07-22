@@ -59,7 +59,7 @@ namedPlug<SidePanelRowSlotProps>(
   }
 );
 
-export { register };
+register();
 
 const DEFAULT_TREE_EXPANSION = {};
 

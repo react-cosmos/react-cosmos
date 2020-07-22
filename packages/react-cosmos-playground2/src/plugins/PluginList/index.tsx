@@ -32,7 +32,7 @@ plug('sidePanelRow', () => {
   );
 });
 
-export { register };
+register();
 
 const Container = styled.div`
   padding: 8px 12px;

@@ -1,0 +1,4 @@
+{
+  "name": "Notifications",
+  "ui": "./index.tsx"
+}

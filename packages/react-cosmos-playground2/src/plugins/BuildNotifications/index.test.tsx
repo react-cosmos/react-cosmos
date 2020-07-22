@@ -1,11 +1,12 @@
-import { loadPlugins, resetPlugins } from 'react-plugin';
 import { BuildMessage } from 'react-cosmos-shared2/build';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
+  getMessageHandlerContext,
   mockMessageHandler,
   mockNotifications,
-  getMessageHandlerContext,
 } from '../../testHelpers/pluginMocks';
-import { register } from '.';
+
+beforeEach(() => jest.isolateModules(() => require('.')));
 
 afterEach(resetPlugins);
 
@@ -14,7 +15,6 @@ function emitBuildMessage(msg: BuildMessage) {
 }
 
 it('pushes build start notification', () => {
-  register();
   mockMessageHandler();
   const { pushStickyNotification } = mockNotifications();
 
@@ -30,7 +30,6 @@ it('pushes build start notification', () => {
 });
 
 it('pushes build error notification', () => {
-  register();
   mockMessageHandler();
   const { pushStickyNotification } = mockNotifications();
 
@@ -46,7 +45,6 @@ it('pushes build error notification', () => {
 });
 
 it('clears build notification', () => {
-  register();
   mockMessageHandler();
   const { removeStickyNotification } = mockNotifications();
 

@@ -37,4 +37,4 @@ plug<SelectControlSlotProps>('control-select', ({ slotProps }) => {
   );
 });
 
-export { register };
+register();

@@ -69,7 +69,7 @@ namedPlug<FixtureActionSlotProps>(
   }
 );
 
-export { register };
+register();
 
 function getStorageApi(pluginContext: FixtureBookmarkContext) {
   const storage = pluginContext.getMethodsOf<StorageSpec>('storage');

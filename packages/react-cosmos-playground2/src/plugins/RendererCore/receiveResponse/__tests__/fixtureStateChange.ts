@@ -11,7 +11,8 @@ import {
   createFixtureStateChangeResponse,
   mockRendererReady,
 } from '../../testHelpers';
-import { register } from '../..';
+
+beforeEach(() => jest.isolateModules(() => require('../..')));
 
 afterEach(resetPlugins);
 
@@ -20,7 +21,6 @@ const fixtureId = { path: 'zwei.js', name: null };
 const fixtureState = { props: [] };
 
 function registerTestPlugins() {
-  register();
   mockRouter({
     getSelectedFixtureId: () => fixtureId,
   });

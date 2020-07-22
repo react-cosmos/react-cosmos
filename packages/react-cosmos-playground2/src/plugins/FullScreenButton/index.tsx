@@ -33,4 +33,4 @@ namedPlug<RendererActionSlotProps>(
   }
 );
 
-export { register };
+register();

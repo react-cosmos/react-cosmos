@@ -1,16 +1,16 @@
 import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { mockRendererReady } from '../../testHelpers';
-import { register } from '../..';
 import {
   mockRouter,
   mockNotifications,
 } from '../../../../testHelpers/pluginMocks';
 
+beforeEach(() => jest.isolateModules(() => require('../..')));
+
 afterEach(resetPlugins);
 
 function registerTestPlugins() {
-  register();
   mockRouter({
     getSelectedFixtureId: () => null,
   });

@@ -2,7 +2,6 @@ import { loadPlugins, resetPlugins } from 'react-plugin';
 import retry from '@skidding/async-retry';
 import { getMethodsOf } from '../../testHelpers/plugin';
 import { StorageSpec } from './public';
-import { register } from '.';
 
 const mockSetItem = jest.fn();
 
@@ -20,7 +19,7 @@ jest.mock('localforage', () => {
 });
 
 beforeEach(() => {
-  register();
+  jest.isolateModules(() => require('.'));
   loadPlugins();
 });
 

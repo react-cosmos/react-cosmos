@@ -9,12 +9,12 @@ import {
 } from '../../../testHelpers/pluginMocks';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { rendererReadyMsg, rendererErrorMsg } from '../testHelpers/messages';
-import { register } from '..';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(resetPlugins);
 
 function registerTestPlugins() {
-  register();
   mockCore({
     getWebRendererUrl: () => 'mockRendererUrl',
   });

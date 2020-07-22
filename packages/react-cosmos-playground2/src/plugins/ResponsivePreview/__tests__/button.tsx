@@ -1,13 +1,14 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { register } from '..';
 import { RendererActionSlot } from '../../../shared/slots/RendererActionSlot';
 import {
   mockCore,
   mockRendererCore,
   mockStorage,
 } from '../../../testHelpers/pluginMocks';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(resetPlugins);
 
@@ -21,7 +22,6 @@ function loadTestPlugins() {
 }
 
 it('renders responsive preview button', async () => {
-  register();
   mockStorage();
   mockCore({ getWebRendererUrl: () => `/_renderer.html` });
   mockRendererCore({
@@ -34,7 +34,6 @@ it('renders responsive preview button', async () => {
 });
 
 it('does not render responsive preview button without renderer URL', async () => {
-  register();
   mockStorage();
   mockCore({ getWebRendererUrl: () => null });
   mockRendererCore({

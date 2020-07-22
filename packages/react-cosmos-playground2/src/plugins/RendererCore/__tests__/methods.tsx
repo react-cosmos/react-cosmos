@@ -5,7 +5,8 @@ import {
   mockNotifications,
 } from '../../../testHelpers/pluginMocks';
 import { mockRendererReady, mockFixtureStateChange } from '../testHelpers';
-import { register } from '..';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(resetPlugins);
 
@@ -14,7 +15,6 @@ const fixtureId = { path: 'foo.js', name: null };
 const fixtureState = { props: [] };
 
 function registerTestPlugins() {
-  register();
   mockRouter({
     getSelectedFixtureId: () => fixtureId,
   });

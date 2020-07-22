@@ -1,7 +1,6 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { register } from '.';
 import { NavRowSlot } from '../../shared/slots/NavRowSlot';
 import {
   mockCore,
@@ -10,12 +9,13 @@ import {
   mockStorage,
 } from '../../testHelpers/pluginMocks';
 
+beforeEach(() => jest.isolateModules(() => require('.')));
+
 afterEach(resetPlugins);
 
 const fixtures = { 'ein.js': null, 'zwei.js': null, 'drei.js': null };
 
 function registerTestPlugins() {
-  register();
   mockStorage();
   mockCore({
     getFixtureFileVars: () => ({

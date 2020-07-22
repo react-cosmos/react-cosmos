@@ -1,10 +1,11 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { register } from '.';
 import { RendererActionSlot } from '../../shared/slots/RendererActionSlot';
 import { mockCore } from '../../testHelpers/pluginMocks';
 import { mockWindowOpen } from '../../testHelpers/windowOpenMock';
+
+beforeEach(() => jest.isolateModules(() => require('.')));
 
 afterEach(resetPlugins);
 
@@ -18,7 +19,6 @@ function loadTestPlugins() {
 }
 
 it('renders fullscreen button', async () => {
-  register();
   mockCore({ getWebRendererUrl: () => `/_renderer.html` });
   const windowOpenMock = mockWindowOpen();
 
@@ -35,7 +35,6 @@ it('renders fullscreen button', async () => {
 });
 
 it('does not render fullscreen button without renderer URL', async () => {
-  register();
   mockCore({ getWebRendererUrl: () => null });
 
   const { queryByTitle } = loadTestPlugins();

@@ -1,8 +1,9 @@
 import { act, render } from '@testing-library/react';
 import React from 'react';
 import { ArraySlot, loadPlugins, resetPlugins } from 'react-plugin';
-import { register } from '..';
 import { getNotificationsMethods } from '../../../testHelpers/pluginMocks';
+
+beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(() => {
   act(() => {
@@ -36,7 +37,6 @@ function pushTimedNotifications() {
 }
 
 it('renders multiple timed notifications', async () => {
-  register();
   const { getByText } = loadTestPlugins();
 
   pushTimedNotifications();
@@ -45,7 +45,6 @@ it('renders multiple timed notifications', async () => {
 });
 
 it('clears all timed notifications after timeout expires', async () => {
-  register();
   const { queryByText } = loadTestPlugins();
 
   pushTimedNotifications();

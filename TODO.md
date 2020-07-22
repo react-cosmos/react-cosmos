@@ -68,6 +68,10 @@ There are three types of plugins in React Cosmos. Exposing all three won't be ea
 - **UI plugins**. The React Cosmos UI is currently composed from plugins, using an unreleased but independent plugin system. The way UI plugins interact is designed, but the way they are installed isn't. UI plugins have to be installed at runtime. This requires a plugin discovery system and a plugin definition format to be indentified by. Once these requirements are in place a user will be able to install an npm package with one or more React Cosmos plugins, and enable those plugins without having to restart the server or even reload the UI.
 - **Server plugins**. Same as UI plugins with regards to installation and the fact that the existing code is already organized around plugins. But the APIs are completely different for server plugins because they mainly revolve around an Express instance and its corresponding HTTP server.
 
+### How UI plugins are loaded
+
+I expect published plugins to be compiled, as their source will likely by written in TypeScript, Flow, even ClojureScript, why not, or with some futuristic JS features. But because webpack isn't capable of producing ES6 modules at the moment (Rollup can), and webpack is by far the most popular web bundler for now, plugins cannot (without hassle) export methods for the Cosmos UI plugin system to run. For this reason the plugins will-auto install. More details on the difficulty of importing a webpack-bundled module dynamically [explained here](https://stackoverflow.com/questions/56691391/dynamic-loading-of-external-modules-in-webpack-fails).
+
 ## Multi selected fixtures
 
 There are (at least) two possible solutions:
