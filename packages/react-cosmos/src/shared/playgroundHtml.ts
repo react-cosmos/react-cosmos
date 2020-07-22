@@ -1,7 +1,11 @@
 import fs from 'fs';
-import url from 'url';
 import pkgUp from 'pkg-up';
-import { PlaygroundConfig } from 'react-cosmos-playground2';
+import {
+  PlaygroundConfig,
+  PlaygroundMountArgs,
+} from 'react-cosmos-playground2';
+import { getCosmosPluginConfigs } from 'react-cosmos-plugin';
+import url from 'url';
 import { CosmosConfig } from '../config';
 import { PlatformType, replaceKeys } from './shared';
 import { getStaticPath } from './static';
@@ -12,18 +16,25 @@ export function getDevPlaygroundHtml(
   platformType: PlatformType,
   cosmosConfig: CosmosConfig
 ) {
-  const { ui } = cosmosConfig;
+  const { rootDir, ui } = cosmosConfig;
   return getPlaygroundHtml({
-    ...ui,
-    core: getDevCoreConfig(platformType, cosmosConfig),
+    playgroundConfig: {
+      ...ui,
+      core: getDevCoreConfig(platformType, cosmosConfig),
+    },
+    pluginConfigs: getCosmosPluginConfigs(rootDir),
   });
 }
 
 export function getExportPlaygroundHtml(cosmosConfig: CosmosConfig) {
-  const { ui } = cosmosConfig;
+  const { rootDir, ui } = cosmosConfig;
   return getPlaygroundHtml({
-    ...ui,
-    core: getExportCoreConfig(cosmosConfig),
+    playgroundConfig: {
+      ...ui,
+      core: getExportCoreConfig(cosmosConfig),
+    },
+    // TODO: Ensure plugins are copied and accessible from the export path
+    pluginConfigs: getCosmosPluginConfigs(rootDir),
   });
 }
 
@@ -78,9 +89,9 @@ function getWebRendererUrl({ publicUrl }: CosmosConfig) {
   return url.resolve(publicUrl, RENDERER_FILENAME);
 }
 
-function getPlaygroundHtml(playgroundConfig: PlaygroundConfig) {
+function getPlaygroundHtml(playgroundArgs: PlaygroundMountArgs) {
   return replaceKeys(getPlaygroundHtmlTemplate(), {
-    __PLAYGROUND_CONFIG: JSON.stringify(playgroundConfig),
+    __PLAYGROUND_ARGS: JSON.stringify(playgroundArgs),
   });
 }
 
