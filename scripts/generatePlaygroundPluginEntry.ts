@@ -22,7 +22,7 @@ export async function generatePlaygroundPluginEntry() {
 }
 
 function createPluginsEntry(pluginPaths: string[]) {
-  return `// Run "yarn generate-playground-plugin-entry" to update this file. Do not change it by hand!
+  return `// Run "yarn build react-cosmos-playground2" to update this file. Do not change it by hand!
 import { enablePlugin, resetPlugins } from 'react-plugin';
 
 const disabledPlugins = ['rendererSelect', 'pluginList'];
