@@ -4,7 +4,7 @@ import { getCosmosPluginConfigs } from './getCosmosPluginConfigs';
 it('loads playground plugins', () => {
   const packagesDir = path.join(
     __dirname,
-    '../../../react-cosmos-playground2/src/plugins'
+    '../../react-cosmos-playground2/src/plugins'
   );
 
   const configs = getCosmosPluginConfigs(packagesDir);

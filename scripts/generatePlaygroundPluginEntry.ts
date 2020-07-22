@@ -1,31 +1,27 @@
 import { outputFile } from 'fs-extra';
 import path from 'path';
-import { getCosmosPluginConfigs } from 'react-cosmos';
+import { getCosmosPluginConfigs } from 'react-cosmos-plugin/src';
 import { done } from './shared';
 
 const { stdout } = process;
 
-(async () => {
+export async function generatePlaygroundPluginEntry() {
   const packagesDir = path.join(
     __dirname,
     '../packages/react-cosmos-playground2/src/plugins'
   );
 
   const pluginConfigs = getCosmosPluginConfigs(packagesDir);
-
   const uiPluginPaths: string[] = [];
   pluginConfigs.forEach(pluginConfig => uiPluginPaths.push(...pluginConfig.ui));
 
-  await outputFile(
-    path.join(packagesDir, 'pluginEntry.ts'),
-    getCompiledTemplate(uiPluginPaths),
-    'utf8'
-  );
+  const entryPath = path.join(packagesDir, 'pluginEntry.ts');
+  await outputFile(entryPath, createPluginsEntry(uiPluginPaths), 'utf8');
 
   stdout.write(done(`Playground plugin entry generated.\n`));
-})();
+}
 
-function getCompiledTemplate(pluginPaths: string[]) {
+function createPluginsEntry(pluginPaths: string[]) {
   return `// Run "yarn generate-playground-plugin-entry" to update this file. Do not change it by hand!
 import { enablePlugin, resetPlugins } from 'react-plugin';
 
@@ -35,12 +31,12 @@ const disabledPlugins = ['rendererSelect', 'pluginList'];
 // can only be registered once with a given name
 resetPlugins();
 
-${pluginPaths.map(getPluginRequire).join(`\n\n`)}
+${pluginPaths.map(getHotReloadablePluginRequire).join(`\n\n`)}
 
 disabledPlugins.forEach(disabledPlugin => enablePlugin(disabledPlugin, false));`;
 }
 
-function getPluginRequire(pluginPath: string) {
+function getHotReloadablePluginRequire(pluginPath: string) {
   return `delete require.cache[require.resolve('${pluginPath}')];
 require('${pluginPath}');`;
 }

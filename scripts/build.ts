@@ -1,15 +1,16 @@
-import { spawn } from 'child_process';
-import path from 'path';
 import chalk from 'chalk';
+import { spawn } from 'child_process';
 import cpy from 'cpy';
+import path from 'path';
+import { generatePlaygroundPluginEntry } from './generatePlaygroundPluginEntry';
 import {
-  NODE_PACKAGES,
   BROWSER_PACKAGES,
-  getFormattedPackageList,
-  getUnnamedArg,
-  getBoolArg,
   done,
   error,
+  getBoolArg,
+  getFormattedPackageList,
+  getUnnamedArg,
+  NODE_PACKAGES,
   rimrafAsync,
 } from './shared';
 
@@ -17,6 +18,7 @@ const { stdout, stderr } = process;
 
 const BUILD_ORDER = [
   'react-cosmos-shared2',
+  'react-cosmos-plugin',
   'react-cosmos-playground2',
   'react-cosmos',
 ];
@@ -134,6 +136,8 @@ async function watchNodePackage(pkgName: string) {
 
 async function buildBrowserPackage(pkgName: string) {
   await clearPreviousBuild(pkgName);
+  if (pkgName === 'react-cosmos-playground2')
+    await generatePlaygroundPluginEntry();
   await Promise.all([
     await buildBrowserPackageSource(pkgName),
     await buildPackageHeaders(pkgName),
