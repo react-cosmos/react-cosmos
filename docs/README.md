@@ -274,7 +274,7 @@ The [react-mock](https://github.com/skidding/react-mock) project provides ways f
 
 ## Control panel
 
-The [props panel](https://twitter.com/ReactCosmos/status/1139838627976843264) allows you to manipulate component props visually by default. But you can also get a custom controls panel by defining the controls by hand in your fixtures.
+The [props panel](https://twitter.com/ReactCosmos/status/1139838627976843264) allows you to manipulate component props visually by default. But you can also get a custom control panel by defining the UI controls by hand in your fixtures.
 
 ### `useValue`
 
@@ -296,7 +296,7 @@ import { useSelect } from 'react-cosmos/fixture';
 
 export default () => {
   // useSelect also returns a setter as the second value in the return tuple,
-  // like any other state hook.
+  // like the useState hook, in case you want to change the value programatically.
   const [buttonType] = useSelect('buttonType', {
     options: ['primary', 'secondary', 'danger'],
   });
@@ -304,7 +304,7 @@ export default () => {
 };
 ```
 
-> Heads up: `useValue` and `useSelect` (and Cosmos in general) works great with TypeScript.
+> Heads up: `useValue` and `useSelect` (and Cosmos in general) work great with TypeScript.
 
 ## UI plugins
 
