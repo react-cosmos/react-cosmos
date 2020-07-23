@@ -274,7 +274,7 @@ The [react-mock](https://github.com/skidding/react-mock) project provides ways f
 
 ## Control panel
 
-The [props panel](https://twitter.com/ReactCosmos/status/1139838627976843264) allows you to manipulate component props visually by default. But you can also get a custom control panel by defining the UI controls by hand in your fixtures.
+The [props panel](https://twitter.com/ReactCosmos/status/1139838627976843264) allows you to manipulate component props visually by default. But you can also get a custom control panel by manually defining the UI controls in your fixtures.
 
 ### `useValue`
 
