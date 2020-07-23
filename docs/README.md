@@ -1,7 +1,7 @@
 ## Table of contents
 
 - Setup: [Getting started](#getting-started) · [Requirements](#requirements) · [Config](#config) · [Compilation](#compilation) · [Webpack](#webpack)
-- Usage: [Fixtures](#fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [UI controls](#ui-controlled-values) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
+- Usage: [Fixtures](#fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [Control panel](#control-panel) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
 - FAQ: [Create React App](#create-react-app) · [Next.js](#nextjs) · [Troubleshooting](#troubleshooting) · [Where's my old Cosmos?](#wheres-my-old-cosmos) · [Roadmap](../TODO.md)
 
 The [example package](../example) is a useful complement to this guide.
@@ -272,9 +272,11 @@ Some components need to be wrapped in certain _contexts_, like a Router provider
 
 The [react-mock](https://github.com/skidding/react-mock) project provides ways for mocking implicit component dependencies and helps you create fixtures for _stubborn_ components.
 
-## UI-controlled values
+## Control panel
 
-The [props panel](https://twitter.com/ReactCosmos/status/1139838627976843264) allows you to manipulate component props visually by default. But you can also get a _custom values panel_ with minimal work.
+The [props panel](https://twitter.com/ReactCosmos/status/1139838627976843264) allows you to manipulate component props visually by default. But you can also get a custom controls panel by defining the controls by hand in your fixtures.
+
+### `useValue`
 
 ```jsx
 // CounterButton.fixture.js
@@ -286,7 +288,23 @@ export default () => {
 };
 ```
 
-> Heads up: `useValue` (and Cosmos in general) works great with TypeScript.
+### `useSelect`
+
+```jsx
+// Button.fixture.js
+import { useSelect } from 'react-cosmos/fixture';
+
+export default () => {
+  // useSelect also returns a setter as the second value in the return tuple,
+  // like any other state hook.
+  const [buttonType] = useSelect('buttonType', {
+    options: ['primary', 'secondary', 'danger'],
+  });
+  return <Button type={buttonType}>Press me</Button>;
+};
+```
+
+> Heads up: `useValue` and `useSelect` (and Cosmos in general) works great with TypeScript.
 
 ## UI plugins
 
