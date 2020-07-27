@@ -1,7 +1,10 @@
 import React from 'react';
 import { ValueInputSlotProps } from 'react-cosmos-playground2/dist/shared/slots/ValueInputSlot';
 import { createPlugin } from 'react-plugin';
-import { BooleanInputPluginSpec } from './public';
+
+export type BooleanInputPluginSpec = {
+  name: 'booleanInputPlugin';
+};
 
 const { plug, register } = createPlugin<BooleanInputPluginSpec>({
   name: 'booleanInputPlugin',
@@ -22,4 +25,4 @@ plug<ValueInputSlotProps>('valueInput', ({ slotProps, children }) => {
   );
 });
 
-export { register };
+register();
