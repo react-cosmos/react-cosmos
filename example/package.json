@@ -8,6 +8,7 @@
     "start": "cosmos"
   },
   "dependencies": {
+    "react-cosmos-example-ui-plugin": "^5.5.0-alpha.6",
     "react-cosmos": "^5.5.0-alpha.6"
   }
 }

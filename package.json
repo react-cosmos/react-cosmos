@@ -2,6 +2,7 @@
   "private": true,
   "workspaces": [
     "packages/*",
+    "example-ui-plugin",
     "example",
     "website"
   ],
