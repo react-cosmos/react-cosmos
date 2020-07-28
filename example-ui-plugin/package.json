@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "name": "react-cosmos-example-ui-plugin",
+  "version": "5.5.0-alpha.6",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/example",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack"
+  },
+  "dependencies": {
+    "react-cosmos-playground2": "^5.5.0-alpha.6"
+  }
+}
