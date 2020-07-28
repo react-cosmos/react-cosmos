@@ -12,153 +12,103 @@ it('loads playground plugins', () => {
     Array [
       Object {
         "name": "Build notifications",
-        "ui": Array [
-          "BuildNotifications/index.ts",
-        ],
+        "rootDir": "BuildNotifications",
       },
       Object {
         "name": "Class state panel",
-        "ui": Array [
-          "ClassStatePanel/index.tsx",
-        ],
+        "rootDir": "ClassStatePanel",
       },
       Object {
         "name": "Content overlay",
-        "ui": Array [
-          "ContentOverlay/index.tsx",
-        ],
+        "rootDir": "ContentOverlay",
       },
       Object {
         "name": "Control panel",
-        "ui": Array [
-          "ControlPanel/index.tsx",
-        ],
+        "rootDir": "ControlPanel",
       },
       Object {
         "name": "Core",
-        "ui": Array [
-          "Core/index.tsx",
-        ],
+        "rootDir": "Core",
       },
       Object {
         "name": "Edit fixture button",
-        "ui": Array [
-          "EditFixtureButton/index.tsx",
-        ],
+        "rootDir": "EditFixtureButton",
       },
       Object {
         "name": "Fixture bookmark",
-        "ui": Array [
-          "FixtureBookmark/index.tsx",
-        ],
+        "rootDir": "FixtureBookmark",
       },
       Object {
         "name": "Fixture search",
-        "ui": Array [
-          "FixtureSearch/index.tsx",
-        ],
+        "rootDir": "FixtureSearch",
       },
       Object {
         "name": "Fixture tree",
-        "ui": Array [
-          "FixtureTree/index.tsx",
-        ],
+        "rootDir": "FixtureTree",
       },
       Object {
         "name": "Full screen button",
-        "ui": Array [
-          "FullScreenButton/index.tsx",
-        ],
+        "rootDir": "FullScreenButton",
       },
       Object {
         "name": "Message handler",
-        "ui": Array [
-          "MessageHandler/index.tsx",
-        ],
+        "rootDir": "MessageHandler",
       },
       Object {
         "name": "Notifications",
-        "ui": Array [
-          "Notifications/index.tsx",
-        ],
+        "rootDir": "Notifications",
       },
       Object {
         "name": "Plugin list",
-        "ui": Array [
-          "PluginList/index.tsx",
-        ],
+        "rootDir": "PluginList",
       },
       Object {
         "name": "Props panel",
-        "ui": Array [
-          "PropsPanel/index.tsx",
-        ],
+        "rootDir": "PropsPanel",
       },
       Object {
         "name": "Remote renderer",
-        "ui": Array [
-          "RemoteRenderer/index.tsx",
-        ],
+        "rootDir": "RemoteRenderer",
       },
       Object {
         "name": "Renderer core",
-        "ui": Array [
-          "RendererCore/index.ts",
-        ],
+        "rootDir": "RendererCore",
       },
       Object {
         "name": "Renderer preview",
-        "ui": Array [
-          "RendererPreview/index.tsx",
-        ],
+        "rootDir": "RendererPreview",
       },
       Object {
         "name": "Renderer select",
-        "ui": Array [
-          "RendererSelect/index.tsx",
-        ],
+        "rootDir": "RendererSelect",
       },
       Object {
         "name": "Responsive preview",
-        "ui": Array [
-          "ResponsivePreview/index.tsx",
-        ],
+        "rootDir": "ResponsivePreview",
       },
       Object {
         "name": "Root",
-        "ui": Array [
-          "Root/index.tsx",
-        ],
+        "rootDir": "Root",
       },
       Object {
         "name": "Router",
-        "ui": Array [
-          "Router/index.ts",
-        ],
+        "rootDir": "Router",
       },
       Object {
         "name": "Select control",
-        "ui": Array [
-          "SelectControl/index.tsx",
-        ],
+        "rootDir": "SelectControl",
       },
       Object {
         "name": "Standard control",
-        "ui": Array [
-          "StandardControl/index.tsx",
-        ],
+        "rootDir": "StandardControl",
       },
       Object {
         "name": "Storage",
-        "ui": Array [
-          "Storage/index.ts",
-        ],
+        "rootDir": "Storage",
       },
       Object {
         "name": "Webpack HMR notification",
-        "ui": Array [
-          "WebpackHmrNotification/index.ts",
-        ],
+        "rootDir": "WebpackHmrNotification",
       },
     ]
   `);

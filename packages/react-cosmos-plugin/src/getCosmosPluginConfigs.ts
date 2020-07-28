@@ -4,12 +4,11 @@ import path from 'path';
 // TODO: Validate config schema on config import
 type RawCosmosPluginConfig = {
   name: string;
-  ui: string[] | string;
 };
 
 export type CosmosPluginConfig = {
   name: string;
-  ui: string[];
+  rootDir: string;
 };
 
 export function getCosmosPluginConfigs(rootDir: string) {
@@ -32,17 +31,9 @@ export function getCosmosPluginConfig(
 ): CosmosPluginConfig {
   const rawConfig = require(configPath) as RawCosmosPluginConfig;
   const pluginRootDir = path.dirname(configPath);
-  const rawUi = Array.isArray(rawConfig.ui) ? rawConfig.ui : [rawConfig.ui];
 
   return {
     name: rawConfig.name,
-    ui: rawUi.map(uiPath =>
-      path.relative(rootDir, resolveModulePath(pluginRootDir, uiPath))
-    ),
+    rootDir: path.relative(rootDir, pluginRootDir),
   };
-}
-
-function resolveModulePath(pluginRootDir: string, relativePath: string) {
-  // TODO: Handle missing paths
-  return require.resolve(path.resolve(pluginRootDir, relativePath));
 }
