@@ -3,8 +3,6 @@ npm-debug.log
 yarn-error.log
 
 packages/*/dist
-packages/react-cosmos-playground2/src/plugins/pluginEntry.ts
-example-ui-plugin/dist
 
 coverage
 cypress/screenshots
