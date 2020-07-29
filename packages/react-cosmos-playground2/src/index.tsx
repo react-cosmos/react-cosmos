@@ -1,10 +1,11 @@
+// Do not change the import order in this file!
 import 'regenerator-runtime/runtime';
 import 'core-js/features/promise';
 import 'core-js/features/array/find';
 import 'core-js/features/array/includes';
 import 'whatwg-fetch';
 
-import React from 'react';
+import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import * as ReactPlugin from 'react-plugin';
 import { CosmosPluginConfig } from 'react-cosmos-plugin';
@@ -16,23 +17,23 @@ import './plugins/pluginEntry';
 
 declare global {
   interface Window {
-    ReactPlugin: typeof ReactPlugin;
-    React: typeof React;
-    ReactDom: typeof ReactDom;
+    ReactPlugin: any;
+    React: any;
+    ReactDom: any;
   }
 }
-
-// Config can also contain keys for 3rd party plugins
-export type PlaygroundConfig = {
-  core: CoreSpec['config'];
-  [pluginName: string]: {};
-};
 
 // Enable external plugins to use a shared copy of react-plugin. Also enable
 // fiddling with plugins from browser console :D.
 window.ReactPlugin = ReactPlugin;
 window.React = React;
 window.ReactDom = ReactDom;
+
+// Config can also contain keys for 3rd party plugins
+export type PlaygroundConfig = {
+  core: CoreSpec['config'];
+  [pluginName: string]: {};
+};
 
 export type PlaygroundMountArgs = {
   playgroundConfig: PlaygroundConfig;

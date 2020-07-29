@@ -1,4 +1,3 @@
 {
-  "name": "Root",
-  "ui": "./index.tsx"
+  "name": "Root"
 }

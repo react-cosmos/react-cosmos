@@ -1,4 +1,3 @@
 {
-  "name": "Fixture search",
-  "ui": "./index.tsx"
+  "name": "Fixture search"
 }

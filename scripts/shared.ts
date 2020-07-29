@@ -1,8 +1,8 @@
+import chalk from 'chalk';
 import { readFile, writeFile } from 'fs';
 import glob from 'glob';
 import rimraf from 'rimraf';
 import { argv } from 'yargs';
-import chalk from 'chalk';
 
 type ArgValue = void | null | boolean | number | string;
 
@@ -13,15 +13,56 @@ export const readFileAsync = asyncify(readFile);
 export const writeFileAsync = asyncify(writeFile);
 export const rimrafAsync = asyncify(rimraf);
 
-export const NODE_PACKAGES = [
-  'react-cosmos-shared2',
-  'react-cosmos-plugin',
-  'react-cosmos',
-];
-export const BROWSER_PACKAGES = ['react-cosmos-playground2'];
+export enum PackageType {
+  Node,
+  Browser,
+}
 
-export function getFormattedPackageList(pkgNames: PackageNames) {
-  return ['', ...pkgNames].join('\n - ');
+export type NodePackage = {
+  type: PackageType.Node;
+  name: string;
+  path: string;
+};
+
+export type BrowserPackage = {
+  type: PackageType.Browser;
+  name: string;
+  path: string;
+};
+
+export type Package = NodePackage | BrowserPackage;
+
+// Warning: The order matters!
+export const packages: Package[] = [
+  {
+    type: PackageType.Node,
+    name: 'react-cosmos-shared2',
+    path: 'packages/react-cosmos-shared2',
+  },
+  {
+    type: PackageType.Node,
+    name: 'react-cosmos-plugin',
+    path: 'packages/react-cosmos-plugin',
+  },
+  {
+    type: PackageType.Browser,
+    name: 'react-cosmos-playground2',
+    path: 'packages/react-cosmos-playground2',
+  },
+  {
+    type: PackageType.Node,
+    name: 'react-cosmos',
+    path: 'packages/react-cosmos',
+  },
+  {
+    type: PackageType.Browser,
+    name: 'example-ui-plugin',
+    path: 'example-ui-plugin',
+  },
+];
+
+export function getFormattedPackageList(includedPackages: Package[]) {
+  return ['', ...includedPackages.map(p => p.name)].join('\n - ');
 }
 
 export function getUnnamedArg(index: number = 0): void | number | string {

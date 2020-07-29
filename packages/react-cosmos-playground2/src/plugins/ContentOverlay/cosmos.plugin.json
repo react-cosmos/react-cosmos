@@ -1,4 +1,3 @@
 {
-  "name": "Content overlay",
-  "ui": "./index.tsx"
+  "name": "Content overlay"
 }

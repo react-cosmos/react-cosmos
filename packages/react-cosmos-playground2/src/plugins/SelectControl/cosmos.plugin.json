@@ -1,4 +1,3 @@
 {
-  "name": "Select control",
-  "ui": "./index.tsx"
+  "name": "Select control"
 }

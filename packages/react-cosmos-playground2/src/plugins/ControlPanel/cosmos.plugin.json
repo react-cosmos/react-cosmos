@@ -1,4 +1,3 @@
 {
-  "name": "Control panel",
-  "ui": "./index.tsx"
+  "name": "Control panel"
 }

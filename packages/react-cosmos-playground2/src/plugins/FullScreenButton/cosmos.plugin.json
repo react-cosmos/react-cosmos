@@ -1,4 +1,3 @@
 {
-  "name": "Full screen button",
-  "ui": "./index.tsx"
+  "name": "Full screen button"
 }

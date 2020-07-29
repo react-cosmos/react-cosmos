@@ -1,4 +1,3 @@
 {
-  "name": "Remote renderer",
-  "ui": "./index.tsx"
+  "name": "Remote renderer"
 }

@@ -13,7 +13,9 @@ export async function generatePlaygroundPluginEntry() {
 
   const pluginConfigs = getCosmosPluginConfigs(packagesDir);
   const uiPluginPaths: string[] = [];
-  pluginConfigs.forEach(pluginConfig => uiPluginPaths.push(...pluginConfig.ui));
+  pluginConfigs.forEach(pluginConfig =>
+    uiPluginPaths.push(`./${pluginConfig.rootDir}/ui.js`)
+  );
 
   const entryPath = path.join(packagesDir, 'pluginEntry.ts');
   await outputFile(entryPath, createPluginsEntry(uiPluginPaths), 'utf8');

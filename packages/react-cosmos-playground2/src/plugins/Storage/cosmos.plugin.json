@@ -1,4 +1,3 @@
 {
-  "name": "Storage",
-  "ui": "./index.ts"
+  "name": "Storage"
 }

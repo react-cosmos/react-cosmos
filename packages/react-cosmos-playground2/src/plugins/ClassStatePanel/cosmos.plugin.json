@@ -1,4 +1,3 @@
 {
-  "name": "Class state panel",
-  "ui": "./index.tsx"
+  "name": "Class state panel"
 }

@@ -1,26 +1,39 @@
 import chalk from 'chalk';
 import {
-  PackageNames,
-  NODE_PACKAGES,
-  BROWSER_PACKAGES,
-  globAsync,
-  readFileAsync,
-  writeFileAsync,
-  getFormattedPackageList,
-  getUnnamedArg,
   done,
   error,
+  getFormattedPackageList,
+  getUnnamedArg,
+  globAsync,
+  Package,
+  packages,
+  readFileAsync,
+  writeFileAsync,
 } from './shared';
 
 const SRC_DIR = 'src';
 const DIST_DIR = 'dist';
+
 type TargetDir = typeof SRC_DIR | typeof DIST_DIR;
 
+// These classes need to be defined at the top of this file
+// https://stackoverflow.com/a/59171646/128816
+class InvalidTargetDir extends Error {
+  constructor() {
+    super('Invalid target dir!');
+  }
+}
+
+class InvalidTargetPackage extends Error {
+  constructor(targetPackage: string) {
+    super(`Invalid package name ${chalk.bold(targetPackage)}!`);
+  }
+}
+
 (async () => {
-  const packages = [...NODE_PACKAGES, ...BROWSER_PACKAGES];
   try {
     const targetDir = getTargetDir();
-    const targetPackages = getTargetPackages(packages);
+    const targetPackages = getTargetPackages();
 
     const entryPoints = await getPackageEntryPoints(targetPackages);
     await Promise.all(
@@ -39,9 +52,7 @@ type TargetDir = typeof SRC_DIR | typeof DIST_DIR;
       );
     } else if (err instanceof InvalidTargetPackage) {
       console.log(
-        error(
-          `${err.message}\nNode packages: ${getFormattedPackageList(packages)}`
-        )
+        error(`${err.message}\nPackages: ${getFormattedPackageList(packages)}`)
       );
     } else {
       throw err;
@@ -60,16 +71,16 @@ async function linkFileRequiresToDir(filePath: string, targetDir: TargetDir) {
 }
 
 async function getPackageEntryPoints(
-  packages: PackageNames
+  targetPackages: Package[]
 ): Promise<string[]> {
-  if (packages.length === 0) {
+  if (targetPackages.length === 0)
     throw new Error('No package entry points to link for empty package list');
-  }
 
+  const packagePaths = targetPackages.map(p => p.path);
   const pkgMatch =
-    packages.length > 1 ? `{${packages.join(',')}}` : packages[0];
+    packagePaths.length > 1 ? `{${packagePaths.join(',')}}` : packagePaths[0];
 
-  return globAsync(`./packages/${pkgMatch}/{*,bin/*}.{js,d.ts}`);
+  return globAsync(`./${pkgMatch}/{*,bin/*}.{js,d.ts}`);
 }
 
 function getTargetDir(): TargetDir {
@@ -81,23 +92,22 @@ function getTargetDir(): TargetDir {
   return targetDir;
 }
 
-function getTargetPackages(nodePackages: PackageNames): string[] {
-  let packages: PackageNames = [];
-  let pkg = getUnnamedArg(1);
+function getTargetPackages(): Package[] {
+  let targetPackages: Package[] = [];
+  let pkgName = getUnnamedArg(1);
 
-  if (!pkg) {
-    return nodePackages;
-  }
+  if (!pkgName) return packages;
 
   do {
-    if (typeof pkg !== 'string' || nodePackages.indexOf(pkg) === -1) {
-      throw new InvalidTargetPackage(String(pkg));
-    }
-    packages = [...packages, pkg];
-    pkg = getUnnamedArg(packages.length + 1);
-  } while (pkg);
+    const pkg = packages.find(p => p.name === pkgName);
+    if (typeof pkgName !== 'string' || !pkg)
+      throw new InvalidTargetPackage(String(pkgName));
 
-  return packages;
+    targetPackages.push(pkg);
+    pkgName = getUnnamedArg(targetPackages.length + 1);
+  } while (pkgName);
+
+  return targetPackages;
 }
 
 function isValidTargetDir(targetDir: unknown): targetDir is TargetDir {
@@ -105,16 +115,4 @@ function isValidTargetDir(targetDir: unknown): targetDir is TargetDir {
     typeof targetDir === 'string' &&
     (targetDir === SRC_DIR || targetDir === DIST_DIR)
   );
-}
-
-class InvalidTargetDir extends Error {
-  constructor() {
-    super('Invalid target dir!');
-  }
-}
-
-class InvalidTargetPackage extends Error {
-  constructor(targetPackage: string) {
-    super(`Invalid package name ${chalk.bold(targetPackage)}!`);
-  }
 }

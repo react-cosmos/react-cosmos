@@ -4,24 +4,18 @@ import cpy from 'cpy';
 import path from 'path';
 import { generatePlaygroundPluginEntry } from './generatePlaygroundPluginEntry';
 import {
-  BROWSER_PACKAGES,
   done,
   error,
   getBoolArg,
   getFormattedPackageList,
   getUnnamedArg,
-  NODE_PACKAGES,
+  Package,
+  packages,
+  PackageType,
   rimrafAsync,
 } from './shared';
 
 const { stdout, stderr } = process;
-
-const BUILD_ORDER = [
-  'react-cosmos-shared2',
-  'react-cosmos-plugin',
-  'react-cosmos-playground2',
-  'react-cosmos',
-];
 
 const SOURCE_IGNORE_PATHS = [
   '**/@types/**/*',
@@ -38,8 +32,6 @@ const SOURCE_IGNORE_PATHS = [
 const watch = getBoolArg('watch');
 
 (async () => {
-  const buildablePackages = [...NODE_PACKAGES, ...BROWSER_PACKAGES];
-  // TODO: Allow shorthand names (shared => react-cosmos-shared2, etc.)
   const pkgName = getUnnamedArg();
 
   if (pkgName) {
@@ -51,14 +43,17 @@ const watch = getBoolArg('watch');
       return;
     }
 
-    if (buildablePackages.indexOf(pkgName) === -1) {
+    const pkg = packages.find(
+      // Allow shorthand names (shared => react-cosmos-shared2, etc.)
+      p => p.name === pkgName || p.name === `react-cosmos-${pkgName}`
+    );
+
+    if (!pkg) {
       stderr.write(
         error(
           `${chalk.bold(
             pkgName
-          )} doesn't exist!\nPackages: ${getFormattedPackageList(
-            buildablePackages
-          )}\n`
+          )} doesn't exist!\nPackages: ${getFormattedPackageList(packages)}\n`
         )
       );
       process.exit(1);
@@ -66,13 +61,13 @@ const watch = getBoolArg('watch');
     }
 
     stdout.write(
-      `${watch ? 'Build-watching' : 'Building'} ${chalk.bold(pkgName)}...\n`
+      `${watch ? 'Build-watching' : 'Building'} ${chalk.bold(pkg.name)}...\n`
     );
 
     if (watch) {
-      await watchPackage(pkgName);
+      await watchPackage(pkg);
     } else {
-      await buildPackage(pkgName);
+      await buildPackage(pkg);
     }
   } else {
     if (watch) {
@@ -92,70 +87,70 @@ const watch = getBoolArg('watch');
 
     // Packages are built serially because they depend on each other and
     // this way TypeScript ensures their interfaces are compatible
-    for (const curPkgName of BUILD_ORDER) {
-      await buildPackage(curPkgName);
+    for (const pkg of packages) {
+      await buildPackage(pkg);
     }
 
-    stdout.write(`Built ${buildablePackages.length} packages successfully.\n`);
+    stdout.write(`Built ${packages.length} packages successfully.\n`);
   }
 })();
 
-async function buildPackage(pkgName: string) {
+async function buildPackage(pkg: Package) {
   try {
-    isBrowserPackage(pkgName)
-      ? await buildBrowserPackage(pkgName)
-      : await buildNodePackage(pkgName);
-    stdout.write(done(`${chalk.bold(pkgName)}\n`));
+    pkg.type === PackageType.Browser
+      ? await buildBrowserPackage(pkg)
+      : await buildNodePackage(pkg);
+    stdout.write(done(`${chalk.bold(pkg.name)}\n`));
   } catch (err) {
-    stderr.write(error(`${chalk.bold(pkgName)}\n`));
+    stderr.write(error(`${chalk.bold(pkg.name)}\n`));
   }
 }
 
-async function watchPackage(pkgName: string) {
-  return isBrowserPackage(pkgName)
-    ? watchBrowserPackage(pkgName)
-    : watchNodePackage(pkgName);
+async function watchPackage(pkg: Package) {
+  return pkg.type === PackageType.Browser
+    ? watchBrowserPackage(pkg)
+    : watchNodePackage(pkg);
 }
 
-async function buildNodePackage(pkgName: string) {
-  await clearPreviousBuild(pkgName);
-  await copyStaticAssets(pkgName);
+async function buildNodePackage(pkg: Package) {
+  await clearPreviousBuild(pkg);
+  await copyStaticAssets(pkg);
   await Promise.all([
-    await buildNodePackageSource(pkgName),
-    await buildPackageHeaders(pkgName),
+    await buildNodePackageSource(pkg),
+    await buildPackageHeaders(pkg),
   ]);
 }
 
-async function watchNodePackage(pkgName: string) {
-  await clearPreviousBuild(pkgName);
-  await copyStaticAssets(pkgName);
+async function watchNodePackage(pkg: Package) {
+  await clearPreviousBuild(pkg);
+  await copyStaticAssets(pkg);
   // Don't await on returned promises because watch tasks hang indefinitely
-  watchNodePackageSource(pkgName);
-  watchPackageHeaders(pkgName);
+  watchNodePackageSource(pkg);
+  watchPackageHeaders(pkg);
 }
 
-async function buildBrowserPackage(pkgName: string) {
-  await clearPreviousBuild(pkgName);
-  if (pkgName === 'react-cosmos-playground2')
+async function buildBrowserPackage(pkg: Package) {
+  await clearPreviousBuild(pkg);
+  if (pkg.name === 'react-cosmos-playground2')
     await generatePlaygroundPluginEntry();
   await Promise.all([
-    await buildBrowserPackageSource(pkgName),
-    await buildPackageHeaders(pkgName),
+    await buildBrowserPackageSource(pkg),
+    await buildPackageHeaders(pkg),
   ]);
 }
 
-async function watchBrowserPackage(pkgName: string) {
-  await clearPreviousBuild(pkgName);
+async function watchBrowserPackage(pkg: Package) {
+  await clearPreviousBuild(pkg);
   // Don't await on returned promises because watch tasks hang indefinitely
-  watchBrowserPackageSource(pkgName);
-  watchPackageHeaders(pkgName);
+  watchBrowserPackageSource(pkg);
+  watchPackageHeaders(pkg);
 }
 
-function buildNodePackageSource(pkgName: string) {
+function buildNodePackageSource(pkg: Package) {
   const args = [
-    `packages/${pkgName}/src`,
+    `${pkg.path}/src`,
     '--out-dir',
-    `packages/${pkgName}/dist`,
+    `${pkg.path}/dist`,
     '--extensions',
     '.ts,.tsx',
     '--ignore',
@@ -164,11 +159,11 @@ function buildNodePackageSource(pkgName: string) {
   return runAsyncTask({ cmd: 'babel', args });
 }
 
-function watchNodePackageSource(pkgName: string) {
+function watchNodePackageSource(pkg: Package) {
   const args = [
-    `packages/${pkgName}/src`,
+    `${pkg.path}/src`,
     '--out-dir',
-    `packages/${pkgName}/dist`,
+    `${pkg.path}/dist`,
     '--extensions',
     '.ts,.tsx',
     '--ignore',
@@ -178,10 +173,10 @@ function watchNodePackageSource(pkgName: string) {
   return runAsyncTask({ cmd: 'babel', args });
 }
 
-async function buildBrowserPackageSource(pkgName: string) {
+async function buildBrowserPackageSource(pkg: Package) {
   const args = [
     '--config',
-    `packages/${pkgName}/webpack.config.js`,
+    `${pkg.path}/webpack.config.js`,
     '--display',
     'errors-only',
   ];
@@ -189,21 +184,21 @@ async function buildBrowserPackageSource(pkgName: string) {
   return runAsyncTask({ cmd: 'webpack', args, env });
 }
 
-async function watchBrowserPackageSource(pkgName: string) {
+async function watchBrowserPackageSource(pkg: Package) {
   // Showing webpack output in watch mode because it's nice to get feedback
   // after saving a file
-  const args = ['--config', `packages/${pkgName}/webpack.config.js`, '--watch'];
+  const args = ['--config', `${pkg.path}/webpack.config.js`, '--watch'];
   const env = { NODE_ENV: 'development' };
   return runAsyncTask({ cmd: 'webpack', args, env });
 }
 
-function buildPackageHeaders(pkgName: string) {
-  const args = ['-b', `packages/${pkgName}/tsconfig.build.json`];
+function buildPackageHeaders(pkg: Package) {
+  const args = ['-b', `${pkg.path}/tsconfig.build.json`];
   return runAsyncTask({ cmd: 'tsc', args });
 }
 
-function watchPackageHeaders(pkgName: string) {
-  const args = ['-b', `packages/${pkgName}/tsconfig.build.json`, '--watch'];
+function watchPackageHeaders(pkg: Package) {
+  const args = ['-b', `${pkg.path}/tsconfig.build.json`, '--watch'];
   return runAsyncTask({ cmd: 'tsc', args });
 }
 
@@ -239,21 +234,17 @@ function runAsyncTask({ cmd, args, env = {} }: RunAsyncTaskArgs) {
   });
 }
 
-async function clearPreviousBuild(pkgName: string) {
-  await rimrafAsync(`packages/${pkgName}/dist`);
+async function clearPreviousBuild(pkg: Package) {
+  await rimrafAsync(`${pkg.path}/dist`);
 }
 
 const STATIC_PATH = 'shared/static';
 
-async function copyStaticAssets(pkgName: string) {
-  if (pkgName === 'react-cosmos') {
+async function copyStaticAssets(pkg: Package) {
+  if (pkg.name === 'react-cosmos') {
     await cpy(`src/${STATIC_PATH}/**`, `dist/${STATIC_PATH}`, {
-      cwd: path.join(__dirname, `../packages/react-cosmos`),
+      cwd: path.join(__dirname, `../${pkg.path}`),
       parents: false,
     });
   }
-}
-
-function isBrowserPackage(pkgName: string) {
-  return BROWSER_PACKAGES.indexOf(pkgName) !== -1;
 }
