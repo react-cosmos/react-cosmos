@@ -8,7 +8,7 @@
     "copy-package": "cp cosmos.plugin.json dist && yarn pack --filename package.tgz && tar zxvf package.tgz && rm -r -f ../example/node_modules/react-cosmos-example-ui-plugin && mv package ../example/node_modules/react-cosmos-example-ui-plugin",
     "build": "webpack && yarn copy-package"
   },
-  "dependencies": {
+  "devDependencies": {
     "react-cosmos-playground2": "^5.5.0-alpha.6"
   }
 }

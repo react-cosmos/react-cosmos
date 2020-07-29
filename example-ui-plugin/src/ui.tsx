@@ -1,6 +1,5 @@
 import React from 'react';
-// @ts-ignore FIXME
-import { ValueInputSlotProps } from 'react-cosmos-playground2/dist/shared/slots/ValueInputSlot';
+import { ValueInputSlotProps } from 'react-cosmos-playground2/plugin';
 import { createPlugin } from 'react-plugin';
 
 export type BooleanInputPluginSpec = {
