@@ -36,6 +36,7 @@ jobs:
       # Test build
       - run: yarn dist
       - run: yarn build
+      - run: cd example-ui-plugin && yarn build
       - run: yarn export
       - run:
           command: yarn start

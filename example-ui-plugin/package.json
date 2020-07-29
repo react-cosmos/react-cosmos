@@ -5,9 +5,8 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/example",
   "license": "MIT",
   "scripts": {
-    "copy-config": "cp cosmos.plugin.json dist/cosmos.plugin.json",
-    "copy-dist": "mkdir -p ../example/node_modules/react-cosmos-example-ui-plugin && cp -R dist ../example/node_modules/react-cosmos-example-ui-plugin/dist",
-    "build": "yarn copy-config && webpack && yarn copy-dist"
+    "copy-package": "cp cosmos.plugin.json dist && yarn pack --filename package.tgz && tar zxvf package.tgz && rm -r -f ../example/node_modules/react-cosmos-example-ui-plugin && mv package ../example/node_modules/react-cosmos-example-ui-plugin",
+    "build": "webpack && yarn copy-package"
   },
   "dependencies": {
     "react-cosmos-playground2": "^5.5.0-alpha.6"
