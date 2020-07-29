@@ -1,5 +1,6 @@
 import glob from 'glob';
 import path from 'path';
+import resolveFrom from 'resolve-from';
 
 // TODO: Validate config schema on config import
 type RawCosmosPluginConfig = {
@@ -9,6 +10,7 @@ type RawCosmosPluginConfig = {
 export type CosmosPluginConfig = {
   name: string;
   rootDir: string;
+  uiPath?: string;
 };
 
 export function getCosmosPluginConfigs(rootDir: string) {
@@ -32,8 +34,13 @@ export function getCosmosPluginConfig(
   const rawConfig = require(configPath) as RawCosmosPluginConfig;
   const pluginRootDir = path.dirname(configPath);
 
-  return {
+  const config: CosmosPluginConfig = {
     name: rawConfig.name,
     rootDir: path.relative(rootDir, pluginRootDir),
   };
+
+  const uiPath = resolveFrom.silent(pluginRootDir, './ui');
+  if (uiPath) config.uiPath = path.relative(rootDir, uiPath);
+
+  return config;
 }

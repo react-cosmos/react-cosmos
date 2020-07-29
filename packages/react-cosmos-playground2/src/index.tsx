@@ -47,15 +47,13 @@ export default function mount({
   const { loadPlugins, Slot } = ReactPlugin;
 
   pluginConfigs.forEach(pluginConfig => {
-    const { rootDir } = pluginConfig;
-    const scriptPath = `${rootDir}/ui.js`;
+    const { uiPath } = pluginConfig;
+    if (!uiPath) return;
 
     const script = document.createElement('script');
     script.type = 'text/javascript';
     // TODO: Use localhost/port from Cosmos config
-    script.src = `http://localhost:5000/_plugin/${encodeURIComponent(
-      scriptPath
-    )}`;
+    script.src = `http://localhost:5000/_plugin/${encodeURIComponent(uiPath)}`;
     document.getElementsByTagName('head')[0].appendChild(script);
   });
 
