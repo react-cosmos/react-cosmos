@@ -33,6 +33,7 @@ export type BrowserPackage = {
 export type Package = NodePackage | BrowserPackage;
 
 // Warning: The order matters!
+// TODO: Remove "path"
 export const packages: Package[] = [
   {
     type: PackageType.Node,
@@ -53,11 +54,6 @@ export const packages: Package[] = [
     type: PackageType.Node,
     name: 'react-cosmos',
     path: 'packages/react-cosmos',
-  },
-  {
-    type: PackageType.Browser,
-    name: 'react-cosmos-boolean-input-plugin',
-    path: 'packages/react-cosmos-boolean-input-plugin',
   },
 ];
 
