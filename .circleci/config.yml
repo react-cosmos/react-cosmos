@@ -36,7 +36,7 @@ jobs:
       # Test build
       - run: yarn dist
       - run: yarn build
-      - run: cd example-ui-plugin && yarn copy-package
+      - run: cd packages/react-cosmos-boolean-input-plugin && yarn copy-package
       - run: yarn export
       - run:
           command: yarn start
