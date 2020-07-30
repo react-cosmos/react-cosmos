@@ -23,13 +23,13 @@ describe('Native', () => {
     });
 
     it('has fixture paths', () => {
-      userDepsContainsModule('__fixtures__/Hello World.ts');
-      userDepsContainsModule('Counter/index.fixture.tsx');
-      userDepsContainsModule('WelcomeMessage/index.fixture.tsx');
+      userDepsContainsModule('components/__fixtures__/Hello World.ts');
+      userDepsContainsModule('components/Counter/index.fixture.tsx');
+      userDepsContainsModule('components/WelcomeMessage/index.fixture.tsx');
     });
 
     it('has decorator paths', () => {
-      userDepsContainsModule('WelcomeMessage/cosmos.decorator.tsx');
+      userDepsContainsModule('components/WelcomeMessage/cosmos.decorator.tsx');
     });
   });
 });
