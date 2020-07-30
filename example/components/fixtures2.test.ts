@@ -1,6 +1,6 @@
 import { getCosmosConfigAtPath, getFixtures2 } from 'react-cosmos';
 
-const cosmosConfig = getCosmosConfigAtPath(require.resolve('./cosmos.config'));
+const cosmosConfig = getCosmosConfigAtPath(require.resolve('../cosmos.config'));
 
 it('returns fixture info', async () => {
   const fixtures = getFixtures2(cosmosConfig);
@@ -12,10 +12,10 @@ it('returns fixture info', async () => {
       name: 'default',
       parents: [],
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22default%22%7D',
-      relativeFilePath: 'Counter/index.fixture.tsx',
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2FCounter%2Findex.fixture.tsx%22%2C%22name%22%3A%22default%22%7D',
+      relativeFilePath: 'components/Counter/index.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22default%22%7D',
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22components%2FCounter%2Findex.fixture.tsx%22%2C%22name%22%3A%22default%22%7D',
       treePath: ['Counter', 'default'],
     },
     {
@@ -25,10 +25,10 @@ it('returns fixture info', async () => {
       name: 'small number',
       parents: [],
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22small%20number%22%7D',
-      relativeFilePath: 'Counter/index.fixture.tsx',
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2FCounter%2Findex.fixture.tsx%22%2C%22name%22%3A%22small%20number%22%7D',
+      relativeFilePath: 'components/Counter/index.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22small%20number%22%7D',
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22components%2FCounter%2Findex.fixture.tsx%22%2C%22name%22%3A%22small%20number%22%7D',
       treePath: ['Counter', 'small number'],
     },
     {
@@ -38,10 +38,10 @@ it('returns fixture info', async () => {
       name: 'large number',
       parents: [],
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22large%20number%22%7D',
-      relativeFilePath: 'Counter/index.fixture.tsx',
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2FCounter%2Findex.fixture.tsx%22%2C%22name%22%3A%22large%20number%22%7D',
+      relativeFilePath: 'components/Counter/index.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22Counter%2Findex.fixture.tsx%22%2C%22name%22%3A%22large%20number%22%7D',
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22components%2FCounter%2Findex.fixture.tsx%22%2C%22name%22%3A%22large%20number%22%7D',
       treePath: ['Counter', 'large number'],
     },
     {
@@ -50,11 +50,11 @@ it('returns fixture info', async () => {
       getElement: expect.any(Function),
       name: null,
       parents: [],
-      relativeFilePath: '__fixtures__/Controls playground.tsx',
+      relativeFilePath: 'components/__fixtures__/Controls playground.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22__fixtures__%2FControls%20playground.tsx%22%2C%22name%22%3Anull%7D',
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22components%2F__fixtures__%2FControls%20playground.tsx%22%2C%22name%22%3Anull%7D',
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22__fixtures__%2FControls%20playground.tsx%22%2C%22name%22%3Anull%7D',
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2F__fixtures__%2FControls%20playground.tsx%22%2C%22name%22%3Anull%7D',
       treePath: ['Controls playground'],
     },
     {
@@ -64,10 +64,10 @@ it('returns fixture info', async () => {
       name: null,
       parents: [],
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22__fixtures__%2FHello%20World.ts%22%2C%22name%22%3Anull%7D',
-      relativeFilePath: '__fixtures__/Hello World.ts',
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2F__fixtures__%2FHello%20World.ts%22%2C%22name%22%3Anull%7D',
+      relativeFilePath: 'components/__fixtures__/Hello World.ts',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22__fixtures__%2FHello%20World.ts%22%2C%22name%22%3Anull%7D',
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22components%2F__fixtures__%2FHello%20World.ts%22%2C%22name%22%3Anull%7D',
       treePath: ['Hello World'],
     },
     {
@@ -76,11 +76,11 @@ it('returns fixture info', async () => {
       getElement: expect.any(Function),
       name: null,
       parents: [],
-      relativeFilePath: '__fixtures__/Props playground.tsx',
+      relativeFilePath: 'components/__fixtures__/Props playground.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22__fixtures__%2FProps%20playground.tsx%22%2C%22name%22%3Anull%7D',
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22components%2F__fixtures__%2FProps%20playground.tsx%22%2C%22name%22%3Anull%7D',
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22__fixtures__%2FProps%20playground.tsx%22%2C%22name%22%3Anull%7D',
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2F__fixtures__%2FProps%20playground.tsx%22%2C%22name%22%3Anull%7D',
       treePath: ['Props playground'],
     },
     {
@@ -90,10 +90,10 @@ it('returns fixture info', async () => {
       name: null,
       parents: [],
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22CounterButton%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D',
-      relativeFilePath: 'CounterButton/index.fixture.tsx',
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2FCounterButton%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D',
+      relativeFilePath: 'components/CounterButton/index.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22CounterButton%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D',
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22components%2FCounterButton%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D',
       treePath: ['CounterButton'],
     },
     {
@@ -103,10 +103,10 @@ it('returns fixture info', async () => {
       name: null,
       parents: [],
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22NestedDecorators%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D',
-      relativeFilePath: 'NestedDecorators/index.fixture.tsx',
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2FNestedDecorators%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D',
+      relativeFilePath: 'components/NestedDecorators/index.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22NestedDecorators%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D',
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22components%2FNestedDecorators%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D',
       treePath: ['NestedDecorators'],
     },
     {
@@ -116,10 +116,10 @@ it('returns fixture info', async () => {
       name: null,
       parents: [],
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22WelcomeMessage%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D',
-      relativeFilePath: 'WelcomeMessage/index.fixture.tsx',
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2FWelcomeMessage%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D',
+      relativeFilePath: 'components/WelcomeMessage/index.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22WelcomeMessage%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D',
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22components%2FWelcomeMessage%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D',
       treePath: ['WelcomeMessage'],
     },
   ]);
