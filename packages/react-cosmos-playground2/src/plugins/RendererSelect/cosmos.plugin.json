@@ -1,4 +1,4 @@
 {
   "name": "Renderer select",
-  "uiPath": "index.tsx"
+  "ui": "index.tsx"
 }

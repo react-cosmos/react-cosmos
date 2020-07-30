@@ -1,4 +1,4 @@
 {
   "name": "Remote renderer",
-  "uiPath": "index.tsx"
+  "ui": "index.tsx"
 }

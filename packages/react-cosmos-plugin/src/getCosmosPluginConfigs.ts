@@ -5,13 +5,13 @@ import resolveFrom from 'resolve-from';
 // TODO: Validate config schema on config import
 type RawCosmosPluginConfig = {
   name: string;
-  uiPath?: string;
+  ui?: string;
 };
 
 export type CosmosPluginConfig = {
   name: string;
   rootDir: string;
-  uiPath?: string;
+  ui?: string;
 };
 
 export function getCosmosPluginConfigs(rootDir: string) {
@@ -41,11 +41,11 @@ export function getCosmosPluginConfig(
     rootDir: relativePluginRootDir,
   };
 
-  if (rawConfig.uiPath) {
-    const uiPath = path.join(pluginRootDir, rawConfig.uiPath);
+  if (rawConfig.ui) {
+    const uiPath = path.join(pluginRootDir, rawConfig.ui);
     const resolvedUiPath = resolveFrom.silent(pluginRootDir, uiPath);
     // TODO: Handle missing path
-    if (resolvedUiPath) config.uiPath = path.relative(rootDir, resolvedUiPath);
+    if (resolvedUiPath) config.ui = path.relative(rootDir, resolvedUiPath);
   }
 
   return config;

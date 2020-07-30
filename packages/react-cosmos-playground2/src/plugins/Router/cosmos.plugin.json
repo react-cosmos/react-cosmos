@@ -1,4 +1,4 @@
 {
   "name": "Router",
-  "uiPath": "index.ts"
+  "ui": "index.ts"
 }

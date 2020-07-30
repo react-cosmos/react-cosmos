@@ -1,4 +1,4 @@
 {
   "name": "Boolean input",
-  "uiPath": "dist/ui"
+  "ui": "dist/ui"
 }

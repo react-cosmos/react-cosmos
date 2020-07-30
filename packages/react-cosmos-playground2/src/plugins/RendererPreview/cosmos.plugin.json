@@ -1,4 +1,4 @@
 {
   "name": "Renderer preview",
-  "uiPath": "index.tsx"
+  "ui": "index.tsx"
 }

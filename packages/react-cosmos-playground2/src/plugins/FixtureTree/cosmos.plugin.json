@@ -1,4 +1,4 @@
 {
   "name": "Fixture tree",
-  "uiPath": "index.tsx"
+  "ui": "index.tsx"
 }

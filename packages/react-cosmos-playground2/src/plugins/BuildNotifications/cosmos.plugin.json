@@ -1,4 +1,4 @@
 {
   "name": "Build notifications",
-  "uiPath": "index.ts"
+  "ui": "index.ts"
 }

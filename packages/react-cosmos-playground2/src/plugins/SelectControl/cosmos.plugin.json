@@ -1,4 +1,4 @@
 {
   "name": "Select control",
-  "uiPath": "index.tsx"
+  "ui": "index.tsx"
 }
