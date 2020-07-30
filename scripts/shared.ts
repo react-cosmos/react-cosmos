@@ -56,8 +56,8 @@ export const packages: Package[] = [
   },
   {
     type: PackageType.Browser,
-    name: 'example-ui-plugin',
-    path: 'example-ui-plugin',
+    name: 'react-cosmos-boolean-input-plugin',
+    path: 'packages/react-cosmos-boolean-input-plugin',
   },
 ];
 
