@@ -53,7 +53,7 @@ const watch = getBoolArg('watch');
         error(
           `${chalk.bold(
             pkgName
-          )} doesn't exist!\nPackages: ${getFormattedPackageList(packages)}\n`
+          )} doesn't exist!\nPackages: ${getFormattedPackageList()}\n`
         )
       );
       process.exit(1);

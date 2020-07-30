@@ -52,7 +52,7 @@ class InvalidTargetPackage extends Error {
       );
     } else if (err instanceof InvalidTargetPackage) {
       console.log(
-        error(`${err.message}\nPackages: ${getFormattedPackageList(packages)}`)
+        error(`${err.message}\nPackages: ${getFormattedPackageList()}`)
       );
     } else {
       throw err;

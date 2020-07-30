@@ -38,8 +38,8 @@ export const packages: Package[] = [
   { type: PackageType.Node, name: 'react-cosmos' },
 ];
 
-export function getFormattedPackageList(includedPackages: Package[]) {
-  return ['', ...includedPackages.map(p => p.name)].join('\n - ');
+export function getFormattedPackageList() {
+  return ['', ...packages.map(p => p.name)].join('\n - ');
 }
 
 export function getUnnamedArg(index: number = 0): void | number | string {
