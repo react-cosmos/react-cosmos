@@ -5,7 +5,6 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/example",
   "license": "MIT",
   "scripts": {
-    "build-plugin": "webpack --config booleanInputPlugin/webpack.config.js",
     "start": "cosmos"
   },
   "dependencies": {
