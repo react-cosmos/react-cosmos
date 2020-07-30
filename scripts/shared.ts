@@ -21,40 +21,21 @@ export enum PackageType {
 export type NodePackage = {
   type: PackageType.Node;
   name: string;
-  path: string;
 };
 
 export type BrowserPackage = {
   type: PackageType.Browser;
   name: string;
-  path: string;
 };
 
 export type Package = NodePackage | BrowserPackage;
 
 // Warning: The order matters!
-// TODO: Remove "path"
 export const packages: Package[] = [
-  {
-    type: PackageType.Node,
-    name: 'react-cosmos-shared2',
-    path: 'packages/react-cosmos-shared2',
-  },
-  {
-    type: PackageType.Node,
-    name: 'react-cosmos-plugin',
-    path: 'packages/react-cosmos-plugin',
-  },
-  {
-    type: PackageType.Browser,
-    name: 'react-cosmos-playground2',
-    path: 'packages/react-cosmos-playground2',
-  },
-  {
-    type: PackageType.Node,
-    name: 'react-cosmos',
-    path: 'packages/react-cosmos',
-  },
+  { type: PackageType.Node, name: 'react-cosmos-shared2' },
+  { type: PackageType.Node, name: 'react-cosmos-plugin' },
+  { type: PackageType.Browser, name: 'react-cosmos-playground2' },
+  { type: PackageType.Node, name: 'react-cosmos' },
 ];
 
 export function getFormattedPackageList(includedPackages: Package[]) {

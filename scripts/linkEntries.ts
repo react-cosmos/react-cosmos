@@ -76,11 +76,10 @@ async function getPackageEntryPoints(
   if (targetPackages.length === 0)
     throw new Error('No package entry points to link for empty package list');
 
-  const packagePaths = targetPackages.map(p => p.path);
   const pkgMatch =
-    packagePaths.length > 1 ? `{${packagePaths.join(',')}}` : packagePaths[0];
+    packages.length > 1 ? `{${packages.join(',')}}` : packages[0];
 
-  return globAsync(`./${pkgMatch}/{*,bin/*}.{js,d.ts}`);
+  return globAsync(`./packages/${pkgMatch}/{*,bin/*}.{js,d.ts}`);
 }
 
 function getTargetDir(): TargetDir {

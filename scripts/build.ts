@@ -148,9 +148,9 @@ async function watchBrowserPackage(pkg: Package) {
 
 function buildNodePackageSource(pkg: Package) {
   const args = [
-    `${pkg.path}/src`,
+    `packages/${pkg.name}/src`,
     '--out-dir',
-    `${pkg.path}/dist`,
+    `packages/${pkg.name}/dist`,
     '--extensions',
     '.ts,.tsx',
     '--ignore',
@@ -161,9 +161,9 @@ function buildNodePackageSource(pkg: Package) {
 
 function watchNodePackageSource(pkg: Package) {
   const args = [
-    `${pkg.path}/src`,
+    `packages/${pkg.name}/src`,
     '--out-dir',
-    `${pkg.path}/dist`,
+    `packages/${pkg.name}/dist`,
     '--extensions',
     '.ts,.tsx',
     '--ignore',
@@ -176,7 +176,7 @@ function watchNodePackageSource(pkg: Package) {
 async function buildBrowserPackageSource(pkg: Package) {
   const args = [
     '--config',
-    `${pkg.path}/webpack.config.js`,
+    `packages/${pkg.name}/webpack.config.js`,
     '--display',
     'errors-only',
   ];
@@ -187,18 +187,22 @@ async function buildBrowserPackageSource(pkg: Package) {
 async function watchBrowserPackageSource(pkg: Package) {
   // Showing webpack output in watch mode because it's nice to get feedback
   // after saving a file
-  const args = ['--config', `${pkg.path}/webpack.config.js`, '--watch'];
+  const args = [
+    '--config',
+    `packages/${pkg.name}/webpack.config.js`,
+    '--watch',
+  ];
   const env = { NODE_ENV: 'development' };
   return runAsyncTask({ cmd: 'webpack', args, env });
 }
 
 function buildPackageHeaders(pkg: Package) {
-  const args = ['-b', `${pkg.path}/tsconfig.build.json`];
+  const args = ['-b', `packages/${pkg.name}/tsconfig.build.json`];
   return runAsyncTask({ cmd: 'tsc', args });
 }
 
 function watchPackageHeaders(pkg: Package) {
-  const args = ['-b', `${pkg.path}/tsconfig.build.json`, '--watch'];
+  const args = ['-b', `packages/${pkg.name}/tsconfig.build.json`, '--watch'];
   return runAsyncTask({ cmd: 'tsc', args });
 }
 
@@ -235,7 +239,7 @@ function runAsyncTask({ cmd, args, env = {} }: RunAsyncTaskArgs) {
 }
 
 async function clearPreviousBuild(pkg: Package) {
-  await rimrafAsync(`${pkg.path}/dist`);
+  await rimrafAsync(`packages/${pkg.name}/dist`);
 }
 
 const STATIC_PATH = 'shared/static';
@@ -243,7 +247,7 @@ const STATIC_PATH = 'shared/static';
 async function copyStaticAssets(pkg: Package) {
   if (pkg.name === 'react-cosmos') {
     await cpy(`src/${STATIC_PATH}/**`, `dist/${STATIC_PATH}`, {
-      cwd: path.join(__dirname, `../${pkg.path}`),
+      cwd: path.join(__dirname, `../packages/${pkg.name}`),
       parents: false,
     });
   }
