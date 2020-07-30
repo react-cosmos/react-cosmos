@@ -1,3 +1,4 @@
 {
-  "name": "Fixture search"
+  "name": "Fixture search",
+  "uiPath": "index.tsx"
 }

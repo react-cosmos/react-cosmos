@@ -1,3 +1,4 @@
 {
-  "name": "Router"
+  "name": "Router",
+  "uiPath": "index.ts"
 }

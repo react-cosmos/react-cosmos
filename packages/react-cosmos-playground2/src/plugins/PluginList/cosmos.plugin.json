@@ -1,3 +1,4 @@
 {
-  "name": "Plugin list"
+  "name": "Plugin list",
+  "uiPath": "index.tsx"
 }

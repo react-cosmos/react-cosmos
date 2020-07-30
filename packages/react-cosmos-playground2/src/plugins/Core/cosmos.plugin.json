@@ -1,3 +1,4 @@
 {
-  "name": "Core"
+  "name": "Core",
+  "uiPath": "index.tsx"
 }

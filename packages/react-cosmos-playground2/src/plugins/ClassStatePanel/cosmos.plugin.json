@@ -1,3 +1,4 @@
 {
-  "name": "Class state panel"
+  "name": "Class state panel",
+  "uiPath": "index.tsx"
 }

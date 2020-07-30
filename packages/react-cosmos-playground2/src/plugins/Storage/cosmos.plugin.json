@@ -1,3 +1,4 @@
 {
-  "name": "Storage"
+  "name": "Storage",
+  "uiPath": "index.ts"
 }

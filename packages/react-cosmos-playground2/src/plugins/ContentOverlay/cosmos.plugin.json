@@ -1,3 +1,4 @@
 {
-  "name": "Content overlay"
+  "name": "Content overlay",
+  "uiPath": "index.tsx"
 }

@@ -1,3 +1,4 @@
 {
-  "name": "Responsive preview"
+  "name": "Responsive preview",
+  "uiPath": "index.tsx"
 }

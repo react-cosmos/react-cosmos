@@ -1,3 +1,4 @@
 {
-  "name": "Props panel"
+  "name": "Props panel",
+  "uiPath": "index.tsx"
 }

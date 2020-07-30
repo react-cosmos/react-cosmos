@@ -1,3 +1,4 @@
 {
-  "name": "Control panel"
+  "name": "Control panel",
+  "uiPath": "index.tsx"
 }

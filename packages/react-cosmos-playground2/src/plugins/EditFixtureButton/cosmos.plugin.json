@@ -1,3 +1,4 @@
 {
-  "name": "Edit fixture button"
+  "name": "Edit fixture button",
+  "uiPath": "index.tsx"
 }

@@ -1,3 +1,4 @@
 {
-  "name": "Standard control"
+  "name": "Standard control",
+  "uiPath": "index.tsx"
 }

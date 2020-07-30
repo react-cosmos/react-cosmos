@@ -1,3 +1,4 @@
 {
-  "name": "Message handler"
+  "name": "Message handler",
+  "uiPath": "index.tsx"
 }

@@ -1,3 +1,4 @@
 {
-  "name": "Notifications"
+  "name": "Notifications",
+  "uiPath": "index.tsx"
 }
