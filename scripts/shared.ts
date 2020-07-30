@@ -38,6 +38,13 @@ export const packages: Package[] = [
   { type: PackageType.Node, name: 'react-cosmos' },
 ];
 
+export function findPackage(pkgName: string) {
+  return packages.find(
+    // Allow shorthand names (shared => react-cosmos-shared2, etc.)
+    p => p.name === pkgName || p.name === `react-cosmos-${pkgName}`
+  );
+}
+
 export function getFormattedPackageList() {
   return ['', ...packages.map(p => p.name)].join('\n - ');
 }

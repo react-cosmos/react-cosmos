@@ -2,6 +2,7 @@ import chalk from 'chalk';
 import {
   done,
   error,
+  findPackage,
   getFormattedPackageList,
   getUnnamedArg,
   globAsync,
@@ -99,9 +100,11 @@ function getTargetPackages(): Package[] {
   if (!pkgName) return packages;
 
   do {
-    const pkg = packages.find(p => p.name === pkgName);
-    if (typeof pkgName !== 'string' || !pkg)
+    if (typeof pkgName !== 'string')
       throw new InvalidTargetPackage(String(pkgName));
+
+    const pkg = findPackage(pkgName);
+    if (!pkg) throw new InvalidTargetPackage(pkgName);
 
     targetPackages.push(pkg);
     pkgName = getUnnamedArg(targetPackages.length + 1);

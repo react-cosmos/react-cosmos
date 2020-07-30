@@ -6,6 +6,7 @@ import { generatePlaygroundPluginEntry } from './generatePlaygroundPluginEntry';
 import {
   done,
   error,
+  findPackage,
   getBoolArg,
   getFormattedPackageList,
   getUnnamedArg,
@@ -43,11 +44,7 @@ const watch = getBoolArg('watch');
       return;
     }
 
-    const pkg = packages.find(
-      // Allow shorthand names (shared => react-cosmos-shared2, etc.)
-      p => p.name === pkgName || p.name === `react-cosmos-${pkgName}`
-    );
-
+    const pkg = findPackage(pkgName);
     if (!pkg) {
       stderr.write(
         error(
