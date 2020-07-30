@@ -76,8 +76,9 @@ async function getPackageEntryPoints(
   if (targetPackages.length === 0)
     throw new Error('No package entry points to link for empty package list');
 
+  const packageNames = targetPackages.map(p => p.name);
   const pkgMatch =
-    packages.length > 1 ? `{${packages.join(',')}}` : packages[0];
+    packageNames.length > 1 ? `{${packageNames.join(',')}}` : packageNames[0];
 
   return globAsync(`./packages/${pkgMatch}/{*,bin/*}.{js,d.ts}`);
 }
