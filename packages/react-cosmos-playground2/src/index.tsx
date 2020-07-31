@@ -47,14 +47,7 @@ export default function mount({
   const { loadPlugins, Slot } = ReactPlugin;
 
   pluginConfigs.forEach(pluginConfig => {
-    const { ui } = pluginConfig;
-    if (!ui) return;
-
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
-    // TODO: Use localhost/port from Cosmos config
-    script.src = `http://localhost:5000/_plugin/${encodeURIComponent(ui)}`;
-    document.getElementsByTagName('head')[0].appendChild(script);
+    if (pluginConfig.ui) loadPluginScript(pluginConfig.ui);
   });
 
   const config = { ...DEFAULT_PLUGIN_CONFIG, ...playgroundConfig };
@@ -66,4 +59,14 @@ export default function mount({
     </>,
     document.getElementById('root')
   );
+}
+
+function loadPluginScript(scriptPath: string) {
+  console.log(`[Cosmos] Loading plugin script at ${scriptPath}`);
+
+  const script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src = `_plugin/${encodeURIComponent(scriptPath)}`;
+
+  document.getElementsByTagName('head')[0].appendChild(script);
 }
