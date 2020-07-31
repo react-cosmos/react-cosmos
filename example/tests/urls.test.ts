@@ -1,6 +1,6 @@
 import { getFixtureUrls, getCosmosConfigAtPath } from 'react-cosmos';
 
-const cosmosConfig = getCosmosConfigAtPath(require.resolve('./cosmos.config'));
+const cosmosConfig = getCosmosConfigAtPath(require.resolve('../cosmos.config'));
 
 it('returns playground URLs', async () => {
   const rendererUrls = await getFixtureUrls({ cosmosConfig });
