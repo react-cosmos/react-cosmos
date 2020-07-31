@@ -14,11 +14,23 @@ export function BooleanInput({
   onChange,
 }: Props) {
   return (
-    <button
-      onClick={() => onChange(!value)}
-      style={{ marginLeft: indentLevel * 12 + 20 }}
+    <label
+      style={{
+        display: 'flex',
+        height: 28,
+        marginLeft: indentLevel * 12 + 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        userSelect: 'none',
+      }}
     >
-      {itemName} {value ? 'true' : 'false'}
-    </button>
+      <input
+        style={{ marginRight: 8 }}
+        type="checkbox"
+        checked={value}
+        onChange={e => onChange(e.target.checked)}
+      />
+      {itemName}
+    </label>
   );
 }

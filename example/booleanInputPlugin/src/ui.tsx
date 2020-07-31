@@ -24,6 +24,7 @@ plug<ValueInputSlotProps>('valueInput', ({ slotProps, children }) => {
       />
     );
 
+  // Fall back to default inputs
   return <>{children}</>;
 });
 
