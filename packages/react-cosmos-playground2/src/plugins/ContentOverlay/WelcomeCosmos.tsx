@@ -43,7 +43,7 @@ export function WelcomeCosmos({ onDismissWelcome }: Props) {
               <br />
               Chat with us on{' '}
               <Link
-                href="https://join-react-cosmos.now.sh/"
+                href="https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw"
                 rel="noopener noreferrer"
                 target="_blank"
               >

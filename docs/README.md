@@ -73,7 +73,7 @@ The `hello` fixture will show up in your React Cosmos UI and will render when yo
 
 You've taken the first step towards designing reusable components. You can now prototype, test and interate on components in isolation. Use this to your advantage!
 
-_Something wrong?_ Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) (be helpful and include details) and to [join us on Slack](https://join-react-cosmos.now.sh/).
+_Something wrong?_ Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) (be helpful and include details) and to [join us on Slack](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw).
 
 ## Requirements
 
@@ -91,7 +91,7 @@ The React Cosmos config is a **JSON** file, so it can only host serializable val
 
 By default, Cosmos reads `cosmos.config.json` from your root directory. You can pass a `--config` CLI arg for a custom config path.
 
-> Most Cosmos Classic config options are still supported in the new JSON format. [Let me know](https://join-react-cosmos.now.sh/) if you need old config options that no longer work.
+> Most Cosmos Classic config options are still supported in the new JSON format. [Let me know](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw) if you need old config options that no longer work.
 
 ### Available options
 
@@ -258,7 +258,7 @@ export default ({ children }) => <Provider store={store}>{children}</Provider>;
 
 ### Migrating _proxies_
 
-Migrating Cosmos Classic proxies to React Cosmos 5 is not intuitive. _Sorry for that!_ Check out the [nested decorators example](../example/NestedDecorators) and join the `#proxies-upgrade` [Slack](https://join-react-cosmos.now.sh/) channel to learn more about this and to get help with your migration.
+Migrating Cosmos Classic proxies to React Cosmos 5 is not intuitive. _Sorry for that!_ Check out the [nested decorators example](../example/NestedDecorators) and join the `#proxies-upgrade` [Slack](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw) channel to learn more about this and to get help with your migration.
 
 ### Redux state mock
 
@@ -559,8 +559,8 @@ module.exports = (config, { env }) => {
 
 Cosmos Classic packages have been moved to [a dedicated repo](https://github.com/react-cosmos/react-cosmos-classic), which means we can continue to maintain Cosmos Classic or even run it alongside React Cosmos 5 in the same project (during the migration period).
 
-That said, it's ideal for all Cosmos users to use the latest version. Please [let me know](https://join-react-cosmos.now.sh/) if you need help upgrading.
+That said, it's ideal for all Cosmos users to use the latest version. Please [let me know](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw) if you need help upgrading.
 
 ---
 
-[Join us on Slack](https://join-react-cosmos.now.sh/) for feedback and questions.
+[Join us on Slack](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw) for feedback and questions.

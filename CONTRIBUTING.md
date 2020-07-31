@@ -111,4 +111,4 @@ When creating a module:
 
 ---
 
-_Have a question or idea to share? See you on [Slack](https://join-react-cosmos.now.sh/)._
+_Have a question or idea to share? See you on [Slack](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw)._
