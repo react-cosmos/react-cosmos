@@ -1,10 +1,10 @@
-import React from 'react';
 import { waitFor } from '@testing-library/dom';
-import { render } from '@testing-library/react';
-import { loadPlugins, Slot, resetPlugins } from 'react-plugin';
+import { act, render } from '@testing-library/react';
+import React from 'react';
+import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import {
-  mockCore,
   getRendererPreviewMethods,
+  mockCore,
 } from '../../../testHelpers/pluginMocks';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 
@@ -18,9 +18,10 @@ function registerTestPlugins() {
   });
 }
 
-function loadTestPlugins(status: number) {
+async function loadTestPlugins(status: number) {
   fakeFetchResponseStatus(status);
-  loadPlugins();
+  // Wait for renderer status to be fetched
+  await act(async () => loadPlugins());
 
   return render(<Slot name="rendererPreview" />);
 }
@@ -32,14 +33,14 @@ function getUrlStatus() {
 
 it('sets "ok" url status', async () => {
   registerTestPlugins();
-  loadTestPlugins(200);
+  await loadTestPlugins(200);
 
   await waitFor(() => expect(getUrlStatus()).toBe('ok'));
 });
 
 it('sets "notResponding" url status', async () => {
   registerTestPlugins();
-  loadTestPlugins(404);
+  await loadTestPlugins(404);
 
   await waitFor(() => expect(getUrlStatus()).toBe('error'));
 });

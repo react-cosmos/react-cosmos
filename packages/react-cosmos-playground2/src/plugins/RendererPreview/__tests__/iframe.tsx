@@ -23,9 +23,12 @@ function registerTestPlugins() {
   mockRendererCore();
 }
 
-function loadTestPlugins() {
+async function loadTestPlugins() {
   fakeFetchResponseStatus(200);
-  loadPlugins();
+
+  // Wait for renderer status to be fetched
+  await act(async () => loadPlugins());
+
   window.postMessage(rendererReadyMsg, '*');
 
   return render(<Slot name="rendererPreview" />);
@@ -48,7 +51,7 @@ async function fireIframeLoadEvent(iframe: HTMLIFrameElement) {
 
 it('renders iframe with src set to renderer web url', async () => {
   registerTestPlugins();
-  const renderer = loadTestPlugins();
+  const renderer = await loadTestPlugins();
 
   await waitFor(() =>
     expect(getIframe(renderer).src).toBe('http://localhost:5000/_renderer.html')
@@ -62,7 +65,7 @@ if (nodeVersion >= 10) {
   it('shows notification when renderer iframe location changes', async () => {
     registerTestPlugins();
     const { pushStickyNotification } = mockNotifications();
-    const renderer = loadTestPlugins();
+    const renderer = await loadTestPlugins();
 
     await mockRendererLocation(renderer, `/route`);
 
@@ -77,7 +80,7 @@ if (nodeVersion >= 10) {
   it('removes location change notification on location revert', async () => {
     registerTestPlugins();
     const { removeStickyNotification } = mockNotifications();
-    const renderer = loadTestPlugins();
+    const renderer = await loadTestPlugins();
 
     await mockRendererLocation(renderer, `/route`);
     await mockRendererLocation(renderer, `/_renderer.html`);
@@ -91,7 +94,7 @@ if (nodeVersion >= 10) {
   it('removes location change notification on fixture select', async () => {
     registerTestPlugins();
     const { removeStickyNotification } = mockNotifications();
-    const renderer = loadTestPlugins();
+    const renderer = await loadTestPlugins();
 
     await mockRendererLocation(renderer, `/route`);
     getRendererCoreContext().emit('request', selectFixtureMsg);
@@ -105,7 +108,7 @@ if (nodeVersion >= 10) {
   it('resets renderer iframe location on fixture select', async () => {
     registerTestPlugins();
     mockNotifications();
-    const renderer = loadTestPlugins();
+    const renderer = await loadTestPlugins();
 
     await mockRendererLocation(renderer, `/route`);
     getRendererCoreContext().emit('request', selectFixtureMsg);
@@ -119,7 +122,7 @@ if (nodeVersion >= 10) {
   it('does not show notification when renderer iframe location hash changes', async () => {
     registerTestPlugins();
     const { pushStickyNotification } = mockNotifications();
-    const renderer = loadTestPlugins();
+    const renderer = await loadTestPlugins();
 
     await mockRendererLocation(renderer, `/_renderer.html#/`);
 
@@ -129,7 +132,7 @@ if (nodeVersion >= 10) {
   it('does not show notification when renderer iframe .html extension is stripped', async () => {
     registerTestPlugins();
     const { pushStickyNotification } = mockNotifications();
-    const renderer = loadTestPlugins();
+    const renderer = await loadTestPlugins();
 
     await mockRendererLocation(renderer, `/_renderer`);
 

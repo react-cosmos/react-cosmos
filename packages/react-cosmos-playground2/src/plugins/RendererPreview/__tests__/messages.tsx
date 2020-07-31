@@ -1,23 +1,26 @@
-import React from 'react';
 import { waitFor } from '@testing-library/dom';
-import { render } from '@testing-library/react';
-import { loadPlugins, Slot, resetPlugins } from 'react-plugin';
+import { act, render } from '@testing-library/react';
+import React from 'react';
+import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import {
+  getRendererCoreContext,
   mockCore,
   mockRendererCore,
-  getRendererCoreContext,
 } from '../../../testHelpers/pluginMocks';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
-import { mockIframeMessage, getIframe } from '../testHelpers/iframe';
-import { selectFixtureMsg, rendererReadyMsg } from '../testHelpers/messages';
+import { getIframe, mockIframeMessage } from '../testHelpers/iframe';
+import { rendererReadyMsg, selectFixtureMsg } from '../testHelpers/messages';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(resetPlugins);
 
-function loadTestPlugins() {
+async function loadTestPlugins() {
   fakeFetchResponseStatus(200);
-  loadPlugins();
+
+  // Wait for renderer status to be fetched
+  await act(async () => loadPlugins());
+
   return render(<Slot name="rendererPreview" />);
 }
 
@@ -31,7 +34,7 @@ it('posts renderer request message to iframe', async () => {
   mockRendererUrl();
   mockRendererCore();
 
-  const renderer = loadTestPlugins();
+  const renderer = await loadTestPlugins();
   getRendererCoreContext().emit('request', selectFixtureMsg);
 
   await mockIframeMessage(getIframe(renderer), async ({ onMessage }) => {
@@ -47,23 +50,35 @@ it('sends renderer response message to renderer core', async () => {
   mockRendererUrl();
   const { receiveResponse } = mockRendererCore();
 
-  loadTestPlugins();
-  window.postMessage(rendererReadyMsg, '*');
+  await loadTestPlugins();
 
-  await waitFor(() =>
-    expect(receiveResponse).toBeCalledWith(expect.any(Object), rendererReadyMsg)
-  );
+  await act(async () => {
+    window.postMessage(rendererReadyMsg, '*');
+
+    await waitFor(() =>
+      expect(receiveResponse).toBeCalledWith(
+        expect.any(Object),
+        rendererReadyMsg
+      )
+    );
+  });
 });
 
 it('makes connected renderer the primary renderer', async () => {
   mockRendererUrl();
   const { selectPrimaryRenderer } = mockRendererCore();
 
-  loadTestPlugins();
-  window.postMessage(rendererReadyMsg, '*');
+  await loadTestPlugins();
 
-  const { rendererId } = rendererReadyMsg.payload;
-  await waitFor(() =>
-    expect(selectPrimaryRenderer).toBeCalledWith(expect.any(Object), rendererId)
-  );
+  await act(async () => {
+    window.postMessage(rendererReadyMsg, '*');
+
+    const { rendererId } = rendererReadyMsg.payload;
+    await waitFor(() =>
+      expect(selectPrimaryRenderer).toBeCalledWith(
+        expect.any(Object),
+        rendererId
+      )
+    );
+  });
 });
