@@ -1,4 +1,5 @@
 {
+  "disablePlugins": true,
   "globalImports": [
     "src/global/cosmos.loadPlugins"
   ],

@@ -17,6 +17,10 @@
       "type": "string",
       "minLength": 1
     },
+    "disablePlugins": {
+      "description": "Disable plugins",
+      "type": "boolean"
+    },
     "staticPath": {
       "description": "Dir path to serve static assets from.",
       "type": "string",
@@ -39,7 +43,10 @@
     "watchDirs": {
       "description": "Directories where the Cosmos server watches for fixture files changes while running. [default: [\".\"]]",
       "type": "array",
-      "items": { "type": "string", "minLength": 1 },
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
       "uniqueItems": true
     },
     "userDepsFilePath": {
@@ -49,7 +56,15 @@
     },
     "hostname": {
       "description": "Dev server hostname. Set to null to accept connections with any hostname. [default: null]",
-      "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "port": {
       "description": "Dev server port. [default: 5000]",
@@ -88,19 +103,33 @@
               "type": "object",
               "description": "Advanced HTTP proxy config.",
               "additionalProperties": true,
-              "required": ["target"],
+              "required": [
+                "target"
+              ],
               "properties": {
-                "target": { "type": "string" },
-                "secure": { "type": "boolean" },
+                "target": {
+                  "type": "string"
+                },
+                "secure": {
+                  "type": "boolean"
+                },
                 "pathRewrite": {
                   "type": "object",
                   "patternProperties": {
-                    ".*": { "type": "string" }
+                    ".*": {
+                      "type": "string"
+                    }
                   }
                 },
                 "logLevel": {
                   "type": "string",
-                  "enum": ["error", "debug", "info", "warn", "silent"]
+                  "enum": [
+                    "error",
+                    "debug",
+                    "info",
+                    "warn",
+                    "silent"
+                  ]
                 }
               }
             }
@@ -111,7 +140,10 @@
     "globalImports": {
       "description": "Modules to be imported before loading components. Stuff like reset.css, polyfills, etc.",
       "type": "array",
-      "items": { "type": "string", "minLength": 1 },
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
       "uniqueItems": true
     },
     "dom": {
@@ -120,7 +152,10 @@
       "properties": {
         "containerQuerySelector": {
           "description": "Document selector for existing element to use as component parent (eg. #root). A blank container element is created from scratch if no selector is provided. [default: null]",
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "minLength": 1
         }
       }
@@ -132,11 +167,27 @@
       "properties": {
         "configPath": {
           "description": "Path to an existing webpack config, which Cosmos will reuse to build your code. Set to null to disable this behavior. [default \"webpack.config.js\"]",
-          "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "overridePath": {
           "description": "Path to a user module that customizes the webpack config used by Cosmos. Set to null to disable this behavior. [default \"webpack.override.js\"]",
-          "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "hotReload": {
           "description": "Enable webpack's Hot Module Replacement. [default: true]",
@@ -159,11 +210,24 @@
               "items": {
                 "type": "object",
                 "additionalProperties": false,
-                "required": ["label", "width", "height"],
+                "required": [
+                  "label",
+                  "width",
+                  "height"
+                ],
                 "properties": {
-                  "label": { "type": "string", "minLength": 1 },
-                  "width": { "type": "number", "minimum": 1 },
-                  "height": { "type": "number", "minimum": 1 }
+                  "label": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "width": {
+                    "type": "number",
+                    "minimum": 1
+                  },
+                  "height": {
+                    "type": "number",
+                    "minimum": 1
+                  }
                 }
               }
             }
