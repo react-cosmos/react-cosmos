@@ -8,162 +8,132 @@ it('loads playground plugins', () => {
   );
 
   const configs = getCosmosPluginConfigs(packagesDir);
-  const normalizedConfigs = configs.map(plugin => ({
-    ...plugin,
-    ui: plugin.ui.map(uiPath => uiPath.replace(/^.+\/src/, '')),
-  }));
-
-  expect(normalizedConfigs).toMatchInlineSnapshot(`
+  expect(configs).toMatchInlineSnapshot(`
     Array [
       Object {
         "name": "Build notifications",
-        "ui": Array [
-          "/plugins/BuildNotifications/index.ts",
-        ],
+        "rootDir": "BuildNotifications",
+        "ui": "BuildNotifications/index.ts",
       },
       Object {
         "name": "Class state panel",
-        "ui": Array [
-          "/plugins/ClassStatePanel/index.tsx",
-        ],
+        "rootDir": "ClassStatePanel",
+        "ui": "ClassStatePanel/index.tsx",
       },
       Object {
         "name": "Content overlay",
-        "ui": Array [
-          "/plugins/ContentOverlay/index.tsx",
-        ],
+        "rootDir": "ContentOverlay",
+        "ui": "ContentOverlay/index.tsx",
       },
       Object {
         "name": "Control panel",
-        "ui": Array [
-          "/plugins/ControlPanel/index.tsx",
-        ],
+        "rootDir": "ControlPanel",
+        "ui": "ControlPanel/index.tsx",
       },
       Object {
         "name": "Core",
-        "ui": Array [
-          "/plugins/Core/index.tsx",
-        ],
+        "rootDir": "Core",
+        "ui": "Core/index.tsx",
       },
       Object {
         "name": "Edit fixture button",
-        "ui": Array [
-          "/plugins/EditFixtureButton/index.tsx",
-        ],
+        "rootDir": "EditFixtureButton",
+        "ui": "EditFixtureButton/index.tsx",
       },
       Object {
         "name": "Fixture bookmark",
-        "ui": Array [
-          "/plugins/FixtureBookmark/index.tsx",
-        ],
+        "rootDir": "FixtureBookmark",
+        "ui": "FixtureBookmark/index.tsx",
       },
       Object {
         "name": "Fixture search",
-        "ui": Array [
-          "/plugins/FixtureSearch/index.tsx",
-        ],
+        "rootDir": "FixtureSearch",
+        "ui": "FixtureSearch/index.tsx",
       },
       Object {
         "name": "Fixture tree",
-        "ui": Array [
-          "/plugins/FixtureTree/index.tsx",
-        ],
+        "rootDir": "FixtureTree",
+        "ui": "FixtureTree/index.tsx",
       },
       Object {
         "name": "Full screen button",
-        "ui": Array [
-          "/plugins/FullScreenButton/index.tsx",
-        ],
+        "rootDir": "FullScreenButton",
+        "ui": "FullScreenButton/index.tsx",
       },
       Object {
         "name": "Message handler",
-        "ui": Array [
-          "/plugins/MessageHandler/index.tsx",
-        ],
+        "rootDir": "MessageHandler",
+        "ui": "MessageHandler/index.tsx",
       },
       Object {
         "name": "Notifications",
-        "ui": Array [
-          "/plugins/Notifications/index.tsx",
-        ],
+        "rootDir": "Notifications",
+        "ui": "Notifications/index.tsx",
       },
       Object {
         "name": "Plugin list",
-        "ui": Array [
-          "/plugins/PluginList/index.tsx",
-        ],
+        "rootDir": "PluginList",
+        "ui": "PluginList/index.tsx",
       },
       Object {
         "name": "Props panel",
-        "ui": Array [
-          "/plugins/PropsPanel/index.tsx",
-        ],
+        "rootDir": "PropsPanel",
+        "ui": "PropsPanel/index.tsx",
       },
       Object {
         "name": "Remote renderer",
-        "ui": Array [
-          "/plugins/RemoteRenderer/index.tsx",
-        ],
+        "rootDir": "RemoteRenderer",
+        "ui": "RemoteRenderer/index.tsx",
       },
       Object {
         "name": "Renderer core",
-        "ui": Array [
-          "/plugins/RendererCore/index.ts",
-        ],
+        "rootDir": "RendererCore",
+        "ui": "RendererCore/index.ts",
       },
       Object {
         "name": "Renderer preview",
-        "ui": Array [
-          "/plugins/RendererPreview/index.tsx",
-        ],
+        "rootDir": "RendererPreview",
+        "ui": "RendererPreview/index.tsx",
       },
       Object {
         "name": "Renderer select",
-        "ui": Array [
-          "/plugins/RendererSelect/index.tsx",
-        ],
+        "rootDir": "RendererSelect",
+        "ui": "RendererSelect/index.tsx",
       },
       Object {
         "name": "Responsive preview",
-        "ui": Array [
-          "/plugins/ResponsivePreview/index.tsx",
-        ],
+        "rootDir": "ResponsivePreview",
+        "ui": "ResponsivePreview/index.tsx",
       },
       Object {
         "name": "Root",
-        "ui": Array [
-          "/plugins/Root/index.tsx",
-        ],
+        "rootDir": "Root",
+        "ui": "Root/index.tsx",
       },
       Object {
         "name": "Router",
-        "ui": Array [
-          "/plugins/Router/index.ts",
-        ],
+        "rootDir": "Router",
+        "ui": "Router/index.ts",
       },
       Object {
         "name": "Select control",
-        "ui": Array [
-          "/plugins/SelectControl/index.tsx",
-        ],
+        "rootDir": "SelectControl",
+        "ui": "SelectControl/index.tsx",
       },
       Object {
         "name": "Standard control",
-        "ui": Array [
-          "/plugins/StandardControl/index.tsx",
-        ],
+        "rootDir": "StandardControl",
+        "ui": "StandardControl/index.tsx",
       },
       Object {
         "name": "Storage",
-        "ui": Array [
-          "/plugins/Storage/index.ts",
-        ],
+        "rootDir": "Storage",
+        "ui": "Storage/index.ts",
       },
       Object {
         "name": "Webpack HMR notification",
-        "ui": Array [
-          "/plugins/WebpackHmrNotification/index.ts",
-        ],
+        "rootDir": "WebpackHmrNotification",
+        "ui": "WebpackHmrNotification/index.ts",
       },
     ]
   `);

@@ -1,4 +1,5 @@
 src
+babel.config.js
+cosmos.config.js
 tsconfig.build.json
 webpack.config.js
-cosmos.config.js

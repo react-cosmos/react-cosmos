@@ -1,4 +1,4 @@
 {
   "name": "Renderer core",
-  "ui": "./index.ts"
+  "ui": "index.ts"
 }

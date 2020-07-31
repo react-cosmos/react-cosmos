@@ -1,4 +1,4 @@
 {
   "name": "Full screen button",
-  "ui": "./index.tsx"
+  "ui": "index.tsx"
 }

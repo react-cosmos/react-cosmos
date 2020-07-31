@@ -1,4 +1,4 @@
 {
   "name": "Edit fixture button",
-  "ui": "./index.tsx"
+  "ui": "index.tsx"
 }

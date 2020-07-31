@@ -1,4 +1,4 @@
-import { globAsync, rimrafAsync, done } from './shared';
+import { done, globAsync, rimrafAsync } from './shared';
 
 (async () => {
   const distPaths = (await globAsync(`./packages/*/dist`)) as string[];

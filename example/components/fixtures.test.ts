@@ -2,7 +2,7 @@ import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { getCosmosConfigAtPath, getFixtures } from 'react-cosmos';
 import { create } from 'react-test-renderer';
 
-const cosmosConfig = getCosmosConfigAtPath(require.resolve('./cosmos.config'));
+const cosmosConfig = getCosmosConfigAtPath(require.resolve('../cosmos.config'));
 
 it('returns fixture elements', async () => {
   expect.hasAssertions();

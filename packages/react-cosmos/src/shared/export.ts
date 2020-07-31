@@ -1,7 +1,9 @@
 import fs from 'fs-extra';
 import path from 'path';
+import { CosmosPluginConfig } from 'react-cosmos-plugin';
 import { CosmosConfig, detectCosmosConfig } from '../config';
 import { getExportPlaygroundHtml } from './playgroundHtml';
+import { getPluginConfigs } from './pluginConfigs';
 import { removeLeadingSlash } from './shared';
 import { getStaticPath } from './static';
 
@@ -13,6 +15,10 @@ export type ExportPlugin = (args: ExportPluginArgs) => unknown;
 
 export async function generateExport(plugins: ExportPlugin[] = []) {
   const cosmosConfig = detectCosmosConfig();
+
+  // Clear previous export (or other files at export path)
+  const { exportPath } = cosmosConfig;
+  fs.removeSync(exportPath);
 
   // Copy static assets first, so that the built index.html overrides the its
   // template file (in case the static assets are served from the root path)
@@ -58,6 +64,11 @@ function copyStaticAssets(cosmosConfig: CosmosConfig) {
 
 function exportPlaygroundFiles(cosmosConfig: CosmosConfig) {
   const { exportPath } = cosmosConfig;
+  const pluginConfigs = getPluginConfigs(cosmosConfig);
+
+  pluginConfigs.forEach(pluginConfig =>
+    exportPlugin(cosmosConfig, pluginConfig)
+  );
 
   fs.copySync(
     require.resolve('react-cosmos-playground2/dist'),
@@ -68,6 +79,25 @@ function exportPlaygroundFiles(cosmosConfig: CosmosConfig) {
     path.resolve(exportPath, '_cosmos.ico')
   );
 
-  const playgroundHtml = getExportPlaygroundHtml(cosmosConfig);
+  const playgroundHtml = getExportPlaygroundHtml(cosmosConfig, pluginConfigs);
   fs.writeFileSync(path.resolve(exportPath, 'index.html'), playgroundHtml);
+}
+
+function exportPlugin(
+  cosmosConfig: CosmosConfig,
+  pluginConfig: CosmosPluginConfig
+) {
+  const { rootDir, exportPath } = cosmosConfig;
+  const pluginExportDir = path.resolve(exportPath, '_plugin');
+
+  // Copy plugin config
+  const relConfigPath = path.join(pluginConfig.rootDir, 'cosmos.plugin.json');
+  const absConfigPath = path.resolve(rootDir, relConfigPath);
+  fs.copySync(absConfigPath, path.resolve(pluginExportDir, relConfigPath));
+
+  // Copy UI script
+  if (pluginConfig.ui) {
+    const absUiPath = path.resolve(rootDir, pluginConfig.ui);
+    fs.copySync(absUiPath, path.resolve(pluginExportDir, pluginConfig.ui));
+  }
 }

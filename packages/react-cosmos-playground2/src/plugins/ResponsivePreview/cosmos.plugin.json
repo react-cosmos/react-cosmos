@@ -1,4 +1,4 @@
 {
   "name": "Responsive preview",
-  "ui": "./index.tsx"
+  "ui": "index.tsx"
 }

@@ -1,4 +1,4 @@
 {
   "name": "Webpack HMR notification",
-  "ui": "./index.ts"
+  "ui": "index.ts"
 }

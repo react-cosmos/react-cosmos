@@ -1,4 +1,4 @@
 {
   "name": "Standard control",
-  "ui": "./index.tsx"
+  "ui": "index.tsx"
 }

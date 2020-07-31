@@ -1,41 +1,53 @@
 import glob from 'glob';
 import path from 'path';
+import resolveFrom from 'resolve-from';
 
 // TODO: Validate config schema on config import
 type RawCosmosPluginConfig = {
   name: string;
-  ui: string[] | string;
+  ui?: string;
 };
 
 export type CosmosPluginConfig = {
   name: string;
-  ui: string[];
+  rootDir: string;
+  ui?: string;
 };
 
-export function getCosmosPluginConfigs(rootDir: string) {
-  const configPaths = getCosmosPluginConfigPaths(rootDir);
-  return configPaths.map(configPath => getCosmosPluginConfig(configPath));
+export function getCosmosPluginConfigs(rootDir: string, ignore?: string[]) {
+  const configPaths = getCosmosPluginConfigPaths(rootDir, ignore);
+  return configPaths.map(configPath =>
+    getCosmosPluginConfig(rootDir, configPath)
+  );
 }
 
-function getCosmosPluginConfigPaths(rootDir: string) {
+function getCosmosPluginConfigPaths(rootDir: string, ignore?: string[]) {
   return glob.sync('**/cosmos.plugin.json', {
     cwd: rootDir,
     absolute: true,
+    ignore,
   });
 }
 
-export function getCosmosPluginConfig(configPath: string): CosmosPluginConfig {
+export function getCosmosPluginConfig(
+  rootDir: string,
+  configPath: string
+): CosmosPluginConfig {
   const rawConfig = require(configPath) as RawCosmosPluginConfig;
-  const rootDir = path.dirname(configPath);
-  const rawUi = Array.isArray(rawConfig.ui) ? rawConfig.ui : [rawConfig.ui];
+  const pluginRootDir = path.dirname(configPath);
+  const relativePluginRootDir = path.relative(rootDir, pluginRootDir);
 
-  return {
+  const config: CosmosPluginConfig = {
     name: rawConfig.name,
-    ui: rawUi.map(uiPath => resolveModulePath(rootDir, uiPath)),
+    rootDir: relativePluginRootDir,
   };
-}
 
-function resolveModulePath(rootDir: string, relativePath: string) {
-  // TODO: Handle missing paths
-  return require.resolve(path.resolve(rootDir, relativePath));
+  if (rawConfig.ui) {
+    const uiPath = path.join(pluginRootDir, rawConfig.ui);
+    const resolvedUiPath = resolveFrom.silent(pluginRootDir, uiPath);
+    // TODO: Handle missing path
+    if (resolvedUiPath) config.ui = path.relative(rootDir, resolvedUiPath);
+  }
+
+  return config;
 }
