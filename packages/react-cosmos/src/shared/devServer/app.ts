@@ -31,6 +31,7 @@ export function createApp(
         return;
       }
 
+      // TODO: Restrict which scripts can be opened based on plugin configs
       const cleanPath = `./${decodeURIComponent(scriptPath)}`;
       const absolutePath = resolveFrom.silent(cosmosConfig.rootDir, cleanPath);
       if (!absolutePath) {
