@@ -1,8 +1,9 @@
 import React from 'react';
 import { ValueInputSlotProps } from 'react-cosmos-playground2/plugin';
 import { createPlugin } from 'react-plugin';
+import { BooleanInput } from './BooleanInput';
 
-export type BooleanInputPluginSpec = {
+type BooleanInputPluginSpec = {
   name: 'booleanInputPlugin';
 };
 
@@ -12,17 +13,18 @@ const { plug, register } = createPlugin<BooleanInputPluginSpec>({
 
 plug<ValueInputSlotProps>('valueInput', ({ slotProps, children }) => {
   const { item, itemName, parents, onInputChange } = slotProps;
-  if (item.type !== 'primitive' || typeof item.value !== 'boolean')
-    return <>{children}</>;
 
-  return (
-    <button
-      onClick={() => onInputChange(!item.value)}
-      style={{ marginLeft: parents.length * 12 + 20 }}
-    >
-      {itemName} {item.value ? 'true' : 'false'}
-    </button>
-  );
+  if (item.type === 'primitive' && typeof item.value === 'boolean')
+    return (
+      <BooleanInput
+        indentLevel={parents.length}
+        itemName={itemName}
+        value={item.value}
+        onChange={onInputChange}
+      />
+    );
+
+  return <>{children}</>;
 });
 
 register();
