@@ -1,4 +1,5 @@
 import express from 'express';
+import { CosmosPluginConfig } from 'react-cosmos-plugin';
 import resolveFrom from 'resolve-from';
 import { CosmosConfig } from '../../config';
 import { getDevPlaygroundHtml } from '../playgroundHtml';
@@ -7,11 +8,16 @@ import { getStaticPath } from '../static';
 
 export function createApp(
   platformType: PlatformType,
-  cosmosConfig: CosmosConfig
+  cosmosConfig: CosmosConfig,
+  pluginConfigs: CosmosPluginConfig[]
 ) {
   const app = express();
 
-  const playgroundHtml = getDevPlaygroundHtml(platformType, cosmosConfig);
+  const playgroundHtml = getDevPlaygroundHtml(
+    platformType,
+    cosmosConfig,
+    pluginConfigs
+  );
   app.get('/', (req: express.Request, res: express.Response) => {
     res.send(playgroundHtml);
   });

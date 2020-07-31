@@ -1,11 +1,12 @@
-import http from 'http';
 import express from 'express';
+import http from 'http';
 import { Message } from 'react-cosmos-shared2/util';
 import { CosmosConfig, detectCosmosConfig } from '../../config';
+import { getPluginConfigs } from '../pluginConfigs';
 import { PlatformType } from '../shared';
 import { serveStaticDir } from '../static';
-import { createHttpServer } from './httpServer';
 import { createApp } from './app';
+import { createHttpServer } from './httpServer';
 import { createMessageHandler } from './messageHandler';
 
 type PluginCleanupCallback = () => unknown;
@@ -27,8 +28,16 @@ export async function startDevServer(
   plugins: DevServerPlugin[] = []
 ) {
   const cosmosConfig = detectCosmosConfig();
+  const pluginConfigs = getPluginConfigs(cosmosConfig);
 
-  const app = createApp(platformType, cosmosConfig);
+  const pluginCount = pluginConfigs.length;
+  if (pluginCount > 0) {
+    const pluginLabel = pluginCount === 1 ? 'plugin' : 'plugins';
+    const pluginNames = pluginConfigs.map(p => p.name).join(', ');
+    console.log(`[Cosmos] Found ${pluginCount} ${pluginLabel}: ${pluginNames}`);
+  }
+
+  const app = createApp(platformType, cosmosConfig, pluginConfigs);
   if (cosmosConfig.staticPath) {
     serveStaticDir(app, cosmosConfig.staticPath, cosmosConfig.publicUrl);
   }

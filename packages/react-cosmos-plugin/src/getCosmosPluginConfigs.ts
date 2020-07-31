@@ -14,17 +14,18 @@ export type CosmosPluginConfig = {
   ui?: string;
 };
 
-export function getCosmosPluginConfigs(rootDir: string) {
-  const configPaths = getCosmosPluginConfigPaths(rootDir);
+export function getCosmosPluginConfigs(rootDir: string, ignore?: string[]) {
+  const configPaths = getCosmosPluginConfigPaths(rootDir, ignore);
   return configPaths.map(configPath =>
     getCosmosPluginConfig(rootDir, configPath)
   );
 }
 
-function getCosmosPluginConfigPaths(rootDir: string) {
+function getCosmosPluginConfigPaths(rootDir: string, ignore?: string[]) {
   return glob.sync('**/cosmos.plugin.json', {
     cwd: rootDir,
     absolute: true,
+    ignore,
   });
 }
 

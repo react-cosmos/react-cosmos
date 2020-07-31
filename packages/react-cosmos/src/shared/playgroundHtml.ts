@@ -4,7 +4,7 @@ import {
   PlaygroundConfig,
   PlaygroundMountArgs,
 } from 'react-cosmos-playground2';
-import { getCosmosPluginConfigs } from 'react-cosmos-plugin';
+import { CosmosPluginConfig } from 'react-cosmos-plugin';
 import url from 'url';
 import { CosmosConfig } from '../config';
 import { PlatformType, replaceKeys } from './shared';
@@ -14,27 +14,30 @@ export const RENDERER_FILENAME = '_renderer.html';
 
 export function getDevPlaygroundHtml(
   platformType: PlatformType,
-  cosmosConfig: CosmosConfig
+  cosmosConfig: CosmosConfig,
+  pluginConfigs: CosmosPluginConfig[]
 ) {
-  const { rootDir, ui } = cosmosConfig;
+  const { ui } = cosmosConfig;
   return getPlaygroundHtml({
     playgroundConfig: {
       ...ui,
       core: getDevCoreConfig(platformType, cosmosConfig),
     },
-    pluginConfigs: getCosmosPluginConfigs(rootDir),
+    pluginConfigs,
   });
 }
 
-export function getExportPlaygroundHtml(cosmosConfig: CosmosConfig) {
-  const { rootDir, ui } = cosmosConfig;
+export function getExportPlaygroundHtml(
+  cosmosConfig: CosmosConfig,
+  pluginConfigs: CosmosPluginConfig[]
+) {
+  const { ui } = cosmosConfig;
   return getPlaygroundHtml({
     playgroundConfig: {
       ...ui,
       core: getExportCoreConfig(cosmosConfig),
     },
-    // TODO: Ensure plugins are copied and accessible from the export path
-    pluginConfigs: getCosmosPluginConfigs(rootDir),
+    pluginConfigs,
   });
 }
 
