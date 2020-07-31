@@ -18,9 +18,7 @@ if (env === 'development') {
 
 module.exports = {
   mode: env,
-  // Besides other advantages, cheap-module-source-map is compatible with
-  // React.componentDidCatch https://github.com/facebook/react/issues/10441
-  devtool: 'cheap-module-source-map',
+  devtool: false,
   entry: src,
   output: {
     libraryTarget: 'umd',
