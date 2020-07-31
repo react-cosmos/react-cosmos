@@ -45,7 +45,6 @@
     "@babel/preset-typescript": "^7.10.4",
     "@react-mock/state": "^0.1.8",
     "@skidding/async-retry": "^2.0.0",
-    "@testing-library/dom": "^7.21.7",
     "@testing-library/jest-dom": "^5.11.2",
     "@testing-library/react": "^10.4.7",
     "@types/express": "4.17.7",
