@@ -1,5 +1,8 @@
-export { CosmosConfig } from './shared';
-export { resolveModule } from './resolve';
 export { createCosmosConfig } from './createCosmosConfig';
-export { detectCosmosConfig } from './detectCosmosConfig';
+export {
+  detectCosmosConfig,
+  detectCosmosConfigPath,
+} from './detectCosmosConfig';
 export { getCosmosConfigAtPath } from './getCosmosConfigAtPath';
+export { resolveModule } from './resolve';
+export { CosmosConfig } from './shared';
