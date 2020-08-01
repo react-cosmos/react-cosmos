@@ -21,6 +21,7 @@
     "pem": "^1.14.4",
     "pkg-up": "^3.1.0",
     "react-cosmos-playground2": "^5.5.0-alpha.8",
+    "react-cosmos-plugin": "^5.5.0-alpha.7",
     "react-cosmos-shared2": "^5.5.0-alpha.7",
     "react-error-overlay": "^6.0.7",
     "regenerator-runtime": "^0.13.7",
