@@ -23,7 +23,7 @@ export function BooleanInput({
         alignItems: 'center',
         color: 'rgb(224, 224, 224)',
         userSelect: 'none',
-        lineHeight: 28,
+        lineHeight: '28px',
       }}
     >
       <input
