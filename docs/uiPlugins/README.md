@@ -79,7 +79,7 @@ And voilà. This is what boolean inputs look like, before and after the plugin i
 
 <img src="pluginListToggle.gif" alt="Boolean input plugin" height="463"/>
 
-> If you don't get the same experience please let us know on [Slack](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw). Hell, even it _does_ work let us know!
+> If you don't get the same experience please let us know on [Slack](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw). Hell, even if it _does_ work let us know!
 
 ## Create your own plugin
 
@@ -91,6 +91,7 @@ I'm working on this and will post updates on Slack. If you're really eager to wr
 - In the plugin config, the `ui` attribute points to the relative path of the JS file.
 - The plugin should be precompiled, as is the Cosmos UI. This is why plugins can be installed without having to build anything locally.
 - If you choose to bundle your plugin with webpack (recommended for now), use [this config](https://github.com/react-cosmos/react-cosmos/blob/ecd4fae5732134292c978fda86832da24ea055c1/example/booleanInputPlugin/webpack.config.js) as your boilerplate. The [externals part](https://github.com/react-cosmos/react-cosmos/blob/ecd4fae5732134292c978fda86832da24ea055c1/example/booleanInputPlugin/webpack.config.js#L21-L25) is the most important, because it ensures your plugin reuses the React version already bundled in the Cosmos UI.
+- There are two things called **slots** and **plugs**. The Cosmos UI has dozens of slots throughout its components. Plugins can _plug_ into these slots to decorate or replace pieces of UI. This really needs to be explained properly, but you can see how the boolean input plugin replaces just boolean input types [here](https://github.com/react-cosmos/react-cosmos/blob/ecd4fae5732134292c978fda86832da24ea055c1/example/booleanInputPlugin/src/ui.tsx#L14-L29).
 - Let us know what you made on the `#plugins` [Slack](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw) channel 🙏
 
 Thank you for being part of this journey.
