@@ -23,6 +23,8 @@ ReactPlugin.enablePlugin('pluginList', true);
 
 Now select any fixture and open the right-side control panel. You should see the plugin list.
 
+![Plugin list](pluginList.png)
+
 > We'll move the plugin list to a dedicated section before we make it official.
 
 You can get a feel of the plugin system by toggling some of the built-in plugins. The essential plugins cannot be disabled as doing so would break everything. But you can still break the UI if you disable a plugin that other enabled plugins depend on. For example if you disable `fixtureTree` before you disable `fixtureSearch`.
