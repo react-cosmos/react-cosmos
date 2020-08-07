@@ -39,7 +39,7 @@ You can get a feel of the plugin system by toggling some of the built-in plugins
 
 Let's get down to business. In the Cosmos monorepo there is a demo plugin called `booleanInputPlugin`. It's [here](https://github.com/react-cosmos/react-cosmos/tree/master/example/booleanInputPlugin). You could clone the Cosmos repo to see it running, but maybe you don't want to do that. And it's more fun to install this demo plugin in your own codebase, right? So let's try that.
 
-The compiled plugin isn't versioned, so I created an archive for you to unpack into your project. **[Click here to download](booleanInputPlugin.zip).** It's just one JSON file and one JS file. We'll get into what they do later.
+The compiled plugin isn't versioned, so I created an archive for you to unpack into your project. **[Click here to download](https://github.com/react-cosmos/react-cosmos/raw/plugin-docs/docs/uiPlugins/booleanInputPlugin.zip).** It's just one JSON file and one JS file. We'll get into what they do later.
 
 Unzip and put the `booleanInputPlugin` folder anywhere in your project. Just make sure it's located inside your `rootDir` (the dir where you have your `cosmos.config.json`, or the dir where you run the `cosmos` command if you're flying configless).
 
