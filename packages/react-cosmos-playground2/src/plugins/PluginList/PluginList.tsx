@@ -57,6 +57,7 @@ const Label = styled.label`
   display: flex;
   flex-direction: row;
   align-items: center;
+  line-height: 24px;
 `;
 
 const Name = styled.span`
