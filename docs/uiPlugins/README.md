@@ -23,7 +23,7 @@ ReactPlugin.enablePlugin('pluginList', true);
 
 Now select any fixture and open the right-side control panel. You should see the plugin list.
 
-![Plugin list](pluginList.png)
+<img src="pluginList.png" alt="Plugin list" height="677"/>
 
 > We'll move the plugin list to a dedicated section before we make it official.
 
