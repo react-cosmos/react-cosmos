@@ -39,7 +39,7 @@ You can get a feel of the plugin system by toggling some of the built-in plugins
 
 Let's get down to business. In the Cosmos monorepo there is a demo plugin called `booleanInputPlugin`. It's [here](https://github.com/react-cosmos/react-cosmos/tree/master/example/booleanInputPlugin). You could clone the Cosmos repo to see it running, but maybe you don't want to do that. And it's more fun to install this demo plugin in your own codebase, right? So let's try that.
 
-The compiled plugin isn't versioned, so I created an archive for you to unpack into your project. **[Click here](booleanInputPlugin.zip) to download.** It's just one JSON and one JS file, we'll get into what they do later.
+The compiled plugin isn't versioned, so I created an archive for you to unpack into your project. **[Click here to download](booleanInputPlugin.zip).** It's just one JSON file and one JS file. We'll get into what they do later.
 
 Unzip and put the `booleanInputPlugin` folder anywhere in your project. Just make sure it's located inside your `rootDir` (the dir where you have your `cosmos.config.json`, or the dir where you run the `cosmos` command if you're flying configless).
 
@@ -79,7 +79,7 @@ And voilà. This is what boolean inputs look like, before and after the plugin i
 
 <img src="pluginListToggle.gif" alt="Boolean input plugin" height="463"/>
 
-> If you don't get the same experience please let us know on [Slack](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw). Hell, even it _does_ works let us know 🙏
+> If you don't get the same experience please let us know on [Slack](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw). Hell, even it _does_ work let us know!
 
 ## Create your own plugin
 
@@ -89,8 +89,8 @@ I'm working on this and will post updates on Slack. If you're really eager to wr
 
 - Your plugin needs a `cosmos.plugin.json` file to be automatically detected by Cosmos.
 - In the plugin config, the `ui` attribute points to the relative path of the JS file.
-- The plugin should be precompiled, as is the Cosmos UI. This is why plugins can be installed at run time without having to bundle anything locally.
-- If you choose to bundle your plugin with webpack (recommended until this section is better documented), use [this config](https://github.com/react-cosmos/react-cosmos/blob/master/example/booleanInputPlugin/webpack.config.js) as your boilerplate. The [externals part](https://github.com/react-cosmos/react-cosmos/blob/master/example/booleanInputPlugin/webpack.config.js#L21-L25) is the most important, because it ensures your plugin reuses the React version already bundled by Cosmos.
+- The plugin should be precompiled, as is the Cosmos UI. This is why plugins can be installed without having to build anything locally.
+- If you choose to bundle your plugin with webpack (recommended for now), use [this config](https://github.com/react-cosmos/react-cosmos/blob/master/example/booleanInputPlugin/webpack.config.js) as your boilerplate. The [externals part](https://github.com/react-cosmos/react-cosmos/blob/master/example/booleanInputPlugin/webpack.config.js#L21-L25) is the most important, because it ensures your plugin reuses the React version already bundled in the Cosmos UI.
 - Let us know what you made on the `#plugins` [Slack](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw) channel 🙏
 
 Thank you for being part of this journey.
