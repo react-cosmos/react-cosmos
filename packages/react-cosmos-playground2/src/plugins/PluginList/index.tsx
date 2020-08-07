@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 import { createPlugin, PluginsConsumer } from 'react-plugin';
+import { PluginList } from './PluginList';
 import { PluginListSpec } from './public';
 
 const { plug, register } = createPlugin<PluginListSpec>({
@@ -9,35 +9,15 @@ const { plug, register } = createPlugin<PluginListSpec>({
 
 plug('sidePanelRow', () => {
   return (
-    <Container>
-      <p>Plugins</p>
-      <ul>
-        <PluginsConsumer>
-          {({ plugins, enable }) =>
-            plugins.map(({ name, enabled }) => (
-              <li key={name}>
-                <label
-                  onMouseDown={() => {
-                    enable(name, !enabled);
-                  }}
-                >
-                  <input type="checkbox" checked={enabled} readOnly /> {name}
-                </label>
-              </li>
-            ))
-          }
-        </PluginsConsumer>
-      </ul>
-    </Container>
+    <PluginsConsumer>
+      {({ plugins, enable }) => (
+        <PluginList
+          plugins={plugins.map(p => ({ name: p.name, enabled: p.enabled }))}
+          enable={enable}
+        />
+      )}
+    </PluginsConsumer>
   );
 });
 
 register();
-
-const Container = styled.div`
-  padding: 8px 12px;
-
-  ul {
-    list-style: none;
-  }
-`;

@@ -21,7 +21,9 @@ export function BooleanInput({
         marginLeft: indentLevel * 12 + 20,
         flexDirection: 'row',
         alignItems: 'center',
+        color: 'rgb(224, 224, 224)',
         userSelect: 'none',
+        lineHeight: 28,
       }}
     >
       <input
