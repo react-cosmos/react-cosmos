@@ -494,7 +494,7 @@ module.exports = overrides.webpack(config, process.env.NODE_ENV);
 
 ## Next.js
 
-- Install `html-webpack-plugin` as a dev dependency.
+- Install `html-webpack-plugin` and `babel-loader` as a dev dependency.
 - Override the React Cosmos webpack config with `ProvidePlugin` to support JSX without importing React.
 - Set `staticPath` to `public` to load static assets inside React Cosmos.
 
