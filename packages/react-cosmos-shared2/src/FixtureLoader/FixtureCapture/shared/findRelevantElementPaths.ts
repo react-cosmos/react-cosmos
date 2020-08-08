@@ -11,9 +11,11 @@ export function findRelevantElementPaths(node: React.ReactNode): string[] {
   return elPaths.filter(elPath => {
     const { type } = getExpectedElementAtPath(node, elPath);
 
-    if (typeof type === 'string') {
-      return isInterestingTag(type);
-    }
+    // Ignore symbol types, like StrictMode
+    // https://github.com/react-cosmos/react-cosmos/issues/1249
+    if (typeof type === 'symbol') return false;
+
+    if (typeof type === 'string') return isInterestingTag(type);
 
     const classType = type as ExtendedComponentClass;
     return classType.cosmosCapture !== false && isInterestingClass(classType);
