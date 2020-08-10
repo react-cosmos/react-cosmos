@@ -1,5 +1,5 @@
 import { get, set } from 'lodash';
-import { FixtureId, FixtureNamesByPath } from '../../renderer';
+import { FixtureNamesByPath } from '../../renderer';
 import { FixtureNode } from '../shared/types';
 
 export function createRawFixtureTree(
@@ -15,8 +15,8 @@ export function createRawFixtureTree(
 
 function getBlankNode(): FixtureNode {
   return {
-    items: {},
     dirs: {},
+    items: {},
   };
 }
 
@@ -27,35 +27,12 @@ function addFixturePathToTree(
 ) {
   const namespace = fixturePath.split('/');
   const rawFixtureName = namespace.pop();
-  if (!rawFixtureName) {
-    throw new Error('Fixture name is empty');
-  }
+  if (!rawFixtureName) throw new Error('Fixture name is empty');
 
   const fileName = removeFixtureNameExtension(rawFixtureName);
 
-  if (!fixtureNames) {
-    return addFixtureIdToTree(rootNode, namespace, fileName, {
-      path: fixturePath,
-      name: null,
-    });
-  }
-
-  fixtureNames.forEach(fixtureName => {
-    addFixtureIdToTree(rootNode, [...namespace, fileName], fixtureName, {
-      path: fixturePath,
-      name: fixtureName,
-    });
-  });
-}
-
-function addFixtureIdToTree(
-  rootNode: FixtureNode,
-  namespace: string[],
-  nodeName: string,
-  fixtureId: FixtureId
-) {
   if (namespace.length === 0) {
-    rootNode.items[nodeName] = fixtureId;
+    rootNode.items[fileName] = { fixturePath, fixtureNames };
     return;
   }
 
@@ -74,7 +51,7 @@ function addFixtureIdToTree(
     curNodeDepth += 1;
   } while (curNodeDepth <= namespace.length);
 
-  curNode.items[nodeName] = fixtureId;
+  curNode.items[fileName] = { fixturePath, fixtureNames };
 }
 
 function removeFixtureNameExtension(fixtureName: string) {

@@ -1,119 +1,115 @@
+import { FixtureNode } from '../shared/types';
 import { collapseSoloIndexes } from './collapseSoloIndexes';
 
 it('collapses solo index item', () => {
-  const tree = {
-    items: {},
+  const tree: FixtureNode = {
     dirs: {
-      SuccessMessage: {
+      Dashboard: {
+        dirs: {},
         items: {
           index: {
-            path: 'SuccessMessage/index.fixture.js',
-            name: null,
+            fixturePath: 'Dashboard/index.fixture.js',
+            fixtureNames: null,
           },
         },
-        dirs: {},
       },
     },
+    items: {},
   };
-  const collapsedTree = {
+  const collapsedTree: FixtureNode = {
+    dirs: {},
     items: {
-      SuccessMessage: {
-        path: 'SuccessMessage/index.fixture.js',
-        name: null,
+      Dashboard: {
+        fixturePath: 'Dashboard/index.fixture.js',
+        fixtureNames: null,
       },
     },
-    dirs: {},
   };
   expect(collapseSoloIndexes(tree)).toEqual(collapsedTree);
 });
 
-it('does not collapse solo index item with sub dirs', () => {
-  const tree = {
-    items: {},
+it('does not collapse index item with sibling item', () => {
+  const tree: FixtureNode = {
     dirs: {
-      SuccessMessage: {
+      Dashboard: {
+        dirs: {},
         items: {
           index: {
-            path: 'SuccessMessage/index.fixture.js',
-            name: null,
+            fixturePath: 'Dashboard/index.fixture.js',
+            fixtureNames: null,
+          },
+          Settings: {
+            fixturePath: 'Dashboard/Settings.fixture.js',
+            fixtureNames: null,
           },
         },
+      },
+    },
+    items: {},
+  };
+  const collapsedTree: FixtureNode = {
+    dirs: {
+      Dashboard: {
+        dirs: {},
+        items: {
+          index: {
+            fixturePath: 'Dashboard/index.fixture.js',
+            fixtureNames: null,
+          },
+          Settings: {
+            fixturePath: 'Dashboard/Settings.fixture.js',
+            fixtureNames: null,
+          },
+        },
+      },
+    },
+    items: {},
+  };
+  expect(collapseSoloIndexes(tree)).toEqual(collapsedTree);
+});
+
+it('does not collapse index item with collapsed sibling dir', () => {
+  const tree: FixtureNode = {
+    dirs: {
+      Dashboard: {
         dirs: {
-          SpecialWelcome: {
+          Settings: {
+            dirs: {},
             items: {
               index: {
-                path: 'SuccessMessage/AwesomeMessage/index.fixture.js',
-                name: null,
+                fixturePath: 'Dashboard/Settings/index.fixture.js',
+                fixtureNames: null,
               },
             },
-            dirs: {},
           },
         },
-      },
-    },
-  };
-  const collapsedTree = {
-    items: {},
-    dirs: {
-      SuccessMessage: {
         items: {
           index: {
-            path: 'SuccessMessage/index.fixture.js',
-            name: null,
-          },
-          SpecialWelcome: {
-            path: 'SuccessMessage/AwesomeMessage/index.fixture.js',
-            name: null,
+            fixturePath: 'Dashboard/index.fixture.js',
+            fixtureNames: null,
           },
         },
+      },
+    },
+    items: {},
+  };
+  const collapsedTree: FixtureNode = {
+    dirs: {
+      Dashboard: {
         dirs: {},
-      },
-    },
-  };
-  expect(collapseSoloIndexes(tree)).toEqual(collapsedTree);
-});
-
-it('collapses solo index dir', () => {
-  const tree = {
-    items: {},
-    dirs: {
-      WelcomeMessage: {
-        items: {},
-        dirs: {
-          index: {
-            items: {
-              Susan: {
-                path: 'WelcomeMessage/index.fixture.js',
-                name: 'Susan',
-              },
-              Sarah: {
-                path: 'WelcomeMessage/index.fixture.js',
-                name: 'Sarah',
-              },
-            },
-            dirs: {},
-          },
-        },
-      },
-    },
-  };
-  const collapsedTree = {
-    items: {},
-    dirs: {
-      WelcomeMessage: {
         items: {
-          Susan: {
-            path: 'WelcomeMessage/index.fixture.js',
-            name: 'Susan',
+          index: {
+            fixturePath: 'Dashboard/index.fixture.js',
+            fixtureNames: null,
           },
-          Sarah: {
-            path: 'WelcomeMessage/index.fixture.js',
-            name: 'Sarah',
+          Settings: {
+            fixturePath: 'Dashboard/Settings/index.fixture.js',
+            fixtureNames: null,
           },
         },
-        dirs: {},
       },
     },
+    items: {},
   };
   expect(collapseSoloIndexes(tree)).toEqual(collapsedTree);
 });

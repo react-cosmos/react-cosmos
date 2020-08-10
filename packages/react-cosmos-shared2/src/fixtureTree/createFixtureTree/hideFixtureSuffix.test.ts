@@ -1,83 +1,56 @@
+import { FixtureNode } from '../shared/types';
 import { hideFixtureSuffix } from './hideFixtureSuffix';
 
-it('hides fixture suffix in dir name', () => {
-  const tree = {
-    items: {},
-    dirs: {
-      WelcomeMessage: {
-        items: {},
-        dirs: {
-          'index.fixture': {
-            items: {
-              Susan: {
-                path: 'WelcomeMessage/index.fixture.js',
-                name: 'Susan',
-              },
-              Sarah: {
-                path: 'WelcomeMessage/index.fixture.js',
-                name: 'Sarah',
-              },
-            },
-            dirs: {},
-          },
-        },
+it('hides fixture suffix in item name', () => {
+  const tree: FixtureNode = {
+    dirs: {},
+    items: {
+      'Dashboard.fixture': {
+        fixturePath: 'Dashboard.fixture.js',
+        fixtureNames: null,
       },
     },
   };
-  const cleanTree = {
-    items: {},
-    dirs: {
-      WelcomeMessage: {
-        items: {},
-        dirs: {
-          index: {
-            items: {
-              Susan: {
-                path: 'WelcomeMessage/index.fixture.js',
-                name: 'Susan',
-              },
-              Sarah: {
-                path: 'WelcomeMessage/index.fixture.js',
-                name: 'Sarah',
-              },
-            },
-            dirs: {},
-          },
-        },
+  const cleanTree: FixtureNode = {
+    dirs: {},
+    items: {
+      Dashboard: {
+        fixturePath: 'Dashboard.fixture.js',
+        fixtureNames: null,
       },
     },
   };
   expect(hideFixtureSuffix(tree, 'fixture')).toEqual(cleanTree);
 });
 
-it('hides fixture suffix in item name', () => {
-  const tree = {
-    items: {},
+it('hides fixture suffix in nested item name', () => {
+  const tree: FixtureNode = {
     dirs: {
-      WelcomeMessage: {
+      ui: {
+        dirs: {},
         items: {
-          'index.fixture': {
-            path: 'WelcomeMessage/index.fixture.js',
-            name: null,
+          'Dashboard.fixture': {
+            fixturePath: 'ui/Dashboard.fixture.js',
+            fixtureNames: null,
           },
         },
-        dirs: {},
       },
     },
+    items: {},
   };
-  const cleanTree = {
-    items: {},
+  const cleanTree: FixtureNode = {
     dirs: {
-      WelcomeMessage: {
+      ui: {
+        dirs: {},
         items: {
-          index: {
-            path: 'WelcomeMessage/index.fixture.js',
-            name: null,
+          Dashboard: {
+            fixturePath: 'ui/Dashboard.fixture.js',
+            fixtureNames: null,
           },
         },
-        dirs: {},
       },
     },
+    items: {},
   };
   expect(hideFixtureSuffix(tree, 'fixture')).toEqual(cleanTree);
 });

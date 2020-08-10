@@ -1,13 +1,16 @@
-import { FixtureId } from '../../renderer';
-
 export type TreeNode<Item> = {
-  items: { [itemName: string]: Item };
   dirs: TreeNodes<Item>;
+  items: { [itemName: string]: Item };
 };
 
 export type TreeNodes<Item> = {
   [dirName: string]: TreeNode<Item>;
 };
 
-export type FixtureNode = TreeNode<FixtureId>;
-export type FixtureNodes = TreeNodes<FixtureId>;
+export type FixtureNodeItem = {
+  fixturePath: string;
+  fixtureNames: null | string[];
+};
+
+export type FixtureNode = TreeNode<FixtureNodeItem>;
+export type FixtureNodes = TreeNodes<FixtureNodeItem>;

@@ -1,37 +1,71 @@
+import { FixtureNode } from '../shared/types';
 import { createRawFixtureTree } from './createRawFixtureTree';
 
-it('create tree with single fixture', () => {
+it('creates tree with single fixture', () => {
   const paths = {
-    'helloWorld.fixture.js': null,
+    'Dashboard.fixture.js': null,
   };
-  const tree = {
+  const tree: FixtureNode = {
     dirs: {},
     items: {
-      'helloWorld.fixture': {
-        name: null,
-        path: 'helloWorld.fixture.js',
+      'Dashboard.fixture': {
+        fixturePath: 'Dashboard.fixture.js',
+        fixtureNames: null,
       },
     },
   };
   expect(createRawFixtureTree(paths)).toEqual(tree);
 });
 
-it('create tree with multi fixture', () => {
+it('creates nested tree with single fixture', () => {
   const paths = {
-    'index.fixture.js': ['Susan', 'Sarah'],
+    'ui/Dashboard.fixture.js': null,
   };
-  const tree = {
+  const tree: FixtureNode = {
     dirs: {
-      'index.fixture': {
+      ui: {
         dirs: {},
         items: {
-          Susan: {
-            name: 'Susan',
-            path: 'index.fixture.js',
+          'Dashboard.fixture': {
+            fixturePath: 'ui/Dashboard.fixture.js',
+            fixtureNames: null,
           },
-          Sarah: {
-            name: 'Sarah',
-            path: 'index.fixture.js',
+        },
+      },
+    },
+    items: {},
+  };
+  expect(createRawFixtureTree(paths)).toEqual(tree);
+});
+
+it('creates tree with multi fixture', () => {
+  const paths = {
+    'Button.fixture.js': ['normal', 'disabled'],
+  };
+  const tree: FixtureNode = {
+    dirs: {},
+    items: {
+      'Button.fixture': {
+        fixturePath: 'Button.fixture.js',
+        fixtureNames: ['normal', 'disabled'],
+      },
+    },
+  };
+  expect(createRawFixtureTree(paths)).toEqual(tree);
+});
+
+it('creates nested tree with multi fixture', () => {
+  const paths = {
+    'ui/Button.fixture.js': ['normal', 'disabled'],
+  };
+  const tree: FixtureNode = {
+    dirs: {
+      ui: {
+        dirs: {},
+        items: {
+          'Button.fixture': {
+            fixturePath: 'ui/Button.fixture.js',
+            fixtureNames: ['normal', 'disabled'],
           },
         },
       },

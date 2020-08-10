@@ -1,55 +1,56 @@
+import { FixtureNode } from '../shared/types';
 import { collapseSoloNamedItems } from './collapseSoloNamedItems';
 
 it('collapses solo named item', () => {
-  const tree = {
-    items: {},
+  const tree: FixtureNode = {
     dirs: {
-      SuccessMessage: {
+      Dashboard: {
+        dirs: {},
         items: {
-          SuccessMessage: {
-            path: 'SuccessMessage/SuccessMessage.fixture.js',
-            name: null,
+          Dashboard: {
+            fixturePath: 'Dashboard/Dashboard.fixture.js',
+            fixtureNames: null,
           },
         },
-        dirs: {},
       },
     },
+    items: {},
   };
-  const collapsedTree = {
+  const collapsedTree: FixtureNode = {
+    dirs: {},
     items: {
-      SuccessMessage: {
-        path: 'SuccessMessage/SuccessMessage.fixture.js',
-        name: null,
+      Dashboard: {
+        fixturePath: 'Dashboard/Dashboard.fixture.js',
+        fixtureNames: null,
       },
     },
-    dirs: {},
   };
   expect(collapseSoloNamedItems(tree)).toEqual(collapsedTree);
 });
 
 it('collapses solo named item (case insensitive)', () => {
-  const tree = {
-    items: {},
+  const tree: FixtureNode = {
     dirs: {
-      successMessage: {
+      dashboard: {
+        dirs: {},
         items: {
-          SuccessMessage: {
-            path: 'successMessage/SuccessMessage.fixture.js',
-            name: null,
+          Dashboard: {
+            fixturePath: 'dashboard/Dashboard.fixture.js',
+            fixtureNames: null,
           },
         },
-        dirs: {},
       },
     },
+    items: {},
   };
-  const collapsedTree = {
+  const collapsedTree: FixtureNode = {
+    dirs: {},
     items: {
-      SuccessMessage: {
-        path: 'successMessage/SuccessMessage.fixture.js',
-        name: null,
+      Dashboard: {
+        fixturePath: 'dashboard/Dashboard.fixture.js',
+        fixtureNames: null,
       },
     },
-    dirs: {},
   };
   expect(collapseSoloNamedItems(tree)).toEqual(collapsedTree);
 });

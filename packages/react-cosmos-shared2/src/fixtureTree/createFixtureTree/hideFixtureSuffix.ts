@@ -18,7 +18,7 @@ export function hideFixtureSuffix(
     removeFixtureNameSuffix(fixtureName, suffix)
   );
 
-  return { items, dirs };
+  return { dirs, items };
 }
 
 function removeFixtureNameSuffix(
