@@ -1,6 +1,6 @@
+import { FixtureNode } from '../../fixtureTree';
 import { FixtureId } from '../renderer';
 import { getSortedNodeDirNames } from './getSortedNodeDirNames';
-import { TreeNode } from './shared/types';
 
 export type FlatFixtureTreeItem = {
   fileName: string;
@@ -11,7 +11,7 @@ export type FlatFixtureTreeItem = {
 export type FlatFixtureTree = FlatFixtureTreeItem[];
 
 export function flattenFixtureTree(
-  treeNode: TreeNode<FixtureId>,
+  treeNode: FixtureNode,
   parents: string[] = []
 ): FlatFixtureTree {
   const flatFixtureTree: FlatFixtureTree = [];
@@ -22,25 +22,24 @@ export function flattenFixtureTree(
   });
 
   Object.keys(treeNode.items).forEach(itemName => {
-    const fixtureId = treeNode.items[itemName];
-    if (fixtureId.name) {
-      const newParents = [...parents];
-      const fileName = newParents.pop();
-      if (fileName)
+    const { fixturePath, fixtureNames } = treeNode.items[itemName];
+
+    if (fixtureNames)
+      fixtureNames.forEach(fixtureName =>
         flatFixtureTree.push({
-          fileName,
-          fixtureId,
-          parents: newParents,
-          name: itemName,
-        });
-    } else {
+          fileName: itemName,
+          fixtureId: { path: fixturePath, name: fixtureName },
+          parents,
+          name: fixtureName,
+        })
+      );
+    else
       flatFixtureTree.push({
         fileName: itemName,
-        fixtureId,
+        fixtureId: { path: fixturePath, name: null },
         parents,
         name: null,
       });
-    }
   });
 
   return flatFixtureTree;
