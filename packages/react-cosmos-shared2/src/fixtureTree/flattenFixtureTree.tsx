@@ -1,6 +1,6 @@
-import { FixtureNode } from '../../fixtureTree';
 import { FixtureId } from '../renderer';
 import { getSortedNodeDirNames } from './getSortedNodeDirNames';
+import { FixtureNode } from './shared/types';
 
 export type FlatFixtureTreeItem = {
   fileName: string;
