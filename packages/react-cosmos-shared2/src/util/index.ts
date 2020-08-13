@@ -5,5 +5,6 @@ export type Message = {
   payload?: {};
 };
 
-export { updateItem, replaceOrAddItem, removeItemMatch } from './array';
+export { removeItemMatch, replaceOrAddItem, updateItem } from './array';
+export { addTreeNodeChild, TreeNode } from './tree';
 export { uuid } from './uuid';

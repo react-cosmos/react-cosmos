@@ -3,8 +3,8 @@ import {
   FixtureStatePrimitiveValue,
   FixtureStateUnserializableValue,
 } from 'react-cosmos-shared2/fixtureState';
-import { TreeNode } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
+import { TreeNode } from 'react-cosmos-shared2/util';
 import styled from 'styled-components';
 
 export type TreeItemValue =

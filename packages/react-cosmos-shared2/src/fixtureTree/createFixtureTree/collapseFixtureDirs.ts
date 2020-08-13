@@ -1,29 +1,37 @@
-import { forEach } from 'lodash';
-import { FixtureNode, FixtureNodes } from '../shared/types';
+import { omit } from 'lodash';
+import { FixtureTreeNode } from '../shared/types';
 
 export function collapseFixtureDirs(
-  treeNode: FixtureNode,
-  collapsedDirName: string
-): FixtureNode {
-  const dirs: FixtureNodes = {};
-  let items = { ...treeNode.items };
+  treeNode: FixtureTreeNode,
+  fixturesDir: string
+): FixtureTreeNode {
+  const { data, children } = treeNode;
+  if (!children || data.type !== 'fileDir') return treeNode;
 
-  forEach(treeNode.dirs, (dirNode, dirName) => {
-    if (dirName !== collapsedDirName) {
-      dirs[dirName] = collapseFixtureDirs(dirNode, collapsedDirName);
-      return;
-    }
-
-    if (dirNode.items)
-      items = {
-        ...items,
-        ...dirNode.items,
+  const collapsableDirNode = children[fixturesDir];
+  if (collapsableDirNode && collapsableDirNode.data.type === 'fileDir') {
+    const otherChildren = omit(children, fixturesDir);
+    const innerChildren = collapsableDirNode.children;
+    if (
+      innerChildren &&
+      // Make sure children of the collapsed dir don't overlap with children of
+      // the parent dir
+      Object.keys(otherChildren).every(childName => !innerChildren[childName])
+    )
+      return {
+        data: { type: 'fileDir' },
+        children: { ...otherChildren, ...innerChildren },
       };
+  }
 
-    forEach(dirNode.dirs, (childDirNode, childDirName) => {
-      dirs[childDirName] = collapseFixtureDirs(childDirNode, collapsedDirName);
-    });
-  });
-
-  return { dirs, items };
+  return {
+    ...treeNode,
+    children: Object.keys(children).reduce(
+      (newChildren, childName) => ({
+        ...newChildren,
+        [childName]: collapseFixtureDirs(children[childName], fixturesDir),
+      }),
+      {}
+    ),
+  };
 }

@@ -1,9 +1,9 @@
 import { FixtureNamesByPath } from '../../renderer';
-import { FixtureNode } from '../shared/types';
+import { FixtureTreeNode } from '../shared/types';
 import { collapseFixtureDirs } from './collapseFixtureDirs';
-import { collapseSingleChildDirs } from './collapseSingleChildDirs';
-import { collapseSoloIndexes } from './collapseSoloIndexes';
-import { collapseSoloNamedItems } from './collapseSoloNamedItems';
+import { collapseOuterDirs } from './collapseOuterDirs';
+import { collapseIndexes } from './collapseIndexes';
+import { collapseNamedIndexes } from './collapseNamedIndexes';
 import { createRawFixtureTree } from './createRawFixtureTree';
 import { hideFixtureSuffix } from './hideFixtureSuffix';
 
@@ -15,12 +15,12 @@ export function createFixtureTree({
   fixtures: FixtureNamesByPath;
   fixturesDir: string;
   fixtureFileSuffix: string;
-}): FixtureNode {
+}): FixtureTreeNode {
   let tree = createRawFixtureTree(fixtures);
   tree = collapseFixtureDirs(tree, fixturesDir);
   tree = hideFixtureSuffix(tree, fixtureFileSuffix);
-  tree = collapseSoloIndexes(tree);
-  tree = collapseSoloNamedItems(tree);
-  tree = collapseSingleChildDirs(tree);
+  tree = collapseIndexes(tree);
+  tree = collapseNamedIndexes(tree);
+  tree = collapseOuterDirs(tree);
   return tree;
 }

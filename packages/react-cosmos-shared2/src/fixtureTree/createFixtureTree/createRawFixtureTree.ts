@@ -1,11 +1,14 @@
 import { get, set } from 'lodash';
-import { FixtureNamesByPath } from '../../renderer';
-import { FixtureNode } from '../shared/types';
+import { FixtureId, FixtureNamesByPath } from '../../renderer';
+import { addTreeNodeChild } from '../../util';
+import { FixtureTreeNode } from '../shared/types';
 
 export function createRawFixtureTree(
   fixtures: FixtureNamesByPath
-): FixtureNode {
-  const rootNode = getBlankNode();
+): FixtureTreeNode {
+  const rootNode: FixtureTreeNode = {
+    data: { type: 'fileDir' },
+  };
   Object.keys(fixtures).forEach(fixturePath =>
     addFixturePathToTree(rootNode, fixturePath, fixtures[fixturePath])
   );
@@ -13,45 +16,74 @@ export function createRawFixtureTree(
   return rootNode;
 }
 
-function getBlankNode(): FixtureNode {
-  return {
-    dirs: {},
-    items: {},
-  };
-}
-
 function addFixturePathToTree(
-  rootNode: FixtureNode,
+  rootNode: FixtureTreeNode,
   fixturePath: string,
   fixtureNames: null | string[]
 ) {
-  const namespace = fixturePath.split('/');
-  const rawFixtureName = namespace.pop();
+  const parents = fixturePath.split('/');
+  const rawFixtureName = parents.pop();
   if (!rawFixtureName) throw new Error('Fixture name is empty');
-
   const fileName = removeFixtureNameExtension(rawFixtureName);
 
-  if (namespace.length === 0) {
-    rootNode.items[fileName] = { fixturePath, fixtureNames };
-    return;
-  }
+  if (!fixtureNames)
+    return injectFixtureId(rootNode, parents, fileName, {
+      path: fixturePath,
+      name: null,
+    });
 
-  let curNodeDepth = 1;
-  let curNode: FixtureNode;
+  injectFixtureTreeNode(rootNode, parents, fileName, {
+    data: { type: 'multiFixture' },
+  });
+  fixtureNames.forEach(fixtureName => {
+    injectFixtureId(rootNode, [...parents, fileName], fixtureName, {
+      path: fixturePath,
+      name: fixtureName,
+    });
+  });
+}
+
+function injectFixtureId(
+  rootNode: FixtureTreeNode,
+  parents: string[],
+  childName: string,
+  fixtureId: FixtureId
+) {
+  injectFixtureTreeNode(rootNode, parents, childName, {
+    data: {
+      type: 'fixture',
+      fixtureId: fixtureId,
+    },
+  });
+}
+
+function injectFixtureTreeNode(
+  rootNode: FixtureTreeNode,
+  parents: string[],
+  childName: string,
+  childNode: FixtureTreeNode
+) {
+  if (parents.length === 0)
+    return addTreeNodeChild(rootNode, childName, childNode);
+
+  let curParentDepth = 1;
+  let curParent: FixtureTreeNode;
   do {
-    const partialNamespace = namespace.slice(0, curNodeDepth);
-    const partialPath = partialNamespace.map(p => `dirs["${p}"]`).join('.');
+    const curParents = parents.slice(0, curParentDepth);
+    const curPath = curParents.map(p => `children["${p}"]`).join('.');
 
-    curNode = get(rootNode, partialPath);
-    if (!curNode) {
-      curNode = getBlankNode();
-      set(rootNode, partialPath, curNode);
+    curParent = get(rootNode, curPath);
+    if (!curParent) {
+      curParent = {
+        data: { type: 'fileDir' },
+      };
+      set(rootNode, curPath, curParent);
     }
 
-    curNodeDepth += 1;
-  } while (curNodeDepth <= namespace.length);
+    curParentDepth += 1;
+  } while (curParentDepth <= parents.length);
 
-  curNode.items[fileName] = { fixturePath, fixtureNames };
+  addTreeNodeChild(curParent, childName, childNode);
 }
 
 function removeFixtureNameExtension(fixtureName: string) {

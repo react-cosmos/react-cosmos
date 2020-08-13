@@ -1,39 +1,43 @@
-import { FixtureNode } from '../shared/types';
+import { FixtureTreeNode } from '../shared/types';
 import { createRawFixtureTree } from './createRawFixtureTree';
 
-it('creates tree with single fixture', () => {
+it('creates tree with fixture', () => {
   const paths = {
     'Dashboard.fixture.js': null,
   };
-  const tree: FixtureNode = {
-    dirs: {},
-    items: {
+  const tree: FixtureTreeNode = {
+    data: { type: 'fileDir' },
+    children: {
       'Dashboard.fixture': {
-        fixturePath: 'Dashboard.fixture.js',
-        fixtureNames: null,
+        data: {
+          type: 'fixture',
+          fixtureId: { path: 'Dashboard.fixture.js', name: null },
+        },
       },
     },
   };
   expect(createRawFixtureTree(paths)).toEqual(tree);
 });
 
-it('creates nested tree with single fixture', () => {
+it('creates nested tree with fixture', () => {
   const paths = {
     'ui/Dashboard.fixture.js': null,
   };
-  const tree: FixtureNode = {
-    dirs: {
+  const tree: FixtureTreeNode = {
+    data: { type: 'fileDir' },
+    children: {
       ui: {
-        dirs: {},
-        items: {
+        data: { type: 'fileDir' },
+        children: {
           'Dashboard.fixture': {
-            fixturePath: 'ui/Dashboard.fixture.js',
-            fixtureNames: null,
+            data: {
+              type: 'fixture',
+              fixtureId: { path: 'ui/Dashboard.fixture.js', name: null },
+            },
           },
         },
       },
     },
-    items: {},
   };
   expect(createRawFixtureTree(paths)).toEqual(tree);
 });
@@ -42,12 +46,25 @@ it('creates tree with multi fixture', () => {
   const paths = {
     'Button.fixture.js': ['normal', 'disabled'],
   };
-  const tree: FixtureNode = {
-    dirs: {},
-    items: {
+  const tree: FixtureTreeNode = {
+    data: { type: 'fileDir' },
+    children: {
       'Button.fixture': {
-        fixturePath: 'Button.fixture.js',
-        fixtureNames: ['normal', 'disabled'],
+        data: { type: 'multiFixture' },
+        children: {
+          normal: {
+            data: {
+              type: 'fixture',
+              fixtureId: { path: 'Button.fixture.js', name: 'normal' },
+            },
+          },
+          disabled: {
+            data: {
+              type: 'fixture',
+              fixtureId: { path: 'Button.fixture.js', name: 'disabled' },
+            },
+          },
+        },
       },
     },
   };
@@ -58,19 +75,32 @@ it('creates nested tree with multi fixture', () => {
   const paths = {
     'ui/Button.fixture.js': ['normal', 'disabled'],
   };
-  const tree: FixtureNode = {
-    dirs: {
+  const tree: FixtureTreeNode = {
+    data: { type: 'fileDir' },
+    children: {
       ui: {
-        dirs: {},
-        items: {
+        data: { type: 'fileDir' },
+        children: {
           'Button.fixture': {
-            fixturePath: 'ui/Button.fixture.js',
-            fixtureNames: ['normal', 'disabled'],
+            data: { type: 'multiFixture' },
+            children: {
+              normal: {
+                data: {
+                  type: 'fixture',
+                  fixtureId: { path: 'ui/Button.fixture.js', name: 'normal' },
+                },
+              },
+              disabled: {
+                data: {
+                  type: 'fixture',
+                  fixtureId: { path: 'ui/Button.fixture.js', name: 'disabled' },
+                },
+              },
+            },
           },
         },
       },
     },
-    items: {},
   };
   expect(createRawFixtureTree(paths)).toEqual(tree);
 });

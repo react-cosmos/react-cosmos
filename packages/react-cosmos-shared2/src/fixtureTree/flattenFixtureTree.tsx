@@ -1,6 +1,6 @@
 import { FixtureId } from '../renderer';
-import { getSortedNodeDirNames } from './getSortedNodeDirNames';
-import { FixtureNode } from './shared/types';
+import { getSortedFixureTreeNodeChildNames } from './getSortedFixureTreeNodeChildNames';
+import { FixtureTreeNode } from './shared/types';
 
 export type FlatFixtureTreeItem = {
   fileName: string;
@@ -11,32 +11,40 @@ export type FlatFixtureTreeItem = {
 export type FlatFixtureTree = FlatFixtureTreeItem[];
 
 export function flattenFixtureTree(
-  treeNode: FixtureNode,
+  treeNode: FixtureTreeNode,
   parents: string[] = []
 ): FlatFixtureTree {
+  const { data, children } = treeNode;
+  if (data.type === 'fixture' || !children) return [];
+
   const flatFixtureTree: FlatFixtureTree = [];
+  getSortedFixureTreeNodeChildNames(data.type, children).forEach(childName => {
+    const childNode = children[childName];
 
-  getSortedNodeDirNames(treeNode.dirs).forEach(dirName => {
-    const dirNode = treeNode.dirs[dirName];
-    flatFixtureTree.push(...flattenFixtureTree(dirNode, [...parents, dirName]));
-  });
-
-  Object.keys(treeNode.items).forEach(itemName => {
-    const { fixturePath, fixtureNames } = treeNode.items[itemName];
-
-    if (fixtureNames)
-      fixtureNames.forEach(fixtureName =>
-        flatFixtureTree.push({
-          fileName: itemName,
-          fixtureId: { path: fixturePath, name: fixtureName },
-          parents,
-          name: fixtureName,
-        })
+    if (childNode.data.type === 'fileDir')
+      flatFixtureTree.push(
+        ...flattenFixtureTree(childNode, [...parents, childName])
       );
-    else
+
+    if (childNode.data.type === 'multiFixture') {
+      const fixtureNodes = childNode.children;
+      if (fixtureNodes)
+        Object.keys(fixtureNodes).forEach(fixtureName => {
+          const fixtureNode = fixtureNodes[fixtureName];
+          if (fixtureNode.data.type === 'fixture')
+            flatFixtureTree.push({
+              fileName: childName,
+              fixtureId: fixtureNode.data.fixtureId,
+              parents,
+              name: fixtureName,
+            });
+        });
+    }
+
+    if (childNode.data.type === 'fixture')
       flatFixtureTree.push({
-        fileName: itemName,
-        fixtureId: { path: fixturePath, name: null },
+        fileName: childName,
+        fixtureId: childNode.data.fixtureId,
         parents,
         name: null,
       });

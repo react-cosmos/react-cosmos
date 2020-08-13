@@ -4,5 +4,5 @@ export {
   FlatFixtureTreeItem,
   flattenFixtureTree,
 } from './flattenFixtureTree';
-export { getSortedNodeDirNames } from './getSortedNodeDirNames';
-export { FixtureNode, TreeNode, TreeNodes } from './shared/types';
+export { getSortedFixureTreeNodeChildNames } from './getSortedFixureTreeNodeChildNames';
+export { FixtureTreeNode } from './shared/types';
