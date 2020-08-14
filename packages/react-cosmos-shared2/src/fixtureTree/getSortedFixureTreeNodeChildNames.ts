@@ -1,5 +1,6 @@
 import { FixtureTreeNode } from './shared/types';
 
+// TODO: Use this in playground
 export function getSortedFixureTreeNodeChildNames(
   nodeType: 'fileDir' | 'multiFixture',
   children: Record<string, FixtureTreeNode>

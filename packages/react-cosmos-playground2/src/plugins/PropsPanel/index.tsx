@@ -6,7 +6,7 @@ import {
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { SidePanelRowSlotProps } from '../../shared/slots/SidePanelRowSlot';
-import { TreeExpansion } from '../../shared/TreeView';
+import { TreeExpansion } from '../../shared/treeExpansion';
 import {
   FixtureExpansionGroup,
   getFixtureExpansion,

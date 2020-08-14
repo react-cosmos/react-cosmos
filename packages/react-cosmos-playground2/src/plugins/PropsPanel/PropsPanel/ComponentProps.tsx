@@ -17,7 +17,7 @@ import {
   Header,
   Title,
 } from '../../../shared/sidePanelUi';
-import { TreeExpansion } from '../../../shared/TreeView';
+import { TreeExpansion } from '../../../shared/treeExpansion';
 import {
   FixtureExpansion,
   OnElementExpansionChange,

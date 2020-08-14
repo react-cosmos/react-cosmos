@@ -1,37 +1,44 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { blue, disabledColors, grey128, grey160, grey224 } from '../colors';
 import { ChevronDownIcon, ChevronRightIcon } from '../icons';
-import { TreeItemContainer, ValueNode } from './shared';
+import { OnTreeExpansionToggle } from '../treeExpansion';
+import { TreeItemContainer } from './shared';
 
 type Props = {
-  node: ValueNode;
+  name: string;
   parents: string[];
-  isExpanded: boolean;
-  onToggle: () => unknown;
+  childNames: string[];
+  expanded: boolean;
+  onToggle: OnTreeExpansionToggle;
 };
 
+// TODO: Rename to ValueInputDir
 export function ValueInputTreeDir({
-  node,
+  name,
   parents,
-  isExpanded,
+  childNames,
+  expanded,
   onToggle,
 }: Props) {
-  const dirName = parents[parents.length - 1];
-  const childNames = getChildNames(node);
   const disabled = childNames.length === 0;
+
+  const onClick = useCallback(() => {
+    onToggle(parents, name);
+  }, [name, onToggle, parents]);
+
   return (
-    <TreeItemContainer indentLevel={parents.length - 1}>
+    <TreeItemContainer indentLevel={parents.length}>
       <ButtonContainer>
-        <Button disabled={disabled} onClick={onToggle}>
+        <Button disabled={disabled} onClick={onClick}>
           <>
             {!disabled && (
               <ChevronContainer>
-                {isExpanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
+                {expanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
               </ChevronContainer>
             )}
             <Text>
-              <DirName disabled={disabled}>{dirName}</DirName>
+              <DirName disabled={disabled}>{name}</DirName>
               <ChildrenInfo>{getChildInfo(childNames)}</ChildrenInfo>
             </Text>
           </>
@@ -43,11 +50,6 @@ export function ValueInputTreeDir({
 
 function getChildInfo(childNames: string[]): string {
   return childNames.length > 0 ? `{ ${childNames.join(', ')} }` : `{}`;
-}
-
-function getChildNames(node: ValueNode): string[] {
-  const { dirs, items } = node;
-  return [...Object.keys(dirs), ...Object.keys(items)];
 }
 
 const ButtonContainer = styled.div`

@@ -3,7 +3,7 @@ import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
 import { grey32 } from '../../shared/colors';
-import { TreeExpansion } from '../../shared/TreeView';
+import { TreeExpansion } from '../../shared/treeExpansion';
 import { BlankState } from './BlankState';
 import { FixtureTree } from './FixtureTree';
 import { FixtureTreeHeader } from './FixtureTreeHeader';

@@ -56,18 +56,68 @@ const values: FixtureStateValues = {
 };
 
 const rootNode: ValueNode = {
-  items: { str1 },
-  dirs: {
+  data: { type: 'collection' },
+  children: {
+    str1: {
+      data: {
+        type: 'item',
+        value: str1,
+      },
+    },
     object1: {
-      items: { str2, num, bool },
-      dirs: {
+      data: { type: 'collection' },
+      children: {
+        str2: {
+          data: {
+            type: 'item',
+            value: str2,
+          },
+        },
+        num: {
+          data: {
+            type: 'item',
+            value: num,
+          },
+        },
+        bool: {
+          data: {
+            type: 'item',
+            value: bool,
+          },
+        },
         object2: {
-          items: { str3, jsx },
-          dirs: {},
+          data: { type: 'collection' },
+          children: {
+            str3: {
+              data: {
+                type: 'item',
+                value: str3,
+              },
+            },
+            jsx: {
+              data: {
+                type: 'item',
+                value: jsx,
+              },
+            },
+          },
         },
         array1: {
-          items: { 0: num, 1: bool },
-          dirs: {},
+          data: { type: 'collection' },
+          children: {
+            0: {
+              data: {
+                type: 'item',
+                value: num,
+              },
+            },
+            1: {
+              data: {
+                type: 'item',
+                value: bool,
+              },
+            },
+          },
         },
       },
     },

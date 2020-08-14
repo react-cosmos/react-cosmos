@@ -1,5 +1,5 @@
 import { isEqual } from 'lodash';
-import React, { RefObject } from 'react';
+import React, { MouseEvent, RefObject, useCallback } from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
 import { blue } from '../../../shared/colors';
@@ -8,48 +8,45 @@ import { stringifyFixtureId } from '../../../shared/valueInputTree';
 import { Label, ListItem } from './shared';
 
 type Props = {
-  parents: string[];
-  item: FixtureId;
-  itemName: string;
+  name: string;
+  fixtureId: FixtureId;
+  indentLevel: number;
   selectedFixtureId: null | FixtureId;
   selectedRef: RefObject<HTMLElement>;
   onSelect: (path: FixtureId) => unknown;
 };
 
-export function FixtureTreeItem({
-  parents,
-  item,
-  itemName,
+export function FixtureButton({
+  name,
+  fixtureId,
+  indentLevel,
   selectedFixtureId,
   selectedRef,
   onSelect,
 }: Props) {
-  const onClick = React.useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const onClick = useCallback(
+    (e: MouseEvent<HTMLAnchorElement>) => {
       e.preventDefault();
-      if (e.metaKey) {
-        openAnchorInNewTab(e.currentTarget);
-      } else {
-        onSelect(item);
-      }
+      if (e.metaKey) openAnchorInNewTab(e.currentTarget);
+      else onSelect(fixtureId);
     },
-    [item, onSelect]
+    [fixtureId, onSelect]
   );
 
-  const itemKey = stringifyFixtureId(item);
-  const selected = isEqual(item, selectedFixtureId);
+  const itemKey = stringifyFixtureId(fixtureId);
+  const selected = isEqual(fixtureId, selectedFixtureId);
   return (
     <FixtureLink
       key={itemKey}
-      href={createRelativePlaygroundUrl({ fixtureId: item })}
+      href={createRelativePlaygroundUrl({ fixtureId })}
       onClick={onClick}
     >
       <ListItem
         ref={selected ? selectedRef : undefined}
-        indentLevel={parents.length}
+        indentLevel={indentLevel}
         selected={selected}
       >
-        <FixtureLabel>{itemName}</FixtureLabel>
+        <FixtureLabel>{name}</FixtureLabel>
       </ListItem>
     </FixtureLink>
   );

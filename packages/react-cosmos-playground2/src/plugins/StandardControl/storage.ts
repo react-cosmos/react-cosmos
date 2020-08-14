@@ -1,6 +1,6 @@
 import React from 'react';
 import { PluginContext } from 'react-plugin';
-import { TreeExpansion } from '../../shared/TreeView';
+import { TreeExpansion } from '../../shared/treeExpansion';
 import { StorageSpec } from '../Storage/public';
 import { StandardControlSpec } from './public';
 

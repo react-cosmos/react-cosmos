@@ -1,79 +1,49 @@
-import { map } from 'lodash';
-import React from 'react';
-import {
-  getSortedNodeDirNames,
-  TreeNode,
-} from 'react-cosmos-shared2/fixtureTree';
-
-export type TreeExpansion = {
-  [nodePath: string]: boolean;
-};
+import React, { ReactNode } from 'react';
+import { TreeNode } from 'react-cosmos-shared2/util';
+import { getTreeNodePath, TreeExpansion } from './treeExpansion';
 
 type Props<Item> = {
   node: TreeNode<Item>;
+  name?: string;
   parents?: string[];
-  treeExpansion: TreeExpansion;
-  renderDir: (args: {
+  expansion: TreeExpansion;
+  renderNode: (args: {
     node: TreeNode<Item>;
+    name: string;
     parents: string[];
-    isExpanded: boolean;
-    onToggle: () => unknown;
-  }) => React.ReactNode;
-  renderItem: (args: {
-    parents: string[];
-    item: Item;
-    itemName: string;
-  }) => React.ReactNode;
-  onTreeExpansionChange: (newTreeExpansion: TreeExpansion) => unknown;
+  }) => ReactNode;
 };
 
 export function TreeView<Item>({
   node,
+  name,
   parents = [],
-  treeExpansion,
-  renderDir,
-  renderItem,
-  onTreeExpansionChange,
+  expansion,
+  renderNode,
 }: Props<Item>) {
-  const { items, dirs } = node;
-  const nodePath = getNodePath(parents);
-  const isRootNode = parents.length === 0;
-  const isExpanded = isRootNode || treeExpansion[nodePath];
-  const onToggle = React.useCallback(
-    () => onTreeExpansionChange({ ...treeExpansion, [nodePath]: !isExpanded }),
-    [onTreeExpansionChange, treeExpansion, nodePath, isExpanded]
-  );
-
+  const { children } = node;
+  // The root node doesn't have a name and isn't rendered
+  // And the children of the root node are always expanded
+  const expanded = name ? expansion[getTreeNodePath(parents, name)] : true;
   return (
     <>
-      {!isRootNode && renderDir({ node, parents, isExpanded, onToggle })}
-      {isExpanded && (
-        <>
-          {getSortedNodeDirNames(dirs).map(dirName => {
-            const nextParents = [...parents, dirName];
-            return (
-              <TreeView
-                key={getNodePath(nextParents)}
-                node={dirs[dirName]}
-                parents={nextParents}
-                treeExpansion={treeExpansion}
-                renderDir={renderDir}
-                renderItem={renderItem}
-                onTreeExpansionChange={onTreeExpansionChange}
-              />
-            );
-          })}
-          {map(items, (item, itemName) => (
-            <React.Fragment key={itemName}>
-              {renderItem({ parents, item, itemName })}
-            </React.Fragment>
-          ))}
-        </>
-      )}
+      {name !== undefined && renderNode({ node, name, parents })}
+      {children &&
+        expanded &&
+        Object.keys(children).map(childName => {
+          const childNode = children[childName];
+          const nextParents = name ? [...parents, name] : parents;
+          return (
+            <TreeView
+              key={childName}
+              node={childNode}
+              name={childName}
+              parents={nextParents}
+              expansion={expansion}
+              renderNode={renderNode}
+            />
+          );
+        })}
     </>
   );
-}
-
-function getNodePath(nodeParents: string[]) {
-  return nodeParents.join('/');
 }

@@ -1,10 +1,10 @@
 import { isEqual } from 'lodash';
 import {
   createFixtureTree,
-  FixtureNode,
+  FixtureTreeNode,
 } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { TreeExpansion } from '../../shared/TreeView';
+import { TreeExpansion } from '../../shared/treeExpansion';
 import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { StorageSpec } from '../Storage/public';
@@ -44,27 +44,23 @@ export function revealFixture(
 }
 
 function getFixtureDirNodePath(
-  { dirs, items }: FixtureNode,
+  { data, children }: FixtureTreeNode,
   fixtureId: FixtureId,
   atPath: string[] = []
 ): null | string[] {
-  const itemNames = Object.keys(items);
-  const dirPath = itemNames.find(itemName =>
-    isEqual(items[itemName], fixtureId)
-  );
-  if (dirPath) {
-    return atPath;
-  }
+  if (data.type === 'fixture' || !children) return null;
 
-  const dirNames = Object.keys(dirs);
-  for (let dirIndex = 0; dirIndex < dirNames.length; dirIndex++) {
-    const dirName = dirNames[dirIndex];
-    const childDirPath = getFixtureDirNodePath(dirs[dirName], fixtureId, [
-      ...atPath,
-      dirName,
-    ]);
-    if (childDirPath) {
-      return childDirPath;
+  const childNames = Object.keys(children);
+  for (let childName of childNames) {
+    const childNode = children[childName];
+    if (childNode.data.type === 'fixture') {
+      if (isEqual(childNode.data.fixtureId, fixtureId)) return atPath;
+    } else {
+      const fixtureDirPath = getFixtureDirNodePath(childNode, fixtureId, [
+        ...atPath,
+        childName,
+      ]);
+      if (fixtureDirPath) return fixtureDirPath;
     }
   }
 

@@ -7,6 +7,19 @@ it('returns fixture info', async () => {
   const fixtures = getFixtures2(cosmosConfig);
   expect(fixtures).toEqual([
     {
+      absoluteFilePath: `${rootDir}/components/__fixtures__/Controls playground.tsx`,
+      fileName: 'Controls playground',
+      getElement: expect.any(Function),
+      name: null,
+      parents: [],
+      relativeFilePath: 'components/__fixtures__/Controls playground.tsx',
+      rendererUrl:
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22components%2F__fixtures__%2FControls%20playground.tsx%22%2C%22name%22%3Anull%7D',
+      playgroundUrl:
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2F__fixtures__%2FControls%20playground.tsx%22%2C%22name%22%3Anull%7D',
+      treePath: ['Controls playground'],
+    },
+    {
       absoluteFilePath: `${rootDir}/components/Counter/index.fixture.tsx`,
       fileName: 'Counter',
       getElement: expect.any(Function),
@@ -46,17 +59,17 @@ it('returns fixture info', async () => {
       treePath: ['Counter', 'large number'],
     },
     {
-      absoluteFilePath: `${rootDir}/components/__fixtures__/Controls playground.tsx`,
-      fileName: 'Controls playground',
+      absoluteFilePath: `${rootDir}/components/CounterButton/index.fixture.tsx`,
+      fileName: 'CounterButton',
       getElement: expect.any(Function),
       name: null,
       parents: [],
-      relativeFilePath: 'components/__fixtures__/Controls playground.tsx',
-      rendererUrl:
-        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22components%2F__fixtures__%2FControls%20playground.tsx%22%2C%22name%22%3Anull%7D',
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2F__fixtures__%2FControls%20playground.tsx%22%2C%22name%22%3Anull%7D',
-      treePath: ['Controls playground'],
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2FCounterButton%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D',
+      relativeFilePath: 'components/CounterButton/index.fixture.tsx',
+      rendererUrl:
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22components%2FCounterButton%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D',
+      treePath: ['CounterButton'],
     },
     {
       absoluteFilePath: `${rootDir}/components/__fixtures__/Hello World.ts`,
@@ -72,32 +85,6 @@ it('returns fixture info', async () => {
       treePath: ['Hello World'],
     },
     {
-      absoluteFilePath: `${rootDir}/components/__fixtures__/Props playground.tsx`,
-      fileName: 'Props playground',
-      getElement: expect.any(Function),
-      name: null,
-      parents: [],
-      relativeFilePath: 'components/__fixtures__/Props playground.tsx',
-      rendererUrl:
-        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22components%2F__fixtures__%2FProps%20playground.tsx%22%2C%22name%22%3Anull%7D',
-      playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2F__fixtures__%2FProps%20playground.tsx%22%2C%22name%22%3Anull%7D',
-      treePath: ['Props playground'],
-    },
-    {
-      absoluteFilePath: `${rootDir}/components/CounterButton/index.fixture.tsx`,
-      fileName: 'CounterButton',
-      getElement: expect.any(Function),
-      name: null,
-      parents: [],
-      playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2FCounterButton%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D',
-      relativeFilePath: 'components/CounterButton/index.fixture.tsx',
-      rendererUrl:
-        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22components%2FCounterButton%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D',
-      treePath: ['CounterButton'],
-    },
-    {
       absoluteFilePath: `${rootDir}/components/NestedDecorators/index.fixture.tsx`,
       fileName: 'NestedDecorators',
       getElement: expect.any(Function),
@@ -109,6 +96,19 @@ it('returns fixture info', async () => {
       rendererUrl:
         'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22components%2FNestedDecorators%2Findex.fixture.tsx%22%2C%22name%22%3Anull%7D',
       treePath: ['NestedDecorators'],
+    },
+    {
+      absoluteFilePath: `${rootDir}/components/__fixtures__/Props playground.tsx`,
+      fileName: 'Props playground',
+      getElement: expect.any(Function),
+      name: null,
+      parents: [],
+      relativeFilePath: 'components/__fixtures__/Props playground.tsx',
+      rendererUrl:
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22components%2F__fixtures__%2FProps%20playground.tsx%22%2C%22name%22%3Anull%7D',
+      playgroundUrl:
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2F__fixtures__%2FProps%20playground.tsx%22%2C%22name%22%3Anull%7D',
+      treePath: ['Props playground'],
     },
     {
       absoluteFilePath: `${rootDir}/components/WelcomeMessage/index.fixture.tsx`,

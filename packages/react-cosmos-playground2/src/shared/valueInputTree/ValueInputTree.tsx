@@ -2,7 +2,12 @@ import React from 'react';
 import { FixtureStateValues } from 'react-cosmos-shared2/fixtureState';
 import styled from 'styled-components';
 import { grey248, grey32 } from '../colors';
-import { TreeExpansion, TreeView } from '../TreeView';
+import {
+  getTreeNodePath,
+  TreeExpansion,
+  useTreeExpansionToggle,
+} from '../treeExpansion';
+import { TreeView } from '../TreeView';
 import { ValueInputTreeDir } from './ValueInputTreeDir';
 import { ValueInputTreeItem } from './ValueInputTreeItem';
 import { getFixtureStateValueTree } from './valueTree';
@@ -18,35 +23,44 @@ type Props = {
 export const ValueInputTree = React.memo(function ValueInputTree({
   id,
   values,
-  treeExpansion,
-  onTreeExpansionChange,
+  treeExpansion: expansion,
+  onTreeExpansionChange: setExpansion,
   onValueChange,
 }: Props) {
   const rootNode = getFixtureStateValueTree(values);
+  const onExpansionToggle = useTreeExpansionToggle(expansion, setExpansion);
   return (
     <Container>
       <TreeView
         node={rootNode}
-        renderDir={({ node, parents, isExpanded, onToggle }) => (
-          <ValueInputTreeDir
-            node={node}
-            parents={parents}
-            isExpanded={isExpanded}
-            onToggle={onToggle}
-          />
-        )}
-        renderItem={({ parents, item, itemName }) => (
-          <ValueInputTreeItem
-            treeId={id}
-            values={values}
-            parents={parents}
-            item={item}
-            itemName={itemName}
-            onValueChange={onValueChange}
-          />
-        )}
-        treeExpansion={treeExpansion}
-        onTreeExpansionChange={onTreeExpansionChange}
+        expansion={expansion}
+        renderNode={({ node, name, parents }) => {
+          const { data, children } = node;
+
+          if (data.type === 'item')
+            return (
+              <ValueInputTreeItem
+                value={data.value}
+                name={name}
+                parents={parents}
+                treeId={id}
+                values={values}
+                onValueChange={onValueChange}
+              />
+            );
+
+          return (
+            children && (
+              <ValueInputTreeDir
+                name={name}
+                parents={parents}
+                childNames={Object.keys(children)}
+                expanded={expansion[getTreeNodePath(parents, name)]}
+                onToggle={onExpansionToggle}
+              />
+            )
+          );
+        }}
       />
     </Container>
   );

@@ -12,14 +12,14 @@ const { plug, register } = createPlugin<BooleanInputPluginSpec>({
 });
 
 plug<ValueInputSlotProps>('valueInput', ({ slotProps, children }) => {
-  const { item, itemName, parents, onInputChange } = slotProps;
+  const { name, value, parents, onInputChange } = slotProps;
 
-  if (item.type === 'primitive' && typeof item.value === 'boolean')
+  if (value.type === 'primitive' && typeof value.value === 'boolean')
     return (
       <BooleanInput
+        name={name}
+        value={value.value}
         indentLevel={parents.length}
-        itemName={itemName}
-        value={item.value}
         onChange={onInputChange}
       />
     );

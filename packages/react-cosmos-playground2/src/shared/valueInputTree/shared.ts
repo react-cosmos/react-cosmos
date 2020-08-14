@@ -7,11 +7,15 @@ import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { TreeNode } from 'react-cosmos-shared2/util';
 import styled from 'styled-components';
 
-export type TreeItemValue =
+export type ItemValue =
   | FixtureStatePrimitiveValue
   | FixtureStateUnserializableValue;
 
-export type ValueNode = TreeNode<TreeItemValue>;
+export type ValueNodeData =
+  | { type: 'collection' }
+  | { type: 'item'; value: ItemValue };
+
+export type ValueNode = TreeNode<ValueNodeData>;
 
 type TreeItemContainerProps = {
   indentLevel: number;

@@ -3,8 +3,11 @@ import { FixtureStateValues } from 'react-cosmos-shared2/fixtureState';
 import { IconButton32 } from '../buttons';
 import { MinusSquareIcon, PlusSquareIcon } from '../icons';
 import { hasNonEmptyDirs } from '../tree';
-import { getFullTreeExpansion, isTreeFullyCollapsed } from '../treeExpansion';
-import { TreeExpansion } from '../TreeView';
+import {
+  getFullTreeExpansion,
+  isTreeFullyCollapsed,
+  TreeExpansion,
+} from '../treeExpansion';
 import { getFixtureStateValueTree } from './valueTree';
 
 type Props = {

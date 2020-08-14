@@ -9,8 +9,8 @@ import { hasNonEmptyDirs } from '../../shared/tree';
 import {
   getFullTreeExpansion,
   isTreeFullyCollapsed,
+  TreeExpansion,
 } from '../../shared/treeExpansion';
-import { TreeExpansion } from '../../shared/TreeView';
 
 type Props = {
   fixturesDir: string;
