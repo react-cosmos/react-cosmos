@@ -56,7 +56,7 @@ export function MultiFixtureButton({
             fixtureId={fixtureId}
             indentLevel={indentLevel + 1}
             selected={childSelected}
-            ref={childSelected ? selectedRef : undefined}
+            selectedRef={selectedRef}
             onSelect={onSelect}
           />
         );
@@ -82,7 +82,7 @@ const Name = styled.span`
 `;
 
 const Count = styled.label`
-  margin: 0 0 0 -2px;
+  margin: 0 0 0 -3px;
   padding: 0 4px;
   border-radius: 3px;
   background: rgba(255, 255, 255, 0.15);

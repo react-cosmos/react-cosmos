@@ -48,7 +48,7 @@ export const FixtureTree = React.memo(function FixtureTree({
                 fixtureId={data.fixtureId}
                 indentLevel={parents.length}
                 selected={selected}
-                ref={selected ? selectedRef : undefined}
+                selectedRef={selectedRef}
                 onSelect={onSelect}
               />
             );
@@ -79,7 +79,7 @@ export const FixtureTree = React.memo(function FixtureTree({
               parents={parents}
               expanded={expanded}
               selected={selected}
-              ref={selected ? selectedRef : undefined}
+              selectedRef={selectedRef}
               onToggle={onExpansionToggle}
             />
           );

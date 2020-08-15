@@ -10,7 +10,7 @@ type Props = {
   fixtureId: FixtureId;
   indentLevel: number;
   selected: boolean;
-  ref?: RefObject<HTMLElement>;
+  selectedRef: RefObject<HTMLElement>;
   onSelect: (fixtureId: FixtureId) => unknown;
 };
 
@@ -19,12 +19,16 @@ export function FixtureButton({
   fixtureId,
   indentLevel,
   selected,
-  ref,
+  selectedRef,
   onSelect,
 }: Props) {
   return (
     <FixtureLink fixtureId={fixtureId} onSelect={onSelect}>
-      <FixtureTreeItem ref={ref} indentLevel={indentLevel} selected={selected}>
+      <FixtureTreeItem
+        ref={selected ? selectedRef : undefined}
+        indentLevel={indentLevel}
+        selected={selected}
+      >
         <Name>{name}</Name>
       </FixtureTreeItem>
     </FixtureLink>

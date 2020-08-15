@@ -17,23 +17,13 @@ const rootNode = createFixtureTree({
   fixtureFileSuffix: 'fixture',
 });
 
-const fixtureBId = { path: 'src/dir1/fixture4.ts', name: 'fixtureB' };
+const disabledFixtureId = { path: 'src/shared/Button.ts', name: 'disabled' };
 
 export default {
   collapsed: createTreeFixture(),
-
-  expanded1: createTreeFixture({ dir1: true }),
-
-  expanded2: createTreeFixture({ dir1: true, 'dir1/fixture4': true }),
-
-  'selected collapsed': createTreeFixture({}, fixtureBId),
-
-  'selected expanded1': createTreeFixture({ dir1: true }, fixtureBId),
-
-  'selected expanded2': createTreeFixture(
-    { dir1: true, 'dir1/fixture4': true },
-    fixtureBId
-  ),
+  expanded: createTreeFixture({ shared: true }),
+  'selected collapsed': createTreeFixture({}, disabledFixtureId),
+  'selected expanded': createTreeFixture({ shared: true }, disabledFixtureId),
 };
 
 function createTreeFixture(

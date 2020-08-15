@@ -10,7 +10,7 @@ type Props = {
   parents: string[];
   expanded: boolean;
   selected: boolean;
-  ref?: RefObject<HTMLElement>;
+  selectedRef: RefObject<HTMLElement>;
   onToggle: OnTreeExpansionToggle;
 };
 
@@ -19,13 +19,13 @@ export function FixtureDir({
   parents,
   expanded,
   selected,
-  ref,
+  selectedRef,
   onToggle,
 }: Props) {
   return (
     <DirButton onClick={() => onToggle(parents, name)}>
       <FixtureTreeItem
-        ref={ref}
+        ref={selected ? selectedRef : undefined}
         indentLevel={parents.length}
         selected={selected}
       >
@@ -49,7 +49,7 @@ const DirButton = styled.button`
   :focus {
     outline: none;
     > span {
-      box-shadow: inset 1px 0px 0 0 ${blue};
+      box-shadow: inset 2px 0px 0 0 ${blue};
     }
   }
 
