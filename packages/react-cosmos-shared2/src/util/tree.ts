@@ -20,12 +20,11 @@ export function sortTreeChildren<T>(node: TreeNode<T>): TreeNode<T> {
   const childNames = Object.keys(children);
   const parentNames = childNames.filter(n => children[n].children);
   const leafNames = childNames.filter(n => !children[n].children);
-  const sortedChildNames = [...parentNames.sort(), ...leafNames.sort()];
   return {
     ...node,
-    children: sortedChildNames.reduce(
-      (newChildren, childName) => ({
-        ...newChildren,
+    children: [...parentNames.sort(), ...leafNames.sort()].reduce(
+      (sortedChildren, childName) => ({
+        ...sortedChildren,
         [childName]: sortTreeChildren(children[childName]),
       }),
       {}
