@@ -1,9 +1,6 @@
 import { isEqual } from 'lodash';
 import React, { RefObject } from 'react';
-import {
-  FixtureTreeNode,
-  getSortedFixureTreeNodeChildNames,
-} from 'react-cosmos-shared2/fixtureTree';
+import { FixtureTreeNode } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
 import { grey32 } from '../../../shared/colors';
@@ -40,7 +37,6 @@ export const FixtureTree = React.memo(function FixtureTree({
       <TreeView
         node={rootNode}
         expansion={expansion}
-        sortChildren={getSortedFixureTreeNodeChildNames}
         renderNode={({ node, name, parents }) => {
           const { data, children } = node;
 

@@ -1,5 +1,5 @@
 import { FixtureId } from '../renderer';
-import { getSortedFixureTreeNodeChildNames } from './getSortedFixureTreeNodeChildNames';
+import { getSortedTreeChildNames } from '../util';
 import { FixtureTreeNode } from './shared/types';
 
 export type FlatFixtureTreeItem = {
@@ -18,7 +18,7 @@ export function flattenFixtureTree(
   if (data.type === 'fixture' || !children) return [];
 
   const flatFixtureTree: FlatFixtureTree = [];
-  getSortedFixureTreeNodeChildNames(treeNode).forEach(childName => {
+  getSortedTreeChildNames(treeNode).forEach(childName => {
     const childNode = children[childName];
 
     if (childNode.data.type === 'fileDir')
