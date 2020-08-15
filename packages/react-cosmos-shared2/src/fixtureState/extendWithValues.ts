@@ -1,17 +1,17 @@
 import {
-  FixtureStateObjectValueData,
   FixtureStateValue,
   FixtureStateValues,
   isArray,
   isObject,
+  ObjectData,
 } from './shared';
 
 // Use fixture state for serializable values and fall back to base values
 export function extendWithValues(
-  obj: FixtureStateObjectValueData,
+  obj: ObjectData,
   values: FixtureStateValues
-): FixtureStateObjectValueData {
-  const extendedObj: FixtureStateObjectValueData = {};
+): ObjectData {
+  const extendedObj: ObjectData = {};
   Object.keys(values).forEach(key => {
     extendedObj[key] = extendWithValue(obj[key], values[key]);
   });

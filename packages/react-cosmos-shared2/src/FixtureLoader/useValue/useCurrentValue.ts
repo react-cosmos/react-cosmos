@@ -2,11 +2,11 @@ import React from 'react';
 import {
   extendWithValue,
   findFixtureStateControl,
-  FixtureStateValueData,
+  FixtureStateData,
 } from '../../fixtureState';
 import { FixtureContext } from '../FixtureContext';
 
-export function useCurrentValue<T extends FixtureStateValueData>(
+export function useCurrentValue<T extends FixtureStateData>(
   inputName: string,
   defaultValue: T
 ): T {

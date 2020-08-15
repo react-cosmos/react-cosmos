@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { FixtureStatePrimitiveValueData } from 'react-cosmos-shared2/fixtureState';
+import { PrimitiveData } from 'react-cosmos-shared2/fixtureState';
 import { Slot } from 'react-plugin';
 import { LeafValue } from '../valueInputTree/shared';
 
@@ -8,7 +8,7 @@ export type ValueInputSlotProps = {
   name: string;
   value: LeafValue;
   parents: string[];
-  onInputChange: (data: FixtureStatePrimitiveValueData) => unknown;
+  onInputChange: (data: PrimitiveData) => unknown;
 };
 
 type Props = {

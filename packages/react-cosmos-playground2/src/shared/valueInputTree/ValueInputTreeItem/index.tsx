@@ -1,9 +1,9 @@
 import { clone, setWith } from 'lodash';
 import React from 'react';
 import {
-  FixtureStatePrimitiveValueData,
   FixtureStateValue,
   FixtureStateValues,
+  PrimitiveData,
 } from 'react-cosmos-shared2/fixtureState';
 import styled from 'styled-components';
 import { ValueInputSlot } from '../../slots/ValueInputSlot';
@@ -36,7 +36,7 @@ export function ValueInputTreeItem({
   const id = getItemId(treeId, parents, name);
 
   const onInputChange = React.useCallback(
-    (data: FixtureStatePrimitiveValueData) => {
+    (data: PrimitiveData) => {
       const valuePath = getValuePath(name, parents);
       const fsValue: FixtureStateValue = { type: 'primitive', data };
       onValueChange(setValueAtPath(values, fsValue, valuePath));
@@ -66,7 +66,7 @@ function getItem(
   id: string,
   name: string,
   value: LeafValue,
-  onInputChange: (value: FixtureStatePrimitiveValueData) => unknown
+  onInputChange: (value: PrimitiveData) => unknown
 ) {
   if (value.type === 'unserializable')
     return <UnserializableItem label={name} value={value.stringifiedData} />;

@@ -14,25 +14,17 @@ export type FixtureStateUnserializableValue = {
   stringifiedData: string;
 };
 
-export type FixtureStatePrimitiveValueData =
-  | string
-  | number
-  | boolean
-  | null
-  | undefined;
+export type PrimitiveData = string | number | boolean | null | undefined;
 
-export type FixtureStateObjectValueData = Record<string, unknown>;
+export type ObjectData = Record<string, unknown>;
 
-export type FixtureStateArrayValueData = unknown[];
+export type ArrayData = unknown[];
 
-export type FixtureStateValueData =
-  | FixtureStatePrimitiveValueData
-  | FixtureStateObjectValueData
-  | FixtureStateArrayValueData;
+export type FixtureStateData = PrimitiveData | ObjectData | ArrayData;
 
 export type FixtureStatePrimitiveValue = {
   type: 'primitive';
-  data: FixtureStatePrimitiveValueData;
+  data: PrimitiveData;
 };
 
 export type FixtureStateObjectValue = {
@@ -115,9 +107,7 @@ export function isUndefined(value: unknown): value is undefined {
   return value === undefined;
 }
 
-export function isPrimitiveData(
-  data: unknown
-): data is FixtureStatePrimitiveValueData {
+export function isPrimitiveData(data: unknown): data is PrimitiveData {
   return (
     isString(data) ||
     isNumber(data) ||
@@ -127,10 +117,10 @@ export function isPrimitiveData(
   );
 }
 
-export function isObject(data: unknown): data is FixtureStateObjectValueData {
+export function isObject(data: unknown): data is ObjectData {
   return isPlainObject(data) && !isElement(data);
 }
 
-export function isArray(data: unknown): data is FixtureStateArrayValueData {
+export function isArray(data: unknown): data is ArrayData {
   return Array.isArray(data);
 }
