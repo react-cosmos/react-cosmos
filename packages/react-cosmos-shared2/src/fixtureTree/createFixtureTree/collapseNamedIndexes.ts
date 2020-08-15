@@ -15,15 +15,14 @@ export function collapseNamedIndexes(
         [childName]: collapseNamedIndexes(childNode),
       });
 
-      const grandchildrenNode = childNode.children;
-      if (childNode.data.type !== 'fileDir' || !grandchildrenNode)
-        return next();
+      const grandchildren = childNode.children;
+      if (childNode.data.type !== 'fileDir' || !grandchildren) return next();
 
-      const grandchildNames = Object.keys(grandchildrenNode);
+      const grandchildNames = Object.keys(grandchildren);
       if (grandchildNames.length !== 1) return next();
 
       const [firstGrandchildName] = grandchildNames;
-      const firstGrandchildNode = grandchildrenNode[firstGrandchildName];
+      const firstGrandchildNode = grandchildren[firstGrandchildName];
       if (
         firstGrandchildNode.data.type !== 'fileDir' &&
         noCaseEqual(childName, firstGrandchildName)
