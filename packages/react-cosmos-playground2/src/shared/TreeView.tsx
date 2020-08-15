@@ -7,6 +7,7 @@ type Props<Item> = {
   name?: string;
   parents?: string[];
   expansion: TreeExpansion;
+  sortChildren: (node: TreeNode<Item>) => string[];
   renderNode: (args: {
     node: TreeNode<Item>;
     name: string;
@@ -19,6 +20,7 @@ export function TreeView<Item>({
   name,
   parents = [],
   expansion,
+  sortChildren,
   renderNode,
 }: Props<Item>) {
   const { children } = node;
@@ -30,7 +32,7 @@ export function TreeView<Item>({
       {name !== undefined && renderNode({ node, name, parents })}
       {children &&
         expanded &&
-        Object.keys(children).map(childName => {
+        sortChildren(node).map(childName => {
           const childNode = children[childName];
           const nextParents = name ? [...parents, name] : parents;
           return (
@@ -40,6 +42,7 @@ export function TreeView<Item>({
               name={childName}
               parents={nextParents}
               expansion={expansion}
+              sortChildren={sortChildren}
               renderNode={renderNode}
             />
           );

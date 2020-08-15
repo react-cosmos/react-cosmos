@@ -5,9 +5,9 @@ import styled from 'styled-components';
 import { IconButton32 } from '../../shared/buttons';
 import { grey128, grey32, white10 } from '../../shared/colors';
 import { MinusSquareIcon, PlusSquareIcon } from '../../shared/icons';
-import { hasNonEmptyDirs } from '../../shared/tree';
 import {
   getFullTreeExpansion,
+  hasExpandableNodes,
   isTreeFullyCollapsed,
   TreeExpansion,
 } from '../../shared/treeExpansion';
@@ -35,7 +35,7 @@ export function FixtureTreeHeader({
   return (
     <Container>
       <Title>All fixtures</Title>
-      {!hasNonEmptyDirs(rootNode) ? (
+      {!hasExpandableNodes(rootNode) ? (
         <IconButton32
           title="Collapse all fixture tree folders"
           icon={<MinusSquareIcon />}

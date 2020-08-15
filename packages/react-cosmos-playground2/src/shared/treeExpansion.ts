@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import { TreeNode } from 'react-cosmos-shared2/util';
-import { getNonEmptyTreeDirNames } from './tree';
 
 export type TreeExpansion = {
   [nodePath: string]: boolean;
@@ -13,18 +12,41 @@ export type OnTreeExpansionToggle = (
 
 export function isTreeFullyCollapsed(treeExpansion: TreeExpansion) {
   return Object.keys(treeExpansion).every(
-    dirName => treeExpansion[dirName] === false
+    childPath => treeExpansion[childPath] === false
   );
 }
 
 export function getFullTreeExpansion(
   rootNode: TreeNode<any>
 ): Record<string, boolean> {
-  const dirNames = getNonEmptyTreeDirNames(rootNode);
-  return dirNames.reduce(
+  const childPaths = getExpandableNodes(rootNode);
+  return childPaths.reduce(
     (treeExpansion, dirName) => ({ ...treeExpansion, [dirName]: true }),
     {}
   );
+}
+
+export function hasExpandableNodes(rootNode: TreeNode<any>) {
+  return getExpandableNodes(rootNode).length > 0;
+}
+
+export function getExpandableNodes(
+  treeNode: TreeNode<any>,
+  parents: string[] = []
+) {
+  const { children } = treeNode;
+  if (!children) return [];
+
+  const nodePaths: string[] = [];
+  Object.keys(children).forEach(childName => {
+    const childNode = children[childName];
+    if (childNode.children && Object.keys(childNode.children).length > 0) {
+      nodePaths.push([...parents, childName].join('/'));
+      nodePaths.push(...getExpandableNodes(childNode, [...parents, childName]));
+    }
+  });
+
+  return nodePaths;
 }
 
 export function getTreeNodePath(parents: string[], name: string) {

@@ -18,7 +18,7 @@ export function flattenFixtureTree(
   if (data.type === 'fixture' || !children) return [];
 
   const flatFixtureTree: FlatFixtureTree = [];
-  getSortedFixureTreeNodeChildNames(data.type, children).forEach(childName => {
+  getSortedFixureTreeNodeChildNames(treeNode).forEach(childName => {
     const childNode = children[childName];
 
     if (childNode.data.type === 'fileDir')

@@ -34,6 +34,10 @@ export const ValueInputTree = React.memo(function ValueInputTree({
       <TreeView
         node={rootNode}
         expansion={expansion}
+        sortChildren={node => {
+          if (!node.children) return [];
+          return Object.keys(node.children);
+        }}
         renderNode={({ node, name, parents }) => {
           const { data, children } = node;
 

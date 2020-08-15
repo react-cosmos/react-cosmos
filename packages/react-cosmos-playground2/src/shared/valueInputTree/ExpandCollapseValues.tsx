@@ -2,9 +2,9 @@ import React from 'react';
 import { FixtureStateValues } from 'react-cosmos-shared2/fixtureState';
 import { IconButton32 } from '../buttons';
 import { MinusSquareIcon, PlusSquareIcon } from '../icons';
-import { hasNonEmptyDirs } from '../tree';
 import {
   getFullTreeExpansion,
+  hasExpandableNodes,
   isTreeFullyCollapsed,
   TreeExpansion,
 } from '../treeExpansion';
@@ -23,7 +23,7 @@ export function ExpandCollapseValues({
 }: Props) {
   const rootNode = getFixtureStateValueTree(values);
 
-  if (!hasNonEmptyDirs(rootNode)) return null;
+  if (!hasExpandableNodes(rootNode)) return null;
 
   return isTreeFullyCollapsed(treeExpansion) ? (
     <IconButton32

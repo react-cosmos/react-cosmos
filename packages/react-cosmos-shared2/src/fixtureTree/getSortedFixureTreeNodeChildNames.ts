@@ -1,14 +1,14 @@
 import { FixtureTreeNode } from './shared/types';
 
-// TODO: Use this in playground
 export function getSortedFixureTreeNodeChildNames(
-  nodeType: 'fileDir' | 'multiFixture',
-  children: Record<string, FixtureTreeNode>
+  node: FixtureTreeNode
 ): string[] {
-  const childNames = Object.keys(children);
+  const { data, children } = node;
+  if (data.type === 'fixture' || !children) return [];
 
   // Original fixture order is preserved in multi fixtures
-  if (nodeType === 'multiFixture') return childNames;
+  const childNames = Object.keys(children);
+  if (data.type === 'multiFixture') return childNames;
 
   const dirChildNames = childNames.filter(
     childName => children[childName].data.type === 'fileDir'
