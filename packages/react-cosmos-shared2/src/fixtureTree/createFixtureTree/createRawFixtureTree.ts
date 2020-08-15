@@ -58,8 +58,8 @@ function removeFixtureNameExtension(fixtureName: string) {
 
 function createFixtureIds(fixturePath: string, fixtureNames: string[]) {
   return fixtureNames.reduce(
-    (prev, fixtureName) => ({
-      ...prev,
+    (fixtureIds, fixtureName) => ({
+      ...fixtureIds,
       [fixtureName]: { path: fixturePath, name: fixtureName },
     }),
     {}
