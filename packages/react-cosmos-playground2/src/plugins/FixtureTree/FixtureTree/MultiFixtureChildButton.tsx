@@ -1,6 +1,13 @@
 import React, { RefObject } from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
+import {
+  grey144,
+  grey192,
+  grey248,
+  grey8,
+  selectedColors,
+} from '../../../shared/colors';
 import { quick } from '../../../shared/vars';
 import { FixtureLink } from './FixtureLink';
 import { FixtureTreeItem } from './FixtureTreeItem';
@@ -14,7 +21,7 @@ type Props = {
   onSelect: (fixtureId: FixtureId) => unknown;
 };
 
-export function FixtureButton({
+export function MultiFixtureChildButton({
   name,
   fixtureId,
   indentLevel,
@@ -24,9 +31,9 @@ export function FixtureButton({
 }: Props) {
   return (
     <FixtureLink fixtureId={fixtureId} onSelect={onSelect}>
-      <FixtureTreeItem ref={ref} indentLevel={indentLevel} selected={selected}>
+      <ChildTreeItem ref={ref} indentLevel={indentLevel} selected={selected}>
         <Name>{name}</Name>
-      </FixtureTreeItem>
+      </ChildTreeItem>
     </FixtureLink>
   );
 }
@@ -36,4 +43,14 @@ const Name = styled.span`
   padding: 0 8px 0 16px;
   white-space: nowrap;
   transition: opacity ${quick}s;
+`;
+
+const ChildTreeItem = styled(FixtureTreeItem)`
+  background: ${grey8};
+  color: ${selectedColors(grey144, grey248)};
+
+  :hover {
+    background: ${grey8};
+    color: ${selectedColors(grey192, grey248)};
+  }
 `;

@@ -5,12 +5,11 @@ import styled from 'styled-components';
 import { grey32 } from '../../shared/colors';
 import { TreeExpansion } from '../../shared/treeExpansion';
 import { BlankState } from './BlankState';
-import { FixtureTree } from './FixtureTree';
+import { FixtureTree } from './FixtureTree/FixtureTree';
 import { FixtureTreeHeader } from './FixtureTreeHeader';
 import { useScrollToSelected } from './useScrollToSelected';
 
 type Props = {
-  projectId: string;
   fixturesDir: string;
   fixtureFileSuffix: string;
   selectedFixtureId: null | FixtureId;
@@ -22,7 +21,6 @@ type Props = {
 };
 
 export function FixtureTreeContainer({
-  projectId,
   fixturesDir,
   fixtureFileSuffix,
   selectedFixtureId,

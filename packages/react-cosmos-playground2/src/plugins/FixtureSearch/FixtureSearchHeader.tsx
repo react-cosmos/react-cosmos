@@ -64,7 +64,7 @@ const SearchButton = styled.button`
 
   :focus {
     outline: none;
-    box-shadow: inset 2px 0px 0 0 ${blue};
+    box-shadow: inset 1px 0px 0 0 ${blue};
   }
 
   ::-moz-focus-inner {

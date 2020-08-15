@@ -2,14 +2,14 @@ import React from 'react';
 import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { useValue } from 'react-cosmos/fixture';
-import { FixtureTree } from '.';
 import { TreeExpansion } from '../../../shared/treeExpansion';
+import { FixtureTree } from './FixtureTree';
 
 const fixtures = {
-  'src/fixture1.ts': null,
-  'src/fixture2.ts': null,
-  'src/dir1/fixture3.ts': null,
-  'src/dir1/fixture4.ts': ['fixtureA', 'fixtureB'],
+  'src/Dashboard.ts': null,
+  'src/Settings.ts': null,
+  'src/shared/Dropdown.ts': null,
+  'src/shared/Button.ts': ['normal', 'disabled'],
 };
 const rootNode = createFixtureTree({
   fixtures,

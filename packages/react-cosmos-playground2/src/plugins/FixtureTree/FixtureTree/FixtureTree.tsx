@@ -12,6 +12,7 @@ import {
 import { TreeView } from '../../../shared/TreeView';
 import { FixtureButton } from './FixtureButton';
 import { FixtureDir } from './FixtureDir';
+import { MultiFixtureButton } from './MultiFixtureButton';
 
 type Props = {
   rootNode: FixtureTreeNode;
@@ -19,10 +20,9 @@ type Props = {
   selectedRef: RefObject<HTMLElement>;
   treeExpansion: TreeExpansion;
   setTreeExpansion: (treeExpansion: TreeExpansion) => unknown;
-  onSelect: (path: FixtureId) => unknown;
+  onSelect: (fixtureId: FixtureId) => unknown;
 };
 
-// TODO: Rename file to FixtureTree.tsx
 export const FixtureTree = React.memo(function FixtureTree({
   rootNode,
   selectedFixtureId,
@@ -40,11 +40,25 @@ export const FixtureTree = React.memo(function FixtureTree({
         renderNode={({ node, name, parents }) => {
           const { data, children } = node;
 
-          if (data.type === 'fixture')
+          if (data.type === 'fixture') {
+            const selected = isEqual(selectedFixtureId, data.fixtureId);
             return (
               <FixtureButton
                 name={name}
                 fixtureId={data.fixtureId}
+                indentLevel={parents.length}
+                selected={selected}
+                ref={selected ? selectedRef : undefined}
+                onSelect={onSelect}
+              />
+            );
+          }
+
+          if (data.type === 'multiFixture')
+            return (
+              <MultiFixtureButton
+                name={name}
+                fixtureIds={data.fixtureIds}
                 indentLevel={parents.length}
                 selectedFixtureId={selectedFixtureId}
                 selectedRef={selectedRef}
@@ -52,21 +66,22 @@ export const FixtureTree = React.memo(function FixtureTree({
               />
             );
 
+          if (!children) return null;
+
+          const expanded = expansion[getTreeNodePath(parents, name)];
+          const selected =
+            !expanded &&
+            selectedFixtureId !== null &&
+            nodesContainFixture(children, selectedFixtureId);
           return (
-            children && (
-              <FixtureDir
-                name={name}
-                parents={parents}
-                expanded={expansion[getTreeNodePath(parents, name)]}
-                containsSelectedFixture={
-                  selectedFixtureId
-                    ? nodesContainFixture(children, selectedFixtureId)
-                    : false
-                }
-                selectedRef={selectedRef}
-                onToggle={onExpansionToggle}
-              />
-            )
+            <FixtureDir
+              name={name}
+              parents={parents}
+              expanded={expanded}
+              selected={selected}
+              ref={selected ? selectedRef : undefined}
+              onToggle={onExpansionToggle}
+            />
           );
         }}
       />
@@ -81,6 +96,10 @@ function nodesContainFixture(
   return Object.keys(nodes).some(childName => {
     const { data, children } = nodes[childName];
     if (data.type === 'fixture') return isEqual(data.fixtureId, fixtureId);
+    if (data.type === 'multiFixture')
+      return Object.keys(data.fixtureIds).some(fixtureName =>
+        isEqual(data.fixtureIds[fixtureName], fixtureId)
+      );
     return children ? nodesContainFixture(children, fixtureId) : false;
   });
 }

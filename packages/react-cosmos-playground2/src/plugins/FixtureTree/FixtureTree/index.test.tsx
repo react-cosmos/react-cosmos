@@ -2,7 +2,7 @@ import { waitFor } from '@testing-library/dom';
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
-import { FixtureTree } from '.';
+import { FixtureTree } from './FixtureTree';
 
 const fixtures = {
   'ein.js': null,
