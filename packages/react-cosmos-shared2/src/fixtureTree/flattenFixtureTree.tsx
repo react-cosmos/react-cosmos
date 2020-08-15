@@ -17,31 +17,30 @@ export function flattenFixtureTree(
   if (data.type === 'fixture' || !children) return [];
 
   const flatFixtureTree: FlatFixtureTree = [];
-  if (treeNode.children)
-    Object.keys(treeNode.children).forEach(childName => {
+  if (children)
+    Object.keys(children).forEach(childName => {
       const childNode = children[childName];
+      const { data: childData } = childNode;
 
-      if (childNode.data.type === 'fileDir')
+      if (childData.type === 'fileDir')
         flatFixtureTree.push(
           ...flattenFixtureTree(childNode, [...parents, childName])
         );
 
-      if (childNode.data.type === 'multiFixture') {
-        const { fixtureIds } = childNode.data;
-        Object.keys(fixtureIds).forEach(fixtureName =>
+      if (childData.type === 'multiFixture')
+        Object.keys(childData.fixtureIds).forEach(fixtureName =>
           flatFixtureTree.push({
             fileName: childName,
-            fixtureId: fixtureIds[fixtureName],
+            fixtureId: childData.fixtureIds[fixtureName],
             parents,
             name: fixtureName,
           })
         );
-      }
 
-      if (childNode.data.type === 'fixture')
+      if (childData.type === 'fixture')
         flatFixtureTree.push({
           fileName: childName,
-          fixtureId: childNode.data.fixtureId,
+          fixtureId: childData.fixtureId,
           parents,
           name: null,
         });
