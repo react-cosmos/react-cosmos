@@ -1,9 +1,9 @@
-import { isEqual } from 'lodash';
 import {
   createFixtureTree,
   FixtureTreeNode,
 } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
+import { nodeContainsFixtureId } from '../../shared/fixtureTree';
 import { TreeExpansion } from '../../shared/treeExpansion';
 import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
@@ -25,42 +25,43 @@ export function revealFixture(
   const { fixturesDir, fixtureFileSuffix } = core.getFixtureFileVars();
   const fixtures = rendererCore.getFixtures();
 
-  const rootFixtureNode = createFixtureTree({
+  const rootNode = createFixtureTree({
     fixtures,
     fixturesDir,
     fixtureFileSuffix,
   });
-  const nodePath = getFixtureDirNodePath(rootFixtureNode, fixtureId);
-  if (nodePath) {
+  const dirPath = findDirPath(rootNode, fixtureId);
+  if (dirPath) {
     const treeExpansion = getTreeExpansion(storage);
-    const curNodePath = [];
+    const curDirPath = [];
     const curTreeExpansion: TreeExpansion = { ...treeExpansion };
-    for (let pathIndex = 0; pathIndex < nodePath.length; pathIndex++) {
-      curNodePath.push(nodePath[pathIndex]);
-      curTreeExpansion[curNodePath.join('/')] = true;
+    for (let pathIndex = 0; pathIndex < dirPath.length; pathIndex++) {
+      curDirPath.push(dirPath[pathIndex]);
+      curTreeExpansion[curDirPath.join('/')] = true;
     }
     setTreeExpansion(storage, curTreeExpansion);
   }
 }
 
-function getFixtureDirNodePath(
+function findDirPath(
   { data, children }: FixtureTreeNode,
   fixtureId: FixtureId,
-  atPath: string[] = []
+  parents: string[] = []
 ): null | string[] {
-  if (data.type === 'fixture' || !children) return null;
+  if (data.type !== 'fileDir' || !children) return null;
 
   const childNames = Object.keys(children);
   for (let childName of childNames) {
     const childNode = children[childName];
-    if (childNode.data.type === 'fixture') {
-      if (isEqual(childNode.data.fixtureId, fixtureId)) return atPath;
+
+    if (childNode.data.type !== 'fileDir') {
+      if (nodeContainsFixtureId(childNode, fixtureId)) return parents;
     } else {
-      const fixtureDirPath = getFixtureDirNodePath(childNode, fixtureId, [
-        ...atPath,
+      const dirPath = findDirPath(childNode, fixtureId, [
+        ...parents,
         childName,
       ]);
-      if (fixtureDirPath) return fixtureDirPath;
+      if (dirPath) return dirPath;
     }
   }
 

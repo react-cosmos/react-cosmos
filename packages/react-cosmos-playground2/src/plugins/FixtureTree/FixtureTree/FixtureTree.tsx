@@ -5,6 +5,10 @@ import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
 import { grey32 } from '../../../shared/colors';
 import {
+  nodeContainsFixtureId,
+  recordContainsFixtureId,
+} from '../../../shared/fixtureTree';
+import {
   getTreeNodePath,
   TreeExpansion,
   useTreeExpansionToggle,
@@ -54,17 +58,22 @@ export const FixtureTree = React.memo(function FixtureTree({
             );
           }
 
-          if (data.type === 'multiFixture')
+          if (data.type === 'multiFixture') {
+            const selected =
+              selectedFixtureId !== null &&
+              recordContainsFixtureId(data.fixtureIds, selectedFixtureId);
             return (
               <MultiFixtureButton
                 name={name}
                 fixtureIds={data.fixtureIds}
                 indentLevel={parents.length}
+                selected={selected}
                 selectedFixtureId={selectedFixtureId}
                 selectedRef={selectedRef}
                 onSelect={onSelect}
               />
             );
+          }
 
           if (!children) return null;
 
@@ -72,7 +81,7 @@ export const FixtureTree = React.memo(function FixtureTree({
           const selected =
             !expanded &&
             selectedFixtureId !== null &&
-            nodesContainFixture(children, selectedFixtureId);
+            nodeContainsFixtureId(node, selectedFixtureId);
           return (
             <FixtureDir
               name={name}
@@ -88,21 +97,6 @@ export const FixtureTree = React.memo(function FixtureTree({
     </Container>
   );
 });
-
-function nodesContainFixture(
-  nodes: Record<string, FixtureTreeNode>,
-  fixtureId: FixtureId
-): boolean {
-  return Object.keys(nodes).some(childName => {
-    const { data, children } = nodes[childName];
-    if (data.type === 'fixture') return isEqual(data.fixtureId, fixtureId);
-    if (data.type === 'multiFixture')
-      return Object.keys(data.fixtureIds).some(fixtureName =>
-        isEqual(data.fixtureIds[fixtureName], fixtureId)
-      );
-    return children ? nodesContainFixture(children, fixtureId) : false;
-  });
-}
 
 // Reason for inline-block: https://stackoverflow.com/a/53895622/128816
 const Container = styled.div`

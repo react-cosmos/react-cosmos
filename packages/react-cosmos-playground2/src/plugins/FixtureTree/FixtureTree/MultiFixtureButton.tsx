@@ -11,6 +11,7 @@ type Props = {
   name: string;
   fixtureIds: Record<string, FixtureId>;
   indentLevel: number;
+  selected: boolean;
   selectedFixtureId: null | FixtureId;
   selectedRef: RefObject<HTMLElement>;
   onSelect: (fixtureId: FixtureId) => unknown;
@@ -20,13 +21,11 @@ export function MultiFixtureButton({
   name,
   fixtureIds,
   indentLevel,
+  selected,
   selectedFixtureId,
   selectedRef,
   onSelect,
 }: Props) {
-  const selected = selectedFixtureId
-    ? containsFixture(fixtureIds, selectedFixtureId)
-    : false;
   const firstFixtureId = fixtureIds[Object.keys(fixtureIds)[0]];
 
   if (!selected)
@@ -63,15 +62,6 @@ export function MultiFixtureButton({
       })}
       <FooterPadding />
     </>
-  );
-}
-
-function containsFixture(
-  fixtureIds: Record<string, FixtureId>,
-  fixtureId: FixtureId
-): boolean {
-  return Object.keys(fixtureIds).some(fixtureName =>
-    isEqual(fixtureIds[fixtureName], fixtureId)
   );
 }
 
