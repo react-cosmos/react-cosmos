@@ -45,7 +45,7 @@ it('renders component name', async () => {
   mockStorage();
 
   const fixtureState = createFsState({
-    myValue: { type: 'primitive', value: 'foo' },
+    myValue: { type: 'primitive', data: 'foo' },
   });
   const { getByText } = loadTestPlugins(fixtureState);
   getByText('MyComponent');
@@ -55,7 +55,7 @@ it('updates string value', async () => {
   mockStorage();
 
   const fixtureState = createFsState({
-    myStrValue: { type: 'primitive', value: 'foo' },
+    myStrValue: { type: 'primitive', data: 'foo' },
   });
   const { getByLabelText } = loadTestPlugins(fixtureState);
   const input = getByLabelText('myStrValue');
@@ -63,7 +63,7 @@ it('updates string value', async () => {
   fireEvent.change(input, { target: { value: 'bar' } });
   await waitFor(() =>
     expect(fixtureState.props[0].values).toEqual({
-      myStrValue: { type: 'primitive', value: 'bar' },
+      myStrValue: { type: 'primitive', data: 'bar' },
     })
   );
 });
@@ -72,7 +72,7 @@ it('updates boolean value', async () => {
   mockStorage();
 
   const fixtureState = createFsState({
-    myBoolValue: { type: 'primitive', value: false },
+    myBoolValue: { type: 'primitive', data: false },
   });
   const { getByText } = loadTestPlugins(fixtureState);
   getByText('myBoolValue');
@@ -81,7 +81,7 @@ it('updates boolean value', async () => {
   fireEvent.click(button);
   await waitFor(() =>
     expect(fixtureState.props[0].values).toEqual({
-      myBoolValue: { type: 'primitive', value: true },
+      myBoolValue: { type: 'primitive', data: true },
     })
   );
 });
@@ -90,7 +90,7 @@ it('renders null value', async () => {
   mockStorage();
 
   const fixtureState = createFsState({
-    myNullValue: { type: 'primitive', value: null },
+    myNullValue: { type: 'primitive', data: null },
   });
   const { getByText } = loadTestPlugins(fixtureState);
   getByText('myNullValue');
@@ -103,7 +103,7 @@ it('renders unserializable value', async () => {
   const fixtureState = createFsState({
     myRegexpValue: {
       type: 'unserializable',
-      stringifiedValue: '/canttouchthis/i',
+      stringifiedData: '/canttouchthis/i',
     },
   });
   const { getByText } = loadTestPlugins(fixtureState);
@@ -118,7 +118,7 @@ it('toggles nested object', async () => {
     myObjValue: {
       type: 'object',
       values: {
-        myNumValue: { type: 'primitive', value: 1234 },
+        myNumValue: { type: 'primitive', data: 1234 },
       },
     },
   });
@@ -144,7 +144,7 @@ it('updates number input nested in object', async () => {
     myObjValue: {
       type: 'object',
       values: {
-        myNumValue: { type: 'primitive', value: 1234 },
+        myNumValue: { type: 'primitive', data: 1234 },
       },
     },
   });
@@ -157,7 +157,7 @@ it('updates number input nested in object', async () => {
       myObjValue: {
         type: 'object',
         values: {
-          myNumValue: { type: 'primitive', value: 6789 },
+          myNumValue: { type: 'primitive', data: 6789 },
         },
       },
     })

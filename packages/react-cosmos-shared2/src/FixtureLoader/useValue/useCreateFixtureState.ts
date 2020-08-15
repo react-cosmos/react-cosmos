@@ -5,13 +5,13 @@ import {
   extendWithValue,
   findFixtureStateControl,
   FixtureStateValue,
-  FixtureStateValueType,
+  FixtureStateValueData,
 } from '../../fixtureState';
 import { FixtureContext } from '../FixtureContext';
 
 export function useCreateFixtureState(
   inputName: string,
-  defaultValue: FixtureStateValueType
+  defaultValue: FixtureStateValueData
 ) {
   const { setFixtureState } = React.useContext(FixtureContext);
   React.useEffect(() => {

@@ -7,32 +7,32 @@ import { getFixtureStateValueTree } from './valueTree';
 
 const str1: FixtureStateValue = {
   type: 'primitive',
-  value: 'foo',
+  data: 'foo',
 };
 
 const str2: FixtureStateValue = {
   type: 'primitive',
-  value: 'bar',
+  data: 'bar',
 };
 
 const str3: FixtureStateValue = {
   type: 'primitive',
-  value: 'baz',
+  data: 'baz',
 };
 
 const num: FixtureStateValue = {
   type: 'primitive',
-  value: 56,
+  data: 56,
 };
 
 const bool: FixtureStateValue = {
   type: 'primitive',
-  value: false,
+  data: false,
 };
 
 const jsx: FixtureStateValue = {
   type: 'unserializable',
-  stringifiedValue: '<div />',
+  stringifiedData: '<div />',
 };
 
 const values: FixtureStateValues = {

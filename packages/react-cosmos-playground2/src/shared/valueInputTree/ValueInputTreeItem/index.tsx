@@ -1,13 +1,13 @@
 import { clone, setWith } from 'lodash';
 import React from 'react';
 import {
-  FixtureStatePrimitiveValueType,
+  FixtureStatePrimitiveValueData,
   FixtureStateValue,
   FixtureStateValues,
 } from 'react-cosmos-shared2/fixtureState';
 import styled from 'styled-components';
 import { ValueInputSlot } from '../../slots/ValueInputSlot';
-import { ItemValue, TreeItemContainer } from '../shared';
+import { LeafValue, TreeItemContainer } from '../shared';
 import { BooleanItem } from './BooleanItem';
 import { NullItem } from './NullItem';
 import { NumberItem } from './NumberItem';
@@ -16,7 +16,7 @@ import { UndefinedItem } from './UndefinedItem';
 import { UnserializableItem } from './UnserializableItem';
 
 type Props = {
-  value: ItemValue;
+  value: LeafValue;
   name: string;
   parents: string[];
   // TODO: Can this interface be simplified?
@@ -36,9 +36,9 @@ export function ValueInputTreeItem({
   const id = getItemId(treeId, parents, name);
 
   const onInputChange = React.useCallback(
-    (newValue: FixtureStatePrimitiveValueType) => {
+    (data: FixtureStatePrimitiveValueData) => {
       const valuePath = getValuePath(name, parents);
-      const fsValue: FixtureStateValue = { type: 'primitive', value: newValue };
+      const fsValue: FixtureStateValue = { type: 'primitive', data };
       onValueChange(setValueAtPath(values, fsValue, valuePath));
     },
     [name, onValueChange, parents, values]
@@ -65,47 +65,47 @@ export const ItemContainer = styled.div`
 function getItem(
   id: string,
   name: string,
-  value: ItemValue,
-  onInputChange: (value: FixtureStatePrimitiveValueType) => unknown
+  value: LeafValue,
+  onInputChange: (value: FixtureStatePrimitiveValueData) => unknown
 ) {
   if (value.type === 'unserializable')
-    return <UnserializableItem label={name} value={value.stringifiedValue} />;
+    return <UnserializableItem label={name} value={value.stringifiedData} />;
 
-  if (typeof value.value === 'string')
+  if (typeof value.data === 'string')
     return (
       <StringItem
         id={id}
         label={name}
-        value={value.value}
+        value={value.data}
         onChange={onInputChange}
       />
     );
 
-  if (typeof value.value === 'number')
+  if (typeof value.data === 'number')
     return (
       <NumberItem
         id={id}
         label={name}
-        value={value.value}
+        value={value.data}
         onChange={onInputChange}
       />
     );
 
-  if (typeof value.value === 'boolean')
+  if (typeof value.data === 'boolean')
     return (
       <BooleanItem
         id={id}
         label={name}
-        value={value.value}
+        value={value.data}
         onChange={onInputChange}
       />
     );
 
-  if (value.value === null) return <NullItem label={name} />;
+  if (value.data === null) return <NullItem label={name} />;
 
-  if (value.value === undefined) return <UndefinedItem label={name} />;
+  if (value.data === undefined) return <UndefinedItem label={name} />;
 
-  throw new Error(`Invalid primitive value: ${value.value}`);
+  throw new Error(`Invalid primitive value: ${value.data}`);
 }
 
 function getValuePath(valueKey: string, parentKeys: string[]) {

@@ -6,7 +6,7 @@ it('creates string value', () => {
   expect(values).toEqual({
     myProp: {
       type: 'primitive',
-      value: 'foo',
+      data: 'foo',
     },
   });
 });
@@ -16,7 +16,7 @@ it('creates number value', () => {
   expect(values).toEqual({
     myProp: {
       type: 'primitive',
-      value: 56,
+      data: 56,
     },
   });
 });
@@ -26,7 +26,7 @@ it('creates boolean value', () => {
   expect(values).toEqual({
     myProp: {
       type: 'primitive',
-      value: false,
+      data: false,
     },
   });
 });
@@ -36,7 +36,7 @@ it('creates undefined value', () => {
   expect(values).toEqual({
     myProp: {
       type: 'primitive',
-      value: undefined,
+      data: undefined,
     },
   });
 });
@@ -46,7 +46,7 @@ it('creates null value', () => {
   expect(values).toEqual({
     myProp: {
       type: 'primitive',
-      value: null,
+      data: null,
     },
   });
 });
@@ -56,7 +56,7 @@ it('creates unserializable function value', () => {
   expect(values).toEqual({
     myProp: {
       type: 'unserializable',
-      stringifiedValue: 'function myProp() {}',
+      stringifiedData: 'function myProp() {}',
     },
   });
 });
@@ -66,7 +66,7 @@ it('creates unserializable regexp value', () => {
   expect(values).toEqual({
     myProp: {
       type: 'unserializable',
-      stringifiedValue: '/impossible/g',
+      stringifiedData: '/impossible/g',
     },
   });
 });
@@ -76,7 +76,7 @@ it('creates unserializable React element value', () => {
   expect(values).toEqual({
     myProp: {
       type: 'unserializable',
-      stringifiedValue: '<div />',
+      stringifiedData: '<div />',
     },
   });
 });
@@ -101,15 +101,15 @@ it('creates serializable object value', () => {
       values: {
         strProp: {
           type: 'primitive',
-          value: 'foo',
+          data: 'foo',
         },
         numProp: {
           type: 'primitive',
-          value: 56,
+          data: 56,
         },
         boolProp: {
           type: 'primitive',
-          value: false,
+          data: false,
         },
       },
     },
@@ -126,11 +126,11 @@ it('creates partially serializable object value', () => {
       values: {
         strProp: {
           type: 'primitive',
-          value: 'foo',
+          data: 'foo',
         },
         fnProp: {
           type: 'unserializable',
-          stringifiedValue: 'function fnProp() {}',
+          stringifiedData: 'function fnProp() {}',
         },
       },
     },
@@ -147,11 +147,11 @@ it('creates array value', () => {
       values: [
         {
           type: 'primitive',
-          value: 'foo',
+          data: 'foo',
         },
         {
           type: 'unserializable',
-          stringifiedValue: 'function () {}',
+          stringifiedData: 'function () {}',
         },
       ],
     },

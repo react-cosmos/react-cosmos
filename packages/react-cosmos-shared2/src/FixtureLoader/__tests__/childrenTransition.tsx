@@ -46,7 +46,7 @@ testFixtureLoader(
             values: {
               children: {
                 type: 'unserializable',
-                stringifiedValue: `<Wrapper>\n  brah\n</Wrapper>`,
+                stringifiedData: `<Wrapper>\n  brah\n</Wrapper>`,
               },
             },
           }),
@@ -94,7 +94,7 @@ testFixtureLoader(
             values: {
               children: {
                 type: 'unserializable',
-                stringifiedValue: `<Wrapper>\n  brah\n</Wrapper>`,
+                stringifiedData: `<Wrapper>\n  brah\n</Wrapper>`,
               },
             },
           }),

@@ -7,13 +7,13 @@ import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { TreeNode } from 'react-cosmos-shared2/util';
 import styled from 'styled-components';
 
-export type ItemValue =
+export type LeafValue =
   | FixtureStatePrimitiveValue
   | FixtureStateUnserializableValue;
 
 export type ValueNodeData =
   | { type: 'collection' }
-  | { type: 'item'; value: ItemValue };
+  | { type: 'item'; value: LeafValue };
 
 export type ValueNode = TreeNode<ValueNodeData>;
 

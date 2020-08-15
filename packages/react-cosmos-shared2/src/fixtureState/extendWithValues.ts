@@ -1,5 +1,5 @@
 import {
-  FixtureStateObjectValueType,
+  FixtureStateObjectValueData,
   FixtureStateValue,
   FixtureStateValues,
   isArray,
@@ -8,10 +8,10 @@ import {
 
 // Use fixture state for serializable values and fall back to base values
 export function extendWithValues(
-  obj: FixtureStateObjectValueType,
+  obj: FixtureStateObjectValueData,
   values: FixtureStateValues
-): FixtureStateObjectValueType {
-  const extendedObj: FixtureStateObjectValueType = {};
+): FixtureStateObjectValueData {
+  const extendedObj: FixtureStateObjectValueData = {};
   Object.keys(values).forEach(key => {
     extendedObj[key] = extendWithValue(obj[key], values[key]);
   });
@@ -19,22 +19,20 @@ export function extendWithValues(
 }
 
 export function extendWithValue(
-  baseValue: unknown,
+  data: unknown,
   value: FixtureStateValue
 ): unknown {
-  if (value.type === 'unserializable') {
-    return baseValue;
-  }
+  if (value.type === 'unserializable') return data;
 
   if (value.type === 'object') {
-    const baseObj = isObject(baseValue) ? baseValue : {};
-    return extendWithValues(baseObj, value.values);
+    const obj = isObject(data) ? data : {};
+    return extendWithValues(obj, value.values);
   }
 
   if (value.type === 'array') {
-    const baseArr = isArray(baseValue) ? baseValue : [];
-    return value.values.map((v, idx) => extendWithValue(baseArr[idx], v));
+    const array = isArray(data) ? data : [];
+    return value.values.map((v, idx) => extendWithValue(array[idx], v));
   }
 
-  return value.value;
+  return value.data;
 }

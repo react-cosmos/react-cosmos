@@ -6,7 +6,7 @@ it('extends string key', () => {
   const values: FixtureStateValues = {
     myProp: {
       type: 'primitive',
-      value: 'bar',
+      data: 'bar',
     },
   };
   expect(extendWithValues(obj, values)).toEqual({ myProp: 'bar' });
@@ -17,7 +17,7 @@ it('extends number key', () => {
   const values: FixtureStateValues = {
     myProp: {
       type: 'primitive',
-      value: 57,
+      data: 57,
     },
   };
   expect(extendWithValues(obj, values)).toEqual({ myProp: 57 });
@@ -28,7 +28,7 @@ it('extends boolean key', () => {
   const values: FixtureStateValues = {
     myProp: {
       type: 'primitive',
-      value: true,
+      data: true,
     },
   };
   expect(extendWithValues(obj, values)).toEqual({ myProp: true });
@@ -45,7 +45,7 @@ it('keeps null key', () => {
   const values: FixtureStateValues = {
     myProp: {
       type: 'primitive',
-      value: null,
+      data: null,
     },
   };
   expect(extendWithValues(obj, values)).toEqual({ myProp: null });
@@ -56,7 +56,7 @@ it('keeps unserializable function key', () => {
   const values: FixtureStateValues = {
     myProp: {
       type: 'unserializable',
-      stringifiedValue: 'xxx',
+      stringifiedData: 'xxx',
     },
   };
   expect(extendWithValues(obj, values)).toEqual({ myProp: obj.myProp });
@@ -67,7 +67,7 @@ it('keeps unserializable regexp key', () => {
   const values: FixtureStateValues = {
     myProp: {
       type: 'unserializable',
-      stringifiedValue: 'xxx',
+      stringifiedData: 'xxx',
     },
   };
   expect(extendWithValues(obj, values)).toEqual({ myProp: obj.myProp });
@@ -94,15 +94,15 @@ it('extends serializable object key', () => {
       values: {
         strProp: {
           type: 'primitive',
-          value: 'bar',
+          data: 'bar',
         },
         numProp: {
           type: 'primitive',
-          value: 57,
+          data: 57,
         },
         boolProp: {
           type: 'primitive',
-          value: true,
+          data: true,
         },
       },
     },
@@ -122,11 +122,11 @@ it('extends partially serializable object key', () => {
       values: {
         strProp: {
           type: 'primitive',
-          value: 'bar',
+          data: 'bar',
         },
         fnProp: {
           type: 'unserializable',
-          stringifiedValue: 'function () {}',
+          stringifiedData: 'function () {}',
         },
       },
     },
@@ -146,11 +146,11 @@ it('extends partially serializable array key', () => {
       values: [
         {
           type: 'primitive',
-          value: 'bar',
+          data: 'bar',
         },
         {
           type: 'unserializable',
-          stringifiedValue: 'function () {}',
+          stringifiedData: 'function () {}',
         },
       ],
     },
@@ -173,7 +173,7 @@ it('extends partial array of objects', () => {
           values: {
             key: {
               type: 'primitive',
-              value: 'bar',
+              data: 'bar',
             },
           },
         },
@@ -182,7 +182,7 @@ it('extends partial array of objects', () => {
           values: {
             key: {
               type: 'primitive',
-              value: 'baz',
+              data: 'baz',
             },
           },
         },

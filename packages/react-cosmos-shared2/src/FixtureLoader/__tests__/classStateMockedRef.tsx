@@ -54,7 +54,7 @@ testFixtureLoader(
       const [{ values }] = getClassState(fixtureState);
       if (!values) return null;
       const countValue = values.count as FixtureStatePrimitiveValue;
-      return countValue.value as number;
+      return countValue.data as number;
     }
   }
 );

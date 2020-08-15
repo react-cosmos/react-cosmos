@@ -11,28 +11,28 @@ export type FixtureElementId = {
 
 export type FixtureStateUnserializableValue = {
   type: 'unserializable';
-  stringifiedValue: string;
+  stringifiedData: string;
 };
 
-export type FixtureStatePrimitiveValueType =
+export type FixtureStatePrimitiveValueData =
   | string
   | number
   | boolean
   | null
   | undefined;
 
-export type FixtureStateObjectValueType = Record<string, unknown>;
+export type FixtureStateObjectValueData = Record<string, unknown>;
 
-export type FixtureStateArrayValueType = unknown[];
+export type FixtureStateArrayValueData = unknown[];
 
-export type FixtureStateValueType =
-  | FixtureStatePrimitiveValueType
-  | FixtureStateObjectValueType
-  | FixtureStateArrayValueType;
+export type FixtureStateValueData =
+  | FixtureStatePrimitiveValueData
+  | FixtureStateObjectValueData
+  | FixtureStateArrayValueData;
 
 export type FixtureStatePrimitiveValue = {
   type: 'primitive';
-  value: FixtureStatePrimitiveValueType;
+  data: FixtureStatePrimitiveValueData;
 };
 
 export type FixtureStateObjectValue = {
@@ -115,22 +115,22 @@ export function isUndefined(value: unknown): value is undefined {
   return value === undefined;
 }
 
-export function isPrimitiveValue(
-  value: unknown
-): value is FixtureStatePrimitiveValueType {
+export function isPrimitiveData(
+  data: unknown
+): data is FixtureStatePrimitiveValueData {
   return (
-    isString(value) ||
-    isNumber(value) ||
-    isBoolean(value) ||
-    isNull(value) ||
-    isUndefined(value)
+    isString(data) ||
+    isNumber(data) ||
+    isBoolean(data) ||
+    isNull(data) ||
+    isUndefined(data)
   );
 }
 
-export function isObject(value: unknown): value is FixtureStateObjectValueType {
-  return isPlainObject(value) && !isElement(value);
+export function isObject(data: unknown): data is FixtureStateObjectValueData {
+  return isPlainObject(data) && !isElement(data);
 }
 
-export function isArray(value: unknown): value is FixtureStateArrayValueType {
-  return Array.isArray(value);
+export function isArray(data: unknown): data is FixtureStateArrayValueData {
+  return Array.isArray(data);
 }
