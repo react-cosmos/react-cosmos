@@ -1,9 +1,10 @@
 import { FixtureNamesByPath } from '../../renderer';
+import { sortTreeChildren } from '../../util';
 import { FixtureTreeNode } from '../shared/types';
 import { collapseFixtureDirs } from './collapseFixtureDirs';
-import { collapseOuterDirs } from './collapseOuterDirs';
 import { collapseIndexes } from './collapseIndexes';
 import { collapseNamedIndexes } from './collapseNamedIndexes';
+import { collapseOuterDirs } from './collapseOuterDirs';
 import { createRawFixtureTree } from './createRawFixtureTree';
 import { hideFixtureSuffix } from './hideFixtureSuffix';
 
@@ -22,5 +23,5 @@ export function createFixtureTree({
   tree = collapseIndexes(tree);
   tree = collapseNamedIndexes(tree);
   tree = collapseOuterDirs(tree);
-  return tree;
+  return sortTreeChildren(tree);
 }

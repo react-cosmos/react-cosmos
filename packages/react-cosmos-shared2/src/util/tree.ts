@@ -12,16 +12,23 @@ export function addTreeNodeChild<T>(
   parentNode.children[childName] = childNode;
 }
 
-// TODO: sortTreeChildNames
-// TODO: Call this when building the tree, not when showing it
-export function getSortedTreeChildNames<T>(node: TreeNode<T>): string[] {
+export function sortTreeChildren<T>(node: TreeNode<T>): TreeNode<T> {
   const { children } = node;
-  if (!children) return [];
+  if (!children) return node;
 
+  // Group by parent and leaf nodes, and sort alphabetically within each group
   const childNames = Object.keys(children);
   const parentNames = childNames.filter(n => children[n].children);
   const leafNames = childNames.filter(n => !children[n].children);
-
-  // Group by parent and leaf nodes, and sort alphabetically within each group
-  return [...parentNames.sort(), ...leafNames.sort()];
+  const sortedChildNames = [...parentNames.sort(), ...leafNames.sort()];
+  return {
+    ...node,
+    children: sortedChildNames.reduce(
+      (newChildren, childName) => ({
+        ...newChildren,
+        [childName]: sortTreeChildren(children[childName]),
+      }),
+      {}
+    ),
+  };
 }

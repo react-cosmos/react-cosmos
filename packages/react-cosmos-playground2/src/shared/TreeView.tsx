@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { getSortedTreeChildNames, TreeNode } from 'react-cosmos-shared2/util';
+import { TreeNode } from 'react-cosmos-shared2/util';
 import { getTreeNodePath, TreeExpansion } from './treeExpansion';
 
 type Props<Item> = {
@@ -30,7 +30,7 @@ export function TreeView<Item>({
       {name !== undefined && renderNode({ node, name, parents })}
       {children &&
         expanded &&
-        getSortedTreeChildNames(node).map(childName => {
+        Object.keys(children).map(childName => {
           const childNode = children[childName];
           const nextParents = name ? [...parents, name] : parents;
           return (

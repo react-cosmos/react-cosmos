@@ -6,5 +6,5 @@ export type Message = {
 };
 
 export { removeItemMatch, replaceOrAddItem, updateItem } from './array';
-export { addTreeNodeChild, getSortedTreeChildNames, TreeNode } from './tree';
+export { addTreeNodeChild, sortTreeChildren, TreeNode } from './tree';
 export { uuid } from './uuid';
