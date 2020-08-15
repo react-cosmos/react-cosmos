@@ -15,24 +15,16 @@ it('collapses fixture dir', () => {
                 data: { type: 'fileDir' },
                 children: {
                   Button: {
-                    data: { type: 'multiFixture' },
-                    children: {
-                      normal: {
-                        data: {
-                          type: 'fixture',
-                          fixtureId: {
-                            path: 'ui/__fixtures__/shared/Button.js',
-                            name: 'normal',
-                          },
+                    data: {
+                      type: 'multiFixture',
+                      fixtureIds: {
+                        normal: {
+                          path: 'ui/__fixtures__/shared/Button.js',
+                          name: 'normal',
                         },
-                      },
-                      disabled: {
-                        data: {
-                          type: 'fixture',
-                          fixtureId: {
-                            path: 'ui/__fixtures__/shared/Button.js',
-                            name: 'disabled',
-                          },
+                        disabled: {
+                          path: 'ui/__fixtures__/shared/Button.js',
+                          name: 'disabled',
                         },
                       },
                     },
@@ -64,24 +56,16 @@ it('collapses fixture dir', () => {
             data: { type: 'fileDir' },
             children: {
               Button: {
-                data: { type: 'multiFixture' },
-                children: {
-                  normal: {
-                    data: {
-                      type: 'fixture',
-                      fixtureId: {
-                        path: 'ui/__fixtures__/shared/Button.js',
-                        name: 'normal',
-                      },
+                data: {
+                  type: 'multiFixture',
+                  fixtureIds: {
+                    normal: {
+                      path: 'ui/__fixtures__/shared/Button.js',
+                      name: 'normal',
                     },
-                  },
-                  disabled: {
-                    data: {
-                      type: 'fixture',
-                      fixtureId: {
-                        path: 'ui/__fixtures__/shared/Button.js',
-                        name: 'disabled',
-                      },
+                    disabled: {
+                      path: 'ui/__fixtures__/shared/Button.js',
+                      name: 'disabled',
                     },
                   },
                 },

@@ -1,5 +1,5 @@
 import { get, set } from 'lodash';
-import { FixtureId, FixtureNamesByPath } from '../../renderer';
+import { FixtureNamesByPath } from '../../renderer';
 import { addTreeNodeChild } from '../../util';
 import { FixtureTreeNode } from '../shared/types';
 
@@ -9,6 +9,7 @@ export function createRawFixtureTree(
   const rootNode: FixtureTreeNode = {
     data: { type: 'fileDir' },
   };
+
   Object.keys(fixtures).forEach(fixturePath =>
     addFixturePathToTree(rootNode, fixturePath, fixtures[fixturePath])
   );
@@ -21,43 +22,51 @@ function addFixturePathToTree(
   fixturePath: string,
   fixtureNames: null | string[]
 ) {
-  const parents = fixturePath.split('/');
-  const rawFixtureName = parents.pop();
-  if (!rawFixtureName) throw new Error('Fixture name is empty');
-  const fileName = removeFixtureNameExtension(rawFixtureName);
+  const { parents, fileName } = parseFixturePath(fixturePath);
 
   if (!fixtureNames)
-    return injectFixtureId(rootNode, parents, fileName, {
-      path: fixturePath,
-      name: null,
+    return injectNode(rootNode, parents, fileName, {
+      data: {
+        type: 'fixture',
+        fixtureId: { path: fixturePath, name: null },
+      },
     });
 
-  injectFixtureTreeNode(rootNode, parents, fileName, {
-    data: { type: 'multiFixture' },
-  });
-  fixtureNames.forEach(fixtureName => {
-    injectFixtureId(rootNode, [...parents, fileName], fixtureName, {
-      path: fixturePath,
-      name: fixtureName,
-    });
-  });
-}
-
-function injectFixtureId(
-  rootNode: FixtureTreeNode,
-  parents: string[],
-  childName: string,
-  fixtureId: FixtureId
-) {
-  injectFixtureTreeNode(rootNode, parents, childName, {
+  injectNode(rootNode, parents, fileName, {
     data: {
-      type: 'fixture',
-      fixtureId: fixtureId,
+      type: 'multiFixture',
+      fixtureIds: createFixtureIds(fixturePath, fixtureNames),
     },
   });
 }
 
-function injectFixtureTreeNode(
+function parseFixturePath(fixturePath: string) {
+  const parents = fixturePath.split('/');
+
+  const rawFixtureName = parents.pop();
+  if (!rawFixtureName) throw new Error('Fixture name is empty');
+
+  return {
+    parents,
+    fileName: removeFixtureNameExtension(rawFixtureName),
+  };
+}
+
+function removeFixtureNameExtension(fixtureName: string) {
+  return fixtureName.replace(/\.(j|t)sx?$/, '');
+}
+
+function createFixtureIds(fixturePath: string, fixtureNames: string[]) {
+  return fixtureNames.reduce(
+    (prev, fixtureName) => ({
+      ...prev,
+      [fixtureName]: { path: fixturePath, name: fixtureName },
+    }),
+    {}
+  );
+}
+
+function injectNode(
   rootNode: FixtureTreeNode,
   parents: string[],
   childName: string,
@@ -84,8 +93,4 @@ function injectFixtureTreeNode(
   } while (curParentDepth <= parents.length);
 
   addTreeNodeChild(curParent, childName, childNode);
-}
-
-function removeFixtureNameExtension(fixtureName: string) {
-  return fixtureName.replace(/\.(j|t)sx?$/, '');
 }

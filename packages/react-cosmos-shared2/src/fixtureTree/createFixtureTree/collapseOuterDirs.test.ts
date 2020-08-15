@@ -40,22 +40,11 @@ it('collapses one outer dir (multi fixture)', () => {
         data: { type: 'fileDir' },
         children: {
           Button: {
-            data: { type: 'multiFixture' },
-            children: {
-              normal: {
-                data: {
-                  type: 'fixture',
-                  fixtureId: { path: 'src/Button.fixture.js', name: 'normal' },
-                },
-              },
-              disabled: {
-                data: {
-                  type: 'fixture',
-                  fixtureId: {
-                    path: 'src/Button.fixture.js',
-                    name: 'disabled',
-                  },
-                },
+            data: {
+              type: 'multiFixture',
+              fixtureIds: {
+                normal: { path: 'src/Button.fixture.js', name: 'normal' },
+                disabled: { path: 'src/Button.fixture.js', name: 'disabled' },
               },
             },
           },
@@ -67,19 +56,11 @@ it('collapses one outer dir (multi fixture)', () => {
     data: { type: 'fileDir' },
     children: {
       Button: {
-        data: { type: 'multiFixture' },
-        children: {
-          normal: {
-            data: {
-              type: 'fixture',
-              fixtureId: { path: 'src/Button.fixture.js', name: 'normal' },
-            },
-          },
-          disabled: {
-            data: {
-              type: 'fixture',
-              fixtureId: { path: 'src/Button.fixture.js', name: 'disabled' },
-            },
+        data: {
+          type: 'multiFixture',
+          fixtureIds: {
+            normal: { path: 'src/Button.fixture.js', name: 'normal' },
+            disabled: { path: 'src/Button.fixture.js', name: 'disabled' },
           },
         },
       },

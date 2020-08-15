@@ -6,7 +6,7 @@ export function collapseFixtureDirs(
   fixturesDir: string
 ): FixtureTreeNode {
   const { data, children } = treeNode;
-  if (!children || data.type !== 'fileDir') return treeNode;
+  if (data.type !== 'fileDir' || !children) return treeNode;
 
   const collapsableDirNode = children[fixturesDir];
   if (collapsableDirNode && collapsableDirNode.data.type === 'fileDir') {

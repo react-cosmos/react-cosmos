@@ -27,18 +27,15 @@ export function flattenFixtureTree(
       );
 
     if (childNode.data.type === 'multiFixture') {
-      const fixtureNodes = childNode.children;
-      if (fixtureNodes)
-        Object.keys(fixtureNodes).forEach(fixtureName => {
-          const fixtureNode = fixtureNodes[fixtureName];
-          if (fixtureNode.data.type === 'fixture')
-            flatFixtureTree.push({
-              fileName: childName,
-              fixtureId: fixtureNode.data.fixtureId,
-              parents,
-              name: fixtureName,
-            });
-        });
+      const { fixtureIds } = childNode.data;
+      Object.keys(fixtureIds).forEach(fixtureName =>
+        flatFixtureTree.push({
+          fileName: childName,
+          fixtureId: fixtureIds[fixtureName],
+          parents,
+          name: fixtureName,
+        })
+      );
     }
 
     if (childNode.data.type === 'fixture')

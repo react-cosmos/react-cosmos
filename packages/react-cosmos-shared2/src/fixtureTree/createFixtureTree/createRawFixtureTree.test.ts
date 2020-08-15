@@ -50,19 +50,11 @@ it('creates tree with multi fixture', () => {
     data: { type: 'fileDir' },
     children: {
       'Button.fixture': {
-        data: { type: 'multiFixture' },
-        children: {
-          normal: {
-            data: {
-              type: 'fixture',
-              fixtureId: { path: 'Button.fixture.js', name: 'normal' },
-            },
-          },
-          disabled: {
-            data: {
-              type: 'fixture',
-              fixtureId: { path: 'Button.fixture.js', name: 'disabled' },
-            },
+        data: {
+          type: 'multiFixture',
+          fixtureIds: {
+            normal: { path: 'Button.fixture.js', name: 'normal' },
+            disabled: { path: 'Button.fixture.js', name: 'disabled' },
           },
         },
       },
@@ -82,19 +74,11 @@ it('creates nested tree with multi fixture', () => {
         data: { type: 'fileDir' },
         children: {
           'Button.fixture': {
-            data: { type: 'multiFixture' },
-            children: {
-              normal: {
-                data: {
-                  type: 'fixture',
-                  fixtureId: { path: 'ui/Button.fixture.js', name: 'normal' },
-                },
-              },
-              disabled: {
-                data: {
-                  type: 'fixture',
-                  fixtureId: { path: 'ui/Button.fixture.js', name: 'disabled' },
-                },
+            data: {
+              type: 'multiFixture',
+              fixtureIds: {
+                normal: { path: 'ui/Button.fixture.js', name: 'normal' },
+                disabled: { path: 'ui/Button.fixture.js', name: 'disabled' },
               },
             },
           },
