@@ -26,8 +26,8 @@ export function navTests() {
     it('expands tree view items', () => {
       cy.contains('Counter').click();
       cy.contains('default');
-      cy.contains('small number').click();
-      cy.contains('large number').click();
+      cy.contains('small number');
+      cy.contains('large number');
     });
   });
 }
@@ -40,6 +40,7 @@ export function selectFixtureTests() {
     });
 
     it('renders updated fixture', () => {
+      cy.contains('Counter').click();
       cy.contains('large number').click();
       getRendererBody().find('button').should('have.text', '555555555 times');
       getRendererBody()
