@@ -166,7 +166,7 @@ const ListItem = styled.span<{ selected: boolean }>`
   line-height: 28px;
   user-select: none;
   cursor: default;
-  transition: background ${quick}s, color ${quick}s;
+  transition: color ${quick}s;
 
   :hover {
     background: ${selectedColors(grey24, grey8)};

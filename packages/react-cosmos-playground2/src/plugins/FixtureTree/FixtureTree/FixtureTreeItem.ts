@@ -27,7 +27,7 @@ export const FixtureTreeItem = styled.span<Props>`
   line-height: ${itemHeight}px;
   user-select: none;
   cursor: default;
-  transition: background ${quick}s, color ${quick}s;
+  transition: color ${quick}s;
 
   :hover {
     background: ${selectedColors(grey24, grey8)};
