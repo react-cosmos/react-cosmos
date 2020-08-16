@@ -26,19 +26,20 @@ export function MultiFixtureButton({
   selectedRef,
   onSelect,
 }: Props) {
-  const firstFixtureId = fixtureIds[Object.keys(fixtureIds)[0]];
+  const fixtureNames = Object.keys(fixtureIds);
+  const firstFixtureId = fixtureIds[fixtureNames[0]];
+  if (!firstFixtureId) return null;
 
   if (!selected)
     return (
       <FixtureLink fixtureId={firstFixtureId} onSelect={onSelect}>
         <FixtureTreeItem indentLevel={indentLevel} selected={false}>
           <Name>{name}</Name>
-          <Count>{Object.keys(fixtureIds).length}</Count>
+          <Count>{fixtureNames.length}</Count>
         </FixtureTreeItem>
       </FixtureLink>
     );
 
-  const fixtureNames = Object.keys(fixtureIds);
   return (
     <>
       <FixtureTreeItem indentLevel={indentLevel} selected={true}>
