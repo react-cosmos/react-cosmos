@@ -7,7 +7,7 @@ import { TreeExpansion } from '../../shared/treeExpansion';
 import {
   FixtureExpansionGroup,
   getFixtureExpansion,
-  updateElementExpansion
+  updateElementExpansion,
 } from '../../shared/valueInputTree';
 import { StorageSpec } from '../Storage/public';
 import { ClassStatePanel } from './ClassStatePanel';

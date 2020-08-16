@@ -11,7 +11,7 @@ export function createCosmosConfig(
     ...cosmosConfigInput,
     rootDir,
     exportPath: getExportPath(cosmosConfigInput, rootDir),
-    disablePlugins: cosmosConfigInput.disablePlugins ?? false,
+    disablePlugins: cosmosConfigInput.disablePlugins ?? true,
     fixtureFileSuffix: getFixtureFileSuffix(cosmosConfigInput),
     fixturesDir: getFixturesDir(cosmosConfigInput),
     globalImports: getGlobalImports(cosmosConfigInput, rootDir),
