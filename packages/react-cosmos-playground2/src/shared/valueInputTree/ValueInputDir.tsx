@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { blue, disabledColors, grey128, grey160, grey224 } from '../colors';
 import { ChevronDownIcon, ChevronRightIcon } from '../icons';
-import { TreeItemContainer } from './shared';
+import { ValueTreeItem } from './shared';
 
 type Props = {
   name: string;
@@ -21,7 +21,7 @@ export function ValueInputDir({
 }: Props) {
   const disabled = childNames.length === 0;
   return (
-    <TreeItemContainer indentLevel={indentLevel}>
+    <ValueTreeItem indentLevel={indentLevel}>
       <ButtonContainer>
         <Button disabled={disabled} onClick={onToggle}>
           <>
@@ -37,7 +37,7 @@ export function ValueInputDir({
           </>
         </Button>
       </ButtonContainer>
-    </TreeItemContainer>
+    </ValueTreeItem>
   );
 }
 

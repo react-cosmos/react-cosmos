@@ -17,11 +17,11 @@ export type ValueNodeData =
 
 export type ValueNode = TreeNode<ValueNodeData>;
 
-type TreeItemContainerProps = {
+type ValueTreeItemProps = {
   indentLevel: number;
 };
 
-export const TreeItemContainer = styled.div<TreeItemContainerProps>`
+export const ValueTreeItem = styled.div<ValueTreeItemProps>`
   padding: 0 0 0 ${props => getLeftPadding(props.indentLevel)}px;
 `;
 

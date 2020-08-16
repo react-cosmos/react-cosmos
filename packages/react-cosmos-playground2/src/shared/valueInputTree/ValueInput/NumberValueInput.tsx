@@ -1,25 +1,25 @@
 import React from 'react';
 import { NumberInput } from '../../inputs/NumberInput';
-import { Label, ValueContainer } from './shared';
+import { Label, ValueDataContainer } from './shared';
 import { grey8, blue, grey248 } from '../../colors';
 
 type Props = {
   id: string;
-  label: string;
-  value: number;
+  name: string;
+  data: number;
   onChange: (newValue: number) => unknown;
 };
 
-export function NumberItem({ id, label, value, onChange }: Props) {
+export function NumberValueInput({ id, name, data, onChange }: Props) {
   return (
     <>
-      <Label title={label} htmlFor={id}>
-        {label}
+      <Label title={name} htmlFor={id}>
+        {name}
       </Label>
-      <ValueContainer>
+      <ValueDataContainer>
         <NumberInput
           id={id}
-          value={value}
+          data={data}
           styles={{
             focusedColor: grey248,
             focusedBg: grey8,
@@ -27,7 +27,7 @@ export function NumberItem({ id, label, value, onChange }: Props) {
           }}
           onChange={onChange}
         />
-      </ValueContainer>
+      </ValueDataContainer>
     </>
   );
 }

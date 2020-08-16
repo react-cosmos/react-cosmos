@@ -1,14 +1,14 @@
 import React from 'react';
 import { PrimitiveData } from 'react-cosmos-shared2/fixtureState';
-import styled from 'styled-components';
 import { ValueInputSlot } from '../../slots/ValueInputSlot';
-import { LeafValue, TreeItemContainer } from '../shared';
-import { BooleanItem } from './BooleanItem';
-import { NullItem } from './NullItem';
-import { NumberItem } from './NumberItem';
-import { StringItem } from './StringItem';
-import { UndefinedItem } from './UndefinedItem';
-import { UnserializableItem } from './UnserializableItem';
+import { LeafValue, ValueTreeItem } from '../shared';
+import { BooleanValueInput } from './BooleanValueInput';
+import { NullValueInput } from './NullValueInput';
+import { NumberValueInput } from './NumberValueInput';
+import { ValueInputContainer } from './shared';
+import { StringValueInput } from './StringValueInput';
+import { UndefinedValueInput } from './UndefinedValueInput';
+import { UnserializableValueInput } from './UnserializableValueInput';
 
 type Props = {
   value: LeafValue;
@@ -21,54 +21,59 @@ type Props = {
 export function ValueInput({ value, name, id, indentLevel, onChange }: Props) {
   return (
     <ValueInputSlot slotProps={{ id, name, value, indentLevel, onChange }}>
-      <TreeItemContainer indentLevel={indentLevel}>
-        <ItemContainer>{getItem(id, name, value, onChange)}</ItemContainer>
-      </TreeItemContainer>
+      <ValueTreeItem indentLevel={indentLevel}>
+        <ValueInputContainer>
+          {getInput(id, name, value, onChange)}
+        </ValueInputContainer>
+      </ValueTreeItem>
     </ValueInputSlot>
   );
 }
 
-export const ItemContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  min-height: 28px;
-  line-height: 28px;
-  padding: 0 0 0 20px;
-`;
-
-function getItem(
+function getInput(
   id: string,
   name: string,
   value: LeafValue,
   onChange: (value: PrimitiveData) => unknown
 ) {
   if (value.type === 'unserializable')
-    return <UnserializableItem label={name} value={value.stringifiedData} />;
+    return (
+      <UnserializableValueInput name={name} data={value.stringifiedData} />
+    );
 
   if (typeof value.data === 'string')
     return (
-      <StringItem id={id} label={name} value={value.data} onChange={onChange} />
-    );
-
-  if (typeof value.data === 'number')
-    return (
-      <NumberItem id={id} label={name} value={value.data} onChange={onChange} />
-    );
-
-  if (typeof value.data === 'boolean')
-    return (
-      <BooleanItem
+      <StringValueInput
         id={id}
-        label={name}
-        value={value.data}
+        name={name}
+        data={value.data}
         onChange={onChange}
       />
     );
 
-  if (value.data === null) return <NullItem label={name} />;
+  if (typeof value.data === 'number')
+    return (
+      <NumberValueInput
+        id={id}
+        name={name}
+        data={value.data}
+        onChange={onChange}
+      />
+    );
 
-  if (value.data === undefined) return <UndefinedItem label={name} />;
+  if (typeof value.data === 'boolean')
+    return (
+      <BooleanValueInput
+        id={id}
+        name={name}
+        data={value.data}
+        onChange={onChange}
+      />
+    );
+
+  if (value.data === null) return <NullValueInput name={name} />;
+
+  if (value.data === undefined) return <UndefinedValueInput name={name} />;
 
   throw new Error(`Invalid primitive value: ${value.data}`);
 }

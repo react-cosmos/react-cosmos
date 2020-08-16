@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { grey128, grey224, disabledColors } from '../../colors';
+import { disabledColors, grey128, grey224 } from '../../colors';
 
 export const Label = styled.label<{ disabled?: boolean }>`
   padding: 0;
@@ -10,7 +10,16 @@ export const Label = styled.label<{ disabled?: boolean }>`
   text-overflow: ellipsis;
 `;
 
-export const ValueContainer = styled.div`
+export const ValueInputContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  min-height: 28px;
+  line-height: 28px;
+  padding: 0 0 0 20px;
+`;
+
+export const ValueDataContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: row;

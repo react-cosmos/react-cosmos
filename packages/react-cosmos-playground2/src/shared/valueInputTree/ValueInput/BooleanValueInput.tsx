@@ -1,28 +1,28 @@
 import React from 'react';
 import styled from 'styled-components';
 import { blue, lightBlue } from '../../colors';
-import { Label, ValueContainer } from './shared';
+import { Label, ValueDataContainer } from './shared';
 
 type Props = {
   id: string;
-  label: string;
-  value: boolean;
-  onChange: (newValue: boolean) => unknown;
+  name: string;
+  data: boolean;
+  onChange: (data: boolean) => unknown;
 };
 
-export function BooleanItem({ id, label, value, onChange }: Props) {
-  const onToggle = React.useCallback(() => onChange(!value), [onChange, value]);
+export function BooleanValueInput({ id, name, data, onChange }: Props) {
+  const onToggle = React.useCallback(() => onChange(!data), [onChange, data]);
 
   return (
     <>
-      <Label title={label} as="span" onClick={onToggle}>
-        {label}
+      <Label title={name} as="span" onClick={onToggle}>
+        {name}
       </Label>
-      <ValueContainer>
+      <ValueDataContainer>
         <BooleanButton onClick={onToggle}>
-          {value ? 'true' : 'false'}
+          {data ? 'true' : 'false'}
         </BooleanButton>
-      </ValueContainer>
+      </ValueDataContainer>
     </>
   );
 }

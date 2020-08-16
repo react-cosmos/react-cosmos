@@ -4,28 +4,25 @@ import { lightBlue } from '../../shared/colors';
 import { Select } from '../../shared/inputs/Select';
 import {
   Label,
-  ValueContainer,
+  ValueDataContainer,
+  ValueInputContainer,
 } from '../../shared/valueInputTree/ValueInput/shared';
-import { ItemContainer } from '../../shared/valueInputTree/ValueInput/ValueInput';
 
 type Props = {
-  selectName: string;
-  select: FixtureStateSelectControl;
-  onSelectChange: (
-    selectName: string,
-    select: FixtureStateSelectControl
-  ) => unknown;
+  name: string;
+  control: FixtureStateSelectControl;
+  onChange: (name: string, select: FixtureStateSelectControl) => unknown;
 };
 
-export function SelectItem({ selectName, select, onSelectChange }: Props) {
-  const { options, currentValue } = select;
-  const id = `select-${selectName}`;
+export function SelectValueInput({ name, control, onChange }: Props) {
+  const { options, currentValue } = control;
+  const id = `select-${name}`;
   return (
-    <ItemContainer key={selectName}>
-      <Label title={selectName} htmlFor={id}>
-        {selectName}
+    <ValueInputContainer key={name}>
+      <Label title={name} htmlFor={id}>
+        {name}
       </Label>
-      <ValueContainer>
+      <ValueDataContainer>
         <Select
           id={id}
           options={options.map(option => ({ value: option, label: option }))}
@@ -34,13 +31,13 @@ export function SelectItem({ selectName, select, onSelectChange }: Props) {
           height={24}
           padding={5}
           onChange={newValue =>
-            onSelectChange(selectName, {
-              ...select,
+            onChange(name, {
+              ...control,
               currentValue: newValue.value,
             })
           }
         />
-      </ValueContainer>
-    </ItemContainer>
+      </ValueDataContainer>
+    </ValueInputContainer>
   );
 }
