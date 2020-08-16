@@ -7,8 +7,8 @@ export type ValueInputSlotProps = {
   id: string;
   name: string;
   value: LeafValue;
-  parents: string[];
-  onInputChange: (data: PrimitiveData) => unknown;
+  indentLevel: number;
+  onChange: (data: PrimitiveData) => unknown;
 };
 
 type Props = {

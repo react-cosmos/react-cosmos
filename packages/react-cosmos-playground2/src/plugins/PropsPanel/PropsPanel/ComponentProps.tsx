@@ -1,5 +1,5 @@
 import { isEqual } from 'lodash';
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   FixtureState,
   FixtureStateProps,
@@ -77,10 +77,10 @@ export function ComponentProps({
   );
 
   const strElementId = stringifyElementId(elementId);
-  const treeExpansion = fixtureExpansion[strElementId] || {};
-  const handleTreeExpansionChange = React.useCallback(
-    (newTreeExpansion: TreeExpansion) =>
-      onElementExpansionChange(elementId, newTreeExpansion),
+  const expansion = fixtureExpansion[strElementId] || {};
+  const setExpansion = useCallback(
+    (newExpansion: TreeExpansion) =>
+      onElementExpansionChange(elementId, newExpansion),
     [elementId, onElementExpansionChange]
   );
 
@@ -104,8 +104,8 @@ export function ComponentProps({
           />
           <ExpandCollapseValues
             values={values}
-            treeExpansion={treeExpansion}
-            onTreeExpansionChange={handleTreeExpansionChange}
+            expansion={expansion}
+            setExpansion={setExpansion}
           />
         </Actions>
       </Header>
@@ -113,9 +113,9 @@ export function ComponentProps({
         <ValueInputTree
           id={strElementId}
           values={values}
-          treeExpansion={treeExpansion}
+          expansion={expansion}
+          setExpansion={setExpansion}
           onValueChange={handleValueChange}
-          onTreeExpansionChange={handleTreeExpansionChange}
         />
       </Body>
     </Container>

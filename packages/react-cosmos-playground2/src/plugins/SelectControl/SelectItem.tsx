@@ -2,11 +2,11 @@ import React from 'react';
 import { FixtureStateSelectControl } from 'react-cosmos-shared2/fixtureState';
 import { lightBlue } from '../../shared/colors';
 import { Select } from '../../shared/inputs/Select';
-import { ItemContainer } from '../../shared/valueInputTree/ValueInputTreeItem';
 import {
   Label,
   ValueContainer,
-} from '../../shared/valueInputTree/ValueInputTreeItem/shared';
+} from '../../shared/valueInputTree/ValueInput/shared';
+import { ItemContainer } from '../../shared/valueInputTree/ValueInput/ValueInput';
 
 type Props = {
   selectName: string;

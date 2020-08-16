@@ -12,29 +12,29 @@ import { createValueTree } from './valueTree';
 
 type Props = {
   values: FixtureStateValues;
-  treeExpansion: TreeExpansion;
-  onTreeExpansionChange: (treeExpansion: TreeExpansion) => unknown;
+  expansion: TreeExpansion;
+  setExpansion: (treeExpansion: TreeExpansion) => unknown;
 };
 
 export function ExpandCollapseValues({
   values,
-  treeExpansion,
-  onTreeExpansionChange,
+  expansion,
+  setExpansion,
 }: Props) {
   const rootNode = createValueTree(values);
   if (!hasExpandableNodes(rootNode)) return null;
 
-  return isTreeFullyCollapsed(treeExpansion) ? (
+  return isTreeFullyCollapsed(expansion) ? (
     <IconButton32
       title="Expand all fixture tree folders"
       icon={<PlusSquareIcon />}
-      onClick={() => onTreeExpansionChange(getFullTreeExpansion(rootNode))}
+      onClick={() => setExpansion(getFullTreeExpansion(rootNode))}
     />
   ) : (
     <IconButton32
       title="Collapse all fixture tree folders"
       icon={<MinusSquareIcon />}
-      onClick={() => onTreeExpansionChange({})}
+      onClick={() => setExpansion({})}
     />
   );
 }

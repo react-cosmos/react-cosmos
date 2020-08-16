@@ -1,36 +1,29 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { blue, disabledColors, grey128, grey160, grey224 } from '../colors';
 import { ChevronDownIcon, ChevronRightIcon } from '../icons';
-import { OnTreeExpansionToggle } from '../treeExpansion';
 import { TreeItemContainer } from './shared';
 
 type Props = {
   name: string;
-  parents: string[];
   childNames: string[];
   expanded: boolean;
-  onToggle: OnTreeExpansionToggle;
+  indentLevel: number;
+  onToggle: () => unknown;
 };
 
-// TODO: Rename to ValueInputDir
-export function ValueInputTreeDir({
+export function ValueInputDir({
   name,
-  parents,
   childNames,
   expanded,
+  indentLevel,
   onToggle,
 }: Props) {
   const disabled = childNames.length === 0;
-
-  const onClick = useCallback(() => {
-    onToggle(parents, name);
-  }, [name, onToggle, parents]);
-
   return (
-    <TreeItemContainer indentLevel={parents.length}>
+    <TreeItemContainer indentLevel={indentLevel}>
       <ButtonContainer>
-        <Button disabled={disabled} onClick={onClick}>
+        <Button disabled={disabled} onClick={onToggle}>
           <>
             {!disabled && (
               <ChevronContainer>

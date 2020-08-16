@@ -60,8 +60,6 @@ export function useTreeExpansionToggle(
   return useCallback<OnTreeExpansionToggle>(
     (parents, name) => {
       const nodePath = getTreeNodePath(parents, name);
-      // console.log(expansion);
-      // console.log({ ...expansion, [nodePath]: !expansion[nodePath] });
       setExpansion({ ...expansion, [nodePath]: !expansion[nodePath] });
     },
     [expansion, setExpansion]
