@@ -1,10 +1,10 @@
 import React from 'react';
 import { PluginContext } from 'react-plugin';
-import { TreeExpansion } from '../../shared/TreeView';
+import { TreeExpansion } from '../../shared/treeExpansion';
 import { StorageSpec } from '../Storage/public';
 import { StandardControlSpec } from './public';
 
-const treeExpansionStorageKey = 'standardControlTreeExpansion';
+const storageKey = 'standardControlTreeExpansion';
 const emptyTreeExpansion = {};
 
 // TODO: Persist tree expansion state per fixture ID?
@@ -13,15 +13,14 @@ export function useTreeExpansionStorage(
 ) {
   const storage = pluginContext.getMethodsOf<StorageSpec>('storage');
 
-  const treeExpansion =
-    storage.getItem<TreeExpansion>(treeExpansionStorageKey) ||
-    emptyTreeExpansion;
+  const expansion =
+    storage.getItem<TreeExpansion>(storageKey) || emptyTreeExpansion;
 
-  const onTreeExpansionChange = React.useCallback(
+  const setExpansion = React.useCallback(
     (newTreeExpansion: TreeExpansion) =>
-      storage.setItem(treeExpansionStorageKey, newTreeExpansion),
+      storage.setItem(storageKey, newTreeExpansion),
     [storage]
   );
 
-  return { treeExpansion, onTreeExpansionChange };
+  return { expansion, setExpansion };
 }

@@ -7,16 +7,16 @@ import {
   TextMirror,
 } from '../../inputs/shared';
 import { useFocus } from '../../useFocus';
-import { Label, ValueContainer } from './shared';
+import { Label, ValueDataContainer } from './shared';
 
 type Props = {
   id: string;
-  label: string;
-  value: string;
-  onChange: (newValue: string) => unknown;
+  name: string;
+  data: string;
+  onChange: (data: string) => unknown;
 };
 
-export function StringItem({ id, label, value, onChange }: Props) {
+export function StringValueInput({ id, name, data, onChange }: Props) {
   const { focused, onFocus, onBlur } = useFocus();
 
   const onInputChange = React.useCallback(
@@ -26,13 +26,13 @@ export function StringItem({ id, label, value, onChange }: Props) {
   );
 
   // Mirror textarea behavior and add an extra row after user adds a new line
-  const mirrorText = focused ? value.replace(/\n$/, `\n `) : value;
+  const mirrorText = focused ? data.replace(/\n$/, `\n `) : data;
   return (
     <>
-      <Label title={label} htmlFor={id}>
-        {label}
+      <Label title={name} htmlFor={id}>
+        {name}
       </Label>
-      <ValueContainer>
+      <ValueDataContainer>
         <TextInputContainer
           focused={focused}
           focusedBg={grey8}
@@ -40,12 +40,12 @@ export function StringItem({ id, label, value, onChange }: Props) {
         >
           <TextContainer>
             <TextMirror minWidth={64} focused={focused}>
-              {value.length > 0 || focused ? mirrorText : <em>empty</em>}
+              {data.length > 0 || focused ? mirrorText : <em>empty</em>}
             </TextMirror>
             <TextField
               rows={1}
               id={id}
-              value={value}
+              value={data}
               focused={focused}
               color={grey248}
               onChange={onInputChange}
@@ -54,7 +54,7 @@ export function StringItem({ id, label, value, onChange }: Props) {
             />
           </TextContainer>
         </TextInputContainer>
-      </ValueContainer>
+      </ValueDataContainer>
     </>
   );
 }

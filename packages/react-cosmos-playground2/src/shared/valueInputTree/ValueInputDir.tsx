@@ -2,52 +2,47 @@ import React from 'react';
 import styled from 'styled-components';
 import { blue, disabledColors, grey128, grey160, grey224 } from '../colors';
 import { ChevronDownIcon, ChevronRightIcon } from '../icons';
-import { TreeItemContainer, ValueNode } from './shared';
+import { ValueTreeItem } from './shared';
 
 type Props = {
-  node: ValueNode;
-  parents: string[];
-  isExpanded: boolean;
+  name: string;
+  childNames: string[];
+  expanded: boolean;
+  indentLevel: number;
   onToggle: () => unknown;
 };
 
-export function ValueInputTreeDir({
-  node,
-  parents,
-  isExpanded,
+export function ValueInputDir({
+  name,
+  childNames,
+  expanded,
+  indentLevel,
   onToggle,
 }: Props) {
-  const dirName = parents[parents.length - 1];
-  const childNames = getChildNames(node);
   const disabled = childNames.length === 0;
   return (
-    <TreeItemContainer indentLevel={parents.length - 1}>
+    <ValueTreeItem indentLevel={indentLevel}>
       <ButtonContainer>
         <Button disabled={disabled} onClick={onToggle}>
           <>
             {!disabled && (
               <ChevronContainer>
-                {isExpanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
+                {expanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
               </ChevronContainer>
             )}
             <Text>
-              <DirName disabled={disabled}>{dirName}</DirName>
+              <DirName disabled={disabled}>{name}</DirName>
               <ChildrenInfo>{getChildInfo(childNames)}</ChildrenInfo>
             </Text>
           </>
         </Button>
       </ButtonContainer>
-    </TreeItemContainer>
+    </ValueTreeItem>
   );
 }
 
 function getChildInfo(childNames: string[]): string {
   return childNames.length > 0 ? `{ ${childNames.join(', ')} }` : `{}`;
-}
-
-function getChildNames(node: ValueNode): string[] {
-  const { dirs, items } = node;
-  return [...Object.keys(dirs), ...Object.keys(items)];
 }
 
 const ButtonContainer = styled.div`

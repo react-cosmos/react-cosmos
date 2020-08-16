@@ -1,56 +1,94 @@
+import { clone, setWith } from 'lodash';
 import React from 'react';
-import { FixtureStateValues } from 'react-cosmos-shared2/fixtureState';
+import {
+  FixtureStateValue,
+  FixtureStateValues,
+} from 'react-cosmos-shared2/fixtureState';
 import styled from 'styled-components';
 import { grey248, grey32 } from '../colors';
-import { TreeExpansion, TreeView } from '../TreeView';
-import { ValueInputTreeDir } from './ValueInputTreeDir';
-import { ValueInputTreeItem } from './ValueInputTreeItem';
-import { getFixtureStateValueTree } from './valueTree';
+import { TreeExpansion } from '../treeExpansion';
+import { TreeView } from '../TreeView';
+import { ValueInput } from './ValueInput/ValueInput';
+import { ValueInputDir } from './ValueInputDir';
+import { createValueTree } from './valueTree';
 
 type Props = {
   id: string;
   values: FixtureStateValues;
-  treeExpansion: TreeExpansion;
+  expansion: TreeExpansion;
+  setExpansion: (expansion: TreeExpansion) => unknown;
   onValueChange: (values: FixtureStateValues) => unknown;
-  onTreeExpansionChange: (treeExpansion: TreeExpansion) => unknown;
 };
 
 export const ValueInputTree = React.memo(function ValueInputTree({
   id,
   values,
-  treeExpansion,
-  onTreeExpansionChange,
+  expansion,
+  setExpansion,
   onValueChange,
 }: Props) {
-  const rootNode = getFixtureStateValueTree(values);
+  const rootNode = createValueTree(values);
   return (
     <Container>
       <TreeView
         node={rootNode}
-        renderDir={({ node, parents, isExpanded, onToggle }) => (
-          <ValueInputTreeDir
-            node={node}
-            parents={parents}
-            isExpanded={isExpanded}
-            onToggle={onToggle}
-          />
-        )}
-        renderItem={({ parents, item, itemName }) => (
-          <ValueInputTreeItem
-            treeId={id}
-            values={values}
-            parents={parents}
-            item={item}
-            itemName={itemName}
-            onValueChange={onValueChange}
-          />
-        )}
-        treeExpansion={treeExpansion}
-        onTreeExpansionChange={onTreeExpansionChange}
+        expansion={expansion}
+        setExpansion={setExpansion}
+        renderNode={({ node, name, parents, expanded, onToggle }) => {
+          const { data, children } = node;
+
+          if (data.type === 'item')
+            return (
+              <ValueInput
+                value={data.value}
+                name={name}
+                id={getInputId(id, parents, name)}
+                indentLevel={parents.length}
+                onChange={newData =>
+                  onValueChange(
+                    setValueAtPath(
+                      values,
+                      { type: 'primitive', data: newData },
+                      getValuePath(name, parents)
+                    )
+                  )
+                }
+              />
+            );
+
+          return (
+            children && (
+              <ValueInputDir
+                name={name}
+                childNames={Object.keys(children)}
+                expanded={expanded}
+                indentLevel={parents.length}
+                onToggle={onToggle}
+              />
+            )
+          );
+        }}
       />
     </Container>
   );
 });
+
+function getInputId(treeId: string, parents: string[], name: string) {
+  return `${treeId}-${[...parents, name].join('-')}`;
+}
+
+function getValuePath(valueKey: string, parentKeys: string[]) {
+  return [...parentKeys.map(p => `${p}.values`), valueKey].join('.');
+}
+
+function setValueAtPath(
+  values: FixtureStateValues,
+  newValue: FixtureStateValue,
+  valuePath: string
+) {
+  // Inspired by https://github.com/lodash/lodash/issues/1696#issuecomment-328335502
+  return setWith(clone(values), valuePath, newValue, clone);
+}
 
 const Container = styled.div`
   background: ${grey32};

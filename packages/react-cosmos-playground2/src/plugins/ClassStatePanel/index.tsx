@@ -3,11 +3,11 @@ import { FixtureElementId } from 'react-cosmos-shared2/fixtureState';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { SidePanelRowSlotProps } from '../../shared/slots/SidePanelRowSlot';
-import { TreeExpansion } from '../../shared/TreeView';
+import { TreeExpansion } from '../../shared/treeExpansion';
 import {
   FixtureExpansionGroup,
   getFixtureExpansion,
-  updateElementExpansion,
+  updateElementExpansion
 } from '../../shared/valueInputTree';
 import { StorageSpec } from '../Storage/public';
 import { ClassStatePanel } from './ClassStatePanel';

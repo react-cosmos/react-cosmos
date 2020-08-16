@@ -4,12 +4,12 @@ import {
   extendWithValue,
   findFixtureStateControl,
   FixtureState,
-  FixtureStateValueType,
+  FixtureStateData,
 } from '../../fixtureState';
 import { FixtureContext } from '../FixtureContext';
 import { SetValue } from './shared';
 
-export function useSetValue<T extends FixtureStateValueType>(
+export function useSetValue<T extends FixtureStateData>(
   inputName: string,
   defaultValue: T
 ): SetValue<T> {
@@ -17,7 +17,7 @@ export function useSetValue<T extends FixtureStateValueType>(
   return React.useCallback(
     stateChange => {
       setFixtureState(prevFs => {
-        const currentValue: FixtureStateValueType =
+        const currentValue: FixtureStateData =
           typeof stateChange === 'function'
             ? stateChange(
                 // Types of fixture state values cannot be guaranteed at read
@@ -51,7 +51,7 @@ export function useSetValue<T extends FixtureStateValueType>(
 function getCurrentValueFromFixtureState(
   fixtureState: FixtureState,
   inputName: string,
-  defaultValue: FixtureStateValueType
+  defaultValue: FixtureStateData
 ): unknown {
   const fsControl = findFixtureStateControl(fixtureState, inputName);
   return fsControl && fsControl.type === 'standard'

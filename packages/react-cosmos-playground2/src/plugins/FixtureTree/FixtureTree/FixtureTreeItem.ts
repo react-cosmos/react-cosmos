@@ -9,14 +9,14 @@ import {
 } from '../../../shared/colors';
 import { quick } from '../../../shared/vars';
 
-type ListItemProps = {
+const itemHeight = 28;
+
+type Props = {
   indentLevel: number;
   selected?: boolean;
 };
 
-const itemHeight = 28;
-
-export const ListItem = styled.span<ListItemProps>`
+export const FixtureTreeItem = styled.span<Props>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -27,20 +27,11 @@ export const ListItem = styled.span<ListItemProps>`
   line-height: ${itemHeight}px;
   user-select: none;
   cursor: default;
-  transition: background ${quick}s, color ${quick}s;
+  transition: color ${quick}s;
 
   :hover {
     background: ${selectedColors(grey24, grey8)};
   }
-`;
-
-export const Unshirinkable = styled.span`
-  flex-shrink: 0;
-`;
-
-export const Label = styled(Unshirinkable)`
-  padding-right: 8px;
-  white-space: nowrap;
 `;
 
 function getLeftPadding(depth: number) {

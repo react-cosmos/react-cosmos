@@ -1,18 +1,13 @@
 import React from 'react';
 
 type Props = {
+  name: string;
+  checked: boolean;
   indentLevel: number;
-  itemName: string;
-  value: boolean;
   onChange: (value: boolean) => unknown;
 };
 
-export function BooleanInput({
-  indentLevel,
-  itemName,
-  value,
-  onChange,
-}: Props) {
+export function BooleanInput({ indentLevel, name, checked, onChange }: Props) {
   return (
     <label
       style={{
@@ -29,10 +24,10 @@ export function BooleanInput({
       <input
         style={{ marginRight: 8 }}
         type="checkbox"
-        checked={value}
+        checked={checked}
         onChange={e => onChange(e.target.checked)}
       />
-      {itemName}
+      {name}
     </label>
   );
 }

@@ -1,6 +1,5 @@
 import { FixtureId } from '../renderer';
-import { getSortedNodeDirNames } from './getSortedNodeDirNames';
-import { TreeNode } from './shared/types';
+import { FixtureTreeNode } from './shared/types';
 
 export type FlatFixtureTreeItem = {
   fileName: string;
@@ -11,37 +10,41 @@ export type FlatFixtureTreeItem = {
 export type FlatFixtureTree = FlatFixtureTreeItem[];
 
 export function flattenFixtureTree(
-  treeNode: TreeNode<FixtureId>,
+  treeNode: FixtureTreeNode,
   parents: string[] = []
 ): FlatFixtureTree {
+  const { data, children } = treeNode;
+  if (data.type === 'fixture' || !children) return [];
+
   const flatFixtureTree: FlatFixtureTree = [];
+  if (children)
+    Object.keys(children).forEach(childName => {
+      const childNode = children[childName];
+      const { data: childData } = childNode;
 
-  getSortedNodeDirNames(treeNode.dirs).forEach(dirName => {
-    const dirNode = treeNode.dirs[dirName];
-    flatFixtureTree.push(...flattenFixtureTree(dirNode, [...parents, dirName]));
-  });
+      if (childData.type === 'fileDir')
+        flatFixtureTree.push(
+          ...flattenFixtureTree(childNode, [...parents, childName])
+        );
 
-  Object.keys(treeNode.items).forEach(itemName => {
-    const fixtureId = treeNode.items[itemName];
-    if (fixtureId.name) {
-      const newParents = [...parents];
-      const fileName = newParents.pop();
-      if (fileName)
+      if (childData.type === 'multiFixture')
+        Object.keys(childData.fixtureIds).forEach(fixtureName =>
+          flatFixtureTree.push({
+            fileName: childName,
+            fixtureId: childData.fixtureIds[fixtureName],
+            parents,
+            name: fixtureName,
+          })
+        );
+
+      if (childData.type === 'fixture')
         flatFixtureTree.push({
-          fileName,
-          fixtureId,
-          parents: newParents,
-          name: itemName,
+          fileName: childName,
+          fixtureId: childData.fixtureId,
+          parents,
+          name: null,
         });
-    } else {
-      flatFixtureTree.push({
-        fileName: itemName,
-        fixtureId,
-        parents,
-        name: null,
-      });
-    }
-  });
+    });
 
   return flatFixtureTree;
 }

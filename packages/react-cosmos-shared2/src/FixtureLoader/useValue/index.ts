@@ -1,14 +1,14 @@
-import { FixtureStateValueType } from '../../fixtureState';
+import { FixtureStateData } from '../../fixtureState';
 import { SetValue } from './shared';
 import { useCreateFixtureState } from './useCreateFixtureState';
 import { useCurrentValue } from './useCurrentValue';
 import { useSetValue } from './useSetValue';
 
-type Opts<T extends FixtureStateValueType> = {
+type Opts<T extends FixtureStateData> = {
   defaultValue: T;
 };
 
-export function useValue<T extends FixtureStateValueType>(
+export function useValue<T extends FixtureStateData>(
   inputName: string,
   { defaultValue }: Opts<T>
 ): [T, SetValue<T>] {

@@ -3,21 +3,25 @@ import {
   FixtureStatePrimitiveValue,
   FixtureStateUnserializableValue,
 } from 'react-cosmos-shared2/fixtureState';
-import { TreeNode } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
+import { TreeNode } from 'react-cosmos-shared2/util';
 import styled from 'styled-components';
 
-export type TreeItemValue =
+export type LeafValue =
   | FixtureStatePrimitiveValue
   | FixtureStateUnserializableValue;
 
-export type ValueNode = TreeNode<TreeItemValue>;
+export type ValueNodeData =
+  | { type: 'collection' }
+  | { type: 'item'; value: LeafValue };
 
-type TreeItemContainerProps = {
+export type ValueNode = TreeNode<ValueNodeData>;
+
+type ValueTreeItemProps = {
   indentLevel: number;
 };
 
-export const TreeItemContainer = styled.div<TreeItemContainerProps>`
+export const ValueTreeItem = styled.div<ValueTreeItemProps>`
   padding: 0 0 0 ${props => getLeftPadding(props.indentLevel)}px;
 `;
 

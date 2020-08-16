@@ -13,27 +13,27 @@ export default () => {
         values: {
           string: {
             type: 'primitive',
-            value: 'hello world',
+            data: 'hello world',
           },
           number: {
             type: 'primitive',
-            value: 1337,
+            data: 1337,
           },
           boolean: {
             type: 'primitive',
-            value: false,
+            data: false,
           },
           null: {
             type: 'primitive',
-            value: null,
+            data: null,
           },
           unserializable: {
             type: 'unserializable',
-            stringifiedValue: `<div>\n  <div />\n  <div />\n</div>`,
+            stringifiedData: `<div>\n  <div />\n  <div />\n</div>`,
           },
           unserializable2: {
             type: 'unserializable',
-            stringifiedValue: `/whatyouseeiswhatyougetsometimes/i`,
+            stringifiedData: `/whatyouseeiswhatyougetsometimes/i`,
           },
         },
       },
@@ -47,15 +47,15 @@ export default () => {
             values: [
               {
                 type: 'primitive',
-                value: 'hello world',
+                data: 'hello world',
               },
               {
                 type: 'primitive',
-                value: 1337,
+                data: 1337,
               },
               {
                 type: 'primitive',
-                value: false,
+                data: false,
               },
             ],
           },
@@ -64,15 +64,15 @@ export default () => {
             values: {
               string: {
                 type: 'primitive',
-                value: 'hello world',
+                data: 'hello world',
               },
               number: {
                 type: 'primitive',
-                value: 1337,
+                data: 1337,
               },
               boolean: {
                 type: 'primitive',
-                value: false,
+                data: false,
               },
             },
           },
@@ -86,15 +86,15 @@ export default () => {
           },
           string: {
             type: 'primitive',
-            value: 'hello world hello world hello world hello world',
+            data: 'hello world hello world hello world hello world',
           },
           numberWithAVeryVeryVeeeryLongName: {
             type: 'primitive',
-            value: 1337,
+            data: 1337,
           },
           boolean: {
             type: 'primitive',
-            value: false,
+            data: false,
           },
         },
       },

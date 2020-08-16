@@ -1,24 +1,29 @@
-import { mapKeys } from 'lodash';
-import { FixtureNode } from '../shared/types';
+import { FixtureTreeNode } from '../shared/types';
 
 export function hideFixtureSuffix(
-  treeNode: FixtureNode,
+  treeNode: FixtureTreeNode,
   suffix: string
-): FixtureNode {
-  // The fixture name suffix can be found in both dir and item names
-  const dirs = Object.keys(treeNode.dirs).reduce((prev, dirName) => {
-    const cleanDirName = removeFixtureNameSuffix(dirName, suffix);
-    return {
-      ...prev,
-      [cleanDirName]: hideFixtureSuffix(treeNode.dirs[dirName], suffix),
-    };
-  }, {});
+): FixtureTreeNode {
+  const { children } = treeNode;
+  if (!children) return treeNode;
 
-  const items = mapKeys(treeNode.items, (fixturePath, fixtureName) =>
-    removeFixtureNameSuffix(fixtureName, suffix)
-  );
+  return {
+    ...treeNode,
+    children: Object.keys(children).reduce((newChildren, childName) => {
+      const childNode = children[childName];
+      if (childNode.data.type === 'fileDir')
+        return {
+          ...newChildren,
+          [childName]: hideFixtureSuffix(childNode, suffix),
+        };
 
-  return { items, dirs };
+      const cleanFixtureName = removeFixtureNameSuffix(childName, suffix);
+      return {
+        ...newChildren,
+        [cleanFixtureName]: hideFixtureSuffix(childNode, suffix),
+      };
+    }, {}),
+  };
 }
 
 function removeFixtureNameSuffix(

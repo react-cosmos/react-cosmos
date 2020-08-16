@@ -1,4 +1,4 @@
-import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
+import { createFixtureTree } from './createFixtureTree';
 import { flattenFixtureTree } from './flattenFixtureTree';
 
 const fixtures = {
@@ -34,14 +34,14 @@ it('flattens fixture tree', () => {
       parents: ['admin'],
     },
     {
-      fileName: 'Profile',
-      fixtureId: { path: 'src/__fixtures__/Profile.ts', name: null },
+      fileName: 'NewsFeed',
+      fixtureId: { path: 'src/__fixtures__/NewsFeed.ts', name: null },
       name: null,
       parents: [],
     },
     {
-      fileName: 'NewsFeed',
-      fixtureId: { path: 'src/__fixtures__/NewsFeed.ts', name: null },
+      fileName: 'Profile',
+      fixtureId: { path: 'src/__fixtures__/Profile.ts', name: null },
       name: null,
       parents: [],
     },

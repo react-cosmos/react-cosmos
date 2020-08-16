@@ -14,7 +14,7 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
-  input, textarea {
+  input, textarea, button {
     font-family: ${fontFamily};
   }
 

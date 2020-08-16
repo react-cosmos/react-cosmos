@@ -1,17 +1,15 @@
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import { isElement } from 'react-is';
 import {
-  FixtureStateObjectValueType,
   FixtureStateValue,
   FixtureStateValues,
   isArray,
   isObject,
-  isPrimitiveValue,
+  isPrimitiveData,
+  ObjectData,
 } from './shared';
 
-export function createValues(
-  obj: FixtureStateObjectValueType
-): FixtureStateValues {
+export function createValues(obj: ObjectData): FixtureStateValues {
   const values: FixtureStateValues = {};
   Object.keys(obj).forEach(key => {
     values[key] = createValue(obj[key]);
@@ -19,24 +17,20 @@ export function createValues(
   return values;
 }
 
-export function createValue(value: unknown): FixtureStateValue {
-  if (isPrimitiveValue(value)) {
-    return { type: 'primitive', value };
-  }
+export function createValue(data: unknown): FixtureStateValue {
+  if (isPrimitiveData(data)) return { type: 'primitive', data };
 
-  if (isArray(value)) {
+  if (isArray(data))
     return {
       type: 'array',
-      values: (value as unknown[]).map(v => createValue(v)),
+      values: (data as unknown[]).map(i => createValue(i)),
     };
-  }
 
-  if (isObject(value)) {
+  if (isObject(data))
     return {
       type: 'object',
-      values: createValues(value),
+      values: createValues(data),
     };
-  }
 
   // Why store unserializable values in fixture state?
   // - Because they still provides value in the Cosmos UI. They let the user know
@@ -46,11 +40,11 @@ export function createValue(value: unknown): FixtureStateValue {
   //   still be removed.
   return {
     type: 'unserializable',
-    stringifiedValue: stringifyUnserializableValue(value),
+    stringifiedData: stringifyUnserializableData(data),
   };
 }
 
-function stringifyUnserializableValue(value: unknown) {
+function stringifyUnserializableData(data: unknown) {
   // TODO: Enable custom stringifier plugins
-  return isElement(value) ? reactElementToJSXString(value) : String(value);
+  return isElement(data) ? reactElementToJSXString(data) : String(data);
 }

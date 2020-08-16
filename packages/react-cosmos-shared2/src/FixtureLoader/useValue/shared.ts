@@ -1,6 +1,6 @@
 import React from 'react';
-import { FixtureStateValueType } from '../../fixtureState';
+import { FixtureStateData } from '../../fixtureState';
 
-export type SetValue<T extends FixtureStateValueType> = React.Dispatch<
+export type SetValue<T extends FixtureStateData> = React.Dispatch<
   React.SetStateAction<T>
 >;

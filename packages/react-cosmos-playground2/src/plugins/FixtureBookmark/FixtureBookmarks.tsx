@@ -131,7 +131,7 @@ const FixtureLink = styled.a<{ selected: boolean }>`
 
   :focus {
     outline: none;
-    box-shadow: inset 3px 0px 0 0 ${blue};
+    box-shadow: inset 2px 0px 0 0 ${blue};
   }
 
   ::-moz-focus-inner {
@@ -166,7 +166,7 @@ const ListItem = styled.span<{ selected: boolean }>`
   line-height: 28px;
   user-select: none;
   cursor: default;
-  transition: background ${quick}s, color ${quick}s;
+  transition: color ${quick}s;
 
   :hover {
     background: ${selectedColors(grey24, grey8)};

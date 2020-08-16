@@ -1,14 +1,14 @@
 import React, { ReactNode } from 'react';
-import { FixtureStatePrimitiveValueType } from 'react-cosmos-shared2/fixtureState';
+import { PrimitiveData } from 'react-cosmos-shared2/fixtureState';
 import { Slot } from 'react-plugin';
-import { TreeItemValue } from '../valueInputTree/shared';
+import { LeafValue } from '../valueInputTree/shared';
 
 export type ValueInputSlotProps = {
-  item: TreeItemValue;
-  itemId: string;
-  itemName: string;
-  parents: string[];
-  onInputChange: (value: FixtureStatePrimitiveValueType) => unknown;
+  id: string;
+  name: string;
+  value: LeafValue;
+  indentLevel: number;
+  onChange: (data: PrimitiveData) => unknown;
 };
 
 type Props = {

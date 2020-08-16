@@ -3,34 +3,32 @@ import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId, FixtureNamesByPath } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
 import { grey32 } from '../../shared/colors';
-import { TreeExpansion } from '../../shared/TreeView';
+import { TreeExpansion } from '../../shared/treeExpansion';
 import { BlankState } from './BlankState';
-import { FixtureTree } from './FixtureTree';
+import { FixtureTree } from './FixtureTree/FixtureTree';
 import { FixtureTreeHeader } from './FixtureTreeHeader';
 import { useScrollToSelected } from './useScrollToSelected';
 
 type Props = {
-  projectId: string;
   fixturesDir: string;
   fixtureFileSuffix: string;
   selectedFixtureId: null | FixtureId;
   rendererConnected: boolean;
   fixtures: FixtureNamesByPath;
-  treeExpansion: TreeExpansion;
+  expansion: TreeExpansion;
   selectFixture: (fixtureId: FixtureId) => void;
-  setTreeExpansion: (treeExpansion: TreeExpansion) => unknown;
+  setExpansion: (expansion: TreeExpansion) => unknown;
 };
 
 export function FixtureTreeContainer({
-  projectId,
   fixturesDir,
   fixtureFileSuffix,
   selectedFixtureId,
   rendererConnected,
   fixtures,
-  treeExpansion,
+  expansion,
   selectFixture,
-  setTreeExpansion,
+  setExpansion,
 }: Props) {
   const rootNode = useMemo(
     () => createFixtureTree({ fixtures, fixturesDir, fixtureFileSuffix }),
@@ -57,17 +55,17 @@ export function FixtureTreeContainer({
         fixturesDir={fixturesDir}
         fixtureFileSuffix={fixtureFileSuffix}
         fixtures={fixtures}
-        treeExpansion={treeExpansion}
-        setTreeExpansion={setTreeExpansion}
+        expansion={expansion}
+        setExpansion={setExpansion}
       />
       <TreeContainer ref={containerRef}>
         <FixtureTree
           rootNode={rootNode}
           selectedFixtureId={selectedFixtureId}
-          treeExpansion={treeExpansion}
+          expansion={expansion}
           selectedRef={selectedRef}
+          setExpansion={setExpansion}
           onSelect={selectFixture}
-          setTreeExpansion={setTreeExpansion}
         />
       </TreeContainer>
     </>

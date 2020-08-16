@@ -2,14 +2,14 @@ import React from 'react';
 import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { useValue } from 'react-cosmos/fixture';
-import { FixtureTree } from '.';
-import { TreeExpansion } from '../../../shared/TreeView';
+import { TreeExpansion } from '../../../shared/treeExpansion';
+import { FixtureTree } from './FixtureTree';
 
 const fixtures = {
-  'src/fixture1.ts': null,
-  'src/fixture2.ts': null,
-  'src/dir1/fixture3.ts': null,
-  'src/dir1/fixture4.ts': ['fixtureA', 'fixtureB'],
+  'src/Dashboard.ts': null,
+  'src/Settings.ts': null,
+  'src/shared/Dropdown.ts': null,
+  'src/shared/Button.ts': ['normal', 'disabled'],
 };
 const rootNode = createFixtureTree({
   fixtures,
@@ -17,23 +17,13 @@ const rootNode = createFixtureTree({
   fixtureFileSuffix: 'fixture',
 });
 
-const fixtureBId = { path: 'src/dir1/fixture4.ts', name: 'fixtureB' };
+const disabledFixtureId = { path: 'src/shared/Button.ts', name: 'disabled' };
 
 export default {
   collapsed: createTreeFixture(),
-
-  expanded1: createTreeFixture({ dir1: true }),
-
-  expanded2: createTreeFixture({ dir1: true, 'dir1/fixture4': true }),
-
-  'selected collapsed': createTreeFixture({}, fixtureBId),
-
-  'selected expanded1': createTreeFixture({ dir1: true }, fixtureBId),
-
-  'selected expanded2': createTreeFixture(
-    { dir1: true, 'dir1/fixture4': true },
-    fixtureBId
-  ),
+  expanded: createTreeFixture({ shared: true }),
+  'selected collapsed': createTreeFixture({}, disabledFixtureId),
+  'selected expanded': createTreeFixture({ shared: true }, disabledFixtureId),
 };
 
 function createTreeFixture(
@@ -45,7 +35,7 @@ function createTreeFixture(
       selectedFixtureId,
       setSelectedFixtureId,
     ] = useValue('selectedFixtureId', { defaultValue: fixtureId });
-    const [treeExpansion, setTreeExpansion] = useValue('treeExpansion', {
+    const [expansion, setExpansion] = useValue('treeExpansion', {
       defaultValue: initialTreeExpansion,
     });
     return (
@@ -53,9 +43,9 @@ function createTreeFixture(
         rootNode={rootNode}
         selectedFixtureId={selectedFixtureId}
         selectedRef={{ current: null }}
-        treeExpansion={treeExpansion}
+        expansion={expansion}
         onSelect={setSelectedFixtureId}
-        setTreeExpansion={setTreeExpansion}
+        setExpansion={setExpansion}
       />
     );
   };
