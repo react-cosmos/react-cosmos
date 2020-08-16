@@ -3,7 +3,7 @@ import {
   FixtureStateValues,
 } from 'react-cosmos-shared2/fixtureState';
 import { ValueNode } from './shared';
-import { getFixtureStateValueTree } from './valueTree';
+import { createValueTree } from './valueTree';
 
 const str1: FixtureStateValue = {
   type: 'primitive',
@@ -125,5 +125,5 @@ const rootNode: ValueNode = {
 };
 
 it('creates value tree', () => {
-  expect(getFixtureStateValueTree(values)).toEqual(rootNode);
+  expect(createValueTree(values)).toEqual(rootNode);
 });

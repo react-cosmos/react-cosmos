@@ -10,7 +10,7 @@ import {
 import { TreeView } from '../TreeView';
 import { ValueInputTreeDir } from './ValueInputTreeDir';
 import { ValueInputTreeItem } from './ValueInputTreeItem';
-import { getFixtureStateValueTree } from './valueTree';
+import { createValueTree } from './valueTree';
 
 type Props = {
   id: string;
@@ -27,7 +27,7 @@ export const ValueInputTree = React.memo(function ValueInputTree({
   onTreeExpansionChange: setExpansion,
   onValueChange,
 }: Props) {
-  const rootNode = getFixtureStateValueTree(values);
+  const rootNode = createValueTree(values);
   const onExpansionToggle = useTreeExpansionToggle(expansion, setExpansion);
   return (
     <Container>

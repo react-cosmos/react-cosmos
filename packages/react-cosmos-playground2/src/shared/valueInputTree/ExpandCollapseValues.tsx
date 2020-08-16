@@ -8,7 +8,7 @@ import {
   isTreeFullyCollapsed,
   TreeExpansion,
 } from '../treeExpansion';
-import { getFixtureStateValueTree } from './valueTree';
+import { createValueTree } from './valueTree';
 
 type Props = {
   values: FixtureStateValues;
@@ -21,8 +21,7 @@ export function ExpandCollapseValues({
   treeExpansion,
   onTreeExpansionChange,
 }: Props) {
-  const rootNode = getFixtureStateValueTree(values);
-
+  const rootNode = createValueTree(values);
   if (!hasExpandableNodes(rootNode)) return null;
 
   return isTreeFullyCollapsed(treeExpansion) ? (
