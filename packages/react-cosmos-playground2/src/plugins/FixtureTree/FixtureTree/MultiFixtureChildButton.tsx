@@ -31,13 +31,13 @@ export function MultiFixtureChildButton({
 }: Props) {
   return (
     <FixtureLink fixtureId={fixtureId} onSelect={onSelect}>
-      <ChildTreeItem
+      <TreeItem
         ref={selected ? selectedRef : undefined}
         indentLevel={indentLevel}
         selected={selected}
       >
         <Name>{name}</Name>
-      </ChildTreeItem>
+      </TreeItem>
     </FixtureLink>
   );
 }
@@ -49,7 +49,7 @@ const Name = styled.span`
   transition: opacity ${quick}s;
 `;
 
-const ChildTreeItem = styled(FixtureTreeItem)`
+const TreeItem = styled(FixtureTreeItem)`
   background: ${grey8};
   color: ${selectedColors(grey144, grey248)};
 
