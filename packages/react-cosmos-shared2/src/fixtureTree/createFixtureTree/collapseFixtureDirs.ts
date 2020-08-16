@@ -12,26 +12,36 @@ export function collapseFixtureDirs(
   if (collapsableDirNode && collapsableDirNode.data.type === 'fileDir') {
     const otherChildren = omit(children, fixturesDir);
     const innerChildren = collapsableDirNode.children;
-    if (
+    // Make sure children of the collapsed dir don't overlap with children of
+    // the parent dir
+    const collapsable =
       innerChildren &&
-      // Make sure children of the collapsed dir don't overlap with children of
-      // the parent dir
-      Object.keys(otherChildren).every(childName => !innerChildren[childName])
-    )
+      Object.keys(otherChildren).every(childName => !innerChildren[childName]);
+    if (collapsable)
       return {
         data: { type: 'fileDir' },
-        children: { ...otherChildren, ...innerChildren },
+        children: {
+          ...collapseChildrenFixtureDirs(otherChildren, fixturesDir),
+          ...innerChildren,
+        },
       };
   }
 
   return {
     ...treeNode,
-    children: Object.keys(children).reduce(
-      (newChildren, childName) => ({
-        ...newChildren,
-        [childName]: collapseFixtureDirs(children[childName], fixturesDir),
-      }),
-      {}
-    ),
+    children: collapseChildrenFixtureDirs(children, fixturesDir),
   };
+}
+
+function collapseChildrenFixtureDirs(
+  children: Record<string, FixtureTreeNode>,
+  fixturesDir: string
+) {
+  return Object.keys(children).reduce(
+    (newChildren, childName) => ({
+      ...newChildren,
+      [childName]: collapseFixtureDirs(children[childName], fixturesDir),
+    }),
+    {}
+  );
 }
