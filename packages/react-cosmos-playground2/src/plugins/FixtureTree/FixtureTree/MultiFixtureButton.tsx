@@ -71,8 +71,8 @@ const Name = styled.span`
   white-space: nowrap;
 `;
 
-const Count = styled.label`
-  margin: 0 0 0 -3px;
+const Count = styled.span`
+  margin: 0 8px 0 -3px;
   padding: 0 4px;
   border-radius: 3px;
   background: rgba(255, 255, 255, 0.15);
