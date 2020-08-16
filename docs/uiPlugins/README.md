@@ -41,7 +41,17 @@ Let's get down to business. In the Cosmos monorepo there is a demo plugin called
 
 The compiled plugin isn't versioned, so I created an archive for you to unpack into your project. **[Click here to download](https://github.com/react-cosmos/react-cosmos/raw/80fbcbcbbd352108d551a8b95685e19627d78d1b/docs/uiPlugins/booleanInputPlugin.zip).** It's just one JSON file and one JS file. We'll get into what they do later.
 
-Unzip and put the `booleanInputPlugin` folder anywhere in your project. Just make sure it's located inside your `rootDir` (the dir where you have your `cosmos.config.json`, or the dir where you run the `cosmos` command if you're flying configless).
+Unzip and put the `booleanInputPlugin` folder anywhere in your project. Just make sure it's located inside your `rootDir` (the dir where you have your cosmos.config.json, or the dir where you run the `cosmos` command if you're flying configless).
+
+### Enable plugins in your project
+
+Plugins are currently disabled by default to avoid performance issues for non-testers until the plugin API matures. Set `disabledPlugins` to `false` in your cosmos.config.json.
+
+```json
+{
+  "disabledPlugins": false
+}
+```
 
 Done? Great. Now (re)start Cosmos as you normally do. The plugin should be detected automatically.
 

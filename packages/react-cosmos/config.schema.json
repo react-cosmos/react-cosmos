@@ -103,9 +103,7 @@
               "type": "object",
               "description": "Advanced HTTP proxy config.",
               "additionalProperties": true,
-              "required": [
-                "target"
-              ],
+              "required": ["target"],
               "properties": {
                 "target": {
                   "type": "string"
@@ -123,13 +121,7 @@
                 },
                 "logLevel": {
                   "type": "string",
-                  "enum": [
-                    "error",
-                    "debug",
-                    "info",
-                    "warn",
-                    "silent"
-                  ]
+                  "enum": ["error", "debug", "info", "warn", "silent"]
                 }
               }
             }
@@ -152,10 +144,7 @@
       "properties": {
         "containerQuerySelector": {
           "description": "Document selector for existing element to use as component parent (eg. #root). A blank container element is created from scratch if no selector is provided. [default: null]",
-          "type": [
-            "string",
-            "null"
-          ],
+          "type": ["string", "null"],
           "minLength": 1
         }
       }
@@ -210,11 +199,7 @@
               "items": {
                 "type": "object",
                 "additionalProperties": false,
-                "required": [
-                  "label",
-                  "width",
-                  "height"
-                ],
+                "required": ["label", "width", "height"],
                 "properties": {
                   "label": {
                     "type": "string",

@@ -1,7 +1,5 @@
 {
   "disablePlugins": true,
-  "globalImports": [
-    "src/global/cosmos.loadPlugins"
-  ],
+  "globalImports": ["src/global/cosmos.loadPlugins"],
   "port": 5500
 }
