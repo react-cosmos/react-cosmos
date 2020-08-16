@@ -1,14 +1,8 @@
-import { useCallback } from 'react';
 import { TreeNode } from 'react-cosmos-shared2/util';
 
 export type TreeExpansion = {
   [nodePath: string]: boolean;
 };
-
-export type OnTreeExpansionToggle = (
-  parents: string[],
-  name: string
-) => unknown;
 
 export function isTreeFullyCollapsed(treeExpansion: TreeExpansion) {
   return Object.keys(treeExpansion).every(
@@ -30,10 +24,7 @@ export function hasExpandableNodes(rootNode: TreeNode<any>) {
   return getExpandableNodes(rootNode).length > 0;
 }
 
-export function getExpandableNodes(
-  treeNode: TreeNode<any>,
-  parents: string[] = []
-) {
+function getExpandableNodes(treeNode: TreeNode<any>, parents: string[] = []) {
   const { children } = treeNode;
   if (!children) return [];
 
@@ -47,21 +38,4 @@ export function getExpandableNodes(
   });
 
   return nodePaths;
-}
-
-export function getTreeNodePath(parents: string[], name: string) {
-  return [...parents, name].join('/');
-}
-
-export function useTreeExpansionToggle(
-  expansion: TreeExpansion,
-  setExpansion: (treeExpansion: TreeExpansion) => unknown
-) {
-  return useCallback<OnTreeExpansionToggle>(
-    (parents, name) => {
-      const nodePath = getTreeNodePath(parents, name);
-      setExpansion({ ...expansion, [nodePath]: !expansion[nodePath] });
-    },
-    [expansion, setExpansion]
-  );
 }

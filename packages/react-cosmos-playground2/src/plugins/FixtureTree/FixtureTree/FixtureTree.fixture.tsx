@@ -35,7 +35,7 @@ function createTreeFixture(
       selectedFixtureId,
       setSelectedFixtureId,
     ] = useValue('selectedFixtureId', { defaultValue: fixtureId });
-    const [treeExpansion, setTreeExpansion] = useValue('treeExpansion', {
+    const [expansion, setExpansion] = useValue('treeExpansion', {
       defaultValue: initialTreeExpansion,
     });
     return (
@@ -43,9 +43,9 @@ function createTreeFixture(
         rootNode={rootNode}
         selectedFixtureId={selectedFixtureId}
         selectedRef={{ current: null }}
-        treeExpansion={treeExpansion}
+        expansion={expansion}
         onSelect={setSelectedFixtureId}
-        setTreeExpansion={setTreeExpansion}
+        setExpansion={setExpansion}
       />
     );
   };

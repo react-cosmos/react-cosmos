@@ -8,11 +8,7 @@ import {
   nodeContainsFixtureId,
   recordContainsFixtureId,
 } from '../../../shared/fixtureTree';
-import {
-  getTreeNodePath,
-  TreeExpansion,
-  useTreeExpansionToggle,
-} from '../../../shared/treeExpansion';
+import { TreeExpansion } from '../../../shared/treeExpansion';
 import { TreeView } from '../../../shared/TreeView';
 import { FixtureButton } from './FixtureButton';
 import { FixtureDir } from './FixtureDir';
@@ -22,8 +18,8 @@ type Props = {
   rootNode: FixtureTreeNode;
   selectedFixtureId: null | FixtureId;
   selectedRef: RefObject<HTMLElement>;
-  treeExpansion: TreeExpansion;
-  setTreeExpansion: (treeExpansion: TreeExpansion) => unknown;
+  expansion: TreeExpansion;
+  setExpansion: (expansion: TreeExpansion) => unknown;
   onSelect: (fixtureId: FixtureId) => unknown;
 };
 
@@ -31,17 +27,17 @@ export const FixtureTree = React.memo(function FixtureTree({
   rootNode,
   selectedFixtureId,
   selectedRef,
-  treeExpansion: expansion,
-  setTreeExpansion: setExpansion,
+  expansion,
+  setExpansion,
   onSelect,
 }: Props) {
-  const onExpansionToggle = useTreeExpansionToggle(expansion, setExpansion);
   return (
     <Container>
       <TreeView
         node={rootNode}
         expansion={expansion}
-        renderNode={({ node, name, parents }) => {
+        setExpansion={setExpansion}
+        renderNode={({ node, name, parents, expanded, onToggle }) => {
           const { data, children } = node;
 
           if (data.type === 'fixture') {
@@ -77,7 +73,6 @@ export const FixtureTree = React.memo(function FixtureTree({
 
           if (!children) return null;
 
-          const expanded = expansion[getTreeNodePath(parents, name)];
           const selected =
             !expanded &&
             selectedFixtureId !== null &&
@@ -85,11 +80,11 @@ export const FixtureTree = React.memo(function FixtureTree({
           return (
             <FixtureDir
               name={name}
-              parents={parents}
+              indentLevel={parents.length}
               expanded={expanded}
               selected={selected}
               selectedRef={selectedRef}
-              onToggle={onExpansionToggle}
+              onToggle={onToggle}
             />
           );
         }}

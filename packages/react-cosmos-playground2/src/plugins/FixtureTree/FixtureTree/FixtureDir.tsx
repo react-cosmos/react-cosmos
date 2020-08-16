@@ -2,31 +2,30 @@ import React, { RefObject } from 'react';
 import styled from 'styled-components';
 import { blue, grey128 } from '../../../shared/colors';
 import { ChevronDownIcon, ChevronRightIcon } from '../../../shared/icons';
-import { OnTreeExpansionToggle } from '../../../shared/treeExpansion';
 import { FixtureTreeItem } from './FixtureTreeItem';
 
 type Props = {
   name: string;
-  parents: string[];
   expanded: boolean;
+  indentLevel: number;
   selected: boolean;
   selectedRef: RefObject<HTMLElement>;
-  onToggle: OnTreeExpansionToggle;
+  onToggle: () => unknown;
 };
 
 export function FixtureDir({
   name,
-  parents,
   expanded,
+  indentLevel,
   selected,
   selectedRef,
   onToggle,
 }: Props) {
   return (
-    <DirButton onClick={() => onToggle(parents, name)}>
+    <DirButton onClick={onToggle}>
       <FixtureTreeItem
         ref={selected ? selectedRef : undefined}
-        indentLevel={parents.length}
+        indentLevel={indentLevel}
         selected={selected}
       >
         <CevronContainer>

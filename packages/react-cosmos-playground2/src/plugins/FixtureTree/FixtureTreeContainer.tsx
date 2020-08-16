@@ -15,9 +15,9 @@ type Props = {
   selectedFixtureId: null | FixtureId;
   rendererConnected: boolean;
   fixtures: FixtureNamesByPath;
-  treeExpansion: TreeExpansion;
+  expansion: TreeExpansion;
   selectFixture: (fixtureId: FixtureId) => void;
-  setTreeExpansion: (treeExpansion: TreeExpansion) => unknown;
+  setExpansion: (expansion: TreeExpansion) => unknown;
 };
 
 export function FixtureTreeContainer({
@@ -26,9 +26,9 @@ export function FixtureTreeContainer({
   selectedFixtureId,
   rendererConnected,
   fixtures,
-  treeExpansion,
+  expansion,
   selectFixture,
-  setTreeExpansion,
+  setExpansion,
 }: Props) {
   const rootNode = useMemo(
     () => createFixtureTree({ fixtures, fixturesDir, fixtureFileSuffix }),
@@ -55,17 +55,17 @@ export function FixtureTreeContainer({
         fixturesDir={fixturesDir}
         fixtureFileSuffix={fixtureFileSuffix}
         fixtures={fixtures}
-        treeExpansion={treeExpansion}
-        setTreeExpansion={setTreeExpansion}
+        expansion={expansion}
+        setExpansion={setExpansion}
       />
       <TreeContainer ref={containerRef}>
         <FixtureTree
           rootNode={rootNode}
           selectedFixtureId={selectedFixtureId}
-          treeExpansion={treeExpansion}
+          expansion={expansion}
           selectedRef={selectedRef}
+          setExpansion={setExpansion}
           onSelect={selectFixture}
-          setTreeExpansion={setTreeExpansion}
         />
       </TreeContainer>
     </>

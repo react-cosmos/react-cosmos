@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { createPlugin } from 'react-plugin';
 import { TreeExpansion } from '../../shared/treeExpansion';
 import { CoreSpec } from '../Core/public';
@@ -24,10 +24,9 @@ namedPlug('navRow', 'fixtureTree', ({ pluginContext }) => {
   const core = getMethodsOf<CoreSpec>('core');
   const { fixturesDir, fixtureFileSuffix } = core.getFixtureFileVars();
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
-  const treeExpansion = getTreeExpansion(storage);
-  const setTreeExpansionMemo = React.useCallback(
-    (newTreeExpansion: TreeExpansion) =>
-      setTreeExpansion(storage, newTreeExpansion),
+  const expansion = getTreeExpansion(storage);
+  const setExpansionMemo = useCallback(
+    (newExpansion: TreeExpansion) => setTreeExpansion(storage, newExpansion),
     [storage]
   );
 
@@ -38,9 +37,9 @@ namedPlug('navRow', 'fixtureTree', ({ pluginContext }) => {
       selectedFixtureId={router.getSelectedFixtureId()}
       rendererConnected={rendererCore.isRendererConnected()}
       fixtures={rendererCore.getFixtures()}
-      treeExpansion={treeExpansion}
+      expansion={expansion}
       selectFixture={router.selectFixture}
-      setTreeExpansion={setTreeExpansionMemo}
+      setExpansion={setExpansionMemo}
     />
   );
 });

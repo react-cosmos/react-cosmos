@@ -16,16 +16,16 @@ type Props = {
   fixturesDir: string;
   fixtureFileSuffix: string;
   fixtures: FixtureNamesByPath;
-  treeExpansion: TreeExpansion;
-  setTreeExpansion: (treeExpansion: TreeExpansion) => unknown;
+  expansion: TreeExpansion;
+  setExpansion: (treeExpansion: TreeExpansion) => unknown;
 };
 
 export function FixtureTreeHeader({
   fixturesDir,
   fixtureFileSuffix,
   fixtures,
-  treeExpansion,
-  setTreeExpansion,
+  expansion,
+  setExpansion,
 }: Props) {
   const rootNode = useMemo(
     () => createFixtureTree({ fixtures, fixturesDir, fixtureFileSuffix }),
@@ -42,17 +42,17 @@ export function FixtureTreeHeader({
           disabled
           onClick={() => {}}
         />
-      ) : isTreeFullyCollapsed(treeExpansion) ? (
+      ) : isTreeFullyCollapsed(expansion) ? (
         <IconButton32
           title="Expand all fixture tree folders"
           icon={<PlusSquareIcon />}
-          onClick={() => setTreeExpansion(getFullTreeExpansion(rootNode))}
+          onClick={() => setExpansion(getFullTreeExpansion(rootNode))}
         />
       ) : (
         <IconButton32
           title="Collapse all fixture tree folders"
           icon={<MinusSquareIcon />}
-          onClick={() => setTreeExpansion({})}
+          onClick={() => setExpansion({})}
         />
       )}
     </Container>

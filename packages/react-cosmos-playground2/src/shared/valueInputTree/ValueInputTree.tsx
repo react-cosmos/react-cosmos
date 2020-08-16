@@ -6,11 +6,7 @@ import {
 } from 'react-cosmos-shared2/fixtureState';
 import styled from 'styled-components';
 import { grey248, grey32 } from '../colors';
-import {
-  getTreeNodePath,
-  TreeExpansion,
-  useTreeExpansionToggle,
-} from '../treeExpansion';
+import { TreeExpansion } from '../treeExpansion';
 import { TreeView } from '../TreeView';
 import { ValueInput } from './ValueInput/ValueInput';
 import { ValueInputDir } from './ValueInputDir';
@@ -32,13 +28,13 @@ export const ValueInputTree = React.memo(function ValueInputTree({
   onValueChange,
 }: Props) {
   const rootNode = createValueTree(values);
-  const onExpansionToggle = useTreeExpansionToggle(expansion, setExpansion);
   return (
     <Container>
       <TreeView
         node={rootNode}
         expansion={expansion}
-        renderNode={({ node, name, parents }) => {
+        setExpansion={setExpansion}
+        renderNode={({ node, name, parents, expanded, onToggle }) => {
           const { data, children } = node;
 
           if (data.type === 'item')
@@ -65,9 +61,9 @@ export const ValueInputTree = React.memo(function ValueInputTree({
               <ValueInputDir
                 name={name}
                 childNames={Object.keys(children)}
-                expanded={expansion[getTreeNodePath(parents, name)]}
+                expanded={expanded}
                 indentLevel={parents.length}
-                onToggle={() => onExpansionToggle(parents, name)}
+                onToggle={onToggle}
               />
             )
           );

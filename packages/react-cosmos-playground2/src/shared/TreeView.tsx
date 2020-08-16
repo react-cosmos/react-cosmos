@@ -1,33 +1,45 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useCallback } from 'react';
 import { TreeNode } from 'react-cosmos-shared2/util';
-import { getTreeNodePath, TreeExpansion } from './treeExpansion';
+import { TreeExpansion } from './treeExpansion';
 
 type Props<Item> = {
   node: TreeNode<Item>;
   name?: string;
   parents?: string[];
   expansion: TreeExpansion;
+  setExpansion: (expansion: TreeExpansion) => unknown;
   renderNode: (args: {
     node: TreeNode<Item>;
     name: string;
     parents: string[];
+    expanded: boolean;
+    onToggle: () => unknown;
   }) => ReactNode;
 };
 
+// The root doesn't have a name and its data isn't rendered
+// And the children of the root node are always expanded
 export function TreeView<Item>({
   node,
   name,
   parents = [],
   expansion,
+  setExpansion,
   renderNode,
 }: Props<Item>) {
-  const { children } = node;
-  // The root node doesn't have a name and isn't rendered
-  // And the children of the root node are always expanded
   const expanded = name ? expansion[getTreeNodePath(parents, name)] : true;
+  const onToggle = useCallback(() => {
+    if (name) {
+      const nodePath = getTreeNodePath(parents, name);
+      setExpansion({ ...expansion, [nodePath]: !expansion[nodePath] });
+    }
+  }, [expansion, name, parents, setExpansion]);
+
+  const { children } = node;
   return (
     <>
-      {name !== undefined && renderNode({ node, name, parents })}
+      {name !== undefined &&
+        renderNode({ node, name, parents, expanded, onToggle })}
       {children &&
         expanded &&
         Object.keys(children).map(childName => {
@@ -40,10 +52,15 @@ export function TreeView<Item>({
               name={childName}
               parents={nextParents}
               expansion={expansion}
+              setExpansion={setExpansion}
               renderNode={renderNode}
             />
           );
         })}
     </>
   );
+}
+
+function getTreeNodePath(parents: string[], name: string) {
+  return [...parents, name].join('/');
 }

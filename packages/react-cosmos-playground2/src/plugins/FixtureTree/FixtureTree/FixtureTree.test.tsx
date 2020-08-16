@@ -22,9 +22,9 @@ it('hides fixture under non-expanded dir', async () => {
       rootNode={rootNode}
       selectedFixtureId={null}
       selectedRef={{ current: null }}
-      treeExpansion={{}}
+      expansion={{}}
       onSelect={jest.fn()}
-      setTreeExpansion={jest.fn()}
+      setExpansion={jest.fn()}
     />
   );
   await waitFor(() => expect(queryByText('drei')).toBeNull());
@@ -36,42 +36,42 @@ it('shows fixture under expanded dir', async () => {
       rootNode={rootNode}
       selectedFixtureId={null}
       selectedRef={{ current: null }}
-      treeExpansion={{ nested: true }}
+      expansion={{ nested: true }}
       onSelect={jest.fn()}
-      setTreeExpansion={jest.fn()}
+      setExpansion={jest.fn()}
     />
   );
   await findByText('drei');
 });
 
 it('expands hidden dir on click', async () => {
-  const setTreeExpansion = jest.fn();
+  const setExpansion = jest.fn();
   const { getByText } = render(
     <FixtureTree
       rootNode={rootNode}
       selectedFixtureId={null}
       selectedRef={{ current: null }}
-      treeExpansion={{}}
+      expansion={{}}
       onSelect={jest.fn()}
-      setTreeExpansion={setTreeExpansion}
+      setExpansion={setExpansion}
     />
   );
   fireEvent.click(getByText(/nested/i));
-  expect(setTreeExpansion).toBeCalledWith({ nested: true });
+  expect(setExpansion).toBeCalledWith({ nested: true });
 });
 
 it('collapses expanded dir on click', async () => {
-  const setTreeExpansion = jest.fn();
+  const setExpansion = jest.fn();
   const { getByText } = render(
     <FixtureTree
       rootNode={rootNode}
       selectedFixtureId={null}
       selectedRef={{ current: null }}
-      treeExpansion={{ nested: true }}
+      expansion={{ nested: true }}
       onSelect={jest.fn()}
-      setTreeExpansion={setTreeExpansion}
+      setExpansion={setExpansion}
     />
   );
   fireEvent.click(getByText(/nested/i));
-  expect(setTreeExpansion).toBeCalledWith({ nested: false });
+  expect(setExpansion).toBeCalledWith({ nested: false });
 });
