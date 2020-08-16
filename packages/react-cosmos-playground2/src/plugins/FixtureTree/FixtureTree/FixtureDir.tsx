@@ -1,4 +1,4 @@
-import React, { RefObject } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { blue, grey128 } from '../../../shared/colors';
 import { ChevronDownIcon, ChevronRightIcon } from '../../../shared/icons';
@@ -9,7 +9,6 @@ type Props = {
   expanded: boolean;
   indentLevel: number;
   selected: boolean;
-  selectedRef: RefObject<HTMLElement>;
   onToggle: () => unknown;
 };
 
@@ -18,16 +17,11 @@ export function FixtureDir({
   expanded,
   indentLevel,
   selected,
-  selectedRef,
   onToggle,
 }: Props) {
   return (
     <DirButton onClick={onToggle}>
-      <FixtureTreeItem
-        ref={selected ? selectedRef : undefined}
-        indentLevel={indentLevel}
-        selected={selected}
-      >
+      <FixtureTreeItem indentLevel={indentLevel} selected={selected}>
         <CevronContainer>
           {expanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
         </CevronContainer>
