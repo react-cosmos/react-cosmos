@@ -1,7 +1,7 @@
 import React from 'react';
+import { blue, grey248, grey8 } from '../../colors';
 import { NumberInput } from '../../inputs/NumberInput';
 import { Label, ValueDataContainer } from './shared';
-import { grey8, blue, grey248 } from '../../colors';
 
 type Props = {
   id: string;
@@ -19,7 +19,7 @@ export function NumberValueInput({ id, name, data, onChange }: Props) {
       <ValueDataContainer>
         <NumberInput
           id={id}
-          data={data}
+          value={data}
           styles={{
             focusedColor: grey248,
             focusedBg: grey8,
