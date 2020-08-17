@@ -123,7 +123,7 @@ How you compile your code is 100% your business. React Cosmos jumps through hoop
 
 **React Cosmos compiles your code using the build dependencies already installed in your project.**
 
-Unless you use a framework like Create React App or Next.js, you need to install build dependencies yourself. This include stuff like Babel, TypeScript, webpack loaders, html-webpack-plugin, etc.
+Unless you use a framework like Create React App or Next.js, you need to install build dependencies yourself. This includes stuff like Babel, TypeScript, webpack loaders, html-webpack-plugin, etc.
 
 Here is a common list of packages required to build React with webpack and Babel:
 
