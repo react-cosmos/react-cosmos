@@ -279,7 +279,7 @@ The [props panel](https://twitter.com/ReactCosmos/status/1139838627976843264) al
 ### `useValue`
 
 ```jsx
-// CounterButton.fixture.js
+// CounterButton.fixture.jsx
 import { useValue } from 'react-cosmos/fixture';
 
 export default () => {
@@ -291,7 +291,7 @@ export default () => {
 ### `useSelect`
 
 ```jsx
-// Button.fixture.js
+// Button.fixture.jsx
 import { useSelect } from 'react-cosmos/fixture';
 
 export default () => {
