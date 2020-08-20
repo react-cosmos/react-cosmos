@@ -20,9 +20,21 @@ export default () => {
   const [float, setFloat] = useValue<number>('float', { defaultValue: 0.93 });
   return (
     <Container>
-      <NumberInput value={int} styles={styles} onChange={setInt} />
+      <NumberInput
+        value={int}
+        styles={styles}
+        minValue={0}
+        maxValue={100}
+        onChange={setInt}
+      />
       <Space height={8} />
-      <NumberInput value={float} styles={styles} onChange={setFloat} />
+      <NumberInput
+        value={float}
+        styles={styles}
+        minValue={-5000}
+        maxValue={5000}
+        onChange={setFloat}
+      />
     </Container>
   );
 };

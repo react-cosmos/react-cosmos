@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { KEY_DOWN, KEY_UP } from '../keys';
 import { useFocus } from '../useFocus';
 import {
@@ -23,7 +23,6 @@ type Props = {
   onChange: (newValue: number) => unknown;
 };
 
-// TODO: Support decimals
 export function NumberInput({
   id,
   value,
@@ -32,53 +31,79 @@ export function NumberInput({
   styles,
   onChange,
 }: Props) {
+  const [rawValue, setRawValue] = useState(String(value));
   const { focused, onFocus, onBlur } = useFocus();
 
-  const trimValue = React.useCallback(
-    (rawValue: number) => {
-      let validValue = Math.min(maxValue, rawValue);
-      validValue = Math.max(minValue, validValue);
+  // Reset raw value when value prop changes
+  useEffect(() => {
+    setRawValue(String(value));
+  }, [value]);
 
-      // Don't allow floating point to exceed 6 decimal points.
-      // This prevents values like 1463.1000000000001
-      if (validValue % 1 > 0) validValue = Number(validValue.toFixed(6));
+  function trim(input: number) {
+    let trimmed = Math.min(maxValue, input);
+    trimmed = Math.max(minValue, trimmed);
 
-      return validValue;
-    },
-    [maxValue, minValue]
-  );
+    // Don't allow floating point to exceed 6 decimal points.
+    // This prevents values like 1463.1000000000001
+    if (trimmed % 1 !== 0) trimmed = Number(trimmed.toFixed(6));
 
-  const onInputChange = React.useCallback(
-    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      const newValue = +e.currentTarget.value;
-      if (isFinite(newValue)) {
-        onChange(trimValue(newValue));
-      }
-    },
-    [onChange, trimValue]
-  );
+    return trimmed;
+  }
 
-  const onKeyDown = React.useCallback(
-    (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  function handleChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    const input = e.currentTarget.value;
+
+    // Allowed inputs: "", "123", "-123", "-", "123.456", ".456", "."
+    if (!input.match(/^(-?[0-9]*|(-?[0-9]+)?\.[0-9]*)$/)) return;
+
+    // Valid numbers are propagated to the parent component immediately, while
+    // invalid ones are discarded on blur
+    const parsed = parseFloat(input);
+    if (isNaN(parsed))
+      // Typing an invalid number is temporarily allowed, as it might be part of
+      // a valid number that the user is in the process of typing. Eg. A minus
+      // sign or a dot.
+      return setRawValue(input);
+
+    const trimmed = trim(parsed);
+    // Unless the value exceeds the [min,max] bounds and needs to be trimmed,
+    // preserve raw value as is. This allows transitioning from integers to
+    // floats. Eg. A "1." raw value is just "1" when parsed, but the dot has
+    setRawValue(trimmed === parsed ? input : String(trimmed));
+    if (trimmed !== value) onChange(trimmed);
+  }
+
+  function handleBlur() {
+    onBlur();
+    // Reset the raw value. Eg. "1." becomes "1", or an empty raw value is
+    // replaced with the current value prop.
+    setRawValue(String(value));
+  }
+
+  function increment(step: number, direction: -1 | 1) {
+    let parsed = parseFloat(rawValue);
+    if (isNaN(parsed)) parsed = value;
+    onChange(trim(parsed + step * direction));
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    function getStep() {
       // Jump value by 100 when CMD is pressed
       // Jump value by 10 when SHIFT is pressed
       // Jump value by 0.1 when ALT is pressed
       // Jump value by 1 by default
-      const step = e.metaKey ? 100 : e.shiftKey ? 10 : e.altKey ? 0.1 : 1;
+      return e.metaKey ? 100 : e.shiftKey ? 10 : e.altKey ? 0.1 : 1;
+    }
 
-      switch (e.keyCode) {
-        case KEY_UP:
-          e.preventDefault();
-          return onChange(trimValue(value + step));
-        case KEY_DOWN:
-          e.preventDefault();
-          return onChange(trimValue(value - step));
-        default:
-        // Nada
-      }
-    },
-    [onChange, trimValue, value]
-  );
+    switch (e.keyCode) {
+      case KEY_UP:
+        e.preventDefault();
+        return increment(getStep(), 1);
+      case KEY_DOWN:
+        e.preventDefault();
+        return increment(getStep(), -1);
+    }
+  }
 
   return (
     <TextInputContainer
@@ -88,18 +113,18 @@ export function NumberInput({
     >
       <TextContainer>
         <TextMirror minWidth={8} focused={focused}>
-          {value}
+          {rawValue}
         </TextMirror>
         <TextField
           rows={1}
           id={id}
-          value={value}
+          value={rawValue}
           focused={focused}
           color={styles.focusedColor}
-          onChange={onInputChange}
+          onChange={handleChange}
           onFocus={onFocus}
-          onBlur={onBlur}
-          onKeyDown={onKeyDown}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
         />
       </TextContainer>
     </TextInputContainer>
