@@ -67,8 +67,9 @@ export function NumberInput({
 
     const trimmed = trim(parsed);
     // Unless the value exceeds the [min,max] bounds and needs to be trimmed,
-    // preserve raw value as is. This allows transitioning from integers to
+    // preserve the raw value as is. This allows transitioning from integers to
     // floats. Eg. A "1." raw value is just "1" when parsed, but the dot has
+    // to be preserved to be able to input the decimals.
     setRawValue(trimmed === parsed ? input : String(trimmed));
     if (trimmed !== value) onChange(trimmed);
   }
