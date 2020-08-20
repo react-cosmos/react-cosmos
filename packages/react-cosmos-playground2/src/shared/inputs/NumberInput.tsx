@@ -23,11 +23,13 @@ type Props = {
   onChange: (newValue: number) => unknown;
 };
 
+const maxNumber = Number.MAX_SAFE_INTEGER || 9007199254740991;
+
 export function NumberInput({
   id,
   value,
-  minValue = -Infinity,
-  maxValue = Infinity,
+  minValue = -maxNumber,
+  maxValue = maxNumber,
   styles,
   onChange,
 }: Props) {

@@ -18,6 +18,7 @@ const Container = styled.div`
 export default () => {
   const [nr1, setNr1] = useValue<number>('number1', { defaultValue: 0.93 });
   const [nr2, setNr2] = useValue<number>('number2', { defaultValue: 1337 });
+  const [nr3, setNr3] = useValue<number>('number3', { defaultValue: 0 });
   return (
     <Container>
       <NumberInput
@@ -35,6 +36,8 @@ export default () => {
         maxValue={5000}
         onChange={setNr2}
       />
+      <Space height={8} />
+      <NumberInput value={nr3} styles={styles} onChange={setNr3} />
     </Container>
   );
 };
