@@ -21,6 +21,7 @@ export const DEFAULT_DEVICES = [
   { label: 'iPhone 5/SE', width: 320, height: 568 },
   { label: 'iPhone 6/7/8', width: 375, height: 667 },
   { label: 'iPhone 6/7/8 Plus', width: 414, height: 736 },
+  { label: 'iPhone X', width: 375, height: 812 },
   { label: 'iPad', width: 768, height: 1024 },
   { label: 'iPad Pro', width: 1024, height: 1366 },
   { label: 'Small laptop', width: 1280, height: 720 },
