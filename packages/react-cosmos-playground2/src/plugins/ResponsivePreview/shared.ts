@@ -18,12 +18,16 @@ export type ViewportState = {
 };
 
 export const DEFAULT_DEVICES = [
-  { label: 'iPhone 5', width: 320, height: 568 },
-  { label: 'iPhone 6', width: 375, height: 667 },
-  { label: 'iPhone 6+', width: 414, height: 736 },
-  { label: 'Medium', width: 1024, height: 768 },
-  { label: 'Large', width: 1440, height: 900 },
-  { label: '1080p', width: 1920, height: 1080 },
+  { label: 'iPhone 5/SE', width: 320, height: 568 },
+  { label: 'iPhone 6/7/8', width: 375, height: 667 },
+  { label: 'iPhone 6/7/8 Plus', width: 414, height: 736 },
+  { label: 'iPad', width: 768, height: 1024 },
+  { label: 'iPad Pro', width: 1024, height: 1366 },
+  { label: 'Small laptop', width: 1280, height: 720 },
+  { label: 'Laptop', width: 1366, height: 768 },
+  { label: 'Large laptop', width: 1600, height: 900 },
+  { label: 'Display', width: 1920, height: 1080 },
+  { label: 'Large display', width: 2560, height: 1440 },
 ];
 
 export const VIEWPORT_STORAGE_KEY = 'responsiveViewportState';
