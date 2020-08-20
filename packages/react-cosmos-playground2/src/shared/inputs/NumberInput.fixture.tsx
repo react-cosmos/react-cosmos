@@ -16,24 +16,24 @@ const Container = styled.div`
 `;
 
 export default () => {
-  const [int, setInt] = useValue<number>('int', { defaultValue: 1337 });
-  const [float, setFloat] = useValue<number>('float', { defaultValue: 0.93 });
+  const [nr1, setNr1] = useValue<number>('number1', { defaultValue: 0.93 });
+  const [nr2, setNr2] = useValue<number>('number2', { defaultValue: 1337 });
   return (
     <Container>
       <NumberInput
-        value={int}
+        value={nr1}
         styles={styles}
         minValue={0}
         maxValue={100}
-        onChange={setInt}
+        onChange={setNr1}
       />
       <Space height={8} />
       <NumberInput
-        value={float}
+        value={nr2}
         styles={styles}
         minValue={-5000}
         maxValue={5000}
-        onChange={setFloat}
+        onChange={setNr2}
       />
     </Container>
   );
