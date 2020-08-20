@@ -55,12 +55,12 @@ export function Hello({ greeting, name }) {
 }
 ```
 
-Create a fixture file in a `__fixtures__` directory. You can [customize this convention](#how-to-create-fixture-files) later.
+Create a `.fixture` file. You can [customize this convention](#how-to-create-fixture-files) later.
 
 > Fixture files contain a default export, which can be a React Component or any React Node.
 
 ```jsx
-// __fixtures__/hello.jsx
+// Hello.fixture.jsx
 import React from 'react';
 import { Hello } from '../Hello';
 
@@ -193,7 +193,7 @@ The file paths of your fixture files (relative to your project root) are used to
 > Think of Node fixtures as the return value of a function component, or the first argument to `React.render`.
 
 ```jsx
-// __fixtures__/disabled.js
+// Button.fixture.jsx
 export default <Button disabled>Click me</Button>;
 ```
 
@@ -202,7 +202,7 @@ export default <Button disabled>Click me</Button>;
 Component fixtures are just function components with no props. They enable using Hooks inside fixtures, which is powerful for simulating state with stateless components.
 
 ```jsx
-// CounterButton.fixture.js
+// CounterButton.fixture.jsx
 export default () => {
   const [count, setCount] = React.useState(0);
   return <CounterButton count={count} increment={() => setCount(count + 1)} />;
@@ -214,7 +214,7 @@ export default () => {
 A fixture file can also export multiple fixtures if the default export is an object.
 
 ```jsx
-// buttons.fixture.js
+// Button.fixture.jsx
 export default {
   primary: <PrimaryButton>Click me</PrimaryButton>,
   primaryDisabled: <PrimaryButton disabled>Click me</PrimaryButton>,
@@ -236,8 +236,8 @@ Two options:
 
 Examples:
 
-1. `blankState.fixture.js`
-2. `__fixtures__/blankState.js`
+1. `blankState.fixture.jsx`
+2. `__fixtures__/blankState.jsx`
 
 > File name conventions can be configured using the `fixturesDir` and `fixtureFileSuffix` options.
 
@@ -279,7 +279,7 @@ The [props panel](https://twitter.com/ReactCosmos/status/1139838627976843264) al
 ### `useValue`
 
 ```jsx
-// CounterButton.fixture.js
+// CounterButton.fixture.jsx
 import { useValue } from 'react-cosmos/fixture';
 
 export default () => {
@@ -291,7 +291,7 @@ export default () => {
 ### `useSelect`
 
 ```jsx
-// Button.fixture.js
+// Button.fixture.jsx
 import { useSelect } from 'react-cosmos/fixture';
 
 export default () => {
