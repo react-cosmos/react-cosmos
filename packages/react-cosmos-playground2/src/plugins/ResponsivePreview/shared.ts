@@ -27,8 +27,8 @@ export const DEFAULT_DEVICES = [
   { label: 'Small laptop', width: 1280, height: 720 },
   { label: 'Laptop', width: 1366, height: 768 },
   { label: 'Large laptop', width: 1600, height: 900 },
-  { label: 'Display', width: 1920, height: 1080 },
-  { label: 'Large display', width: 2560, height: 1440 },
+  { label: 'Full HD', width: 1920, height: 1080 },
+  { label: 'Quad HD', width: 2560, height: 1440 },
 ];
 
 export const VIEWPORT_STORAGE_KEY = 'responsiveViewportState';
