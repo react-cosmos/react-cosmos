@@ -16,11 +16,16 @@ type SvgElementType = React.ReactElement<
 
 type SvgChildren = SvgElementType | SvgElementType[];
 
-export function Icon({ children }: { children: SvgChildren }) {
+type IconProps = {
+  size?: number | string;
+  children: SvgChildren;
+};
+
+export function Icon({ size = '100%', children }: IconProps) {
   return (
     <BaseSvg
-      width="24"
-      height="24"
+      width={size}
+      height={size}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -59,6 +64,4 @@ function BaseSvg({
 
 const StyledSvg = styled.svg`
   display: block;
-  width: 100%;
-  height: 100%;
 `;

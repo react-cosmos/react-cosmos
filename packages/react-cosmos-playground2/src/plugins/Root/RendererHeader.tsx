@@ -7,7 +7,7 @@ import { IconButton32 } from '../../shared/buttons';
 import { grey176, grey32, white10 } from '../../shared/colors';
 import {
   MenuIcon,
-  RefreshCwIcon,
+  RotateCcwIcon,
   SlidersIcon,
   XCircleIcon,
 } from '../../shared/icons';
@@ -66,7 +66,7 @@ export const RendererHeader = React.memo(function RendererHeader({
           onClick={onClose}
         />
         <IconButton32
-          icon={<RefreshCwIcon />}
+          icon={<RotateCcwIcon />}
           title="Reload fixture"
           onClick={onReload}
         />

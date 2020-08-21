@@ -1,10 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button8 } from '../../../shared/buttons';
-import { blue, grey128, grey248, grey8 } from '../../../shared/colors';
-import { Minimize2Icon } from '../../../shared/icons';
+import {
+  blue,
+  grey128,
+  grey144,
+  grey216,
+  grey248,
+  grey8,
+} from '../../../shared/colors';
+import { Minimize2Icon, RefreshCcwIcon } from '../../../shared/icons';
 import { NumberInput } from '../../../shared/inputs/NumberInput';
 import { Select } from '../../../shared/inputs/Select';
+import { Space } from '../../../shared/Space';
+import { quick } from '../../../shared/vars';
 import { Device, Viewport } from '../public';
 
 type Props = {
@@ -41,18 +50,21 @@ export const Header = React.memo(function Header({
   const canScale = scaleFactor < 1;
   return (
     <Container data-testid="responsiveHeader">
-      <Select
-        testId="viewportSelect"
-        options={options}
-        value={stringifyViewport(selectedViewport)}
-        color={grey248}
-        height={32}
-        padding={8}
-        onChange={option =>
-          selectViewport({ width: option.width, height: option.height })
-        }
-      />
-      <ViewportSize>
+      <Left>
+        <Select
+          testId="viewportSelect"
+          options={options}
+          value={stringifyViewport(selectedViewport)}
+          color={grey248}
+          height={32}
+          padding={8}
+          onChange={option =>
+            selectViewport({ width: option.width, height: option.height })
+          }
+        />
+      </Left>
+      <Space width={4} />
+      <Center>
         <NumberInput
           value={selectedViewport.width}
           minValue={1}
@@ -68,26 +80,40 @@ export const Header = React.memo(function Header({
           styles={numberInputStypes}
           onChange={height => selectViewport({ ...selectedViewport, height })}
         />
-      </ViewportSize>
-      {canScale ? (
-        <Button8
-          icon={<Minimize2Icon />}
-          label={getScalePercent(scaleFactor)}
-          title="Toggle fit to scale"
-          disabled={false}
-          selected={scaled}
-          onClick={toggleScale}
-        />
-      ) : (
-        <Button8
-          icon={<Minimize2Icon />}
-          label="100%"
-          title="Toggle fit to scale"
-          disabled={true}
-          selected={false}
-          onClick={() => {}}
-        />
-      )}
+        <RotateButton
+          title="Rotate"
+          onClick={() =>
+            selectViewport({
+              width: selectedViewport.height,
+              height: selectedViewport.width,
+            })
+          }
+        >
+          <RefreshCcwIcon size={14} />
+        </RotateButton>
+      </Center>
+      <Space width={4} />
+      <Right>
+        {canScale ? (
+          <Button8
+            icon={<Minimize2Icon />}
+            label={getScalePercent(scaleFactor)}
+            title="Toggle fit to scale"
+            disabled={false}
+            selected={scaled}
+            onClick={toggleScale}
+          />
+        ) : (
+          <Button8
+            icon={<Minimize2Icon />}
+            label="100%"
+            title="Toggle fit to scale"
+            disabled={true}
+            selected={false}
+            onClick={() => {}}
+          />
+        )}
+      </Right>
     </Container>
   );
 });
@@ -105,22 +131,58 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
   padding: 4px;
   background: ${grey8};
   white-space: nowrap;
   overflow-x: auto;
 `;
 
-const ViewportSize = styled.div`
+const Left = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+const Right = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+`;
+
+const Center = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 0 2px;
 `;
 
 const ViewportX = styled.div`
   padding: 0 1px;
   line-height: 32px;
   color: ${grey128};
+`;
+
+export const RotateButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  background: transparent;
+  color: ${grey144};
+  outline: none;
+  transition: color ${quick}s;
+
+  :hover,
+  :focus {
+    color: ${grey216};
+  }
+
+  ::-moz-focus-inner {
+    border: 0;
+  }
 `;
