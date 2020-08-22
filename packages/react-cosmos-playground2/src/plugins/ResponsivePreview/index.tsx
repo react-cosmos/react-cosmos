@@ -4,7 +4,7 @@ import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { StorageSpec } from '../Storage/public';
 import { ResponsivePreviewSpec, Viewport } from './public';
-import { ResponsivePreview } from './ResponsivePreview';
+import { ResponsivePreview } from './ResponsivePreview/ResponsivePreview';
 import {
   DEFAULT_DEVICES,
   DEFAULT_VIEWPORT_STATE,
