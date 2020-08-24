@@ -1,11 +1,11 @@
 {
   "name": "react-cosmos-shared2",
-  "version": "5.5.0-alpha.13",
+  "version": "5.5.0-alpha.15",
   "description": "Code shared between Cosmos packages",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-shared2",
   "license": "MIT",
   "dependencies": {
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.20",
     "query-string": "5.1.1",
     "react-element-to-jsx-string": "^14.3.1",
     "react-is": "^16.13.1",
