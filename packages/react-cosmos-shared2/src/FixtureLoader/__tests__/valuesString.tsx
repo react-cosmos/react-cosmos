@@ -1,6 +1,6 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
-import { ReactTestRenderer } from 'react-test-renderer';
+import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
 import { createValue } from '../../fixtureState';
 import { uuid } from '../../util';
 import { testFixtureLoader } from '../testHelpers';
@@ -109,7 +109,7 @@ testFixtureLoader(
 );
 
 function getButtonText(renderer: ReactTestRenderer) {
-  return renderer.toJSON()!.props.value;
+  return getSingleRendererElement(renderer).props.value;
 }
 
 async function rendered(renderer: ReactTestRenderer, text: string) {
@@ -117,5 +117,9 @@ async function rendered(renderer: ReactTestRenderer, text: string) {
 }
 
 function changeInput(renderer: ReactTestRenderer, value: string) {
-  renderer.toJSON()!.props.onChange({ target: { value } });
+  getSingleRendererElement(renderer).props.onChange({ target: { value } });
+}
+
+function getSingleRendererElement(renderer: ReactTestRenderer) {
+  return renderer.toJSON() as ReactTestRendererJSON;
 }
