@@ -1,6 +1,6 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
-import { ReactTestRenderer } from 'react-test-renderer';
+import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
 import { uuid } from '../../util';
 import { testFixtureLoader } from '../testHelpers';
 import { useSelect } from '../useSelect';
@@ -60,5 +60,11 @@ testFixtureLoader(
 );
 
 async function rendered(renderer: ReactTestRenderer, text: string) {
-  await retry(() => expect(renderer.toJSON()!.props.value).toEqual(text));
+  await retry(() =>
+    expect(getSingleRendererElement(renderer).props.value).toEqual(text)
+  );
+}
+
+function getSingleRendererElement(renderer: ReactTestRenderer) {
+  return renderer.toJSON() as ReactTestRendererJSON;
 }
