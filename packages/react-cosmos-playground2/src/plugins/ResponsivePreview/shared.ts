@@ -1,4 +1,3 @@
-import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { PluginContext } from 'react-plugin';
 import { StorageSpec } from '../Storage/public';
 import { ResponsivePreviewSpec, Viewport } from './public';
@@ -7,10 +6,7 @@ export type ResponsivePreviewContext = PluginContext<ResponsivePreviewSpec>;
 
 export type StorageMethods = StorageSpec['methods'];
 
-export type FixtureStateWithViewport = FixtureState & {
-  viewport?: Viewport;
-};
-
+// TODO: Rename to RendererPreviewState
 export type ViewportState = {
   enabled: boolean;
   scaled: boolean;

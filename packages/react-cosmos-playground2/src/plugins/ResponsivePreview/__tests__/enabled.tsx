@@ -1,5 +1,6 @@
 import { fireEvent, render, RenderResult } from '@testing-library/react';
 import React from 'react';
+import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { RendererActionSlot } from '../../../shared/slots/RendererActionSlot';
 import {
@@ -10,7 +11,6 @@ import {
 import {
   DEFAULT_DEVICES,
   DEFAULT_VIEWPORT_STATE,
-  FixtureStateWithViewport,
   ViewportState,
   VIEWPORT_STORAGE_KEY,
 } from '../shared';
@@ -42,7 +42,7 @@ function mockRendererUrl() {
 }
 
 function mockViewportFixtureState() {
-  const mocks: { fixtureState: FixtureStateWithViewport } = {
+  const mocks: { fixtureState: FixtureState } = {
     fixtureState: {},
   };
   mockRendererCore({

@@ -6,6 +6,11 @@ export type Device = Viewport & {
 
 export type ResponsivePreviewSpec = {
   name: 'responsivePreview';
+  // state: {
+  //   enabled: boolean;
+  //   scaled: boolean;
+  //   viewport: Viewport;
+  // };
   config: {
     devices: Device[];
   };
