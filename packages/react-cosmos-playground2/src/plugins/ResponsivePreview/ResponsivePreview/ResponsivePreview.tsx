@@ -1,11 +1,17 @@
 import { isEqual } from 'lodash';
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { grey8 } from '../../../shared/colors';
 import { useDrag } from '../../../shared/useDrag';
 import { Device, Viewport } from '../public';
 import { Header } from './Header';
-import { getStyles, getViewportScaleFactor, stretchStyle } from './style';
+import {
+  getStyles,
+  getViewportScaleFactor,
+  responsivePreviewBorderWidth,
+  responsivePreviewPadding,
+  stretchStyle,
+} from './style';
 
 type Props = {
   children?: React.ReactNode;
@@ -30,14 +36,22 @@ export function ResponsivePreview({
 }: Props) {
   const [container, setContainer] = useState<null | Viewport>(null);
 
-  const hDrag = useDrag({
+  const leftDrag = useDrag({
+    value: viewport.width,
+    direction: 'horizontal',
+    double: true,
+    reverse: true,
+    min: 32,
+    onChange: width => setViewport({ ...viewport, width }),
+  });
+  const rightDrag = useDrag({
     value: viewport.width,
     direction: 'horizontal',
     double: true,
     min: 32,
     onChange: width => setViewport({ ...viewport, width }),
   });
-  const vDrag = useDrag({
+  const bottomDrag = useDrag({
     value: viewport.height,
     direction: 'vertical',
     double: true,
@@ -110,41 +124,14 @@ export function ResponsivePreview({
           <div key="container" style={alignContainerStyle}>
             <div style={scaleContainerStyle}>{children}</div>
           </div>
-          <div
-            ref={hDrag.dragElRef}
-            style={{
-              position: 'absolute',
-              top: padContainerStyle.paddingTop,
-              bottom: padContainerStyle.paddingBottom,
-              right: 0,
-              width: padContainerStyle.paddingRight,
-              background: 'rgba(255, 255, 255, 0.3)',
-              cursor: 'col-resize',
-              userSelect: 'none',
-            }}
-          />
-          <div
-            ref={vDrag.dragElRef}
-            style={{
-              position: 'absolute',
-              height: padContainerStyle.paddingBottom,
-              bottom: 0,
-              left: padContainerStyle.paddingLeft,
-              right: padContainerStyle.paddingRight,
-              background: 'rgba(255, 255, 255, 0.3)',
-              cursor: 'row-resize',
-              userSelect: 'none',
-            }}
-          />
-          {(hDrag.dragging || vDrag.dragging) && (
-            <div
+          <LeftDragHandle ref={leftDrag.dragElRef} />
+          <RightDragHandle ref={rightDrag.dragElRef} />
+          <BottomDragHandle ref={bottomDrag.dragElRef} />
+          {(leftDrag.dragging || rightDrag.dragging || bottomDrag.dragging) && (
+            <DragOverlay
               style={{
-                position: 'absolute',
-                top: padContainerStyle.paddingTop + 1,
-                left: padContainerStyle.paddingLeft + 1,
                 width: alignContainerStyle.width,
                 height: alignContainerStyle.height,
-                backgroundColor: 'rgba(255, 0, 0, 0.3)',
               }}
             />
           )}
@@ -169,4 +156,45 @@ const Container = styled.div.attrs({ 'data-testid': 'responsivePreview' })`
   flex-direction: column;
   overflow-x: hidden;
   background: ${grey8};
+`;
+
+const LeftDragHandle = styled.div`
+  position: absolute;
+  top: ${responsivePreviewPadding.top}px;
+  bottom: ${responsivePreviewPadding.bottom}px;
+  left: 0;
+  width: ${responsivePreviewPadding.left}px;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: col-resize;
+  user-select: none;
+`;
+
+const RightDragHandle = styled.div`
+  position: absolute;
+  top: ${responsivePreviewPadding.top}px;
+  bottom: ${responsivePreviewPadding.bottom}px;
+  right: 0;
+  width: ${responsivePreviewPadding.left}px;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: col-resize;
+  user-select: none;
+`;
+
+const BottomDragHandle = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: ${responsivePreviewPadding.left}px;
+  right: ${responsivePreviewPadding.right}px;
+  height: ${responsivePreviewPadding.bottom}px;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: row-resize;
+  user-select: none;
+`;
+
+// The purpose of DragOverlay is to cover the renderer iframe while dragging,
+// because otherwise the iframe steaps the mousemove events and stops the drag.
+const DragOverlay = styled.div`
+  position: absolute;
+  top: ${responsivePreviewPadding.top + responsivePreviewBorderWidth}px;
+  left: ${responsivePreviewPadding.left + responsivePreviewBorderWidth}px;
 `;

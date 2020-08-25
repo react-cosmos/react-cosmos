@@ -228,9 +228,8 @@ const PanelDragHandle = styled(DragHandle)`
   padding: 0 1px 0 2px;
 `;
 
-// The purpose of DragOverlay is to cover other elements while dragging, such
-// as the renderer preview iframe, which sucks up `mousemove` events, or the
-// links in the fixture tree view which change the mouse cursor.
+// The purpose of DragOverlay is to cover the renderer iframe while dragging,
+// because otherwise the iframe steaps the mousemove events and stops the drag.
 const DragOverlay = styled.div`
   position: absolute;
   top: 0;
