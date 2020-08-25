@@ -1,5 +1,13 @@
 import { isEqual } from 'lodash';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import styled, { css } from 'styled-components';
 import { grey64, grey8 } from '../../../shared/colors';
 import { useDrag } from '../../../shared/useDrag';
@@ -14,14 +22,14 @@ import {
 } from './style';
 
 type Props = {
-  children?: React.ReactNode;
+  children?: ReactNode;
   devices: Device[];
   enabled: boolean;
   viewport: Viewport;
   scaled: boolean;
   validFixtureSelected: boolean;
-  setViewport(viewport: Viewport): unknown;
-  setScaled(scaled: boolean): unknown;
+  setViewport: Dispatch<SetStateAction<Viewport>>;
+  setScaled: (scaled: boolean) => unknown;
 };
 
 export function ResponsivePreview({
@@ -36,27 +44,36 @@ export function ResponsivePreview({
 }: Props) {
   const [container, setContainer] = useState<null | Viewport>(null);
 
+  const onWidthChange = useCallback(
+    width => setViewport(prevViewport => ({ ...prevViewport, width })),
+    [setViewport]
+  );
+  const onHeightChange = useCallback(
+    height => setViewport(prevViewport => ({ ...prevViewport, height })),
+    [setViewport]
+  );
+
   const leftDrag = useDrag({
     value: viewport.width,
     direction: 'horizontal',
     double: true,
     reverse: true,
     min: 32,
-    onChange: width => setViewport({ ...viewport, width }),
+    onChange: onWidthChange,
   });
   const rightDrag = useDrag({
     value: viewport.width,
     direction: 'horizontal',
     double: true,
     min: 32,
-    onChange: width => setViewport({ ...viewport, width }),
+    onChange: onWidthChange,
   });
   const bottomDrag = useDrag({
     value: viewport.height,
     direction: 'vertical',
     double: true,
     min: 32,
-    onChange: height => setViewport({ ...viewport, height }),
+    onChange: onHeightChange,
   });
 
   const containerRef = useRef<HTMLDivElement | null>(null);

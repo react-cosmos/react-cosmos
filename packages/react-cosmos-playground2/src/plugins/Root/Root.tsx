@@ -65,7 +65,6 @@ export function Root({
 }: Props) {
   const navDrag = useDrag({
     value: navWidth,
-    reverse: false,
     onChange: setNavWidth,
   });
   const panelDrag = useDrag({
