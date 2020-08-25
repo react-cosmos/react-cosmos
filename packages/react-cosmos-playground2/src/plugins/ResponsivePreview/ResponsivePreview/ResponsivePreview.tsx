@@ -1,7 +1,7 @@
 import { isEqual } from 'lodash';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
-import { grey8 } from '../../../shared/colors';
+import styled, { css } from 'styled-components';
+import { grey32, grey8 } from '../../../shared/colors';
 import { useDrag } from '../../../shared/useDrag';
 import { Device, Viewport } from '../public';
 import { Header } from './Header';
@@ -124,9 +124,15 @@ export function ResponsivePreview({
           <div key="container" style={alignContainerStyle}>
             <div style={scaleContainerStyle}>{children}</div>
           </div>
-          <LeftDragHandle ref={leftDrag.dragElRef} />
-          <RightDragHandle ref={rightDrag.dragElRef} />
-          <BottomDragHandle ref={bottomDrag.dragElRef} />
+          <LeftDragHandle ref={leftDrag.dragElRef}>
+            <HorizontalDragIndicator />
+          </LeftDragHandle>
+          <RightDragHandle ref={rightDrag.dragElRef}>
+            <HorizontalDragIndicator />
+          </RightDragHandle>
+          <BottomDragHandle ref={bottomDrag.dragElRef}>
+            <VerticalDragIndicator />
+          </BottomDragHandle>
           {(leftDrag.dragging || rightDrag.dragging || bottomDrag.dragging) && (
             <DragOverlay
               style={{
@@ -158,37 +164,56 @@ const Container = styled.div.attrs({ 'data-testid': 'responsivePreview' })`
   background: ${grey8};
 `;
 
-const LeftDragHandle = styled.div`
+const commonDragHandleStyles = css`
   position: absolute;
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const LeftDragHandle = styled.div`
+  ${commonDragHandleStyles};
   top: ${responsivePreviewPadding.top}px;
   bottom: ${responsivePreviewPadding.bottom}px;
   left: 0;
   width: ${responsivePreviewPadding.left}px;
-  background: rgba(255, 255, 255, 0.3);
   cursor: col-resize;
-  user-select: none;
+  flex-direction: column;
 `;
 
 const RightDragHandle = styled.div`
-  position: absolute;
+  ${commonDragHandleStyles};
   top: ${responsivePreviewPadding.top}px;
   bottom: ${responsivePreviewPadding.bottom}px;
   right: 0;
   width: ${responsivePreviewPadding.left}px;
-  background: rgba(255, 255, 255, 0.3);
   cursor: col-resize;
-  user-select: none;
+  flex-direction: column;
 `;
 
 const BottomDragHandle = styled.div`
-  position: absolute;
+  ${commonDragHandleStyles};
   bottom: 0;
   left: ${responsivePreviewPadding.left}px;
   right: ${responsivePreviewPadding.right}px;
   height: ${responsivePreviewPadding.bottom}px;
-  background: rgba(255, 255, 255, 0.3);
   cursor: row-resize;
-  user-select: none;
+  flex-direction: row;
+`;
+
+const HorizontalDragIndicator = styled.div`
+  width: 5px;
+  height: 64px;
+  border-radius: 3px;
+  background: ${grey32};
+`;
+
+const VerticalDragIndicator = styled.div`
+  width: 64px;
+  height: 5px;
+  border-radius: 3px;
+  background: ${grey32};
 `;
 
 // The purpose of DragOverlay is to cover the renderer iframe while dragging,
