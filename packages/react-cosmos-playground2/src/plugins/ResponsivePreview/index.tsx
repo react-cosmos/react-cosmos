@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { SetStateAction } from 'react';
 import { createPlugin } from 'react-plugin';
 import { CoreSpec } from '../Core/public';
 import { RendererCoreSpec } from '../RendererCore/public';
 import { StorageSpec } from '../Storage/public';
 import { ResponsivePreviewSpec, Viewport } from './public';
-import { ResponsivePreview } from './ResponsivePreview';
+import { ResponsivePreview } from './ResponsivePreview/ResponsivePreview';
 import {
   DEFAULT_DEVICES,
   DEFAULT_VIEWPORT_STATE,
@@ -79,7 +79,11 @@ register();
 function useViewportChange(context: ResponsivePreviewContext) {
   const viewportState = getViewportState(context);
   return React.useCallback(
-    (viewport: Viewport) => {
+    (viewportChange: SetStateAction<Viewport>) => {
+      const viewport =
+        typeof viewportChange === 'function'
+          ? viewportChange(viewportState.viewport)
+          : viewportChange;
       setViewportState(context, { ...viewportState, enabled: true, viewport });
       setFixtureStateViewport(context, viewport);
     },

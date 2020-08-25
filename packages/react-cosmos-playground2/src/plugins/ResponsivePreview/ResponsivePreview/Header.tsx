@@ -67,7 +67,7 @@ export const Header = React.memo(function Header({
       <Center>
         <NumberInput
           value={selectedViewport.width}
-          minValue={1}
+          minValue={32}
           maxValue={5120}
           styles={numberInputStypes}
           onChange={width => selectViewport({ ...selectedViewport, width })}
@@ -75,7 +75,7 @@ export const Header = React.memo(function Header({
         <ViewportX>×</ViewportX>
         <NumberInput
           value={selectedViewport.height}
-          minValue={1}
+          minValue={32}
           maxValue={5120}
           styles={numberInputStypes}
           onChange={height => selectViewport({ ...selectedViewport, height })}

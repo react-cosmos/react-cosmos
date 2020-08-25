@@ -2,28 +2,45 @@ import React from 'react';
 
 type UseDragArgs = {
   value: number;
-  reverse: boolean;
+  direction?: 'horizontal' | 'vertical';
+  reverse?: boolean;
+  double?: boolean;
+  min?: number;
+  max?: number;
   onChange: (value: number) => unknown;
 };
 
 type DragState = {
   startValue: number;
-  startX: number;
+  startOffset: number;
 };
 
-export function useDrag({ value, reverse, onChange }: UseDragArgs) {
+export function useDrag({
+  value,
+  direction = 'horizontal',
+  reverse = false,
+  double = false,
+  min = 0,
+  max = 99999,
+  onChange,
+}: UseDragArgs) {
   const [dragState, setDragState] = React.useState<null | DragState>(null);
 
   const handleDrag = React.useCallback(
     (e: MouseEvent) => {
       if (dragState) {
-        const { startValue, startX } = dragState;
-        const diff = e.clientX - startX;
-        const curValue = startValue + (reverse ? -diff : diff);
+        const { startValue, startOffset } = dragState;
+        let diff =
+          direction === 'horizontal'
+            ? e.clientX - startOffset
+            : e.clientY - startOffset;
+        if (reverse) diff *= -1;
+        if (double) diff *= 2;
+        const curValue = Math.min(max, Math.max(min, startValue + diff));
         onChange(curValue);
       }
     },
-    [reverse, onChange, dragState]
+    [direction, double, dragState, max, min, onChange, reverse]
   );
 
   const handleDragEnd = React.useCallback(() => {
@@ -34,10 +51,10 @@ export function useDrag({ value, reverse, onChange }: UseDragArgs) {
     (e: MouseEvent) => {
       setDragState({
         startValue: value,
-        startX: e.clientX,
+        startOffset: direction === 'horizontal' ? e.clientX : e.clientY,
       });
     },
-    [value]
+    [direction, value]
   );
 
   React.useEffect((): void | (() => void) => {

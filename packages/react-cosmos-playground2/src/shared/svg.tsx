@@ -17,11 +17,11 @@ type SvgElementType = React.ReactElement<
 type SvgChildren = SvgElementType | SvgElementType[];
 
 type IconProps = {
-  size?: number | string;
   children: SvgChildren;
+  size?: number | string;
 };
 
-export function Icon({ size = '100%', children }: IconProps) {
+export function Icon({ children, size = '100%' }: IconProps) {
   return (
     <BaseSvg
       width={size}
@@ -38,14 +38,22 @@ export function Icon({ size = '100%', children }: IconProps) {
   );
 }
 
+type IllustrationProps = {
+  children: SvgChildren;
+  viewBox: string;
+  size?: number | string;
+};
+
 export function Illustration({
   children,
   viewBox,
-}: {
-  children: SvgChildren;
-  viewBox: string;
-}) {
-  return <BaseSvg viewBox={viewBox}>{children}</BaseSvg>;
+  size = '100%',
+}: IllustrationProps) {
+  return (
+    <BaseSvg width={size} height={size} viewBox={viewBox}>
+      {children}
+    </BaseSvg>
+  );
 }
 
 function BaseSvg({

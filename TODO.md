@@ -51,7 +51,7 @@ Auto generating fixtures completely is a pipe dream, but some parts can be autom
 ## Responsive mode improvements
 
 - [x] Update default devices
-- [ ] X/y drag handles to resize viewport
+- [x] X/y drag handles to resize viewport
 
 ## Input panel improvements
 

@@ -28,7 +28,7 @@ module.exports = async () => {
     },
     module: {
       rules: [
-        { test: /\.tsx?$/, include: [src], loader: 'babel-loader' },
+        { test: /\.[jt]sx?$/, include: [src], loader: 'babel-loader' },
         { test: /\.css$/, include: src, loader: 'style-loader!css-loader' },
       ],
     },

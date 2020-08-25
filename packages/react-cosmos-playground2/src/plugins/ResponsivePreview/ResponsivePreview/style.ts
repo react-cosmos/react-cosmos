@@ -1,8 +1,13 @@
 import { white20 } from '../../../shared/colors';
 import { Viewport } from '../public';
 
-const PADDING = [8, 12, 12, 12];
-const BORDER_WIDTH = 1;
+export const responsivePreviewPadding = {
+  top: 8,
+  bottom: 24,
+  left: 24,
+  right: 24,
+};
+export const responsivePreviewBorderWidth = 1;
 
 export const stretchStyle = { display: 'flex', flex: 1 };
 
@@ -65,21 +70,20 @@ function getMaskContainerStyle(
 }
 
 function getPadContainerStyle() {
-  const [paddingTop, paddingRight, paddingBottom, paddingLeft] = PADDING;
-
   return {
-    paddingTop,
-    paddingBottom,
-    paddingLeft,
-    paddingRight,
-  };
+    position: 'relative',
+    paddingTop: responsivePreviewPadding.top,
+    paddingBottom: responsivePreviewPadding.bottom,
+    paddingLeft: responsivePreviewPadding.left,
+    paddingRight: responsivePreviewPadding.right,
+  } as const;
 }
 
 function getAlignContainerStyle(scaledWidth: number, scaledHeight: number) {
   return {
     width: scaledWidth,
     height: scaledHeight,
-    border: `${BORDER_WIDTH}px solid ${white20}`,
+    border: `${responsivePreviewBorderWidth}px solid ${white20}`,
     overflow: 'hidden',
   };
 }
@@ -98,9 +102,17 @@ function getScaleContainerStyle(
 }
 
 function getHorPadding() {
-  return PADDING[1] + PADDING[3] + 2 * BORDER_WIDTH;
+  return (
+    responsivePreviewPadding.left +
+    responsivePreviewPadding.right +
+    2 * responsivePreviewBorderWidth
+  );
 }
 
 function getVerPadding() {
-  return PADDING[0] + PADDING[2] + 2 * BORDER_WIDTH;
+  return (
+    responsivePreviewPadding.top +
+    responsivePreviewPadding.bottom +
+    2 * responsivePreviewBorderWidth
+  );
 }
