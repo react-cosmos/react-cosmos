@@ -33,8 +33,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        include: src,
+        test: /\.[jt]sx?$/,
+        include: [src, join(__dirname, '../../node_modules/debug')],
         use: {
           loader: 'babel-loader',
         },
