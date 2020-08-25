@@ -1,7 +1,7 @@
 import { isEqual } from 'lodash';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { grey32, grey8 } from '../../../shared/colors';
+import { grey64, grey8 } from '../../../shared/colors';
 import { useDrag } from '../../../shared/useDrag';
 import { Device, Viewport } from '../public';
 import { Header } from './Header';
@@ -210,7 +210,7 @@ const VerticalDragIndicator = styled.div`
   width: 5px;
   height: 64px;
   border-radius: 3px;
-  background: ${grey32};
+  background: ${grey64};
 `;
 
 const HorizontalDragIndicator = styled.div`
@@ -218,7 +218,7 @@ const HorizontalDragIndicator = styled.div`
   width: 64px;
   height: 5px;
   border-radius: 3px;
-  background: ${grey32};
+  background: ${grey64};
 `;
 
 // The purpose of DragOverlay is to cover the renderer iframe while dragging,
