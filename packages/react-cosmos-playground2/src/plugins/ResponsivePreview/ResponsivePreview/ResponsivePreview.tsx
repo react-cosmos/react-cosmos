@@ -132,12 +132,7 @@ export function ResponsivePreview({
         toggleScale={() => setScaled(!scaled)}
       />
       <div key="preview" ref={handleContainerRef} style={maskContainerStyle}>
-        <div
-          style={{
-            ...padContainerStyle,
-            position: 'relative',
-          }}
-        >
+        <div style={padContainerStyle}>
           <div key="container" style={alignContainerStyle}>
             <div style={scaleContainerStyle}>{children}</div>
           </div>
@@ -165,9 +160,7 @@ export function ResponsivePreview({
 }
 
 function getContainerSize(containerEl: null | HTMLElement) {
-  if (!containerEl) {
-    return null;
-  }
+  if (!containerEl) return null;
 
   const { width, height } = containerEl.getBoundingClientRect();
   return { width, height };

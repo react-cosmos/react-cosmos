@@ -71,11 +71,12 @@ function getMaskContainerStyle(
 
 function getPadContainerStyle() {
   return {
+    position: 'relative',
     paddingTop: responsivePreviewPadding.top,
     paddingBottom: responsivePreviewPadding.bottom,
     paddingLeft: responsivePreviewPadding.left,
     paddingRight: responsivePreviewPadding.right,
-  };
+  } as const;
 }
 
 function getAlignContainerStyle(scaledWidth: number, scaledHeight: number) {
