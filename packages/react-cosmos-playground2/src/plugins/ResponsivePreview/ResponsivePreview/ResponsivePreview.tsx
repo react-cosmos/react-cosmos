@@ -125,13 +125,13 @@ export function ResponsivePreview({
             <div style={scaleContainerStyle}>{children}</div>
           </div>
           <LeftDragHandle ref={leftDrag.dragElRef}>
-            <HorizontalDragIndicator />
+            <VerticalDragIndicator />
           </LeftDragHandle>
           <RightDragHandle ref={rightDrag.dragElRef}>
-            <HorizontalDragIndicator />
+            <VerticalDragIndicator />
           </RightDragHandle>
           <BottomDragHandle ref={bottomDrag.dragElRef}>
-            <VerticalDragIndicator />
+            <HorizontalDragIndicator />
           </BottomDragHandle>
           {(leftDrag.dragging || rightDrag.dragging || bottomDrag.dragging) && (
             <DragOverlay
@@ -180,6 +180,7 @@ const LeftDragHandle = styled.div`
   width: ${responsivePreviewPadding.left}px;
   cursor: col-resize;
   flex-direction: column;
+  align-items: flex-end;
 `;
 
 const RightDragHandle = styled.div`
@@ -190,6 +191,7 @@ const RightDragHandle = styled.div`
   width: ${responsivePreviewPadding.left}px;
   cursor: col-resize;
   flex-direction: column;
+  align-items: flex-start;
 `;
 
 const BottomDragHandle = styled.div`
@@ -200,16 +202,19 @@ const BottomDragHandle = styled.div`
   height: ${responsivePreviewPadding.bottom}px;
   cursor: row-resize;
   flex-direction: row;
+  align-items: flex-start;
 `;
 
-const HorizontalDragIndicator = styled.div`
+const VerticalDragIndicator = styled.div`
+  margin: 0 8px;
   width: 5px;
   height: 64px;
   border-radius: 3px;
   background: ${grey32};
 `;
 
-const VerticalDragIndicator = styled.div`
+const HorizontalDragIndicator = styled.div`
+  margin: 8px 0;
   width: 64px;
   height: 5px;
   border-radius: 3px;

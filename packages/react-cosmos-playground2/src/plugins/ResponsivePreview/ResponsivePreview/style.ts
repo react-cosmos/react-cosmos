@@ -3,9 +3,9 @@ import { Viewport } from '../public';
 
 export const responsivePreviewPadding = {
   top: 8,
-  bottom: 20,
-  left: 20,
-  right: 20,
+  bottom: 24,
+  left: 24,
+  right: 24,
 };
 export const responsivePreviewBorderWidth = 1;
 
