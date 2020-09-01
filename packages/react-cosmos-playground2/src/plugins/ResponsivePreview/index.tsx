@@ -26,17 +26,16 @@ plug('rendererPreviewOuter', ({ children, pluginContext }) => {
   const { getConfig, getMethodsOf } = pluginContext;
   const { devices } = getConfig();
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
-  const fixtureState = rendererCore.getFixtureState() as FixtureStateWithViewport;
-  const viewportState = getViewportState(pluginContext);
+  const { enabled, viewport, scaled } = getViewportState(pluginContext);
   const onViewportChange = useViewportChange(pluginContext);
   const onScaledChange = useScaledChange(pluginContext);
 
   return (
     <ResponsivePreview
       devices={devices}
-      enabled={fixtureState.viewport ? true : viewportState.enabled}
-      viewport={fixtureState.viewport || viewportState.viewport}
-      scaled={viewportState.scaled}
+      enabled={enabled}
+      viewport={viewport}
+      scaled={scaled}
       validFixtureSelected={rendererCore.isValidFixtureSelected()}
       setViewport={onViewportChange}
       setScaled={onScaledChange}
@@ -49,14 +48,10 @@ plug('rendererPreviewOuter', ({ children, pluginContext }) => {
 namedPlug('rendererAction', 'responsivePreview', ({ pluginContext }) => {
   const { getMethodsOf } = pluginContext;
   const core = getMethodsOf<CoreSpec>('core');
-  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
-  const fixtureState = rendererCore.getFixtureState();
   const viewportState = getViewportState(pluginContext);
-  const enabled = fixtureState.viewport ? true : viewportState.enabled;
+  const { enabled, viewport } = viewportState;
 
-  if (!core.getWebRendererUrl()) {
-    return null;
-  }
+  if (!core.getWebRendererUrl()) return null;
 
   return (
     <ToggleButton
@@ -67,7 +62,7 @@ namedPlug('rendererAction', 'responsivePreview', ({ pluginContext }) => {
           setFixtureStateViewport(pluginContext, null);
         } else {
           setViewportState(pluginContext, { ...viewportState, enabled: true });
-          setFixtureStateViewport(pluginContext, viewportState.viewport);
+          setFixtureStateViewport(pluginContext, viewport);
         }
       }}
     />
@@ -103,10 +98,16 @@ function useScaledChange(context: ResponsivePreviewContext) {
 function getViewportState(context: ResponsivePreviewContext): ViewportState {
   const { getMethodsOf } = context;
   const storage = getMethodsOf<StorageSpec>('storage');
-  return (
+  const viewportState =
     storage.getItem<ViewportState>(VIEWPORT_STORAGE_KEY) ||
-    DEFAULT_VIEWPORT_STATE
-  );
+    DEFAULT_VIEWPORT_STATE;
+
+  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
+  const fixtureState = rendererCore.getFixtureState() as FixtureStateWithViewport;
+
+  return fixtureState.viewport
+    ? { ...viewportState, enabled: true, viewport: fixtureState.viewport }
+    : viewportState;
 }
 
 function setViewportState(
