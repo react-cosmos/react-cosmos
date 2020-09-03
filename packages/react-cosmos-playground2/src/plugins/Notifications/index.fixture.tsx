@@ -1,21 +1,39 @@
 import React from 'react';
-import { Notification } from './public';
+import { Notification, NotificationType } from './public';
 import { Notifications } from './Notifications';
+import { useSelect } from 'react-cosmos/fixture';
 
 type Args = Pick<Notification, 'id' | 'title' | 'info'>;
 
-export default {
-  single: (
+const titles: Record<NotificationType, string> = {
+  error: 'Build failed',
+  info: 'Renderer connected',
+  loading: 'Rebuilding...',
+  success: 'Renderer URL copied to clipboard',
+};
+const infos: Record<NotificationType, string> = {
+  error:
+    'Open the browser console or check your terminal for more information.',
+  info: 'Your fixtures are ready to use.',
+  loading: 'Your code is updating.',
+  success: 'Paste the renderer URL in the address bar of another browser.',
+};
+
+function NotificationFixture() {
+  const [type] = useSelect<NotificationType>('notification type', {
+    options: ['error', 'info', 'loading', 'success'],
+  });
+  return (
     <Notifications
       notifications={[
-        createInfoNotification({
-          id: 'renderer-connect-1',
-          title: 'Renderer connected',
-          info: 'Your fixtures are ready to use.',
-        }),
+        { id: '1', type, title: titles[type], info: infos[type] },
       ]}
     />
-  ),
+  );
+}
+
+export default {
+  single: <NotificationFixture />,
   multiple: (
     <Notifications
       notifications={[
