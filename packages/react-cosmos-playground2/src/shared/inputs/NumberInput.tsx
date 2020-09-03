@@ -41,15 +41,18 @@ export function NumberInput({
     setRawValue(String(value));
   }, [value]);
 
-  function trim(input: number) {
-    let trimmed = Math.min(maxValue, input);
-    trimmed = Math.max(minValue, trimmed);
+  function trimMinMax(input: number) {
+    return Math.max(minValue, Math.min(maxValue, input));
+  }
 
+  function trimDecimals(input: number) {
     // Don't allow floating point to exceed 6 decimal points.
     // This prevents values like 1463.1000000000001
-    if (trimmed % 1 !== 0) trimmed = Number(trimmed.toFixed(6));
+    return input % 1 === 0 ? input : Number(input.toFixed(6));
+  }
 
-    return trimmed;
+  function trim(input: number) {
+    return trimDecimals(trimMinMax(input));
   }
 
   function handleChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
