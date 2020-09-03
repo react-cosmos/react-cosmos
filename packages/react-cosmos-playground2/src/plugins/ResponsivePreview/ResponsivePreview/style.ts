@@ -20,7 +20,8 @@ export function getStyles({
   viewport: Viewport;
   scaled: boolean;
 }) {
-  const { width, height } = viewport;
+  const width = Math.max(16, viewport.width);
+  const height = Math.max(16, viewport.height);
 
   const availableViewport = getAvailableViewport(container);
   const widthScale = Math.min(1, availableViewport.width / width);
