@@ -7,14 +7,18 @@ import {
   ReactDecoratorsByPath,
   ReactFixtureExportsByPath,
 } from 'react-cosmos-shared2/react';
-import { NativeModules, StyleSheet, Text, View, YellowBox } from 'react-native';
+import * as ReactNative from 'react-native';
 import parse from 'url-parse';
 import { NativeRendererConfig } from './shared/rendererConfig';
 
+const { View, Text, StyleSheet, NativeModules } = ReactNative;
+
 // https://stackoverflow.com/a/53655887/128816
-YellowBox.ignoreWarnings([
-  'Unrecognized WebSocket connection option(s) `agent`, `perMessageDeflate`, `pfx`, `key`, `passphrase`, `cert`, `ca`, `ciphers`, `rejectUnauthorized`. Did you mean to put these under `headers`?',
-]);
+const wsWarning =
+  'Unrecognized WebSocket connection option(s) `agent`, `perMessageDeflate`, `pfx`, `key`, `passphrase`, `cert`, `ca`, `ciphers`, `rejectUnauthorized`. Did you mean to put these under `headers`?';
+if (ReactNative.LogBox) ReactNative.LogBox.ignoreLogs([wsWarning]);
+else if (ReactNative.YellowBox)
+  ReactNative.YellowBox.ignoreWarnings([wsWarning]);
 
 // TODO: Generate unique ID per device
 const rendererId = 'native-renderer';
