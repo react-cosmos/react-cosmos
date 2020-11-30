@@ -13,7 +13,9 @@ export function getDefaultWebpackConfig(
   // react-cosmos doesn't directly depend on any webpack loader.
   // Instead, it includes the ones already installed by the user.
   const tsLoaderPath = resolveFrom.silent(rootDir, 'ts-loader');
-  const babelLoaderPath = resolveFrom.silent(rootDir, 'babel-loader');
+  const babelLoaderPath =
+    resolveFrom.silent(rootDir, 'next/dist/compiled/babel-loader') ||
+    resolveFrom.silent(rootDir, 'babel-loader');
   const styleLoaderPath = resolveFrom.silent(rootDir, 'style-loader');
   const cssLoaderPath = resolveFrom.silent(rootDir, 'css-loader');
   const postcssLoaderPath = resolveFrom.silent(rootDir, 'postcss-loader');

@@ -496,7 +496,7 @@ module.exports = overrides.webpack(config, process.env.NODE_ENV);
 
 > The following steps are required for running Cosmos in **Next.js v10**. [This repo](https://github.com/react-cosmos/react-cosmos-nextjs) is a working example. [Ask for help](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw) if you're having issues integrating Cosmos with an older version of Next.js.
 
-- Install `@babel/core babel-loader html-webpack-plugin` as dev dependencies.
+- Install `html-webpack-plugin` as a dev dependency.
 - Configure Babel to use the `next/babel` preset.
 - Optional: Set `staticPath` to `public` to load static assets inside Cosmos.
 - Optional: Add `styles/globals.css` to `globalImports` to automatically load global CSS in Cosmos fixtures.
