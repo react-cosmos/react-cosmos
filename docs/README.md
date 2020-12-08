@@ -494,36 +494,30 @@ module.exports = overrides.webpack(config, process.env.NODE_ENV);
 
 ## Next.js
 
-- Install `html-webpack-plugin` and `babel-loader` as a dev dependency.
-- Override the React Cosmos webpack config with `ProvidePlugin` to support JSX without importing React.
-- Set `staticPath` to `public` to load static assets inside React Cosmos.
+> The following steps are required for running Cosmos in **Next.js v10**. [This repo](https://github.com/react-cosmos/react-cosmos-nextjs) is a working example. [Ask for help](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw) if you're having issues integrating Cosmos with an older version of Next.js.
+
+- Install `html-webpack-plugin` as a dev dependency.
+- Configure Babel to use the `next/babel` preset.
+- Optional: Set `staticPath` to `public` to load static assets inside Cosmos.
+- Optional: Add `styles/globals.css` to `globalImports` to automatically load global CSS in Cosmos fixtures.
 
 This is a `cosmos.config.json` example for Next.js:
 
 ```json
 {
+  "globalImports": ["styles/globals.css"],
   "staticPath": "public"
 }
 ```
 
-And this is the webpack override config:
+This is a `.babelrc` example for Next.js:
 
-```js
-// webpack.override.js
-var webpack = require('webpack');
-
-module.exports = (config, { env }) => {
-  return {
-    ...config,
-    plugins: [
-      ...(config.plugins || []),
-      new webpack.ProvidePlugin({ React: 'react' }),
-    ],
-  };
-};
+```json
+{
+  "presets": ["next/babel"],
+  "plugins": []
+}
 ```
-
-> React Cosmos picks up `webpack.override.js` automatically. Use `webpack.overridePath` if you prefer to customize the webpack override config path.
 
 ## Troubleshooting
 
