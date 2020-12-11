@@ -66,9 +66,6 @@ function getEntry(cosmosConfig: CosmosConfig) {
 function getOutput({ publicUrl }: CosmosConfig) {
   const filename = '[name].js';
   return {
-    // Setting path to `/` in development (where files are saved in memory and
-    // not on disk) is a weird required for old webpack versions
-    path: '/',
     filename,
     publicPath: publicUrl,
     // Enable click-to-open source in react-error-overlay
