@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "react-cosmos-website",
-  "version": "5.5.3",
+  "version": "5.6.0-alpha.0",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/website",
   "license": "MIT",
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "isomorphic-fetch": "^3.0.0",
-    "react-cosmos": "^5.5.3",
-    "react-cosmos-playground2": "^5.5.1"
+    "react-cosmos": "^5.6.0-alpha.0",
+    "react-cosmos-playground2": "^5.6.0-alpha.0"
   }
 }
