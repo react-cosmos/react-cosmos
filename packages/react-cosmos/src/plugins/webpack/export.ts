@@ -32,7 +32,7 @@ function runWebpackCompiler(
     compiler.run((err, stats) => {
       if (err) {
         reject(err);
-      } else if (stats.hasErrors()) {
+      } else if (stats?.hasErrors()) {
         const error = new WebpackCompilationError();
         error.webpackErrors = stats.toJson().errors;
         reject(error);

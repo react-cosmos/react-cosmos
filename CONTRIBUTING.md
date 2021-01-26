@@ -55,7 +55,7 @@ Open the CI build page. See what went wrong and learn to run the checks locally.
 
 ## Repo
 
-> Working on Cosmos requires Node 8 or newer
+> Working on Cosmos requires Node 10 or newer
 
 [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) and [Lerna](https://github.com/lerna/lerna) make it possible to publish independent packages and still test the project end-to-end.
 

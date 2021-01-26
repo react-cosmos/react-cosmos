@@ -23,7 +23,7 @@ type WebpackDevMiddlewareInstance = NextHandleFunction & {
 };
 
 type WebpackDevMiddleware = (
-  compiler: webpack.ICompiler,
+  compiler: webpack.Compiler,
   options?: webpackDevMiddleware.Options
 ) => WebpackDevMiddlewareInstance;
 
@@ -95,7 +95,6 @@ export async function webpackDevServer({
     // publicPath is the base path for the webpack assets and has to match
     // webpack.output.path
     publicPath: removeLeadingDot(cosmosConfig.publicUrl),
-    logLevel: 'warn',
   });
 
   expressApp.use(wdmInst);
@@ -108,7 +107,7 @@ export async function webpackDevServer({
   await onCompilationDone;
 
   return async () => {
-    await new Promise(res => wdmInst.close(res));
+    await new Promise<void>(res => wdmInst.close(res));
   };
 }
 

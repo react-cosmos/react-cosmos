@@ -77,7 +77,7 @@ _Something wrong?_ Don't hesitate to [create a GitHub issue](https://github.com/
 
 ## Requirements
 
-The only hard requirements are React 16.8 and Node 8 (or newer).
+The only hard requirements are React 16.8 and Node 10 (or newer).
 
 React Cosmos works best with webpack 4. It takes extra effort to make it work with other bundlers, but it's not as scary as it might seem. Don’t be afraid to ask for support.
 
@@ -127,7 +127,7 @@ Unless you use a framework like Create React App or Next.js, you need to install
 
 Here is a common list of packages required to build React with webpack and Babel:
 
-> @babel/core @babel/preset-env @babel/preset-react babel-loader style-loader css-loader html-webpack-plugin
+> @babel/core @babel/preset-env @babel/preset-react babel-loader style-loader css-loader html-webpack-plugin@4
 
 And unless you use a framework that does it under the hood, create a `.babelrc` (or similar) config in your project root.
 
@@ -496,7 +496,7 @@ module.exports = overrides.webpack(config, process.env.NODE_ENV);
 
 > The following steps are required for running Cosmos in **Next.js v10**. [This repo](https://github.com/react-cosmos/react-cosmos-nextjs) is a working example. [Ask for help](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw) if you're having issues integrating Cosmos with an older version of Next.js.
 
-- Install `html-webpack-plugin` as a dev dependency.
+- Install `html-webpack-plugin@4` as a dev dependency.
 - Configure Babel to use the `next/babel` preset.
 - Optional: Set `staticPath` to `public` to load static assets inside Cosmos.
 - Optional: Add `styles/globals.css` to `globalImports` to automatically load global CSS in Cosmos fixtures.
@@ -526,7 +526,7 @@ This is a `.babelrc` example for Next.js:
 #### localhost:5000/\_renderer.html 404s?
 
 - Check for build errors in your terminal.
-- Make sure you have html-webpack-plugin installed, as well as [any other build dependency](#compilation).
+- Make sure you have html-webpack-plugin@4 installed, as well as [any other build dependency](#compilation).
 
 #### Renderer not responding?
 

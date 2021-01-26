@@ -2,9 +2,14 @@ import { detectCosmosConfig } from '../../../config';
 import { DomRendererConfig } from '../../../shared/rendererConfig';
 import { generateUserDepsModule } from '../../../shared/userDeps';
 import { createDomCosmosConfig } from '../cosmosConfig/dom';
-import { loader } from 'webpack';
 
-module.exports = function injectUserDeps(this: loader.LoaderContext) {
+// XXX: Loader types are currently missing in webpack 5
+// https://github.com/webpack/webpack/issues/11630
+interface LoaderContext {
+  addContextDependency(dir: string): unknown;
+}
+
+module.exports = function injectUserDeps(this: LoaderContext) {
   const cosmosConfig = detectCosmosConfig();
 
   // This ensures this loader is invalidated whenever a new file is added to or

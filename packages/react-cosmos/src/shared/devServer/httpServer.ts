@@ -20,7 +20,7 @@ export async function createHttpServer(
     : http.createServer(requestListener);
 
   async function start() {
-    await new Promise(resolve => {
+    await new Promise<void>(resolve => {
       if (hostname === null) {
         server.listen(port, resolve);
       } else {

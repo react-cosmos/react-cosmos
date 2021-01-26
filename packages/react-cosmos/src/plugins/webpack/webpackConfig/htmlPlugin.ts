@@ -1,3 +1,4 @@
+import { Options as HtmlWebpackPluginOptions } from 'html-webpack-plugin';
 import importFrom from 'import-from';
 import { omit } from 'lodash';
 import webpack from 'webpack';
@@ -5,23 +6,19 @@ import { CosmosConfig } from '../../../config';
 import { RENDERER_FILENAME } from '../../../shared/playgroundHtml';
 import { hasPlugin, isInstanceOfPlugin } from './shared';
 
-export type HtmlWebpackPlugin = webpack.Plugin & {
+export type HtmlWebpackPlugin = webpack.WebpackPluginInstance & {
   constructor: HtmlWebpackPluginConstructor;
-  options: {
-    title: string;
-    filename: string;
-  };
+  options: HtmlWebpackPluginOptions;
 };
 
-type HtmlWebpackPluginConstructor = new (args: {
-  title: string;
-  filename: string;
-}) => HtmlWebpackPlugin;
+type HtmlWebpackPluginConstructor = new (
+  options?: HtmlWebpackPluginOptions
+) => HtmlWebpackPlugin;
 
 export function ensureHtmlWebackPlugin(
   { rootDir }: CosmosConfig,
-  plugins: webpack.Plugin[]
-): webpack.Plugin[] {
+  plugins: webpack.WebpackPluginInstance[]
+): webpack.WebpackPluginInstance[] {
   if (hasPlugin(plugins, 'HtmlWebpackPlugin')) {
     return plugins.map(plugin =>
       isHtmlWebpackPlugin(plugin) ? changeHtmlPluginFilename(plugin) : plugin
@@ -50,7 +47,7 @@ export function getHtmlWebpackPlugin(rootDir: string) {
 }
 
 function isHtmlWebpackPlugin(
-  plugin: webpack.Plugin
+  plugin: webpack.WebpackPluginInstance
 ): plugin is HtmlWebpackPlugin {
   return isInstanceOfPlugin(plugin, 'HtmlWebpackPlugin');
 }
@@ -70,5 +67,9 @@ function changeHtmlPluginFilename(htmlPlugin: HtmlWebpackPlugin) {
 
 function isIndexHtmlWebpackPlugin(htmlPlugin: HtmlWebpackPlugin) {
   const { filename } = htmlPlugin.options;
-  return filename === 'index.html' || filename.endsWith('/index.html');
+  return (
+    filename === 'index.html' ||
+    typeof filename !== 'string' ||
+    filename.endsWith('/index.html')
+  );
 }

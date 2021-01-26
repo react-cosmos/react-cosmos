@@ -174,7 +174,7 @@ async function buildBrowserPackageSource(pkg: Package) {
   const args = [
     '--config',
     `packages/${pkg.name}/webpack.config.js`,
-    '--display',
+    '--stats',
     'errors-only',
   ];
   const env = { NODE_ENV: 'production' };
@@ -210,7 +210,7 @@ type RunAsyncTaskArgs = {
 };
 
 function runAsyncTask({ cmd, args, env = {} }: RunAsyncTaskArgs) {
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     const cp = spawn(cmd, args, {
       cwd: path.join(__dirname, '..'),
       env: {

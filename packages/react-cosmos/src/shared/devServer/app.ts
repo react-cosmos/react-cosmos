@@ -10,7 +10,7 @@ export function createApp(
   platformType: PlatformType,
   cosmosConfig: CosmosConfig,
   pluginConfigs: CosmosPluginConfig[]
-) {
+): express.Express {
   const app = express();
 
   const playgroundHtml = getDevPlaygroundHtml(
