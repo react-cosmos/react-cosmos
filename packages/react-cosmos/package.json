@@ -11,7 +11,7 @@
     "chokidar": "^3.5.1",
     "core-js": "^3.8.3",
     "express": "^4.17.1",
-    "fs-extra": "8.1.0",
+    "fs-extra": "9.1.0",
     "glob": "^7.1.6",
     "http-proxy-middleware": "^1.0.6",
     "import-from": "^3.0.0",
@@ -30,8 +30,8 @@
     "socket.io": "2.2.0",
     "url-parse": "^1.4.7",
     "util.promisify": "^1.1.1",
-    "webpack-dev-middleware": "^3.7.2",
-    "yargs": "^15.4.1"
+    "webpack-dev-middleware": "3.7.3",
+    "yargs": "^16.2.0"
   },
   "bin": {
     "cosmos": "./bin/cosmos.js",
