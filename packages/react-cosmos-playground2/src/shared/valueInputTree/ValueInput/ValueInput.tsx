@@ -34,7 +34,7 @@ function getInput(
   id: string,
   name: string,
   value: LeafValue,
-  onChange: (value: PrimitiveData) => unknown
+  onChange: (newValue: PrimitiveData) => unknown
 ) {
   if (value.type === 'unserializable')
     return (

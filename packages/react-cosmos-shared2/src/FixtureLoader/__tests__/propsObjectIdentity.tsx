@@ -18,7 +18,7 @@ function TestComponent({ obj, cb }: Props) {
   return null;
 }
 
-function createFixtures(obj: {}, cb: (obj: {}) => unknown) {
+function createFixtures(obj: {}, cb: (newObj: {}) => unknown) {
   return {
     first: <TestComponent obj={obj} cb={cb} />,
   };
