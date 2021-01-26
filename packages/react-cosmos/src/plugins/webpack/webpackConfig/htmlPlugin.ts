@@ -1,3 +1,4 @@
+import { Options as HtmlWebpackPluginOptions } from 'html-webpack-plugin';
 import importFrom from 'import-from';
 import { omit } from 'lodash';
 import webpack from 'webpack';
@@ -7,16 +8,12 @@ import { hasPlugin, isInstanceOfPlugin } from './shared';
 
 export type HtmlWebpackPlugin = webpack.WebpackPluginInstance & {
   constructor: HtmlWebpackPluginConstructor;
-  userOptions: {
-    title: string;
-    filename: string;
-  };
+  userOptions: HtmlWebpackPluginOptions;
 };
 
-type HtmlWebpackPluginConstructor = new (args: {
-  title: string;
-  filename: string;
-}) => HtmlWebpackPlugin;
+type HtmlWebpackPluginConstructor = new (
+  options?: HtmlWebpackPluginOptions
+) => HtmlWebpackPlugin;
 
 export function ensureHtmlWebackPlugin(
   { rootDir }: CosmosConfig,
@@ -70,5 +67,9 @@ function changeHtmlPluginFilename(htmlPlugin: HtmlWebpackPlugin) {
 
 function isIndexHtmlWebpackPlugin(htmlPlugin: HtmlWebpackPlugin) {
   const { filename } = htmlPlugin.userOptions;
-  return filename === 'index.html' || filename.endsWith('/index.html');
+  return (
+    filename === 'index.html' ||
+    typeof filename !== 'string' ||
+    filename.endsWith('/index.html')
+  );
 }
