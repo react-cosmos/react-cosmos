@@ -95,7 +95,6 @@ export async function webpackDevServer({
     // publicPath is the base path for the webpack assets and has to match
     // webpack.output.path
     publicPath: removeLeadingDot(cosmosConfig.publicUrl),
-    logLevel: 'warn',
   });
 
   expressApp.use(wdmInst);
