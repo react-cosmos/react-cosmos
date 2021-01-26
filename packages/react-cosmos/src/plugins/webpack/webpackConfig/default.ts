@@ -104,6 +104,8 @@ export function getDefaultWebpackConfig(
       rules,
     },
     plugins,
+    stats: 'minimal',
+    infrastructureLogging: { level: 'warn' },
   };
 
   const webpack4 =
