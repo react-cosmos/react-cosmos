@@ -7,7 +7,7 @@ import { hasPlugin, isInstanceOfPlugin } from './shared';
 
 export type HtmlWebpackPlugin = webpack.WebpackPluginInstance & {
   constructor: HtmlWebpackPluginConstructor;
-  options: {
+  userOptions: {
     title: string;
     filename: string;
   };
@@ -59,9 +59,9 @@ function changeHtmlPluginFilename(htmlPlugin: HtmlWebpackPlugin) {
   if (!isIndexHtmlWebpackPlugin(htmlPlugin)) return htmlPlugin;
 
   const safeOptions = omit(
-    htmlPlugin.options,
+    htmlPlugin.userOptions,
     'chunks'
-  ) as HtmlWebpackPlugin['options'];
+  ) as HtmlWebpackPlugin['userOptions'];
   return new htmlPlugin.constructor({
     ...safeOptions,
     filename: RENDERER_FILENAME,
@@ -69,6 +69,6 @@ function changeHtmlPluginFilename(htmlPlugin: HtmlWebpackPlugin) {
 }
 
 function isIndexHtmlWebpackPlugin(htmlPlugin: HtmlWebpackPlugin) {
-  const { filename } = htmlPlugin.options;
+  const { filename } = htmlPlugin.userOptions;
   return filename === 'index.html' || filename.endsWith('/index.html');
 }
