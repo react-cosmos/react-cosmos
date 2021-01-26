@@ -29,7 +29,11 @@ module.exports = async () => {
     module: {
       rules: [
         { test: /\.[jt]sx?$/, include: [src], loader: 'babel-loader' },
-        { test: /\.css$/, include: src, loader: 'style-loader!css-loader' },
+        {
+          test: /\.css$/,
+          include: src,
+          use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
+        },
       ],
     },
     plugins: [

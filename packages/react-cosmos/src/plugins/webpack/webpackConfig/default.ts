@@ -59,7 +59,7 @@ export function getDefaultWebpackConfig(
     } else {
       rules.push({
         test: /\.css$/,
-        loader: `${styleLoaderPath}!${cssLoaderPath}`,
+        use: [{ loader: styleLoaderPath }, { loader: cssLoaderPath }],
         exclude: /node_modules/,
       });
     }
@@ -67,7 +67,7 @@ export function getDefaultWebpackConfig(
     // Preprocess 3rd party .css files located in node_modules
     rules.push({
       test: /\.css$/,
-      loader: `${styleLoaderPath}!${cssLoaderPath}`,
+      use: [{ loader: styleLoaderPath }, { loader: cssLoaderPath }],
       include: /node_modules/,
     });
   }
