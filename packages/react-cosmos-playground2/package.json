@@ -7,7 +7,7 @@
   "main": "index.js",
   "devDependencies": {
     "fuzzaldrin-plus": "^0.6.0",
-    "html-webpack-plugin": "^4.5.0",
+    "html-webpack-plugin": "^4.5.1",
     "localforage": "^1.9.0",
     "lodash": "^4.17.20",
     "react": "17.0.1",
@@ -17,6 +17,6 @@
     "react-is": "^17.0.1",
     "react-plugin": "^2.0.0-alpha.8",
     "socket.io-client": "2.3.1",
-    "styled-components": "^5.2.0"
+    "styled-components": "^5.2.1"
   }
 }
