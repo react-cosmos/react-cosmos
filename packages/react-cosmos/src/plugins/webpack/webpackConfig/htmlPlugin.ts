@@ -5,7 +5,7 @@ import { CosmosConfig } from '../../../config';
 import { RENDERER_FILENAME } from '../../../shared/playgroundHtml';
 import { hasPlugin, isInstanceOfPlugin } from './shared';
 
-export type HtmlWebpackPlugin = webpack.Plugin & {
+export type HtmlWebpackPlugin = webpack.WebpackPluginInstance & {
   constructor: HtmlWebpackPluginConstructor;
   options: {
     title: string;
@@ -20,8 +20,8 @@ type HtmlWebpackPluginConstructor = new (args: {
 
 export function ensureHtmlWebackPlugin(
   { rootDir }: CosmosConfig,
-  plugins: webpack.Plugin[]
-): webpack.Plugin[] {
+  plugins: webpack.WebpackPluginInstance[]
+): webpack.WebpackPluginInstance[] {
   if (hasPlugin(plugins, 'HtmlWebpackPlugin')) {
     return plugins.map(plugin =>
       isHtmlWebpackPlugin(plugin) ? changeHtmlPluginFilename(plugin) : plugin
@@ -50,7 +50,7 @@ export function getHtmlWebpackPlugin(rootDir: string) {
 }
 
 function isHtmlWebpackPlugin(
-  plugin: webpack.Plugin
+  plugin: webpack.WebpackPluginInstance
 ): plugin is HtmlWebpackPlugin {
   return isInstanceOfPlugin(plugin, 'HtmlWebpackPlugin');
 }

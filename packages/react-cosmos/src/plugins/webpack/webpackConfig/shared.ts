@@ -12,7 +12,10 @@ type WebpackConfigExport =
   | webpack.Configuration
   // Mirror webpack API for config functions
   // https://webpack.js.org/configuration/configuration-types/#exporting-a-function
-  | ((env: unknown, argv: {}) => webpack.Configuration);
+  | ((
+      env: unknown,
+      _argv: {}
+    ) => webpack.Configuration | Promise<webpack.Configuration>);
 
 // Override arguments are inspired by react-app-rewired
 // https://github.com/timarney/react-app-rewired/blob/b673379d32fe7b57c71667f4827f3b16e3717363/scripts/start.js#L22
@@ -71,7 +74,7 @@ export function resolveClientPath(relPath: string) {
   return require.resolve(`../client/${relPath}`);
 }
 
-export function getUserDepsLoaderRule() {
+export function getUserDepsLoaderRule(): webpack.RuleSetRule {
   return {
     loader: require.resolve('./userDepsLoader'),
     include: resolveClientPath('userDeps'),
@@ -81,7 +84,7 @@ export function getUserDepsLoaderRule() {
 export function resolveLocalReactDeps(
   cosmosConfig: CosmosConfig,
   baseWebpackConfig: webpack.Configuration
-) {
+): webpack.ResolveOptions {
   const { rootDir } = cosmosConfig;
 
   const reactPath = resolveFrom.silent(rootDir, 'react');
@@ -120,7 +123,7 @@ export function getGlobalsPlugin(
 }
 
 export function hasPlugin(
-  plugins: void | webpack.Plugin[],
+  plugins: void | webpack.WebpackPluginInstance[],
   pluginName: string
 ) {
   return (
@@ -129,7 +132,7 @@ export function hasPlugin(
 }
 
 export function isInstanceOfPlugin(
-  plugin: webpack.Plugin,
+  plugin: webpack.WebpackPluginInstance,
   constructorName: string
 ) {
   return plugin.constructor && plugin.constructor.name === constructorName;

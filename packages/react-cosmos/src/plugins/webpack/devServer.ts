@@ -23,7 +23,7 @@ type WebpackDevMiddlewareInstance = NextHandleFunction & {
 };
 
 type WebpackDevMiddleware = (
-  compiler: webpack.ICompiler,
+  compiler: webpack.Compiler,
   options?: webpackDevMiddleware.Options
 ) => WebpackDevMiddlewareInstance;
 

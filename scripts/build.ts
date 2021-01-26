@@ -174,7 +174,7 @@ async function buildBrowserPackageSource(pkg: Package) {
   const args = [
     '--config',
     `packages/${pkg.name}/webpack.config.js`,
-    '--display',
+    '--stats',
     'errors-only',
   ];
   const env = { NODE_ENV: 'production' };

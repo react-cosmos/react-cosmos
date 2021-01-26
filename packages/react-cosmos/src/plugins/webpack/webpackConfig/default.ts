@@ -22,7 +22,7 @@ export function getDefaultWebpackConfig(
   // Note: Since webpack >= v2.0.0, importing of JSON files will work by default
   const jsonLoaderPath = resolveFrom.silent(rootDir, 'json-loader');
   const rules: webpack.RuleSetRule[] = [];
-  const plugins: webpack.Plugin[] = [];
+  const plugins: webpack.WebpackPluginInstance[] = [];
 
   // Prefer babel-loader over ts-loader if user has both installed. If user
   // has babel-loader installed then most likely they won't want ts-loader

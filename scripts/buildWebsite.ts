@@ -77,7 +77,7 @@ function buildWebpack() {
     webpack(webpackConfig, (err, stats) => {
       if (err) {
         reject(err);
-      } else if (stats.hasErrors()) {
+      } else if (stats?.hasErrors()) {
         console.log(stats.toJson().errors);
         reject();
       } else {
