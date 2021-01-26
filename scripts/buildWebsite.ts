@@ -72,7 +72,7 @@ async function createPage({ pageName, title, description }: PageParams) {
 }
 
 function buildWebpack() {
-  return new Promise(async (resolve, reject) => {
+  return new Promise<void>(async (resolve, reject) => {
     const webpackConfig = await require('../website/webpack.config')();
     webpack(webpackConfig, (err, stats) => {
       if (err) {

@@ -108,7 +108,7 @@ export async function webpackDevServer({
   await onCompilationDone;
 
   return async () => {
-    await new Promise(res => wdmInst.close(res));
+    await new Promise<void>(res => wdmInst.close(res));
   };
 }
 
