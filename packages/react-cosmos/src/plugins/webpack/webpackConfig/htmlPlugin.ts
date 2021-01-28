@@ -66,7 +66,7 @@ function changeHtmlPluginFilename(htmlPlugin: HtmlWebpackPlugin) {
 }
 
 function isIndexHtmlWebpackPlugin(htmlPlugin: HtmlWebpackPlugin) {
-  const { filename } = htmlPlugin.options;
+  const { filename } = htmlPlugin.options || htmlPlugin.userOptions;
   return (
     filename === 'index.html' ||
     typeof filename !== 'string' ||
