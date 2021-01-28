@@ -56,7 +56,7 @@ function changeHtmlPluginFilename(htmlPlugin: HtmlWebpackPlugin) {
   if (!isIndexHtmlWebpackPlugin(htmlPlugin)) return htmlPlugin;
 
   const safeOptions = omit(
-    htmlPlugin.options,
+    htmlPlugin.options || htmlPlugin.userOptions,
     'chunks'
   ) as HtmlWebpackPlugin['options'];
   return new htmlPlugin.constructor({
