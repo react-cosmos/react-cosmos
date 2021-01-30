@@ -8,8 +8,10 @@ import { hasPlugin, isInstanceOfPlugin } from './shared';
 
 export type HtmlWebpackPlugin = webpack.WebpackPluginInstance & {
   constructor: HtmlWebpackPluginConstructor;
-  options: HtmlWebpackPluginOptions;
-};
+} & (
+    | { options: HtmlWebpackPluginOptions; userOptions: undefined } // html-webpack-plugin < 5
+    | { userOptions: HtmlWebpackPluginOptions; options: undefined } // html-webpack-plugin >= 5
+  );
 
 type HtmlWebpackPluginConstructor = new (
   options?: HtmlWebpackPluginOptions
