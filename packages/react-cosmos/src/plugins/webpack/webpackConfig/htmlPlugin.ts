@@ -57,10 +57,9 @@ function isHtmlWebpackPlugin(
 function changeHtmlPluginFilename(htmlPlugin: HtmlWebpackPlugin) {
   if (!isIndexHtmlWebpackPlugin(htmlPlugin)) return htmlPlugin;
 
-  const safeOptions = omit(
-    htmlPlugin.options || htmlPlugin.userOptions,
-    'chunks'
-  ) as HtmlWebpackPlugin['options'];
+  const options = htmlPlugin.userOptions || htmlPlugin.options;
+  const safeOptions = omit(options, 'chunks');
+
   return new htmlPlugin.constructor({
     ...safeOptions,
     filename: RENDERER_FILENAME,
@@ -68,7 +67,7 @@ function changeHtmlPluginFilename(htmlPlugin: HtmlWebpackPlugin) {
 }
 
 function isIndexHtmlWebpackPlugin(htmlPlugin: HtmlWebpackPlugin) {
-  const { filename } = htmlPlugin.options || htmlPlugin.userOptions;
+  const { filename } = htmlPlugin.userOptions || htmlPlugin.options;
   return (
     filename === 'index.html' ||
     typeof filename !== 'string' ||
