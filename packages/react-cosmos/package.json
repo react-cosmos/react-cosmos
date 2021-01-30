@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos",
-  "version": "5.6.0-alpha.0",
+  "version": "5.6.0-alpha.1",
   "description": "CLI for running React Cosmos inside webpack-powered apps",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos",
   "license": "MIT",
