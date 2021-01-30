@@ -62,7 +62,9 @@ it('includes HtmlWebpackPlugin', async () => {
     p => p.constructor.name === 'HtmlWebpackPlugin'
   ) as HtmlWebpackPlugin;
   expect(htmlWebpackPlugin).toBeDefined();
-  expect(htmlWebpackPlugin.options.filename).toBe(RENDERER_FILENAME);
+  expect(htmlWebpackPlugin.options).toEqual(
+    expect.objectContaining({ filename: RENDERER_FILENAME })
+  );
 });
 
 it('includes HotModuleReplacementPlugin', async () => {
