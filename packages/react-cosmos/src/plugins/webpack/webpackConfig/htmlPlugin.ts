@@ -56,7 +56,7 @@ function changeHtmlPluginFilename(htmlPlugin: HtmlWebpackPlugin) {
   if (!isIndexHtmlWebpackPlugin(htmlPlugin)) return htmlPlugin;
 
   const safeOptions = omit(
-    htmlPlugin.options,
+    htmlPlugin.options || htmlPlugin.userOptions,
     'chunks'
   ) as HtmlWebpackPlugin['options'];
   return new htmlPlugin.constructor({
@@ -66,7 +66,7 @@ function changeHtmlPluginFilename(htmlPlugin: HtmlWebpackPlugin) {
 }
 
 function isIndexHtmlWebpackPlugin(htmlPlugin: HtmlWebpackPlugin) {
-  const { filename } = htmlPlugin.options;
+  const { filename } = htmlPlugin.options || htmlPlugin.userOptions;
   return (
     filename === 'index.html' ||
     typeof filename !== 'string' ||
