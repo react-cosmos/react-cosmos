@@ -40,8 +40,8 @@ function getEntry() {
   return [devtoolsHook, clientIndex];
 }
 
-function getOutput({ exportPath, publicUrl }: CosmosConfig) {
-  const filename = '[name].js';
+function getOutput({ exportPath, outputFilename, publicUrl }: CosmosConfig) {
+  const filename = outputFilename || '[name].js';
   return {
     path: path.resolve(exportPath, removeLeadingSlash(publicUrl)),
     filename,

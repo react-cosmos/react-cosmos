@@ -21,6 +21,7 @@ export type CosmosConfig = {
   httpsOptions: null | HttpsOptions;
   port: number;
   publicUrl: string;
+  outputFilename: string;
   rootDir: string;
   staticPath: null | string;
   // Only used by the React Native server, userDepsFilePath specifies where to
