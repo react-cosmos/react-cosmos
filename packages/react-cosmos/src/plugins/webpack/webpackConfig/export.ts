@@ -41,10 +41,9 @@ function getEntry() {
 }
 
 function getOutput({ exportPath, outputFilename, publicUrl }: CosmosConfig) {
-  const filename = outputFilename || '[name].js';
   return {
     path: path.resolve(exportPath, removeLeadingSlash(publicUrl)),
-    filename,
+    filename: outputFilename,
     publicPath: publicUrl,
   };
 }

@@ -20,6 +20,7 @@ export function createCosmosConfig(
     httpsOptions: getHttpsOptions(cosmosConfigInput, rootDir),
     port: getPort(cosmosConfigInput),
     publicUrl: getPublicUrl(cosmosConfigInput),
+    outputFilename: getOutputFilename(cosmosConfigInput),
     staticPath: getStaticPath(cosmosConfigInput, rootDir),
     userDepsFilePath: getUserDepsFilePath(cosmosConfigInput, rootDir),
     watchDirs: getWatchDirs(cosmosConfigInput, rootDir),
@@ -60,6 +61,10 @@ function getHttpsOptions(
 
 function getPublicUrl({ publicUrl = '/' }: CosmosConfigInput) {
   return publicUrl;
+}
+
+function getOutputFilename({ outputFilename = '[name].js' }: CosmosConfigInput) {
+  return outputFilename;
 }
 
 function getFixturesDir({ fixturesDir = '__fixtures__' }: CosmosConfigInput) {
