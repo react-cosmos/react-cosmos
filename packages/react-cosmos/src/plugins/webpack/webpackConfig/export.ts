@@ -1,6 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import { CosmosConfig } from '../../../config';
+import { createWebpackCosmosConfig } from '../cosmosConfig/webpack';
 import { removeLeadingSlash } from '../../../shared/shared';
 import { ensureHtmlWebackPlugin } from './htmlPlugin';
 import {
@@ -40,10 +41,13 @@ function getEntry() {
   return [devtoolsHook, clientIndex];
 }
 
-function getOutput({ exportPath, outputFilename, publicUrl }: CosmosConfig) {
+function getOutput(cosmosConfig: CosmosConfig) {
+  const { exportPath, publicUrl } = cosmosConfig;
+  const { includeHashInOutputFilename } = createWebpackCosmosConfig(cosmosConfig);
+
   return {
     path: path.resolve(exportPath, removeLeadingSlash(publicUrl)),
-    filename: outputFilename,
+    filename: includeHashInOutputFilename ? '[name].[contenthash].js' : '[name].js',
     publicPath: publicUrl,
   };
 }

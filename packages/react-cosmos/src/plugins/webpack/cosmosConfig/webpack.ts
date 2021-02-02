@@ -5,6 +5,7 @@ import { fileExists } from '../../../shared/fs';
 type WebpackCosmosConfig = {
   configPath: null | string;
   overridePath: null | string;
+  includeHashInOutputFilename: boolean;
   hotReload: boolean;
 };
 
@@ -15,9 +16,11 @@ export function createWebpackCosmosConfig(
 ): WebpackCosmosConfig {
   const { rootDir } = cosmosConfig;
   const configInput = (cosmosConfig.webpack || {}) as WebpackCosmosConfigInput;
+
   return {
     configPath: getWebpackConfigPath(configInput, rootDir),
     overridePath: getWebpackOverridePath(configInput, rootDir),
+    includeHashInOutputFilename: getIncludeHashInOutputFilename(configInput),
     hotReload: getHotReload(configInput),
   };
 }
@@ -66,6 +69,13 @@ function getWebpackOverridePath(
   }
 
   return absPath;
+}
+
+// Default value is False to not break backwards compatibility
+// In future releases it's better to mark this as @deprecated and set
+// output.filename to "[name].[contenthash].js" by default
+function getIncludeHashInOutputFilename({ includeHashInOutputFilename = false }: WebpackCosmosConfigInput) {
+  return includeHashInOutputFilename;
 }
 
 function getHotReload({ hotReload = true }: WebpackCosmosConfigInput) {
