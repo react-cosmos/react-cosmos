@@ -182,7 +182,7 @@ module.exports = (webpackConfig, env) => {
 
 ### Output filename
 
-Cosmos overrides `output.filename` value in webpack final config to `[name].js` by default. Some users are faced with caching `main.js` file when building app with `cosmos-export`. Use the `webpack.includeHashInOutputFilename` setting to change filename template to `[name].[contenthash].js`.
+Cosmos overwrites `output.filename` in the webpack config to `[name].js` by default. Due to caching, this isn't ideal when generating static exports via `cosmos-export` command. Use the `webpack.includeHashInOutputFilename` setting to change the filename template to `[name].[contenthash].js`.
 
 ```json
 {
