@@ -180,7 +180,7 @@ module.exports = (webpackConfig, env) => {
 };
 ```
 
-### Output Filename
+### Output filename
 
 Cosmos overrides `output.filename` value in webpack final config to `[name].js` by default. Some users are faced with caching `main.js` file. Use the `webpack.includeHashInOutputFilename` setting to change filename template to `[name].[contenthash].js`.
 
