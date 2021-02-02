@@ -180,6 +180,18 @@ module.exports = (webpackConfig, env) => {
 };
 ```
 
+### Output filename
+
+Cosmos overrides `output.filename` value in webpack final config to `[name].js` by default. Some users are faced with caching `main.js` file when building app with `cosmos-export`. Use the `webpack.includeHashInOutputFilename` setting to change filename template to `[name].[contenthash].js`.
+
+```json
+{
+  "webpack": {
+    "includeHashInOutputFilename": true
+  }
+}
+```
+
 ## Fixtures
 
 Fixture files contain a default export, which can be a React Component or any React Node.
@@ -539,6 +551,10 @@ This is a `.babelrc` example for Next.js:
 #### "localhost:3001/\_\_get-internal-source..." 404s?
 
 - [Try changing your webpack `devtool` to something like `cheap-module-source-map`](https://github.com/react-cosmos/react-cosmos/issues/1045#issuecomment-535150617).
+
+#### main.js file is cached?
+
+- [Set `includeHashInOutputFilename` to `true`](https://github.com/react-cosmos/react-cosmos/tree/master/docs#output-filename).
 
 #### Serving a static export from a nested path?
 

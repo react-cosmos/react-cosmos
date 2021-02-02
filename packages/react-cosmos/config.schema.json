@@ -178,6 +178,10 @@
             }
           ]
         },
+        "includeHashInOutputFilename": {
+          "description": "Changes output filename from \"[name].js\" to \"[name].[contenthash].js\". [default: false]",
+          "type": "boolean"
+        },
         "hotReload": {
           "description": "Enable webpack's Hot Module Replacement. [default: true]",
           "type": "boolean"
