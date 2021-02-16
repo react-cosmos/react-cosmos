@@ -64,7 +64,7 @@ it('includes HtmlWebpackPlugin', async () => {
     p => p.constructor.name === 'HtmlWebpackPlugin'
   ) as HtmlWebpackPlugin;
   expect(htmlWebpackPlugin).toBeDefined();
-  expect(htmlWebpackPlugin.options).toEqual(
+  expect(htmlWebpackPlugin.userOptions).toEqual(
     expect.objectContaining({ filename: RENDERER_FILENAME })
   );
 });
