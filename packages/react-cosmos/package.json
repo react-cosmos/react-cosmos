@@ -17,7 +17,7 @@
     "import-from": "^3.0.0",
     "lodash": "^4.17.20",
     "micromatch": "^4.0.2",
-    "open": "^7.4.1",
+    "open": "^7.3.1",
     "pem": "^1.14.4",
     "pkg-up": "^3.1.0",
     "react-cosmos-playground2": "^5.6.0-alpha.0",
