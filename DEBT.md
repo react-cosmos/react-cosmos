@@ -14,4 +14,3 @@ In general we keep dependencies up to date. The following packages, however, nee
 
 - `query-string@5.1.1` because 6.x is no longer compatible with IE11.
 - `socket.io@2.2` and `socket.io-client@2.2` because [2.3 upgraded to `debug@4`](https://github.com/socketio/socket.io-client/issues/1328#issuecomment-536525472), which is no longer compatible with IE11.
-- `html-webpack-plugin@4.x` because 5.x is only compatible with webpack 5, which is still in beta.
