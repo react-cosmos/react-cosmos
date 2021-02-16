@@ -1,4 +1,4 @@
-import webpack, { StatsCompilation } from 'webpack';
+import webpack from 'webpack';
 import { ExportPluginArgs } from '../../shared/export';
 import { getWebpack } from './shared';
 import { getExportWebpackConfig } from './webpackConfig';
@@ -44,7 +44,7 @@ function runWebpackCompiler(
 }
 
 class WebpackCompilationError extends Error {
-  webpackErrors?: StatsCompilation['StatsError'][];
+  webpackErrors?: string[];
   constructor() {
     super('Webpack errors occurred');
   }
