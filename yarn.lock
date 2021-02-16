@@ -10397,15 +10397,15 @@ react-is@^16.12.0, react-is@^16.7.0, react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.1.tgz#5b3531bd76a645a4c9fb6e693ed36419e3301339"
   integrity sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
 
-react-plugin@^3.0.0-alpha.0:
-  version "3.0.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/react-plugin/-/react-plugin-3.0.0-alpha.0.tgz#2daf250c8b89b6d7baeed55fa7b57357a292b5ee"
-  integrity sha512-kT8lqJO0MfH2iRmIX8C3N1FLqpa/ll9g5mc3ViGWvFrU8G3rGo2exJSrKxYW2N6uRoiGK+cN0wDCHoH0m9YyhA==
+react-plugin@^3.0.0-alpha.2:
+  version "3.0.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/react-plugin/-/react-plugin-3.0.0-alpha.2.tgz#98eab20fe5ace57010cc7e89617409aa05262faa"
+  integrity sha512-VXfQO81GnSSixBZJLxWmBQFarApR4BH1Z9+s8yk5xA9fDJZmulvs9vPXdOTy69pSOCuBXrAafxCuDLwyfT+p+A==
   dependencies:
     "@skidding/linked-list" "^1.0.2"
     array-find-index "^1.0.2"
     lodash "^4.17.20"
-    ui-plugin "^3.0.0-alpha.0"
+    ui-plugin "^3.0.0-alpha.3"
 
 react-shallow-renderer@^16.13.1:
   version "16.14.1"
@@ -12136,10 +12136,10 @@ uglify-js@^3.1.4:
   dependencies:
     commander "~2.20.3"
 
-ui-plugin@^3.0.0-alpha.0:
-  version "3.0.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/ui-plugin/-/ui-plugin-3.0.0-alpha.0.tgz#2300ff3cecdab96247488dfe32f6a495761267e7"
-  integrity sha512-MXPWnfooTj+k4JHWmyVtNL6MfMJuDsCcQAKze9iELf9bsHDcKjezfD6H5iZt8OlicnUwNmY+bGVK2JhhG/lRYw==
+ui-plugin@^3.0.0-alpha.3:
+  version "3.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/ui-plugin/-/ui-plugin-3.0.0-alpha.3.tgz#7c0c24e61b0ae8614b304a54c4bd53fe4841325a"
+  integrity sha512-GkD0cycNrOij3Dzl/hFGopu5OAR4imf5ovvfZnRIRYK0fXPkYgQ/xZdzcRcfUSxPkd1WxRgSemsU3iRuyg2SoA==
   dependencies:
     lodash "^4.17.20"
 

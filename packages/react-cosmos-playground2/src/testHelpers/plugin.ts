@@ -1,10 +1,12 @@
 import {
-  PluginSpec,
-  PlugComponentType,
-  MethodHandlers,
-  EventHandlers,
   createPlugin,
   getPluginContext,
+  PlugComponentType,
+  PluginEventHandlers,
+  PluginMethodHandlers,
+  PluginSpec,
+  PluginWithEvents,
+  PluginWithMethods,
 } from 'react-plugin';
 
 export function getMethodsOf<Spec extends PluginSpec>(
@@ -16,9 +18,9 @@ export function getMethodsOf<Spec extends PluginSpec>(
   return getPluginContext(name).getMethodsOf<Spec>(pluginName);
 }
 
-export function on<Spec extends PluginSpec>(
+export function on<Spec extends PluginWithEvents>(
   pluginName: Spec['name'],
-  handlers: EventHandlers<any, Spec>
+  handlers: PluginEventHandlers<any, Spec>
 ) {
   const name = getNewPluginName();
   const testPlugin = createPlugin({ name });
@@ -26,9 +28,9 @@ export function on<Spec extends PluginSpec>(
   testPlugin.register();
 }
 
-export function mockMethodsOf<Spec extends PluginSpec>(
+export function mockMethodsOf<Spec extends PluginWithMethods>(
   pluginName: Spec['name'],
-  methods: MethodHandlers<Spec>
+  methods: PluginMethodHandlers<Spec>
 ) {
   createPlugin<any>({ name: pluginName, methods }).register();
 }

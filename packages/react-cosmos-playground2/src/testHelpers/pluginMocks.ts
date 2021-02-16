@@ -1,8 +1,9 @@
 import {
-  EventHandlers,
   getPluginContext,
-  MethodHandlers,
-  PluginSpec,
+  PluginEventHandlers,
+  PluginMethodHandlers,
+  PluginWithEvents,
+  PluginWithMethods,
 } from 'react-plugin';
 import { CoreSpec } from '../plugins/Core/public';
 import { FixtureTreeSpec } from '../plugins/FixtureTree/public';
@@ -14,8 +15,10 @@ import { RouterSpec } from '../plugins/Router/public';
 import { StorageSpec } from '../plugins/Storage/public';
 import { getMethodsOf, mockMethodsOf, on } from './plugin';
 
-type MethodsOf<Spec extends PluginSpec> = Partial<MethodHandlers<Spec>>;
-type EventsOf<Spec extends PluginSpec> = EventHandlers<any, Spec>;
+type MethodsOf<Spec extends PluginWithMethods> = Partial<
+  PluginMethodHandlers<Spec>
+>;
+type EventsOf<Spec extends PluginWithEvents> = PluginEventHandlers<any, Spec>;
 
 export function getRouterContext() {
   return getPluginContext<RouterSpec>('router');
