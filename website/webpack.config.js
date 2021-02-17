@@ -43,6 +43,9 @@ module.exports = async () => {
         GH_CONTRIBUTORS: JSON.stringify(ghContributors),
       }),
     ],
+    optimization: {
+      minimize: false,
+    },
   };
 
   if (env === 'development') {
