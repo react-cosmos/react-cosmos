@@ -1,6 +1,6 @@
 import React from 'react';
 import { Fixture } from './Fixture';
-import { Input } from './Input';
+import { Input } from './NestedDecorators';
 
 export default (
   <Fixture

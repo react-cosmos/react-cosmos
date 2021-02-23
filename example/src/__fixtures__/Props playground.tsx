@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 export default (
   <MyComponent
@@ -19,8 +19,8 @@ export default (
 );
 
 function MyComponent(props: Record<string, any>) {
-  const mounted = React.useRef(false);
-  React.useEffect(() => {
+  const mounted = useRef(false);
+  useEffect(() => {
     if (mounted.current) {
       // console.log('Props change');
     } else {
