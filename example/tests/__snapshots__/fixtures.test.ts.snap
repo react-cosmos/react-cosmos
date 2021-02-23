@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`returns fixture elements: components/__fixtures__/Controls playground.tsx 1`] = `
+exports[`returns fixture elements: src/__fixtures__/Controls playground.tsx 1`] = `
 Array [
   <pre>
     {
@@ -49,9 +49,9 @@ Array [
 ]
 `;
 
-exports[`returns fixture elements: components/__fixtures__/Hello World.ts 1`] = `"Hello World!"`;
+exports[`returns fixture elements: src/__fixtures__/Hello World.ts 1`] = `"Hello World!"`;
 
-exports[`returns fixture elements: components/__fixtures__/Props playground.tsx 1`] = `
+exports[`returns fixture elements: src/__fixtures__/Props playground.tsx 1`] = `
 <pre>
   {
   "string": "How are you doing?",
@@ -70,7 +70,7 @@ exports[`returns fixture elements: components/__fixtures__/Props playground.tsx 
 </pre>
 `;
 
-exports[`returns fixture elements: components/Counter/index.fixture.tsx default 1`] = `
+exports[`returns fixture elements: src/Counter/Counter.fixture.tsx default 1`] = `
 <button
   onClick={[Function]}
 >
@@ -80,7 +80,7 @@ exports[`returns fixture elements: components/Counter/index.fixture.tsx default 
 </button>
 `;
 
-exports[`returns fixture elements: components/Counter/index.fixture.tsx large number 1`] = `
+exports[`returns fixture elements: src/Counter/Counter.fixture.tsx large number 1`] = `
 <button
   onClick={[Function]}
 >
@@ -90,7 +90,7 @@ exports[`returns fixture elements: components/Counter/index.fixture.tsx large nu
 </button>
 `;
 
-exports[`returns fixture elements: components/Counter/index.fixture.tsx small number 1`] = `
+exports[`returns fixture elements: src/Counter/Counter.fixture.tsx small number 1`] = `
 <button
   onClick={[Function]}
 >
@@ -100,7 +100,7 @@ exports[`returns fixture elements: components/Counter/index.fixture.tsx small nu
 </button>
 `;
 
-exports[`returns fixture elements: components/CounterButton/index.fixture.tsx 1`] = `
+exports[`returns fixture elements: src/CounterButton/CounterButton.fixture.tsx 1`] = `
 <button
   onClick={[Function]}
 >
@@ -110,7 +110,7 @@ exports[`returns fixture elements: components/CounterButton/index.fixture.tsx 1`
 </button>
 `;
 
-exports[`returns fixture elements: components/NestedDecorators/index.fixture.tsx 1`] = `
+exports[`returns fixture elements: src/NestedDecorators/NestedDecorators.fixture.tsx 1`] = `
 <span>
   (layout:
   wide
@@ -134,7 +134,7 @@ exports[`returns fixture elements: components/NestedDecorators/index.fixture.tsx
 </span>
 `;
 
-exports[`returns fixture elements: components/WelcomeMessage/index.fixture.tsx 1`] = `
+exports[`returns fixture elements: src/WelcomeMessage/WelcomeMessage.fixture.tsx 1`] = `
 <div
   style={
     Object {
