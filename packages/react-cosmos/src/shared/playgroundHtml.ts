@@ -88,8 +88,11 @@ function getProjectId(rootDir: string) {
   return pkg.name || '';
 }
 
-function getWebRendererUrl({ publicUrl }: CosmosConfig) {
-  return url.resolve(publicUrl, RENDERER_FILENAME);
+function getWebRendererUrl({
+  publicUrl,
+  experimentalRendererUrl,
+}: CosmosConfig) {
+  return experimentalRendererUrl || url.resolve(publicUrl, RENDERER_FILENAME);
 }
 
 function getPlaygroundHtml(playgroundArgs: PlaygroundMountArgs) {

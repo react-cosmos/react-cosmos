@@ -29,6 +29,7 @@ export type CosmosConfig = {
   // is used as an output file path and it requires a file extension.
   userDepsFilePath: string;
   watchDirs: string[];
+  experimentalRendererUrl: string | null;
   // Plugin configs
   [option: string]: unknown;
   // UI plugin configs

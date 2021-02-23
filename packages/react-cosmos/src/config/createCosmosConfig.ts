@@ -23,6 +23,7 @@ export function createCosmosConfig(
     staticPath: getStaticPath(cosmosConfigInput, rootDir),
     userDepsFilePath: getUserDepsFilePath(cosmosConfigInput, rootDir),
     watchDirs: getWatchDirs(cosmosConfigInput, rootDir),
+    experimentalRendererUrl: cosmosConfigInput.experimentalRendererUrl ?? null,
     ui: cosmosConfigInput.ui || {},
   };
 }

@@ -32,10 +32,11 @@ export async function webpackDevServer({
   expressApp,
   sendMessage,
 }: DevServerPluginArgs) {
+  // Skip webpack bundling if custom renderer URL is passed
+  if (cosmosConfig.experimentalRendererUrl) return;
+
   const userWebpack = getWebpack(cosmosConfig.rootDir);
-  if (!userWebpack) {
-    return;
-  }
+  if (!userWebpack) return;
 
   const webpackConfig = (await getDevWebpackConfig(
     cosmosConfig,
