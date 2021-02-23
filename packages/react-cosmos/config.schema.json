@@ -56,15 +56,7 @@
     },
     "hostname": {
       "description": "Dev server hostname. Set to null to accept connections with any hostname. [default: null]",
-      "anyOf": [
-        {
-          "type": "string",
-          "minLength": 1
-        },
-        {
-          "type": "null"
-        }
-      ]
+      "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
     },
     "port": {
       "description": "Dev server port. [default: 5000]",
@@ -96,28 +88,18 @@
       "patternProperties": {
         ".*": {
           "anyOf": [
-            {
-              "type": "string"
-            },
+            { "type": "string" },
             {
               "type": "object",
               "description": "Advanced HTTP proxy config.",
               "additionalProperties": true,
               "required": ["target"],
               "properties": {
-                "target": {
-                  "type": "string"
-                },
-                "secure": {
-                  "type": "boolean"
-                },
+                "target": { "type": "string" },
+                "secure": { "type": "boolean" },
                 "pathRewrite": {
                   "type": "object",
-                  "patternProperties": {
-                    ".*": {
-                      "type": "string"
-                    }
-                  }
+                  "patternProperties": { ".*": { "type": "string" } }
                 },
                 "logLevel": {
                   "type": "string",
@@ -132,11 +114,12 @@
     "globalImports": {
       "description": "Modules to be imported before loading components. Stuff like reset.css, polyfills, etc.",
       "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      },
+      "items": { "type": "string", "minLength": 1 },
       "uniqueItems": true
+    },
+    "experimentalRendererUrl": {
+      "description": "Custom renderer URL. This setting disables webpack bundling and allows integration with other build tools like Snowpack. [default: null]",
+      "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
     },
     "dom": {
       "description": "DOM-related options",
@@ -156,27 +139,11 @@
       "properties": {
         "configPath": {
           "description": "Path to an existing webpack config, which Cosmos will reuse to build your code. Set to null to disable this behavior. [default \"webpack.config.js\"]",
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
         },
         "overridePath": {
           "description": "Path to a user module that customizes the webpack config used by Cosmos. Set to null to disable this behavior. [default \"webpack.override.js\"]",
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
         },
         "includeHashInOutputFilename": {
           "description": "Changes output filename from \"[name].js\" to \"[name].[contenthash].js\". [default: false]",
@@ -205,18 +172,9 @@
                 "additionalProperties": false,
                 "required": ["label", "width", "height"],
                 "properties": {
-                  "label": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "width": {
-                    "type": "number",
-                    "minimum": 1
-                  },
-                  "height": {
-                    "type": "number",
-                    "minimum": 1
-                  }
+                  "label": { "type": "string", "minLength": 1 },
+                  "width": { "type": "number", "minimum": 1 },
+                  "height": { "type": "number", "minimum": 1 }
                 }
               }
             }
