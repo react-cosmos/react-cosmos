@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`returns fixture elements: src/__fixtures__/Controls playground.tsx 1`] = `
+exports[`returns fixture elements: src/__fixtures__/Controls.tsx 1`] = `
 Array [
   <pre>
     {
@@ -49,9 +49,9 @@ Array [
 ]
 `;
 
-exports[`returns fixture elements: src/__fixtures__/Hello World.ts 1`] = `"Hello World!"`;
+exports[`returns fixture elements: src/__fixtures__/HelloWorld.ts 1`] = `"Hello World!"`;
 
-exports[`returns fixture elements: src/__fixtures__/Props playground.tsx 1`] = `
+exports[`returns fixture elements: src/__fixtures__/Props.tsx 1`] = `
 <pre>
   {
   "string": "How are you doing?",
