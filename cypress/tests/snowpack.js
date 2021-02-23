@@ -1,6 +1,6 @@
 import { homepageTests, navTests, staticTests } from '../support/testBlocks';
 
-describe('DOM dev', () => {
+describe('Snowpack', () => {
   // WARNING: These tests are serial and share state
   before(() => {
     cy.clearStorage();
