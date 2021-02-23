@@ -1,6 +1,6 @@
 import React from 'react';
 import { Viewport } from 'react-cosmos/fixture';
-import { Hello } from '.';
+import { Hello } from './WelcomeMessage';
 
 export default (
   <Viewport width={320} height={568}>

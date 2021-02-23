@@ -20,7 +20,7 @@ export function navTests() {
       cy.contains('Counter');
       cy.contains('CounterButton');
       cy.contains('WelcomeMessage');
-      cy.contains('Hello World');
+      cy.contains('HelloWorld');
     });
 
     it('expands tree view items', () => {
@@ -35,7 +35,7 @@ export function navTests() {
 export function selectFixtureTests() {
   context('select fixture', () => {
     it('renders selected fixtures', () => {
-      cy.contains('Hello World').click();
+      cy.contains('HelloWorld').click();
       getRendererBody().find('#root').should('have.text', 'Hello World!');
     });
 
