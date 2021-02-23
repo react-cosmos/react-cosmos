@@ -31,7 +31,7 @@ export function userDepsTemplate({
 // Keeping global imports here is superior to making them bundle entry points
 // because this way they become hot-reloadable.
 ${globalImports
-  .map(p => `import '${createImportPath(p, relativeToDir)}';`)
+  .map(p => `import '${resolveImportPath(p, relativeToDir)}';`)
   .join(`\n`)}
 
 ${fixtureKeys
@@ -62,13 +62,13 @@ function createImportMap(
   return paths.reduce(
     (acc, p) => ({
       ...acc,
-      [slash(path.relative(rootDir, p))]: createImportPath(p, relativeToDir),
+      [slash(path.relative(rootDir, p))]: resolveImportPath(p, relativeToDir),
     }),
     {}
   );
 }
 
-function createImportPath(filePath: string, relativeToDir: string | null) {
+function resolveImportPath(filePath: string, relativeToDir: string | null) {
   return relativeToDir
     ? `.${path.sep}${path.relative(relativeToDir, filePath)}`
     : filePath;
