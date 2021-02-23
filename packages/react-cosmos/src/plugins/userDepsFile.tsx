@@ -51,7 +51,11 @@ async function generateUserDepsFile(cosmosConfig: CosmosConfig) {
   const { userDepsFilePath, port } = cosmosConfig;
 
   const rendererConfig: NativeRendererConfig = { port };
-  const userDepsModule = generateUserDepsModule(cosmosConfig, rendererConfig);
+  const userDepsModule = generateUserDepsModule({
+    cosmosConfig,
+    rendererConfig,
+    relativeToDir: path.dirname(userDepsFilePath),
+  });
   await writeFileAsync(userDepsFilePath, userDepsModule, 'utf8');
 
   const relUserDepsFilePath = path.relative(process.cwd(), userDepsFilePath);

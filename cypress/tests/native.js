@@ -1,5 +1,3 @@
-import { homepageTests } from '../support/testBlocks';
-
 describe('Native', () => {
   // WARNING: These tests are serial and share state
   before(() => {
@@ -38,6 +36,9 @@ function getUserDepsFile() {
   return cy.readFile('example/cosmos.userdeps.js');
 }
 
-function userDepsContainsModule(moduleName) {
-  getUserDepsFile().should('contain', `'${moduleName}': require(`);
+function userDepsContainsModule(modulePath) {
+  getUserDepsFile().should(
+    'match',
+    new RegExp(`import (fixture|decorator)[0-9]+ from './${modulePath}'`)
+  );
 }
