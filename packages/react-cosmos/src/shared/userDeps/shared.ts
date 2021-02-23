@@ -1,5 +1,13 @@
 import { replaceKeys } from '../shared';
 
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [property: string]: Json }
+  | Json[];
+
 // NODE: These can be made configurable if a proper need arises
 const FIXTURE_PATTERNS = [
   '**/<fixturesDir>/**/*.{js,jsx,ts,tsx}',

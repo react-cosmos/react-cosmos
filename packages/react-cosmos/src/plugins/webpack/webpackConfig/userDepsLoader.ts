@@ -24,5 +24,9 @@ module.exports = function injectUserDeps(this: LoaderContext) {
 
   const { containerQuerySelector } = createDomCosmosConfig(cosmosConfig);
   const rendererConfig: DomRendererConfig = { containerQuerySelector };
-  return generateUserDepsModule(cosmosConfig, rendererConfig);
+  return generateUserDepsModule({
+    cosmosConfig,
+    rendererConfig,
+    relativeToDir: null,
+  });
 };
