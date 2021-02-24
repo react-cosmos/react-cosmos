@@ -85,10 +85,12 @@ function getPlaygroundUrl(cosmosConfig: CosmosConfig, fixtureId: FixtureId) {
 }
 
 function getRendererUrl(cosmosConfig: CosmosConfig, fixtureId: FixtureId) {
-  const { publicUrl } = cosmosConfig;
+  const { publicUrl, experimentalRendererUrl } = cosmosConfig;
+  const query = stringifyRendererUrlQuery({ _fixtureId: fixtureId });
+  if (experimentalRendererUrl) return `${experimentalRendererUrl}?${query}`;
+
   const host = getPlaygroundHost(cosmosConfig);
   const urlPath = url.resolve(publicUrl, RENDERER_FILENAME);
-  const query = stringifyRendererUrlQuery({ _fixtureId: fixtureId });
   return `${host}${urlPath}?${query}`;
 }
 
