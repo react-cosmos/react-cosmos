@@ -1,8 +1,8 @@
 # React Cosmos + Snowpack = ❤️
 
-React Cosmos is dev environment for building scalable, high-quality user interfaces. Go to the [main README](https://github.com/react-cosmos/react-cosmos/blob/master/README.md) for an overall description of the project.
+React Cosmos is dev environment for building scalable, high-quality user interfaces. Go to the [main README](https://github.com/react-cosmos/react-cosmos/blob/master/README.md) for a project description.
 
-Although it's most commonly used with webpack, Cosmos is made out of composable pieces that can be assembled with any build tool. Cosmos is already used without webpack in React Native projects, and there are Parcel and Browserify examples available too. _So how about Snowpack?_
+Although it's most commonly used with webpack, Cosmos is made out of composable pieces that can be assembled with any build tool. Cosmos is already used without webpack in React Native projects, and it works with Parcel and Browserify too. _So how about Snowpack?_
 
 Snowpack and Cosmos make a great match. Both focus on developer productivity and complement each other nicely. You get to narrow your focus down to a single component, which refreshes instantly when you make a change without losing state.
 
@@ -23,7 +23,7 @@ yarn add --dev react-cosmos@next
 
 ### 2. Configure React Cosmos
 
-Create a `cosmos.config.json` file in your project root containing the following settings. In the `experimentalRendererUrl` option, adjust the port to your Snowpack dev server port.
+Create a `cosmos.config.json` file in your project root containing the following settings. In the `experimentalRendererUrl` option, adjust the port to your Snowpack port.
 
 ```json
 {
@@ -76,9 +76,9 @@ routes: [
 With this setup, Cosmos requires your regular Snowpack dev server to also be running. This could improve in the future, but for now...
 
 ```bash
-# Terminal 1 (Snowpack at localhost:8080)
+# Terminal 1 (Snowpack running)
 yarn start
-# Terminal 2 (Cosmos at localhost:5000)
+# Terminal 2 (Cosmos running at localhost:5000)
 yarn cosmos
 ```
 
