@@ -50,7 +50,7 @@ Finally, add `cosmos.userdeps.js` to gitignore. It's a file that Cosmos auto gen
 
 ### 3. Configure Snowpack
 
-Create `index.cosmos.html` next to your existing index html file. Make it identical to `index.html`, except for the index module, which will point to the `index.cosmos.js`.
+Create `index.cosmos.html` next to your existing index html file. Make it identical to `index.html`, except for the index module, which will point to `/dist/index.cosmos.js`.
 
 ```diff
 <body>
@@ -71,7 +71,7 @@ routes: [
 ],
 ```
 
-### 4. Run React Cosmos with Snowpack
+### 4. Start React Cosmos with Snowpack
 
 With this setup, Cosmos requires your regular Snowpack dev server to also be running. This could improve in the future, but for now...
 
