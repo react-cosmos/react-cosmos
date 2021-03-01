@@ -1,5 +1,4 @@
 import React from 'react';
-import { FixtureLoader } from 'react-cosmos-shared2/FixtureLoader';
 import {
   ReactDecoratorsByPath,
   ReactFixtureExportsByPath,
@@ -7,38 +6,30 @@ import {
 import { render } from 'react-dom';
 import { DomRendererConfig } from '../shared/rendererConfig';
 import { getDomContainer } from './container';
-import { ErrorCatch } from './ErrorCatch';
+import { DomFixtureLoader } from './DomFixtureLoader';
 import './globalErrorHandler';
 import { rendererConnect } from './rendererConnect';
 import { rendererId } from './rendererId';
-import { renderMessage } from './renderMessage';
-import { selectedFixtureId } from './selectedFixtureId';
 
-type MountDomRendererOpts = {
+export { rendererId, rendererConnect };
+
+type Args = {
   rendererConfig: DomRendererConfig;
   fixtures: ReactFixtureExportsByPath;
   decorators: ReactDecoratorsByPath;
   onErrorReset?: () => unknown;
 };
-
-export { rendererId, rendererConnect };
-
 export function mountDomRenderer({
   rendererConfig,
   fixtures,
   decorators,
   onErrorReset,
-}: MountDomRendererOpts) {
+}: Args) {
   const domContainer = getDomContainer(rendererConfig.containerQuerySelector);
   render(
-    <FixtureLoader
-      rendererId={rendererId}
-      rendererConnect={rendererConnect}
+    <DomFixtureLoader
       fixtures={fixtures}
-      selectedFixtureId={selectedFixtureId}
-      systemDecorators={[ErrorCatch]}
-      userDecorators={decorators}
-      renderMessage={renderMessage}
+      decorators={decorators}
       onErrorReset={onErrorReset}
     />,
     domContainer
