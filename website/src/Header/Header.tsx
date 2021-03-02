@@ -30,7 +30,7 @@ export function Header({ visible, fixed }: Props) {
             <InternalLink to="/">React Cosmos</InternalLink>
           </Title>
           <Links>
-            <ExternalLink href="https://github.com/react-cosmos/react-cosmos/tree/main/docs">
+            <ExternalLink href="https://github.com/react-cosmos/react-cosmos/blob/main/docs/README.md#table-of-contents">
               Docs
             </ExternalLink>
             <LinkSeparator>/</LinkSeparator>
