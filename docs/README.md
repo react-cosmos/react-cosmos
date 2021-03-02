@@ -554,7 +554,7 @@ This is a `.babelrc` example for Next.js:
 
 #### main.js file is cached?
 
-- [Set `includeHashInOutputFilename` to `true`](https://github.com/react-cosmos/react-cosmos/tree/master/docs#output-filename).
+- [Set `includeHashInOutputFilename` to `true`](https://github.com/react-cosmos/react-cosmos/tree/main/docs#output-filename).
 
 #### Serving a static export from a nested path?
 
