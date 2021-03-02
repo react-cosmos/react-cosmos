@@ -1,6 +1,6 @@
 # React Cosmos + Snowpack = ❤️
 
-React Cosmos is dev environment for building scalable, high-quality user interfaces. Go to the [main README](https://github.com/react-cosmos/react-cosmos/blob/main/README.md) for a project description.
+React Cosmos is a sandbox for developing and testing UI components in isolation. Go to the [main README](https://github.com/react-cosmos/react-cosmos/blob/main/README.md) for more info.
 
 Although it's most commonly used with webpack, Cosmos is made out of composable pieces that can be assembled with any build tool. Cosmos is already used without webpack in React Native projects, and it works with Parcel and Browserify too. _So how about Snowpack?_
 
