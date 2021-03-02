@@ -15,7 +15,7 @@ process.env.NODE_ENV = 'production';
   // Generate pages
   await createPage({
     title: `React Cosmos`,
-    description: `A tool for ambitious UI developers.`,
+    description: `Sandbox for developing and testing UI components in isolation.`,
   });
   await createPage({
     pageName: 'visual-tdd',
