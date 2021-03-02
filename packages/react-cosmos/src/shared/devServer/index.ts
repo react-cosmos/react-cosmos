@@ -20,6 +20,7 @@ type PluginReturn = void | null | PluginCleanupCallback;
 
 export type DevServerPluginArgs = {
   cosmosConfig: CosmosConfig;
+  platformType: PlatformType;
   httpServer: http.Server;
   expressApp: express.Express;
   sendMessage(msg: Message): unknown;
@@ -60,6 +61,7 @@ export async function startDevServer(
     for (const plugin of plugins) {
       const pluginReturn = await plugin({
         cosmosConfig,
+        platformType,
         httpServer: httpServer.server,
         expressApp: app,
         sendMessage: msgHandler.sendMessage,

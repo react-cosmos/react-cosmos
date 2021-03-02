@@ -16,9 +16,10 @@ import {
 
 const writeFileAsync = promisify(writeFile);
 
-export async function userDepsFile({ cosmosConfig }: DevServerPluginArgs) {
-  if (!shouldGenerateUserDepsFile(cosmosConfig)) return;
+export async function userDepsFile(args: DevServerPluginArgs) {
+  if (!shouldGenerateUserDepsFile(args)) return;
 
+  const { cosmosConfig } = args;
   await generateUserDepsFile(cosmosConfig);
   const watcher = await startFixtureFileWatcher(cosmosConfig);
   return () => {
@@ -26,10 +27,14 @@ export async function userDepsFile({ cosmosConfig }: DevServerPluginArgs) {
   };
 }
 
-function shouldGenerateUserDepsFile(cosmosConfig: CosmosConfig): boolean {
+function shouldGenerateUserDepsFile({
+  cosmosConfig,
+  platformType,
+}: DevServerPluginArgs): boolean {
   return (
+    platformType === 'native' ||
     cosmosConfig.experimentalRendererUrl !== null ||
-    // CLI support for --external-userdeps flag
+    // CLI support for --external-userdeps flag (useful with react-native-web)
     Boolean(getCliArgs().externalUserdeps)
   );
 }
