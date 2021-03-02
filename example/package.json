@@ -2,7 +2,7 @@
   "private": true,
   "name": "react-cosmos-example",
   "version": "5.6.0-alpha.6",
-  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/example",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/example",
   "license": "MIT",
   "scripts": {
     "start": "cosmos"

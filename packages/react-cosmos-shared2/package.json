@@ -2,7 +2,7 @@
   "name": "react-cosmos-shared2",
   "version": "5.6.0-alpha.4",
   "description": "Code shared between Cosmos packages",
-  "repository": "https://github.com/react-cosmos/react-cosmos/tree/master/packages/react-cosmos-shared2",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-shared2",
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.20",

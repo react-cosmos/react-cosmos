@@ -33,7 +33,7 @@ export function WelcomeCosmos({ onDismissWelcome }: Props) {
             <Bullet />
             <span>
               <Link
-                href="https://github.com/react-cosmos/react-cosmos/tree/master/docs"
+                href="https://github.com/react-cosmos/react-cosmos/tree/main/docs"
                 rel="noopener noreferrer"
                 target="_blank"
               >
