@@ -1,9 +1,10 @@
 import { FSWatcher, watch } from 'chokidar';
 import { writeFile } from 'fs';
 import { debounce } from 'lodash';
-import promisify from 'util.promisify';
 import path from 'path';
+import promisify from 'util.promisify';
 import { CosmosConfig } from '../config';
+import { getCliArgs } from '../shared/cli';
 import { DevServerPluginArgs } from '../shared/devServer';
 import { NativeRendererConfig } from '../shared/rendererConfig';
 import {
@@ -16,11 +17,21 @@ import {
 const writeFileAsync = promisify(writeFile);
 
 export async function userDepsFile({ cosmosConfig }: DevServerPluginArgs) {
+  if (!shouldGenerateUserDepsFile(cosmosConfig)) return;
+
   await generateUserDepsFile(cosmosConfig);
   const watcher = await startFixtureFileWatcher(cosmosConfig);
   return () => {
     watcher.close();
   };
+}
+
+function shouldGenerateUserDepsFile(cosmosConfig: CosmosConfig): boolean {
+  return (
+    cosmosConfig.experimentalRendererUrl !== null ||
+    // CLI support for --external-userdeps flag
+    Boolean(getCliArgs().externalUserdeps)
+  );
 }
 
 const DEBOUNCE_INTERVAL = 50;
