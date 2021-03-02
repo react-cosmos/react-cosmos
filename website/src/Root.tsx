@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { About } from './About';
 import { Benefits } from './Benefits';
 import { Demo } from './Demo';
-import { Description } from './Description';
 import { Features } from './Features/Features';
 import { Footer } from './Footer/Footer';
 import { StickyHeader } from './Header/StickyHeader';
@@ -30,8 +29,6 @@ export function Root() {
         />
         <Demo />
         <Height mobile={96} tablet={128} desktop={192} />
-        <Description />
-        <Height mobile={64} tablet={64} desktop={96} />
         <Features />
       </Gradient1>
       <WhiteBg>

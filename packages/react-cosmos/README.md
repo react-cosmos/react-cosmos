@@ -4,4 +4,4 @@
 
 # React Cosmos
 
-A dev environment for building scalable, high-quality user interfaces.
+Sandbox for developing and testing UI components in isolation.

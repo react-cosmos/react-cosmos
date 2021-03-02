@@ -6,7 +6,7 @@
 
 [![npm version](https://img.shields.io/npm/v/react-cosmos.svg?style=flat)](https://www.npmjs.com/package/react-cosmos) [![CircleCI Status](https://circleci.com/gh/react-cosmos/react-cosmos.svg?style=shield)](https://circleci.com/gh/react-cosmos/react-cosmos) [![Twitter](https://img.shields.io/twitter/follow/ReactCosmos.svg?color=%2338A1F3&label=twitter&style=flat)](https://twitter.com/ReactCosmos) [![Slack](https://img.shields.io/badge/slack-join%20200%2B%20community-blueviolet)](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/react-cosmos/react-cosmos/blob/main/CONTRIBUTING.md#how-to-contribute)
 
-A dev environment for building scalable, high-quality user interfaces.
+Sandbox for developing and testing UI components in isolation.
 
 - **Visual TDD.** Develop one component at a time. Isolate the UI you&apos;re
   working on and iterate quickly. Reloading your whole app on

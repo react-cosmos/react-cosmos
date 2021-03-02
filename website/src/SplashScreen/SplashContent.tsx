@@ -17,12 +17,11 @@ export function SplashContent({ windowViewport, gitHubStars }: Props) {
 
   return (
     <Container style={containerStyle}>
-      <Title>
-        Build UIs at <em>scale</em>.
-      </Title>
+      <Title>React Cosmos</Title>
       <Subtitle>
-        Introducing <strong>React Cosmos 5</strong>
-        <br />a tool for ambitious UI developers
+        Sandbox for developing and testing
+        <br />
+        UI components in isolation
       </Subtitle>
       <CallToAction href="https://github.com/react-cosmos/react-cosmos">
         <strong>GitHub</strong>
@@ -96,7 +95,7 @@ const Subtitle = styled.p`
   margin: 0;
   padding: 0;
   background: rgb(9, 53, 86, 0.8);
-  font-size: calc(10px + 1em);
+  font-size: calc(6px + 1.2em);
   font-weight: 300;
   line-height: 1.6em;
   color: #b1dcfd;
