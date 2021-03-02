@@ -90,6 +90,6 @@ And there you have it 🪄
 
 This is a first pass at the React Cosmos integration with Snowpack. There might be some kinks that need to be ironed out.
 
-In the future Cosmos run Snowpack behind the hood, without relying on an already running Snowpack server. This could reduce the install steps. I have some other ideas and I also want to hear yours. I'm new to Snowpack, but I love it so far and I'm excited to interact with the Snowpack community.
+In the future Cosmos might run Snowpack behind the hood, without relying on an already running Snowpack server. This could reduce the install steps. I have some other ideas and I also want to hear yours. I'm new to Snowpack, but I love it so far and I'm excited to interact with the Snowpack community.
 
 Feel free to create an issue if you have one, or [join us on Slack](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw#/) to ask questions and brainstorm ideas.
