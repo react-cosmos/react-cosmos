@@ -2,7 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { ExternalLink } from '../shared/ExternalLink';
 import { getSlideInStyle, slideInTransition } from '../shared/slideIn';
-import { getCosmonautSize, Viewport } from '../shared/viewport';
+import {
+  getBaseFontSize,
+  getCosmonautSize,
+  Viewport,
+} from '../shared/viewport';
 
 type Props = {
   windowViewport: Viewport;
@@ -41,7 +45,7 @@ function getContainerStyle(
   gitHubStars: null | number
 ) {
   const cosmonautSize = Math.round(getCosmonautSize(windowViewport));
-  const fontSize = Math.round(cosmonautSize / 18);
+  const fontSize = getBaseFontSize(windowViewport);
   const slideInStyle = getSlideInStyle(gitHubStars !== null);
 
   if (isPortrait(windowViewport)) {
@@ -83,10 +87,11 @@ const Title = styled.h1`
   margin: 0;
   padding: 0;
   background: rgb(9, 53, 86, 0.8);
+  font-family: Rubik, sans-serif;
   font-size: calc(16px + 2.4em);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.5em;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   white-space: nowrap;
   text-align: center;
 `;
@@ -95,7 +100,8 @@ const Subtitle = styled.p`
   margin: 0;
   padding: 0;
   background: rgb(9, 53, 86, 0.8);
-  font-size: calc(6px + 1.2em);
+  font-family: Rubik, sans-serif;
+  font-size: calc(8px + 1.1em);
   font-weight: 300;
   line-height: 1.6em;
   color: #b1dcfd;
@@ -110,10 +116,13 @@ const Subtitle = styled.p`
 const CallToAction = styled(ExternalLink)`
   margin: 2.8em 0 0 0;
   padding: 0 1em;
+  border-radius: 0.15em;
   background: #b1dcfd;
   color: #0a2e46;
+  font-family: Rubik, sans-serif;
   font-size: calc(10px + 1em);
   font-weight: 400;
+  letter-spacing: 0.01em;
   line-height: 2.3em;
   display: flex;
   flex-direction: row;
@@ -151,10 +160,12 @@ const DocsLink = styled(ExternalLink)`
   margin: 0.5em 0 0 0;
   padding: 0 1em;
   color: #b1dcfd;
+  font-family: Rubik, sans-serif;
   font-size: calc(10px + 0.8em);
   font-weight: 400;
   line-height: 2.3em;
   text-decoration: none;
+  letter-spacing: 0.01em;
   white-space: nowrap;
   display: flex;
   flex-direction: row;
