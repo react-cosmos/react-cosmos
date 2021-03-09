@@ -137,7 +137,7 @@ const CallToAction = styled(ExternalLink)`
   svg {
     width: 26px;
     height: 26px;
-    margin: 0 8px -2px -4px;
+    margin: 0 8px -2px -2px;
     stroke: #0a2e46;
     stroke-width: 2px;
     fill: none;
@@ -152,7 +152,7 @@ const CallToAction = styled(ExternalLink)`
     svg {
       width: 20px;
       height: 20px;
-      margin: 0 6px -2px -4px;
+      margin: 0 6px -2px -2px;
     }
   }
 `;
