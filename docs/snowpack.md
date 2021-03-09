@@ -14,12 +14,10 @@ Snowpack and Cosmos make a great match. Both focus on developer productivity and
 
 ```bash
 # npm
-npm install --save-dev react-cosmos@next
+npm install --save-dev react-cosmos
 # Yarn
-yarn add --dev react-cosmos@next
+yarn add --dev react-cosmos
 ```
-
-> Make sure to use the `react-cosmos@next` channel for now.
 
 ### 2. Configure React Cosmos
 
