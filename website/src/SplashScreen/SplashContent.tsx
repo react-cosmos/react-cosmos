@@ -90,7 +90,7 @@ const Title = styled.h1`
   font-size: calc(16px + 2.4em);
   font-weight: 500;
   line-height: 1.5em;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   white-space: nowrap;
   text-align: center;
 `;
