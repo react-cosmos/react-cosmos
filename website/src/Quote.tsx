@@ -66,14 +66,13 @@ const Words = styled.div`
   font-size: 30px;
   font-weight: 300;
   font-style: italic;
-  line-height: 36px;
+  line-height: 1.2em;
   text-align: center;
   letter-spacing: -0.01em;
 
   @media (max-width: ${mobileMaxWidth}px) {
     padding: 16px 20px;
     font-size: 24px;
-    line-height: 30px;
   }
 `;
 
@@ -82,7 +81,7 @@ const OneAndOnly = styled.div`
   color: rgba(10, 46, 70, 0.7);
   font-size: 24px;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1em;
   text-align: center;
   letter-spacing: -0.01em;
   transition: ${slideInTransition};
@@ -93,6 +92,5 @@ const OneAndOnly = styled.div`
 
   @media (max-width: ${mobileMaxWidth}px) {
     font-size: 20px;
-    line-height: 20px;
   }
 `;

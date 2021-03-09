@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { contentMaxWidth } from './shared/breakpoints';
+import { contentMaxWidth, mobileMaxWidth } from './shared/breakpoints';
 import { getSlideInStyle, slideInTransition } from './shared/slideIn';
 import { useViewportEnter } from './shared/useViewportEnter';
 
@@ -59,9 +59,17 @@ const Item = styled.div`
   align-items: center;
   justify-content: center;
   overflow: hidden;
+
+  @media (max-width: ${mobileMaxWidth}px) {
+    width: 260px;
+  }
 `;
 
 const LogoImage = styled.img`
   width: 288px;
   opacity: 0.7;
+
+  @media (max-width: ${mobileMaxWidth}px) {
+    width: 234px;
+  }
 `;

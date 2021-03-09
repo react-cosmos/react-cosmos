@@ -1,6 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, Ubuntu, 'Helvetica Neue',
-    'Helvetica', 'Arial', sans-serif;
+  font-family: Rubik, sans-serif;
   font-size: 16px;
   margin: 0;
 }

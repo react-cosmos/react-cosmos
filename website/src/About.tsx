@@ -36,8 +36,8 @@ export function About() {
             </Paragraph>
             <Paragraph>
               React Cosmos is licensed as MIT and will always be free. If you
-              want to support me, however, become a Sponsor and ensure this
-              journey continues!
+              want to support me, become a Sponsor and ensure this journey
+              continues!
             </Paragraph>
           </StoryBody>
           <CtaContainer>
@@ -67,7 +67,6 @@ const Title = styled.div`
   color: #dfeaf3;
   margin: 0 0 32px 0;
   font-size: 48px;
-  font-weight: 500;
   line-height: 56px;
   transition: ${slideInTransition};
 
@@ -82,7 +81,7 @@ const Subtitle = styled.div`
   color: #dfeaf3;
   font-size: 24px;
   font-weight: 300;
-  line-height: 38px;
+  line-height: 1.7em;
   transition: ${slideInTransition};
 
   strong {
@@ -92,7 +91,6 @@ const Subtitle = styled.div`
   @media (max-width: ${mobileMaxWidth}px) {
     font-size: 20px;
     font-weight: 400;
-    line-height: 34px;
   }
 `;
 
@@ -108,7 +106,11 @@ const Paragraph = styled.p`
   margin: 0 0 32px 0;
   font-size: 20px;
   font-weight: 400;
-  line-height: 34px;
+  line-height: 1.7em;
+
+  @media (max-width: ${mobileMaxWidth}px) {
+    font-size: 18px;
+  }
 `;
 
 const CtaContainer = styled.div`
@@ -123,6 +125,7 @@ const CallToAction = styled(ExternalLink)`
   flex-direction: row;
   align-items: center;
   padding: 0 28px;
+  border-radius: 5px;
   background: #b1dcfd;
   color: #0a2e46;
   font-size: 28px;
@@ -132,8 +135,8 @@ const CallToAction = styled(ExternalLink)`
   white-space: nowrap;
 
   svg {
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
     margin: 0 8px -2px -2px;
     stroke: #0a2e46;
     stroke-width: 2px;
@@ -141,13 +144,14 @@ const CallToAction = styled(ExternalLink)`
   }
 
   @media (max-width: ${mobileMaxWidth}px) {
-    padding: 0 24px;
-    font-size: 24px;
-    line-height: 56px;
+    border-radius: 3px;
+    padding: 0 22px;
+    font-size: 22px;
+    line-height: 50px;
 
     svg {
-      width: 24px;
-      height: 24px;
+      width: 20px;
+      height: 20px;
       margin: 0 6px -2px -2px;
     }
   }

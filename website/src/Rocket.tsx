@@ -47,25 +47,25 @@ const StyledRocketSvg = styled.svg`
   width: 50%;
   height: 50%;
   fill: currentColor;
-  animation: hover 0.6s infinite ease;
+  animation: hover 0.5s infinite ease;
   transition: left, 0.4s ease-out, bottom 0.4s ease-out;
   transition-delay: 0.4s;
 
   @keyframes hover {
     0% {
-      transform: translateY(-0.6px) translateX(-0.6px);
+      transform: translateY(-1px) translateX(-1px);
     }
     25% {
-      transform: translateX(0.6px) translateY(0.6px);
+      transform: translateX(1px) translateY(1px);
     }
     50% {
-      transform: translateX(-0.6px) translateY(0.6px);
+      transform: translateX(-1px) translateY(1px);
     }
     75% {
-      transform: translateX(0.6px) translateY(-0.6px);
+      transform: translateX(1px) translateY(-1px);
     }
     100% {
-      transform: translateY(-0.6px) translateX(-0.6px);
+      transform: translateY(-1px) translateX(-1px);
     }
   }
 `;
