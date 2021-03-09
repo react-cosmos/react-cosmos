@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useViewportEnter } from './shared/useViewportEnter';
+import { mobileMaxWidth } from './shared/breakpoints';
 import { getSlideInStyle, slideInTransition } from './shared/slideIn';
+import { useViewportEnter } from './shared/useViewportEnter';
 
 export function Highlights() {
   return (
@@ -25,7 +26,7 @@ export function Highlights() {
         <Box
           src="/responsive-mode.png"
           altText="Responsive preview mode"
-          caption="Preview components under any viewport size."
+          caption="Preview components under any viewport size and orientation."
         />
       </Boxes>
     </Container>
@@ -106,8 +107,11 @@ const Caption = styled.div`
   padding: 12px 20px 0 20px;
   font-size: 22px;
   font-weight: 400;
-  line-height: 28px;
-  letter-spacing: -0.02em;
+  line-height: 1.3em;
   text-align: center;
   opacity: 0.9;
+
+  @media (max-width: ${mobileMaxWidth}px) {
+    font-size: 18px;
+  }
 `;

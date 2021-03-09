@@ -118,8 +118,8 @@ const Title = styled.h1`
   margin: 0;
   padding: 0;
   font-size: 24px;
-  font-weight: 600;
-  letter-spacing: -0.03em;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   line-height: 28px;
   white-space: nowrap;
 

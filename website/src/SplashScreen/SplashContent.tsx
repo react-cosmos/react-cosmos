@@ -87,7 +87,6 @@ const Title = styled.h1`
   margin: 0;
   padding: 0;
   background: rgb(9, 53, 86, 0.8);
-  font-family: Rubik, sans-serif;
   font-size: calc(16px + 2.4em);
   font-weight: 500;
   line-height: 1.5em;
@@ -100,7 +99,6 @@ const Subtitle = styled.p`
   margin: 0;
   padding: 0;
   background: rgb(9, 53, 86, 0.8);
-  font-family: Rubik, sans-serif;
   font-size: calc(8px + 1.1em);
   font-weight: 300;
   line-height: 1.6em;
@@ -119,10 +117,8 @@ const CallToAction = styled(ExternalLink)`
   border-radius: 0.15em;
   background: #b1dcfd;
   color: #0a2e46;
-  font-family: Rubik, sans-serif;
   font-size: calc(10px + 1em);
   font-weight: 400;
-  letter-spacing: 0.01em;
   line-height: 2.3em;
   display: flex;
   flex-direction: row;
@@ -153,15 +149,14 @@ const StyledStar = styled.svg`
   height: 0.8em;
   stroke-width: calc(2px + 0.005em);
   margin: 0 0.1em 0 0.5em;
-  transform: translate(0, 4%);
+  transform: translate(0, 2%);
 `;
 
 const DocsLink = styled(ExternalLink)`
   margin: 0.5em 0 0 0;
   padding: 0 1em;
   color: #b1dcfd;
-  font-family: Rubik, sans-serif;
-  font-size: calc(10px + 0.8em);
+  font-size: calc(10px + 0.85em);
   font-weight: 400;
   line-height: 2.3em;
   text-decoration: none;
@@ -178,7 +173,7 @@ const Chevron = () => {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeLinecap="square"
+      strokeLinecap="round"
       strokeLinejoin="round"
     >
       <polyline points="9 18 15 12 9 6"></polyline>
@@ -191,5 +186,5 @@ const StyledChevron = styled.svg`
   height: 1em;
   stroke-width: calc(2px + 0.005em);
   margin: 0 -0.4em 0 0em;
-  transform: translate(0, 9%);
+  transform: translate(0, 5%);
 `;

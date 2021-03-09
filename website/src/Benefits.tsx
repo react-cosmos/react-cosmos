@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { mobileMaxWidth } from './shared/breakpoints';
 import {
   getSlideInStyle,
   slideInDelay,
@@ -138,21 +139,23 @@ const StyledBenefit = styled.div`
 
 const BenefitText = styled.div`
   font-size: 22px;
-  line-height: 28px;
+  line-height: 1.3em;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+
+  @media (max-width: ${mobileMaxWidth}px) {
+    font-size: 18px;
+  }
 `;
 
 const BenefitTitle = styled.div`
-  font-weight: 600;
-  letter-spacing: -0.02em;
+  font-weight: 500;
 `;
 
 const BenefitDescription = styled.div`
   margin-top: 4px;
-  letter-spacing: -0.02em;
   opacity: 0.8;
 `;
 
@@ -183,7 +186,7 @@ function Check({ visible, nth }: CheckProps) {
         fill="none"
         stroke="currentColor"
         strokeWidth="2"
-        strokeLinecap="square"
+        strokeLinecap="round"
         strokeLinejoin="round"
       >
         <polyline points="20 6 9 17 4 12"></polyline>

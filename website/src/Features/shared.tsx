@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { mobileMaxWidth } from '../shared/breakpoints';
 import { slideInTransition } from '../shared/slideIn';
 
 export const minFeatureColumnsWidth = 1280 + 96;
@@ -39,24 +40,42 @@ export const FeatureIconContainer = styled.div`
     height: 40px;
     opacity: 0.9;
   }
+
+  @media (max-width: ${mobileMaxWidth}px) {
+    width: 60px;
+    height: 60px;
+    margin: 0 6px 12px 12px;
+
+    svg {
+      width: 30px;
+      height: 30px;
+    }
+  }
 `;
 
 export const FeatureTitle = styled.h2`
   margin: 0;
   padding: 0 20px 8px 20px;
   font-size: 32px;
-  line-height: 32px;
-  font-weight: 600;
-  letter-spacing: -0.03em;
+  line-height: 1em;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   text-align: center;
+
+  @media (max-width: ${mobileMaxWidth}px) {
+    font-size: 26px;
+  }
 `;
 
 export const FeatureDescription = styled.div`
   max-width: 640px;
   padding: 0 20px 0 20px;
   font-size: 22px;
-  line-height: 28px;
+  line-height: 1.3em;
   opacity: 0.85;
-  letter-spacing: -0.02em;
   text-align: center;
+
+  @media (max-width: ${mobileMaxWidth}px) {
+    font-size: 18px;
+  }
 `;

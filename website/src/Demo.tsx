@@ -84,29 +84,27 @@ const TextContainer = styled.div`
 
 const Title = styled.div`
   padding: 0 0 12px 0;
-  font-size: 48px;
-  line-height: 50px;
-  font-weight: 600;
+  font-size: 46px;
+  font-weight: 500;
+  line-height: 1.05em;
   letter-spacing: -0.03em;
   transition: ${slideInTransition};
 
   @media (max-width: ${mobileMaxWidth}px) {
-    font-size: 40px;
-    line-height: 42px;
+    font-size: 36px;
   }
 `;
 
 const Subtitle = styled.div`
   color: #566d7e;
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 300;
-  line-height: 36px;
+  line-height: 1.2em;
   letter-spacing: -0.02em;
   transition: ${slideInTransition};
 
   @media (max-width: ${mobileMaxWidth}px) {
-    font-size: 28px;
-    line-height: 32px;
+    font-size: 24px;
   }
 `;
 
@@ -123,6 +121,7 @@ const CallToAction = styled(ExternalLink)`
   flex-direction: row;
   align-items: center;
   padding: 0 28px;
+  border-radius: 5px;
   background: #078383;
   color: #fff;
   font-size: 28px;
@@ -132,8 +131,8 @@ const CallToAction = styled(ExternalLink)`
   white-space: nowrap;
 
   svg {
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
     margin: 0 8px -2px -4px;
     fill: none;
     stroke: currentColor;
@@ -141,13 +140,14 @@ const CallToAction = styled(ExternalLink)`
   }
 
   @media (max-width: ${mobileMaxWidth}px) {
-    padding: 0 24px;
-    font-size: 24px;
-    line-height: 56px;
+    border-radius: 3px;
+    padding: 0 22px;
+    font-size: 22px;
+    line-height: 50px;
 
     svg {
-      width: 24px;
-      height: 24px;
+      width: 20px;
+      height: 20px;
       margin: 0 6px -2px -4px;
     }
   }
@@ -155,7 +155,7 @@ const CallToAction = styled(ExternalLink)`
 
 export function Play() {
   return (
-    <svg viewBox="0 0 24 24" strokeLinecap="square" strokeLinejoin="round">
+    <svg viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
       <polygon points="5 3 19 12 5 21 5 3"></polygon>
     </svg>
   );
@@ -174,12 +174,11 @@ const Links = styled.div`
   @media (max-width: ${mobileMaxWidth}px) {
     font-size: 20px;
     line-height: 20px;
-    font-weight: 500;
   }
 `;
 
 const Link = styled(ExternalLink)`
-  margin: 16px 12px 0 12px;
+  margin: 14px 12px 0 12px;
   color: #078383;
   font-weight: 400;
   text-decoration: none;
@@ -187,10 +186,6 @@ const Link = styled(ExternalLink)`
   display: flex;
   flex-direction: row;
   align-items: center;
-
-  @media (max-width: ${mobileMaxWidth}px) {
-    font-weight: 500;
-  }
 `;
 
 const Chevron = () => {
@@ -200,7 +195,7 @@ const Chevron = () => {
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
-      strokeLinecap="square"
+      strokeLinecap="round"
       strokeLinejoin="round"
     >
       <polyline points="9 18 15 12 9 6"></polyline>
@@ -212,12 +207,12 @@ const StyledChevron = styled.svg`
   width: 24px;
   height: 24px;
   margin: 0 0 0 0px;
-  transform: translate(0, 2.5px);
+  transform: translate(0, 2.2px);
 
   @media (max-width: ${mobileMaxWidth}px) {
     width: 20px;
     height: 20px;
-    transform: translate(0, 1.5px);
+    transform: translate(0, 1.2px);
   }
 `;
 

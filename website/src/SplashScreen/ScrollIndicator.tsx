@@ -20,7 +20,7 @@ export function ScrollIndicator({ windowViewport }: Props) {
       fill="none"
       stroke="#fff"
       strokeWidth="1.5"
-      strokeLinecap="square"
+      strokeLinecap="round"
       strokeLinejoin="round"
       style={{ bottom }}
       onClick={scrollToContent}
