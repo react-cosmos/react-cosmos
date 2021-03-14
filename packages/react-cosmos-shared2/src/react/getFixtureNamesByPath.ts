@@ -8,9 +8,10 @@ export function getFixtureNamesByPath(
   const fixtureNamesByPath: FixtureNamesByPath = {};
   Object.keys(fixtureExportsByPath).forEach(fixturePath => {
     const fixtureExport = fixtureExportsByPath[fixturePath];
-    fixtureNamesByPath[fixturePath] = isMultiFixture(fixtureExport)
-      ? Object.keys(fixtureExport)
-      : null;
+    fixtureNamesByPath[fixturePath] =
+      isMultiFixture(fixtureExport) && !fixtureExport.__lazy
+        ? Object.keys(fixtureExport)
+        : null;
   });
 
   return fixtureNamesByPath;

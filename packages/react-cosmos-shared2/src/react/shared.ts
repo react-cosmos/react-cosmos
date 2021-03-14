@@ -3,10 +3,16 @@ import { FixtureState, SetFixtureState } from '../fixtureState';
 // These generic types keep Cosmos slightly more decoupled from React
 type FixtureMap<FixtureType> = { [fixtureName: string]: FixtureType };
 type FixtureExport<FixtureType> = FixtureType | FixtureMap<FixtureType>;
+type LazyFixtureExport<FixtureType> = {
+  __lazy: true;
+  getModule: () => Promise<FixtureExport<FixtureType>>;
+};
 
 export type ReactFixture = React.ReactNode | React.FunctionComponent;
 export type ReactFixtureMap = FixtureMap<ReactFixture>;
-export type ReactFixtureExport = FixtureExport<ReactFixture>;
+export type ReactFixtureExport =
+  | FixtureExport<ReactFixture>
+  | LazyFixtureExport<ReactFixture>;
 
 export type ReactDecoratorProps = {
   children: React.ReactNode;

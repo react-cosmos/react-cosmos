@@ -1,5 +1,5 @@
 import { isEqual } from 'lodash';
-import React from 'react';
+import React, { Component, ReactNode } from 'react';
 import { FixtureState, SetFixtureState } from '../fixtureState';
 import {
   getFixtureNamesByPath,
@@ -33,6 +33,8 @@ export type Props = {
 type State = {
   selectedFixture: null | {
     fixtureId: FixtureId;
+    fixtureStatus: 'loading' | 'ready';
+    fixtureRef: null | ReactNode;
     fixtureState: FixtureState;
     // Why is this copy of the fixtureState needed? Two reasons:
     // - To avoid posting fixtureStateChange messages with no changes from
@@ -47,11 +49,13 @@ type State = {
   renderKey: number;
 };
 
-export class FixtureLoader extends React.Component<Props, State> {
+export class FixtureLoader extends Component<Props, State> {
   state: State = {
     selectedFixture: this.props.selectedFixtureId
       ? {
           fixtureId: this.props.selectedFixtureId,
+          fixtureStatus: 'loading',
+          fixtureRef: null,
           fixtureState: {},
           syncedFixtureState: {},
         }
@@ -102,15 +106,28 @@ export class FixtureLoader extends React.Component<Props, State> {
     }
 
     const { fixtures } = this.props;
-    const { fixtureId, fixtureState } = selectedFixture;
+    const {
+      fixtureId,
+      fixtureStatus,
+      fixtureRef,
+      fixtureState,
+    } = selectedFixture;
     // Falsy check doesn't do because fixtures can be any Node, including
     // null or undefined.
     if (!fixtures.hasOwnProperty(fixtureId.path)) {
       return this.renderMessage(`Fixture path not found: ${fixtureId.path}`);
     }
 
-    const fixtureExport = fixtures[fixtureId.path];
-    const fixture = getFixture(fixtureExport, fixtureId.name);
+    if (fixtureStatus === 'loading') {
+      return null;
+    }
+
+    // const fixtureExport = fixtures[fixtureId.path];
+    const fixture = getFixture(fixtureRef, fixtureId.name);
+    console.log('fixtureRef', fixtureRef);
+    console.log('fixtureId.name', fixtureId.name);
+    console.log('fixture', fixture);
+
     if (typeof fixture === 'undefined') {
       return this.renderMessage(
         `Invalid fixture ID: ${JSON.stringify(fixtureId)}`
@@ -169,11 +186,32 @@ export class FixtureLoader extends React.Component<Props, State> {
     this.setState({
       selectedFixture: {
         fixtureId,
+        fixtureStatus: 'loading',
+        fixtureRef: null,
         fixtureState,
         syncedFixtureState: fixtureState,
       },
       renderKey: this.state.renderKey + 1,
     });
+
+    const { fixtures } = this.props;
+    const fixtureExport = fixtures[fixtureId.path];
+    // const fixture = getFixture(fixtureExport, fixtureId.name);
+    if (fixtureExport.__lazy) {
+      fixtureExport.getModule().then(module => {
+        const { selectedFixture } = this.state;
+        // console.log(module.default);
+        if (selectedFixture) {
+          this.setState({
+            selectedFixture: {
+              ...selectedFixture,
+              fixtureStatus: 'ready',
+              fixtureRef: module.default,
+            },
+          });
+        }
+      });
+    }
   }
 
   handleUnselectFixtureRequest() {
@@ -190,7 +228,7 @@ export class FixtureLoader extends React.Component<Props, State> {
     if (selectedFixture && isEqual(fixtureId, selectedFixture.fixtureId)) {
       this.setState({
         selectedFixture: {
-          fixtureId,
+          ...selectedFixture,
           fixtureState,
           syncedFixtureState: fixtureState,
         },
