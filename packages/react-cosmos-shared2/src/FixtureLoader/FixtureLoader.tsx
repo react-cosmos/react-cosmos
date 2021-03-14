@@ -3,6 +3,7 @@ import React, { Component, ReactNode } from 'react';
 import { FixtureState, SetFixtureState } from '../fixtureState';
 import {
   getFixtureNamesByPath,
+  isMultiFixture,
   ReactDecorator,
   ReactDecoratorsByPath,
   ReactFixtureExportsByPath,
@@ -124,9 +125,6 @@ export class FixtureLoader extends Component<Props, State> {
 
     // const fixtureExport = fixtures[fixtureId.path];
     const fixture = getFixture(fixtureRef, fixtureId.name);
-    console.log('fixtureRef', fixtureRef);
-    console.log('fixtureId.name', fixtureId.name);
-    console.log('fixture', fixture);
 
     if (typeof fixture === 'undefined') {
       return this.renderMessage(
@@ -196,17 +194,20 @@ export class FixtureLoader extends Component<Props, State> {
 
     const { fixtures } = this.props;
     const fixtureExport = fixtures[fixtureId.path];
-    // const fixture = getFixture(fixtureExport, fixtureId.name);
     if (fixtureExport.__lazy) {
       fixtureExport.getModule().then(module => {
+        const f = module.default;
         const { selectedFixture } = this.state;
-        // console.log(module.default);
         if (selectedFixture) {
           this.setState({
             selectedFixture: {
               ...selectedFixture,
+              fixtureId: {
+                ...fixtureId,
+                name: isMultiFixture(f) ? Object.keys(f)[0] : null,
+              },
               fixtureStatus: 'ready',
-              fixtureRef: module.default,
+              fixtureRef: f,
             },
           });
         }
