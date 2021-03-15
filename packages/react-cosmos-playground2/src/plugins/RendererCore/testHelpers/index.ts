@@ -1,5 +1,5 @@
 import {
-  FixtureNamesByPath,
+  FixturesByPath,
   FixtureId,
   RendererId,
   RendererReadyResponse,
@@ -11,7 +11,7 @@ import { getRendererCoreMethods } from '../../../testHelpers/pluginMocks';
 
 export function createRendererReadyResponse(
   rendererId: RendererId,
-  fixtures: FixtureNamesByPath
+  fixtures: FixturesByPath
 ): RendererReadyResponse {
   return {
     type: 'rendererReady',
@@ -24,7 +24,7 @@ export function createRendererReadyResponse(
 
 export function createFixtureListUpdateResponse(
   rendererId: RendererId,
-  fixtures: FixtureNamesByPath
+  fixtures: FixturesByPath
 ): FixtureListUpdateResponse {
   return {
     type: 'fixtureListUpdate',
@@ -52,7 +52,7 @@ export function createFixtureStateChangeResponse(
 
 export function mockRendererReady(
   rendererId: RendererId,
-  fixtures: FixtureNamesByPath
+  fixtures: FixturesByPath
 ) {
   return getRendererCoreMethods().receiveResponse(
     createRendererReadyResponse(rendererId, fixtures)

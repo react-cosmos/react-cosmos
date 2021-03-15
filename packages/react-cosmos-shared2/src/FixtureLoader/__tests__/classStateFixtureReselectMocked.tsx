@@ -5,15 +5,16 @@ import { uuid } from '../../util';
 import { testFixtureLoader } from '../testHelpers';
 import { Counter } from '../testHelpers/components';
 import { anyClassState, anyProps } from '../testHelpers/fixtureState';
+import { wrapFixtures } from '../testHelpers/wrapFixture';
 
 const rendererId = uuid();
-const fixtures = {
+const fixtures = wrapFixtures({
   first: (
     <StateMock state={{ count: 5 }}>
       <Counter />
     </StateMock>
   ),
-};
+});
 const fixtureId = { path: 'first', name: null };
 
 // NOTE: This is a regression test that was created for a bug that initally

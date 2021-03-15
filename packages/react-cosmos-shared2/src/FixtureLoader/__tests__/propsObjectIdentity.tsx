@@ -4,6 +4,7 @@ import { createValues, updateFixtureStateProps } from '../../fixtureState';
 import { uuid } from '../../util';
 import { testFixtureLoader } from '../testHelpers';
 import { getProps } from '../testHelpers/fixtureState';
+import { wrapFixtures } from '../testHelpers/wrapFixture';
 
 const rendererId = uuid();
 const fixtureId = { path: 'first', name: null };
@@ -19,9 +20,9 @@ function TestComponent({ obj, cb }: Props) {
 }
 
 function createFixtures(obj: {}, cb: (newObj: {}) => unknown) {
-  return {
+  return wrapFixtures({
     first: <TestComponent obj={obj} cb={cb} />,
-  };
+  });
 }
 
 testFixtureLoader(

@@ -1,10 +1,14 @@
+import { FixtureList } from '../renderer';
 import { createFixtureTree } from './createFixtureTree';
 import { flattenFixtureTree } from './flattenFixtureTree';
 
-const fixtures = {
-  'src/__fixtures__/Profile.ts': null,
-  'src/__fixtures__/NewsFeed.ts': null,
-  'src/admin/Dashboard/index.fixture.ts': ['overview', 'stats'],
+const fixtures: FixtureList = {
+  'src/__fixtures__/Profile.ts': { type: 'single' },
+  'src/__fixtures__/NewsFeed.ts': { type: 'single' },
+  'src/admin/Dashboard/index.fixture.ts': {
+    type: 'multi',
+    fixtureNames: ['overview', 'stats'],
+  },
 };
 
 const fixtureTree = createFixtureTree({

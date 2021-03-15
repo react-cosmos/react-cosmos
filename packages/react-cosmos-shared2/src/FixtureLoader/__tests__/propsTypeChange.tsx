@@ -4,6 +4,7 @@ import { createValues, updateFixtureStateProps } from '../../fixtureState';
 import { uuid } from '../../util';
 import { testFixtureLoader } from '../testHelpers';
 import { getProps } from '../testHelpers/fixtureState';
+import { wrapFixtures } from '../testHelpers/wrapFixture';
 
 const rendererId = uuid();
 const fixtures = createFixtures();
@@ -13,9 +14,9 @@ function createFixtures() {
   function HelloMessage({ name }: { name: string }) {
     return <>{`Hello ${name}`}</>;
   }
-  return {
+  return wrapFixtures({
     first: <HelloMessage name="Theo" />,
-  };
+  });
 }
 
 testFixtureLoader(

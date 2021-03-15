@@ -43,7 +43,7 @@ export const rendererConfig = ${JSON.stringify(rendererConfig, null, 2)};
 export const fixtures = {
 ${fixtureKeys
   .map(
-    k => `  '${k}': { __lazy: true, getModule: () => import('${fixtures[k]}') }`
+    k => `  '${k}': { lazy: true, getModule: () => import('${fixtures[k]}') }`
   )
   .join(`,\n`)}
 };

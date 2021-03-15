@@ -4,8 +4,13 @@ import { FixtureState } from './fixtureState';
 // cannot be established by consensus
 export type RendererId = string;
 
-export type FixtureNamesByPath = {
-  [fixturePath: string]: null | string[];
+export type FixtureListItem =
+  | { type: 'unknown' } // Lazy fixture not imported yet
+  | { type: 'single' }
+  | { type: 'multi'; fixtureNames: string[] };
+
+export type FixtureList = {
+  [fixturePath: string]: FixtureListItem;
 };
 
 export type FixtureId = {
@@ -54,7 +59,7 @@ export type RendererReadyResponse = {
   type: 'rendererReady';
   payload: {
     rendererId: RendererId;
-    fixtures: FixtureNamesByPath;
+    fixtures: FixtureList;
   };
 };
 
@@ -69,7 +74,7 @@ export type FixtureListUpdateResponse = {
   type: 'fixtureListUpdate';
   payload: {
     rendererId: RendererId;
-    fixtures: FixtureNamesByPath;
+    fixtures: FixtureList;
   };
 };
 

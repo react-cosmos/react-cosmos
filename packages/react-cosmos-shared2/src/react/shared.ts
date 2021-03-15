@@ -1,30 +1,30 @@
+import { ReactNode } from 'react';
 import { FixtureState, SetFixtureState } from '../fixtureState';
 
 // These generic types keep Cosmos slightly more decoupled from React
 type FixtureMap<FixtureType> = { [fixtureName: string]: FixtureType };
 type FixtureExport<FixtureType> = FixtureType | FixtureMap<FixtureType>;
-type LazyFixtureExport<FixtureType> = {
-  __lazy: true;
-  getModule: () => Promise<FixtureExport<FixtureType>>;
-};
+type FixtureWrapper<FixtureType> =
+  | { lazy: false; module: { default: FixtureExport<FixtureType> } }
+  | {
+      lazy: true;
+      getModule: () => Promise<{ default: FixtureExport<FixtureType> }>;
+    };
 
-export type ReactFixture = React.ReactNode | React.FunctionComponent;
+export type ReactFixture = ReactNode | React.FunctionComponent;
 export type ReactFixtureMap = FixtureMap<ReactFixture>;
-export type ReactFixtureExport =
-  | FixtureExport<ReactFixture>
-  | LazyFixtureExport<ReactFixture>;
+export type ReactFixtureExport = FixtureExport<ReactFixture>;
+export type ReactFixtureWrapper = FixtureWrapper<ReactFixture>;
 
+// TODO: Add decorator wrapper
 export type ReactDecoratorProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   fixtureState: FixtureState;
   setFixtureState: SetFixtureState;
   onErrorReset: () => unknown;
 };
 export type ReactDecorator = React.ComponentType<ReactDecoratorProps>;
 
-type ModuleByPath<ModuleType> = {
-  [path: string]: ModuleType;
-};
-
-export type ReactFixtureExportsByPath = ModuleByPath<ReactFixtureExport>;
-export type ReactDecoratorsByPath = ModuleByPath<ReactDecorator>;
+export type ReactFixtureExports = Record<string, ReactFixtureExport>;
+export type ReactFixtureWrappers = Record<string, ReactFixtureWrapper>;
+export type ReactDecorators = Record<string, ReactDecorator>;

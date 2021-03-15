@@ -2,15 +2,16 @@ import { isEqual } from 'lodash';
 import React, { Component, ReactNode } from 'react';
 import { FixtureState, SetFixtureState } from '../fixtureState';
 import {
-  getFixtureNamesByPath,
+  getFixtureListFromWrappers,
   isMultiFixture,
   ReactDecorator,
-  ReactDecoratorsByPath,
-  ReactFixtureExportsByPath,
+  ReactDecorators,
+  ReactFixtureWrapper,
+  ReactFixtureWrappers,
 } from '../react';
 import {
   FixtureId,
-  FixtureNamesByPath,
+  FixtureList,
   RendererConnect,
   RendererRequest,
   RendererResponse,
@@ -23,44 +24,65 @@ import { FixtureProvider } from './FixtureProvider';
 export type Props = {
   rendererId: string;
   rendererConnect: RendererConnect;
-  fixtures: ReactFixtureExportsByPath;
+  fixtures: ReactFixtureWrappers;
   selectedFixtureId: null | FixtureId;
   systemDecorators: ReactDecorator[];
-  userDecorators: ReactDecoratorsByPath;
+  userDecorators: ReactDecorators;
   renderMessage?: (args: { msg: string }) => React.ReactNode;
   onErrorReset?: () => unknown;
 };
 
+type SelectedFixture = {
+  fixtureId: FixtureId;
+  fixtureStatus: 'loading' | 'ready';
+  fixtureRef: null | ReactNode;
+  fixtureState: FixtureState;
+  // Why is this copy of the fixtureState needed? Two reasons:
+  // - To avoid posting fixtureStateChange messages with no changes from
+  //   the last message
+  // - To piggy back on React's setState batching and only send a
+  //   fixtureStateChange message when FixtureLoader updates (via cDU),
+  //   instead of posting messages in rapid succession as fixture state
+  //   changes are dispatched by fixture plugins
+  syncedFixtureState: FixtureState;
+};
+
 type State = {
-  selectedFixture: null | {
-    fixtureId: FixtureId;
-    fixtureStatus: 'loading' | 'ready';
-    fixtureRef: null | ReactNode;
-    fixtureState: FixtureState;
-    // Why is this copy of the fixtureState needed? Two reasons:
-    // - To avoid posting fixtureStateChange messages with no changes from
-    //   the last message
-    // - To piggy back on React's setState batching and only send a
-    //   fixtureStateChange message when FixtureLoader updates (via cDU),
-    //   instead of posting messages in rapid succession as fixture state
-    //   changes are dispatched by fixture plugins
-    syncedFixtureState: FixtureState;
-  };
+  selectedFixture: null | SelectedFixture;
   // Used to reset FixtureProvider instance on fixturePath change
   renderKey: number;
 };
 
+function getSelectedFixture(props: Props): SelectedFixture | null {
+  const { fixtures, selectedFixtureId } = props;
+  if (!selectedFixtureId) return null;
+
+  const fixtureWrapper = fixtures[selectedFixtureId.path] as
+    | ReactFixtureWrapper
+    | undefined;
+
+  if (!fixtureWrapper) {
+    return {
+      fixtureId: selectedFixtureId,
+      fixtureStatus: 'ready',
+      fixtureRef: null,
+      fixtureState: {},
+      syncedFixtureState: {},
+    };
+  }
+
+  return {
+    fixtureId: selectedFixtureId,
+    fixtureStatus: fixtureWrapper.lazy ? 'loading' : 'ready',
+    fixtureRef: fixtureWrapper.lazy ? null : fixtureWrapper.module.default,
+    fixtureState: {},
+    syncedFixtureState: {},
+  };
+}
+
 export class FixtureLoader extends Component<Props, State> {
   state: State = {
-    selectedFixture: this.props.selectedFixtureId
-      ? {
-          fixtureId: this.props.selectedFixtureId,
-          fixtureStatus: 'loading',
-          fixtureRef: null,
-          fixtureState: {},
-          syncedFixtureState: {},
-        }
-      : null,
+    selectedFixture: getSelectedFixture(this.props),
     renderKey: 0,
   };
 
@@ -87,6 +109,22 @@ export class FixtureLoader extends Component<Props, State> {
     const { selectedFixture } = this.state;
     if (selectedFixture) {
       const { fixtureId, fixtureState, syncedFixtureState } = selectedFixture;
+
+      // Update module ref
+      const fixtureWrapper = fixtures[fixtureId.path] as
+        | ReactFixtureWrapper
+        | undefined;
+
+      // TODO: Support for wrapper.lazy
+      if (fixtureWrapper && fixtureWrapper.lazy === false) {
+        this.setState({
+          selectedFixture: {
+            ...selectedFixture,
+            fixtureRef: fixtureWrapper.module.default,
+          },
+        });
+      }
+
       if (fixtureId && !isEqual(fixtureState, syncedFixtureState)) {
         this.postFixtureStateChange(fixtureId, fixtureState);
         this.updateSyncedFixtureState(fixtureState);
@@ -181,22 +219,40 @@ export class FixtureLoader extends Component<Props, State> {
 
   handleSelectFixtureRequest({ payload }: SelectFixtureRequest) {
     const { fixtureId, fixtureState } = payload;
+
+    const { fixtures } = this.props;
+    const fixtureWrapper = fixtures[fixtureId.path] as
+      | ReactFixtureWrapper
+      | undefined;
+
+    if (!fixtureWrapper) {
+      this.setState({
+        selectedFixture: {
+          fixtureId,
+          fixtureStatus: 'ready',
+          fixtureRef: null,
+          fixtureState,
+          syncedFixtureState: fixtureState,
+        },
+        renderKey: this.state.renderKey + 1,
+      });
+      return;
+    }
+
     this.setState({
       selectedFixture: {
         fixtureId,
-        fixtureStatus: 'loading',
-        fixtureRef: null,
+        fixtureStatus: fixtureWrapper.lazy ? 'loading' : 'ready',
+        fixtureRef: fixtureWrapper.lazy ? null : fixtureWrapper.module.default,
         fixtureState,
         syncedFixtureState: fixtureState,
       },
       renderKey: this.state.renderKey + 1,
     });
 
-    const { fixtures } = this.props;
-    const fixtureExport = fixtures[fixtureId.path];
-    if (fixtureExport.__lazy) {
-      fixtureExport.getModule().then(module => {
-        const f = module.default;
+    if (fixtureWrapper.lazy) {
+      fixtureWrapper.getModule().then(module => {
+        const fixtureExport = module.default;
         const { selectedFixture } = this.state;
         if (selectedFixture) {
           this.setState({
@@ -204,10 +260,12 @@ export class FixtureLoader extends Component<Props, State> {
               ...selectedFixture,
               fixtureId: {
                 ...fixtureId,
-                name: isMultiFixture(f) ? Object.keys(f)[0] : null,
+                name: isMultiFixture(fixtureExport)
+                  ? Object.keys(fixtureExport)[0]
+                  : null,
               },
               fixtureStatus: 'ready',
-              fixtureRef: f,
+              fixtureRef: fixtureExport,
             },
           });
         }
@@ -243,7 +301,7 @@ export class FixtureLoader extends Component<Props, State> {
       type: 'rendererReady',
       payload: {
         rendererId,
-        fixtures: this.getFixtureNamesByPath(),
+        fixtures: this.getFixtureList(),
       },
     });
   }
@@ -254,7 +312,7 @@ export class FixtureLoader extends Component<Props, State> {
       type: 'fixtureListUpdate',
       payload: {
         rendererId,
-        fixtures: this.getFixtureNamesByPath(),
+        fixtures: this.getFixtureList(),
       },
     });
   }
@@ -302,8 +360,8 @@ export class FixtureLoader extends Component<Props, State> {
     });
   };
 
-  getFixtureNamesByPath(): FixtureNamesByPath {
-    return getFixtureNamesByPath(this.props.fixtures);
+  getFixtureList(): FixtureList {
+    return getFixtureListFromWrappers(this.props.fixtures);
   }
 
   fireChangeCallback() {

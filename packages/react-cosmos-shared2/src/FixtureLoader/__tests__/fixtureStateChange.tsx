@@ -4,6 +4,7 @@ import { ReactTestRenderer } from 'react-test-renderer';
 import { uuid } from '../../util';
 import { FixtureContext } from '../FixtureContext';
 import { testFixtureLoader } from '../testHelpers';
+import { wrapFixtures } from '../testHelpers/wrapFixture';
 
 function MyComponent() {
   const { setFixtureState } = React.useContext(FixtureContext);
@@ -25,9 +26,9 @@ function MyComponent() {
 }
 
 const rendererId = uuid();
-const fixtures = {
+const fixtures = wrapFixtures({
   first: MyComponent,
-};
+});
 
 testFixtureLoader(
   'creates fixture state',

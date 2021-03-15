@@ -2,16 +2,17 @@ import retry from '@skidding/async-retry';
 import React from 'react';
 import { uuid } from '../../util';
 import { testFixtureLoader } from '../testHelpers';
+import { wrapFixtures } from '../testHelpers/wrapFixture';
 import { Viewport } from '../Viewport';
 
 const rendererId = uuid();
-const fixtures = {
+const fixtures = wrapFixtures({
   first: (
     <Viewport width={320} height={240}>
       yo
     </Viewport>
   ),
-};
+});
 const fixtureId = { path: 'first', name: null };
 
 testFixtureLoader(
@@ -58,13 +59,13 @@ testFixtureLoader(
     });
     update({
       rendererId,
-      fixtures: {
+      fixtures: wrapFixtures({
         first: (
           <Viewport width={640} height={480}>
             yo
           </Viewport>
         ),
-      },
+      }),
     });
     await fixtureStateChange({
       rendererId,

@@ -4,6 +4,7 @@ import { ReactTestRenderer } from 'react-test-renderer';
 import { createValue } from '../../fixtureState';
 import { uuid } from '../../util';
 import { testFixtureLoader } from '../testHelpers';
+import { wrapFixtures } from '../testHelpers/wrapFixture';
 import { useValue } from '../useValue';
 
 type Profile = {
@@ -18,9 +19,9 @@ function createFixtures({ defaultValue }: { defaultValue: Profile[] }) {
     const [profiles] = useValue('profiles', { defaultValue });
     return <>{JSON.stringify(profiles, null, 2)}</>;
   };
-  return {
+  return wrapFixtures({
     first: <MyComponent />,
-  };
+  });
 }
 
 const rendererId = uuid();

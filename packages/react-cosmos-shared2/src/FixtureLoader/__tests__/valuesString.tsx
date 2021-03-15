@@ -4,6 +4,7 @@ import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
 import { createValue } from '../../fixtureState';
 import { uuid } from '../../util';
 import { testFixtureLoader } from '../testHelpers';
+import { wrapFixtures } from '../testHelpers/wrapFixture';
 import { useValue } from '../useValue';
 
 function createFixtures({ defaultValue }: { defaultValue: string }) {
@@ -17,9 +18,9 @@ function createFixtures({ defaultValue }: { defaultValue: string }) {
       />
     );
   };
-  return {
+  return wrapFixtures({
     first: <MyComponent />,
-  };
+  });
 }
 
 const rendererId = uuid();
