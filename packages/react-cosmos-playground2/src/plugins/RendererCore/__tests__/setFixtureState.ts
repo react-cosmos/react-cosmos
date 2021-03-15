@@ -8,12 +8,17 @@ import {
   onRendererCore,
 } from '../../../testHelpers/pluginMocks';
 import { mockRendererReady, mockFixtureStateChange } from '../testHelpers';
+import { FixtureList } from 'react-cosmos-shared2/renderer';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(resetPlugins);
 
-const fixtures = { 'ein.js': null, 'zwei.js': null, 'drei.js': null };
+const fixtures: FixtureList = {
+  'ein.js': { type: 'single' },
+  'zwei.js': { type: 'single' },
+  'drei.js': { type: 'single' },
+};
 const fixtureId = { path: 'zwei.js', name: null };
 const fixtureState = { props: [] };
 const expectedFixtureState = {

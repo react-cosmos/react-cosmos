@@ -58,7 +58,11 @@ it('sends renderer response to renderer core', async () => {
     type: 'rendererReady',
     payload: {
       rendererId: 'mockRendererId',
-      fixtures: { 'ein.js': null, 'zwei.js': null, 'drei.js': null },
+      fixtures: {
+        'ein.js': { type: 'single' },
+        'zwei.js': { type: 'single' },
+        'drei.js': { type: 'single' },
+      },
     },
   };
   getMessageHandlerContext().emit('rendererResponse', rendererReadyRes);

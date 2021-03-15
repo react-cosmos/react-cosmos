@@ -2,6 +2,7 @@ import path from 'path';
 import slash from 'slash';
 import { Json } from './shared';
 
+// TODO: Add lazy true|false option
 type Args = {
   globalImports: string[];
   fixturePaths: string[];

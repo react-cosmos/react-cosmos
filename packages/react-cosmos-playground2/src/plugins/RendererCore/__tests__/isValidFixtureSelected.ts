@@ -1,5 +1,5 @@
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { FixtureId } from 'react-cosmos-shared2/renderer';
+import { FixtureId, FixtureList } from 'react-cosmos-shared2/renderer';
 import {
   getRendererCoreMethods,
   mockRouter,
@@ -12,10 +12,10 @@ beforeEach(() => jest.isolateModules(() => require('..')));
 afterEach(resetPlugins);
 
 const rendererId = 'mockRendererId';
-const fixtures = {
-  'ein.js': ['a', 'b', 'c'],
-  'zwei.js': null,
-  'drei.js': null,
+const fixtures: FixtureList = {
+  'ein.js': { type: 'multi', fixtureNames: ['a', 'b', 'c'] },
+  'zwei.js': { type: 'single' },
+  'drei.js': { type: 'single' },
 };
 
 function mockFixtureId(fixtureId: null | FixtureId = null) {

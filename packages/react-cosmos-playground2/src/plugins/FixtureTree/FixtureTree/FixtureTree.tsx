@@ -40,6 +40,23 @@ export const FixtureTree = React.memo(function FixtureTree({
         renderNode={({ node, name, parents, expanded, onToggle }) => {
           const { data, children } = node;
 
+          if (data.type === 'unknown') {
+            const { fixturePath } = data;
+            const fixtureId = { path: fixturePath, name: null };
+            const selected = isEqual(selectedFixtureId, fixtureId);
+            return (
+              <FixtureButton
+                name={name}
+                fixtureId={fixtureId}
+                indentLevel={parents.length}
+                selected={selected}
+                selectedRef={selectedRef}
+                lazy
+                onSelect={onSelect}
+              />
+            );
+          }
+
           if (data.type === 'fixture') {
             const selected = isEqual(selectedFixtureId, data.fixtureId);
             return (
