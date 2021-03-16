@@ -12,6 +12,7 @@ import {
 import {
   FixtureId,
   FixtureList,
+  FixtureListItem,
   RendererConnect,
   RendererRequest,
   RendererResponse,
@@ -48,6 +49,7 @@ type SelectedFixture = {
 };
 
 type State = {
+  fixtureList: FixtureList;
   selectedFixture: null | SelectedFixture;
   // Used to reset FixtureProvider instance on fixturePath change
   renderKey: number;
@@ -82,6 +84,7 @@ function getSelectedFixture(props: Props): SelectedFixture | null {
 
 export class FixtureLoader extends Component<Props, State> {
   state: State = {
+    fixtureList: getFixtureListFromWrappers(this.props.fixtures),
     selectedFixture: getSelectedFixture(this.props),
     renderKey: 0,
   };
@@ -103,7 +106,10 @@ export class FixtureLoader extends Component<Props, State> {
   componentDidUpdate(prevProps: Props) {
     const { fixtures } = this.props;
     if (!isEqual(fixtures, prevProps.fixtures)) {
-      this.postFixtureListUpdate();
+      this.setState(
+        { fixtureList: getFixtureListFromWrappers(fixtures) },
+        this.postFixtureListUpdate
+      );
     }
 
     const { selectedFixture } = this.state;
@@ -261,12 +267,27 @@ export class FixtureLoader extends Component<Props, State> {
               fixtureId: {
                 ...fixtureId,
                 name: isMultiFixture(fixtureExport)
-                  ? Object.keys(fixtureExport)[0]
+                  ? fixtureId.name || Object.keys(fixtureExport)[0]
                   : null,
               },
               fixtureStatus: 'ready',
               fixtureRef: fixtureExport,
             },
+          });
+
+          const { rendererId } = this.props;
+          const fixtureItem: FixtureListItem = isMultiFixture(fixtureExport)
+            ? { type: 'multi', fixtureNames: Object.keys(fixtureExport) }
+            : { type: 'single' };
+
+          const fixtureList = {
+            ...this.state.fixtureList,
+            [fixtureId.path]: fixtureItem,
+          };
+          this.setState({ fixtureList });
+          this.postMessage({
+            type: 'fixtureListUpdate',
+            payload: { rendererId, fixtures: fixtureList },
           });
         }
       });
@@ -301,7 +322,7 @@ export class FixtureLoader extends Component<Props, State> {
       type: 'rendererReady',
       payload: {
         rendererId,
-        fixtures: this.getFixtureList(),
+        fixtures: this.state.fixtureList,
       },
     });
   }
@@ -312,7 +333,7 @@ export class FixtureLoader extends Component<Props, State> {
       type: 'fixtureListUpdate',
       payload: {
         rendererId,
-        fixtures: this.getFixtureList(),
+        fixtures: this.state.fixtureList,
       },
     });
   }
@@ -359,10 +380,6 @@ export class FixtureLoader extends Component<Props, State> {
       };
     });
   };
-
-  getFixtureList(): FixtureList {
-    return getFixtureListFromWrappers(this.props.fixtures);
-  }
 
   fireChangeCallback() {
     const { onErrorReset } = this.props;
