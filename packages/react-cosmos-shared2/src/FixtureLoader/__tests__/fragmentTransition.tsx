@@ -17,7 +17,7 @@ const fixtures = wrapFixtures({
     </>
   ),
 });
-const fixtureId = { path: 'first', name: null };
+const fixtureId = { path: 'first' };
 
 testFixtureLoader(
   'transitions Fragment from single to multi children',

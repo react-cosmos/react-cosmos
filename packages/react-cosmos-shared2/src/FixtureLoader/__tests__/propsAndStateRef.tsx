@@ -27,7 +27,7 @@ const getFixtures = () =>
       />
     ),
   });
-const fixtureId = { path: 'first', name: null };
+const fixtureId = { path: 'first' };
 
 testFixtureLoader(
   'keeps props when state changes',

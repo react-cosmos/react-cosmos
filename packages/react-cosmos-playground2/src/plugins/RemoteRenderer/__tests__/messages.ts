@@ -33,7 +33,7 @@ it('sends renderer request to message handler', async () => {
     type: 'selectFixture',
     payload: {
       rendererId: 'mockRendererId',
-      fixtureId: { path: 'mockFixturePath', name: null },
+      fixtureId: { path: 'mockFixturePath' },
       fixtureState: {},
     },
   };

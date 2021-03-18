@@ -36,7 +36,7 @@ testFixtureLoader(
   async ({ renderer, selectFixture, fixtureStateChange }) => {
     await selectFixture({
       rendererId,
-      fixtureId: { path: 'first', name: null },
+      fixtureId: { path: 'first' },
       fixtureState: { props: [] },
     });
 
@@ -44,7 +44,7 @@ testFixtureLoader(
     await retry(() => clickButtonByLabel(renderer, 'Set custom state'));
     await fixtureStateChange({
       rendererId,
-      fixtureId: { path: 'first', name: null },
+      fixtureId: { path: 'first' },
       fixtureState: { props: [], customFixtureState: true },
     });
 
@@ -53,7 +53,7 @@ testFixtureLoader(
     clickButtonByLabel(renderer, 'Clear custom state');
     await fixtureStateChange({
       rendererId,
-      fixtureId: { path: 'first', name: null },
+      fixtureId: { path: 'first' },
       fixtureState: { props: [] },
     });
   }

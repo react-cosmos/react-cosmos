@@ -264,12 +264,6 @@ export class FixtureLoader extends Component<Props, State> {
           this.setState({
             selectedFixture: {
               ...selectedFixture,
-              fixtureId: {
-                ...fixtureId,
-                name: isMultiFixture(fixtureExport)
-                  ? fixtureId.name || Object.keys(fixtureExport)[0]
-                  : null,
-              },
               fixtureStatus: 'ready',
               fixtureRef: fixtureExport,
             },

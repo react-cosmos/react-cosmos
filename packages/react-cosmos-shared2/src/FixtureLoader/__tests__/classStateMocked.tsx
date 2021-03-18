@@ -24,7 +24,7 @@ const fixtures = wrapFixtures({
     </StateMock>
   ),
 });
-const fixtureId = { path: 'first', name: null };
+const fixtureId = { path: 'first' };
 
 testFixtureLoader(
   'captures mocked state',

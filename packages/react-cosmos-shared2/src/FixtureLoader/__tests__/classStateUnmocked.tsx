@@ -19,7 +19,7 @@ const rendererId = uuid();
 const fixtures = wrapFixtures({
   first: <Counter />,
 });
-const fixtureId = { path: 'first', name: null };
+const fixtureId = { path: 'first' };
 
 testFixtureLoader(
   'captures initial state',

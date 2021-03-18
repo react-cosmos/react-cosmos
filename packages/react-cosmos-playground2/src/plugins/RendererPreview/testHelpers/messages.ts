@@ -8,7 +8,7 @@ export const selectFixtureMsg: SelectFixtureRequest = {
   type: 'selectFixture',
   payload: {
     rendererId: 'mockRendererId',
-    fixtureId: { path: 'mockFixturePath', name: null },
+    fixtureId: { path: 'mockFixturePath' },
     fixtureState: {},
   },
 };

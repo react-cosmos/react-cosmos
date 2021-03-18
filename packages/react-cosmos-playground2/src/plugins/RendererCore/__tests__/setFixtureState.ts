@@ -19,7 +19,7 @@ const fixtures: FixtureList = {
   'zwei.js': { type: 'single' },
   'drei.js': { type: 'single' },
 };
-const fixtureId = { path: 'zwei.js', name: null };
+const fixtureId = { path: 'zwei.js' };
 const fixtureState = { props: [] };
 const expectedFixtureState = {
   props: [],
@@ -33,7 +33,7 @@ function registerTestPlugins() {
 
 function mockSelectedFixture() {
   mockRouter({
-    getSelectedFixtureId: () => ({ path: 'zwei.js', name: null }),
+    getSelectedFixtureId: () => ({ path: 'zwei.js' }),
   });
 }
 
@@ -76,7 +76,7 @@ it('posts "setFixtureState" renderer requests', async () => {
       type: 'setFixtureState',
       payload: {
         rendererId: 'mockRendererId1',
-        fixtureId: { path: 'zwei.js', name: null },
+        fixtureId: { path: 'zwei.js' },
         fixtureState: expectedFixtureState,
       },
     })
@@ -87,7 +87,7 @@ it('posts "setFixtureState" renderer requests', async () => {
       type: 'setFixtureState',
       payload: {
         rendererId: 'mockRendererId2',
-        fixtureId: { path: 'zwei.js', name: null },
+        fixtureId: { path: 'zwei.js' },
         fixtureState: expectedFixtureState,
       },
     })

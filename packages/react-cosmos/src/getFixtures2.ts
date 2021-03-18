@@ -49,7 +49,7 @@ export function getFixtures2(cosmosConfig: CosmosConfig) {
   flatFixtureTree.forEach(({ fileName, fixtureId, name, parents }) => {
     const fixtureExport = fixtures[fixtureId.path];
     const fixture: ReactFixture =
-      fixtureId.name === null
+      fixtureId.name === undefined
         ? fixtureExport
         : (fixtureExport as ReactFixtureMap)[fixtureId.name];
 

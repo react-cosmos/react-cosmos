@@ -19,7 +19,7 @@ testFixtureLoader(
 
 testFixtureLoader(
   'renders initially selected unnamed fixture',
-  { rendererId, fixtures, selectedFixtureId: { path: 'second', name: null } },
+  { rendererId, fixtures, selectedFixtureId: { path: 'second' } },
   async ({ renderer }) => {
     await retry(() => expect(renderer.toJSON()).toBe('Second'));
   }

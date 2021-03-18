@@ -26,7 +26,7 @@ function createFixtures() {
 
 const rendererId = uuid();
 const fixtures = createFixtures();
-const fixtureId = { path: 'first', name: null };
+const fixtureId = { path: 'first' };
 
 testFixtureLoader(
   'renders fixture',

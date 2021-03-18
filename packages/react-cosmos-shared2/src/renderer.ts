@@ -15,7 +15,7 @@ export type FixtureList = {
 
 export type FixtureId = {
   path: string;
-  name: null | string;
+  name?: string;
 };
 
 export type PingRenderersRequest = {

@@ -10,7 +10,7 @@ const rendererId = uuid();
 const fixtures = wrapFixtures({
   first: <Counter />,
 });
-const fixtureId = { path: 'first', name: null };
+const fixtureId = { path: 'first' };
 
 // NOTE: This is a regression test that was created for a bug that initally
 // slipped unnoticed in https://github.com/react-cosmos/react-cosmos/pull/893.

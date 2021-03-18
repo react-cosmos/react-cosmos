@@ -10,7 +10,7 @@ const rendererId = uuid();
 const fixtures = wrapFixtures({
   first: <HelloMessage name="Bianca" />,
 });
-const fixtureId = { path: 'first', name: null };
+const fixtureId = { path: 'first' };
 
 testFixtureLoader(
   'renders selected fixture with fixture state',

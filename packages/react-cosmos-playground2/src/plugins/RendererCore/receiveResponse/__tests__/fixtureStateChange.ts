@@ -21,7 +21,7 @@ const fixtures: FixtureList = {
   'zwei.js': { type: 'single' },
   'drei.js': { type: 'single' },
 };
-const fixtureId = { path: 'zwei.js', name: null };
+const fixtureId = { path: 'zwei.js' };
 const fixtureState = { props: [] };
 
 function registerTestPlugins() {

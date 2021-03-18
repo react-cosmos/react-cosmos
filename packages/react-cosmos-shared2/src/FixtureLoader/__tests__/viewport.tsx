@@ -13,7 +13,7 @@ const fixtures = wrapFixtures({
     </Viewport>
   ),
 });
-const fixtureId = { path: 'first', name: null };
+const fixtureId = { path: 'first' };
 
 testFixtureLoader(
   'renders children',

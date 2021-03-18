@@ -12,7 +12,7 @@ beforeEach(() => jest.isolateModules(() => require('../..')));
 
 afterEach(resetPlugins);
 
-const fixtureId = { path: 'ein.js', name: null };
+const fixtureId = { path: 'ein.js' };
 const fixtures: FixtureList = { [fixtureId.path]: { type: 'single' } };
 const fixtureState = { props: [] };
 

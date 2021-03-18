@@ -23,7 +23,7 @@ const fixtures = wrapFixtures({
     </>
   ),
 });
-const fixtureId = { path: 'first', name: null };
+const fixtureId = { path: 'first' };
 
 testFixtureLoader(
   'keeps state when resetting props',

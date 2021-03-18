@@ -16,9 +16,12 @@ export function isValidFixtureSelected(context: RendererCoreContext) {
   const fixtureItem = fixtures[fixtureId.path];
   return fixtureItem.type === 'multi'
     ? matchFixtureName(fixtureId, fixtureItem.fixtureNames)
-    : fixtureId.name === null;
+    : fixtureId.name === undefined;
 }
 
 function matchFixtureName(fixtureId: FixtureId, fixtureNames: string[]) {
-  return fixtureId.name !== null && fixtureNames.indexOf(fixtureId.name) !== -1;
+  return (
+    // TODO: Test when fixtureId.name === undefined
+    fixtureId.name === undefined || fixtureNames.indexOf(fixtureId.name) !== -1
+  );
 }

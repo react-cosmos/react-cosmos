@@ -42,14 +42,14 @@ it('returns false on no fixture selected', async () => {
 });
 
 it('returns false on missing fixture', async () => {
-  mockFixtureId({ path: 'sechs.js', name: null });
+  mockFixtureId({ path: 'sechs.js' });
   loadTestPlugins();
 
   expect(isValidFixtureSelected()).toBe(false);
 });
 
 it('returns true on existing fixture', async () => {
-  mockFixtureId({ path: 'drei.js', name: null });
+  mockFixtureId({ path: 'drei.js' });
   loadTestPlugins();
 
   expect(isValidFixtureSelected()).toBe(true);

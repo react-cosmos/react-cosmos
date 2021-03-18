@@ -10,7 +10,7 @@ const rendererId = uuid();
 const fixtures = wrapFixtures({
   first: <Wrapper>yo</Wrapper>,
 });
-const fixtureId = { path: 'first', name: null };
+const fixtureId = { path: 'first' };
 
 testFixtureLoader(
   'transitions string children into an element with children',

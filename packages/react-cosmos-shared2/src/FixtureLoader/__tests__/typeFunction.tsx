@@ -7,7 +7,7 @@ const rendererId = uuid();
 const fixtures = wrapFixtures({
   first: () => <input type="text" />,
 });
-const fixtureId = { path: 'first', name: null };
+const fixtureId = { path: 'first' };
 
 testFixtureLoader(
   'collects no props fixture state',

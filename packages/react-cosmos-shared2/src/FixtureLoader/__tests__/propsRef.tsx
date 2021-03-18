@@ -13,7 +13,7 @@ import { getProps } from '../testHelpers/fixtureState';
 import { wrapFixtures } from '../testHelpers/wrapFixture';
 
 const rendererId = uuid();
-const fixtureId = { path: 'first', name: null };
+const fixtureId = { path: 'first' };
 
 let refs: React.Component[] = [];
 beforeEach(() => {

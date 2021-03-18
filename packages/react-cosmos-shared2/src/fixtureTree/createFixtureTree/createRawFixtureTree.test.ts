@@ -12,7 +12,7 @@ it('creates tree with fixture', () => {
       'Dashboard.fixture': {
         data: {
           type: 'fixture',
-          fixtureId: { path: 'Dashboard.fixture.js', name: null },
+          fixtureId: { path: 'Dashboard.fixture.js' },
         },
       },
     },
@@ -33,7 +33,7 @@ it('creates nested tree with fixture', () => {
           'Dashboard.fixture': {
             data: {
               type: 'fixture',
-              fixtureId: { path: 'ui/Dashboard.fixture.js', name: null },
+              fixtureId: { path: 'ui/Dashboard.fixture.js' },
             },
           },
         },

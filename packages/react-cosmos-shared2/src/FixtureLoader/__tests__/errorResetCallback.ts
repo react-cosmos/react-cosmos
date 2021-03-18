@@ -5,7 +5,7 @@ import { wrapFixtures } from '../testHelpers/wrapFixture';
 
 const rendererId = uuid();
 const fixtures = wrapFixtures({ first: 'First' });
-const fixtureId = { path: 'first', name: null };
+const fixtureId = { path: 'first' };
 
 const onErrorReset = jest.fn();
 beforeEach(() => {

@@ -8,7 +8,7 @@ import { wrapFixtures } from '../testHelpers/wrapFixture';
 
 const rendererId = uuid();
 const fixtures = createFixtures();
-const fixtureId = { path: 'first', name: null };
+const fixtureId = { path: 'first' };
 
 function createFixtures() {
   function HelloMessage({ name }: { name: string }) {

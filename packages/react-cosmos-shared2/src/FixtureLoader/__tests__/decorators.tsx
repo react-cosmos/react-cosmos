@@ -30,7 +30,7 @@ testFixtureLoader(
     const [path] = Object.keys(fixtures);
     await selectFixture({
       rendererId,
-      fixtureId: { path, name: null },
+      fixtureId: { path },
       fixtureState: {},
     });
     // "src/bar/decorator" should be omitted because it's not a placed in

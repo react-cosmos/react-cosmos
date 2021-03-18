@@ -30,7 +30,7 @@ const getFixtures = () =>
       </StateMock>
     ),
   });
-const fixtureId = { path: 'first', name: null };
+const fixtureId = { path: 'first' };
 
 testFixtureLoader(
   'captures component state changes',

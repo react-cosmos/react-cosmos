@@ -45,7 +45,7 @@ export function getFixturesSync({ cosmosConfig }: Args) {
         });
       });
     } else {
-      const fixtureId = { path: fixturePath, name: null };
+      const fixtureId = { path: fixturePath };
       result.push({
         fixtureId,
         getElement: createFixtureElementGetter(

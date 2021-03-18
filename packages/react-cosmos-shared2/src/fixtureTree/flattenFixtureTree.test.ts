@@ -39,13 +39,13 @@ it('flattens fixture tree', () => {
     },
     {
       fileName: 'NewsFeed',
-      fixtureId: { path: 'src/__fixtures__/NewsFeed.ts', name: null },
+      fixtureId: { path: 'src/__fixtures__/NewsFeed.ts' },
       name: null,
       parents: [],
     },
     {
       fileName: 'Profile',
-      fixtureId: { path: 'src/__fixtures__/Profile.ts', name: null },
+      fixtureId: { path: 'src/__fixtures__/Profile.ts' },
       name: null,
       parents: [],
     },

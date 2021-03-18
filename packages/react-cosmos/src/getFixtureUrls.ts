@@ -28,7 +28,7 @@ export function getFixtureUrlsSync({ cosmosConfig, fullScreen = false }: Args) {
   Object.keys(fixtureList).forEach(fixturePath => {
     const fixtureItem = fixtureList[fixturePath];
     if (fixtureItem.type === 'single') {
-      pushFixtureUrl({ path: fixturePath, name: null });
+      pushFixtureUrl({ path: fixturePath });
     } else if (fixtureItem.type === 'multi') {
       fixtureItem.fixtureNames.forEach(fixtureName => {
         pushFixtureUrl({ path: fixturePath, name: fixtureName });

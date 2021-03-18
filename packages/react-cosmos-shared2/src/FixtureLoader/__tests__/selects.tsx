@@ -31,7 +31,7 @@ function createFixtures({ defaultValue }: { defaultValue: Option }) {
 
 const rendererId = uuid();
 const fixtures = createFixtures({ defaultValue: 'first' });
-const fixtureId = { path: 'first', name: null };
+const fixtureId = { path: 'first' };
 
 testFixtureLoader(
   'renders fixture',

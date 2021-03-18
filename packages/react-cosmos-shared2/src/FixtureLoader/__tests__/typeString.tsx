@@ -6,7 +6,7 @@ import { anyProps } from '../testHelpers/fixtureState';
 import { wrapFixtures } from '../testHelpers/wrapFixture';
 
 const rendererId = uuid();
-const fixtureId = { path: 'first', name: null };
+const fixtureId = { path: 'first' };
 
 testFixtureLoader(
   'collects fixture state for interesting string element type',

@@ -28,7 +28,7 @@ const rendererId = uuid();
 const fixtures = createFixtures({
   defaultValue: [{ isAdmin: true, name: 'Pat D', age: 45, onClick: () => {} }],
 });
-const fixtureId = { path: 'first', name: null };
+const fixtureId = { path: 'first' };
 
 testFixtureLoader(
   'renders fixture',

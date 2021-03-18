@@ -33,7 +33,7 @@ function addFixturePathToTree(
     injectNode(rootNode, parents, fileName, {
       data: {
         type: 'fixture',
-        fixtureId: { path: fixturePath, name: null },
+        fixtureId: { path: fixturePath },
       },
     });
   } else if (fixtureItem.type == 'multi') {
