@@ -87,23 +87,37 @@ export function resolveLocalReactDeps(
 ): webpack.ResolveOptions {
   const { rootDir } = cosmosConfig;
 
-  const reactPath = resolveFrom.silent(rootDir, 'react');
-  if (!reactPath) throw new Error(`[Cosmos] Local dependency not found: react`);
-
-  const reactDomPath = resolveFrom.silent(rootDir, 'react-dom');
-  if (!reactDomPath)
-    throw new Error(`[Cosmos] Local dependency not found: react-dom`);
-
   const { resolve = {} } = baseWebpackConfig;
-  const { alias = {} } = resolve;
-  return {
-    ...resolve,
-    alias: {
-      ...alias,
-      react: path.dirname(reactPath),
-      'react-dom': path.dirname(reactDomPath),
-    },
-  };
+  let alias = resolve.alias || {};
+
+  // Preserve existing React aliases (eg. when using Preact)
+  let reactAlias = hasAlias(alias, 'react');
+  let reactDomAlias = hasAlias(alias, 'react-dom');
+
+  if (reactAlias && reactDomAlias) {
+    console.log('[Cosmos] React and React DOM aliases found in webpack config');
+    return resolve;
+  }
+
+  if (reactAlias) {
+    console.log('[Cosmos] React alias found in webpack config');
+  } else {
+    const reactPath = resolveFrom.silent(rootDir, 'react');
+    if (!reactPath)
+      throw new Error(`[Cosmos] Local dependency not found: react`);
+    alias = addAlias(alias, 'react', path.dirname(reactPath));
+  }
+
+  if (reactDomAlias) {
+    console.log('[Cosmos] React DOM alias found in webpack config');
+  } else {
+    const reactDomPath = resolveFrom.silent(rootDir, 'react-dom');
+    if (!reactDomPath)
+      throw new Error(`[Cosmos] Local dependency not found: react-dom`);
+    alias = addAlias(alias, 'react-dom', path.dirname(reactDomPath));
+  }
+
+  return { ...resolve, alias };
 }
 
 export function getGlobalsPlugin(
@@ -146,4 +160,26 @@ export function getNodeEnv() {
   // Disallow non dev/prod environments, like "test" inside Jest, because
   // they are not supported by webpack
   return process.env.NODE_ENV === 'production' ? 'production' : 'development';
+}
+
+function hasAlias(alias: webpack.ResolveOptions['alias'], name: string) {
+  if (!alias) return false;
+
+  const exactName = `${name}$`;
+  if (Array.isArray(alias)) {
+    return alias.some(a => a.name === name || a.name === exactName);
+  } else {
+    const keys = Object.keys(alias);
+    return keys.includes(name) || keys.includes(exactName);
+  }
+}
+
+function addAlias(
+  alias: webpack.ResolveOptions['alias'],
+  name: string,
+  value: string | false | string[]
+) {
+  return Array.isArray(alias)
+    ? [...alias, { name, alias: value }]
+    : { ...alias, [name]: value };
 }
