@@ -6,6 +6,7 @@ import {
   isMultiFixture,
   ReactDecorator,
   ReactDecorators,
+  ReactFixtureModule,
   ReactFixtureWrapper,
   ReactFixtureWrappers,
 } from '../react';
@@ -121,14 +122,17 @@ export class FixtureLoader extends Component<Props, State> {
         | ReactFixtureWrapper
         | undefined;
 
-      // TODO: Support for wrapper.lazy
-      if (fixtureWrapper && fixtureWrapper.lazy === false) {
-        this.setState({
-          selectedFixture: {
-            ...selectedFixture,
-            fixtureRef: fixtureWrapper.module.default,
-          },
-        });
+      if (fixtureWrapper) {
+        if (fixtureWrapper.lazy) {
+          fixtureWrapper.getModule().then(this.createModuleLoad(fixtureId));
+        } else {
+          this.setState({
+            selectedFixture: {
+              ...selectedFixture,
+              fixtureRef: fixtureWrapper.module.default,
+            },
+          });
+        }
       }
 
       if (fixtureId && !isEqual(fixtureState, syncedFixtureState)) {
@@ -257,34 +261,7 @@ export class FixtureLoader extends Component<Props, State> {
     });
 
     if (fixtureWrapper.lazy) {
-      fixtureWrapper.getModule().then(module => {
-        const fixtureExport = module.default;
-        const { selectedFixture } = this.state;
-        if (selectedFixture) {
-          this.setState({
-            selectedFixture: {
-              ...selectedFixture,
-              fixtureStatus: 'ready',
-              fixtureRef: fixtureExport,
-            },
-          });
-
-          const { rendererId } = this.props;
-          const fixtureItem: FixtureListItem = isMultiFixture(fixtureExport)
-            ? { type: 'multi', fixtureNames: Object.keys(fixtureExport) }
-            : { type: 'single' };
-
-          const fixtureList = {
-            ...this.state.fixtureList,
-            [fixtureId.path]: fixtureItem,
-          };
-          this.setState({ fixtureList });
-          this.postMessage({
-            type: 'fixtureListUpdate',
-            payload: { rendererId, fixtures: fixtureList },
-          });
-        }
-      });
+      fixtureWrapper.getModule().then(this.createModuleLoad(fixtureId));
     }
   }
 
@@ -410,6 +387,35 @@ export class FixtureLoader extends Component<Props, State> {
       ? this.props.renderMessage({ msg })
       : msg;
   }
+
+  createModuleLoad = (fixtureId: FixtureId) => (module: ReactFixtureModule) => {
+    const fixtureExport = module.default;
+    const { selectedFixture } = this.state;
+
+    // Fixture changed while module was dynamically importing
+    if (!selectedFixture || !isEqual(selectedFixture.fixtureId, fixtureId)) {
+      return;
+    }
+
+    const fixtureItem: FixtureListItem = isMultiFixture(fixtureExport)
+      ? { type: 'multi', fixtureNames: Object.keys(fixtureExport) }
+      : { type: 'single' };
+
+    this.setState(
+      {
+        fixtureList: {
+          ...this.state.fixtureList,
+          [fixtureId.path]: fixtureItem,
+        },
+        selectedFixture: {
+          ...selectedFixture,
+          fixtureStatus: 'ready',
+          fixtureRef: fixtureExport,
+        },
+      },
+      this.postFixtureListUpdate
+    );
+  };
 }
 
 function doesRequestChangeFixture(r: RendererRequest) {

@@ -15,6 +15,7 @@ export {
   ReactFixtureExport,
   ReactFixtureExports,
   ReactFixtureMap,
+  ReactFixtureModule,
   ReactFixtureWrapper,
   ReactFixtureWrappers,
 } from './shared';
