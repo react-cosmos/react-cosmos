@@ -1,8 +1,9 @@
-import webpack from 'webpack';
 // NOTE: Mock files need to imported before modules that use the mocked APIs
 import { unmockCliArgs, mockCliArgs } from '../../../../testHelpers/mockYargs';
 import { mockConsole } from '../../../../testHelpers/mockConsole';
 import { mockFile } from '../../../../testHelpers/mockFs';
+
+import webpack from 'webpack';
 import { createCosmosConfig } from '../../../../config';
 import { RENDERER_FILENAME } from '../../../../shared/playgroundHtml';
 import { HtmlWebpackPlugin } from '../htmlPlugin';
@@ -127,124 +128,4 @@ it('includes HotModuleReplacementPlugin', async () => {
     p => p.constructor.name === 'HotModuleReplacementPlugin'
   );
   expect(hotModuleReplacementPlugin).toBeDefined();
-});
-
-it('applies resolve aliases for React', async () => {
-  const resolvePreact = jest.fn(() => ({
-    ...mockWebpackConfig(),
-    resolve: {
-      alias: {
-        react: 'preact/compat',
-        'react-dom': 'preact/compat',
-      },
-    },
-  }));
-  mockFile('mywebpack.config.js', resolvePreact);
-
-  const { resolve } = await getCustomDevWebpackConfig();
-  expect(resolve?.alias).toBeDefined();
-  const aliasAsObject = resolve?.alias as Record<
-    string,
-    string | false | string[]
-  >;
-  expect(aliasAsObject.react).toEqual('preact/compat');
-  expect(aliasAsObject['react-dom']).toEqual('preact/compat');
-});
-
-it('applies resolve aliases for React using exact matches', async () => {
-  const resolvePreact = jest.fn(() => ({
-    ...mockWebpackConfig(),
-    resolve: {
-      alias: {
-        react$: 'preact/compat',
-        'react-dom$': 'preact/compat',
-      },
-    },
-  }));
-  mockFile('mywebpack.config.js', resolvePreact);
-
-  const { resolve } = await getCustomDevWebpackConfig();
-  expect(resolve?.alias).toBeDefined();
-  const aliasAsObject = resolve?.alias as Record<
-    string,
-    string | false | string[]
-  >;
-  expect(aliasAsObject.react$).toEqual('preact/compat');
-  expect(aliasAsObject.react).toBeUndefined();
-  expect(aliasAsObject['react-dom$']).toEqual('preact/compat');
-  expect(aliasAsObject['react-dom']).toBeUndefined();
-});
-
-it('applies resolve aliases for React using array form', async () => {
-  const resolvePreact = jest.fn(() => ({
-    ...mockWebpackConfig(),
-    resolve: {
-      alias: [
-        {
-          name: 'react',
-          alias: 'preact/compat',
-        },
-        {
-          name: 'react-dom$',
-          alias: 'preact/compat',
-        },
-      ],
-    },
-  }));
-  mockFile('mywebpack.config.js', resolvePreact);
-
-  const { resolve } = await getCustomDevWebpackConfig();
-  expect(resolve?.alias).toBeDefined();
-  const aliasAsArray = resolve?.alias as Array<{
-    name: string;
-    alias: string | false | string[];
-  }>;
-  expect(aliasAsArray).toHaveLength(2);
-  expect(aliasAsArray).toContainEqual({
-    name: 'react',
-    alias: 'preact/compat',
-  });
-  expect(aliasAsArray).toContainEqual({
-    name: 'react-dom$',
-    alias: 'preact/compat',
-  });
-});
-
-it('adds missing React aliases by matching the alias form', async () => {
-  const resolvePreact = jest.fn(() => ({
-    ...mockWebpackConfig(),
-    resolve: {
-      alias: [
-        {
-          name: 'xyz',
-          alias: 'abc',
-        },
-      ],
-    },
-  }));
-  mockFile('mywebpack.config.js', resolvePreact);
-
-  const { resolve } = await getCustomDevWebpackConfig();
-  expect(resolve?.alias).toBeDefined();
-  const aliasAsArray = resolve?.alias as Array<{
-    name: string;
-    alias: string | false | string[];
-  }>;
-  expect(aliasAsArray).toHaveLength(3);
-  expect(aliasAsArray).toEqual(
-    expect.arrayContaining([
-      {
-        name: 'xyz',
-        alias: 'abc',
-      },
-      {
-        name: 'react',
-        alias: expect.stringMatching(/node_modules\/react$/),
-      },
-      {
-        name: 'react-dom',
-        alias: expect.stringMatching(/node_modules\/react-dom$/),
-      },
-    ])
-  );
 });
