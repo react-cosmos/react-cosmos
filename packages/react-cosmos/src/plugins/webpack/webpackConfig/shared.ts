@@ -87,22 +87,62 @@ export function resolveLocalReactDeps(
 ): webpack.ResolveOptions {
   const { rootDir } = cosmosConfig;
 
-  const reactPath = resolveFrom.silent(rootDir, 'react');
-  if (!reactPath) throw new Error(`[Cosmos] Local dependency not found: react`);
-
-  const reactDomPath = resolveFrom.silent(rootDir, 'react-dom');
-  if (!reactDomPath)
-    throw new Error(`[Cosmos] Local dependency not found: react-dom`);
-
+  // Fetch existing configuration
   const { resolve = {} } = baseWebpackConfig;
   const { alias = {} } = resolve;
+
+  // Check for existing React aliases
+  let hasReactAlias = false;
+  let hasReactDomAlias = false;
+  if (Array.isArray(alias)) {
+    hasReactAlias = alias.some(
+      item => item.name === 'react' || item.name === 'react$'
+    );
+    hasReactDomAlias = alias.some(
+      item => item.name === 'react-dom' || item.name === 'react-dom$'
+    );
+  } else {
+    hasReactAlias = typeof (alias.react ?? alias.react$) !== 'undefined';
+    hasReactDomAlias =
+      typeof (alias['react-dom'] ?? alias['react-dom$']) !== 'undefined';
+  }
+
+  if (hasReactAlias && hasReactDomAlias) {
+    console.log('[Cosmos] React and React DOM aliases found in Webpack config');
+    return resolve;
+  }
+
+  // Add aliases if they don't exist
+  const updatedAliases = Array.isArray(alias) ? alias.slice() : { ...alias };
+  const addAlias = (name: string, value: string | false | string[]) => {
+    if (Array.isArray(updatedAliases)) {
+      updatedAliases.push({ name, alias: value });
+    } else {
+      updatedAliases[name] = value;
+    }
+  };
+
+  if (!hasReactAlias) {
+    const reactPath = resolveFrom.silent(rootDir, 'react');
+    if (!reactPath)
+      throw new Error(`[Cosmos] Local dependency not found: react`);
+    addAlias('react', path.dirname(reactPath));
+  } else {
+    console.log('[Cosmos] React alias found in Webpack config');
+  }
+
+  if (!hasReactDomAlias) {
+    const reactDomPath = resolveFrom.silent(rootDir, 'react-dom');
+    if (!reactDomPath)
+      throw new Error(`[Cosmos] Local dependency not found: react-dom`);
+    addAlias('react-dom', path.dirname(reactDomPath));
+  } else {
+    console.log('[Cosmos] React DOM alias found in Webpack config');
+  }
+
   return {
     ...resolve,
-    alias: {
-      ...alias,
-      react: path.dirname(reactPath),
-      'react-dom': path.dirname(reactDomPath),
-    },
+    alias: updatedAliases,
   };
 }
 
