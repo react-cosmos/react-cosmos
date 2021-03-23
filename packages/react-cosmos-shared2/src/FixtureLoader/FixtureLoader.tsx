@@ -236,15 +236,16 @@ export class FixtureLoader extends Component<Props, State> {
       | undefined;
 
     if (!fixtureWrapper) {
+      // Go into "fixture not found" state
       this.setState({
         selectedFixture: {
           fixtureId,
           fixtureStatus: 'ready',
           fixtureRef: null,
-          fixtureState,
-          syncedFixtureState: fixtureState,
+          fixtureState: {},
+          syncedFixtureState: {},
         },
-        renderKey: this.state.renderKey + 1,
+        renderKey: 0,
       });
       return;
     }
