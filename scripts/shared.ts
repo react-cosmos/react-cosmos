@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import { readFile, writeFile } from 'fs';
 import glob from 'glob';
 import rimraf from 'rimraf';
-import { argv } from 'yargs';
+import { getCliArgs } from '../packages/react-cosmos/src/shared/cli';
 
 type ArgValue = void | null | boolean | number | string;
 
@@ -30,6 +30,8 @@ export type BrowserPackage = {
 
 export type Package = NodePackage | BrowserPackage;
 
+const cliArgs = getCliArgs();
+
 // Warning: The order matters!
 export const packages: Package[] = [
   { type: PackageType.Node, name: 'react-cosmos-shared2' },
@@ -50,11 +52,11 @@ export function getFormattedPackageList() {
 }
 
 export function getUnnamedArg(index: number = 0): void | number | string {
-  return argv._[index];
+  return cliArgs._[index];
 }
 
 export function getNamedArg(name: string): ArgValue {
-  return argv[name] as ArgValue;
+  return cliArgs[name] as ArgValue;
 }
 
 export function getBoolArg(name: string): boolean {
