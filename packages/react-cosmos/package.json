@@ -31,7 +31,7 @@
     "url-parse": "^1.5.1",
     "util.promisify": "^1.1.1",
     "webpack-dev-middleware": "^4.3.0",
-    "yargs": "^17.0.1"
+    "yargs": "^16.2.0"
   },
   "bin": {
     "cosmos": "./bin/cosmos.js",
