@@ -63,7 +63,7 @@
     "@types/react": "^17.0.6",
     "@types/react-dom": "^17.0.5",
     "@types/react-is": "^17.0.0",
-    "@types/react-native": "^0.63.51",
+    "@types/react-native": "^0.64.5",
     "@types/react-test-renderer": "^17.0.1",
     "@types/rimraf": "^3.0.0",
     "@types/slash": "^3.0.0",
@@ -72,10 +72,10 @@
     "@types/styled-components": "^5.1.9",
     "@types/url-parse": "^1.4.3",
     "@types/util.promisify": "1.0.4",
-    "@types/webpack": "4.41.26",
+    "@types/webpack": "5.28.0",
     "@types/webpack-dev-middleware": "^4.3.0",
     "@types/webpack-dev-server": "^3.11.4",
-    "@types/yargs": "^16.0.0",
+    "@types/yargs": "^17.0.0",
     "@typescript-eslint/parser": "^4.24.0",
     "async-until": "^2.0.0",
     "babel-loader": "^8.2.2",
@@ -86,7 +86,7 @@
     "cpy-cli": "^3.1.1",
     "create-react-class": "^15.7.0",
     "css-loader": "^5.2.5",
-    "cypress": "^6.6.0",
+    "cypress": "^7.3.0",
     "delay": "^5.0.0",
     "eslint": "^7.27.0",
     "eslint-plugin-react": "^7.23.2",
@@ -110,6 +110,6 @@
     "webpack": "^5.37.1",
     "webpack-cli": "^4.7.0",
     "whatwg-fetch": "^3.6.2",
-    "yargs": "^16.2.0"
+    "yargs": "^17.0.1"
   }
 }
