@@ -242,7 +242,7 @@ export default {
   primary: <PrimaryButton>Click me</PrimaryButton>,
   primaryDisabled: <PrimaryButton disabled>Click me</PrimaryButton>,
   secondary: <SecondaryButton>Click me</SecondaryButton>,
-  secondaryDisabled: <SecondaryButton disabled>Click me</SecondaryButton>,
+  secondaryDisabled: <SecondaryButton disabled>Click me</SecondaryButton>
 };
 ```
 
@@ -321,7 +321,7 @@ export default () => {
   // useSelect also returns a setter as the second value in the return tuple,
   // like the useState hook, in case you want to change the value programatically.
   const [buttonType] = useSelect('buttonType', {
-    options: ['primary', 'secondary', 'danger'],
+    options: ['primary', 'secondary', 'danger']
   });
   return <Button type={buttonType}>Press me</Button>;
 };
@@ -514,6 +514,33 @@ module.exports = overrides.webpack(config, process.env.NODE_ENV);
 ```
 
 > React Cosmos picks up `webpack.config.js` automatically. Use `webpack.configPath` if you prefer to customize the webpack config path.
+
+### Using [Craco](https://github.com/gsoft-inc/craco) with [Tailwindcss](https://github.com/tailwindlabs/tailwindcss)
+
+Since `react-app-rewired` was only lightly maintained now, many people turn into [craco](https://github.com/gsoft-inc/craco) to override CRA's internal `webpack config` instead. If you're using [tailwindcss](https://github.com/tailwindlabs/tailwindcss) with CRA, you probably found they recommend using `craco` instead to override the CAR's `postcss` settings. In this case, please follow the steps below.
+
+- Create a `webpack.config.js` under your root folder (if you don't have one already) and copy-paste code below and save.
+
+```js
+/* webpack.config.js */
+const { createWebpackDevConfig } = require('@craco/craco');
+const cracoConfig = require('./craco.config.js');
+const webpackConfig = createWebpackDevConfig(cracoConfig);
+
+module.exports = webpackConfig;
+```
+
+- Don't forget to `import` your `global CSS` file if you're using `tailwindcss` or any other utility first CSS library. Just create a `cosmos.config.json` under your root folder (if you don't have one already) and set the `globalImports` like this:
+
+```json
+/*cosmos.config.json*/
+{
+  "globalImports": ["src/index.css"],
+  "staticPath": "public"
+}
+```
+
+> React Cosmos picks up `webpack.config.js` automatically. Since you're using exported `webpackConfig` generate by `craco`, don't forgot to remove the `"webpack": { "configPath": "react-scripts/config/webpack.config"}` inside of the `cosmos.config.json` if you have that setup. Use `webpack.configPath` if you prefer to customize the `webpack config` path.
 
 ## Next.js
 
