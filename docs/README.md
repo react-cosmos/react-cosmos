@@ -542,6 +542,8 @@ module.exports = webpackConfig;
 
 > React Cosmos picks up `webpack.config.js` automatically. Since you're using exported `webpackConfig` generate by `craco`, don't forgot to remove the `"webpack": { "configPath": "react-scripts/config/webpack.config"}` inside of the `cosmos.config.json` if you have that setup. Use `webpack.configPath` if you prefer to customize the `webpack config` path.
 
+> `globalImports` accept an array of strings, so if you want to add additional global CSS files, add them like this: `"globalImports": ["src/index.css","src/app.css"]`
+
 ## Next.js
 
 > **Currently Cosmos doesn't work with Next.js v10.0.6 or above. Downgrade to `next@10.0.5` until the issue is resolved. Read [#1289](https://github.com/react-cosmos/react-cosmos/issues/1289) for more context.**
