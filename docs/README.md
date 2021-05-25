@@ -242,7 +242,7 @@ export default {
   primary: <PrimaryButton>Click me</PrimaryButton>,
   primaryDisabled: <PrimaryButton disabled>Click me</PrimaryButton>,
   secondary: <SecondaryButton>Click me</SecondaryButton>,
-  secondaryDisabled: <SecondaryButton disabled>Click me</SecondaryButton>
+  secondaryDisabled: <SecondaryButton disabled>Click me</SecondaryButton>,
 };
 ```
 
@@ -321,7 +321,7 @@ export default () => {
   // useSelect also returns a setter as the second value in the return tuple,
   // like the useState hook, in case you want to change the value programatically.
   const [buttonType] = useSelect('buttonType', {
-    options: ['primary', 'secondary', 'danger']
+    options: ['primary', 'secondary', 'danger'],
   });
   return <Button type={buttonType}>Press me</Button>;
 };
