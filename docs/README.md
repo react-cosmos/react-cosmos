@@ -533,7 +533,6 @@ module.exports = webpackConfig;
 - If you're using Tailwind CSS or another similar CSS library, add your global CSS to `globalImports` in the Cosmos config. Create `cosmos.config.json` in your root folder if you haven't already.
 
 ```json
-/* cosmos.config.json */
 {
   "globalImports": ["src/index.css"],
   "staticPath": "public"
