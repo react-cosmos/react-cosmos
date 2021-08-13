@@ -24,6 +24,8 @@ Sandbox for developing and testing UI components in isolation.
 
 ## 🤔 Why React Cosmos?
 
+[5 Reasons to Choose React Cosmos](https://javascript.plainenglish.io/5-reasons-to-choose-react-cosmos-ace2322f8ab?source=friends_link&sk=b110374586e76955676ed6b745d8b599) | Medium
+
 React Cosmos
 
 - **Makes developers more productive**
