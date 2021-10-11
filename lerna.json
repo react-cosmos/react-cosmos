@@ -7,8 +7,7 @@
       "allowBranch": "main",
       "ignoreChanges": [
         "packages/*/README.md",
-        "packages/*/*.js",
-        "packages/*/bin/*.js"
+        "packages/*/*.js"
       ]
     }
   }
