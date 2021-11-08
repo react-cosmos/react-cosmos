@@ -7,8 +7,8 @@
   "main": "index.js",
   "devDependencies": {
     "fuzzaldrin-plus": "^0.6.0",
-    "html-webpack-plugin": "^5.3.2",
-    "localforage": "^1.9.0",
+    "html-webpack-plugin": "^5.5.0",
+    "localforage": "^1.10.0",
     "lodash": "^4.17.21",
     "react": "17.0.2",
     "react-cosmos-plugin": "^5.6.0",
