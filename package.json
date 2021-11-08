@@ -86,7 +86,7 @@
     "cpy-cli": "^3.1.1",
     "create-react-class": "^15.7.0",
     "css-loader": "^5.2.6",
-    "cypress": "^7.6.0",
+    "cypress": "^8.7.0",
     "delay": "^5.0.0",
     "eslint": "^7.29.0",
     "eslint-plugin-react": "^7.26.1",
