@@ -59,7 +59,7 @@ function getEntry(cosmosConfig: CosmosConfig) {
   const clientIndex = resolveClientPath('index');
 
   return hotReload
-    ? [devtoolsHook, getHotMiddlewareEntry(), clientIndex]
+    ? [devtoolsHook, getHotMiddlewareEntry(cosmosConfig), clientIndex]
     : [devtoolsHook, clientIndex];
 }
 
@@ -99,7 +99,7 @@ function getPlugins(
   return ensureHtmlWebackPlugin(cosmosConfig, plugins);
 }
 
-function getHotMiddlewareEntry() {
+function getHotMiddlewareEntry(cosmosConfig: CosmosConfig) {
   const clientPath = require.resolve('@skidding/webpack-hot-middleware/client');
-  return `${clientPath}?reload=true&overlay=false`;
+  return `${clientPath}?reload=${!cosmosConfig.disableReload}&overlay=false`;
 }
