@@ -7,6 +7,10 @@ type WebpackCosmosConfig = {
   overridePath: null | string;
   includeHashInOutputFilename: boolean;
   hotReload: boolean;
+  // Related to, but separate from, the 'hotReload' option.
+  // Matches to the 'reload' config option in webpack-hot-middleware.
+  // If false, location reload will *not* occur when webpack gets stuck updating code.
+  reloadOnFail: boolean;
 };
 
 type WebpackCosmosConfigInput = Partial<WebpackCosmosConfig>;
@@ -22,6 +26,7 @@ export function createWebpackCosmosConfig(
     overridePath: getWebpackOverridePath(configInput, rootDir),
     includeHashInOutputFilename: getIncludeHashInOutputFilename(configInput),
     hotReload: getHotReload(configInput),
+    reloadOnFail: getReloadOnFail(configInput)
   };
 }
 
@@ -80,4 +85,8 @@ function getIncludeHashInOutputFilename({ includeHashInOutputFilename = false }:
 
 function getHotReload({ hotReload = true }: WebpackCosmosConfigInput) {
   return hotReload;
+}
+
+function getReloadOnFail({ reloadOnFail = true }: WebpackCosmosConfigInput) {
+  return reloadOnFail;
 }
