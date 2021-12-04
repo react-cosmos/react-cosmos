@@ -52,14 +52,14 @@ export async function getDevWebpackConfig(
 }
 
 function getEntry(cosmosConfig: CosmosConfig) {
-  const { hotReload } = createWebpackCosmosConfig(cosmosConfig);
+  const { hotReload, reloadOnFail } = createWebpackCosmosConfig(cosmosConfig);
   // The React devtools hook needs to be imported before any other module that
   // might import React
   const devtoolsHook = resolveClientPath('reactDevtoolsHook');
   const clientIndex = resolveClientPath('index');
 
   return hotReload
-    ? [devtoolsHook, getHotMiddlewareEntry(cosmosConfig), clientIndex]
+    ? [devtoolsHook, getHotMiddlewareEntry(reloadOnFail), clientIndex]
     : [devtoolsHook, clientIndex];
 }
 
@@ -99,7 +99,7 @@ function getPlugins(
   return ensureHtmlWebackPlugin(cosmosConfig, plugins);
 }
 
-function getHotMiddlewareEntry(cosmosConfig: CosmosConfig) {
+function getHotMiddlewareEntry(reloadOnFail: boolean) {
   const clientPath = require.resolve('@skidding/webpack-hot-middleware/client');
-  return `${clientPath}?reload=${!cosmosConfig.disableReload}&overlay=false`;
+  return `${clientPath}?reload=${reloadOnFail}&overlay=false`;
 }

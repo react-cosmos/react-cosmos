@@ -30,9 +30,6 @@ export type CosmosConfig = {
   userDepsFilePath: string;
   watchDirs: string[];
   experimentalRendererUrl: string | null;
-  // The negation of the 'reload' config option in webpack-hot-middleware.
-  // If true, location reload will *not* occur when webpack gets stuck updating code.
-  disableReload: boolean;
   // Plugin configs
   [option: string]: unknown;
   // UI plugin configs

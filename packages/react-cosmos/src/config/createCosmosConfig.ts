@@ -24,7 +24,6 @@ export function createCosmosConfig(
     userDepsFilePath: getUserDepsFilePath(cosmosConfigInput, rootDir),
     watchDirs: getWatchDirs(cosmosConfigInput, rootDir),
     experimentalRendererUrl: cosmosConfigInput.experimentalRendererUrl ?? null,
-    disableReload: !!cosmosConfigInput.disableReload,
     ui: cosmosConfigInput.ui || {},
   };
 }

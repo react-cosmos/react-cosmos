@@ -121,10 +121,6 @@
       "description": "Custom renderer URL. This setting disables webpack bundling and allows integration with other build tools like Snowpack. [default: null]",
       "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
     },
-    "disableReload": {
-      "description": "Disable automatic location reload when webpack gets stuck updating modules during hot reload. [default: false]",
-      "type": "boolean"
-    },
     "dom": {
       "description": "DOM-related options",
       "type": "object",
@@ -155,6 +151,10 @@
         },
         "hotReload": {
           "description": "Enable webpack's Hot Module Replacement. [default: true]",
+          "type": "boolean"
+        },
+        "reloadOnFail": {
+          "description": "When using webpack's Hot Module Replacement, enable automatic location reload after webpack fails to update modules. [default: true]",
           "type": "boolean"
         }
       }
