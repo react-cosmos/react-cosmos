@@ -23,7 +23,7 @@
     "react-cosmos-playground2": "^5.6.3",
     "react-cosmos-plugin": "^5.6.0",
     "react-cosmos-shared2": "^5.6.3",
-    "react-error-overlay": "^6.0.9",
+    "react-error-overlay": "6.0.9",
     "regenerator-runtime": "^0.13.7",
     "resolve-from": "^5.0.0",
     "slash": "^3.0.0",
