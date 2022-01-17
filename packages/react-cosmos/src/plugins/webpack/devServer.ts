@@ -1,4 +1,4 @@
-import webpackHotMiddleware from 'webpack-hot-middleware';
+import webpackHotMiddleware from '@skidding/webpack-hot-middleware';
 import { NextHandleFunction } from 'connect';
 import path from 'path';
 import { BuildMessage } from 'react-cosmos-shared2/build';
