@@ -24,10 +24,10 @@ plug<StandardControlSlotProps>(
     const { controlName, control, onFixtureStateChange } = slotProps;
     const treeExpansionApi = useTreeExpansionStorage(pluginContext);
 
-    const values = useMemo(() => ({ [controlName]: control.currentValue }), [
-      control.currentValue,
-      controlName,
-    ]);
+    const values = useMemo(
+      () => ({ [controlName]: control.currentValue }),
+      [control.currentValue, controlName]
+    );
 
     const handleValueChange = useCallback(
       (updatedValues: FixtureStateValues) => {

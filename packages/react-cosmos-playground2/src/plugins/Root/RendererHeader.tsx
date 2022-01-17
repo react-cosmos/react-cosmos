@@ -41,10 +41,10 @@ export const RendererHeader = React.memo(function RendererHeader({
 }: Props) {
   const fixtureItem = findFixtureItemById(fixtureItems, fixtureId);
   const slotProps = React.useMemo(() => ({ fixtureId }), [fixtureId]);
-  const onReload = React.useCallback(() => onFixtureSelect(fixtureId), [
-    fixtureId,
-    onFixtureSelect,
-  ]);
+  const onReload = React.useCallback(
+    () => onFixtureSelect(fixtureId),
+    [fixtureId, onFixtureSelect]
+  );
 
   return (
     <Container>

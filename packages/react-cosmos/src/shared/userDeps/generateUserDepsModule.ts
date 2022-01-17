@@ -13,12 +13,8 @@ export function generateUserDepsModule({
   rendererConfig,
   relativeToDir,
 }: Args): string {
-  const {
-    rootDir,
-    fixturesDir,
-    fixtureFileSuffix,
-    globalImports,
-  } = cosmosConfig;
+  const { rootDir, fixturesDir, fixtureFileSuffix, globalImports } =
+    cosmosConfig;
   const { fixturePaths, decoratorPaths } = findUserModulePaths({
     rootDir,
     fixturesDir,

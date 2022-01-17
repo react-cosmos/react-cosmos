@@ -3,6 +3,7 @@ coverage
 example/cosmos-export
 example/cosmos.userdeps.js
 example/package.json
+example/*/dist
 lerna.json
 package.json
 packages/*/dist

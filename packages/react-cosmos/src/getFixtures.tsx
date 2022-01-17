@@ -24,9 +24,8 @@ type RenderableFixture = {
 export const getFixtures = async (args: Args) => getFixturesSync(args);
 
 export function getFixturesSync({ cosmosConfig }: Args) {
-  const { fixtureExportsByPath, decoratorsByPath } = getUserModules(
-    cosmosConfig
-  );
+  const { fixtureExportsByPath, decoratorsByPath } =
+    getUserModules(cosmosConfig);
 
   const fixtures: RenderableFixture[] = [];
   Object.keys(fixtureExportsByPath).forEach(fixturePath => {

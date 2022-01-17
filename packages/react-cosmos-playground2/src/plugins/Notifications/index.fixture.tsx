@@ -60,8 +60,7 @@ export default {
         createErrorNotification({
           id: 'build-error',
           title: 'Build failed',
-          info:
-            'Open the browser console or check your terminal for more information.',
+          info: 'Open the browser console or check your terminal for more information.',
         }),
       ]}
     />
