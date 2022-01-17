@@ -38,9 +38,8 @@ export function getFixtures2(cosmosConfig: CosmosConfig) {
   const { fixturesDir, fixtureFileSuffix, rootDir } = cosmosConfig;
 
   const fixtureInfo: FixtureApi[] = [];
-  const { fixtureExportsByPath, decoratorsByPath } = getUserModules(
-    cosmosConfig
-  );
+  const { fixtureExportsByPath, decoratorsByPath } =
+    getUserModules(cosmosConfig);
   const fixtureNamesByPath = getFixtureNamesByPath(fixtureExportsByPath);
   const fixtureTree = createFixtureTree({
     fixtures: fixtureNamesByPath,

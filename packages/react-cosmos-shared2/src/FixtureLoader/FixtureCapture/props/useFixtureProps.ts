@@ -18,9 +18,10 @@ export function useFixtureProps(
 ): React.ReactNode {
   // React.useMemo is used as a cache invalidated by decoratorId
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const propCache: Record<string, unknown> = React.useMemo(() => ({}), [
-    decoratorId,
-  ]);
+  const propCache: Record<string, unknown> = React.useMemo(
+    () => ({}),
+    [decoratorId]
+  );
 
   const elPaths = findRelevantElementPaths(fixture);
 

@@ -35,8 +35,7 @@ function onRendererResponse(
         id: 'renderer-hmr-fail',
         type: 'error',
         title: 'Hot reload failed',
-        info:
-          'Check the browser console to see which module failed to hot reload.',
+        info: 'Check the browser console to see which module failed to hot reload.',
       });
 
     default:
