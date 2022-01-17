@@ -7,7 +7,6 @@
   "main": "index.js",
   "dependencies": {
     "@skidding/launch-editor": "^2.2.3",
-    "@skidding/webpack-hot-middleware": "^2.25.0",
     "chokidar": "^3.5.2",
     "core-js": "^3.20.3",
     "express": "^4.17.2",
@@ -31,6 +30,7 @@
     "url-parse": "^1.5.4",
     "util.promisify": "^1.1.1",
     "webpack-dev-middleware": "^4.3.0",
+    "webpack-hot-middleware": "^2.25.1",
     "yargs": "^16.2.0"
   },
   "bin": {
