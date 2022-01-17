@@ -16,10 +16,10 @@ export function useFixtureProps(
   fixtureState: FixtureState,
   decoratorId: FixtureDecoratorId
 ): React.ReactNode {
-  // React.useMemo is used as a cache invalidated by decoratorId
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const propCache: Record<string, unknown> = React.useMemo(
     () => ({}),
+    // React.useMemo is used as a cache invalidated by decoratorId
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [decoratorId]
   );
 
