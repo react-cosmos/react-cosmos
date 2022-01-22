@@ -3,6 +3,7 @@
 ## Documentation
 
 - [ ] Improve getting started docs. This needs to be more prominent. Easy steps for getting started should be present in the website and the main docs.
+- [ ] Add more [used by logos](https://github.com/react-cosmos/react-cosmos/issues/1207).
 
 ## Bundler
 
