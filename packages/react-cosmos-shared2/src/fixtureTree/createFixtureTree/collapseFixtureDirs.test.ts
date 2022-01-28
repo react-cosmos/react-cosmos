@@ -17,6 +17,7 @@ it('collapses fixtures dir', () => {
                   Button: {
                     data: {
                       type: 'multiFixture',
+                      fixturePath: 'ui/__fixtures__/shared/Button.js',
                       fixtureIds: {
                         normal: {
                           path: 'ui/__fixtures__/shared/Button.js',
@@ -55,6 +56,7 @@ it('collapses fixtures dir', () => {
               Button: {
                 data: {
                   type: 'multiFixture',
+                  fixturePath: 'ui/__fixtures__/shared/Button.js',
                   fixtureIds: {
                     normal: {
                       path: 'ui/__fixtures__/shared/Button.js',

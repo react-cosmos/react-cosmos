@@ -1,12 +1,19 @@
-import { FixtureTreeNode } from 'react-cosmos-shared2/fixtureTree';
+import { isEqual } from 'lodash';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
+import {
+  FixtureTreeNode,
+  MultiFixtureTreeNodeData,
+} from 'react-cosmos-shared2/fixtureTree';
 
-export function recordContainsFixtureId(
-  fixtureIds: Record<string, FixtureId>,
+export function multiFixtureContainsFixtureId(
+  { fixturePath, fixtureIds }: MultiFixtureTreeNodeData,
   fixtureId: FixtureId
 ) {
-  return Object.keys(fixtureIds).some(
-    fixtureName => fixtureIds[fixtureName].path === fixtureId.path
+  return (
+    (fixtureId.path === fixturePath && fixtureId.name === undefined) ||
+    Object.keys(fixtureIds).some(fixtureName =>
+      isEqual(fixtureIds[fixtureName], fixtureId)
+    )
   );
 }
 
@@ -19,7 +26,7 @@ export function nodeContainsFixtureId(
   }
 
   if (data.type === 'multiFixture') {
-    return recordContainsFixtureId(data.fixtureIds, fixtureId);
+    return multiFixtureContainsFixtureId(data, fixtureId);
   }
 
   return (
