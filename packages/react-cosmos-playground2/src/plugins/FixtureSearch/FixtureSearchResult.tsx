@@ -25,10 +25,10 @@ export function FixtureSearchResult({
   const { fixtureId, fileName, name, parents } = fixtureItem;
 
   const containerRef = useScrollToActive(cleanFixturePath, active);
-  const onClick = React.useCallback(
-    () => onSelect(fixtureId, true),
-    [fixtureId, onSelect]
-  );
+  const onClick = React.useCallback(() => onSelect(fixtureId, true), [
+    fixtureId,
+    onSelect,
+  ]);
 
   return (
     <Container ref={containerRef} selected={active} onClick={onClick}>

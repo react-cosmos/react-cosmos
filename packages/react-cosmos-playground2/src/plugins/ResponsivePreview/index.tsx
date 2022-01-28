@@ -103,8 +103,7 @@ function getViewportState(context: ResponsivePreviewContext): ViewportState {
     DEFAULT_VIEWPORT_STATE;
 
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
-  const fixtureState =
-    rendererCore.getFixtureState() as FixtureStateWithViewport;
+  const fixtureState = rendererCore.getFixtureState() as FixtureStateWithViewport;
 
   return fixtureState.viewport
     ? { ...viewportState, enabled: true, viewport: fixtureState.viewport }

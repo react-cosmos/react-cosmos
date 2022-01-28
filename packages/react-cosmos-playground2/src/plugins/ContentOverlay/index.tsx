@@ -17,8 +17,11 @@ plug('contentOverlay', ({ pluginContext }) => {
   const fixtureSelected = router.getSelectedFixtureId() !== null;
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const rendererPreview = getMethodsOf<RendererPreviewSpec>('rendererPreview');
-  const { welcomeDismissed, onDismissWelcome, onShowWelcome } =
-    useWelcomeDismiss(pluginContext);
+  const {
+    welcomeDismissed,
+    onDismissWelcome,
+    onShowWelcome,
+  } = useWelcomeDismiss(pluginContext);
 
   return (
     <ContentOverlay
