@@ -28,7 +28,6 @@ export function MultiFixtureButton({
   onSelect,
 }: Props) {
   const fixtureNames = Object.keys(fixtureIds);
-  if (fixtureNames.length === 0) return null;
 
   if (!selected)
     return (
