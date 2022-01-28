@@ -13,8 +13,6 @@ export function wrapFixtures(
   }, {});
 }
 
-export function wrapFixture(
-  fixtureExport: ReactFixtureExport
-): ReactFixtureWrapper {
+function wrapFixture(fixtureExport: ReactFixtureExport): ReactFixtureWrapper {
   return { module: { default: fixtureExport } };
 }
