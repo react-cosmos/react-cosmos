@@ -48,12 +48,12 @@ export function MultiFixtureButton({
       </FixtureTreeItem>
       {fixtureNames.map((fixtureName, index) => {
         const fixtureId = fixtureIds[fixtureName];
-        // TODO: Clean up
         const childSelected =
           selectedFixtureId !== null &&
           selectedFixtureId.path === fixtureId.path &&
-          (selectedFixtureId.name === fixtureId.name ||
-            (selectedFixtureId.name === undefined && index === 0));
+          (selectedFixtureId.name === undefined
+            ? index === 0
+            : selectedFixtureId.name === fixtureId.name);
         return (
           <MultiFixtureChildButton
             key={fixtureName}
