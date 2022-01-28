@@ -19,8 +19,8 @@ export const rendererConfig = {
 };
 
 export const fixtures = {
-  'src/Counter/Counter.fixture.tsx': fixture0,
-  'src/CounterButton/CounterButton.fixture.tsx': fixture1
+  'src/Counter/Counter.fixture.tsx': { module: { default: fixture0 } },
+  'src/CounterButton/CounterButton.fixture.tsx': { module: { default: fixture1 } }
 };
 
 export const decorators = {
@@ -48,8 +48,8 @@ export const rendererConfig = {
 };
 
 export const fixtures = {
-  'src/Counter/Counter.fixture.tsx': fixture0,
-  'src/CounterButton/CounterButton.fixture.tsx': fixture1
+  'src/Counter/Counter.fixture.tsx': { module: { default: fixture0 } },
+  'src/CounterButton/CounterButton.fixture.tsx': { module: { default: fixture1 } }
 };
 
 export const decorators = {
