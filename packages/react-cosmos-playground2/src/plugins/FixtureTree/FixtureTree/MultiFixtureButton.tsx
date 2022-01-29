@@ -1,3 +1,4 @@
+import { isEqual } from 'lodash';
 import React, { RefObject } from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import styled from 'styled-components';
@@ -45,14 +46,9 @@ export function MultiFixtureButton({
         <Name>{name}</Name>
         <Count>{fixtureNames.length}</Count>
       </FixtureTreeItem>
-      {fixtureNames.map((fixtureName, index) => {
+      {fixtureNames.map(fixtureName => {
         const fixtureId = fixtureIds[fixtureName];
-        const childSelected =
-          selectedFixtureId !== null &&
-          selectedFixtureId.path === fixtureId.path &&
-          (selectedFixtureId.name === undefined
-            ? index === 0
-            : selectedFixtureId.name === fixtureId.name);
+        const childSelected = isEqual(fixtureId, selectedFixtureId);
         return (
           <MultiFixtureChildButton
             key={fixtureName}

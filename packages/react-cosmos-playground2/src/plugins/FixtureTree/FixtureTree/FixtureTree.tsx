@@ -1,3 +1,4 @@
+import { isEqual } from 'lodash';
 import React, { RefObject } from 'react';
 import { FixtureTreeNode } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
@@ -40,7 +41,7 @@ export const FixtureTree = React.memo(function FixtureTree({
           const { data, children } = node;
 
           if (data.type === 'fixture') {
-            const selected = selectedFixtureId?.path === data.fixtureId.path;
+            const selected = isEqual(selectedFixtureId, data.fixtureId);
             return (
               <FixtureButton
                 name={name}
