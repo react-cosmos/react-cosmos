@@ -96,7 +96,6 @@ function findFixtureItemById(
   fixtureItems: FlatFixtureTreeItem[],
   fixtureId: FixtureId
 ) {
-  // TODO: Fix this
   return fixtureItems.find(fixtureItem =>
     isEqual(fixtureItem.fixtureId, fixtureId)
   );
