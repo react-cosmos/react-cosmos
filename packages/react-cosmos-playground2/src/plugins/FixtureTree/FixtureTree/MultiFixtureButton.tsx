@@ -8,7 +8,6 @@ import { MultiFixtureChildButton } from './MultiFixtureChildButton';
 
 type Props = {
   name: string;
-  fixturePath: string;
   fixtureIds: Record<string, FixtureId>;
   indentLevel: number;
   selected: boolean;
@@ -19,7 +18,6 @@ type Props = {
 
 export function MultiFixtureButton({
   name,
-  fixturePath,
   fixtureIds,
   indentLevel,
   selected,
@@ -28,10 +26,12 @@ export function MultiFixtureButton({
   onSelect,
 }: Props) {
   const fixtureNames = Object.keys(fixtureIds);
+  const firstFixtureId = fixtureIds[fixtureNames[0]];
+  if (!firstFixtureId) return null;
 
   if (!selected)
     return (
-      <FixtureLink fixtureId={{ path: fixturePath }} onSelect={onSelect}>
+      <FixtureLink fixtureId={firstFixtureId} onSelect={onSelect}>
         <FixtureTreeItem indentLevel={indentLevel} selected={false}>
           <Name>{name}</Name>
           <Count>{fixtureNames.length}</Count>

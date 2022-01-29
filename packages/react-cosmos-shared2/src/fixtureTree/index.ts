@@ -4,4 +4,4 @@ export {
   FlatFixtureTreeItem,
   flattenFixtureTree,
 } from './flattenFixtureTree';
-export { FixtureTreeNode, MultiFixtureTreeNodeData } from './shared/types';
+export { FixtureTreeNode } from './shared/types';

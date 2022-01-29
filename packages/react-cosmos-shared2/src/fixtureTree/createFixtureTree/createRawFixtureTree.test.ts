@@ -56,7 +56,6 @@ it('creates tree with multi fixture', () => {
       'Button.fixture': {
         data: {
           type: 'multiFixture',
-          fixturePath: 'Button.fixture.js',
           fixtureIds: {
             normal: { path: 'Button.fixture.js', name: 'normal' },
             disabled: { path: 'Button.fixture.js', name: 'disabled' },
@@ -84,7 +83,6 @@ it('creates nested tree with multi fixture', () => {
           'Button.fixture': {
             data: {
               type: 'multiFixture',
-              fixturePath: 'ui/Button.fixture.js',
               fixtureIds: {
                 normal: { path: 'ui/Button.fixture.js', name: 'normal' },
                 disabled: { path: 'ui/Button.fixture.js', name: 'disabled' },

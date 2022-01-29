@@ -42,7 +42,6 @@ it('collapses index multi fixture', () => {
           index: {
             data: {
               type: 'multiFixture',
-              fixturePath: 'Button/index.fixture.js',
               fixtureIds: {
                 normal: { path: 'Button/index.fixture.js', name: 'normal' },
                 disabled: { path: 'Button/index.fixture.js', name: 'disabled' },
@@ -59,7 +58,6 @@ it('collapses index multi fixture', () => {
       Button: {
         data: {
           type: 'multiFixture',
-          fixturePath: 'Button/index.fixture.js',
           fixtureIds: {
             normal: { path: 'Button/index.fixture.js', name: 'normal' },
             disabled: { path: 'Button/index.fixture.js', name: 'disabled' },

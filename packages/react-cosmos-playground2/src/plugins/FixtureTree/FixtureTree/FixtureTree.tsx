@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { grey32 } from '../../../shared/colors';
 import {
   nodeContainsFixtureId,
-  multiFixtureContainsFixtureId,
+  recordContainsFixtureId,
 } from '../../../shared/fixtureTree';
 import { TreeExpansion } from '../../../shared/treeExpansion';
 import { TreeView } from '../../../shared/TreeView';
@@ -56,11 +56,10 @@ export const FixtureTree = React.memo(function FixtureTree({
           if (data.type === 'multiFixture') {
             const selected =
               selectedFixtureId !== null &&
-              multiFixtureContainsFixtureId(data, selectedFixtureId);
+              recordContainsFixtureId(data.fixtureIds, selectedFixtureId);
             return (
               <MultiFixtureButton
                 name={name}
-                fixturePath={data.fixturePath}
                 fixtureIds={data.fixtureIds}
                 indentLevel={parents.length}
                 selected={selected}

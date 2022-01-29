@@ -33,7 +33,6 @@ function addFixturePathToTree(
     injectNode(rootNode, parents, fileName, {
       data: {
         type: 'multiFixture',
-        fixturePath,
         fixtureIds: createFixtureIds(fixturePath, fixtureItem.fixtureNames),
       },
     });
