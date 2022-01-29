@@ -4,7 +4,7 @@
 
 # React Cosmos
 
-[![npm version](https://img.shields.io/npm/v/react-cosmos.svg?style=flat)](https://www.npmjs.com/package/react-cosmos) [![CircleCI Status](https://circleci.com/gh/react-cosmos/react-cosmos.svg?style=shield)](https://circleci.com/gh/react-cosmos/react-cosmos) [![Twitter](https://img.shields.io/twitter/follow/ReactCosmos.svg?color=%2338A1F3&label=twitter&style=flat)](https://twitter.com/ReactCosmos) [![Slack](https://img.shields.io/badge/slack-join%20200%2B%20community-blueviolet)](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/react-cosmos/react-cosmos/blob/main/CONTRIBUTING.md#how-to-contribute)
+[![npm version](https://img.shields.io/npm/v/react-cosmos.svg?style=flat)](https://www.npmjs.com/package/react-cosmos) [![CircleCI Status](https://circleci.com/gh/react-cosmos/react-cosmos.svg?style=shield)](https://circleci.com/gh/react-cosmos/react-cosmos) [![Twitter](https://img.shields.io/twitter/follow/ReactCosmos.svg?color=%2338A1F3&label=twitter&style=flat)](https://twitter.com/ReactCosmos) [![Slack](https://img.shields.io/badge/slack-join%20300%2B%20community-blueviolet)](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/react-cosmos/react-cosmos/blob/main/CONTRIBUTING.md#how-to-contribute)
 
 Sandbox for developing and testing UI components in isolation.
 
@@ -23,6 +23,8 @@ Sandbox for developing and testing UI components in isolation.
 [![React Cosmos](next.png)](https://reactcosmos.org)
 
 ## 🤔 Why React Cosmos?
+
+> [5 Reasons to Choose React Cosmos](https://javascript.plainenglish.io/5-reasons-to-choose-react-cosmos-ace2322f8ab?source=friends_link&sk=b110374586e76955676ed6b745d8b599) | Medium
 
 React Cosmos
 

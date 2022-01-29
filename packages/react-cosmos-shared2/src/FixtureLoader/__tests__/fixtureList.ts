@@ -19,7 +19,10 @@ testFixtureLoader(
   async ({ rendererReady }) => {
     await rendererReady({
       rendererId,
-      fixtures: { first: { type: 'single' }, second: { type: 'single' } },
+      fixtures: {
+        first: { type: 'single' },
+        second: { type: 'single' },
+      },
     });
   }
 );
@@ -30,12 +33,18 @@ testFixtureLoader(
   async ({ rendererReady, pingRenderers }) => {
     await rendererReady({
       rendererId,
-      fixtures: { first: { type: 'single' }, second: { type: 'single' } },
+      fixtures: {
+        first: { type: 'single' },
+        second: { type: 'single' },
+      },
     });
     await pingRenderers();
     await rendererReady({
       rendererId,
-      fixtures: { first: { type: 'single' }, second: { type: 'single' } },
+      fixtures: {
+        first: { type: 'single' },
+        second: { type: 'single' },
+      },
     });
   }
 );
@@ -46,7 +55,10 @@ testFixtureLoader(
   async ({ update, rendererReady, fixtureListUpdate }) => {
     await rendererReady({
       rendererId,
-      fixtures: { first: { type: 'single' }, second: { type: 'single' } },
+      fixtures: {
+        first: { type: 'single' },
+        second: { type: 'single' },
+      },
     });
     update({
       rendererId,

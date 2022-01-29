@@ -6,11 +6,12 @@ import { CosmosConfig } from '../../../config';
 import { RENDERER_FILENAME } from '../../../shared/playgroundHtml';
 import { hasPlugin, isInstanceOfPlugin } from './shared';
 
+// prettier-ignore
 export type HtmlWebpackPlugin = webpack.WebpackPluginInstance & {
   constructor: HtmlWebpackPluginConstructor;
 } & (
-    | { options: HtmlWebpackPluginOptions; userOptions: undefined } // html-webpack-plugin < 5
-    | { userOptions: HtmlWebpackPluginOptions; options: undefined } // html-webpack-plugin >= 5
+  | { options: HtmlWebpackPluginOptions; userOptions: undefined } // html-webpack-plugin < 5
+  | { userOptions: HtmlWebpackPluginOptions; options: undefined } // html-webpack-plugin >= 5
   );
 
 type HtmlWebpackPluginConstructor = new (

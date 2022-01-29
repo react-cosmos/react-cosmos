@@ -5,7 +5,7 @@ import {
 } from 'react-cosmos-shared2/FixtureLoader';
 import { render } from 'react-dom';
 // @ts-ignore
-import { decorators, fixtures } from './cosmos.userdeps';
+import { decorators, fixtures } from './cosmos.userdeps.js';
 
 render(
   <FixtureLoader

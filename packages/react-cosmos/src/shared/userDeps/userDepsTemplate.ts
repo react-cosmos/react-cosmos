@@ -70,7 +70,9 @@ function createImportMap(
 }
 
 function resolveImportPath(filePath: string, relativeToDir: string | null) {
-  return relativeToDir
-    ? `.${path.sep}${path.relative(relativeToDir, filePath)}`
-    : filePath;
+  return slash(
+    relativeToDir
+      ? `.${path.sep}${path.relative(relativeToDir, filePath)}`
+      : filePath
+  );
 }

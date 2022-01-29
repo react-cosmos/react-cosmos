@@ -1,14 +1,14 @@
 {
   "name": "react-cosmos-shared2",
-  "version": "5.6.1",
+  "version": "5.6.7",
   "description": "Code shared between Cosmos packages",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-shared2",
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.21",
     "query-string": "5.1.1",
-    "react-element-to-jsx-string": "^14.3.2",
-    "react-is": "^17.0.1",
+    "react-element-to-jsx-string": "^14.3.4",
+    "react-is": "^17.0.2",
     "socket.io-client": "2.2.0"
   }
 }

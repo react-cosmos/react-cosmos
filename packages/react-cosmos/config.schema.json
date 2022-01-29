@@ -152,6 +152,10 @@
         "hotReload": {
           "description": "Enable webpack's Hot Module Replacement. [default: true]",
           "type": "boolean"
+        },
+        "reloadOnFail": {
+          "description": "When using webpack's Hot Module Replacement, enable automatic location reload after webpack fails to update modules. [default: true]",
+          "type": "boolean"
         }
       }
     },

@@ -34,10 +34,10 @@ function createTreeFixture(
   fixtureId: null | FixtureId = null
 ) {
   return () => {
-    const [
-      selectedFixtureId,
-      setSelectedFixtureId,
-    ] = useValue('selectedFixtureId', { defaultValue: fixtureId });
+    const [selectedFixtureId, setSelectedFixtureId] = useValue(
+      'selectedFixtureId',
+      { defaultValue: fixtureId }
+    );
     const [expansion, setExpansion] = useValue('treeExpansion', {
       defaultValue: initialTreeExpansion,
     });

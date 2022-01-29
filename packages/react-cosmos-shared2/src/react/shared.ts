@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ComponentType, ReactNode } from 'react';
 import { FixtureState, SetFixtureState } from '../fixtureState';
 
 // These generic types keep Cosmos slightly more decoupled from React
@@ -22,7 +22,7 @@ export type ReactDecoratorProps = {
   setFixtureState: SetFixtureState;
   onErrorReset: () => unknown;
 };
-export type ReactDecorator = React.ComponentType<ReactDecoratorProps>;
+export type ReactDecorator = ComponentType<ReactDecoratorProps>;
 
 export type ReactFixtureExports = Record<string, ReactFixtureExport>;
 export type ReactFixtureWrappers = Record<string, ReactFixtureWrapper>;

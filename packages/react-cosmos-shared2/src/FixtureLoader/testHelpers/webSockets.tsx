@@ -9,12 +9,9 @@ import {
 } from './shared';
 
 // __getMockApi is defined in mockSocketIo.js
-const {
-  WS_URL,
-  getMessages,
-  postMessage,
-  resetMessages,
-} = (io as any).__getMockApi();
+const { WS_URL, getMessages, postMessage, resetMessages } = (
+  io as any
+).__getMockApi();
 
 export async function mountWebSockets(
   args: FixtureLoaderTestArgs,

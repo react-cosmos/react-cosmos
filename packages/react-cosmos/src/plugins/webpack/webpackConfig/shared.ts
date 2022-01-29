@@ -1,8 +1,8 @@
 import path from 'path';
 import resolveFrom from 'resolve-from';
 import webpack from 'webpack';
-import { argv } from 'yargs';
 import { CosmosConfig } from '../../../config';
+import { getCliArgs } from '../../../shared/cli';
 import { moduleExists, requireModule } from '../../../shared/fs';
 import { createWebpackCosmosConfig } from '../cosmosConfig/webpack';
 import { getDefaultWebpackConfig } from './default';
@@ -65,8 +65,9 @@ export async function getBaseWebpackConfig(
   const userConfigExport = getDefaultExport(
     requireModule(configPath)
   ) as WebpackConfigExport;
+  const cliArgs = getCliArgs();
   return typeof userConfigExport === 'function'
-    ? await userConfigExport(argv.env || getNodeEnv(), argv)
+    ? await userConfigExport(cliArgs.env || getNodeEnv(), cliArgs)
     : userConfigExport;
 }
 

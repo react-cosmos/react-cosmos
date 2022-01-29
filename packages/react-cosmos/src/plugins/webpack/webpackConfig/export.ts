@@ -43,11 +43,14 @@ function getEntry() {
 
 function getOutput(cosmosConfig: CosmosConfig) {
   const { exportPath, publicUrl } = cosmosConfig;
-  const { includeHashInOutputFilename } = createWebpackCosmosConfig(cosmosConfig);
+  const { includeHashInOutputFilename } =
+    createWebpackCosmosConfig(cosmosConfig);
 
   return {
     path: path.resolve(exportPath, removeLeadingSlash(publicUrl)),
-    filename: includeHashInOutputFilename ? '[name].[contenthash].js' : '[name].js',
+    filename: includeHashInOutputFilename
+      ? '[name].[contenthash].js'
+      : '[name].js',
     publicPath: publicUrl,
   };
 }

@@ -10,10 +10,8 @@ export function receiveFixtureStateChangeResponse(
 ) {
   const { rendererId, fixtureId, fixtureState } = payload;
   const selectedFixtureId = getSelectedFixtureId(context);
-  const {
-    primaryRendererId,
-    fixtureState: prevFixtureState,
-  } = context.getState();
+  const { primaryRendererId, fixtureState: prevFixtureState } =
+    context.getState();
 
   if (!isEqual(fixtureId, selectedFixtureId)) {
     console.warn(

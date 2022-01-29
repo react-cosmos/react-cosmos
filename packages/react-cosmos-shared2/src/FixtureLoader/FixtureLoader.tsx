@@ -155,12 +155,8 @@ export class FixtureLoader extends Component<Props, State> {
     }
 
     const { fixtures } = this.props;
-    const {
-      fixtureId,
-      fixtureStatus,
-      fixtureRef,
-      fixtureState,
-    } = selectedFixture;
+    const { fixtureId, fixtureStatus, fixtureRef, fixtureState } =
+      selectedFixture;
     // Falsy check doesn't do because fixtures can be any Node, including
     // null or undefined.
     if (!fixtures.hasOwnProperty(fixtureId.path)) {
