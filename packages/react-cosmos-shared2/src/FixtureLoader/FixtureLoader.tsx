@@ -1,19 +1,15 @@
 import { isEqual } from 'lodash';
-import React, { Component, ReactNode } from 'react';
+import React, { Component } from 'react';
 import { FixtureState, SetFixtureState } from '../fixtureState';
 import {
   getFixtureListFromWrappers,
-  isMultiFixture,
   ReactDecorator,
   ReactDecorators,
-  ReactFixtureModule,
-  ReactFixtureWrapper,
   ReactFixtureWrappers,
 } from '../react';
 import {
   FixtureId,
   FixtureList,
-  FixtureListItem,
   RendererConnect,
   RendererRequest,
   RendererResponse,
@@ -36,8 +32,6 @@ export type Props = {
 
 type SelectedFixture = {
   fixtureId: FixtureId;
-  fixtureStatus: 'loading' | 'ready';
-  fixtureRef: null | ReactNode;
   fixtureState: FixtureState;
   // Why is this copy of the fixtureState needed? Two reasons:
   // - To avoid posting fixtureStateChange messages with no changes from
@@ -56,28 +50,10 @@ type State = {
   renderKey: number;
 };
 
-function getSelectedFixture(props: Props): SelectedFixture | null {
-  const { fixtures, selectedFixtureId } = props;
-  if (!selectedFixtureId) return null;
-
-  const fixtureWrapper = fixtures[selectedFixtureId.path] as
-    | ReactFixtureWrapper
-    | undefined;
-
-  if (!fixtureWrapper) {
-    return {
-      fixtureId: selectedFixtureId,
-      fixtureStatus: 'ready',
-      fixtureRef: null,
-      fixtureState: {},
-      syncedFixtureState: {},
-    };
-  }
-
+function getSelectedFixture(fixtureId: FixtureId | null) {
+  if (!fixtureId) return null;
   return {
-    fixtureId: selectedFixtureId,
-    fixtureStatus: 'ready',
-    fixtureRef: fixtureWrapper.module.default,
+    fixtureId: fixtureId,
     fixtureState: {},
     syncedFixtureState: {},
   };
@@ -86,7 +62,7 @@ function getSelectedFixture(props: Props): SelectedFixture | null {
 export class FixtureLoader extends Component<Props, State> {
   state: State = {
     fixtureList: getFixtureListFromWrappers(this.props.fixtures),
-    selectedFixture: getSelectedFixture(this.props),
+    selectedFixture: getSelectedFixture(this.props.selectedFixtureId),
     renderKey: 0,
   };
 
@@ -116,21 +92,6 @@ export class FixtureLoader extends Component<Props, State> {
     const { selectedFixture } = this.state;
     if (selectedFixture) {
       const { fixtureId, fixtureState, syncedFixtureState } = selectedFixture;
-
-      // Update module ref
-      const fixtureWrapper = fixtures[fixtureId.path] as
-        | ReactFixtureWrapper
-        | undefined;
-
-      if (fixtureWrapper) {
-        this.setState({
-          selectedFixture: {
-            ...selectedFixture,
-            fixtureRef: fixtureWrapper.module.default,
-          },
-        });
-      }
-
       if (fixtureId && !isEqual(fixtureState, syncedFixtureState)) {
         this.postFixtureStateChange(fixtureId, fixtureState);
         this.updateSyncedFixtureState(fixtureState);
@@ -151,20 +112,16 @@ export class FixtureLoader extends Component<Props, State> {
     }
 
     const { fixtures } = this.props;
-    const { fixtureId, fixtureStatus, fixtureRef, fixtureState } =
-      selectedFixture;
+    const { fixtureId, fixtureState } = selectedFixture;
+
     // Falsy check doesn't do because fixtures can be any Node, including
     // null or undefined.
     if (!fixtures.hasOwnProperty(fixtureId.path)) {
       return this.renderMessage(`Fixture path not found: ${fixtureId.path}`);
     }
 
-    if (fixtureStatus === 'loading') {
-      return null;
-    }
-
-    // const fixtureExport = fixtures[fixtureId.path];
-    const fixture = getFixture(fixtureRef, fixtureId.name);
+    const fixtureExport = fixtures[fixtureId.path].module.default;
+    const fixture = getFixture(fixtureExport, fixtureId.name);
 
     if (typeof fixture === 'undefined') {
       return this.renderMessage(
@@ -221,32 +178,9 @@ export class FixtureLoader extends Component<Props, State> {
 
   handleSelectFixtureRequest({ payload }: SelectFixtureRequest) {
     const { fixtureId, fixtureState } = payload;
-
-    const { fixtures } = this.props;
-    const fixtureWrapper = fixtures[fixtureId.path] as
-      | ReactFixtureWrapper
-      | undefined;
-
-    if (!fixtureWrapper) {
-      // Go into "fixture not found" state
-      this.setState({
-        selectedFixture: {
-          fixtureId,
-          fixtureStatus: 'ready',
-          fixtureRef: null,
-          fixtureState: {},
-          syncedFixtureState: {},
-        },
-        renderKey: 0,
-      });
-      return;
-    }
-
     this.setState({
       selectedFixture: {
         fixtureId,
-        fixtureStatus: 'ready',
-        fixtureRef: fixtureWrapper.module.default,
         fixtureState,
         syncedFixtureState: fixtureState,
       },
@@ -268,7 +202,7 @@ export class FixtureLoader extends Component<Props, State> {
     if (selectedFixture && isEqual(fixtureId, selectedFixture.fixtureId)) {
       this.setState({
         selectedFixture: {
-          ...selectedFixture,
+          fixtureId,
           fixtureState,
           syncedFixtureState: fixtureState,
         },
@@ -376,35 +310,6 @@ export class FixtureLoader extends Component<Props, State> {
       ? this.props.renderMessage({ msg })
       : msg;
   }
-
-  createModuleLoad = (fixtureId: FixtureId) => (module: ReactFixtureModule) => {
-    const fixtureExport = module.default;
-    const { selectedFixture } = this.state;
-
-    // Fixture changed while module was dynamically importing
-    if (!selectedFixture || !isEqual(selectedFixture.fixtureId, fixtureId)) {
-      return;
-    }
-
-    const fixtureItem: FixtureListItem = isMultiFixture(fixtureExport)
-      ? { type: 'multi', fixtureNames: Object.keys(fixtureExport) }
-      : { type: 'single' };
-
-    this.setState(
-      {
-        fixtureList: {
-          ...this.state.fixtureList,
-          [fixtureId.path]: fixtureItem,
-        },
-        selectedFixture: {
-          ...selectedFixture,
-          fixtureStatus: 'ready',
-          fixtureRef: fixtureExport,
-        },
-      },
-      this.postFixtureListUpdate
-    );
-  };
 }
 
 function doesRequestChangeFixture(r: RendererRequest) {
