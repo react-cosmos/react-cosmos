@@ -24,6 +24,7 @@ module.exports = function injectUserDeps(this: LoaderContext) {
 
   const { containerQuerySelector } = createDomCosmosConfig(cosmosConfig);
   const rendererConfig: DomRendererConfig = { containerQuerySelector };
+  // TODO: Read already-loaded fixtures from server state
   return generateUserDepsModule({
     cosmosConfig,
     rendererConfig,

@@ -3,6 +3,7 @@ import slash from 'slash';
 import { Json } from './shared';
 
 // TODO: Add lazy true|false option
+// TODO: Receive list of loaded modules and only make the other fixtures lazy
 type Args = {
   globalImports: string[];
   fixturePaths: string[];
