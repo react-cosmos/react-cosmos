@@ -4,7 +4,7 @@ import { omit } from 'lodash';
 import webpack from 'webpack';
 import { CosmosConfig } from '../../../config';
 import { RENDERER_FILENAME } from '../../../shared/playgroundHtml';
-import { hasPlugin, isInstanceOfPlugin } from './shared';
+import { hasPlugin, isInstanceOfPlugin } from './plugins';
 
 // prettier-ignore
 export type HtmlWebpackPlugin = webpack.WebpackPluginInstance & {

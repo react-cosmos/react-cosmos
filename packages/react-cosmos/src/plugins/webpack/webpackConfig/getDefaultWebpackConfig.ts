@@ -1,7 +1,7 @@
 import resolveFrom from 'resolve-from';
 import webpack from 'webpack';
 import { RENDERER_FILENAME } from '../../../shared/playgroundHtml';
-import { getNodeEnv } from './shared';
+import { getNodeEnv } from './getNodeEnv';
 import { getHtmlWebpackPlugin } from './htmlPlugin';
 
 // This config doesn't have entry and output set up because it's not meant to
