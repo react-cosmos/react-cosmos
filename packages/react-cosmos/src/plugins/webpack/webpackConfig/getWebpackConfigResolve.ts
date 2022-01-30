@@ -7,16 +7,28 @@ export function getWebpackConfigResolve(
   cosmosConfig: CosmosConfig,
   webpackConfig: webpack.Configuration
 ): webpack.ResolveOptions {
-  return resolveLocalReactDeps(cosmosConfig, webpackConfig);
+  return removeModuleScopePlugin(
+    resolveLocalReactDeps(cosmosConfig, webpackConfig.resolve)
+  );
+}
+
+function removeModuleScopePlugin(resolve: webpack.ResolveOptions = {}) {
+  const { plugins } = resolve;
+  if (!plugins) return resolve;
+  return {
+    ...resolve,
+    plugins: plugins.filter(
+      p => !isInstanceOfResolvePlugin(p, 'ModuleScopePlugin')
+    ),
+  };
 }
 
 function resolveLocalReactDeps(
   cosmosConfig: CosmosConfig,
-  webpackConfig: webpack.Configuration
+  resolve: webpack.ResolveOptions = {}
 ): webpack.ResolveOptions {
   const { rootDir } = cosmosConfig;
 
-  const { resolve = {} } = webpackConfig;
   let alias = resolve.alias || {};
 
   // Preserve existing React aliases (eg. when using Preact)
@@ -69,4 +81,11 @@ function addAlias(
   return Array.isArray(alias)
     ? [...alias, { name, alias: value }]
     : { ...alias, [name]: value };
+}
+
+export function isInstanceOfResolvePlugin(
+  plugin: webpack.ResolvePluginInstance | '...',
+  constructorName: string
+) {
+  return plugin.constructor && plugin.constructor.name === constructorName;
 }

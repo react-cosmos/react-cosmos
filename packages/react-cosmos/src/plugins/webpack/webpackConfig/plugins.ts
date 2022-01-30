@@ -23,11 +23,12 @@ export function hasPlugin(
   pluginName: string
 ) {
   return (
-    plugins && plugins.filter(p => isInstanceOfPlugin(p, pluginName)).length > 0
+    plugins &&
+    plugins.filter(p => isInstanceOfWebpackPlugin(p, pluginName)).length > 0
   );
 }
 
-export function isInstanceOfPlugin(
+export function isInstanceOfWebpackPlugin(
   plugin: webpack.WebpackPluginInstance,
   constructorName: string
 ) {

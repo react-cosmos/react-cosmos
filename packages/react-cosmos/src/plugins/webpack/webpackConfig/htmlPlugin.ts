@@ -4,7 +4,7 @@ import { omit } from 'lodash';
 import webpack from 'webpack';
 import { CosmosConfig } from '../../../config';
 import { RENDERER_FILENAME } from '../../../shared/playgroundHtml';
-import { hasPlugin, isInstanceOfPlugin } from './plugins';
+import { hasPlugin, isInstanceOfWebpackPlugin } from './plugins';
 
 // prettier-ignore
 export type HtmlWebpackPlugin = webpack.WebpackPluginInstance & {
@@ -52,7 +52,7 @@ export function getHtmlWebpackPlugin(rootDir: string) {
 function isHtmlWebpackPlugin(
   plugin: webpack.WebpackPluginInstance
 ): plugin is HtmlWebpackPlugin {
-  return isInstanceOfPlugin(plugin, 'HtmlWebpackPlugin');
+  return isInstanceOfWebpackPlugin(plugin, 'HtmlWebpackPlugin');
 }
 
 function changeHtmlPluginFilename(htmlPlugin: HtmlWebpackPlugin) {
