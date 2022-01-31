@@ -1,7 +1,9 @@
 import webpack from 'webpack';
 import { resolveWebpackClientPath } from './resolveWebpackClientPath';
 
-export function getWebpackConfigModule(webpackConfig: webpack.Configuration) {
+export function getWebpackConfigModule(
+  webpackConfig: webpack.Configuration
+): webpack.ModuleOptions {
   return {
     ...webpackConfig.module,
     rules: getRules(webpackConfig),
