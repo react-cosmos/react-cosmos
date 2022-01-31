@@ -2,15 +2,12 @@ import path from 'path';
 import webpack from 'webpack';
 import { CosmosConfig } from '../../../config';
 import { createWebpackCosmosConfig } from '../cosmosConfig/webpack';
+import { getUserWebpackConfig } from './getUserWebpackConfig';
+import { getWebpackConfigResolve } from './getWebpackConfigResolve';
+import { getWebpackConfigModule } from './getWebpackConfigModule';
 import { ensureHtmlWebackPlugin } from './htmlPlugin';
-import {
-  getGlobalsPlugin,
-  getUserDepsLoaderRule,
-  getUserWebpackConfig,
-  hasPlugin,
-  resolveClientPath,
-  resolveLocalReactDeps,
-} from './shared';
+import { getGlobalsPlugin, hasPlugin } from './plugins';
+import { resolveWebpackClientPath } from './resolveWebpackClientPath';
 
 export async function getDevWebpackConfig(
   cosmosConfig: CosmosConfig,
@@ -25,11 +22,8 @@ export async function getDevWebpackConfig(
     ...baseWebpackConfig,
     entry: getEntry(cosmosConfig),
     output: getOutput(cosmosConfig),
-    module: {
-      ...baseWebpackConfig.module,
-      rules: getRules(baseWebpackConfig),
-    },
-    resolve: resolveLocalReactDeps(cosmosConfig, baseWebpackConfig),
+    module: getWebpackConfigModule(baseWebpackConfig),
+    resolve: getWebpackConfigResolve(cosmosConfig, baseWebpackConfig),
     plugins: getPlugins(cosmosConfig, baseWebpackConfig, userWebpack),
   };
 
@@ -55,8 +49,8 @@ function getEntry(cosmosConfig: CosmosConfig) {
   const { hotReload, reloadOnFail } = createWebpackCosmosConfig(cosmosConfig);
   // The React devtools hook needs to be imported before any other module that
   // might import React
-  const devtoolsHook = resolveClientPath('reactDevtoolsHook');
-  const clientIndex = resolveClientPath('index');
+  const devtoolsHook = resolveWebpackClientPath('reactDevtoolsHook');
+  const clientIndex = resolveWebpackClientPath('index');
 
   return hotReload
     ? [devtoolsHook, getHotMiddlewareEntry(reloadOnFail), clientIndex]
@@ -72,12 +66,6 @@ function getOutput({ publicUrl }: CosmosConfig) {
     devtoolModuleFilenameTemplate: (info: { absoluteResourcePath: string }) =>
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
   };
-}
-
-function getRules(baseWebpackConfig: webpack.Configuration) {
-  const existingRules =
-    (baseWebpackConfig.module && baseWebpackConfig.module.rules) || [];
-  return [...existingRules, getUserDepsLoaderRule()];
 }
 
 function getPlugins(
