@@ -1,6 +1,6 @@
 import webpack from 'webpack';
 import { CosmosConfig } from '../../../config';
-import { getNodeEnv } from './getNodeEnv';
+import { getWebpackNodeEnv } from './getWebpackNodeEnv';
 
 export function getGlobalsPlugin(
   { publicUrl }: CosmosConfig,
@@ -12,7 +12,7 @@ export function getGlobalsPlugin(
     // "if (__DEV__)" blocks get stripped when compiling a static export build
     __DEV__: JSON.stringify(devServerOn),
     'process.env': {
-      NODE_ENV: JSON.stringify(getNodeEnv()),
+      NODE_ENV: JSON.stringify(getWebpackNodeEnv()),
       PUBLIC_URL: JSON.stringify(cleanPublicUrl),
     },
   });

@@ -5,7 +5,7 @@ import { getCliArgs } from '../../../shared/cli';
 import { moduleExists, requireModule } from '../../../shared/fs';
 import { createWebpackCosmosConfig } from '../cosmosConfig/webpack';
 import { getDefaultWebpackConfig } from './getDefaultWebpackConfig';
-import { getNodeEnv } from './getNodeEnv';
+import { getWebpackNodeEnv } from './getWebpackNodeEnv';
 
 type WebpackConfigExport =
   | webpack.Configuration
@@ -43,7 +43,7 @@ export async function getUserWebpackConfig(
     requireModule(overridePath)
   ) as WebpackOverride;
 
-  return webpackOverride(baseWebpackConfig, getNodeEnv());
+  return webpackOverride(baseWebpackConfig, getWebpackNodeEnv());
 }
 
 async function getBaseWebpackConfig(
@@ -66,7 +66,7 @@ async function getBaseWebpackConfig(
   ) as WebpackConfigExport;
   const cliArgs = getCliArgs();
   return typeof userConfigExport === 'function'
-    ? await userConfigExport(cliArgs.env || getNodeEnv(), cliArgs)
+    ? await userConfigExport(cliArgs.env || getWebpackNodeEnv(), cliArgs)
     : userConfigExport;
 }
 
