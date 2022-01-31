@@ -1,4 +1,4 @@
-import { replaceKeys } from '../shared/shared';
+import { replaceKeys } from '../shared/utils';
 
 export type Json =
   | string

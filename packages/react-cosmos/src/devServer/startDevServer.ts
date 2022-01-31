@@ -9,8 +9,8 @@ import {
   detectCosmosConfigPath,
 } from '../config';
 import { getPluginConfigs } from '../shared/pluginConfigs';
-import { PlatformType } from '../shared/shared';
 import { serveStaticDir } from '../shared/static';
+import { PlatformType } from '../shared/types';
 import { createApp } from './app';
 import { createHttpServer } from './httpServer';
 import { createMessageHandler } from './messageHandler';

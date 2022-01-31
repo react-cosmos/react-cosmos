@@ -1,11 +1,11 @@
 import path from 'path';
 import webpack from 'webpack';
 import { CosmosConfig } from '../../../config';
-import { removeLeadingSlash } from '../../../shared/shared';
+import { removeLeadingSlash } from '../../../shared/utils';
 import { createWebpackCosmosConfig } from '../cosmosConfig/webpack';
 import { getUserWebpackConfig } from './getUserWebpackConfig';
-import { getWebpackConfigResolve } from './getWebpackConfigResolve';
 import { getWebpackConfigModule } from './getWebpackConfigModule';
+import { getWebpackConfigResolve } from './getWebpackConfigResolve';
 import { ensureHtmlWebackPlugin } from './htmlPlugin';
 import { getGlobalsPlugin } from './plugins';
 import { resolveWebpackClientPath } from './resolveWebpackClientPath';

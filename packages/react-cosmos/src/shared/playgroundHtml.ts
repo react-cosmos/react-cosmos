@@ -7,8 +7,9 @@ import {
 import { CosmosPluginConfig } from 'react-cosmos-plugin';
 import url from 'url';
 import { CosmosConfig } from '../config';
-import { PlatformType, replaceKeys } from './shared';
 import { getStaticPath } from './static';
+import { PlatformType } from './types';
+import { replaceKeys } from './utils';
 
 export const RENDERER_FILENAME = '_renderer.html';
 
