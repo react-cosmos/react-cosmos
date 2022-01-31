@@ -2,10 +2,10 @@ import fs from 'fs-extra';
 import path from 'path';
 import { CosmosPluginConfig } from 'react-cosmos-plugin';
 import { CosmosConfig, detectCosmosConfig } from '../config';
-import { getExportPlaygroundHtml } from './playgroundHtml';
-import { getPluginConfigs } from './pluginConfigs';
-import { removeLeadingSlash } from './shared';
-import { getStaticPath } from './static';
+import { getExportPlaygroundHtml } from '../shared/playgroundHtml';
+import { getPluginConfigs } from '../shared/pluginConfigs';
+import { removeLeadingSlash } from '../shared/shared';
+import { getStaticPath } from '../shared/static';
 
 export type ExportPluginArgs = {
   cosmosConfig: CosmosConfig;

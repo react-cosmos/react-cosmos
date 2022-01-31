@@ -1,5 +1,5 @@
 import webpack, { StatsCompilation } from 'webpack';
-import { ExportPluginArgs } from '../../shared/export';
+import { ExportPluginArgs } from '../../export/generateExport';
 import { getWebpack } from './shared';
 import { getExportWebpackConfig } from './webpackConfig';
 

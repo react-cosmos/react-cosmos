@@ -4,7 +4,7 @@ import path from 'path';
 import { BuildMessage } from 'react-cosmos-shared2/build';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-import { DevServerPluginArgs } from '../../shared/devServer';
+import { DevServerPluginArgs } from '../../devServer/startDevServer';
 import { removeLeadingDot } from '../../shared/shared';
 import { serveStaticDir } from '../../shared/static';
 import { createWebpackCosmosConfig } from './cosmosConfig/webpack';

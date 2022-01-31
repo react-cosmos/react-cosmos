@@ -1,10 +1,10 @@
 import express from 'express';
 import { CosmosPluginConfig } from 'react-cosmos-plugin';
 import resolveFrom from 'resolve-from';
-import { CosmosConfig } from '../../config';
-import { getDevPlaygroundHtml } from '../playgroundHtml';
-import { PlatformType } from '../shared';
-import { getStaticPath } from '../static';
+import { CosmosConfig } from '../config';
+import { getDevPlaygroundHtml } from '../shared/playgroundHtml';
+import { PlatformType } from '../shared/shared';
+import { getStaticPath } from '../shared/static';
 
 export function createApp(
   platformType: PlatformType,

@@ -7,10 +7,10 @@ import {
   CosmosConfig,
   detectCosmosConfig,
   detectCosmosConfigPath,
-} from '../../config';
-import { getPluginConfigs } from '../pluginConfigs';
-import { PlatformType } from '../shared';
-import { serveStaticDir } from '../static';
+} from '../config';
+import { getPluginConfigs } from '../shared/pluginConfigs';
+import { PlatformType } from '../shared/shared';
+import { serveStaticDir } from '../shared/static';
 import { createApp } from './app';
 import { createHttpServer } from './httpServer';
 import { createMessageHandler } from './messageHandler';

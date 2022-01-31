@@ -10,7 +10,7 @@ import {
 } from 'react-cosmos-shared2/react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { CosmosConfig } from './config';
-import { getUserModules } from './shared/userDeps';
+import { getUserModules } from './userDeps';
 
 type Args = {
   cosmosConfig: CosmosConfig;

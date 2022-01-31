@@ -1,10 +1,10 @@
-import fs from 'fs';
-import path from 'path';
-import open from 'open';
 import launchEditor from '@skidding/launch-editor';
 import express from 'express';
+import fs from 'fs';
+import open from 'open';
+import path from 'path';
 import { CosmosConfig } from '../config/shared';
-import { DevServerPluginArgs } from '../shared/devServer';
+import { DevServerPluginArgs } from '../devServer/startDevServer';
 
 type ReqQuery = { filePath: void | string; line: number; column: number };
 

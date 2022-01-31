@@ -1,6 +1,6 @@
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { CosmosConfig } from '../config/shared';
-import { DevServerPluginArgs } from '../shared/devServer';
+import { DevServerPluginArgs } from '../devServer/startDevServer';
 
 type HttpProxyConfig = {
   [context: string]:

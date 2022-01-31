@@ -20,7 +20,7 @@ import {
 import url from 'url';
 import { CosmosConfig } from './config';
 import { RENDERER_FILENAME } from './shared/playgroundHtml';
-import { getUserModules } from './shared/userDeps';
+import { getUserModules } from './userDeps';
 
 export type FixtureApi = {
   absoluteFilePath: string;

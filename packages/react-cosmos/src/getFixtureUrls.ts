@@ -6,7 +6,7 @@ import {
 } from 'react-cosmos-shared2/url';
 import { CosmosConfig } from './config';
 import { RENDERER_FILENAME } from './shared/playgroundHtml';
-import { getUserModules } from './shared/userDeps';
+import { getUserModules } from './userDeps';
 
 type Args = {
   cosmosConfig: CosmosConfig;

@@ -4,15 +4,15 @@ import { debounce } from 'lodash';
 import path from 'path';
 import promisify from 'util.promisify';
 import { CosmosConfig } from '../config';
+import { DevServerPluginArgs } from '../devServer/startDevServer';
 import { getCliArgs } from '../shared/cli';
-import { DevServerPluginArgs } from '../shared/devServer';
 import { NativeRendererConfig } from '../shared/rendererConfig';
 import {
   generateUserDepsModule,
   getDecoratorPatterns,
   getFixturePatterns,
   getIgnorePatterns,
-} from '../shared/userDeps';
+} from '../userDeps';
 
 const writeFileAsync = promisify(writeFile);
 
