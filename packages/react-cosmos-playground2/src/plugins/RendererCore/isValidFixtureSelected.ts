@@ -1,4 +1,3 @@
-import { FixtureId } from 'react-cosmos-shared2/renderer';
 import { RendererCoreContext } from './shared';
 import { getSelectedFixtureId } from './shared/router';
 
@@ -13,19 +12,9 @@ export function isValidFixtureSelected(context: RendererCoreContext) {
     return false;
   }
 
-  const fixtureNames = fixtures[fixtureId.path];
-  return fixtureNames === null
-    ? doesFixtureIdMatchUnnamedFixture(fixtureId)
-    : doesFixtureIdMatchNamedFixtures(fixtureId, fixtureNames);
-}
-
-function doesFixtureIdMatchUnnamedFixture(fixtureId: FixtureId) {
-  return fixtureId.name === null;
-}
-
-function doesFixtureIdMatchNamedFixtures(
-  fixtureId: FixtureId,
-  fixtureNames: string[]
-) {
-  return fixtureId.name !== null && fixtureNames.indexOf(fixtureId.name) !== -1;
+  const fixtureItem = fixtures[fixtureId.path];
+  return fixtureItem.type === 'multi'
+    ? fixtureId.name !== undefined &&
+        fixtureItem.fixtureNames.indexOf(fixtureId.name) !== -1
+    : fixtureId.name === undefined;
 }

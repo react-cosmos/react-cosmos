@@ -45,7 +45,9 @@ ${decoratorKeys
 export const rendererConfig = ${JSON.stringify(rendererConfig, null, 2)};
 
 export const fixtures = {
-${fixtureKeys.map((k, i) => `  '${k}': fixture${i}`).join(`,\n`)}
+${fixtureKeys
+  .map((k, i) => `  '${k}': { module: { default: fixture${i} } }`)
+  .join(`,\n`)}
 };
 
 export const decorators = {
