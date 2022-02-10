@@ -4,10 +4,10 @@ import path from 'path';
 import { CosmosPluginConfig } from 'react-cosmos-plugin';
 import { Message } from 'react-cosmos-shared2/util';
 import {
-  CosmosConfig,
   detectCosmosConfig,
   detectCosmosConfigPath,
-} from '../config';
+} from '../config/detectCosmosConfig';
+import { CosmosConfig } from '../config/shared';
 import { getPluginConfigs } from '../shared/pluginConfigs';
 import { serveStaticDir } from '../shared/static';
 import { PlatformType } from '../shared/types';

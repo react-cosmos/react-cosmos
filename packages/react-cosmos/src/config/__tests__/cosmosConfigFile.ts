@@ -1,9 +1,10 @@
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs';
 import { mockCosmosConfig, unmockFs } from '../../testHelpers/mockFs';
+
 // NOTE: This is the only config test file where the config file is mocked.
 // Mocking the config file provides extra coverage, but the rest of the test
 // files instantiate a CosmosConfig class by hand to minimize boilerplate.
-import { detectCosmosConfig } from '..';
+import { detectCosmosConfig } from '../detectCosmosConfig';
 
 afterEach(() => {
   unmockCliArgs();

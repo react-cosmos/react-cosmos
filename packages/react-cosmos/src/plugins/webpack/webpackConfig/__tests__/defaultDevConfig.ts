@@ -3,7 +3,7 @@ import { unmockCliArgs } from '../../../../testHelpers/mockYargs';
 import { mockConsole } from '../../../../testHelpers/mockConsole';
 
 import webpack from 'webpack';
-import { createCosmosConfig } from '../../../../config';
+import { createCosmosConfig } from '../../../../config/createCosmosConfig';
 import { RENDERER_FILENAME } from '../../../../shared/playgroundHtml';
 import { HtmlWebpackPlugin } from '../htmlPlugin';
 import { getDevWebpackConfig } from '../getDevWebpackConfig';

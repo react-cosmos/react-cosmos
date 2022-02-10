@@ -1,4 +1,4 @@
-import { detectCosmosConfig } from '../../../config';
+import { detectCosmosConfig } from '../../../config/detectCosmosConfig';
 import { DomRendererConfig } from '../../../shared/rendererConfig';
 import { generateUserDepsModule } from '../../../userDeps/generateUserDepsModule';
 import { createDomCosmosConfig } from '../cosmosConfig/dom';

@@ -6,7 +6,7 @@ import {
   ReactFixtureExports,
 } from 'react-cosmos-shared2/react';
 import slash from 'slash';
-import { CosmosConfig } from '../config';
+import { CosmosConfig } from '../config/shared';
 import { findUserModulePaths } from './findUserModulePaths';
 
 type UserModules = {

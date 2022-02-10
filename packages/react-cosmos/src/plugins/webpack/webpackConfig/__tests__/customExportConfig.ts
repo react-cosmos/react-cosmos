@@ -5,7 +5,7 @@ import { mockFile } from '../../../../testHelpers/mockFs';
 
 import webpack from 'webpack';
 import { getCwdPath } from '../../../../testHelpers/cwd';
-import { createCosmosConfig } from '../../../../config';
+import { createCosmosConfig } from '../../../../config/createCosmosConfig';
 import { RENDERER_FILENAME } from '../../../../shared/playgroundHtml';
 import { HtmlWebpackPlugin } from '../htmlPlugin';
 import { getExportWebpackConfig } from '../getExportWebpackConfig';

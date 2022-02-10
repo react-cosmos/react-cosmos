@@ -2,7 +2,7 @@ import { Options as HtmlWebpackPluginOptions } from 'html-webpack-plugin';
 import importFrom from 'import-from';
 import { omit } from 'lodash';
 import webpack from 'webpack';
-import { CosmosConfig } from '../../../config';
+import { CosmosConfig } from '../../../config/shared';
 import { RENDERER_FILENAME } from '../../../shared/playgroundHtml';
 import { hasPlugin, isInstanceOfWebpackPlugin } from './plugins';
 

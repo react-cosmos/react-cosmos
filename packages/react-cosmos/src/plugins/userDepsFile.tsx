@@ -3,7 +3,7 @@ import { writeFile } from 'fs';
 import { debounce } from 'lodash';
 import path from 'path';
 import promisify from 'util.promisify';
-import { CosmosConfig } from '../config';
+import { CosmosConfig } from '../config/shared';
 import { DevServerPluginArgs } from '../devServer/startDevServer';
 import { getCliArgs } from '../shared/cli';
 import { NativeRendererConfig } from '../shared/rendererConfig';

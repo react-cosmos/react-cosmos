@@ -1,4 +1,4 @@
-import { CosmosConfig } from '../config';
+import { CosmosConfig } from '../config/shared';
 import { findUserModulePaths } from './findUserModulePaths';
 import { Json } from './shared';
 import { userDepsTemplate } from './userDepsTemplate';

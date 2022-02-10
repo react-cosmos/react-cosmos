@@ -9,7 +9,7 @@ import {
   ReactFixtureMap,
 } from 'react-cosmos-shared2/react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { CosmosConfig } from './config';
+import { CosmosConfig } from './config/shared';
 import { getUserModules } from './userDeps/getUserModules';
 
 type Args = {

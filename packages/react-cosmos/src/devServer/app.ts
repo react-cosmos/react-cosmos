@@ -1,7 +1,7 @@
 import express from 'express';
 import { CosmosPluginConfig } from 'react-cosmos-plugin';
 import resolveFrom from 'resolve-from';
-import { CosmosConfig } from '../config';
+import { CosmosConfig } from '../config/shared';
 import { getDevPlaygroundHtml } from '../shared/playgroundHtml';
 import { getStaticPath } from '../shared/static';
 import { PlatformType } from '../shared/types';
