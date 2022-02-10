@@ -1,7 +1,7 @@
 import webpack, { StatsCompilation } from 'webpack';
 import { ExportPluginArgs } from '../../export/generateExport';
 import { getWebpack } from './shared';
-import { getExportWebpackConfig } from './webpackConfig';
+import { getExportWebpackConfig } from './webpackConfig/getExportWebpackConfig';
 
 export async function webpackExport({ cosmosConfig }: ExportPluginArgs) {
   const userWebpack = getWebpack(cosmosConfig.rootDir);

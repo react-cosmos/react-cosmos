@@ -9,7 +9,7 @@ import { serveStaticDir } from '../../shared/static';
 import { removeLeadingDot } from '../../shared/utils';
 import { createWebpackCosmosConfig } from './cosmosConfig/webpack';
 import { getWebpack } from './shared';
-import { getDevWebpackConfig } from './webpackConfig';
+import { getDevWebpackConfig } from './webpackConfig/getDevWebpackConfig';
 
 type WebpackConfig = webpack.Configuration & {
   // webpack-dev-server options (no need to install WDS just for these types)

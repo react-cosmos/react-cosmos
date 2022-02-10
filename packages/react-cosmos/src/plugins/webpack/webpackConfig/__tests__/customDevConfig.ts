@@ -7,7 +7,7 @@ import webpack from 'webpack';
 import { createCosmosConfig } from '../../../../config';
 import { RENDERER_FILENAME } from '../../../../shared/playgroundHtml';
 import { HtmlWebpackPlugin } from '../htmlPlugin';
-import { getDevWebpackConfig } from '..';
+import { getDevWebpackConfig } from '../getDevWebpackConfig';
 
 const mockWebpackConfig = jest.fn(() => ({
   module: { rules: [MY_RULE] },
