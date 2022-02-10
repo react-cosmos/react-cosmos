@@ -4,9 +4,9 @@ import {
   stringifyPlaygroundUrlQuery,
   stringifyRendererUrlQuery,
 } from 'react-cosmos-shared2/url';
-import { CosmosConfig } from './config';
+import { CosmosConfig } from './config/shared';
 import { RENDERER_FILENAME } from './shared/playgroundHtml';
-import { getUserModules } from './shared/userDeps';
+import { getUserModules } from './userDeps/getUserModules';
 
 type Args = {
   cosmosConfig: CosmosConfig;

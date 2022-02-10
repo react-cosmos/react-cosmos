@@ -1,4 +1,4 @@
-import { createCosmosConfig } from '..';
+import { createCosmosConfig } from '../createCosmosConfig';
 
 it('returns default fixturesDir', () => {
   const cosmosConfig = createCosmosConfig(process.cwd(), {});

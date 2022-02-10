@@ -3,8 +3,8 @@ import { mockConsole } from '../../../../testHelpers/mockConsole';
 import { mockFile } from '../../../../testHelpers/mockFs';
 
 import webpack from 'webpack';
-import { getDevWebpackConfig } from '..';
-import { createCosmosConfig } from '../../../../config';
+import { createCosmosConfig } from '../../../../config/createCosmosConfig';
+import { getDevWebpackConfig } from '../getDevWebpackConfig';
 
 async function getCustomDevWebpackConfig() {
   return mockConsole(async ({ expectLog }) => {

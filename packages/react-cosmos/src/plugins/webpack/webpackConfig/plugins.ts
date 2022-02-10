@@ -1,5 +1,5 @@
 import webpack from 'webpack';
-import { CosmosConfig } from '../../../config';
+import { CosmosConfig } from '../../../config/shared';
 import { getWebpackNodeEnv } from './getWebpackNodeEnv';
 
 export function getGlobalsPlugin(

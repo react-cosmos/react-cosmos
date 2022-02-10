@@ -9,8 +9,8 @@ import {
   ReactFixtureMap,
 } from 'react-cosmos-shared2/react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { CosmosConfig } from './config';
-import { getUserModules } from './shared/userDeps';
+import { CosmosConfig } from './config/shared';
+import { getUserModules } from './userDeps/getUserModules';
 
 type Args = {
   cosmosConfig: CosmosConfig;

@@ -1,13 +1,14 @@
-import webpack from 'webpack';
 // NOTE: Mock files need to imported before modules that use the mocked APIs
 import { unmockCliArgs } from '../../../../testHelpers/mockYargs';
-import { getCwdPath } from '../../../../testHelpers/cwd';
 import { mockConsole } from '../../../../testHelpers/mockConsole';
 import { mockFile } from '../../../../testHelpers/mockFs';
-import { createCosmosConfig } from '../../../../config';
+
+import webpack from 'webpack';
+import { getCwdPath } from '../../../../testHelpers/cwd';
+import { createCosmosConfig } from '../../../../config/createCosmosConfig';
 import { RENDERER_FILENAME } from '../../../../shared/playgroundHtml';
 import { HtmlWebpackPlugin } from '../htmlPlugin';
-import { getExportWebpackConfig } from '..';
+import { getExportWebpackConfig } from '../getExportWebpackConfig';
 
 beforeAll(() => {
   mockFile('mywebpack.config.js', {

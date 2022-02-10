@@ -1,5 +1,6 @@
 import path from 'path';
-import { CosmosConfig, resolveModule } from '../../../config';
+import { resolveModule } from '../../../config/resolveModule';
+import { CosmosConfig } from '../../../config/shared';
 import { fileExists } from '../../../shared/fs';
 
 type WebpackCosmosConfig = {

@@ -4,13 +4,13 @@ import path from 'path';
 import { CosmosPluginConfig } from 'react-cosmos-plugin';
 import { Message } from 'react-cosmos-shared2/util';
 import {
-  CosmosConfig,
   detectCosmosConfig,
   detectCosmosConfigPath,
-} from '../../config';
-import { getPluginConfigs } from '../pluginConfigs';
-import { PlatformType } from '../shared';
-import { serveStaticDir } from '../static';
+} from '../config/detectCosmosConfig';
+import { CosmosConfig } from '../config/shared';
+import { getPluginConfigs } from '../shared/pluginConfigs';
+import { serveStaticDir } from '../shared/static';
+import { PlatformType } from '../shared/types';
 import { createApp } from './app';
 import { createHttpServer } from './httpServer';
 import { createMessageHandler } from './messageHandler';

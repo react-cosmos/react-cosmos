@@ -1,10 +1,10 @@
 import path from 'path';
 import webpack from 'webpack';
-import { CosmosConfig } from '../../../config';
+import { CosmosConfig } from '../../../config/shared';
 import { createWebpackCosmosConfig } from '../cosmosConfig/webpack';
 import { getUserWebpackConfig } from './getUserWebpackConfig';
-import { getWebpackConfigResolve } from './getWebpackConfigResolve';
 import { getWebpackConfigModule } from './getWebpackConfigModule';
+import { getWebpackConfigResolve } from './getWebpackConfigResolve';
 import { ensureHtmlWebackPlugin } from './htmlPlugin';
 import { getGlobalsPlugin, hasPlugin } from './plugins';
 import { resolveWebpackClientPath } from './resolveWebpackClientPath';
