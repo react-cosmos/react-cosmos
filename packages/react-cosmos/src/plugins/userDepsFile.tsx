@@ -7,12 +7,12 @@ import { CosmosConfig } from '../config';
 import { DevServerPluginArgs } from '../devServer/startDevServer';
 import { getCliArgs } from '../shared/cli';
 import { NativeRendererConfig } from '../shared/rendererConfig';
+import { generateUserDepsModule } from '../userDeps/generateUserDepsModule';
 import {
-  generateUserDepsModule,
   getDecoratorPatterns,
   getFixturePatterns,
   getIgnorePatterns,
-} from '../userDeps';
+} from '../userDeps/shared';
 
 const writeFileAsync = promisify(writeFile);
 
