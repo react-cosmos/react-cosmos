@@ -7,19 +7,11 @@ import {
   ReactDecorators,
   ReactFixtureWrappers,
 } from 'react-cosmos-shared2/react';
-import { FixtureId } from 'react-cosmos-shared2/renderer';
 import * as ReactNative from 'react-native';
 import parse from 'url-parse';
-import { NativeRendererConfig } from './shared/rendererConfig';
+import { NativeRendererConfig } from '../shared/rendererConfig';
 
 const { View, Text, StyleSheet, NativeModules } = ReactNative;
-
-// https://stackoverflow.com/a/53655887/128816
-const wsWarning =
-  'Unrecognized WebSocket connection option(s) `agent`, `perMessageDeflate`, `pfx`, `key`, `passphrase`, `cert`, `ca`, `ciphers`, `rejectUnauthorized`. Did you mean to put these under `headers`?';
-if (ReactNative.LogBox) ReactNative.LogBox.ignoreLogs([wsWarning]);
-else if (ReactNative.YellowBox)
-  ReactNative.YellowBox.ignoreWarnings([wsWarning]);
 
 // TODO: Generate unique ID per device
 const rendererId = 'native-renderer';
@@ -28,13 +20,11 @@ type Props = {
   rendererConfig: NativeRendererConfig;
   fixtures: ReactFixtureWrappers;
   decorators: ReactDecorators;
-  initialFixtureId?: FixtureId;
 };
 export function NativeFixtureLoader({
   rendererConfig: { port },
   fixtures,
   decorators,
-  initialFixtureId,
 }: Props) {
   const socketUrl = getSocketUrl(port);
   return (
@@ -42,7 +32,7 @@ export function NativeFixtureLoader({
       rendererId={rendererId}
       rendererConnect={createWebSocketsConnect(socketUrl)}
       fixtures={fixtures}
-      selectedFixtureId={initialFixtureId ?? null}
+      selectedFixtureId={null}
       systemDecorators={[]}
       userDecorators={decorators}
       renderMessage={renderMessage}
