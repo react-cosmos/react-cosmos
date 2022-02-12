@@ -4,7 +4,7 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
 require('regenerator-runtime/runtime');
-const { generateWebExport } = require('../dist');
+const { generateWebExport } = require('../dist/webExport');
 
 generateWebExport().catch(err => {
   console.log('[Cosmos] Export failed...');
