@@ -22,7 +22,8 @@ export type Props = {
   rendererId: string;
   rendererConnect: RendererConnect;
   fixtures: ReactFixtureWrappers;
-  selectedFixtureId: null | FixtureId;
+  initialFixtureId?: null | FixtureId;
+  selectedFixtureId?: null | FixtureId;
   systemDecorators: ReactDecorator[];
   userDecorators: ReactDecorators;
   renderMessage?: (args: { msg: string }) => React.ReactNode;
@@ -48,7 +49,7 @@ type State = {
   renderKey: number;
 };
 
-function getSelectedFixture(fixtureId: FixtureId | null) {
+function getSelectedFixture(fixtureId?: FixtureId | null) {
   if (!fixtureId) return null;
   return {
     fixtureId: fixtureId,
@@ -59,7 +60,9 @@ function getSelectedFixture(fixtureId: FixtureId | null) {
 
 export class FixtureLoader extends Component<Props, State> {
   state: State = {
-    selectedFixture: getSelectedFixture(this.props.selectedFixtureId),
+    selectedFixture: getSelectedFixture(
+      this.props.selectedFixtureId || this.props.initialFixtureId
+    ),
     renderKey: 0,
   };
 
@@ -211,6 +214,7 @@ export class FixtureLoader extends Component<Props, State> {
       payload: {
         rendererId,
         fixtures: this.getFixtureList(),
+        initialFixtureId: this.props.initialFixtureId,
       },
     });
   }

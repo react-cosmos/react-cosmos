@@ -7,6 +7,7 @@ import {
   ReactDecorators,
   ReactFixtureWrappers,
 } from 'react-cosmos-shared2/react';
+import { FixtureId } from 'react-cosmos-shared2/renderer';
 import * as ReactNative from 'react-native';
 import parse from 'url-parse';
 import { NativeRendererConfig } from '../shared/rendererConfig';
@@ -20,11 +21,13 @@ type Props = {
   rendererConfig: NativeRendererConfig;
   fixtures: ReactFixtureWrappers;
   decorators: ReactDecorators;
+  initialFixtureId?: FixtureId | null;
 };
 export function NativeFixtureLoader({
   rendererConfig: { port },
   fixtures,
   decorators,
+  initialFixtureId,
 }: Props) {
   const socketUrl = getSocketUrl(port);
   return (
@@ -32,7 +35,7 @@ export function NativeFixtureLoader({
       rendererId={rendererId}
       rendererConnect={createWebSocketsConnect(socketUrl)}
       fixtures={fixtures}
-      selectedFixtureId={null}
+      initialFixtureId={initialFixtureId}
       systemDecorators={[]}
       userDecorators={decorators}
       renderMessage={renderMessage}
