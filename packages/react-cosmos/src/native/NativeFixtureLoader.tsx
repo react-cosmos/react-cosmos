@@ -21,7 +21,7 @@ type Props = {
   rendererConfig: NativeRendererConfig;
   fixtures: ReactFixtureWrappers;
   decorators: ReactDecorators;
-  initialFixtureId?: FixtureId | null;
+  initialFixtureId?: FixtureId;
 };
 export function NativeFixtureLoader({
   rendererConfig: { port },

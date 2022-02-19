@@ -18,11 +18,12 @@ import {
 import { getFixture } from './fixtureHelpers';
 import { FixtureProvider } from './FixtureProvider';
 
+// TODO: Split into FixtureLoader and FixtureLoaderConnect
 export type Props = {
   rendererId: string;
   rendererConnect: RendererConnect;
   fixtures: ReactFixtureWrappers;
-  initialFixtureId?: null | FixtureId;
+  initialFixtureId?: FixtureId;
   selectedFixtureId?: null | FixtureId;
   systemDecorators: ReactDecorator[];
   userDecorators: ReactDecorators;
@@ -208,14 +209,13 @@ export class FixtureLoader extends Component<Props, State> {
   }
 
   postReadyState() {
-    const { rendererId } = this.props;
+    const { rendererId, initialFixtureId } = this.props;
+    const fixtures = this.getFixtureList();
     this.postMessage({
       type: 'rendererReady',
-      payload: {
-        rendererId,
-        fixtures: this.getFixtureList(),
-        initialFixtureId: this.props.initialFixtureId,
-      },
+      payload: initialFixtureId
+        ? { rendererId, fixtures, initialFixtureId }
+        : { rendererId, fixtures },
     });
   }
 
