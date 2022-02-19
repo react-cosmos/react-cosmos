@@ -27,7 +27,7 @@ function mockRendererUrl() {
   });
 }
 
-it('sends renderer response message to renderer core', async () => {
+it('automatically selects initialFixtureId', async () => {
   mockRendererUrl();
   const { selectFixture } = mockRouter();
   mockRendererCore();
