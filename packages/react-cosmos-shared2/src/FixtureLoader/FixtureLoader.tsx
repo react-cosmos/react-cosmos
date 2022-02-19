@@ -50,7 +50,7 @@ type State = {
   renderKey: number;
 };
 
-function getSelectedFixture(fixtureId?: FixtureId | null) {
+function getSelectedFixtureState(fixtureId?: FixtureId | null) {
   if (!fixtureId) return null;
   return {
     fixtureId: fixtureId,
@@ -61,7 +61,7 @@ function getSelectedFixture(fixtureId?: FixtureId | null) {
 
 export class FixtureLoader extends Component<Props, State> {
   state: State = {
-    selectedFixture: getSelectedFixture(
+    selectedFixture: getSelectedFixtureState(
       this.props.selectedFixtureId || this.props.initialFixtureId
     ),
     renderKey: 0,
