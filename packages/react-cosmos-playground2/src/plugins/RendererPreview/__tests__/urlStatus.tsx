@@ -1,10 +1,11 @@
-import React from 'react';
 import { waitFor } from '@testing-library/dom';
 import { render } from '@testing-library/react';
-import { loadPlugins, Slot, resetPlugins } from 'react-plugin';
+import React from 'react';
+import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import {
-  mockCore,
   getRendererPreviewMethods,
+  mockCore,
+  mockRouter,
 } from '../../../testHelpers/pluginMocks';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 
@@ -16,6 +17,7 @@ function registerTestPlugins() {
   mockCore({
     getWebRendererUrl: () => 'mockRendererUrl',
   });
+  mockRouter();
 }
 
 function loadTestPlugins(status: number) {
