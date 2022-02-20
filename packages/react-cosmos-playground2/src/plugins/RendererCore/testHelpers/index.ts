@@ -11,13 +11,15 @@ import { getRendererCoreMethods } from '../../../testHelpers/pluginMocks';
 
 export function createRendererReadyResponse(
   rendererId: RendererId,
-  fixtures: FixtureList
+  fixtures: FixtureList,
+  initialFixtureId?: FixtureId
 ): RendererReadyResponse {
   return {
     type: 'rendererReady',
     payload: {
       rendererId,
       fixtures,
+      initialFixtureId,
     },
   };
 }
@@ -52,10 +54,11 @@ export function createFixtureStateChangeResponse(
 
 export function mockRendererReady(
   rendererId: RendererId,
-  fixtures: FixtureList
+  fixtures: FixtureList,
+  initialFixtureId?: FixtureId
 ) {
   return getRendererCoreMethods().receiveResponse(
-    createRendererReadyResponse(rendererId, fixtures)
+    createRendererReadyResponse(rendererId, fixtures, initialFixtureId)
   );
 }
 
