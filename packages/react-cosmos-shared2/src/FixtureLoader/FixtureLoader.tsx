@@ -18,11 +18,13 @@ import {
 import { getFixture } from './fixtureHelpers';
 import { FixtureProvider } from './FixtureProvider';
 
+// TODO: Split into FixtureLoader and FixtureLoaderConnect
 export type Props = {
   rendererId: string;
   rendererConnect: RendererConnect;
   fixtures: ReactFixtureWrappers;
-  selectedFixtureId: null | FixtureId;
+  initialFixtureId?: FixtureId;
+  selectedFixtureId?: null | FixtureId;
   systemDecorators: ReactDecorator[];
   userDecorators: ReactDecorators;
   renderMessage?: (args: { msg: string }) => React.ReactNode;
@@ -48,7 +50,7 @@ type State = {
   renderKey: number;
 };
 
-function getSelectedFixture(fixtureId: FixtureId | null) {
+function getSelectedFixtureState(fixtureId?: FixtureId | null) {
   if (!fixtureId) return null;
   return {
     fixtureId: fixtureId,
@@ -59,7 +61,9 @@ function getSelectedFixture(fixtureId: FixtureId | null) {
 
 export class FixtureLoader extends Component<Props, State> {
   state: State = {
-    selectedFixture: getSelectedFixture(this.props.selectedFixtureId),
+    selectedFixture: getSelectedFixtureState(
+      this.props.selectedFixtureId || this.props.initialFixtureId
+    ),
     renderKey: 0,
   };
 
@@ -205,13 +209,13 @@ export class FixtureLoader extends Component<Props, State> {
   }
 
   postReadyState() {
-    const { rendererId } = this.props;
+    const { rendererId, initialFixtureId } = this.props;
+    const fixtures = this.getFixtureList();
     this.postMessage({
       type: 'rendererReady',
-      payload: {
-        rendererId,
-        fixtures: this.getFixtureList(),
-      },
+      payload: initialFixtureId
+        ? { rendererId, fixtures, initialFixtureId }
+        : { rendererId, fixtures },
     });
   }
 

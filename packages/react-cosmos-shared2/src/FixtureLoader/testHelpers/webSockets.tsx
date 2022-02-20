@@ -34,22 +34,13 @@ export async function mountWebSockets(
   }
 }
 
-function getElement({
-  rendererId,
-  fixtures,
-  selectedFixtureId = null,
-  decorators = {},
-  onErrorReset,
-}: FixtureLoaderTestArgs) {
+function getElement({ decorators = {}, ...otherArgs }: FixtureLoaderTestArgs) {
   return (
     <FixtureLoader
-      rendererId={rendererId}
+      {...otherArgs}
       rendererConnect={createWebSocketsConnect(WS_URL)}
-      fixtures={fixtures}
-      selectedFixtureId={selectedFixtureId}
       systemDecorators={[]}
       userDecorators={decorators}
-      onErrorReset={onErrorReset}
     />
   );
 }

@@ -1,14 +1,15 @@
-import React from 'react';
 import { waitFor } from '@testing-library/dom';
 import { render } from '@testing-library/react';
-import { loadPlugins, Slot, resetPlugins } from 'react-plugin';
+import React from 'react';
+import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import {
+  getRendererPreviewMethods,
   mockCore,
   mockRendererCore,
-  getRendererPreviewMethods,
+  mockRouter,
 } from '../../../testHelpers/pluginMocks';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
-import { rendererReadyMsg, rendererErrorMsg } from '../testHelpers/messages';
+import { rendererErrorMsg, rendererReadyMsg } from '../testHelpers/messages';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 
@@ -19,6 +20,7 @@ function registerTestPlugins() {
     getWebRendererUrl: () => 'mockRendererUrl',
   });
   mockRendererCore();
+  mockRouter();
 }
 
 function loadTestPlugins() {

@@ -1,15 +1,16 @@
-import React from 'react';
 import { waitFor } from '@testing-library/dom';
 import { render } from '@testing-library/react';
-import { loadPlugins, Slot, resetPlugins } from 'react-plugin';
+import React from 'react';
+import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import {
+  getRendererCoreContext,
   mockCore,
   mockRendererCore,
-  getRendererCoreContext,
+  mockRouter,
 } from '../../../testHelpers/pluginMocks';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
-import { mockIframeMessage, getIframe } from '../testHelpers/iframe';
-import { selectFixtureMsg, rendererReadyMsg } from '../testHelpers/messages';
+import { getIframe, mockIframeMessage } from '../testHelpers/iframe';
+import { rendererReadyMsg, selectFixtureMsg } from '../testHelpers/messages';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 
@@ -45,6 +46,7 @@ it('posts renderer request message to iframe', async () => {
 
 it('sends renderer response message to renderer core', async () => {
   mockRendererUrl();
+  mockRouter();
   const { receiveResponse } = mockRendererCore();
 
   loadTestPlugins();
@@ -57,6 +59,7 @@ it('sends renderer response message to renderer core', async () => {
 
 it('makes connected renderer the primary renderer', async () => {
   mockRendererUrl();
+  mockRouter();
   const { selectPrimaryRenderer } = mockRendererCore();
 
   loadTestPlugins();
