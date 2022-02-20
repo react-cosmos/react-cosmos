@@ -60,6 +60,7 @@ export type RendererReadyResponse = {
   payload: {
     rendererId: RendererId;
     fixtures: FixtureList;
+    initialFixtureId?: FixtureId;
   };
 };
 

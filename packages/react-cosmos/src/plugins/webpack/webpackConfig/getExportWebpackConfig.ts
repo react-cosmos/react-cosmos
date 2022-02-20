@@ -1,16 +1,14 @@
 import path from 'path';
 import webpack from 'webpack';
-import { CosmosConfig } from '../../../config';
+import { CosmosConfig } from '../../../config/shared';
+import { removeLeadingSlash } from '../../../shared/utils';
 import { createWebpackCosmosConfig } from '../cosmosConfig/webpack';
-import { removeLeadingSlash } from '../../../shared/shared';
+import { getUserWebpackConfig } from './getUserWebpackConfig';
+import { getWebpackConfigModule } from './getWebpackConfigModule';
+import { getWebpackConfigResolve } from './getWebpackConfigResolve';
 import { ensureHtmlWebackPlugin } from './htmlPlugin';
-import {
-  getGlobalsPlugin,
-  getUserDepsLoaderRule,
-  getUserWebpackConfig,
-  resolveClientPath,
-  resolveLocalReactDeps,
-} from './shared';
+import { getGlobalsPlugin } from './plugins';
+import { resolveWebpackClientPath } from './resolveWebpackClientPath';
 
 export async function getExportWebpackConfig(
   cosmosConfig: CosmosConfig,
@@ -24,11 +22,8 @@ export async function getExportWebpackConfig(
     ...baseWebpackConfig,
     entry: getEntry(),
     output: getOutput(cosmosConfig),
-    module: {
-      ...baseWebpackConfig.module,
-      rules: getRules(baseWebpackConfig),
-    },
-    resolve: resolveLocalReactDeps(cosmosConfig, baseWebpackConfig),
+    module: getWebpackConfigModule(baseWebpackConfig),
+    resolve: getWebpackConfigResolve(cosmosConfig, baseWebpackConfig),
     plugins: getPlugins(cosmosConfig, baseWebpackConfig, userWebpack),
   };
 }
@@ -36,8 +31,8 @@ export async function getExportWebpackConfig(
 function getEntry() {
   // The React devtools hook needs to be imported before any other module that
   // might import React
-  const devtoolsHook = resolveClientPath('reactDevtoolsHook');
-  const clientIndex = resolveClientPath('index');
+  const devtoolsHook = resolveWebpackClientPath('reactDevtoolsHook');
+  const clientIndex = resolveWebpackClientPath('index');
   return [devtoolsHook, clientIndex];
 }
 
@@ -53,12 +48,6 @@ function getOutput(cosmosConfig: CosmosConfig) {
       : '[name].js',
     publicPath: publicUrl,
   };
-}
-
-function getRules(baseWebpackConfig: webpack.Configuration) {
-  const existingRules =
-    (baseWebpackConfig.module && baseWebpackConfig.module.rules) || [];
-  return [...existingRules, getUserDepsLoaderRule()];
 }
 
 function getPlugins(

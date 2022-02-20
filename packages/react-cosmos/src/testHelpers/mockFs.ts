@@ -1,5 +1,5 @@
 import path from 'path';
-import { CosmosConfig } from '../config';
+import { CosmosConfig } from '../config/shared';
 // @ts-ignore
 import { __mockFile, __mockDir, __unmockFs } from '../shared/fs';
 import { getCwdPath } from './cwd';

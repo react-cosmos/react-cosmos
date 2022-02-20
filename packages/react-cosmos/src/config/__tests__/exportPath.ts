@@ -1,5 +1,5 @@
 import { getCwdPath } from '../../testHelpers/cwd';
-import { createCosmosConfig } from '..';
+import { createCosmosConfig } from '../createCosmosConfig';
 
 it('returns default export path', () => {
   const { exportPath } = createCosmosConfig(process.cwd(), {});

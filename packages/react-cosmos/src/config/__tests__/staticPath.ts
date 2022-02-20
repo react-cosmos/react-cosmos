@@ -1,6 +1,6 @@
-import { getCwdPath } from '../../testHelpers/cwd';
-import { createCosmosConfig } from '..';
 import { join } from 'path';
+import { getCwdPath } from '../../testHelpers/cwd';
+import { createCosmosConfig } from '../createCosmosConfig';
 
 it('returns default null static path', () => {
   const { staticPath } = createCosmosConfig(process.cwd());

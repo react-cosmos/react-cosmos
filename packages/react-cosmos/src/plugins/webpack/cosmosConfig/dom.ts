@@ -1,4 +1,4 @@
-import { CosmosConfig } from '../../../config';
+import { CosmosConfig } from '../../../config/shared';
 
 type DomCosmosConfig = {
   containerQuerySelector: null | string;
