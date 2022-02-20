@@ -1,6 +1,5 @@
 import { RendererResponse } from 'react-cosmos-shared2/renderer';
 import { RendererCoreSpec } from '../RendererCore/public';
-import { RouterSpec } from '../Router/public';
 import { RendererPreviewContext } from './shared';
 
 type WindowMsg = { data: { [key: string]: unknown } };
@@ -20,7 +19,6 @@ function createMessageHandler(context: RendererPreviewContext) {
       return;
     }
 
-    const router = context.getMethodsOf<RouterSpec>('router');
     const rendererCore = context.getMethodsOf<RendererCoreSpec>('rendererCore');
     const response = msg.data as RendererResponse;
     rendererCore.receiveResponse(response);
@@ -28,11 +26,7 @@ function createMessageHandler(context: RendererPreviewContext) {
     updateRuntimeStatus(context, response);
 
     if (response.type === 'rendererReady') {
-      const { rendererId, initialFixtureId } = response.payload;
-      rendererCore.selectPrimaryRenderer(rendererId);
-      if (initialFixtureId) {
-        router.selectFixture(initialFixtureId);
-      }
+      rendererCore.selectPrimaryRenderer(response.payload.rendererId);
     }
   };
 }
