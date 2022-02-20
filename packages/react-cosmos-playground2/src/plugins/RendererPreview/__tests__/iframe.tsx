@@ -7,7 +7,6 @@ import {
   mockCore,
   mockNotifications,
   mockRendererCore,
-  mockRouter,
 } from '../../../testHelpers/pluginMocks';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { getIframe } from '../testHelpers/iframe';
@@ -22,7 +21,6 @@ function registerTestPlugins() {
     getWebRendererUrl: () => 'http://localhost:5000/_renderer.html',
   });
   mockRendererCore();
-  mockRouter();
 }
 
 function loadTestPlugins() {

@@ -6,7 +6,6 @@ import {
   getRendererCoreContext,
   mockCore,
   mockRendererCore,
-  mockRouter,
 } from '../../../testHelpers/pluginMocks';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { getIframe, mockIframeMessage } from '../testHelpers/iframe';
@@ -46,7 +45,6 @@ it('posts renderer request message to iframe', async () => {
 
 it('sends renderer response message to renderer core', async () => {
   mockRendererUrl();
-  mockRouter();
   const { receiveResponse } = mockRendererCore();
 
   loadTestPlugins();
@@ -59,7 +57,6 @@ it('sends renderer response message to renderer core', async () => {
 
 it('makes connected renderer the primary renderer', async () => {
   mockRendererUrl();
-  mockRouter();
   const { selectPrimaryRenderer } = mockRendererCore();
 
   loadTestPlugins();
