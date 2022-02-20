@@ -58,7 +58,6 @@ type State = {
   renderKey: number;
 };
 
-// this.props.selectedFixtureId || this.props.initialFixtureId
 function getSelectedFixtureState(props: Props): SelectedFixture | null {
   const { fixtures, selectedFixtureId, initialFixtureId } = props;
   const fixtureId = selectedFixtureId || initialFixtureId;
