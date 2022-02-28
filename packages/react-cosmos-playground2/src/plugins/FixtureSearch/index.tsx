@@ -1,14 +1,16 @@
 import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
+import {
+  CoreSpec,
+  FixtureSearchSpec,
+  FixtureTreeSpec,
+  RendererCoreSpec,
+  RouterSpec,
+} from 'react-cosmos-shared2/ui';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { NavRowSlotProps } from '../../shared/slots/NavRowSlot';
-import { CoreSpec } from '../Core/public';
-import { FixtureTreeSpec } from '../FixtureTree/public';
-import { RendererCoreSpec } from '../RendererCore/public';
-import { RouterSpec } from '../Router/public';
 import { FixtureSearchHeader } from './FixtureSearchHeader';
 import { FixtureSearchOverlay } from './FixtureSearchOverlay';
-import { FixtureSearchSpec } from './public';
 
 type FixtureSearchContext = PluginContext<FixtureSearchSpec>;
 

@@ -1,6 +1,6 @@
 import * as localForage from 'localforage';
-import { PluginContext, createPlugin } from 'react-plugin';
-import { StorageSpec } from './public';
+import { StorageSpec } from 'react-cosmos-shared2/ui';
+import { createPlugin, PluginContext } from 'react-plugin';
 
 type StorageContext = PluginContext<StorageSpec>;
 

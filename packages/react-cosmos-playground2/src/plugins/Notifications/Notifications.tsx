@@ -1,4 +1,5 @@
 import React from 'react';
+import { Notification, NotificationType } from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
 import { grey128, grey32, grey64, grey8, white95 } from '../../shared/colors';
 import {
@@ -8,7 +9,6 @@ import {
   LoaderIcon,
 } from '../../shared/icons';
 import { quick } from '../../shared/vars';
-import { Notification, NotificationType } from './public';
 
 type Props = {
   notifications: Notification[];

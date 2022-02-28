@@ -1,4 +1,4 @@
-import { Message } from 'react-cosmos-shared2/util';
+import { Message } from '../../util';
 
 export type MessageHandlerSpec = {
   name: 'messageHandler';

@@ -1,4 +1,4 @@
+import { MessageHandlerSpec } from 'react-cosmos-shared2/ui';
 import { PluginContext } from 'react-plugin';
-import { MessageHandlerSpec } from './public';
 
 export type MessageHandlerContext = PluginContext<MessageHandlerSpec>;

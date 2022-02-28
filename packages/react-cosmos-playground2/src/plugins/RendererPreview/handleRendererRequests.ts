@@ -1,5 +1,5 @@
+import { NotificationsSpec } from 'react-cosmos-shared2/ui';
 import { Message } from 'react-cosmos-shared2/util';
-import { NotificationsSpec } from '../Notifications/public';
 import { RendererPreviewContext } from './shared';
 
 type State = {

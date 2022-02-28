@@ -1,11 +1,10 @@
-import { createPlugin } from 'react-plugin';
 import { RendererId } from 'react-cosmos-shared2/renderer';
-import { RouterSpec } from '../Router/public';
+import { RendererCoreSpec, RouterSpec } from 'react-cosmos-shared2/ui';
+import { createPlugin } from 'react-plugin';
 import { isValidFixtureSelected } from './isValidFixtureSelected';
-import { setFixtureState } from './setFixtureState';
-import { receiveResponse } from './receiveResponse';
 import { onRouterFixtureChange } from './onRouterFixtureChange';
-import { RendererCoreSpec } from './public';
+import { receiveResponse } from './receiveResponse';
+import { setFixtureState } from './setFixtureState';
 import { RendererCoreContext } from './shared';
 
 const { on, register } = createPlugin<RendererCoreSpec>({

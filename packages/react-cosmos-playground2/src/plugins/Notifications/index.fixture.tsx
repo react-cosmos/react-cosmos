@@ -1,7 +1,7 @@
 import React from 'react';
-import { Notification, NotificationType } from './public';
-import { Notifications } from './Notifications';
+import { Notification, NotificationType } from 'react-cosmos-shared2/ui';
 import { useSelect } from 'react-cosmos/fixture';
+import { Notifications } from './Notifications';
 
 type Args = Pick<Notification, 'id' | 'title' | 'info'>;
 

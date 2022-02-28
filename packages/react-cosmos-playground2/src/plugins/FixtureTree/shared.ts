@@ -1,7 +1,6 @@
+import { FixtureTreeSpec, StorageSpec } from 'react-cosmos-shared2/ui';
 import { PluginContext } from 'react-plugin';
 import { TreeExpansion } from '../../shared/treeExpansion';
-import { StorageSpec } from '../Storage/public';
-import { FixtureTreeSpec } from './public';
 
 export type FixtureTreeContext = PluginContext<FixtureTreeSpec>;
 

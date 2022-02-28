@@ -1,5 +1,5 @@
-import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { PlaygroundUrlParams } from 'react-cosmos-shared2/url';
+import { FixtureId } from '../../renderer';
+import { PlaygroundUrlParams } from '../../url';
 
 export type RouterSpec = {
   name: 'router';

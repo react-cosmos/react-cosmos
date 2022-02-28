@@ -1,7 +1,7 @@
 import React from 'react';
+import { Notification } from 'react-cosmos-shared2/ui';
 import { IconButton32 } from '../../../shared/buttons';
 import { CastIcon } from '../../../shared/icons';
-import { Notification } from '../../Notifications/public';
 import { copyToClipboard } from './copyToClipboard';
 
 type Props = {

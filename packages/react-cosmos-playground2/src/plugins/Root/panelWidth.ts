@@ -1,4 +1,4 @@
-import { StorageSpec } from '../Storage/public';
+import { StorageSpec } from 'react-cosmos-shared2/ui';
 import { RootContext } from './shared';
 
 const PANEL_WIDTH_STORAGE_KEY = 'panelWidth';

@@ -1,4 +1,4 @@
-import { StorageSpec } from '../Storage/public';
+import { StorageSpec } from 'react-cosmos-shared2/ui';
 import { RootContext } from './shared';
 
 export const NAV_OPEN_STORAGE_KEY = 'navOpen';

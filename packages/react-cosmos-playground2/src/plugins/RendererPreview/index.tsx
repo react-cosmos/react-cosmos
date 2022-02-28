@@ -1,12 +1,14 @@
 import React from 'react';
+import {
+  CoreSpec,
+  RendererCoreSpec,
+  RendererPreviewSpec,
+} from 'react-cosmos-shared2/ui';
 import { createPlugin } from 'react-plugin';
-import { CoreSpec } from '../Core/public';
-import { RendererCoreSpec } from '../RendererCore/public';
 import { checkRendererStatus } from './checkRendererStatus';
 import { createRendererRequestHandler } from './handleRendererRequests';
 import { handleWindowMessages } from './handleWindowMessages';
 import { RendererPreview } from './RendererPreview';
-import { RendererPreviewSpec } from './public';
 import { RendererPreviewContext } from './shared';
 
 const { postRendererRequest, setIframeRef } = createRendererRequestHandler();

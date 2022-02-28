@@ -5,15 +5,17 @@ import {
   flattenFixtureTree,
 } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
+import {
+  CoreSpec,
+  FixtureBookmarkSpec,
+  RendererCoreSpec,
+  RouterSpec,
+  StorageSpec,
+} from 'react-cosmos-shared2/ui';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { FixtureActionSlotProps } from '../../shared/slots/FixtureActionSlot';
-import { CoreSpec } from '../Core/public';
-import { RendererCoreSpec } from '../RendererCore/public';
-import { RouterSpec } from '../Router/public';
-import { StorageSpec } from '../Storage/public';
 import { BookmarkFixtureButton } from './BookmarkFixtureButton';
 import { FixtureBookmarks } from './FixtureBookmarks';
-import { FixtureBookmarkSpec } from './public';
 
 type FixtureBookmarkContext = PluginContext<FixtureBookmarkSpec>;
 

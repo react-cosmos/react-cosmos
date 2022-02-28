@@ -1,6 +1,6 @@
-import { StateUpdater, Message } from 'react-cosmos-shared2/util';
-import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import { RendererId, FixtureList } from 'react-cosmos-shared2/renderer';
+import { FixtureState } from '../../fixtureState';
+import { FixtureList, RendererId } from '../../renderer';
+import { Message, StateUpdater } from '../../util';
 
 export type RendererCoreSpec = {
   name: 'rendererCore';

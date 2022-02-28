@@ -1,8 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
+import { RendererCoreSpec, RendererSelectSpec } from 'react-cosmos-shared2/ui';
 import { createPlugin } from 'react-plugin';
-import { RendererCoreSpec } from '../RendererCore/public';
-import { RendererSelectSpec } from './public';
+import styled from 'styled-components';
 
 const { plug, register } = createPlugin<RendererSelectSpec>({
   name: 'rendererSelect',

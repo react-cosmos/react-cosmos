@@ -1,7 +1,10 @@
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
+import {
+  ResponsivePreviewSpec,
+  StorageSpec,
+  Viewport,
+} from 'react-cosmos-shared2/ui';
 import { PluginContext } from 'react-plugin';
-import { StorageSpec } from '../Storage/public';
-import { ResponsivePreviewSpec, Viewport } from './public';
 
 export type ResponsivePreviewContext = PluginContext<ResponsivePreviewSpec>;
 

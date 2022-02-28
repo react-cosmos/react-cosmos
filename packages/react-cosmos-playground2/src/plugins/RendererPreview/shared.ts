@@ -1,5 +1,5 @@
+import { RendererPreviewSpec } from 'react-cosmos-shared2/ui';
 import { PluginContext } from 'react-plugin';
-import { RendererPreviewSpec } from './public';
 
 export type UrlStatus = 'unknown' | 'ok' | 'error';
 export type RuntimeStatus = 'pending' | 'connected' | 'error';

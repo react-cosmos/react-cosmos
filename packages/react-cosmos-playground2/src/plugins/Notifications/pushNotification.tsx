@@ -1,5 +1,5 @@
-import { replaceOrAddItem, removeItemMatch } from 'react-cosmos-shared2/util';
-import { Notification, NotificationsSpec } from './public';
+import { Notification, NotificationsSpec } from 'react-cosmos-shared2/ui';
+import { removeItemMatch, replaceOrAddItem } from 'react-cosmos-shared2/util';
 import { NotificationsContext } from './shared';
 
 const TIMEOUT = 3000;

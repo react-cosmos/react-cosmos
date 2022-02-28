@@ -1,5 +1,5 @@
 import { RendererResponse } from 'react-cosmos-shared2/renderer';
-import { RendererCoreSpec } from '../RendererCore/public';
+import { RendererCoreSpec } from 'react-cosmos-shared2/ui';
 import { RendererPreviewContext } from './shared';
 
 type WindowMsg = { data: { [key: string]: unknown } };

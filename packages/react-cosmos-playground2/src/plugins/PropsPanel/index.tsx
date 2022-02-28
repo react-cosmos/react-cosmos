@@ -4,6 +4,7 @@ import {
   FixtureState,
 } from 'react-cosmos-shared2/fixtureState';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
+import { PropsPanelSpec, StorageSpec } from 'react-cosmos-shared2/ui';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { SidePanelRowSlotProps } from '../../shared/slots/SidePanelRowSlot';
 import { TreeExpansion } from '../../shared/treeExpansion';
@@ -13,10 +14,8 @@ import {
   hasFsValues,
   updateElementExpansion,
 } from '../../shared/valueInputTree';
-import { StorageSpec } from '../Storage/public';
 import { BlankState } from './BlankState';
 import { PropsPanel } from './PropsPanel';
-import { PropsPanelSpec } from './public';
 import { PROPS_TREE_EXPANSION_STORAGE_KEY } from './shared';
 
 type PropsPanelContext = PluginContext<PropsPanelSpec>;

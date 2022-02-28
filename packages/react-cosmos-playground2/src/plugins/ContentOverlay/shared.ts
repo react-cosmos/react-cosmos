@@ -1,3 +1,4 @@
+import { ContentOverlaySpec } from 'react-cosmos-shared2/ui';
 import { PluginContext } from 'react-plugin';
 import styled from 'styled-components';
 import {
@@ -8,7 +9,6 @@ import {
   screenPrimary2,
   screenPrimary3,
 } from '../../shared/colors';
-import { ContentOverlaySpec } from './public';
 
 export type ContentOverlayContext = PluginContext<ContentOverlaySpec>;
 

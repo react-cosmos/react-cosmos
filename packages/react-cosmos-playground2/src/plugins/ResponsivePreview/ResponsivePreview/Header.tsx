@@ -1,4 +1,5 @@
 import React from 'react';
+import { Device, Viewport } from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
 import { Button8 } from '../../../shared/buttons';
 import {
@@ -14,7 +15,6 @@ import { NumberInput } from '../../../shared/inputs/NumberInput';
 import { Select } from '../../../shared/inputs/Select';
 import { Space } from '../../../shared/Space';
 import { quick } from '../../../shared/vars';
-import { Device, Viewport } from '../public';
 
 type Props = {
   devices: Device[];

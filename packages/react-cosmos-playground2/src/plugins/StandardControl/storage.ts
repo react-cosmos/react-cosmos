@@ -1,8 +1,7 @@
 import React from 'react';
+import { StandardControlSpec, StorageSpec } from 'react-cosmos-shared2/ui';
 import { PluginContext } from 'react-plugin';
 import { TreeExpansion } from '../../shared/treeExpansion';
-import { StorageSpec } from '../Storage/public';
-import { StandardControlSpec } from './public';
 
 const storageKey = 'standardControlTreeExpansion';
 const emptyTreeExpansion = {};

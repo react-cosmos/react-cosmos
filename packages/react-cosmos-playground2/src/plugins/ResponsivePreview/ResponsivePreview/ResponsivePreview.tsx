@@ -8,10 +8,10 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { Device, Viewport } from 'react-cosmos-shared2/ui';
 import styled, { css } from 'styled-components';
 import { grey64, grey8 } from '../../../shared/colors';
 import { useDrag } from '../../../shared/useDrag';
-import { Device, Viewport } from '../public';
 import { Header } from './Header';
 import {
   getStyles,

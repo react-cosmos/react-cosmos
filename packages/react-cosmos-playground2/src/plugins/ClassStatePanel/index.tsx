@@ -1,6 +1,7 @@
 import React from 'react';
 import { FixtureElementId } from 'react-cosmos-shared2/fixtureState';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
+import { ClassStatePanelSpec, StorageSpec } from 'react-cosmos-shared2/ui';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { SidePanelRowSlotProps } from '../../shared/slots/SidePanelRowSlot';
 import { TreeExpansion } from '../../shared/treeExpansion';
@@ -9,9 +10,7 @@ import {
   getFixtureExpansion,
   updateElementExpansion,
 } from '../../shared/valueInputTree';
-import { StorageSpec } from '../Storage/public';
 import { ClassStatePanel } from './ClassStatePanel';
-import { ClassStatePanelSpec } from './public';
 import { CLASS_STATE_TREE_EXPANSION_STORAGE_KEY } from './shared';
 
 type ClassStatePanelContext = PluginContext<ClassStatePanelSpec>;

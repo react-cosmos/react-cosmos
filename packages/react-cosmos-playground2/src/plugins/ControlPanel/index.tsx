@@ -1,8 +1,8 @@
 import React from 'react';
+import { ControlPanelSpec } from 'react-cosmos-shared2/ui';
 import { createPlugin } from 'react-plugin';
 import { SidePanelRowSlotProps } from '../../shared/slots/SidePanelRowSlot';
 import { ControlPanel } from './ControlPanel';
-import { ControlPanelSpec } from './public';
 
 const { namedPlug, register } = createPlugin<ControlPanelSpec>({
   name: 'controlPanel',

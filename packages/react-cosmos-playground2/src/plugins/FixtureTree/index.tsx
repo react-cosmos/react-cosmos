@@ -1,12 +1,14 @@
 import React, { useCallback } from 'react';
+import {
+  CoreSpec,
+  FixtureTreeSpec,
+  RendererCoreSpec,
+  RouterSpec,
+  StorageSpec,
+} from 'react-cosmos-shared2/ui';
 import { createPlugin } from 'react-plugin';
 import { TreeExpansion } from '../../shared/treeExpansion';
-import { CoreSpec } from '../Core/public';
-import { RendererCoreSpec } from '../RendererCore/public';
-import { RouterSpec } from '../Router/public';
-import { StorageSpec } from '../Storage/public';
 import { FixtureTreeContainer } from './FixtureTreeContainer';
-import { FixtureTreeSpec } from './public';
 import { revealFixture } from './revealFixture';
 import { getTreeExpansion, setTreeExpansion } from './shared';
 

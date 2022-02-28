@@ -1,7 +1,7 @@
-import { PluginContext } from 'react-plugin';
-import { StateUpdater } from 'react-cosmos-shared2/util';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
-import { RendererCoreSpec } from '../../RendererCore/public';
+import { RendererCoreSpec } from 'react-cosmos-shared2/ui';
+import { StateUpdater } from 'react-cosmos-shared2/util';
+import { PluginContext } from 'react-plugin';
 
 export type StorageMock = { [key: string]: any };
 
