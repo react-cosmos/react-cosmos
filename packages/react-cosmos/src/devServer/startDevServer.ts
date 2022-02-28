@@ -5,7 +5,7 @@ import {
   DevServerPluginCleanupCallback,
   PlatformType,
 } from 'react-cosmos-plugin';
-import { openFileDevServerPlugin } from 'react-cosmos-plugin-open-file';
+import { openFixtureDevServerPlugin } from 'react-cosmos-plugin-open-fixture';
 import {
   detectCosmosConfig,
   detectCosmosConfigPath,
@@ -23,7 +23,7 @@ const corePlugins: DevServerPlugin[] = [
   webpackDevServerPlugin,
   userDepsFileDevServerPlugin,
   httpProxyDevServerPlugin,
-  openFileDevServerPlugin,
+  openFixtureDevServerPlugin,
 ];
 
 export async function startDevServer(platformType: PlatformType) {
