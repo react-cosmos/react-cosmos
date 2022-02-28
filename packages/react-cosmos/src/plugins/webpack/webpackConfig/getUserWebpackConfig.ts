@@ -3,7 +3,7 @@ import webpack from 'webpack';
 import { CosmosConfig } from '../../../config/shared';
 import { getCliArgs } from '../../../shared/cli';
 import { moduleExists, requireModule } from '../../../shared/fs';
-import { createWebpackCosmosConfig } from '../cosmosConfig/webpack';
+import { createWebpackCosmosConfig } from '../cosmosConfig/createWebpackCosmosConfig';
 import { getDefaultWebpackConfig } from './getDefaultWebpackConfig';
 import { getWebpackNodeEnv } from './getWebpackNodeEnv';
 

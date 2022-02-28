@@ -1,39 +1,32 @@
-import express from 'express';
-import http from 'http';
 import path from 'path';
 import { CosmosPluginConfig } from 'react-cosmos-plugin';
-import { Message } from 'react-cosmos-shared2/util';
 import {
   detectCosmosConfig,
   detectCosmosConfigPath,
 } from '../config/detectCosmosConfig';
-import { CosmosConfig } from '../config/shared';
+import { httpProxyDevServerPlugin } from '../plugins/httpProxy';
+import { openFileDevServerPlugin } from '../plugins/openFile';
+import { userDepsFileDevServerPlugin } from '../plugins/userDepsFile';
+import { webpackDevServerPlugin } from '../plugins/webpack/webpackDevServerPlugin';
 import { getPluginConfigs } from '../shared/pluginConfigs';
 import { serveStaticDir } from '../shared/static';
-import { PlatformType } from '../shared/types';
+import {
+  DevServerPlugin,
+  DevServerPluginCleanupCallback,
+  PlatformType,
+} from '../shared/types';
 import { createApp } from './app';
 import { createHttpServer } from './httpServer';
 import { createMessageHandler } from './messageHandler';
 
-type PluginCleanupCallback = () => unknown;
-type PluginReturn = void | null | PluginCleanupCallback;
+const corePlugins: DevServerPlugin[] = [
+  webpackDevServerPlugin,
+  userDepsFileDevServerPlugin,
+  httpProxyDevServerPlugin,
+  openFileDevServerPlugin,
+];
 
-export type DevServerPluginArgs = {
-  cosmosConfig: CosmosConfig;
-  platformType: PlatformType;
-  httpServer: http.Server;
-  expressApp: express.Express;
-  sendMessage(msg: Message): unknown;
-};
-
-export type DevServerPlugin = (
-  args: DevServerPluginArgs
-) => PluginReturn | Promise<PluginReturn>;
-
-export async function startDevServer(
-  platformType: PlatformType,
-  plugins: DevServerPlugin[] = []
-) {
+export async function startDevServer(platformType: PlatformType) {
   const cosmosConfig = detectCosmosConfig();
   logCosmosConfigInfo();
 
@@ -45,7 +38,7 @@ export async function startDevServer(
     serveStaticDir(app, cosmosConfig.staticPath, cosmosConfig.publicUrl);
   }
 
-  const pluginCleanupCallbacks: PluginCleanupCallback[] = [];
+  const pluginCleanupCallbacks: DevServerPluginCleanupCallback[] = [];
   const httpServer = await createHttpServer(cosmosConfig, app);
   await httpServer.start();
 
@@ -58,7 +51,7 @@ export async function startDevServer(
   }
 
   try {
-    for (const plugin of plugins) {
+    for (const plugin of corePlugins) {
       const pluginReturn = await plugin({
         cosmosConfig,
         platformType,

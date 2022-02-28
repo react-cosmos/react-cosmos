@@ -4,9 +4,9 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 require('regenerator-runtime/runtime');
-const { startNativeServer } = require('../dist/startNativeServer');
+const { startDevServer } = require('../dist/devServer/startDevServer');
 
-startNativeServer().catch(err => {
+startDevServer('native').catch(err => {
   console.log('[Cosmos] Server crashed...');
   console.log(`\n  (╯°□°)╯︵ ┻━┻\n`);
   console.log(err);

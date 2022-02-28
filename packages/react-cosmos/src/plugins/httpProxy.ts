@@ -1,6 +1,6 @@
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { CosmosConfig } from '../config/shared';
-import { DevServerPluginArgs } from '../devServer/startDevServer';
+import { DevServerPluginArgs } from '../shared/types';
 
 type HttpProxyConfig = {
   [context: string]:
@@ -13,7 +13,13 @@ type HttpProxyConfig = {
       };
 };
 
-export function httpProxy({ cosmosConfig, expressApp }: DevServerPluginArgs) {
+export function httpProxyDevServerPlugin({
+  platformType,
+  cosmosConfig,
+  expressApp,
+}: DevServerPluginArgs) {
+  if (platformType !== 'web') return;
+
   const httpProxyConfig = getHttpProxyCosmosConfig(cosmosConfig);
   Object.keys(httpProxyConfig).forEach(context => {
     const config = httpProxyConfig[context];

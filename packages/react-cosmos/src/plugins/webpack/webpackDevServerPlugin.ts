@@ -4,11 +4,11 @@ import path from 'path';
 import { BuildMessage } from 'react-cosmos-shared2/build';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-import { DevServerPluginArgs } from '../../devServer/startDevServer';
 import { serveStaticDir } from '../../shared/static';
+import { DevServerPluginArgs } from '../../shared/types';
 import { removeLeadingDot } from '../../shared/utils';
-import { createWebpackCosmosConfig } from './cosmosConfig/webpack';
-import { getWebpack } from './shared';
+import { createWebpackCosmosConfig } from './cosmosConfig/createWebpackCosmosConfig';
+import { getWebpack } from './getWebpack';
 import { getDevWebpackConfig } from './webpackConfig/getDevWebpackConfig';
 
 type WebpackConfig = webpack.Configuration & {
@@ -27,11 +27,14 @@ type WebpackDevMiddleware = (
   options?: webpackDevMiddleware.Options
 ) => WebpackDevMiddlewareInstance;
 
-export async function webpackDevServer({
+export async function webpackDevServerPlugin({
+  platformType,
   cosmosConfig,
   expressApp,
   sendMessage,
 }: DevServerPluginArgs) {
+  if (platformType !== 'web') return;
+
   // Skip webpack bundling if custom renderer URL is passed
   if (cosmosConfig.experimentalRendererUrl) return;
 

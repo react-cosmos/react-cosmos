@@ -4,9 +4,9 @@ import { debounce } from 'lodash';
 import path from 'path';
 import promisify from 'util.promisify';
 import { CosmosConfig } from '../config/shared';
-import { DevServerPluginArgs } from '../devServer/startDevServer';
 import { getCliArgs } from '../shared/cli';
 import { NativeRendererConfig } from '../shared/rendererConfig';
+import { DevServerPluginArgs } from '../shared/types';
 import { generateUserDepsModule } from '../userDeps/generateUserDepsModule';
 import {
   getDecoratorPatterns,
@@ -16,7 +16,7 @@ import {
 
 const writeFileAsync = promisify(writeFile);
 
-export async function userDepsFile(args: DevServerPluginArgs) {
+export async function userDepsFileDevServerPlugin(args: DevServerPluginArgs) {
   if (!shouldGenerateUserDepsFile(args)) return;
 
   const { cosmosConfig } = args;
