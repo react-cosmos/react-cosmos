@@ -37,6 +37,7 @@ export const packages: Package[] = [
   { type: PackageType.Node, name: 'react-cosmos-shared2' },
   { type: PackageType.Node, name: 'react-cosmos-plugin' },
   { type: PackageType.Browser, name: 'react-cosmos-playground2' },
+  { type: PackageType.Node, name: 'react-cosmos-plugin-open-file' },
   { type: PackageType.Node, name: 'react-cosmos' },
 ];
 

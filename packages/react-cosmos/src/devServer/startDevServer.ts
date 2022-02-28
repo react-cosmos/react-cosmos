@@ -1,20 +1,20 @@
 import path from 'path';
-import { CosmosPluginConfig } from 'react-cosmos-plugin';
+import {
+  CosmosPluginConfig,
+  DevServerPlugin,
+  DevServerPluginCleanupCallback,
+  PlatformType,
+} from 'react-cosmos-plugin';
+import { openFileDevServerPlugin } from 'react-cosmos-plugin-open-file';
 import {
   detectCosmosConfig,
   detectCosmosConfigPath,
 } from '../config/detectCosmosConfig';
 import { httpProxyDevServerPlugin } from '../plugins/httpProxy';
-import { openFileDevServerPlugin } from '../plugins/openFile';
 import { userDepsFileDevServerPlugin } from '../plugins/userDepsFile';
 import { webpackDevServerPlugin } from '../plugins/webpack/webpackDevServerPlugin';
 import { getPluginConfigs } from '../shared/pluginConfigs';
 import { serveStaticDir } from '../shared/static';
-import {
-  DevServerPlugin,
-  DevServerPluginCleanupCallback,
-  PlatformType,
-} from '../shared/types';
 import { createApp } from './app';
 import { createHttpServer } from './httpServer';
 import { createMessageHandler } from './messageHandler';

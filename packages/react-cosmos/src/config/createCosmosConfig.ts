@@ -1,7 +1,10 @@
 import path from 'path';
+import {
+  CosmosConfig,
+  CosmosConfigInput,
+} from 'react-cosmos-shared2/cosmosConfig';
 import { getCliArgs } from '../shared/cli';
 import { resolveModule } from './resolveModule';
-import { CosmosConfig, CosmosConfigInput } from './shared';
 
 export function createCosmosConfig(
   rootDir: string,

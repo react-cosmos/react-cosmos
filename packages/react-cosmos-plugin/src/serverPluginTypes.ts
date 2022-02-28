@@ -1,7 +1,7 @@
 import express from 'express';
 import http from 'http';
+import { CosmosConfig } from 'react-cosmos-shared2/cosmosConfig';
 import { Message } from 'react-cosmos-shared2/util';
-import { CosmosConfig } from '../config/shared';
 
 export type PlatformType = 'web' | 'native';
 

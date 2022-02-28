@@ -1,0 +1,1 @@
+export { openFileDevServerPlugin } from './openFile';

@@ -1,7 +1,7 @@
 import path from 'path';
-import { CosmosConfig } from '../config/shared';
+import { CosmosConfig } from 'react-cosmos-shared2/cosmosConfig';
 // @ts-ignore
-import { __mockFile, __mockDir, __unmockFs } from '../shared/fs';
+import { __mockDir, __mockFile, __unmockFs } from '../shared/fs';
 import { getCwdPath } from './cwd';
 
 jest.mock('../shared/fs', () => {

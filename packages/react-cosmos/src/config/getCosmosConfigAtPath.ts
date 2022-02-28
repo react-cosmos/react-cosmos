@@ -1,6 +1,7 @@
 import path from 'path';
+import { CosmosConfigInput } from 'react-cosmos-shared2/cosmosConfig';
 import { createCosmosConfig } from './createCosmosConfig';
-import { CosmosConfigInput, requireConfigFile } from './shared';
+import { requireConfigFile } from './shared';
 
 export function getCosmosConfigAtPath(cosmosConfigPath: string) {
   const cosmosConfigInput = requireConfigFile(cosmosConfigPath);

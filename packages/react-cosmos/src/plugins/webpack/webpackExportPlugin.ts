@@ -1,5 +1,5 @@
+import { ExportPluginArgs } from 'react-cosmos-plugin';
 import webpack, { StatsCompilation } from 'webpack';
-import { ExportPluginArgs } from '../../shared/types';
 import { getWebpack } from './getWebpack';
 import { getExportWebpackConfig } from './webpackConfig/getExportWebpackConfig';
 

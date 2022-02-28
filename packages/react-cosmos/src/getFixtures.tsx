@@ -1,4 +1,5 @@
 import React from 'react';
+import { CosmosConfig } from 'react-cosmos-shared2/cosmosConfig';
 import { getDecoratedFixtureElement } from 'react-cosmos-shared2/FixtureLoader';
 import {
   getSortedDecoratorsForFixturePath,
@@ -9,7 +10,6 @@ import {
   ReactFixtureMap,
 } from 'react-cosmos-shared2/react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { CosmosConfig } from './config/shared';
 import { getUserModules } from './userDeps/getUserModules';
 
 type Args = {

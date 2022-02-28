@@ -1,4 +1,4 @@
-import { CosmosConfig } from '../../../config/shared';
+import { CosmosConfig } from 'react-cosmos-shared2/cosmosConfig';
 
 type DomCosmosConfig = {
   containerQuerySelector: null | string;

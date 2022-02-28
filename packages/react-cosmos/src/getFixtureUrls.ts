@@ -1,10 +1,10 @@
+import { CosmosConfig } from 'react-cosmos-shared2/cosmosConfig';
 import { getFixtureListFromExports } from 'react-cosmos-shared2/react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import {
   stringifyPlaygroundUrlQuery,
   stringifyRendererUrlQuery,
 } from 'react-cosmos-shared2/url';
-import { CosmosConfig } from './config/shared';
 import { RENDERER_FILENAME } from './shared/playgroundHtml';
 import { getUserModules } from './userDeps/getUserModules';
 

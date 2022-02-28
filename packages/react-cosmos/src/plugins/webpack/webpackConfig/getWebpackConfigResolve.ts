@@ -1,7 +1,7 @@
 import path from 'path';
+import { CosmosConfig } from 'react-cosmos-shared2/cosmosConfig';
 import resolveFrom from 'resolve-from';
 import webpack from 'webpack';
-import { CosmosConfig } from '../../../config/shared';
 
 export function getWebpackConfigResolve(
   cosmosConfig: CosmosConfig,
