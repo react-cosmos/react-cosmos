@@ -1,7 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import { CosmosConfig } from '../../../config/shared';
-import { createWebpackCosmosConfig } from '../cosmosConfig/webpack';
+import { createWebpackCosmosConfig } from '../cosmosConfig/createWebpackCosmosConfig';
 import { getUserWebpackConfig } from './getUserWebpackConfig';
 import { getWebpackConfigModule } from './getWebpackConfigModule';
 import { getWebpackConfigResolve } from './getWebpackConfigResolve';

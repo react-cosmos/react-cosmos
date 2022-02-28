@@ -3,18 +3,16 @@ import path from 'path';
 import { CosmosPluginConfig } from 'react-cosmos-plugin';
 import { detectCosmosConfig } from '../config/detectCosmosConfig';
 import { CosmosConfig } from '../config/shared';
+import { webpackExportPlugin } from '../plugins/webpack/webpackExportPlugin';
 import { getExportPlaygroundHtml } from '../shared/playgroundHtml';
 import { getPluginConfigs } from '../shared/pluginConfigs';
 import { getStaticPath } from '../shared/static';
+import { ExportPlugin } from '../shared/types';
 import { removeLeadingSlash } from '../shared/utils';
 
-export type ExportPluginArgs = {
-  cosmosConfig: CosmosConfig;
-};
+const corePlugins: ExportPlugin[] = [webpackExportPlugin];
 
-export type ExportPlugin = (args: ExportPluginArgs) => unknown;
-
-export async function generateExport(plugins: ExportPlugin[] = []) {
+export async function generateExport() {
   const cosmosConfig = detectCosmosConfig();
 
   // Clear previous export (or other files at export path)
@@ -24,7 +22,7 @@ export async function generateExport(plugins: ExportPlugin[] = []) {
   // Copy static assets first, so that the built index.html overrides the its
   // template file (in case the static assets are served from the root path)
   copyStaticAssets(cosmosConfig);
-  await Promise.all(plugins.map(plugin => plugin({ cosmosConfig })));
+  await Promise.all(corePlugins.map(plugin => plugin({ cosmosConfig })));
   exportPlaygroundFiles(cosmosConfig);
 
   console.log('[Cosmos] Export complete!');

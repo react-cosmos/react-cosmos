@@ -8,9 +8,9 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 process.env.FAST_REFRESH = process.env.FAST_REFRESH || false;
 
 require('regenerator-runtime/runtime');
-const { startWebServer } = require('../dist/startWebServer');
+const { startDevServer } = require('../dist/devServer/startDevServer');
 
-startWebServer().catch(err => {
+startDevServer('web').catch(err => {
   console.log('[Cosmos] Server crashed...');
   console.log(`\n  (╯°□°)╯︵ ┻━┻\n`);
   console.log(err);

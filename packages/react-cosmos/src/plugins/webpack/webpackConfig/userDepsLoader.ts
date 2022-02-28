@@ -1,7 +1,7 @@
 import { detectCosmosConfig } from '../../../config/detectCosmosConfig';
 import { DomRendererConfig } from '../../../shared/rendererConfig';
 import { generateUserDepsModule } from '../../../userDeps/generateUserDepsModule';
-import { createDomCosmosConfig } from '../cosmosConfig/dom';
+import { createDomCosmosConfig } from '../cosmosConfig/createDomCosmosConfig';
 
 // XXX: Loader types are currently missing in webpack 5
 // https://github.com/webpack/webpack/issues/11630
