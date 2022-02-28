@@ -5,7 +5,7 @@ import {
   DevServerPluginCleanupCallback,
   PlatformType,
 } from 'react-cosmos-plugin';
-import { openFixtureDevServerPlugin } from 'react-cosmos-plugin-open-fixture';
+import openFixtureDevServerPlugin from 'react-cosmos-plugin-open-fixture/dist/devServer';
 import {
   detectCosmosConfig,
   detectCosmosConfigPath,

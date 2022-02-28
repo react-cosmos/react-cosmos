@@ -4,7 +4,6 @@
   "description": "React Cosmos plugin for opening source fixture files",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-plugin-open-fixture",
   "license": "MIT",
-  "main": "index.js",
   "dependencies": {
     "@skidding/launch-editor": "^2.2.3",
     "open": "^8.4.0",

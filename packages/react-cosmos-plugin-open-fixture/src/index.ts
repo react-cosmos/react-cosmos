@@ -1,1 +1,0 @@
-export { openFixtureDevServerPlugin } from './openFixture';

@@ -8,7 +8,7 @@ import { CosmosConfig } from 'react-cosmos-shared2/cosmosConfig';
 
 type ReqQuery = { filePath: void | string; line: number; column: number };
 
-export function openFixtureDevServerPlugin({
+export default function openFixtureDevServerPlugin({
   cosmosConfig,
   expressApp,
 }: DevServerPluginArgs) {
