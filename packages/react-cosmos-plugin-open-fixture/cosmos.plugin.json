@@ -1,0 +1,5 @@
+{
+  "name": "Open fixture",
+  "ui": "dist/ui",
+  "devServer": "dist/devServer"
+}

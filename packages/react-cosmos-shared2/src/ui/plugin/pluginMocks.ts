@@ -1,21 +1,19 @@
 import {
-  CoreSpec,
-  FixtureTreeSpec,
-  MessageHandlerSpec,
-  NotificationsSpec,
-  RendererCoreSpec,
-  RendererPreviewSpec,
-  RouterSpec,
-  StorageSpec,
-} from 'react-cosmos-shared2/ui';
-import {
   getPluginContext,
   PluginEventHandlers,
   PluginMethodHandlers,
   PluginWithEvents,
   PluginWithMethods,
 } from 'react-plugin';
-import { getMethodsOf, mockMethodsOf, on } from './plugin';
+import { CoreSpec } from '../specs/CoreSpec';
+import { FixtureTreeSpec } from '../specs/FixtureTreeSpec';
+import { MessageHandlerSpec } from '../specs/MessageHandlerSpec';
+import { NotificationsSpec } from '../specs/NotificationsSpec';
+import { RendererCoreSpec } from '../specs/RendererCoreSpec';
+import { RendererPreviewSpec } from '../specs/RendererPreviewSpec';
+import { RouterSpec } from '../specs/RouterSpec';
+import { StorageSpec } from '../specs/StorageSpec';
+import { getMethodsOf, mockMethodsOf, on } from './pluginHelpers';
 
 type MethodsOf<Spec extends PluginWithMethods> = Partial<
   PluginMethodHandlers<Spec>

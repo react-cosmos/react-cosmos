@@ -1,8 +1,11 @@
 import React from 'react';
-import { CoreSpec, FullScreenButtonSpec } from 'react-cosmos-shared2/ui';
+import {
+  CoreSpec,
+  FullScreenButtonSpec,
+  RendererActionSlotProps,
+} from 'react-cosmos-shared2/ui';
 import { stringifyRendererUrlQuery } from 'react-cosmos-shared2/url';
 import { createPlugin } from 'react-plugin';
-import { RendererActionSlotProps } from '../../shared/slots/RendererActionSlot';
 import { FullScreenButton } from './FullScreenButton';
 
 const { namedPlug, register } = createPlugin<FullScreenButtonSpec>({

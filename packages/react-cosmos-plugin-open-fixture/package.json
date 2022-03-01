@@ -8,6 +8,7 @@
     "@skidding/launch-editor": "^2.2.3",
     "open": "^8.4.0",
     "react-cosmos-plugin": "^5.6.0",
-    "react-cosmos-shared2": "^5.7.1"
+    "react-cosmos-shared2": "^5.7.1",
+    "react-plugin": "^3.0.0-alpha.4"
   }
 }
