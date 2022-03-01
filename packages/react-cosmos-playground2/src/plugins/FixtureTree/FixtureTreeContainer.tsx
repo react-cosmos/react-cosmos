@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId, FixtureList } from 'react-cosmos-shared2/renderer';
+import { grey32 } from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
-import { grey32 } from '../../shared/colors';
 import { TreeExpansion } from '../../shared/treeExpansion';
 import { BlankState } from './BlankState';
 import { FixtureTree } from './FixtureTree/FixtureTree';

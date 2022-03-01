@@ -1,12 +1,12 @@
 import { render } from '@testing-library/react';
 import React from 'react';
-import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import {
   mockRendererCore,
   mockRendererPreview,
   mockRouter,
   mockStorage,
-} from '../../../testHelpers/pluginMocks';
+} from 'react-cosmos-shared2/ui';
+import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { WELCOME_DISMISS_STORAGE_KEY } from '../welcomeDismiss';
 
 beforeEach(() => jest.isolateModules(() => require('..')));

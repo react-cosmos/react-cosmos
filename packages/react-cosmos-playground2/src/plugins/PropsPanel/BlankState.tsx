@@ -1,7 +1,12 @@
 import React from 'react';
+import {
+  grey160,
+  grey224,
+  grey32,
+  grey64,
+  SlidersIcon,
+} from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
-import { grey160, grey224, grey32, grey64 } from '../../shared/colors';
-import { SlidersIcon } from '../../shared/icons';
 
 export function BlankState() {
   return (

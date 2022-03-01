@@ -1,6 +1,9 @@
 import React from 'react';
-import { screenGrey5, screenPrimary3 } from '../colors';
-import { Illustration } from '../svg';
+import {
+  Illustration,
+  screenGrey5,
+  screenPrimary3,
+} from 'react-cosmos-shared2/ui';
 
 export const ArtificialIntelligenceIllustration = ({
   title,

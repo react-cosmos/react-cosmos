@@ -12,7 +12,7 @@ import {
   getMessageHandlerMethods,
   mockCore,
   onMessageHandler,
-} from '../../testHelpers/pluginMocks';
+} from 'react-cosmos-shared2/ui';
 
 beforeEach(() => jest.isolateModules(() => require('.')));
 

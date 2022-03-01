@@ -1,5 +1,4 @@
-import { Viewport } from 'react-cosmos-shared2/ui';
-import { white20 } from '../../../shared/colors';
+import { Viewport, white20 } from 'react-cosmos-shared2/ui';
 
 export const responsivePreviewPadding = {
   top: 8,

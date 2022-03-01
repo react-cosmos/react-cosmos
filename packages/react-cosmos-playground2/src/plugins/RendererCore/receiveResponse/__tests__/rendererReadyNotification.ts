@@ -1,10 +1,7 @@
 import { waitFor } from '@testing-library/dom';
+import { mockNotifications, mockRouter } from 'react-cosmos-shared2/ui';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { mockRendererReady } from '../../testHelpers';
-import {
-  mockRouter,
-  mockNotifications,
-} from '../../../../testHelpers/pluginMocks';
 
 beforeEach(() => jest.isolateModules(() => require('../..')));
 

@@ -1,12 +1,12 @@
-import React from 'react';
-import { loadPlugins, ArraySlot, resetPlugins } from 'react-plugin';
 import { waitFor } from '@testing-library/dom';
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
+import React from 'react';
 import {
   mockCore,
   mockMessageHandler,
   mockNotifications,
-} from '../../../testHelpers/pluginMocks';
+} from 'react-cosmos-shared2/ui';
+import { ArraySlot, loadPlugins, resetPlugins } from 'react-plugin';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 

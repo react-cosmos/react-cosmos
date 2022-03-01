@@ -1,13 +1,13 @@
-import styled from 'styled-components';
 import {
   grey224,
   grey24,
   grey248,
   grey32,
   grey8,
+  quick,
   selectedColors,
-} from '../../../shared/colors';
-import { quick } from '../../../shared/vars';
+} from 'react-cosmos-shared2/ui';
+import styled from 'styled-components';
 
 const itemHeight = 28;
 

@@ -1,6 +1,5 @@
 import React from 'react';
-import { screenPrimary3 } from '../colors';
-import { Illustration } from '../svg';
+import { Illustration, screenPrimary3 } from 'react-cosmos-shared2/ui';
 
 export const BlankCanvasIllustration = ({ title }: { title: string }) => (
   <Illustration viewBox="0 0 998.95 833.99">

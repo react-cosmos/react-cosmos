@@ -2,15 +2,15 @@ import React from 'react';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { FlatFixtureTreeItem } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
+import { grey32, grey8, white10 } from 'react-cosmos-shared2/ui';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import { ArraySlot, Slot } from 'react-plugin';
 import styled from 'styled-components';
-import { grey32, grey8, white10 } from '../../shared/colors';
 import { NavRowSlot } from '../../shared/slots/NavRowSlot';
 import { useDrag } from '../../shared/useDrag';
-import { SidePanel } from './SidePanel';
 import { GlobalHeader } from './GlobalHeader';
 import { RendererHeader } from './RendererHeader';
+import { SidePanel } from './SidePanel';
 
 type Props = {
   storageCacheReady: boolean;

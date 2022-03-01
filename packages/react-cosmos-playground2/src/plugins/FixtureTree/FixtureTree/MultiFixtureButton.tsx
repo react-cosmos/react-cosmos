@@ -1,8 +1,8 @@
 import { isEqual } from 'lodash';
 import React, { RefObject } from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
+import { grey8 } from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
-import { grey8 } from '../../../shared/colors';
 import { FixtureLink } from './FixtureLink';
 import { FixtureTreeItem } from './FixtureTreeItem';
 import { MultiFixtureChildButton } from './MultiFixtureChildButton';

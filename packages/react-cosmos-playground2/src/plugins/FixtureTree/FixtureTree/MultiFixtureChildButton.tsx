@@ -1,14 +1,14 @@
 import React, { RefObject } from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import styled from 'styled-components';
 import {
   grey144,
   grey192,
   grey248,
   grey8,
+  quick,
   selectedColors,
-} from '../../../shared/colors';
-import { quick } from '../../../shared/vars';
+} from 'react-cosmos-shared2/ui';
+import styled from 'styled-components';
 import { FixtureLink } from './FixtureLink';
 import { FixtureTreeItem } from './FixtureTreeItem';
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
+import { grey176, grey32, white10 } from 'react-cosmos-shared2/ui';
 import { ArraySlot } from 'react-plugin';
 import styled from 'styled-components';
-import { grey176, grey32, white10 } from '../../shared/colors';
 
 type Props = {
   selectedFixtureId: FixtureId | null;

@@ -1,10 +1,10 @@
+import { onRouter } from 'react-cosmos-shared2/ui';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
-  pushUrlParams,
   popUrlParams,
+  pushUrlParams,
   resetUrl,
 } from '../../../testHelpers/url';
-import { onRouter } from '../../../testHelpers/pluginMocks';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 

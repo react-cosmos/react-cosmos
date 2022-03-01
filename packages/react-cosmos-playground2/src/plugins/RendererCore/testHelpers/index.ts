@@ -7,7 +7,7 @@ import {
   RendererId,
   RendererReadyResponse,
 } from 'react-cosmos-shared2/renderer';
-import { getRendererCoreMethods } from '../../../testHelpers/pluginMocks';
+import { getRendererCoreMethods } from 'react-cosmos-shared2/ui';
 
 export function createRendererReadyResponse(
   rendererId: RendererId,

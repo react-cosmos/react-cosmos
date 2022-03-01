@@ -1,7 +1,10 @@
 import React from 'react';
 import { FixtureStateValues } from 'react-cosmos-shared2/fixtureState';
-import { IconButton32 } from '../buttons';
-import { MinusSquareIcon, PlusSquareIcon } from '../icons';
+import {
+  IconButton32,
+  MinusSquareIcon,
+  PlusSquareIcon,
+} from 'react-cosmos-shared2/ui';
 import {
   getFullTreeExpansion,
   hasExpandableNodes,

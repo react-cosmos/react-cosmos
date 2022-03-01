@@ -5,9 +5,8 @@ import {
   FixtureStateControl,
   FixtureStateControls,
 } from 'react-cosmos-shared2/fixtureState';
+import { IconButton32, RotateCcwIcon } from 'react-cosmos-shared2/ui';
 import { StateUpdater } from 'react-cosmos-shared2/util';
-import { IconButton32 } from '../../shared/buttons';
-import { RotateCcwIcon } from '../../shared/icons';
 import {
   Actions,
   Body,

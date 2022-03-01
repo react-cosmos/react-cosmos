@@ -1,6 +1,5 @@
+import { fontFamily, grey8, white3 } from 'react-cosmos-shared2/ui';
 import { createGlobalStyle } from 'styled-components';
-import { grey8, white3 } from '../shared/colors';
-import { fontFamily } from '../shared/vars';
 
 export const GlobalStyle = createGlobalStyle`
   html {

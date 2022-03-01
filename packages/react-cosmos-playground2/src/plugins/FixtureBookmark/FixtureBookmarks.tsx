@@ -1,3 +1,4 @@
+import { blue } from 'chalk';
 import { isEqual } from 'lodash';
 import React from 'react';
 import {
@@ -5,22 +6,21 @@ import {
   FlatFixtureTreeItem,
 } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import styled from 'styled-components';
 import {
-  blue,
   grey128,
   grey224,
   grey24,
   grey248,
   grey32,
   grey8,
+  quick,
   selectedColors,
   white10,
-} from '../../shared/colors';
-import { XIcon } from '../../shared/icons';
+  XIcon,
+} from 'react-cosmos-shared2/ui';
+import styled from 'styled-components';
 import { createRelativePlaygroundUrl } from '../../shared/url';
 import { stringifyFixtureId } from '../../shared/valueInputTree';
-import { quick } from '../../shared/vars';
 
 type Props = {
   fixtureItems: FlatFixtureTree;

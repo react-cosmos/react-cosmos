@@ -1,6 +1,6 @@
 import React from 'react';
 import { FixtureStateSelectControl } from 'react-cosmos-shared2/fixtureState';
-import { lightBlue } from '../../shared/colors';
+import { lightBlue } from 'react-cosmos-shared2/ui';
 import { Select } from '../../shared/inputs/Select';
 import {
   Label,

@@ -4,8 +4,8 @@ import {
   FixtureStateValue,
   FixtureStateValues,
 } from 'react-cosmos-shared2/fixtureState';
+import { grey248, grey32 } from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
-import { grey248, grey32 } from '../colors';
 import { TreeExpansion } from '../treeExpansion';
 import { TreeView } from '../TreeView';
 import { ValueInput } from './ValueInput/ValueInput';

@@ -1,7 +1,11 @@
 import React from 'react';
+import {
+  blue,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  grey128,
+} from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
-import { blue, grey128 } from '../../../shared/colors';
-import { ChevronDownIcon, ChevronRightIcon } from '../../../shared/icons';
 import { FixtureTreeItem } from './FixtureTreeItem';
 
 type Props = {

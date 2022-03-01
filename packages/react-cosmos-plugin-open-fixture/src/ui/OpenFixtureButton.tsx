@@ -1,6 +1,5 @@
 import React from 'react';
-import { IconButton32 } from 'react-cosmos-playground2/src/shared/buttons';
-import { EditIcon } from 'react-cosmos-playground2/src/shared/icons';
+import { EditIcon, IconButton32 } from 'react-cosmos-shared2/ui';
 
 type Props = {
   onClick: () => unknown;

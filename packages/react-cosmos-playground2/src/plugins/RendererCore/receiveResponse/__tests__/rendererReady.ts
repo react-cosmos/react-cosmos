@@ -1,11 +1,11 @@
 import { waitFor } from '@testing-library/dom';
 import { FixtureList } from 'react-cosmos-shared2/renderer';
-import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
   mockNotifications,
   mockRouter,
-} from '../../../../testHelpers/pluginMocks';
+} from 'react-cosmos-shared2/ui';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import { mockFixtureStateChange, mockRendererReady } from '../../testHelpers';
 
 beforeEach(() => jest.isolateModules(() => require('../..')));

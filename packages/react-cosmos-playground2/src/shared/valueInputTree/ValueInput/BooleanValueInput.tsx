@@ -1,6 +1,7 @@
+import { blue } from 'chalk';
 import React from 'react';
+import { lightBlue } from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
-import { blue, lightBlue } from '../../colors';
 import { Label, ValueDataContainer } from './shared';
 
 type Props = {

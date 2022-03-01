@@ -1,11 +1,8 @@
 import { waitFor } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import React from 'react';
+import { getRendererPreviewMethods, mockCore } from 'react-cosmos-shared2/ui';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
-import {
-  getRendererPreviewMethods,
-  mockCore,
-} from '../../../testHelpers/pluginMocks';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 
 beforeEach(() => jest.isolateModules(() => require('..')));

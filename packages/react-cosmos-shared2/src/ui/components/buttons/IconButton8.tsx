@@ -1,7 +1,7 @@
 import React from 'react';
 import {
-  grey176,
   grey144,
+  grey176,
   grey216,
   grey24,
   grey248,

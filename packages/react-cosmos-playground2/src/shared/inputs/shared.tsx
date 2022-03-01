@@ -1,5 +1,5 @@
+import { lightBlue } from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
-import { lightBlue } from '../colors';
 
 export const TextInputContainer = styled.div<{
   focused: boolean;

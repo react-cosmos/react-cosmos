@@ -1,12 +1,12 @@
 import { waitFor } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import React from 'react';
-import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import {
   getRendererCoreContext,
   mockCore,
   mockRendererCore,
-} from '../../../testHelpers/pluginMocks';
+} from 'react-cosmos-shared2/ui';
+import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { getIframe, mockIframeMessage } from '../testHelpers/iframe';
 import { rendererReadyMsg, selectFixtureMsg } from '../testHelpers/messages';

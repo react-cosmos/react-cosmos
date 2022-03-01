@@ -1,12 +1,12 @@
 import { waitFor } from '@testing-library/dom';
-import { loadPlugins, resetPlugins } from 'react-plugin';
 import { FixtureList, RendererId } from 'react-cosmos-shared2/renderer';
 import {
   getRendererCoreMethods,
   mockNotifications,
   mockRouter,
   onRendererCore,
-} from '../../../../testHelpers/pluginMocks';
+} from 'react-cosmos-shared2/ui';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   createFixtureStateChangeResponse,
   mockRendererReady,

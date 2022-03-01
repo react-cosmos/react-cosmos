@@ -7,9 +7,8 @@ import {
   resetFixtureStateProps,
   updateFixtureStateProps,
 } from 'react-cosmos-shared2/fixtureState';
+import { CopyIcon, IconButton32, RotateCcwIcon } from 'react-cosmos-shared2/ui';
 import { StateUpdater } from 'react-cosmos-shared2/util';
-import { IconButton32 } from '../../../shared/buttons';
-import { CopyIcon, RotateCcwIcon } from '../../../shared/icons';
 import {
   Actions,
   Body,

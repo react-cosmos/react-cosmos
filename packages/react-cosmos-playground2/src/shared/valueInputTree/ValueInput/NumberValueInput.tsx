@@ -1,5 +1,6 @@
+import { blue } from 'chalk';
 import React from 'react';
-import { blue, grey248, grey8 } from '../../colors';
+import { grey248, grey8 } from 'react-cosmos-shared2/ui';
 import { NumberInput } from '../../inputs/NumberInput';
 import { Label, ValueDataContainer } from './shared';
 
