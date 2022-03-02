@@ -5,7 +5,12 @@ import {
   FixtureStateControl,
   FixtureStateControls,
 } from 'react-cosmos-shared2/fixtureState';
-import { IconButton32, RotateCcwIcon } from 'react-cosmos-shared2/ui';
+import {
+  ControlActionSlot,
+  ControlSlot,
+  IconButton32,
+  RotateCcwIcon,
+} from 'react-cosmos-shared2/ui';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import {
   Actions,
@@ -14,8 +19,6 @@ import {
   Header,
   Title,
 } from '../../shared/sidePanelUi';
-import { ControlActionSlot } from '../../shared/slots/ControlActionSlot';
-import { ControlSlot } from '../../shared/slots/ControlSlot';
 
 type Props = {
   fixtureState: FixtureState;

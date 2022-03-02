@@ -1,10 +1,9 @@
 import React from 'react';
 import { FixtureState } from 'react-cosmos-shared2/fixtureState';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { grey32 } from 'react-cosmos-shared2/ui';
+import { grey32, SidePanelRowSlot } from 'react-cosmos-shared2/ui';
 import { StateUpdater } from 'react-cosmos-shared2/util';
 import styled from 'styled-components';
-import { SidePanelRowSlot } from '../../shared/slots/SidePanelRowSlot';
 
 type Props = {
   fixtureId: FixtureId;

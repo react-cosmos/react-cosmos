@@ -4,11 +4,11 @@ import {
   CoreSpec,
   FixtureSearchSpec,
   FixtureTreeSpec,
+  NavRowSlotProps,
   RendererCoreSpec,
   RouterSpec,
 } from 'react-cosmos-shared2/ui';
 import { createPlugin, PluginContext } from 'react-plugin';
-import { NavRowSlotProps } from '../../shared/slots/NavRowSlot';
 import { FixtureSearchHeader } from './FixtureSearchHeader';
 import { FixtureSearchOverlay } from './FixtureSearchOverlay';
 

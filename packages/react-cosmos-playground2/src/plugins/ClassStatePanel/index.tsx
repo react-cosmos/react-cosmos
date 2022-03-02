@@ -1,9 +1,12 @@
 import React from 'react';
 import { FixtureElementId } from 'react-cosmos-shared2/fixtureState';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
-import { ClassStatePanelSpec, StorageSpec } from 'react-cosmos-shared2/ui';
+import {
+  ClassStatePanelSpec,
+  SidePanelRowSlotProps,
+  StorageSpec,
+} from 'react-cosmos-shared2/ui';
 import { createPlugin, PluginContext } from 'react-plugin';
-import { SidePanelRowSlotProps } from '../../shared/slots/SidePanelRowSlot';
 import { TreeExpansion } from '../../shared/treeExpansion';
 import {
   FixtureExpansionGroup,

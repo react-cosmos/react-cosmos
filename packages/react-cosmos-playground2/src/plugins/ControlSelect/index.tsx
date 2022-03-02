@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react';
 import { FixtureStateSelectControl } from 'react-cosmos-shared2/fixtureState';
-import { ControlSelectSpec } from 'react-cosmos-shared2/ui';
+import { ControlSelectSpec, ControlSlotProps } from 'react-cosmos-shared2/ui';
 import { createPlugin } from 'react-plugin';
-import { ControlSlotProps } from '../../shared/slots/ControlSlot';
 import { SelectValueInput } from './SelectValueInput';
 
 const { plug, register } = createPlugin<ControlSelectSpec>({

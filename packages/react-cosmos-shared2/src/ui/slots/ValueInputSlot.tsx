@@ -1,7 +1,12 @@
 import React, { ReactNode } from 'react';
-import { PrimitiveData } from 'react-cosmos-shared2/fixtureState';
 import { Slot } from 'react-plugin';
-import { LeafValue } from '../valueInputTree/shared';
+import {
+  FixtureStatePrimitiveValue,
+  FixtureStateUnserializableValue,
+  PrimitiveData,
+} from '../../fixtureState';
+
+type LeafValue = FixtureStatePrimitiveValue | FixtureStateUnserializableValue;
 
 export type ValueInputSlotProps = {
   id: string;

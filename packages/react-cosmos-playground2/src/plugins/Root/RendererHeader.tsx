@@ -3,6 +3,7 @@ import React from 'react';
 import { FlatFixtureTreeItem } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import {
+  FixtureActionSlot,
   grey176,
   grey32,
   IconButton32,
@@ -14,7 +15,6 @@ import {
   XCircleIcon,
 } from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
-import { FixtureActionSlot } from '../../shared/slots/FixtureActionSlot';
 
 type Props = {
   fixtureItems: FlatFixtureTreeItem[];

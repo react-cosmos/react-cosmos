@@ -7,13 +7,13 @@ import {
 import { FixtureId } from 'react-cosmos-shared2/renderer';
 import {
   CoreSpec,
+  FixtureActionSlotProps,
   FixtureBookmarkSpec,
   RendererCoreSpec,
   RouterSpec,
   StorageSpec,
 } from 'react-cosmos-shared2/ui';
 import { createPlugin, PluginContext } from 'react-plugin';
-import { FixtureActionSlotProps } from '../../shared/slots/FixtureActionSlot';
 import { BookmarkFixtureButton } from './BookmarkFixtureButton';
 import { FixtureBookmarks } from './FixtureBookmarks';
 

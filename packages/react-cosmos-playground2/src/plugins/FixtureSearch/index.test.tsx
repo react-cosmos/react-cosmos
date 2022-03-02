@@ -6,9 +6,9 @@ import {
   mockFixtureTree,
   mockRendererCore,
   mockRouter,
+  NavRowSlot,
 } from 'react-cosmos-shared2/ui';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
-import { NavRowSlot } from '../../shared/slots/NavRowSlot';
 
 beforeEach(() => jest.isolateModules(() => require('.')));
 

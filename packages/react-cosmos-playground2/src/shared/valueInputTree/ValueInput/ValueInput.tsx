@@ -1,6 +1,6 @@
 import React from 'react';
 import { PrimitiveData } from 'react-cosmos-shared2/fixtureState';
-import { ValueInputSlot } from '../../slots/ValueInputSlot';
+import { ValueInputSlot } from 'react-cosmos-shared2/ui';
 import { LeafValue, ValueTreeItem } from '../shared';
 import { BooleanValueInput } from './BooleanValueInput';
 import { NullValueInput } from './NullValueInput';
