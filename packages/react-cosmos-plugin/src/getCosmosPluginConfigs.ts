@@ -14,7 +14,11 @@ export type CosmosPluginConfig = {
   ui?: string;
 };
 
-export function getCosmosPluginConfigs(rootDir: string, ignore?: string[]) {
+type Args = {
+  rootDir: string;
+  ignore?: string[];
+};
+export function getCosmosPluginConfigs({ rootDir, ignore }: Args) {
   const configPaths = getCosmosPluginConfigPaths(rootDir, ignore);
   return configPaths.map(configPath =>
     getCosmosPluginConfig(rootDir, configPath)

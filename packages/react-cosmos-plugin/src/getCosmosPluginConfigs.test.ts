@@ -7,7 +7,7 @@ it('loads playground plugins', () => {
     '../../react-cosmos-playground2/src/plugins'
   );
 
-  const configs = getCosmosPluginConfigs(packagesDir);
+  const configs = getCosmosPluginConfigs({ rootDir: packagesDir });
   expect(configs).toMatchInlineSnapshot(`
     Array [
       Object {

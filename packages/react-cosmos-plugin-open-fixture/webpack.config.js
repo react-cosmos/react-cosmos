@@ -9,7 +9,7 @@ const plugins = [];
 module.exports = {
   mode: env,
   devtool: false,
-  entry: join(src, 'ui.tsx'),
+  entry: join(src, 'ui'),
   output: {
     path: dist,
     filename: 'ui.js',

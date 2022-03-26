@@ -10,6 +10,7 @@ import {
   detectCosmosConfigPath,
 } from '../config/detectCosmosConfig';
 import { httpProxyDevServerPlugin } from '../plugins/httpProxy';
+import openFileDevServerPlugin from '../plugins/openFile';
 import { userDepsFileDevServerPlugin } from '../plugins/userDepsFile';
 import { webpackDevServerPlugin } from '../plugins/webpack/webpackDevServerPlugin';
 import { getPluginConfigs } from '../shared/pluginConfigs';
@@ -22,6 +23,7 @@ const corePlugins: DevServerPlugin[] = [
   webpackDevServerPlugin,
   userDepsFileDevServerPlugin,
   httpProxyDevServerPlugin,
+  openFileDevServerPlugin,
 ];
 
 export async function startDevServer(platformType: PlatformType) {

@@ -8,6 +8,7 @@
     "start": "cosmos"
   },
   "dependencies": {
-    "react-cosmos": "^5.7.2"
+    "react-cosmos": "^5.7.2",
+    "react-cosmos-plugin-open-fixture": "^5.7.2"
   }
 }

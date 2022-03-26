@@ -18,6 +18,7 @@ export type CosmosConfig = {
   https: boolean;
   httpsOptions: null | HttpsOptions;
   port: number;
+  plugins: string[];
   publicUrl: string;
   rootDir: string;
   staticPath: null | string;
