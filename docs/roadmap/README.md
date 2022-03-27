@@ -10,11 +10,19 @@
 
 ## Core
 
+- [ ] Clean up codebase
+  - [ ] Rename `react-cosmos-shared2` to `react-cosmos-core`.
+  - [ ] Rename `react-cosmos-playground2` to `react-cosmos-ui`.
+  - [ ] Simplify `react-cosmos-core` entry points into `shared` (env agnostic), `ui` and `server`. _What happens to webpack stuff, can it be moved in the webpack package?_
+  - [ ] Merge `react-cosmos-plugin` into `react-cosmos-core/server`.
+  - [ ] Pick up fixtures from both `core/ui` and `ui` packages. _One playground or two?_
 - [ ] Decide what to do with [Lazy fixture importing](https://github.com/react-cosmos/react-cosmos/pull/1313). Salvage what you can and move on. No need to linger if the complexity required to achieve this is unreasonable. Document everything learned for future reference.
 - [ ] Research: ES6 modules (React Cosmos with no bundler and no compiler).
 
 ## Plugins
 
+- [ ] Extract react-cosmos-plugin-open-fixture plugin.
+- [ ] Move Boolean input plugin from example to built-in UI plugins.
 - [ ] Add support for server plugins.
 - [ ] Document plugin APIs.
 - [ ] Add guide for creating UI + server plugin.
@@ -27,6 +35,7 @@
   - [ ] Drop IE support.
   - [ ] Drop Node <12 support.
   - [ ] Minimize 3rd party depedencies.
+- [ ] _Can we publish ES modules instead of CJS on NPM? Would be useful for tree shaking because we're reducing the core package entry points._
 - [ ] Migrate from Slack to Discord?
 
 ## Docs & website
