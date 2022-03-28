@@ -29,7 +29,9 @@ export function getCosmosPluginConfigs({ rootDir, ignore }: Args) {
   );
 }
 
-function getCosmosPluginConfigPaths(rootDir: string, ignore?: string[]) {
+const defaultIgnore = ['**/node_modules/**'];
+
+function getCosmosPluginConfigPaths(rootDir: string, ignore = defaultIgnore) {
   return glob.sync('**/cosmos.plugin.json', {
     cwd: rootDir,
     absolute: true,
