@@ -50,6 +50,7 @@ export async function startDevServer(platformType: PlatformType) {
     msgHandler.cleanUp();
   }
 
+  // TODO: Use pluginConfigs on top of corePlugins
   try {
     for (const plugin of corePlugins) {
       const pluginReturn = await plugin({
