@@ -11,7 +11,7 @@ export async function generatePlaygroundPluginEntry() {
     '../packages/react-cosmos-playground2/src/plugins'
   );
 
-  const pluginConfigs = getCosmosPluginConfigs(packagesDir);
+  const pluginConfigs = getCosmosPluginConfigs({ rootDir: packagesDir });
   const uiPluginPaths: string[] = [];
   pluginConfigs.forEach(pluginConfig => {
     if (pluginConfig.ui) uiPluginPaths.push(`./${pluginConfig.ui}`);

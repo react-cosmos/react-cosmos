@@ -1,9 +1,9 @@
-import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
-  mockRouter,
   mockNotifications,
-} from '../../../testHelpers/pluginMocks';
+  mockRouter,
+} from 'react-cosmos-shared2/ui';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import { mockRendererReady } from '../testHelpers';
 
 beforeEach(() => jest.isolateModules(() => require('..')));

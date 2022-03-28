@@ -1,20 +1,20 @@
 import path from 'path';
-import { CosmosPluginConfig } from 'react-cosmos-plugin';
+import {
+  CosmosPluginConfig,
+  DevServerPlugin,
+  DevServerPluginCleanupCallback,
+  PlatformType,
+} from 'react-cosmos-plugin';
 import {
   detectCosmosConfig,
   detectCosmosConfigPath,
 } from '../config/detectCosmosConfig';
 import { httpProxyDevServerPlugin } from '../plugins/httpProxy';
-import { openFileDevServerPlugin } from '../plugins/openFile';
+import openFileDevServerPlugin from '../plugins/openFile';
 import { userDepsFileDevServerPlugin } from '../plugins/userDepsFile';
 import { webpackDevServerPlugin } from '../plugins/webpack/webpackDevServerPlugin';
 import { getPluginConfigs } from '../shared/pluginConfigs';
 import { serveStaticDir } from '../shared/static';
-import {
-  DevServerPlugin,
-  DevServerPluginCleanupCallback,
-  PlatformType,
-} from '../shared/types';
 import { createApp } from './app';
 import { createHttpServer } from './httpServer';
 import { createMessageHandler } from './messageHandler';
@@ -50,6 +50,7 @@ export async function startDevServer(platformType: PlatformType) {
     msgHandler.cleanUp();
   }
 
+  // TODO: Use pluginConfigs on top of corePlugins
   try {
     for (const plugin of corePlugins) {
       const pluginReturn = await plugin({

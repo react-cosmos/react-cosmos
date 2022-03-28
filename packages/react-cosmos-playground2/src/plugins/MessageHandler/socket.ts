@@ -1,8 +1,8 @@
-import io from 'socket.io-client';
-import { Message } from 'react-cosmos-shared2/util';
 import { SERVER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/build';
 import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-shared2/renderer';
-import { CoreSpec } from '../Core/public';
+import { CoreSpec } from 'react-cosmos-shared2/ui';
+import { Message } from 'react-cosmos-shared2/util';
+import io from 'socket.io-client';
 import { MessageHandlerContext } from './shared';
 
 let socket: void | SocketIOClient.Socket;

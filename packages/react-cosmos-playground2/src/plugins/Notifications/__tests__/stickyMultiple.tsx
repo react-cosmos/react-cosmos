@@ -1,7 +1,7 @@
 import { act, render } from '@testing-library/react';
 import React from 'react';
+import { getNotificationsMethods } from 'react-cosmos-shared2/ui';
 import { ArraySlot, loadPlugins, resetPlugins } from 'react-plugin';
-import { getNotificationsMethods } from '../../../testHelpers/pluginMocks';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 

@@ -1,7 +1,8 @@
+import { blue } from 'chalk';
 import React from 'react';
+import { grey248, grey8 } from 'react-cosmos-shared2/ui';
 import { useValue } from 'react-cosmos/fixture';
 import styled from 'styled-components';
-import { blue, grey248, grey8 } from '../colors';
 import { Space } from '../Space';
 import { NumberInput, NumberInputStyles } from './NumberInput';
 

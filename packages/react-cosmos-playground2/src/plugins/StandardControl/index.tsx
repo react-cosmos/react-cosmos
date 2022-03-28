@@ -4,12 +4,14 @@ import {
   FixtureStateStandardControl,
   FixtureStateValues,
 } from 'react-cosmos-shared2/fixtureState';
+import {
+  ControlActionSlotProps,
+  ControlSlotProps,
+  StandardControlSpec,
+} from 'react-cosmos-shared2/ui';
 import { createPlugin } from 'react-plugin';
-import { ControlActionSlotProps } from '../../shared/slots/ControlActionSlot';
-import { ControlSlotProps } from '../../shared/slots/ControlSlot';
 import { ValueInputTree } from '../../shared/valueInputTree';
 import { ExpandCollapseValues } from '../../shared/valueInputTree/ExpandCollapseValues';
-import { StandardControlSpec } from './public';
 import { useTreeExpansionStorage } from './storage';
 
 const { namedPlug, plug, register } = createPlugin<StandardControlSpec>({

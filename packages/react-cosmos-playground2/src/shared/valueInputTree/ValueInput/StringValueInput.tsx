@@ -1,5 +1,6 @@
+import { blue } from 'chalk';
 import React from 'react';
-import { blue, grey248, grey8 } from '../../colors';
+import { grey8, grey248 } from 'react-cosmos-shared2/ui';
 import {
   TextContainer,
   TextField,

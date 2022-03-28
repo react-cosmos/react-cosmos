@@ -1,6 +1,6 @@
 import React from 'react';
+import { grey224, grey64, grey96 } from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
-import { grey224, grey64, grey96 } from '../../shared/colors';
 import { KeyBox } from '../../shared/KeyBox';
 
 export function FixtureSearchShortcuts() {

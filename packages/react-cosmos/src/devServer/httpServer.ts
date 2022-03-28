@@ -2,7 +2,7 @@ import fs from 'fs';
 import http from 'http';
 import https from 'https';
 import pem from 'pem';
-import { CosmosConfig } from '../config/shared';
+import { CosmosConfig } from 'react-cosmos-shared2/cosmosConfig';
 
 type RequestListener = (
   request: http.IncomingMessage,

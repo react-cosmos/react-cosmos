@@ -1,4 +1,5 @@
 import path from 'path';
+import { CosmosConfig } from 'react-cosmos-shared2/cosmosConfig';
 import { getDecoratedFixtureElement } from 'react-cosmos-shared2/FixtureLoader';
 import {
   createFixtureTree,
@@ -18,7 +19,6 @@ import {
   stringifyRendererUrlQuery,
 } from 'react-cosmos-shared2/url';
 import url from 'url';
-import { CosmosConfig } from './config/shared';
 import { RENDERER_FILENAME } from './shared/playgroundHtml';
 import { getUserModules } from './userDeps/getUserModules';
 

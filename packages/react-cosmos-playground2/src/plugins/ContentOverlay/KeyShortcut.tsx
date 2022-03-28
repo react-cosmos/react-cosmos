@@ -1,6 +1,6 @@
 import React from 'react';
+import { screenGrey1, screenGrey5 } from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
-import { screenGrey1, screenGrey5 } from '../../shared/colors';
 import { KeyBox } from '../../shared/KeyBox';
 
 type Props = {

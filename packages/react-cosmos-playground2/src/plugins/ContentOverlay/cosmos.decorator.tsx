@@ -1,6 +1,6 @@
 import React from 'react';
+import { screenGrey6 } from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
-import { screenGrey6 } from '../../shared/colors';
 
 export default ({ children }: { children: React.ReactNode }) => (
   <Wrapper>{children}</Wrapper>

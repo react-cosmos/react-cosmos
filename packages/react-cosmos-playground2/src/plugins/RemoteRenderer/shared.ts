@@ -1,4 +1,4 @@
+import { RemoteRendererSpec } from 'react-cosmos-shared2/ui';
 import { PluginContext } from 'react-plugin';
-import { RemoteRendererSpec } from './public';
 
 export type RemoteRendererContext = PluginContext<RemoteRendererSpec>;

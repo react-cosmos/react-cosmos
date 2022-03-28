@@ -1,7 +1,10 @@
 import path from 'path';
+import {
+  CosmosConfig,
+  CosmosConfigInput,
+} from 'react-cosmos-shared2/cosmosConfig';
 import { getCliArgs } from '../shared/cli';
 import { resolveModule } from './resolveModule';
-import { CosmosConfig, CosmosConfigInput } from './shared';
 
 export function createCosmosConfig(
   rootDir: string,
@@ -19,6 +22,7 @@ export function createCosmosConfig(
     https: getHttps(cosmosConfigInput),
     httpsOptions: getHttpsOptions(cosmosConfigInput, rootDir),
     port: getPort(cosmosConfigInput),
+    plugins: getPlugins(cosmosConfigInput, rootDir),
     publicUrl: getPublicUrl(cosmosConfigInput),
     staticPath: getStaticPath(cosmosConfigInput, rootDir),
     userDepsFilePath: getUserDepsFilePath(cosmosConfigInput, rootDir),
@@ -108,4 +112,9 @@ function getGlobalImports(
   return globalImports.map(globalImport =>
     resolveModule(rootDir, globalImport)
   );
+}
+
+function getPlugins(cosmosConfigInput: CosmosConfigInput, rootDir: string) {
+  const { plugins = [] } = cosmosConfigInput;
+  return plugins.map(plugin => resolveModule(rootDir, plugin));
 }

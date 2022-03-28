@@ -1,6 +1,6 @@
 import React from 'react';
+import { grey128, grey160, grey32, white10 } from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
-import { grey128, grey160, grey32, white10 } from './colors';
 
 export const Container = styled.div`
   background: ${grey32};

@@ -1,11 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
 import {
   screenGrey3,
   screenGrey5,
   screenPrimary2,
   screenPrimary3,
-} from '../../shared/colors';
+} from 'react-cosmos-shared2/ui';
+import styled from 'styled-components';
 import { ArtificialIntelligenceIllustration } from '../../shared/illustrations';
 import {
   ContentContainer,

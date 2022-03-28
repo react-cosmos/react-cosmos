@@ -1,4 +1,4 @@
-import { RouterSpec } from '../../Router/public';
+import { RouterSpec } from 'react-cosmos-shared2/ui';
 import { RendererCoreContext } from '../shared';
 
 export function getSelectedFixtureId({ getMethodsOf }: RendererCoreContext) {

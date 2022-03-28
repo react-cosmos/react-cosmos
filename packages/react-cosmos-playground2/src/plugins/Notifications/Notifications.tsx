@@ -1,14 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
-import { grey128, grey32, grey64, grey8, white95 } from '../../shared/colors';
 import {
   AlertCircleIcon,
   CheckCircleIcon,
+  grey128,
+  grey32,
+  grey64,
+  grey8,
   InfoIcon,
   LoaderIcon,
-} from '../../shared/icons';
-import { quick } from '../../shared/vars';
-import { Notification, NotificationType } from './public';
+  Notification,
+  NotificationType,
+  quick,
+  white95,
+} from 'react-cosmos-shared2/ui';
+import styled from 'styled-components';
 
 type Props = {
   notifications: Notification[];

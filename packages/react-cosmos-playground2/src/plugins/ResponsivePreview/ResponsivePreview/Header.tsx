@@ -1,20 +1,22 @@
 import React from 'react';
-import styled from 'styled-components';
-import { Button8 } from '../../../shared/buttons';
 import {
   blue,
+  Button8,
+  Device,
   grey128,
   grey144,
   grey216,
   grey248,
   grey8,
-} from '../../../shared/colors';
-import { Minimize2Icon, RefreshCcwIcon } from '../../../shared/icons';
+  Minimize2Icon,
+  quick,
+  RefreshCcwIcon,
+  Viewport,
+} from 'react-cosmos-shared2/ui';
+import styled from 'styled-components';
 import { NumberInput } from '../../../shared/inputs/NumberInput';
 import { Select } from '../../../shared/inputs/Select';
 import { Space } from '../../../shared/Space';
-import { quick } from '../../../shared/vars';
-import { Device, Viewport } from '../public';
 
 type Props = {
   devices: Device[];

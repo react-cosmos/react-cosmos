@@ -1,13 +1,13 @@
-import React from 'react';
 import { render } from '@testing-library/react';
-import { Slot, loadPlugins, resetPlugins } from 'react-plugin';
-import { mockPlug } from '../../../testHelpers/plugin';
+import React from 'react';
 import {
-  mockStorage,
-  mockRouter,
   mockCore,
+  mockPlug,
   mockRendererCore,
-} from '../../../testHelpers/pluginMocks';
+  mockRouter,
+  mockStorage,
+} from 'react-cosmos-shared2/ui';
+import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 

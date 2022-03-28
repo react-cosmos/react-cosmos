@@ -1,11 +1,11 @@
 import { waitFor } from '@testing-library/dom';
+import { getRouterMethods, onRouter } from 'react-cosmos-shared2/ui';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getUrlParams,
   pushUrlParams,
   resetUrl,
 } from '../../../testHelpers/url';
-import { getRouterMethods, onRouter } from '../../../testHelpers/pluginMocks';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 

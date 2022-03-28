@@ -1,7 +1,7 @@
+import { blue } from 'chalk';
 import React from 'react';
+import { ChevronDownIcon, grey32 } from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
-import { blue, grey32 } from '../colors';
-import { ChevronDownIcon } from '../icons';
 import { useFocus } from '../useFocus';
 
 type BaseOption = { value: string; label: string };

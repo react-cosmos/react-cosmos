@@ -1,10 +1,12 @@
 import React from 'react';
+import {
+  ContentOverlaySpec,
+  RendererCoreSpec,
+  RendererPreviewSpec,
+  RouterSpec,
+} from 'react-cosmos-shared2/ui';
 import { createPlugin } from 'react-plugin';
 import { ContentOverlay } from './ContentOverlay';
-import { RouterSpec } from '../Router/public';
-import { RendererCoreSpec } from '../RendererCore/public';
-import { RendererPreviewSpec } from '../RendererPreview/public';
-import { ContentOverlaySpec } from './public';
 import { useWelcomeDismiss } from './welcomeDismiss';
 
 const { plug, register } = createPlugin<ContentOverlaySpec>({

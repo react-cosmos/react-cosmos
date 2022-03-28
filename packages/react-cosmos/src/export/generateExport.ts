@@ -1,13 +1,12 @@
 import fs from 'fs-extra';
 import path from 'path';
-import { CosmosPluginConfig } from 'react-cosmos-plugin';
+import { CosmosPluginConfig, ExportPlugin } from 'react-cosmos-plugin';
+import { CosmosConfig } from 'react-cosmos-shared2/cosmosConfig';
 import { detectCosmosConfig } from '../config/detectCosmosConfig';
-import { CosmosConfig } from '../config/shared';
 import { webpackExportPlugin } from '../plugins/webpack/webpackExportPlugin';
 import { getExportPlaygroundHtml } from '../shared/playgroundHtml';
 import { getPluginConfigs } from '../shared/pluginConfigs';
 import { getStaticPath } from '../shared/static';
-import { ExportPlugin } from '../shared/types';
 import { removeLeadingSlash } from '../shared/utils';
 
 const corePlugins: ExportPlugin[] = [webpackExportPlugin];

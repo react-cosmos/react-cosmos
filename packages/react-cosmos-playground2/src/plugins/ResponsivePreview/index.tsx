@@ -1,9 +1,12 @@
 import React, { SetStateAction } from 'react';
+import {
+  CoreSpec,
+  RendererCoreSpec,
+  ResponsivePreviewSpec,
+  StorageSpec,
+  Viewport,
+} from 'react-cosmos-shared2/ui';
 import { createPlugin } from 'react-plugin';
-import { CoreSpec } from '../Core/public';
-import { RendererCoreSpec } from '../RendererCore/public';
-import { StorageSpec } from '../Storage/public';
-import { ResponsivePreviewSpec, Viewport } from './public';
 import { ResponsivePreview } from './ResponsivePreview/ResponsivePreview';
 import {
   DEFAULT_DEVICES,

@@ -1,8 +1,14 @@
 import React from 'react';
+import {
+  blue,
+  ChevronLeftIcon,
+  grey160,
+  grey32,
+  IconButton32,
+  SearchIcon,
+  white10,
+} from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
-import { IconButton32 } from '../../shared/buttons';
-import { blue, grey160, grey32, white10 } from '../../shared/colors';
-import { ChevronLeftIcon, SearchIcon } from '../../shared/icons';
 import { KeyBox } from '../../shared/KeyBox';
 
 type Props = {

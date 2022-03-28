@@ -1,6 +1,5 @@
+import { CoreSpec, getCoreMethods, mockStorage } from 'react-cosmos-shared2/ui';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { mockStorage, getCoreMethods } from '../../testHelpers/pluginMocks';
-import { CoreSpec } from './public';
 
 beforeEach(() => jest.isolateModules(() => require('.')));
 

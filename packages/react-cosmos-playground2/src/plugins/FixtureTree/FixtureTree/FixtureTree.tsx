@@ -2,8 +2,8 @@ import { isEqual } from 'lodash';
 import React, { RefObject } from 'react';
 import { FixtureTreeNode } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
+import { grey32 } from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
-import { grey32 } from '../../../shared/colors';
 import {
   nodeContainsFixtureId,
   recordContainsFixtureId,

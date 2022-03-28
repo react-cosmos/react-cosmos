@@ -3,12 +3,12 @@ import express from 'express';
 import fs from 'fs';
 import open from 'open';
 import path from 'path';
-import { CosmosConfig } from '../config/shared';
-import { DevServerPluginArgs } from '../shared/types';
+import { DevServerPluginArgs } from 'react-cosmos-plugin';
+import { CosmosConfig } from 'react-cosmos-shared2/cosmosConfig';
 
 type ReqQuery = { filePath: void | string; line: number; column: number };
 
-export function openFileDevServerPlugin({
+export default function openFileDevServerPlugin({
   cosmosConfig,
   expressApp,
 }: DevServerPluginArgs) {

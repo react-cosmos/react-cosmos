@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import {
   screenGrey1,
   screenGrey3,
@@ -7,7 +6,8 @@ import {
   screenPrimary1,
   screenPrimary2,
   screenPrimary3,
-} from '../../shared/colors';
+} from 'react-cosmos-shared2/ui';
+import styled from 'styled-components';
 import { AstronautIllustration } from '../../shared/illustrations';
 import {
   ContentContainer,

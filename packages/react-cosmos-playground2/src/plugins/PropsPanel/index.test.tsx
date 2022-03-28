@@ -5,9 +5,8 @@ import {
   FixtureState,
   FixtureStateValues,
 } from 'react-cosmos-shared2/fixtureState';
+import { mockStorage, SidePanelRowSlot } from 'react-cosmos-shared2/ui';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { SidePanelRowSlot } from '../../shared/slots/SidePanelRowSlot';
-import { mockStorage } from '../../testHelpers/pluginMocks';
 import { getParentButton } from '../../testHelpers/selectors';
 import { PROPS_TREE_EXPANSION_STORAGE_KEY } from './shared';
 

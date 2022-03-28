@@ -1,4 +1,2 @@
-export {
-  CosmosPluginConfig,
-  getCosmosPluginConfigs,
-} from './getCosmosPluginConfigs';
+export * from './getCosmosPluginConfigs';
+export * from './serverPluginTypes';

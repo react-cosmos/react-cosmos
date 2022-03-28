@@ -1,12 +1,12 @@
 import { fireEvent, render, RenderResult } from '@testing-library/react';
 import React from 'react';
-import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
-import { RendererActionSlot } from '../../../shared/slots/RendererActionSlot';
 import {
   mockCore,
   mockRendererCore,
   mockStorage,
-} from '../../../testHelpers/pluginMocks';
+  RendererActionSlot,
+} from 'react-cosmos-shared2/ui';
+import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import {
   DEFAULT_DEVICES,
   DEFAULT_VIEWPORT_STATE,

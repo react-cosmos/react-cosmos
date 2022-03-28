@@ -1,14 +1,14 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { FixtureList } from 'react-cosmos-shared2/renderer';
-import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
-import { NavRowSlot } from '../../shared/slots/NavRowSlot';
 import {
   mockCore,
   mockFixtureTree,
   mockRendererCore,
   mockRouter,
-} from '../../testHelpers/pluginMocks';
+  NavRowSlot,
+} from 'react-cosmos-shared2/ui';
+import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 
 beforeEach(() => jest.isolateModules(() => require('.')));
 

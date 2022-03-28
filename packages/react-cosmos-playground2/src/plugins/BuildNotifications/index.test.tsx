@@ -1,10 +1,10 @@
 import { BuildMessage } from 'react-cosmos-shared2/build';
-import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getMessageHandlerContext,
   mockMessageHandler,
   mockNotifications,
-} from '../../testHelpers/pluginMocks';
+} from 'react-cosmos-shared2/ui';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 
 beforeEach(() => jest.isolateModules(() => require('.')));
 

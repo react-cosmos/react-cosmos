@@ -1,5 +1,5 @@
 import React from 'react';
-import { StorageSpec } from '../Storage/public';
+import { StorageSpec } from 'react-cosmos-shared2/ui';
 import { ContentOverlayContext } from './shared';
 
 export const WELCOME_DISMISS_STORAGE_KEY = 'welcomeDismissedAt';

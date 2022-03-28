@@ -1,10 +1,15 @@
 import React, { useMemo } from 'react';
 import { createFixtureTree } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureList } from 'react-cosmos-shared2/renderer';
+import {
+  grey128,
+  grey32,
+  IconButton32,
+  MinusSquareIcon,
+  PlusSquareIcon,
+  white10,
+} from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
-import { IconButton32 } from '../../shared/buttons';
-import { grey128, grey32, white10 } from '../../shared/colors';
-import { MinusSquareIcon, PlusSquareIcon } from '../../shared/icons';
 import {
   getFullTreeExpansion,
   hasExpandableNodes,

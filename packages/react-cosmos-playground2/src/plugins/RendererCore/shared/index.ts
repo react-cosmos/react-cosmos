@@ -1,5 +1,5 @@
+import { RendererCoreSpec } from 'react-cosmos-shared2/ui';
 import { PluginContext } from 'react-plugin';
-import { RendererCoreSpec } from '../public';
 
 export type State = RendererCoreSpec['state'];
 

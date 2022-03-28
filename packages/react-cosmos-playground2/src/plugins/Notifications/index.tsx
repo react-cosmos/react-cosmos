@@ -1,7 +1,7 @@
 import React from 'react';
+import { NotificationsSpec } from 'react-cosmos-shared2/ui';
 import { createPlugin } from 'react-plugin';
 import { Notifications } from './Notifications';
-import { NotificationsSpec } from './public';
 import {
   clearTimedNotification,
   pushStickyNotification,

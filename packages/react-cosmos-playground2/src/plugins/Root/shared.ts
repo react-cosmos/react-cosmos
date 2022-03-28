@@ -1,4 +1,4 @@
+import { RootSpec } from 'react-cosmos-shared2/ui';
 import { PluginContext } from 'react-plugin';
-import { RootSpec } from './public';
 
 export type RootContext = PluginContext<RootSpec>;

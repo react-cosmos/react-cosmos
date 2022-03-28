@@ -1,11 +1,11 @@
 import webpackHotMiddleware from '@skidding/webpack-hot-middleware';
 import { NextHandleFunction } from 'connect';
 import path from 'path';
+import { DevServerPluginArgs } from 'react-cosmos-plugin';
 import { BuildMessage } from 'react-cosmos-shared2/build';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import { serveStaticDir } from '../../shared/static';
-import { DevServerPluginArgs } from '../../shared/types';
 import { removeLeadingDot } from '../../shared/utils';
 import { createWebpackCosmosConfig } from './cosmosConfig/createWebpackCosmosConfig';
 import { getWebpack } from './getWebpack';

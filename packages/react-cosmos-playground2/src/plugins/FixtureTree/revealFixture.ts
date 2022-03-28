@@ -3,11 +3,13 @@ import {
   FixtureTreeNode,
 } from 'react-cosmos-shared2/fixtureTree';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
+import {
+  CoreSpec,
+  RendererCoreSpec,
+  StorageSpec,
+} from 'react-cosmos-shared2/ui';
 import { nodeContainsFixtureId } from '../../shared/fixtureTree';
 import { TreeExpansion } from '../../shared/treeExpansion';
-import { CoreSpec } from '../Core/public';
-import { RendererCoreSpec } from '../RendererCore/public';
-import { StorageSpec } from '../Storage/public';
 import {
   FixtureTreeContext,
   getTreeExpansion,

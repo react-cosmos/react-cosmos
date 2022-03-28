@@ -1,6 +1,10 @@
 import React from 'react';
-import { screenGrey4, screenGrey5, screenPrimary3 } from '../colors';
-import { Illustration } from '../svg';
+import {
+  Illustration,
+  screenGrey4,
+  screenGrey5,
+  screenPrimary3,
+} from 'react-cosmos-shared2/ui';
 
 export const AstronautIllustration = ({ title }: { title: string }) => (
   <Illustration viewBox="0 0 995.79 756.3">

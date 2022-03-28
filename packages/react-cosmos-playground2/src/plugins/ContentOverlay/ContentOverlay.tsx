@@ -1,5 +1,5 @@
 import React from 'react';
-import { RuntimeStatus, UrlStatus } from '../RendererPreview/public';
+import { RuntimeStatus, UrlStatus } from 'react-cosmos-shared2/ui';
 import { NoFixtureSelected } from './NoFixtureSelected';
 import { RendererNotResponding } from './RendererNotResponding';
 import { ContentContainer, OverlayContainer } from './shared';

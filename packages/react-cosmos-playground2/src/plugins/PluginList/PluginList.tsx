@@ -1,6 +1,6 @@
 import React from 'react';
+import { grey224 } from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
-import { grey224 } from '../../shared/colors';
 import { Container, Header, Title } from '../../shared/sidePanelUi';
 
 export type SimplePlugin = {

@@ -1,5 +1,5 @@
+import { disabledColors, grey128, grey224 } from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
-import { disabledColors, grey128, grey224 } from '../../colors';
 
 export const Label = styled.label<{ disabled?: boolean }>`
   padding: 0;

@@ -8,9 +8,9 @@ import 'whatwg-fetch';
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import * as ReactPlugin from 'react-plugin';
+import { CoreSpec } from 'react-cosmos-shared2/ui';
 import { CosmosPluginConfig } from 'react-cosmos-plugin';
 import { GlobalStyle } from './global/style';
-import { CoreSpec } from './plugins/Core/public';
 import { DEFAULT_PLUGIN_CONFIG } from './shared/plugin';
 
 import './plugins/pluginEntry';

@@ -1,7 +1,6 @@
-import { loadPlugins, resetPlugins } from 'react-plugin';
 import retry from '@skidding/async-retry';
-import { getMethodsOf } from '../../testHelpers/plugin';
-import { StorageSpec } from './public';
+import { getMethodsOf, StorageSpec } from 'react-cosmos-shared2/ui';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 
 const mockSetItem = jest.fn();
 

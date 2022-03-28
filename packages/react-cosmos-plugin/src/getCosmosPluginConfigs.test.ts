@@ -7,7 +7,7 @@ it('loads playground plugins', () => {
     '../../react-cosmos-playground2/src/plugins'
   );
 
-  const configs = getCosmosPluginConfigs(packagesDir);
+  const configs = getCosmosPluginConfigs({ rootDir: packagesDir });
   expect(configs).toMatchInlineSnapshot(`
     Array [
       Object {
@@ -31,14 +31,14 @@ it('loads playground plugins', () => {
         "ui": "ControlPanel/index.tsx",
       },
       Object {
+        "name": "Select control",
+        "rootDir": "ControlSelect",
+        "ui": "ControlSelect/index.tsx",
+      },
+      Object {
         "name": "Core",
         "rootDir": "Core",
         "ui": "Core/index.tsx",
-      },
-      Object {
-        "name": "Edit fixture button",
-        "rootDir": "EditFixtureButton",
-        "ui": "EditFixtureButton/index.tsx",
       },
       Object {
         "name": "Fixture bookmark",
@@ -114,11 +114,6 @@ it('loads playground plugins', () => {
         "name": "Router",
         "rootDir": "Router",
         "ui": "Router/index.ts",
-      },
-      Object {
-        "name": "Select control",
-        "rootDir": "SelectControl",
-        "ui": "SelectControl/index.tsx",
       },
       Object {
         "name": "Standard control",

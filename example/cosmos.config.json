@@ -1,5 +1,6 @@
 {
   "disablePlugins": false,
   "globalImports": ["src/polyfills.ts", "src/global.css"],
-  "staticPath": "static"
+  "staticPath": "static",
+  "plugins": ["react-cosmos-plugin-open-fixture"]
 }

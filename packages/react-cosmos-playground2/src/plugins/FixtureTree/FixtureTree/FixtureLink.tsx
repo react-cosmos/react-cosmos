@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
+import { blue } from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
-import { blue } from '../../../shared/colors';
 import { createRelativePlaygroundUrl } from '../../../shared/url';
 
 type Props = {

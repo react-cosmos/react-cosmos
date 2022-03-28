@@ -1,6 +1,6 @@
 import React from 'react';
+import { screenGrey3 } from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
-import { screenGrey3 } from '../../shared/colors';
 import { BlankCanvasIllustration } from '../../shared/illustrations';
 import { KeyShortcut } from './KeyShortcut';
 import {

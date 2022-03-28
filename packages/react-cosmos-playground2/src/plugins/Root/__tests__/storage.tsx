@@ -1,9 +1,9 @@
-import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
-  mockStorage,
   mockCore,
   mockRendererCore,
-} from '../../../testHelpers/pluginMocks';
+  mockStorage,
+} from 'react-cosmos-shared2/ui';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 

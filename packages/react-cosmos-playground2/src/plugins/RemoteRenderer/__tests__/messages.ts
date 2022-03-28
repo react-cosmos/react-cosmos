@@ -1,16 +1,16 @@
-import { loadPlugins, resetPlugins } from 'react-plugin';
 import { waitFor } from '@testing-library/dom';
 import {
-  SelectFixtureRequest,
   RendererReadyResponse,
+  SelectFixtureRequest,
 } from 'react-cosmos-shared2/renderer';
 import {
-  mockCore,
-  mockRendererCore,
-  mockMessageHandler,
   getMessageHandlerContext,
   getRendererCoreContext,
-} from '../../../testHelpers/pluginMocks';
+  mockCore,
+  mockMessageHandler,
+  mockRendererCore,
+} from 'react-cosmos-shared2/ui';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 

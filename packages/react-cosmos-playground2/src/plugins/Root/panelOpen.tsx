@@ -1,5 +1,4 @@
-import { RendererCoreSpec } from '../RendererCore/public';
-import { StorageSpec } from '../Storage/public';
+import { RendererCoreSpec, StorageSpec } from 'react-cosmos-shared2/ui';
 import { RootContext } from './shared';
 
 export const PANEL_OPEN_STORAGE_KEY = 'sidePanelOpen';

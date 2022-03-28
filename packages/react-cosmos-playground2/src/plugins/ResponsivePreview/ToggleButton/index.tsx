@@ -1,6 +1,5 @@
 import React from 'react';
-import { IconButton32 } from '../../../shared/buttons';
-import { SmartphoneIcon } from '../../../shared/icons';
+import { IconButton32, SmartphoneIcon } from 'react-cosmos-shared2/ui';
 
 type Props = {
   selected: boolean;

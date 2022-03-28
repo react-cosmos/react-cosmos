@@ -3,16 +3,18 @@ import {
   createFixtureTree,
   flattenFixtureTree,
 } from 'react-cosmos-shared2/fixtureTree';
+import {
+  CoreSpec,
+  RendererCoreSpec,
+  RootSpec,
+  RouterSpec,
+  StorageSpec,
+} from 'react-cosmos-shared2/ui';
 import { createPlugin } from 'react-plugin';
-import { CoreSpec } from '../Core/public';
-import { RendererCoreSpec } from '../RendererCore/public';
-import { RouterSpec } from '../Router/public';
-import { StorageSpec } from '../Storage/public';
 import { isNavOpen, openNav } from './navOpen';
 import { getNavWidthApi } from './navWidth';
 import { isPanelOpen, openPanel } from './panelOpen';
 import { getPanelWidthApi } from './panelWidth';
-import { RootSpec } from './public';
 import { Root } from './Root';
 import { RootContext } from './shared';
 

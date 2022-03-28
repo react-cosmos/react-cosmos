@@ -1,4 +1,5 @@
 import path from 'path';
+import { CosmosConfig } from 'react-cosmos-shared2/cosmosConfig';
 import {
   ReactDecorator,
   ReactDecorators,
@@ -6,7 +7,6 @@ import {
   ReactFixtureExports,
 } from 'react-cosmos-shared2/react';
 import slash from 'slash';
-import { CosmosConfig } from '../config/shared';
 import { findUserModulePaths } from './findUserModulePaths';
 
 type UserModules = {

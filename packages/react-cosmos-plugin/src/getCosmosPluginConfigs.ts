@@ -3,25 +3,35 @@ import path from 'path';
 import resolveFrom from 'resolve-from';
 
 // TODO: Validate config schema on config import
+// TODO: Allow ui and devServer to be [true] for default paths?
 type RawCosmosPluginConfig = {
   name: string;
   ui?: string;
+  devServer?: string;
 };
 
 export type CosmosPluginConfig = {
   name: string;
   rootDir: string;
   ui?: string;
+  devServer?: string;
 };
 
-export function getCosmosPluginConfigs(rootDir: string, ignore?: string[]) {
+type Args = {
+  rootDir: string;
+  ignore?: string[];
+};
+// TODO: Rename to findCosmosPluginConfigs
+export function getCosmosPluginConfigs({ rootDir, ignore }: Args) {
   const configPaths = getCosmosPluginConfigPaths(rootDir, ignore);
   return configPaths.map(configPath =>
     getCosmosPluginConfig(rootDir, configPath)
   );
 }
 
-function getCosmosPluginConfigPaths(rootDir: string, ignore?: string[]) {
+const defaultIgnore = ['**/node_modules/**'];
+
+function getCosmosPluginConfigPaths(rootDir: string, ignore = defaultIgnore) {
   return glob.sync('**/cosmos.plugin.json', {
     cwd: rootDir,
     absolute: true,

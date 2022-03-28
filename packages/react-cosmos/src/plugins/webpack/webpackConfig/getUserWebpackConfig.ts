@@ -1,6 +1,6 @@
 import path from 'path';
+import { CosmosConfig } from 'react-cosmos-shared2/cosmosConfig';
 import webpack from 'webpack';
-import { CosmosConfig } from '../../../config/shared';
 import { getCliArgs } from '../../../shared/cli';
 import { moduleExists, requireModule } from '../../../shared/fs';
 import { createWebpackCosmosConfig } from '../cosmosConfig/createWebpackCosmosConfig';

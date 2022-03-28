@@ -1,6 +1,6 @@
 import React from 'react';
+import { grey248 } from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
-import { grey248 } from '../colors';
 import { Select } from './Select';
 
 const planets = [

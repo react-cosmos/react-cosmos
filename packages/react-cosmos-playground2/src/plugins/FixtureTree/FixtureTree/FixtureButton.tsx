@@ -1,7 +1,7 @@
 import React, { RefObject } from 'react';
 import { FixtureId } from 'react-cosmos-shared2/renderer';
+import { quick } from 'react-cosmos-shared2/ui';
 import styled from 'styled-components';
-import { quick } from '../../../shared/vars';
 import { FixtureLink } from './FixtureLink';
 import { FixtureTreeItem } from './FixtureTreeItem';
 

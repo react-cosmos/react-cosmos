@@ -2,11 +2,11 @@ import { FSWatcher, watch } from 'chokidar';
 import { writeFile } from 'fs';
 import { debounce } from 'lodash';
 import path from 'path';
+import { DevServerPluginArgs } from 'react-cosmos-plugin';
+import { CosmosConfig } from 'react-cosmos-shared2/cosmosConfig';
 import promisify from 'util.promisify';
-import { CosmosConfig } from '../config/shared';
 import { getCliArgs } from '../shared/cli';
 import { NativeRendererConfig } from '../shared/rendererConfig';
-import { DevServerPluginArgs } from '../shared/types';
 import { generateUserDepsModule } from '../userDeps/generateUserDepsModule';
 import {
   getDecoratorPatterns,
