@@ -34,7 +34,7 @@ export type FixtureApi = {
   treePath: string[];
 };
 
-export function getFixtures2(cosmosConfig: CosmosConfig) {
+export function getFixtures(cosmosConfig: CosmosConfig) {
   const { fixturesDir, fixtureFileSuffix, rootDir } = cosmosConfig;
 
   const fixtureInfo: FixtureApi[] = [];
