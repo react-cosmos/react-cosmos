@@ -10,12 +10,7 @@
 
 ## Core
 
-- [ ] Clean up codebase
-  - [ ] Rename `react-cosmos-shared2` to `react-cosmos-core`.
-  - [ ] Rename `react-cosmos-playground2` to `react-cosmos-ui`.
-  - [ ] Simplify `react-cosmos-core` entry points into `shared` (env agnostic), `ui` and `server`. _What happens to webpack stuff, can it be moved in the webpack package?_
-  - [ ] Merge `react-cosmos-plugin` into `react-cosmos-core/server`.
-  - [ ] Pick up fixtures from both `core/ui` and `ui` packages. _One playground or two?_
+- [ ] Redesign codebase packages and APIs
 - [ ] Decide what to do with [Lazy fixture importing](https://github.com/react-cosmos/react-cosmos/pull/1313). Salvage what you can and move on. No need to linger if the complexity required to achieve this is unreasonable. Document everything learned for future reference.
 - [ ] Research: ES6 modules (React Cosmos with no bundler and no compiler).
 
