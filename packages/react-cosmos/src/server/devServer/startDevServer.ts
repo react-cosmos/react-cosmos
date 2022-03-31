@@ -1,0 +1,91 @@
+import path from 'path';
+import { getPluginConfigs } from '../pluginConfigs';
+import { serveStaticDir } from '../staticServer';
+import {
+  detectCosmosConfig,
+  detectCosmosConfigPath,
+} from '../cosmosConfig/detectCosmosConfig';
+import { CosmosPluginConfig } from '../cosmosPlugin/getCosmosPluginConfigs';
+import {
+  DevServerPlugin,
+  DevServerPluginCleanupCallback,
+  PlatformType,
+} from '../cosmosPlugin/types';
+import { createApp } from './app';
+import { httpProxyDevServerPlugin } from './corePlugins/httpProxy';
+import openFileDevServerPlugin from './corePlugins/openFile';
+import { userDepsFileDevServerPlugin } from './corePlugins/userDepsFile';
+import { createHttpServer } from './httpServer';
+import { createMessageHandler } from './messageHandler';
+
+const corePlugins: DevServerPlugin[] = [
+  userDepsFileDevServerPlugin,
+  httpProxyDevServerPlugin,
+  openFileDevServerPlugin,
+];
+
+export async function startDevServer(platformType: PlatformType) {
+  const cosmosConfig = detectCosmosConfig();
+  logCosmosConfigInfo();
+
+  const pluginConfigs = getPluginConfigs(cosmosConfig);
+  logPluginInfo(pluginConfigs);
+
+  const app = createApp(platformType, cosmosConfig, pluginConfigs);
+  if (cosmosConfig.staticPath) {
+    serveStaticDir(app, cosmosConfig.staticPath, cosmosConfig.publicUrl);
+  }
+
+  const pluginCleanupCallbacks: DevServerPluginCleanupCallback[] = [];
+  const httpServer = await createHttpServer(cosmosConfig, app);
+  await httpServer.start();
+
+  const msgHandler = createMessageHandler(httpServer.server);
+
+  async function cleanUp() {
+    await Promise.all(pluginCleanupCallbacks.map(cleanup => cleanup()));
+    await httpServer.stop();
+    msgHandler.cleanUp();
+  }
+
+  // TODO: Use pluginConfigs on top of corePlugins
+  try {
+    for (const plugin of corePlugins) {
+      const pluginReturn = await plugin({
+        cosmosConfig,
+        platformType,
+        httpServer: httpServer.server,
+        expressApp: app,
+        sendMessage: msgHandler.sendMessage,
+      });
+      if (typeof pluginReturn === 'function') {
+        pluginCleanupCallbacks.push(pluginReturn);
+      }
+    }
+  } catch (err) {
+    cleanUp();
+    throw err;
+  }
+
+  return cleanUp;
+}
+
+function logCosmosConfigInfo() {
+  const cosmosConfigPath = detectCosmosConfigPath();
+  if (!cosmosConfigPath) {
+    console.log(`[Cosmos] Using default cosmos config`);
+    return;
+  }
+
+  const relConfigPath = path.relative(process.cwd(), cosmosConfigPath);
+  console.log(`[Cosmos] Using cosmos config found at ${relConfigPath}`);
+}
+
+function logPluginInfo(pluginConfigs: CosmosPluginConfig[]) {
+  const pluginCount = pluginConfigs.length;
+  if (pluginCount > 0) {
+    const pluginLabel = pluginCount === 1 ? 'plugin' : 'plugins';
+    const pluginNames = pluginConfigs.map(p => p.name).join(', ');
+    console.log(`[Cosmos] Found ${pluginCount} ${pluginLabel}: ${pluginNames}`);
+  }
+}

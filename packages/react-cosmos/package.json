@@ -1,7 +1,7 @@
 {
   "name": "react-cosmos",
   "version": "5.7.2",
-  "description": "CLI for running React Cosmos inside webpack-powered apps",
+  "description": "Sandbox for developing and testing UI components in isolation",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos",
   "license": "MIT",
   "main": "index.js",
@@ -20,9 +20,7 @@
     "open": "^8.4.0",
     "pem": "^1.14.4",
     "pkg-up": "^3.1.0",
-    "react-cosmos-playground2": "^5.7.2",
-    "react-cosmos-plugin": "^5.6.0",
-    "react-cosmos-shared2": "^5.7.1",
+    "query-string": "5.1.1",
     "react-error-overlay": "6.0.9",
     "regenerator-runtime": "^0.13.9",
     "resolve-from": "^5.0.0",
@@ -32,6 +30,13 @@
     "util.promisify": "^1.1.1",
     "webpack-dev-middleware": "^4.3.0",
     "yargs": "^16.2.0"
+  },
+  "devDependencies": {
+    "fuzzaldrin-plus": "^0.6.0",
+    "localforage": "^1.10.0",
+    "react-element-to-jsx-string": "^14.3.4",
+    "socket.io-client": "2.2.0",
+    "styled-components": "^5.3.3"
   },
   "bin": {
     "cosmos": "./bin/cosmos.js",

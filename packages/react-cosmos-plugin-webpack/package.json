@@ -1,0 +1,15 @@
+{
+  "name": "react-cosmos-webpack",
+  "version": "5.7.2",
+  "description": "Plugin for integrating React Cosmos with Webpack",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos",
+  "license": "MIT",
+  "main": "cosmos.plugin.json",
+  "dependencies": {
+    "webpack-dev-middleware": "^4.3.0"
+  },
+  "devDependencies": {},
+  "peerDependencies": {
+    "react-cosmos": "^5.7.2"
+  }
+}

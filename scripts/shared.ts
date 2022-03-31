@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import { readFile, writeFile } from 'fs';
 import glob from 'glob';
 import rimraf from 'rimraf';
-import { getCliArgs } from '../packages/react-cosmos/src/shared/cli';
+import { getCliArgs } from 'react-cosmos/src/server/cli';
 
 type ArgValue = void | null | boolean | number | string;
 

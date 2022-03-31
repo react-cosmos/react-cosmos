@@ -6,18 +6,18 @@
 // 3. Used by global check-types command (which runs in CI)
 {
   "compilerOptions": {
-    "lib": ["dom", "es2015", "esnext"],
-    "target": "es5",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
+    "lib": ["dom", "es2015", "esnext"],
     "noEmit": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
+    "skipLibCheck": true,
     "strict": true,
-    "skipLibCheck": true
+    "target": "es5"
   },
   "exclude": ["node_modules"]
 }
