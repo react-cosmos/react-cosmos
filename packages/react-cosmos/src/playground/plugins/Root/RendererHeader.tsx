@@ -2,17 +2,17 @@ import { isEqual } from 'lodash';
 import React from 'react';
 import styled from 'styled-components';
 import { FixtureId } from '../../../renderer/types';
-import { grey176, grey32, white10 } from '../../../ui/colors';
-import { IconButton32 } from '../../../ui/components/buttons';
+import { FlatFixtureTreeItem } from '../../../utils/fixtureTree/flattenFixtureTree';
+import { FixtureActionSlot } from '../../slots/FixtureActionSlot';
+import { RendererActionSlot } from '../../slots/RendererActionSlot';
+import { grey176, grey32, white10 } from '../../ui/colors';
+import { IconButton32 } from '../../ui/components/buttons';
 import {
   MenuIcon,
   RotateCcwIcon,
   SlidersIcon,
   XCircleIcon,
-} from '../../../ui/components/icons';
-import { FixtureActionSlot } from '../../../ui/slots/FixtureActionSlot';
-import { RendererActionSlot } from '../../../ui/slots/RendererActionSlot';
-import { FlatFixtureTreeItem } from '../../../utils/fixtureTree/flattenFixtureTree';
+} from '../../ui/components/icons';
 
 type Props = {
   fixtureItems: FlatFixtureTreeItem[];

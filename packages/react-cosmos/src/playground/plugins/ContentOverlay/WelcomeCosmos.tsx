@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { AstronautIllustration } from '../../shared/illustrations';
 import {
   screenGrey1,
   screenGrey3,
@@ -7,8 +8,7 @@ import {
   screenPrimary1,
   screenPrimary2,
   screenPrimary3,
-} from '../../../ui/colors';
-import { AstronautIllustration } from '../../shared/illustrations';
+} from '../../ui/colors';
 import {
   ContentContainer,
   IllustrationContainer,

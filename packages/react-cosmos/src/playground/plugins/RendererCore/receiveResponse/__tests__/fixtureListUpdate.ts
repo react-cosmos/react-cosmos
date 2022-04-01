@@ -5,7 +5,7 @@ import {
   getRendererCoreMethods,
   mockNotifications,
   mockRouter,
-} from '../../../../../ui/plugin/mocks';
+} from '../../../../testHelpers/pluginMocks';
 import {
   createFixtureListUpdateResponse,
   mockRendererReady,

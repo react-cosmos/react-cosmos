@@ -1,7 +1,7 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { RendererActionSlotProps } from '../../../ui/slots/RendererActionSlot';
 import { stringifyRendererUrlQuery } from '../../playgroundUrl';
+import { RendererActionSlotProps } from '../../slots/RendererActionSlot';
 import { CoreSpec } from '../Core/spec';
 import { FullScreenButton } from './FullScreenButton';
 import { FullScreenButtonSpec } from './spec';

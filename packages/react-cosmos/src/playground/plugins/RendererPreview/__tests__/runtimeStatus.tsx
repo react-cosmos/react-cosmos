@@ -6,7 +6,7 @@ import {
   getRendererPreviewMethods,
   mockCore,
   mockRendererCore,
-} from '../../../../ui/plugin/mocks';
+} from '../../../testHelpers/pluginMocks';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { rendererErrorMsg, rendererReadyMsg } from '../testHelpers/messages';
 

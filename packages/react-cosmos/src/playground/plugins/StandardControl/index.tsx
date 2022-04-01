@@ -1,7 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
 import { createPlugin } from 'react-plugin';
-import { ControlActionSlotProps } from '../../../ui/slots/ControlActionSlot';
-import { ControlSlotProps } from '../../../ui/slots/ControlSlot';
 import {
   FixtureStateControls,
   FixtureStateStandardControl,
@@ -9,6 +7,8 @@ import {
 } from '../../../utils/fixtureState/types';
 import { ValueInputTree } from '../../shared/valueInputTree';
 import { ExpandCollapseValues } from '../../shared/valueInputTree/ExpandCollapseValues';
+import { ControlActionSlotProps } from '../../slots/ControlActionSlot';
+import { ControlSlotProps } from '../../slots/ControlSlot';
 import { StandardControlSpec } from './spec';
 import { useTreeExpansionStorage } from './storage';
 

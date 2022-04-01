@@ -1,11 +1,11 @@
 import { blue } from 'chalk';
 import React from 'react';
 import styled from 'styled-components';
-import { grey128 } from '../../../../ui/colors';
+import { grey128 } from '../../../ui/colors';
 import {
   ChevronDownIcon,
   ChevronRightIcon,
-} from '../../../../ui/components/icons';
+} from '../../../ui/components/icons';
 import { FixtureTreeItem } from './FixtureTreeItem';
 
 type Props = {

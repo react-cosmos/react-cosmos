@@ -3,7 +3,7 @@ import {
   getRendererCoreMethods,
   mockNotifications,
   mockRouter,
-} from '../../../../ui/plugin/mocks';
+} from '../../../testHelpers/pluginMocks';
 import { mockRendererReady } from '../testHelpers';
 
 beforeEach(() => jest.isolateModules(() => require('..')));

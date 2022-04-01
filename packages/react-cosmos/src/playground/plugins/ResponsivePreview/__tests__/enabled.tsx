@@ -1,12 +1,12 @@
 import { fireEvent, render, RenderResult } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
+import { RendererActionSlot } from '../../../slots/RendererActionSlot';
 import {
   mockCore,
   mockRendererCore,
   mockStorage,
-} from '../../../../ui/plugin/mocks';
-import { RendererActionSlot } from '../../../../ui/slots/RendererActionSlot';
+} from '../../../testHelpers/pluginMocks';
 import {
   DEFAULT_DEVICES,
   DEFAULT_VIEWPORT_STATE,

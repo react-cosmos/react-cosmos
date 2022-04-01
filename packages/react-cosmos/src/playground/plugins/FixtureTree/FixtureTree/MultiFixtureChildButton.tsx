@@ -7,8 +7,8 @@ import {
   grey248,
   grey8,
   selectedColors,
-} from '../../../../ui/colors';
-import { quick } from '../../../../ui/vars';
+} from '../../../ui/colors';
+import { quick } from '../../../ui/vars';
 import { FixtureLink } from './FixtureLink';
 import { FixtureTreeItem } from './FixtureTreeItem';
 

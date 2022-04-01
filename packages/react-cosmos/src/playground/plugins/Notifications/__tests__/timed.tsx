@@ -6,7 +6,7 @@ import {
   loadPlugins,
   resetPlugins,
 } from 'react-plugin';
-import { getNotificationsMethods } from '../../../../ui/plugin/mocks';
+import { getNotificationsMethods } from '../../../testHelpers/pluginMocks';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 

@@ -1,8 +1,8 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { mockCore } from '../../../ui/plugin/mocks';
-import { RendererActionSlot } from '../../../ui/slots/RendererActionSlot';
+import { RendererActionSlot } from '../../slots/RendererActionSlot';
+import { mockCore } from '../../testHelpers/pluginMocks';
 import { mockWindowOpen } from '../../testHelpers/windowOpenMock';
 
 beforeEach(() => jest.isolateModules(() => require('.')));

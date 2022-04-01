@@ -6,7 +6,7 @@ import {
   mockRendererPreview,
   mockRouter,
   mockStorage,
-} from '../../../../ui/plugin/mocks';
+} from '../../../testHelpers/pluginMocks';
 import { WELCOME_DISMISS_STORAGE_KEY } from '../welcomeDismiss';
 
 beforeEach(() => jest.isolateModules(() => require('..')));

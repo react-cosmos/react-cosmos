@@ -9,8 +9,8 @@ import React, {
   useState,
 } from 'react';
 import styled, { css } from 'styled-components';
-import { grey64, grey8 } from '../../../../ui/colors';
 import { useDrag } from '../../../shared/useDrag';
+import { grey64, grey8 } from '../../../ui/colors';
 import { ResponsiveDevice, Viewport } from '../spec';
 import { Header } from './Header';
 import {

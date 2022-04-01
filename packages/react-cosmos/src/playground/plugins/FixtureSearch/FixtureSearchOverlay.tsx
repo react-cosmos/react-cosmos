@@ -9,18 +9,6 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 import { FixtureId, FixtureList } from '../../../renderer/types';
-import {
-  black60,
-  grey128,
-  grey160,
-  grey176,
-  grey208,
-  grey224,
-  grey248,
-  grey64,
-} from '../../../ui/colors';
-import { HelpCircleIcon, SearchIcon } from '../../../ui/components/icons';
-import { quick } from '../../../ui/vars';
 import { createFixtureTree } from '../../../utils/fixtureTree/createFixtureTree';
 import {
   FlatFixtureTreeItem,
@@ -34,6 +22,18 @@ import {
   KEY_TAB,
   KEY_UP,
 } from '../../shared/keys';
+import {
+  black60,
+  grey128,
+  grey160,
+  grey176,
+  grey208,
+  grey224,
+  grey248,
+  grey64,
+} from '../../ui/colors';
+import { HelpCircleIcon, SearchIcon } from '../../ui/components/icons';
+import { quick } from '../../ui/vars';
 import { FixtureSearchResult } from './FixtureSearchResult';
 import { FixtureSearchShortcuts } from './FixtureSearchShortcuts';
 

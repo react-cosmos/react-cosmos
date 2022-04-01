@@ -1,6 +1,6 @@
 import retry from '@skidding/async-retry';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { getMethodsOf } from '../../../ui/plugin/helpers';
+import { getMethodsOf } from '../../testHelpers/pluginHelpers';
 import { StorageSpec } from './spec';
 
 const mockSetItem = jest.fn();

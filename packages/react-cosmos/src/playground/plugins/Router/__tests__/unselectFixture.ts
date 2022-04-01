@@ -1,6 +1,6 @@
 import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { getRouterMethods, onRouter } from '../../../../ui/plugin/mocks';
+import { getRouterMethods, onRouter } from '../../../testHelpers/pluginMocks';
 import {
   getUrlParams,
   pushUrlParams,

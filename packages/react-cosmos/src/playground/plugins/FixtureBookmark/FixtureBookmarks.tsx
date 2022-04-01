@@ -4,6 +4,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { FixtureId } from '../../../renderer/types';
 import {
+  FlatFixtureTree,
+  FlatFixtureTreeItem,
+} from '../../../utils/fixtureTree/flattenFixtureTree';
+import { createRelativePlaygroundUrl } from '../../shared/url';
+import { stringifyFixtureId } from '../../shared/valueInputTree';
+import {
   grey128,
   grey224,
   grey24,
@@ -12,15 +18,9 @@ import {
   grey8,
   selectedColors,
   white10,
-} from '../../../ui/colors';
-import { XIcon } from '../../../ui/components/icons';
-import { quick } from '../../../ui/vars';
-import {
-  FlatFixtureTree,
-  FlatFixtureTreeItem,
-} from '../../../utils/fixtureTree/flattenFixtureTree';
-import { createRelativePlaygroundUrl } from '../../shared/url';
-import { stringifyFixtureId } from '../../shared/valueInputTree';
+} from '../../ui/colors';
+import { XIcon } from '../../ui/components/icons';
+import { quick } from '../../ui/vars';
 
 type Props = {
   fixtureItems: FlatFixtureTree;

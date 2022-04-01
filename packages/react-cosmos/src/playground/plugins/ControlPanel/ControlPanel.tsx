@@ -1,9 +1,5 @@
 import { isEqual } from 'lodash';
 import React from 'react';
-import { IconButton32 } from '../../../ui/components/buttons';
-import { RotateCcwIcon } from '../../../ui/components/icons';
-import { ControlActionSlot } from '../../../ui/slots/ControlActionSlot';
-import { ControlSlot } from '../../../ui/slots/ControlSlot';
 import {
   FixtureState,
   FixtureStateControl,
@@ -17,6 +13,10 @@ import {
   Header,
   Title,
 } from '../../shared/sidePanelUi';
+import { ControlActionSlot } from '../../slots/ControlActionSlot';
+import { ControlSlot } from '../../slots/ControlSlot';
+import { IconButton32 } from '../../ui/components/buttons';
+import { RotateCcwIcon } from '../../ui/components/icons';
 
 type Props = {
   fixtureState: FixtureState;

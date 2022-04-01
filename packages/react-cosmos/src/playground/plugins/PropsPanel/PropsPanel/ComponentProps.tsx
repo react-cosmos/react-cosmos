@@ -1,7 +1,5 @@
 import { isEqual } from 'lodash';
 import React, { useCallback } from 'react';
-import { IconButton32 } from '../../../../ui/components/buttons';
-import { CopyIcon, RotateCcwIcon } from '../../../../ui/components/icons';
 import {
   resetFixtureStateProps,
   updateFixtureStateProps,
@@ -27,6 +25,8 @@ import {
   ValueInputTree,
 } from '../../../shared/valueInputTree';
 import { ExpandCollapseValues } from '../../../shared/valueInputTree/ExpandCollapseValues';
+import { IconButton32 } from '../../../ui/components/buttons';
+import { CopyIcon, RotateCcwIcon } from '../../../ui/components/icons';
 import { createPropsFsUpdater } from './shared';
 
 type Props = {

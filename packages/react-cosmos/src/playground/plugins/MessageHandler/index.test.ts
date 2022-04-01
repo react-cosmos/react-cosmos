@@ -1,6 +1,4 @@
 // NOTE: Mock files need to imported before modules that use the mocked APIs
-import { mockSocketIo } from './testHelpers/mockSocketIo';
-
 import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { RENDERER_MESSAGE_EVENT_NAME } from '../../../renderer/types';
@@ -12,7 +10,8 @@ import {
   getMessageHandlerMethods,
   mockCore,
   onMessageHandler,
-} from '../../../ui/plugin/mocks';
+} from '../../testHelpers/pluginMocks';
+import { mockSocketIo } from './testHelpers/mockSocketIo';
 
 beforeEach(() => jest.isolateModules(() => require('.')));
 

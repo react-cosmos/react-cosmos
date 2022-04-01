@@ -1,5 +1,4 @@
 import React from 'react';
-import { lightBlue } from '../../../ui/colors';
 import { FixtureStateSelectControl } from '../../../utils/fixtureState/types';
 import { Select } from '../../shared/inputs/Select';
 import {
@@ -7,6 +6,7 @@ import {
   ValueDataContainer,
   ValueInputContainer,
 } from '../../shared/valueInputTree/ValueInput/shared';
+import { lightBlue } from '../../ui/colors';
 
 type Props = {
   name: string;

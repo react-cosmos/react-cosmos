@@ -1,13 +1,13 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
-import { mockPlug } from '../../../../ui/plugin/helpers';
+import { mockPlug } from '../../../testHelpers/pluginHelpers';
 import {
   mockCore,
   mockRendererCore,
   mockRouter,
   mockStorage,
-} from '../../../../ui/plugin/mocks';
+} from '../../../testHelpers/pluginMocks';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 

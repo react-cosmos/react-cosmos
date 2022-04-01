@@ -1,7 +1,7 @@
 import React from 'react';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { FixtureId } from '../../../renderer/types';
-import { NavRowSlotProps } from '../../../ui/slots/NavRowSlot';
+import { NavRowSlotProps } from '../../slots/NavRowSlot';
 import { CoreSpec } from '../Core/spec';
 import { FixtureTreeSpec } from '../FixtureTree/spec';
 import { RendererCoreSpec } from '../RendererCore/spec';

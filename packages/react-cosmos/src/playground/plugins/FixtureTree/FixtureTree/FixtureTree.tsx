@@ -2,7 +2,6 @@ import { isEqual } from 'lodash';
 import React, { RefObject } from 'react';
 import styled from 'styled-components';
 import { FixtureId } from '../../../../renderer/types';
-import { grey32 } from '../../../../ui/colors';
 import { FixtureTreeNode } from '../../../../utils/fixtureTree/shared/types';
 import {
   nodeContainsFixtureId,
@@ -10,6 +9,7 @@ import {
 } from '../../../shared/fixtureTree';
 import { TreeExpansion } from '../../../shared/treeExpansion';
 import { TreeView } from '../../../shared/TreeView';
+import { grey32 } from '../../../ui/colors';
 import { FixtureButton } from './FixtureButton';
 import { FixtureDir } from './FixtureDir';
 import { MultiFixtureButton } from './MultiFixtureButton';

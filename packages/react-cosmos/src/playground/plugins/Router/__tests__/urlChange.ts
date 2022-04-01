@@ -1,5 +1,5 @@
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { onRouter } from '../../../../ui/plugin/mocks';
+import { onRouter } from '../../../testHelpers/pluginMocks';
 import {
   popUrlParams,
   pushUrlParams,

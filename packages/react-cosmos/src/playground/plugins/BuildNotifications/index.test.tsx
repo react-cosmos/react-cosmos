@@ -4,7 +4,7 @@ import {
   getMessageHandlerContext,
   mockMessageHandler,
   mockNotifications,
-} from '../../../ui/plugin/mocks';
+} from '../../testHelpers/pluginMocks';
 
 beforeEach(() => jest.isolateModules(() => require('.')));
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import { ValueInputSlot } from '../../../../ui/slots/ValueInputSlot';
 import { PrimitiveData } from '../../../../utils/fixtureState/types';
+import { ValueInputSlot } from '../../../slots/ValueInputSlot';
 import { LeafValue, ValueTreeItem } from '../shared';
 import { BooleanValueInput } from './BooleanValueInput';
 import { NullValueInput } from './NullValueInput';

@@ -1,7 +1,7 @@
 import React from 'react';
-import { IconButton32 } from '../../../ui/components/buttons';
-import { MinusSquareIcon, PlusSquareIcon } from '../../../ui/components/icons';
 import { FixtureStateValues } from '../../../utils/fixtureState/types';
+import { IconButton32 } from '../../ui/components/buttons';
+import { MinusSquareIcon, PlusSquareIcon } from '../../ui/components/icons';
 import {
   getFullTreeExpansion,
   hasExpandableNodes,

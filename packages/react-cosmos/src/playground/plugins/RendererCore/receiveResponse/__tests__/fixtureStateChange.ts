@@ -6,7 +6,7 @@ import {
   mockNotifications,
   mockRouter,
   onRendererCore,
-} from '../../../../../ui/plugin/mocks';
+} from '../../../../testHelpers/pluginMocks';
 import {
   createFixtureStateChangeResponse,
   mockRendererReady,

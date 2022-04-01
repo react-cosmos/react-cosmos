@@ -1,11 +1,11 @@
 import { clone, setWith } from 'lodash';
 import React from 'react';
 import styled from 'styled-components';
-import { grey248, grey32 } from '../../../ui/colors';
 import {
   FixtureStateValue,
   FixtureStateValues,
 } from '../../../utils/fixtureState/types';
+import { grey248, grey32 } from '../../ui/colors';
 import { TreeExpansion } from '../treeExpansion';
 import { TreeView } from '../TreeView';
 import { ValueInput } from './ValueInput/ValueInput';

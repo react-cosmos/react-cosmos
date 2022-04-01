@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { disabledColors, grey128, grey224 } from '../../../../ui/colors';
+import { disabledColors, grey128, grey224 } from '../../../ui/colors';
 
 export const Label = styled.label<{ disabled?: boolean }>`
   padding: 0;

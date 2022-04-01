@@ -6,8 +6,8 @@ import {
   RendererId,
   RendererReadyResponse,
 } from '../../../../renderer/types';
-import { getRendererCoreMethods } from '../../../../ui/plugin/mocks';
 import { FixtureState } from '../../../../utils/fixtureState/types';
+import { getRendererCoreMethods } from '../../../testHelpers/pluginMocks';
 
 export function createRendererReadyResponse(
   rendererId: RendererId,

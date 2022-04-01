@@ -2,12 +2,12 @@ import { waitFor } from '@testing-library/dom';
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { mockStorage } from '../../../ui/plugin/mocks';
-import { SidePanelRowSlot } from '../../../ui/slots/SidePanelRowSlot';
 import {
   FixtureState,
   FixtureStateValues,
 } from '../../../utils/fixtureState/types';
+import { SidePanelRowSlot } from '../../slots/SidePanelRowSlot';
+import { mockStorage } from '../../testHelpers/pluginMocks';
 import { getParentButton } from '../../testHelpers/selectors';
 import { PROPS_TREE_EXPANSION_STORAGE_KEY } from './shared';
 

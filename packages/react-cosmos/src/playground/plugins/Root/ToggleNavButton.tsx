@@ -1,6 +1,6 @@
 import React from 'react';
-import { IconButton8 } from '../../../ui/components/buttons';
-import { MenuIcon } from '../../../ui/components/icons';
+import { IconButton8 } from '../../ui/components/buttons';
+import { MenuIcon } from '../../ui/components/icons';
 
 type Props = {
   disabled?: boolean;

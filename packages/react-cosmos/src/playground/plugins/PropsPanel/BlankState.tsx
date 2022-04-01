@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { grey160, grey224, grey32, grey64 } from '../../../ui/colors';
-import { SlidersIcon } from '../../../ui/components/icons';
+import { grey160, grey224, grey32, grey64 } from '../../ui/colors';
+import { SlidersIcon } from '../../ui/components/icons';
 
 export function BlankState() {
   return (

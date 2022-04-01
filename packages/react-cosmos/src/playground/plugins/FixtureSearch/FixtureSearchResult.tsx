@@ -1,13 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FixtureId } from '../../../renderer/types';
-import {
-  blue,
-  createGreyColor,
-  grey64,
-  selectedColors,
-} from '../../../ui/colors';
 import { FlatFixtureTreeItem } from '../../../utils/fixtureTree/flattenFixtureTree';
+import { blue, createGreyColor, grey64, selectedColors } from '../../ui/colors';
 
 type Props = {
   active: boolean;

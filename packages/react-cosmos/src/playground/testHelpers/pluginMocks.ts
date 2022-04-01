@@ -5,15 +5,15 @@ import {
   PluginWithEvents,
   PluginWithMethods,
 } from 'react-plugin';
-import { CoreSpec } from '../../playground/plugins/Core/spec';
-import { FixtureTreeSpec } from '../../playground/plugins/FixtureTree/spec';
-import { MessageHandlerSpec } from '../../playground/plugins/MessageHandler/spec';
-import { NotificationsSpec } from '../../playground/plugins/Notifications/spec';
-import { RendererCoreSpec } from '../../playground/plugins/RendererCore/spec';
-import { RendererPreviewSpec } from '../../playground/plugins/RendererPreview/spec';
-import { RouterSpec } from '../../playground/plugins/Router/spec';
-import { StorageSpec } from '../../playground/plugins/Storage/spec';
-import { getMethodsOf, mockMethodsOf, on } from './helpers';
+import { CoreSpec } from '../plugins/Core/spec';
+import { FixtureTreeSpec } from '../plugins/FixtureTree/spec';
+import { MessageHandlerSpec } from '../plugins/MessageHandler/spec';
+import { NotificationsSpec } from '../plugins/Notifications/spec';
+import { RendererCoreSpec } from '../plugins/RendererCore/spec';
+import { RendererPreviewSpec } from '../plugins/RendererPreview/spec';
+import { RouterSpec } from '../plugins/Router/spec';
+import { StorageSpec } from '../plugins/Storage/spec';
+import { getMethodsOf, mockMethodsOf, on } from './pluginHelpers';
 
 type MethodsOf<Spec extends PluginWithMethods> = Partial<
   PluginMethodHandlers<Spec>

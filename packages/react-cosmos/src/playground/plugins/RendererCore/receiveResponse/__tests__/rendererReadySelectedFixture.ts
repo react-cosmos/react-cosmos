@@ -5,7 +5,7 @@ import {
   mockNotifications,
   mockRouter,
   onRendererCore,
-} from '../../../../../ui/plugin/mocks';
+} from '../../../../testHelpers/pluginMocks';
 import { mockFixtureStateChange, mockRendererReady } from '../../testHelpers';
 
 beforeEach(() => jest.isolateModules(() => require('../..')));

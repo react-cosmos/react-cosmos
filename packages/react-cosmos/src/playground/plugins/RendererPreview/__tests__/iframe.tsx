@@ -7,7 +7,7 @@ import {
   mockCore,
   mockNotifications,
   mockRendererCore,
-} from '../../../../ui/plugin/mocks';
+} from '../../../testHelpers/pluginMocks';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 import { getIframe } from '../testHelpers/iframe';
 import { rendererReadyMsg, selectFixtureMsg } from '../testHelpers/messages';

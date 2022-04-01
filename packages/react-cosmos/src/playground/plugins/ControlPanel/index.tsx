@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { SidePanelRowSlotProps } from '../../../ui/slots/SidePanelRowSlot';
+import { SidePanelRowSlotProps } from '../../slots/SidePanelRowSlot';
 import { ControlPanel } from './ControlPanel';
 import { ControlPanelSpec } from './spec';
 

@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ArtificialIntelligenceIllustration } from '../../shared/illustrations';
 import {
   screenGrey3,
   screenGrey5,
   screenPrimary2,
   screenPrimary3,
-} from '../../../ui/colors';
-import { ArtificialIntelligenceIllustration } from '../../shared/illustrations';
+} from '../../ui/colors';
 import {
   ContentContainer,
   IllustrationContainer,
