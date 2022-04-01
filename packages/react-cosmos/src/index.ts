@@ -1,3 +1,6 @@
+// UI components
+export * from './playground/components/buttons';
+export * from './playground/components/icons';
 // UI core
 export * from './playground/core/colors';
 export * from './playground/core/vars';
