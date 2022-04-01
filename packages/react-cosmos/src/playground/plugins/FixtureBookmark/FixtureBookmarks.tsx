@@ -7,6 +7,7 @@ import {
   FlatFixtureTree,
   FlatFixtureTreeItem,
 } from '../../../utils/fixtureTree/flattenFixtureTree';
+import { XIcon } from '../../components/icons';
 import {
   grey128,
   grey224,
@@ -19,7 +20,6 @@ import {
 } from '../../core/colors';
 import { quick } from '../../core/vars';
 import { stringifyFixtureId } from '../../shared/valueInputTree';
-import { XIcon } from '../../ui/components/icons';
 import { createRelativePlaygroundUrl } from '../../utils/url';
 
 type Props = {

@@ -7,6 +7,8 @@ import {
   FixtureStateValues,
 } from '../../../../utils/fixtureState/types';
 import { StateUpdater } from '../../../../utils/types';
+import { IconButton32 } from '../../../components/buttons';
+import { RotateCcwIcon } from '../../../components/icons';
 import {
   Actions,
   Body,
@@ -21,8 +23,6 @@ import {
   ValueInputTree,
 } from '../../../shared/valueInputTree';
 import { ExpandCollapseValues } from '../../../shared/valueInputTree/ExpandCollapseValues';
-import { IconButton32 } from '../../../ui/components/buttons';
-import { RotateCcwIcon } from '../../../ui/components/icons';
 import { TreeExpansion } from '../../../utils/treeExpansion';
 import { createClassStateFsUpdater } from './shared';
 

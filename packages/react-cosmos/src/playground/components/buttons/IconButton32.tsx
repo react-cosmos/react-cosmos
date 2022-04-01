@@ -1,13 +1,13 @@
 import React from 'react';
 import {
-  grey144,
+  grey160,
   grey176,
-  grey216,
+  grey224,
   grey24,
   grey248,
   grey32,
   grey8,
-} from '../../../core/colors';
+} from '../../core/colors';
 import { StyledButton, StyledIcon } from './shared';
 
 type Props = {
@@ -18,7 +18,7 @@ type Props = {
   onClick?: () => unknown;
 };
 
-export function IconButton8({
+export function IconButton32({
   icon,
   title,
   disabled = false,
@@ -27,17 +27,17 @@ export function IconButton8({
 }: Props) {
   return (
     <StyledButton
-      bg={grey8}
-      bgSelect={grey32}
+      bg={grey32}
+      bgSelect={grey8}
       bgHover={grey24}
-      color={grey216}
+      color={grey224}
       colorSelect={grey248}
       title={title}
       selected={selected}
       disabled={disabled}
       onClick={onClick}
     >
-      <StyledIcon color={selected ? grey176 : grey144}>{icon}</StyledIcon>
+      <StyledIcon color={selected ? grey176 : grey160}>{icon}</StyledIcon>
     </StyledButton>
   );
 }

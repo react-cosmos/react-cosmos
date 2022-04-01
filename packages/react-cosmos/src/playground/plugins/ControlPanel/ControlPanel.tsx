@@ -6,6 +6,8 @@ import {
   FixtureStateControls,
 } from '../../../utils/fixtureState/types';
 import { StateUpdater } from '../../../utils/types';
+import { IconButton32 } from '../../components/buttons';
+import { RotateCcwIcon } from '../../components/icons';
 import {
   Actions,
   Body,
@@ -15,8 +17,6 @@ import {
 } from '../../shared/sidePanelUi';
 import { ControlActionSlot } from '../../slots/ControlActionSlot';
 import { ControlSlot } from '../../slots/ControlSlot';
-import { IconButton32 } from '../../ui/components/buttons';
-import { RotateCcwIcon } from '../../ui/components/icons';
 
 type Props = {
   fixtureState: FixtureState;

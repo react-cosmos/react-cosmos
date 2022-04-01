@@ -3,16 +3,16 @@ import React from 'react';
 import styled from 'styled-components';
 import { FixtureId } from '../../../renderer/types';
 import { FlatFixtureTreeItem } from '../../../utils/fixtureTree/flattenFixtureTree';
-import { grey176, grey32, white10 } from '../../core/colors';
-import { FixtureActionSlot } from '../../slots/FixtureActionSlot';
-import { RendererActionSlot } from '../../slots/RendererActionSlot';
-import { IconButton32 } from '../../ui/components/buttons';
+import { IconButton32 } from '../../components/buttons';
 import {
   MenuIcon,
   RotateCcwIcon,
   SlidersIcon,
   XCircleIcon,
-} from '../../ui/components/icons';
+} from '../../components/icons';
+import { grey176, grey32, white10 } from '../../core/colors';
+import { FixtureActionSlot } from '../../slots/FixtureActionSlot';
+import { RendererActionSlot } from '../../slots/RendererActionSlot';
 
 type Props = {
   fixtureItems: FlatFixtureTreeItem[];

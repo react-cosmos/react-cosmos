@@ -1,6 +1,6 @@
 import React from 'react';
+import { Illustration } from '../../components/svg';
 import { screenGrey4, screenGrey5, screenPrimary3 } from '../../core/colors';
-import { Illustration } from '../../ui/components/svg';
 
 export const AstronautIllustration = ({ title }: { title: string }) => (
   <Illustration viewBox="0 0 995.79 756.3">

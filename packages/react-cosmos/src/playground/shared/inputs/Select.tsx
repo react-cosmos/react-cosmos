@@ -1,8 +1,8 @@
 import { blue } from 'chalk';
 import React from 'react';
 import styled from 'styled-components';
+import { ChevronDownIcon } from '../../components/icons';
 import { grey32 } from '../../core/colors';
-import { ChevronDownIcon } from '../../ui/components/icons';
 import { useFocus } from '../useFocus';
 
 type BaseOption = { value: string; label: string };

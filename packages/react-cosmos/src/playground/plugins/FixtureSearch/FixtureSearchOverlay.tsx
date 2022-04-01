@@ -14,6 +14,7 @@ import {
   FlatFixtureTreeItem,
   flattenFixtureTree,
 } from '../../../utils/fixtureTree/flattenFixtureTree';
+import { HelpCircleIcon, SearchIcon } from '../../components/icons';
 import {
   black60,
   grey128,
@@ -25,7 +26,6 @@ import {
   grey64,
 } from '../../core/colors';
 import { quick } from '../../core/vars';
-import { HelpCircleIcon, SearchIcon } from '../../ui/components/icons';
 import {
   KEY_DOWN,
   KEY_ENTER,
