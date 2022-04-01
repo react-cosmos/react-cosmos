@@ -20,7 +20,7 @@
     "open": "^8.4.0",
     "pem": "^1.14.4",
     "pkg-up": "^3.1.0",
-    "query-string": "5.1.1",
+    "query-string": "7.1.1",
     "react-error-overlay": "6.0.9",
     "regenerator-runtime": "^0.13.9",
     "resolve-from": "^5.0.0",

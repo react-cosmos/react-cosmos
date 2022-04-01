@@ -12,23 +12,10 @@ import {
   getUnnamedArg,
   Package,
   packages,
-  PackageType,
   rimrafAsync,
 } from './shared';
 
 const { stdout, stderr } = process;
-
-const SOURCE_IGNORE_PATHS = [
-  '**/@types/**/*',
-  '**/__tests__/**/*',
-  '**/__mocks__/**/*',
-  '**/__fixtures__/**/*',
-  '**/*.test.ts',
-  '**/*.test.tsx',
-  '**/*.fixture.ts',
-  '**/*.fixture.tsx',
-  '**/testHelpers/**',
-];
 
 const watch = getBoolArg('watch');
 
@@ -44,8 +31,7 @@ const watch = getBoolArg('watch');
       return;
     }
 
-    const pkg = findPackage(pkgName);
-    if (!pkg) {
+    if (!findPackage(pkgName)) {
       stderr.write(
         error(
           `${chalk.bold(
@@ -58,22 +44,15 @@ const watch = getBoolArg('watch');
     }
 
     stdout.write(
-      `${watch ? 'Build-watching' : 'Building'} ${chalk.bold(pkg.name)}...\n`
+      `${watch ? 'Build-watching' : 'Building'} ${chalk.bold(pkgName)}...\n`
     );
 
-    if (watch) {
-      await watchPackage(pkg);
-    } else {
-      await buildPackage(pkg);
-    }
+    await tryBuildPackage(pkgName);
   } else {
     if (watch) {
-      // The limitation here is that we need to build browser packages after
-      // packages compiled with Babel. This doesn't work out of the box because
-      // `buildNodePackage` hangs forever in watch mode.
       stderr.write(
         error(
-          `Can't build-watch all packages! Run ${chalk.italic(
+          `Can't watch-build all packages! Run ${chalk.italic(
             'build PACKAGE --watch'
           )} for one or more packages (in separate terminals)\n`
         )
@@ -84,123 +63,65 @@ const watch = getBoolArg('watch');
 
     // Packages are built serially because they depend on each other and
     // this way TypeScript ensures their interfaces are compatible
-    for (const pkg of packages) {
-      await buildPackage(pkg);
-    }
+    for (const p of packages) await tryBuildPackage(p);
 
     stdout.write(`Built ${packages.length} packages successfully.\n`);
   }
 })();
 
-async function buildPackage(pkg: Package) {
+async function tryBuildPackage(pkgName: Package) {
   try {
-    pkg.type === PackageType.Browser
-      ? await buildBrowserPackage(pkg)
-      : await buildNodePackage(pkg);
-    stdout.write(done(`${chalk.bold(pkg.name)}\n`));
+    await buildPackage(pkgName);
+    stdout.write(done(`${chalk.bold(pkgName)}\n`));
   } catch (err) {
-    stderr.write(error(`${chalk.bold(pkg.name)}\n`));
+    stderr.write(error(`${chalk.bold(pkgName)}\n`));
   }
 }
 
-async function watchPackage(pkg: Package) {
-  return pkg.type === PackageType.Browser
-    ? watchBrowserPackage(pkg)
-    : watchNodePackage(pkg);
+async function buildPackage(pkgName: Package) {
+  switch (pkgName) {
+    case 'react-cosmos': {
+      await generatePlaygroundPluginEntry();
+      await clearPackage(pkgName);
+      await copyStaticAssets(pkgName);
+      await buildTsPackage(pkgName);
+      await runWebpack(`packages/${pkgName}/src/playground/webpack.config.js`);
+    }
+    default: {
+      // TODO: Build all packages
+      await clearPackage(pkgName);
+      await buildTsPackage(pkgName);
+    }
+  }
 }
 
-async function buildNodePackage(pkg: Package) {
-  await clearPreviousBuild(pkg);
-  await copyStaticAssets(pkg);
-  await Promise.all([
-    await buildNodePackageSource(pkg),
-    await buildPackageHeaders(pkg),
-  ]);
+async function clearPackage(pkgName: string) {
+  await rimrafAsync(`packages/${pkgName}/dist`);
 }
 
-async function watchNodePackage(pkg: Package) {
-  await clearPreviousBuild(pkg);
-  await copyStaticAssets(pkg);
-  // Don't await on returned promises because watch tasks hang indefinitely
-  watchNodePackageSource(pkg);
-  watchPackageHeaders(pkg);
+function buildTsPackage(pkgName: string) {
+  return runTypeScript(`packages/${pkgName}/tsconfig.build.json`);
 }
 
-async function buildBrowserPackage(pkg: Package) {
-  await clearPreviousBuild(pkg);
-  if (pkg.name === 'react-cosmos-playground2')
-    await generatePlaygroundPluginEntry();
-  await Promise.all([
-    await buildBrowserPackageSource(pkg),
-    await buildPackageHeaders(pkg),
-  ]);
+function runTypeScript(config: string) {
+  const args = ['-b', config];
+  if (watch) args.push('--watch');
+  const promise = runAsyncTask({ cmd: 'tsc', args });
+  return watch ? null : promise;
 }
 
-async function watchBrowserPackage(pkg: Package) {
-  await clearPreviousBuild(pkg);
-  // Don't await on returned promises because watch tasks hang indefinitely
-  watchBrowserPackageSource(pkg);
-  watchPackageHeaders(pkg);
-}
-
-function buildNodePackageSource(pkg: Package) {
-  const args = [
-    `packages/${pkg.name}/src`,
-    '--out-dir',
-    `packages/${pkg.name}/dist`,
-    '--extensions',
-    '.ts,.tsx',
-    '--ignore',
-    SOURCE_IGNORE_PATHS.join(','),
-  ];
-  return runAsyncTask({ cmd: 'babel', args });
-}
-
-function watchNodePackageSource(pkg: Package) {
-  const args = [
-    `packages/${pkg.name}/src`,
-    '--out-dir',
-    `packages/${pkg.name}/dist`,
-    '--extensions',
-    '.ts,.tsx',
-    '--ignore',
-    SOURCE_IGNORE_PATHS.join(','),
-    '--watch',
-  ];
-  return runAsyncTask({ cmd: 'babel', args });
-}
-
-async function buildBrowserPackageSource(pkg: Package) {
-  const args = [
-    '--config',
-    `packages/${pkg.name}/webpack.config.js`,
-    '--stats',
-    'errors-only',
-  ];
-  const env = { NODE_ENV: 'production' };
-  return runAsyncTask({ cmd: 'webpack', args, env });
-}
-
-async function watchBrowserPackageSource(pkg: Package) {
+function runWebpack(config: string) {
+  const args = ['--config', config];
   // Showing webpack output in watch mode because it's nice to get feedback
   // after saving a file
-  const args = [
-    '--config',
-    `packages/${pkg.name}/webpack.config.js`,
-    '--watch',
-  ];
-  const env = { NODE_ENV: 'development' };
-  return runAsyncTask({ cmd: 'webpack', args, env });
-}
-
-function buildPackageHeaders(pkg: Package) {
-  const args = ['-b', `packages/${pkg.name}/tsconfig.build.json`];
-  return runAsyncTask({ cmd: 'tsc', args });
-}
-
-function watchPackageHeaders(pkg: Package) {
-  const args = ['-b', `packages/${pkg.name}/tsconfig.build.json`, '--watch'];
-  return runAsyncTask({ cmd: 'tsc', args });
+  if (watch) {
+    args.push('--watch');
+  } else {
+    args.push('--stats', 'errors-only');
+  }
+  const env = { NODE_ENV: watch ? 'development' : 'production' };
+  const promise = runAsyncTask({ cmd: 'webpack', args, env });
+  return watch ? null : promise;
 }
 
 type RunAsyncTaskArgs = {
@@ -235,17 +156,11 @@ function runAsyncTask({ cmd, args, env = {} }: RunAsyncTaskArgs) {
   });
 }
 
-async function clearPreviousBuild(pkg: Package) {
-  await rimrafAsync(`packages/${pkg.name}/dist`);
-}
+const STATIC_PATH = 'server/static';
 
-const STATIC_PATH = 'shared/static';
-
-async function copyStaticAssets(pkg: Package) {
-  if (pkg.name === 'react-cosmos') {
-    await cpy(`src/${STATIC_PATH}/**`, `dist/${STATIC_PATH}`, {
-      cwd: path.join(__dirname, `../packages/${pkg.name}`),
-      parents: false,
-    });
-  }
+async function copyStaticAssets(pkgName: string) {
+  await cpy(`src/${STATIC_PATH}/**`, `dist/${STATIC_PATH}`, {
+    cwd: path.join(__dirname, `../packages/${pkgName}`),
+    parents: false,
+  });
 }

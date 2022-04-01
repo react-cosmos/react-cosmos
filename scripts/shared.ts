@@ -13,43 +13,28 @@ export const readFileAsync = asyncify(readFile);
 export const writeFileAsync = asyncify(writeFile);
 export const rimrafAsync = asyncify(rimraf);
 
-export enum PackageType {
-  Node,
-  Browser,
-}
-
-export type NodePackage = {
-  type: PackageType.Node;
-  name: string;
-};
-
-export type BrowserPackage = {
-  type: PackageType.Browser;
-  name: string;
-};
-
-export type Package = NodePackage | BrowserPackage;
-
 const cliArgs = getCliArgs();
 
-// Warning: The order matters!
-export const packages: Package[] = [
-  { type: PackageType.Node, name: 'react-cosmos' },
-  { type: PackageType.Browser, name: 'react-cosmos' }, // playground
-  { type: PackageType.Node, name: 'react-cosmos-plugin-webpack' },
-  { type: PackageType.Browser, name: 'react-cosmos-plugin-webpack' }, // ui plugin
-  { type: PackageType.Browser, name: 'react-cosmos-plugin-open-fixture' },
-];
+// Packages are built in this order
+const packageMap = {
+  'react-cosmos': true,
+  'react-cosmos-plugin-open-fixture': true,
+  'react-cosmos-plugin-webpack': true,
+};
 
-export function findPackage(pkgName: string) {
-  return packages.find(
-    // Allow shorthand names (shared => react-cosmos-shared2, etc.)
-    p => p.name === pkgName || p.name === `react-cosmos-${pkgName}`
+export type Package = keyof typeof packageMap;
+
+export const packages = Object.keys(packageMap) as Package[];
+
+export function findPackage(pkgName: string): pkgName is Package {
+  return packages.some(
+    // Allow shorthand names (plugin-webpack => react-cosmos-plugin-webpack, etc.)
+    p => p === pkgName || p === `react-cosmos-${pkgName}`
   );
 }
 
 export function getFormattedPackageList() {
-  return ['', ...packages.map(p => p.name)].join('\n - ');
+  return ['', ...packages.map(p => p)].join('\n - ');
 }
 
 export function getUnnamedArg(index: number = 0): void | number | string {

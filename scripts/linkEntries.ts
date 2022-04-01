@@ -77,9 +77,10 @@ async function getPackageEntryPoints(
   if (targetPackages.length === 0)
     throw new Error('No package entry points to link for empty package list');
 
-  const packageNames = targetPackages.map(p => p.name);
   const pkgMatch =
-    packageNames.length > 1 ? `{${packageNames.join(',')}}` : packageNames[0];
+    targetPackages.length > 1
+      ? `{${targetPackages.join(',')}}`
+      : targetPackages[0];
 
   return globAsync(`./packages/${pkgMatch}/{*,bin/*}.{js,d.ts}`);
 }
@@ -103,10 +104,9 @@ function getTargetPackages(): Package[] {
     if (typeof pkgName !== 'string')
       throw new InvalidTargetPackage(String(pkgName));
 
-    const pkg = findPackage(pkgName);
-    if (!pkg) throw new InvalidTargetPackage(pkgName);
+    if (!findPackage(pkgName)) throw new InvalidTargetPackage(pkgName);
 
-    targetPackages.push(pkg);
+    targetPackages.push(pkgName);
     pkgName = getUnnamedArg(targetPackages.length + 1);
   } while (pkgName);
 
