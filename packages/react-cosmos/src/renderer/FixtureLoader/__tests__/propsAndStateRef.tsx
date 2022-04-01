@@ -1,8 +1,8 @@
 import retry from '@skidding/async-retry';
 import until from 'async-until';
 import React from 'react';
-import { createValues } from '../../../utils/fixtureState/createValues';
-import { updateFixtureStateProps } from '../../../utils/fixtureState/props';
+import { createValues } from '../../../core/fixtureState/createValues';
+import { updateFixtureStateProps } from '../../../core/fixtureState/props';
 import { uuid } from '../../../utils/uuid';
 import { testFixtureLoader } from '../testHelpers';
 import { SuffixCounter } from '../testHelpers/components';

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { findFixtureStateControl } from '../../utils/fixtureState/controls';
+import { findFixtureStateControl } from '../../core/fixtureState/controls';
 import { FixtureContext } from '../FixtureContext';
 import { getDefaultSelectValue, UseSelectArgs } from './shared';
 

@@ -1,4 +1,4 @@
-import { parseRendererUrlQuery } from '../../utils/playgroundUrl';
+import { parseRendererUrlQuery } from '../../core/playgroundUrl';
 import { FixtureId } from '../types';
 import { isInsideCosmosPreviewIframe } from './isInsideCosmosPreviewIframe';
 

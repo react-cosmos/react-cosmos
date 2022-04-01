@@ -3,7 +3,7 @@ import retry from '@skidding/async-retry';
 import until from 'async-until';
 import delay from 'delay';
 import React from 'react';
-import { FixtureStatePrimitiveValue } from '../../../utils/fixtureState/types';
+import { FixtureStatePrimitiveValue } from '../../../core/fixtureState/types';
 import { uuid } from '../../../utils/uuid';
 import { testFixtureLoader } from '../testHelpers';
 import { Counter } from '../testHelpers/components';

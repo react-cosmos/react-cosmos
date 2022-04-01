@@ -1,8 +1,8 @@
+import { createFixtureTree } from '../../../core/fixtureTree/createFixtureTree';
+import { FixtureTreeNode } from '../../../core/fixtureTree/types';
 import { FixtureId } from '../../../renderer/types';
-import { createFixtureTree } from '../../../utils/fixtureTree/createFixtureTree';
-import { FixtureTreeNode } from '../../../utils/fixtureTree/shared/types';
-import { nodeContainsFixtureId } from '../../utils/fixtureTree';
-import { TreeExpansion } from '../../utils/treeExpansion';
+import { nodeContainsFixtureId } from '../../shared/fixtureTree';
+import { TreeExpansion } from '../../shared/treeExpansion';
 import { CoreSpec } from '../Core/spec';
 import { RendererCoreSpec } from '../RendererCore/spec';
 import { StorageSpec } from '../Storage/spec';

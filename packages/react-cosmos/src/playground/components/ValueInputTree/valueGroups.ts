@@ -1,7 +1,7 @@
 import {
   FixtureElementId,
   FixtureStateValues,
-} from '../../../utils/fixtureState/types';
+} from '../../../core/fixtureState/types';
 import { stringifyElementId } from './shared';
 
 interface FixtureStateValueGroup {

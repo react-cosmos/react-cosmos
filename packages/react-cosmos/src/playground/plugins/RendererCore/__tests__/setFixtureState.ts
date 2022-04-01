@@ -1,7 +1,7 @@
 import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
+import { FixtureState } from '../../../../core/fixtureState/types';
 import { FixtureList } from '../../../../renderer/types';
-import { FixtureState } from '../../../../utils/fixtureState/types';
 import {
   getRendererCoreMethods,
   mockNotifications,

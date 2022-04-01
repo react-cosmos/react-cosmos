@@ -1,6 +1,6 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
-import { createValues } from '../../../utils/fixtureState/createValues';
+import { createValues } from '../../../core/fixtureState/createValues';
 import { uuid } from '../../../utils/uuid';
 import { FixtureCapture } from '../FixtureCapture';
 import { testFixtureLoader } from '../testHelpers';

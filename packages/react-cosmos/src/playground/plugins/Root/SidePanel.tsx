@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { FixtureState } from '../../../core/fixtureState/types';
 import { FixtureId } from '../../../renderer/types';
-import { FixtureState } from '../../../utils/fixtureState/types';
 import { StateUpdater } from '../../../utils/types';
 import { SidePanelRowSlot } from '../../slots/SidePanelRowSlot';
 import { grey32 } from '../../style/colors';

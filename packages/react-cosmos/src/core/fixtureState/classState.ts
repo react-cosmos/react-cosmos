@@ -1,5 +1,9 @@
 import { find, isEqual } from 'lodash';
-import { removeItemMatch, replaceOrAddItem, updateItem } from '../array';
+import {
+  removeItemMatch,
+  replaceOrAddItem,
+  updateItem,
+} from '../../utils/array';
 import {
   FixtureDecoratorId,
   FixtureElementId,

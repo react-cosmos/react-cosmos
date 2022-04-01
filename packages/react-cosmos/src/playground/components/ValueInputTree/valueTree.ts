@@ -1,4 +1,4 @@
-import { FixtureStateValues } from '../../../utils/fixtureState/types';
+import { FixtureStateValues } from '../../../core/fixtureState/types';
 import { ValueNode } from './shared';
 
 export function createValueTree(values: FixtureStateValues): ValueNode {

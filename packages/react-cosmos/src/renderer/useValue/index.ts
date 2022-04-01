@@ -1,4 +1,4 @@
-import { FixtureStateData } from '../../utils/fixtureState/types';
+import { FixtureStateData } from '../../core/fixtureState/types';
 import { SetValue } from './shared';
 import { useCreateFixtureState } from './useCreateFixtureState';
 import { useCurrentValue } from './useCurrentValue';

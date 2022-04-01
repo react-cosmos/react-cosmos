@@ -1,5 +1,5 @@
 import { PluginContext } from 'react-plugin';
-import { FixtureState } from '../../../../utils/fixtureState/types';
+import { FixtureState } from '../../../../core/fixtureState/types';
 import { StateUpdater } from '../../../../utils/types';
 import { RendererCoreSpec } from '../../RendererCore/spec';
 

@@ -8,12 +8,20 @@ import React, {
   useState,
 } from 'react';
 import styled from 'styled-components';
-import { FixtureId, FixtureList } from '../../../renderer/types';
-import { createFixtureTree } from '../../../utils/fixtureTree/createFixtureTree';
+import { createFixtureTree } from '../../../core/fixtureTree/createFixtureTree';
 import {
   FlatFixtureTreeItem,
   flattenFixtureTree,
-} from '../../../utils/fixtureTree/flattenFixtureTree';
+} from '../../../core/fixtureTree/flattenFixtureTree';
+import { FixtureId, FixtureList } from '../../../renderer/types';
+import {
+  KEY_DOWN,
+  KEY_ENTER,
+  KEY_ESC,
+  KEY_FWD_SLASH,
+  KEY_TAB,
+  KEY_UP,
+} from '../../../utils/keys';
 import { HelpCircleIcon, SearchIcon } from '../../components/icons';
 import {
   black60,
@@ -26,14 +34,6 @@ import {
   grey64,
 } from '../../style/colors';
 import { quick } from '../../style/vars';
-import {
-  KEY_DOWN,
-  KEY_ENTER,
-  KEY_ESC,
-  KEY_FWD_SLASH,
-  KEY_TAB,
-  KEY_UP,
-} from '../../utils/keys';
 import { FixtureSearchResult } from './FixtureSearchResult';
 import { FixtureSearchShortcuts } from './FixtureSearchShortcuts';
 

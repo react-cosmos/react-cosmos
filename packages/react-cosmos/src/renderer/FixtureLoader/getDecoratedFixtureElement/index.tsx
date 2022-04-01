@@ -3,7 +3,7 @@ import {
   ReactDecorator,
   ReactDecoratorProps,
   ReactFixture,
-} from '../../../utils/react/types';
+} from '../../../core/react/types';
 import { FixtureCapture } from '../FixtureCapture';
 import { FixtureElement } from './FixtureElement';
 

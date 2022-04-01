@@ -1,4 +1,4 @@
-import { FixtureTreeNode } from '../shared/types';
+import { FixtureTreeNode } from '../types';
 import { collapseIndexes } from './collapseIndexes';
 
 it('collapses index fixture', () => {

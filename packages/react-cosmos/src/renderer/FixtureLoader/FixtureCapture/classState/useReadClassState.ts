@@ -9,13 +9,13 @@ import {
 import {
   findFixtureStateClassState,
   updateFixtureStateClassState,
-} from '../../../../utils/fixtureState/classState';
-import { createValues } from '../../../../utils/fixtureState/createValues';
-import { extendWithValues } from '../../../../utils/fixtureState/extendWithValues';
+} from '../../../../core/fixtureState/classState';
+import { createValues } from '../../../../core/fixtureState/createValues';
+import { extendWithValues } from '../../../../core/fixtureState/extendWithValues';
 import {
   FixtureDecoratorId,
   FixtureStateClassState,
-} from '../../../../utils/fixtureState/types';
+} from '../../../../core/fixtureState/types';
 import { FixtureContext } from '../../../FixtureContext';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
 import { ElRefs } from './shared';

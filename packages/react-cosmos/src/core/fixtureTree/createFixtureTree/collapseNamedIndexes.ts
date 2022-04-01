@@ -1,4 +1,4 @@
-import { FixtureTreeNode } from '../shared/types';
+import { FixtureTreeNode } from '../types';
 
 export function collapseNamedIndexes(
   treeNode: FixtureTreeNode

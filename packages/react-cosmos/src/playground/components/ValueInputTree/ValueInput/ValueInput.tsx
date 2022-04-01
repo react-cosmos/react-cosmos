@@ -1,5 +1,5 @@
 import React from 'react';
-import { PrimitiveData } from '../../../../utils/fixtureState/types';
+import { PrimitiveData } from '../../../../core/fixtureState/types';
 import { ValueInputSlot } from '../../../slots/ValueInputSlot';
 import { LeafValue, ValueTreeItem } from '../shared';
 import { BooleanValueInput } from './BooleanValueInput';

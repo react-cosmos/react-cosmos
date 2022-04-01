@@ -2,13 +2,14 @@ import { blue } from 'chalk';
 import { isEqual } from 'lodash';
 import React from 'react';
 import styled from 'styled-components';
-import { FixtureId } from '../../../renderer/types';
 import {
   FlatFixtureTree,
   FlatFixtureTreeItem,
-} from '../../../utils/fixtureTree/flattenFixtureTree';
+} from '../../../core/fixtureTree/flattenFixtureTree';
+import { FixtureId } from '../../../renderer/types';
 import { XIcon } from '../../components/icons';
 import { stringifyFixtureId } from '../../components/ValueInputTree';
+import { createRelativePlaygroundUrl } from '../../shared/url';
 import {
   grey128,
   grey224,
@@ -20,7 +21,6 @@ import {
   white10,
 } from '../../style/colors';
 import { quick } from '../../style/vars';
-import { createRelativePlaygroundUrl } from '../../utils/url';
 
 type Props = {
   fixtureItems: FlatFixtureTree;

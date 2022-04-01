@@ -4,7 +4,7 @@ import {
   FixtureStateClassState,
   FixtureStateProps,
   FixtureStateValues,
-} from '../../../utils/fixtureState/types';
+} from '../../../core/fixtureState/types';
 
 export function anyProps(
   args: {

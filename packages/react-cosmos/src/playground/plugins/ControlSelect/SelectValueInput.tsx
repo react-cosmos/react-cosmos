@@ -1,5 +1,5 @@
 import React from 'react';
-import { FixtureStateSelectControl } from '../../../utils/fixtureState/types';
+import { FixtureStateSelectControl } from '../../../core/fixtureState/types';
 import { Select } from '../../components/inputs/Select';
 import {
   Label,

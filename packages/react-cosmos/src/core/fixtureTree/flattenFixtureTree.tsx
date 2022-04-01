@@ -1,5 +1,5 @@
 import { FixtureId } from '../../renderer/types';
-import { FixtureTreeNode } from './shared/types';
+import { FixtureTreeNode } from './types';
 
 export type FlatFixtureTreeItem = {
   fileName: string;

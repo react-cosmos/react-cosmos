@@ -4,7 +4,7 @@ import {
   FixtureStateControls,
   FixtureStateStandardControl,
   FixtureStateValues,
-} from '../../../utils/fixtureState/types';
+} from '../../../core/fixtureState/types';
 import { ValueInputTree } from '../../components/ValueInputTree';
 import { ExpandCollapseValues } from '../../components/ValueInputTree/ExpandCollapseValues';
 import { ControlActionSlotProps } from '../../slots/ControlActionSlot';

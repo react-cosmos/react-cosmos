@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { FixtureState, SetFixtureState } from '../utils/fixtureState/types';
+import { FixtureState, SetFixtureState } from '../core/fixtureState/types';
 
 export type FixtureContextValue = {
   fixtureState: FixtureState;

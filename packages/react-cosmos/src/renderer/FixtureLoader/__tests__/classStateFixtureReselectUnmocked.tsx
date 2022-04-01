@@ -1,5 +1,5 @@
 import React from 'react';
-import { createValues } from '../../../utils/fixtureState/createValues';
+import { createValues } from '../../../core/fixtureState/createValues';
 import { uuid } from '../../../utils/uuid';
 import { testFixtureLoader } from '../testHelpers';
 import { Counter } from '../testHelpers/components';

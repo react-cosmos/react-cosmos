@@ -1,7 +1,7 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { createFixtureTree } from '../../../utils/fixtureTree/createFixtureTree';
-import { flattenFixtureTree } from '../../../utils/fixtureTree/flattenFixtureTree';
+import { createFixtureTree } from '../../../core/fixtureTree/createFixtureTree';
+import { flattenFixtureTree } from '../../../core/fixtureTree/flattenFixtureTree';
 import { CoreSpec } from '../Core/spec';
 import { RendererCoreSpec } from '../RendererCore/spec';
 import { RouterSpec } from '../Router/spec';

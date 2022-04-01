@@ -1,5 +1,5 @@
-import { FixtureId } from '../../../renderer/types';
-import { TreeNode } from '../../tree';
+import { FixtureId } from '../../renderer/types';
+import { TreeNode } from '../../utils/tree';
 
 export type FixtureTreeNode = TreeNode<
   | { type: 'fileDir' }

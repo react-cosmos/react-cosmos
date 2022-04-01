@@ -1,5 +1,5 @@
 import React from 'react';
-import { FixtureDecoratorId } from '../../../../utils/fixtureState/types';
+import { FixtureDecoratorId } from '../../../../core/fixtureState/types';
 import { ElRefs } from './shared';
 import { useFixtureState } from './useFixtureState';
 import { useReadClassState } from './useReadClassState';

@@ -1,10 +1,10 @@
 import until from 'async-until';
 import { ReactTestRenderer } from 'react-test-renderer';
-import { FixtureState } from '../../../utils/fixtureState/types';
+import { FixtureState } from '../../../core/fixtureState/types';
 import {
   ReactDecorators,
   ReactFixtureWrappers,
-} from '../../../utils/react/types';
+} from '../../../core/react/types';
 import {
   FixtureId,
   FixtureListUpdateResponse,

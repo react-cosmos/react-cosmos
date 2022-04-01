@@ -2,7 +2,7 @@ import {
   parsePlaygroundUrlQuery,
   PlaygroundUrlParams,
   stringifyPlaygroundUrlQuery,
-} from '../../utils/playgroundUrl';
+} from '../../core/playgroundUrl';
 
 export function getUrlParams(): PlaygroundUrlParams {
   return parsePlaygroundUrlQuery(location.search);

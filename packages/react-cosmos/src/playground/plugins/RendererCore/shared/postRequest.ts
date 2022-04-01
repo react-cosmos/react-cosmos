@@ -1,9 +1,9 @@
+import { FixtureState } from '../../../../core/fixtureState/types';
 import {
   FixtureId,
   RendererId,
   RendererRequest,
 } from '../../../../renderer/types';
-import { FixtureState } from '../../../../utils/fixtureState/types';
 import { RendererCoreContext } from '../shared';
 
 export function postSelectFixtureRequest(

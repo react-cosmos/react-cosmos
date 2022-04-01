@@ -1,12 +1,12 @@
 import { isEqual } from 'lodash';
 import React, { Component } from 'react';
-import { FixtureState, SetFixtureState } from '../../utils/fixtureState/types';
-import { getFixtureListFromWrappers } from '../../utils/react/getFixtureList';
+import { FixtureState, SetFixtureState } from '../../core/fixtureState/types';
+import { getFixtureListFromWrappers } from '../../core/react/getFixtureList';
 import {
   ReactDecorator,
   ReactDecorators,
   ReactFixtureWrappers,
-} from '../../utils/react/types';
+} from '../../core/react/types';
 import {
   FixtureId,
   RendererConnect,

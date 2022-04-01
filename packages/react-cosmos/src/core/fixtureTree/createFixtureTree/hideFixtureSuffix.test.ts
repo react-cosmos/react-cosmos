@@ -1,4 +1,4 @@
-import { FixtureTreeNode } from '../shared/types';
+import { FixtureTreeNode } from '../types';
 import { hideFixtureSuffix } from './hideFixtureSuffix';
 
 it('hides fixture suffix', () => {

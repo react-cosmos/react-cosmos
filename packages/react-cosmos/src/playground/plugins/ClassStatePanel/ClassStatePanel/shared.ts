@@ -1,9 +1,9 @@
-import { findFixtureStateClassState } from '../../../../utils/fixtureState/classState';
+import { findFixtureStateClassState } from '../../../../core/fixtureState/classState';
 import {
   FixtureElementId,
   FixtureState,
   FixtureStateClassState,
-} from '../../../../utils/fixtureState/types';
+} from '../../../../core/fixtureState/types';
 import { StateUpdater } from '../../../../utils/types';
 import { stringifyElementId } from '../../../components/ValueInputTree';
 

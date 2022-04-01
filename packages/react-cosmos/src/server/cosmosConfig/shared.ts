@@ -1,4 +1,4 @@
-import { requireModule } from '../fs';
+import { requireModule } from '../utils/fs';
 import { CosmosConfigInput } from './types';
 
 export function getCurrentDir() {

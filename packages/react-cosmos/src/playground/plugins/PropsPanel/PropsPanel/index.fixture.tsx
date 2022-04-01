@@ -1,6 +1,6 @@
 import React from 'react';
 import { PropsPanel } from '.';
-import { FixtureState } from '../../../../utils/fixtureState/types';
+import { FixtureState } from '../../../../core/fixtureState/types';
 import { stringifyElementId } from '../../../components/ValueInputTree';
 
 export default () => {

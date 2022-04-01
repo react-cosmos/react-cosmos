@@ -1,5 +1,5 @@
 import React from 'react';
-import { FixtureDecoratorId } from '../../../utils/fixtureState/types';
+import { FixtureDecoratorId } from '../../../core/fixtureState/types';
 import { useClassStateCapture } from './classState';
 import { usePropsCapture } from './props';
 

@@ -1,16 +1,16 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
+import { createFixtureTree } from '../../../core/fixtureTree/createFixtureTree';
 import { FixtureList } from '../../../renderer/types';
-import { createFixtureTree } from '../../../utils/fixtureTree/createFixtureTree';
 import { IconButton32 } from '../../components/buttons';
 import { MinusSquareIcon, PlusSquareIcon } from '../../components/icons';
-import { grey128, grey32, white10 } from '../../style/colors';
 import {
   getFullTreeExpansion,
   hasExpandableNodes,
   isTreeFullyCollapsed,
   TreeExpansion,
-} from '../../utils/treeExpansion';
+} from '../../shared/treeExpansion';
+import { grey128, grey32, white10 } from '../../style/colors';
 
 type Props = {
   fixturesDir: string;

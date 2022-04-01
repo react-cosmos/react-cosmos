@@ -1,4 +1,4 @@
-import { FixtureState } from '../utils/fixtureState/types';
+import { FixtureState } from '../core/fixtureState/types';
 
 // FYI: Renderer ids are self assigned in remote environments, so uniqueness
 // cannot be established by consensus

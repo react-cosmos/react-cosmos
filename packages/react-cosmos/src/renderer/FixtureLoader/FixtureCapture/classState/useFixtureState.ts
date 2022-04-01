@@ -14,13 +14,13 @@ import {
   findFixtureStateClassState,
   getFixtureStateClassState,
   removeFixtureStateClassState,
-} from '../../../../utils/fixtureState/classState';
-import { createValues } from '../../../../utils/fixtureState/createValues';
-import { extendWithValues } from '../../../../utils/fixtureState/extendWithValues';
+} from '../../../../core/fixtureState/classState';
+import { createValues } from '../../../../core/fixtureState/createValues';
+import { extendWithValues } from '../../../../core/fixtureState/extendWithValues';
 import {
   FixtureDecoratorId,
   FixtureState,
-} from '../../../../utils/fixtureState/types';
+} from '../../../../core/fixtureState/types';
 import { getComponentName } from '../../../../utils/react/getComponentName';
 import { FixtureContext } from '../../../FixtureContext';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';

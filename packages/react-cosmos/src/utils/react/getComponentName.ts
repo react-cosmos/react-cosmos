@@ -1,8 +1,8 @@
-import React from 'react';
+import { ComponentType } from 'react';
 
-const componentNames: WeakMap<React.ComponentType, string> = new WeakMap();
+const componentNames: WeakMap<ComponentType, string> = new WeakMap();
 
-export function getComponentName(type: string | React.ComponentType): string {
+export function getComponentName(type: string | ComponentType): string {
   if (typeof type === 'string') {
     return type;
   }

@@ -1,3 +1,4 @@
+import { FixtureState } from '../../../../core/fixtureState/types';
 import {
   FixtureId,
   FixtureList,
@@ -6,7 +7,6 @@ import {
   RendererId,
   RendererReadyResponse,
 } from '../../../../renderer/types';
-import { FixtureState } from '../../../../utils/fixtureState/types';
 import { getRendererCoreMethods } from '../../../testHelpers/pluginMocks';
 
 export function createRendererReadyResponse(

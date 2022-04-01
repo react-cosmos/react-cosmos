@@ -1,4 +1,4 @@
-import { parseUrlQuery, stringifyUrlQuery } from '../../utils/playgroundUrl';
+import { parseUrlQuery, stringifyUrlQuery } from '../../core/playgroundUrl';
 
 type Params = Record<string, unknown>;
 

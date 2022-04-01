@@ -1,8 +1,8 @@
 import React from 'react';
+import { createFixtureTree } from '../../../../core/fixtureTree/createFixtureTree';
 import { FixtureId, FixtureList } from '../../../../renderer/types';
 import { useValue } from '../../../../renderer/useValue';
-import { createFixtureTree } from '../../../../utils/fixtureTree/createFixtureTree';
-import { TreeExpansion } from '../../../utils/treeExpansion';
+import { TreeExpansion } from '../../../shared/treeExpansion';
 import { FixtureTree } from './FixtureTree';
 
 const fixtures: FixtureList = {

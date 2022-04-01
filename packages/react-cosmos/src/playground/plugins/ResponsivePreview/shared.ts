@@ -1,5 +1,5 @@
 import { PluginContext } from 'react-plugin';
-import { FixtureState } from '../../../utils/fixtureState/types';
+import { FixtureState } from '../../../core/fixtureState/types';
 import { StorageSpec } from '../Storage/spec';
 import { ResponsivePreviewSpec, Viewport } from './spec';
 

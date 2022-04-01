@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
-import { isMultiFixture } from '../../utils/react/isMultiFixture';
-import { ReactFixtureExport, ReactFixtureMap } from '../../utils/react/types';
+import { isMultiFixture } from '../../core/react/isMultiFixture';
+import { ReactFixtureExport, ReactFixtureMap } from '../../core/react/types';
 
 export function getFixture(
   fixtureExport: ReactFixtureExport,

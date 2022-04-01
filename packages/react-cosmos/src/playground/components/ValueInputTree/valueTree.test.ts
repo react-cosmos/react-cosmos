@@ -1,7 +1,7 @@
 import {
   FixtureStateValue,
   FixtureStateValues,
-} from '../../../utils/fixtureState/types';
+} from '../../../core/fixtureState/types';
 import { ValueNode } from './shared';
 import { createValueTree } from './valueTree';
 

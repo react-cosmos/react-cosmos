@@ -3,7 +3,7 @@ import { Slot } from 'react-plugin';
 import {
   FixtureState,
   FixtureStateControl,
-} from '../../utils/fixtureState/types';
+} from '../../core/fixtureState/types';
 import { StateUpdater } from '../../utils/types';
 
 export type ControlSlotProps<TControl extends FixtureStateControl> = {

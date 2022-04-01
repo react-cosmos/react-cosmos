@@ -3,12 +3,12 @@ import React, { useCallback } from 'react';
 import {
   resetFixtureStateProps,
   updateFixtureStateProps,
-} from '../../../../utils/fixtureState/props';
+} from '../../../../core/fixtureState/props';
 import {
   FixtureState,
   FixtureStateProps,
   FixtureStateValues,
-} from '../../../../utils/fixtureState/types';
+} from '../../../../core/fixtureState/types';
 import { StateUpdater } from '../../../../utils/types';
 import { IconButton32 } from '../../../components/buttons';
 import { CopyIcon, RotateCcwIcon } from '../../../components/icons';
@@ -26,7 +26,7 @@ import {
   ValueInputTree,
 } from '../../../components/ValueInputTree';
 import { ExpandCollapseValues } from '../../../components/ValueInputTree/ExpandCollapseValues';
-import { TreeExpansion } from '../../../utils/treeExpansion';
+import { TreeExpansion } from '../../../shared/treeExpansion';
 import { createPropsFsUpdater } from './shared';
 
 type Props = {

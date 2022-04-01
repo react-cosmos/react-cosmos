@@ -1,15 +1,15 @@
 import { isEqual } from 'lodash';
 import React, { RefObject } from 'react';
 import styled from 'styled-components';
+import { FixtureTreeNode } from '../../../../core/fixtureTree/types';
 import { FixtureId } from '../../../../renderer/types';
-import { FixtureTreeNode } from '../../../../utils/fixtureTree/shared/types';
 import { TreeView } from '../../../components/TreeView';
-import { grey32 } from '../../../style/colors';
 import {
   nodeContainsFixtureId,
   recordContainsFixtureId,
-} from '../../../utils/fixtureTree';
-import { TreeExpansion } from '../../../utils/treeExpansion';
+} from '../../../shared/fixtureTree';
+import { TreeExpansion } from '../../../shared/treeExpansion';
+import { grey32 } from '../../../style/colors';
 import { FixtureButton } from './FixtureButton';
 import { FixtureDir } from './FixtureDir';
 import { MultiFixtureButton } from './MultiFixtureButton';

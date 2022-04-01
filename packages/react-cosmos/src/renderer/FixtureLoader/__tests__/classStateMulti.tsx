@@ -1,8 +1,8 @@
 import { StateMock } from '@react-mock/state';
 import retry from '@skidding/async-retry';
 import React from 'react';
-import { updateFixtureStateClassState } from '../../../utils/fixtureState/classState';
-import { createValues } from '../../../utils/fixtureState/createValues';
+import { updateFixtureStateClassState } from '../../../core/fixtureState/classState';
+import { createValues } from '../../../core/fixtureState/createValues';
 import { uuid } from '../../../utils/uuid';
 import { testFixtureLoader } from '../testHelpers';
 import { Counter } from '../testHelpers/components';

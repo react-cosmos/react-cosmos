@@ -1,7 +1,7 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
 import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
-import { createValue } from '../../../utils/fixtureState/createValues';
+import { createValue } from '../../../core/fixtureState/createValues';
 import { uuid } from '../../../utils/uuid';
 import { useValue } from '../../useValue';
 import { testFixtureLoader } from '../testHelpers';

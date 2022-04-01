@@ -1,6 +1,6 @@
 import { FixtureList } from '../../../renderer/types';
-import { sortTreeChildren } from '../../tree';
-import { FixtureTreeNode } from '../shared/types';
+import { sortTreeChildren } from '../../../utils/tree';
+import { FixtureTreeNode } from '../types';
 import { collapseFixtureDirs } from './collapseFixtureDirs';
 import { collapseIndexes } from './collapseIndexes';
 import { collapseNamedIndexes } from './collapseNamedIndexes';

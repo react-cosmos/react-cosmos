@@ -4,7 +4,7 @@ import {
   FixtureState,
   FixtureStateControl,
   FixtureStateControls,
-} from '../../../utils/fixtureState/types';
+} from '../../../core/fixtureState/types';
 import { StateUpdater } from '../../../utils/types';
 import { IconButton32 } from '../../components/buttons';
 import { RotateCcwIcon } from '../../components/icons';

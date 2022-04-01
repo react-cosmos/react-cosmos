@@ -1,6 +1,6 @@
 import path from 'path';
-import { getCliArgs } from '../cli';
-import { dirExists, fileExists, moduleExists } from '../fs';
+import { getCliArgs } from '../utils/cli';
+import { dirExists, fileExists, moduleExists } from '../utils/fs';
 import { createCosmosConfig } from './createCosmosConfig';
 import { getCosmosConfigAtPath } from './getCosmosConfigAtPath';
 import { getCurrentDir } from './shared';

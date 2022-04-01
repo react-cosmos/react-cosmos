@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArraySlot } from 'react-plugin';
-import { FixtureStateControls } from '../../utils/fixtureState/types';
+import { FixtureStateControls } from '../../core/fixtureState/types';
 
 export type ControlActionSlotProps = {
   controls: FixtureStateControls;

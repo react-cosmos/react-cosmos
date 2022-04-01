@@ -1,11 +1,11 @@
 import React from 'react';
-import { FixtureStateValues } from '../../../utils/fixtureState/types';
+import { FixtureStateValues } from '../../../core/fixtureState/types';
 import {
   getFullTreeExpansion,
   hasExpandableNodes,
   isTreeFullyCollapsed,
   TreeExpansion,
-} from '../../utils/treeExpansion';
+} from '../../shared/treeExpansion';
 import { IconButton32 } from '../buttons';
 import { MinusSquareIcon, PlusSquareIcon } from '../icons';
 import { createValueTree } from './valueTree';

@@ -1,5 +1,5 @@
+import { FixtureState } from '../../../core/fixtureState/types';
 import { FixtureId } from '../../../renderer/types';
-import { FixtureState } from '../../../utils/fixtureState/types';
 import { StateUpdater } from '../../../utils/types';
 import { RendererCoreContext, State } from './shared';
 import { postSetFixtureStateRequest } from './shared/postRequest';

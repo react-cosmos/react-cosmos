@@ -1,18 +1,18 @@
 import React from 'react';
 import { createPlugin, PluginContext } from 'react-plugin';
-import { FixtureId } from '../../../renderer/types';
 import {
   FixtureElementId,
   FixtureState,
-} from '../../../utils/fixtureState/types';
+} from '../../../core/fixtureState/types';
+import { FixtureId } from '../../../renderer/types';
 import {
   FixtureExpansionGroup,
   getFixtureExpansion,
   hasFsValues,
   updateElementExpansion,
 } from '../../components/ValueInputTree';
+import { TreeExpansion } from '../../shared/treeExpansion';
 import { SidePanelRowSlotProps } from '../../slots/SidePanelRowSlot';
-import { TreeExpansion } from '../../utils/treeExpansion';
 import { StorageSpec } from '../Storage/spec';
 import { BlankState } from './BlankState';
 import { PropsPanel } from './PropsPanel';

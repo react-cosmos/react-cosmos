@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactDecorators, ReactFixtureWrappers } from '../../utils/react/types';
+import { ReactDecorators, ReactFixtureWrappers } from '../../core/react/types';
 import { FixtureLoader } from '../FixtureLoader/FixtureLoader';
 import { ErrorCatch } from './ErrorCatch';
 import { renderDomMessage } from './renderDomMessage';

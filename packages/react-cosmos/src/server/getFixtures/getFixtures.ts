@@ -1,21 +1,21 @@
 import path from 'path';
 import url from 'url';
-import { getDecoratedFixtureElement } from '../../renderer/FixtureLoader/getDecoratedFixtureElement';
-import { FixtureId } from '../../renderer/types';
-import { createFixtureTree } from '../../utils/fixtureTree/createFixtureTree';
-import { flattenFixtureTree } from '../../utils/fixtureTree/flattenFixtureTree';
+import { createFixtureTree } from '../../core/fixtureTree/createFixtureTree';
+import { flattenFixtureTree } from '../../core/fixtureTree/flattenFixtureTree';
 import {
   stringifyPlaygroundUrlQuery,
   stringifyRendererUrlQuery,
-} from '../../utils/playgroundUrl';
-import { getFixtureListFromExports } from '../../utils/react/getFixtureList';
-import { getSortedDecoratorsForFixturePath } from '../../utils/react/getSortedDecoratorsForFixturePath';
+} from '../../core/playgroundUrl';
+import { getFixtureListFromExports } from '../../core/react/getFixtureList';
+import { getSortedDecoratorsForFixturePath } from '../../core/react/getSortedDecoratorsForFixturePath';
 import {
   ReactDecorator,
   ReactDecorators,
   ReactFixture,
   ReactFixtureMap,
-} from '../../utils/react/types';
+} from '../../core/react/types';
+import { getDecoratedFixtureElement } from '../../renderer/FixtureLoader/getDecoratedFixtureElement';
+import { FixtureId } from '../../renderer/types';
 import { CosmosConfig } from '../cosmosConfig/types';
 import { RENDERER_FILENAME } from '../playgroundHtml';
 import { getUserModules } from '../userDeps/getUserModules';

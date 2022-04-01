@@ -1,4 +1,4 @@
-import { StateUpdater } from '../types';
+import { StateUpdater } from '../../utils/types';
 
 export type FixtureDecoratorId = string;
 

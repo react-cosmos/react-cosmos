@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { KEY_DOWN, KEY_UP } from '../../../utils/keys';
 import { useFocus } from '../../hooks/useFocus';
-import { KEY_DOWN, KEY_UP } from '../../utils/keys';
 import {
   TextContainer,
   TextField,

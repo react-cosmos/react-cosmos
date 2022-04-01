@@ -1,13 +1,13 @@
 import React from 'react';
-import { createValues } from '../../../../utils/fixtureState/createValues';
+import { createValues } from '../../../../core/fixtureState/createValues';
 import {
   createFixtureStateProps,
   findFixtureStateProps,
   getFixtureStateProps,
   removeFixtureStateProps,
   updateFixtureStateProps,
-} from '../../../../utils/fixtureState/props';
-import { FixtureDecoratorId } from '../../../../utils/fixtureState/types';
+} from '../../../../core/fixtureState/props';
+import { FixtureDecoratorId } from '../../../../core/fixtureState/types';
 import { areNodesEqual } from '../../../../utils/react/areNodesEqual';
 import { getComponentName } from '../../../../utils/react/getComponentName';
 import { FixtureContext } from '../../../FixtureContext';

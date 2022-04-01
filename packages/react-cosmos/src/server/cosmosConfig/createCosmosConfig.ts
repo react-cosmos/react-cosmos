@@ -1,6 +1,6 @@
 import path from 'path';
-import { getCliArgs } from '../cli';
-import { resolveModule } from './resolveModule';
+import { getCliArgs } from '../utils/cli';
+import { resolveModule } from '../utils/resolveModule';
 import { CosmosConfig, CosmosConfigInput } from './types';
 
 export function createCosmosConfig(

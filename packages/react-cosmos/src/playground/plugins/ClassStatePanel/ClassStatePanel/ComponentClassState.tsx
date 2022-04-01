@@ -1,11 +1,11 @@
 import { isEqual } from 'lodash';
 import React, { useCallback } from 'react';
-import { updateFixtureStateClassState } from '../../../../utils/fixtureState/classState';
+import { updateFixtureStateClassState } from '../../../../core/fixtureState/classState';
 import {
   FixtureState,
   FixtureStateClassState,
   FixtureStateValues,
-} from '../../../../utils/fixtureState/types';
+} from '../../../../core/fixtureState/types';
 import { StateUpdater } from '../../../../utils/types';
 import { IconButton32 } from '../../../components/buttons';
 import { RotateCcwIcon } from '../../../components/icons';
@@ -23,7 +23,7 @@ import {
   ValueInputTree,
 } from '../../../components/ValueInputTree';
 import { ExpandCollapseValues } from '../../../components/ValueInputTree/ExpandCollapseValues';
-import { TreeExpansion } from '../../../utils/treeExpansion';
+import { TreeExpansion } from '../../../shared/treeExpansion';
 import { createClassStateFsUpdater } from './shared';
 
 type Props = {

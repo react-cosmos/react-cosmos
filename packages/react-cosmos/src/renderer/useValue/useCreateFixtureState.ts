@@ -1,12 +1,12 @@
 import { isEqual } from 'lodash';
 import React from 'react';
-import { findFixtureStateControl } from '../../utils/fixtureState/controls';
-import { createValue } from '../../utils/fixtureState/createValues';
-import { extendWithValue } from '../../utils/fixtureState/extendWithValues';
+import { findFixtureStateControl } from '../../core/fixtureState/controls';
+import { createValue } from '../../core/fixtureState/createValues';
+import { extendWithValue } from '../../core/fixtureState/extendWithValues';
 import {
   FixtureStateData,
   FixtureStateValue,
-} from '../../utils/fixtureState/types';
+} from '../../core/fixtureState/types';
 import { FixtureContext } from '../FixtureContext';
 
 export function useCreateFixtureState(

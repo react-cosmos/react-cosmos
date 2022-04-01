@@ -1,5 +1,5 @@
 import { FixtureList } from '../../../renderer/types';
-import { FixtureTreeNode } from '../shared/types';
+import { FixtureTreeNode } from '../types';
 import { createRawFixtureTree } from './createRawFixtureTree';
 
 it('creates tree with fixture', () => {

@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import { FixtureId } from '../../../renderer/types';
 import {
   FixtureElementId,
   FixtureStatePrimitiveValue,
   FixtureStateUnserializableValue,
-} from '../../../utils/fixtureState/types';
+} from '../../../core/fixtureState/types';
+import { FixtureId } from '../../../renderer/types';
 import { TreeNode } from '../../../utils/tree';
 
 export type LeafValue =

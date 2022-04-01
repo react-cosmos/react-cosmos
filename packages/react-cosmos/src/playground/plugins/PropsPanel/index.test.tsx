@@ -5,7 +5,7 @@ import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   FixtureState,
   FixtureStateValues,
-} from '../../../utils/fixtureState/types';
+} from '../../../core/fixtureState/types';
 import { SidePanelRowSlot } from '../../slots/SidePanelRowSlot';
 import { mockStorage } from '../../testHelpers/pluginMocks';
 import { getParentButton } from '../../testHelpers/selectors';

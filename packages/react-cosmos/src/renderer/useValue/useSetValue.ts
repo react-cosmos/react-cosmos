@@ -1,8 +1,8 @@
 import React from 'react';
-import { findFixtureStateControl } from '../../utils/fixtureState/controls';
-import { createValue } from '../../utils/fixtureState/createValues';
-import { extendWithValue } from '../../utils/fixtureState/extendWithValues';
-import { FixtureState, FixtureStateData } from '../../utils/fixtureState/types';
+import { findFixtureStateControl } from '../../core/fixtureState/controls';
+import { createValue } from '../../core/fixtureState/createValues';
+import { extendWithValue } from '../../core/fixtureState/extendWithValues';
+import { FixtureState, FixtureStateData } from '../../core/fixtureState/types';
 import { FixtureContext } from '../FixtureContext';
 import { SetValue } from './shared';
 

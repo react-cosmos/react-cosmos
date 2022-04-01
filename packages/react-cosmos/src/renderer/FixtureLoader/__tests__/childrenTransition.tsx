@@ -2,7 +2,7 @@ import React from 'react';
 import {
   createValue,
   createValues,
-} from '../../../utils/fixtureState/createValues';
+} from '../../../core/fixtureState/createValues';
 import { uuid } from '../../../utils/uuid';
 import { testFixtureLoader } from '../testHelpers';
 import { Wrapper } from '../testHelpers/components';
