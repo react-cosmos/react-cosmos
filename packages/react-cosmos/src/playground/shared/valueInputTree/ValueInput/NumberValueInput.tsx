@@ -1,7 +1,7 @@
 import { blue } from 'chalk';
 import React from 'react';
+import { NumberInput } from '../../../components/inputs/NumberInput';
 import { grey248, grey8 } from '../../../core/colors';
-import { NumberInput } from '../../inputs/NumberInput';
 import { Label, ValueDataContainer } from './shared';
 
 type Props = {

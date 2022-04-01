@@ -3,6 +3,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Button8 } from '../../../components/buttons';
 import { Minimize2Icon, RefreshCcwIcon } from '../../../components/icons';
+import { NumberInput } from '../../../components/inputs/NumberInput';
+import { Select } from '../../../components/inputs/Select';
+import { Space } from '../../../components/Space';
 import {
   grey128,
   grey144,
@@ -11,9 +14,6 @@ import {
   grey8,
 } from '../../../core/colors';
 import { quick } from '../../../core/vars';
-import { NumberInput } from '../../../shared/inputs/NumberInput';
-import { Select } from '../../../shared/inputs/Select';
-import { Space } from '../../../shared/Space';
 import { ResponsiveDevice, Viewport } from '../spec';
 
 type Props = {

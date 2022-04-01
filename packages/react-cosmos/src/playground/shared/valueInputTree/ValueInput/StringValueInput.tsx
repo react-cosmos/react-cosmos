@@ -1,12 +1,12 @@
 import { blue } from 'chalk';
 import React from 'react';
-import { grey248, grey8 } from '../../../core/colors';
 import {
   TextContainer,
   TextField,
   TextInputContainer,
   TextMirror,
-} from '../../inputs/shared';
+} from '../../../components/inputs/shared';
+import { grey248, grey8 } from '../../../core/colors';
 import { useFocus } from '../../useFocus';
 import { Label, ValueDataContainer } from './shared';
 

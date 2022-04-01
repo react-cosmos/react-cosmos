@@ -1,7 +1,7 @@
 import React from 'react';
 import { FixtureStateSelectControl } from '../../../utils/fixtureState/types';
+import { Select } from '../../components/inputs/Select';
 import { lightBlue } from '../../core/colors';
-import { Select } from '../../shared/inputs/Select';
 import {
   Label,
   ValueDataContainer,
