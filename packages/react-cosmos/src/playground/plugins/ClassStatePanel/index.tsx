@@ -2,13 +2,13 @@ import React from 'react';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { FixtureId } from '../../../renderer/types';
 import { FixtureElementId } from '../../../utils/fixtureState/types';
-import { TreeExpansion } from '../../shared/treeExpansion';
 import {
   FixtureExpansionGroup,
   getFixtureExpansion,
   updateElementExpansion,
 } from '../../shared/valueInputTree';
 import { SidePanelRowSlotProps } from '../../slots/SidePanelRowSlot';
+import { TreeExpansion } from '../../utils/treeExpansion';
 import { StorageSpec } from '../Storage/spec';
 import { ClassStatePanel } from './ClassStatePanel';
 import { CLASS_STATE_TREE_EXPANSION_STORAGE_KEY } from './shared';

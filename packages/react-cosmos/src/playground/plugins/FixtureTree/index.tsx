@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { createPlugin } from 'react-plugin';
-import { TreeExpansion } from '../../shared/treeExpansion';
+import { TreeExpansion } from '../../utils/treeExpansion';
 import { CoreSpec } from '../Core/spec';
 import { RendererCoreSpec } from '../RendererCore/spec';
 import { RouterSpec } from '../Router/spec';

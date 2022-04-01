@@ -5,7 +5,6 @@ import {
   FixtureElementId,
   FixtureState,
 } from '../../../utils/fixtureState/types';
-import { TreeExpansion } from '../../shared/treeExpansion';
 import {
   FixtureExpansionGroup,
   getFixtureExpansion,
@@ -13,6 +12,7 @@ import {
   updateElementExpansion,
 } from '../../shared/valueInputTree';
 import { SidePanelRowSlotProps } from '../../slots/SidePanelRowSlot';
+import { TreeExpansion } from '../../utils/treeExpansion';
 import { StorageSpec } from '../Storage/spec';
 import { BlankState } from './BlankState';
 import { PropsPanel } from './PropsPanel';

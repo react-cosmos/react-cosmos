@@ -1,7 +1,7 @@
 import { clone, setWith } from 'lodash';
 import { FixtureId } from '../../../renderer/types';
 import { FixtureElementId } from '../../../utils/fixtureState/types';
-import { TreeExpansion } from '../treeExpansion';
+import { TreeExpansion } from '../../utils/treeExpansion';
 import { stringifyElementId, stringifyFixtureId } from './shared';
 
 export type FixtureExpansion = Record<string, void | TreeExpansion>;

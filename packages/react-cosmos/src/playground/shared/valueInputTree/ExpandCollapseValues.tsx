@@ -7,7 +7,7 @@ import {
   hasExpandableNodes,
   isTreeFullyCollapsed,
   TreeExpansion,
-} from '../treeExpansion';
+} from '../../utils/treeExpansion';
 import { createValueTree } from './valueTree';
 
 type Props = {

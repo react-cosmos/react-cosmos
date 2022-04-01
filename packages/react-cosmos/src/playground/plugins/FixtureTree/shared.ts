@@ -1,5 +1,5 @@
 import { PluginContext } from 'react-plugin';
-import { TreeExpansion } from '../../shared/treeExpansion';
+import { TreeExpansion } from '../../utils/treeExpansion';
 import { StorageSpec } from '../Storage/spec';
 import { FixtureTreeSpec } from './spec';
 

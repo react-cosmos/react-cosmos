@@ -7,9 +7,9 @@ import {
   nodeContainsFixtureId,
   recordContainsFixtureId,
 } from '../../../shared/fixtureTree';
-import { TreeExpansion } from '../../../shared/treeExpansion';
 import { TreeView } from '../../../shared/TreeView';
 import { grey32 } from '../../../ui/colors';
+import { TreeExpansion } from '../../../utils/treeExpansion';
 import { FixtureButton } from './FixtureButton';
 import { FixtureDir } from './FixtureDir';
 import { MultiFixtureButton } from './MultiFixtureButton';

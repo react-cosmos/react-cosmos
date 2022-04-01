@@ -17,7 +17,6 @@ import {
   Header,
   Title,
 } from '../../../shared/sidePanelUi';
-import { TreeExpansion } from '../../../shared/treeExpansion';
 import {
   FixtureExpansion,
   OnElementExpansionChange,
@@ -27,6 +26,7 @@ import {
 import { ExpandCollapseValues } from '../../../shared/valueInputTree/ExpandCollapseValues';
 import { IconButton32 } from '../../../ui/components/buttons';
 import { CopyIcon, RotateCcwIcon } from '../../../ui/components/icons';
+import { TreeExpansion } from '../../../utils/treeExpansion';
 import { createPropsFsUpdater } from './shared';
 
 type Props = {
