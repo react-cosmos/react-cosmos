@@ -2,10 +2,10 @@ import React from 'react';
 import * as ReactNative from 'react-native';
 import parse from 'url-parse';
 import { ReactDecorators, ReactFixtureWrappers } from '../core/react/types';
+import { FixtureId } from '../core/types';
 import { FixtureLoader } from './FixtureLoader/FixtureLoader';
 import { createWebSocketsConnect } from './FixtureLoader/webSockets';
 import { NativeRendererConfig } from './rendererConfig';
-import { FixtureId } from './types';
 
 const { View, Text, StyleSheet, NativeModules } = ReactNative;
 

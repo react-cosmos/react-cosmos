@@ -1,6 +1,6 @@
 import { createFixtureTree } from '../../../core/fixtureTree/createFixtureTree';
 import { FixtureTreeNode } from '../../../core/fixtureTree/types';
-import { FixtureId } from '../../../renderer/types';
+import { FixtureId } from '../../../core/types';
 import { nodeContainsFixtureId } from '../../shared/fixtureTree';
 import { TreeExpansion } from '../../shared/treeExpansion';
 import { CoreSpec } from '../Core/spec';

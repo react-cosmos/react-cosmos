@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { createFixtureTree } from '../../../core/fixtureTree/createFixtureTree';
-import { FixtureList } from '../../../renderer/types';
+import { FixtureList } from '../../../core/types';
 import { IconButton32 } from '../../components/buttons';
 import { MinusSquareIcon, PlusSquareIcon } from '../../components/icons';
 import {

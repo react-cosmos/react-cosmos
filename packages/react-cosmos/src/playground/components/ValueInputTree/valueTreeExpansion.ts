@@ -1,6 +1,6 @@
 import { clone, setWith } from 'lodash';
 import { FixtureElementId } from '../../../core/fixtureState/types';
-import { FixtureId } from '../../../renderer/types';
+import { FixtureId } from '../../../core/types';
 import { TreeExpansion } from '../../shared/treeExpansion';
 import { stringifyElementId, stringifyFixtureId } from './shared';
 

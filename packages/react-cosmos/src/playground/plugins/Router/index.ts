@@ -1,7 +1,7 @@
 import { isEqual } from 'lodash';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { PlaygroundUrlParams } from '../../../core/playgroundUrl';
-import { FixtureId } from '../../../renderer/types';
+import { FixtureId } from '../../../core/types';
 import {
   getUrlParams,
   pushUrlParams,

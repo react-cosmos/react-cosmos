@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArraySlot } from 'react-plugin';
 import styled from 'styled-components';
-import { FixtureId } from '../../../renderer/types';
+import { FixtureId } from '../../../core/types';
 import { grey176, grey32, white10 } from '../../style/colors';
 
 type Props = {

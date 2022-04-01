@@ -1,5 +1,6 @@
 import { FixtureState } from '../../../core/fixtureState/types';
-import { FixtureList, RendererId } from '../../../renderer/types';
+import { FixtureList } from '../../../core/types';
+import { RendererId } from '../../../renderer/types';
 import { MessageType, StateUpdater } from '../../../utils/types';
 
 export type RendererCoreSpec = {

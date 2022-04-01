@@ -1,7 +1,7 @@
 import { blue } from 'chalk';
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
-import { FixtureId } from '../../../../renderer/types';
+import { FixtureId } from '../../../../core/types';
 import { createRelativePlaygroundUrl } from '../../../shared/url';
 
 type Props = {

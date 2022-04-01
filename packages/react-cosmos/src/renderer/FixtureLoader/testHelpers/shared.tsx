@@ -5,8 +5,8 @@ import {
   ReactDecorators,
   ReactFixtureWrappers,
 } from '../../../core/react/types';
+import { FixtureId } from '../../../core/types';
 import {
-  FixtureId,
   FixtureListUpdateResponse,
   FixtureStateChangeResponse,
   RendererId,

@@ -1,7 +1,6 @@
 import { FixtureState } from '../../../../core/fixtureState/types';
+import { FixtureId, FixtureList } from '../../../../core/types';
 import {
-  FixtureId,
-  FixtureList,
   FixtureListUpdateResponse,
   FixtureStateChangeResponse,
   RendererId,

@@ -1,4 +1,4 @@
-import { FixtureList } from '../../../renderer/types';
+import { FixtureList } from '../../types';
 import { FixtureTreeNode } from '../types';
 import { createRawFixtureTree } from './createRawFixtureTree';
 

@@ -2,8 +2,8 @@ import React from 'react';
 import { FixtureState, SetFixtureState } from '../../core/fixtureState/types';
 import { getSortedDecoratorsForFixturePath } from '../../core/react/getSortedDecoratorsForFixturePath';
 import { ReactDecorator, ReactDecorators } from '../../core/react/types';
+import { FixtureId } from '../../core/types';
 import { FixtureContext } from '../FixtureContext';
-import { FixtureId } from '../types';
 import { getDecoratedFixtureElement } from './getDecoratedFixtureElement';
 
 type Props = {

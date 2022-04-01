@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArraySlot } from 'react-plugin';
-import { FixtureId } from '../../renderer/types';
+import { FixtureId } from '../../core/types';
 
 export type FixtureActionSlotProps = {
   fixtureId: FixtureId;

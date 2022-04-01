@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FlatFixtureTreeItem } from '../../../core/fixtureTree/flattenFixtureTree';
-import { FixtureId } from '../../../renderer/types';
+import { FixtureId } from '../../../core/types';
 import {
   blue,
   createGreyColor,

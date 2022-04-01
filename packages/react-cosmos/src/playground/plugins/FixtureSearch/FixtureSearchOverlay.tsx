@@ -13,7 +13,7 @@ import {
   FlatFixtureTreeItem,
   flattenFixtureTree,
 } from '../../../core/fixtureTree/flattenFixtureTree';
-import { FixtureId, FixtureList } from '../../../renderer/types';
+import { FixtureId, FixtureList } from '../../../core/types';
 import {
   KEY_DOWN,
   KEY_ENTER,

@@ -7,8 +7,8 @@ import {
   ReactDecorators,
   ReactFixtureWrappers,
 } from '../../core/react/types';
+import { FixtureId } from '../../core/types';
 import {
-  FixtureId,
   RendererConnect,
   RendererRequest,
   RendererResponse,

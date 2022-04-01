@@ -4,7 +4,7 @@ import {
   FixtureStatePrimitiveValue,
   FixtureStateUnserializableValue,
 } from '../../../core/fixtureState/types';
-import { FixtureId } from '../../../renderer/types';
+import { FixtureId } from '../../../core/types';
 import { TreeNode } from '../../../utils/tree';
 
 export type LeafValue =

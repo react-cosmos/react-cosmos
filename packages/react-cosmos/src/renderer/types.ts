@@ -1,21 +1,9 @@
 import { FixtureState } from '../core/fixtureState/types';
+import { FixtureId, FixtureList } from '../core/types';
 
 // FYI: Renderer ids are self assigned in remote environments, so uniqueness
 // cannot be established by consensus
 export type RendererId = string;
-
-export type FixtureListItem =
-  | { type: 'single' }
-  | { type: 'multi'; fixtureNames: string[] };
-
-export type FixtureList = {
-  [fixturePath: string]: FixtureListItem;
-};
-
-export type FixtureId = {
-  path: string;
-  name?: string;
-};
 
 export type PingRenderersRequest = {
   type: 'pingRenderers';

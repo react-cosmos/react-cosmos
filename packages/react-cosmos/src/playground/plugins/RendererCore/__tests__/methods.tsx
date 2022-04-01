@@ -1,5 +1,5 @@
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { FixtureList } from '../../../../renderer/types';
+import { FixtureList } from '../../../../core/types';
 import {
   getRendererCoreMethods,
   mockNotifications,

@@ -1,6 +1,7 @@
 import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { FixtureList, RendererId } from '../../../../../renderer/types';
+import { FixtureList } from '../../../../../core/types';
+import { RendererId } from '../../../../../renderer/types';
 import {
   getRendererCoreMethods,
   mockNotifications,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { FixtureElementId } from '../../../core/fixtureState/types';
-import { FixtureId } from '../../../renderer/types';
+import { FixtureId } from '../../../core/types';
 import {
   FixtureExpansionGroup,
   getFixtureExpansion,

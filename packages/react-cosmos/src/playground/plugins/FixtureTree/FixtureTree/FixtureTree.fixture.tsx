@@ -1,6 +1,6 @@
 import React from 'react';
 import { createFixtureTree } from '../../../../core/fixtureTree/createFixtureTree';
-import { FixtureId, FixtureList } from '../../../../renderer/types';
+import { FixtureId, FixtureList } from '../../../../core/types';
 import { useValue } from '../../../../renderer/useValue';
 import { TreeExpansion } from '../../../shared/treeExpansion';
 import { FixtureTree } from './FixtureTree';

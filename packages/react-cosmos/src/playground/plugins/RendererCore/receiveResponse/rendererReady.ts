@@ -1,8 +1,5 @@
-import {
-  FixtureId,
-  RendererId,
-  RendererReadyResponse,
-} from '../../../../renderer/types';
+import { FixtureId } from '../../../../core/types';
+import { RendererId, RendererReadyResponse } from '../../../../renderer/types';
 import { NotificationsSpec } from '../../Notifications/spec';
 import { RouterSpec } from '../../Router/spec';
 import { RendererCoreContext, State } from '../shared';

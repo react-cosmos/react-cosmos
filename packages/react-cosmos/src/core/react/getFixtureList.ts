@@ -1,4 +1,4 @@
-import { FixtureList, FixtureListItem } from '../../renderer/types';
+import { FixtureList, FixtureListItem } from '../types';
 import { isMultiFixture } from './isMultiFixture';
 import {
   ReactFixtureExport,

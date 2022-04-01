@@ -1,6 +1,6 @@
 import { get, set } from 'lodash';
-import { FixtureList, FixtureListItem } from '../../../renderer/types';
 import { addTreeNodeChild } from '../../../utils/tree';
+import { FixtureList, FixtureListItem } from '../../types';
 import { FixtureTreeNode } from '../types';
 
 export function createRawFixtureTree(fixtures: FixtureList): FixtureTreeNode {

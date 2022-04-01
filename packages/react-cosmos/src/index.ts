@@ -1,6 +1,7 @@
 export * from './core/playgroundUrl';
 export * from './core/react/types';
 export * from './core/serverMessage';
+export * from './core/types';
 export * from './playground/components/buttons';
 export * from './playground/components/icons';
 export * from './playground/plugins/BuildNotifications/spec';

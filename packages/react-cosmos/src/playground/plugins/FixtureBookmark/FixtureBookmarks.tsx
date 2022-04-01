@@ -6,7 +6,7 @@ import {
   FlatFixtureTree,
   FlatFixtureTreeItem,
 } from '../../../core/fixtureTree/flattenFixtureTree';
-import { FixtureId } from '../../../renderer/types';
+import { FixtureId } from '../../../core/types';
 import { XIcon } from '../../components/icons';
 import { stringifyFixtureId } from '../../components/ValueInputTree';
 import { createRelativePlaygroundUrl } from '../../shared/url';

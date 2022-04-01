@@ -1,5 +1,5 @@
-import { FixtureList } from '../../../renderer/types';
 import { sortTreeChildren } from '../../../utils/tree';
+import { FixtureList } from '../../types';
 import { FixtureTreeNode } from '../types';
 import { collapseFixtureDirs } from './collapseFixtureDirs';
 import { collapseIndexes } from './collapseIndexes';

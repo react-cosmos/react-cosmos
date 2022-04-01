@@ -14,8 +14,8 @@ import {
   ReactFixture,
   ReactFixtureMap,
 } from '../../core/react/types';
+import { FixtureId } from '../../core/types';
 import { getDecoratedFixtureElement } from '../../renderer/FixtureLoader/getDecoratedFixtureElement';
-import { FixtureId } from '../../renderer/types';
 import { CosmosConfig } from '../cosmosConfig/types';
 import { RENDERER_FILENAME } from '../shared/playgroundHtml';
 import { getUserModules } from '../userDeps/getUserModules';

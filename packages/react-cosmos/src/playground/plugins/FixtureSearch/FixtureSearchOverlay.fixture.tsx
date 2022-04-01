@@ -1,5 +1,5 @@
 import React from 'react';
-import { FixtureId } from '../../../renderer/types';
+import { FixtureId } from '../../../core/types';
 import { useValue } from '../../../renderer/useValue';
 import { fixtures } from '../../testHelpers/dataMocks';
 import { FixtureSearchOverlay } from './FixtureSearchOverlay';

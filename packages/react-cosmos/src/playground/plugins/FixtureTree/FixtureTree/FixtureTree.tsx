@@ -2,7 +2,7 @@ import { isEqual } from 'lodash';
 import React, { RefObject } from 'react';
 import styled from 'styled-components';
 import { FixtureTreeNode } from '../../../../core/fixtureTree/types';
-import { FixtureId } from '../../../../renderer/types';
+import { FixtureId } from '../../../../core/types';
 import { TreeView } from '../../../components/TreeView';
 import {
   nodeContainsFixtureId,

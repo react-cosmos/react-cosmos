@@ -1,6 +1,6 @@
 import React, { RefObject } from 'react';
 import styled from 'styled-components';
-import { FixtureId } from '../../../../renderer/types';
+import { FixtureId } from '../../../../core/types';
 import { quick } from '../../../style/vars';
 import { FixtureLink } from './FixtureLink';
 import { FixtureTreeItem } from './FixtureTreeItem';
