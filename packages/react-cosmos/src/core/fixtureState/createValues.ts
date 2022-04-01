@@ -1,11 +1,4 @@
-// XXX: Importing the CJS dist works with both webpack and Snowpack. By default,
-// Snowpack imports the ESM version of react-element-to-jsx-string. Because of
-// how Babel compiles this file (createValues.ts), the default export of
-// reactElementToJSXString ends up wrapped twice as
-//   { default: { default: reactElementToJSXString } }
-// I'm not sure what's the underlying issue, and if Snowpack, Babel or
-// react-element-to-jsx-string is to blame.
-import reactElementToJSXString from 'react-element-to-jsx-string/dist/cjs';
+import reactElementToJSXString from 'react-element-to-jsx-string';
 import { isElement } from 'react-is';
 import { isArray, isObject, isPrimitiveData } from './shared';
 import { FixtureStateValue, FixtureStateValues, ObjectData } from './types';
