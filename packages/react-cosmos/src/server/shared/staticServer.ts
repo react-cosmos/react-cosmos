@@ -1,6 +1,6 @@
 import express from 'express';
 import path from 'path';
-import { removeLeadingDot } from '../utils/string';
+import { removeLeadingDot } from '../../utils/string';
 
 export function getStaticPath(relPath: string) {
   return path.join(__dirname, 'static', relPath);

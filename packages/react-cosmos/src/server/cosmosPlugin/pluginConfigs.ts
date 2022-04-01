@@ -1,10 +1,11 @@
-import { CosmosConfig } from './cosmosConfig/types';
+import { CosmosConfig } from '../cosmosConfig/types';
 import {
-  CosmosPluginConfig,
   getCosmosPluginConfig,
   getCosmosPluginConfigs,
-} from './cosmosPlugin/getCosmosPluginConfigs';
+} from './getCosmosPluginConfigs';
+import { CosmosPluginConfig } from './types';
 
+// TODO: Refactor
 export function getPluginConfigs(cosmosConfig: CosmosConfig) {
   const { rootDir, disablePlugins, plugins, exportPath } = cosmosConfig;
   if (disablePlugins) return [];

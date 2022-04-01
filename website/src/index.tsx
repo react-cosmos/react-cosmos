@@ -1,11 +1,7 @@
-// This import comes first
-import 'regenerator-runtime/runtime';
-
 import React from 'react';
 import { render } from 'react-dom';
 import './global.css';
 import pages from './Page.fixture';
-import './polyfills';
 import { Root } from './Root';
 
 type PageName = keyof typeof pages;

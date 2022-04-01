@@ -1,4 +1,4 @@
-import { RendererId, RendererResponse } from 'react-cosmos/src/renderer/types';
+import { RendererId, RendererResponse } from 'react-cosmos/src';
 
 export type RendererHmrFailResponse = {
   type: 'rendererHmrFail';

@@ -1,16 +1,16 @@
 import path from 'path';
-import { getPluginConfigs } from '../pluginConfigs';
-import { serveStaticDir } from '../staticServer';
 import {
   detectCosmosConfig,
   detectCosmosConfigPath,
 } from '../cosmosConfig/detectCosmosConfig';
-import { CosmosPluginConfig } from '../cosmosPlugin/getCosmosPluginConfigs';
+import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs';
 import {
+  CosmosPluginConfig,
   DevServerPlugin,
   DevServerPluginCleanupCallback,
   PlatformType,
 } from '../cosmosPlugin/types';
+import { serveStaticDir } from '../shared/staticServer';
 import { createApp } from './app';
 import { httpProxyDevServerPlugin } from './corePlugins/httpProxy';
 import openFileDevServerPlugin from './corePlugins/openFile';

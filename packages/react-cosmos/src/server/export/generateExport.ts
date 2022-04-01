@@ -3,11 +3,10 @@ import path from 'path';
 import { removeLeadingSlash } from '../../utils/string';
 import { detectCosmosConfig } from '../cosmosConfig/detectCosmosConfig';
 import { CosmosConfig } from '../cosmosConfig/types';
-import { CosmosPluginConfig } from '../cosmosPlugin/getCosmosPluginConfigs';
-import { ExportPlugin } from '../cosmosPlugin/types';
-import { getExportPlaygroundHtml } from '../playgroundHtml';
-import { getPluginConfigs } from '../pluginConfigs';
-import { getStaticPath } from '../staticServer';
+import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs';
+import { CosmosPluginConfig, ExportPlugin } from '../cosmosPlugin/types';
+import { getExportPlaygroundHtml } from '../shared/playgroundHtml';
+import { getStaticPath } from '../shared/staticServer';
 
 const corePlugins: ExportPlugin[] = [];
 

@@ -1,6 +1,6 @@
 {
   "disablePlugins": false,
-  "globalImports": ["src/polyfills.ts", "src/global.css"],
+  "globalImports": ["src/global.css"],
   "staticPath": "static",
   "port": 5010,
   "userDepsFilePath": "src/cosmos.userdeps.js",

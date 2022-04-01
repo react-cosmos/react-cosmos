@@ -1,8 +1,8 @@
-import { DomRendererConfig } from 'react-cosmos/src/renderer/rendererConfig';
 import {
+  DomRendererConfig,
   ReactDecorators,
   ReactFixtureWrappers,
-} from 'react-cosmos/src/utils/react/types';
+} from 'react-cosmos/src';
 
 // NOTE: Renderer data is statically injected at compile time
 export const rendererConfig: DomRendererConfig = {

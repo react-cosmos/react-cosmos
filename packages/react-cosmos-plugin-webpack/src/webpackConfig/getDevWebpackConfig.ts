@@ -1,5 +1,5 @@
 import path from 'path';
-import { CosmosConfig } from 'react-cosmos/src/server/cosmosConfig/types';
+import { CosmosConfig } from 'react-cosmos/src/server';
 import webpack from 'webpack';
 import { createWebpackCosmosConfig } from '../cosmosConfig/createWebpackCosmosConfig';
 import { getUserWebpackConfig } from './getUserWebpackConfig';

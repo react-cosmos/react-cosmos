@@ -14,14 +14,14 @@ import {
   grey8,
 } from '../../../style/colors';
 import { quick } from '../../../style/vars';
-import { ResponsiveDevice, Viewport } from '../spec';
+import { ResponsiveDevice, ResponsiveViewport } from '../spec';
 
 type Props = {
   devices: ResponsiveDevice[];
-  selectedViewport: Viewport;
+  selectedViewport: ResponsiveViewport;
   scaleFactor: number;
   scaled: boolean;
-  selectViewport: (viewport: Viewport) => unknown;
+  selectViewport: (viewport: ResponsiveViewport) => unknown;
   toggleScale: () => unknown;
 };
 
@@ -118,7 +118,7 @@ export const Header = React.memo(function Header({
   );
 });
 
-function stringifyViewport({ width, height }: Viewport) {
+function stringifyViewport({ width, height }: ResponsiveViewport) {
   return `${width}x${height}`;
 }
 

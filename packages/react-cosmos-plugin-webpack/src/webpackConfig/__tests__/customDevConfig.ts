@@ -1,16 +1,15 @@
 // NOTE: Mock files need to imported before modules that use the mocked APIs
-import { mockFile } from 'react-cosmos/src/testHelpers/mockFs';
 import {
   mockCliArgs,
+  mockConsole,
+  mockFile,
   unmockCliArgs,
-} from 'react-cosmos/src/testHelpers/mockYargs';
-import { mockConsole } from '../../testHelpers/mockConsole';
+} from 'react-cosmos/src/jest';
 
+import { createCosmosConfig, RENDERER_FILENAME } from 'react-cosmos/src/server';
 import webpack from 'webpack';
-import { createCosmosConfig } from '../../../../config/createCosmosConfig';
-import { RENDERER_FILENAME } from '../../../../shared/playgroundHtml';
-import { HtmlWebpackPlugin } from '../htmlPlugin';
 import { getDevWebpackConfig } from '../getDevWebpackConfig';
+import { HtmlWebpackPlugin } from '../htmlPlugin';
 
 const mockWebpackConfig = jest.fn(() => ({
   module: { rules: [MY_RULE] },

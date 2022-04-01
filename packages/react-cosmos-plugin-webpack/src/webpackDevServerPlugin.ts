@@ -1,10 +1,8 @@
 import webpackHotMiddleware from '@skidding/webpack-hot-middleware';
 import { NextHandleFunction } from 'connect';
 import path from 'path';
-import { DevServerPluginArgs } from 'react-cosmos/src/server/cosmosPlugin/types';
-import { BuildMessage } from 'react-cosmos/src/server/serverMessage';
-import { serveStaticDir } from 'react-cosmos/src/server/staticServer';
-import { removeLeadingDot } from 'react-cosmos/src/utils/string';
+import { BuildMessage, removeLeadingDot } from 'react-cosmos/src';
+import { DevServerPluginArgs, serveStaticDir } from 'react-cosmos/src/server';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import { createWebpackCosmosConfig } from './cosmosConfig/createWebpackCosmosConfig';

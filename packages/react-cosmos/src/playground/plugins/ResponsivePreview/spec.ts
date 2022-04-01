@@ -1,6 +1,6 @@
-export type Viewport = { width: number; height: number };
+export type ResponsiveViewport = { width: number; height: number };
 
-export type ResponsiveDevice = Viewport & {
+export type ResponsiveDevice = ResponsiveViewport & {
   label: string;
 };
 

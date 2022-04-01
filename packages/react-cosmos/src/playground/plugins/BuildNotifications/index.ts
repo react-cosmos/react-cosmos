@@ -1,5 +1,5 @@
 import { createPlugin, PluginContext } from 'react-plugin';
-import { BuildMessage } from '../../../server/serverMessage';
+import { BuildMessage } from '../../../core/serverMessage';
 import { MessageType } from '../../../utils/types';
 import { MessageHandlerSpec } from '../MessageHandler/spec';
 import { NotificationsSpec } from '../Notifications/spec';

@@ -1,6 +1,8 @@
-import { NotificationsSpec } from 'react-cosmos/src/playground/plugins/Notifications/spec';
-import { RendererCoreSpec } from 'react-cosmos/src/playground/plugins/RendererCore/spec';
-import { MessageType } from 'react-cosmos/src/utils/types';
+import {
+  MessageType,
+  NotificationsSpec,
+  RendererCoreSpec,
+} from 'react-cosmos/src';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { WebpackRendererResponse } from '../rendererResponse';
 import { WebpackHmrNotificationSpec } from './spec';

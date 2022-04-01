@@ -1,8 +1,7 @@
 import { Options as HtmlWebpackPluginOptions } from 'html-webpack-plugin';
 import importFrom from 'import-from';
 import { omit } from 'lodash';
-import { CosmosConfig } from 'react-cosmos/src/server/cosmosConfig/types';
-import { RENDERER_FILENAME } from 'react-cosmos/src/server/playgroundHtml';
+import { CosmosConfig, RENDERER_FILENAME } from 'react-cosmos/src/server';
 import webpack from 'webpack';
 import { hasPlugin, isInstanceOfWebpackPlugin } from './plugins';
 

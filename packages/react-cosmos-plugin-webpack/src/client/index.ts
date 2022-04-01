@@ -1,9 +1,3 @@
-import 'regenerator-runtime/runtime';
-import 'core-js/features/promise';
-import 'core-js/features/array/find';
-import 'core-js/features/array/includes';
-import 'core-js/features/array/fill';
-
 import { mountDomRenderer } from 'react-cosmos/src/dom';
 import { dismissErrorOverlay } from './errorOverlay';
 import './hmrErrorHandler';

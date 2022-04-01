@@ -1,5 +1,5 @@
 import React from 'react';
-import { Viewport } from 'react-cosmos/fixture';
+import { Viewport } from 'react-cosmos/src';
 import { Hello } from './WelcomeMessage';
 
 export default (

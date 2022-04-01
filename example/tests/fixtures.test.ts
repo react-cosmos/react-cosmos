@@ -1,4 +1,4 @@
-import { getCosmosConfigAtPath, getFixtures } from 'react-cosmos';
+import { getCosmosConfigAtPath, getFixtures } from 'react-cosmos/src/server';
 
 const cosmosConfig = getCosmosConfigAtPath(require.resolve('../cosmos.config'));
 const { rootDir } = cosmosConfig;

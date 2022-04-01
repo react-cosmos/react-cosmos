@@ -1,29 +1,13 @@
 import glob from 'glob';
 import path from 'path';
 import resolveFrom from 'resolve-from';
-
-// TODO: Validate config schema on config import
-// TODO: Allow ui and devServer to be [true] for default paths?
-type RawCosmosPluginConfig = {
-  name: string;
-  ui?: string;
-  devServer?: string;
-  export?: string;
-};
-
-export type CosmosPluginConfig = {
-  name: string;
-  rootDir: string;
-  ui?: string;
-  devServer?: string;
-  export?: string;
-};
+import { CosmosPluginConfig, RawCosmosPluginConfig } from './types';
 
 type Args = {
   rootDir: string;
   ignore?: string[];
 };
-// TODO: Rename to findCosmosPluginConfigs
+// TODO: Rename to detectLocalCosmosPlugins
 export function getCosmosPluginConfigs({ rootDir, ignore }: Args) {
   const configPaths = getCosmosPluginConfigPaths(rootDir, ignore);
   return configPaths.map(configPath =>

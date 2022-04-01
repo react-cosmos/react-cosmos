@@ -1,9 +1,8 @@
 // NOTE: Mock files need to imported before modules that use the mocked APIs
-import { mockConsole } from '../../testHelpers/mockConsole';
-import { mockFile } from '../../../../testHelpers/mockFs';
+import { mockConsole, mockFile } from 'react-cosmos/src/jest';
 
+import { createCosmosConfig } from 'react-cosmos/src/server';
 import webpack from 'webpack';
-import { createCosmosConfig } from '../../../../config/createCosmosConfig';
 import { getDevWebpackConfig } from '../getDevWebpackConfig';
 
 async function getCustomDevWebpackConfig() {

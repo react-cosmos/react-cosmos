@@ -1,13 +1,7 @@
-// Do not change the import order in this file!
-import 'core-js/features/array/find';
-import 'core-js/features/array/includes';
-import 'core-js/features/promise';
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import * as ReactPlugin from 'react-plugin';
-import 'regenerator-runtime/runtime';
-import 'whatwg-fetch';
-import { CosmosPluginConfig } from '../server/cosmosPlugin/getCosmosPluginConfigs';
+import { CosmosPluginConfig } from '../server/cosmosPlugin/types';
 import { CoreSpec } from './plugins/Core/spec';
 import './plugins/pluginEntry';
 import { DEFAULT_PLUGIN_CONFIG } from './shared/defaultPluginConfig';

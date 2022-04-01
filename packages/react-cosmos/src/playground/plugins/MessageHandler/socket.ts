@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
+import { SERVER_MESSAGE_EVENT_NAME } from '../../../core/serverMessage';
 import { RENDERER_MESSAGE_EVENT_NAME } from '../../../renderer/types';
-import { SERVER_MESSAGE_EVENT_NAME } from '../../../server/serverMessage';
 import { MessageType } from '../../../utils/types';
 import { CoreSpec } from '../Core/spec';
 import { MessageHandlerContext } from './shared';

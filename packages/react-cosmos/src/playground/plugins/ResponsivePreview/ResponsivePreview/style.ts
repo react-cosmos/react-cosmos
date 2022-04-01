@@ -1,5 +1,5 @@
 import { white20 } from '../../../style/colors';
-import { Viewport } from '../spec';
+import { ResponsiveViewport } from '../spec';
 
 export const responsivePreviewPadding = {
   top: 8,
@@ -16,8 +16,8 @@ export function getStyles({
   viewport,
   scaled,
 }: {
-  container: Viewport;
-  viewport: Viewport;
+  container: ResponsiveViewport;
+  viewport: ResponsiveViewport;
   scaled: boolean;
 }) {
   const width = Math.max(16, viewport.width);
@@ -39,8 +39,8 @@ export function getStyles({
 }
 
 export function getViewportScaleFactor(
-  viewport: Viewport,
-  container: Viewport
+  viewport: ResponsiveViewport,
+  container: ResponsiveViewport
 ) {
   const containerViewport = getAvailableViewport(container);
   return Math.min(
@@ -49,7 +49,7 @@ export function getViewportScaleFactor(
   );
 }
 
-function getAvailableViewport(container: Viewport) {
+function getAvailableViewport(container: ResponsiveViewport) {
   return {
     width: container.width - getHorPadding(),
     height: container.height - getVerPadding(),

@@ -11,7 +11,7 @@ import React, {
 import styled, { css } from 'styled-components';
 import { useDrag } from '../../../hooks/useDrag';
 import { grey64, grey8 } from '../../../style/colors';
-import { ResponsiveDevice, Viewport } from '../spec';
+import { ResponsiveDevice, ResponsiveViewport } from '../spec';
 import { Header } from './Header';
 import {
   getStyles,
@@ -25,10 +25,10 @@ type Props = {
   children?: ReactNode;
   devices: ResponsiveDevice[];
   enabled: boolean;
-  viewport: Viewport;
+  viewport: ResponsiveViewport;
   scaled: boolean;
   validFixtureSelected: boolean;
-  setViewport: Dispatch<SetStateAction<Viewport>>;
+  setViewport: Dispatch<SetStateAction<ResponsiveViewport>>;
   setScaled: (scaled: boolean) => unknown;
 };
 
@@ -42,7 +42,7 @@ export function ResponsivePreview({
   setViewport,
   setScaled,
 }: Props) {
-  const [container, setContainer] = useState<null | Viewport>(null);
+  const [container, setContainer] = useState<null | ResponsiveViewport>(null);
 
   const onWidthChange = useCallback(
     width => setViewport(prevViewport => ({ ...prevViewport, width })),

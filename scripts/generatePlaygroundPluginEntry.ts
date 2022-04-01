@@ -1,6 +1,6 @@
 import { outputFile } from 'fs-extra';
 import path from 'path';
-import { getCosmosPluginConfigs } from 'react-cosmos-plugin/src';
+import { getCosmosPluginConfigs } from 'react-cosmos/src/server';
 import { done } from './shared';
 
 const { stdout } = process;

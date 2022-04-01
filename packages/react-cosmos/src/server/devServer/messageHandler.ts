@@ -1,7 +1,10 @@
 import http from 'http';
 import ioServer from 'socket.io';
+import {
+  BuildMessage,
+  SERVER_MESSAGE_EVENT_NAME,
+} from '../../core/serverMessage';
 import { RENDERER_MESSAGE_EVENT_NAME } from '../../renderer/types';
-import { BuildMessage, SERVER_MESSAGE_EVENT_NAME } from '../serverMessage';
 
 export function createMessageHandler(httpServer: http.Server) {
   const io = ioServer(httpServer);

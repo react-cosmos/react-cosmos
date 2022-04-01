@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import { readFile, writeFile } from 'fs';
 import glob from 'glob';
-import { getCliArgs } from 'react-cosmos/src/server/cli';
+import { getCliArgs } from 'react-cosmos/src/server';
 import rimraf from 'rimraf';
 
 type ArgValue = void | null | boolean | number | string;

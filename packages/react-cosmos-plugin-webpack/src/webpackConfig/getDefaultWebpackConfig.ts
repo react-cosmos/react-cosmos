@@ -1,4 +1,4 @@
-import { RENDERER_FILENAME } from 'react-cosmos/src/server/playgroundHtml';
+import { RENDERER_FILENAME } from 'react-cosmos/src/server';
 import resolveFrom from 'resolve-from';
 import webpack from 'webpack';
 import { getWebpackNodeEnv } from './getWebpackNodeEnv';

@@ -6,9 +6,9 @@ import {
   mockCore,
   mockNotifications,
   RendererActionSlot,
-} from 'react-cosmos-shared2/ui';
+} from 'react-cosmos/src';
+import { mockFetch } from 'react-cosmos/src/jest';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { mockFetch } from './testHelpers';
 
 beforeEach(() => jest.isolateModules(() => require('.')));
 

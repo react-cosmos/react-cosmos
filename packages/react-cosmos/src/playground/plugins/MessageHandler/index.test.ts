@@ -1,11 +1,11 @@
 // NOTE: Mock files need to imported before modules that use the mocked APIs
 import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { RENDERER_MESSAGE_EVENT_NAME } from '../../../renderer/types';
 import {
   BuildErrorMessage,
   SERVER_MESSAGE_EVENT_NAME,
-} from '../../../server/serverMessage';
+} from '../../../core/serverMessage';
+import { RENDERER_MESSAGE_EVENT_NAME } from '../../../renderer/types';
 import {
   getMessageHandlerMethods,
   mockCore,

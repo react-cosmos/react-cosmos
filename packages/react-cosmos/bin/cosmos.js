@@ -7,7 +7,6 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 // https://github.com/react-cosmos/react-cosmos/issues/1272
 process.env.FAST_REFRESH = process.env.FAST_REFRESH || false;
 
-require('regenerator-runtime/runtime');
 const { startDevServer } = require('../dist/devServer/startDevServer');
 
 startDevServer('web').catch(err => {

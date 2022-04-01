@@ -12,7 +12,7 @@ import {
   ViewportState,
   VIEWPORT_STORAGE_KEY,
 } from './shared';
-import { ResponsivePreviewSpec, Viewport } from './spec';
+import { ResponsivePreviewSpec, ResponsiveViewport } from './spec';
 import { ToggleButton } from './ToggleButton';
 
 const { plug, namedPlug, register } = createPlugin<ResponsivePreviewSpec>({
@@ -74,7 +74,7 @@ register();
 function useViewportChange(context: ResponsivePreviewContext) {
   const viewportState = getViewportState(context);
   return React.useCallback(
-    (viewportChange: SetStateAction<Viewport>) => {
+    (viewportChange: SetStateAction<ResponsiveViewport>) => {
       const viewport =
         typeof viewportChange === 'function'
           ? viewportChange(viewportState.viewport)
@@ -122,7 +122,7 @@ function setViewportState(
 
 function setFixtureStateViewport(
   context: ResponsivePreviewContext,
-  viewport: null | Viewport
+  viewport: null | ResponsiveViewport
 ) {
   const { getMethodsOf } = context;
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');

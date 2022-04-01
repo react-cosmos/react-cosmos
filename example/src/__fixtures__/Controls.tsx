@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelect, useValue } from 'react-cosmos/fixture';
+import { useSelect, useValue } from 'react-cosmos/src';
 
 export default () => {
   const [string] = useValue('string', { defaultValue: 'How are you doing?' });

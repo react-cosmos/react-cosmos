@@ -1,11 +1,10 @@
 import fs from 'fs';
 import pkgUp from 'pkg-up';
 import url from 'url';
-import { PlaygroundConfig, PlaygroundMountArgs } from '../playground';
-import { replaceKeys } from '../utils/string';
-import { CosmosConfig } from './cosmosConfig/types';
-import { CosmosPluginConfig } from './cosmosPlugin/getCosmosPluginConfigs';
-import { PlatformType } from './cosmosPlugin/types';
+import { PlaygroundConfig, PlaygroundMountArgs } from '../../playground';
+import { replaceKeys } from '../../utils/string';
+import { CosmosConfig } from '../cosmosConfig/types';
+import { CosmosPluginConfig, PlatformType } from '../cosmosPlugin/types';
 import { getStaticPath } from './staticServer';
 
 export const RENDERER_FILENAME = '_renderer.html';

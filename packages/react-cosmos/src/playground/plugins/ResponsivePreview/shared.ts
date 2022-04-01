@@ -1,20 +1,20 @@
 import { PluginContext } from 'react-plugin';
 import { FixtureState } from '../../../core/fixtureState/types';
 import { StorageSpec } from '../Storage/spec';
-import { ResponsivePreviewSpec, Viewport } from './spec';
+import { ResponsivePreviewSpec, ResponsiveViewport } from './spec';
 
 export type ResponsivePreviewContext = PluginContext<ResponsivePreviewSpec>;
 
 export type StorageMethods = StorageSpec['methods'];
 
 export type FixtureStateWithViewport = FixtureState & {
-  viewport?: Viewport;
+  viewport?: ResponsiveViewport;
 };
 
 export type ViewportState = {
   enabled: boolean;
   scaled: boolean;
-  viewport: Viewport;
+  viewport: ResponsiveViewport;
 };
 
 export const DEFAULT_DEVICES = [
