@@ -6,25 +6,24 @@ import { done } from './shared';
 const { stdout } = process;
 
 export async function generatePlaygroundPluginEntry() {
-  const packagesDir = path.join(
+  const rootDir = path.join(
     __dirname,
     '../packages/react-cosmos/src/playground/plugins'
   );
 
-  const pluginConfigs = getCosmosPluginConfigs({ rootDir: packagesDir });
-  const uiPluginPaths: string[] = [];
-  pluginConfigs.forEach(pluginConfig => {
-    if (pluginConfig.ui)
-      uiPluginPaths.push(`./${pluginConfig.ui.replace(/\/index\.tsx?$/, '')}`);
+  const configs = getCosmosPluginConfigs({ rootDir });
+  const uiPaths: string[] = [];
+  configs.forEach(config => {
+    if (config.ui) uiPaths.push(`./${config.ui.replace(/\/index\.tsx?$/, '')}`);
   });
 
-  const entryPath = path.join(packagesDir, 'pluginEntry.ts');
-  await outputFile(entryPath, createPluginsEntry(uiPluginPaths), 'utf8');
+  const entryPath = path.join(rootDir, 'pluginEntry.ts');
+  await outputFile(entryPath, createPluginsEntry(uiPaths), 'utf8');
 
   stdout.write(done(`Playground plugin entry generated.\n`));
 }
 
-function createPluginsEntry(pluginPaths: string[]) {
+function createPluginsEntry(paths: string[]) {
   return `// Run "yarn build react-cosmos" to update this file. Do not change it by hand!
 import { enablePlugin, resetPlugins } from 'react-plugin';
 
@@ -34,7 +33,7 @@ const disabledPlugins = ['rendererSelect', 'pluginList'];
 // can only be registered once with a given name
 resetPlugins();
 
-${pluginPaths.map(getHotReloadablePluginRequire).join(`\n\n`)}
+${paths.map(getHotReloadablePluginRequire).join(`\n\n`)}
 
 disabledPlugins.forEach(disabledPlugin => enablePlugin(disabledPlugin, false));\n`;
 }
