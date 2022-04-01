@@ -8,7 +8,7 @@ const plugins = [];
 module.exports = {
   mode: env,
   devtool: false,
-  entry: dist,
+  entry: join(dist, 'WebpackHmrNotification'),
   output: {
     path: dist,
     filename: 'ui.js',

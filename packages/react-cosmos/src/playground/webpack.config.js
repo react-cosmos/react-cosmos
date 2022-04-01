@@ -1,7 +1,6 @@
 const { join } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const src = join(__dirname, '../../dist/playground');
 const dist = join(__dirname, '../../dist/playground');
 
 const env = process.env.NODE_ENV || 'development';
@@ -19,16 +18,13 @@ if (env === 'development') {
 module.exports = {
   mode: env,
   devtool: false,
-  entry: src,
+  entry: dist,
   output: {
     libraryTarget: 'umd',
     libraryExport: 'default',
     library: 'mountPlayground',
     path: dist,
     filename: 'index.bundle.js',
-  },
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js'],
   },
   plugins,
 };

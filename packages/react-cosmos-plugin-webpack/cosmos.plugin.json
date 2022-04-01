@@ -1,6 +1,6 @@
 {
   "name": "React Cosmos Webpack",
-  "ui": "dist/WebpackHmrNotification",
+  "ui": "dist/ui",
   "devServer": "dist/webpackDevServerPlugin",
   "export": "dist/webpackExportPlugin"
 }

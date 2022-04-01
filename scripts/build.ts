@@ -83,13 +83,10 @@ async function buildPackage(pkgName: Package) {
     await copyStaticAssets(pkgName);
     await buildTsPackage(pkgName);
     await runWebpack(`packages/${pkgName}/src/playground/webpack.config.js`);
-  } else if (pkgName === 'react-cosmos-plugin-open-fixture') {
-    await clearPackage(pkgName);
-    await buildTsPackage(pkgName);
-    await runWebpack(`packages/${pkgName}/webpack.config.js`);
   } else {
     await clearPackage(pkgName);
     await buildTsPackage(pkgName);
+    await runWebpack(`packages/${pkgName}/webpack.config.js`);
   }
 }
 

@@ -42,10 +42,10 @@ export function ensureHtmlWebackPlugin(
 }
 
 export function getHtmlWebpackPlugin(rootDir: string) {
-  return importFrom.silent<HtmlWebpackPluginConstructor>(
+  return importFrom.silent(
     rootDir,
     'html-webpack-plugin'
-  );
+  ) as HtmlWebpackPluginConstructor;
 }
 
 function isHtmlWebpackPlugin(
