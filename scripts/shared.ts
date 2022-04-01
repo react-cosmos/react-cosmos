@@ -1,8 +1,8 @@
 import chalk from 'chalk';
 import { readFile, writeFile } from 'fs';
 import glob from 'glob';
-import rimraf from 'rimraf';
 import { getCliArgs } from 'react-cosmos/src/server/cli';
+import rimraf from 'rimraf';
 
 type ArgValue = void | null | boolean | number | string;
 
@@ -34,11 +34,11 @@ const cliArgs = getCliArgs();
 
 // Warning: The order matters!
 export const packages: Package[] = [
-  { type: PackageType.Node, name: 'react-cosmos-shared2' },
-  { type: PackageType.Node, name: 'react-cosmos-plugin' },
-  { type: PackageType.Browser, name: 'react-cosmos-playground2' },
-  { type: PackageType.Browser, name: 'react-cosmos-plugin-open-fixture' },
   { type: PackageType.Node, name: 'react-cosmos' },
+  { type: PackageType.Browser, name: 'react-cosmos' }, // playground
+  { type: PackageType.Node, name: 'react-cosmos-plugin-webpack' },
+  { type: PackageType.Browser, name: 'react-cosmos-plugin-webpack' }, // ui plugin
+  { type: PackageType.Browser, name: 'react-cosmos-plugin-open-fixture' },
 ];
 
 export function findPackage(pkgName: string) {
