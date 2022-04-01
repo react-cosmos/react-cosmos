@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { KeyBox } from '../../components/KeyBox';
 import { screenGrey1, screenGrey5 } from '../../core/colors';
-import { KeyBox } from '../../shared/KeyBox';
 
 type Props = {
   keys: string[];

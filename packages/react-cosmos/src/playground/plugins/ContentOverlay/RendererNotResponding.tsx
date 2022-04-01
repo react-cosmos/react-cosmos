@@ -6,7 +6,7 @@ import {
   screenPrimary2,
   screenPrimary3,
 } from '../../core/colors';
-import { ArtificialIntelligenceIllustration } from '../../shared/illustrations';
+import { ArtificialIntelligenceIllustration } from '../../shared/illustrations/ArtificialIntelligence';
 import {
   ContentContainer,
   IllustrationContainer,

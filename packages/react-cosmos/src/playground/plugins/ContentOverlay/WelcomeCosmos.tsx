@@ -8,7 +8,7 @@ import {
   screenPrimary2,
   screenPrimary3,
 } from '../../core/colors';
-import { AstronautIllustration } from '../../shared/illustrations';
+import { AstronautIllustration } from '../../shared/illustrations/Astronaut';
 import {
   ContentContainer,
   IllustrationContainer,

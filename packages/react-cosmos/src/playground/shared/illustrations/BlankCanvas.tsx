@@ -1,5 +1,5 @@
 import React from 'react';
-import { Illustration } from '../../components/svg';
+import { Illustration } from '../../components/Illustration';
 import { screenPrimary3 } from '../../core/colors';
 
 export const BlankCanvasIllustration = ({ title }: { title: string }) => (
