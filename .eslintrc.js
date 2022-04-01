@@ -3,7 +3,7 @@ module.exports = {
   parserOptions: {
     sourceType: 'module',
   },
-  plugins: ['react-hooks'],
+  plugins: ['react-hooks', '@typescript-eslint'],
   extends: ['plugin:react/recommended'],
   settings: {
     react: {
@@ -11,7 +11,8 @@ module.exports = {
     },
   },
   rules: {
-    'no-shadow': 'warn',
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': 'warn',
     'linebreak-style': 'error',
     'react/prop-types': 'off',
     'react/display-name': 'off',
