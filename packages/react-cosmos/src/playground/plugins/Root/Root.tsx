@@ -3,7 +3,7 @@ import { ArraySlot, Slot } from 'react-plugin';
 import styled from 'styled-components';
 import { FixtureState } from '../../../core/fixtureState/types';
 import { FlatFixtureTreeItem } from '../../../core/fixtureTree/flattenFixtureTree';
-import { FixtureId } from '../../../renderer/types';
+import { FixtureId } from '../../../core/types';
 import { StateUpdater } from '../../../utils/types';
 import { useDrag } from '../../hooks/useDrag';
 import { NavRowSlot } from '../../slots/NavRowSlot';
