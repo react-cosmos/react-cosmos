@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { grey248 } from '../../ui/colors';
+import { grey248 } from '../../core/colors';
 import { Select } from './Select';
 
 const planets = [

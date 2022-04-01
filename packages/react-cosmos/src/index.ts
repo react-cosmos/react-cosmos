@@ -1,3 +1,6 @@
+// UI core
+export * from './playground/core/colors';
+export * from './playground/core/vars';
 // UI plugin specs
 export * from './playground/plugins/BuildNotifications/spec';
 export * from './playground/plugins/ClassStatePanel/spec';

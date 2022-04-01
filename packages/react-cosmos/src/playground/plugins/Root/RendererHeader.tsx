@@ -3,9 +3,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { FixtureId } from '../../../renderer/types';
 import { FlatFixtureTreeItem } from '../../../utils/fixtureTree/flattenFixtureTree';
+import { grey176, grey32, white10 } from '../../core/colors';
 import { FixtureActionSlot } from '../../slots/FixtureActionSlot';
 import { RendererActionSlot } from '../../slots/RendererActionSlot';
-import { grey176, grey32, white10 } from '../../ui/colors';
 import { IconButton32 } from '../../ui/components/buttons';
 import {
   MenuIcon,

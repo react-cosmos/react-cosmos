@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { grey128, grey32, grey64, grey8, white95 } from '../../ui/colors';
+import { grey128, grey32, grey64, grey8, white95 } from '../../core/colors';
+import { quick } from '../../core/vars';
 import {
   AlertCircleIcon,
   CheckCircleIcon,
   InfoIcon,
   LoaderIcon,
 } from '../../ui/components/icons';
-import { quick } from '../../ui/vars';
 import { NotificationItem, NotificationType } from './spec';
 
 type Props = {

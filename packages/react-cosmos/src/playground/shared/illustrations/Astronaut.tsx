@@ -1,5 +1,5 @@
 import React from 'react';
-import { screenGrey4, screenGrey5, screenPrimary3 } from '../../ui/colors';
+import { screenGrey4, screenGrey5, screenPrimary3 } from '../../core/colors';
 import { Illustration } from '../../ui/components/svg';
 
 export const AstronautIllustration = ({ title }: { title: string }) => (

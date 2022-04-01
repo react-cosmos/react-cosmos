@@ -23,9 +23,9 @@ import {
   grey224,
   grey248,
   grey64,
-} from '../../ui/colors';
+} from '../../core/colors';
+import { quick } from '../../core/vars';
 import { HelpCircleIcon, SearchIcon } from '../../ui/components/icons';
-import { quick } from '../../ui/vars';
 import {
   KEY_DOWN,
   KEY_ENTER,

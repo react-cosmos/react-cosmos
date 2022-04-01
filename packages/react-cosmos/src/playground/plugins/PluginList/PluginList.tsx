@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { grey224 } from '../../core/colors';
 import { Container, Header, Title } from '../../shared/sidePanelUi';
-import { grey224 } from '../../ui/colors';
 
 export type SimplePlugin = {
   name: string;

@@ -5,7 +5,7 @@ import {
   FixtureStateValue,
   FixtureStateValues,
 } from '../../../utils/fixtureState/types';
-import { grey248, grey32 } from '../../ui/colors';
+import { grey248, grey32 } from '../../core/colors';
 import { TreeExpansion } from '../../utils/treeExpansion';
 import { TreeView } from '../TreeView';
 import { ValueInput } from './ValueInput/ValueInput';

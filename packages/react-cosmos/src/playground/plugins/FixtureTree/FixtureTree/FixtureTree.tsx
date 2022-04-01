@@ -3,8 +3,8 @@ import React, { RefObject } from 'react';
 import styled from 'styled-components';
 import { FixtureId } from '../../../../renderer/types';
 import { FixtureTreeNode } from '../../../../utils/fixtureTree/shared/types';
+import { grey32 } from '../../../core/colors';
 import { TreeView } from '../../../shared/TreeView';
-import { grey32 } from '../../../ui/colors';
 import {
   nodeContainsFixtureId,
   recordContainsFixtureId,

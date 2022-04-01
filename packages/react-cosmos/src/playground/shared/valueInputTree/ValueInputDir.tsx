@@ -1,7 +1,7 @@
 import { blue } from 'chalk';
 import React from 'react';
 import styled from 'styled-components';
-import { disabledColors, grey128, grey160, grey224 } from '../../ui/colors';
+import { disabledColors, grey128, grey160, grey224 } from '../../core/colors';
 import { ChevronDownIcon, ChevronRightIcon } from '../../ui/components/icons';
 import { ValueTreeItem } from './shared';
 

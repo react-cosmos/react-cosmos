@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { grey160, grey224, grey32, grey64, grey8 } from '../../ui/colors';
+import { grey160, grey224, grey32, grey64, grey8 } from '../../core/colors';
 import { FileIcon } from '../../ui/components/icons';
 
 type Props = {

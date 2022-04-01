@@ -7,7 +7,7 @@ import {
   grey248,
   grey32,
   grey8,
-} from '../../colors';
+} from '../../../core/colors';
 import { Label, StyledButton, StyledIcon } from './shared';
 
 type Props = {

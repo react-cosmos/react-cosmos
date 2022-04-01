@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { FixtureList } from '../../../renderer/types';
 import { createFixtureTree } from '../../../utils/fixtureTree/createFixtureTree';
-import { grey128, grey32, white10 } from '../../ui/colors';
+import { grey128, grey32, white10 } from '../../core/colors';
 import { IconButton32 } from '../../ui/components/buttons';
 import { MinusSquareIcon, PlusSquareIcon } from '../../ui/components/icons';
 import {

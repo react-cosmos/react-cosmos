@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { FixtureId, FixtureList } from '../../../renderer/types';
 import { createFixtureTree } from '../../../utils/fixtureTree/createFixtureTree';
-import { grey32 } from '../../ui/colors';
+import { grey32 } from '../../core/colors';
 import { TreeExpansion } from '../../utils/treeExpansion';
 import { BlankState } from './BlankState';
 import { FixtureTree } from './FixtureTree/FixtureTree';

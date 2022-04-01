@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button32, IconButton32, IconButton8 } from '.';
-import { grey32, grey8 } from '../../colors';
+import { grey32, grey8 } from '../../../core/colors';
 import { CopyIcon, RefreshCwIcon } from '../icons';
 
 const Row = styled.div`

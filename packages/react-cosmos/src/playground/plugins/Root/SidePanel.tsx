@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { FixtureId } from '../../../renderer/types';
 import { FixtureState } from '../../../utils/fixtureState/types';
 import { StateUpdater } from '../../../utils/types';
+import { grey32 } from '../../core/colors';
 import { SidePanelRowSlot } from '../../slots/SidePanelRowSlot';
-import { grey32 } from '../../ui/colors';
 
 type Props = {
   fixtureId: FixtureId;
