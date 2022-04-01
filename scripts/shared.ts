@@ -26,8 +26,8 @@ export type Package = keyof typeof packageMap;
 
 export const packages = Object.keys(packageMap) as Package[];
 
-export function findPackage(pkgName: string): pkgName is Package {
-  return packages.some(
+export function findPackage(pkgName: string): Package | undefined {
+  return packages.find(
     // Allow shorthand names (plugin-webpack => react-cosmos-plugin-webpack, etc.)
     p => p === pkgName || p === `react-cosmos-${pkgName}`
   );

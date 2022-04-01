@@ -31,23 +31,21 @@ const watch = getBoolArg('watch');
       return;
     }
 
-    if (!findPackage(pkgName)) {
+    const pkg = findPackage(pkgName);
+    if (!pkg) {
       stderr.write(
         error(
-          `${chalk.bold(
-            pkgName
-          )} doesn't exist!\nPackages: ${getFormattedPackageList()}\n`
+          `${chalk.bold(pkgName)} doesn't exist!\n` +
+            `Packages: ${getFormattedPackageList()}\n`
         )
       );
       process.exit(1);
       return;
     }
 
-    stdout.write(
-      `${watch ? 'Build-watching' : 'Building'} ${chalk.bold(pkgName)}...\n`
-    );
-
-    await tryBuildPackage(pkgName);
+    const label = watch ? 'Build-watching' : 'Building';
+    stdout.write(`${label} ${chalk.bold(pkgName)}...\n`);
+    await tryBuildPackage(pkg);
   } else {
     if (watch) {
       stderr.write(
@@ -79,19 +77,19 @@ async function tryBuildPackage(pkgName: Package) {
 }
 
 async function buildPackage(pkgName: Package) {
-  switch (pkgName) {
-    case 'react-cosmos': {
-      await generatePlaygroundPluginEntry();
-      await clearPackage(pkgName);
-      await copyStaticAssets(pkgName);
-      await buildTsPackage(pkgName);
-      await runWebpack(`packages/${pkgName}/src/playground/webpack.config.js`);
-    }
-    default: {
-      // TODO: Build all packages
-      await clearPackage(pkgName);
-      await buildTsPackage(pkgName);
-    }
+  if (pkgName === 'react-cosmos') {
+    await generatePlaygroundPluginEntry();
+    await clearPackage(pkgName);
+    await copyStaticAssets(pkgName);
+    await buildTsPackage(pkgName);
+    await runWebpack(`packages/${pkgName}/src/playground/webpack.config.js`);
+  } else if (pkgName === 'react-cosmos-plugin-open-fixture') {
+    await clearPackage(pkgName);
+    await buildTsPackage(pkgName);
+    await runWebpack(`packages/${pkgName}/webpack.config.js`);
+  } else {
+    await clearPackage(pkgName);
+    await buildTsPackage(pkgName);
   }
 }
 

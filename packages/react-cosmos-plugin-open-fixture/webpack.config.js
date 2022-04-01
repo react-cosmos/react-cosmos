@@ -9,7 +9,7 @@ const plugins = [];
 module.exports = {
   mode: env,
   devtool: false,
-  entry: join(src, 'ui'),
+  entry: dist,
   output: {
     path: dist,
     filename: 'ui.js',
@@ -21,17 +21,6 @@ module.exports = {
     'react-dom': 'ReactDom',
     'react-plugin': 'ReactPlugin',
     react: 'React',
-  },
-  module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        include: src,
-        use: {
-          loader: 'babel-loader',
-        },
-      },
-    ],
   },
   plugins,
 };

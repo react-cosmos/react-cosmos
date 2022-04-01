@@ -104,9 +104,10 @@ function getTargetPackages(): Package[] {
     if (typeof pkgName !== 'string')
       throw new InvalidTargetPackage(String(pkgName));
 
-    if (!findPackage(pkgName)) throw new InvalidTargetPackage(pkgName);
+    const pkg = findPackage(pkgName);
+    if (!pkg) throw new InvalidTargetPackage(pkgName);
 
-    targetPackages.push(pkgName);
+    targetPackages.push(pkg);
     pkgName = getUnnamedArg(targetPackages.length + 1);
   } while (pkgName);
 

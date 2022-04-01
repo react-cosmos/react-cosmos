@@ -9,7 +9,6 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
-    "lib": ["dom"],
     "moduleResolution": "node",
     "noEmit": true,
     "noImplicitAny": true,
@@ -18,7 +17,7 @@
     "noUnusedLocals": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ES6"
+    "target": "ES2017"
   },
   "exclude": ["node_modules"]
 }
