@@ -1,19 +1,22 @@
 import React from 'react';
-import { createValues } from '../../../../core/fixtureState/createValues';
+import { createValues } from '../../../../core/fixtureState/createValues.js';
 import {
   createFixtureStateProps,
   findFixtureStateProps,
   getFixtureStateProps,
   removeFixtureStateProps,
   updateFixtureStateProps,
-} from '../../../../core/fixtureState/props';
-import { FixtureDecoratorId } from '../../../../core/fixtureState/types';
-import { areNodesEqual } from '../../../../utils/react/areNodesEqual';
-import { getComponentName } from '../../../../utils/react/getComponentName';
-import { FixtureContext } from '../../../FixtureContext';
-import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
-import { getElementAtPath, getExpectedElementAtPath } from '../shared/nodeTree';
-import { useFixtureProps } from './useFixtureProps';
+} from '../../../../core/fixtureState/props.js';
+import { FixtureDecoratorId } from '../../../../core/fixtureState/types.js';
+import { areNodesEqual } from '../../../../utils/react/areNodesEqual.js';
+import { getComponentName } from '../../../../utils/react/getComponentName.js';
+import { FixtureContext } from '../../../FixtureContext.js';
+import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
+import {
+  getElementAtPath,
+  getExpectedElementAtPath,
+} from '../shared/nodeTree/index.js';
+import { useFixtureProps } from './useFixtureProps.js';
 
 export function usePropsCapture(
   fixture: React.ReactNode,

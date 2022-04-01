@@ -3,9 +3,9 @@ import {
   FixtureElementId,
   FixtureStatePrimitiveValue,
   FixtureStateUnserializableValue,
-} from '../../../core/fixtureState/types';
-import { FixtureId } from '../../../core/types';
-import { TreeNode } from '../../../utils/tree';
+} from '../../../core/fixtureState/types.js';
+import { FixtureId } from '../../../core/types.js';
+import { TreeNode } from '../../../utils/tree.js';
 
 export type LeafValue =
   | FixtureStatePrimitiveValue

@@ -4,13 +4,13 @@ import styled from 'styled-components';
 import {
   FixtureStateValue,
   FixtureStateValues,
-} from '../../../core/fixtureState/types';
-import { TreeExpansion } from '../../shared/treeExpansion';
-import { grey248, grey32 } from '../../style/colors';
-import { TreeView } from '../TreeView';
-import { ValueInput } from './ValueInput/ValueInput';
-import { ValueInputDir } from './ValueInputDir';
-import { createValueTree } from './valueTree';
+} from '../../../core/fixtureState/types.js';
+import { TreeExpansion } from '../../shared/treeExpansion.js';
+import { grey248, grey32 } from '../../style/colors.js';
+import { TreeView } from '../TreeView.js';
+import { ValueInput } from './ValueInput/ValueInput.js';
+import { ValueInputDir } from './ValueInputDir.js';
+import { createValueTree } from './valueTree.js';
 
 type Props = {
   id: string;

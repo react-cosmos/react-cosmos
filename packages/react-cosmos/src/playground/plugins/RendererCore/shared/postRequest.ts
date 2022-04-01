@@ -1,7 +1,7 @@
-import { FixtureState } from '../../../../core/fixtureState/types';
-import { FixtureId } from '../../../../core/types';
-import { RendererId, RendererRequest } from '../../../../renderer/types';
-import { RendererCoreContext } from '../shared';
+import { FixtureState } from '../../../../core/fixtureState/types.js';
+import { FixtureId } from '../../../../core/types.js';
+import { RendererId, RendererRequest } from '../../../../renderer/types.js';
+import { RendererCoreContext } from '../shared/index.js';
 
 export function postSelectFixtureRequest(
   context: RendererCoreContext,

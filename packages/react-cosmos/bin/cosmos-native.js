@@ -3,7 +3,7 @@
 // Set the env before any code reads it
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-const { startDevServer } = require('../dist/devServer/startDevServer');
+const { startDevServer } = require('../dist/server/devServer/startDevServer');
 
 startDevServer('native').catch(err => {
   console.log('[Cosmos] Server crashed...');

@@ -8,12 +8,12 @@ import React, {
   useState,
 } from 'react';
 import styled from 'styled-components';
-import { createFixtureTree } from '../../../core/fixtureTree/createFixtureTree';
+import { createFixtureTree } from '../../../core/fixtureTree/createFixtureTree/index.js';
 import {
   FlatFixtureTreeItem,
   flattenFixtureTree,
-} from '../../../core/fixtureTree/flattenFixtureTree';
-import { FixtureId, FixtureList } from '../../../core/types';
+} from '../../../core/fixtureTree/flattenFixtureTree.js';
+import { FixtureId, FixtureList } from '../../../core/types.js';
 import {
   KEY_DOWN,
   KEY_ENTER,
@@ -21,8 +21,8 @@ import {
   KEY_FWD_SLASH,
   KEY_TAB,
   KEY_UP,
-} from '../../../utils/keys';
-import { HelpCircleIcon, SearchIcon } from '../../components/icons';
+} from '../../../utils/keys.js';
+import { HelpCircleIcon, SearchIcon } from '../../components/icons/index.js';
 import {
   black60,
   grey128,
@@ -32,10 +32,10 @@ import {
   grey224,
   grey248,
   grey64,
-} from '../../style/colors';
-import { quick } from '../../style/vars';
-import { FixtureSearchResult } from './FixtureSearchResult';
-import { FixtureSearchShortcuts } from './FixtureSearchShortcuts';
+} from '../../style/colors.js';
+import { quick } from '../../style/vars.js';
+import { FixtureSearchResult } from './FixtureSearchResult.js';
+import { FixtureSearchShortcuts } from './FixtureSearchShortcuts.js';
 
 type Props = {
   searchText: string;

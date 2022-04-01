@@ -1,5 +1,5 @@
-import { StorageSpec } from '../Storage/spec';
-import { RootContext } from './shared';
+import { StorageSpec } from '../Storage/spec.js';
+import { RootContext } from './shared.js';
 
 const PANEL_WIDTH_STORAGE_KEY = 'panelWidth';
 const PANEL_WIDTH_DEFAULT = 320;

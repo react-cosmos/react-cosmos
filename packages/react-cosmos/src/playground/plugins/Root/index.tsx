@@ -1,18 +1,18 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { createFixtureTree } from '../../../core/fixtureTree/createFixtureTree';
-import { flattenFixtureTree } from '../../../core/fixtureTree/flattenFixtureTree';
-import { CoreSpec } from '../Core/spec';
-import { RendererCoreSpec } from '../RendererCore/spec';
-import { RouterSpec } from '../Router/spec';
-import { StorageSpec } from '../Storage/spec';
-import { isNavOpen, openNav } from './navOpen';
-import { getNavWidthApi } from './navWidth';
-import { isPanelOpen, openPanel } from './panelOpen';
-import { getPanelWidthApi } from './panelWidth';
-import { Root } from './Root';
-import { RootContext } from './shared';
-import { RootSpec } from './spec';
+import { createFixtureTree } from '../../../core/fixtureTree/createFixtureTree/index.js';
+import { flattenFixtureTree } from '../../../core/fixtureTree/flattenFixtureTree.js';
+import { CoreSpec } from '../Core/spec.js';
+import { RendererCoreSpec } from '../RendererCore/spec.js';
+import { RouterSpec } from '../Router/spec.js';
+import { StorageSpec } from '../Storage/spec.js';
+import { isNavOpen, openNav } from './navOpen.js';
+import { getNavWidthApi } from './navWidth.js';
+import { isPanelOpen, openPanel } from './panelOpen.js';
+import { getPanelWidthApi } from './panelWidth.js';
+import { Root } from './Root.js';
+import { RootContext } from './shared.js';
+import { RootSpec } from './spec.js';
 
 const { onLoad, plug, register } = createPlugin<RootSpec>({
   name: 'root',

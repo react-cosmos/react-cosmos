@@ -1,5 +1,5 @@
-import { rendererId } from './rendererId';
-import { rendererConnect } from './rendererConnect';
+import { rendererConnect } from './rendererConnect.js';
+import { rendererId } from './rendererId.js';
 
 window.addEventListener('error', () => {
   rendererConnect.postMessage({

@@ -1,9 +1,9 @@
 import io from 'socket.io-client';
-import { SERVER_MESSAGE_EVENT_NAME } from '../../../core/serverMessage';
-import { RENDERER_MESSAGE_EVENT_NAME } from '../../../renderer/types';
-import { MessageType } from '../../../utils/types';
-import { CoreSpec } from '../Core/spec';
-import { MessageHandlerContext } from './shared';
+import { SERVER_MESSAGE_EVENT_NAME } from '../../../core/serverMessage.js';
+import { RENDERER_MESSAGE_EVENT_NAME } from '../../../renderer/types.js';
+import { MessageType } from '../../../utils/types.js';
+import { CoreSpec } from '../Core/spec.js';
+import { MessageHandlerContext } from './shared.js';
 
 let socket: void | SocketIOClient.Socket;
 

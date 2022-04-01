@@ -1,14 +1,17 @@
 import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { FixtureState } from '../../../../core/fixtureState/types';
-import { FixtureList } from '../../../../core/types';
+import { FixtureState } from '../../../../core/fixtureState/types.js';
+import { FixtureList } from '../../../../core/types.js';
 import {
   getRendererCoreMethods,
   mockNotifications,
   mockRouter,
   onRendererCore,
-} from '../../../testHelpers/pluginMocks';
-import { mockFixtureStateChange, mockRendererReady } from '../testHelpers';
+} from '../../../testHelpers/pluginMocks.js';
+import {
+  mockFixtureStateChange,
+  mockRendererReady,
+} from '../testHelpers/index.js';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 

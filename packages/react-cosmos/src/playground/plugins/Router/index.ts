@@ -1,13 +1,13 @@
 import { isEqual } from 'lodash';
 import { createPlugin, PluginContext } from 'react-plugin';
-import { PlaygroundUrlParams } from '../../../core/playgroundUrl';
-import { FixtureId } from '../../../core/types';
+import { PlaygroundUrlParams } from '../../../core/playgroundUrl.js';
+import { FixtureId } from '../../../core/types.js';
 import {
   getUrlParams,
   pushUrlParams,
   subscribeToLocationChanges,
-} from '../../shared/url';
-import { RouterSpec } from './spec';
+} from '../../shared/url.js';
+import { RouterSpec } from './spec.js';
 
 type RouterContext = PluginContext<RouterSpec>;
 

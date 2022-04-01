@@ -1,5 +1,5 @@
-import { FixtureTreeNode } from '../types';
-import { collapseNamedIndexes } from './collapseNamedIndexes';
+import { FixtureTreeNode } from '../types.js';
+import { collapseNamedIndexes } from './collapseNamedIndexes.js';
 
 it('collapses named index fixture', () => {
   const tree: FixtureTreeNode = {

@@ -1,9 +1,9 @@
 import React from 'react';
-import { createFixtureTree } from '../../../../core/fixtureTree/createFixtureTree';
-import { FixtureId, FixtureList } from '../../../../core/types';
-import { useValue } from '../../../../renderer/useValue';
-import { TreeExpansion } from '../../../shared/treeExpansion';
-import { FixtureTree } from './FixtureTree';
+import { createFixtureTree } from '../../../../core/fixtureTree/createFixtureTree/index.js';
+import { FixtureId, FixtureList } from '../../../../core/types.js';
+import { useValue } from '../../../../renderer/useValue/index.js';
+import { TreeExpansion } from '../../../shared/treeExpansion.js';
+import { FixtureTree } from './FixtureTree.js';
 
 const fixtures: FixtureList = {
   'src/Dashboard.ts': { type: 'single' },

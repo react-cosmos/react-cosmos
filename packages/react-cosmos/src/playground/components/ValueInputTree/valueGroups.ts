@@ -1,8 +1,8 @@
 import {
   FixtureElementId,
   FixtureStateValues,
-} from '../../../core/fixtureState/types';
-import { stringifyElementId } from './shared';
+} from '../../../core/fixtureState/types.js';
+import { stringifyElementId } from './shared.js';
 
 interface FixtureStateValueGroup {
   elementId: FixtureElementId;

@@ -1,7 +1,7 @@
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import { isElement } from 'react-is';
-import { isArray, isObject, isPrimitiveData } from './shared';
-import { FixtureStateValue, FixtureStateValues, ObjectData } from './types';
+import { isArray, isObject, isPrimitiveData } from './shared.js';
+import { FixtureStateValue, FixtureStateValues, ObjectData } from './types.js';
 
 export function createValues(obj: ObjectData): FixtureStateValues {
   const values: FixtureStateValues = {};

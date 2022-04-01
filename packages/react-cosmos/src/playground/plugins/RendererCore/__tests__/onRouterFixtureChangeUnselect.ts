@@ -6,8 +6,8 @@ import {
   mockNotifications,
   mockRouter,
   onRendererCore,
-} from '../../../testHelpers/pluginMocks';
-import { mockRendererReady } from '../testHelpers';
+} from '../../../testHelpers/pluginMocks.js';
+import { mockRendererReady } from '../testHelpers/index.js';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 

@@ -2,7 +2,7 @@ import fs from 'fs';
 import http from 'http';
 import https from 'https';
 import pem from 'pem';
-import { CosmosConfig } from '../cosmosConfig/types';
+import { CosmosConfig } from '../cosmosConfig/types.js';
 
 type RequestListener = (
   request: http.IncomingMessage,

@@ -1,5 +1,5 @@
-import { PlaygroundUrlParams } from '../../../core/playgroundUrl';
-import { FixtureId } from '../../../core/types';
+import { PlaygroundUrlParams } from '../../../core/playgroundUrl.js';
+import { FixtureId } from '../../../core/types.js';
 
 export type RouterSpec = {
   name: 'router';

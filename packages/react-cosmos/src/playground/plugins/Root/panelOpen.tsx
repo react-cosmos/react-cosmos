@@ -1,6 +1,6 @@
-import { RendererCoreSpec } from '../RendererCore/spec';
-import { StorageSpec } from '../Storage/spec';
-import { RootContext } from './shared';
+import { RendererCoreSpec } from '../RendererCore/spec.js';
+import { StorageSpec } from '../Storage/spec.js';
+import { RootContext } from './shared.js';
 
 export const PANEL_OPEN_STORAGE_KEY = 'sidePanelOpen';
 const PANEL_OPEN_DEFAULT = true;

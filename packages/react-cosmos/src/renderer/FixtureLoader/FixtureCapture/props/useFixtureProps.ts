@@ -1,17 +1,17 @@
 import { isEqual, mapValues } from 'lodash';
 import React from 'react';
-import { extendWithValues } from '../../../../core/fixtureState/extendWithValues';
+import { extendWithValues } from '../../../../core/fixtureState/extendWithValues.js';
 import {
   DEFAULT_RENDER_KEY,
   findFixtureStateProps,
-} from '../../../../core/fixtureState/props';
+} from '../../../../core/fixtureState/props.js';
 import {
   FixtureDecoratorId,
   FixtureState,
-} from '../../../../core/fixtureState/types';
-import { getComponentName } from '../../../../utils/react/getComponentName';
-import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
-import { getChildrenPath, setElementAtPath } from '../shared/nodeTree';
+} from '../../../../core/fixtureState/types.js';
+import { getComponentName } from '../../../../utils/react/getComponentName.js';
+import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
+import { getChildrenPath, setElementAtPath } from '../shared/nodeTree/index.js';
 
 export function useFixtureProps(
   fixture: React.ReactNode,

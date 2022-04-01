@@ -1,7 +1,7 @@
-import { FixtureState } from '../../../core/fixtureState/types';
-import { FixtureList } from '../../../core/types';
-import { RendererId } from '../../../renderer/types';
-import { MessageType, StateUpdater } from '../../../utils/types';
+import { FixtureState } from '../../../core/fixtureState/types.js';
+import { FixtureList } from '../../../core/types.js';
+import { RendererId } from '../../../renderer/types.js';
+import { MessageType, StateUpdater } from '../../../utils/types.js';
 
 export type RendererCoreSpec = {
   name: 'rendererCore';

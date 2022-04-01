@@ -1,4 +1,4 @@
-import { FixtureState, FixtureStateControl } from './types';
+import { FixtureState, FixtureStateControl } from './types.js';
 
 export function findFixtureStateControl(
   fixtureState: FixtureState,

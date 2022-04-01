@@ -3,9 +3,9 @@ import {
   ReactDecorator,
   ReactDecoratorProps,
   ReactFixture,
-} from '../../../core/react/types';
-import { FixtureCapture } from '../FixtureCapture';
-import { FixtureElement } from './FixtureElement';
+} from '../../../core/react/types.js';
+import { FixtureCapture } from '../FixtureCapture/index.js';
+import { FixtureElement } from './FixtureElement.js';
 
 export function getDecoratedFixtureElement(
   fixture: ReactFixture,

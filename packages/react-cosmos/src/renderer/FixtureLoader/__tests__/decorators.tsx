@@ -1,8 +1,8 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
-import { uuid } from '../../../utils/uuid';
-import { testFixtureLoader } from '../testHelpers';
-import { wrapFixtures } from '../testHelpers/wrapFixture';
+import { uuid } from '../../../utils/uuid.js';
+import { testFixtureLoader } from '../testHelpers/index.js';
+import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 type Props = {
   children: React.ReactNode;

@@ -1,11 +1,11 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
-import { createValues } from '../../../core/fixtureState/createValues';
-import { createFixtureStateProps } from '../../../core/fixtureState/props';
-import { uuid } from '../../../utils/uuid';
-import { testFixtureLoader } from '../testHelpers';
-import { HelloMessage } from '../testHelpers/components';
-import { wrapFixtures } from '../testHelpers/wrapFixture';
+import { createValues } from '../../../core/fixtureState/createValues.js';
+import { createFixtureStateProps } from '../../../core/fixtureState/props.js';
+import { uuid } from '../../../utils/uuid.js';
+import { HelloMessage } from '../testHelpers/components.js';
+import { testFixtureLoader } from '../testHelpers/index.js';
+import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
 const fixtures = wrapFixtures({

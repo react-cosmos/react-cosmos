@@ -1,6 +1,6 @@
-import { FixtureList } from '../types';
-import { createFixtureTree } from './createFixtureTree';
-import { flattenFixtureTree } from './flattenFixtureTree';
+import { FixtureList } from '../types.js';
+import { createFixtureTree } from './createFixtureTree/index.js';
+import { flattenFixtureTree } from './flattenFixtureTree.js';
 
 const fixtures: FixtureList = {
   'src/__fixtures__/Profile.ts': { type: 'single' },

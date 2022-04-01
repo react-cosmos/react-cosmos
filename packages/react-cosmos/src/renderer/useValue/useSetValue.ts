@@ -1,10 +1,13 @@
 import React from 'react';
-import { findFixtureStateControl } from '../../core/fixtureState/controls';
-import { createValue } from '../../core/fixtureState/createValues';
-import { extendWithValue } from '../../core/fixtureState/extendWithValues';
-import { FixtureState, FixtureStateData } from '../../core/fixtureState/types';
-import { FixtureContext } from '../FixtureContext';
-import { SetValue } from './shared';
+import { findFixtureStateControl } from '../../core/fixtureState/controls.js';
+import { createValue } from '../../core/fixtureState/createValues.js';
+import { extendWithValue } from '../../core/fixtureState/extendWithValues.js';
+import {
+  FixtureState,
+  FixtureStateData,
+} from '../../core/fixtureState/types.js';
+import { FixtureContext } from '../FixtureContext.js';
+import { SetValue } from './shared.js';
 
 export function useSetValue<T extends FixtureStateData>(
   inputName: string,

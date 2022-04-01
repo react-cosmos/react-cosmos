@@ -1,6 +1,6 @@
-import { RendererResponse } from '../../../renderer/types';
-import { RendererCoreSpec } from '../RendererCore/spec';
-import { RendererPreviewContext } from './shared';
+import { RendererResponse } from '../../../renderer/types.js';
+import { RendererCoreSpec } from '../RendererCore/spec.js';
+import { RendererPreviewContext } from './shared.js';
 
 type WindowMsg = { data: { [key: string]: unknown } };
 

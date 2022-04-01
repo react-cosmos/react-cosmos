@@ -1,9 +1,9 @@
-import { FixtureId } from '../../../core/types';
-import { RendererCoreContext, State } from './shared';
+import { FixtureId } from '../../../core/types.js';
+import { RendererCoreContext, State } from './shared/index.js';
 import {
   postSelectFixtureRequest,
   postUnselectFixtureRequest,
-} from './shared/postRequest';
+} from './shared/postRequest.js';
 
 export function onRouterFixtureChange(
   context: RendererCoreContext,

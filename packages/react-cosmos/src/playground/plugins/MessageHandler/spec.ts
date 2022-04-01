@@ -1,4 +1,4 @@
-import { MessageType } from '../../../utils/types';
+import { MessageType } from '../../../utils/types.js';
 
 export type MessageHandlerSpec = {
   name: 'messageHandler';

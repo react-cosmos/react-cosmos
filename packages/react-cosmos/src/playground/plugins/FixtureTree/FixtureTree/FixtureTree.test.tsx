@@ -1,9 +1,9 @@
 import { waitFor } from '@testing-library/dom';
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { createFixtureTree } from '../../../../core/fixtureTree/createFixtureTree';
-import { FixtureList } from '../../../../core/types';
-import { FixtureTree } from './FixtureTree';
+import { createFixtureTree } from '../../../../core/fixtureTree/createFixtureTree/index.js';
+import { FixtureList } from '../../../../core/types.js';
+import { FixtureTree } from './FixtureTree.js';
 
 const fixtures: FixtureList = {
   'ein.js': { type: 'single' },

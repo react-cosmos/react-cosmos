@@ -1,10 +1,13 @@
-import { FixtureId } from '../../../../core/types';
-import { RendererId, RendererReadyResponse } from '../../../../renderer/types';
-import { NotificationsSpec } from '../../Notifications/spec';
-import { RouterSpec } from '../../Router/spec';
-import { RendererCoreContext, State } from '../shared';
-import { postSelectFixtureRequest } from '../shared/postRequest';
-import { getSelectedFixtureId } from '../shared/router';
+import { FixtureId } from '../../../../core/types.js';
+import {
+  RendererId,
+  RendererReadyResponse,
+} from '../../../../renderer/types.js';
+import { NotificationsSpec } from '../../Notifications/spec.js';
+import { RouterSpec } from '../../Router/spec.js';
+import { RendererCoreContext, State } from '../shared/index.js';
+import { postSelectFixtureRequest } from '../shared/postRequest.js';
+import { getSelectedFixtureId } from '../shared/router.js';
 
 export function receiveRendererReadyResponse(
   context: RendererCoreContext,

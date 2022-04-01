@@ -1,5 +1,5 @@
 import React from 'react';
-import { FixtureSearchHeader } from './FixtureSearchHeader';
+import { FixtureSearchHeader } from './FixtureSearchHeader.js';
 
 export default (
   <FixtureSearchHeader

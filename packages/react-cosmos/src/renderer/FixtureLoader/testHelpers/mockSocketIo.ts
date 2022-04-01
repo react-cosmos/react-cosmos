@@ -1,5 +1,5 @@
 import { act } from 'react-test-renderer';
-import { RENDERER_MESSAGE_EVENT_NAME } from '../../types';
+import { RENDERER_MESSAGE_EVENT_NAME } from '../../types.js';
 
 type MsgHandler = (msg: {}) => {};
 

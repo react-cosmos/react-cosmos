@@ -4,19 +4,19 @@ import {
   FixtureState,
   FixtureStateControl,
   FixtureStateControls,
-} from '../../../core/fixtureState/types';
-import { StateUpdater } from '../../../utils/types';
-import { IconButton32 } from '../../components/buttons';
-import { RotateCcwIcon } from '../../components/icons';
+} from '../../../core/fixtureState/types.js';
+import { StateUpdater } from '../../../utils/types.js';
+import { IconButton32 } from '../../components/buttons/index.js';
+import { RotateCcwIcon } from '../../components/icons/index.js';
 import {
   SidePanelActions,
   SidePanelBody,
   SidePanelContainer,
   SidePanelHeader,
   SidePanelTitle,
-} from '../../components/SidePanel';
-import { ControlActionSlot } from '../../slots/ControlActionSlot';
-import { ControlSlot } from '../../slots/ControlSlot';
+} from '../../components/SidePanel.js';
+import { ControlActionSlot } from '../../slots/ControlActionSlot.js';
+import { ControlSlot } from '../../slots/ControlSlot.js';
 
 type Props = {
   fixtureState: FixtureState;

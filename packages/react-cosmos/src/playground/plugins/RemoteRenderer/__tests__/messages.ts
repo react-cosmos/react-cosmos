@@ -3,14 +3,14 @@ import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   RendererReadyResponse,
   SelectFixtureRequest,
-} from '../../../../renderer/types';
+} from '../../../../renderer/types.js';
 import {
   getMessageHandlerContext,
   getRendererCoreContext,
   mockCore,
   mockMessageHandler,
   mockRendererCore,
-} from '../../../testHelpers/pluginMocks';
+} from '../../../testHelpers/pluginMocks.js';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 

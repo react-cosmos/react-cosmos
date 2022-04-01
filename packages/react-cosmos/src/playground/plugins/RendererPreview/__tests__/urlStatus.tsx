@@ -5,8 +5,8 @@ import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import {
   getRendererPreviewMethods,
   mockCore,
-} from '../../../testHelpers/pluginMocks';
-import { fakeFetchResponseStatus } from '../testHelpers/fetch';
+} from '../../../testHelpers/pluginMocks.js';
+import { fakeFetchResponseStatus } from '../testHelpers/fetch.js';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 

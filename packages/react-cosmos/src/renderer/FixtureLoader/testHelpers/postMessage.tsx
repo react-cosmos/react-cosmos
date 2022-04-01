@@ -1,13 +1,13 @@
 import React from 'react';
 import { act, create } from 'react-test-renderer';
-import { FixtureLoader } from '../FixtureLoader';
-import { createPostMessageConnect } from '../postMessage';
+import { FixtureLoader } from '../FixtureLoader.js';
+import { createPostMessageConnect } from '../postMessage.js';
 import {
   createRendererConnectMockApi,
   FixtureLoaderTestArgs,
   FixtureLoaderTestCallback,
   RendererMessage,
-} from './shared';
+} from './shared.js';
 
 export async function mountPostMessage(
   args: FixtureLoaderTestArgs,

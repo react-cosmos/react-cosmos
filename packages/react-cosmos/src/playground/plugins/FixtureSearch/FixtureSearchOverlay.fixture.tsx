@@ -1,8 +1,8 @@
 import React from 'react';
-import { FixtureId } from '../../../core/types';
-import { useValue } from '../../../renderer/useValue';
-import { fixtures } from '../../testHelpers/dataMocks';
-import { FixtureSearchOverlay } from './FixtureSearchOverlay';
+import { FixtureId } from '../../../core/types.js';
+import { useValue } from '../../../renderer/useValue/index.js';
+import { fixtures } from '../../testHelpers/dataMocks.js';
+import { FixtureSearchOverlay } from './FixtureSearchOverlay.js';
 
 export default {
   'no fixture selected': createFixture(),

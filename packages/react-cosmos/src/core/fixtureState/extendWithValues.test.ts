@@ -1,5 +1,5 @@
-import { extendWithValues } from './extendWithValues';
-import { FixtureStateValues } from './types';
+import { extendWithValues } from './extendWithValues.js';
+import { FixtureStateValues } from './types.js';
 
 it('extends string key', () => {
   const obj = { myProp: 'foo' };

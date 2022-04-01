@@ -1,6 +1,6 @@
 import { isPlainObject } from 'lodash';
 import { isElement } from 'react-is';
-import { ArrayData, ObjectData, PrimitiveData } from './types';
+import { ArrayData, ObjectData, PrimitiveData } from './types.js';
 
 export function isString(value: unknown): value is string {
   return typeof value === 'string';

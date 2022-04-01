@@ -1,5 +1,8 @@
 import React from 'react';
-import { findElementPaths, getExpectedElementAtPath } from './nodeTree';
+import {
+  findElementPaths,
+  getExpectedElementAtPath,
+} from './nodeTree/index.js';
 
 type ExtendedComponentClass = React.ComponentClass & {
   cosmosCapture?: boolean;

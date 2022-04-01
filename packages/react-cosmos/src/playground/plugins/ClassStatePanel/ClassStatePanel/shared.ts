@@ -1,11 +1,11 @@
-import { findFixtureStateClassState } from '../../../../core/fixtureState/classState';
+import { findFixtureStateClassState } from '../../../../core/fixtureState/classState.js';
 import {
   FixtureElementId,
   FixtureState,
   FixtureStateClassState,
-} from '../../../../core/fixtureState/types';
-import { StateUpdater } from '../../../../utils/types';
-import { stringifyElementId } from '../../../components/ValueInputTree';
+} from '../../../../core/fixtureState/types.js';
+import { StateUpdater } from '../../../../utils/types.js';
+import { stringifyElementId } from '../../../components/ValueInputTree/index.js';
 
 export function createClassStateFsUpdater(
   elementId: FixtureElementId,

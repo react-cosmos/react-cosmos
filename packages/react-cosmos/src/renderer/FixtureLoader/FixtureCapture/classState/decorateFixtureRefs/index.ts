@@ -1,8 +1,8 @@
 import React from 'react';
-import { setElementAtPath } from '../../shared/nodeTree';
-import { findRelevantElementPaths } from '../../shared/findRelevantElementPaths';
-import { CachedRefHandlers } from '../shared';
-import { isRefSupported } from './isRefSupported';
+import { findRelevantElementPaths } from '../../shared/findRelevantElementPaths.js';
+import { setElementAtPath } from '../../shared/nodeTree/index.js';
+import { CachedRefHandlers } from '../shared.js';
+import { isRefSupported } from './isRefSupported.js';
 
 type ElementWithRef = React.ReactElement<any> & {
   ref: null | React.Ref<any>;

@@ -1,12 +1,12 @@
-import { FixtureState } from '../../../../core/fixtureState/types';
-import { FixtureId, FixtureList } from '../../../../core/types';
+import { FixtureState } from '../../../../core/fixtureState/types.js';
+import { FixtureId, FixtureList } from '../../../../core/types.js';
 import {
   FixtureListUpdateResponse,
   FixtureStateChangeResponse,
   RendererId,
   RendererReadyResponse,
-} from '../../../../renderer/types';
-import { getRendererCoreMethods } from '../../../testHelpers/pluginMocks';
+} from '../../../../renderer/types.js';
+import { getRendererCoreMethods } from '../../../testHelpers/pluginMocks.js';
 
 export function createRendererReadyResponse(
   rendererId: RendererId,

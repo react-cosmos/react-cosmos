@@ -1,9 +1,8 @@
 // IMPORTANT: Import socket Socket.IO mock before modules which use Socket.IO
-import './mockSocketIo';
-
-import { mountPostMessage } from './postMessage';
-import { mountWebSockets } from './webSockets';
-import { FixtureLoaderTestArgs, FixtureLoaderTestCallback } from './shared';
+import './mockSocketIo.js';
+import { mountPostMessage } from './postMessage.js';
+import { FixtureLoaderTestArgs, FixtureLoaderTestCallback } from './shared.js';
+import { mountWebSockets } from './webSockets.js';
 
 export function testFixtureLoader(
   testName: string,

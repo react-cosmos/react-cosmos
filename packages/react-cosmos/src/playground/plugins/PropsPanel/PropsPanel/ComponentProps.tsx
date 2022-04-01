@@ -3,31 +3,31 @@ import React, { useCallback } from 'react';
 import {
   resetFixtureStateProps,
   updateFixtureStateProps,
-} from '../../../../core/fixtureState/props';
+} from '../../../../core/fixtureState/props.js';
 import {
   FixtureState,
   FixtureStateProps,
   FixtureStateValues,
-} from '../../../../core/fixtureState/types';
-import { StateUpdater } from '../../../../utils/types';
-import { IconButton32 } from '../../../components/buttons';
-import { CopyIcon, RotateCcwIcon } from '../../../components/icons';
+} from '../../../../core/fixtureState/types.js';
+import { StateUpdater } from '../../../../utils/types.js';
+import { IconButton32 } from '../../../components/buttons/index.js';
+import { CopyIcon, RotateCcwIcon } from '../../../components/icons/index.js';
 import {
   SidePanelActions,
   SidePanelBody,
   SidePanelContainer,
   SidePanelHeader,
   SidePanelTitle,
-} from '../../../components/SidePanel';
+} from '../../../components/SidePanel.js';
+import { ExpandCollapseValues } from '../../../components/ValueInputTree/ExpandCollapseValues.js';
 import {
   FixtureExpansion,
   OnElementExpansionChange,
   stringifyElementId,
   ValueInputTree,
-} from '../../../components/ValueInputTree';
-import { ExpandCollapseValues } from '../../../components/ValueInputTree/ExpandCollapseValues';
-import { TreeExpansion } from '../../../shared/treeExpansion';
-import { createPropsFsUpdater } from './shared';
+} from '../../../components/ValueInputTree/index.js';
+import { TreeExpansion } from '../../../shared/treeExpansion.js';
+import { createPropsFsUpdater } from './shared.js';
 
 type Props = {
   fsProps: FixtureStateProps;

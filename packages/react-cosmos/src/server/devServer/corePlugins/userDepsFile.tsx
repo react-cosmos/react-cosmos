@@ -3,16 +3,16 @@ import { writeFile } from 'fs';
 import { debounce } from 'lodash';
 import path from 'path';
 import promisify from 'util.promisify';
-import { NativeRendererConfig } from '../../../renderer/rendererConfig';
-import { CosmosConfig } from '../../cosmosConfig/types';
-import { DevServerPluginArgs } from '../../cosmosPlugin/types';
-import { generateUserDepsModule } from '../../userDeps/generateUserDepsModule';
+import { NativeRendererConfig } from '../../../renderer/rendererConfig.js';
+import { CosmosConfig } from '../../cosmosConfig/types.js';
+import { DevServerPluginArgs } from '../../cosmosPlugin/types.js';
+import { generateUserDepsModule } from '../../userDeps/generateUserDepsModule.js';
 import {
   getDecoratorPatterns,
   getFixturePatterns,
   getIgnorePatterns,
-} from '../../userDeps/shared';
-import { getCliArgs } from '../../utils/cli';
+} from '../../userDeps/shared.js';
+import { getCliArgs } from '../../utils/cli.js';
 
 const writeFileAsync = promisify(writeFile);
 

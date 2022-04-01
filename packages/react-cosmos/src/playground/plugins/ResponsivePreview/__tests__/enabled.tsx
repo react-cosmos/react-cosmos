@@ -1,20 +1,20 @@
 import { fireEvent, render, RenderResult } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
-import { RendererActionSlot } from '../../../slots/RendererActionSlot';
+import { RendererActionSlot } from '../../../slots/RendererActionSlot.js';
 import {
   mockCore,
   mockRendererCore,
   mockStorage,
-} from '../../../testHelpers/pluginMocks';
+} from '../../../testHelpers/pluginMocks.js';
 import {
   DEFAULT_DEVICES,
   DEFAULT_VIEWPORT_STATE,
   FixtureStateWithViewport,
   ViewportState,
   VIEWPORT_STORAGE_KEY,
-} from '../shared';
-import { StorageMock } from '../testHelpers';
+} from '../shared.js';
+import { StorageMock } from '../testHelpers/index.js';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 

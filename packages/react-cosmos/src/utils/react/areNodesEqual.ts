@@ -1,7 +1,7 @@
 import { isEqual, isEqualWith, isPlainObject } from 'lodash';
 import { ComponentType, ReactElement, ReactNode, ReactNodeArray } from 'react';
-import { getComponentName } from './getComponentName';
-import { isReactElement } from './isReactElement';
+import { getComponentName } from './getComponentName.js';
+import { isReactElement } from './isReactElement.js';
 
 export function areNodesEqual(
   node1: ReactNode,

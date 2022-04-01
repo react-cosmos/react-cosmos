@@ -1,14 +1,14 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
-import { FixtureList } from '../../../core/types';
-import { NavRowSlot } from '../../slots/NavRowSlot';
+import { FixtureList } from '../../../core/types.js';
+import { NavRowSlot } from '../../slots/NavRowSlot.js';
 import {
   mockCore,
   mockFixtureTree,
   mockRendererCore,
   mockRouter,
-} from '../../testHelpers/pluginMocks';
+} from '../../testHelpers/pluginMocks.js';
 
 beforeEach(() => jest.isolateModules(() => require('.')));
 

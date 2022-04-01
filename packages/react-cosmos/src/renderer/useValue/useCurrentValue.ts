@@ -1,8 +1,8 @@
 import React from 'react';
-import { findFixtureStateControl } from '../../core/fixtureState/controls';
-import { extendWithValue } from '../../core/fixtureState/extendWithValues';
-import { FixtureStateData } from '../../core/fixtureState/types';
-import { FixtureContext } from '../FixtureContext';
+import { findFixtureStateControl } from '../../core/fixtureState/controls.js';
+import { extendWithValue } from '../../core/fixtureState/extendWithValues.js';
+import { FixtureStateData } from '../../core/fixtureState/types.js';
+import { FixtureContext } from '../FixtureContext.js';
 
 export function useCurrentValue<T extends FixtureStateData>(
   inputName: string,

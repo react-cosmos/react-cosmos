@@ -1,9 +1,9 @@
 import {
   FixtureStateValue,
   FixtureStateValues,
-} from '../../../core/fixtureState/types';
-import { ValueNode } from './shared';
-import { createValueTree } from './valueTree';
+} from '../../../core/fixtureState/types.js';
+import { ValueNode } from './shared.js';
+import { createValueTree } from './valueTree.js';
 
 const str1: FixtureStateValue = {
   type: 'primitive',

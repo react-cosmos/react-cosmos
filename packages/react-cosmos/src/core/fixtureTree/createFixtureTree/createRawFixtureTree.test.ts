@@ -1,6 +1,6 @@
-import { FixtureList } from '../../types';
-import { FixtureTreeNode } from '../types';
-import { createRawFixtureTree } from './createRawFixtureTree';
+import { FixtureList } from '../../types.js';
+import { FixtureTreeNode } from '../types.js';
+import { createRawFixtureTree } from './createRawFixtureTree.js';
 
 it('creates tree with fixture', () => {
   const fixtures: FixtureList = {

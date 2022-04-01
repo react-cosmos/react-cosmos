@@ -1,7 +1,7 @@
 import { get } from 'lodash';
 import React from 'react';
-import { isReactElement } from '../../../../../utils/react/isReactElement';
-import { isRootPath } from './shared';
+import { isReactElement } from '../../../../../utils/react/isReactElement.js';
+import { isRootPath } from './shared.js';
 
 // Why be silent about trying to fetch a node that isn't an element?
 // Because users of this utility only care about elements. Whether the child

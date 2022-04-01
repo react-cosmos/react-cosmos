@@ -1,4 +1,4 @@
-import { FixtureTreeNode } from '../types';
+import { FixtureTreeNode } from '../types.js';
 
 export function hideFixtureSuffix(
   treeNode: FixtureTreeNode,

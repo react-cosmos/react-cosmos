@@ -1,9 +1,9 @@
 import { createPlugin, PluginContext } from 'react-plugin';
-import { BuildMessage } from '../../../core/serverMessage';
-import { MessageType } from '../../../utils/types';
-import { MessageHandlerSpec } from '../MessageHandler/spec';
-import { NotificationsSpec } from '../Notifications/spec';
-import { BuildNotificationsSpec } from './spec';
+import { BuildMessage } from '../../../core/serverMessage.js';
+import { MessageType } from '../../../utils/types.js';
+import { MessageHandlerSpec } from '../MessageHandler/spec.js';
+import { NotificationsSpec } from '../Notifications/spec.js';
+import { BuildNotificationsSpec } from './spec.js';
 
 type BuildNotificationsContext = PluginContext<BuildNotificationsSpec>;
 

@@ -1,6 +1,6 @@
-import { PlaygroundCommandResponse } from '../../../../renderer/types';
-import { CoreSpec } from '../../Core/spec';
-import { RendererCoreContext } from '../shared';
+import { PlaygroundCommandResponse } from '../../../../renderer/types.js';
+import { CoreSpec } from '../../Core/spec.js';
+import { RendererCoreContext } from '../shared/index.js';
 
 export function receivePlaygroundCommandResponse(
   context: RendererCoreContext,

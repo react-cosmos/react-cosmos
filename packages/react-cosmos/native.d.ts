@@ -1,1 +1,1 @@
-export * from './dist/native';
+export * from './dist/native.js';

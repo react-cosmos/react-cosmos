@@ -1,4 +1,4 @@
-import { replaceKeys } from '../../utils/string';
+import { replaceKeys } from '../../utils/string.js';
 
 export type Json =
   | string

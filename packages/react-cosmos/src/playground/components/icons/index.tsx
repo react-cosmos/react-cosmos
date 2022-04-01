@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '../Icon';
+import { Icon } from '../Icon.js';
 
 // Add common interface to each icon when needed
 type Props = {

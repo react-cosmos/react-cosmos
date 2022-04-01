@@ -1,10 +1,10 @@
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { onRouter } from '../../../testHelpers/pluginMocks';
+import { onRouter } from '../../../testHelpers/pluginMocks.js';
 import {
   popUrlParams,
   pushUrlParams,
   resetUrlParams,
-} from '../../../testHelpers/urlParams';
+} from '../../../testHelpers/urlParams.js';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import { useValue } from '../../../renderer/useValue';
-import { PluginList, SimplePlugin } from './PluginList';
+import { useValue } from '../../../renderer/useValue/index.js';
+import { PluginList, SimplePlugin } from './PluginList.js';
 
 const initialPlugins: SimplePlugin[] = [
   { name: 'buildNotifications', enabled: true },

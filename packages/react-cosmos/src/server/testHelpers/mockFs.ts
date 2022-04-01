@@ -1,8 +1,8 @@
 import path from 'path';
-import { CosmosConfig } from '../cosmosConfig/types';
+import { CosmosConfig } from '../cosmosConfig/types.js';
 // @ts-ignore
-import { __mockDir, __mockFile, __unmockFs } from '../utils/fs';
-import { getCwdPath } from './cwd';
+import { __mockDir, __mockFile, __unmockFs } from '../utils/fs.js';
+import { getCwdPath } from './cwd.js';
 
 jest.mock('../utils/fs', () => {
   let fileMocks: { [path: string]: any } = {};

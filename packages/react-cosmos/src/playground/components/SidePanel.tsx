@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { grey128, grey160, grey32, white10 } from '../style/colors';
+import { grey128, grey160, grey32, white10 } from '../style/colors.js';
 
 export const SidePanelContainer = styled.div`
   background: ${grey32};

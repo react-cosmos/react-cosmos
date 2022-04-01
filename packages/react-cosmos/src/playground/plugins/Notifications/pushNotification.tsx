@@ -1,6 +1,6 @@
-import { removeItemMatch, replaceOrAddItem } from '../../../utils/array';
-import { NotificationsContext } from './shared';
-import { NotificationItem, NotificationsSpec } from './spec';
+import { removeItemMatch, replaceOrAddItem } from '../../../utils/array.js';
+import { NotificationsContext } from './shared.js';
+import { NotificationItem, NotificationsSpec } from './spec.js';
 
 const TIMEOUT = 3000;
 

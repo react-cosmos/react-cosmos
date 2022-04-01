@@ -2,7 +2,6 @@ import chalk from 'chalk';
 import { spawn } from 'child_process';
 import cpy from 'cpy';
 import path from 'path';
-import { generatePlaygroundPluginEntry } from './generatePlaygroundPluginEntry';
 import {
   done,
   error,
@@ -78,7 +77,7 @@ async function tryBuildPackage(pkgName: Package) {
 
 async function buildPackage(pkgName: Package) {
   if (pkgName === 'react-cosmos') {
-    await generatePlaygroundPluginEntry();
+    // await generatePlaygroundPluginEntry();
     await clearPackage(pkgName);
     await copyStaticAssets(pkgName);
     await buildTsPackage(pkgName);

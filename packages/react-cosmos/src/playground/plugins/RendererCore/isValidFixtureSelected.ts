@@ -1,5 +1,5 @@
-import { RendererCoreContext } from './shared';
-import { getSelectedFixtureId } from './shared/router';
+import { RendererCoreContext } from './shared/index.js';
+import { getSelectedFixtureId } from './shared/router.js';
 
 export function isValidFixtureSelected(context: RendererCoreContext) {
   const fixtureId = getSelectedFixtureId(context);

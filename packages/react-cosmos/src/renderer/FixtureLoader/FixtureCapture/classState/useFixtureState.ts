@@ -14,23 +14,23 @@ import {
   findFixtureStateClassState,
   getFixtureStateClassState,
   removeFixtureStateClassState,
-} from '../../../../core/fixtureState/classState';
-import { createValues } from '../../../../core/fixtureState/createValues';
-import { extendWithValues } from '../../../../core/fixtureState/extendWithValues';
+} from '../../../../core/fixtureState/classState.js';
+import { createValues } from '../../../../core/fixtureState/createValues.js';
+import { extendWithValues } from '../../../../core/fixtureState/extendWithValues.js';
 import {
   FixtureDecoratorId,
   FixtureState,
-} from '../../../../core/fixtureState/types';
-import { getComponentName } from '../../../../utils/react/getComponentName';
-import { FixtureContext } from '../../../FixtureContext';
-import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
-import { decorateFixtureRefs } from './decorateFixtureRefs';
+} from '../../../../core/fixtureState/types.js';
+import { getComponentName } from '../../../../utils/react/getComponentName.js';
+import { FixtureContext } from '../../../FixtureContext.js';
+import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
+import { decorateFixtureRefs } from './decorateFixtureRefs/index.js';
 import {
   CachedRefHandlers,
   ElRefs,
   InitialStates,
   replaceState,
-} from './shared';
+} from './shared.js';
 
 export function useFixtureState(
   fixture: ReactNode,

@@ -1,11 +1,11 @@
-import { FixtureList, FixtureListItem } from '../types';
-import { isMultiFixture } from './isMultiFixture';
+import { FixtureList, FixtureListItem } from '../types.js';
+import { isMultiFixture } from './isMultiFixture.js';
 import {
   ReactFixtureExport,
   ReactFixtureExports,
   ReactFixtureWrapper,
   ReactFixtureWrappers,
-} from './types';
+} from './types.js';
 
 export function getFixtureListFromWrappers(wrappers: ReactFixtureWrappers) {
   return Object.keys(wrappers).reduce((acc: FixtureList, fixturePath) => {

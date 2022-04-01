@@ -1,18 +1,18 @@
 import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { FixtureList } from '../../../../../core/types';
-import { RendererId } from '../../../../../renderer/types';
+import { FixtureList } from '../../../../../core/types.js';
+import { RendererId } from '../../../../../renderer/types.js';
 import {
   getRendererCoreMethods,
   mockNotifications,
   mockRouter,
-} from '../../../../testHelpers/pluginMocks';
+} from '../../../../testHelpers/pluginMocks.js';
 import {
   createFixtureListUpdateResponse,
   mockRendererReady,
-} from '../../testHelpers';
+} from '../../testHelpers/index.js';
 
-beforeEach(() => jest.isolateModules(() => require('../..')));
+beforeEach(() => jest.isolateModules(() => require('../../index.js')));
 
 afterEach(resetPlugins);
 

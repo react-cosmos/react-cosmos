@@ -1,5 +1,5 @@
 import webpack from 'webpack';
-import { resolveWebpackClientPath } from './resolveWebpackClientPath';
+import { resolveWebpackClientPath } from './resolveWebpackClientPath.js';
 
 export function getWebpackConfigModule(
   webpackConfig: webpack.Configuration

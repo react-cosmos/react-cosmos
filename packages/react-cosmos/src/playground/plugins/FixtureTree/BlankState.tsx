@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FileIcon } from '../../components/icons';
-import { grey160, grey224, grey32, grey64, grey8 } from '../../style/colors';
+import { FileIcon } from '../../components/icons/index.js';
+import { grey160, grey224, grey32, grey64, grey8 } from '../../style/colors.js';
 
 type Props = {
   fixturesDir: string;

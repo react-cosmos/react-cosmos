@@ -1,9 +1,14 @@
 import { blue } from 'chalk';
 import React from 'react';
 import styled from 'styled-components';
-import { disabledColors, grey128, grey160, grey224 } from '../../style/colors';
-import { ChevronDownIcon, ChevronRightIcon } from '../icons';
-import { ValueTreeItem } from './shared';
+import {
+  disabledColors,
+  grey128,
+  grey160,
+  grey224,
+} from '../../style/colors.js';
+import { ChevronDownIcon, ChevronRightIcon } from '../icons/index.js';
+import { ValueTreeItem } from './shared.js';
 
 type Props = {
   name: string;

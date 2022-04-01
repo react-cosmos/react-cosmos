@@ -1,8 +1,8 @@
 import React from 'react';
-import { FixtureDecoratorId } from '../../../../core/fixtureState/types';
-import { ElRefs } from './shared';
-import { useFixtureState } from './useFixtureState';
-import { useReadClassState } from './useReadClassState';
+import { FixtureDecoratorId } from '../../../../core/fixtureState/types.js';
+import { ElRefs } from './shared.js';
+import { useFixtureState } from './useFixtureState.js';
+import { useReadClassState } from './useReadClassState.js';
 
 export function useClassStateCapture(
   fixture: React.ReactNode,

@@ -17,7 +17,7 @@
     "noUnusedLocals": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ES2017"
+    "target": "es2020"
   },
   "exclude": ["node_modules"]
 }

@@ -1,5 +1,5 @@
-import { FixtureStateValues } from '../../../core/fixtureState/types';
-import { ValueNode } from './shared';
+import { FixtureStateValues } from '../../../core/fixtureState/types.js';
+import { ValueNode } from './shared.js';
 
 export function createValueTree(values: FixtureStateValues): ValueNode {
   const children: Record<string, ValueNode> = {};

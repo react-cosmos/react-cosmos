@@ -1,4 +1,4 @@
-import { parseUrlQuery, stringifyUrlQuery } from '../../core/playgroundUrl';
+import { parseUrlQuery, stringifyUrlQuery } from '../../core/playgroundUrl.js';
 
 type Params = Record<string, unknown>;
 

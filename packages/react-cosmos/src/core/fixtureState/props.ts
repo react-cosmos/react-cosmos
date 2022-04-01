@@ -3,7 +3,7 @@ import {
   removeItemMatch,
   replaceOrAddItem,
   updateItem,
-} from '../../utils/array';
+} from '../../utils/array.js';
 import {
   FixtureDecoratorId,
   FixtureElementId,
@@ -11,7 +11,7 @@ import {
   FixtureState,
   FixtureStateProps,
   FixtureStateValues,
-} from './types';
+} from './types.js';
 
 export const DEFAULT_RENDER_KEY: FixtureRenderKey = 0;
 

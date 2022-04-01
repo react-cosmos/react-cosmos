@@ -1,13 +1,17 @@
 import retry from '@skidding/async-retry';
 import until from 'async-until';
 import React from 'react';
-import { createValues } from '../../../core/fixtureState/createValues';
-import { updateFixtureStateProps } from '../../../core/fixtureState/props';
-import { uuid } from '../../../utils/uuid';
-import { testFixtureLoader } from '../testHelpers';
-import { SuffixCounter } from '../testHelpers/components';
-import { anyClassState, anyProps, getProps } from '../testHelpers/fixtureState';
-import { wrapFixtures } from '../testHelpers/wrapFixture';
+import { createValues } from '../../../core/fixtureState/createValues.js';
+import { updateFixtureStateProps } from '../../../core/fixtureState/props.js';
+import { uuid } from '../../../utils/uuid.js';
+import { SuffixCounter } from '../testHelpers/components.js';
+import {
+  anyClassState,
+  anyProps,
+  getProps,
+} from '../testHelpers/fixtureState.js';
+import { testFixtureLoader } from '../testHelpers/index.js';
+import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 let counterRef: null | SuffixCounter = null;
 beforeEach(() => {

@@ -1,13 +1,13 @@
 import React from 'react';
 import { act, create } from 'react-test-renderer';
 import * as io from 'socket.io-client';
-import { FixtureLoader } from '../FixtureLoader';
-import { createWebSocketsConnect } from '../webSockets';
+import { FixtureLoader } from '../FixtureLoader.js';
+import { createWebSocketsConnect } from '../webSockets.js';
 import {
   createRendererConnectMockApi,
   FixtureLoaderTestArgs,
   FixtureLoaderTestCallback,
-} from './shared';
+} from './shared.js';
 
 // __getMockApi is defined in mockSocketIo.js
 const { WS_URL, getMessages, postMessage, resetMessages } = (

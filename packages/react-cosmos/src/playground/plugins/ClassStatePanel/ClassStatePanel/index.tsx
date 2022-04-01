@@ -1,14 +1,14 @@
 import React from 'react';
-import { FixtureState } from '../../../../core/fixtureState/types';
-import { StateUpdater } from '../../../../utils/types';
+import { FixtureState } from '../../../../core/fixtureState/types.js';
+import { StateUpdater } from '../../../../utils/types.js';
 import {
   FixtureExpansion,
   hasFsValues,
   OnElementExpansionChange,
   sortFsValueGroups,
   stringifyElementId,
-} from '../../../components/ValueInputTree';
-import { ComponentClassState } from './ComponentClassState';
+} from '../../../components/ValueInputTree/index.js';
+import { ComponentClassState } from './ComponentClassState.js';
 
 type Props = {
   fixtureState: FixtureState;

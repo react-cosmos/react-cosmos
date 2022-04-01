@@ -1,11 +1,11 @@
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { FixtureId, FixtureList } from '../../../../core/types';
+import { FixtureId, FixtureList } from '../../../../core/types.js';
 import {
   getRendererCoreMethods,
   mockNotifications,
   mockRouter,
-} from '../../../testHelpers/pluginMocks';
-import { mockRendererReady } from '../testHelpers';
+} from '../../../testHelpers/pluginMocks.js';
+import { mockRendererReady } from '../testHelpers/index.js';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 

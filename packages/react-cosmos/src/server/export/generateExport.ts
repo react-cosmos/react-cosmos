@@ -1,12 +1,12 @@
 import fs from 'fs-extra';
 import path from 'path';
-import { removeLeadingSlash } from '../../utils/string';
-import { detectCosmosConfig } from '../cosmosConfig/detectCosmosConfig';
-import { CosmosConfig } from '../cosmosConfig/types';
-import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs';
-import { CosmosPluginConfig, ExportPlugin } from '../cosmosPlugin/types';
-import { getExportPlaygroundHtml } from '../shared/playgroundHtml';
-import { getStaticPath } from '../shared/staticServer';
+import { removeLeadingSlash } from '../../utils/string.js';
+import { detectCosmosConfig } from '../cosmosConfig/detectCosmosConfig.js';
+import { CosmosConfig } from '../cosmosConfig/types.js';
+import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
+import { CosmosPluginConfig, ExportPlugin } from '../cosmosPlugin/types.js';
+import { getExportPlaygroundHtml } from '../shared/playgroundHtml.js';
+import { getStaticPath } from '../shared/staticServer.js';
 
 const corePlugins: ExportPlugin[] = [];
 

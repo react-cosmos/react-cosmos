@@ -1,7 +1,7 @@
-import { SetSelectValue, UseSelectArgs } from './shared';
-import { useCreateFixtureState } from './useCreateFixtureState';
-import { useCurrentValue } from './useCurrentValue';
-import { useSetValue } from './useSetValue';
+import { SetSelectValue, UseSelectArgs } from './shared.js';
+import { useCreateFixtureState } from './useCreateFixtureState.js';
+import { useCurrentValue } from './useCurrentValue.js';
+import { useSetValue } from './useSetValue.js';
 
 export function useSelect<Option extends string>(
   selectName: string,

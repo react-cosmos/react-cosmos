@@ -1,7 +1,13 @@
 import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { getRouterMethods, onRouter } from '../../../testHelpers/pluginMocks';
-import { getUrlParams, resetUrlParams } from '../../../testHelpers/urlParams';
+import {
+  getRouterMethods,
+  onRouter,
+} from '../../../testHelpers/pluginMocks.js';
+import {
+  getUrlParams,
+  resetUrlParams,
+} from '../../../testHelpers/urlParams.js';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 

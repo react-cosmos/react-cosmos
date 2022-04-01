@@ -1,13 +1,13 @@
 import path from 'path';
 import { CosmosConfig } from 'react-cosmos/server';
 import webpack from 'webpack';
-import { createWebpackCosmosConfig } from '../cosmosConfig/createWebpackCosmosConfig';
-import { getUserWebpackConfig } from './getUserWebpackConfig';
-import { getWebpackConfigModule } from './getWebpackConfigModule';
-import { getWebpackConfigResolve } from './getWebpackConfigResolve';
-import { ensureHtmlWebackPlugin } from './htmlPlugin';
-import { getGlobalsPlugin, hasPlugin } from './plugins';
-import { resolveWebpackClientPath } from './resolveWebpackClientPath';
+import { createWebpackCosmosConfig } from '../cosmosConfig/createWebpackCosmosConfig.js';
+import { getUserWebpackConfig } from './getUserWebpackConfig.js';
+import { getWebpackConfigModule } from './getWebpackConfigModule.js';
+import { getWebpackConfigResolve } from './getWebpackConfigResolve.js';
+import { ensureHtmlWebackPlugin } from './htmlPlugin.js';
+import { getGlobalsPlugin, hasPlugin } from './plugins.js';
+import { resolveWebpackClientPath } from './resolveWebpackClientPath.js';
 
 export async function getDevWebpackConfig(
   cosmosConfig: CosmosConfig,

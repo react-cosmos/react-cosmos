@@ -1,14 +1,14 @@
 import React from 'react';
 import { createPlugin, PluginContext } from 'react-plugin';
-import { FixtureId } from '../../../core/types';
-import { NavRowSlotProps } from '../../slots/NavRowSlot';
-import { CoreSpec } from '../Core/spec';
-import { FixtureTreeSpec } from '../FixtureTree/spec';
-import { RendererCoreSpec } from '../RendererCore/spec';
-import { RouterSpec } from '../Router/spec';
-import { FixtureSearchHeader } from './FixtureSearchHeader';
-import { FixtureSearchOverlay } from './FixtureSearchOverlay';
-import { FixtureSearchSpec } from './spec';
+import { FixtureId } from '../../../core/types.js';
+import { NavRowSlotProps } from '../../slots/NavRowSlot.js';
+import { CoreSpec } from '../Core/spec.js';
+import { FixtureTreeSpec } from '../FixtureTree/spec.js';
+import { RendererCoreSpec } from '../RendererCore/spec.js';
+import { RouterSpec } from '../Router/spec.js';
+import { FixtureSearchHeader } from './FixtureSearchHeader.js';
+import { FixtureSearchOverlay } from './FixtureSearchOverlay.js';
+import { FixtureSearchSpec } from './spec.js';
 
 type FixtureSearchContext = PluginContext<FixtureSearchSpec>;
 

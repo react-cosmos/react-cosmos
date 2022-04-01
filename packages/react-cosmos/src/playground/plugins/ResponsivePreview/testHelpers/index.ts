@@ -1,7 +1,7 @@
 import { PluginContext } from 'react-plugin';
-import { FixtureState } from '../../../../core/fixtureState/types';
-import { StateUpdater } from '../../../../utils/types';
-import { RendererCoreSpec } from '../../RendererCore/spec';
+import { FixtureState } from '../../../../core/fixtureState/types.js';
+import { StateUpdater } from '../../../../utils/types.js';
+import { RendererCoreSpec } from '../../RendererCore/spec.js';
 
 export type StorageMock = { [key: string]: any };
 

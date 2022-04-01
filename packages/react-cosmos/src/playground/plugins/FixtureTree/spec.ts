@@ -1,4 +1,4 @@
-import { FixtureId } from '../../../core/types';
+import { FixtureId } from '../../../core/types.js';
 
 export type FixtureTreeSpec = {
   name: 'fixtureTree';

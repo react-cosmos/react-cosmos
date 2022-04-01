@@ -1,6 +1,6 @@
 import React from 'react';
-import { StorageSpec } from '../Storage/spec';
-import { ContentOverlayContext } from './shared';
+import { StorageSpec } from '../Storage/spec.js';
+import { ContentOverlayContext } from './shared.js';
 
 export const WELCOME_DISMISS_STORAGE_KEY = 'welcomeDismissedAt';
 const SHOW_AGAIN_IN = 90 * 86400 * 1000; // ~3 months

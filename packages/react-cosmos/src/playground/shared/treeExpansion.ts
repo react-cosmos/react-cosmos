@@ -1,4 +1,4 @@
-import { TreeNode } from '../../utils/tree';
+import { TreeNode } from '../../utils/tree.js';
 
 export type TreeExpansion = {
   [nodePath: string]: boolean;

@@ -1,22 +1,25 @@
 import { isEqual } from 'lodash';
 import React, { Component } from 'react';
-import { FixtureState, SetFixtureState } from '../../core/fixtureState/types';
-import { getFixtureListFromWrappers } from '../../core/react/getFixtureList';
+import {
+  FixtureState,
+  SetFixtureState,
+} from '../../core/fixtureState/types.js';
+import { getFixtureListFromWrappers } from '../../core/react/getFixtureList.js';
 import {
   ReactDecorator,
   ReactDecorators,
   ReactFixtureWrappers,
-} from '../../core/react/types';
-import { FixtureId } from '../../core/types';
+} from '../../core/react/types.js';
+import { FixtureId } from '../../core/types.js';
 import {
   RendererConnect,
   RendererRequest,
   RendererResponse,
   SelectFixtureRequest,
   SetFixtureStateRequest,
-} from '../types';
-import { getFixture } from './fixtureHelpers';
-import { FixtureProvider } from './FixtureProvider';
+} from '../types.js';
+import { getFixture } from './fixtureHelpers.js';
+import { FixtureProvider } from './FixtureProvider.js';
 
 // TODO: Split into FixtureLoader and FixtureLoaderConnect
 export type Props = {

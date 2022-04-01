@@ -1,16 +1,16 @@
 import retry from '@skidding/async-retry';
 import { uniq } from 'lodash';
 import React from 'react';
-import { createValues } from '../../../core/fixtureState/createValues';
+import { createValues } from '../../../core/fixtureState/createValues.js';
 import {
   resetFixtureStateProps,
   updateFixtureStateProps,
-} from '../../../core/fixtureState/props';
-import { uuid } from '../../../utils/uuid';
-import { testFixtureLoader } from '../testHelpers';
-import { HelloMessageCls } from '../testHelpers/components';
-import { getProps } from '../testHelpers/fixtureState';
-import { wrapFixtures } from '../testHelpers/wrapFixture';
+} from '../../../core/fixtureState/props.js';
+import { uuid } from '../../../utils/uuid.js';
+import { HelloMessageCls } from '../testHelpers/components.js';
+import { getProps } from '../testHelpers/fixtureState.js';
+import { testFixtureLoader } from '../testHelpers/index.js';
+import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
 const fixtureId = { path: 'first' };

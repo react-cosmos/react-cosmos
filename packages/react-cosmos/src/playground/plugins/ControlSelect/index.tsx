@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import { createPlugin } from 'react-plugin';
-import { FixtureStateSelectControl } from '../../../core/fixtureState/types';
-import { ControlSlotProps } from '../../slots/ControlSlot';
-import { SelectValueInput } from './SelectValueInput';
-import { ControlSelectSpec } from './spec';
+import { FixtureStateSelectControl } from '../../../core/fixtureState/types.js';
+import { ControlSlotProps } from '../../slots/ControlSlot.js';
+import { SelectValueInput } from './SelectValueInput.js';
+import { ControlSelectSpec } from './spec.js';
 
 const { plug, register } = createPlugin<ControlSelectSpec>({
   name: 'controlSelect',

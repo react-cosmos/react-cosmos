@@ -1,10 +1,10 @@
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { BuildMessage } from '../../../core/serverMessage';
+import { BuildMessage } from '../../../core/serverMessage.js';
 import {
   getMessageHandlerContext,
   mockMessageHandler,
   mockNotifications,
-} from '../../testHelpers/pluginMocks';
+} from '../../testHelpers/pluginMocks.js';
 
 beforeEach(() => jest.isolateModules(() => require('.')));
 

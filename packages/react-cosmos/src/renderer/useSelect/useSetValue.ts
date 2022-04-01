@@ -1,7 +1,7 @@
 import { useCallback, useContext } from 'react';
-import { findFixtureStateControl } from '../../core/fixtureState/controls';
-import { FixtureContext } from '../FixtureContext';
-import { SetSelectValue } from './shared';
+import { findFixtureStateControl } from '../../core/fixtureState/controls.js';
+import { FixtureContext } from '../FixtureContext.js';
+import { SetSelectValue } from './shared.js';
 
 export function useSetValue<Option extends string>(
   selectName: string

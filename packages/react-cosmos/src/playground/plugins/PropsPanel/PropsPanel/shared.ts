@@ -1,11 +1,11 @@
-import { findFixtureStateProps } from '../../../../core/fixtureState/props';
+import { findFixtureStateProps } from '../../../../core/fixtureState/props.js';
 import {
   FixtureElementId,
   FixtureState,
   FixtureStateProps,
-} from '../../../../core/fixtureState/types';
-import { StateUpdater } from '../../../../utils/types';
-import { stringifyElementId } from '../../../components/ValueInputTree';
+} from '../../../../core/fixtureState/types.js';
+import { StateUpdater } from '../../../../utils/types.js';
+import { stringifyElementId } from '../../../components/ValueInputTree/index.js';
 
 export function createPropsFsUpdater(
   elementId: FixtureElementId,

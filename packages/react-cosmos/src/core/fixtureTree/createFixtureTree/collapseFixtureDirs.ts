@@ -1,5 +1,5 @@
 import { omit } from 'lodash';
-import { FixtureTreeNode } from '../types';
+import { FixtureTreeNode } from '../types.js';
 
 export function collapseFixtureDirs(
   treeNode: FixtureTreeNode,

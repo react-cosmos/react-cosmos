@@ -1,5 +1,5 @@
 import qs from 'query-string';
-import { FixtureId } from './types';
+import { FixtureId } from './types.js';
 
 export type PlaygroundUrlParams = {
   fixtureId?: FixtureId;

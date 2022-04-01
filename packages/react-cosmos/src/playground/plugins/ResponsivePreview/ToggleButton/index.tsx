@@ -1,6 +1,6 @@
 import React from 'react';
-import { IconButton32 } from '../../../components/buttons';
-import { SmartphoneIcon } from '../../../components/icons';
+import { IconButton32 } from '../../../components/buttons/index.js';
+import { SmartphoneIcon } from '../../../components/icons/index.js';
 
 type Props = {
   selected: boolean;

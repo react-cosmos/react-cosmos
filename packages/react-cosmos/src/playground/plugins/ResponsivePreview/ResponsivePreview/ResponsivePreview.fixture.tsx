@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useValue } from '../../../../renderer/useValue';
-import { DEFAULT_DEVICES } from '../shared';
-import { ResponsivePreview } from './ResponsivePreview';
+import { useValue } from '../../../../renderer/useValue/index.js';
+import { DEFAULT_DEVICES } from '../shared.js';
+import { ResponsivePreview } from './ResponsivePreview.js';
 
 const { width, height } = DEFAULT_DEVICES[0];
 const initialViewport = { width, height };

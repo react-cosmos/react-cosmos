@@ -1,10 +1,10 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
 import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
-import { uuid } from '../../../utils/uuid';
-import { useSelect } from '../../useSelect';
-import { testFixtureLoader } from '../testHelpers';
-import { wrapFixtures } from '../testHelpers/wrapFixture';
+import { uuid } from '../../../utils/uuid.js';
+import { useSelect } from '../../useSelect/index.js';
+import { testFixtureLoader } from '../testHelpers/index.js';
+import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 function createFixtures() {
   const MyComponent = () => {

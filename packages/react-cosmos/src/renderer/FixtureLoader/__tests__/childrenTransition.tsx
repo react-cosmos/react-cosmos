@@ -2,12 +2,12 @@ import React from 'react';
 import {
   createValue,
   createValues,
-} from '../../../core/fixtureState/createValues';
-import { uuid } from '../../../utils/uuid';
-import { testFixtureLoader } from '../testHelpers';
-import { Wrapper } from '../testHelpers/components';
-import { anyProps } from '../testHelpers/fixtureState';
-import { wrapFixtures } from '../testHelpers/wrapFixture';
+} from '../../../core/fixtureState/createValues.js';
+import { uuid } from '../../../utils/uuid.js';
+import { Wrapper } from '../testHelpers/components.js';
+import { anyProps } from '../testHelpers/fixtureState.js';
+import { testFixtureLoader } from '../testHelpers/index.js';
+import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
 const fixtures = wrapFixtures({

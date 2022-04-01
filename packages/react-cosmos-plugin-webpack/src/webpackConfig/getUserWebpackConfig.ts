@@ -6,9 +6,9 @@ import {
   requireModule,
 } from 'react-cosmos/server';
 import webpack from 'webpack';
-import { createWebpackCosmosConfig } from '../cosmosConfig/createWebpackCosmosConfig';
-import { getDefaultWebpackConfig } from './getDefaultWebpackConfig';
-import { getWebpackNodeEnv } from './getWebpackNodeEnv';
+import { createWebpackCosmosConfig } from '../cosmosConfig/createWebpackCosmosConfig.js';
+import { getDefaultWebpackConfig } from './getDefaultWebpackConfig.js';
+import { getWebpackNodeEnv } from './getWebpackNodeEnv.js';
 
 type WebpackConfigExport =
   | webpack.Configuration

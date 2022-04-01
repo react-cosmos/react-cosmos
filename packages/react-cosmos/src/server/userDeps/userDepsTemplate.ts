@@ -1,6 +1,6 @@
 import path from 'path';
 import slash from 'slash';
-import { Json } from './shared';
+import { Json } from './shared.js';
 
 type Args = {
   globalImports: string[];

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ClassStatePanel } from '.';
-import { FixtureState } from '../../../../core/fixtureState/types';
-import { stringifyElementId } from '../../../components/ValueInputTree';
+import { FixtureState } from '../../../../core/fixtureState/types.js';
+import { stringifyElementId } from '../../../components/ValueInputTree/index.js';
 
 export default () => {
   const [fixtureState, setFixtureState] = React.useState<FixtureState>({

@@ -1,5 +1,5 @@
 import React from 'react';
-import { createValues } from './createValues';
+import { createValues } from './createValues.js';
 
 it('creates string value', () => {
   const values = createValues({ myProp: 'foo' });

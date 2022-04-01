@@ -1,9 +1,9 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
-import { uuid } from '../../../utils/uuid';
-import { testFixtureLoader } from '../testHelpers';
-import { wrapFixtures } from '../testHelpers/wrapFixture';
-import { Viewport } from '../Viewport';
+import { uuid } from '../../../utils/uuid.js';
+import { testFixtureLoader } from '../testHelpers/index.js';
+import { wrapFixtures } from '../testHelpers/wrapFixture.js';
+import { Viewport } from '../Viewport.js';
 
 const rendererId = uuid();
 const fixtures = wrapFixtures({

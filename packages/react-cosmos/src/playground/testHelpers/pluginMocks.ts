@@ -5,15 +5,15 @@ import {
   PluginWithEvents,
   PluginWithMethods,
 } from 'react-plugin';
-import { CoreSpec } from '../plugins/Core/spec';
-import { FixtureTreeSpec } from '../plugins/FixtureTree/spec';
-import { MessageHandlerSpec } from '../plugins/MessageHandler/spec';
-import { NotificationsSpec } from '../plugins/Notifications/spec';
-import { RendererCoreSpec } from '../plugins/RendererCore/spec';
-import { RendererPreviewSpec } from '../plugins/RendererPreview/spec';
-import { RouterSpec } from '../plugins/Router/spec';
-import { StorageSpec } from '../plugins/Storage/spec';
-import { getMethodsOf, mockMethodsOf, on } from './pluginHelpers';
+import { CoreSpec } from '../plugins/Core/spec.js';
+import { FixtureTreeSpec } from '../plugins/FixtureTree/spec.js';
+import { MessageHandlerSpec } from '../plugins/MessageHandler/spec.js';
+import { NotificationsSpec } from '../plugins/Notifications/spec.js';
+import { RendererCoreSpec } from '../plugins/RendererCore/spec.js';
+import { RendererPreviewSpec } from '../plugins/RendererPreview/spec.js';
+import { RouterSpec } from '../plugins/Router/spec.js';
+import { StorageSpec } from '../plugins/Storage/spec.js';
+import { getMethodsOf, mockMethodsOf, on } from './pluginHelpers.js';
 
 type MethodsOf<Spec extends PluginWithMethods> = Partial<
   PluginMethodHandlers<Spec>

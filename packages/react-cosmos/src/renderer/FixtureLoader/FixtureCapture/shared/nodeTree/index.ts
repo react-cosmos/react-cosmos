@@ -5,7 +5,10 @@
  * type, children can also be a function.
  * https://reactjs.org/docs/jsx-in-depth.html#functions-as-children
  */
-export { findElementPaths } from './findElementPaths';
-export { getElementAtPath, getExpectedElementAtPath } from './getElementAtPath';
-export { setElementAtPath } from './setElementAtPath';
-export { getChildrenPath } from './shared';
+export { findElementPaths } from './findElementPaths.js';
+export {
+  getElementAtPath,
+  getExpectedElementAtPath,
+} from './getElementAtPath.js';
+export { setElementAtPath } from './setElementAtPath.js';
+export { getChildrenPath } from './shared.js';

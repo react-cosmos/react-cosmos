@@ -1,1 +1,1 @@
-export * from './renderer/NativeFixtureLoader';
+export * from './renderer/NativeFixtureLoader.js';

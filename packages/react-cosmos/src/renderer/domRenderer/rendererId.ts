@@ -1,5 +1,5 @@
-import { uuid } from '../../utils/uuid';
-import { RendererId } from '../types';
+import { uuid } from '../../utils/uuid.js';
+import { RendererId } from '../types.js';
 
 export const rendererId = getRendererId();
 

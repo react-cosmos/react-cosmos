@@ -3,14 +3,14 @@ import {
   removeItemMatch,
   replaceOrAddItem,
   updateItem,
-} from '../../utils/array';
+} from '../../utils/array.js';
 import {
   FixtureDecoratorId,
   FixtureElementId,
   FixtureState,
   FixtureStateClassState,
   FixtureStateValues,
-} from './types';
+} from './types.js';
 
 export function getFixtureStateClassState(
   fixtureState: FixtureState,

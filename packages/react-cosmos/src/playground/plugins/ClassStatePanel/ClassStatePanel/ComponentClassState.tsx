@@ -1,30 +1,30 @@
 import { isEqual } from 'lodash';
 import React, { useCallback } from 'react';
-import { updateFixtureStateClassState } from '../../../../core/fixtureState/classState';
+import { updateFixtureStateClassState } from '../../../../core/fixtureState/classState.js';
 import {
   FixtureState,
   FixtureStateClassState,
   FixtureStateValues,
-} from '../../../../core/fixtureState/types';
-import { StateUpdater } from '../../../../utils/types';
-import { IconButton32 } from '../../../components/buttons';
-import { RotateCcwIcon } from '../../../components/icons';
+} from '../../../../core/fixtureState/types.js';
+import { StateUpdater } from '../../../../utils/types.js';
+import { IconButton32 } from '../../../components/buttons/index.js';
+import { RotateCcwIcon } from '../../../components/icons/index.js';
 import {
   SidePanelActions,
   SidePanelBody,
   SidePanelContainer,
   SidePanelHeader,
   SidePanelTitle,
-} from '../../../components/SidePanel';
+} from '../../../components/SidePanel.js';
+import { ExpandCollapseValues } from '../../../components/ValueInputTree/ExpandCollapseValues.js';
 import {
   FixtureExpansion,
   OnElementExpansionChange,
   stringifyElementId,
   ValueInputTree,
-} from '../../../components/ValueInputTree';
-import { ExpandCollapseValues } from '../../../components/ValueInputTree/ExpandCollapseValues';
-import { TreeExpansion } from '../../../shared/treeExpansion';
-import { createClassStateFsUpdater } from './shared';
+} from '../../../components/ValueInputTree/index.js';
+import { TreeExpansion } from '../../../shared/treeExpansion.js';
+import { createClassStateFsUpdater } from './shared.js';
 
 type Props = {
   fsClassState: FixtureStateClassState;

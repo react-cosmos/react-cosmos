@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FixtureState } from '../../../core/fixtureState/types';
-import { FixtureId } from '../../../core/types';
-import { StateUpdater } from '../../../utils/types';
-import { SidePanelRowSlot } from '../../slots/SidePanelRowSlot';
-import { grey32 } from '../../style/colors';
+import { FixtureState } from '../../../core/fixtureState/types.js';
+import { FixtureId } from '../../../core/types.js';
+import { StateUpdater } from '../../../utils/types.js';
+import { SidePanelRowSlot } from '../../slots/SidePanelRowSlot.js';
+import { grey32 } from '../../style/colors.js';
 
 type Props = {
   fixtureId: FixtureId;

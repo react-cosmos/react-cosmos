@@ -1,7 +1,7 @@
-import { CosmosConfig } from '../cosmosConfig/types';
-import { findUserModulePaths } from './findUserModulePaths';
-import { Json } from './shared';
-import { userDepsTemplate } from './userDepsTemplate';
+import { CosmosConfig } from '../cosmosConfig/types.js';
+import { findUserModulePaths } from './findUserModulePaths.js';
+import { Json } from './shared.js';
+import { userDepsTemplate } from './userDepsTemplate.js';
 
 type Args = {
   cosmosConfig: CosmosConfig;

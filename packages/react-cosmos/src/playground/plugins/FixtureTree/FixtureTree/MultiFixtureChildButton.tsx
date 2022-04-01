@@ -1,16 +1,16 @@
 import React, { RefObject } from 'react';
 import styled from 'styled-components';
-import { FixtureId } from '../../../../core/types';
+import { FixtureId } from '../../../../core/types.js';
 import {
   grey144,
   grey192,
   grey248,
   grey8,
   selectedColors,
-} from '../../../style/colors';
-import { quick } from '../../../style/vars';
-import { FixtureLink } from './FixtureLink';
-import { FixtureTreeItem } from './FixtureTreeItem';
+} from '../../../style/colors.js';
+import { quick } from '../../../style/vars.js';
+import { FixtureLink } from './FixtureLink.js';
+import { FixtureTreeItem } from './FixtureTreeItem.js';
 
 type Props = {
   name: string;

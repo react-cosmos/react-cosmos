@@ -3,12 +3,12 @@ import retry from '@skidding/async-retry';
 import until from 'async-until';
 import delay from 'delay';
 import React from 'react';
-import { FixtureStatePrimitiveValue } from '../../../core/fixtureState/types';
-import { uuid } from '../../../utils/uuid';
-import { testFixtureLoader } from '../testHelpers';
-import { Counter } from '../testHelpers/components';
-import { getClassState } from '../testHelpers/fixtureState';
-import { wrapFixtures } from '../testHelpers/wrapFixture';
+import { FixtureStatePrimitiveValue } from '../../../core/fixtureState/types.js';
+import { uuid } from '../../../utils/uuid.js';
+import { Counter } from '../testHelpers/components.js';
+import { getClassState } from '../testHelpers/fixtureState.js';
+import { testFixtureLoader } from '../testHelpers/index.js';
+import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 let counterRef: null | Counter = null;
 beforeEach(() => {

@@ -1,7 +1,7 @@
 import { useContext } from 'react';
-import { findFixtureStateControl } from '../../core/fixtureState/controls';
-import { FixtureContext } from '../FixtureContext';
-import { getDefaultSelectValue, UseSelectArgs } from './shared';
+import { findFixtureStateControl } from '../../core/fixtureState/controls.js';
+import { FixtureContext } from '../FixtureContext.js';
+import { getDefaultSelectValue, UseSelectArgs } from './shared.js';
 
 export function useCurrentValue<Option extends string>(
   selectName: string,

@@ -1,10 +1,10 @@
-export { stringifyElementId, stringifyFixtureId } from './shared';
-export { hasFsValues, sortFsValueGroups } from './valueGroups';
-export { ValueInputTree } from './ValueInputTree';
+export { stringifyElementId, stringifyFixtureId } from './shared.js';
+export { hasFsValues, sortFsValueGroups } from './valueGroups.js';
+export { ValueInputTree } from './ValueInputTree.js';
 export {
   FixtureExpansion,
   FixtureExpansionGroup,
   getFixtureExpansion,
   OnElementExpansionChange,
   updateElementExpansion,
-} from './valueTreeExpansion';
+} from './valueTreeExpansion.js';

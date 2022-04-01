@@ -1,8 +1,8 @@
-import { FixtureStateData } from '../../core/fixtureState/types';
-import { SetValue } from './shared';
-import { useCreateFixtureState } from './useCreateFixtureState';
-import { useCurrentValue } from './useCurrentValue';
-import { useSetValue } from './useSetValue';
+import { FixtureStateData } from '../../core/fixtureState/types.js';
+import { SetValue } from './shared.js';
+import { useCreateFixtureState } from './useCreateFixtureState.js';
+import { useCurrentValue } from './useCurrentValue.js';
+import { useSetValue } from './useSetValue.js';
 
 type Opts<T extends FixtureStateData> = {
   defaultValue: T;

@@ -1,11 +1,11 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
 import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
-import { createValue } from '../../../core/fixtureState/createValues';
-import { uuid } from '../../../utils/uuid';
-import { useValue } from '../../useValue';
-import { testFixtureLoader } from '../testHelpers';
-import { wrapFixtures } from '../testHelpers/wrapFixture';
+import { createValue } from '../../../core/fixtureState/createValues.js';
+import { uuid } from '../../../utils/uuid.js';
+import { useValue } from '../../useValue/index.js';
+import { testFixtureLoader } from '../testHelpers/index.js';
+import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 type CreateFixtureArgs = {
   countName?: string;

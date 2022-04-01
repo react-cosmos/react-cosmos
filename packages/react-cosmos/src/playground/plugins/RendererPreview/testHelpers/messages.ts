@@ -2,7 +2,7 @@ import {
   RendererErrorResponse,
   RendererReadyResponse,
   SelectFixtureRequest,
-} from '../../../../renderer/types';
+} from '../../../../renderer/types.js';
 
 export const selectFixtureMsg: SelectFixtureRequest = {
   type: 'selectFixture',

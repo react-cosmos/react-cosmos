@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
-import { RendererConnect, RENDERER_MESSAGE_EVENT_NAME } from '../types';
+import { RendererConnect, RENDERER_MESSAGE_EVENT_NAME } from '../types.js';
 
 export function createWebSocketsConnect(url: string): RendererConnect {
   const socket = io(url);

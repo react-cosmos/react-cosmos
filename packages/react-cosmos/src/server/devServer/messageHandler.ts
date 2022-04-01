@@ -3,8 +3,8 @@ import ioServer from 'socket.io';
 import {
   BuildMessage,
   SERVER_MESSAGE_EVENT_NAME,
-} from '../../core/serverMessage';
-import { RENDERER_MESSAGE_EVENT_NAME } from '../../renderer/types';
+} from '../../core/serverMessage.js';
+import { RENDERER_MESSAGE_EVENT_NAME } from '../../renderer/types.js';
 
 export function createMessageHandler(httpServer: http.Server) {
   const io = ioServer(httpServer);

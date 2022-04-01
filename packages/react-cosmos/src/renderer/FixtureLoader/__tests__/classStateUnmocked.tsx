@@ -3,17 +3,17 @@ import React from 'react';
 import {
   removeFixtureStateClassState,
   updateFixtureStateClassState,
-} from '../../../core/fixtureState/classState';
-import { createValues } from '../../../core/fixtureState/createValues';
-import { uuid } from '../../../utils/uuid';
-import { testFixtureLoader } from '../testHelpers';
-import { Counter } from '../testHelpers/components';
+} from '../../../core/fixtureState/classState.js';
+import { createValues } from '../../../core/fixtureState/createValues.js';
+import { uuid } from '../../../utils/uuid.js';
+import { Counter } from '../testHelpers/components.js';
 import {
   anyClassState,
   anyProps,
   getClassState,
-} from '../testHelpers/fixtureState';
-import { wrapFixtures } from '../testHelpers/wrapFixture';
+} from '../testHelpers/fixtureState.js';
+import { testFixtureLoader } from '../testHelpers/index.js';
+import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
 const fixtures = wrapFixtures({

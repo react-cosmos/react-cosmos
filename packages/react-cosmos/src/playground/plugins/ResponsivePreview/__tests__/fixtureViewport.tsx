@@ -4,7 +4,7 @@ import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import {
   mockRendererCore,
   mockStorage,
-} from '../../../testHelpers/pluginMocks';
+} from '../../../testHelpers/pluginMocks.js';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 

@@ -1,5 +1,5 @@
-import { FixtureListUpdateResponse } from '../../../../renderer/types';
-import { RendererCoreContext } from '../shared';
+import { FixtureListUpdateResponse } from '../../../../renderer/types.js';
+import { RendererCoreContext } from '../shared/index.js';
 
 export function receiveFixtureListUpdateResponse(
   context: RendererCoreContext,

@@ -1,5 +1,5 @@
-import { FixtureTreeNode } from '../types';
-import { collapseOuterDirs } from './collapseOuterDirs';
+import { FixtureTreeNode } from '../types.js';
+import { collapseOuterDirs } from './collapseOuterDirs.js';
 
 it('collapses one outer dir', () => {
   const tree: FixtureTreeNode = {

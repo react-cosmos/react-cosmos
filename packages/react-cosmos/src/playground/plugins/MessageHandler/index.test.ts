@@ -4,14 +4,14 @@ import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   BuildErrorMessage,
   SERVER_MESSAGE_EVENT_NAME,
-} from '../../../core/serverMessage';
-import { RENDERER_MESSAGE_EVENT_NAME } from '../../../renderer/types';
+} from '../../../core/serverMessage.js';
+import { RENDERER_MESSAGE_EVENT_NAME } from '../../../renderer/types.js';
 import {
   getMessageHandlerMethods,
   mockCore,
   onMessageHandler,
-} from '../../testHelpers/pluginMocks';
-import { mockSocketIo } from './testHelpers/mockSocketIo';
+} from '../../testHelpers/pluginMocks.js';
+import { mockSocketIo } from './testHelpers/mockSocketIo.js';
 
 beforeEach(() => jest.isolateModules(() => require('.')));
 

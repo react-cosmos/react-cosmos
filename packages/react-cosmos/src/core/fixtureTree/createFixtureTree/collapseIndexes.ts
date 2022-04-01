@@ -1,4 +1,4 @@
-import { FixtureTreeNode } from '../types';
+import { FixtureTreeNode } from '../types.js';
 
 export function collapseIndexes(treeNode: FixtureTreeNode): FixtureTreeNode {
   const { data, children } = treeNode;

@@ -1,1 +1,1 @@
-module.exports = require('./dist/jest');
+module.exports = require('./dist/jest.js');

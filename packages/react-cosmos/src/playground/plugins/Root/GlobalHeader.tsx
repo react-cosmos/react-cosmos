@@ -1,8 +1,8 @@
 import React from 'react';
 import { ArraySlot } from 'react-plugin';
 import styled from 'styled-components';
-import { FixtureId } from '../../../core/types';
-import { grey176, grey32, white10 } from '../../style/colors';
+import { FixtureId } from '../../../core/types.js';
+import { grey176, grey32, white10 } from '../../style/colors.js';
 
 type Props = {
   selectedFixtureId: FixtureId | null;

@@ -5,9 +5,9 @@ import { BuildMessage, removeLeadingDot } from 'react-cosmos';
 import { DevServerPluginArgs, serveStaticDir } from 'react-cosmos/server';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-import { createWebpackCosmosConfig } from './cosmosConfig/createWebpackCosmosConfig';
-import { getWebpack } from './getWebpack';
-import { getDevWebpackConfig } from './webpackConfig/getDevWebpackConfig';
+import { createWebpackCosmosConfig } from './cosmosConfig/createWebpackCosmosConfig.js';
+import { getWebpack } from './getWebpack.js';
+import { getDevWebpackConfig } from './webpackConfig/getDevWebpackConfig.js';
 
 type WebpackConfig = webpack.Configuration & {
   // webpack-dev-server options (no need to install WDS just for these types)

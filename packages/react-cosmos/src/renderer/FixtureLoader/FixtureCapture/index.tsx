@@ -1,7 +1,7 @@
 import React from 'react';
-import { FixtureDecoratorId } from '../../../core/fixtureState/types';
-import { useClassStateCapture } from './classState';
-import { usePropsCapture } from './props';
+import { FixtureDecoratorId } from '../../../core/fixtureState/types.js';
+import { useClassStateCapture } from './classState/index.js';
+import { usePropsCapture } from './props/index.js';
 
 export type Props = {
   children: React.ReactNode;

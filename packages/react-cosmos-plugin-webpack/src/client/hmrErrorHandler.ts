@@ -1,6 +1,6 @@
 import { RendererConnect, RendererRequest } from 'react-cosmos';
 import { rendererConnect, rendererId } from 'react-cosmos/dom';
-import { WebpackRendererResponse } from '../rendererResponse';
+import { WebpackRendererResponse } from '../rendererResponse.js';
 
 declare var __DEV__: boolean;
 

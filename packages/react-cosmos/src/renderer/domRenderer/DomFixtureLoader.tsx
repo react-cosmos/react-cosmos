@@ -1,11 +1,14 @@
 import React from 'react';
-import { ReactDecorators, ReactFixtureWrappers } from '../../core/react/types';
-import { FixtureLoader } from '../FixtureLoader/FixtureLoader';
-import { ErrorCatch } from './ErrorCatch';
-import { renderDomMessage } from './renderDomMessage';
-import { rendererConnect } from './rendererConnect';
-import { rendererId } from './rendererId';
-import { selectedFixtureId } from './selectedFixtureId';
+import {
+  ReactDecorators,
+  ReactFixtureWrappers,
+} from '../../core/react/types.js';
+import { FixtureLoader } from '../FixtureLoader/FixtureLoader.js';
+import { ErrorCatch } from './ErrorCatch.js';
+import { renderDomMessage } from './renderDomMessage.js';
+import { rendererConnect } from './rendererConnect.js';
+import { rendererId } from './rendererId.js';
+import { selectedFixtureId } from './selectedFixtureId.js';
 
 type Props = {
   fixtures: ReactFixtureWrappers;

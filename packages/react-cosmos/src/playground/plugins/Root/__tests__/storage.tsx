@@ -3,7 +3,7 @@ import {
   mockCore,
   mockRendererCore,
   mockStorage,
-} from '../../../testHelpers/pluginMocks';
+} from '../../../testHelpers/pluginMocks.js';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 

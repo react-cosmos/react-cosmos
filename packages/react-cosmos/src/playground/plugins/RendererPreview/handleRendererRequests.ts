@@ -1,6 +1,6 @@
-import { MessageType } from '../../../utils/types';
-import { NotificationsSpec } from '../Notifications/spec';
-import { RendererPreviewContext } from './shared';
+import { MessageType } from '../../../utils/types.js';
+import { NotificationsSpec } from '../Notifications/spec.js';
+import { RendererPreviewContext } from './shared.js';
 
 type State = {
   iframeRef: HTMLIFrameElement;

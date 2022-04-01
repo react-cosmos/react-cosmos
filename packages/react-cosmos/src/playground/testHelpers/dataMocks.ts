@@ -1,4 +1,4 @@
-import { FixtureList } from '../../core/types';
+import { FixtureList } from '../../core/types.js';
 
 export const fixtures: FixtureList = {
   'src/__fixtures__/styleguide/button.tsx': { type: 'single' },

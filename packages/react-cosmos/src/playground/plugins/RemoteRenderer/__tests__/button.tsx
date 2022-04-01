@@ -6,7 +6,7 @@ import {
   mockCore,
   mockMessageHandler,
   mockNotifications,
-} from '../../../testHelpers/pluginMocks';
+} from '../../../testHelpers/pluginMocks.js';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 

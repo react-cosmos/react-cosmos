@@ -1,12 +1,12 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
-import { createValues } from '../../../core/fixtureState/createValues';
-import { uuid } from '../../../utils/uuid';
-import { FixtureCapture } from '../FixtureCapture';
-import { testFixtureLoader } from '../testHelpers';
-import { HelloMessage } from '../testHelpers/components';
-import { anyProps } from '../testHelpers/fixtureState';
-import { wrapFixtures } from '../testHelpers/wrapFixture';
+import { createValues } from '../../../core/fixtureState/createValues.js';
+import { uuid } from '../../../utils/uuid.js';
+import { FixtureCapture } from '../FixtureCapture/index.js';
+import { HelloMessage } from '../testHelpers/components.js';
+import { anyProps } from '../testHelpers/fixtureState.js';
+import { testFixtureLoader } from '../testHelpers/index.js';
+import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 function Wrap({ children }: { children: () => React.ReactNode }) {
   return <>{children()}</>;

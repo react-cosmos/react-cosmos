@@ -1,7 +1,7 @@
 import { MessageType, NotificationsSpec, RendererCoreSpec } from 'react-cosmos';
 import { createPlugin, PluginContext } from 'react-plugin';
-import { WebpackRendererResponse } from '../rendererResponse';
-import { WebpackHmrNotificationSpec } from './spec';
+import { WebpackRendererResponse } from '../rendererResponse.js';
+import { WebpackHmrNotificationSpec } from './spec.js';
 
 type WebpackHmrNotificationContext = PluginContext<WebpackHmrNotificationSpec>;
 

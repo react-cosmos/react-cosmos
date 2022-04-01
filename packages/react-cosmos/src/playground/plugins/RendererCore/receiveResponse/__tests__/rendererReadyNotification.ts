@@ -3,10 +3,10 @@ import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   mockNotifications,
   mockRouter,
-} from '../../../../testHelpers/pluginMocks';
-import { mockRendererReady } from '../../testHelpers';
+} from '../../../../testHelpers/pluginMocks.js';
+import { mockRendererReady } from '../../testHelpers/index.js';
 
-beforeEach(() => jest.isolateModules(() => require('../..')));
+beforeEach(() => jest.isolateModules(() => require('../../index.js')));
 
 afterEach(resetPlugins);
 

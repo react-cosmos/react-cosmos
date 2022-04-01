@@ -1,5 +1,9 @@
-import { registerPlaygroundShortcuts } from '../registerPlaygroundShortcuts';
-import { RendererConnect, RendererRequest, RendererResponse } from '../types';
+import { registerPlaygroundShortcuts } from '../registerPlaygroundShortcuts.js';
+import {
+  RendererConnect,
+  RendererRequest,
+  RendererResponse,
+} from '../types.js';
 
 export function createPostMessageConnect(): RendererConnect {
   function postMessage(msg: RendererResponse) {

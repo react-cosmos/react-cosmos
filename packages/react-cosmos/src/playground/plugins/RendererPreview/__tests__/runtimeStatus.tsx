@@ -6,9 +6,9 @@ import {
   getRendererPreviewMethods,
   mockCore,
   mockRendererCore,
-} from '../../../testHelpers/pluginMocks';
-import { fakeFetchResponseStatus } from '../testHelpers/fetch';
-import { rendererErrorMsg, rendererReadyMsg } from '../testHelpers/messages';
+} from '../../../testHelpers/pluginMocks.js';
+import { fakeFetchResponseStatus } from '../testHelpers/fetch.js';
+import { rendererErrorMsg, rendererReadyMsg } from '../testHelpers/messages.js';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 

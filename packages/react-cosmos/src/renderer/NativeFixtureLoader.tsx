@@ -1,11 +1,11 @@
 import React from 'react';
 import * as ReactNative from 'react-native';
 import parse from 'url-parse';
-import { ReactDecorators, ReactFixtureWrappers } from '../core/react/types';
-import { FixtureId } from '../core/types';
-import { FixtureLoader } from './FixtureLoader/FixtureLoader';
-import { createWebSocketsConnect } from './FixtureLoader/webSockets';
-import { NativeRendererConfig } from './rendererConfig';
+import { ReactDecorators, ReactFixtureWrappers } from '../core/react/types.js';
+import { FixtureId } from '../core/types.js';
+import { FixtureLoader } from './FixtureLoader/FixtureLoader.js';
+import { createWebSocketsConnect } from './FixtureLoader/webSockets.js';
+import { NativeRendererConfig } from './rendererConfig.js';
 
 const { View, Text, StyleSheet, NativeModules } = ReactNative;
 

@@ -1,8 +1,8 @@
 import { blue } from 'chalk';
 import React from 'react';
 import styled from 'styled-components';
-import { lightBlue } from '../../../style/colors';
-import { Label, ValueDataContainer } from './shared';
+import { lightBlue } from '../../../style/colors.js';
+import { Label, ValueDataContainer } from './shared.js';
 
 type Props = {
   id: string;

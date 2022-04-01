@@ -1,8 +1,8 @@
 import { clone, setWith } from 'lodash';
-import { FixtureElementId } from '../../../core/fixtureState/types';
-import { FixtureId } from '../../../core/types';
-import { TreeExpansion } from '../../shared/treeExpansion';
-import { stringifyElementId, stringifyFixtureId } from './shared';
+import { FixtureElementId } from '../../../core/fixtureState/types.js';
+import { FixtureId } from '../../../core/types.js';
+import { TreeExpansion } from '../../shared/treeExpansion.js';
+import { stringifyElementId, stringifyFixtureId } from './shared.js';
 
 export type FixtureExpansion = Record<string, void | TreeExpansion>;
 

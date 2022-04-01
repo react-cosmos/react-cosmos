@@ -4,7 +4,7 @@ import {
   FixtureStatePrimitiveValue,
   FixtureStateUnserializableValue,
   PrimitiveData,
-} from '../../core/fixtureState/types';
+} from '../../core/fixtureState/types.js';
 
 type LeafValue = FixtureStatePrimitiveValue | FixtureStateUnserializableValue;
 

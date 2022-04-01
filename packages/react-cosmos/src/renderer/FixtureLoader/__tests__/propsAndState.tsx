@@ -1,13 +1,17 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
-import { updateFixtureStateClassState } from '../../../core/fixtureState/classState';
-import { createValues } from '../../../core/fixtureState/createValues';
-import { updateFixtureStateProps } from '../../../core/fixtureState/props';
-import { uuid } from '../../../utils/uuid';
-import { testFixtureLoader } from '../testHelpers';
-import { SuffixCounter } from '../testHelpers/components';
-import { anyClassState, anyProps, getProps } from '../testHelpers/fixtureState';
-import { wrapFixtures } from '../testHelpers/wrapFixture';
+import { updateFixtureStateClassState } from '../../../core/fixtureState/classState.js';
+import { createValues } from '../../../core/fixtureState/createValues.js';
+import { updateFixtureStateProps } from '../../../core/fixtureState/props.js';
+import { uuid } from '../../../utils/uuid.js';
+import { SuffixCounter } from '../testHelpers/components.js';
+import {
+  anyClassState,
+  anyProps,
+  getProps,
+} from '../testHelpers/fixtureState.js';
+import { testFixtureLoader } from '../testHelpers/index.js';
+import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
 const fixtures = wrapFixtures({

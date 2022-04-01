@@ -3,7 +3,7 @@
 // Set the env before any code reads it
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
-const { generateExport } = require('../dist/export/generateExport');
+const { generateExport } = require('../dist/server/export/generateExport');
 
 generateExport().catch(err => {
   console.log('[Cosmos] Export failed...');

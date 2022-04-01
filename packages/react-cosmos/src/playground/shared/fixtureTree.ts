@@ -1,6 +1,6 @@
 import { isEqual } from 'lodash';
-import { FixtureTreeNode } from '../../core/fixtureTree/types';
-import { FixtureId } from '../../core/types';
+import { FixtureTreeNode } from '../../core/fixtureTree/types.js';
+import { FixtureId } from '../../core/types.js';
 
 export function recordContainsFixtureId(
   fixtureIds: Record<string, FixtureId>,

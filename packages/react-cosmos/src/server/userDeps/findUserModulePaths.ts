@@ -1,10 +1,10 @@
 import glob from 'glob';
 import micromatch from 'micromatch';
 import {
-  getFixturePatterns,
   getDecoratorPatterns,
+  getFixturePatterns,
   getIgnorePatterns,
-} from './shared';
+} from './shared.js';
 
 type FindUserModulePathsArgs = {
   rootDir: string;

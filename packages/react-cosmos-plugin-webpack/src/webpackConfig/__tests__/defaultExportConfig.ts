@@ -6,8 +6,8 @@ import {
   RENDERER_FILENAME,
 } from 'react-cosmos/server';
 import webpack from 'webpack';
-import { getExportWebpackConfig } from '../getExportWebpackConfig';
-import { HtmlWebpackPlugin } from '../htmlPlugin';
+import { getExportWebpackConfig } from '../getExportWebpackConfig.js';
+import { HtmlWebpackPlugin } from '../htmlPlugin.js';
 
 afterAll(() => {
   unmockCliArgs();

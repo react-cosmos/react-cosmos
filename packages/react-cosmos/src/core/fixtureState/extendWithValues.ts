@@ -1,5 +1,5 @@
-import { isArray, isObject } from './shared';
-import { FixtureStateValue, FixtureStateValues, ObjectData } from './types';
+import { isArray, isObject } from './shared.js';
+import { FixtureStateValue, FixtureStateValues, ObjectData } from './types.js';
 
 // Use fixture state for serializable values and fall back to base values
 export function extendWithValues(

@@ -1,8 +1,8 @@
 import chalk from 'chalk';
 import { readFile, writeFile } from 'fs';
 import glob from 'glob';
-import { getCliArgs } from 'react-cosmos/src/server';
 import rimraf from 'rimraf';
+import { argv } from 'yargs';
 
 type ArgValue = void | null | boolean | number | string;
 
@@ -12,8 +12,6 @@ export const globAsync = asyncify(glob);
 export const readFileAsync = asyncify(readFile);
 export const writeFileAsync = asyncify(writeFile);
 export const rimrafAsync = asyncify(rimraf);
-
-const cliArgs = getCliArgs();
 
 // Packages are built in this order
 const packageMap = {
@@ -38,11 +36,11 @@ export function getFormattedPackageList() {
 }
 
 export function getUnnamedArg(index: number = 0): void | number | string {
-  return cliArgs._[index];
+  return argv._[index];
 }
 
 export function getNamedArg(name: string): ArgValue {
-  return cliArgs[name] as ArgValue;
+  return argv[name] as ArgValue;
 }
 
 export function getBoolArg(name: string): boolean {

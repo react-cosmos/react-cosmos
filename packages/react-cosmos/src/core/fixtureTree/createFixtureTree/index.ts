@@ -1,12 +1,12 @@
-import { sortTreeChildren } from '../../../utils/tree';
-import { FixtureList } from '../../types';
-import { FixtureTreeNode } from '../types';
-import { collapseFixtureDirs } from './collapseFixtureDirs';
-import { collapseIndexes } from './collapseIndexes';
-import { collapseNamedIndexes } from './collapseNamedIndexes';
-import { collapseOuterDirs } from './collapseOuterDirs';
-import { createRawFixtureTree } from './createRawFixtureTree';
-import { hideFixtureSuffix } from './hideFixtureSuffix';
+import { sortTreeChildren } from '../../../utils/tree.js';
+import { FixtureList } from '../../types.js';
+import { FixtureTreeNode } from '../types.js';
+import { collapseFixtureDirs } from './collapseFixtureDirs.js';
+import { collapseIndexes } from './collapseIndexes.js';
+import { collapseNamedIndexes } from './collapseNamedIndexes.js';
+import { collapseOuterDirs } from './collapseOuterDirs.js';
+import { createRawFixtureTree } from './createRawFixtureTree.js';
+import { hideFixtureSuffix } from './hideFixtureSuffix.js';
 
 export function createFixtureTree({
   fixtures,

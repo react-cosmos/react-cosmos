@@ -1,8 +1,8 @@
 import { set } from 'lodash';
 import React from 'react';
-import { isReactElement } from '../../../../../utils/react/isReactElement';
-import { getExpectedElementAtPath } from './getElementAtPath';
-import { isRootPath } from './shared';
+import { isReactElement } from '../../../../../utils/react/isReactElement.js';
+import { getExpectedElementAtPath } from './getElementAtPath.js';
+import { isRootPath } from './shared.js';
 
 export function setElementAtPath(
   node: React.ReactNode,

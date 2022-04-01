@@ -9,16 +9,16 @@ import {
 import {
   findFixtureStateClassState,
   updateFixtureStateClassState,
-} from '../../../../core/fixtureState/classState';
-import { createValues } from '../../../../core/fixtureState/createValues';
-import { extendWithValues } from '../../../../core/fixtureState/extendWithValues';
+} from '../../../../core/fixtureState/classState.js';
+import { createValues } from '../../../../core/fixtureState/createValues.js';
+import { extendWithValues } from '../../../../core/fixtureState/extendWithValues.js';
 import {
   FixtureDecoratorId,
   FixtureStateClassState,
-} from '../../../../core/fixtureState/types';
-import { FixtureContext } from '../../../FixtureContext';
-import { findRelevantElementPaths } from '../shared/findRelevantElementPaths';
-import { ElRefs } from './shared';
+} from '../../../../core/fixtureState/types.js';
+import { FixtureContext } from '../../../FixtureContext.js';
+import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
+import { ElRefs } from './shared.js';
 
 // How often to check the state of the loaded component and update the fixture
 // state if it changed

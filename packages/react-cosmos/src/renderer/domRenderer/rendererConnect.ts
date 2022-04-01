@@ -1,6 +1,6 @@
-import { createPostMessageConnect } from '../FixtureLoader/postMessage';
-import { createWebSocketsConnect } from '../FixtureLoader/webSockets';
-import { isInsideCosmosPreviewIframe } from './isInsideCosmosPreviewIframe';
+import { createPostMessageConnect } from '../FixtureLoader/postMessage.js';
+import { createWebSocketsConnect } from '../FixtureLoader/webSockets.js';
+import { isInsideCosmosPreviewIframe } from './isInsideCosmosPreviewIframe.js';
 
 export const rendererConnect = isInsideCosmosPreviewIframe()
   ? createPostMessageConnect()

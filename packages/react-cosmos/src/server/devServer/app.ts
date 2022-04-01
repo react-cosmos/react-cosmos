@@ -1,9 +1,9 @@
 import express from 'express';
 import resolveFrom from 'resolve-from';
-import { CosmosConfig } from '../cosmosConfig/types';
-import { CosmosPluginConfig, PlatformType } from '../cosmosPlugin/types';
-import { getDevPlaygroundHtml } from '../shared/playgroundHtml';
-import { getStaticPath } from '../shared/staticServer';
+import { CosmosConfig } from '../cosmosConfig/types.js';
+import { CosmosPluginConfig, PlatformType } from '../cosmosPlugin/types.js';
+import { getDevPlaygroundHtml } from '../shared/playgroundHtml.js';
+import { getStaticPath } from '../shared/staticServer.js';
 
 export function createApp(
   platformType: PlatformType,

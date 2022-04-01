@@ -1,11 +1,11 @@
 import until from 'async-until';
 import { ReactTestRenderer } from 'react-test-renderer';
-import { FixtureState } from '../../../core/fixtureState/types';
+import { FixtureState } from '../../../core/fixtureState/types.js';
 import {
   ReactDecorators,
   ReactFixtureWrappers,
-} from '../../../core/react/types';
-import { FixtureId } from '../../../core/types';
+} from '../../../core/react/types.js';
+import { FixtureId } from '../../../core/types.js';
 import {
   FixtureListUpdateResponse,
   FixtureStateChangeResponse,
@@ -16,7 +16,7 @@ import {
   SelectFixtureRequest,
   SetFixtureStateRequest,
   UnselectFixtureRequest,
-} from '../../types';
+} from '../../types.js';
 
 export type RendererMessage = RendererResponse | RendererRequest;
 

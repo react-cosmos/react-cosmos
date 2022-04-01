@@ -1,5 +1,5 @@
 import { ComponentType, FunctionComponent, ReactNode } from 'react';
-import { FixtureState, SetFixtureState } from '../fixtureState/types';
+import { FixtureState, SetFixtureState } from '../fixtureState/types.js';
 
 // These generic types keep Cosmos slightly more decoupled from React
 type FixtureMap<FixtureType> = { [fixtureName: string]: FixtureType };

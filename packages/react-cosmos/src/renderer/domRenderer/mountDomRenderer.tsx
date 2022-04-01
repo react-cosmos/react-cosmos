@@ -1,10 +1,13 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { ReactDecorators, ReactFixtureWrappers } from '../../core/react/types';
-import { DomRendererConfig } from '../rendererConfig';
-import { DomFixtureLoader } from './DomFixtureLoader';
-import { getDomContainer } from './getDomContainer';
-import './globalErrorHandler';
+import {
+  ReactDecorators,
+  ReactFixtureWrappers,
+} from '../../core/react/types.js';
+import { DomRendererConfig } from '../rendererConfig.js';
+import { DomFixtureLoader } from './DomFixtureLoader.js';
+import { getDomContainer } from './getDomContainer.js';
+import './globalErrorHandler.js';
 
 type Args = {
   rendererConfig: DomRendererConfig;
