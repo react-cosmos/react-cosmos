@@ -3,12 +3,12 @@ import React, { RefObject } from 'react';
 import styled from 'styled-components';
 import { FixtureId } from '../../../../renderer/types';
 import { FixtureTreeNode } from '../../../../utils/fixtureTree/shared/types';
+import { TreeView } from '../../../shared/TreeView';
+import { grey32 } from '../../../ui/colors';
 import {
   nodeContainsFixtureId,
   recordContainsFixtureId,
-} from '../../../shared/fixtureTree';
-import { TreeView } from '../../../shared/TreeView';
-import { grey32 } from '../../../ui/colors';
+} from '../../../utils/fixtureTree';
 import { TreeExpansion } from '../../../utils/treeExpansion';
 import { FixtureButton } from './FixtureButton';
 import { FixtureDir } from './FixtureDir';

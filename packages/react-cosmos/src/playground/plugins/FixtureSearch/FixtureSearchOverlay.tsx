@@ -15,14 +15,6 @@ import {
   flattenFixtureTree,
 } from '../../../utils/fixtureTree/flattenFixtureTree';
 import {
-  KEY_DOWN,
-  KEY_ENTER,
-  KEY_ESC,
-  KEY_FWD_SLASH,
-  KEY_TAB,
-  KEY_UP,
-} from '../../shared/keys';
-import {
   black60,
   grey128,
   grey160,
@@ -34,6 +26,14 @@ import {
 } from '../../ui/colors';
 import { HelpCircleIcon, SearchIcon } from '../../ui/components/icons';
 import { quick } from '../../ui/vars';
+import {
+  KEY_DOWN,
+  KEY_ENTER,
+  KEY_ESC,
+  KEY_FWD_SLASH,
+  KEY_TAB,
+  KEY_UP,
+} from '../../utils/keys';
 import { FixtureSearchResult } from './FixtureSearchResult';
 import { FixtureSearchShortcuts } from './FixtureSearchShortcuts';
 
