@@ -2,7 +2,7 @@ import React from 'react';
 import { ArraySlot } from 'react-plugin';
 import styled from 'styled-components';
 import { FixtureId } from '../../../renderer/types';
-import { grey176, grey32, white10 } from '../../core/colors';
+import { grey176, grey32, white10 } from '../../style/colors';
 
 type Props = {
   selectedFixtureId: FixtureId | null;

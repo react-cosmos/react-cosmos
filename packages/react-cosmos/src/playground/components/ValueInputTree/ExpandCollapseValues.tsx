@@ -1,13 +1,13 @@
 import React from 'react';
 import { FixtureStateValues } from '../../../utils/fixtureState/types';
-import { IconButton32 } from '../../components/buttons';
-import { MinusSquareIcon, PlusSquareIcon } from '../../components/icons';
 import {
   getFullTreeExpansion,
   hasExpandableNodes,
   isTreeFullyCollapsed,
   TreeExpansion,
 } from '../../utils/treeExpansion';
+import { IconButton32 } from '../buttons';
+import { MinusSquareIcon, PlusSquareIcon } from '../icons';
 import { createValueTree } from './valueTree';
 
 type Props = {

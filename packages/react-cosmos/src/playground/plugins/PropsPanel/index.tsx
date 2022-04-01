@@ -10,7 +10,7 @@ import {
   getFixtureExpansion,
   hasFsValues,
   updateElementExpansion,
-} from '../../shared/valueInputTree';
+} from '../../components/ValueInputTree';
 import { SidePanelRowSlotProps } from '../../slots/SidePanelRowSlot';
 import { TreeExpansion } from '../../utils/treeExpansion';
 import { StorageSpec } from '../Storage/spec';

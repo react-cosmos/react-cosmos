@@ -1,13 +1,13 @@
 import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { getRouterMethods, onRouter } from '../../../testHelpers/pluginMocks';
-import { getUrlParams, resetUrl } from '../../../testHelpers/url';
+import { getUrlParams, resetUrlParams } from '../../../testHelpers/urlParams';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(() => {
   resetPlugins();
-  resetUrl();
+  resetUrlParams();
 });
 
 const fixtureId = { path: 'zwei.js' };

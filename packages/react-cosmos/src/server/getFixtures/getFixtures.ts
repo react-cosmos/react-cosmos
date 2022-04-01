@@ -1,13 +1,13 @@
 import path from 'path';
 import url from 'url';
-import {
-  stringifyPlaygroundUrlQuery,
-  stringifyRendererUrlQuery,
-} from '../../playground/playgroundUrl';
 import { getDecoratedFixtureElement } from '../../renderer/FixtureLoader/getDecoratedFixtureElement';
 import { FixtureId } from '../../renderer/types';
 import { createFixtureTree } from '../../utils/fixtureTree/createFixtureTree';
 import { flattenFixtureTree } from '../../utils/fixtureTree/flattenFixtureTree';
+import {
+  stringifyPlaygroundUrlQuery,
+  stringifyRendererUrlQuery,
+} from '../../utils/playgroundUrl';
 import { getFixtureListFromExports } from '../../utils/react/getFixtureList';
 import { getSortedDecoratorsForFixturePath } from '../../utils/react/getSortedDecoratorsForFixturePath';
 import {

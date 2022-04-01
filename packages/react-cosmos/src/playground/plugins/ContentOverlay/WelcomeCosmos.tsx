@@ -8,7 +8,7 @@ import {
   screenPrimary1,
   screenPrimary2,
   screenPrimary3,
-} from '../../core/colors';
+} from '../../style/colors';
 import {
   ContentContainer,
   IllustrationContainer,

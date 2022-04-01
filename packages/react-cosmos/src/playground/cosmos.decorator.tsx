@@ -1,5 +1,5 @@
 import React from 'react';
-import { CosmosGlobalStyle, GlobalStyle } from './global/style';
+import { CosmosGlobalStyle, GlobalStyle } from './style/globalStyle';
 
 export default ({ children }: { children: React.ReactNode }) => (
   <>

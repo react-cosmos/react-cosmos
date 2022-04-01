@@ -1,5 +1,5 @@
+import { parseRendererUrlQuery } from '../../utils/playgroundUrl';
 import { FixtureId } from '../types';
-import { parseRendererUrlQuery } from '../../playground/playgroundUrl';
 import { isInsideCosmosPreviewIframe } from './isInsideCosmosPreviewIframe';
 
 export const selectedFixtureId = getSelectedFixtureId();

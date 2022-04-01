@@ -1,4 +1,4 @@
-import { parseUrlQuery, stringifyUrlQuery } from '../playgroundUrl';
+import { parseUrlQuery, stringifyUrlQuery } from '../../utils/playgroundUrl';
 
 type Params = Record<string, unknown>;
 
@@ -17,6 +17,6 @@ export function popUrlParams(params: Params) {
   window.dispatchEvent(new Event('popstate'));
 }
 
-export function resetUrl() {
+export function resetUrlParams() {
   pushUrlParams({});
 }

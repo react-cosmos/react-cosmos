@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 type UseDragArgs = {
   value: number;
@@ -24,9 +24,9 @@ export function useDrag({
   max = 99999,
   onChange,
 }: UseDragArgs) {
-  const [dragState, setDragState] = React.useState<null | DragState>(null);
+  const [dragState, setDragState] = useState<null | DragState>(null);
 
-  const handleDrag = React.useCallback(
+  const handleDrag = useCallback(
     (e: MouseEvent) => {
       if (dragState) {
         const { startValue, startOffset } = dragState;
@@ -43,11 +43,11 @@ export function useDrag({
     [direction, double, dragState, max, min, onChange, reverse]
   );
 
-  const handleDragEnd = React.useCallback(() => {
+  const handleDragEnd = useCallback(() => {
     setDragState(null);
   }, []);
 
-  const handleDragStart = React.useCallback(
+  const handleDragStart = useCallback(
     (e: MouseEvent) => {
       setDragState({
         startValue: value,
@@ -57,7 +57,7 @@ export function useDrag({
     [direction, value]
   );
 
-  React.useEffect((): void | (() => void) => {
+  useEffect((): void | (() => void) => {
     if (dragState) {
       document.addEventListener('mousemove', handleDrag);
       document.addEventListener('mouseup', handleDragEnd);
@@ -77,8 +77,8 @@ export function useDrag({
   // Safety aside, if re-creating the ref callback so often proves to be a perf
   // concern, we can make handleDragStart depend on a constant ref that stays
   // in sync with "value".
-  const onUnmount = React.useRef<(() => unknown) | null>(null);
-  const dragElRef = React.useCallback(
+  const onUnmount = useRef<(() => unknown) | null>(null);
+  const dragElRef = useCallback(
     (elRef: HTMLElement | null) => {
       if (elRef) {
         elRef.addEventListener('mousedown', handleDragStart);

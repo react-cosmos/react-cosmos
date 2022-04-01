@@ -5,8 +5,8 @@ import {
   FixtureStateStandardControl,
   FixtureStateValues,
 } from '../../../utils/fixtureState/types';
-import { ValueInputTree } from '../../shared/valueInputTree';
-import { ExpandCollapseValues } from '../../shared/valueInputTree/ExpandCollapseValues';
+import { ValueInputTree } from '../../components/ValueInputTree';
+import { ExpandCollapseValues } from '../../components/ValueInputTree/ExpandCollapseValues';
 import { ControlActionSlotProps } from '../../slots/ControlActionSlot';
 import { ControlSlotProps } from '../../slots/ControlSlot';
 import { StandardControlSpec } from './spec';

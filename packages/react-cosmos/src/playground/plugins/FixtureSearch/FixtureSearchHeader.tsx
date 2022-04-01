@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { IconButton32 } from '../../components/buttons';
 import { ChevronLeftIcon, SearchIcon } from '../../components/icons';
 import { KeyBox } from '../../components/KeyBox';
-import { blue, grey160, grey32, white10 } from '../../core/colors';
+import { blue, grey160, grey32, white10 } from '../../style/colors';
 
 type Props = {
   validFixtureSelected: boolean;

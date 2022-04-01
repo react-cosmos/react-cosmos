@@ -9,9 +9,9 @@ import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import * as ReactPlugin from 'react-plugin';
 import { CosmosPluginConfig } from '../server/cosmosPlugin/getCosmosPluginConfigs';
-import { GlobalStyle } from './global/style';
 import { CoreSpec } from './plugins/Core/spec';
-import { DEFAULT_PLUGIN_CONFIG } from './shared/plugin';
+import { GlobalStyle } from './style/globalStyle';
+import { DEFAULT_PLUGIN_CONFIG } from './utils/defaultPluginConfig';
 
 import './plugins/pluginEntry';
 

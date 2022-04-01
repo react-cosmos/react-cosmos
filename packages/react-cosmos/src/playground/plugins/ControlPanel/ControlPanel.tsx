@@ -9,12 +9,12 @@ import { StateUpdater } from '../../../utils/types';
 import { IconButton32 } from '../../components/buttons';
 import { RotateCcwIcon } from '../../components/icons';
 import {
-  Actions,
-  Body,
-  Container,
-  Header,
-  Title,
-} from '../../shared/sidePanelUi';
+  SidePanelActions,
+  SidePanelBody,
+  SidePanelContainer,
+  SidePanelHeader,
+  SidePanelTitle,
+} from '../../components/SidePanel';
 import { ControlActionSlot } from '../../slots/ControlActionSlot';
 import { ControlSlot } from '../../slots/ControlSlot';
 
@@ -38,10 +38,10 @@ export function ControlPanel({
   if (Object.keys(controls).length === 0) return null;
 
   return (
-    <Container>
-      <Header>
-        <Title label="Controls" />
-        <Actions>
+    <SidePanelContainer>
+      <SidePanelHeader>
+        <SidePanelTitle label="Controls" />
+        <SidePanelActions>
           <IconButton32
             title="Reset to default values"
             icon={<RotateCcwIcon />}
@@ -52,9 +52,9 @@ export function ControlPanel({
             slotProps={{ controls }}
             plugOrder={controlActionOrder}
           />
-        </Actions>
-      </Header>
-      <Body>
+        </SidePanelActions>
+      </SidePanelHeader>
+      <SidePanelBody>
         {Object.keys(controls).map(controlName => (
           <ControlSlot
             key={controlName}
@@ -65,8 +65,8 @@ export function ControlPanel({
             }}
           />
         ))}
-      </Body>
-    </Container>
+      </SidePanelBody>
+    </SidePanelContainer>
   );
 }
 

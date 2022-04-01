@@ -1,13 +1,13 @@
 import { blue } from 'chalk';
 import React from 'react';
+import { useFocus } from '../../../hooks/useFocus';
+import { grey248, grey8 } from '../../../style/colors';
 import {
   TextContainer,
   TextField,
   TextInputContainer,
   TextMirror,
-} from '../../../components/inputs/shared';
-import { grey248, grey8 } from '../../../core/colors';
-import { useFocus } from '../../useFocus';
+} from '../../inputs/shared';
 import { Label, ValueDataContainer } from './shared';
 
 type Props = {

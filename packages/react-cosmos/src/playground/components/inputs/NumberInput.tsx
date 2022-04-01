@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useFocus } from '../../shared/useFocus';
+import { useFocus } from '../../hooks/useFocus';
 import { KEY_DOWN, KEY_UP } from '../../utils/keys';
 import {
   TextContainer,

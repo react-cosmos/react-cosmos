@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { FixtureId } from '../../../../renderer/types';
 import { FixtureTreeNode } from '../../../../utils/fixtureTree/shared/types';
 import { TreeView } from '../../../components/TreeView';
-import { grey32 } from '../../../core/colors';
+import { grey32 } from '../../../style/colors';
 import {
   nodeContainsFixtureId,
   recordContainsFixtureId,

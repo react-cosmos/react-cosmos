@@ -12,8 +12,8 @@ import {
   grey216,
   grey248,
   grey8,
-} from '../../../core/colors';
-import { quick } from '../../../core/vars';
+} from '../../../style/colors';
+import { quick } from '../../../style/vars';
 import { ResponsiveDevice, Viewport } from '../spec';
 
 type Props = {

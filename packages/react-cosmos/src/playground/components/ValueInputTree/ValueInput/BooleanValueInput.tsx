@@ -1,7 +1,7 @@
 import { blue } from 'chalk';
 import React from 'react';
 import styled from 'styled-components';
-import { lightBlue } from '../../../core/colors';
+import { lightBlue } from '../../../style/colors';
 import { Label, ValueDataContainer } from './shared';
 
 type Props = {

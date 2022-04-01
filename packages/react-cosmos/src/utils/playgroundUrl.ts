@@ -1,5 +1,13 @@
 import qs from 'query-string';
-import { PlaygroundUrlParams, RendererUrlParams } from './types';
+import { FixtureId } from '../renderer/types';
+
+export type PlaygroundUrlParams = {
+  fixtureId?: FixtureId;
+};
+
+export type RendererUrlParams = {
+  _fixtureId?: FixtureId;
+};
 
 type EncodedPlaygroundUrlParams = {
   fixtureId?: string;

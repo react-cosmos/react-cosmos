@@ -1,12 +1,12 @@
 import React from 'react';
 import { FixtureStateSelectControl } from '../../../utils/fixtureState/types';
 import { Select } from '../../components/inputs/Select';
-import { lightBlue } from '../../core/colors';
 import {
   Label,
   ValueDataContainer,
   ValueInputContainer,
-} from '../../shared/valueInputTree/ValueInput/shared';
+} from '../../components/ValueInputTree/ValueInput/shared';
+import { lightBlue } from '../../style/colors';
 
 type Props = {
   name: string;

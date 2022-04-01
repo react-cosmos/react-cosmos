@@ -1,9 +1,6 @@
 // UI components
 export * from './playground/components/buttons';
 export * from './playground/components/icons';
-// UI core
-export * from './playground/core/colors';
-export * from './playground/core/vars';
 // UI plugin specs
 export * from './playground/plugins/BuildNotifications/spec';
 export * from './playground/plugins/ClassStatePanel/spec';
@@ -36,6 +33,9 @@ export * from './playground/slots/NavRowSlot';
 export * from './playground/slots/RendererActionSlot';
 export * from './playground/slots/SidePanelRowSlot';
 export * from './playground/slots/ValueInputSlot';
+// UI style
+export * from './playground/style/colors';
+export * from './playground/style/vars';
 // UI plugin mocks
 export * from './playground/testHelpers/pluginMocks';
 // Utils

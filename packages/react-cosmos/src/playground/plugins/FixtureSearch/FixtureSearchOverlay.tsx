@@ -24,8 +24,8 @@ import {
   grey224,
   grey248,
   grey64,
-} from '../../core/colors';
-import { quick } from '../../core/vars';
+} from '../../style/colors';
+import { quick } from '../../style/vars';
 import {
   KEY_DOWN,
   KEY_ENTER,

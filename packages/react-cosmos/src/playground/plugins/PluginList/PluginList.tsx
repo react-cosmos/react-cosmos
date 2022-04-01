@@ -1,7 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { grey224 } from '../../core/colors';
-import { Container, Header, Title } from '../../shared/sidePanelUi';
+import {
+  SidePanelContainer,
+  SidePanelHeader,
+  SidePanelTitle,
+} from '../../components/SidePanel';
+import { grey224 } from '../../style/colors';
 
 export type SimplePlugin = {
   name: string;
@@ -25,10 +29,10 @@ const requiredPlugins = [
 
 export function PluginList({ plugins, enable }: Props) {
   return (
-    <Container>
-      <Header>
-        <Title label="Plugins" />
-      </Header>
+    <SidePanelContainer>
+      <SidePanelHeader>
+        <SidePanelTitle label="Plugins" />
+      </SidePanelHeader>
       <Body>
         {[...plugins]
           .sort((p1, p2) => p1.name.localeCompare(p2.name))
@@ -44,7 +48,7 @@ export function PluginList({ plugins, enable }: Props) {
             </Label>
           ))}
       </Body>
-    </Container>
+    </SidePanelContainer>
   );
 }
 

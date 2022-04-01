@@ -4,14 +4,14 @@ import { getRouterMethods, onRouter } from '../../../testHelpers/pluginMocks';
 import {
   getUrlParams,
   pushUrlParams,
-  resetUrl,
-} from '../../../testHelpers/url';
+  resetUrlParams,
+} from '../../../testHelpers/urlParams';
 
 beforeEach(() => jest.isolateModules(() => require('..')));
 
 afterEach(() => {
   resetPlugins();
-  resetUrl();
+  resetUrlParams();
 });
 
 const fixtureId = { path: 'zwei.js' };

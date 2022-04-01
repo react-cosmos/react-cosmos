@@ -7,7 +7,7 @@ import {
   createGreyColor,
   grey64,
   selectedColors,
-} from '../../core/colors';
+} from '../../style/colors';
 
 type Props = {
   active: boolean;

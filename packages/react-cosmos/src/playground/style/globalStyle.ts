@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
-import { grey8, white3 } from '../core/colors';
-import { fontFamily } from '../core/vars';
+import { grey8, white3 } from './colors';
+import { fontFamily } from './vars';
 
 export const GlobalStyle = createGlobalStyle`
   html {

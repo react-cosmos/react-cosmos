@@ -10,9 +10,9 @@ import {
   SlidersIcon,
   XCircleIcon,
 } from '../../components/icons';
-import { grey176, grey32, white10 } from '../../core/colors';
 import { FixtureActionSlot } from '../../slots/FixtureActionSlot';
 import { RendererActionSlot } from '../../slots/RendererActionSlot';
+import { grey176, grey32, white10 } from '../../style/colors';
 
 type Props = {
   fixtureItems: FlatFixtureTreeItem[];

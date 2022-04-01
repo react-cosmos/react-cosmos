@@ -1,8 +1,8 @@
 import { blue } from 'chalk';
-import React from 'react';
+import React, { ChangeEvent, useCallback } from 'react';
 import styled from 'styled-components';
-import { grey32 } from '../../core/colors';
-import { useFocus } from '../../shared/useFocus';
+import { useFocus } from '../../hooks/useFocus';
+import { grey32 } from '../../style/colors';
 import { ChevronDownIcon } from '../icons';
 
 type BaseOption = { value: string; label: string };
@@ -32,8 +32,8 @@ export function Select<Option extends BaseOption>({
 }: Props<Option>) {
   const { focused, onFocus, onBlur } = useFocus();
 
-  const onInputChange = React.useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const onInputChange = useCallback(
+    (e: ChangeEvent<HTMLSelectElement>) => {
       const option = options.find(o => o.value === e.target.value);
       if (!option) {
         throw new Error(`Select value doesn't match any option`);

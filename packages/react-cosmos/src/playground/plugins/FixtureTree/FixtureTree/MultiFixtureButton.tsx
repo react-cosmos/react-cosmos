@@ -2,7 +2,7 @@ import { isEqual } from 'lodash';
 import React, { RefObject } from 'react';
 import styled from 'styled-components';
 import { FixtureId } from '../../../../renderer/types';
-import { grey8 } from '../../../core/colors';
+import { grey8 } from '../../../style/colors';
 import { FixtureLink } from './FixtureLink';
 import { FixtureTreeItem } from './FixtureTreeItem';
 import { MultiFixtureChildButton } from './MultiFixtureChildButton';

@@ -10,19 +10,19 @@ import { StateUpdater } from '../../../../utils/types';
 import { IconButton32 } from '../../../components/buttons';
 import { RotateCcwIcon } from '../../../components/icons';
 import {
-  Actions,
-  Body,
-  Container,
-  Header,
-  Title,
-} from '../../../shared/sidePanelUi';
+  SidePanelActions,
+  SidePanelBody,
+  SidePanelContainer,
+  SidePanelHeader,
+  SidePanelTitle,
+} from '../../../components/SidePanel';
 import {
   FixtureExpansion,
   OnElementExpansionChange,
   stringifyElementId,
   ValueInputTree,
-} from '../../../shared/valueInputTree';
-import { ExpandCollapseValues } from '../../../shared/valueInputTree/ExpandCollapseValues';
+} from '../../../components/ValueInputTree';
+import { ExpandCollapseValues } from '../../../components/ValueInputTree/ExpandCollapseValues';
 import { TreeExpansion } from '../../../utils/treeExpansion';
 import { createClassStateFsUpdater } from './shared';
 
@@ -80,10 +80,10 @@ export function ComponentClassState({
   );
 
   return (
-    <Container>
-      <Header>
-        <Title label="Class State" componentName={componentName} />
-        <Actions>
+    <SidePanelContainer>
+      <SidePanelHeader>
+        <SidePanelTitle label="Class State" componentName={componentName} />
+        <SidePanelActions>
           <IconButton32
             title="Reset to initial values"
             icon={<RotateCcwIcon />}
@@ -95,9 +95,9 @@ export function ComponentClassState({
             expansion={expansion}
             setExpansion={setExpansion}
           />
-        </Actions>
-      </Header>
-      <Body>
+        </SidePanelActions>
+      </SidePanelHeader>
+      <SidePanelBody>
         <ValueInputTree
           id={strElementId}
           values={values}
@@ -105,7 +105,7 @@ export function ComponentClassState({
           onValueChange={handleValueChange}
           setExpansion={setExpansion}
         />
-      </Body>
-    </Container>
+      </SidePanelBody>
+    </SidePanelContainer>
   );
 }

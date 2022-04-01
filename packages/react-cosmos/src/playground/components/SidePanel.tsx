@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { grey128, grey160, grey32, white10 } from '../core/colors';
+import { grey128, grey160, grey32, white10 } from '../style/colors';
 
-export const Container = styled.div`
+export const SidePanelContainer = styled.div`
   background: ${grey32};
   border-top: 1px solid ${white10};
 
@@ -11,7 +11,7 @@ export const Container = styled.div`
   }
 `;
 
-export const Header = styled.div`
+export const SidePanelHeader = styled.div`
   height: 40px;
   padding: 0 4px 0 24px;
   display: flex;
@@ -25,7 +25,7 @@ type TitleProps = {
   componentName?: string;
 };
 
-export function Title({ label, componentName }: TitleProps) {
+export function SidePanelTitle({ label, componentName }: TitleProps) {
   return (
     <TitleContainer>
       <TitleLabel>{label}</TitleLabel>
@@ -37,6 +37,23 @@ export function Title({ label, componentName }: TitleProps) {
     </TitleContainer>
   );
 }
+
+export const SidePanelActions = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  > button {
+    margin-left: 4px;
+
+    :first-child {
+      margin-left: 0;
+    }
+  }
+`;
+
+export const SidePanelBody = styled.div`
+  padding: 0 4px 8px 4px;
+`;
 
 const TitleContainer = styled.div`
   color: ${grey128};
@@ -52,21 +69,4 @@ const TitleLabel = styled.span`
 const ComponentName = styled.span`
   padding-left: 8px;
   color: ${grey160};
-`;
-
-export const Actions = styled.div`
-  display: flex;
-  flex-direction: row;
-
-  > button {
-    margin-left: 4px;
-
-    :first-child {
-      margin-left: 0;
-    }
-  }
-`;
-
-export const Body = styled.div`
-  padding: 0 4px 8px 4px;
 `;

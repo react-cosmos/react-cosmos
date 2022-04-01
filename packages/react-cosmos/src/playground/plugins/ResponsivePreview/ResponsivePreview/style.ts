@@ -1,4 +1,4 @@
-import { white20 } from '../../../core/colors';
+import { white20 } from '../../../style/colors';
 import { Viewport } from '../spec';
 
 export const responsivePreviewPadding = {

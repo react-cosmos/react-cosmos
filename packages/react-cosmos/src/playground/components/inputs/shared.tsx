@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { lightBlue } from '../../core/colors';
+import { lightBlue } from '../../style/colors';
 
 export const TextInputContainer = styled.div<{
   focused: boolean;

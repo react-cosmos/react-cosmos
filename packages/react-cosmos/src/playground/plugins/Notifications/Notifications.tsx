@@ -6,8 +6,8 @@ import {
   InfoIcon,
   LoaderIcon,
 } from '../../components/icons';
-import { grey128, grey32, grey64, grey8, white95 } from '../../core/colors';
-import { quick } from '../../core/vars';
+import { grey128, grey32, grey64, grey8, white95 } from '../../style/colors';
+import { quick } from '../../style/vars';
 import { NotificationItem, NotificationType } from './spec';
 
 type Props = {

@@ -6,7 +6,7 @@ import {
   screenGrey5,
   screenPrimary2,
   screenPrimary3,
-} from '../../core/colors';
+} from '../../style/colors';
 import {
   ContentContainer,
   IllustrationContainer,

@@ -13,19 +13,19 @@ import { StateUpdater } from '../../../../utils/types';
 import { IconButton32 } from '../../../components/buttons';
 import { CopyIcon, RotateCcwIcon } from '../../../components/icons';
 import {
-  Actions,
-  Body,
-  Container,
-  Header,
-  Title,
-} from '../../../shared/sidePanelUi';
+  SidePanelActions,
+  SidePanelBody,
+  SidePanelContainer,
+  SidePanelHeader,
+  SidePanelTitle,
+} from '../../../components/SidePanel';
 import {
   FixtureExpansion,
   OnElementExpansionChange,
   stringifyElementId,
   ValueInputTree,
-} from '../../../shared/valueInputTree';
-import { ExpandCollapseValues } from '../../../shared/valueInputTree/ExpandCollapseValues';
+} from '../../../components/ValueInputTree';
+import { ExpandCollapseValues } from '../../../components/ValueInputTree/ExpandCollapseValues';
 import { TreeExpansion } from '../../../utils/treeExpansion';
 import { createPropsFsUpdater } from './shared';
 
@@ -87,10 +87,10 @@ export function ComponentProps({
   );
 
   return (
-    <Container>
-      <Header>
-        <Title label="Props" componentName={componentName} />
-        <Actions>
+    <SidePanelContainer>
+      <SidePanelHeader>
+        <SidePanelTitle label="Props" componentName={componentName} />
+        <SidePanelActions>
           <IconButton32
             title="Reset to initial values"
             icon={<RotateCcwIcon />}
@@ -109,9 +109,9 @@ export function ComponentProps({
             expansion={expansion}
             setExpansion={setExpansion}
           />
-        </Actions>
-      </Header>
-      <Body>
+        </SidePanelActions>
+      </SidePanelHeader>
+      <SidePanelBody>
         <ValueInputTree
           id={strElementId}
           values={values}
@@ -119,7 +119,7 @@ export function ComponentProps({
           setExpansion={setExpansion}
           onValueChange={handleValueChange}
         />
-      </Body>
-    </Container>
+      </SidePanelBody>
+    </SidePanelContainer>
   );
 }
