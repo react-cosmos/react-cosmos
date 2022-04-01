@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { BlankCanvasIllustration } from '../../components/illustrations/BlankCanvas';
 import { screenGrey3 } from '../../core/colors';
-import { BlankCanvasIllustration } from '../../shared/illustrations/BlankCanvas';
 import { KeyShortcut } from './KeyShortcut';
 import {
   ContentContainer,

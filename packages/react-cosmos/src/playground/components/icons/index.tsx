@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '../svg';
+import { Icon } from '../Icon';
 
 // Add common interface to each icon when needed
 type Props = {

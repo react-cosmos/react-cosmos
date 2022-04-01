@@ -1,6 +1,6 @@
 import React from 'react';
-import { Illustration } from '../../components/Illustration';
 import { screenGrey5, screenPrimary3 } from '../../core/colors';
+import { Illustration } from '../Illustration';
 
 export const ArtificialIntelligenceIllustration = ({
   title,
