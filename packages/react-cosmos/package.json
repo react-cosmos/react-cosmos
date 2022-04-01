@@ -35,6 +35,7 @@
     "fuzzaldrin-plus": "^0.6.0",
     "localforage": "^1.10.0",
     "react-element-to-jsx-string": "^14.3.4",
+    "react-plugin": "^3.0.0-alpha.4",
     "socket.io-client": "2.2.0",
     "styled-components": "^5.3.3"
   },

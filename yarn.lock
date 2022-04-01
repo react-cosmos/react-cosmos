@@ -8510,15 +8510,6 @@ qs@~6.5.2:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.3.tgz#3aeeffc91967ef6e35c0e488ef46fb296ab76aad"
   integrity sha512-qxXIEh4pCGfHICj1mAJQ2/2XVZkjCDTcEgfoSQxc/fYivUZxTkk7L3bDBJSoNrEzXI17oUO5Dp07ktqE5KzczA==
 
-query-string@5.1.1:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/query-string/-/query-string-5.1.1.tgz#a78c012b71c17e05f2e3fa2319dd330682efb3cb"
-  integrity sha512-gjWOsm2SoGlgLEdAGt7a6slVOk9mGiXmPFMqrEhLQ68rhQuBnpfs3+EmlvqKyxnCo9/PPlF+9MtY02S1aFg+Jw==
-  dependencies:
-    decode-uri-component "^0.2.0"
-    object-assign "^4.1.0"
-    strict-uri-encode "^1.0.0"
-
 query-string@7.1.1:
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/query-string/-/query-string-7.1.1.tgz#754620669db978625a90f635f12617c271a088e1"
@@ -8595,22 +8586,6 @@ react-cosmos-playground2@^5.7.2:
   version "5.7.2"
   resolved "https://registry.yarnpkg.com/react-cosmos-playground2/-/react-cosmos-playground2-5.7.2.tgz#416937e936f2b4c192c627e63454c37c45d7f0bd"
   integrity sha512-k2OaXTq02wve8zv0tYhCxy5DomlOU+N62Wn/OaFxKQkszqadjynXnS8PpoHA5j2rEpBN4sbJW12Q+CztCBXhpQ==
-
-react-cosmos-plugin@^5.6.0:
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/react-cosmos-plugin/-/react-cosmos-plugin-5.6.0.tgz#03c0eda6be9075e5c91d7557aca054340a694b77"
-  integrity sha512-3yphEQ8nDDMiCChenz9sPyABqz/Z7daGhl1xElKpVKWziwX8OKoMxHFr4DrTZgxnRy4dTPyTsC20O0tLEfSD/A==
-
-react-cosmos-shared2@^5.7.1:
-  version "5.7.1"
-  resolved "https://registry.yarnpkg.com/react-cosmos-shared2/-/react-cosmos-shared2-5.7.1.tgz#a98736844b8ab9635c03262dbee928aeab18c4c6"
-  integrity sha512-zN2hoKd4+RBcqE7aac8vwjKoisTAIB9+XOwq6Mpec3e4U76Az2MEBsadwdNVqmsVI6RTRPcKnxRZ1AEMUVMUCA==
-  dependencies:
-    lodash "^4.17.21"
-    query-string "5.1.1"
-    react-element-to-jsx-string "^14.3.4"
-    react-is "^17.0.2"
-    socket.io-client "2.2.0"
 
 react-dom@^17.0.2:
   version "17.0.2"
@@ -9600,11 +9575,6 @@ stream-events@^1.0.5:
   integrity sha512-E1GUzBSgvct8Jsb3v2X15pjzN1tYebtbLaMg+eBOUOAxgbLoSbT2NS91ckc5lJD1KfLjId+jXJRgo0qnV5Nerg==
   dependencies:
     stubs "^3.0.0"
-
-strict-uri-encode@^1.0.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-1.1.0.tgz#279b225df1d582b1f54e65addd4352e18faa0713"
-  integrity sha1-J5siXfHVgrH1TmWt3UNS4Y+qBxM=
 
 strict-uri-encode@^2.0.0:
   version "2.0.0"

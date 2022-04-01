@@ -5,9 +5,11 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-plugin-open-fixture",
   "license": "MIT",
   "main": "cosmos.plugin.json",
-  "dependencies": {
-    "react-cosmos-plugin": "^5.6.0",
-    "react-cosmos-shared2": "^5.7.1",
+  "dependencies": {},
+  "devDependencies": {
     "react-plugin": "^3.0.0-alpha.4"
+  },
+  "peerDependencies": {
+    "react-cosmos": "^5.7.2"
   }
 }

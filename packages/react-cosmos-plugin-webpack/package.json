@@ -8,7 +8,9 @@
   "dependencies": {
     "webpack-dev-middleware": "^4.3.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "react-plugin": "^3.0.0-alpha.4"
+  },
   "peerDependencies": {
     "react-cosmos": "^5.7.2"
   }
