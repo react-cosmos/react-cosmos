@@ -1,7 +1,10 @@
 import React from 'react';
-import { FixtureId, RendererActionSlotProps } from 'react-cosmos/src';
-import { CoreSpec } from 'react-cosmos/src/playground/plugins/Core/spec';
-import { NotificationsSpec } from 'react-cosmos/src/playground/plugins/Notifications/spec';
+import {
+  CoreSpec,
+  FixtureId,
+  NotificationsSpec,
+  RendererActionSlotProps,
+} from 'react-cosmos';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { OpenFixtureButton } from './OpenFixtureButton';
 import { OpenFixtureSpec } from './spec';

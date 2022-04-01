@@ -1,5 +1,5 @@
 import React from 'react';
-import { EditIcon, IconButton32 } from 'react-cosmos/src';
+import { EditIcon, IconButton32 } from 'react-cosmos';
 
 type Props = {
   onClick: () => unknown;

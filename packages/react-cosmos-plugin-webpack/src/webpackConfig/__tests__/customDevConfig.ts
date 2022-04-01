@@ -4,9 +4,8 @@ import {
   mockConsole,
   mockFile,
   unmockCliArgs,
-} from 'react-cosmos/src/jest';
-
-import { createCosmosConfig, RENDERER_FILENAME } from 'react-cosmos/src/server';
+} from 'react-cosmos/jest';
+import { createCosmosConfig, RENDERER_FILENAME } from 'react-cosmos/server';
 import webpack from 'webpack';
 import { getDevWebpackConfig } from '../getDevWebpackConfig';
 import { HtmlWebpackPlugin } from '../htmlPlugin';

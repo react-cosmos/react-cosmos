@@ -1,4 +1,4 @@
-import { CosmosConfig } from 'react-cosmos/src/server';
+import { CosmosConfig } from 'react-cosmos/server';
 
 type DomCosmosConfig = {
   containerQuerySelector: null | string;

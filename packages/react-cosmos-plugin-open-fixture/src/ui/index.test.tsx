@@ -6,8 +6,8 @@ import {
   mockCore,
   mockNotifications,
   RendererActionSlot,
-} from 'react-cosmos/src';
-import { mockFetch } from 'react-cosmos/src/jest';
+} from 'react-cosmos';
+import { mockFetch } from 'react-cosmos/jest';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 
 beforeEach(() => jest.isolateModules(() => require('.')));

@@ -1,9 +1,5 @@
 import path from 'path';
-import {
-  CosmosConfig,
-  fileExists,
-  resolveModule,
-} from 'react-cosmos/src/server';
+import { CosmosConfig, fileExists, resolveModule } from 'react-cosmos/server';
 
 type WebpackCosmosConfig = {
   configPath: null | string;

@@ -1,4 +1,4 @@
-import { CosmosConfig } from 'react-cosmos/src/server';
+import { CosmosConfig } from 'react-cosmos/server';
 import webpack from 'webpack';
 import { getWebpackNodeEnv } from './getWebpackNodeEnv';
 

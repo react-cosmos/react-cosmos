@@ -1,8 +1,8 @@
-import { DomRendererConfig } from 'react-cosmos/src';
+import { DomRendererConfig } from 'react-cosmos';
 import {
   detectCosmosConfig,
   generateUserDepsModule,
-} from 'react-cosmos/src/server';
+} from 'react-cosmos/server';
 import { createDomCosmosConfig } from '../cosmosConfig/createDomCosmosConfig';
 
 // XXX: Loader types are currently missing in webpack 5

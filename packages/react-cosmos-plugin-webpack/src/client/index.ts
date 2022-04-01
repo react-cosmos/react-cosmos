@@ -1,4 +1,4 @@
-import { mountDomRenderer } from 'react-cosmos/src/dom';
+import { mountDomRenderer } from 'react-cosmos/dom';
 import { dismissErrorOverlay } from './errorOverlay';
 import './hmrErrorHandler';
 

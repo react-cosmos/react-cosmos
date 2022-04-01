@@ -1,5 +1,5 @@
 import React from 'react';
-import { useValue } from 'react-cosmos/src';
+import { useValue } from 'react-cosmos';
 import { CounterButton } from './CounterButton';
 
 export default () => {

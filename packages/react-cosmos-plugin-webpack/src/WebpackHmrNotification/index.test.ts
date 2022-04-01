@@ -3,7 +3,7 @@ import {
   getRendererCoreContext,
   mockNotifications,
   mockRendererCore,
-} from 'react-cosmos/src';
+} from 'react-cosmos';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 
 beforeEach(() => jest.isolateModules(() => require('.')));

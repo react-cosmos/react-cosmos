@@ -1,4 +1,4 @@
-import { RENDERER_FILENAME } from 'react-cosmos/src/server';
+import { RENDERER_FILENAME } from 'react-cosmos/server';
 import resolveFrom from 'resolve-from';
 import webpack from 'webpack';
 import { getWebpackNodeEnv } from './getWebpackNodeEnv';
