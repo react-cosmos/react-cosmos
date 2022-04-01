@@ -1,6 +1,6 @@
 import React from 'react';
 import { FixtureState } from '../../../../utils/fixtureState/types';
-import { StateUpdater } from '../../../../utils/state';
+import { StateUpdater } from '../../../../utils/types';
 import {
   FixtureExpansion,
   hasFsValues,

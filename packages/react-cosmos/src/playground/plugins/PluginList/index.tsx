@@ -1,7 +1,7 @@
 import React from 'react';
 import { createPlugin, PluginsConsumer } from 'react-plugin';
-import { PluginListSpec } from '../../../ui/specs/PluginListSpec';
 import { PluginList } from './PluginList';
+import { PluginListSpec } from './spec';
 
 const { plug, register } = createPlugin<PluginListSpec>({
   name: 'pluginList',

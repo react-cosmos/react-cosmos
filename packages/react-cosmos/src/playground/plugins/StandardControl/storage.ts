@@ -1,8 +1,8 @@
 import React from 'react';
 import { PluginContext } from 'react-plugin';
-import { StandardControlSpec } from '../../../ui/specs/StandardControlSpec';
-import { StorageSpec } from '../../../ui/specs/StorageSpec';
 import { TreeExpansion } from '../../shared/treeExpansion';
+import { StorageSpec } from '../Storage/spec';
+import { StandardControlSpec } from './spec';
 
 const storageKey = 'standardControlTreeExpansion';
 const emptyTreeExpansion = {};

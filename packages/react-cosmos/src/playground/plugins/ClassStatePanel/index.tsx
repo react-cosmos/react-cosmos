@@ -2,8 +2,6 @@ import React from 'react';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { FixtureId } from '../../../renderer/types';
 import { SidePanelRowSlotProps } from '../../../ui/slots/SidePanelRowSlot';
-import { ClassStatePanelSpec } from '../../../ui/specs/ClassStatePanelSpec';
-import { StorageSpec } from '../../../ui/specs/StorageSpec';
 import { FixtureElementId } from '../../../utils/fixtureState/types';
 import { TreeExpansion } from '../../shared/treeExpansion';
 import {
@@ -11,8 +9,10 @@ import {
   getFixtureExpansion,
   updateElementExpansion,
 } from '../../shared/valueInputTree';
+import { StorageSpec } from '../Storage/spec';
 import { ClassStatePanel } from './ClassStatePanel';
 import { CLASS_STATE_TREE_EXPANSION_STORAGE_KEY } from './shared';
+import { ClassStatePanelSpec } from './spec';
 
 type ClassStatePanelContext = PluginContext<ClassStatePanelSpec>;
 

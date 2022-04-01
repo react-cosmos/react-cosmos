@@ -6,7 +6,7 @@ import { grey32, grey8, white10 } from '../../../ui/colors';
 import { NavRowSlot } from '../../../ui/slots/NavRowSlot';
 import { FixtureState } from '../../../utils/fixtureState/types';
 import { FlatFixtureTreeItem } from '../../../utils/fixtureTree/flattenFixtureTree';
-import { StateUpdater } from '../../../utils/state';
+import { StateUpdater } from '../../../utils/types';
 import { useDrag } from '../../shared/useDrag';
 import { GlobalHeader } from './GlobalHeader';
 import { RendererHeader } from './RendererHeader';

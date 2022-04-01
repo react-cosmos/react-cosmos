@@ -1,13 +1,11 @@
 import React from 'react';
-import { FixtureId } from 'react-cosmos-shared2/renderer';
-import {
-  CoreSpec,
-  NotificationsSpec,
-  RendererActionSlotProps,
-} from 'react-cosmos-shared2/ui';
+import { CoreSpec } from 'react-cosmos/src/playground/plugins/Core/spec';
+import { NotificationsSpec } from 'react-cosmos/src/playground/plugins/Notifications/spec';
+import { FixtureId } from 'react-cosmos/src/renderer/types';
+import { RendererActionSlotProps } from 'react-cosmos/src/ui/slots/RendererActionSlot';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { OpenFixtureButton } from './OpenFixtureButton';
-import { OpenFixtureSpec } from './OpenFixtureSpec';
+import { OpenFixtureSpec } from './spec';
 
 type OpenFixtureContext = PluginContext<OpenFixtureSpec>;
 

@@ -1,4 +1,4 @@
-import { StorageSpec } from '../../../ui/specs/StorageSpec';
+import { StorageSpec } from '../Storage/spec';
 import { RootContext } from './shared';
 
 const PANEL_WIDTH_STORAGE_KEY = 'panelWidth';

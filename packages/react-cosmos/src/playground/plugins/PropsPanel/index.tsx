@@ -2,8 +2,6 @@ import React from 'react';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { FixtureId } from '../../../renderer/types';
 import { SidePanelRowSlotProps } from '../../../ui/slots/SidePanelRowSlot';
-import { PropsPanelSpec } from '../../../ui/specs/PropsPanelSpec';
-import { StorageSpec } from '../../../ui/specs/StorageSpec';
 import {
   FixtureElementId,
   FixtureState,
@@ -15,9 +13,11 @@ import {
   hasFsValues,
   updateElementExpansion,
 } from '../../shared/valueInputTree';
+import { StorageSpec } from '../Storage/spec';
 import { BlankState } from './BlankState';
 import { PropsPanel } from './PropsPanel';
 import { PROPS_TREE_EXPANSION_STORAGE_KEY } from './shared';
+import { PropsPanelSpec } from './spec';
 
 type PropsPanelContext = PluginContext<PropsPanelSpec>;
 

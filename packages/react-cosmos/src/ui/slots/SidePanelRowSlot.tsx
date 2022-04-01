@@ -2,7 +2,7 @@ import React from 'react';
 import { ArraySlot } from 'react-plugin';
 import { FixtureId } from '../../renderer/types';
 import { FixtureState } from '../../utils/fixtureState/types';
-import { StateUpdater } from '../../utils/state';
+import { StateUpdater } from '../../utils/types';
 
 export type SidePanelRowSlotProps = {
   fixtureId: FixtureId;

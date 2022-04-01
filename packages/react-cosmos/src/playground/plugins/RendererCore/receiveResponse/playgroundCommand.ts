@@ -1,5 +1,5 @@
 import { PlaygroundCommandResponse } from '../../../../renderer/types';
-import { CoreSpec } from '../../../../ui/specs/CoreSpec';
+import { CoreSpec } from '../../Core/spec';
 import { RendererCoreContext } from '../shared';
 
 export function receivePlaygroundCommandResponse(

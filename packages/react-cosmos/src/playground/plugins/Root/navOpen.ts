@@ -1,4 +1,4 @@
-import { StorageSpec } from '../../../ui/specs/StorageSpec';
+import { StorageSpec } from '../Storage/spec';
 import { RootContext } from './shared';
 
 export const NAV_OPEN_STORAGE_KEY = 'navOpen';

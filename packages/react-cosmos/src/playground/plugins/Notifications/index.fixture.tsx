@@ -1,12 +1,9 @@
 import React from 'react';
 import { useSelect } from '../../../renderer/useSelect';
-import {
-  Notification,
-  NotificationType,
-} from '../../../ui/specs/NotificationsSpec';
 import { Notifications } from './Notifications';
+import { NotificationItem, NotificationType } from './spec';
 
-type Args = Pick<Notification, 'id' | 'title' | 'info'>;
+type Args = Pick<NotificationItem, 'id' | 'title' | 'info'>;
 
 const titles: Record<NotificationType, string> = {
   error: 'Build failed',
@@ -70,18 +67,26 @@ export default {
   ),
 };
 
-function createSuccessNotification({ id, title, info }: Args): Notification {
+function createSuccessNotification({
+  id,
+  title,
+  info,
+}: Args): NotificationItem {
   return { id, type: 'success', title, info };
 }
 
-function createErrorNotification({ id, title, info }: Args): Notification {
+function createErrorNotification({ id, title, info }: Args): NotificationItem {
   return { id, type: 'error', title, info };
 }
 
-function createInfoNotification({ id, title, info }: Args): Notification {
+function createInfoNotification({ id, title, info }: Args): NotificationItem {
   return { id, type: 'info', title, info };
 }
 
-function createLoadingNotification({ id, title, info }: Args): Notification {
+function createLoadingNotification({
+  id,
+  title,
+  info,
+}: Args): NotificationItem {
   return { id, type: 'loading', title, info };
 }

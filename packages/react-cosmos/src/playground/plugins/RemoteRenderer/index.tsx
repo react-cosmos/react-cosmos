@@ -1,13 +1,13 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { CoreSpec } from '../../../ui/specs/CoreSpec';
-import { MessageHandlerSpec } from '../../../ui/specs/MessageHandlerSpec';
-import { NotificationsSpec } from '../../../ui/specs/NotificationsSpec';
-import { RemoteRendererSpec } from '../../../ui/specs/RemoteRendererSpec';
-import { RendererCoreSpec } from '../../../ui/specs/RendererCoreSpec';
-import { MessageType } from '../../../utils/message';
+import { MessageType } from '../../../utils/types';
+import { CoreSpec } from '../Core/spec';
+import { MessageHandlerSpec } from '../MessageHandler/spec';
+import { NotificationsSpec } from '../Notifications/spec';
+import { RendererCoreSpec } from '../RendererCore/spec';
 import { RemoteButton } from './RemoteButton';
 import { RemoteRendererContext } from './shared';
+import { RemoteRendererSpec } from './spec';
 
 const { onLoad, on, namedPlug, register } = createPlugin<RemoteRendererSpec>({
   name: 'remoteRenderer',

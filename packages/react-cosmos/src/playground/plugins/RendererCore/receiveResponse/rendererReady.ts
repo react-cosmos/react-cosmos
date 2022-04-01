@@ -3,8 +3,8 @@ import {
   RendererId,
   RendererReadyResponse,
 } from '../../../../renderer/types';
-import { NotificationsSpec } from '../../../../ui/specs/NotificationsSpec';
-import { RouterSpec } from '../../../../ui/specs/RouterSpec';
+import { NotificationsSpec } from '../../Notifications/spec';
+import { RouterSpec } from '../../Router/spec';
 import { RendererCoreContext, State } from '../shared';
 import { postSelectFixtureRequest } from '../shared/postRequest';
 import { getSelectedFixtureId } from '../shared/router';

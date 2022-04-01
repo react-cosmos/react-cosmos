@@ -1,11 +1,11 @@
 import { FixtureId } from '../../../renderer/types';
-import { CoreSpec } from '../../../ui/specs/CoreSpec';
-import { RendererCoreSpec } from '../../../ui/specs/RendererCoreSpec';
-import { StorageSpec } from '../../../ui/specs/StorageSpec';
 import { createFixtureTree } from '../../../utils/fixtureTree/createFixtureTree';
 import { FixtureTreeNode } from '../../../utils/fixtureTree/shared/types';
 import { nodeContainsFixtureId } from '../../shared/fixtureTree';
 import { TreeExpansion } from '../../shared/treeExpansion';
+import { CoreSpec } from '../Core/spec';
+import { RendererCoreSpec } from '../RendererCore/spec';
+import { StorageSpec } from '../Storage/spec';
 import {
   FixtureTreeContext,
   getTreeExpansion,

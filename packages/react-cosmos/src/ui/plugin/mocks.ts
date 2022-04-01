@@ -5,14 +5,14 @@ import {
   PluginWithEvents,
   PluginWithMethods,
 } from 'react-plugin';
-import { CoreSpec } from '../specs/CoreSpec';
-import { FixtureTreeSpec } from '../specs/FixtureTreeSpec';
-import { MessageHandlerSpec } from '../specs/MessageHandlerSpec';
-import { NotificationsSpec } from '../specs/NotificationsSpec';
-import { RendererCoreSpec } from '../specs/RendererCoreSpec';
-import { RendererPreviewSpec } from '../specs/RendererPreviewSpec';
-import { RouterSpec } from '../specs/RouterSpec';
-import { StorageSpec } from '../specs/StorageSpec';
+import { CoreSpec } from '../../playground/plugins/Core/spec';
+import { FixtureTreeSpec } from '../../playground/plugins/FixtureTree/spec';
+import { MessageHandlerSpec } from '../../playground/plugins/MessageHandler/spec';
+import { NotificationsSpec } from '../../playground/plugins/Notifications/spec';
+import { RendererCoreSpec } from '../../playground/plugins/RendererCore/spec';
+import { RendererPreviewSpec } from '../../playground/plugins/RendererPreview/spec';
+import { RouterSpec } from '../../playground/plugins/Router/spec';
+import { StorageSpec } from '../../playground/plugins/Storage/spec';
 import { getMethodsOf, mockMethodsOf, on } from './helpers';
 
 type MethodsOf<Spec extends PluginWithMethods> = Partial<

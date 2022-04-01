@@ -1,10 +1,7 @@
 import { PluginContext } from 'react-plugin';
-import {
-  ResponsivePreviewSpec,
-  Viewport,
-} from '../../../ui/specs/ResponsivePreviewSpec';
-import { StorageSpec } from '../../../ui/specs/StorageSpec';
 import { FixtureState } from '../../../utils/fixtureState/types';
+import { StorageSpec } from '../Storage/spec';
+import { ResponsivePreviewSpec, Viewport } from './spec';
 
 export type ResponsivePreviewContext = PluginContext<ResponsivePreviewSpec>;
 

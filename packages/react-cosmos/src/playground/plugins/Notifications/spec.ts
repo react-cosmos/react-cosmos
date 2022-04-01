@@ -1,6 +1,6 @@
 export type NotificationType = 'success' | 'error' | 'info' | 'loading';
 
-export type Notification = {
+export type NotificationItem = {
   id: string;
   type: NotificationType;
   title: string;
@@ -10,15 +10,15 @@ export type Notification = {
 export type NotificationsSpec = {
   name: 'notifications';
   state: {
-    stickyNotifications: Notification[];
+    stickyNotifications: NotificationItem[];
     timedNotifications: null | {
       timeoutId: number;
-      items: Notification[];
+      items: NotificationItem[];
     };
   };
   methods: {
-    pushStickyNotification(notification: Notification): void;
+    pushStickyNotification(notification: NotificationItem): void;
     removeStickyNotification(notificationId: string): void;
-    pushTimedNotification(notification: Notification): void;
+    pushTimedNotification(notification: NotificationItem): void;
   };
 };

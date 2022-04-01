@@ -1,18 +1,18 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { CoreSpec } from '../../../ui/specs/CoreSpec';
-import { RendererCoreSpec } from '../../../ui/specs/RendererCoreSpec';
-import { RootSpec } from '../../../ui/specs/RootSpec';
-import { RouterSpec } from '../../../ui/specs/RouterSpec';
-import { StorageSpec } from '../../../ui/specs/StorageSpec';
 import { createFixtureTree } from '../../../utils/fixtureTree/createFixtureTree';
 import { flattenFixtureTree } from '../../../utils/fixtureTree/flattenFixtureTree';
+import { CoreSpec } from '../Core/spec';
+import { RendererCoreSpec } from '../RendererCore/spec';
+import { RouterSpec } from '../Router/spec';
+import { StorageSpec } from '../Storage/spec';
 import { isNavOpen, openNav } from './navOpen';
 import { getNavWidthApi } from './navWidth';
 import { isPanelOpen, openPanel } from './panelOpen';
 import { getPanelWidthApi } from './panelWidth';
 import { Root } from './Root';
 import { RootContext } from './shared';
+import { RootSpec } from './spec';
 
 const { onLoad, plug, register } = createPlugin<RootSpec>({
   name: 'root',

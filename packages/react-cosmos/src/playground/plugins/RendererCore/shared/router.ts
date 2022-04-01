@@ -1,4 +1,4 @@
-import { RouterSpec } from '../../../../ui/specs/RouterSpec';
+import { RouterSpec } from '../../Router/spec';
 import { RendererCoreContext } from '../shared';
 
 export function getSelectedFixtureId({ getMethodsOf }: RendererCoreContext) {

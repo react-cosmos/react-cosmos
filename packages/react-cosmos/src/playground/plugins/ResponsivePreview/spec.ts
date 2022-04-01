@@ -1,12 +1,12 @@
 export type Viewport = { width: number; height: number };
 
-export type Device = Viewport & {
+export type ResponsiveDevice = Viewport & {
   label: string;
 };
 
 export type ResponsivePreviewSpec = {
   name: 'responsivePreview';
   config: {
-    devices: Device[];
+    devices: ResponsiveDevice[];
   };
 };

@@ -1,5 +1,5 @@
 import { RendererResponse } from '../../../../renderer/types';
-import { MessageType } from '../../../../utils/message';
+import { MessageType } from '../../../../utils/types';
 import { RendererCoreContext } from '../shared';
 import { receiveFixtureListUpdateResponse } from './fixtureListUpdate';
 import { receiveFixtureStateChangeResponse } from './fixtureStateChange';

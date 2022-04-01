@@ -1,10 +1,10 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { ContentOverlaySpec } from '../../../ui/specs/ContentOverlaySpec';
-import { RendererCoreSpec } from '../../../ui/specs/RendererCoreSpec';
-import { RendererPreviewSpec } from '../../../ui/specs/RendererPreviewSpec';
-import { RouterSpec } from '../../../ui/specs/RouterSpec';
+import { RendererCoreSpec } from '../RendererCore/spec';
+import { RendererPreviewSpec } from '../RendererPreview/spec';
+import { RouterSpec } from '../Router/spec';
 import { ContentOverlay } from './ContentOverlay';
+import { ContentOverlaySpec } from './spec';
 import { useWelcomeDismiss } from './welcomeDismiss';
 
 const { plug, register } = createPlugin<ContentOverlaySpec>({

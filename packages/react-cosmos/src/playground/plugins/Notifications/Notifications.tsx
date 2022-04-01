@@ -7,14 +7,11 @@ import {
   InfoIcon,
   LoaderIcon,
 } from '../../../ui/components/icons';
-import {
-  Notification,
-  NotificationType,
-} from '../../../ui/specs/NotificationsSpec';
 import { quick } from '../../../ui/vars';
+import { NotificationItem, NotificationType } from './spec';
 
 type Props = {
-  notifications: Notification[];
+  notifications: NotificationItem[];
 };
 
 export function Notifications({ notifications }: Props) {

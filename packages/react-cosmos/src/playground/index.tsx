@@ -1,19 +1,20 @@
 // Do not change the import order in this file!
 import 'regenerator-runtime/runtime';
-import 'core-js/features/promise';
 import 'core-js/features/array/find';
 import 'core-js/features/array/includes';
+import 'core-js/features/promise';
 import 'whatwg-fetch';
 
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import * as ReactPlugin from 'react-plugin';
 import { CosmosPluginConfig } from '../server/cosmosPlugin/getCosmosPluginConfigs';
-import { CoreSpec } from '../ui/specs/CoreSpec';
 import { GlobalStyle } from './global/style';
+import { CoreSpec } from './plugins/Core/spec';
 import { DEFAULT_PLUGIN_CONFIG } from './shared/plugin';
 
 import './plugins/pluginEntry';
+
 declare global {
   interface Window {
     ReactPlugin: any;

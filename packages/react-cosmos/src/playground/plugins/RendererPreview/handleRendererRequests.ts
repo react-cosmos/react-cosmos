@@ -1,5 +1,5 @@
-import { NotificationsSpec } from '../../../ui/specs/NotificationsSpec';
-import { MessageType } from '../../../utils/message';
+import { MessageType } from '../../../utils/types';
+import { NotificationsSpec } from '../Notifications/spec';
 import { RendererPreviewContext } from './shared';
 
 type State = {

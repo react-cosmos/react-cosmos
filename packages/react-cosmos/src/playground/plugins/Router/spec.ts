@@ -1,5 +1,5 @@
-import { PlaygroundUrlParams } from '../../playground/types';
-import { FixtureId } from '../../renderer/types';
+import { FixtureId } from '../../../renderer/types';
+import { PlaygroundUrlParams } from '../../types';
 
 export type RouterSpec = {
   name: 'router';

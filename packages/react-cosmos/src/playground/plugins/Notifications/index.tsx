@@ -1,6 +1,5 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { NotificationsSpec } from '../../../ui/specs/NotificationsSpec';
 import { Notifications } from './Notifications';
 import {
   clearTimedNotification,
@@ -8,6 +7,7 @@ import {
   pushTimedNotification,
   removeStickyNotification,
 } from './pushNotification';
+import { NotificationsSpec } from './spec';
 
 const { register, onLoad, namedPlug } = createPlugin<NotificationsSpec>({
   name: 'notifications',

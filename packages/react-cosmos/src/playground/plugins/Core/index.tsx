@@ -1,7 +1,7 @@
 import { omit } from 'lodash';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { registerPlaygroundShortcuts } from '../../../renderer/registerPlaygroundShortcuts';
-import { Commands, CoreSpec } from '../../../ui/specs/CoreSpec';
+import { Commands, CoreSpec } from './spec';
 
 type CoreContext = PluginContext<CoreSpec>;
 

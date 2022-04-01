@@ -1,5 +1,5 @@
-import { RendererCoreSpec } from '../../../ui/specs/RendererCoreSpec';
-import { StorageSpec } from '../../../ui/specs/StorageSpec';
+import { RendererCoreSpec } from '../RendererCore/spec';
+import { StorageSpec } from '../Storage/spec';
 import { RootContext } from './shared';
 
 export const PANEL_OPEN_STORAGE_KEY = 'sidePanelOpen';

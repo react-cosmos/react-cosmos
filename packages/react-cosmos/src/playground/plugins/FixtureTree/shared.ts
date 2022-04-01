@@ -1,7 +1,7 @@
 import { PluginContext } from 'react-plugin';
-import { FixtureTreeSpec } from '../../../ui/specs/FixtureTreeSpec';
-import { StorageSpec } from '../../../ui/specs/StorageSpec';
 import { TreeExpansion } from '../../shared/treeExpansion';
+import { StorageSpec } from '../Storage/spec';
+import { FixtureTreeSpec } from './spec';
 
 export type FixtureTreeContext = PluginContext<FixtureTreeSpec>;
 

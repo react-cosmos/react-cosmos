@@ -3,15 +3,15 @@ import React from 'react';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { FixtureId } from '../../../renderer/types';
 import { FixtureActionSlotProps } from '../../../ui/slots/FixtureActionSlot';
-import { CoreSpec } from '../../../ui/specs/CoreSpec';
-import { FixtureBookmarkSpec } from '../../../ui/specs/FixtureBookmarkSpec';
-import { RendererCoreSpec } from '../../../ui/specs/RendererCoreSpec';
-import { RouterSpec } from '../../../ui/specs/RouterSpec';
-import { StorageSpec } from '../../../ui/specs/StorageSpec';
 import { createFixtureTree } from '../../../utils/fixtureTree/createFixtureTree';
 import { flattenFixtureTree } from '../../../utils/fixtureTree/flattenFixtureTree';
+import { CoreSpec } from '../Core/spec';
+import { RendererCoreSpec } from '../RendererCore/spec';
+import { RouterSpec } from '../Router/spec';
+import { StorageSpec } from '../Storage/spec';
 import { BookmarkFixtureButton } from './BookmarkFixtureButton';
 import { FixtureBookmarks } from './FixtureBookmarks';
+import { FixtureBookmarkSpec } from './spec';
 
 type FixtureBookmarkContext = PluginContext<FixtureBookmarkSpec>;
 

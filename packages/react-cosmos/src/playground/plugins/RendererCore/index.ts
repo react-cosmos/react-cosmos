@@ -1,12 +1,12 @@
 import { createPlugin } from 'react-plugin';
 import { RendererId } from '../../../renderer/types';
-import { RendererCoreSpec } from '../../../ui/specs/RendererCoreSpec';
-import { RouterSpec } from '../../../ui/specs/RouterSpec';
+import { RouterSpec } from '../Router/spec';
 import { isValidFixtureSelected } from './isValidFixtureSelected';
 import { onRouterFixtureChange } from './onRouterFixtureChange';
 import { receiveResponse } from './receiveResponse';
 import { setFixtureState } from './setFixtureState';
 import { RendererCoreContext } from './shared';
+import { RendererCoreSpec } from './spec';
 
 const { on, register } = createPlugin<RendererCoreSpec>({
   name: 'rendererCore',

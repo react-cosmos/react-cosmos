@@ -1,13 +1,13 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { CoreSpec } from '../../../ui/specs/CoreSpec';
-import { RendererCoreSpec } from '../../../ui/specs/RendererCoreSpec';
-import { RendererPreviewSpec } from '../../../ui/specs/RendererPreviewSpec';
+import { CoreSpec } from '../Core/spec';
+import { RendererCoreSpec } from '../RendererCore/spec';
 import { checkRendererStatus } from './checkRendererStatus';
 import { createRendererRequestHandler } from './handleRendererRequests';
 import { handleWindowMessages } from './handleWindowMessages';
 import { RendererPreview } from './RendererPreview';
 import { RendererPreviewContext } from './shared';
+import { RendererPreviewSpec } from './spec';
 
 const { postRendererRequest, setIframeRef } = createRendererRequestHandler();
 

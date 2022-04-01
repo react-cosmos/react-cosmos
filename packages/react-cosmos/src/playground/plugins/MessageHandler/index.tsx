@@ -1,6 +1,6 @@
 import { createPlugin } from 'react-plugin';
-import { MessageHandlerSpec } from '../../../ui/specs/MessageHandlerSpec';
 import { initSocket, postRendererRequest } from './socket';
+import { MessageHandlerSpec } from './spec';
 
 const { onLoad, register } = createPlugin<MessageHandlerSpec>({
   name: 'messageHandler',

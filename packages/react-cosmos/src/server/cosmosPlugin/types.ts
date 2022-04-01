@@ -1,6 +1,6 @@
 import express from 'express';
 import http from 'http';
-import { MessageType } from '../../utils/message';
+import { MessageType } from '../../utils/types';
 import { CosmosConfig } from '../cosmosConfig/types';
 
 export type PlatformType = 'web' | 'native';

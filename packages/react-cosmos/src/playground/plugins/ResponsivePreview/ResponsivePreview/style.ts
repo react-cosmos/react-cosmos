@@ -1,5 +1,5 @@
 import { white20 } from '../../../../ui/colors';
-import { Viewport } from '../../../../ui/specs/ResponsivePreviewSpec';
+import { Viewport } from '../spec';
 
 export const responsivePreviewPadding = {
   top: 8,

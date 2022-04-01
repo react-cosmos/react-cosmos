@@ -1,4 +1,4 @@
-import { FixtureId } from '../../renderer/types';
+import { FixtureId } from '../../../renderer/types';
 
 export type FixtureTreeSpec = {
   name: 'fixtureTree';

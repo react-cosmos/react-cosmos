@@ -10,8 +10,8 @@ import React, {
 } from 'react';
 import styled, { css } from 'styled-components';
 import { grey64, grey8 } from '../../../../ui/colors';
-import { Device, Viewport } from '../../../../ui/specs/ResponsivePreviewSpec';
 import { useDrag } from '../../../shared/useDrag';
+import { ResponsiveDevice, Viewport } from '../spec';
 import { Header } from './Header';
 import {
   getStyles,
@@ -23,7 +23,7 @@ import {
 
 type Props = {
   children?: ReactNode;
-  devices: Device[];
+  devices: ResponsiveDevice[];
   enabled: boolean;
   viewport: Viewport;
   scaled: boolean;

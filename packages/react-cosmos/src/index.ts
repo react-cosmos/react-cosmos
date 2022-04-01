@@ -1,1 +1,1 @@
-// export { MessageType } from './utils/message';
+// export { MessageType } from './utils/types';

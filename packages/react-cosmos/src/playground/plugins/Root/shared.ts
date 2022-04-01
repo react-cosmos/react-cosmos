@@ -1,4 +1,4 @@
 import { PluginContext } from 'react-plugin';
-import { RootSpec } from '../../../ui/specs/RootSpec';
+import { RootSpec } from './spec';
 
 export type RootContext = PluginContext<RootSpec>;

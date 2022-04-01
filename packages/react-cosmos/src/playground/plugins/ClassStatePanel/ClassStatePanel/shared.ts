@@ -4,7 +4,7 @@ import {
   FixtureState,
   FixtureStateClassState,
 } from '../../../../utils/fixtureState/types';
-import { StateUpdater } from '../../../../utils/state';
+import { StateUpdater } from '../../../../utils/types';
 import { stringifyElementId } from '../../../shared/valueInputTree';
 
 export function createClassStateFsUpdater(

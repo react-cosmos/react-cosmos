@@ -8,7 +8,7 @@ import {
   FixtureStateClassState,
   FixtureStateValues,
 } from '../../../../utils/fixtureState/types';
-import { StateUpdater } from '../../../../utils/state';
+import { StateUpdater } from '../../../../utils/types';
 import {
   Actions,
   Body,

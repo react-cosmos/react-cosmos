@@ -1,5 +1,5 @@
 import React from 'react';
-import { StorageSpec } from '../../../ui/specs/StorageSpec';
+import { StorageSpec } from '../Storage/spec';
 import { ContentOverlayContext } from './shared';
 
 export const WELCOME_DISMISS_STORAGE_KEY = 'welcomeDismissedAt';

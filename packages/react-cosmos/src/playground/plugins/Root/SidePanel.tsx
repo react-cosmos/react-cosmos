@@ -4,7 +4,7 @@ import { FixtureId } from '../../../renderer/types';
 import { grey32 } from '../../../ui/colors';
 import { SidePanelRowSlot } from '../../../ui/slots/SidePanelRowSlot';
 import { FixtureState } from '../../../utils/fixtureState/types';
-import { StateUpdater } from '../../../utils/state';
+import { StateUpdater } from '../../../utils/types';
 
 type Props = {
   fixtureId: FixtureId;

@@ -10,14 +10,14 @@ import {
 } from '../../../../ui/colors';
 import { Button8 } from '../../../../ui/components/buttons';
 import { Minimize2Icon, RefreshCcwIcon } from '../../../../ui/components/icons';
-import { Device, Viewport } from '../../../../ui/specs/ResponsivePreviewSpec';
 import { quick } from '../../../../ui/vars';
 import { NumberInput } from '../../../shared/inputs/NumberInput';
 import { Select } from '../../../shared/inputs/Select';
 import { Space } from '../../../shared/Space';
+import { ResponsiveDevice, Viewport } from '../spec';
 
 type Props = {
-  devices: Device[];
+  devices: ResponsiveDevice[];
   selectedViewport: Viewport;
   scaleFactor: number;
   scaled: boolean;

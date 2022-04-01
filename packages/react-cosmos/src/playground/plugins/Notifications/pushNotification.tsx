@@ -1,15 +1,12 @@
-import {
-  Notification,
-  NotificationsSpec,
-} from '../../../ui/specs/NotificationsSpec';
 import { removeItemMatch, replaceOrAddItem } from '../../../utils/array';
 import { NotificationsContext } from './shared';
+import { NotificationItem, NotificationsSpec } from './spec';
 
 const TIMEOUT = 3000;
 
 export function pushStickyNotification(
   context: NotificationsContext,
-  notification: Notification
+  notification: NotificationItem
 ) {
   context.setState(prevState => ({
     ...prevState,
@@ -36,7 +33,7 @@ export function removeStickyNotification(
 
 export function pushTimedNotification(
   context: NotificationsContext,
-  notification: Notification
+  notification: NotificationItem
 ) {
   const { timedNotifications } = context.getState();
   if (timedNotifications !== null) {

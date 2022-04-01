@@ -8,7 +8,7 @@ import {
   screenPrimary2,
   screenPrimary3,
 } from '../../../ui/colors';
-import { ContentOverlaySpec } from '../../../ui/specs/ContentOverlaySpec';
+import { ContentOverlaySpec } from './spec';
 
 export type ContentOverlayContext = PluginContext<ContentOverlaySpec>;
 

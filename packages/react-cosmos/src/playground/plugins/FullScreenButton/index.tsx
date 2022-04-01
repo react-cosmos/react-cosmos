@@ -1,10 +1,10 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
 import { RendererActionSlotProps } from '../../../ui/slots/RendererActionSlot';
-import { CoreSpec } from '../../../ui/specs/CoreSpec';
-import { FullScreenButtonSpec } from '../../../ui/specs/FullScreenButtonSpec';
 import { stringifyRendererUrlQuery } from '../../playgroundUrl';
+import { CoreSpec } from '../Core/spec';
 import { FullScreenButton } from './FullScreenButton';
+import { FullScreenButtonSpec } from './spec';
 
 const { namedPlug, register } = createPlugin<FullScreenButtonSpec>({
   name: 'fullScreenButton',

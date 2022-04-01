@@ -1,8 +1,8 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
 import styled from 'styled-components';
-import { RendererCoreSpec } from '../../../ui/specs/RendererCoreSpec';
-import { RendererSelectSpec } from '../../../ui/specs/RendererSelectSpec';
+import { RendererCoreSpec } from '../RendererCore/spec';
+import { RendererSelectSpec } from './spec';
 
 const { plug, register } = createPlugin<RendererSelectSpec>({
   name: 'rendererSelect',
