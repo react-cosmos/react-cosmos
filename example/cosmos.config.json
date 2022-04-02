@@ -2,5 +2,5 @@
   "disablePlugins": false,
   "globalImports": ["src/global.css"],
   "staticPath": "static",
-  "plugins": ["react-cosmos-plugin-open-fixture"]
+  "plugins": ["react-cosmos-plugin-open-fixture", "react-cosmos-plugin-webpack"]
 }

@@ -25,7 +25,7 @@ type WebpackDevMiddleware = (
   options?: webpackDevMiddleware.Options
 ) => WebpackDevMiddlewareInstance;
 
-export async function webpackDevServerPlugin({
+export default async function webpackDevServerPlugin({
   platformType,
   cosmosConfig,
   expressApp,

@@ -3,7 +3,7 @@ import path from 'path';
 import { removeLeadingDot } from '../../utils/string.js';
 
 export function getStaticPath(relPath: string) {
-  return path.join(__dirname, 'static', relPath);
+  return path.join(__dirname, '../static', relPath);
 }
 
 export function serveStaticDir(

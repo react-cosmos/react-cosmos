@@ -4,7 +4,6 @@
   "description": "Sandbox for developing and testing UI components in isolation",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos",
   "license": "MIT",
-  "type": "module",
   "main": "index.js",
   "dependencies": {
     "@skidding/launch-editor": "^2.2.3",

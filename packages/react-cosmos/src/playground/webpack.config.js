@@ -1,9 +1,4 @@
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-console.log({ url: import.meta.url, __filename, __dirname });
+const { join } = require('path');
 
 const dist = join(__dirname, '../../dist/playground');
 
@@ -19,7 +14,7 @@ if (env === 'development') {
   );
 }
 
-export default {
+module.exports = {
   mode: env,
   devtool: false,
   entry: dist,
