@@ -10,7 +10,7 @@ This is a worthy goal but not a top priority because:
 
 That said, converting the compiled code to ESM is advantageous because:
 
-1. All non-server Cosmos code would run natively in the browser without requiring bundling. Not sure if we'll ever want to load the Playground unbundled, but **allowing users to use unbundled ESM for fixtures is of interest**. This requires at least the fixture helpers to be published as ESM instead of CJS.
+1. All non-server Cosmos code would run natively in the browser without requiring bundling. Not sure if we'll ever want to load the Playground unbundled, but **allowing users to use unbundled ESM for fixtures is of interest**. This requires at least the fixture helpers to be published as ESM instead of CJS (browsers don't support CJS interop like Node).
 2. Server-side APIs like `getFixtures` could be called in ESM packages (with type: "module" in package.json). Even though ESM can call CJS, Cosmos would would still crash in this environment due to usage of CJS features like `__dirname` or `require.resolve` (**LATTER CLAIM REQUIRES VALIDATION**).
 
 ### What makes the transition tough?
