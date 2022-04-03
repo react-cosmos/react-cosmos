@@ -4,14 +4,14 @@ This document tracks the progress with converting the Cosmos codebase to [pure E
 
 This is a worthy goal but not a top priority because:
 
-- 1. Cosmos is not a low level library imported by other libraries. It's a dev sandbox that users interface with via GUI, CLI, or through code APIs used in fixture and test files, which aren't published as dependencies for other consumers.
-- 2. Node ES modules are backwards compatible and [can import CommonJS modules](https://nodejs.org/api/esm.html#interoperability-with-commonjs) by design.
-- 3. CJS or ESM, the Cosmos source requires compilation before publishing anyway because of using TypeScript.
+1. Cosmos is not a low level library imported by other libraries. It's a dev sandbox that users interface with via GUI, CLI, or through code APIs used in fixture and test files, which aren't published as dependencies for other consumers.
+2. Node ES modules are backwards compatible and [can import CommonJS modules](https://nodejs.org/api/esm.html#interoperability-with-commonjs) by design.
+3. CJS or ESM, the Cosmos source requires compilation before publishing anyway because of using TypeScript.
 
 That said, converting the compiled code to ESM is advantageous because:
 
-- 1. All non-server Cosmos code would run natively in the browser without requiring bundling. Not sure if we'll ever want to load the Playground unbundled, but **allowing users to use unbundled ESM for fixtures is of interest**. This requires at least the fixture helpers to be published as ESM instead of CJS.
-- 2. Server-side APIs like `getFixtures` could be called in ESM packages (with type: "module" in package.json). Even though ESM can call CJS, Cosmos would would still crash in this environment due to usage of CJS features like `__dirname` or `require.resolve` (**LATTER CLAIM REQUIRES VALIDATION**).
+1. All non-server Cosmos code would run natively in the browser without requiring bundling. Not sure if we'll ever want to load the Playground unbundled, but **allowing users to use unbundled ESM for fixtures is of interest**. This requires at least the fixture helpers to be published as ESM instead of CJS.
+2. Server-side APIs like `getFixtures` could be called in ESM packages (with type: "module" in package.json). Even though ESM can call CJS, Cosmos would would still crash in this environment due to usage of CJS features like `__dirname` or `require.resolve` (**LATTER CLAIM REQUIRES VALIDATION**).
 
 ### What makes the transition tough?
 
