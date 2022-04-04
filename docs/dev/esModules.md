@@ -8,7 +8,11 @@ This is a worthy goal but not a top priority because:
 2. Node ES modules are backwards compatible and [can import CommonJS modules](https://nodejs.org/api/esm.html#interoperability-with-commonjs) by design.
 3. CJS or ESM, the Cosmos source requires compilation before publishing anyway because of using TypeScript.
 
-That said, converting the compiled code to ESM is advantageous because:
+> WHAT IS MORE IMPORTANT: Supporting ESM fixtures without requiring users to have webpack or a bundler installed.
+> **This means react-cosmos/src/renderer should be published as ESM above all.**
+> Moreover, running the Cosmos server without webpack or another bundler plugin should serve a \_renderer.html page with a pure ESM renderer JS entry point that contains a map to all user fixture files.
+
+That said, converting Cosmos' compiled code to ESM is advantageous because:
 
 1. All non-server Cosmos code would run natively in the browser without requiring bundling. Not sure if we'll ever want to load the Playground unbundled, but **allowing users to use unbundled ESM for fixtures is of interest**. This requires at least the fixture helpers to be published as ESM instead of CJS (browsers don't support CJS interop like Node).
 2. Server-side APIs like `getFixtures` could be called in ESM packages (with type: "module" in package.json). Even though ESM can import CJS, Cosmos would would still crash in this environment due to usage of CJS features like `__dirname` or `require.resolve` (**LATTER CLAIM REQUIRES VALIDATION**).
@@ -21,6 +25,8 @@ That said, converting the compiled code to ESM is advantageous because:
 
 ### Other mentions
 
+- The Playground CANNOT be served unbundled ESM straight from node_modules because it has a lot of dependencies that 1) are a lot of modules to serve invidiually and 2) aren't guaranteed to all be ESM. So at least the Playground's dependencies need to be bundled.
+- Could Cosmos plugins be pure ESM? How would UI plugins make React/ReactDOM/ReactPlugin imports external and reuse them from the global scope? UI plugins probably require pre-publish bundling for the foreseeable future.
 - The transition might potentially introduce issues with Jest mocking (**REQUIRES TESTING**).
 - This probably doesn't affect how Cosmos integrates with package managers like Berry or PnP.
 
