@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import {
   CoreSpec,
   FixtureId,
@@ -24,7 +24,7 @@ namedPlug<RendererActionSlotProps>(
     const devServerOn = core.isDevServerOn();
     const onOpen = useOpen(pluginContext, slotProps.fixtureId, devServerOn);
 
-    React.useEffect(() => {
+    useEffect(() => {
       return core.registerCommands({ editFixture: onOpen });
     }, [core, onOpen]);
 
@@ -44,7 +44,7 @@ function useOpen(
   devServerOn: boolean
 ) {
   const onError = useErrorNotification(context);
-  return React.useCallback(() => {
+  return useCallback(() => {
     if (!devServerOn)
       return onError('Static exports cannot access source files.');
 
@@ -72,7 +72,7 @@ function useErrorNotification(context: OpenFixtureContext) {
   const { getMethodsOf } = context;
   const notifications = getMethodsOf<NotificationsSpec>('notifications');
   const { pushTimedNotification } = notifications;
-  return React.useCallback(
+  return useCallback(
     info =>
       pushTimedNotification({
         id: 'edit-fixture',

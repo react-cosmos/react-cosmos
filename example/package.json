@@ -11,5 +11,11 @@
     "react-cosmos": "^5.7.2",
     "react-cosmos-plugin-open-fixture": "^5.7.2",
     "react-cosmos-plugin-webpack": "^5.7.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "@babel/preset-react": "^7.16.7",
+    "@babel/preset-typescript": "^7.16.7",
+    "babel-loader": "^8.2.4"
   }
 }

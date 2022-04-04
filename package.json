@@ -25,7 +25,7 @@
     "export": "yarn cosmos-export --root-dir example",
     "start:export": "http-server -p 5001 ./example/cosmos-export",
     "start:native": "yarn cosmos-native --root-dir example --port 5002",
-    "start:playground": "yarn cosmos --root-dir packages/react-cosmos-playground2",
+    "start:playground": "yarn cosmos --root-dir packages/react-cosmos/src/playground",
     "start:snowpack:playground": "yarn cosmos --config example/cosmos.config.snowpack.json",
     "start:snowpack:renderer": "yarn snowpack dev --config example/snowpack.config.js",
     "website:start": "yarn cosmos --root-dir website",

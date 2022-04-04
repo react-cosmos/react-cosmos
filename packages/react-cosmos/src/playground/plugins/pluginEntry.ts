@@ -1,4 +1,4 @@
-import { enablePlugin, resetPlugins } from 'react-plugin';
+import { enablePlugin } from 'react-plugin';
 import './BuildNotifications/index.js';
 import './ClassStatePanel/index.js';
 import './ContentOverlay/index.js';
@@ -27,6 +27,6 @@ const disabledPlugins = ['rendererSelect', 'pluginList'];
 
 // Unregistering plugins first makes this file hot-reloadable because a plugin
 // can only be registered once with a given name
-resetPlugins();
+// resetPlugins();
 
 disabledPlugins.forEach(disabledPlugin => enablePlugin(disabledPlugin, false));

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import ReactPlugin from 'react-plugin';
+import * as ReactPlugin from 'react-plugin';
 import { CosmosPluginConfig } from '../server/cosmosPlugin/types.js';
 import { CoreSpec } from './plugins/Core/spec.js';
 import './plugins/pluginEntry.js';

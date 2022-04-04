@@ -1,3 +1,4 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { join } = require('path');
 
 const dist = join(__dirname, '../../dist/playground');

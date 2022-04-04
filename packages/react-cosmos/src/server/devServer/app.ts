@@ -43,7 +43,9 @@ export function createApp(
   );
 
   app.get('/_playground.js', (req: express.Request, res: express.Response) => {
-    res.sendFile(require.resolve('react-cosmos-playground2/dist'));
+    res.sendFile(
+      require.resolve('react-cosmos/dist/playground/index.bundle.js')
+    );
   });
 
   app.get('/_cosmos.ico', (req: express.Request, res: express.Response) => {
