@@ -25,6 +25,7 @@ export const RendererPreview = React.memo(function RendererPreview({
           ref={onIframeRef}
           src={rendererUrl}
           frameBorder={0}
+          allow="clipboard-write *"
         />
       </Container>
     </Slot>
