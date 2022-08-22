@@ -25,7 +25,7 @@ export function mountDomRenderer({
   decorators,
   onErrorReset,
 }: Args) {
-  const domContainer = getDomContainer(rendererConfig.containerQuerySelector);
+  const domContainer = getDomContainer(rendererConfig.containerQuerySelector, rendererConfig.rootElement);
   render(
     <DomFixtureLoader
       fixtures={fixtures}

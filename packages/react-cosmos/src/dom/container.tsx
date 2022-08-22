@@ -1,4 +1,6 @@
-export function getDomContainer(querySelector: null | string) {
+export function getDomContainer(querySelector: null | string, rootElement?: Node) {
+  if (rootElement) return rootElement;
+
   if (!querySelector) {
     return getFallbackDomContainer();
   }
