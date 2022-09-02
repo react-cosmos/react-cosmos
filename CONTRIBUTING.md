@@ -69,9 +69,9 @@ cd react-cosmos
 yarn
 
 # Basic commands
-yarn check-types
-yarn test
 yarn build
+yarn test
+yarn check-types
 
 # Run example and test React Cosmos end to end
 yarn start
