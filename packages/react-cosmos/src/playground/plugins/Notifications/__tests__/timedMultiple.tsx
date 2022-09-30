@@ -6,7 +6,11 @@ import { register } from '../index.js';
 
 beforeEach(register);
 
-afterEach(resetPlugins);
+afterEach(() => {
+  act(() => {
+    resetPlugins();
+  });
+});
 
 jest.useFakeTimers();
 
