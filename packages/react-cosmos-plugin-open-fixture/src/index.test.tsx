@@ -9,8 +9,9 @@ import {
 } from 'react-cosmos';
 import { mockFetch } from 'react-cosmos/jest';
 import { loadPlugins, resetPlugins } from 'react-plugin';
+import { register } from '.';
 
-beforeEach(() => jest.isolateModules(() => require('.')));
+beforeEach(register);
 
 afterEach(resetPlugins);
 

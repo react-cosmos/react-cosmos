@@ -1,7 +1,7 @@
-import { blue } from 'chalk';
 import React from 'react';
 import styled from 'styled-components';
 import {
+  blue,
   disabledColors,
   grey128,
   grey160,

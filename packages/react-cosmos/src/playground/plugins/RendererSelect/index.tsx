@@ -37,7 +37,9 @@ plug('sidePanelRow', ({ pluginContext }) => {
   );
 });
 
-register();
+export { register };
+
+if (process.env.NODE_ENV !== 'test') register();
 
 const Container = styled.ul`
   padding: 8px 12px;

@@ -7,9 +7,10 @@ import {
   mockRouter,
   mockStorage,
 } from '../../../testHelpers/pluginMocks.js';
+import { register } from '../index.js';
 import { WELCOME_DISMISS_STORAGE_KEY } from '../welcomeDismiss.js';
 
-beforeEach(() => jest.isolateModules(() => require('..')));
+beforeEach(register);
 
 afterEach(resetPlugins);
 

@@ -1,8 +1,7 @@
-import { blue } from 'chalk';
 import React from 'react';
 import styled from 'styled-components';
 import { useValue } from '../../../renderer/useValue/index.js';
-import { grey248, grey8 } from '../../style/colors.js';
+import { blue, grey248, grey8 } from '../../style/colors.js';
 import { Space } from '../Space.js';
 import { NumberInput, NumberInputStyles } from './NumberInput.js';
 

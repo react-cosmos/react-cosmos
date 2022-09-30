@@ -27,7 +27,9 @@ const { onLoad, register } = createPlugin<CoreSpec>({
   },
 });
 
-register();
+export { register };
+
+if (process.env.NODE_ENV !== 'test') register();
 
 onLoad(pluginContext =>
   registerPlaygroundShortcuts(command => runCommand(pluginContext, command))

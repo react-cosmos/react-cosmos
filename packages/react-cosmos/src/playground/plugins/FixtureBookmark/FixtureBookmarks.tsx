@@ -1,4 +1,3 @@
-import { blue } from 'chalk';
 import { isEqual } from 'lodash';
 import React from 'react';
 import styled from 'styled-components';
@@ -11,6 +10,7 @@ import { XIcon } from '../../components/icons/index.js';
 import { stringifyFixtureId } from '../../components/ValueInputTree/index.js';
 import { createRelativePlaygroundUrl } from '../../shared/url.js';
 import {
+  blue,
   grey128,
   grey224,
   grey24,

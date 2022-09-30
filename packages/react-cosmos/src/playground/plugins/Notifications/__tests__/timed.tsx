@@ -7,14 +7,11 @@ import {
   resetPlugins,
 } from 'react-plugin';
 import { getNotificationsMethods } from '../../../testHelpers/pluginMocks.js';
+import { register } from '../index.js';
 
-beforeEach(() => jest.isolateModules(() => require('..')));
+beforeEach(register);
 
-afterEach(() => {
-  act(() => {
-    resetPlugins();
-  });
-});
+afterEach(resetPlugins);
 
 jest.useFakeTimers();
 

@@ -1,6 +1,5 @@
-import { blue } from 'chalk';
 import React from 'react';
-import { grey248, grey8 } from '../../../style/colors.js';
+import { blue, grey248, grey8 } from '../../../style/colors.js';
 import { NumberInput } from '../../inputs/NumberInput.js';
 import { Label, ValueDataContainer } from './shared.js';
 

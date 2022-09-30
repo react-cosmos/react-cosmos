@@ -67,7 +67,9 @@ namedPlug<FixtureActionSlotProps>(
   }
 );
 
-register();
+export { register };
+
+if (process.env.NODE_ENV !== 'test') register();
 
 function getStorageApi(pluginContext: FixtureBookmarkContext) {
   const storage = pluginContext.getMethodsOf<StorageSpec>('storage');

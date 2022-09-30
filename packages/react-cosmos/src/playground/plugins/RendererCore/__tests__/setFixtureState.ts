@@ -8,12 +8,13 @@ import {
   mockRouter,
   onRendererCore,
 } from '../../../testHelpers/pluginMocks.js';
+import { register } from '../index.js';
 import {
   mockFixtureStateChange,
   mockRendererReady,
 } from '../testHelpers/index.js';
 
-beforeEach(() => jest.isolateModules(() => require('..')));
+beforeEach(register);
 
 afterEach(resetPlugins);
 

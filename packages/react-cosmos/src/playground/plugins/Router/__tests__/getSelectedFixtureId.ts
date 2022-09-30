@@ -5,8 +5,9 @@ import {
   pushUrlParams,
   resetUrlParams,
 } from '../../../testHelpers/urlParams.js';
+import { register } from '../index.js';
 
-beforeEach(() => jest.isolateModules(() => require('..')));
+beforeEach(register);
 
 afterEach(() => {
   resetPlugins();

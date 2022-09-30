@@ -43,4 +43,6 @@ namedPlug('global', 'notifications', ({ pluginContext }) => {
   return <Notifications notifications={notifications} />;
 });
 
-register();
+export { register };
+
+if (process.env.NODE_ENV !== 'test') register();

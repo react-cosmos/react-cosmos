@@ -27,4 +27,6 @@ namedPlug<SidePanelRowSlotProps>(
   }
 );
 
-register();
+export { register };
+
+if (process.env.NODE_ENV !== 'test') register();

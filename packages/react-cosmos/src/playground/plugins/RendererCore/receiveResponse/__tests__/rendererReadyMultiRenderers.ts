@@ -6,12 +6,13 @@ import {
   mockNotifications,
   mockRouter,
 } from '../../../../testHelpers/pluginMocks.js';
+import { register } from '../../index.js';
 import {
   mockFixtureStateChange,
   mockRendererReady,
 } from '../../testHelpers/index.js';
 
-beforeEach(() => jest.isolateModules(() => require('../../index.js')));
+beforeEach(register);
 
 afterEach(resetPlugins);
 

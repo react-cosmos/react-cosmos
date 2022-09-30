@@ -52,7 +52,9 @@ plug('rendererPreview', ({ pluginContext }) => {
   );
 });
 
-register();
+export { register };
+
+if (process.env.NODE_ENV !== 'test') register();
 
 function getUrlStatus({ getState }: RendererPreviewContext) {
   return getState().urlStatus;

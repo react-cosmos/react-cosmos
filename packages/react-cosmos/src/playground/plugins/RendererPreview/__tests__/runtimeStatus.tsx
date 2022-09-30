@@ -7,10 +7,11 @@ import {
   mockCore,
   mockRendererCore,
 } from '../../../testHelpers/pluginMocks.js';
+import { register } from '../index.js';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch.js';
 import { rendererErrorMsg, rendererReadyMsg } from '../testHelpers/messages.js';
 
-beforeEach(() => jest.isolateModules(() => require('..')));
+beforeEach(register);
 
 afterEach(resetPlugins);
 

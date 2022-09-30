@@ -8,6 +8,17 @@ module.exports = {
   testMatch: ['**/__tests__/**/*.{ts,tsx}', '**/?(*.)test.{ts,tsx}'],
   testPathIgnorePatterns: ['<rootDir>/node_modules/'],
   setupFilesAfterEnv: ['<rootDir>/.jest/setup.ts'],
+  transform: {
+    '^.+\\.tsx?$': [
+      'ts-jest',
+      // https://kulshekhar.github.io/ts-jest/docs/getting-started/options/tsconfig
+      {
+        tsconfig: {
+          noUnusedLocals: false,
+        },
+      },
+    ],
+  },
   collectCoverageFrom: [
     'packages/*/src/**/*.{ts,tsx}',
     '!**/__fixtures__/**',

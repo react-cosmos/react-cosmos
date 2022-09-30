@@ -1,8 +1,7 @@
-import { blue } from 'chalk';
 import React, { ChangeEvent, useCallback } from 'react';
 import styled from 'styled-components';
 import { useFocus } from '../../hooks/useFocus.js';
-import { grey32 } from '../../style/colors.js';
+import { blue, grey32 } from '../../style/colors.js';
 import { ChevronDownIcon } from '../icons/index.js';
 
 type BaseOption = { value: string; label: string };

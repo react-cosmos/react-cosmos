@@ -83,4 +83,6 @@ function extractValuesFromStandardControls(
   return values;
 }
 
-register();
+export { register };
+
+if (process.env.NODE_ENV !== 'test') register();

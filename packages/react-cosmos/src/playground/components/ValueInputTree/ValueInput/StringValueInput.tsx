@@ -1,7 +1,6 @@
-import { blue } from 'chalk';
 import React from 'react';
 import { useFocus } from '../../../hooks/useFocus.js';
-import { grey248, grey8 } from '../../../style/colors.js';
+import { blue, grey248, grey8 } from '../../../style/colors.js';
 import {
   TextContainer,
   TextField,

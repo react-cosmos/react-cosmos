@@ -31,7 +31,9 @@ const { on, register } = createPlugin<RendererCoreSpec>({
 
 on<RouterSpec>('router', { fixtureChange: onRouterFixtureChange });
 
-register();
+export { register };
+
+if (process.env.NODE_ENV !== 'test') register();
 
 function getConnectedRendererIds({ getState }: RendererCoreContext) {
   return getState().connectedRendererIds;

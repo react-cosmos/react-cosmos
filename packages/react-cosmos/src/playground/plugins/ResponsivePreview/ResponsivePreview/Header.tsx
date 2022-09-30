@@ -1,4 +1,3 @@
-import { blue } from 'chalk';
 import React from 'react';
 import styled from 'styled-components';
 import { Button8 } from '../../../components/buttons/index.js';
@@ -10,6 +9,7 @@ import { NumberInput } from '../../../components/inputs/NumberInput.js';
 import { Select } from '../../../components/inputs/Select.js';
 import { Space } from '../../../components/Space.js';
 import {
+  blue,
   grey128,
   grey144,
   grey216,

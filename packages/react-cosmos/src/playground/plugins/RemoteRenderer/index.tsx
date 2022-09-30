@@ -46,7 +46,9 @@ namedPlug('globalAction', 'remoteRenderer', ({ pluginContext }) => {
   );
 });
 
-register();
+export { register };
+
+if (process.env.NODE_ENV !== 'test') register();
 
 function postRendererRequest(context: RemoteRendererContext, msg: MessageType) {
   const msgHandler = context.getMethodsOf<MessageHandlerSpec>('messageHandler');

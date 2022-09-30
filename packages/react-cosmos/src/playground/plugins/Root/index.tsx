@@ -124,7 +124,9 @@ plug('root', ({ pluginContext }) => {
   );
 });
 
-register();
+export { register };
+
+if (process.env.NODE_ENV !== 'test') register();
 
 function useFixtureItems(context: RootContext) {
   const { getMethodsOf } = context;

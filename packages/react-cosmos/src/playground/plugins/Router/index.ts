@@ -39,7 +39,9 @@ onLoad(context => {
   });
 });
 
-register();
+export { register };
+
+if (process.env.NODE_ENV !== 'test') register();
 
 function getSelectedFixtureId({ getState }: RouterContext) {
   return getState().urlParams.fixtureId || null;

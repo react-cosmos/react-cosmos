@@ -1,5 +1,6 @@
 import retry from '@skidding/async-retry';
 import { loadPlugins, resetPlugins } from 'react-plugin';
+import { register } from '.';
 import { getMethodsOf } from '../../testHelpers/pluginHelpers.js';
 import { StorageSpec } from './spec.js';
 
@@ -19,7 +20,7 @@ jest.mock('localforage', () => {
 });
 
 beforeEach(() => {
-  jest.isolateModules(() => require('.'));
+  register();
   loadPlugins();
 });
 

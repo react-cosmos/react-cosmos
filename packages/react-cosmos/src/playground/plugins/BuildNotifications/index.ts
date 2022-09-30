@@ -15,7 +15,9 @@ on<MessageHandlerSpec>('messageHandler', {
   serverMessage: onServerMessage,
 });
 
-register();
+export { register };
+
+if (process.env.NODE_ENV !== 'test') register();
 
 function onServerMessage(context: BuildNotificationsContext, msg: MessageType) {
   const { getMethodsOf } = context;

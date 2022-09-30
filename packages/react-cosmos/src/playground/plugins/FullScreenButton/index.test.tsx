@@ -4,8 +4,9 @@ import { loadPlugins, resetPlugins } from 'react-plugin';
 import { RendererActionSlot } from '../../slots/RendererActionSlot.js';
 import { mockCore } from '../../testHelpers/pluginMocks.js';
 import { mockWindowOpen } from '../../testHelpers/windowOpenMock.js';
+import { register } from './index.js';
 
-beforeEach(() => jest.isolateModules(() => require('.')));
+beforeEach(register);
 
 afterEach(resetPlugins);
 

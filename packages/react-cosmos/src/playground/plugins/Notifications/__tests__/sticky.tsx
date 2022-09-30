@@ -2,8 +2,9 @@ import { act, render } from '@testing-library/react';
 import React from 'react';
 import { ArraySlot, loadPlugins, resetPlugins } from 'react-plugin';
 import { getNotificationsMethods } from '../../../testHelpers/pluginMocks.js';
+import { register } from '../index.js';
 
-beforeEach(() => jest.isolateModules(() => require('..')));
+beforeEach(register);
 
 afterEach(resetPlugins);
 

@@ -1,8 +1,8 @@
-import { blue } from 'chalk';
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import { FixtureId } from '../../../../core/types.js';
 import { createRelativePlaygroundUrl } from '../../../shared/url.js';
+import { blue } from '../../../style/colors.js';
 
 type Props = {
   children: ReactNode;

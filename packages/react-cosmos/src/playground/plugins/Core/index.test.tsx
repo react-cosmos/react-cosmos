@@ -1,8 +1,9 @@
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { getCoreMethods, mockStorage } from '../../testHelpers/pluginMocks.js';
+import { register } from './index.js';
 import { CoreSpec } from './spec.js';
 
-beforeEach(() => jest.isolateModules(() => require('.')));
+beforeEach(register);
 
 afterEach(resetPlugins);
 

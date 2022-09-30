@@ -69,7 +69,9 @@ namedPlug('rendererAction', 'responsivePreview', ({ pluginContext }) => {
   );
 });
 
-register();
+export { register };
+
+if (process.env.NODE_ENV !== 'test') register();
 
 function useViewportChange(context: ResponsivePreviewContext) {
   const viewportState = getViewportState(context);

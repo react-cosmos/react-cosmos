@@ -6,9 +6,10 @@ import {
   getRendererPreviewMethods,
   mockCore,
 } from '../../../testHelpers/pluginMocks.js';
+import { register } from '../index.js';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch.js';
 
-beforeEach(() => jest.isolateModules(() => require('..')));
+beforeEach(register);
 
 afterEach(resetPlugins);
 
