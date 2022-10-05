@@ -5,6 +5,7 @@ import {
   mockFile,
   unmockCliArgs,
 } from 'react-cosmos/jest';
+
 import { createCosmosConfig, RENDERER_FILENAME } from 'react-cosmos/server';
 import webpack from 'webpack';
 import { getDevWebpackConfig } from '../getDevWebpackConfig.js';

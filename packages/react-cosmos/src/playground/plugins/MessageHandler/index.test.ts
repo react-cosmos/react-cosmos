@@ -1,5 +1,6 @@
 // NOTE: Mock files need to imported before modules that use the mocked APIs
 import { mockSocketIo } from './testHelpers/mockSocketIo.js';
+
 import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {

@@ -1,6 +1,3 @@
-// @ts-ignore
-import { __mockArgsv } from 'yargs';
-
 // Secondary role of mocking yargs: Prevent Cosmos from intercepting the
 // --config arg passed to Jest
 jest.mock('yargs', () => {
@@ -14,9 +11,13 @@ jest.mock('yargs', () => {
 });
 
 export function mockCliArgs(cliArgs: {}) {
-  __mockArgsv(cliArgs);
+  requireMocked().__mockArgsv(cliArgs);
 }
 
 export function unmockCliArgs() {
-  __mockArgsv({});
+  requireMocked().__mockArgsv({});
+}
+
+function requireMocked() {
+  return require('yargs');
 }

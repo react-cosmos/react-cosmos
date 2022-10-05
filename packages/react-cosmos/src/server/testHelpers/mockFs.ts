@@ -1,7 +1,5 @@
 import path from 'path';
 import { CosmosConfig } from '../cosmosConfig/types.js';
-// @ts-ignore
-import { __mockDir, __mockFile, __unmockFs } from '../utils/fs.js';
 import { getCwdPath } from './cwd.js';
 
 jest.mock('../utils/fs', () => {
@@ -57,14 +55,18 @@ export function mockCosmosConfig(
 
 export function mockFile(filePath: string, fileContent: {}) {
   const absPath = getCwdPath(filePath);
-  __mockFile(absPath, fileContent);
-  __mockDir(path.dirname(absPath));
+  requireMocked().__mockFile(absPath, fileContent);
+  requireMocked().__mockDir(path.dirname(absPath));
 }
 
 export function mockDir(dirPath: string) {
-  __mockDir(getCwdPath(dirPath));
+  requireMocked().__mockDir(getCwdPath(dirPath));
 }
 
 export function unmockFs() {
-  __unmockFs();
+  requireMocked().__unmockFs();
+}
+
+function requireMocked() {
+  return require('../utils/fs.js');
 }
