@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { mobileMaxWidth } from './shared/breakpoints.js';
-import { ExternalLink } from './shared/ExternalLink.js';
-import { livePreviewUrl } from './shared/livePreviewUrl.js';
-import { getSlideInStyle, slideInTransition } from './shared/slideIn.js';
-import { NoWrap } from './shared/styledPrimitives.js';
-import { useViewportEnter } from './shared/useViewportEnter.js';
+import { mobileMaxWidth } from './shared/breakpoints';
+import { ExternalLink } from './shared/ExternalLink';
+import { livePreviewUrl } from './shared/livePreviewUrl';
+import { getSlideInStyle, slideInTransition } from './shared/slideIn';
+import { NoWrap } from './shared/styledPrimitives';
+import { useViewportEnter } from './shared/useViewportEnter';
 
 const minPreviewWidth = 960;
 const previewPadding = 32;

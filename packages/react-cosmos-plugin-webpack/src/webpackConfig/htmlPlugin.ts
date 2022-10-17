@@ -3,7 +3,7 @@ import importFrom from 'import-from';
 import { omit } from 'lodash';
 import { CosmosConfig, RENDERER_FILENAME } from 'react-cosmos/server';
 import webpack from 'webpack';
-import { hasPlugin, isInstanceOfWebpackPlugin } from './plugins.js';
+import { hasPlugin, isInstanceOfWebpackPlugin } from './plugins';
 
 // prettier-ignore
 export type HtmlWebpackPlugin = webpack.WebpackPluginInstance & {

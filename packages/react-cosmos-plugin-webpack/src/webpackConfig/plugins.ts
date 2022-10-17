@@ -1,6 +1,6 @@
 import { CosmosConfig } from 'react-cosmos/server';
 import webpack from 'webpack';
-import { getWebpackNodeEnv } from './getWebpackNodeEnv.js';
+import { getWebpackNodeEnv } from './getWebpackNodeEnv';
 
 export function getGlobalsPlugin(
   { publicUrl }: CosmosConfig,

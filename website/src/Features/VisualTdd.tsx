@@ -1,12 +1,12 @@
 import React from 'react';
-import { getSlideInStyle } from '../shared/slideIn.js';
-import { useViewportEnter } from '../shared/useViewportEnter.js';
+import { getSlideInStyle } from '../shared/slideIn';
+import { useViewportEnter } from '../shared/useViewportEnter';
 import {
   Feature,
   FeatureDescription,
   FeatureIconContainer,
   FeatureTitle,
-} from './shared.js';
+} from './shared';
 
 export function VisualTdd() {
   const [ref, entered] = useViewportEnter(0.7);

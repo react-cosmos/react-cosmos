@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { scrollTo } from '../shared/scrollTo.js';
-import { getCosmonautSize, Viewport } from '../shared/viewport.js';
+import { scrollTo } from '../shared/scrollTo';
+import { getCosmonautSize, Viewport } from '../shared/viewport';
 
 type Props = {
   windowViewport: Viewport;

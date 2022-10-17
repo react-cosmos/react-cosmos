@@ -1,5 +1,5 @@
 import React from 'react';
-import { getGitHubContributors } from '../shared/gitHub.js';
+import { getGitHubContributors } from '../shared/gitHub';
 
 const TIMEOUT_TS = 1000;
 

@@ -8,8 +8,8 @@ import {
 
 import { createCosmosConfig, RENDERER_FILENAME } from 'react-cosmos/server';
 import webpack from 'webpack';
-import { getDevWebpackConfig } from '../getDevWebpackConfig.js';
-import { HtmlWebpackPlugin } from '../htmlPlugin.js';
+import { getDevWebpackConfig } from '../getDevWebpackConfig';
+import { HtmlWebpackPlugin } from '../htmlPlugin';
 
 const mockWebpackConfig = jest.fn(() => ({
   module: { rules: [MY_RULE] },

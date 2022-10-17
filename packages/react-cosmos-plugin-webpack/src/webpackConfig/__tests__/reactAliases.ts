@@ -3,7 +3,7 @@ import { mockConsole, mockFile } from 'react-cosmos/jest';
 import { createCosmosConfig } from 'react-cosmos/server';
 
 import webpack from 'webpack';
-import { getDevWebpackConfig } from '../getDevWebpackConfig.js';
+import { getDevWebpackConfig } from '../getDevWebpackConfig';
 
 async function getCustomDevWebpackConfig() {
   return mockConsole(async ({ expectLog }) => {

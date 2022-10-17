@@ -1,5 +1,5 @@
 import React from 'react';
-import { scrollTo } from './scrollTo.js';
+import { scrollTo } from './scrollTo';
 
 type Props = {
   children?: React.ReactNode;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { stars } from '../shared/stars.js';
+import { stars } from '../shared/stars';
 
 type NewStar = { x: number; y: number; r: number };
 

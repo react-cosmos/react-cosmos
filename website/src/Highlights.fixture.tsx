@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Highlights } from './Highlights.js';
+import { Highlights } from './Highlights';
 
 const Container = styled.div`
   position: absolute;

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Logos } from './Logos.js';
+import { Logos } from './Logos';
 
 const Container = styled.div`
   position: absolute;

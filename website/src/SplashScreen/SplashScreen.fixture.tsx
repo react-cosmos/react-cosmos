@@ -1,4 +1,4 @@
 import React from 'react';
-import { SplashScreen } from './SplashScreen.js';
+import { SplashScreen } from './SplashScreen';
 
 export default <SplashScreen />;

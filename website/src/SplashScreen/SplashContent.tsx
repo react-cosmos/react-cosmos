@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ExternalLink } from '../shared/ExternalLink.js';
-import { getSlideInStyle, slideInTransition } from '../shared/slideIn.js';
+import { ExternalLink } from '../shared/ExternalLink';
+import { getSlideInStyle, slideInTransition } from '../shared/slideIn';
 import {
   getBaseFontSize,
   getCosmonautSize,
   Viewport,
-} from '../shared/viewport.js';
+} from '../shared/viewport';
 
 type Props = {
   windowViewport: Viewport;

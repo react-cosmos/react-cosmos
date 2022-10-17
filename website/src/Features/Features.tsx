@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ComponentLibrary } from './ComponentLibrary.js';
-import { OpenPlatform } from './OpenPlatform.js';
-import { maxFeatureColumnsWidth, minFeatureColumnsWidth } from './shared.js';
-import { VisualTdd } from './VisualTdd.js';
+import { ComponentLibrary } from './ComponentLibrary';
+import { OpenPlatform } from './OpenPlatform';
+import { maxFeatureColumnsWidth, minFeatureColumnsWidth } from './shared';
+import { VisualTdd } from './VisualTdd';
 
 export function Features() {
   return (

@@ -6,8 +6,8 @@ import {
   RendererActionSlotProps,
 } from 'react-cosmos';
 import { createPlugin, PluginContext } from 'react-plugin';
-import { OpenFixtureButton } from './OpenFixtureButton.js';
-import { OpenFixtureSpec } from './spec.js';
+import { OpenFixtureButton } from './OpenFixtureButton';
+import { OpenFixtureSpec } from './spec';
 
 type OpenFixtureContext = PluginContext<OpenFixtureSpec>;
 

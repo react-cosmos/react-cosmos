@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { contentMaxWidth, mobileMaxWidth } from './shared/breakpoints.js';
-import { getSlideInStyle, slideInTransition } from './shared/slideIn.js';
-import { useViewportEnter } from './shared/useViewportEnter.js';
+import { contentMaxWidth, mobileMaxWidth } from './shared/breakpoints';
+import { getSlideInStyle, slideInTransition } from './shared/slideIn';
+import { useViewportEnter } from './shared/useViewportEnter';
 
 export function Logos() {
   const [ref, entered] = useViewportEnter(0.7);

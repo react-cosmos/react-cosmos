@@ -1,12 +1,12 @@
 import { mountDomRenderer } from 'react-cosmos/dom';
-import { dismissErrorOverlay } from './errorOverlay/index.js';
-import './hmrErrorHandler.js';
+import { dismissErrorOverlay } from './errorOverlay/index';
+import './hmrErrorHandler';
 
 mount();
 
 function mount() {
   // Use dynamic import to load updated modules upon hot reloading
-  const { rendererConfig, fixtures, decorators } = require('./userDeps.js');
+  const { rendererConfig, fixtures, decorators } = require('./userDeps');
   mountDomRenderer({
     rendererConfig,
     fixtures,

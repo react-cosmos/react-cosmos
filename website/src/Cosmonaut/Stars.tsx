@@ -1,5 +1,5 @@
 import React from 'react';
-import { stars } from './shared/stars.js';
+import { stars } from './shared/stars';
 
 export const Stars = React.memo(function Stars() {
   return (

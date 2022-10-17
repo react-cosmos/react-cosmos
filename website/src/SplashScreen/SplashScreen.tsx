@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FullScreenCosmonaut } from '../Cosmonaut/FullScreenCosmonaut.js';
-import { useWindowViewport } from '../shared/useWindowViewport.js';
-import { ScrollIndicator } from './ScrollIndicator.js';
-import { SplashContent } from './SplashContent.js';
-import { useGitHubStars } from './useGitHubStars.js';
+import { FullScreenCosmonaut } from '../Cosmonaut/FullScreenCosmonaut';
+import { useWindowViewport } from '../shared/useWindowViewport';
+import { ScrollIndicator } from './ScrollIndicator';
+import { SplashContent } from './SplashContent';
+import { useGitHubStars } from './useGitHubStars';
 
 export function SplashScreen() {
   const gitHubStars = useGitHubStars();

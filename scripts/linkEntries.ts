@@ -10,7 +10,7 @@ import {
   packages,
   readFileAsync,
   writeFileAsync,
-} from './shared.js';
+} from './shared';
 
 const SRC_DIR = 'src';
 const DIST_DIR = 'dist';

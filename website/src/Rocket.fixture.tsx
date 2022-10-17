@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Rocket } from './Rocket.js';
+import { Rocket } from './Rocket';
 
 const Container = styled.div`
   position: absolute;

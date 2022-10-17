@@ -1,7 +1,7 @@
 import React from 'react';
 import { useValue } from 'react-cosmos';
-import { useWindowViewport } from '../shared/useWindowViewport.js';
-import { SplashContent } from './SplashContent.js';
+import { useWindowViewport } from '../shared/useWindowViewport';
+import { SplashContent } from './SplashContent';
 
 export default () => {
   const windowViewport = useWindowViewport();

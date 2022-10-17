@@ -14,7 +14,6 @@ module.exports = {
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': 'warn',
     'linebreak-style': 'error',
-    'import/extensions': ['error', 'ignorePackages'],
     'react/prop-types': 'off',
     'react/display-name': 'off',
     'react-hooks/rules-of-hooks': 'error',
