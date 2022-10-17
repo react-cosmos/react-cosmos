@@ -1,6 +1,6 @@
 import React from 'react';
 import { Viewport } from 'react-cosmos';
-import { Hello } from './WelcomeMessage.js';
+import { Hello } from './WelcomeMessage';
 
 export default (
   <Viewport width={320} height={568}>
