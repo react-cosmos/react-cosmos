@@ -20,7 +20,6 @@
     "dist": "yarn link-entries dist",
     "build:clear": "ts-node ./scripts/clearBuild.ts",
     "build": "ts-node ./scripts/build.ts",
-    "build:plugin": "webpack --config example/booleanInputPlugin/webpack.config.js",
     "start": "yarn cosmos --root-dir example",
     "export": "yarn cosmos-export --root-dir example",
     "start:export": "http-server -p 5001 ./example/cosmos-export",

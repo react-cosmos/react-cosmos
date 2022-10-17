@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "react-cosmos": "^5.7.2",
+    "react-cosmos-plugin-boolean-input": "^5.7.2",
     "react-cosmos-plugin-open-fixture": "^5.7.2",
     "react-cosmos-plugin-webpack": "^5.7.2"
   },

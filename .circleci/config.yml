@@ -36,7 +36,6 @@ jobs:
       # Test build
       - run: yarn dist
       - run: yarn build
-      - run: yarn build:plugin
       - run: yarn export
       - run:
           command: yarn start

@@ -16,6 +16,7 @@ export const rimrafAsync = asyncify(rimraf);
 // Packages are built in this order
 const packageMap = {
   'react-cosmos': true,
+  'react-cosmos-plugin-boolean-input': true,
   'react-cosmos-plugin-open-fixture': true,
   'react-cosmos-plugin-webpack': true,
 };
