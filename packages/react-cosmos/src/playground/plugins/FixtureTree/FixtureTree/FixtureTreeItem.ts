@@ -6,8 +6,8 @@ import {
   grey32,
   grey8,
   selectedColors,
-} from '../../../style/colors.js';
-import { quick } from '../../../style/vars.js';
+} from '../../../style/colors';
+import { quick } from '../../../style/vars';
 
 const itemHeight = 28;
 

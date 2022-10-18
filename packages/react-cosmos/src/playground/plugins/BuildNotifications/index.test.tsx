@@ -1,11 +1,11 @@
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { BuildMessage } from '../../../core/serverMessage.js';
+import { BuildMessage } from 'react-cosmos-core/server';
 import {
   getMessageHandlerContext,
   mockMessageHandler,
   mockNotifications,
-} from '../../testHelpers/pluginMocks.js';
-import { register } from './index.js';
+} from '../../testHelpers/pluginMocks';
+import { register } from '.';
 
 beforeEach(register);
 

@@ -3,15 +3,15 @@ import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   RendererReadyResponse,
   SelectFixtureRequest,
-} from '../../../../renderer/types.js';
+} from 'react-cosmos-core/renderer';
 import {
   getMessageHandlerContext,
   getRendererCoreContext,
   mockCore,
   mockMessageHandler,
   mockRendererCore,
-} from '../../../testHelpers/pluginMocks.js';
-import { register } from '../index.js';
+} from '../../../testHelpers/pluginMocks';
+import { register } from '..';
 
 beforeEach(register);
 

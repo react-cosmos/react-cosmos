@@ -1,18 +1,18 @@
 import { isEqual } from 'lodash';
 import React, { RefObject } from 'react';
+import { FixtureId } from 'react-cosmos-core/fixture';
+import { FixtureTreeNode } from 'react-cosmos-core/fixtureTree';
 import styled from 'styled-components';
-import { FixtureTreeNode } from '../../../../core/fixtureTree/types.js';
-import { FixtureId } from '../../../../core/types.js';
-import { TreeView } from '../../../components/TreeView.js';
+import { TreeView } from '../../../components/TreeView';
 import {
   nodeContainsFixtureId,
   recordContainsFixtureId,
-} from '../../../shared/fixtureTree.js';
-import { TreeExpansion } from '../../../shared/treeExpansion.js';
-import { grey32 } from '../../../style/colors.js';
-import { FixtureButton } from './FixtureButton.js';
-import { FixtureDir } from './FixtureDir.js';
-import { MultiFixtureButton } from './MultiFixtureButton.js';
+} from '../../../shared/fixtureTree';
+import { TreeExpansion } from '../../../shared/treeExpansion';
+import { grey32 } from '../../../style/colors';
+import { FixtureButton } from './FixtureButton';
+import { FixtureDir } from './FixtureDir';
+import { MultiFixtureButton } from './MultiFixtureButton';
 
 type Props = {
   rootNode: FixtureTreeNode;

@@ -46,12 +46,6 @@ jobs:
       - run:
           command: yarn start:native
           background: true
-      - run:
-          command: yarn start:snowpack:playground
-          background: true
-      - run:
-          command: yarn start:snowpack:renderer
-          background: true
       - run: yarn test:cypress
 
       - store_artifacts:

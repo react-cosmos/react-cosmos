@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { FixtureId } from '../../../core/types.js';
+import { FixtureId } from 'react-cosmos-core/fixture';
 
 export function useScrollToSelected(selectedFixtureId: FixtureId | null) {
   const containerRef = useRef<HTMLDivElement>(null);

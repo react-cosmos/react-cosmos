@@ -2,21 +2,22 @@ import path from 'path';
 import {
   detectCosmosConfig,
   detectCosmosConfigPath,
-} from '../cosmosConfig/detectCosmosConfig.js';
-import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
+} from '../cosmosConfig/detectCosmosConfig';
+import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs';
 import {
   CosmosPluginConfig,
   DevServerPlugin,
   DevServerPluginCleanupCallback,
   PlatformType,
-} from '../cosmosPlugin/types.js';
-import { serveStaticDir } from '../shared/staticServer.js';
-import { createApp } from './app.js';
-import { httpProxyDevServerPlugin } from './corePlugins/httpProxy.js';
-import openFileDevServerPlugin from './corePlugins/openFile.js';
-import { userDepsFileDevServerPlugin } from './corePlugins/userDepsFile.js';
-import { createHttpServer } from './httpServer.js';
-import { createMessageHandler } from './messageHandler.js';
+} from '../cosmosPlugin/types';
+import { serveStaticDir } from '../shared/staticServer';
+import { requireModule } from '../utils/fs';
+import { createApp } from './app';
+import { httpProxyDevServerPlugin } from './corePlugins/httpProxy';
+import openFileDevServerPlugin from './corePlugins/openFile';
+import { userDepsFileDevServerPlugin } from './corePlugins/userDepsFile';
+import { createHttpServer } from './httpServer';
+import { createMessageHandler } from './messageHandler';
 
 const corePlugins: DevServerPlugin[] = [
   userDepsFileDevServerPlugin,
@@ -48,9 +49,16 @@ export async function startDevServer(platformType: PlatformType) {
     msgHandler.cleanUp();
   }
 
-  // TODO: Use pluginConfigs on top of corePlugins
+  // TODO: Use pluginConfigs on top of corePlugins (WIP)
+  const devServerPlugins = pluginConfigs
+    .filter(c => c.devServer)
+    .map(
+      c =>
+        requireModule(path.resolve(cosmosConfig.rootDir, c.devServer!)).default
+    );
+  console.log(devServerPlugins);
   try {
-    for (const plugin of corePlugins) {
+    for (const plugin of [...corePlugins, ...devServerPlugins]) {
       const pluginReturn = await plugin({
         cosmosConfig,
         platformType,

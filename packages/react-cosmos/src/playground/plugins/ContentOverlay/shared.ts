@@ -7,8 +7,8 @@ import {
   screenGrey6,
   screenPrimary2,
   screenPrimary3,
-} from '../../style/colors.js';
-import { ContentOverlaySpec } from './spec.js';
+} from '../../style/colors';
+import { ContentOverlaySpec } from './spec';
 
 export type ContentOverlayContext = PluginContext<ContentOverlaySpec>;
 

@@ -1,4 +1,4 @@
-import { replaceKeys } from '../../utils/string.js';
+import { replaceKeys } from 'react-cosmos-core/utils';
 
 export type Json =
   | string

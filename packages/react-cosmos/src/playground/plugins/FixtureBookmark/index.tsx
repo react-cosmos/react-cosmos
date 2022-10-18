@@ -1,17 +1,19 @@
 import { isEqual } from 'lodash';
 import React from 'react';
+import { FixtureId } from 'react-cosmos-core/fixture';
+import {
+  createFixtureTree,
+  flattenFixtureTree,
+} from 'react-cosmos-core/fixtureTree';
 import { createPlugin, PluginContext } from 'react-plugin';
-import { createFixtureTree } from '../../../core/fixtureTree/createFixtureTree/index.js';
-import { flattenFixtureTree } from '../../../core/fixtureTree/flattenFixtureTree.js';
-import { FixtureId } from '../../../core/types.js';
-import { FixtureActionSlotProps } from '../../slots/FixtureActionSlot.js';
-import { CoreSpec } from '../Core/spec.js';
-import { RendererCoreSpec } from '../RendererCore/spec.js';
-import { RouterSpec } from '../Router/spec.js';
-import { StorageSpec } from '../Storage/spec.js';
-import { BookmarkFixtureButton } from './BookmarkFixtureButton.js';
-import { FixtureBookmarks } from './FixtureBookmarks.js';
-import { FixtureBookmarkSpec } from './spec.js';
+import { FixtureActionSlotProps } from '../../slots/FixtureActionSlot';
+import { CoreSpec } from '../Core/spec';
+import { RendererCoreSpec } from '../RendererCore/spec';
+import { RouterSpec } from '../Router/spec';
+import { StorageSpec } from '../Storage/spec';
+import { BookmarkFixtureButton } from './BookmarkFixtureButton';
+import { FixtureBookmarks } from './FixtureBookmarks';
+import { FixtureBookmarkSpec } from './spec';
 
 type FixtureBookmarkContext = PluginContext<FixtureBookmarkSpec>;
 

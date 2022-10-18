@@ -1,10 +1,10 @@
 import React from 'react';
-import { Slot } from 'react-plugin';
 import {
   FixtureState,
   FixtureStateControl,
-} from '../../core/fixtureState/types.js';
-import { StateUpdater } from '../../utils/types.js';
+} from 'react-cosmos-core/fixtureState';
+import { StateUpdater } from 'react-cosmos-core/utils';
+import { Slot } from 'react-plugin';
 
 export type ControlSlotProps<TControl extends FixtureStateControl> = {
   controlName: string;

@@ -1,4 +1,4 @@
-import { FixtureList } from '../../core/types.js';
+import { FixtureList } from 'react-cosmos-core/fixture';
 
 export const fixtures: FixtureList = {
   'src/__fixtures__/styleguide/button.tsx': { type: 'single' },

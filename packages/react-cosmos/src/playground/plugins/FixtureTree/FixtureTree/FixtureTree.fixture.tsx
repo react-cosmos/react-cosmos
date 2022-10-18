@@ -1,9 +1,8 @@
 import React from 'react';
-import { createFixtureTree } from '../../../../core/fixtureTree/createFixtureTree/index.js';
-import { FixtureId, FixtureList } from '../../../../core/types.js';
-import { useValue } from '../../../../renderer/useValue/index.js';
-import { TreeExpansion } from '../../../shared/treeExpansion.js';
-import { FixtureTree } from './FixtureTree.js';
+import { FixtureId, FixtureList, useValue } from 'react-cosmos-core/fixture';
+import { createFixtureTree } from 'react-cosmos-core/fixtureTree';
+import { TreeExpansion } from '../../../shared/treeExpansion';
+import { FixtureTree } from './FixtureTree';
 
 const fixtures: FixtureList = {
   'src/Dashboard.ts': { type: 'single' },

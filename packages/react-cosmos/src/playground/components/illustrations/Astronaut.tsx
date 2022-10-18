@@ -1,10 +1,6 @@
 import React from 'react';
-import {
-  screenGrey4,
-  screenGrey5,
-  screenPrimary3,
-} from '../../style/colors.js';
-import { Illustration } from '../Illustration.js';
+import { screenGrey4, screenGrey5, screenPrimary3 } from '../../style/colors';
+import { Illustration } from '../Illustration';
 
 export const AstronautIllustration = ({ title }: { title: string }) => (
   <Illustration viewBox="0 0 995.79 756.3">

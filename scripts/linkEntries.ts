@@ -36,10 +36,9 @@ class InvalidTargetPackage extends Error {
     const targetDir = getTargetDir();
     const targetPackages = getTargetPackages();
 
-    const entryPoints = await getPackageEntryPoints(targetPackages);
-    await Promise.all(
-      entryPoints.map(f => linkFileRequiresToDir(f, targetDir))
-    );
+    const { modules, configs } = await getPackageEntryPoints(targetPackages);
+    await Promise.all(modules.map(f => linkFileRequiresToDir(f, targetDir)));
+    await Promise.all(configs.map(f => linkConfigExportsToDir(f, targetDir)));
 
     console.log(done(`Linked entry points to ${chalk.bold(targetDir)}.`));
   } catch (err) {
@@ -71,9 +70,35 @@ async function linkFileRequiresToDir(filePath: string, targetDir: TargetDir) {
   writeFileAsync(filePath, nextContents, 'utf8');
 }
 
-async function getPackageEntryPoints(
-  targetPackages: Package[]
-): Promise<string[]> {
+async function linkConfigExportsToDir(filePath: string, targetDir: TargetDir) {
+  const prev = await readFileAsync(filePath, 'utf8');
+  if (prev.match(/"exports": {/)) {
+    let next = prev;
+
+    if (targetDir === SRC_DIR) {
+      const regExp1 = new RegExp(`"import": "./${DIST_DIR}/esm/(.+).js"`, 'g');
+      next = next.replace(regExp1, `"import": "./${SRC_DIR}/$1.ts"`);
+
+      const regExp2 = new RegExp(`"require": "./${DIST_DIR}/cjs/(.+).js"`, 'g');
+      next = next.replace(regExp2, `"require": "./${SRC_DIR}/$1.ts"`);
+    } else {
+      const regExp1 = new RegExp(`"import": "./${SRC_DIR}/(.+).ts"`, 'g');
+      next = next.replace(regExp1, `"import": "./${DIST_DIR}/esm/$1.js"`);
+
+      const regExp2 = new RegExp(`"require": "./${SRC_DIR}/(.+).ts"`, 'g');
+      next = next.replace(regExp2, `"require": "./${DIST_DIR}/cjs/$1.js"`);
+    }
+
+    if (next !== prev) {
+      writeFileAsync(filePath, next, 'utf8');
+    }
+  }
+}
+
+async function getPackageEntryPoints(targetPackages: Package[]): Promise<{
+  modules: string[];
+  configs: string[];
+}> {
   if (targetPackages.length === 0)
     throw new Error('No package entry points to link for empty package list');
 
@@ -82,7 +107,10 @@ async function getPackageEntryPoints(
       ? `{${targetPackages.join(',')}}`
       : targetPackages[0];
 
-  return globAsync(`./packages/${pkgMatch}/{*,bin/*}.{js,d.ts}`);
+  const modules = await globAsync(`./packages/${pkgMatch}/{*,bin/*}.{js,d.ts}`);
+  const configs = await globAsync(`./packages/${pkgMatch}/package.json`);
+
+  return { modules, configs };
 }
 
 function getTargetDir(): TargetDir {

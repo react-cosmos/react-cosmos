@@ -1,5 +1,5 @@
 import React from 'react';
-import { BaseSvg, SvgChildren } from './BaseSvg.js';
+import { BaseSvg, SvgChildren } from './BaseSvg';
 
 type Props = {
   children: SvgChildren;

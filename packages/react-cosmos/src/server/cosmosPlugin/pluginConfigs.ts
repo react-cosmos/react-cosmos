@@ -1,9 +1,9 @@
-import { CosmosConfig } from '../cosmosConfig/types.js';
+import { CosmosConfig } from '../cosmosConfig/types';
 import {
   getCosmosPluginConfig,
   getCosmosPluginConfigs,
-} from './getCosmosPluginConfigs.js';
-import { CosmosPluginConfig } from './types.js';
+} from './getCosmosPluginConfigs';
+import { CosmosPluginConfig } from './types';
 
 // TODO: Refactor
 export function getPluginConfigs(cosmosConfig: CosmosConfig) {

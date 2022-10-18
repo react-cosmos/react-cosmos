@@ -4,8 +4,8 @@ import {
   SidePanelContainer,
   SidePanelHeader,
   SidePanelTitle,
-} from '../../components/SidePanel.js';
-import { grey224 } from '../../style/colors.js';
+} from '../../components/SidePanel';
+import { grey224 } from '../../style/colors';
 
 export type SimplePlugin = {
   name: string;

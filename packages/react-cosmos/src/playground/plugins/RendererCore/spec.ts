@@ -1,7 +1,7 @@
-import { FixtureState } from '../../../core/fixtureState/types.js';
-import { FixtureList } from '../../../core/types.js';
-import { RendererId } from '../../../renderer/types.js';
-import { MessageType, StateUpdater } from '../../../utils/types.js';
+import { FixtureState } from 'react-cosmos-core/fixtureState';
+import { FixtureList } from 'react-cosmos-core/fixture';
+import { RendererId } from 'react-cosmos-core/renderer';
+import { MessageType, StateUpdater } from 'react-cosmos-core/utils';
 
 export type RendererCoreSpec = {
   name: 'rendererCore';

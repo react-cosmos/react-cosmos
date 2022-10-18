@@ -1,8 +1,8 @@
 import React from 'react';
-import { IconButton32 } from '../../../components/buttons/index.js';
-import { CastIcon } from '../../../components/icons/index.js';
-import { NotificationItem } from '../../Notifications/spec.js';
-import { copyToClipboard } from './copyToClipboard.js';
+import { IconButton32 } from '../../../components/buttons';
+import { CastIcon } from '../../../components/icons';
+import { NotificationItem } from '../../Notifications/spec';
+import { copyToClipboard } from './copyToClipboard';
 
 type Props = {
   devServerOn: boolean;

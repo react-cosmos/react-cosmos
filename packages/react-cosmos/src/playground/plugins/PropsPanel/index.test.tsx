@@ -5,12 +5,12 @@ import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   FixtureState,
   FixtureStateValues,
-} from '../../../core/fixtureState/types.js';
-import { SidePanelRowSlot } from '../../slots/SidePanelRowSlot.js';
-import { mockStorage } from '../../testHelpers/pluginMocks.js';
-import { getParentButton } from '../../testHelpers/selectors.js';
-import { register } from './index.js';
-import { PROPS_TREE_EXPANSION_STORAGE_KEY } from './shared.js';
+} from 'react-cosmos-core/fixtureState';
+import { SidePanelRowSlot } from '../../slots/SidePanelRowSlot';
+import { mockStorage } from '../../testHelpers/pluginMocks';
+import { getParentButton } from '../../testHelpers/selectors';
+import { register } from '.';
+import { PROPS_TREE_EXPANSION_STORAGE_KEY } from './shared';
 
 beforeEach(register);
 

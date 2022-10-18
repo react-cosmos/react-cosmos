@@ -2,7 +2,7 @@ import {
   parsePlaygroundUrlQuery,
   PlaygroundUrlParams,
   stringifyPlaygroundUrlQuery,
-} from '../../core/playgroundUrl.js';
+} from 'react-cosmos-core/playground';
 
 export function getUrlParams(): PlaygroundUrlParams {
   return parsePlaygroundUrlQuery(location.search);

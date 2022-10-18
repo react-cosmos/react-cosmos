@@ -1,19 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ArtificialIntelligenceIllustration } from '../../components/illustrations/ArtificialIntelligence.js';
+import { ArtificialIntelligenceIllustration } from '../../components/illustrations/ArtificialIntelligence';
 import {
   screenGrey3,
   screenGrey5,
   screenPrimary2,
   screenPrimary3,
-} from '../../style/colors.js';
+} from '../../style/colors';
 import {
   ContentContainer,
   IllustrationContainer,
   NoWrap,
   TextContainer,
-} from './shared.js';
+} from './shared';
 
+// webpack???
 export function RendererNotResponding() {
   return (
     <ContentContainer>

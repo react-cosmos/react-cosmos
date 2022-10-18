@@ -1,4 +1,4 @@
-import { parseUrlQuery, stringifyUrlQuery } from '../../core/playgroundUrl.js';
+import { parseUrlQuery, stringifyUrlQuery } from 'react-cosmos-core/playground';
 
 type Params = Record<string, unknown>;
 

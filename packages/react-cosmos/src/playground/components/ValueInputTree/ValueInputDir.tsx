@@ -6,9 +6,9 @@ import {
   grey128,
   grey160,
   grey224,
-} from '../../style/colors.js';
-import { ChevronDownIcon, ChevronRightIcon } from '../icons/index.js';
-import { ValueTreeItem } from './shared.js';
+} from '../../style/colors';
+import { ChevronDownIcon, ChevronRightIcon } from '../icons';
+import { ValueTreeItem } from './shared';
 
 type Props = {
   name: string;

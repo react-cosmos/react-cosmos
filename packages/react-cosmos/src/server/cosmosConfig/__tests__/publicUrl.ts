@@ -1,4 +1,4 @@
-import { createCosmosConfig } from '../createCosmosConfig.js';
+import { createCosmosConfig } from '../createCosmosConfig';
 
 it('returns default publicUrl', () => {
   const { publicUrl } = createCosmosConfig(process.cwd());

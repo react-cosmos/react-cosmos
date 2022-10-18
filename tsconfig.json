@@ -9,7 +9,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
-    "moduleResolution": "node",
+    "moduleResolution": "node16",
     "noEmit": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
@@ -17,7 +17,8 @@
     "noUnusedLocals": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "es2020"
+    "target": "es2020",
+    "module": "CommonJS"
   },
   "exclude": ["node_modules"]
 }

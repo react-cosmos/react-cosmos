@@ -1,6 +1,6 @@
 import React from 'react';
-import { useValue } from '../../../renderer/useValue/index.js';
-import { PluginList, SimplePlugin } from './PluginList.js';
+import { useValue } from 'react-cosmos-core/fixture';
+import { PluginList, SimplePlugin } from './PluginList';
 
 const initialPlugins: SimplePlugin[] = [
   { name: 'buildNotifications', enabled: true },
@@ -27,6 +27,7 @@ const initialPlugins: SimplePlugin[] = [
   { name: 'controlSelect', enabled: true },
   { name: 'standardControl', enabled: true },
   { name: 'storage', enabled: true },
+  // ???
   { name: 'webpackHmrNotification', enabled: true },
 ];
 

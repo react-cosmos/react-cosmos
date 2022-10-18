@@ -1,9 +1,9 @@
 import React from 'react';
-import { RuntimeStatus, UrlStatus } from '../RendererPreview/shared.js';
-import { NoFixtureSelected } from './NoFixtureSelected.js';
-import { RendererNotResponding } from './RendererNotResponding.js';
-import { ContentContainer, OverlayContainer } from './shared.js';
-import { WelcomeCosmos } from './WelcomeCosmos.js';
+import { RuntimeStatus, UrlStatus } from '../RendererPreview/shared';
+import { NoFixtureSelected } from './NoFixtureSelected';
+import { RendererNotResponding } from './RendererNotResponding';
+import { ContentContainer, OverlayContainer } from './shared';
+import { WelcomeCosmos } from './WelcomeCosmos';
 
 type Props = {
   fixtureSelected: boolean;

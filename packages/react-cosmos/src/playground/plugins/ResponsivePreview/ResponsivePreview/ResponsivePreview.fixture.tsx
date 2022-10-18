@@ -1,8 +1,8 @@
 import React from 'react';
+import { useValue } from 'react-cosmos-core/fixture';
 import styled from 'styled-components';
-import { useValue } from '../../../../renderer/useValue/index.js';
-import { DEFAULT_DEVICES } from '../shared.js';
-import { ResponsivePreview } from './ResponsivePreview.js';
+import { DEFAULT_DEVICES } from '../shared';
+import { ResponsivePreview } from './ResponsivePreview';
 
 const { width, height } = DEFAULT_DEVICES[0];
 const initialViewport = { width, height };

@@ -1,13 +1,13 @@
 import React, { useMemo } from 'react';
+import { FixtureId, FixtureList } from 'react-cosmos-core/fixture';
+import { createFixtureTree } from 'react-cosmos-core/fixtureTree';
 import styled from 'styled-components';
-import { createFixtureTree } from '../../../core/fixtureTree/createFixtureTree/index.js';
-import { FixtureId, FixtureList } from '../../../core/types.js';
-import { TreeExpansion } from '../../shared/treeExpansion.js';
-import { grey32 } from '../../style/colors.js';
-import { BlankState } from './BlankState.js';
-import { FixtureTree } from './FixtureTree/FixtureTree.js';
-import { FixtureTreeHeader } from './FixtureTreeHeader.js';
-import { useScrollToSelected } from './useScrollToSelected.js';
+import { TreeExpansion } from '../../shared/treeExpansion';
+import { grey32 } from '../../style/colors';
+import { BlankState } from './BlankState';
+import { FixtureTree } from './FixtureTree/FixtureTree';
+import { FixtureTreeHeader } from './FixtureTreeHeader';
+import { useScrollToSelected } from './useScrollToSelected';
 
 type Props = {
   fixturesDir: string;

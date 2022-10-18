@@ -1,15 +1,15 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
-import { FixtureList } from '../../../core/types.js';
-import { NavRowSlot } from '../../slots/NavRowSlot.js';
+import { FixtureList } from 'react-cosmos-core/fixture';
+import { NavRowSlot } from '../../slots/NavRowSlot';
 import {
   mockCore,
   mockFixtureTree,
   mockRendererCore,
   mockRouter,
-} from '../../testHelpers/pluginMocks.js';
-import { register } from './index.js';
+} from '../../testHelpers/pluginMocks';
+import { register } from '.';
 
 beforeEach(register);
 

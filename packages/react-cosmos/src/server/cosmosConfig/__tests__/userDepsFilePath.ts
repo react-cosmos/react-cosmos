@@ -1,5 +1,5 @@
-import { getCwdPath } from '../../testHelpers/cwd.js';
-import { createCosmosConfig } from '../createCosmosConfig.js';
+import { getCwdPath } from '../../testHelpers/cwd';
+import { createCosmosConfig } from '../createCosmosConfig';
 
 it('returns resolved default getUserDepsFilePath', () => {
   const cosmosConfig = createCosmosConfig(process.cwd());

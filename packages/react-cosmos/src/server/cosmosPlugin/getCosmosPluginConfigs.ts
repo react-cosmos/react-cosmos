@@ -1,7 +1,7 @@
 import glob from 'glob';
 import path from 'path';
 import resolveFrom from 'resolve-from';
-import { CosmosPluginConfig, RawCosmosPluginConfig } from './types.js';
+import { CosmosPluginConfig, RawCosmosPluginConfig } from './types';
 
 type Args = {
   rootDir: string;
@@ -43,6 +43,18 @@ export function getCosmosPluginConfig(
     const resolvedUiPath = resolveFrom.silent(pluginRootDir, uiPath);
     // TODO: Handle missing path
     if (resolvedUiPath) config.ui = path.relative(rootDir, resolvedUiPath);
+  }
+
+  if (rawConfig.devServer) {
+    const devServerPath = path.join(pluginRootDir, rawConfig.devServer);
+    const resolvedDevServerPath = resolveFrom.silent(
+      pluginRootDir,
+      devServerPath
+    );
+    // TODO: Handle missing path
+    // TODO: Test
+    if (resolvedDevServerPath)
+      config.devServer = path.relative(rootDir, resolvedDevServerPath);
   }
 
   return config;

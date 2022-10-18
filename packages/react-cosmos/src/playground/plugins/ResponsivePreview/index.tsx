@@ -1,9 +1,9 @@
 import React, { SetStateAction } from 'react';
 import { createPlugin } from 'react-plugin';
-import { CoreSpec } from '../Core/spec.js';
-import { RendererCoreSpec } from '../RendererCore/spec.js';
-import { StorageSpec } from '../Storage/spec.js';
-import { ResponsivePreview } from './ResponsivePreview/ResponsivePreview.js';
+import { CoreSpec } from '../Core/spec';
+import { RendererCoreSpec } from '../RendererCore/spec';
+import { StorageSpec } from '../Storage/spec';
+import { ResponsivePreview } from './ResponsivePreview/ResponsivePreview';
 import {
   DEFAULT_DEVICES,
   DEFAULT_VIEWPORT_STATE,
@@ -11,9 +11,9 @@ import {
   ResponsivePreviewContext,
   ViewportState,
   VIEWPORT_STORAGE_KEY,
-} from './shared.js';
-import { ResponsivePreviewSpec, ResponsiveViewport } from './spec.js';
-import { ToggleButton } from './ToggleButton/index.js';
+} from './shared';
+import { ResponsivePreviewSpec, ResponsiveViewport } from './spec';
+import { ToggleButton } from './ToggleButton';
 
 const { plug, namedPlug, register } = createPlugin<ResponsivePreviewSpec>({
   name: 'responsivePreview',

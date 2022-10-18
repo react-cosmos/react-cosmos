@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import * as ReactPlugin from 'react-plugin';
-import { CosmosPluginConfig } from '../server/cosmosPlugin/types.js';
-import { CoreSpec } from './plugins/Core/spec.js';
-import './plugins/pluginEntry.js';
-import { DEFAULT_PLUGIN_CONFIG } from './shared/defaultPluginConfig.js';
-import { GlobalStyle } from './style/globalStyle.js';
+import { CosmosPluginConfig } from '../server/cosmosPlugin/types';
+import { CoreSpec } from './plugins/Core/spec';
+import './plugins/pluginEntry';
+import { DEFAULT_PLUGIN_CONFIG } from './shared/defaultPluginConfig';
+import { GlobalStyle } from './style/globalStyle';
 
 declare global {
   interface Window {

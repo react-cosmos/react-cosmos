@@ -1,6 +1,6 @@
-import { removeItemMatch, replaceOrAddItem } from '../../../utils/array.js';
-import { NotificationsContext } from './shared.js';
-import { NotificationItem, NotificationsSpec } from './spec.js';
+import { removeItemMatch, replaceOrAddItem } from 'react-cosmos-core/utils';
+import { NotificationsContext } from './shared';
+import { NotificationItem, NotificationsSpec } from './spec';
 
 const TIMEOUT = 3000;
 

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { KEY_DOWN, KEY_UP } from '../../../utils/keys.js';
-import { useFocus } from '../../hooks/useFocus.js';
+import { KEY_DOWN, KEY_UP } from 'react-cosmos-core/utils';
+import { useFocus } from '../../hooks/useFocus';
 import {
   TextContainer,
   TextField,
   TextInputContainer,
   TextMirror,
-} from './shared.js';
+} from './shared';
 
 export type NumberInputStyles = {
   focusedColor: string;

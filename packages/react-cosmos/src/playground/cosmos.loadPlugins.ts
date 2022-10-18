@@ -1,6 +1,6 @@
 import { loadPlugins } from 'react-plugin';
-import './plugins/pluginEntry.js';
-import { DEFAULT_PLUGIN_CONFIG } from './shared/defaultPluginConfig.js';
+import './plugins/pluginEntry';
+import { DEFAULT_PLUGIN_CONFIG } from './shared/defaultPluginConfig';
 
 loadPlugins({
   config: {

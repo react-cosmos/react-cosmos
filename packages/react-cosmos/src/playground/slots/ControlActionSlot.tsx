@@ -1,6 +1,6 @@
 import React from 'react';
+import { FixtureStateControls } from 'react-cosmos-core/fixtureState';
 import { ArraySlot } from 'react-plugin';
-import { FixtureStateControls } from '../../core/fixtureState/types.js';
 
 export type ControlActionSlotProps = {
   controls: FixtureStateControls;

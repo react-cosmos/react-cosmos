@@ -9,17 +9,17 @@ import React, {
   useState,
 } from 'react';
 import styled, { css } from 'styled-components';
-import { useDrag } from '../../../hooks/useDrag.js';
-import { grey64, grey8 } from '../../../style/colors.js';
-import { ResponsiveDevice, ResponsiveViewport } from '../spec.js';
-import { Header } from './Header.js';
+import { useDrag } from '../../../hooks/useDrag';
+import { grey64, grey8 } from '../../../style/colors';
+import { ResponsiveDevice, ResponsiveViewport } from '../spec';
+import { Header } from './Header';
 import {
   getStyles,
   getViewportScaleFactor,
   responsivePreviewBorderWidth,
   responsivePreviewPadding,
   stretchStyle,
-} from './style.js';
+} from './style';
 
 type Props = {
   children?: ReactNode;

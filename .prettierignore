@@ -8,5 +8,4 @@ lerna.json
 package.json
 packages/*/dist
 packages/*/package.json
-packages/react-cosmos-playground2/src/plugins/pluginEntry.ts
 website/dist

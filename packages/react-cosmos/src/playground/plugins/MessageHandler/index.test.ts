@@ -1,19 +1,19 @@
 // NOTE: Mock files need to imported before modules that use the mocked APIs
-import { mockSocketIo } from './testHelpers/mockSocketIo.js';
+import { mockSocketIo } from './testHelpers/mockSocketIo';
 
 import { waitFor } from '@testing-library/dom';
-import { loadPlugins, resetPlugins } from 'react-plugin';
+import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-core/renderer';
 import {
   BuildErrorMessage,
   SERVER_MESSAGE_EVENT_NAME,
-} from '../../../core/serverMessage.js';
-import { RENDERER_MESSAGE_EVENT_NAME } from '../../../renderer/types.js';
+} from 'react-cosmos-core/server';
+import { loadPlugins, resetPlugins } from 'react-plugin';
+import { register } from '.';
 import {
   getMessageHandlerMethods,
   mockCore,
   onMessageHandler,
-} from '../../testHelpers/pluginMocks.js';
-import { register } from './index.js';
+} from '../../testHelpers/pluginMocks';
 
 beforeEach(register);
 

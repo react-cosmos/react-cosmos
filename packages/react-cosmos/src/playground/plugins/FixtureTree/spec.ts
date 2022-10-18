@@ -1,4 +1,4 @@
-import { FixtureId } from '../../../core/types.js';
+import { FixtureId } from 'react-cosmos-core/fixture';
 
 export type FixtureTreeSpec = {
   name: 'fixtureTree';

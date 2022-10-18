@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { KeyBox } from '../../components/KeyBox.js';
-import { grey224, grey64, grey96 } from '../../style/colors.js';
+import { KeyBox } from '../../components/KeyBox';
+import { grey224, grey64, grey96 } from '../../style/colors';
 
 export function FixtureSearchShortcuts() {
   return (

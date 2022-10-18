@@ -1,8 +1,8 @@
 import {
   FixtureElementId,
   FixtureStateValues,
-} from '../../../core/fixtureState/types.js';
-import { stringifyElementId } from './shared.js';
+} from 'react-cosmos-core/fixtureState';
+import { stringifyElementId } from './shared';
 
 interface FixtureStateValueGroup {
   elementId: FixtureElementId;

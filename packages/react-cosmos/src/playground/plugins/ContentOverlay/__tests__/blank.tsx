@@ -6,9 +6,9 @@ import {
   mockRendererPreview,
   mockRouter,
   mockStorage,
-} from '../../../testHelpers/pluginMocks.js';
-import { register } from '../index.js';
-import { WELCOME_DISMISS_STORAGE_KEY } from '../welcomeDismiss.js';
+} from '../../../testHelpers/pluginMocks';
+import { register } from '..';
+import { WELCOME_DISMISS_STORAGE_KEY } from '../welcomeDismiss';
 
 beforeEach(register);
 

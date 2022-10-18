@@ -1,7 +1,7 @@
 import React from 'react';
 import { PropsPanel } from '.';
-import { FixtureState } from '../../../../core/fixtureState/types.js';
-import { stringifyElementId } from '../../../components/ValueInputTree/index.js';
+import { FixtureState } from 'react-cosmos-core/fixtureState';
+import { stringifyElementId } from '../../../components/ValueInputTree';
 
 export default () => {
   const [fixtureState, setFixtureState] = React.useState<FixtureState>({

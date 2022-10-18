@@ -1,0 +1,47 @@
+{
+  "name": "react-cosmos-core",
+  "version": "5.7.2",
+  "description": "React Cosmos Core (ES modules)",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-core",
+  "license": "MIT",
+  "exports": {
+    "./dom": {
+      "import": "./dist/esm/dom/index.js",
+      "require": "./dist/cjs/dom/index.js"
+    },
+    "./fixture": {
+      "import": "./dist/esm/fixture/index.js",
+      "require": "./dist/cjs/fixture/index.js"
+    },
+    "./fixtureState": {
+      "import": "./dist/esm/fixtureState/index.js",
+      "require": "./dist/cjs/fixtureState/index.js"
+    },
+    "./fixtureTree": {
+      "import": "./dist/esm/fixtureTree/index.js",
+      "require": "./dist/cjs/fixtureTree/index.js"
+    },
+    "./playground": {
+      "import": "./dist/esm/playground/index.js",
+      "require": "./dist/cjs/playground/index.js"
+    },
+    "./react": {
+      "import": "./dist/esm/react/index.js",
+      "require": "./dist/cjs/react/index.js"
+    },
+    "./renderer": {
+      "import": "./dist/esm/renderer/index.js",
+      "require": "./dist/cjs/renderer/index.js"
+    },
+    "./server": {
+      "import": "./dist/esm/server/index.js",
+      "require": "./dist/cjs/server/index.js"
+    },
+    "./utils": {
+      "import": "./dist/esm/utils/index.js",
+      "require": "./dist/cjs/utils/index.js"
+    }
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

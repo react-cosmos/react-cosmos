@@ -1,11 +1,11 @@
-import { findFixtureStateClassState } from '../../../../core/fixtureState/classState.js';
 import {
+  findFixtureStateClassState,
   FixtureElementId,
   FixtureState,
   FixtureStateClassState,
-} from '../../../../core/fixtureState/types.js';
-import { StateUpdater } from '../../../../utils/types.js';
-import { stringifyElementId } from '../../../components/ValueInputTree/index.js';
+} from 'react-cosmos-core/fixtureState';
+import { StateUpdater } from 'react-cosmos-core/utils';
+import { stringifyElementId } from '../../../components/ValueInputTree';
 
 export function createClassStateFsUpdater(
   elementId: FixtureElementId,

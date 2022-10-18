@@ -1,16 +1,16 @@
 import React, { useCallback, useMemo } from 'react';
-import { createPlugin } from 'react-plugin';
 import {
   FixtureStateControls,
   FixtureStateStandardControl,
   FixtureStateValues,
-} from '../../../core/fixtureState/types.js';
-import { ExpandCollapseValues } from '../../components/ValueInputTree/ExpandCollapseValues.js';
-import { ValueInputTree } from '../../components/ValueInputTree/index.js';
-import { ControlActionSlotProps } from '../../slots/ControlActionSlot.js';
-import { ControlSlotProps } from '../../slots/ControlSlot.js';
-import { StandardControlSpec } from './spec.js';
-import { useTreeExpansionStorage } from './storage.js';
+} from 'react-cosmos-core/fixtureState';
+import { createPlugin } from 'react-plugin';
+import { ValueInputTree } from '../../components/ValueInputTree';
+import { ExpandCollapseValues } from '../../components/ValueInputTree/ExpandCollapseValues';
+import { ControlActionSlotProps } from '../../slots/ControlActionSlot';
+import { ControlSlotProps } from '../../slots/ControlSlot';
+import { StandardControlSpec } from './spec';
+import { useTreeExpansionStorage } from './storage';
 
 const { namedPlug, plug, register } = createPlugin<StandardControlSpec>({
   name: 'standardControl',

@@ -1,30 +1,30 @@
 import { isEqual } from 'lodash';
 import React, { useCallback } from 'react';
-import { updateFixtureStateClassState } from '../../../../core/fixtureState/classState.js';
 import {
   FixtureState,
   FixtureStateClassState,
   FixtureStateValues,
-} from '../../../../core/fixtureState/types.js';
-import { StateUpdater } from '../../../../utils/types.js';
-import { IconButton32 } from '../../../components/buttons/index.js';
-import { RotateCcwIcon } from '../../../components/icons/index.js';
+  updateFixtureStateClassState,
+} from 'react-cosmos-core/fixtureState';
+import { StateUpdater } from 'react-cosmos-core/utils';
+import { IconButton32 } from '../../../components/buttons';
+import { RotateCcwIcon } from '../../../components/icons';
 import {
   SidePanelActions,
   SidePanelBody,
   SidePanelContainer,
   SidePanelHeader,
   SidePanelTitle,
-} from '../../../components/SidePanel.js';
-import { ExpandCollapseValues } from '../../../components/ValueInputTree/ExpandCollapseValues.js';
+} from '../../../components/SidePanel';
 import {
   FixtureExpansion,
   OnElementExpansionChange,
   stringifyElementId,
   ValueInputTree,
-} from '../../../components/ValueInputTree/index.js';
-import { TreeExpansion } from '../../../shared/treeExpansion.js';
-import { createClassStateFsUpdater } from './shared.js';
+} from '../../../components/ValueInputTree';
+import { ExpandCollapseValues } from '../../../components/ValueInputTree/ExpandCollapseValues';
+import { TreeExpansion } from '../../../shared/treeExpansion';
+import { createClassStateFsUpdater } from './shared';
 
 type Props = {
   fsClassState: FixtureStateClassState;

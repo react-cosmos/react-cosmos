@@ -1,5 +1,5 @@
 import { PluginContext } from 'react-plugin';
-import { RendererPreviewSpec } from './spec.js';
+import { RendererPreviewSpec } from './spec';
 
 export type UrlStatus = 'unknown' | 'ok' | 'error';
 export type RuntimeStatus = 'pending' | 'connected' | 'error';
