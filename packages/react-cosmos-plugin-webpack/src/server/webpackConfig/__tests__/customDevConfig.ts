@@ -78,12 +78,12 @@ it('includes plugin from user override', async () => {
 
 it('includes client entry', async () => {
   const { entry } = await getCustomDevWebpackConfig();
-  expect(entry).toContain(require.resolve('../../client'));
+  expect(entry).toContain(require.resolve('../../../client'));
 });
 
 it('includes DOM devtooks hook entry', async () => {
   const { entry } = await getCustomDevWebpackConfig();
-  expect(entry).toContain(require.resolve('../../client/reactDevtoolsHook'));
+  expect(entry).toContain(require.resolve('../../../client/reactDevtoolsHook'));
 });
 
 it('includes webpack-hot-middleware entry', async () => {
@@ -109,7 +109,7 @@ it('includes user deps loader', async () => {
   const { module } = await getCustomDevWebpackConfig();
   expect(module!.rules).toContainEqual({
     loader: require.resolve('../userDepsLoader'),
-    include: require.resolve('../../client/userDeps'),
+    include: require.resolve('../../../client/userDeps'),
   });
 });
 

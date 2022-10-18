@@ -48,12 +48,12 @@ it('includes user plugin', async () => {
 
 it('includes client entry', async () => {
   const { entry } = await getCustomExportWebpackConfig();
-  expect(entry).toContain(require.resolve('../../client'));
+  expect(entry).toContain(require.resolve('../../../client'));
 });
 
 it('includes DOM devtooks hook entry', async () => {
   const { entry } = await getCustomExportWebpackConfig();
-  expect(entry).toContain(require.resolve('../../client/reactDevtoolsHook'));
+  expect(entry).toContain(require.resolve('../../../client/reactDevtoolsHook'));
 });
 
 it('does not include webpack-hot-middleware entry', async () => {
@@ -80,7 +80,7 @@ it('includes user deps loader', async () => {
   const { module } = await getCustomExportWebpackConfig();
   expect(module!.rules).toContainEqual({
     loader: require.resolve('../userDepsLoader'),
-    include: require.resolve('../../client/userDeps'),
+    include: require.resolve('../../../client/userDeps'),
   });
 });
 
