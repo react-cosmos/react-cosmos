@@ -68,7 +68,7 @@ function exportPlaygroundFiles(cosmosConfig: CosmosConfig) {
   );
 
   fs.copySync(
-    require.resolve('react-cosmos-playground2/dist'),
+    require.resolve('../../playground/index.bundle'),
     path.resolve(exportPath, '_playground.js')
   );
   fs.copySync(
