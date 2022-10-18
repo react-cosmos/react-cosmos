@@ -18,6 +18,29 @@ const { stdout, stderr } = process;
 
 const watch = getBoolArg('watch');
 
+type Builder = (pkgName: string) => Promise<void>;
+
+const builders: Partial<Record<Package, Builder>> & { default: Builder } = {
+  'react-cosmos-core': async pkgName => {
+    await buildPkgTs(pkgName, 'tsconfig.build.esm.json');
+    await buildPkgTs(pkgName, 'tsconfig.build.cjs.json');
+  },
+  'react-cosmos': async pkgName => {
+    await copyStaticAssets(pkgName);
+    await buildPkgTs(pkgName, 'tsconfig.build.json');
+    await buildPkgWebpack(pkgName, 'src/playground/webpack.config.js');
+  },
+  'react-cosmos-plugin-webpack': async pkgName => {
+    await buildPkgTs(pkgName, 'tsconfig.build.client.json');
+    await buildPkgTs(pkgName, 'tsconfig.build.server.json');
+    await buildPkgWebpack(pkgName, 'webpack.config.js');
+  },
+  default: async pkgName => {
+    await buildPkgTs(pkgName, 'tsconfig.build.json');
+    await buildPkgWebpack(pkgName, 'webpack.config.js');
+  },
+};
+
 (async () => {
   const pkgName = getUnnamedArg();
 
@@ -76,34 +99,21 @@ async function tryBuildPackage(pkgName: Package) {
 }
 
 async function buildPackage(pkgName: Package) {
-  if (pkgName === 'react-cosmos-core') {
-    await clearPackage(pkgName);
-    await builDualTsPackage(pkgName);
-  } else if (pkgName === 'react-cosmos') {
-    // await generatePlaygroundPluginEntry();
-    await clearPackage(pkgName);
-    await copyStaticAssets(pkgName);
-    await buildTsPackage(pkgName);
-    await runWebpack(`packages/${pkgName}/src/playground/webpack.config.js`);
-  } else {
-    await clearPackage(pkgName);
-    await buildTsPackage(pkgName);
-    const webpackConfigPath = `packages/${pkgName}/webpack.config.js`;
-    await runWebpack(webpackConfigPath);
-  }
+  await clearPackage(pkgName);
+  const builder = builders[pkgName] || builders.default;
+  await builder(pkgName);
 }
 
 async function clearPackage(pkgName: string) {
   await rimrafAsync(`packages/${pkgName}/dist`);
 }
 
-async function buildTsPackage(pkgName: string) {
-  await runTypeScript(`packages/${pkgName}/tsconfig.build.json`);
+async function buildPkgTs(pkgName: string, tsConfig: string) {
+  await runTypeScript(`packages/${pkgName}/${tsConfig}`);
 }
 
-async function builDualTsPackage(pkgName: string) {
-  await runTypeScript(`packages/${pkgName}/tsconfig.build.esm.json`);
-  await runTypeScript(`packages/${pkgName}/tsconfig.build.cjs.json`);
+async function buildPkgWebpack(pkgName: string, webpackConfig: string) {
+  await runWebpack(`packages/${pkgName}/${webpackConfig}`);
 }
 
 function runTypeScript(config: string) {
