@@ -49,8 +49,7 @@ export async function startDevServer(platformType: PlatformType) {
     msgHandler.cleanUp();
   }
 
-  // TODO: Use pluginConfigs on top of corePlugins
-  // ^^ this
+  // TODO: Use pluginConfigs on top of corePlugins (WIP)
   const devServerPlugins = pluginConfigs
     .filter(c => c.devServer)
     .map(
