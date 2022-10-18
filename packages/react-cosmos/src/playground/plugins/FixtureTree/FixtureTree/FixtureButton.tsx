@@ -1,9 +1,9 @@
 import React, { RefObject } from 'react';
 import styled from 'styled-components';
 import { FixtureId } from 'react-cosmos-core/fixture';
-import { quick } from '../../../style/vars.js';
-import { FixtureLink } from './FixtureLink.js';
-import { FixtureTreeItem } from './FixtureTreeItem.js';
+import { quick } from '../../../style/vars';
+import { FixtureLink } from './FixtureLink';
+import { FixtureTreeItem } from './FixtureTreeItem';
 
 type Props = {
   name: string;

@@ -6,8 +6,8 @@ import {
   mockRendererPreview,
   mockRouter,
   mockStorage,
-} from '../../../testHelpers/pluginMocks.js';
-import { register } from '../index.js';
+} from '../../../testHelpers/pluginMocks';
+import { register } from '..';
 
 beforeEach(register);
 

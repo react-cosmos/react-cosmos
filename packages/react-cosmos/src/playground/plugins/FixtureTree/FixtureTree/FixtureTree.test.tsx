@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { createFixtureTree } from 'react-cosmos-core/fixtureTree';
 import { FixtureList } from 'react-cosmos-core/fixture';
-import { FixtureTree } from './FixtureTree.js';
+import { FixtureTree } from './FixtureTree';
 
 const fixtures: FixtureList = {
   'ein.js': { type: 'single' },

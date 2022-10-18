@@ -1,6 +1,6 @@
 import { MessageType } from 'react-cosmos-core/utils';
-import { NotificationsSpec } from '../Notifications/spec.js';
-import { RendererPreviewContext } from './shared.js';
+import { NotificationsSpec } from '../Notifications/spec';
+import { RendererPreviewContext } from './shared';
 
 type State = {
   iframeRef: HTMLIFrameElement;

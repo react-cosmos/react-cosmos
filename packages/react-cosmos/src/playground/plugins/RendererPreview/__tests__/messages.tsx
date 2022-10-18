@@ -2,15 +2,15 @@ import { waitFor } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
+import { register } from '..';
 import {
   getRendererCoreContext,
   mockCore,
   mockRendererCore,
-} from '../../../testHelpers/pluginMocks.js';
-import { register } from '../index.js';
-import { fakeFetchResponseStatus } from '../testHelpers/fetch.js';
-import { getIframe, mockIframeMessage } from '../testHelpers/iframe.js';
-import { rendererReadyMsg, selectFixtureMsg } from '../testHelpers/messages.js';
+} from '../../../testHelpers/pluginMocks';
+import { fakeFetchResponseStatus } from '../testHelpers/fetch';
+import { getIframe, mockIframeMessage } from '../testHelpers/iframe';
+import { rendererReadyMsg, selectFixtureMsg } from '../testHelpers/messages';
 
 beforeEach(register);
 

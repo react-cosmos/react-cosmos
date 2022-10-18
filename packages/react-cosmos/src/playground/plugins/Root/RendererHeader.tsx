@@ -3,16 +3,16 @@ import React from 'react';
 import styled from 'styled-components';
 import { FlatFixtureTreeItem } from 'react-cosmos-core/fixtureTree';
 import { FixtureId } from 'react-cosmos-core/fixture';
-import { IconButton32 } from '../../components/buttons/index.js';
+import { IconButton32 } from '../../components/buttons';
 import {
   MenuIcon,
   RotateCcwIcon,
   SlidersIcon,
   XCircleIcon,
-} from '../../components/icons/index.js';
-import { FixtureActionSlot } from '../../slots/FixtureActionSlot.js';
-import { RendererActionSlot } from '../../slots/RendererActionSlot.js';
-import { grey176, grey32, white10 } from '../../style/colors.js';
+} from '../../components/icons';
+import { FixtureActionSlot } from '../../slots/FixtureActionSlot';
+import { RendererActionSlot } from '../../slots/RendererActionSlot';
+import { grey176, grey32, white10 } from '../../style/colors';
 
 type Props = {
   fixtureItems: FlatFixtureTreeItem[];

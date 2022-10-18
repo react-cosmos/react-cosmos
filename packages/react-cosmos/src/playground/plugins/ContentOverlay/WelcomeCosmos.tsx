@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AstronautIllustration } from '../../components/illustrations/Astronaut.js';
+import { AstronautIllustration } from '../../components/illustrations/Astronaut';
 import {
   screenGrey1,
   screenGrey3,
@@ -8,14 +8,14 @@ import {
   screenPrimary1,
   screenPrimary2,
   screenPrimary3,
-} from '../../style/colors.js';
+} from '../../style/colors';
 import {
   ContentContainer,
   IllustrationContainer,
   NoWrap,
   SecondaryButton,
   TextContainer,
-} from './shared.js';
+} from './shared';
 
 type Props = {
   onDismissWelcome: () => unknown;

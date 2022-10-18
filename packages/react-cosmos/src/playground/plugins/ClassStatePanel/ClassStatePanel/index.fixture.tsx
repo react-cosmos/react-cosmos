@@ -1,7 +1,7 @@
 import React from 'react';
 import { ClassStatePanel } from '.';
 import { FixtureState } from 'react-cosmos-core/fixtureState';
-import { stringifyElementId } from '../../../components/ValueInputTree/index.js';
+import { stringifyElementId } from '../../../components/ValueInputTree';
 
 export default () => {
   const [fixtureState, setFixtureState] = React.useState<FixtureState>({

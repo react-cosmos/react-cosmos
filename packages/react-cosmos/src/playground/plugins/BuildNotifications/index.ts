@@ -1,9 +1,9 @@
 import { createPlugin, PluginContext } from 'react-plugin';
 import { BuildMessage } from 'react-cosmos-core/server';
 import { MessageType } from 'react-cosmos-core/utils';
-import { MessageHandlerSpec } from '../MessageHandler/spec.js';
-import { NotificationsSpec } from '../Notifications/spec.js';
-import { BuildNotificationsSpec } from './spec.js';
+import { MessageHandlerSpec } from '../MessageHandler/spec';
+import { NotificationsSpec } from '../Notifications/spec';
+import { BuildNotificationsSpec } from './spec';
 
 type BuildNotificationsContext = PluginContext<BuildNotificationsSpec>;
 

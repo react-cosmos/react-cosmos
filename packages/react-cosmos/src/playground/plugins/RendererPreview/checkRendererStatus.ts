@@ -1,4 +1,4 @@
-import { RendererPreviewContext } from './shared.js';
+import { RendererPreviewContext } from './shared';
 
 export function checkRendererStatus(
   context: RendererPreviewContext,

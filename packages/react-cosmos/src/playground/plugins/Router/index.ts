@@ -6,8 +6,8 @@ import {
   getUrlParams,
   pushUrlParams,
   subscribeToLocationChanges,
-} from '../../shared/url.js';
-import { RouterSpec } from './spec.js';
+} from '../../shared/url';
+import { RouterSpec } from './spec';
 
 type RouterContext = PluginContext<RouterSpec>;
 

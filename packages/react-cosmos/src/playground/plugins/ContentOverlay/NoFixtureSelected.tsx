@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BlankCanvasIllustration } from '../../components/illustrations/BlankCanvas.js';
-import { screenGrey3 } from '../../style/colors.js';
-import { KeyShortcut } from './KeyShortcut.js';
+import { BlankCanvasIllustration } from '../../components/illustrations/BlankCanvas';
+import { screenGrey3 } from '../../style/colors';
+import { KeyShortcut } from './KeyShortcut';
 import {
   ContentContainer,
   IllustrationContainer,
   SecondaryButton,
   TextContainer,
-} from './shared.js';
+} from './shared';
 
 type Props = {
   onShowWelcome: () => unknown;

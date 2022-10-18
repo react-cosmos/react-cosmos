@@ -6,8 +6,8 @@ import {
   ReactFixtureExports,
 } from 'react-cosmos-core/react';
 import slash from 'slash';
-import { CosmosConfig } from '../cosmosConfig/types.js';
-import { findUserModulePaths } from './findUserModulePaths.js';
+import { CosmosConfig } from '../cosmosConfig/types';
+import { findUserModulePaths } from './findUserModulePaths';
 
 type UserModules = {
   fixtures: ReactFixtureExports;

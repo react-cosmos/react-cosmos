@@ -1,10 +1,10 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { RendererActionSlot } from '../../slots/RendererActionSlot.js';
-import { mockCore } from '../../testHelpers/pluginMocks.js';
-import { mockWindowOpen } from '../../testHelpers/windowOpenMock.js';
-import { register } from './index.js';
+import { RendererActionSlot } from '../../slots/RendererActionSlot';
+import { mockCore } from '../../testHelpers/pluginMocks';
+import { mockWindowOpen } from '../../testHelpers/windowOpenMock';
+import { register } from '.';
 
 beforeEach(register);
 

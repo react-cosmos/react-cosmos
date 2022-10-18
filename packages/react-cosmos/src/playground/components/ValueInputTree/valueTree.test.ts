@@ -2,8 +2,8 @@ import {
   FixtureStateValue,
   FixtureStateValues,
 } from 'react-cosmos-core/fixtureState';
-import { ValueNode } from './shared.js';
-import { createValueTree } from './valueTree.js';
+import { ValueNode } from './shared';
+import { createValueTree } from './valueTree';
 
 const str1: FixtureStateValue = {
   type: 'primitive',

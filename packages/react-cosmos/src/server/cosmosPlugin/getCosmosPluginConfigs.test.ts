@@ -1,5 +1,5 @@
 import path from 'path';
-import { getCosmosPluginConfigs } from './getCosmosPluginConfigs.js';
+import { getCosmosPluginConfigs } from './getCosmosPluginConfigs';
 
 it('loads playground plugins', () => {
   const packagesDir = path.join(__dirname, '../../playground/plugins');

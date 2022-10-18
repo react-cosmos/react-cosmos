@@ -1,4 +1,4 @@
-import { userDepsTemplate } from './userDepsTemplate.js';
+import { userDepsTemplate } from './userDepsTemplate';
 
 const globalImports = [
   '/Users/ovidiu/cosmos/src/polyfills.ts',

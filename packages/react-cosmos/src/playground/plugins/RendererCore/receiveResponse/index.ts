@@ -1,10 +1,10 @@
 import { RendererResponse } from 'react-cosmos-core/renderer';
 import { MessageType } from 'react-cosmos-core/utils';
-import { RendererCoreContext } from '../shared/index.js';
-import { receiveFixtureListUpdateResponse } from './fixtureListUpdate.js';
-import { receiveFixtureStateChangeResponse } from './fixtureStateChange.js';
-import { receivePlaygroundCommandResponse } from './playgroundCommand.js';
-import { receiveRendererReadyResponse } from './rendererReady.js';
+import { RendererCoreContext } from '../shared';
+import { receiveFixtureListUpdateResponse } from './fixtureListUpdate';
+import { receiveFixtureStateChangeResponse } from './fixtureStateChange';
+import { receivePlaygroundCommandResponse } from './playgroundCommand';
+import { receiveRendererReadyResponse } from './rendererReady';
 
 export function receiveResponse(
   context: RendererCoreContext,

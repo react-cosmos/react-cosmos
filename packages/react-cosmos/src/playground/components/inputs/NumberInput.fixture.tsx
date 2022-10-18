@@ -1,9 +1,9 @@
 import React from 'react';
 import { useValue } from 'react-cosmos-core/fixture';
 import styled from 'styled-components';
-import { blue, grey248, grey8 } from '../../style/colors.js';
-import { Space } from '../Space.js';
-import { NumberInput, NumberInputStyles } from './NumberInput.js';
+import { blue, grey248, grey8 } from '../../style/colors';
+import { Space } from '../Space';
+import { NumberInput, NumberInputStyles } from './NumberInput';
 
 const styles: NumberInputStyles = {
   focusedColor: grey248,

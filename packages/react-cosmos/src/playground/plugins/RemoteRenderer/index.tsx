@@ -1,13 +1,13 @@
 import React from 'react';
-import { createPlugin } from 'react-plugin';
 import { MessageType } from 'react-cosmos-core/utils';
-import { CoreSpec } from '../Core/spec.js';
-import { MessageHandlerSpec } from '../MessageHandler/spec.js';
-import { NotificationsSpec } from '../Notifications/spec.js';
-import { RendererCoreSpec } from '../RendererCore/spec.js';
-import { RemoteButton } from './RemoteButton/index.js';
-import { RemoteRendererContext } from './shared.js';
-import { RemoteRendererSpec } from './spec.js';
+import { createPlugin } from 'react-plugin';
+import { CoreSpec } from '../Core/spec';
+import { MessageHandlerSpec } from '../MessageHandler/spec';
+import { NotificationsSpec } from '../Notifications/spec';
+import { RendererCoreSpec } from '../RendererCore/spec';
+import { RemoteButton } from './RemoteButton';
+import { RemoteRendererContext } from './shared';
+import { RemoteRendererSpec } from './spec';
 
 const { onLoad, on, namedPlug, register } = createPlugin<RemoteRendererSpec>({
   name: 'remoteRenderer',

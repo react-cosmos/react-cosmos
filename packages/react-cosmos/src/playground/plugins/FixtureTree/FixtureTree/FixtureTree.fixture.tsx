@@ -1,8 +1,8 @@
 import React from 'react';
 import { FixtureId, FixtureList, useValue } from 'react-cosmos-core/fixture';
 import { createFixtureTree } from 'react-cosmos-core/fixtureTree';
-import { TreeExpansion } from '../../../shared/treeExpansion.js';
-import { FixtureTree } from './FixtureTree.js';
+import { TreeExpansion } from '../../../shared/treeExpansion';
+import { FixtureTree } from './FixtureTree';
 
 const fixtures: FixtureList = {
   'src/Dashboard.ts': { type: 'single' },

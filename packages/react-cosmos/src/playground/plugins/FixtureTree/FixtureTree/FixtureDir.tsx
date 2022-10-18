@@ -1,11 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import {
-  ChevronDownIcon,
-  ChevronRightIcon,
-} from '../../../components/icons/index.js';
-import { blue, grey128 } from '../../../style/colors.js';
-import { FixtureTreeItem } from './FixtureTreeItem.js';
+import { ChevronDownIcon, ChevronRightIcon } from '../../../components/icons';
+import { blue, grey128 } from '../../../style/colors';
+import { FixtureTreeItem } from './FixtureTreeItem';
 
 type Props = {
   name: string;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useValue } from 'react-cosmos-core/fixture';
-import { PluginList, SimplePlugin } from './PluginList.js';
+import { PluginList, SimplePlugin } from './PluginList';
 
 const initialPlugins: SimplePlugin[] = [
   { name: 'buildNotifications', enabled: true },

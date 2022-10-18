@@ -1,5 +1,5 @@
-import { StorageSpec } from '../Storage/spec.js';
-import { RootContext } from './shared.js';
+import { StorageSpec } from '../Storage/spec';
+import { RootContext } from './shared';
 
 export const NAV_OPEN_STORAGE_KEY = 'navOpen';
 const NAV_OPEN_DEFAULT = true;

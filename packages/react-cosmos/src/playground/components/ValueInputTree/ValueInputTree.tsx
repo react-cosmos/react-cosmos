@@ -5,12 +5,12 @@ import {
   FixtureStateValues,
 } from 'react-cosmos-core/fixtureState';
 import styled from 'styled-components';
-import { TreeExpansion } from '../../shared/treeExpansion.js';
-import { grey248, grey32 } from '../../style/colors.js';
-import { TreeView } from '../TreeView.js';
-import { ValueInput } from './ValueInput/ValueInput.js';
-import { ValueInputDir } from './ValueInputDir.js';
-import { createValueTree } from './valueTree.js';
+import { TreeExpansion } from '../../shared/treeExpansion';
+import { grey248, grey32 } from '../../style/colors';
+import { TreeView } from '../TreeView';
+import { ValueInput } from './ValueInput/ValueInput';
+import { ValueInputDir } from './ValueInputDir';
+import { createValueTree } from './valueTree';
 
 type Props = {
   id: string;

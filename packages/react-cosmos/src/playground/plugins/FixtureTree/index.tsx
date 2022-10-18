@@ -1,14 +1,14 @@
 import React, { useCallback } from 'react';
 import { createPlugin } from 'react-plugin';
-import { TreeExpansion } from '../../shared/treeExpansion.js';
-import { CoreSpec } from '../Core/spec.js';
-import { RendererCoreSpec } from '../RendererCore/spec.js';
-import { RouterSpec } from '../Router/spec.js';
-import { StorageSpec } from '../Storage/spec.js';
-import { FixtureTreeContainer } from './FixtureTreeContainer.js';
-import { revealFixture } from './revealFixture.js';
-import { getTreeExpansion, setTreeExpansion } from './shared.js';
-import { FixtureTreeSpec } from './spec.js';
+import { TreeExpansion } from '../../shared/treeExpansion';
+import { CoreSpec } from '../Core/spec';
+import { RendererCoreSpec } from '../RendererCore/spec';
+import { RouterSpec } from '../Router/spec';
+import { StorageSpec } from '../Storage/spec';
+import { FixtureTreeContainer } from './FixtureTreeContainer';
+import { revealFixture } from './revealFixture';
+import { getTreeExpansion, setTreeExpansion } from './shared';
+import { FixtureTreeSpec } from './spec';
 
 const { namedPlug, register } = createPlugin<FixtureTreeSpec>({
   name: 'fixtureTree',

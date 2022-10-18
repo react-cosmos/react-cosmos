@@ -1,8 +1,8 @@
 import React from 'react';
-import { NoFixtureSelected } from './NoFixtureSelected.js';
-import { RendererNotResponding } from './RendererNotResponding.js';
-import { OverlayContainer } from './shared.js';
-import { WelcomeCosmos } from './WelcomeCosmos.js';
+import { NoFixtureSelected } from './NoFixtureSelected';
+import { RendererNotResponding } from './RendererNotResponding';
+import { OverlayContainer } from './shared';
+import { WelcomeCosmos } from './WelcomeCosmos';
 
 export default {
   welcome: (

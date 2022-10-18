@@ -1,7 +1,7 @@
 import glob from 'glob';
 import path from 'path';
 import resolveFrom from 'resolve-from';
-import { CosmosPluginConfig, RawCosmosPluginConfig } from './types.js';
+import { CosmosPluginConfig, RawCosmosPluginConfig } from './types';
 
 type Args = {
   rootDir: string;

@@ -1,14 +1,14 @@
 import { isEqual } from 'lodash';
 import React from 'react';
-import styled from 'styled-components';
+import { FixtureId } from 'react-cosmos-core/fixture';
 import {
   FlatFixtureTree,
   FlatFixtureTreeItem,
 } from 'react-cosmos-core/fixtureTree';
-import { FixtureId } from 'react-cosmos-core/fixture';
-import { XIcon } from '../../components/icons/index.js';
-import { stringifyFixtureId } from '../../components/ValueInputTree/index.js';
-import { createRelativePlaygroundUrl } from '../../shared/url.js';
+import styled from 'styled-components';
+import { XIcon } from '../../components/icons';
+import { stringifyFixtureId } from '../../components/ValueInputTree';
+import { createRelativePlaygroundUrl } from '../../shared/url';
 import {
   blue,
   grey128,
@@ -19,8 +19,8 @@ import {
   grey8,
   selectedColors,
   white10,
-} from '../../style/colors.js';
-import { quick } from '../../style/vars.js';
+} from '../../style/colors';
+import { quick } from '../../style/vars';
 
 type Props = {
   fixtureItems: FlatFixtureTree;

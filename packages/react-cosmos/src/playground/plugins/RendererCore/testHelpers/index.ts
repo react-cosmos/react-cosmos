@@ -6,7 +6,7 @@ import {
   RendererId,
   RendererReadyResponse,
 } from 'react-cosmos-core/renderer';
-import { getRendererCoreMethods } from '../../../testHelpers/pluginMocks.js';
+import { getRendererCoreMethods } from '../../../testHelpers/pluginMocks';
 
 export function createRendererReadyResponse(
   rendererId: RendererId,

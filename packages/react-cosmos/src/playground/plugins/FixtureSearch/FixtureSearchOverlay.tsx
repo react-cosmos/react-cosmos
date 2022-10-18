@@ -22,7 +22,7 @@ import {
   KEY_TAB,
   KEY_UP,
 } from 'react-cosmos-core/utils';
-import { HelpCircleIcon, SearchIcon } from '../../components/icons/index.js';
+import { HelpCircleIcon, SearchIcon } from '../../components/icons';
 import {
   black60,
   grey128,
@@ -32,10 +32,10 @@ import {
   grey224,
   grey248,
   grey64,
-} from '../../style/colors.js';
-import { quick } from '../../style/vars.js';
-import { FixtureSearchResult } from './FixtureSearchResult.js';
-import { FixtureSearchShortcuts } from './FixtureSearchShortcuts.js';
+} from '../../style/colors';
+import { quick } from '../../style/vars';
+import { FixtureSearchResult } from './FixtureSearchResult';
+import { FixtureSearchShortcuts } from './FixtureSearchShortcuts';
 
 type Props = {
   searchText: string;

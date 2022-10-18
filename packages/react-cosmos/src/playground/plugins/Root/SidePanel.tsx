@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { FixtureState } from 'react-cosmos-core/fixtureState';
 import { FixtureId } from 'react-cosmos-core/fixture';
 import { StateUpdater } from 'react-cosmos-core/utils';
-import { SidePanelRowSlot } from '../../slots/SidePanelRowSlot.js';
-import { grey32 } from '../../style/colors.js';
+import { SidePanelRowSlot } from '../../slots/SidePanelRowSlot';
+import { grey32 } from '../../style/colors';
 
 type Props = {
   fixtureId: FixtureId;

@@ -1,1 +1,1 @@
-export * from './dist/jest.js';
+export * from './dist/jest';

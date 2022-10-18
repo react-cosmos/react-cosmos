@@ -1,5 +1,5 @@
-export * from './playground/components/buttons/index';
-export * from './playground/components/icons/index';
+export * from './playground/components/buttons';
+export * from './playground/components/icons';
 export * from './playground/plugins/BuildNotifications/spec';
 export * from './playground/plugins/ClassStatePanel/spec';
 export * from './playground/plugins/ContentOverlay/spec';

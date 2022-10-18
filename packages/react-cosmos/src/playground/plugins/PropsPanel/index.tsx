@@ -1,20 +1,20 @@
 import React from 'react';
-import { createPlugin, PluginContext } from 'react-plugin';
-import { FixtureElementId, FixtureState } from 'react-cosmos-core/fixtureState';
 import { FixtureId } from 'react-cosmos-core/fixture';
+import { FixtureElementId, FixtureState } from 'react-cosmos-core/fixtureState';
+import { createPlugin, PluginContext } from 'react-plugin';
 import {
   FixtureExpansionGroup,
   getFixtureExpansion,
   hasFsValues,
   updateElementExpansion,
-} from '../../components/ValueInputTree/index.js';
-import { TreeExpansion } from '../../shared/treeExpansion.js';
-import { SidePanelRowSlotProps } from '../../slots/SidePanelRowSlot.js';
-import { StorageSpec } from '../Storage/spec.js';
-import { BlankState } from './BlankState.js';
-import { PropsPanel } from './PropsPanel/index.js';
-import { PROPS_TREE_EXPANSION_STORAGE_KEY } from './shared.js';
-import { PropsPanelSpec } from './spec.js';
+} from '../../components/ValueInputTree';
+import { TreeExpansion } from '../../shared/treeExpansion';
+import { SidePanelRowSlotProps } from '../../slots/SidePanelRowSlot';
+import { StorageSpec } from '../Storage/spec';
+import { BlankState } from './BlankState';
+import { PropsPanel } from './PropsPanel';
+import { PROPS_TREE_EXPANSION_STORAGE_KEY } from './shared';
+import { PropsPanelSpec } from './spec';
 
 type PropsPanelContext = PluginContext<PropsPanelSpec>;
 

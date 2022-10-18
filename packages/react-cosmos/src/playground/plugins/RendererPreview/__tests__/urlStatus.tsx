@@ -5,9 +5,9 @@ import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import {
   getRendererPreviewMethods,
   mockCore,
-} from '../../../testHelpers/pluginMocks.js';
-import { register } from '../index.js';
-import { fakeFetchResponseStatus } from '../testHelpers/fetch.js';
+} from '../../../testHelpers/pluginMocks';
+import { register } from '..';
+import { fakeFetchResponseStatus } from '../testHelpers/fetch';
 
 beforeEach(register);
 

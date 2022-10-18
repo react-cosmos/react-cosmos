@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import { FixtureId } from 'react-cosmos-core/fixture';
-import { createRelativePlaygroundUrl } from '../../../shared/url.js';
-import { blue } from '../../../style/colors.js';
+import { createRelativePlaygroundUrl } from '../../../shared/url';
+import { blue } from '../../../style/colors';
 
 type Props = {
   children: ReactNode;

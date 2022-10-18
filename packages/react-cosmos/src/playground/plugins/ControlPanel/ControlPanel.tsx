@@ -6,17 +6,17 @@ import {
   FixtureStateControls,
 } from 'react-cosmos-core/fixtureState';
 import { StateUpdater } from 'react-cosmos-core/utils';
-import { IconButton32 } from '../../components/buttons/index.js';
-import { RotateCcwIcon } from '../../components/icons/index.js';
+import { IconButton32 } from '../../components/buttons';
+import { RotateCcwIcon } from '../../components/icons';
 import {
   SidePanelActions,
   SidePanelBody,
   SidePanelContainer,
   SidePanelHeader,
   SidePanelTitle,
-} from '../../components/SidePanel.js';
-import { ControlActionSlot } from '../../slots/ControlActionSlot.js';
-import { ControlSlot } from '../../slots/ControlSlot.js';
+} from '../../components/SidePanel';
+import { ControlActionSlot } from '../../slots/ControlActionSlot';
+import { ControlSlot } from '../../slots/ControlSlot';
 
 type Props = {
   fixtureState: FixtureState;

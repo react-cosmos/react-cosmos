@@ -7,12 +7,12 @@ import {
   mockNotifications,
   mockRouter,
   onRendererCore,
-} from '../../../../testHelpers/pluginMocks.js';
-import { register } from '../../index.js';
+} from '../../../../testHelpers/pluginMocks';
+import { register } from '../..';
 import {
   createFixtureStateChangeResponse,
   mockRendererReady,
-} from '../../testHelpers/index.js';
+} from '../../testHelpers';
 
 beforeEach(register);
 

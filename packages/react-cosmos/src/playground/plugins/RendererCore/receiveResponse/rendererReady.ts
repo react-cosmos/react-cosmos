@@ -1,10 +1,10 @@
 import { FixtureId } from 'react-cosmos-core/fixture';
 import { RendererId, RendererReadyResponse } from 'react-cosmos-core/renderer';
-import { NotificationsSpec } from '../../Notifications/spec.js';
-import { RouterSpec } from '../../Router/spec.js';
-import { RendererCoreContext, State } from '../shared/index.js';
-import { postSelectFixtureRequest } from '../shared/postRequest.js';
-import { getSelectedFixtureId } from '../shared/router.js';
+import { NotificationsSpec } from '../../Notifications/spec';
+import { RouterSpec } from '../../Router/spec';
+import { RendererCoreContext, State } from '../shared';
+import { postSelectFixtureRequest } from '../shared/postRequest';
+import { getSelectedFixtureId } from '../shared/router';
 
 export function receiveRendererReadyResponse(
   context: RendererCoreContext,

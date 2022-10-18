@@ -1,5 +1,5 @@
 import { PluginContext } from 'react-plugin';
-import { RendererCoreSpec } from '../spec.js';
+import { RendererCoreSpec } from '../spec';
 
 export type State = RendererCoreSpec['state'];
 

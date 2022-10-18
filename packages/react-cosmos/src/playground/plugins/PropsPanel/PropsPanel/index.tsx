@@ -7,8 +7,8 @@ import {
   OnElementExpansionChange,
   sortFsValueGroups,
   stringifyElementId,
-} from '../../../components/ValueInputTree/index.js';
-import { ComponentProps } from './ComponentProps.js';
+} from '../../../components/ValueInputTree';
+import { ComponentProps } from './ComponentProps';
 
 type Props = {
   fixtureState: FixtureState;

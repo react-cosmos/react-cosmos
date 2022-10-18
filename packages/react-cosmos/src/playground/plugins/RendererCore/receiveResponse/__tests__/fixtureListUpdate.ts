@@ -6,12 +6,12 @@ import {
   getRendererCoreMethods,
   mockNotifications,
   mockRouter,
-} from '../../../../testHelpers/pluginMocks.js';
-import { register } from '../../index.js';
+} from '../../../../testHelpers/pluginMocks';
+import { register } from '../..';
 import {
   createFixtureListUpdateResponse,
   mockRendererReady,
-} from '../../testHelpers/index.js';
+} from '../../testHelpers';
 
 beforeEach(register);
 

@@ -1,5 +1,5 @@
-import { RouterSpec } from '../../Router/spec.js';
-import { RendererCoreContext } from '../shared/index.js';
+import { RouterSpec } from '../../Router/spec';
+import { RendererCoreContext } from '../shared';
 
 export function getSelectedFixtureId({ getMethodsOf }: RendererCoreContext) {
   return getMethodsOf<RouterSpec>('router').getSelectedFixtureId();

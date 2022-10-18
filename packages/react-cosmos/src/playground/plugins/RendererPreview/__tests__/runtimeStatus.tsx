@@ -6,10 +6,10 @@ import {
   getRendererPreviewMethods,
   mockCore,
   mockRendererCore,
-} from '../../../testHelpers/pluginMocks.js';
-import { register } from '../index.js';
-import { fakeFetchResponseStatus } from '../testHelpers/fetch.js';
-import { rendererErrorMsg, rendererReadyMsg } from '../testHelpers/messages.js';
+} from '../../../testHelpers/pluginMocks';
+import { register } from '..';
+import { fakeFetchResponseStatus } from '../testHelpers/fetch';
+import { rendererErrorMsg, rendererReadyMsg } from '../testHelpers/messages';
 
 beforeEach(register);
 

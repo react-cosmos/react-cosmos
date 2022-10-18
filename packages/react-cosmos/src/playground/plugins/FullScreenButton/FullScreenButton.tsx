@@ -1,6 +1,6 @@
 import React from 'react';
-import { IconButton32 } from '../../components/buttons/index.js';
-import { ExternalIcon } from '../../components/icons/index.js';
+import { IconButton32 } from '../../components/buttons';
+import { ExternalIcon } from '../../components/icons';
 
 type Props = {
   onClick: () => void;
