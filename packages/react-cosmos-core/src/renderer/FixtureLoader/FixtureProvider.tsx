@@ -3,7 +3,7 @@ import { FixtureState, SetFixtureState } from '../../fixtureState/types.js';
 import { getSortedDecoratorsForFixturePath } from '../../react/getSortedDecoratorsForFixturePath.js';
 import { ReactDecorator, ReactDecorators } from '../../react/types.js';
 import { FixtureId } from '../../fixture/types.js';
-import { FixtureContext } from '../FixtureContext.js';
+import { FixtureContext } from '../../fixture/FixtureContext.js';
 import { getDecoratedFixtureElement } from './getDecoratedFixtureElement/index.js';
 
 type Props = {

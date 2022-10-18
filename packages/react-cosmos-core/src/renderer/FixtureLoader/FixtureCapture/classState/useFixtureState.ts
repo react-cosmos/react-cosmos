@@ -22,7 +22,7 @@ import {
   FixtureState,
 } from '../../../../fixtureState/types.js';
 import { getComponentName } from '../../../../react/getComponentName.js';
-import { FixtureContext } from '../../../FixtureContext.js';
+import { FixtureContext } from '../../../../fixture/FixtureContext.js';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
 import { decorateFixtureRefs } from './decorateFixtureRefs/index.js';
 import {

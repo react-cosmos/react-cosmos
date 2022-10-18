@@ -16,7 +16,7 @@ import {
   FixtureDecoratorId,
   FixtureStateClassState,
 } from '../../../../fixtureState/types.js';
-import { FixtureContext } from '../../../FixtureContext.js';
+import { FixtureContext } from '../../../../fixture/FixtureContext.js';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
 import { ElRefs } from './shared.js';
 

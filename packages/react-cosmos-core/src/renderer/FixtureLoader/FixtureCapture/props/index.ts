@@ -10,7 +10,7 @@ import {
 import { FixtureDecoratorId } from '../../../../fixtureState/types.js';
 import { areNodesEqual } from '../../../../react/areNodesEqual.js';
 import { getComponentName } from '../../../../react/getComponentName.js';
-import { FixtureContext } from '../../../FixtureContext.js';
+import { FixtureContext } from '../../../../fixture/FixtureContext.js';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
 import {
   getElementAtPath,

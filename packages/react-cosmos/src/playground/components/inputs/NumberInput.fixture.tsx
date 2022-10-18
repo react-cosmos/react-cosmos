@@ -1,5 +1,5 @@
 import React from 'react';
-import { useValue } from 'react-cosmos-core/renderer';
+import { useValue } from 'react-cosmos-core/fixture';
 import styled from 'styled-components';
 import { blue, grey248, grey8 } from '../../style/colors.js';
 import { Space } from '../Space.js';

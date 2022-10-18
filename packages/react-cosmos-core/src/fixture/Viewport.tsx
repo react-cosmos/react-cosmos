@@ -1,5 +1,5 @@
 import React from 'react';
-import { FixtureContext } from '../FixtureContext.js';
+import { FixtureContext } from './FixtureContext.js';
 
 type Props = {
   children: React.ReactNode;

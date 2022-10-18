@@ -3,6 +3,7 @@ export type FixtureId = {
   name?: string;
 };
 
+// TODO: Move to renderer?
 export type FixtureListItem =
   | { type: 'single' }
   | { type: 'multi'; fixtureNames: string[] };

@@ -33,7 +33,8 @@ const builders: Partial<Record<Package, Builder>> & { default: Builder } = {
   'react-cosmos-plugin-webpack': async pkgName => {
     await buildPkgTs(pkgName, 'tsconfig.build.client.json');
     await buildPkgTs(pkgName, 'tsconfig.build.server.json');
-    await buildPkgWebpack(pkgName, 'webpack.config.js');
+    await buildPkgTs(pkgName, 'tsconfig.build.ui.json');
+    await buildPkgWebpack(pkgName, 'src/ui/webpack.config.js');
   },
   default: async pkgName => {
     await buildPkgTs(pkgName, 'tsconfig.build.json');
