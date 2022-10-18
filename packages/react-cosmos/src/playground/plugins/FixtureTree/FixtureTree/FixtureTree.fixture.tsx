@@ -1,7 +1,7 @@
 import React from 'react';
-import { createFixtureTree } from '../../../../core/fixtureTree/createFixtureTree/index.js';
-import { FixtureId, FixtureList } from '../../../../core/types.js';
-import { useValue } from '../../../../renderer/useValue/index.js';
+import { FixtureId, FixtureList } from 'react-cosmos-core/fixture';
+import { createFixtureTree } from 'react-cosmos-core/fixtureTree';
+import { useValue } from 'react-cosmos-core/renderer';
 import { TreeExpansion } from '../../../shared/treeExpansion.js';
 import { FixtureTree } from './FixtureTree.js';
 

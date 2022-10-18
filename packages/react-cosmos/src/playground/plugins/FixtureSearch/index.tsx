@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPlugin, PluginContext } from 'react-plugin';
-import { FixtureId } from '../../../core/types.js';
+import { FixtureId } from 'react-cosmos-core/fixture';
 import { NavRowSlotProps } from '../../slots/NavRowSlot.js';
 import { CoreSpec } from '../Core/spec.js';
 import { FixtureTreeSpec } from '../FixtureTree/spec.js';

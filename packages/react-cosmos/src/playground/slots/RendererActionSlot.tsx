@@ -1,6 +1,6 @@
 import React from 'react';
+import { FixtureId } from 'react-cosmos-core/fixture';
 import { ArraySlot } from 'react-plugin';
-import { FixtureId } from '../../core/types.js';
 
 export type RendererActionSlotProps = {
   fixtureId: FixtureId;

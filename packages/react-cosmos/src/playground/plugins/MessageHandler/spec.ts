@@ -1,4 +1,4 @@
-import { MessageType } from '../../../utils/types.js';
+import { MessageType } from 'react-cosmos-core/utils';
 
 export type MessageHandlerSpec = {
   name: 'messageHandler';

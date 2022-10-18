@@ -1,5 +1,5 @@
 import React from 'react';
-import { FixtureStateValues } from '../../../core/fixtureState/types.js';
+import { FixtureStateValues } from 'react-cosmos-core/fixtureState';
 import {
   getFullTreeExpansion,
   hasExpandableNodes,

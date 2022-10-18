@@ -1,5 +1,5 @@
 import { createPlugin } from 'react-plugin';
-import { RendererId } from '../../../renderer/types.js';
+import { RendererId } from 'react-cosmos-core/renderer';
 import { RouterSpec } from '../Router/spec.js';
 import { isValidFixtureSelected } from './isValidFixtureSelected.js';
 import { onRouterFixtureChange } from './onRouterFixtureChange.js';

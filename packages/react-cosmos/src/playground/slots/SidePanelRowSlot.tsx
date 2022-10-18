@@ -1,8 +1,8 @@
 import React from 'react';
+import { FixtureId } from 'react-cosmos-core/fixture';
+import { FixtureState } from 'react-cosmos-core/fixtureState';
+import { StateUpdater } from 'react-cosmos-core/utils';
 import { ArraySlot } from 'react-plugin';
-import { FixtureState } from '../../core/fixtureState/types.js';
-import { FixtureId } from '../../core/types.js';
-import { StateUpdater } from '../../utils/types.js';
 
 export type SidePanelRowSlotProps = {
   fixtureId: FixtureId;

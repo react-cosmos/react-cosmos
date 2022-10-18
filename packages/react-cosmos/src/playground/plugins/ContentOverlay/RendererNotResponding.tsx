@@ -14,6 +14,7 @@ import {
   TextContainer,
 } from './shared.js';
 
+// webpack???
 export function RendererNotResponding() {
   return (
     <ContentContainer>

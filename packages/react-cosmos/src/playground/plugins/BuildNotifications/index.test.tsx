@@ -1,5 +1,5 @@
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { BuildMessage } from '../../../core/serverMessage.js';
+import { BuildMessage } from 'react-cosmos-core/server';
 import {
   getMessageHandlerContext,
   mockMessageHandler,

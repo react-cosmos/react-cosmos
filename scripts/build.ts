@@ -76,7 +76,10 @@ async function tryBuildPackage(pkgName: Package) {
 }
 
 async function buildPackage(pkgName: Package) {
-  if (pkgName === 'react-cosmos') {
+  if (pkgName === 'react-cosmos-core') {
+    await clearPackage(pkgName);
+    await buildTsPackage(pkgName);
+  } else if (pkgName === 'react-cosmos') {
     // await generatePlaygroundPluginEntry();
     await clearPackage(pkgName);
     await copyStaticAssets(pkgName);
@@ -85,7 +88,8 @@ async function buildPackage(pkgName: Package) {
   } else {
     await clearPackage(pkgName);
     await buildTsPackage(pkgName);
-    await runWebpack(`packages/${pkgName}/webpack.config.js`);
+    const webpackConfigPath = `packages/${pkgName}/webpack.config.js`;
+    await runWebpack(webpackConfigPath);
   }
 }
 
@@ -93,8 +97,8 @@ async function clearPackage(pkgName: string) {
   await rimrafAsync(`packages/${pkgName}/dist`);
 }
 
-function buildTsPackage(pkgName: string) {
-  return runTypeScript(`packages/${pkgName}/tsconfig.build.json`);
+async function buildTsPackage(pkgName: string) {
+  await runTypeScript(`packages/${pkgName}/tsconfig.build.json`);
 }
 
 function runTypeScript(config: string) {

@@ -1,0 +1,9 @@
+{
+  "name": "react-cosmos-core",
+  "version": "5.7.2",
+  "description": "React Cosmos Core (ES modules)",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-core",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}

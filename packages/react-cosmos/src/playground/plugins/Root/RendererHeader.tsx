@@ -1,8 +1,8 @@
 import { isEqual } from 'lodash';
 import React from 'react';
 import styled from 'styled-components';
-import { FlatFixtureTreeItem } from '../../../core/fixtureTree/flattenFixtureTree.js';
-import { FixtureId } from '../../../core/types.js';
+import { FlatFixtureTreeItem } from 'react-cosmos-core/fixtureTree';
+import { FixtureId } from 'react-cosmos-core/fixture';
 import { IconButton32 } from '../../components/buttons/index.js';
 import {
   MenuIcon,

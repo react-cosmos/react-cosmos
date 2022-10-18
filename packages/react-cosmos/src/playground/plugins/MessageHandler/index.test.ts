@@ -6,8 +6,8 @@ import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   BuildErrorMessage,
   SERVER_MESSAGE_EVENT_NAME,
-} from '../../../core/serverMessage.js';
-import { RENDERER_MESSAGE_EVENT_NAME } from '../../../renderer/types.js';
+} from 'react-cosmos-core/server';
+import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-core/renderer';
 import {
   getMessageHandlerMethods,
   mockCore,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FixtureStateSelectControl } from '../../../core/fixtureState/types.js';
+import { FixtureStateSelectControl } from 'react-cosmos-core/fixtureState';
 import { Select } from '../../components/inputs/Select.js';
 import {
   Label,

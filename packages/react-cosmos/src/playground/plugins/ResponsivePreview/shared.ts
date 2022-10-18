@@ -1,5 +1,5 @@
 import { PluginContext } from 'react-plugin';
-import { FixtureState } from '../../../core/fixtureState/types.js';
+import { FixtureState } from 'react-cosmos-core/fixtureState';
 import { StorageSpec } from '../Storage/spec.js';
 import { ResponsivePreviewSpec, ResponsiveViewport } from './spec.js';
 

@@ -4,7 +4,7 @@ import {
   FixtureStateControls,
   FixtureStateStandardControl,
   FixtureStateValues,
-} from '../../../core/fixtureState/types.js';
+} from 'react-cosmos-core/fixtureState';
 import { ExpandCollapseValues } from '../../components/ValueInputTree/ExpandCollapseValues.js';
 import { ValueInputTree } from '../../components/ValueInputTree/index.js';
 import { ControlActionSlotProps } from '../../slots/ControlActionSlot.js';

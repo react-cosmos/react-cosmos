@@ -1,24 +1,26 @@
 import path from 'path';
-import url from 'url';
-import { createFixtureTree } from '../../core/fixtureTree/createFixtureTree/index.js';
-import { flattenFixtureTree } from '../../core/fixtureTree/flattenFixtureTree.js';
+import { FixtureId } from 'react-cosmos-core/fixture';
+import {
+  createFixtureTree,
+  flattenFixtureTree,
+} from 'react-cosmos-core/fixtureTree';
 import {
   stringifyPlaygroundUrlQuery,
   stringifyRendererUrlQuery,
-} from '../../core/playgroundUrl.js';
-import { getFixtureListFromExports } from '../../core/react/getFixtureList.js';
-import { getSortedDecoratorsForFixturePath } from '../../core/react/getSortedDecoratorsForFixturePath.js';
+} from 'react-cosmos-core/playground';
 import {
+  getFixtureListFromExports,
+  getSortedDecoratorsForFixturePath,
   ReactDecorator,
   ReactDecorators,
   ReactFixture,
   ReactFixtureMap,
-} from '../../core/react/types.js';
-import { FixtureId } from '../../core/types.js';
-import { getDecoratedFixtureElement } from '../../renderer/FixtureLoader/getDecoratedFixtureElement/index.js';
-import { CosmosConfig } from '../cosmosConfig/types.js';
-import { RENDERER_FILENAME } from '../shared/playgroundHtml.js';
-import { getUserModules } from '../userDeps/getUserModules.js';
+} from 'react-cosmos-core/react';
+import { getDecoratedFixtureElement } from 'react-cosmos-core/renderer';
+import url from 'url';
+import { CosmosConfig } from '../cosmosConfig/types';
+import { RENDERER_FILENAME } from '../shared/playgroundHtml';
+import { getUserModules } from '../userDeps/getUserModules';
 
 export type FixtureApi = {
   absoluteFilePath: string;

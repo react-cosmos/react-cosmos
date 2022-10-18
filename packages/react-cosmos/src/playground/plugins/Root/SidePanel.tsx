@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FixtureState } from '../../../core/fixtureState/types.js';
-import { FixtureId } from '../../../core/types.js';
-import { StateUpdater } from '../../../utils/types.js';
+import { FixtureState } from 'react-cosmos-core/fixtureState';
+import { FixtureId } from 'react-cosmos-core/fixture';
+import { StateUpdater } from 'react-cosmos-core/utils';
 import { SidePanelRowSlot } from '../../slots/SidePanelRowSlot.js';
 import { grey32 } from '../../style/colors.js';
 

@@ -1,11 +1,11 @@
 import path from 'path';
-import slash from 'slash';
 import {
   ReactDecorator,
   ReactDecorators,
   ReactFixtureExport,
   ReactFixtureExports,
-} from '../../core/react/types.js';
+} from 'react-cosmos-core/react';
+import slash from 'slash';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { findUserModulePaths } from './findUserModulePaths.js';
 

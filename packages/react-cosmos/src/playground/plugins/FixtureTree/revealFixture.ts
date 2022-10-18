@@ -1,6 +1,6 @@
-import { createFixtureTree } from '../../../core/fixtureTree/createFixtureTree/index.js';
-import { FixtureTreeNode } from '../../../core/fixtureTree/types.js';
-import { FixtureId } from '../../../core/types.js';
+import { createFixtureTree } from 'react-cosmos-core/fixtureTree';
+import { FixtureTreeNode } from 'react-cosmos-core/fixtureTree';
+import { FixtureId } from 'react-cosmos-core/fixture';
 import { nodeContainsFixtureId } from '../../shared/fixtureTree.js';
 import { TreeExpansion } from '../../shared/treeExpansion.js';
 import { CoreSpec } from '../Core/spec.js';

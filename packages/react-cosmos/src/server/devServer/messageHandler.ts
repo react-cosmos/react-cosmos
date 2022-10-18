@@ -1,10 +1,10 @@
 import http from 'http';
-import ioServer from 'socket.io';
+import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-core/renderer';
 import {
   BuildMessage,
   SERVER_MESSAGE_EVENT_NAME,
-} from '../../core/serverMessage.js';
-import { RENDERER_MESSAGE_EVENT_NAME } from '../../renderer/types.js';
+} from 'react-cosmos-core/server';
+import ioServer from 'socket.io';
 
 export function createMessageHandler(httpServer: http.Server) {
   const io = ioServer(httpServer);

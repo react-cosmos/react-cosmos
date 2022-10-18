@@ -1,7 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
-import { FixtureList } from '../../../core/types.js';
+import { FixtureList } from 'react-cosmos-core/fixture';
 import { NavRowSlot } from '../../slots/NavRowSlot.js';
 import {
   mockCore,

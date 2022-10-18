@@ -1,5 +1,5 @@
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { FixtureId, FixtureList } from '../../../../core/types.js';
+import { FixtureId, FixtureList } from 'react-cosmos-core/fixture';
 import {
   getRendererCoreMethods,
   mockNotifications,

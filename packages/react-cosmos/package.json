@@ -7,7 +7,6 @@
   "main": "index.js",
   "dependencies": {
     "@skidding/launch-editor": "^2.2.3",
-    "@skidding/webpack-hot-middleware": "^2.25.1",
     "chokidar": "^3.5.2",
     "core-js": "^3.20.3",
     "express": "^4.17.2",
@@ -22,13 +21,13 @@
     "pkg-up": "^3.1.0",
     "query-string": "7.1.1",
     "react-error-overlay": "6.0.9",
+    "react-cosmos-core": "5.7.2",
     "regenerator-runtime": "^0.13.9",
     "resolve-from": "^5.0.0",
     "slash": "^3.0.0",
     "socket.io": "2.2.0",
     "url-parse": "^1.5.4",
     "util.promisify": "^1.1.1",
-    "webpack-dev-middleware": "^4.3.0",
     "yargs": "^16.2.0"
   },
   "devDependencies": {

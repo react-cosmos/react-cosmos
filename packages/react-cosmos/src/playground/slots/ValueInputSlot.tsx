@@ -1,10 +1,10 @@
 import React, { ReactNode } from 'react';
-import { Slot } from 'react-plugin';
 import {
   FixtureStatePrimitiveValue,
   FixtureStateUnserializableValue,
   PrimitiveData,
-} from '../../core/fixtureState/types.js';
+} from 'react-cosmos-core/fixtureState';
+import { Slot } from 'react-plugin';
 
 type LeafValue = FixtureStatePrimitiveValue | FixtureStateUnserializableValue;
 

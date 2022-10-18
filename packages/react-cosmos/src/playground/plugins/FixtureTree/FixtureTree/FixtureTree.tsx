@@ -1,8 +1,8 @@
 import { isEqual } from 'lodash';
 import React, { RefObject } from 'react';
 import styled from 'styled-components';
-import { FixtureTreeNode } from '../../../../core/fixtureTree/types.js';
-import { FixtureId } from '../../../../core/types.js';
+import { FixtureTreeNode } from 'react-cosmos-core/fixtureTree';
+import { FixtureId } from 'react-cosmos-core/fixture';
 import { TreeView } from '../../../components/TreeView.js';
 import {
   nodeContainsFixtureId,

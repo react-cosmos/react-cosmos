@@ -1,9 +1,9 @@
 import { isEqual } from 'lodash';
 import React from 'react';
 import { createPlugin, PluginContext } from 'react-plugin';
-import { createFixtureTree } from '../../../core/fixtureTree/createFixtureTree/index.js';
-import { flattenFixtureTree } from '../../../core/fixtureTree/flattenFixtureTree.js';
-import { FixtureId } from '../../../core/types.js';
+import { createFixtureTree } from 'react-cosmos-core/fixtureTree';
+import { flattenFixtureTree } from 'react-cosmos-core/fixtureTree';
+import { FixtureId } from 'react-cosmos-core/fixture';
 import { FixtureActionSlotProps } from '../../slots/FixtureActionSlot.js';
 import { CoreSpec } from '../Core/spec.js';
 import { RendererCoreSpec } from '../RendererCore/spec.js';

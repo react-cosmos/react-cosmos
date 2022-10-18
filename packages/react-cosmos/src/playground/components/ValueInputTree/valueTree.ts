@@ -1,4 +1,4 @@
-import { FixtureStateValues } from '../../../core/fixtureState/types.js';
+import { FixtureStateValues } from 'react-cosmos-core/fixtureState';
 import { ValueNode } from './shared.js';
 
 export function createValueTree(values: FixtureStateValues): ValueNode {

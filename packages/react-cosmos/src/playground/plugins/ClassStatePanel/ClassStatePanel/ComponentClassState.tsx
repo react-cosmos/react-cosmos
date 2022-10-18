@@ -1,12 +1,12 @@
 import { isEqual } from 'lodash';
 import React, { useCallback } from 'react';
-import { updateFixtureStateClassState } from '../../../../core/fixtureState/classState.js';
+import { updateFixtureStateClassState } from 'react-cosmos-core/fixtureState';
 import {
   FixtureState,
   FixtureStateClassState,
   FixtureStateValues,
-} from '../../../../core/fixtureState/types.js';
-import { StateUpdater } from '../../../../utils/types.js';
+} from 'react-cosmos-core/fixtureState';
+import { StateUpdater } from 'react-cosmos-core/utils';
 import { IconButton32 } from '../../../components/buttons/index.js';
 import { RotateCcwIcon } from '../../../components/icons/index.js';
 import {

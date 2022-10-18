@@ -3,13 +3,13 @@ import React, { useCallback } from 'react';
 import {
   resetFixtureStateProps,
   updateFixtureStateProps,
-} from '../../../../core/fixtureState/props.js';
+} from 'react-cosmos-core/fixtureState';
 import {
   FixtureState,
   FixtureStateProps,
   FixtureStateValues,
-} from '../../../../core/fixtureState/types.js';
-import { StateUpdater } from '../../../../utils/types.js';
+} from 'react-cosmos-core/fixtureState';
+import { StateUpdater } from 'react-cosmos-core/utils';
 import { IconButton32 } from '../../../components/buttons/index.js';
 import { CopyIcon, RotateCcwIcon } from '../../../components/icons/index.js';
 import {

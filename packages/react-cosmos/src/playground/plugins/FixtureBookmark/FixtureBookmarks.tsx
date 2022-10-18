@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import {
   FlatFixtureTree,
   FlatFixtureTreeItem,
-} from '../../../core/fixtureTree/flattenFixtureTree.js';
-import { FixtureId } from '../../../core/types.js';
+} from 'react-cosmos-core/fixtureTree';
+import { FixtureId } from 'react-cosmos-core/fixture';
 import { XIcon } from '../../components/icons/index.js';
 import { stringifyFixtureId } from '../../components/ValueInputTree/index.js';
 import { createRelativePlaygroundUrl } from '../../shared/url.js';

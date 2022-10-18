@@ -11,6 +11,7 @@ import {
   PlatformType,
 } from '../cosmosPlugin/types.js';
 import { serveStaticDir } from '../shared/staticServer.js';
+import { requireModule } from '../utils/fs.js';
 import { createApp } from './app.js';
 import { httpProxyDevServerPlugin } from './corePlugins/httpProxy.js';
 import openFileDevServerPlugin from './corePlugins/openFile.js';
@@ -49,8 +50,16 @@ export async function startDevServer(platformType: PlatformType) {
   }
 
   // TODO: Use pluginConfigs on top of corePlugins
+  // ^^ this
+  const devServerPlugins = pluginConfigs
+    .filter(c => c.devServer)
+    .map(
+      c =>
+        requireModule(path.resolve(cosmosConfig.rootDir, c.devServer!)).default
+    );
+  console.log(devServerPlugins);
   try {
-    for (const plugin of corePlugins) {
+    for (const plugin of [...corePlugins, ...devServerPlugins]) {
       const pluginReturn = await plugin({
         cosmosConfig,
         platformType,

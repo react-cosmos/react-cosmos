@@ -1,6 +1,6 @@
 import React from 'react';
-import { FixtureId } from '../../../core/types.js';
-import { useValue } from '../../../renderer/useValue/index.js';
+import { FixtureId } from 'react-cosmos-core/fixture';
+import { useValue } from 'react-cosmos-core/renderer';
 import { fixtures } from '../../testHelpers/dataMocks.js';
 import { FixtureSearchOverlay } from './FixtureSearchOverlay.js';
 

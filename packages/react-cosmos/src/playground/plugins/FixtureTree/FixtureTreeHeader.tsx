@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
-import { createFixtureTree } from '../../../core/fixtureTree/createFixtureTree/index.js';
-import { FixtureList } from '../../../core/types.js';
+import { createFixtureTree } from 'react-cosmos-core/fixtureTree';
+import { FixtureList } from 'react-cosmos-core/fixture';
 import { IconButton32 } from '../../components/buttons/index.js';
 import {
   MinusSquareIcon,

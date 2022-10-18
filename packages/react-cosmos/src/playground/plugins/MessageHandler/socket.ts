@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
-import { SERVER_MESSAGE_EVENT_NAME } from '../../../core/serverMessage.js';
-import { RENDERER_MESSAGE_EVENT_NAME } from '../../../renderer/types.js';
-import { MessageType } from '../../../utils/types.js';
+import { SERVER_MESSAGE_EVENT_NAME } from 'react-cosmos-core/server';
+import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-core/renderer';
+import { MessageType } from 'react-cosmos-core/utils';
 import { CoreSpec } from '../Core/spec.js';
 import { MessageHandlerContext } from './shared.js';
 

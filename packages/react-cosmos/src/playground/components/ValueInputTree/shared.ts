@@ -1,11 +1,11 @@
-import styled from 'styled-components';
+import { FixtureId } from 'react-cosmos-core/fixture';
 import {
   FixtureElementId,
   FixtureStatePrimitiveValue,
   FixtureStateUnserializableValue,
-} from '../../../core/fixtureState/types.js';
-import { FixtureId } from '../../../core/types.js';
-import { TreeNode } from '../../../utils/tree.js';
+} from 'react-cosmos-core/fixtureState';
+import { TreeNode } from 'react-cosmos-core/utils';
+import styled from 'styled-components';
 
 export type LeafValue =
   | FixtureStatePrimitiveValue

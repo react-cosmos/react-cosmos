@@ -1,5 +1,7 @@
 module.exports = {
   rules: {
-    'import/extensions': ['error', 'ignorePackages'],
+    // TODO: Remove this
+    // 'import/extensions': ['error', 'ignorePackages'],
+    // 'import/extensions': ['off'],
   },
 };

@@ -1,6 +1,6 @@
-import { FixtureState } from '../../../../core/fixtureState/types.js';
-import { FixtureId } from '../../../../core/types.js';
-import { RendererId, RendererRequest } from '../../../../renderer/types.js';
+import { FixtureState } from 'react-cosmos-core/fixtureState';
+import { FixtureId } from 'react-cosmos-core/fixture';
+import { RendererId, RendererRequest } from 'react-cosmos-core/renderer';
 import { RendererCoreContext } from '../shared/index.js';
 
 export function postSelectFixtureRequest(

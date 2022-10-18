@@ -8,12 +8,12 @@ import React, {
   useState,
 } from 'react';
 import styled from 'styled-components';
-import { createFixtureTree } from '../../../core/fixtureTree/createFixtureTree/index.js';
+import { createFixtureTree } from 'react-cosmos-core/fixtureTree';
 import {
   FlatFixtureTreeItem,
   flattenFixtureTree,
-} from '../../../core/fixtureTree/flattenFixtureTree.js';
-import { FixtureId, FixtureList } from '../../../core/types.js';
+} from 'react-cosmos-core/fixtureTree';
+import { FixtureId, FixtureList } from 'react-cosmos-core/fixture';
 import {
   KEY_DOWN,
   KEY_ENTER,
@@ -21,7 +21,7 @@ import {
   KEY_FWD_SLASH,
   KEY_TAB,
   KEY_UP,
-} from '../../../utils/keys.js';
+} from 'react-cosmos-core/utils';
 import { HelpCircleIcon, SearchIcon } from '../../components/icons/index.js';
 import {
   black60,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { MessageType } from '../../../utils/types.js';
+import { MessageType } from 'react-cosmos-core/utils';
 import { CoreSpec } from '../Core/spec.js';
 import { MessageHandlerSpec } from '../MessageHandler/spec.js';
 import { NotificationsSpec } from '../Notifications/spec.js';

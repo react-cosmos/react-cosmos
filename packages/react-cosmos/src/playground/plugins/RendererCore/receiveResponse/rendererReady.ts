@@ -1,8 +1,5 @@
-import { FixtureId } from '../../../../core/types.js';
-import {
-  RendererId,
-  RendererReadyResponse,
-} from '../../../../renderer/types.js';
+import { FixtureId } from 'react-cosmos-core/fixture';
+import { RendererId, RendererReadyResponse } from 'react-cosmos-core/renderer';
 import { NotificationsSpec } from '../../Notifications/spec.js';
 import { RouterSpec } from '../../Router/spec.js';
 import { RendererCoreContext, State } from '../shared/index.js';

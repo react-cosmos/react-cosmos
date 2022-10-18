@@ -1,10 +1,10 @@
 import { clone, setWith } from 'lodash';
 import React from 'react';
-import styled from 'styled-components';
 import {
   FixtureStateValue,
   FixtureStateValues,
-} from '../../../core/fixtureState/types.js';
+} from 'react-cosmos-core/fixtureState';
+import styled from 'styled-components';
 import { TreeExpansion } from '../../shared/treeExpansion.js';
 import { grey248, grey32 } from '../../style/colors.js';
 import { TreeView } from '../TreeView.js';
