@@ -78,7 +78,7 @@ async function tryBuildPackage(pkgName: Package) {
 async function buildPackage(pkgName: Package) {
   if (pkgName === 'react-cosmos-core') {
     await clearPackage(pkgName);
-    await buildTsPackage(pkgName);
+    await builDualTsPackage(pkgName);
   } else if (pkgName === 'react-cosmos') {
     // await generatePlaygroundPluginEntry();
     await clearPackage(pkgName);
@@ -99,6 +99,11 @@ async function clearPackage(pkgName: string) {
 
 async function buildTsPackage(pkgName: string) {
   await runTypeScript(`packages/${pkgName}/tsconfig.build.json`);
+}
+
+async function builDualTsPackage(pkgName: string) {
+  await runTypeScript(`packages/${pkgName}/tsconfig.build.esm.json`);
+  await runTypeScript(`packages/${pkgName}/tsconfig.build.cjs.json`);
 }
 
 function runTypeScript(config: string) {
