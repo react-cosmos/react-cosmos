@@ -1,7 +1,8 @@
 import webpackHotMiddleware from '@skidding/webpack-hot-middleware';
 import { NextHandleFunction } from 'connect';
 import path from 'path';
-import { BuildMessage, removeLeadingDot } from 'react-cosmos-core';
+import { BuildMessage } from 'react-cosmos';
+import { removeLeadingDot } from 'react-cosmos-core';
 import { DevServerPluginArgs, serveStaticDir } from 'react-cosmos/server';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';

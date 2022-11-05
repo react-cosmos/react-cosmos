@@ -2,13 +2,13 @@
 import { mockSocketIo } from './testHelpers/mockSocketIo';
 
 import { waitFor } from '@testing-library/dom';
-import {
-  BuildErrorMessage,
-  RENDERER_MESSAGE_EVENT_NAME,
-  SERVER_MESSAGE_EVENT_NAME,
-} from 'react-cosmos-core';
+import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '.';
+import {
+  BuildErrorMessage,
+  SERVER_MESSAGE_EVENT_NAME,
+} from '../../../shared/serverMessage';
 import {
   getMessageHandlerMethods,
   mockCore,

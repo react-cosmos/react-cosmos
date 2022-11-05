@@ -1,6 +1,6 @@
-import { BuildMessage } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '.';
+import { BuildMessage } from '../../../shared/serverMessage';
 import {
   getMessageHandlerContext,
   mockMessageHandler,

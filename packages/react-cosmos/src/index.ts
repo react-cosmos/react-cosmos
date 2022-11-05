@@ -33,3 +33,4 @@ export * from './playground/slots/ValueInputSlot';
 export * from './playground/style/colors';
 export * from './playground/style/vars';
 export * from './playground/testHelpers/pluginMocks';
+export * from './shared/serverMessage';
