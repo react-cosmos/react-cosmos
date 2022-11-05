@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
+import { FixtureId } from 'react-cosmos-core';
 import styled from 'styled-components';
-import { FixtureId } from 'react-cosmos-core/fixture';
 import { createRelativePlaygroundUrl } from '../../../shared/url';
 import { blue } from '../../../style/colors';
 

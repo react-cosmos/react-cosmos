@@ -1,4 +1,4 @@
-import { FixtureId } from 'react-cosmos-core/fixture';
+import { FixtureId } from 'react-cosmos-core';
 import { RendererCoreContext, State } from './shared';
 import {
   postSelectFixtureRequest,

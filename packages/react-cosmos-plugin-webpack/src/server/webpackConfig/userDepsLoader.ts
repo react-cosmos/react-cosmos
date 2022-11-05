@@ -1,4 +1,4 @@
-import { DomRendererConfig } from 'react-cosmos-core/renderer';
+import { DomRendererConfig } from 'react-cosmos-core';
 import {
   detectCosmosConfig,
   generateUserDepsModule,

@@ -1,4 +1,4 @@
-import { PlaygroundCommandResponse } from 'react-cosmos-core/renderer';
+import { PlaygroundCommandResponse } from 'react-cosmos-core';
 import { CoreSpec } from '../../Core/spec';
 import { RendererCoreContext } from '../shared';
 

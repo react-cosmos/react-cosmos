@@ -1,10 +1,10 @@
 import { isEqual } from 'lodash';
 import React from 'react';
-import { FixtureId } from 'react-cosmos-core/fixture';
 import {
+  FixtureId,
   FlatFixtureTree,
   FlatFixtureTreeItem,
-} from 'react-cosmos-core/fixtureTree';
+} from 'react-cosmos-core';
 import styled from 'styled-components';
 import { XIcon } from '../../components/icons';
 import { stringifyFixtureId } from '../../components/ValueInputTree';

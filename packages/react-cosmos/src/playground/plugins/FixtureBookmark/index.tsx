@@ -1,10 +1,10 @@
 import { isEqual } from 'lodash';
 import React from 'react';
-import { FixtureId } from 'react-cosmos-core/fixture';
 import {
   createFixtureTree,
+  FixtureId,
   flattenFixtureTree,
-} from 'react-cosmos-core/fixtureTree';
+} from 'react-cosmos-core';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { FixtureActionSlotProps } from '../../slots/FixtureActionSlot';
 import { CoreSpec } from '../Core/spec';

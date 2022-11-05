@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { KEY_DOWN, KEY_UP } from 'react-cosmos-core/utils';
+import { KEY_DOWN, KEY_UP } from 'react-cosmos-core';
 import { useFocus } from '../../hooks/useFocus';
 import {
   TextContainer,

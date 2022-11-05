@@ -1,15 +1,12 @@
 import { waitFor } from '@testing-library/dom';
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
+import { FixtureState, FixtureStateValues } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import {
-  FixtureState,
-  FixtureStateValues,
-} from 'react-cosmos-core/fixtureState';
+import { register } from '.';
 import { SidePanelRowSlot } from '../../slots/SidePanelRowSlot';
 import { mockStorage } from '../../testHelpers/pluginMocks';
 import { getParentButton } from '../../testHelpers/selectors';
-import { register } from '.';
 import { PROPS_TREE_EXPANSION_STORAGE_KEY } from './shared';
 
 beforeEach(register);

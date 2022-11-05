@@ -7,21 +7,20 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import styled from 'styled-components';
-import { createFixtureTree } from 'react-cosmos-core/fixtureTree';
 import {
+  createFixtureTree,
+  FixtureId,
+  FixtureList,
   FlatFixtureTreeItem,
   flattenFixtureTree,
-} from 'react-cosmos-core/fixtureTree';
-import { FixtureId, FixtureList } from 'react-cosmos-core/fixture';
-import {
   KEY_DOWN,
   KEY_ENTER,
   KEY_ESC,
   KEY_FWD_SLASH,
   KEY_TAB,
   KEY_UP,
-} from 'react-cosmos-core/utils';
+} from 'react-cosmos-core';
+import styled from 'styled-components';
 import { HelpCircleIcon, SearchIcon } from '../../components/icons';
 import {
   black60,

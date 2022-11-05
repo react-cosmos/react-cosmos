@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { stringifyRendererUrlQuery } from 'react-cosmos-core/playground';
+import { stringifyRendererUrlQuery } from 'react-cosmos-core';
 import { RendererActionSlotProps } from '../../slots/RendererActionSlot';
 import { CoreSpec } from '../Core/spec';
 import { FullScreenButton } from './FullScreenButton';

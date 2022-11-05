@@ -1,10 +1,10 @@
-import { findFixtureStateProps } from 'react-cosmos-core/fixtureState';
 import {
+  findFixtureStateProps,
   FixtureElementId,
   FixtureState,
   FixtureStateProps,
-} from 'react-cosmos-core/fixtureState';
-import { StateUpdater } from 'react-cosmos-core/utils';
+  StateUpdater,
+} from 'react-cosmos-core';
 import { stringifyElementId } from '../../../components/ValueInputTree';
 
 export function createPropsFsUpdater(

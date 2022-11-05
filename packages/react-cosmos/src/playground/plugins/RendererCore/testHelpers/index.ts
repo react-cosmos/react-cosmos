@@ -1,11 +1,12 @@
-import { FixtureState } from 'react-cosmos-core/fixtureState';
-import { FixtureId, FixtureList } from 'react-cosmos-core/fixture';
 import {
+  FixtureId,
+  FixtureList,
   FixtureListUpdateResponse,
+  FixtureState,
   FixtureStateChangeResponse,
   RendererId,
   RendererReadyResponse,
-} from 'react-cosmos-core/renderer';
+} from 'react-cosmos-core';
 import { getRendererCoreMethods } from '../../../testHelpers/pluginMocks';
 
 export function createRendererReadyResponse(

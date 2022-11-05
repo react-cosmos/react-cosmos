@@ -2,7 +2,7 @@ import { FSWatcher, watch } from 'chokidar';
 import { writeFile } from 'fs';
 import { debounce } from 'lodash';
 import path from 'path';
-import { NativeRendererConfig } from 'react-cosmos-core/renderer';
+import { NativeRendererConfig } from 'react-cosmos-core';
 import promisify from 'util.promisify';
 import { CosmosConfig } from '../../cosmosConfig/types';
 import { DevServerPluginArgs } from '../../cosmosPlugin/types';

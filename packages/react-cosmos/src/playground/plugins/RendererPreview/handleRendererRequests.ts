@@ -1,4 +1,4 @@
-import { MessageType } from 'react-cosmos-core/utils';
+import { MessageType } from 'react-cosmos-core';
 import { NotificationsSpec } from '../Notifications/spec';
 import { RendererPreviewContext } from './shared';
 

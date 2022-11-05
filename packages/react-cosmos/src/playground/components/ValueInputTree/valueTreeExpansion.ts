@@ -1,6 +1,5 @@
 import { clone, setWith } from 'lodash';
-import { FixtureId } from 'react-cosmos-core/fixture';
-import { FixtureElementId } from 'react-cosmos-core/fixtureState';
+import { FixtureElementId, FixtureId } from 'react-cosmos-core';
 import { TreeExpansion } from '../../shared/treeExpansion';
 import { stringifyElementId, stringifyFixtureId } from './shared';
 

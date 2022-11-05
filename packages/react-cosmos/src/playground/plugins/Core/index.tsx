@@ -1,5 +1,5 @@
 import { omit } from 'lodash';
-import { registerPlaygroundShortcuts } from 'react-cosmos-core/renderer';
+import { registerPlaygroundShortcuts } from 'react-cosmos-core';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { Commands, CoreSpec } from './spec';
 

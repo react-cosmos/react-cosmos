@@ -3,7 +3,7 @@ import {
   FixtureStateControls,
   FixtureStateStandardControl,
   FixtureStateValues,
-} from 'react-cosmos-core/fixtureState';
+} from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
 import { ValueInputTree } from '../../components/ValueInputTree';
 import { ExpandCollapseValues } from '../../components/ValueInputTree/ExpandCollapseValues';

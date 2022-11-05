@@ -4,8 +4,8 @@ import {
   FixtureState,
   FixtureStateControl,
   FixtureStateControls,
-} from 'react-cosmos-core/fixtureState';
-import { StateUpdater } from 'react-cosmos-core/utils';
+  StateUpdater,
+} from 'react-cosmos-core';
 import { IconButton32 } from '../../components/buttons';
 import { RotateCcwIcon } from '../../components/icons';
 import {

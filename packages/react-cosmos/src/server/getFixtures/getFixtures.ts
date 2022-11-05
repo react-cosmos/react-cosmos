@@ -1,14 +1,8 @@
 import path from 'path';
-import { FixtureId } from 'react-cosmos-core/fixture';
 import {
   createFixtureTree,
+  FixtureId,
   flattenFixtureTree,
-} from 'react-cosmos-core/fixtureTree';
-import {
-  stringifyPlaygroundUrlQuery,
-  stringifyRendererUrlQuery,
-} from 'react-cosmos-core/playground';
-import {
   getDecoratedFixtureElement,
   getFixtureListFromExports,
   getSortedDecoratorsForFixturePath,
@@ -16,7 +10,9 @@ import {
   ReactDecorators,
   ReactFixture,
   ReactFixtureMap,
-} from 'react-cosmos-core/renderer';
+  stringifyPlaygroundUrlQuery,
+  stringifyRendererUrlQuery,
+} from 'react-cosmos-core';
 import url from 'url';
 import { CosmosConfig } from '../cosmosConfig/types';
 import { RENDERER_FILENAME } from '../shared/playgroundHtml';

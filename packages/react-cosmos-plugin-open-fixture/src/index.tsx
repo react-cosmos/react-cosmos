@@ -4,7 +4,7 @@ import {
   NotificationsSpec,
   RendererActionSlotProps,
 } from 'react-cosmos';
-import { FixtureId } from 'react-cosmos-core/fixture';
+import { FixtureId } from 'react-cosmos-core';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { OpenFixtureButton } from './OpenFixtureButton';
 import { OpenFixtureSpec } from './spec';

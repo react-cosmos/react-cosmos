@@ -1,4 +1,4 @@
-import { RendererResponse } from 'react-cosmos-core/renderer';
+import { RendererResponse } from 'react-cosmos-core';
 import { RendererCoreSpec } from '../RendererCore/spec';
 import { RendererPreviewContext } from './shared';
 

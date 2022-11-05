@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageType } from 'react-cosmos-core/utils';
+import { MessageType } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
 import { CoreSpec } from '../Core/spec';
 import { MessageHandlerSpec } from '../MessageHandler/spec';

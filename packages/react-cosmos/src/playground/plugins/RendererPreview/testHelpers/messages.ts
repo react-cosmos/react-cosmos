@@ -2,7 +2,7 @@ import {
   RendererErrorResponse,
   RendererReadyResponse,
   SelectFixtureRequest,
-} from 'react-cosmos-core/renderer';
+} from 'react-cosmos-core';
 
 export const selectFixtureMsg: SelectFixtureRequest = {
   type: 'selectFixture',

@@ -1,6 +1,6 @@
 import React from 'react';
+import { FixtureState } from 'react-cosmos-core';
 import { PropsPanel } from '.';
-import { FixtureState } from 'react-cosmos-core/fixtureState';
 import { stringifyElementId } from '../../../components/ValueInputTree';
 
 export default () => {

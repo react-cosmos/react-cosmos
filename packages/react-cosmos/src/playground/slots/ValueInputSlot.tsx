@@ -3,7 +3,7 @@ import {
   FixtureStatePrimitiveValue,
   FixtureStateUnserializableValue,
   PrimitiveData,
-} from 'react-cosmos-core/fixtureState';
+} from 'react-cosmos-core';
 import { Slot } from 'react-plugin';
 
 type LeafValue = FixtureStatePrimitiveValue | FixtureStateUnserializableValue;

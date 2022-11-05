@@ -1,4 +1,4 @@
-import { stringifyUrlQuery } from 'react-cosmos-core/playground';
+import { stringifyUrlQuery } from 'react-cosmos-core';
 import * as ErrorOverlay from 'react-error-overlay';
 
 type WebpackHotMiddlewareReporter = {

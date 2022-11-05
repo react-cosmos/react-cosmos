@@ -1,6 +1,6 @@
 import fs from 'fs-extra';
 import path from 'path';
-import { removeLeadingSlash } from 'react-cosmos-core/utils';
+import { removeLeadingSlash } from 'react-cosmos-core';
 import { detectCosmosConfig } from '../cosmosConfig/detectCosmosConfig';
 import { CosmosConfig } from '../cosmosConfig/types';
 import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs';

@@ -1,4 +1,4 @@
-import { FixtureListUpdateResponse } from 'react-cosmos-core/renderer';
+import { FixtureListUpdateResponse } from 'react-cosmos-core';
 import { RendererCoreContext } from '../shared';
 
 export function receiveFixtureListUpdateResponse(

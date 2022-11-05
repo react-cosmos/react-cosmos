@@ -1,11 +1,11 @@
+import { FixtureList } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { FixtureList } from 'react-cosmos-core/fixture';
+import { register } from '..';
 import {
   getRendererCoreMethods,
   mockNotifications,
   mockRouter,
 } from '../../../testHelpers/pluginMocks';
-import { register } from '..';
 import { mockFixtureStateChange, mockRendererReady } from '../testHelpers';
 
 beforeEach(register);

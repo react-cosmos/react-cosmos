@@ -1,7 +1,6 @@
 import React from 'react';
+import { FixtureId, FlatFixtureTreeItem } from 'react-cosmos-core';
 import styled from 'styled-components';
-import { FlatFixtureTreeItem } from 'react-cosmos-core/fixtureTree';
-import { FixtureId } from 'react-cosmos-core/fixture';
 import {
   blue,
   createGreyColor,

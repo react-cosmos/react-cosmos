@@ -1,5 +1,5 @@
 import React from 'react';
-import { FixtureId } from 'react-cosmos-core/fixture';
+import { FixtureId } from 'react-cosmos-core';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { NavRowSlotProps } from '../../slots/NavRowSlot';
 import { CoreSpec } from '../Core/spec';

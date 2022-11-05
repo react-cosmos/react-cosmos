@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
-import { FixtureId, FixtureList } from 'react-cosmos-core/fixture';
-import { createFixtureTree } from 'react-cosmos-core/fixtureTree';
+import { createFixtureTree, FixtureId, FixtureList } from 'react-cosmos-core';
 import styled from 'styled-components';
 import { TreeExpansion } from '../../shared/treeExpansion';
 import { grey32 } from '../../style/colors';

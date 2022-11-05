@@ -1,7 +1,6 @@
 import { isEqual } from 'lodash';
 import React, { RefObject } from 'react';
-import { FixtureId } from 'react-cosmos-core/fixture';
-import { FixtureTreeNode } from 'react-cosmos-core/fixtureTree';
+import { FixtureId, FixtureTreeNode } from 'react-cosmos-core';
 import styled from 'styled-components';
 import { TreeView } from '../../../components/TreeView';
 import {

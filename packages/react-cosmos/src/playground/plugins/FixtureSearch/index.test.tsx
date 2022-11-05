@@ -1,7 +1,8 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
+import { FixtureList } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
-import { FixtureList } from 'react-cosmos-core/fixture';
+import { register } from '.';
 import { NavRowSlot } from '../../slots/NavRowSlot';
 import {
   mockCore,
@@ -9,7 +10,6 @@ import {
   mockRendererCore,
   mockRouter,
 } from '../../testHelpers/pluginMocks';
-import { register } from '.';
 
 beforeEach(register);
 

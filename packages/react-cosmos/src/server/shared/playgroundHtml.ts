@@ -1,6 +1,6 @@
 import fs from 'fs';
 import pkgUp from 'pkg-up';
-import { replaceKeys } from 'react-cosmos-core/utils';
+import { replaceKeys } from 'react-cosmos-core';
 import url from 'url';
 import { PlaygroundConfig, PlaygroundMountArgs } from '../../playground';
 import { CosmosConfig } from '../cosmosConfig/types';

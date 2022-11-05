@@ -1,6 +1,5 @@
 import React from 'react';
-import { FixtureId } from 'react-cosmos-core/fixture';
-import { FixtureElementId, FixtureState } from 'react-cosmos-core/fixtureState';
+import { FixtureElementId, FixtureId, FixtureState } from 'react-cosmos-core';
 import { createPlugin, PluginContext } from 'react-plugin';
 import {
   FixtureExpansionGroup,

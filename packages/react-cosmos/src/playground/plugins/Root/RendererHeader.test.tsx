@@ -1,7 +1,6 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { createFixtureTree } from 'react-cosmos-core/fixtureTree';
-import { flattenFixtureTree } from 'react-cosmos-core/fixtureTree';
+import { createFixtureTree, flattenFixtureTree } from 'react-cosmos-core';
 import { fixtures } from '../../testHelpers/dataMocks';
 import { RendererHeader } from './RendererHeader';
 

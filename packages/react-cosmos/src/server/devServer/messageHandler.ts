@@ -1,9 +1,9 @@
 import http from 'http';
-import { RENDERER_MESSAGE_EVENT_NAME } from 'react-cosmos-core/renderer';
 import {
   BuildMessage,
+  RENDERER_MESSAGE_EVENT_NAME,
   SERVER_MESSAGE_EVENT_NAME,
-} from 'react-cosmos-core/server';
+} from 'react-cosmos-core';
 import ioServer from 'socket.io';
 
 export function createMessageHandler(httpServer: http.Server) {

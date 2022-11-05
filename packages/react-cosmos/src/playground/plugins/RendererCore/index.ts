@@ -1,4 +1,4 @@
-import { RendererId } from 'react-cosmos-core/renderer';
+import { RendererId } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
 import { RouterSpec } from '../Router/spec';
 import { isValidFixtureSelected } from './isValidFixtureSelected';

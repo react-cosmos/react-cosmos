@@ -1,7 +1,6 @@
 import React from 'react';
+import { createFixtureTree, flattenFixtureTree } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
-import { createFixtureTree } from 'react-cosmos-core/fixtureTree';
-import { flattenFixtureTree } from 'react-cosmos-core/fixtureTree';
 import { CoreSpec } from '../Core/spec';
 import { RendererCoreSpec } from '../RendererCore/spec';
 import { RouterSpec } from '../Router/spec';

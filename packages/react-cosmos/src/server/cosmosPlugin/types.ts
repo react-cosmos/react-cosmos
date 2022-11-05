@@ -1,6 +1,6 @@
 import express from 'express';
 import http from 'http';
-import { MessageType } from 'react-cosmos-core/utils';
+import { MessageType } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types';
 
 // TODO: Validate config schema on config import

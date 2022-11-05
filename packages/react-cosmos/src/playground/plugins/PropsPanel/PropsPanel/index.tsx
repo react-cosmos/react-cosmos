@@ -1,6 +1,5 @@
 import React from 'react';
-import { FixtureState } from 'react-cosmos-core/fixtureState';
-import { StateUpdater } from 'react-cosmos-core/utils';
+import { FixtureState, StateUpdater } from 'react-cosmos-core';
 import {
   FixtureExpansion,
   hasFsValues,

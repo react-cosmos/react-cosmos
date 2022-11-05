@@ -1,4 +1,4 @@
-import { removeItemMatch, replaceOrAddItem } from 'react-cosmos-core/utils';
+import { removeItemMatch, replaceOrAddItem } from 'react-cosmos-core';
 import { NotificationsContext } from './shared';
 import { NotificationItem, NotificationsSpec } from './spec';
 

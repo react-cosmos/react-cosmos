@@ -2,8 +2,8 @@ import React from 'react';
 import {
   FixtureState,
   FixtureStateControl,
-} from 'react-cosmos-core/fixtureState';
-import { StateUpdater } from 'react-cosmos-core/utils';
+  StateUpdater,
+} from 'react-cosmos-core';
 import { Slot } from 'react-plugin';
 
 export type ControlSlotProps<TControl extends FixtureStateControl> = {

@@ -1,8 +1,8 @@
-import { FixtureId } from 'react-cosmos-core/fixture';
 import {
   createFixtureTree,
+  FixtureId,
   FixtureTreeNode,
-} from 'react-cosmos-core/fixtureTree';
+} from 'react-cosmos-core';
 import { nodeContainsFixtureId } from '../../shared/fixtureTree';
 import { TreeExpansion } from '../../shared/treeExpansion';
 import { CoreSpec } from '../Core/spec';

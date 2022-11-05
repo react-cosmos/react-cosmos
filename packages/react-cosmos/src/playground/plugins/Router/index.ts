@@ -1,7 +1,6 @@
 import { isEqual } from 'lodash';
+import { FixtureId, PlaygroundUrlParams } from 'react-cosmos-core';
 import { createPlugin, PluginContext } from 'react-plugin';
-import { PlaygroundUrlParams } from 'react-cosmos-core/playground';
-import { FixtureId } from 'react-cosmos-core/fixture';
 import {
   getUrlParams,
   pushUrlParams,

@@ -4,7 +4,7 @@ import {
   ReactDecorators,
   ReactFixtureExport,
   ReactFixtureExports,
-} from 'react-cosmos-core/renderer';
+} from 'react-cosmos-core';
 import slash from 'slash';
 import { CosmosConfig } from '../cosmosConfig/types';
 import { findUserModulePaths } from './findUserModulePaths';

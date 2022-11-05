@@ -1,7 +1,7 @@
 import { isEqual } from 'lodash';
 import React, { RefObject } from 'react';
+import { FixtureId } from 'react-cosmos-core';
 import styled from 'styled-components';
-import { FixtureId } from 'react-cosmos-core/fixture';
 import { grey8 } from '../../../style/colors';
 import { FixtureLink } from './FixtureLink';
 import { FixtureTreeItem } from './FixtureTreeItem';

@@ -1,10 +1,12 @@
 import React from 'react';
+import {
+  FixtureId,
+  FixtureState,
+  FlatFixtureTreeItem,
+  StateUpdater,
+} from 'react-cosmos-core';
 import { ArraySlot, Slot } from 'react-plugin';
 import styled from 'styled-components';
-import { FixtureState } from 'react-cosmos-core/fixtureState';
-import { FlatFixtureTreeItem } from 'react-cosmos-core/fixtureTree';
-import { FixtureId } from 'react-cosmos-core/fixture';
-import { StateUpdater } from 'react-cosmos-core/utils';
 import { useDrag } from '../../hooks/useDrag';
 import { NavRowSlot } from '../../slots/NavRowSlot';
 import { grey32, grey8, white10 } from '../../style/colors';

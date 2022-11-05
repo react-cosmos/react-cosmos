@@ -1,7 +1,4 @@
-import {
-  FixtureStateValue,
-  FixtureStateValues,
-} from 'react-cosmos-core/fixtureState';
+import { FixtureStateValue, FixtureStateValues } from 'react-cosmos-core';
 import { ValueNode } from './shared';
 import { createValueTree } from './valueTree';
 

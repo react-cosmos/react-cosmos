@@ -1,4 +1,4 @@
-import { TreeNode } from 'react-cosmos-core/utils';
+import { TreeNode } from 'react-cosmos-core';
 
 export type TreeExpansion = {
   [nodePath: string]: boolean;
