@@ -5,7 +5,7 @@ import {
   ReactFixtureExports,
   ReactFixtureWrapper,
   ReactFixtureWrappers,
-} from './types.js';
+} from './reactTypes.js';
 
 export function getFixtureListFromWrappers(wrappers: ReactFixtureWrappers) {
   return Object.keys(wrappers).reduce((acc: FixtureList, fixturePath) => {

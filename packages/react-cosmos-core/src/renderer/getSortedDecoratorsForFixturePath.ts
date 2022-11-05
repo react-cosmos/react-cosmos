@@ -1,4 +1,4 @@
-import { ReactDecorator, ReactDecorators } from './types.js';
+import { ReactDecorator, ReactDecorators } from './reactTypes.js';
 
 export function getSortedDecoratorsForFixturePath(
   fixturePath: string,

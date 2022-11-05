@@ -25,10 +25,6 @@
       "import": "./dist/esm/playground/index.js",
       "require": "./dist/cjs/playground/index.js"
     },
-    "./react": {
-      "import": "./dist/esm/react/index.js",
-      "require": "./dist/cjs/react/index.js"
-    },
     "./renderer": {
       "import": "./dist/esm/renderer/index.js",
       "require": "./dist/cjs/renderer/index.js"

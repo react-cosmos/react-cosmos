@@ -1,7 +1,7 @@
 import React from 'react';
 import * as ReactNative from 'react-native';
 import parse from 'url-parse';
-import { ReactDecorators, ReactFixtureWrappers } from '../react/types.js';
+import { ReactDecorators, ReactFixtureWrappers } from './reactTypes.js';
 import { FixtureId } from '../fixture/types.js';
 import { FixtureLoader } from './FixtureLoader/FixtureLoader.js';
 import { createWebSocketsConnect } from './FixtureLoader/webSockets.js';

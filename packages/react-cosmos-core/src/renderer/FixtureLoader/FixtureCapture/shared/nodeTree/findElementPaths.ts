@@ -1,6 +1,6 @@
 import { flatten } from 'lodash';
 import React, { Fragment } from 'react';
-import { isReactElement } from '../../../../../react/isReactElement.js';
+import { isReactElement } from '../../../../../utils/react/isReactElement.js';
 import { getChildrenPath } from './shared.js';
 
 export function findElementPaths(

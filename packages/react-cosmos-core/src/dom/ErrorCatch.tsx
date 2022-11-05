@@ -1,7 +1,7 @@
 import { isEqual } from 'lodash';
 import React from 'react';
-import { ReactDecoratorProps } from '../react/types.js';
-import { areNodesEqual } from '../react/areNodesEqual.js';
+import { ReactDecoratorProps } from '../renderer/reactTypes.js';
+import { areNodesEqual } from '../utils/react/areNodesEqual.js';
 
 type State = {
   error: null | string;

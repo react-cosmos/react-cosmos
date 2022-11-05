@@ -1,6 +1,6 @@
 import { set } from 'lodash';
 import React from 'react';
-import { isReactElement } from '../../../../../react/isReactElement.js';
+import { isReactElement } from '../../../../../utils/react/isReactElement.js';
 import { getExpectedElementAtPath } from './getElementAtPath.js';
 import { isRootPath } from './shared.js';
 

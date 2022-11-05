@@ -9,7 +9,7 @@ import {
   FixtureDecoratorId,
   FixtureState,
 } from '../../../../fixtureState/types.js';
-import { getComponentName } from '../../../../react/getComponentName.js';
+import { getComponentName } from '../../../../utils/react/getComponentName.js';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
 import { getChildrenPath, setElementAtPath } from '../shared/nodeTree/index.js';
 

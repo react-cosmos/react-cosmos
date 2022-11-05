@@ -1,6 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { ReactDecorators, ReactFixtureWrappers } from '../react/types.js';
+import {
+  ReactDecorators,
+  ReactFixtureWrappers,
+} from '../renderer/reactTypes.js';
 import { DomRendererConfig } from '../renderer/rendererConfig.js';
 import { DomFixtureLoader } from './DomFixtureLoader.js';
 import { getDomContainer } from './getDomContainer.js';

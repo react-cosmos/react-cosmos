@@ -8,8 +8,8 @@ import {
   updateFixtureStateProps,
 } from '../../../../fixtureState/props.js';
 import { FixtureDecoratorId } from '../../../../fixtureState/types.js';
-import { areNodesEqual } from '../../../../react/areNodesEqual.js';
-import { getComponentName } from '../../../../react/getComponentName.js';
+import { areNodesEqual } from '../../../../utils/react/areNodesEqual.js';
+import { getComponentName } from '../../../../utils/react/getComponentName.js';
 import { FixtureContext } from '../../../../fixture/FixtureContext.js';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
 import {

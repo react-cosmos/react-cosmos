@@ -1,6 +1,9 @@
 import React from 'react';
-import { ReactDecorators, ReactFixtureWrappers } from '../react/types.js';
 import { FixtureLoader } from '../renderer/FixtureLoader/FixtureLoader.js';
+import {
+  ReactDecorators,
+  ReactFixtureWrappers,
+} from '../renderer/reactTypes.js';
 import { ErrorCatch } from './ErrorCatch.js';
 import { renderDomMessage } from './renderDomMessage.js';
 import { rendererConnect } from './rendererConnect.js';

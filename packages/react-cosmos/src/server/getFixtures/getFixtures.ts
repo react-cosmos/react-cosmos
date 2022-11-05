@@ -9,14 +9,14 @@ import {
   stringifyRendererUrlQuery,
 } from 'react-cosmos-core/playground';
 import {
+  getDecoratedFixtureElement,
   getFixtureListFromExports,
   getSortedDecoratorsForFixturePath,
   ReactDecorator,
   ReactDecorators,
   ReactFixture,
   ReactFixtureMap,
-} from 'react-cosmos-core/react';
-import { getDecoratedFixtureElement } from 'react-cosmos-core/renderer';
+} from 'react-cosmos-core/renderer';
 import url from 'url';
 import { CosmosConfig } from '../cosmosConfig/types';
 import { RENDERER_FILENAME } from '../shared/playgroundHtml';

@@ -3,7 +3,7 @@ import {
   ReactFixtureExports,
   ReactFixtureWrapper,
   ReactFixtureWrappers,
-} from '../../../react/types.js';
+} from '../../reactTypes.js';
 
 export function wrapFixtures(
   fixtureExports: ReactFixtureExports
