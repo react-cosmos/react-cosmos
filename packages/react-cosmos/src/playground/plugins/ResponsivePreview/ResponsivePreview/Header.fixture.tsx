@@ -1,5 +1,5 @@
 import React from 'react';
-import { useValue } from 'react-cosmos-core/fixture';
+import { useValue } from 'react-cosmos-core';
 import { DEFAULT_DEVICES } from '../shared';
 import { Header } from './Header';
 import { getViewportScaleFactor } from './style';

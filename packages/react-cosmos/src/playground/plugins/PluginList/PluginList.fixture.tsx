@@ -1,5 +1,5 @@
 import React from 'react';
-import { useValue } from 'react-cosmos-core/fixture';
+import { useValue } from 'react-cosmos-core';
 import { PluginList, SimplePlugin } from './PluginList';
 
 const initialPlugins: SimplePlugin[] = [

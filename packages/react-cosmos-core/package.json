@@ -12,10 +12,6 @@
     "./dom": {
       "import": "./dist/esm/dom/index.js",
       "require": "./dist/cjs/dom/index.js"
-    },
-    "./fixture": {
-      "import": "./dist/esm/fixture.js",
-      "require": "./dist/cjs/fixture.js"
     }
   },
   "dependencies": {},

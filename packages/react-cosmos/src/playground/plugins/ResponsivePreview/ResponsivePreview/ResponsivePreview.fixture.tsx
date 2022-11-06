@@ -1,5 +1,5 @@
 import React from 'react';
-import { useValue } from 'react-cosmos-core/fixture';
+import { useValue } from 'react-cosmos-core';
 import styled from 'styled-components';
 import { DEFAULT_DEVICES } from '../shared';
 import { ResponsivePreview } from './ResponsivePreview';
