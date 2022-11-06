@@ -42,7 +42,9 @@ export function getCosmosPluginConfig(
     const uiPath = path.join(pluginRootDir, rawConfig.ui);
     const resolvedUiPath = resolveFrom.silent(pluginRootDir, uiPath);
     // TODO: Handle missing path
-    if (resolvedUiPath) config.ui = path.relative(rootDir, resolvedUiPath);
+    if (resolvedUiPath) {
+      config.ui = path.relative(rootDir, resolvedUiPath);
+    }
   }
 
   if (rawConfig.devServer) {
@@ -53,8 +55,19 @@ export function getCosmosPluginConfig(
     );
     // TODO: Handle missing path
     // TODO: Test
-    if (resolvedDevServerPath)
+    if (resolvedDevServerPath) {
       config.devServer = path.relative(rootDir, resolvedDevServerPath);
+    }
+  }
+
+  if (rawConfig.export) {
+    const exportPath = path.join(pluginRootDir, rawConfig.export);
+    const resolvedExportPath = resolveFrom.silent(pluginRootDir, exportPath);
+    // TODO: Handle missing path
+    // TODO: Test
+    if (resolvedExportPath) {
+      config.export = path.relative(rootDir, resolvedExportPath);
+    }
   }
 
   return config;

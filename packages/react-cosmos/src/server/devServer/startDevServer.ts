@@ -5,11 +5,11 @@ import {
 } from '../cosmosConfig/detectCosmosConfig';
 import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs';
 import {
-  CosmosPluginConfig,
   DevServerPlugin,
   DevServerPluginCleanupCallback,
   PlatformType,
 } from '../cosmosPlugin/types';
+import { logPluginInfo } from '../shared/logPluginInfo';
 import { serveStaticDir } from '../shared/staticServer';
 import { requireModule } from '../utils/fs';
 import { createApp } from './app';
@@ -56,7 +56,7 @@ export async function startDevServer(platformType: PlatformType) {
       c =>
         requireModule(path.resolve(cosmosConfig.rootDir, c.devServer!)).default
     );
-  console.log(devServerPlugins);
+
   try {
     for (const plugin of [...corePlugins, ...devServerPlugins]) {
       const pluginReturn = await plugin({
@@ -87,13 +87,4 @@ function logCosmosConfigInfo() {
 
   const relConfigPath = path.relative(process.cwd(), cosmosConfigPath);
   console.log(`[Cosmos] Using cosmos config found at ${relConfigPath}`);
-}
-
-function logPluginInfo(pluginConfigs: CosmosPluginConfig[]) {
-  const pluginCount = pluginConfigs.length;
-  if (pluginCount > 0) {
-    const pluginLabel = pluginCount === 1 ? 'plugin' : 'plugins';
-    const pluginNames = pluginConfigs.map(p => p.name).join(', ');
-    console.log(`[Cosmos] Found ${pluginCount} ${pluginLabel}: ${pluginNames}`);
-  }
 }

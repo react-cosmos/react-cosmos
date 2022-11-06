@@ -3,7 +3,9 @@ import webpack, { StatsCompilation } from 'webpack';
 import { getWebpack } from './getWebpack';
 import { getExportWebpackConfig } from './webpackConfig/getExportWebpackConfig';
 
-export async function webpackExportPlugin({ cosmosConfig }: ExportPluginArgs) {
+export default async function webpackExportPlugin({
+  cosmosConfig,
+}: ExportPluginArgs) {
   const userWebpack = getWebpack(cosmosConfig.rootDir);
   if (!userWebpack) {
     return;

@@ -5,13 +5,18 @@ import { detectCosmosConfig } from '../cosmosConfig/detectCosmosConfig';
 import { CosmosConfig } from '../cosmosConfig/types';
 import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs';
 import { CosmosPluginConfig, ExportPlugin } from '../cosmosPlugin/types';
+import { logPluginInfo } from '../shared/logPluginInfo';
 import { getExportPlaygroundHtml } from '../shared/playgroundHtml';
 import { getStaticPath } from '../shared/staticServer';
+import { requireModule } from '../utils/fs';
 
 const corePlugins: ExportPlugin[] = [];
 
 export async function generateExport() {
   const cosmosConfig = detectCosmosConfig();
+
+  const pluginConfigs = getPluginConfigs(cosmosConfig);
+  logPluginInfo(pluginConfigs);
 
   // Clear previous export (or other files at export path)
   const { exportPath } = cosmosConfig;
@@ -20,7 +25,17 @@ export async function generateExport() {
   // Copy static assets first, so that the built index.html overrides the its
   // template file (in case the static assets are served from the root path)
   copyStaticAssets(cosmosConfig);
-  await Promise.all(corePlugins.map(plugin => plugin({ cosmosConfig })));
+
+  const exportPlugins = pluginConfigs
+    .filter(c => c.export)
+    .map(
+      c => requireModule(path.resolve(cosmosConfig.rootDir, c.export!)).default
+    );
+
+  for (const plugin of [...corePlugins, ...exportPlugins]) {
+    await plugin({ cosmosConfig });
+  }
+
   exportPlaygroundFiles(cosmosConfig);
 
   console.log('[Cosmos] Export complete!');
