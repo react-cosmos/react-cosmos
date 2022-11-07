@@ -7,8 +7,8 @@ import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs';
 import { CosmosPluginConfig, ExportPlugin } from '../cosmosPlugin/types';
 import { logPluginInfo } from '../shared/logPluginInfo';
 import { getExportPlaygroundHtml } from '../shared/playgroundHtml';
+import { requirePluginModule } from '../shared/requirePluginModule';
 import { getStaticPath } from '../shared/staticServer';
-import { requireModule } from '../utils/fs';
 
 const corePlugins: ExportPlugin[] = [];
 
@@ -26,17 +26,18 @@ export async function generateExport() {
   // template file (in case the static assets are served from the root path)
   copyStaticAssets(cosmosConfig);
 
-  const exportPlugins = pluginConfigs
-    .filter(c => c.export)
-    .map(
-      c => requireModule(path.resolve(cosmosConfig.rootDir, c.export!)).default
-    );
+  const exportPlugins = getExportPlugins(cosmosConfig, pluginConfigs);
 
   for (const plugin of [...corePlugins, ...exportPlugins]) {
-    await plugin({ cosmosConfig });
+    try {
+      await plugin({ cosmosConfig });
+    } catch (err) {
+      console.log(`[Cosmos][${plugin.name}] Export plugin failed`);
+      throw err;
+    }
   }
 
-  exportPlaygroundFiles(cosmosConfig);
+  exportPlaygroundFiles(cosmosConfig, pluginConfigs);
 
   console.log('[Cosmos] Export complete!');
   console.log(`Export path: ${cosmosConfig.exportPath}`);
@@ -74,9 +75,22 @@ function copyStaticAssets(cosmosConfig: CosmosConfig) {
   fs.copySync(staticPath, exportStaticPath);
 }
 
-function exportPlaygroundFiles(cosmosConfig: CosmosConfig) {
+function getExportPlugins(
+  cosmosConfig: CosmosConfig,
+  pluginConfigs: CosmosPluginConfig[]
+) {
+  return pluginConfigs
+    .filter(p => p.export)
+    .map(p =>
+      requirePluginModule<ExportPlugin>(cosmosConfig.rootDir, p, 'export')
+    );
+}
+
+function exportPlaygroundFiles(
+  cosmosConfig: CosmosConfig,
+  pluginConfigs: CosmosPluginConfig[]
+) {
   const { exportPath } = cosmosConfig;
-  const pluginConfigs = getPluginConfigs(cosmosConfig);
 
   pluginConfigs.forEach(pluginConfig =>
     exportPlugin(cosmosConfig, pluginConfig)
