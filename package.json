@@ -27,6 +27,7 @@
     "start:playground": "yarn cosmos --root-dir packages/react-cosmos/src/playground",
     "website:start": "yarn cosmos --root-dir website",
     "website:build": "ts-node ./scripts/buildWebsite.ts",
+    "website:serve": "http-server -p 5001 ./website/dist",
     "release:check": "yarn build:clear && yarn build && yarn src && yarn lint && yarn dist && yarn test:unit",
     "release:lerna": "lerna publish --registry=https://registry.npmjs.org/",
     "release": "yarn release:check && yarn release:lerna",
