@@ -2,7 +2,7 @@ export * from './server/cosmosConfig/createCosmosConfig';
 export * from './server/cosmosConfig/detectCosmosConfig';
 export * from './server/cosmosConfig/getCosmosConfigAtPath';
 export * from './server/cosmosConfig/types';
-export * from './server/cosmosPlugin/getCosmosPluginConfigs';
+export * from './server/cosmosPlugin/findCosmosPluginConfigs';
 export * from './server/cosmosPlugin/pluginConfigs';
 export * from './server/cosmosPlugin/types';
 export * from './server/getFixtures/getFixtures';

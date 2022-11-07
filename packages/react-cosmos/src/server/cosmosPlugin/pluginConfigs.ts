@@ -1,8 +1,6 @@
 import { CosmosConfig } from '../cosmosConfig/types';
-import {
-  getCosmosPluginConfig,
-  getCosmosPluginConfigs,
-} from './getCosmosPluginConfigs';
+import { findCosmosPluginConfigs } from './findCosmosPluginConfigs';
+import { readCosmosPluginConfig } from './readCosmosPluginConfig';
 import { CosmosPluginConfig } from './types';
 
 // TODO: Refactor
@@ -11,14 +9,14 @@ export function getPluginConfigs(cosmosConfig: CosmosConfig) {
   if (disablePlugins) return [];
 
   const moduleConfigs = plugins.reduce(
-    (paths: CosmosPluginConfig[], pluginPath) => [
+    (paths: CosmosPluginConfig[], pluginId) => [
       ...paths,
-      getCosmosPluginConfig(rootDir, pluginPath),
+      readCosmosPluginConfig(rootDir, pluginId),
     ],
     []
   );
 
-  const localConfigs = getCosmosPluginConfigs({
+  const localConfigs = findCosmosPluginConfigs({
     rootDir,
     ignore: [`${exportPath}/**`],
   });

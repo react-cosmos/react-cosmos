@@ -1,10 +1,10 @@
 import path from 'path';
-import { getCosmosPluginConfigs } from './getCosmosPluginConfigs';
+import { findCosmosPluginConfigs } from './findCosmosPluginConfigs';
 
 it('loads playground plugins', () => {
   const packagesDir = path.join(__dirname, '../../playground/plugins');
 
-  const configs = getCosmosPluginConfigs({ rootDir: packagesDir });
+  const configs = findCosmosPluginConfigs({ rootDir: packagesDir });
   expect(configs).toMatchInlineSnapshot(`
     [
       {
