@@ -2,5 +2,11 @@
   "exportPath": "dist/live-demo",
   "globalImports": ["src/global.css"],
   "publicUrl": "./",
-  "staticPath": "static"
+  "staticPath": "static",
+  "disablePlugins": false,
+  "plugins": [
+    "react-cosmos-plugin-open-fixture",
+    "react-cosmos-plugin-webpack",
+    "react-cosmos-plugin-boolean-input"
+  ]
 }

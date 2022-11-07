@@ -28,7 +28,14 @@ module.exports = async () => {
     },
     module: {
       rules: [
-        { test: /\.[jt]sx?$/, include: [src], loader: 'babel-loader' },
+        {
+          test: /\.[jt]sx?$/,
+          include: [src],
+          loader: 'ts-loader',
+          options: {
+            configFile: path.join(__dirname, 'tsconfig.build.json'),
+          },
+        },
         {
           test: /\.css$/,
           include: src,
