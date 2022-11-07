@@ -5,9 +5,7 @@ export function homepageTests() {
     });
 
     it('displays welcome message', () => {
-      // The Snowpack build is lazy so this is required even though the test
-      // suite only starts after the Cosmos server has loaded.
-      cy.contains('Welcome to React Cosmos', { timeout: 10000 });
+      cy.contains('Welcome to React Cosmos');
     });
 
     it('shows renderer connected notification', () => {
