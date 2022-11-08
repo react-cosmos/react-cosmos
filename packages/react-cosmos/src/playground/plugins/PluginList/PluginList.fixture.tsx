@@ -27,8 +27,6 @@ const initialPlugins: SimplePlugin[] = [
   { name: 'controlSelect', enabled: true },
   { name: 'standardControl', enabled: true },
   { name: 'storage', enabled: true },
-  // ???
-  { name: 'webpackHmrNotification', enabled: true },
 ];
 
 export default () => {
