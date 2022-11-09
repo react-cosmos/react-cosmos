@@ -1,6 +1,13 @@
 import path from 'path';
 import { findCosmosPluginConfigs } from './findCosmosPluginConfigs';
 
+// Allow plugin configs to be read without having to actually build them
+jest.mock('resolve-from', () => {
+  return {
+    silent: (rootDir: string, absolutePath: string) => `${absolutePath}.js`,
+  };
+});
+
 it('loads mono repo plugins', () => {
   const packagesDir = path.join(__dirname, '../../../..');
 
