@@ -1,4 +1,5 @@
 import React from 'react';
+import { Slot } from 'react-plugin';
 import styled from 'styled-components';
 import { ArtificialIntelligenceIllustration } from '../../components/illustrations/ArtificialIntelligence';
 import {
@@ -14,7 +15,6 @@ import {
   TextContainer,
 } from './shared';
 
-// webpack???
 export function RendererNotResponding() {
   return (
     <ContentContainer>
@@ -35,12 +35,14 @@ export function RendererNotResponding() {
           <li>
             <No>2</No>
             <span>
-              If you use a custom webpack config,{' '}
-              <strong>
-                make sure
-                <br />
-                your build is generating an index.html page.
-              </strong>
+              <Slot name="rendererError">
+                If you use a bundler plugin,{' '}
+                <strong>
+                  make sure
+                  <br />
+                  your build is generating an index.html page.
+                </strong>
+              </Slot>
             </span>
           </li>
         </List>

@@ -32,18 +32,24 @@ export type PlaygroundMountArgs = {
   pluginConfigs: CosmosPluginConfig[];
 };
 
-export default function mount({
+export default async function mount({
   playgroundConfig,
   pluginConfigs,
 }: PlaygroundMountArgs) {
   const { loadPlugins, Slot } = ReactPlugin;
 
-  pluginConfigs.forEach(pluginConfig => {
-    if (pluginConfig.ui) loadPluginScript(pluginConfig.ui);
-  });
-
   const config = { ...DEFAULT_PLUGIN_CONFIG, ...playgroundConfig };
   loadPlugins({ config });
+
+  // We can make plugin loading unblocking if react-plugin exports the
+  // reloadPlugins method.
+  await Promise.all(
+    pluginConfigs.map(async pluginConfig => {
+      console.log('loadPluginScript', pluginConfig.name, pluginConfig.ui);
+      if (pluginConfig.ui) await loadPluginScript(pluginConfig.ui);
+    })
+  );
+
   ReactDom.render(
     <>
       <GlobalStyle />
@@ -53,7 +59,7 @@ export default function mount({
   );
 }
 
-function loadPluginScript(scriptPath: string) {
+async function loadPluginScript(scriptPath: string) {
   console.log(`[Cosmos] Loading plugin script at ${scriptPath}`);
 
   const script = document.createElement('script');
@@ -61,4 +67,8 @@ function loadPluginScript(scriptPath: string) {
   script.src = `_plugin/${encodeURIComponent(scriptPath)}`;
 
   document.getElementsByTagName('head')[0].appendChild(script);
+
+  return new Promise(resolve => {
+    script.onload = resolve;
+  });
 }
