@@ -45,7 +45,6 @@ export default async function mount({
   // reloadPlugins method.
   await Promise.all(
     pluginConfigs.map(async pluginConfig => {
-      console.log('loadPluginScript', pluginConfig.name, pluginConfig.ui);
       if (pluginConfig.ui) await loadPluginScript(pluginConfig.ui);
     })
   );
