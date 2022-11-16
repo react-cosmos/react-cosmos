@@ -4,8 +4,7 @@ import {
 } from 'react-cosmos-core';
 import { isInsideCosmosPreviewIframe } from './isInsideCosmosPreviewIframe.js';
 
-// TODO: Rename to domRendererConnect
-export const rendererConnect = isInsideCosmosPreviewIframe()
+export const domRendererConnect = isInsideCosmosPreviewIframe()
   ? createPostMessageConnect()
   : createWebSocketsConnect(getWebSocketsUrl());
 

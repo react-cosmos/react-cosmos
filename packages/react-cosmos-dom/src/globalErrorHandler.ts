@@ -1,9 +1,9 @@
-import { rendererConnect } from './rendererConnect.js';
-import { rendererId } from './rendererId.js';
+import { domRendererConnect } from './domRendererConnect.js';
+import { domRendererId } from './domRendererId.js';
 
 window.addEventListener('error', () => {
-  rendererConnect.postMessage({
+  domRendererConnect.postMessage({
     type: 'rendererError',
-    payload: { rendererId },
+    payload: { rendererId: domRendererId },
   });
 });

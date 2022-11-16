@@ -6,8 +6,8 @@ import {
 } from 'react-cosmos-core';
 import { ErrorCatch } from './ErrorCatch.js';
 import { renderDomMessage } from './renderDomMessage.js';
-import { rendererConnect } from './rendererConnect.js';
-import { rendererId } from './rendererId.js';
+import { domRendererConnect } from './domRendererConnect.js';
+import { domRendererId } from './domRendererId.js';
 import { selectedFixtureId } from './selectedFixtureId.js';
 
 type Props = {
@@ -22,8 +22,8 @@ export function DomFixtureLoader({
 }: Props) {
   return (
     <FixtureLoader
-      rendererId={rendererId}
-      rendererConnect={rendererConnect}
+      rendererId={domRendererId}
+      rendererConnect={domRendererConnect}
       fixtures={fixtures}
       selectedFixtureId={selectedFixtureId}
       systemDecorators={[ErrorCatch]}
