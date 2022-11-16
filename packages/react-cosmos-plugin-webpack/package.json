@@ -7,6 +7,7 @@
   "main": "cosmos.plugin.json",
   "dependencies": {
     "@skidding/webpack-hot-middleware": "^2.25.1",
+    "react-cosmos-core": "5.7.2",
     "react-cosmos-dom": "5.7.2",
     "webpack-dev-middleware": "^4.3.0"
   },
