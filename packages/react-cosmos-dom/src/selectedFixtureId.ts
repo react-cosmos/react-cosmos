@@ -1,5 +1,5 @@
 import { FixtureId, parseRendererUrlQuery } from 'react-cosmos-core';
-import { isInsideCosmosPreviewIframe } from './isInsideCosmosPreviewIframe.js';
+import { isInsideCosmosPreviewIframe } from './utils/isInsideCosmosPreviewIframe.js';
 
 export const selectedFixtureId = getSelectedFixtureId();
 

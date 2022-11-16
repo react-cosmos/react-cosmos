@@ -2,7 +2,7 @@ import {
   createPostMessageConnect,
   createWebSocketsConnect,
 } from 'react-cosmos-core';
-import { isInsideCosmosPreviewIframe } from './isInsideCosmosPreviewIframe.js';
+import { isInsideCosmosPreviewIframe } from './utils/isInsideCosmosPreviewIframe.js';
 
 export const domRendererConnect = isInsideCosmosPreviewIframe()
   ? createPostMessageConnect()
