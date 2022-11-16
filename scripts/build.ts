@@ -25,6 +25,10 @@ const builders: Partial<Record<Package, Builder>> & { default: Builder } = {
     await buildPkgTs(pkgName, 'tsconfig.build.esm.json');
     await buildPkgTs(pkgName, 'tsconfig.build.cjs.json');
   },
+  'react-cosmos-dom': async pkgName => {
+    await buildPkgTs(pkgName, 'tsconfig.build.esm.json');
+    await buildPkgTs(pkgName, 'tsconfig.build.cjs.json');
+  },
   'react-cosmos': async pkgName => {
     await copyStaticAssets(pkgName);
     await buildPkgTs(pkgName, 'tsconfig.build.json');

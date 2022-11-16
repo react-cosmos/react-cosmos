@@ -14,7 +14,7 @@ const mockSocket = {
   emit,
 };
 
-jest.mock('socket.io-client', () => jest.fn(() => mockSocket));
+jest.mock('socket.io-client', () => ({ io: jest.fn(() => mockSocket) }));
 
 beforeEach(() => {
   handlers = {};

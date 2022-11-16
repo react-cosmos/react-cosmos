@@ -1,7 +1,10 @@
-import { createPostMessageConnect } from '../renderer/FixtureLoader/postMessage.js';
-import { createWebSocketsConnect } from '../renderer/FixtureLoader/webSockets.js';
+import {
+  createPostMessageConnect,
+  createWebSocketsConnect,
+} from 'react-cosmos-core';
 import { isInsideCosmosPreviewIframe } from './isInsideCosmosPreviewIframe.js';
 
+// TODO: Rename to domRendererConnect
 export const rendererConnect = isInsideCosmosPreviewIframe()
   ? createPostMessageConnect()
   : createWebSocketsConnect(getWebSocketsUrl());

@@ -1,10 +1,10 @@
 import React from 'react';
-import { render } from 'react-dom';
 import {
+  DomRendererConfig,
   ReactDecorators,
   ReactFixtureWrappers,
-} from '../renderer/reactTypes.js';
-import { DomRendererConfig } from '../renderer/rendererConfig.js';
+} from 'react-cosmos-core';
+import { render } from 'react-dom';
 import { DomFixtureLoader } from './DomFixtureLoader.js';
 import { getDomContainer } from './getDomContainer.js';
 import './globalErrorHandler.js';

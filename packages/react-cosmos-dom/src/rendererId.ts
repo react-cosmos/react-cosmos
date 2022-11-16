@@ -1,5 +1,4 @@
-import { uuid } from '../utils/uuid.js';
-import { RendererId } from '../renderer/types.js';
+import { RendererId, uuid } from 'react-cosmos-core';
 
 export const rendererId = getRendererId();
 

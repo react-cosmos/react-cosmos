@@ -1,6 +1,6 @@
 import React from 'react';
 import { act, create } from 'react-test-renderer';
-import * as io from 'socket.io-client';
+import { io } from 'socket.io-client';
 import { FixtureLoader } from '../FixtureLoader.js';
 import { createWebSocketsConnect } from '../webSockets.js';
 import {

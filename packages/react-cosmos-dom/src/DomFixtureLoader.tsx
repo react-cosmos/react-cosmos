@@ -1,9 +1,9 @@
 import React from 'react';
-import { FixtureLoader } from '../renderer/FixtureLoader/FixtureLoader.js';
 import {
+  FixtureLoader,
   ReactDecorators,
   ReactFixtureWrappers,
-} from '../renderer/reactTypes.js';
+} from 'react-cosmos-core';
 import { ErrorCatch } from './ErrorCatch.js';
 import { renderDomMessage } from './renderDomMessage.js';
 import { rendererConnect } from './rendererConnect.js';
