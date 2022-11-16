@@ -1,13 +1,18 @@
 import React from 'react';
+import { ReactDecorators, ReactFixtureWrappers } from 'react-cosmos-core';
 import { render } from 'react-dom';
-import {
-  ReactDecorators,
-  ReactFixtureWrappers,
-} from '../renderer/reactTypes.js';
-import { DomRendererConfig } from '../renderer/rendererConfig.js';
 import { DomFixtureLoader } from './DomFixtureLoader.js';
+import { domRendererConnect } from './domRendererConnect.js';
+import { domRendererId } from './domRendererId.js';
 import { getDomContainer } from './getDomContainer.js';
-import './globalErrorHandler.js';
+import { DomRendererConfig } from './types.js';
+
+window.addEventListener('error', () => {
+  domRendererConnect.postMessage({
+    type: 'rendererError',
+    payload: { rendererId: domRendererId },
+  });
+});
 
 type Args = {
   rendererConfig: DomRendererConfig;

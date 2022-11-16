@@ -1,7 +1,6 @@
-import { uuid } from '../utils/uuid.js';
-import { RendererId } from '../renderer/types.js';
+import { RendererId, uuid } from 'react-cosmos-core';
 
-export const rendererId = getRendererId();
+export const domRendererId = getRendererId();
 
 // Renderer ID is remembered to avoid announcing a new renderer when reloading
 // the renderer window. Note that each tab has creates a new session and thus

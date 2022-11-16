@@ -23,7 +23,7 @@
     "react-error-overlay": "6.0.9",
     "resolve-from": "^5.0.0",
     "slash": "^3.0.0",
-    "socket.io": "2.2.0",
+    "socket.io": "4.5.3",
     "util.promisify": "^1.1.1",
     "yargs": "^16.2.0"
   },
@@ -31,7 +31,7 @@
     "fuzzaldrin-plus": "^0.6.0",
     "localforage": "^1.10.0",
     "react-plugin": "^3.0.0-alpha.4",
-    "socket.io-client": "2.2.0",
+    "socket.io-client": "4.5.3",
     "styled-components": "^5.3.6"
   },
   "bin": {

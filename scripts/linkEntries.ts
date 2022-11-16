@@ -38,7 +38,7 @@ class InvalidTargetPackage extends Error {
 
     const { modules, configs } = await getPackageEntryPoints(targetPackages);
     await Promise.all(modules.map(f => linkFileRequiresToDir(f, targetDir)));
-    await Promise.all(configs.map(f => linkConfigExportsToDir(f, targetDir)));
+    await Promise.all(configs.map(f => linkConfigPathsToDir(f, targetDir)));
 
     console.log(done(`Linked entry points to ${chalk.bold(targetDir)}.`));
   } catch (err) {
@@ -70,23 +70,23 @@ async function linkFileRequiresToDir(filePath: string, targetDir: TargetDir) {
   writeFileAsync(filePath, nextContents, 'utf8');
 }
 
-async function linkConfigExportsToDir(filePath: string, targetDir: TargetDir) {
+async function linkConfigPathsToDir(filePath: string, targetDir: TargetDir) {
   const prev = await readFileAsync(filePath, 'utf8');
-  if (prev.match(/"exports": {/)) {
+  if (prev.match(/"main": "/) && prev.match(/"module": "/)) {
     let next = prev;
 
     if (targetDir === SRC_DIR) {
-      const regExp1 = new RegExp(`"import": "./${DIST_DIR}/esm/(.+).js"`, 'g');
-      next = next.replace(regExp1, `"import": "./${SRC_DIR}/$1.ts"`);
+      const regExp1 = new RegExp(`"module": "./${DIST_DIR}/esm/(.+).js"`, 'g');
+      next = next.replace(regExp1, `"module": "./${SRC_DIR}/$1.ts"`);
 
-      const regExp2 = new RegExp(`"require": "./${DIST_DIR}/cjs/(.+).js"`, 'g');
-      next = next.replace(regExp2, `"require": "./${SRC_DIR}/$1.ts"`);
+      const regExp2 = new RegExp(`"main": "./${DIST_DIR}/cjs/(.+).js"`, 'g');
+      next = next.replace(regExp2, `"main": "./${SRC_DIR}/$1.ts"`);
     } else {
-      const regExp1 = new RegExp(`"import": "./${SRC_DIR}/(.+).ts"`, 'g');
-      next = next.replace(regExp1, `"import": "./${DIST_DIR}/esm/$1.js"`);
+      const regExp1 = new RegExp(`"module": "./${SRC_DIR}/(.+).ts"`, 'g');
+      next = next.replace(regExp1, `"module": "./${DIST_DIR}/esm/$1.js"`);
 
-      const regExp2 = new RegExp(`"require": "./${SRC_DIR}/(.+).ts"`, 'g');
-      next = next.replace(regExp2, `"require": "./${DIST_DIR}/cjs/$1.js"`);
+      const regExp2 = new RegExp(`"main": "./${SRC_DIR}/(.+).ts"`, 'g');
+      next = next.replace(regExp2, `"main": "./${DIST_DIR}/cjs/$1.js"`);
     }
 
     if (next !== prev) {

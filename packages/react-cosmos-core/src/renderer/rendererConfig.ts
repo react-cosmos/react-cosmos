@@ -1,7 +1,3 @@
-export type DomRendererConfig = {
-  containerQuerySelector: null | string;
-};
-
-export type NativeRendererConfig = {
+export type RemoteRendererConfig = {
   port: number;
 };

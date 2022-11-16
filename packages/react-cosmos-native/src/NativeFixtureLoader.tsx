@@ -1,14 +1,14 @@
 import React from 'react';
-import * as ReactNative from 'react-native';
-import parse from 'url-parse';
-import { FixtureId } from '../fixture/types.js';
-import { FixtureLoader } from '../renderer/FixtureLoader/FixtureLoader.js';
-import { createWebSocketsConnect } from '../renderer/FixtureLoader/webSockets.js';
 import {
+  createWebSocketsConnect,
+  FixtureId,
+  FixtureLoader,
   ReactDecorators,
   ReactFixtureWrappers,
-} from '../renderer/reactTypes.js';
-import { NativeRendererConfig } from '../renderer/rendererConfig.js';
+  RemoteRendererConfig,
+} from 'react-cosmos-core';
+import * as ReactNative from 'react-native';
+import parse from 'url-parse';
 
 const { View, Text, StyleSheet, NativeModules } = ReactNative;
 
@@ -16,7 +16,7 @@ const { View, Text, StyleSheet, NativeModules } = ReactNative;
 const rendererId = 'native-renderer';
 
 type Props = {
-  rendererConfig: NativeRendererConfig;
+  rendererConfig: RemoteRendererConfig;
   fixtures: ReactFixtureWrappers;
   decorators: ReactDecorators;
   initialFixtureId?: FixtureId;

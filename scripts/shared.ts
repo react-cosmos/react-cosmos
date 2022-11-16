@@ -16,6 +16,8 @@ export const rimrafAsync = asyncify(rimraf);
 // Packages are built in this order
 const packageMap = {
   'react-cosmos-core': true,
+  'react-cosmos-dom': true,
+  'react-cosmos-native': true,
   'react-cosmos': true,
   'react-cosmos-plugin-boolean-input': true,
   'react-cosmos-plugin-open-fixture': true,

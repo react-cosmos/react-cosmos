@@ -10,7 +10,7 @@ let messages: object[] = [];
 
 // FYI: Tried using https://github.com/thoov/mock-socket but at the time it
 // didn't capture events as expected
-jest.mock('socket.io-client', () => mockSocketIo);
+jest.mock('socket.io-client', () => ({ io: mockSocketIo }));
 
 function mockSocketIo(url: string) {
   expect(url).toBe(WS_URL);
