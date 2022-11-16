@@ -1,5 +1,13 @@
 {
-  "disablePlugins": true,
-  "globalImports": ["src/cosmos.loadPlugins"],
-  "port": 5500
+  "globalImports": [],
+  "webpack": {
+    "configPath": "./webpack.config.cosmos.js"
+  },
+  "port": 5500,
+  "disablePlugins": false,
+  "plugins": [
+    "react-cosmos-plugin-open-fixture",
+    "react-cosmos-plugin-webpack",
+    "react-cosmos-plugin-boolean-input"
+  ]
 }

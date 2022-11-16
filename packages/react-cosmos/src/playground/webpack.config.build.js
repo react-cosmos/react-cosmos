@@ -1,19 +1,8 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { join } = require('path');
 
 const dist = join(__dirname, '../../dist/playground');
 
 const env = process.env.NODE_ENV || 'development';
-const plugins = [];
-
-if (env === 'development') {
-  // Used by Cosmos config (when loading Playground inside Playground)
-  plugins.push(
-    new HtmlWebpackPlugin({
-      title: 'React Cosmos',
-    })
-  );
-}
 
 module.exports = {
   mode: env,
@@ -29,5 +18,4 @@ module.exports = {
     path: dist,
     filename: 'index.bundle.js',
   },
-  plugins,
 };

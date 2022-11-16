@@ -28,7 +28,7 @@ const builders: Partial<Record<Package, Builder>> & { default: Builder } = {
   'react-cosmos': async pkgName => {
     await copyStaticAssets(pkgName);
     await buildPkgTs(pkgName, 'tsconfig.build.json');
-    await buildPkgWebpack(pkgName, 'src/playground/webpack.config.js');
+    await buildPkgWebpack(pkgName, 'src/playground/webpack.config.build.js');
   },
   'react-cosmos-plugin-webpack': async pkgName => {
     await buildPkgTs(pkgName, 'tsconfig.build.client.json');
