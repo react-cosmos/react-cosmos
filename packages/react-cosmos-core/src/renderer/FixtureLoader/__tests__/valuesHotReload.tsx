@@ -1,9 +1,9 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
 import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
+import { useValue } from '../../../fixture/useValue/index.js';
 import { createValue } from '../../../fixtureState/createValues.js';
 import { uuid } from '../../../utils/uuid.js';
-import { useValue } from '../../../fixture/useValue/index.js';
 import { testFixtureLoader } from '../testHelpers/index.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
@@ -62,7 +62,7 @@ testFixtureLoader(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: expect.any(Array),
+        props: expect.any<any>(Array),
         controls: {
           // `count` was reset, `toggled` was preserved
           count: {
@@ -119,7 +119,7 @@ testFixtureLoader(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: expect.any(Array),
+        props: expect.any<any>(Array),
         controls: {
           // `count` was preserved, `toggled` was reset
           count: {
@@ -149,7 +149,7 @@ testFixtureLoader(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: expect.any(Array),
+        props: expect.any<any>(Array),
         controls: {
           count: {
             type: 'standard',
@@ -176,7 +176,7 @@ testFixtureLoader(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: expect.any(Array),
+        props: expect.any<any>(Array),
         controls: {
           count: {
             type: 'standard',

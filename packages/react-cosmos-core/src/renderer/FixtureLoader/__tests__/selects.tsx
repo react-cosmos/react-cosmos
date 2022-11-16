@@ -1,8 +1,8 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
 import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
-import { uuid } from '../../../utils/uuid.js';
 import { useSelect } from '../../../fixture/useSelect/index.js';
+import { uuid } from '../../../utils/uuid.js';
 import { testFixtureLoader } from '../testHelpers/index.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
@@ -51,7 +51,7 @@ testFixtureLoader(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: expect.any(Array),
+        props: expect.any<any>(Array),
         controls: {
           selectName: {
             type: 'select',
@@ -104,7 +104,7 @@ testFixtureLoader(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: expect.any(Array),
+        props: expect.any<any>(Array),
         controls: {
           selectName: {
             type: 'select',
@@ -133,7 +133,7 @@ testFixtureLoader(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: expect.any(Array),
+        props: expect.any<any>(Array),
         controls: {
           selectName: {
             type: 'select',

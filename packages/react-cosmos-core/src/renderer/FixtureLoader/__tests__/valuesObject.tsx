@@ -57,7 +57,7 @@ testFixtureLoader(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: expect.any(Array),
+        props: expect.any<any>(Array),
         controls: {
           profile: {
             type: 'standard',
@@ -91,7 +91,7 @@ testFixtureLoader(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: expect.any(Array),
+        props: expect.any<any>(Array),
         controls: {
           profile: {
             type: 'standard',
@@ -135,7 +135,7 @@ testFixtureLoader(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: expect.any(Array),
+        props: expect.any<any>(Array),
         controls: {
           profile: {
             type: 'standard',
