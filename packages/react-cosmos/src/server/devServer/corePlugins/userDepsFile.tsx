@@ -2,7 +2,7 @@ import { FSWatcher, watch } from 'chokidar';
 import { writeFile } from 'fs';
 import { debounce } from 'lodash';
 import path from 'path';
-import { NativeRendererConfig } from 'react-cosmos-core';
+import { RemoteRendererConfig } from 'react-cosmos-core';
 import promisify from 'util.promisify';
 import { CosmosConfig } from '../../cosmosConfig/types';
 import { DevServerPluginArgs } from '../../cosmosPlugin/types';
@@ -66,7 +66,7 @@ async function startFixtureFileWatcher(
 async function generateUserDepsFile(cosmosConfig: CosmosConfig) {
   const { userDepsFilePath, port } = cosmosConfig;
 
-  const rendererConfig: NativeRendererConfig = { port };
+  const rendererConfig: RemoteRendererConfig = { port };
   const userDepsModule = generateUserDepsModule({
     cosmosConfig,
     rendererConfig,

@@ -1,3 +1,3 @@
-export type NativeRendererConfig = {
+export type RemoteRendererConfig = {
   port: number;
 };

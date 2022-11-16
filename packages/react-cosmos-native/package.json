@@ -1,0 +1,14 @@
+{
+  "name": "react-cosmos-native",
+  "version": "5.7.2",
+  "description": "React Cosmos Native",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-native",
+  "license": "MIT",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "dependencies": {
+    "react-cosmos-core": "5.7.2",
+    "url-parse": "^1.5.10"
+  },
+  "devDependencies": {}
+}
