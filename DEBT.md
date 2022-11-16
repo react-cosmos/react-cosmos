@@ -15,3 +15,4 @@ In general we keep dependencies up to date. The following packages, however, nee
 - `socket.io@2.2` and `socket.io-client@2.2` because [2.3 upgraded to `debug@4`](https://github.com/socketio/socket.io-client/issues/1328#issuecomment-536525472), which is no longer compatible with IE11.
 - `slash@3.0.0` because 4.x is pure ESM.
 - `yargs@16.2.0` because 17.x dropped support for Node 10.
+- `react-error-overlay@6.0.9` because of [this issue](https://github.com/facebook/create-react-app/issues/11773).
