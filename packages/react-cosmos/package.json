@@ -19,20 +19,17 @@
     "open": "^8.4.0",
     "pem": "^1.14.4",
     "pkg-up": "^3.1.0",
-    "query-string": "7.1.1",
     "react-cosmos-core": "5.7.2",
     "react-error-overlay": "6.0.9",
     "resolve-from": "^5.0.0",
     "slash": "^3.0.0",
     "socket.io": "2.2.0",
-    "url-parse": "^1.5.4",
     "util.promisify": "^1.1.1",
     "yargs": "^16.2.0"
   },
   "devDependencies": {
     "fuzzaldrin-plus": "^0.6.0",
     "localforage": "^1.10.0",
-    "react-element-to-jsx-string": "^14.3.4",
     "react-plugin": "^3.0.0-alpha.4",
     "socket.io-client": "2.2.0",
     "styled-components": "^5.3.3"
