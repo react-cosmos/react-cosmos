@@ -24,7 +24,7 @@
     "react-element-to-jsx-string": "^14.3.4",
     "react-is": "^18.0.0",
     "socket.io-client": "2.2.0",
-    "url-parse": "^1.5.4"
+    "url-parse": "^1.5.10"
   },
   "devDependencies": {}
 }
