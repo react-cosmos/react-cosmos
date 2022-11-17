@@ -65,7 +65,6 @@
     "chalk": "4.1.2",
     "codecov": "^3.8.3",
     "cpy": "^8.1.2",
-    "cpy-cli": "^3.1.1",
     "create-react-class": "^15.7.0",
     "css-loader": "^5.2.6",
     "cypress": "^8.7.0",

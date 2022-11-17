@@ -103,6 +103,7 @@ async function tryBuildPackage(pkgName: Package) {
     await buildPackage(pkgName);
     stdout.write(done(`${chalk.bold(pkgName)}\n`));
   } catch (err) {
+    console.log(err);
     stderr.write(error(`${chalk.bold(pkgName)}\n`));
   }
 }
