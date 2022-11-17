@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import { spawn } from 'child_process';
 import cpy from 'cpy';
+import { rm } from 'fs/promises';
 import {
   done,
   error,
@@ -10,7 +11,6 @@ import {
   getUnnamedArg,
   Package,
   packages,
-  rimrafAsync,
 } from './shared.js';
 
 const { stdout, stderr } = process;
@@ -114,7 +114,7 @@ async function buildPackage(pkgName: Package) {
 }
 
 async function clearPackage(pkgName: string) {
-  await rimrafAsync(`packages/${pkgName}/dist`);
+  await rm(`packages/${pkgName}/dist`, { recursive: true, force: true });
 }
 
 async function buildPkgTs(pkgName: string, tsConfig: string) {

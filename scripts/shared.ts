@@ -1,7 +1,6 @@
 import chalk from 'chalk';
 import { readFile, writeFile } from 'fs';
 import glob from 'glob';
-import rimraf from 'rimraf';
 import yargs from 'yargs/yargs';
 
 const argv = yargs(process.argv.slice(2)).parseSync();
@@ -13,7 +12,6 @@ export type PackageNames = string[];
 export const globAsync = asyncify(glob);
 export const readFileAsync = asyncify(readFile);
 export const writeFileAsync = asyncify(writeFile);
-export const rimrafAsync = asyncify(rimraf);
 
 // Packages are built in this order
 const packageMap = {
