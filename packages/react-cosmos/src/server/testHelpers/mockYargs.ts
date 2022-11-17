@@ -1,12 +1,16 @@
 // Secondary role of mocking yargs: Prevent Cosmos from intercepting the
 // --config arg passed to Jest
-jest.mock('yargs', () => {
-  const yargs = {
-    argv: {},
-    __mockArgsv: (newArgv: {}) => {
-      yargs.argv = newArgv;
-    },
+jest.mock('yargs/yargs', () => {
+  let argv = {};
+
+  const yargs = () => ({
+    parseSync: () => argv,
+  });
+
+  yargs.__mockArgsv = (newArgv: {}) => {
+    argv = newArgv;
   };
+
   return yargs;
 });
 
@@ -19,5 +23,5 @@ export function unmockCliArgs() {
 }
 
 function requireMocked() {
-  return require('yargs');
+  return require('yargs/yargs');
 }

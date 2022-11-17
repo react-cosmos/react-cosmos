@@ -1,5 +1,5 @@
 import path from 'path';
-import slash from 'slash';
+import { slash } from '../utils/slash';
 import { Json } from './shared';
 
 type Args = {
@@ -53,7 +53,7 @@ ${fixtureKeys
 export const decorators = {
 ${decoratorKeys.map((k, i) => `  '${k}': decorator${i}`).join(`,\n`)}
 };
-`.trimLeft();
+`.trimStart();
 }
 
 function createImportMap(

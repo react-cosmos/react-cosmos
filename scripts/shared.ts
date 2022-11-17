@@ -2,7 +2,9 @@ import chalk from 'chalk';
 import { readFile, writeFile } from 'fs';
 import glob from 'glob';
 import rimraf from 'rimraf';
-import { argv } from 'yargs';
+import yargs from 'yargs/yargs';
+
+const argv = yargs(process.argv.slice(2)).parseSync();
 
 type ArgValue = void | null | boolean | number | string;
 

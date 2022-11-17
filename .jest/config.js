@@ -14,10 +14,7 @@ module.exports = {
     '^.+\\.js$': ['ts-jest', { tsconfig: { allowJs: true } }],
   },
   // https://jestjs.io/docs/configuration#transformignorepatterns-arraystring
-  transformIgnorePatterns: [
-    '/node_modules/(?!react-cosmos/dist)',
-    '\\.pnp\\.[^\\/]+$',
-  ],
+  transformIgnorePatterns: ['/node_modules/(?!slash)', '\\.pnp\\.[^\\/]+$'],
   collectCoverageFrom: [
     'packages/*/src/**/*.{ts,tsx}',
     '!**/__fixtures__/**',

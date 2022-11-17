@@ -12,6 +12,4 @@ Exceptions are logging in Cosmos are ad-hoc and minimalistic. `throw new Error` 
 
 In general we keep dependencies up to date. The following packages, however, need to be pinned to a specific version:
 
-- `slash@3.0.0` because 4.x is pure ESM.
-- `yargs@16.2.0` because 17.x dropped support for Node 10.
 - `react-error-overlay@6.0.9` because of [this issue](https://github.com/facebook/create-react-app/issues/11773).

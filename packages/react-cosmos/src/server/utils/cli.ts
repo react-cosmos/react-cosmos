@@ -1,5 +1,5 @@
-import yargs from 'yargs';
+import yargs from 'yargs/yargs';
 
 export function getCliArgs() {
-  return yargs.argv;
+  return yargs(process.argv.slice(2)).parseSync();
 }

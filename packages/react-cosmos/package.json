@@ -22,10 +22,9 @@
     "react-cosmos-core": "5.7.2",
     "react-error-overlay": "6.0.9",
     "resolve-from": "^5.0.0",
-    "slash": "^3.0.0",
     "socket.io": "4.5.3",
     "util.promisify": "^1.1.1",
-    "yargs": "^16.2.0"
+    "yargs": "^17.6.2"
   },
   "devDependencies": {
     "fuzzaldrin-plus": "^0.6.0",
