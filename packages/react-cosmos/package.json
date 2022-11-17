@@ -10,7 +10,6 @@
     "chokidar": "^3.5.3",
     "core-js": "^3.26.1",
     "express": "^4.18.2",
-    "fs-extra": "10.1.0",
     "glob": "^8.0.3",
     "http-proxy-middleware": "^2.0.6",
     "import-from": "^4.0.0",

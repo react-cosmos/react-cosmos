@@ -1,4 +1,4 @@
-import fs from 'fs-extra';
+import { copyFile, cp, rm, stat, writeFile } from 'fs/promises';
 import path from 'path';
 import { removeLeadingSlash } from 'react-cosmos-core';
 import { detectCosmosConfig } from '../cosmosConfig/detectCosmosConfig';
@@ -20,11 +20,11 @@ export async function generateExport() {
 
   // Clear previous export (or other files at export path)
   const { exportPath } = cosmosConfig;
-  fs.removeSync(exportPath);
+  await rm(exportPath, { recursive: true, force: true });
 
   // Copy static assets first, so that the built index.html overrides the its
   // template file (in case the static assets are served from the root path)
-  copyStaticAssets(cosmosConfig);
+  await copyStaticAssets(cosmosConfig);
 
   const exportPlugins = getExportPlugins(cosmosConfig, pluginConfigs);
 
@@ -37,13 +37,13 @@ export async function generateExport() {
     }
   }
 
-  exportPlaygroundFiles(cosmosConfig, pluginConfigs);
+  await exportPlaygroundFiles(cosmosConfig, pluginConfigs);
 
   console.log('[Cosmos] Export complete!');
   console.log(`Export path: ${cosmosConfig.exportPath}`);
 }
 
-function copyStaticAssets(cosmosConfig: CosmosConfig) {
+async function copyStaticAssets(cosmosConfig: CosmosConfig) {
   const { staticPath } = cosmosConfig;
   if (!staticPath) {
     return;
@@ -59,9 +59,10 @@ function copyStaticAssets(cosmosConfig: CosmosConfig) {
     return;
   }
 
-  if (!fs.existsSync(staticPath)) {
+  const staticStat = await stat(staticPath);
+  if (!staticStat.isDirectory()) {
     console.log(
-      '[Cosmos] Warning: config.staticPath points to missing dir',
+      `[Cosmos] Warning: config.staticPath doesn't point to a valid dir`,
       staticPath
     );
     return;
@@ -72,7 +73,7 @@ function copyStaticAssets(cosmosConfig: CosmosConfig) {
     exportPath,
     removeLeadingSlash(publicUrl)
   );
-  fs.copySync(staticPath, exportStaticPath);
+  cp(staticPath, exportStaticPath, { recursive: true });
 }
 
 function getExportPlugins(
@@ -86,30 +87,30 @@ function getExportPlugins(
     );
 }
 
-function exportPlaygroundFiles(
+async function exportPlaygroundFiles(
   cosmosConfig: CosmosConfig,
   pluginConfigs: CosmosPluginConfig[]
 ) {
   const { exportPath } = cosmosConfig;
 
-  pluginConfigs.forEach(pluginConfig =>
-    exportPlugin(cosmosConfig, pluginConfig)
-  );
+  for (const pluginConfig of pluginConfigs) {
+    await exportPlugin(cosmosConfig, pluginConfig);
+  }
 
-  fs.copySync(
+  await copyFile(
     require.resolve('../../playground/index.bundle'),
     path.resolve(exportPath, '_playground.js')
   );
-  fs.copySync(
+  await copyFile(
     getStaticPath('favicon.ico'),
     path.resolve(exportPath, '_cosmos.ico')
   );
 
   const playgroundHtml = getExportPlaygroundHtml(cosmosConfig, pluginConfigs);
-  fs.writeFileSync(path.resolve(exportPath, 'index.html'), playgroundHtml);
+  await writeFile(path.resolve(exportPath, 'index.html'), playgroundHtml);
 }
 
-function exportPlugin(
+async function exportPlugin(
   cosmosConfig: CosmosConfig,
   pluginConfig: CosmosPluginConfig
 ) {
@@ -119,11 +120,11 @@ function exportPlugin(
   // Copy plugin config
   const relConfigPath = path.join(pluginConfig.rootDir, 'cosmos.plugin.json');
   const absConfigPath = path.resolve(rootDir, relConfigPath);
-  fs.copySync(absConfigPath, path.resolve(pluginExportDir, relConfigPath));
+  await copyFile(absConfigPath, path.resolve(pluginExportDir, relConfigPath));
 
   // Copy UI script
   if (pluginConfig.ui) {
     const absUiPath = path.resolve(rootDir, pluginConfig.ui);
-    fs.copySync(absUiPath, path.resolve(pluginExportDir, pluginConfig.ui));
+    await copyFile(absUiPath, path.resolve(pluginExportDir, pluginConfig.ui));
   }
 }

@@ -1,7 +1,6 @@
 import chalk from 'chalk';
 import { spawn } from 'child_process';
-import cpy from 'cpy';
-import { rm } from 'fs/promises';
+import { cp, rm } from 'fs/promises';
 import {
   done,
   error,
@@ -154,7 +153,7 @@ type RunAsyncTaskArgs = {
 
 function runAsyncTask({ cmd, args, env = {} }: RunAsyncTaskArgs) {
   return new Promise<void>((resolve, reject) => {
-    const cp = spawn(cmd, args, {
+    const child = spawn(cmd, args, {
       cwd: new URL('..', import.meta.url).pathname,
       env: {
         ...process.env,
@@ -162,13 +161,13 @@ function runAsyncTask({ cmd, args, env = {} }: RunAsyncTaskArgs) {
       },
       shell: true,
     });
-    cp.stdout.on('data', data => {
+    child.stdout.on('data', data => {
       stdout.write(data);
     });
-    cp.stderr.on('data', data => {
+    child.stderr.on('data', data => {
       stderr.write(data);
     });
-    cp.on('close', code => {
+    child.on('close', code => {
       if (code) {
         reject();
       } else {
@@ -182,5 +181,7 @@ const STATIC_PATH = 'server/static';
 
 async function copyStaticAssets(pkgName: string) {
   const pkgDir = new URL(`../packages/${pkgName}`, import.meta.url).pathname;
-  await cpy(`${pkgDir}/src/${STATIC_PATH}/**`, `${pkgDir}/dist/${STATIC_PATH}`);
+  await cp(`${pkgDir}/src/${STATIC_PATH}`, `${pkgDir}/dist/${STATIC_PATH}`, {
+    recursive: true,
+  });
 }
