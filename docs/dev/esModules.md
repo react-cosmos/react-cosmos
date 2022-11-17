@@ -17,7 +17,7 @@ That said, publishing Cosmos code as ESM is advantageous because:
 
 - `require.resolve` doesn't have a simple alternative because `import.meta.resolve` is still experimental (requires Node flag) and `module.createRequire` seems limited – it doesn't seem to resolve modules in the same way (**FURTHER TESTING REQUIRED**).
 - `require`-ing modules needs to be replaced with async `import()` which only supports JSON [experimentally](https://nodejs.org/docs/latest-v15.x/api/esm.html#esm_no_json_module_loading) at the moment. Opening JSON files could be replaced with `fs.readFile`.
-- `__dirname` and `__firname` usage needs to be refactored using [`import.meta.url`](https://nodejs.org/docs/latest-v15.x/api/esm.html#esm_import_meta_url).
+- `__dirname` and `__filename` usage needs to be refactored using [`import.meta.url`](https://nodejs.org/docs/latest-v15.x/api/esm.html#esm_import_meta_url).
 
 ### Other mentions
 

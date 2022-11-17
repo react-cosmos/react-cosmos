@@ -1,7 +1,6 @@
 import chalk from 'chalk';
 import { spawn } from 'child_process';
 import cpy from 'cpy';
-import path from 'path';
 import {
   done,
   error,
@@ -12,7 +11,7 @@ import {
   Package,
   packages,
   rimrafAsync,
-} from './shared';
+} from './shared.js';
 
 const { stdout, stderr } = process;
 
@@ -156,7 +155,7 @@ type RunAsyncTaskArgs = {
 function runAsyncTask({ cmd, args, env = {} }: RunAsyncTaskArgs) {
   return new Promise<void>((resolve, reject) => {
     const cp = spawn(cmd, args, {
-      cwd: path.join(__dirname, '..'),
+      cwd: new URL('..', import.meta.url).pathname,
       env: {
         ...process.env,
         ...env,
@@ -182,8 +181,6 @@ function runAsyncTask({ cmd, args, env = {} }: RunAsyncTaskArgs) {
 const STATIC_PATH = 'server/static';
 
 async function copyStaticAssets(pkgName: string) {
-  await cpy(`src/${STATIC_PATH}/**`, `dist/${STATIC_PATH}`, {
-    cwd: path.join(__dirname, `../packages/${pkgName}`),
-    parents: false,
-  });
+  const pkgDir = new URL(`../packages/${pkgName}`, import.meta.url).pathname;
+  await cpy(`${pkgDir}/src/${STATIC_PATH}/**`, `${pkgDir}/dist/${STATIC_PATH}`);
 }
