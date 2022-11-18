@@ -5,10 +5,10 @@ import {
   createCosmosConfig,
   getCwdPath,
   RENDERER_FILENAME,
-} from 'react-cosmos/server';
+} from 'react-cosmos/server.js';
 import webpack from 'webpack';
-import { getExportWebpackConfig } from '../getExportWebpackConfig';
-import { HtmlWebpackPlugin } from '../htmlPlugin';
+import { getExportWebpackConfig } from '../getExportWebpackConfig.js';
+import { HtmlWebpackPlugin } from '../htmlPlugin.js';
 
 beforeAll(() => {
   mockFile('mywebpack.config.js', {

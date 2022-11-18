@@ -51,7 +51,10 @@ export async function startDevServer(platformType: PlatformType) {
     msgHandler.cleanUp();
   }
 
-  const devServerPlugins = getDevServerPlugins(cosmosConfig, pluginConfigs);
+  const devServerPlugins = await getDevServerPlugins(
+    cosmosConfig,
+    pluginConfigs
+  );
 
   for (const plugin of [...corePlugins, ...devServerPlugins]) {
     try {
@@ -100,13 +103,19 @@ function logCosmosConfigInfo() {
   console.log(`[Cosmos] Using cosmos config found at ${relConfigPath}`);
 }
 
-function getDevServerPlugins(
+async function getDevServerPlugins(
   cosmosConfig: CosmosConfig,
   pluginConfigs: CosmosPluginConfig[]
 ) {
-  return pluginConfigs
-    .filter(p => p.export)
-    .map(p =>
-      requirePluginModule<DevServerPlugin>(cosmosConfig.rootDir, p, 'devServer')
-    );
+  return Promise.all(
+    pluginConfigs
+      .filter(pluginConfig => pluginConfig.export)
+      .map(pluginConfig =>
+        requirePluginModule<DevServerPlugin>(
+          cosmosConfig.rootDir,
+          pluginConfig,
+          'devServer'
+        )
+      )
+  );
 }

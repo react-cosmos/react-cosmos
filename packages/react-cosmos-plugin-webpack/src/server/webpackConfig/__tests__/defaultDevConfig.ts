@@ -1,10 +1,10 @@
 // NOTE: Mock files need to imported before modules that use the mocked APIs
 import { mockConsole, unmockCliArgs } from 'react-cosmos/jest';
 
-import { createCosmosConfig, RENDERER_FILENAME } from 'react-cosmos/server';
+import { createCosmosConfig, RENDERER_FILENAME } from 'react-cosmos/server.js';
 import webpack from 'webpack';
-import { getDevWebpackConfig } from '../getDevWebpackConfig';
-import { HtmlWebpackPlugin } from '../htmlPlugin';
+import { getDevWebpackConfig } from '../getDevWebpackConfig.js';
+import { HtmlWebpackPlugin } from '../htmlPlugin.js';
 
 afterAll(() => {
   unmockCliArgs();

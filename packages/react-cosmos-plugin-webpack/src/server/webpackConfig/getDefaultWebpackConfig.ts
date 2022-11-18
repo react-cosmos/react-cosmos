@@ -1,8 +1,8 @@
-import { RENDERER_FILENAME } from 'react-cosmos/server';
+import { RENDERER_FILENAME } from 'react-cosmos/server.js';
 import resolveFrom from 'resolve-from';
 import webpack from 'webpack';
-import { getWebpackNodeEnv } from './getWebpackNodeEnv';
-import { getHtmlWebpackPlugin } from './htmlPlugin';
+import { getWebpackNodeEnv } from './getWebpackNodeEnv.js';
+import { getHtmlWebpackPlugin } from './htmlPlugin.js';
 
 // This config doesn't have entry and output set up because it's not meant to
 // work standalone. An entry & output will be added to this base config.
@@ -106,6 +106,9 @@ export function getDefaultWebpackConfig(
     plugins,
     stats: 'minimal',
     infrastructureLogging: { level: 'warn' },
+    experiments: {
+      topLevelAwait: true,
+    },
   };
 
   const webpack4 =

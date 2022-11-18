@@ -1,16 +1,16 @@
-const { join } = require('path');
+import path from 'path';
 
-const dist = join(__dirname, '../../dist');
+const dist = new URL('../../dist', import.meta.url).pathname;
 const env = process.env.NODE_ENV || 'development';
 
 const plugins = [];
 
-module.exports = {
+export default {
   mode: env,
   devtool: false,
   entry: [
-    join(dist, 'ui/WebpackHmrNotification'),
-    join(dist, 'ui/WebpackRendererError'),
+    path.join(dist, 'ui/WebpackHmrNotification'),
+    path.join(dist, 'ui/WebpackRendererError'),
   ],
   output: {
     path: dist,

@@ -4,6 +4,7 @@
   "description": "Plugin for integrating React Cosmos with Webpack",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos",
   "license": "MIT",
+  "type": "module",
   "main": "cosmos.plugin.json",
   "dependencies": {
     "@skidding/webpack-hot-middleware": "^2.25.1",

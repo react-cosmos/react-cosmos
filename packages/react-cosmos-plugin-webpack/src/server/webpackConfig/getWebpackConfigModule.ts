@@ -1,5 +1,6 @@
+import { createRequire } from 'node:module';
 import webpack from 'webpack';
-import { resolveWebpackClientPath } from './resolveWebpackClientPath';
+import { resolveWebpackClientPath } from './resolveWebpackClientPath.js';
 
 export function getWebpackConfigModule(
   webpackConfig: webpack.Configuration
@@ -16,8 +17,9 @@ function getRules({ module }: webpack.Configuration) {
 }
 
 function getUserDepsLoaderRule(): webpack.RuleSetRule {
+  const require = createRequire(import.meta.url);
   return {
-    loader: require.resolve('./userDepsLoader'),
+    loader: require.resolve('./userDepsLoader.cjs'),
     include: resolveWebpackClientPath('userDeps'),
   };
 }

@@ -39,6 +39,10 @@ const builders: Partial<Record<Package, Builder>> & { default: Builder } = {
   'react-cosmos-plugin-webpack': async pkgName => {
     await buildPkgTs(pkgName, 'tsconfig.build.client.json');
     await buildPkgTs(pkgName, 'tsconfig.build.server.json');
+    await fs.copyFile(
+      pkgPath(pkgName, 'src/server/webpackConfig/userDepsLoader.cjs'),
+      pkgPath(pkgName, 'dist/server/webpackConfig/userDepsLoader.cjs')
+    );
     await buildPkgTs(pkgName, 'tsconfig.build.ui.json');
     await buildPkgWebpack(pkgName, 'src/ui/webpack.config.js');
   },
@@ -184,4 +188,8 @@ async function copyStaticAssets(pkgName: string) {
   await fs.cp(`${pkgDir}/src/${STATIC_PATH}`, `${pkgDir}/dist/${STATIC_PATH}`, {
     recursive: true,
   });
+}
+
+function pkgPath(pkgName: string, relPath: string) {
+  return new URL(`../packages/${pkgName}/${relPath}`, import.meta.url).pathname;
 }

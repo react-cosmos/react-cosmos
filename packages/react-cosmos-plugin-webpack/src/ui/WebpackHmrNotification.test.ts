@@ -5,7 +5,7 @@ import {
   mockRendererCore,
 } from 'react-cosmos';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { register } from './WebpackHmrNotification';
+import { register } from './WebpackHmrNotification.js';
 
 beforeEach(register);
 

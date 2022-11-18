@@ -6,10 +6,10 @@ import {
   unmockCliArgs,
 } from 'react-cosmos/jest';
 
-import { createCosmosConfig, RENDERER_FILENAME } from 'react-cosmos/server';
+import { createCosmosConfig, RENDERER_FILENAME } from 'react-cosmos/server.js';
 import webpack from 'webpack';
-import { getDevWebpackConfig } from '../getDevWebpackConfig';
-import { HtmlWebpackPlugin } from '../htmlPlugin';
+import { getDevWebpackConfig } from '../getDevWebpackConfig.js';
+import { HtmlWebpackPlugin } from '../htmlPlugin.js';
 
 const mockWebpackConfig = jest.fn(() => ({
   module: { rules: [MY_RULE] },

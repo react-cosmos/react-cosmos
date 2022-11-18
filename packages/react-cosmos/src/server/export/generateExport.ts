@@ -31,7 +31,7 @@ export async function generateExport() {
   // template file (in case the static assets are served from the root path)
   await copyStaticAssets(cosmosConfig);
 
-  const exportPlugins = getExportPlugins(cosmosConfig, pluginConfigs);
+  const exportPlugins = await getExportPlugins(cosmosConfig, pluginConfigs);
 
   for (const plugin of [...corePlugins, ...exportPlugins]) {
     try {
@@ -81,15 +81,21 @@ async function copyStaticAssets(cosmosConfig: CosmosConfig) {
   fs.cp(staticPath, exportStaticPath, { recursive: true });
 }
 
-function getExportPlugins(
+async function getExportPlugins(
   cosmosConfig: CosmosConfig,
   pluginConfigs: CosmosPluginConfig[]
 ) {
-  return pluginConfigs
-    .filter(p => p.export)
-    .map(p =>
-      requirePluginModule<ExportPlugin>(cosmosConfig.rootDir, p, 'export')
-    );
+  return Promise.all(
+    pluginConfigs
+      .filter(pluginConfig => pluginConfig.export)
+      .map(pluginConfig =>
+        requirePluginModule<ExportPlugin>(
+          cosmosConfig.rootDir,
+          pluginConfig,
+          'export'
+        )
+      )
+  );
 }
 
 async function exportPlaygroundFiles(

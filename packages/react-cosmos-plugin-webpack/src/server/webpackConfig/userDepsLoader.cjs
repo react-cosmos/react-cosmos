@@ -1,18 +1,14 @@
-import { DomRendererConfig } from 'react-cosmos-dom';
-import {
-  detectCosmosConfig,
-  generateUserDepsModule,
-} from 'react-cosmos/server';
-import { createDomCosmosConfig } from '../cosmosConfig/createDomCosmosConfig';
+// Webpack doesn't support ESM loaders:
+// https://github.com/webpack/webpack/issues/13233
+// To circumvent this we use this CJS source file that's manually copied in the
+// dist folder as part of the build process
+module.exports = async function injectUserDeps() {
+  const server = await import('react-cosmos/server.js');
+  const { createDomCosmosConfig } = await import(
+    '../cosmosConfig/createDomCosmosConfig.js'
+  );
 
-// XXX: Loader types are currently missing in webpack 5
-// https://github.com/webpack/webpack/issues/11630
-interface LoaderContext {
-  addContextDependency(dir: string): unknown;
-}
-
-module.exports = function injectUserDeps(this: LoaderContext) {
-  const cosmosConfig = detectCosmosConfig();
+  const cosmosConfig = server.detectCosmosConfig();
 
   // This ensures this loader is invalidated whenever a new file is added to or
   // removed from user's project, which in turn triggers react-cosmos-voyager2
@@ -25,8 +21,8 @@ module.exports = function injectUserDeps(this: LoaderContext) {
   watchDirs.forEach(watchDir => this.addContextDependency(watchDir));
 
   const { containerQuerySelector } = createDomCosmosConfig(cosmosConfig);
-  const rendererConfig: DomRendererConfig = { containerQuerySelector };
-  return generateUserDepsModule({
+  const rendererConfig = { containerQuerySelector };
+  return server.generateUserDepsModule({
     cosmosConfig,
     rendererConfig,
     relativeToDir: null,

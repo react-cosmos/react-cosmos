@@ -23,7 +23,7 @@ module.exports = {
             // Make sure tsc doesn't convert modules to CommonJS because they
             // will end up depending on CJS react-cosmos-core modules instead of
             // sharing the EJS react-cosmos-core modules imported in fixtures.
-            module: 'ES2020',
+            module: 'ES2022',
           },
         },
       },

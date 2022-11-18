@@ -1,9 +1,9 @@
 import { Options as HtmlWebpackPluginOptions } from 'html-webpack-plugin';
 import importFrom from 'import-from';
-import { omit } from 'lodash';
-import { CosmosConfig, RENDERER_FILENAME } from 'react-cosmos/server';
+import lodash from 'lodash';
+import { CosmosConfig, RENDERER_FILENAME } from 'react-cosmos/server.js';
 import webpack from 'webpack';
-import { hasPlugin, isInstanceOfWebpackPlugin } from './plugins';
+import { hasPlugin, isInstanceOfWebpackPlugin } from './plugins.js';
 
 // prettier-ignore
 export type HtmlWebpackPlugin = webpack.WebpackPluginInstance & {
@@ -58,7 +58,7 @@ function changeHtmlPluginFilename(htmlPlugin: HtmlWebpackPlugin) {
   if (!isIndexHtmlWebpackPlugin(htmlPlugin)) return htmlPlugin;
 
   const options = htmlPlugin.userOptions || htmlPlugin.options;
-  const safeOptions = omit(options, 'chunks');
+  const safeOptions = lodash.omit(options, 'chunks');
 
   return new htmlPlugin.constructor({
     ...safeOptions,
