@@ -1,8 +1,9 @@
 import fs from 'fs/promises';
-import { done, globAsync } from './shared.js';
+import glob from 'glob';
+import { done } from './shared.js';
 
 (async () => {
-  const distPaths = (await globAsync(`./packages/*/dist`)) as string[];
+  const distPaths = glob.sync(`./packages/*/dist`) as string[];
   await Promise.all(
     distPaths.map(p => fs.rm(p, { recursive: true, force: true }))
   );

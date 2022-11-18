@@ -1,6 +1,4 @@
 import chalk from 'chalk';
-import { readFile, writeFile } from 'fs';
-import glob from 'glob';
 import yargs from 'yargs/yargs';
 
 const argv = yargs(process.argv.slice(2)).parseSync();
@@ -8,10 +6,6 @@ const argv = yargs(process.argv.slice(2)).parseSync();
 type ArgValue = void | null | boolean | number | string;
 
 export type PackageNames = string[];
-
-export const globAsync = asyncify(glob);
-export const readFileAsync = asyncify(readFile);
-export const writeFileAsync = asyncify(writeFile);
 
 // Packages are built in this order
 const packageMap = {
@@ -57,18 +51,4 @@ export function done(text: string) {
 
 export function error(text: string) {
   return `${chalk.bold.inverse.red(` ERROR `)} ${text}`;
-}
-
-function asyncify(fn: (...args: any[]) => any) {
-  return (...args: any[]): Promise<any> => {
-    return new Promise((resolve, reject) => {
-      fn(...args, (err: Error, result: any) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(result);
-        }
-      });
-    });
-  };
 }
