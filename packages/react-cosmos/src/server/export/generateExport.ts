@@ -1,19 +1,19 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { removeLeadingSlash } from 'react-cosmos-core';
-import { detectCosmosConfig } from '../cosmosConfig/detectCosmosConfig';
-import { CosmosConfig } from '../cosmosConfig/types';
-import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs';
+import { detectCosmosConfig } from '../cosmosConfig/detectCosmosConfig.js';
+import { CosmosConfig } from '../cosmosConfig/types.js';
+import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
 import {
   CosmosPluginConfig,
   ExportPlugin,
   PartialCosmosPluginConfig,
   UiCosmosPluginConfig,
-} from '../cosmosPlugin/types';
-import { logPluginInfo } from '../shared/logPluginInfo';
-import { getExportPlaygroundHtml } from '../shared/playgroundHtml';
-import { requirePluginModule } from '../shared/requirePluginModule';
-import { getStaticPath } from '../shared/staticServer';
+} from '../cosmosPlugin/types.js';
+import { logPluginInfo } from '../shared/logPluginInfo.js';
+import { getExportPlaygroundHtml } from '../shared/playgroundHtml.js';
+import { requirePluginModule } from '../shared/requirePluginModule.js';
+import { getStaticPath } from '../shared/staticServer.js';
 
 const corePlugins: ExportPlugin[] = [];
 
@@ -114,7 +114,10 @@ async function exportPlaygroundFiles(
     path.resolve(exportPath, '_cosmos.ico')
   );
 
-  const playgroundHtml = getExportPlaygroundHtml(cosmosConfig, copiedUiPlugins);
+  const playgroundHtml = await getExportPlaygroundHtml(
+    cosmosConfig,
+    copiedUiPlugins
+  );
   await fs.writeFile(path.resolve(exportPath, 'index.html'), playgroundHtml);
 }
 

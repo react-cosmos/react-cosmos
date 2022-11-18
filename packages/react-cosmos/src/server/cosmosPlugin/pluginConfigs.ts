@@ -1,7 +1,7 @@
-import { CosmosConfig } from '../cosmosConfig/types';
-import { findCosmosPluginConfigs } from './findCosmosPluginConfigs';
-import { readCosmosPluginConfig } from './readCosmosPluginConfig';
-import { CosmosPluginConfig } from './types';
+import { CosmosConfig } from '../cosmosConfig/types.js';
+import { findCosmosPluginConfigs } from './findCosmosPluginConfigs.js';
+import { readCosmosPluginConfig } from './readCosmosPluginConfig.js';
+import { CosmosPluginConfig } from './types.js';
 
 export function getPluginConfigs(cosmosConfig: CosmosConfig) {
   const { rootDir, disablePlugins, plugins, exportPath } = cosmosConfig;

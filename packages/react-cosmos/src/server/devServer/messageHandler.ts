@@ -4,7 +4,7 @@ import { Server } from 'socket.io';
 import {
   BuildMessage,
   SERVER_MESSAGE_EVENT_NAME,
-} from '../../shared/serverMessage';
+} from '../../shared/serverMessage.js';
 
 export function createMessageHandler(httpServer: http.Server) {
   const io = new Server(httpServer);

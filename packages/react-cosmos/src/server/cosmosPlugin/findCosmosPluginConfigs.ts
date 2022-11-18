@@ -1,5 +1,5 @@
 import glob from 'glob';
-import { readCosmosPluginConfig } from './readCosmosPluginConfig';
+import { readCosmosPluginConfig } from './readCosmosPluginConfig.js';
 
 type Args = {
   rootDir: string;

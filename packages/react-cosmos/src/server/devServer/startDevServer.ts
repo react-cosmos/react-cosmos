@@ -2,24 +2,24 @@ import path from 'path';
 import {
   detectCosmosConfig,
   detectCosmosConfigPath,
-} from '../cosmosConfig/detectCosmosConfig';
-import { CosmosConfig } from '../cosmosConfig/types';
-import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs';
+} from '../cosmosConfig/detectCosmosConfig.js';
+import { CosmosConfig } from '../cosmosConfig/types.js';
+import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
 import {
   CosmosPluginConfig,
   DevServerPlugin,
   DevServerPluginCleanupCallback,
   PlatformType,
-} from '../cosmosPlugin/types';
-import { logPluginInfo } from '../shared/logPluginInfo';
-import { requirePluginModule } from '../shared/requirePluginModule';
-import { serveStaticDir } from '../shared/staticServer';
-import { createApp } from './app';
-import { httpProxyDevServerPlugin } from './corePlugins/httpProxy';
-import openFileDevServerPlugin from './corePlugins/openFile';
-import { userDepsFileDevServerPlugin } from './corePlugins/userDepsFile';
-import { createHttpServer } from './httpServer';
-import { createMessageHandler } from './messageHandler';
+} from '../cosmosPlugin/types.js';
+import { logPluginInfo } from '../shared/logPluginInfo.js';
+import { requirePluginModule } from '../shared/requirePluginModule.js';
+import { serveStaticDir } from '../shared/staticServer.js';
+import { createApp } from './app.js';
+import { httpProxyDevServerPlugin } from './corePlugins/httpProxy.js';
+import openFileDevServerPlugin from './corePlugins/openFile.js';
+import { userDepsFileDevServerPlugin } from './corePlugins/userDepsFile.js';
+import { createHttpServer } from './httpServer.js';
+import { createMessageHandler } from './messageHandler.js';
 
 const corePlugins: DevServerPlugin[] = [
   userDepsFileDevServerPlugin,
@@ -34,7 +34,7 @@ export async function startDevServer(platformType: PlatformType) {
   const pluginConfigs = getPluginConfigs(cosmosConfig);
   logPluginInfo(pluginConfigs);
 
-  const app = createApp(platformType, cosmosConfig, pluginConfigs);
+  const app = await createApp(platformType, cosmosConfig, pluginConfigs);
   if (cosmosConfig.staticPath) {
     serveStaticDir(app, cosmosConfig.staticPath, cosmosConfig.publicUrl);
   }

@@ -1,6 +1,6 @@
 import path from 'path';
-import { CosmosPluginConfig } from '../cosmosPlugin/types';
-import { requireModule } from '../utils/fs';
+import { CosmosPluginConfig } from '../cosmosPlugin/types.js';
+import { requireModule } from '../utils/fs.js';
 
 export function requirePluginModule<T>(
   rootDir: string,

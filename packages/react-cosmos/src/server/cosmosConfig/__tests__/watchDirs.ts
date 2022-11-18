@@ -1,5 +1,5 @@
 import path from 'path';
-import { createCosmosConfig } from '../createCosmosConfig';
+import { createCosmosConfig } from '../createCosmosConfig.js';
 
 it('returns resolved default watchDirs', () => {
   const cosmosConfig = createCosmosConfig(process.cwd());

@@ -1,4 +1,4 @@
-import { CosmosPluginConfig } from '../cosmosPlugin/types';
+import { CosmosPluginConfig } from '../cosmosPlugin/types.js';
 
 export function logPluginInfo(pluginConfigs: CosmosPluginConfig[]) {
   const pluginCount = pluginConfigs.length;

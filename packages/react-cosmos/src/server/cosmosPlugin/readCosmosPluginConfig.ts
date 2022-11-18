@@ -1,12 +1,13 @@
 import path from 'path';
 import resolveFrom from 'resolve-from';
-import { CosmosPluginConfig, RawCosmosPluginConfig } from './types';
+import { requireModule } from '../utils/fs.js';
+import { CosmosPluginConfig, RawCosmosPluginConfig } from './types.js';
 
 export function readCosmosPluginConfig(
   rootDir: string,
   moduleNameOrPath: string
 ): CosmosPluginConfig {
-  const rawConfig = require(moduleNameOrPath) as RawCosmosPluginConfig;
+  const rawConfig = requireModule(moduleNameOrPath) as RawCosmosPluginConfig;
   const pluginRootDir = path.dirname(moduleNameOrPath);
   const relativePluginRootDir = path.relative(rootDir, pluginRootDir);
 

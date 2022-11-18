@@ -1,5 +1,5 @@
 import path from 'path';
-import { findCosmosPluginConfigs } from './findCosmosPluginConfigs';
+import { findCosmosPluginConfigs } from './findCosmosPluginConfigs.js';
 
 // Allow plugin configs to be read without having to actually build them
 jest.mock('resolve-from', () => {

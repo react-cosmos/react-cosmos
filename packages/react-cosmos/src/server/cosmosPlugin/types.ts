@@ -1,7 +1,7 @@
 import express from 'express';
 import http from 'http';
 import { MessageType } from 'react-cosmos-core';
-import { CosmosConfig } from '../cosmosConfig/types';
+import { CosmosConfig } from '../cosmosConfig/types.js';
 
 // TODO: Validate config schema on config import
 // TODO: Allow ui and devServer to be [true] for default paths?

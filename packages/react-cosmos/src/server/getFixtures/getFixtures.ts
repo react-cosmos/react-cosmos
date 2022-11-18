@@ -14,9 +14,9 @@ import {
   stringifyRendererUrlQuery,
 } from 'react-cosmos-core';
 import url from 'url';
-import { CosmosConfig } from '../cosmosConfig/types';
-import { RENDERER_FILENAME } from '../shared/playgroundHtml';
-import { getUserModules } from '../userDeps/getUserModules';
+import { CosmosConfig } from '../cosmosConfig/types.js';
+import { RENDERER_FILENAME } from '../shared/playgroundHtml.js';
+import { getUserModules } from '../userDeps/getUserModules.js';
 
 export type FixtureApi = {
   absoluteFilePath: string;

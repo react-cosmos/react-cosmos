@@ -1,5 +1,8 @@
 // NOTE: This API has been extracted to be easily mocked inside tests
 import fs from 'fs';
+import { createRequire } from 'node:module';
+
+const require = createRequire(import.meta.url);
 
 export function requireModule(modulePath: string) {
   // This purpose of this wrapper is merely to make it easy to mock user

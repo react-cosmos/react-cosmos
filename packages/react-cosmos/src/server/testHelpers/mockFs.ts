@@ -1,6 +1,6 @@
 import path from 'path';
-import { CosmosConfig } from '../cosmosConfig/types';
-import { getCwdPath } from './cwd';
+import { CosmosConfig } from '../cosmosConfig/types.js';
+import { getCwdPath } from './cwd.js';
 
 jest.mock('../utils/fs', () => {
   let fileMocks: { [path: string]: any } = {};
@@ -68,5 +68,5 @@ export function unmockFs() {
 }
 
 function requireMocked() {
-  return require('../utils/fs');
+  return require('../utils/fs.js');
 }

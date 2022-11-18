@@ -1,17 +1,17 @@
 import { FSWatcher, watch } from 'chokidar';
 import fs from 'fs/promises';
-import { debounce } from 'lodash';
+import lodash from 'lodash';
 import path from 'path';
 import { RemoteRendererConfig } from 'react-cosmos-core';
-import { CosmosConfig } from '../../cosmosConfig/types';
-import { DevServerPluginArgs } from '../../cosmosPlugin/types';
-import { generateUserDepsModule } from '../../userDeps/generateUserDepsModule';
+import { CosmosConfig } from '../../cosmosConfig/types.js';
+import { DevServerPluginArgs } from '../../cosmosPlugin/types.js';
+import { generateUserDepsModule } from '../../userDeps/generateUserDepsModule.js';
 import {
   getDecoratorPatterns,
   getFixturePatterns,
   getIgnorePatterns,
-} from '../../userDeps/shared';
-import { getCliArgs } from '../../utils/cli';
+} from '../../userDeps/shared.js';
+import { getCliArgs } from '../../utils/cli.js';
 
 export async function userDepsFileDevServerPlugin(args: DevServerPluginArgs) {
   if (!shouldGenerateUserDepsFile(args)) return;
@@ -55,7 +55,10 @@ async function startFixtureFileWatcher(
       .on('ready', () => resolve(watcher))
       .on(
         'all',
-        debounce(() => generateUserDepsFile(cosmosConfig), DEBOUNCE_INTERVAL)
+        lodash.debounce(
+          () => generateUserDepsFile(cosmosConfig),
+          DEBOUNCE_INTERVAL
+        )
       );
   });
 }

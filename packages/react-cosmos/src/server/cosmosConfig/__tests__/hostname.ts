@@ -1,4 +1,4 @@
-import { createCosmosConfig } from '../createCosmosConfig';
+import { createCosmosConfig } from '../createCosmosConfig.js';
 
 it('returns default hostname', () => {
   const { hostname } = createCosmosConfig(process.cwd());

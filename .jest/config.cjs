@@ -1,5 +1,18 @@
 const { join } = require('path');
 
+// These 3rd party deps are pure ESM and need to be transformed for Jest.
+// Once Jest ESM is safe to use, we can remove this.
+// https://jestjs.io/docs/ecmascript-modules
+const esDependencies = [
+  'pkg-up',
+  'find-up',
+  'locate-path',
+  'p-locate',
+  'p-limit',
+  'yocto-queue',
+  'path-exists',
+];
+
 module.exports = {
   preset: 'ts-jest',
   resolver: 'ts-jest-resolver',
@@ -14,7 +27,10 @@ module.exports = {
     '^.+\\.js$': ['ts-jest', { tsconfig: { allowJs: true } }],
   },
   // https://jestjs.io/docs/configuration#transformignorepatterns-arraystring
-  transformIgnorePatterns: ['/node_modules/(?!slash)', '\\.pnp\\.[^\\/]+$'],
+  transformIgnorePatterns: [
+    `/node_modules/(?!${esDependencies.join('|')})`,
+    '\\.pnp\\.[^\\/]+$',
+  ],
   collectCoverageFrom: [
     'packages/*/src/**/*.{ts,tsx}',
     '!**/__fixtures__/**',

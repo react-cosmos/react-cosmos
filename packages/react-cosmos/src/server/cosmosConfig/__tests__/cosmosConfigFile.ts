@@ -1,9 +1,9 @@
-import { mockCosmosConfig, unmockFs } from '../../testHelpers/mockFs';
-import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs';
+import { mockCosmosConfig, unmockFs } from '../../testHelpers/mockFs.js';
+import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 // NOTE: This is the only config test file where the config file is mocked.
 // Mocking the config file provides extra coverage, but the rest of the test
 // files instantiate a CosmosConfig class by hand to minimize boilerplate.
-import { detectCosmosConfig } from '../detectCosmosConfig';
+import { detectCosmosConfig } from '../detectCosmosConfig.js';
 
 afterEach(() => {
   unmockCliArgs();

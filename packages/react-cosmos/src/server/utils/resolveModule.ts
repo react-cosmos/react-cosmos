@@ -1,3 +1,4 @@
+import { createRequire } from 'node:module';
 import path from 'path';
 
 export function resolveModule(rootDir: string, moduleId: string) {
@@ -13,6 +14,7 @@ export function resolveModule(rootDir: string, moduleId: string) {
 
 function resolveSilent(moduleId: string, rootDir: string) {
   try {
+    const require = createRequire(import.meta.url);
     return require.resolve(moduleId, { paths: [rootDir] });
   } catch (err) {
     return null;

@@ -1,10 +1,8 @@
-const { join } = require('path');
-
-const dist = join(__dirname, '../../dist/playground');
+const dist = new URL('../../dist/playground', import.meta.url).pathname;
 
 const env = process.env.NODE_ENV || 'development';
 
-module.exports = {
+export default {
   mode: env,
   devtool: false,
   entry: dist,

@@ -4,7 +4,7 @@ import {
   getDecoratorPatterns,
   getFixturePatterns,
   getIgnorePatterns,
-} from './shared';
+} from './shared.js';
 
 type FindUserModulePathsArgs = {
   rootDir: string;

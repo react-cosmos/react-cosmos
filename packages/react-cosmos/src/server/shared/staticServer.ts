@@ -3,7 +3,7 @@ import path from 'path';
 import { removeLeadingDot } from 'react-cosmos-core';
 
 export function getStaticPath(relPath: string) {
-  return path.join(__dirname, '../static', relPath);
+  return new URL(`../static/${relPath}`, import.meta.url).pathname;
 }
 
 export function serveStaticDir(

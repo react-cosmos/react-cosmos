@@ -1,7 +1,7 @@
 import path from 'path';
-import { createCosmosConfig } from './createCosmosConfig';
-import { requireConfigFile } from './shared';
-import { CosmosConfigInput } from './types';
+import { createCosmosConfig } from './createCosmosConfig.js';
+import { requireConfigFile } from './shared.js';
+import { CosmosConfigInput } from './types.js';
 
 export function getCosmosConfigAtPath(cosmosConfigPath: string) {
   const cosmosConfigInput = requireConfigFile(cosmosConfigPath);
