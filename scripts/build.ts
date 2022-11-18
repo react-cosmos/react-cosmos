@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import { spawn } from 'child_process';
-import { cp, rm } from 'fs/promises';
+import fs from 'fs/promises';
 import {
   done,
   error,
@@ -113,7 +113,7 @@ async function buildPackage(pkgName: Package) {
 }
 
 async function clearPackage(pkgName: string) {
-  await rm(`packages/${pkgName}/dist`, { recursive: true, force: true });
+  await fs.rm(`packages/${pkgName}/dist`, { recursive: true, force: true });
 }
 
 async function buildPkgTs(pkgName: string, tsConfig: string) {
@@ -181,7 +181,7 @@ const STATIC_PATH = 'server/static';
 
 async function copyStaticAssets(pkgName: string) {
   const pkgDir = new URL(`../packages/${pkgName}`, import.meta.url).pathname;
-  await cp(`${pkgDir}/src/${STATIC_PATH}`, `${pkgDir}/dist/${STATIC_PATH}`, {
+  await fs.cp(`${pkgDir}/src/${STATIC_PATH}`, `${pkgDir}/dist/${STATIC_PATH}`, {
     recursive: true,
   });
 }

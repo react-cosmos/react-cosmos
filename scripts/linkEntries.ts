@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { readFile, writeFile } from 'fs/promises';
+import fs from 'fs/promises';
 import glob from 'glob';
 import {
   done,
@@ -62,15 +62,15 @@ class InvalidTargetPackage extends Error {
 async function linkFileRequiresToDir(filePath: string, targetDir: TargetDir) {
   // NOTE: Use static transform + pretty format if future requires it.
   // For now this is JustFine™
-  const prevContents = await readFile(filePath, 'utf8');
+  const prevContents = await fs.readFile(filePath, 'utf8');
   const regExp = new RegExp(`'(\\.{1,2})/(${SRC_DIR}|${DIST_DIR})`, 'g');
   const nextContents = prevContents.replace(regExp, `'$1/${targetDir}`);
 
-  await writeFile(filePath, nextContents, 'utf8');
+  await fs.writeFile(filePath, nextContents, 'utf8');
 }
 
 async function linkConfigPathsToDir(filePath: string, targetDir: TargetDir) {
-  const prev = await readFile(filePath, 'utf8');
+  const prev = await fs.readFile(filePath, 'utf8');
   if (prev.match(/"main": "/) && prev.match(/"module": "/)) {
     let next = prev;
 
@@ -89,7 +89,7 @@ async function linkConfigPathsToDir(filePath: string, targetDir: TargetDir) {
     }
 
     if (next !== prev) {
-      await writeFile(filePath, next, 'utf8');
+      await fs.writeFile(filePath, next, 'utf8');
     }
   }
 }
