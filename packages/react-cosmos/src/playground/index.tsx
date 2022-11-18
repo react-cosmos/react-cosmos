@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import * as ReactPlugin from 'react-plugin';
-import { CosmosPluginConfig } from '../server/cosmosPlugin/types';
+import { PartialCosmosPluginConfig } from '../server/cosmosPlugin/types';
 import { CoreSpec } from './plugins/Core/spec';
 import './plugins/pluginEntry';
 import { DEFAULT_PLUGIN_CONFIG } from './shared/defaultPluginConfig';
@@ -29,7 +29,7 @@ export type PlaygroundConfig = {
 
 export type PlaygroundMountArgs = {
   playgroundConfig: PlaygroundConfig;
-  pluginConfigs: CosmosPluginConfig[];
+  pluginConfigs: PartialCosmosPluginConfig[];
 };
 
 export default async function mount({
@@ -69,5 +69,9 @@ async function loadPluginScript(scriptPath: string) {
 
   return new Promise(resolve => {
     script.onload = resolve;
+    script.onerror = () => {
+      console.log('Failed to load plugin script.');
+      resolve(null);
+    };
   });
 }

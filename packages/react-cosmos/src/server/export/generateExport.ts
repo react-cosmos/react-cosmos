@@ -1,10 +1,15 @@
-import { copyFile, cp, rm, stat, writeFile } from 'fs/promises';
+import fs from 'fs/promises';
 import path from 'path';
 import { removeLeadingSlash } from 'react-cosmos-core';
 import { detectCosmosConfig } from '../cosmosConfig/detectCosmosConfig';
 import { CosmosConfig } from '../cosmosConfig/types';
 import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs';
-import { CosmosPluginConfig, ExportPlugin } from '../cosmosPlugin/types';
+import {
+  CosmosPluginConfig,
+  ExportPlugin,
+  PartialCosmosPluginConfig,
+  UiCosmosPluginConfig,
+} from '../cosmosPlugin/types';
 import { logPluginInfo } from '../shared/logPluginInfo';
 import { getExportPlaygroundHtml } from '../shared/playgroundHtml';
 import { requirePluginModule } from '../shared/requirePluginModule';
@@ -20,7 +25,7 @@ export async function generateExport() {
 
   // Clear previous export (or other files at export path)
   const { exportPath } = cosmosConfig;
-  await rm(exportPath, { recursive: true, force: true });
+  await fs.rm(exportPath, { recursive: true, force: true });
 
   // Copy static assets first, so that the built index.html overrides the its
   // template file (in case the static assets are served from the root path)
@@ -59,7 +64,7 @@ async function copyStaticAssets(cosmosConfig: CosmosConfig) {
     return;
   }
 
-  const staticStat = await stat(staticPath);
+  const staticStat = await fs.stat(staticPath);
   if (!staticStat.isDirectory()) {
     console.log(
       `[Cosmos] Warning: config.staticPath doesn't point to a valid dir`,
@@ -73,7 +78,7 @@ async function copyStaticAssets(cosmosConfig: CosmosConfig) {
     exportPath,
     removeLeadingSlash(publicUrl)
   );
-  cp(staticPath, exportStaticPath, { recursive: true });
+  fs.cp(staticPath, exportStaticPath, { recursive: true });
 }
 
 function getExportPlugins(
@@ -93,38 +98,51 @@ async function exportPlaygroundFiles(
 ) {
   const { exportPath } = cosmosConfig;
 
-  for (const pluginConfig of pluginConfigs) {
-    await exportPlugin(cosmosConfig, pluginConfig);
-  }
+  // Copy UI plugins to export path and embed them in the playground HTML
+  // with updated paths
+  const uiPlugins = pluginConfigs.filter(isUiPlugin);
+  const copiedUiPlugins = await Promise.all(
+    uiPlugins.map(p => exportUiPlugin(cosmosConfig, p))
+  );
 
-  await copyFile(
+  await fs.copyFile(
     require.resolve('../../playground/index.bundle'),
     path.resolve(exportPath, '_playground.js')
   );
-  await copyFile(
+  await fs.copyFile(
     getStaticPath('favicon.ico'),
     path.resolve(exportPath, '_cosmos.ico')
   );
 
-  const playgroundHtml = getExportPlaygroundHtml(cosmosConfig, pluginConfigs);
-  await writeFile(path.resolve(exportPath, 'index.html'), playgroundHtml);
+  const playgroundHtml = getExportPlaygroundHtml(cosmosConfig, copiedUiPlugins);
+  await fs.writeFile(path.resolve(exportPath, 'index.html'), playgroundHtml);
 }
 
-async function exportPlugin(
+async function exportUiPlugin(
   cosmosConfig: CosmosConfig,
-  pluginConfig: CosmosPluginConfig
-) {
+  pluginConfig: UiCosmosPluginConfig
+): Promise<PartialCosmosPluginConfig> {
   const { rootDir, exportPath } = cosmosConfig;
-  const pluginExportDir = path.resolve(exportPath, '_plugin');
+  const pluginPath = path.join(exportPath, '_plugin');
 
-  // Copy plugin config
-  const relConfigPath = path.join(pluginConfig.rootDir, 'cosmos.plugin.json');
-  const absConfigPath = path.resolve(rootDir, relConfigPath);
-  await copyFile(absConfigPath, path.resolve(pluginExportDir, relConfigPath));
+  const pluginRootDir = path.resolve(rootDir, pluginConfig.rootDir);
+  const srcUiPath = path.resolve(rootDir, pluginConfig.ui);
 
-  // Copy UI script
-  if (pluginConfig.ui) {
-    const absUiPath = path.resolve(rootDir, pluginConfig.ui);
-    await copyFile(absUiPath, path.resolve(pluginExportDir, pluginConfig.ui));
-  }
+  const relUiPath = path.relative(pluginRootDir, srcUiPath);
+  const pluginDirName = pluginRootDir.split('/').pop()!;
+  const targetUiPath = path.resolve(pluginPath, pluginDirName, relUiPath);
+
+  await fs.mkdir(path.dirname(targetUiPath), { recursive: true });
+  await fs.copyFile(srcUiPath, targetUiPath);
+
+  return {
+    name: pluginConfig.name,
+    ui: path.relative(pluginPath, targetUiPath),
+  };
+}
+
+function isUiPlugin(
+  pluginConfig: CosmosPluginConfig
+): pluginConfig is UiCosmosPluginConfig {
+  return Boolean(pluginConfig.ui);
 }
