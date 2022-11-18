@@ -17,8 +17,8 @@ async function mount() {
   });
 }
 
-if ((module as any).hot) {
-  (module as any).hot.accept('./userDeps', () => {
+if ((import.meta as any).webpackHot) {
+  (import.meta as any).webpackHot.accept('./userDeps.js', () => {
     // If a previous error has been solved, the error overlay auto-closes nicely.
     // If the error persists, however, the overlay will pop up again on its own
     dismissErrorOverlay();
