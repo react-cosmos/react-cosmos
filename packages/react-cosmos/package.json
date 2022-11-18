@@ -8,7 +8,6 @@
   "dependencies": {
     "@skidding/launch-editor": "^2.2.3",
     "chokidar": "^3.5.3",
-    "core-js": "^3.26.1",
     "express": "^4.18.2",
     "glob": "^8.0.3",
     "http-proxy-middleware": "^2.0.6",
