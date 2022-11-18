@@ -11,6 +11,7 @@ module.exports = {
     },
   },
   rules: {
+    'import/extensions': ['error', 'ignorePackages'],
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': 'warn',
     'linebreak-style': 'error',

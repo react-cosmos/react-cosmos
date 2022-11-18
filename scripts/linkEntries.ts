@@ -1,16 +1,15 @@
 import chalk from 'chalk';
+import fs from 'fs/promises';
+import glob from 'glob';
 import {
   done,
   error,
   findPackage,
   getFormattedPackageList,
   getUnnamedArg,
-  globAsync,
   Package,
   packages,
-  readFileAsync,
-  writeFileAsync,
-} from './shared';
+} from './shared.js';
 
 const SRC_DIR = 'src';
 const DIST_DIR = 'dist';
@@ -63,15 +62,15 @@ class InvalidTargetPackage extends Error {
 async function linkFileRequiresToDir(filePath: string, targetDir: TargetDir) {
   // NOTE: Use static transform + pretty format if future requires it.
   // For now this is JustFine™
-  const prevContents = await readFileAsync(filePath, 'utf8');
+  const prevContents = await fs.readFile(filePath, 'utf8');
   const regExp = new RegExp(`'(\\.{1,2})/(${SRC_DIR}|${DIST_DIR})`, 'g');
   const nextContents = prevContents.replace(regExp, `'$1/${targetDir}`);
 
-  writeFileAsync(filePath, nextContents, 'utf8');
+  await fs.writeFile(filePath, nextContents, 'utf8');
 }
 
 async function linkConfigPathsToDir(filePath: string, targetDir: TargetDir) {
-  const prev = await readFileAsync(filePath, 'utf8');
+  const prev = await fs.readFile(filePath, 'utf8');
   if (prev.match(/"main": "/) && prev.match(/"module": "/)) {
     let next = prev;
 
@@ -90,7 +89,7 @@ async function linkConfigPathsToDir(filePath: string, targetDir: TargetDir) {
     }
 
     if (next !== prev) {
-      writeFileAsync(filePath, next, 'utf8');
+      await fs.writeFile(filePath, next, 'utf8');
     }
   }
 }
@@ -107,8 +106,8 @@ async function getPackageEntryPoints(targetPackages: Package[]): Promise<{
       ? `{${targetPackages.join(',')}}`
       : targetPackages[0];
 
-  const modules = await globAsync(`./packages/${pkgMatch}/{*,bin/*}.{js,d.ts}`);
-  const configs = await globAsync(`./packages/${pkgMatch}/package.json`);
+  const modules = glob.sync(`./packages/${pkgMatch}/{*,bin/*}.{js,d.ts}`);
+  const configs = glob.sync(`./packages/${pkgMatch}/package.json`);
 
   return { modules, configs };
 }

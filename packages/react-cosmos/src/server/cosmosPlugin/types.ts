@@ -20,6 +20,14 @@ export type CosmosPluginConfig = {
   export?: string;
 };
 
+export type UiCosmosPluginConfig = CosmosPluginConfig & {
+  ui: string;
+};
+
+export type PartialCosmosPluginConfig = Omit<CosmosPluginConfig, 'rootDir'> & {
+  rootDir?: string;
+};
+
 export type PlatformType = 'web' | 'native';
 
 export type DevServerPluginArgs = {

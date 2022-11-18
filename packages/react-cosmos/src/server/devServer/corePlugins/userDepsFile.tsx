@@ -1,9 +1,8 @@
 import { FSWatcher, watch } from 'chokidar';
-import { writeFile } from 'fs';
+import fs from 'fs/promises';
 import { debounce } from 'lodash';
 import path from 'path';
 import { RemoteRendererConfig } from 'react-cosmos-core';
-import promisify from 'util.promisify';
 import { CosmosConfig } from '../../cosmosConfig/types';
 import { DevServerPluginArgs } from '../../cosmosPlugin/types';
 import { generateUserDepsModule } from '../../userDeps/generateUserDepsModule';
@@ -13,8 +12,6 @@ import {
   getIgnorePatterns,
 } from '../../userDeps/shared';
 import { getCliArgs } from '../../utils/cli';
-
-const writeFileAsync = promisify(writeFile);
 
 export async function userDepsFileDevServerPlugin(args: DevServerPluginArgs) {
   if (!shouldGenerateUserDepsFile(args)) return;
@@ -72,7 +69,7 @@ async function generateUserDepsFile(cosmosConfig: CosmosConfig) {
     rendererConfig,
     relativeToDir: path.dirname(userDepsFilePath),
   });
-  await writeFileAsync(userDepsFilePath, userDepsModule, 'utf8');
+  await fs.writeFile(userDepsFilePath, userDepsModule, 'utf8');
 
   const relUserDepsFilePath = path.relative(process.cwd(), userDepsFilePath);
   console.log(`[Cosmos] Generated ${relUserDepsFilePath}`);

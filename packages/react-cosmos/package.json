@@ -8,9 +8,7 @@
   "dependencies": {
     "@skidding/launch-editor": "^2.2.3",
     "chokidar": "^3.5.3",
-    "core-js": "^3.26.1",
     "express": "^4.18.2",
-    "fs-extra": "10.1.0",
     "glob": "^8.0.3",
     "http-proxy-middleware": "^2.0.6",
     "import-from": "^4.0.0",
@@ -23,7 +21,6 @@
     "react-error-overlay": "6.0.9",
     "resolve-from": "^5.0.0",
     "socket.io": "4.5.3",
-    "util.promisify": "^1.1.1",
     "yargs": "^17.6.2"
   },
   "devDependencies": {

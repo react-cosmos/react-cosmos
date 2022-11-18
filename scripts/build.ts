@@ -1,7 +1,6 @@
 import chalk from 'chalk';
 import { spawn } from 'child_process';
-import cpy from 'cpy';
-import path from 'path';
+import fs from 'fs/promises';
 import {
   done,
   error,
@@ -11,8 +10,7 @@ import {
   getUnnamedArg,
   Package,
   packages,
-  rimrafAsync,
-} from './shared';
+} from './shared.js';
 
 const { stdout, stderr } = process;
 
@@ -115,7 +113,7 @@ async function buildPackage(pkgName: Package) {
 }
 
 async function clearPackage(pkgName: string) {
-  await rimrafAsync(`packages/${pkgName}/dist`);
+  await fs.rm(`packages/${pkgName}/dist`, { recursive: true, force: true });
 }
 
 async function buildPkgTs(pkgName: string, tsConfig: string) {
@@ -155,21 +153,21 @@ type RunAsyncTaskArgs = {
 
 function runAsyncTask({ cmd, args, env = {} }: RunAsyncTaskArgs) {
   return new Promise<void>((resolve, reject) => {
-    const cp = spawn(cmd, args, {
-      cwd: path.join(__dirname, '..'),
+    const child = spawn(cmd, args, {
+      cwd: new URL('..', import.meta.url).pathname,
       env: {
         ...process.env,
         ...env,
       },
       shell: true,
     });
-    cp.stdout.on('data', data => {
+    child.stdout.on('data', data => {
       stdout.write(data);
     });
-    cp.stderr.on('data', data => {
+    child.stderr.on('data', data => {
       stderr.write(data);
     });
-    cp.on('close', code => {
+    child.on('close', code => {
       if (code) {
         reject();
       } else {
@@ -182,8 +180,8 @@ function runAsyncTask({ cmd, args, env = {} }: RunAsyncTaskArgs) {
 const STATIC_PATH = 'server/static';
 
 async function copyStaticAssets(pkgName: string) {
-  await cpy(`src/${STATIC_PATH}/**`, `dist/${STATIC_PATH}`, {
-    cwd: path.join(__dirname, `../packages/${pkgName}`),
-    parents: false,
+  const pkgDir = new URL(`../packages/${pkgName}`, import.meta.url).pathname;
+  await fs.cp(`${pkgDir}/src/${STATIC_PATH}`, `${pkgDir}/dist/${STATIC_PATH}`, {
+    recursive: true,
   });
 }

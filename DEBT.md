@@ -13,4 +13,3 @@ Exceptions are logging in Cosmos are ad-hoc and minimalistic. `throw new Error` 
 In general we keep dependencies up to date. The following packages, however, need to be pinned to a specific version:
 
 - `react-error-overlay@6.0.9` because of [this issue](https://github.com/facebook/create-react-app/issues/11773).
-- `cpy@8.x` because 9.x of is pure ESM and Cosmos scripts aren't.

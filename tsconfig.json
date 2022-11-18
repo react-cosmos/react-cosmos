@@ -17,8 +17,8 @@
     "noUnusedLocals": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "es2020",
-    "module": "CommonJS"
+    "target": "ES2020",
+    "module": "ES2020"
   },
   "exclude": ["node_modules"]
 }

@@ -4,7 +4,11 @@ import { replaceKeys } from 'react-cosmos-core';
 import url from 'url';
 import { PlaygroundConfig, PlaygroundMountArgs } from '../../playground';
 import { CosmosConfig } from '../cosmosConfig/types';
-import { CosmosPluginConfig, PlatformType } from '../cosmosPlugin/types';
+import {
+  CosmosPluginConfig,
+  PartialCosmosPluginConfig,
+  PlatformType,
+} from '../cosmosPlugin/types';
 import { getStaticPath } from './staticServer';
 
 export const RENDERER_FILENAME = '_renderer.html';
@@ -26,7 +30,7 @@ export function getDevPlaygroundHtml(
 
 export function getExportPlaygroundHtml(
   cosmosConfig: CosmosConfig,
-  pluginConfigs: CosmosPluginConfig[]
+  pluginConfigs: PartialCosmosPluginConfig[]
 ) {
   const { ui } = cosmosConfig;
   return getPlaygroundHtml({
