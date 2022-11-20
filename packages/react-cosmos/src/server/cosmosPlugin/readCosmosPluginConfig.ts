@@ -1,7 +1,7 @@
 import path from 'path';
 import { CosmosPluginConfig, RawCosmosPluginConfig } from 'react-cosmos-core';
-import resolveFrom from 'resolve-from';
 import { requireModule } from '../utils/fs.js';
+import { resolveFromSilent } from '../utils/resolveFromSilent.js';
 
 export function readCosmosPluginConfig(
   rootDir: string,
@@ -53,7 +53,7 @@ function resolvePluginPath(
   filePath: string
 ) {
   const absolutePath = path.join(pluginRootDir, filePath);
-  const resolvedPath = resolveFrom.silent(rootDir, absolutePath);
+  const resolvedPath = resolveFromSilent(rootDir, absolutePath);
   if (!resolvedPath) {
     throw new Error(`Invalid path in plugin "${pluginName}": ${filePath}`);
   }

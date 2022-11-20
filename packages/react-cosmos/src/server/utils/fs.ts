@@ -1,19 +1,14 @@
-// NOTE: This API has been extracted to be easily mocked inside tests
+// NOTE: This API has been extracted to be easily mock the file system in tests
+
 import fs from 'fs';
-import { createRequire } from 'node:module';
+import { resolve } from './resolve.js';
 
-const require = createRequire(import.meta.url);
-
-export function requireModule(modulePath: string) {
-  // This purpose of this wrapper is merely to make it easy to mock user
-  // modules in tests
-  return require(modulePath);
-}
+export { requireModule } from './requireModule.js';
 
 // Better than fs.exists because it works for module paths without an extension
-export function moduleExists(modulePath: string) {
+export function moduleExists(moduleId: string) {
   try {
-    return require.resolve(modulePath) && true;
+    return resolve(moduleId) && true;
   } catch (err) {
     return false;
   }

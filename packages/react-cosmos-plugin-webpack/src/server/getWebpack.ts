@@ -1,8 +1,8 @@
-import importFrom from 'import-from';
+import { requireFromSilent } from 'react-cosmos/server.js';
 import webpack from 'webpack';
 
 export function getWebpack(rootDir: string) {
-  const userWebpack = importFrom.silent(rootDir, 'webpack') as typeof webpack;
+  const userWebpack = requireFromSilent(rootDir, 'webpack') as typeof webpack;
   if (!userWebpack) {
     console.warn('[Cosmos] webpack dependency missing!');
     console.log(

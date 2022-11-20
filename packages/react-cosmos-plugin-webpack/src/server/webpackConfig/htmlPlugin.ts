@@ -1,7 +1,10 @@
 import { Options as HtmlWebpackPluginOptions } from 'html-webpack-plugin';
-import importFrom from 'import-from';
 import lodash from 'lodash';
-import { CosmosConfig, RENDERER_FILENAME } from 'react-cosmos/server.js';
+import {
+  CosmosConfig,
+  requireFromSilent,
+  RENDERER_FILENAME,
+} from 'react-cosmos/server.js';
 import webpack from 'webpack';
 import { hasPlugin, isInstanceOfWebpackPlugin } from './plugins.js';
 
@@ -42,7 +45,7 @@ export function ensureHtmlWebackPlugin(
 }
 
 export function getHtmlWebpackPlugin(rootDir: string) {
-  return importFrom.silent(
+  return requireFromSilent(
     rootDir,
     'html-webpack-plugin'
   ) as HtmlWebpackPluginConstructor;

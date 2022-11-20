@@ -1,3 +1,5 @@
+import '../../testHelpers/mockResolve.js';
+
 import path from 'path';
 import { createCosmosConfig } from '../createCosmosConfig.js';
 

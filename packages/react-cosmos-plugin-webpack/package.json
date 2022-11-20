@@ -8,11 +8,9 @@
   "main": "cosmos.plugin.json",
   "dependencies": {
     "@skidding/webpack-hot-middleware": "^2.25.1",
-    "import-from": "^4.0.0",
     "react-cosmos-core": "5.7.2",
     "react-cosmos-dom": "5.7.2",
     "react-error-overlay": "6.0.9",
-    "resolve-from": "^5.0.0",
     "webpack-dev-middleware": "^4.3.0"
   },
   "devDependencies": {

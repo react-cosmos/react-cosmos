@@ -1,12 +1,8 @@
+import '../testHelpers/mockRequire.js';
+import '../testHelpers/mockResolve.js';
+
 import path from 'path';
 import { findCosmosPluginConfigs } from './findCosmosPluginConfigs.js';
-
-// Allow plugin configs to be read without having to actually build them
-jest.mock('resolve-from', () => {
-  return {
-    silent: (rootDir: string, absolutePath: string) => `${absolutePath}.js`,
-  };
-});
 
 it('loads mono repo plugins', () => {
   const packagesDir = path.join(__dirname, '../../../..');

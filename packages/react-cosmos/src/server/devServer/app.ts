@@ -1,11 +1,11 @@
 import express from 'express';
 import { createRequire } from 'node:module';
 import { CosmosPluginConfig } from 'react-cosmos-core';
-import resolveFrom from 'resolve-from';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { PlatformType } from '../cosmosPlugin/types.js';
 import { getDevPlaygroundHtml } from '../shared/playgroundHtml.js';
 import { getStaticPath } from '../shared/staticServer.js';
+import { resolveFromSilent } from '../utils/resolveFromSilent.js';
 
 export async function createApp(
   platformType: PlatformType,
@@ -34,7 +34,7 @@ export async function createApp(
 
       // TODO: Restrict which scripts can be opened based on plugin configs
       const cleanPath = `./${decodeURIComponent(scriptPath)}`;
-      const absolutePath = resolveFrom.silent(cosmosConfig.rootDir, cleanPath);
+      const absolutePath = resolveFromSilent(cosmosConfig.rootDir, cleanPath);
       if (!absolutePath) {
         res.sendStatus(404);
         return;

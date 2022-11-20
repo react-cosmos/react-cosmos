@@ -1,3 +1,5 @@
+import '../../testHelpers/mockResolve.js';
+
 import { createCosmosConfig } from '../createCosmosConfig.js';
 
 it('returns default fixtureFileSuffix', () => {
