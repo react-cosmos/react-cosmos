@@ -1,7 +1,6 @@
 import webpackHotMiddleware from '@skidding/webpack-hot-middleware';
 import path from 'path';
-import { BuildMessage } from 'react-cosmos';
-import { removeLeadingDot } from 'react-cosmos-core';
+import { BuildMessage, removeLeadingDot } from 'react-cosmos-core';
 import { DevServerPluginArgs, serveStaticDir } from 'react-cosmos/server.js';
 import webpack from 'webpack';
 import { createWebpackCosmosConfig } from './cosmosConfig/createWebpackCosmosConfig.js';

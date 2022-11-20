@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { join } = require('path');
+const path = require('path');
 
-const src = join(__dirname, '..');
+const src = path.join(__dirname, 'src');
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -18,13 +18,7 @@ module.exports = {
         include: [src],
         loader: 'ts-loader',
         options: {
-          configFile: join(__dirname, '../../tsconfig.build.json'),
-          compilerOptions: {
-            // Make sure tsc doesn't convert modules to CommonJS because they
-            // will end up depending on CJS react-cosmos-core modules instead of
-            // sharing the EJS react-cosmos-core modules imported in fixtures.
-            module: 'ES2022',
-          },
+          configFile: path.join(__dirname, './tsconfig.build.json'),
         },
       },
     ],
@@ -34,4 +28,7 @@ module.exports = {
       title: 'React Cosmos',
     }),
   ],
+  experiments: {
+    topLevelAwait: true,
+  },
 };

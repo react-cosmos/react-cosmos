@@ -3,31 +3,6 @@ import http from 'http';
 import { MessageType } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 
-// TODO: Validate config schema on config import
-// TODO: Allow ui and devServer to be [true] for default paths?
-export type RawCosmosPluginConfig = {
-  name: string;
-  ui?: string;
-  devServer?: string;
-  export?: string;
-};
-
-export type CosmosPluginConfig = {
-  name: string;
-  rootDir: string;
-  ui?: string;
-  devServer?: string;
-  export?: string;
-};
-
-export type UiCosmosPluginConfig = CosmosPluginConfig & {
-  ui: string;
-};
-
-export type PartialCosmosPluginConfig = Omit<CosmosPluginConfig, 'rootDir'> & {
-  rootDir?: string;
-};
-
 export type PlatformType = 'web' | 'native';
 
 export type DevServerPluginArgs = {

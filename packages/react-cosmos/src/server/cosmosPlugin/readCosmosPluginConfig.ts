@@ -1,7 +1,7 @@
 import path from 'path';
+import { CosmosPluginConfig, RawCosmosPluginConfig } from 'react-cosmos-core';
 import resolveFrom from 'resolve-from';
 import { requireModule } from '../utils/fs.js';
-import { CosmosPluginConfig, RawCosmosPluginConfig } from './types.js';
 
 export function readCosmosPluginConfig(
   rootDir: string,

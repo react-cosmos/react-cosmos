@@ -1,5 +1,5 @@
 import path from 'path';
-import { CosmosPluginConfig } from '../cosmosPlugin/types.js';
+import { CosmosPluginConfig } from 'react-cosmos-core';
 
 export async function requirePluginModule<T>(
   rootDir: string,

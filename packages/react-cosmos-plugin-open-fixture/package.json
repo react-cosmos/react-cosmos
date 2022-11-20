@@ -10,6 +10,6 @@
     "react-plugin": "^3.0.0-alpha.4"
   },
   "peerDependencies": {
-    "react-cosmos": "^5.7.2"
+    "react-cosmos-ui": "^5.7.2"
   }
 }

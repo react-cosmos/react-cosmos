@@ -1,4 +1,5 @@
 import path from 'path';
+import { CosmosPluginConfig } from 'react-cosmos-core';
 import {
   detectCosmosConfig,
   detectCosmosConfigPath,
@@ -6,7 +7,6 @@ import {
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
 import {
-  CosmosPluginConfig,
   DevServerPlugin,
   DevServerPluginCleanupCallback,
   PlatformType,

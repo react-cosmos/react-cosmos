@@ -1,15 +1,16 @@
 import fs from 'fs/promises';
+import { createRequire } from 'node:module';
 import path from 'path';
-import { removeLeadingSlash } from 'react-cosmos-core';
+import {
+  CosmosPluginConfig,
+  PartialCosmosPluginConfig,
+  removeLeadingSlash,
+  UiCosmosPluginConfig,
+} from 'react-cosmos-core';
 import { detectCosmosConfig } from '../cosmosConfig/detectCosmosConfig.js';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
-import {
-  CosmosPluginConfig,
-  ExportPlugin,
-  PartialCosmosPluginConfig,
-  UiCosmosPluginConfig,
-} from '../cosmosPlugin/types.js';
+import { ExportPlugin } from '../cosmosPlugin/types.js';
 import { logPluginInfo } from '../shared/logPluginInfo.js';
 import { getExportPlaygroundHtml } from '../shared/playgroundHtml.js';
 import { requirePluginModule } from '../shared/requirePluginModule.js';
@@ -111,8 +112,9 @@ async function exportPlaygroundFiles(
     uiPlugins.map(p => exportUiPlugin(cosmosConfig, p))
   );
 
+  const require = createRequire(import.meta.url);
   await fs.copyFile(
-    require.resolve('../../playground/index.bundle'),
+    require.resolve('react-cosmos-ui/dist/playground.bundle.js'),
     path.resolve(exportPath, '_playground.js')
   );
   await fs.copyFile(

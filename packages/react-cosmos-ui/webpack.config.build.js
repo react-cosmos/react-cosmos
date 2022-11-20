@@ -1,11 +1,14 @@
-const dist = new URL('../../dist/playground', import.meta.url).pathname;
+const path = require('path');
+
+const dist = path.join(__dirname, './dist');
+const entry = path.join(__dirname, './dist/playground.js');
 
 const env = process.env.NODE_ENV || 'development';
 
-export default {
+module.exports = {
   mode: env,
   devtool: false,
-  entry: dist,
+  entry,
   module: {
     rules: [{ test: /\.js/, resolve: { fullySpecified: false } }],
   },
@@ -14,6 +17,6 @@ export default {
     libraryExport: 'default',
     library: 'mountPlayground',
     path: dist,
-    filename: 'index.bundle.js',
+    filename: 'playground.bundle.js',
   },
 };

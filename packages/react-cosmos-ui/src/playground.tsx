@@ -1,7 +1,7 @@
 import React from 'react';
+import { PartialCosmosPluginConfig } from 'react-cosmos-core';
 import ReactDom from 'react-dom';
 import * as ReactPlugin from 'react-plugin';
-import { PartialCosmosPluginConfig } from '../server/cosmosPlugin/types';
 import { CoreSpec } from './plugins/Core/spec';
 import './plugins/pluginEntry';
 import { DEFAULT_PLUGIN_CONFIG } from './shared/defaultPluginConfig';

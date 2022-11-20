@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect } from 'react';
+import { FixtureId } from 'react-cosmos-core';
 import {
   CoreSpec,
   NotificationsSpec,
   RendererActionSlotProps,
-} from 'react-cosmos';
-import { FixtureId } from 'react-cosmos-core';
+} from 'react-cosmos-ui';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { OpenFixtureButton } from './OpenFixtureButton';
 import { OpenFixtureSpec } from './spec';

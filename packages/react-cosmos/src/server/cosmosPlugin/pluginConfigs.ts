@@ -1,7 +1,7 @@
+import { CosmosPluginConfig } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { findCosmosPluginConfigs } from './findCosmosPluginConfigs.js';
 import { readCosmosPluginConfig } from './readCosmosPluginConfig.js';
-import { CosmosPluginConfig } from './types.js';
 
 export function getPluginConfigs(cosmosConfig: CosmosConfig) {
   const { rootDir, disablePlugins, plugins, exportPath } = cosmosConfig;

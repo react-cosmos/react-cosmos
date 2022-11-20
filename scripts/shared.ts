@@ -12,6 +12,7 @@ const packageMap = {
   'react-cosmos-core': true,
   'react-cosmos-dom': true,
   'react-cosmos-native': true,
+  'react-cosmos-ui': true,
   'react-cosmos': true,
   'react-cosmos-plugin-boolean-input': true,
   'react-cosmos-plugin-open-fixture': true,

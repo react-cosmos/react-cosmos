@@ -1,18 +1,18 @@
 import fs from 'fs';
 import { readFile } from 'fs/promises';
 import { pkgUpSync } from 'pkg-up';
-import { replaceKeys } from 'react-cosmos-core';
-import url from 'url';
-import {
-  PlaygroundConfig,
-  PlaygroundMountArgs,
-} from '../../playground/index.js';
-import { CosmosConfig } from '../cosmosConfig/types.js';
 import {
   CosmosPluginConfig,
   PartialCosmosPluginConfig,
-  PlatformType,
-} from '../cosmosPlugin/types.js';
+  replaceKeys,
+} from 'react-cosmos-core';
+import {
+  PlaygroundConfig,
+  PlaygroundMountArgs,
+} from 'react-cosmos-ui/dist/playground';
+import url from 'url';
+import { CosmosConfig } from '../cosmosConfig/types.js';
+import { PlatformType } from '../cosmosPlugin/types.js';
 import { getStaticPath } from './staticServer.js';
 
 export const RENDERER_FILENAME = '_renderer.html';

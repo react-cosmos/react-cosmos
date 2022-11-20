@@ -25,7 +25,7 @@
     "export": "yarn cosmos-export --root-dir example",
     "start:export": "http-server -p 5001 ./example/cosmos-export",
     "start:native": "yarn cosmos-native --root-dir example --port 5002",
-    "start:playground": "yarn cosmos --root-dir packages/react-cosmos/src/playground",
+    "start:playground": "yarn cosmos --root-dir packages/react-cosmos-ui",
     "website:start": "yarn cosmos --root-dir website",
     "website:build": "ts-node --esm ./scripts/buildWebsite.ts",
     "website:serve": "http-server -p 5001 ./website/dist",
