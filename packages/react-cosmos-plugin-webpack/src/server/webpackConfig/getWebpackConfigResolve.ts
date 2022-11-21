@@ -1,6 +1,5 @@
 import path from 'path';
-import { CosmosConfig } from 'react-cosmos/server.js';
-import resolveFrom from 'resolve-from';
+import { CosmosConfig, resolveFromSilent } from 'react-cosmos/server.js';
 import webpack from 'webpack';
 
 export function getWebpackConfigResolve(
@@ -43,7 +42,7 @@ function resolveLocalReactDeps(
   if (reactAlias) {
     console.log('[Cosmos] React alias found in webpack config');
   } else {
-    const reactPath = resolveFrom.silent(rootDir, 'react');
+    const reactPath = resolveFromSilent(rootDir, 'react');
     if (!reactPath)
       throw new Error(`[Cosmos] Local dependency not found: react`);
     alias = addAlias(alias, 'react', path.dirname(reactPath));
@@ -52,7 +51,7 @@ function resolveLocalReactDeps(
   if (reactDomAlias) {
     console.log('[Cosmos] React DOM alias found in webpack config');
   } else {
-    const reactDomPath = resolveFrom.silent(rootDir, 'react-dom');
+    const reactDomPath = resolveFromSilent(rootDir, 'react-dom');
     if (!reactDomPath)
       throw new Error(`[Cosmos] Local dependency not found: react-dom`);
     alias = addAlias(alias, 'react-dom', path.dirname(reactDomPath));
