@@ -1,4 +1,4 @@
-import { clone, setWith } from 'lodash';
+import { clone, setWith } from 'lodash-es';
 import React from 'react';
 import { FixtureStateValue, FixtureStateValues } from 'react-cosmos-core';
 import styled from 'styled-components';

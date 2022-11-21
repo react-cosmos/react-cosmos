@@ -1,6 +1,6 @@
 import { FSWatcher, watch } from 'chokidar';
 import fs from 'fs/promises';
-import lodash from 'lodash';
+import { debounce } from 'lodash-es';
 import path from 'path';
 import { RemoteRendererConfig } from 'react-cosmos-core';
 import { CosmosConfig } from '../../cosmosConfig/types.js';
@@ -55,10 +55,7 @@ async function startFixtureFileWatcher(
       .on('ready', () => resolve(watcher))
       .on(
         'all',
-        lodash.debounce(
-          () => generateUserDepsFile(cosmosConfig),
-          DEBOUNCE_INTERVAL
-        )
+        debounce(() => generateUserDepsFile(cosmosConfig), DEBOUNCE_INTERVAL)
       );
   });
 }

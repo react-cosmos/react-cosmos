@@ -1,4 +1,4 @@
-import { clone, setWith } from 'lodash';
+import { clone, setWith } from 'lodash-es';
 import { FixtureElementId, FixtureId } from 'react-cosmos-core';
 import { TreeExpansion } from '../../shared/treeExpansion';
 import { stringifyElementId, stringifyFixtureId } from './shared';

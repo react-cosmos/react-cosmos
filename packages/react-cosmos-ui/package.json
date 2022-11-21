@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "./dist/index.js",
   "dependencies": {
-    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "react-cosmos-core": "5.7.2"
   },
   "devDependencies": {

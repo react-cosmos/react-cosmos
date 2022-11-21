@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash';
+import { isEqual } from 'lodash-es';
 import { FixtureStateChangeResponse } from 'react-cosmos-core';
 import { RendererCoreContext } from '../shared';
 import { postSetFixtureStateRequest } from '../shared/postRequest';

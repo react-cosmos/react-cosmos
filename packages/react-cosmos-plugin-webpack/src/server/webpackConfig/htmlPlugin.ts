@@ -1,9 +1,9 @@
 import { Options as HtmlWebpackPluginOptions } from 'html-webpack-plugin';
-import lodash from 'lodash';
+import { omit } from 'lodash-es';
 import {
   CosmosConfig,
-  requireFromSilent,
   RENDERER_FILENAME,
+  requireFromSilent,
 } from 'react-cosmos/server.js';
 import webpack from 'webpack';
 import { hasPlugin, isInstanceOfWebpackPlugin } from './plugins.js';
@@ -61,7 +61,7 @@ function changeHtmlPluginFilename(htmlPlugin: HtmlWebpackPlugin) {
   if (!isIndexHtmlWebpackPlugin(htmlPlugin)) return htmlPlugin;
 
   const options = htmlPlugin.userOptions || htmlPlugin.options;
-  const safeOptions = lodash.omit(options, 'chunks');
+  const safeOptions = omit(options, 'chunks');
 
   return new htmlPlugin.constructor({
     ...safeOptions,

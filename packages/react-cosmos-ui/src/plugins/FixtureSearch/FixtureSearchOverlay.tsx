@@ -1,5 +1,5 @@
 import { filter } from 'fuzzaldrin-plus';
-import { isEqual } from 'lodash';
+import { isEqual } from 'lodash-es';
 import React, {
   useCallback,
   useEffect,

@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash';
+import { isEqual } from 'lodash-es';
 import React, { RefObject } from 'react';
 import { FixtureId, FixtureTreeNode } from 'react-cosmos-core';
 import styled from 'styled-components';

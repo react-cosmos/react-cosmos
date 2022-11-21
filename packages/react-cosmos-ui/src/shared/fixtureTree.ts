@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash';
+import { isEqual } from 'lodash-es';
 import { FixtureId, FixtureTreeNode } from 'react-cosmos-core';
 
 export function recordContainsFixtureId(

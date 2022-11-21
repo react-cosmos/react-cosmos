@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash';
+import { isEqual } from 'lodash-es';
 import { FixtureId, PlaygroundUrlParams } from 'react-cosmos-core';
 import { createPlugin, PluginContext } from 'react-plugin';
 import {
