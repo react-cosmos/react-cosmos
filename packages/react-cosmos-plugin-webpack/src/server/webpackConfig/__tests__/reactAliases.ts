@@ -71,7 +71,6 @@ it('preserves React aliases using array form', async () => {
 
   const { resolve } = await getCustomDevWebpackConfig();
   if (resolve && Array.isArray(resolve.alias)) {
-    expect(resolve.alias).toHaveLength(2);
     expect(resolve.alias).toContainEqual({
       name: 'react',
       alias: 'preact/compat',
@@ -113,7 +112,6 @@ it('adds missing React aliases using array form', async () => {
 
   const { resolve } = await getCustomDevWebpackConfig();
   if (resolve && Array.isArray(resolve.alias)) {
-    expect(resolve.alias).toHaveLength(3);
     expect(resolve.alias).toContainEqual({
       name: 'xyz',
       alias: 'abc',
