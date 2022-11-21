@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Footer } from './Footer/Footer';
-import { Header } from './Header/Header';
-import { grayToWhiteGradient } from './shared/colors';
+import { Footer } from './Footer/Footer.js';
+import { Header } from './Header/Header.js';
+import { grayToWhiteGradient } from './shared/colors.js';
 
 type Props = {
   children: React.ReactNode;

@@ -1,3 +1,4 @@
+const fs = require('fs/promises');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
@@ -5,17 +6,21 @@ require('isomorphic-fetch');
 const {
   getGitHubStars,
   getGitHubContributors,
-} = require('./src/shared/gitHub');
+} = require('./src/shared/gitHub.cjs');
 
 const src = path.join(__dirname, 'src');
 const dist = path.join(__dirname, 'dist');
 
 const env = process.env.NODE_ENV || 'development';
-const { version } = require('../lerna.json');
 
 module.exports = async () => {
+  const { version } = await fs
+    .readFile(path.join(__dirname, '../lerna.json'), 'utf8')
+    .then(JSON.parse);
+
   const ghStars = await getGitHubStars();
   const ghContributors = await getGitHubContributors();
+
   const config = {
     mode: env,
     entry: [path.join(src, 'index')],
@@ -24,6 +29,9 @@ module.exports = async () => {
       filename: 'index.js',
     },
     resolve: {
+      extensionAlias: {
+        '.js': ['.ts', '.tsx', '.js'],
+      },
       extensions: ['.ts', '.tsx', '.js'],
     },
     module: {

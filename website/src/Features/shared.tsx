@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { mobileMaxWidth } from '../shared/breakpoints';
-import { slideInTransition } from '../shared/slideIn';
+import { mobileMaxWidth } from '../shared/breakpoints.js';
+import { slideInTransition } from '../shared/slideIn.js';
 
 export const minFeatureColumnsWidth = 1280 + 96;
 export const maxFeatureColumnsWidth = 1280 + 128;

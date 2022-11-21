@@ -4,6 +4,7 @@
   "version": "5.7.2",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/website",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "start": "cosmos"
   },

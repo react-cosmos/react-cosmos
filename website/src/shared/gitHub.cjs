@@ -1,4 +1,5 @@
-// NODE: This is a CJS module because the webpack config also imports it
+// TODO: Remove this duplicate file once Cosmos supports ES webpack config
+// via dynamic import().
 
 exports.getGitHubStars = async () => {
   const res = await fetchGithub(`repos/react-cosmos/react-cosmos`);

@@ -3,6 +3,9 @@
   "globalImports": ["src/global.css"],
   "publicUrl": "./",
   "staticPath": "static",
+  "webpack": {
+    "configPath": "./webpack.config.cjs"
+  },
   "disablePlugins": false,
   "plugins": [
     "react-cosmos-plugin-open-fixture",

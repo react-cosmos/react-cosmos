@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ExternalLink } from '../shared/ExternalLink';
-import { InternalLink } from '../shared/InternalLink';
+import { ExternalLink } from '../shared/ExternalLink.js';
+import { InternalLink } from '../shared/InternalLink.js';
 
 const centerHeaderBreakpoint = 367;
 const maxHeaderWidth = 640;
