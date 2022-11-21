@@ -6,10 +6,7 @@ import {
   PartialCosmosPluginConfig,
   replaceKeys,
 } from 'react-cosmos-core';
-import {
-  PlaygroundConfig,
-  PlaygroundMountArgs,
-} from 'react-cosmos-ui/dist/playground';
+import { PlaygroundConfig, PlaygroundMountArgs } from 'react-cosmos-ui';
 import url from 'url';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { PlatformType } from '../cosmosPlugin/types.js';

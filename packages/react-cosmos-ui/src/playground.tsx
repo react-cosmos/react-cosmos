@@ -1,8 +1,7 @@
 import React from 'react';
-import { PartialCosmosPluginConfig } from 'react-cosmos-core';
 import ReactDom from 'react-dom';
 import * as ReactPlugin from 'react-plugin';
-import { CoreSpec } from './plugins/Core/spec';
+import { PlaygroundMountArgs } from './playgroundConfig';
 import './plugins/pluginEntry';
 import { DEFAULT_PLUGIN_CONFIG } from './shared/defaultPluginConfig';
 import { GlobalStyle } from './style/globalStyle';
@@ -20,17 +19,6 @@ declare global {
 window.ReactPlugin = ReactPlugin;
 window.React = React;
 window.ReactDom = ReactDom;
-
-// Config can also contain keys for 3rd party plugins
-export type PlaygroundConfig = {
-  core: CoreSpec['config'];
-  [pluginName: string]: {};
-};
-
-export type PlaygroundMountArgs = {
-  playgroundConfig: PlaygroundConfig;
-  pluginConfigs: PartialCosmosPluginConfig[];
-};
 
 export default async function mount({
   playgroundConfig,
