@@ -1,4 +1,4 @@
-// NOTE: This API has been extracted to be easily mock the file system in tests
+// NOTE: This API has been extracted to easily mock the file system in tests
 
 import fs from 'fs';
 import { resolve } from './resolve.js';
