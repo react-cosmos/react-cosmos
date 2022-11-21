@@ -6,12 +6,32 @@ export function getWebpackConfigResolve(
   cosmosConfig: CosmosConfig,
   webpackConfig: webpack.Configuration
 ): webpack.ResolveOptions {
-  return removeModuleScopePlugin(
-    resolveLocalReactDeps(cosmosConfig, webpackConfig.resolve)
+  return fixReactElementToJsxStringImport(
+    removeModuleScopePlugin(
+      resolveLocalReactDeps(cosmosConfig, webpackConfig.resolve)
+    )
   );
 }
 
-function removeModuleScopePlugin(resolve: webpack.ResolveOptions = {}) {
+function fixReactElementToJsxStringImport(
+  resolve: webpack.ResolveOptions = {}
+): webpack.ResolveOptions {
+  let alias = resolve.alias || {};
+
+  if (!hasAlias(alias, 'react-element-to-jsx-string')) {
+    alias = addAlias(
+      alias,
+      'react-element-to-jsx-string',
+      'react-element-to-jsx-string/dist/esm/index.js'
+    );
+  }
+
+  return { ...resolve, alias };
+}
+
+function removeModuleScopePlugin(
+  resolve: webpack.ResolveOptions = {}
+): webpack.ResolveOptions {
   const { plugins } = resolve;
   if (!plugins) return resolve;
   return {
