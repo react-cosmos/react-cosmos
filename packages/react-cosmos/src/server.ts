@@ -12,7 +12,6 @@ export * from './server/testHelpers/cwd.js';
 export * from './server/userDeps/generateUserDepsModule.js';
 export * from './server/utils/cli.js';
 export * from './server/utils/fs.js';
-export * from './server/utils/requireModule.js';
 export * from './server/utils/requireSilent.js';
 export * from './server/utils/resolve.js';
 export * from './server/utils/resolveLoose.js';

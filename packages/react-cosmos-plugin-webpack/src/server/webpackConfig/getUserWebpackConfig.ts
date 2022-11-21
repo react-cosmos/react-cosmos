@@ -3,7 +3,7 @@ import {
   CosmosConfig,
   getCliArgs,
   moduleExists,
-  requireModule,
+  importModule,
 } from 'react-cosmos/server.js';
 import webpack from 'webpack';
 import { createWebpackCosmosConfig } from '../cosmosConfig/createWebpackCosmosConfig.js';
@@ -43,7 +43,7 @@ export async function getUserWebpackConfig(
   const relPath = path.relative(process.cwd(), overridePath);
   console.log(`[Cosmos] Overriding webpack config at ${relPath}`);
   const webpackOverride = getDefaultExport(
-    requireModule(overridePath)
+    importModule(overridePath)
   ) as WebpackOverride;
 
   return webpackOverride(baseWebpackConfig, getWebpackNodeEnv());
@@ -65,7 +65,7 @@ async function getBaseWebpackConfig(
   console.log(`[Cosmos] Using webpack config found at ${relPath}`);
 
   const userConfigExport = getDefaultExport(
-    requireModule(configPath)
+    importModule(configPath)
   ) as WebpackConfigExport;
   const cliArgs = getCliArgs();
   return typeof userConfigExport === 'function'

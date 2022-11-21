@@ -9,18 +9,18 @@ jest.mock('../utils/fs', () => {
   let fileMocks: { [path: string]: any } = {};
   let dirMocks: string[] = [];
 
-  function requireModule(filePath: string) {
-    if (!mocked) return actual.requireModule(filePath);
+  function importModule(moduleId: string) {
+    if (!mocked) return actual.importModule(moduleId);
 
-    return fileMocks[filePath] || fileMocks[`${filePath}.js`];
+    return fileMocks[moduleId] || fileMocks[`${moduleId}.js`];
   }
 
-  function moduleExists(filePath: string) {
-    if (!mocked) return actual.moduleExists(filePath);
+  function moduleExists(moduleId: string) {
+    if (!mocked) return actual.moduleExists(moduleId);
 
     return (
-      fileMocks.hasOwnProperty(filePath) ||
-      fileMocks.hasOwnProperty(`${filePath}.js`)
+      fileMocks.hasOwnProperty(moduleId) ||
+      fileMocks.hasOwnProperty(`${moduleId}.js`)
     );
   }
 
@@ -37,7 +37,7 @@ jest.mock('../utils/fs', () => {
   }
 
   return {
-    requireModule,
+    importModule,
     moduleExists,
     fileExists,
     dirExists,

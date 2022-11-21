@@ -1,4 +1,4 @@
-import { requireModule } from '../utils/fs.js';
+import { importModule } from '../utils/fs.js';
 import { CosmosConfigInput } from './types.js';
 
 export function getCurrentDir() {
@@ -6,5 +6,5 @@ export function getCurrentDir() {
 }
 
 export function requireConfigFile(cosmosConfigPath: string): CosmosConfigInput {
-  return requireModule(cosmosConfigPath);
+  return importModule(cosmosConfigPath);
 }
