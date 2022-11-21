@@ -73,21 +73,7 @@ async function linkConfigPathsToDir(filePath: string, targetDir: TargetDir) {
   const prev = await fs.readFile(filePath, 'utf8');
   let next = prev;
 
-  if (prev.match(/"main": "/) && prev.match(/"module": "/)) {
-    if (targetDir === SRC_DIR) {
-      const regExp1 = new RegExp(`"module": "./${DIST_DIR}/esm/(.+).js"`, 'g');
-      next = next.replace(regExp1, `"module": "./${SRC_DIR}/$1.ts"`);
-
-      const regExp2 = new RegExp(`"main": "./${DIST_DIR}/cjs/(.+).js"`, 'g');
-      next = next.replace(regExp2, `"main": "./${SRC_DIR}/$1.ts"`);
-    } else {
-      const regExp1 = new RegExp(`"module": "./${SRC_DIR}/(.+).ts"`, 'g');
-      next = next.replace(regExp1, `"module": "./${DIST_DIR}/esm/$1.js"`);
-
-      const regExp2 = new RegExp(`"main": "./${SRC_DIR}/(.+).ts"`, 'g');
-      next = next.replace(regExp2, `"main": "./${DIST_DIR}/cjs/$1.js"`);
-    }
-  } else if (prev.match(/"main": "/)) {
+  if (prev.match(/"main": "/)) {
     if (targetDir === SRC_DIR) {
       const regExp = new RegExp(`"main": "./${DIST_DIR}/(.+).js"`, 'g');
       next = next.replace(regExp, `"main": "./${SRC_DIR}/$1.ts"`);

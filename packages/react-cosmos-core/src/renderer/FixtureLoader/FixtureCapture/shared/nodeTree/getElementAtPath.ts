@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import { get } from 'lodash-es';
 import React from 'react';
 import { isReactElement } from '../../../../../utils/react/isReactElement.js';
 import { isRootPath } from './shared.js';

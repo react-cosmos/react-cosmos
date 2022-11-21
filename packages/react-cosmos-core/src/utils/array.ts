@@ -1,4 +1,4 @@
-import { findIndex } from 'lodash';
+import { findIndex } from 'lodash-es';
 
 export function updateItem<T>(
   items: Readonly<T[]>,

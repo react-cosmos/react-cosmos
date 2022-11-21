@@ -1,4 +1,4 @@
-import { isPlainObject } from 'lodash';
+import { isPlainObject } from 'lodash-es';
 import { isElement } from 'react-is';
 import { ArrayData, ObjectData, PrimitiveData } from './types.js';
 

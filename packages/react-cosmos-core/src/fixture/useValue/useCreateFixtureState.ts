@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash';
+import { isEqual } from 'lodash-es';
 import React from 'react';
 import { findFixtureStateControl } from '../../fixtureState/controls.js';
 import { createValue } from '../../fixtureState/createValues.js';

@@ -20,16 +20,13 @@ type Builder = (pkgName: string) => Promise<void>;
 
 const builders: Partial<Record<Package, Builder>> & { default: Builder } = {
   'react-cosmos-core': async pkgName => {
-    await buildPkgTs(pkgName, 'tsconfig.build.esm.json');
-    await buildPkgTs(pkgName, 'tsconfig.build.cjs.json');
+    await buildPkgTs(pkgName, 'tsconfig.build.json');
   },
   'react-cosmos-dom': async pkgName => {
-    await buildPkgTs(pkgName, 'tsconfig.build.esm.json');
-    await buildPkgTs(pkgName, 'tsconfig.build.cjs.json');
+    await buildPkgTs(pkgName, 'tsconfig.build.json');
   },
   'react-cosmos-native': async pkgName => {
-    await buildPkgTs(pkgName, 'tsconfig.build.esm.json');
-    await buildPkgTs(pkgName, 'tsconfig.build.cjs.json');
+    await buildPkgTs(pkgName, 'tsconfig.build.json');
   },
   'react-cosmos-ui': async pkgName => {
     await buildPkgTs(pkgName, 'tsconfig.build.json');

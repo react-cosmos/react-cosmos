@@ -1,4 +1,4 @@
-import { find, isEqual } from 'lodash';
+import { find, isEqual } from 'lodash-es';
 import {
   removeItemMatch,
   replaceOrAddItem,

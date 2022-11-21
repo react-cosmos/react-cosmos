@@ -44,6 +44,7 @@
     "@types/glob": "^8.0.0",
     "@types/jest": "^29.2.3",
     "@types/lodash": "^4.14.189",
+    "@types/lodash-es": "^4.17.6",
     "@types/micromatch": "^4.0.2",
     "@types/node": "^17.0.23",
     "@types/pem": "^1.9.6",

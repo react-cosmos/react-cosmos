@@ -1,4 +1,4 @@
-import { set } from 'lodash';
+import { set } from 'lodash-es';
 import React from 'react';
 import { isReactElement } from '../../../../../utils/react/isReactElement.js';
 import { getExpectedElementAtPath } from './getElementAtPath.js';

@@ -4,13 +4,14 @@ const { join } = require('path');
 // Once Jest ESM is safe to use, we can remove this.
 // https://jestjs.io/docs/ecmascript-modules
 const esDependencies = [
-  'pkg-up',
   'find-up',
   'locate-path',
-  'p-locate',
+  'lodash-es',
   'p-limit',
-  'yocto-queue',
+  'p-locate',
   'path-exists',
+  'pkg-up',
+  'yocto-queue',
 ];
 
 module.exports = {

@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash';
+import { isEqual } from 'lodash-es';
 import React, { Component } from 'react';
 import { FixtureState, SetFixtureState } from '../../fixtureState/types.js';
 import { getFixtureListFromWrappers } from '../getFixtureList.js';

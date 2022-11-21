@@ -1,4 +1,4 @@
-import { omit } from 'lodash';
+import { omit } from 'lodash-es';
 import { FixtureTreeNode } from '../types.js';
 
 export function collapseFixtureDirs(
