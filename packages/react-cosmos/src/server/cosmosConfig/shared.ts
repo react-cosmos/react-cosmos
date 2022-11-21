@@ -5,6 +5,8 @@ export function getCurrentDir() {
   return process.cwd();
 }
 
-export function requireConfigFile(cosmosConfigPath: string): CosmosConfigInput {
+export async function importConfigFile(
+  cosmosConfigPath: string
+): Promise<CosmosConfigInput> {
   return importModule(cosmosConfigPath);
 }

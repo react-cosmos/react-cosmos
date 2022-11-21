@@ -12,10 +12,10 @@ jest.mock('../utils/resolveSilent.js', () => {
   };
 });
 
-it('loads mono repo plugins', () => {
+it('loads mono repo plugins', async () => {
   const packagesDir = path.join(__dirname, '../../../..');
 
-  const configs = findCosmosPluginConfigs({ rootDir: packagesDir });
+  const configs = await findCosmosPluginConfigs({ rootDir: packagesDir });
   expect(configs).toMatchInlineSnapshot(`
     [
       {

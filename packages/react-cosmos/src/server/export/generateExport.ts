@@ -19,9 +19,9 @@ import { resolve } from '../utils/resolve.js';
 const corePlugins: ExportPlugin[] = [];
 
 export async function generateExport() {
-  const cosmosConfig = detectCosmosConfig();
+  const cosmosConfig = await detectCosmosConfig();
 
-  const pluginConfigs = getPluginConfigs(cosmosConfig);
+  const pluginConfigs = await getPluginConfigs(cosmosConfig);
   logPluginInfo(pluginConfigs);
 
   // Clear previous export (or other files at export path)

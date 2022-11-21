@@ -4,7 +4,7 @@ import fs from 'fs';
 import { requireModule } from './requireModule.js';
 import { resolve } from './resolve.js';
 
-export function importModule(moduleId: string) {
+export async function importModule(moduleId: string) {
   return requireModule(resolve(moduleId));
 }
 

@@ -14,11 +14,11 @@ afterEach(() => {
   resetFsMock();
 });
 
-it('returns cosmos config at --config path', () => {
+it('returns cosmos config at --config path', async () => {
   const uniqOpt = {};
   mockCosmosConfig('subdir/cosmos.config.json', { uniqOpt });
   mockCliArgs({ config: 'subdir/cosmos.config.json' });
-  expect(detectCosmosConfig().uniqOpt).toBe(uniqOpt);
+  expect((await detectCosmosConfig()).uniqOpt).toBe(uniqOpt);
 });
 
 it('throws on invalid --config path', () => {
@@ -35,11 +35,11 @@ it('throws on invalid --config file extension', () => {
   );
 });
 
-it('returns cosmos config at --root-dir path', () => {
+it('returns cosmos config at --root-dir path', async () => {
   const uniqOpt = {};
   mockCosmosConfig('subdir/cosmos.config.json', { uniqOpt });
   mockCliArgs({ rootDir: 'subdir' });
-  expect(detectCosmosConfig().uniqOpt).toBe(uniqOpt);
+  expect((await detectCosmosConfig()).uniqOpt).toBe(uniqOpt);
 });
 
 it('throws on invalid --root-dir path', () => {
@@ -49,9 +49,9 @@ it('throws on invalid --root-dir path', () => {
   );
 });
 
-it('returns cosmos config at cwd', () => {
+it('returns cosmos config at cwd', async () => {
   const uniqOpt = {};
   mockCosmosConfig('cosmos.config.json', { uniqOpt });
   mockCliArgs({});
-  expect(detectCosmosConfig().uniqOpt).toBe(uniqOpt);
+  expect((await detectCosmosConfig()).uniqOpt).toBe(uniqOpt);
 });

@@ -28,10 +28,10 @@ const corePlugins: DevServerPlugin[] = [
 ];
 
 export async function startDevServer(platformType: PlatformType) {
-  const cosmosConfig = detectCosmosConfig();
+  const cosmosConfig = await detectCosmosConfig();
   logCosmosConfigInfo();
 
-  const pluginConfigs = getPluginConfigs(cosmosConfig);
+  const pluginConfigs = await getPluginConfigs(cosmosConfig);
   logPluginInfo(pluginConfigs);
 
   const app = await createApp(platformType, cosmosConfig, pluginConfigs);

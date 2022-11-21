@@ -3,11 +3,13 @@ import { CosmosPluginConfig, RawCosmosPluginConfig } from 'react-cosmos-core';
 import { importModule } from '../utils/fs.js';
 import { resolveSilent } from '../utils/resolveSilent.js';
 
-export function readCosmosPluginConfig(
+export async function readCosmosPluginConfig(
   rootDir: string,
   moduleNameOrPath: string
-): CosmosPluginConfig {
-  const rawConfig = importModule(moduleNameOrPath) as RawCosmosPluginConfig;
+): Promise<CosmosPluginConfig> {
+  const rawConfig = (await importModule(
+    moduleNameOrPath
+  )) as RawCosmosPluginConfig;
   const pluginRootDir = path.dirname(moduleNameOrPath);
   const relativePluginRootDir = path.relative(rootDir, pluginRootDir);
 

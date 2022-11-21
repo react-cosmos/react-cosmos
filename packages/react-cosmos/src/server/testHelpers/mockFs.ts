@@ -9,7 +9,7 @@ jest.mock('../utils/fs', () => {
   let fileMocks: { [path: string]: any } = {};
   let dirMocks: string[] = [];
 
-  function importModule(moduleId: string) {
+  async function importModule(moduleId: string) {
     if (!mocked) return actual.importModule(moduleId);
 
     return fileMocks[moduleId] || fileMocks[`${moduleId}.js`];

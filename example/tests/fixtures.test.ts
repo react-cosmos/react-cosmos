@@ -3,10 +3,11 @@ import 'react-cosmos/jest';
 
 import { getCosmosConfigAtPath, getFixtures } from 'react-cosmos/server';
 
-const cosmosConfig = getCosmosConfigAtPath(require.resolve('../cosmos.config'));
-const { rootDir } = cosmosConfig;
-
 it('returns fixture info', async () => {
+  const cosmosConfig = await getCosmosConfigAtPath(
+    require.resolve('../cosmos.config')
+  );
+  const { rootDir } = cosmosConfig;
   const fixtures = getFixtures(cosmosConfig);
   expect(fixtures).toEqual([
     {
