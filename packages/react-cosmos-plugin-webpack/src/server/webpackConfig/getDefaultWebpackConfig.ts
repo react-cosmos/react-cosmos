@@ -94,6 +94,9 @@ export function getDefaultWebpackConfig(
     // React.componentDidCatch https://github.com/facebook/react/issues/10441
     devtool: 'cheap-module-source-map',
     resolve: {
+      extensionAlias: {
+        '.js': ['.ts', '.tsx', '.js'],
+      },
       // Warning: webpack 1.x expects ['', '.js', '.jsx']
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
     },
