@@ -1,10 +1,10 @@
 import express from 'express';
-import { createRequire } from 'node:module';
 import { CosmosPluginConfig } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { PlatformType } from '../cosmosPlugin/types.js';
 import { getDevPlaygroundHtml } from '../shared/playgroundHtml.js';
 import { getStaticPath } from '../shared/staticPath.js';
+import { resolve } from '../utils/resolve.js';
 import { resolveFromSilent } from '../utils/resolveSilent.js';
 
 export async function createApp(
@@ -45,8 +45,7 @@ export async function createApp(
   );
 
   app.get('/_playground.js', (req: express.Request, res: express.Response) => {
-    const require = createRequire(import.meta.url);
-    res.sendFile(require.resolve('react-cosmos-ui/dist/playground.bundle.js'));
+    res.sendFile(resolve('react-cosmos-ui/dist/playground.bundle.js'));
   });
 
   app.get('/_cosmos.ico', (req: express.Request, res: express.Response) => {

@@ -1,5 +1,4 @@
 import fs from 'fs/promises';
-import { createRequire } from 'node:module';
 import path from 'path';
 import {
   CosmosPluginConfig,
@@ -15,6 +14,7 @@ import { logPluginInfo } from '../shared/logPluginInfo.js';
 import { getExportPlaygroundHtml } from '../shared/playgroundHtml.js';
 import { requirePluginModule } from '../shared/requirePluginModule.js';
 import { getStaticPath } from '../shared/staticPath.js';
+import { resolve } from '../utils/resolve.js';
 
 const corePlugins: ExportPlugin[] = [];
 
@@ -112,9 +112,8 @@ async function exportPlaygroundFiles(
     uiPlugins.map(p => exportUiPlugin(cosmosConfig, p))
   );
 
-  const require = createRequire(import.meta.url);
   await fs.copyFile(
-    require.resolve('react-cosmos-ui/dist/playground.bundle.js'),
+    resolve('react-cosmos-ui/dist/playground.bundle.js'),
     path.resolve(exportPath, '_playground.js')
   );
   await fs.copyFile(

@@ -42,5 +42,13 @@ module.exports = {
     // Ignore coverage from dark launched plugins
     '!packages/react-cosmos/src/playground/plugins/PluginList/**',
     '!packages/react-cosmos/src/playground/plugins/RendererSelect/**',
+    // Ignore coverage from unsupported ES modules
+    '!packages/react-cosmos/src/server/utils/requireModule.ts',
+    '!packages/react-cosmos/src/server/utils/resolve.ts',
+    '!packages/react-cosmos/src/server/shared/staticPath.ts',
+    '!packages/react-cosmos-plugin-webpack/src/client/index.ts',
+    '!packages/react-cosmos-plugin-webpack/src/client/errorOverlay/index.ts',
+    '!packages/react-cosmos-plugin-webpack/src/server/webpackConfig/resolveWebpackClientPath.ts',
+    '!packages/react-cosmos-plugin-webpack/src/server/webpackConfig/resolveWebpackLoaderPath.ts',
   ],
 };
