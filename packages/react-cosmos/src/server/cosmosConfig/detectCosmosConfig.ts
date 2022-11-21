@@ -1,11 +1,11 @@
 import path from 'path';
-import { getCliArgs } from '../utils/cli';
-import { dirExists, fileExists, moduleExists } from '../utils/fs';
-import { createCosmosConfig } from './createCosmosConfig';
-import { getCosmosConfigAtPath } from './getCosmosConfigAtPath';
-import { getCurrentDir } from './shared';
+import { getCliArgs } from '../utils/cli.js';
+import { dirExists, fileExists, moduleExists } from '../utils/fs.js';
+import { createCosmosConfig } from './createCosmosConfig.js';
+import { getCosmosConfigAtPath } from './getCosmosConfigAtPath.js';
+import { getCurrentDir } from './shared.js';
 
-export function detectCosmosConfig() {
+export async function detectCosmosConfig() {
   const cosmosConfigPath = detectCosmosConfigPath();
   return cosmosConfigPath
     ? getCosmosConfigAtPath(cosmosConfigPath)

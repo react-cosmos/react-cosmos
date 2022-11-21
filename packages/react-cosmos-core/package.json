@@ -4,12 +4,12 @@
   "description": "React Cosmos Core",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-core",
   "license": "MIT",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
+  "type": "module",
+  "main": "./dist/index.js",
   "dependencies": {
-    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "query-string": "7.1.1",
-    "react-element-to-jsx-string": "^14.3.4",
+    "react-element-to-jsx-string": "^15.0.0",
     "react-is": "^18.0.0",
     "socket.io-client": "4.5.3"
   },

@@ -1,9 +1,11 @@
 // NOTE: Mock files need to imported before modules that use the mocked APIs
 import { mockConsole, mockFile } from 'react-cosmos/jest';
-import { createCosmosConfig } from 'react-cosmos/server';
+import '../../testHelpers/mockEsmClientPath.js';
+import '../../testHelpers/mockEsmLoaderPath.js';
 
+import { createCosmosConfig } from 'react-cosmos/server.js';
 import webpack from 'webpack';
-import { getDevWebpackConfig } from '../getDevWebpackConfig';
+import { getDevWebpackConfig } from '../getDevWebpackConfig.js';
 
 async function getCustomDevWebpackConfig() {
   return mockConsole(async ({ expectLog }) => {
@@ -69,7 +71,6 @@ it('preserves React aliases using array form', async () => {
 
   const { resolve } = await getCustomDevWebpackConfig();
   if (resolve && Array.isArray(resolve.alias)) {
-    expect(resolve.alias).toHaveLength(2);
     expect(resolve.alias).toContainEqual({
       name: 'react',
       alias: 'preact/compat',
@@ -111,7 +112,6 @@ it('adds missing React aliases using array form', async () => {
 
   const { resolve } = await getCustomDevWebpackConfig();
   if (resolve && Array.isArray(resolve.alias)) {
-    expect(resolve.alias).toHaveLength(3);
     expect(resolve.alias).toContainEqual({
       name: 'xyz',
       alias: 'abc',

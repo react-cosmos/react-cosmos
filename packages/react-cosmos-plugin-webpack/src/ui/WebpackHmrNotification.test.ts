@@ -3,9 +3,9 @@ import {
   getRendererCoreContext,
   mockNotifications,
   mockRendererCore,
-} from 'react-cosmos';
+} from 'react-cosmos-ui';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { register } from './WebpackHmrNotification';
+import { register } from './WebpackHmrNotification.js';
 
 beforeEach(register);
 

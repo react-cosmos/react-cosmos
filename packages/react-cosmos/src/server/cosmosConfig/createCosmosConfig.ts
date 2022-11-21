@@ -1,7 +1,7 @@
 import path from 'path';
-import { getCliArgs } from '../utils/cli';
-import { resolveModule } from '../utils/resolveModule';
-import { CosmosConfig, CosmosConfigInput } from './types';
+import { getCliArgs } from '../utils/cli.js';
+import { resolveLoose } from '../utils/resolveLoose.js';
+import { CosmosConfig, CosmosConfigInput } from './types.js';
 
 export function createCosmosConfig(
   rootDir: string,
@@ -106,12 +106,10 @@ function getGlobalImports(
   rootDir: string
 ) {
   const { globalImports = [] } = cosmosConfigInput;
-  return globalImports.map(globalImport =>
-    resolveModule(rootDir, globalImport)
-  );
+  return globalImports.map(globalImport => resolveLoose(rootDir, globalImport));
 }
 
 function getPlugins(cosmosConfigInput: CosmosConfigInput, rootDir: string) {
   const { plugins = [] } = cosmosConfigInput;
-  return plugins.map(plugin => resolveModule(rootDir, plugin));
+  return plugins.map(plugin => resolveLoose(rootDir, plugin));
 }

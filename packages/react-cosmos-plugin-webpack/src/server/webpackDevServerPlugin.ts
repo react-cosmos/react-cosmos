@@ -1,14 +1,11 @@
 import webpackHotMiddleware from '@skidding/webpack-hot-middleware';
-import { NextHandleFunction } from 'connect';
 import path from 'path';
-import { BuildMessage } from 'react-cosmos';
-import { removeLeadingDot } from 'react-cosmos-core';
-import { DevServerPluginArgs, serveStaticDir } from 'react-cosmos/server';
+import { BuildMessage, removeLeadingDot } from 'react-cosmos-core';
+import { DevServerPluginArgs, serveStaticDir } from 'react-cosmos/server.js';
 import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import { createWebpackCosmosConfig } from './cosmosConfig/createWebpackCosmosConfig';
-import { getWebpack } from './getWebpack';
-import { getDevWebpackConfig } from './webpackConfig/getDevWebpackConfig';
+import { createWebpackCosmosConfig } from './cosmosConfig/createWebpackCosmosConfig.js';
+import { getWebpack } from './getWebpack.js';
+import { getDevWebpackConfig } from './webpackConfig/getDevWebpackConfig.js';
 
 type WebpackConfig = webpack.Configuration & {
   // webpack-dev-server options (no need to install WDS just for these types)
@@ -16,15 +13,6 @@ type WebpackConfig = webpack.Configuration & {
     contentBase: string;
   };
 };
-
-type WebpackDevMiddlewareInstance = NextHandleFunction & {
-  close: (callback?: () => void) => unknown;
-};
-
-type WebpackDevMiddleware = (
-  compiler: webpack.Compiler,
-  options?: webpackDevMiddleware.Options
-) => WebpackDevMiddlewareInstance;
 
 export default async function webpackDevServerPlugin({
   platformType,
@@ -93,8 +81,8 @@ export default async function webpackDevServerPlugin({
   // https://github.com/webpack/webpack-dev-middleware/blob/eb2e32bab57df11bdfbbac19474eb16817d504fe/lib/fs.js#L8
   // Instead, prior to importing WDM we check if webpack is installed and fail
   // gracefully if not.
-  const wdm: WebpackDevMiddleware = require('webpack-dev-middleware');
-  const wdmInst = wdm(webpackCompiler, {
+  const wdmModule = await import('webpack-dev-middleware');
+  const wdmInst = wdmModule.default(webpackCompiler as any, {
     // publicPath is the base path for the webpack assets and has to match
     // webpack.output.path
     publicPath: removeLeadingDot(cosmosConfig.publicUrl),

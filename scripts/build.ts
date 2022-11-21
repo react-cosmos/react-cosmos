@@ -20,25 +20,29 @@ type Builder = (pkgName: string) => Promise<void>;
 
 const builders: Partial<Record<Package, Builder>> & { default: Builder } = {
   'react-cosmos-core': async pkgName => {
-    await buildPkgTs(pkgName, 'tsconfig.build.esm.json');
-    await buildPkgTs(pkgName, 'tsconfig.build.cjs.json');
+    await buildPkgTs(pkgName, 'tsconfig.build.json');
   },
   'react-cosmos-dom': async pkgName => {
-    await buildPkgTs(pkgName, 'tsconfig.build.esm.json');
-    await buildPkgTs(pkgName, 'tsconfig.build.cjs.json');
+    await buildPkgTs(pkgName, 'tsconfig.build.json');
   },
   'react-cosmos-native': async pkgName => {
-    await buildPkgTs(pkgName, 'tsconfig.build.esm.json');
-    await buildPkgTs(pkgName, 'tsconfig.build.cjs.json');
+    await buildPkgTs(pkgName, 'tsconfig.build.json');
+  },
+  'react-cosmos-ui': async pkgName => {
+    await buildPkgTs(pkgName, 'tsconfig.build.json');
+    await buildPkgWebpack(pkgName, 'webpack.config.build.js');
   },
   'react-cosmos': async pkgName => {
     await copyStaticAssets(pkgName);
     await buildPkgTs(pkgName, 'tsconfig.build.json');
-    await buildPkgWebpack(pkgName, 'src/playground/webpack.config.build.js');
   },
   'react-cosmos-plugin-webpack': async pkgName => {
     await buildPkgTs(pkgName, 'tsconfig.build.client.json');
     await buildPkgTs(pkgName, 'tsconfig.build.server.json');
+    await fs.copyFile(
+      pkgPath(pkgName, 'src/server/webpackConfig/userDepsLoader.cjs'),
+      pkgPath(pkgName, 'dist/server/webpackConfig/userDepsLoader.cjs')
+    );
     await buildPkgTs(pkgName, 'tsconfig.build.ui.json');
     await buildPkgWebpack(pkgName, 'src/ui/webpack.config.js');
   },
@@ -140,7 +144,7 @@ function runWebpack(config: string) {
   } else {
     args.push('--stats', 'errors-only');
   }
-  const env = { NODE_ENV: watch ? 'development' : 'production' };
+  const env = { NODE_ENV: 'development' };
   const promise = runAsyncTask({ cmd: 'webpack', args, env });
   return watch ? null : promise;
 }
@@ -184,4 +188,8 @@ async function copyStaticAssets(pkgName: string) {
   await fs.cp(`${pkgDir}/src/${STATIC_PATH}`, `${pkgDir}/dist/${STATIC_PATH}`, {
     recursive: true,
   });
+}
+
+function pkgPath(pkgName: string, relPath: string) {
+  return new URL(`../packages/${pkgName}/${relPath}`, import.meta.url).pathname;
 }

@@ -1,17 +1,21 @@
-import path from 'path';
-import { findCosmosPluginConfigs } from './findCosmosPluginConfigs';
+import '../testHelpers/mockEsmRequire.js';
+import '../testHelpers/mockEsmResolve.js';
 
-// Allow plugin configs to be read without having to actually build them
-jest.mock('resolve-from', () => {
+import path from 'path';
+import { findCosmosPluginConfigs } from './findCosmosPluginConfigs.js';
+
+// Allow plugin configs to be read without having to actually build
+// the plugin packages
+jest.mock('../utils/resolveSilent.js', () => {
   return {
-    silent: (rootDir: string, absolutePath: string) => `${absolutePath}.js`,
+    resolveSilent: (moduleId: string) => `${moduleId}.js`,
   };
 });
 
-it('loads mono repo plugins', () => {
+it('loads mono repo plugins', async () => {
   const packagesDir = path.join(__dirname, '../../../..');
 
-  const configs = findCosmosPluginConfigs({ rootDir: packagesDir });
+  const configs = await findCosmosPluginConfigs({ rootDir: packagesDir });
   expect(configs).toMatchInlineSnapshot(`
     [
       {

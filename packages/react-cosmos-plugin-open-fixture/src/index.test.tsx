@@ -6,7 +6,7 @@ import {
   mockCore,
   mockNotifications,
   RendererActionSlot,
-} from 'react-cosmos';
+} from 'react-cosmos-ui';
 import { mockFetch } from 'react-cosmos/jest';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '.';

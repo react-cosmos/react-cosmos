@@ -1,14 +1,18 @@
 import glob from 'glob';
-import { readCosmosPluginConfig } from './readCosmosPluginConfig';
+import { CosmosPluginConfig } from 'react-cosmos-core';
+import { readCosmosPluginConfig } from './readCosmosPluginConfig.js';
 
 type Args = {
   rootDir: string;
   ignore?: string[];
 };
-export function findCosmosPluginConfigs({ rootDir, ignore }: Args) {
+export async function findCosmosPluginConfigs({
+  rootDir,
+  ignore,
+}: Args): Promise<CosmosPluginConfig[]> {
   const configPaths = findCosmosPluginConfigPaths(rootDir, ignore);
-  return configPaths.map(configPath =>
-    readCosmosPluginConfig(rootDir, configPath)
+  return Promise.all(
+    configPaths.map(configPath => readCosmosPluginConfig(rootDir, configPath))
   );
 }
 

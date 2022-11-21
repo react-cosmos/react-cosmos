@@ -71,26 +71,20 @@ async function linkFileRequiresToDir(filePath: string, targetDir: TargetDir) {
 
 async function linkConfigPathsToDir(filePath: string, targetDir: TargetDir) {
   const prev = await fs.readFile(filePath, 'utf8');
-  if (prev.match(/"main": "/) && prev.match(/"module": "/)) {
-    let next = prev;
+  let next = prev;
 
+  if (prev.match(/"main": "/)) {
     if (targetDir === SRC_DIR) {
-      const regExp1 = new RegExp(`"module": "./${DIST_DIR}/esm/(.+).js"`, 'g');
-      next = next.replace(regExp1, `"module": "./${SRC_DIR}/$1.ts"`);
-
-      const regExp2 = new RegExp(`"main": "./${DIST_DIR}/cjs/(.+).js"`, 'g');
-      next = next.replace(regExp2, `"main": "./${SRC_DIR}/$1.ts"`);
+      const regExp = new RegExp(`"main": "./${DIST_DIR}/(.+).js"`, 'g');
+      next = next.replace(regExp, `"main": "./${SRC_DIR}/$1.ts"`);
     } else {
-      const regExp1 = new RegExp(`"module": "./${SRC_DIR}/(.+).ts"`, 'g');
-      next = next.replace(regExp1, `"module": "./${DIST_DIR}/esm/$1.js"`);
-
-      const regExp2 = new RegExp(`"main": "./${SRC_DIR}/(.+).ts"`, 'g');
-      next = next.replace(regExp2, `"main": "./${DIST_DIR}/cjs/$1.js"`);
+      const regExp = new RegExp(`"main": "./${SRC_DIR}/(.+).ts"`, 'g');
+      next = next.replace(regExp, `"main": "./${DIST_DIR}/$1.js"`);
     }
+  }
 
-    if (next !== prev) {
-      await fs.writeFile(filePath, next, 'utf8');
-    }
+  if (next !== prev) {
+    await fs.writeFile(filePath, next, 'utf8');
   }
 }
 
@@ -106,8 +100,16 @@ async function getPackageEntryPoints(targetPackages: Package[]): Promise<{
       ? `{${targetPackages.join(',')}}`
       : targetPackages[0];
 
-  const modules = glob.sync(`./packages/${pkgMatch}/{*,bin/*}.{js,d.ts}`);
-  const configs = glob.sync(`./packages/${pkgMatch}/package.json`);
+  const cwd = new URL('..', import.meta.url).pathname;
+  const modules = glob.sync(`packages/${pkgMatch}/{*,bin/*}.{js,d.ts}`, {
+    cwd,
+    absolute: true,
+    ignore: ['**/webpack.config*.js'],
+  });
+  const configs = glob.sync(`packages/${pkgMatch}/package.json`, {
+    cwd,
+    absolute: true,
+  });
 
   return { modules, configs };
 }

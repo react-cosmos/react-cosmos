@@ -1,19 +1,20 @@
 import fs from 'fs';
-import pkgUp from 'pkg-up';
-import { replaceKeys } from 'react-cosmos-core';
-import url from 'url';
-import { PlaygroundConfig, PlaygroundMountArgs } from '../../playground';
-import { CosmosConfig } from '../cosmosConfig/types';
+import { readFile } from 'fs/promises';
+import { pkgUpSync } from 'pkg-up';
 import {
   CosmosPluginConfig,
   PartialCosmosPluginConfig,
-  PlatformType,
-} from '../cosmosPlugin/types';
-import { getStaticPath } from './staticServer';
+  replaceKeys,
+} from 'react-cosmos-core';
+import { PlaygroundConfig, PlaygroundMountArgs } from 'react-cosmos-ui';
+import url from 'url';
+import { CosmosConfig } from '../cosmosConfig/types.js';
+import { PlatformType } from '../cosmosPlugin/types.js';
+import { getStaticPath } from './staticPath.js';
 
 export const RENDERER_FILENAME = '_renderer.html';
 
-export function getDevPlaygroundHtml(
+export async function getDevPlaygroundHtml(
   platformType: PlatformType,
   cosmosConfig: CosmosConfig,
   pluginConfigs: CosmosPluginConfig[]
@@ -22,13 +23,13 @@ export function getDevPlaygroundHtml(
   return getPlaygroundHtml({
     playgroundConfig: {
       ...ui,
-      core: getDevCoreConfig(platformType, cosmosConfig),
+      core: await getDevCoreConfig(platformType, cosmosConfig),
     },
     pluginConfigs,
   });
 }
 
-export function getExportPlaygroundHtml(
+export async function getExportPlaygroundHtml(
   cosmosConfig: CosmosConfig,
   pluginConfigs: PartialCosmosPluginConfig[]
 ) {
@@ -36,26 +37,26 @@ export function getExportPlaygroundHtml(
   return getPlaygroundHtml({
     playgroundConfig: {
       ...ui,
-      core: getExportCoreConfig(cosmosConfig),
+      core: await getExportCoreConfig(cosmosConfig),
     },
     pluginConfigs,
   });
 }
 
-function getDevCoreConfig(
+async function getDevCoreConfig(
   platformType: PlatformType,
   cosmosConfig: CosmosConfig
-): PlaygroundConfig['core'] {
+): Promise<PlaygroundConfig['core']> {
   switch (platformType) {
     case 'native':
       return {
-        ...getSharedCoreConfig(cosmosConfig),
+        ...(await getSharedCoreConfig(cosmosConfig)),
         devServerOn: true,
         webRendererUrl: null,
       };
     case 'web':
       return {
-        ...getSharedCoreConfig(cosmosConfig),
+        ...(await getSharedCoreConfig(cosmosConfig)),
         devServerOn: true,
         webRendererUrl: getWebRendererUrl(cosmosConfig),
       };
@@ -64,29 +65,39 @@ function getDevCoreConfig(
   }
 }
 
-function getExportCoreConfig(
+async function getExportCoreConfig(
   cosmosConfig: CosmosConfig
-): PlaygroundConfig['core'] {
+): Promise<PlaygroundConfig['core']> {
   return {
-    ...getSharedCoreConfig(cosmosConfig),
+    ...(await getSharedCoreConfig(cosmosConfig)),
     devServerOn: false,
     webRendererUrl: getWebRendererUrl(cosmosConfig),
   };
 }
 
-function getSharedCoreConfig(cosmosConfig: CosmosConfig) {
+async function getSharedCoreConfig(cosmosConfig: CosmosConfig) {
   const { rootDir, fixturesDir, fixtureFileSuffix } = cosmosConfig;
-  return { projectId: getProjectId(rootDir), fixturesDir, fixtureFileSuffix };
+  return {
+    projectId: await getProjectId(rootDir),
+    fixturesDir,
+    fixtureFileSuffix,
+  };
 }
 
-function getProjectId(rootDir: string) {
-  const pkgPath = pkgUp.sync({ cwd: rootDir });
+async function getProjectId(rootDir: string) {
+  const pkgPath = pkgUpSync({ cwd: rootDir });
   if (!pkgPath) {
     return rootDir.split('/').pop();
   }
 
-  const pkg = require(pkgPath);
-  return pkg.name || '';
+  try {
+    const pkg = JSON.parse(await readFile(pkgPath, 'utf8'));
+    return pkg.name || 'new-project';
+  } catch (err) {
+    console.log('Failed to read package.json');
+    console.log(err);
+    return 'new-project';
+  }
 }
 
 function getWebRendererUrl({

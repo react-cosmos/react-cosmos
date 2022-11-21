@@ -1,12 +1,13 @@
 import path from 'path';
-import resolveFrom from 'resolve-from';
-import { CosmosPluginConfig, RawCosmosPluginConfig } from './types';
+import { CosmosPluginConfig, RawCosmosPluginConfig } from 'react-cosmos-core';
+import { importModule } from '../utils/fs.js';
+import { resolveSilent } from '../utils/resolveSilent.js';
 
-export function readCosmosPluginConfig(
+export async function readCosmosPluginConfig(
   rootDir: string,
   moduleNameOrPath: string
-): CosmosPluginConfig {
-  const rawConfig = require(moduleNameOrPath) as RawCosmosPluginConfig;
+) {
+  const rawConfig = await importModule<RawCosmosPluginConfig>(moduleNameOrPath);
   const pluginRootDir = path.dirname(moduleNameOrPath);
   const relativePluginRootDir = path.relative(rootDir, pluginRootDir);
 
@@ -52,7 +53,7 @@ function resolvePluginPath(
   filePath: string
 ) {
   const absolutePath = path.join(pluginRootDir, filePath);
-  const resolvedPath = resolveFrom.silent(rootDir, absolutePath);
+  const resolvedPath = resolveSilent(absolutePath);
   if (!resolvedPath) {
     throw new Error(`Invalid path in plugin "${pluginName}": ${filePath}`);
   }

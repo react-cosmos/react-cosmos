@@ -1,5 +1,5 @@
 import path from 'path';
-import { CosmosConfig, fileExists, resolveModule } from 'react-cosmos/server';
+import { CosmosConfig, fileExists, resolveLoose } from 'react-cosmos/server.js';
 
 type WebpackCosmosConfig = {
   configPath: null | string;
@@ -34,7 +34,7 @@ function getWebpackConfigPath(
   rootDir: string
 ) {
   if (typeof configPath === 'undefined') {
-    return resolveModule(rootDir, 'webpack.config.js');
+    return resolveLoose(rootDir, 'webpack.config.js');
   }
 
   // User can choose to prevent automatical use of an existing webpack.config.js
@@ -43,7 +43,7 @@ function getWebpackConfigPath(
     return null;
   }
 
-  const absPath = resolveModule(rootDir, configPath);
+  const absPath = resolveLoose(rootDir, configPath);
   if (!fileExists(absPath)) {
     const relPath = path.relative(process.cwd(), absPath);
     throw new Error(`webpack config not found at path: ${relPath}`);
@@ -57,7 +57,7 @@ function getWebpackOverridePath(
   rootDir: string
 ) {
   if (typeof overridePath === 'undefined') {
-    return resolveModule(rootDir, 'webpack.override.js');
+    return resolveLoose(rootDir, 'webpack.override.js');
   }
 
   // User can choose to prevent automatical use of an existing webpack.override.js
@@ -66,7 +66,7 @@ function getWebpackOverridePath(
     return null;
   }
 
-  const absPath = resolveModule(rootDir, overridePath);
+  const absPath = resolveLoose(rootDir, overridePath);
   if (!fileExists(absPath)) {
     const relPath = path.relative(process.cwd(), absPath);
     throw new Error(`webpack override module not found at path: ${relPath}`);

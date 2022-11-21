@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { contentMaxWidth } from './breakpoints';
+import { contentMaxWidth } from './breakpoints.js';
 
 export const Center = styled.div`
   max-width: ${contentMaxWidth}px;

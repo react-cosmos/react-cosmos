@@ -1,8 +1,7 @@
 import path from 'path';
-import { CosmosPluginConfig } from '../cosmosPlugin/types';
-import { requireModule } from '../utils/fs';
+import { CosmosPluginConfig } from 'react-cosmos-core';
 
-export function requirePluginModule<T>(
+export async function requirePluginModule<T>(
   rootDir: string,
   pluginConfig: CosmosPluginConfig,
   configKey: 'ui' | 'devServer' | 'export'
@@ -14,6 +13,6 @@ export function requirePluginModule<T>(
     );
   }
 
-  const esModule = requireModule(path.resolve(rootDir, moduleId));
+  const esModule = await import(path.resolve(rootDir, moduleId));
   return esModule.default as T;
 }

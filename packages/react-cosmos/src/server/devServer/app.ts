@@ -1,18 +1,20 @@
 import express from 'express';
-import resolveFrom from 'resolve-from';
-import { CosmosConfig } from '../cosmosConfig/types';
-import { CosmosPluginConfig, PlatformType } from '../cosmosPlugin/types';
-import { getDevPlaygroundHtml } from '../shared/playgroundHtml';
-import { getStaticPath } from '../shared/staticServer';
+import { CosmosPluginConfig } from 'react-cosmos-core';
+import { CosmosConfig } from '../cosmosConfig/types.js';
+import { PlatformType } from '../cosmosPlugin/types.js';
+import { getDevPlaygroundHtml } from '../shared/playgroundHtml.js';
+import { getStaticPath } from '../shared/staticPath.js';
+import { resolve } from '../utils/resolve.js';
+import { resolveFromSilent } from '../utils/resolveSilent.js';
 
-export function createApp(
+export async function createApp(
   platformType: PlatformType,
   cosmosConfig: CosmosConfig,
   pluginConfigs: CosmosPluginConfig[]
-): express.Express {
+): Promise<express.Express> {
   const app = express();
 
-  const playgroundHtml = getDevPlaygroundHtml(
+  const playgroundHtml = await getDevPlaygroundHtml(
     platformType,
     cosmosConfig,
     pluginConfigs
@@ -32,7 +34,7 @@ export function createApp(
 
       // TODO: Restrict which scripts can be opened based on plugin configs
       const cleanPath = `./${decodeURIComponent(scriptPath)}`;
-      const absolutePath = resolveFrom.silent(cosmosConfig.rootDir, cleanPath);
+      const absolutePath = resolveFromSilent(cosmosConfig.rootDir, cleanPath);
       if (!absolutePath) {
         res.sendStatus(404);
         return;
@@ -43,9 +45,7 @@ export function createApp(
   );
 
   app.get('/_playground.js', (req: express.Request, res: express.Response) => {
-    res.sendFile(
-      require.resolve('react-cosmos/dist/playground/index.bundle.js')
-    );
+    res.sendFile(resolve('react-cosmos-ui/dist/playground.bundle.js'));
   });
 
   app.get('/_cosmos.ico', (req: express.Request, res: express.Response) => {

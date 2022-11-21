@@ -1,5 +1,5 @@
 import React from 'react';
-import { Viewport } from './viewport';
+import { Viewport } from './viewport.js';
 
 // https://stackoverflow.com/a/24600597/128816
 const IS_MOBILE = /Mobi|Android/i.test(navigator.userAgent);

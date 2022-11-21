@@ -1,5 +1,5 @@
 import retry from '@skidding/async-retry';
-import { uniq } from 'lodash';
+import { uniq } from 'lodash-es';
 import React from 'react';
 import { createValues } from '../../../fixtureState/createValues.js';
 import {

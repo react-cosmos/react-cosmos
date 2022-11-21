@@ -3,8 +3,8 @@ import express from 'express';
 import fs from 'fs';
 import open from 'open';
 import path from 'path';
-import { CosmosConfig } from '../../cosmosConfig/types';
-import { DevServerPluginArgs } from '../../cosmosPlugin/types';
+import { CosmosConfig } from '../../cosmosConfig/types.js';
+import { DevServerPluginArgs } from '../../cosmosPlugin/types.js';
 
 type ReqQuery = { filePath: void | string; line: number; column: number };
 

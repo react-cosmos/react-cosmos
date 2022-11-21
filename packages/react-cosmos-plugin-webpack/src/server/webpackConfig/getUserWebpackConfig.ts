@@ -3,12 +3,12 @@ import {
   CosmosConfig,
   getCliArgs,
   moduleExists,
-  requireModule,
-} from 'react-cosmos/server';
+  importModule,
+} from 'react-cosmos/server.js';
 import webpack from 'webpack';
-import { createWebpackCosmosConfig } from '../cosmosConfig/createWebpackCosmosConfig';
-import { getDefaultWebpackConfig } from './getDefaultWebpackConfig';
-import { getWebpackNodeEnv } from './getWebpackNodeEnv';
+import { createWebpackCosmosConfig } from '../cosmosConfig/createWebpackCosmosConfig.js';
+import { getDefaultWebpackConfig } from './getDefaultWebpackConfig.js';
+import { getWebpackNodeEnv } from './getWebpackNodeEnv.js';
 
 type WebpackConfigExport =
   | webpack.Configuration
@@ -43,8 +43,8 @@ export async function getUserWebpackConfig(
   const relPath = path.relative(process.cwd(), overridePath);
   console.log(`[Cosmos] Overriding webpack config at ${relPath}`);
   const webpackOverride = getDefaultExport(
-    requireModule(overridePath)
-  ) as WebpackOverride;
+    await importModule<WebpackOverride>(overridePath)
+  );
 
   return webpackOverride(baseWebpackConfig, getWebpackNodeEnv());
 }
@@ -65,8 +65,8 @@ async function getBaseWebpackConfig(
   console.log(`[Cosmos] Using webpack config found at ${relPath}`);
 
   const userConfigExport = getDefaultExport(
-    requireModule(configPath)
-  ) as WebpackConfigExport;
+    await importModule<WebpackConfigExport>(configPath)
+  );
   const cliArgs = getCliArgs();
   return typeof userConfigExport === 'function'
     ? await userConfigExport(cliArgs.env || getWebpackNodeEnv(), cliArgs)
@@ -75,7 +75,7 @@ async function getBaseWebpackConfig(
 
 // Get "default" export from either an ES or CJS module
 // More context: https://github.com/react-cosmos/react-cosmos/issues/895
-function getDefaultExport(module: any | { default: any }) {
+function getDefaultExport<T extends object>(module: T | { default: T }): T {
   if (typeof module === 'object' && 'default' in module) {
     return module.default;
   }

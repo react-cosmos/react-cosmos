@@ -4,10 +4,10 @@
   "description": "React Cosmos DOM",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-dom",
   "license": "MIT",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
+  "type": "module",
+  "main": "./dist/index.js",
   "dependencies": {
-    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "react-cosmos-core": "5.7.2"
   },
   "devDependencies": {}

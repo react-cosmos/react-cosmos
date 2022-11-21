@@ -1,4 +1,4 @@
-import { isEqual, mapValues } from 'lodash';
+import { isEqual, mapValues } from 'lodash-es';
 import React from 'react';
 import { extendWithValues } from '../../../../fixtureState/extendWithValues.js';
 import {

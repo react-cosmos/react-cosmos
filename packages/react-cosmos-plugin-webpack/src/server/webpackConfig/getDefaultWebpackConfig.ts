@@ -1,8 +1,7 @@
-import { RENDERER_FILENAME } from 'react-cosmos/server';
-import resolveFrom from 'resolve-from';
+import { RENDERER_FILENAME, resolveFromSilent } from 'react-cosmos/server.js';
 import webpack from 'webpack';
-import { getWebpackNodeEnv } from './getWebpackNodeEnv';
-import { getHtmlWebpackPlugin } from './htmlPlugin';
+import { getWebpackNodeEnv } from './getWebpackNodeEnv.js';
+import { getHtmlWebpackPlugin } from './htmlPlugin.js';
 
 // This config doesn't have entry and output set up because it's not meant to
 // work standalone. An entry & output will be added to this base config.
@@ -12,15 +11,15 @@ export function getDefaultWebpackConfig(
 ): webpack.Configuration {
   // react-cosmos doesn't directly depend on any webpack loader.
   // Instead, it includes the ones already installed by the user.
-  const tsLoaderPath = resolveFrom.silent(rootDir, 'ts-loader');
+  const tsLoaderPath = resolveFromSilent(rootDir, 'ts-loader');
   const babelLoaderPath =
-    resolveFrom.silent(rootDir, 'next/dist/compiled/babel-loader') ||
-    resolveFrom.silent(rootDir, 'babel-loader');
-  const styleLoaderPath = resolveFrom.silent(rootDir, 'style-loader');
-  const cssLoaderPath = resolveFrom.silent(rootDir, 'css-loader');
-  const postcssLoaderPath = resolveFrom.silent(rootDir, 'postcss-loader');
+    resolveFromSilent(rootDir, 'next/dist/compiled/babel-loader') ||
+    resolveFromSilent(rootDir, 'babel-loader');
+  const styleLoaderPath = resolveFromSilent(rootDir, 'style-loader');
+  const cssLoaderPath = resolveFromSilent(rootDir, 'css-loader');
+  const postcssLoaderPath = resolveFromSilent(rootDir, 'postcss-loader');
   // Note: Since webpack >= v2.0.0, importing of JSON files will work by default
-  const jsonLoaderPath = resolveFrom.silent(rootDir, 'json-loader');
+  const jsonLoaderPath = resolveFromSilent(rootDir, 'json-loader');
   const rules: webpack.RuleSetRule[] = [];
   const plugins: webpack.WebpackPluginInstance[] = [];
 
@@ -95,6 +94,9 @@ export function getDefaultWebpackConfig(
     // React.componentDidCatch https://github.com/facebook/react/issues/10441
     devtool: 'cheap-module-source-map',
     resolve: {
+      extensionAlias: {
+        '.js': ['.ts', '.tsx', '.js'],
+      },
       // Warning: webpack 1.x expects ['', '.js', '.jsx']
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
     },
@@ -106,6 +108,9 @@ export function getDefaultWebpackConfig(
     plugins,
     stats: 'minimal',
     infrastructureLogging: { level: 'warn' },
+    experiments: {
+      topLevelAwait: true,
+    },
   };
 
   const webpack4 =

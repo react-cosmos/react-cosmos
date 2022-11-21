@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { WebpackRendererErrorSpec } from './WebpackRendererErrorSpec';
+import { WebpackRendererErrorSpec } from './WebpackRendererErrorSpec.js';
 
 const { register, plug } = createPlugin<WebpackRendererErrorSpec>({
   name: 'webpackRendererError',

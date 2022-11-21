@@ -1,6 +1,9 @@
+// Import mocks first
+import '../../testHelpers/mockEsmResolve.js';
+
 import { join } from 'path';
-import { getCwdPath } from '../../testHelpers/cwd';
-import { createCosmosConfig } from '../createCosmosConfig';
+import { getCwdPath } from '../../testHelpers/cwd.js';
+import { createCosmosConfig } from '../createCosmosConfig.js';
 
 it('returns default null static path', () => {
   const { staticPath } = createCosmosConfig(process.cwd());

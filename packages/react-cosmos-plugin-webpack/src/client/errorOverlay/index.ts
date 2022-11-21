@@ -1,11 +1,11 @@
 declare var __DEV__: boolean;
 
 if (__DEV__) {
-  require('./reactErrorOverlay').init();
+  (await import('./reactErrorOverlay.js')).init();
 }
 
-export function dismissErrorOverlay() {
+export async function dismissErrorOverlay() {
   if (__DEV__) {
-    require('./reactErrorOverlay').dismiss();
+    (await import('./reactErrorOverlay.js')).dismiss();
   }
 }

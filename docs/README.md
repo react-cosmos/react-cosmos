@@ -416,7 +416,7 @@ Fetching a Cosmos config can be done in a number of ways, depending on whether o
 ```js
 import { detectCosmosConfig } from 'react-cosmos';
 
-const cosmosConfig = detectCosmosConfig();
+const cosmosConfig = await detectCosmosConfig();
 ```
 
 #### Read existing config at exact path

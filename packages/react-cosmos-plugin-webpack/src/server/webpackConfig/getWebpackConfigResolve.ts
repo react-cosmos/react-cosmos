@@ -1,18 +1,37 @@
 import path from 'path';
-import { CosmosConfig } from 'react-cosmos/server';
-import resolveFrom from 'resolve-from';
+import { CosmosConfig, resolveFromSilent } from 'react-cosmos/server.js';
 import webpack from 'webpack';
 
 export function getWebpackConfigResolve(
   cosmosConfig: CosmosConfig,
   webpackConfig: webpack.Configuration
 ): webpack.ResolveOptions {
-  return removeModuleScopePlugin(
-    resolveLocalReactDeps(cosmosConfig, webpackConfig.resolve)
+  return fixReactElementToJsxStringImport(
+    removeModuleScopePlugin(
+      resolveLocalReactDeps(cosmosConfig, webpackConfig.resolve)
+    )
   );
 }
 
-function removeModuleScopePlugin(resolve: webpack.ResolveOptions = {}) {
+function fixReactElementToJsxStringImport(
+  resolve: webpack.ResolveOptions = {}
+): webpack.ResolveOptions {
+  let alias = resolve.alias || {};
+
+  if (!hasAlias(alias, 'react-element-to-jsx-string')) {
+    alias = addAlias(
+      alias,
+      'react-element-to-jsx-string',
+      'react-element-to-jsx-string/dist/esm/index.js'
+    );
+  }
+
+  return { ...resolve, alias };
+}
+
+function removeModuleScopePlugin(
+  resolve: webpack.ResolveOptions = {}
+): webpack.ResolveOptions {
   const { plugins } = resolve;
   if (!plugins) return resolve;
   return {
@@ -43,7 +62,7 @@ function resolveLocalReactDeps(
   if (reactAlias) {
     console.log('[Cosmos] React alias found in webpack config');
   } else {
-    const reactPath = resolveFrom.silent(rootDir, 'react');
+    const reactPath = resolveFromSilent(rootDir, 'react');
     if (!reactPath)
       throw new Error(`[Cosmos] Local dependency not found: react`);
     alias = addAlias(alias, 'react', path.dirname(reactPath));
@@ -52,7 +71,7 @@ function resolveLocalReactDeps(
   if (reactDomAlias) {
     console.log('[Cosmos] React DOM alias found in webpack config');
   } else {
-    const reactDomPath = resolveFrom.silent(rootDir, 'react-dom');
+    const reactDomPath = resolveFromSilent(rootDir, 'react-dom');
     if (!reactDomPath)
       throw new Error(`[Cosmos] Local dependency not found: react-dom`);
     alias = addAlias(alias, 'react-dom', path.dirname(reactDomPath));

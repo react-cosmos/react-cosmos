@@ -4,6 +4,7 @@
   "description": "Sandbox for developing and testing UI components in isolation",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos",
   "license": "MIT",
+  "type": "module",
   "main": "index.js",
   "dependencies": {
     "@skidding/launch-editor": "^2.2.3",
@@ -11,25 +12,17 @@
     "express": "^4.18.2",
     "glob": "^8.0.3",
     "http-proxy-middleware": "^2.0.6",
-    "import-from": "^4.0.0",
-    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "micromatch": "^4.0.5",
     "open": "^8.4.0",
     "pem": "^1.14.6",
-    "pkg-up": "^3.1.0",
+    "pkg-up": "^4.0.0",
     "react-cosmos-core": "5.7.2",
-    "react-error-overlay": "6.0.9",
-    "resolve-from": "^5.0.0",
+    "react-cosmos-ui": "5.7.2",
     "socket.io": "4.5.3",
     "yargs": "^17.6.2"
   },
-  "devDependencies": {
-    "fuzzaldrin-plus": "^0.6.0",
-    "localforage": "^1.10.0",
-    "react-plugin": "^3.0.0-alpha.4",
-    "socket.io-client": "4.5.3",
-    "styled-components": "^5.3.6"
-  },
+  "devDependencies": {},
   "bin": {
     "cosmos": "./bin/cosmos.js",
     "cosmos-export": "./bin/cosmos-export.js",

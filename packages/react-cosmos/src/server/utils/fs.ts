@@ -1,16 +1,19 @@
-// NOTE: This API has been extracted to be easily mocked inside tests
-import fs from 'fs';
+// NOTE: This API has been extracted to easily mock the file system in tests
 
-export function requireModule(modulePath: string) {
-  // This purpose of this wrapper is merely to make it easy to mock user
-  // modules in tests
-  return require(modulePath);
+import fs from 'fs';
+import { requireModule } from './requireModule.js';
+import { resolve } from './resolve.js';
+
+export async function importModule<T>(moduleId: string): Promise<T> {
+  return moduleId.endsWith('.json')
+    ? requireModule(moduleId)
+    : import(moduleId);
 }
 
 // Better than fs.exists because it works for module paths without an extension
-export function moduleExists(modulePath: string) {
+export function moduleExists(moduleId: string) {
   try {
-    return require.resolve(modulePath) && true;
+    return resolve(moduleId) && true;
   } catch (err) {
     return false;
   }

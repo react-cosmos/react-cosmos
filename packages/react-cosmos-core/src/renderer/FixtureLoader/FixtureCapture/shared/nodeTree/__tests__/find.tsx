@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import { get } from 'lodash-es';
 import React from 'react';
 import { isElement } from 'react-is';
 import { findElementPaths } from '..';

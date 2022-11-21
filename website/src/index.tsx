@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import './global.css';
 import pages from './Page.fixture';
-import { Root } from './Root';
+import { Root } from './Root.js';
 
 type PageName = keyof typeof pages;
 

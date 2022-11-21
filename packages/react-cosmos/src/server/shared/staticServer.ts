@@ -2,10 +2,6 @@ import express from 'express';
 import path from 'path';
 import { removeLeadingDot } from 'react-cosmos-core';
 
-export function getStaticPath(relPath: string) {
-  return path.join(__dirname, '../static', relPath);
-}
-
 export function serveStaticDir(
   app: express.Application,
   staticPath: string,
