@@ -6,7 +6,6 @@ const { join } = require('path');
 const esDependencies = [
   'find-up',
   'locate-path',
-  'lodash-es',
   'p-limit',
   'p-locate',
   'path-exists',
