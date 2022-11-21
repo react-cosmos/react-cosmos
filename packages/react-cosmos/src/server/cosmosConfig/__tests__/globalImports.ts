@@ -1,5 +1,5 @@
 // Import mocks first
-import '../../testHelpers/mockResolve.js';
+import '../../testHelpers/mockEsmResolve.js';
 
 import path from 'path';
 import { getCwdPath } from '../../testHelpers/cwd.js';

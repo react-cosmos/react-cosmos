@@ -1,5 +1,5 @@
-import '../testHelpers/mockRequire.js';
-import '../testHelpers/mockResolve.js';
+import '../testHelpers/mockEsmRequire.js';
+import '../testHelpers/mockEsmResolve.js';
 
 import path from 'path';
 import { findCosmosPluginConfigs } from './findCosmosPluginConfigs.js';
