@@ -5,7 +5,9 @@ import { requireModule } from './requireModule.js';
 import { resolve } from './resolve.js';
 
 export async function importModule(moduleId: string) {
-  return requireModule(resolve(moduleId));
+  return moduleId.endsWith('.json')
+    ? requireModule(moduleId)
+    : import(moduleId);
 }
 
 // Better than fs.exists because it works for module paths without an extension

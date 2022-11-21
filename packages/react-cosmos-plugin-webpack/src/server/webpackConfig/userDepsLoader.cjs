@@ -8,7 +8,7 @@ module.exports = async function injectUserDeps() {
     '../cosmosConfig/createDomCosmosConfig.js'
   );
 
-  const cosmosConfig = server.detectCosmosConfig();
+  const cosmosConfig = await server.detectCosmosConfig();
 
   // This ensures this loader is invalidated whenever a new file is added to or
   // removed from user's project, which in turn triggers react-cosmos-voyager2
