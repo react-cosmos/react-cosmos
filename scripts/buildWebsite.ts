@@ -73,8 +73,7 @@ async function createPage({ pageName, title, description }: PageParams) {
 
 function buildWebpack() {
   return new Promise<void>(async (resolve, reject) => {
-    // @ts-ignore Remove this when ES webpack config is supported
-    const configFn = await import('../website/webpack.config.cjs');
+    const configFn = await import('../website/webpack.config.js');
     const webpackConfig = await configFn.default();
     webpack(webpackConfig, (err, stats) => {
       if (err) {

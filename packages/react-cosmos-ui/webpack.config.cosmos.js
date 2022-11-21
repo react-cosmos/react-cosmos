@@ -1,11 +1,12 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import path from 'path';
 
-const src = path.join(__dirname, 'src');
+const dirname = new URL('.', import.meta.url).pathname;
+const src = path.join(dirname, 'src');
 
 const env = process.env.NODE_ENV || 'development';
 
-module.exports = {
+export default {
   mode: env,
   devtool: false,
   resolve: {
@@ -22,7 +23,7 @@ module.exports = {
         include: [src],
         loader: 'ts-loader',
         options: {
-          configFile: path.join(__dirname, './tsconfig.build.json'),
+          configFile: path.join(dirname, './tsconfig.build.json'),
         },
       },
     ],

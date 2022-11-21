@@ -1,21 +1,19 @@
-const fs = require('fs/promises');
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
-require('isomorphic-fetch');
-const {
-  getGitHubStars,
-  getGitHubContributors,
-} = require('./src/shared/gitHub.cjs');
+import fs from 'fs/promises';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import 'isomorphic-fetch';
+import path from 'path';
+import webpack from 'webpack';
+import { getGitHubContributors, getGitHubStars } from './src/shared/gitHub.js';
 
-const src = path.join(__dirname, 'src');
-const dist = path.join(__dirname, 'dist');
+const dirname = new URL('.', import.meta.url).pathname;
+const src = path.join(dirname, 'src');
+const dist = path.join(dirname, 'dist');
 
 const env = process.env.NODE_ENV || 'development';
 
-module.exports = async () => {
+export default async () => {
   const { version } = await fs
-    .readFile(path.join(__dirname, '../lerna.json'), 'utf8')
+    .readFile(path.join(dirname, '../lerna.json'), 'utf8')
     .then(JSON.parse);
 
   const ghStars = await getGitHubStars();
@@ -41,7 +39,7 @@ module.exports = async () => {
           include: [src],
           loader: 'ts-loader',
           options: {
-            configFile: path.join(__dirname, 'tsconfig.build.json'),
+            configFile: path.join(dirname, 'tsconfig.build.json'),
           },
         },
         {

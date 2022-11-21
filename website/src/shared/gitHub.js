@@ -1,7 +1,4 @@
-// TODO: Remove this duplicate file once Cosmos supports ES webpack config
-// via dynamic import().
-
-exports.getGitHubStars = async () => {
+export const getGitHubStars = async () => {
   const res = await fetchGithub(`repos/react-cosmos/react-cosmos`);
   const parsedRes = await res.json();
   if (isNaN(parsedRes.stargazers_count))
@@ -9,7 +6,7 @@ exports.getGitHubStars = async () => {
   return parsedRes.stargazers_count;
 };
 
-exports.getGitHubContributors = async () => {
+export const getGitHubContributors = async () => {
   const res = await fetchGithub(
     `repos/react-cosmos/react-cosmos/contributors?per_page=1000`
   );

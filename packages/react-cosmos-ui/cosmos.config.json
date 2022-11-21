@@ -1,7 +1,7 @@
 {
   "globalImports": [],
   "webpack": {
-    "configPath": "./webpack.config.cosmos.cjs"
+    "configPath": "./webpack.config.cosmos.js"
   },
   "port": 5500,
   "disablePlugins": false,
