@@ -1,3 +1,4 @@
+// Import mocks first
 import '../../testHelpers/mockResolve.js';
 
 import { createCosmosConfig } from '../createCosmosConfig.js';

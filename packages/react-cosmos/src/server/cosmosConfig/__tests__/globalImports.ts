@@ -1,3 +1,4 @@
+// Import mocks first
 import '../../testHelpers/mockResolve.js';
 
 import path from 'path';

@@ -1,3 +1,4 @@
+// Import mocks first
 import '../../testHelpers/mockResolve.js';
 
 import { getCwdPath } from '../../testHelpers/cwd.js';

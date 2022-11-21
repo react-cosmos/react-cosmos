@@ -1,5 +1,7 @@
-import { mockCosmosConfig, unmockFs } from '../../testHelpers/mockFs.js';
+// Import mocks first
+import '../../testHelpers/mockRequire.js';
 import '../../testHelpers/mockResolve.js';
+import { mockCosmosConfig, resetFsMock } from '../../testHelpers/mockFs.js';
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
 // NOTE: This is the only config test file where the config file is mocked.
@@ -9,7 +11,7 @@ import { detectCosmosConfig } from '../detectCosmosConfig.js';
 
 afterEach(() => {
   unmockCliArgs();
-  unmockFs();
+  resetFsMock();
 });
 
 it('returns cosmos config at --config path', () => {

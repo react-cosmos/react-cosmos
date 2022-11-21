@@ -3,14 +3,21 @@ import { CosmosConfig } from '../cosmosConfig/types.js';
 import { getCwdPath } from './cwd.js';
 
 jest.mock('../utils/fs', () => {
+  const actual = jest.requireActual('../utils/fs');
+  let mocked = false;
+
   let fileMocks: { [path: string]: any } = {};
   let dirMocks: string[] = [];
 
   function requireModule(filePath: string) {
+    if (!mocked) return actual.requireModule(filePath);
+
     return fileMocks[filePath] || fileMocks[`${filePath}.js`];
   }
 
   function moduleExists(filePath: string) {
+    if (!mocked) return actual.moduleExists(filePath);
+
     return (
       fileMocks.hasOwnProperty(filePath) ||
       fileMocks.hasOwnProperty(`${filePath}.js`)
@@ -18,10 +25,14 @@ jest.mock('../utils/fs', () => {
   }
 
   function fileExists(filePath: string) {
+    if (!mocked) return actual.fileExists(filePath);
+
     return fileMocks.hasOwnProperty(filePath);
   }
 
   function dirExists(dirPath: string) {
+    if (!mocked) return actual.dirExists(dirPath);
+
     return dirMocks.indexOf(dirPath) !== -1;
   }
 
@@ -32,14 +43,16 @@ jest.mock('../utils/fs', () => {
     dirExists,
 
     __mockFile(filePath: string, fileMock: any) {
+      mocked = true;
       fileMocks = { ...fileMocks, [filePath]: fileMock };
     },
 
     __mockDir(dirPath: string) {
+      mocked = true;
       dirMocks = [...dirMocks, dirPath];
     },
 
-    __unmockFs() {
+    __resetMock() {
       fileMocks = {};
       dirMocks = [];
     },
@@ -63,8 +76,8 @@ export function mockDir(dirPath: string) {
   requireMocked().__mockDir(getCwdPath(dirPath));
 }
 
-export function unmockFs() {
-  requireMocked().__unmockFs();
+export function resetFsMock() {
+  requireMocked().__resetMock();
 }
 
 function requireMocked() {

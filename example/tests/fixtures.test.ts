@@ -1,3 +1,6 @@
+// Import mocks first
+import 'react-cosmos/jest';
+
 import { getCosmosConfigAtPath, getFixtures } from 'react-cosmos/server';
 
 const cosmosConfig = getCosmosConfigAtPath(require.resolve('../cosmos.config'));
