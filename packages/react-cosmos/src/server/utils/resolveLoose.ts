@@ -1,5 +1,5 @@
 import path from 'path';
-import { resolveFromSilent } from './resolveFromSilent.js';
+import { resolveFromSilent } from './resolveSilent.js';
 
 export function resolveLoose(fromDirectory: string, moduleId: string) {
   // Use to deal with file paths and module names interchangeably.

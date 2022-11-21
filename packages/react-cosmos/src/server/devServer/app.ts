@@ -5,7 +5,7 @@ import { CosmosConfig } from '../cosmosConfig/types.js';
 import { PlatformType } from '../cosmosPlugin/types.js';
 import { getDevPlaygroundHtml } from '../shared/playgroundHtml.js';
 import { getStaticPath } from '../shared/staticPath.js';
-import { resolveFromSilent } from '../utils/resolveFromSilent.js';
+import { resolveFromSilent } from '../utils/resolveSilent.js';
 
 export async function createApp(
   platformType: PlatformType,

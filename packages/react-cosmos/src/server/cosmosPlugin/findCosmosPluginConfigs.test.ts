@@ -4,6 +4,14 @@ import '../testHelpers/mockEsmResolve.js';
 import path from 'path';
 import { findCosmosPluginConfigs } from './findCosmosPluginConfigs.js';
 
+// Allow plugin configs to be read without having to actually build
+// the plugin packages
+jest.mock('../utils/resolveSilent.js', () => {
+  return {
+    resolveSilent: (moduleId: string) => `${moduleId}.js`,
+  };
+});
+
 it('loads mono repo plugins', () => {
   const packagesDir = path.join(__dirname, '../../../..');
 
