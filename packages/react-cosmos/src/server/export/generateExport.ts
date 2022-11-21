@@ -14,7 +14,7 @@ import { ExportPlugin } from '../cosmosPlugin/types.js';
 import { logPluginInfo } from '../shared/logPluginInfo.js';
 import { getExportPlaygroundHtml } from '../shared/playgroundHtml.js';
 import { requirePluginModule } from '../shared/requirePluginModule.js';
-import { getStaticPath } from '../shared/staticServer.js';
+import { getStaticPath } from '../shared/staticPath.js';
 
 const corePlugins: ExportPlugin[] = [];
 

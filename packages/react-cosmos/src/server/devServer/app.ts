@@ -4,7 +4,7 @@ import { CosmosPluginConfig } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { PlatformType } from '../cosmosPlugin/types.js';
 import { getDevPlaygroundHtml } from '../shared/playgroundHtml.js';
-import { getStaticPath } from '../shared/staticServer.js';
+import { getStaticPath } from '../shared/staticPath.js';
 import { resolveFromSilent } from '../utils/resolveFromSilent.js';
 
 export async function createApp(

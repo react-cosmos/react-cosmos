@@ -13,7 +13,7 @@ import {
 import url from 'url';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { PlatformType } from '../cosmosPlugin/types.js';
-import { getStaticPath } from './staticServer.js';
+import { getStaticPath } from './staticPath.js';
 
 export const RENDERER_FILENAME = '_renderer.html';
 
