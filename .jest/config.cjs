@@ -38,10 +38,9 @@ module.exports = {
     '!**/cosmos.decorator.{js,ts,tsx}',
     '!**/testHelpers/**',
     '!**/@types/**',
-    '!packages/react-cosmos/src/playground/components/illustrations/**',
     // Ignore coverage from dark launched plugins
-    '!packages/react-cosmos/src/playground/plugins/PluginList/**',
-    '!packages/react-cosmos/src/playground/plugins/RendererSelect/**',
+    '!packages/react-cosmos-ui/src/plugins/PluginList/**',
+    '!packages/react-cosmos-ui/src/plugins/RendererSelect/**',
     // Ignore coverage from unsupported ES modules
     '!packages/react-cosmos/src/server/utils/requireModule.ts',
     '!packages/react-cosmos/src/server/utils/resolve.ts',
