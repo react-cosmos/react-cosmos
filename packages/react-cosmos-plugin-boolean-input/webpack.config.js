@@ -1,11 +1,9 @@
-const { join } = require('path');
-
-const dist = join(__dirname, 'dist');
+const dist = new URL('./dist', import.meta.url).pathname;
 const env = process.env.NODE_ENV || 'development';
 
 const plugins = [];
 
-module.exports = {
+export default {
   mode: env,
   devtool: false,
   entry: dist,

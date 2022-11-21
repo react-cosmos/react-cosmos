@@ -4,6 +4,7 @@
   "description": "React Cosmos plugin for turning boolean control inputs into checkboxes",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-plugin-boolean-input",
   "license": "MIT",
+  "type": "module",
   "main": "cosmos.plugin.json",
   "dependencies": {},
   "devDependencies": {
