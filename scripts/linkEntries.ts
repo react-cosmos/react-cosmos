@@ -100,8 +100,16 @@ async function getPackageEntryPoints(targetPackages: Package[]): Promise<{
       ? `{${targetPackages.join(',')}}`
       : targetPackages[0];
 
-  const modules = glob.sync(`./packages/${pkgMatch}/{*,bin/*}.{js,d.ts}`);
-  const configs = glob.sync(`./packages/${pkgMatch}/package.json`);
+  const cwd = new URL('..', import.meta.url).pathname;
+  const modules = glob.sync(`packages/${pkgMatch}/{*,bin/*}.{js,d.ts}`, {
+    cwd,
+    absolute: true,
+    ignore: ['**/webpack.config*.js'],
+  });
+  const configs = glob.sync(`packages/${pkgMatch}/package.json`, {
+    cwd,
+    absolute: true,
+  });
 
   return { modules, configs };
 }
