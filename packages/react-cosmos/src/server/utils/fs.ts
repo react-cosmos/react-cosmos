@@ -4,7 +4,7 @@ import fs from 'fs';
 import { requireModule } from './requireModule.js';
 import { resolve } from './resolve.js';
 
-export async function importModule(moduleId: string) {
+export async function importModule<T>(moduleId: string): Promise<T> {
   return moduleId.endsWith('.json')
     ? requireModule(moduleId)
     : import(moduleId);

@@ -5,7 +5,7 @@ import { createCosmosConfig } from './createCosmosConfig.js';
 import { getCosmosConfigAtPath } from './getCosmosConfigAtPath.js';
 import { getCurrentDir } from './shared.js';
 
-export function detectCosmosConfig() {
+export async function detectCosmosConfig() {
   const cosmosConfigPath = detectCosmosConfigPath();
   return cosmosConfigPath
     ? getCosmosConfigAtPath(cosmosConfigPath)

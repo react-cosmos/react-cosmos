@@ -6,10 +6,8 @@ import { resolveSilent } from '../utils/resolveSilent.js';
 export async function readCosmosPluginConfig(
   rootDir: string,
   moduleNameOrPath: string
-): Promise<CosmosPluginConfig> {
-  const rawConfig = (await importModule(
-    moduleNameOrPath
-  )) as RawCosmosPluginConfig;
+) {
+  const rawConfig = await importModule<RawCosmosPluginConfig>(moduleNameOrPath);
   const pluginRootDir = path.dirname(moduleNameOrPath);
   const relativePluginRootDir = path.relative(rootDir, pluginRootDir);
 
