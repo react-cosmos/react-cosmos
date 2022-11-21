@@ -4,7 +4,7 @@ import {
   RendererId,
   RendererRequest,
 } from 'react-cosmos-core';
-import { RendererCoreContext } from '../shared';
+import { RendererCoreContext } from '../shared/index.js';
 
 export function postSelectFixtureRequest(
   context: RendererCoreContext,

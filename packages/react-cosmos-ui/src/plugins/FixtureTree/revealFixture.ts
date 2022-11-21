@@ -3,16 +3,16 @@ import {
   FixtureId,
   FixtureTreeNode,
 } from 'react-cosmos-core';
-import { nodeContainsFixtureId } from '../../shared/fixtureTree';
-import { TreeExpansion } from '../../shared/treeExpansion';
-import { CoreSpec } from '../Core/spec';
-import { RendererCoreSpec } from '../RendererCore/spec';
-import { StorageSpec } from '../Storage/spec';
+import { nodeContainsFixtureId } from '../../shared/fixtureTree.js';
+import { TreeExpansion } from '../../shared/treeExpansion.js';
+import { CoreSpec } from '../Core/spec.js';
+import { RendererCoreSpec } from '../RendererCore/spec.js';
+import { StorageSpec } from '../Storage/spec.js';
 import {
   FixtureTreeContext,
   getTreeExpansion,
   setTreeExpansion,
-} from './shared';
+} from './shared.js';
 
 export function revealFixture(
   context: FixtureTreeContext,

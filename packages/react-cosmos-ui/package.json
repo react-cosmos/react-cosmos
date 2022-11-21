@@ -4,6 +4,7 @@
   "description": "React Cosmos UI",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-ui",
   "license": "MIT",
+  "type": "module",
   "main": "./dist/index.js",
   "dependencies": {
     "lodash-es": "^4.17.21",

@@ -2,7 +2,7 @@ import React from 'react';
 import { FixtureId } from 'react-cosmos-core';
 import { ArraySlot } from 'react-plugin';
 import styled from 'styled-components';
-import { grey176, grey32, white10 } from '../../style/colors';
+import { grey176, grey32, white10 } from '../../style/colors.js';
 
 type Props = {
   selectedFixtureId: FixtureId | null;

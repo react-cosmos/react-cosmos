@@ -3,11 +3,11 @@ import {
   RendererId,
   RendererReadyResponse,
 } from 'react-cosmos-core';
-import { NotificationsSpec } from '../../Notifications/spec';
-import { RouterSpec } from '../../Router/spec';
-import { RendererCoreContext, State } from '../shared';
-import { postSelectFixtureRequest } from '../shared/postRequest';
-import { getSelectedFixtureId } from '../shared/router';
+import { NotificationsSpec } from '../../Notifications/spec.js';
+import { RouterSpec } from '../../Router/spec.js';
+import { RendererCoreContext, State } from '../shared/index.js';
+import { postSelectFixtureRequest } from '../shared/postRequest.js';
+import { getSelectedFixtureId } from '../shared/router.js';
 
 export function receiveRendererReadyResponse(
   context: RendererCoreContext,

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { blue, lightBlue } from '../../../style/colors';
-import { Label, ValueDataContainer } from './shared';
+import { blue, lightBlue } from '../../../style/colors.js';
+import { Label, ValueDataContainer } from './shared.js';
 
 type Props = {
   id: string;

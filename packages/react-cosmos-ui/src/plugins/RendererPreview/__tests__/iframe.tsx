@@ -8,10 +8,10 @@ import {
   mockCore,
   mockNotifications,
   mockRendererCore,
-} from '../../../testHelpers/pluginMocks';
-import { fakeFetchResponseStatus } from '../testHelpers/fetch';
-import { getIframe } from '../testHelpers/iframe';
-import { rendererReadyMsg, selectFixtureMsg } from '../testHelpers/messages';
+} from '../../../testHelpers/pluginMocks.js';
+import { fakeFetchResponseStatus } from '../testHelpers/fetch.js';
+import { getIframe } from '../testHelpers/iframe.js';
+import { rendererReadyMsg, selectFixtureMsg } from '../testHelpers/messages.js';
 
 beforeEach(register);
 

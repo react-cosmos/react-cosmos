@@ -1,6 +1,6 @@
 import React from 'react';
 import { useValue } from 'react-cosmos-core';
-import { PluginList, SimplePlugin } from './PluginList';
+import { PluginList, SimplePlugin } from './PluginList.js';
 
 const initialPlugins: SimplePlugin[] = [
   { name: 'buildNotifications', enabled: true },

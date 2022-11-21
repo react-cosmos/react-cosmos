@@ -1,13 +1,13 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { Notifications } from './Notifications';
+import { Notifications } from './Notifications.js';
 import {
   clearTimedNotification,
   pushStickyNotification,
   pushTimedNotification,
   removeStickyNotification,
-} from './pushNotification';
-import { NotificationsSpec } from './spec';
+} from './pushNotification.js';
+import { NotificationsSpec } from './spec.js';
 
 const { register, onLoad, namedPlug } = createPlugin<NotificationsSpec>({
   name: 'notifications',

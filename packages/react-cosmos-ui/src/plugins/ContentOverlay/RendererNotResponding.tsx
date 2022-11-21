@@ -1,19 +1,19 @@
 import React from 'react';
 import { Slot } from 'react-plugin';
 import styled from 'styled-components';
-import { ArtificialIntelligenceIllustration } from '../../components/illustrations/ArtificialIntelligence';
+import { ArtificialIntelligenceIllustration } from '../../components/illustrations/ArtificialIntelligence.js';
 import {
   screenGrey3,
   screenGrey5,
   screenPrimary2,
   screenPrimary3,
-} from '../../style/colors';
+} from '../../style/colors.js';
 import {
   ContentContainer,
   IllustrationContainer,
   NoWrap,
   TextContainer,
-} from './shared';
+} from './shared.js';
 
 export function RendererNotResponding() {
   return (

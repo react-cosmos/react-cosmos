@@ -7,10 +7,10 @@ import {
   getRendererCoreContext,
   mockCore,
   mockRendererCore,
-} from '../../../testHelpers/pluginMocks';
-import { fakeFetchResponseStatus } from '../testHelpers/fetch';
-import { getIframe, mockIframeMessage } from '../testHelpers/iframe';
-import { rendererReadyMsg, selectFixtureMsg } from '../testHelpers/messages';
+} from '../../../testHelpers/pluginMocks.js';
+import { fakeFetchResponseStatus } from '../testHelpers/fetch.js';
+import { getIframe, mockIframeMessage } from '../testHelpers/iframe.js';
+import { rendererReadyMsg, selectFixtureMsg } from '../testHelpers/messages.js';
 
 beforeEach(register);
 

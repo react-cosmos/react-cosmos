@@ -8,7 +8,7 @@ import {
   mockCore,
   mockMessageHandler,
   mockRendererCore,
-} from '../../../testHelpers/pluginMocks';
+} from '../../../testHelpers/pluginMocks.js';
 
 beforeEach(register);
 

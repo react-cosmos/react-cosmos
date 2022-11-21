@@ -5,8 +5,8 @@ import {
   FixtureList,
   useValue,
 } from 'react-cosmos-core';
-import { TreeExpansion } from '../../../shared/treeExpansion';
-import { FixtureTree } from './FixtureTree';
+import { TreeExpansion } from '../../../shared/treeExpansion.js';
+import { FixtureTree } from './FixtureTree.js';
 
 const fixtures: FixtureList = {
   'src/Dashboard.ts': { type: 'single' },

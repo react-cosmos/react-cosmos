@@ -1,16 +1,16 @@
 import { waitFor } from '@testing-library/dom';
 import { FixtureList, RendererId } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { register } from '../..';
+import { register } from '../../index.js';
 import {
   getRendererCoreMethods,
   mockNotifications,
   mockRouter,
-} from '../../../../testHelpers/pluginMocks';
+} from '../../../../testHelpers/pluginMocks.js';
 import {
   createFixtureListUpdateResponse,
   mockRendererReady,
-} from '../../testHelpers';
+} from '../../testHelpers/index.js';
 
 beforeEach(register);
 

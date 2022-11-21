@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import * as ReactPlugin from 'react-plugin';
-import { PlaygroundMountArgs } from './playgroundConfig';
-import './plugins/pluginEntry';
-import { DEFAULT_PLUGIN_CONFIG } from './shared/defaultPluginConfig';
-import { GlobalStyle } from './style/globalStyle';
+import { PlaygroundMountArgs } from './playgroundConfig.js';
+import './plugins/pluginEntry.js';
+import { DEFAULT_PLUGIN_CONFIG } from './shared/defaultPluginConfig.js';
+import { GlobalStyle } from './style/globalStyle.js';
 
 declare global {
   interface Window {

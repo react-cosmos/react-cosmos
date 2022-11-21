@@ -6,9 +6,9 @@ import {
   FlatFixtureTreeItem,
 } from 'react-cosmos-core';
 import styled from 'styled-components';
-import { XIcon } from '../../components/icons';
-import { stringifyFixtureId } from '../../components/ValueInputTree';
-import { createRelativePlaygroundUrl } from '../../shared/url';
+import { XIcon } from '../../components/icons/index.js';
+import { stringifyFixtureId } from '../../components/ValueInputTree/index.js';
+import { createRelativePlaygroundUrl } from '../../shared/url.js';
 import {
   blue,
   grey128,
@@ -19,8 +19,8 @@ import {
   grey8,
   selectedColors,
   white10,
-} from '../../style/colors';
-import { quick } from '../../style/vars';
+} from '../../style/colors.js';
+import { quick } from '../../style/vars.js';
 
 type Props = {
   fixtureItems: FlatFixtureTree;

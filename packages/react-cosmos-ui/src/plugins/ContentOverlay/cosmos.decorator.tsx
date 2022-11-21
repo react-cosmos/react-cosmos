@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { screenGrey6 } from '../../style/colors';
+import { screenGrey6 } from '../../style/colors.js';
 
 export default ({ children }: { children: React.ReactNode }) => (
   <Wrapper>{children}</Wrapper>

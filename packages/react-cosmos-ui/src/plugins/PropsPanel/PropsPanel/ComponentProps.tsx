@@ -8,24 +8,24 @@ import {
   StateUpdater,
   updateFixtureStateProps,
 } from 'react-cosmos-core';
-import { IconButton32 } from '../../../components/buttons';
-import { CopyIcon, RotateCcwIcon } from '../../../components/icons';
+import { IconButton32 } from '../../../components/buttons/index.js';
+import { CopyIcon, RotateCcwIcon } from '../../../components/icons/index.js';
 import {
   SidePanelActions,
   SidePanelBody,
   SidePanelContainer,
   SidePanelHeader,
   SidePanelTitle,
-} from '../../../components/SidePanel';
+} from '../../../components/SidePanel.js';
+import { ExpandCollapseValues } from '../../../components/ValueInputTree/ExpandCollapseValues.js';
 import {
   FixtureExpansion,
   OnElementExpansionChange,
   stringifyElementId,
   ValueInputTree,
-} from '../../../components/ValueInputTree';
-import { ExpandCollapseValues } from '../../../components/ValueInputTree/ExpandCollapseValues';
-import { TreeExpansion } from '../../../shared/treeExpansion';
-import { createPropsFsUpdater } from './shared';
+} from '../../../components/ValueInputTree/index.js';
+import { TreeExpansion } from '../../../shared/treeExpansion.js';
+import { createPropsFsUpdater } from './shared.js';
 
 type Props = {
   fsProps: FixtureStateProps;

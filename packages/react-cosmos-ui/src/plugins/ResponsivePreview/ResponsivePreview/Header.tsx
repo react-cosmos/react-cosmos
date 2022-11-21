@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button8 } from '../../../components/buttons';
-import { Minimize2Icon, RefreshCcwIcon } from '../../../components/icons';
-import { NumberInput } from '../../../components/inputs/NumberInput';
-import { Select } from '../../../components/inputs/Select';
-import { Space } from '../../../components/Space';
+import { Button8 } from '../../../components/buttons/index.js';
+import {
+  Minimize2Icon,
+  RefreshCcwIcon,
+} from '../../../components/icons/index.js';
+import { NumberInput } from '../../../components/inputs/NumberInput.js';
+import { Select } from '../../../components/inputs/Select.js';
+import { Space } from '../../../components/Space.js';
 import {
   blue,
   grey128,
@@ -12,9 +15,9 @@ import {
   grey216,
   grey248,
   grey8,
-} from '../../../style/colors';
-import { quick } from '../../../style/vars';
-import { ResponsiveDevice, ResponsiveViewport } from '../spec';
+} from '../../../style/colors.js';
+import { quick } from '../../../style/vars.js';
+import { ResponsiveDevice, ResponsiveViewport } from '../spec.js';
 
 type Props = {
   devices: ResponsiveDevice[];

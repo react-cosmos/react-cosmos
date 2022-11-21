@@ -1,6 +1,6 @@
 import { FixtureState, StateUpdater } from 'react-cosmos-core';
 import { PluginContext } from 'react-plugin';
-import { RendererCoreSpec } from '../../RendererCore/spec';
+import { RendererCoreSpec } from '../../RendererCore/spec.js';
 
 export type StorageMock = { [key: string]: any };
 

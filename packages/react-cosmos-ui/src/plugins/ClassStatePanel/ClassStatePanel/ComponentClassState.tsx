@@ -7,24 +7,24 @@ import {
   StateUpdater,
   updateFixtureStateClassState,
 } from 'react-cosmos-core';
-import { IconButton32 } from '../../../components/buttons';
-import { RotateCcwIcon } from '../../../components/icons';
+import { IconButton32 } from '../../../components/buttons/index.js';
+import { RotateCcwIcon } from '../../../components/icons/index.js';
 import {
   SidePanelActions,
   SidePanelBody,
   SidePanelContainer,
   SidePanelHeader,
   SidePanelTitle,
-} from '../../../components/SidePanel';
+} from '../../../components/SidePanel.js';
+import { ExpandCollapseValues } from '../../../components/ValueInputTree/ExpandCollapseValues.js';
 import {
   FixtureExpansion,
   OnElementExpansionChange,
   stringifyElementId,
   ValueInputTree,
-} from '../../../components/ValueInputTree';
-import { ExpandCollapseValues } from '../../../components/ValueInputTree/ExpandCollapseValues';
-import { TreeExpansion } from '../../../shared/treeExpansion';
-import { createClassStateFsUpdater } from './shared';
+} from '../../../components/ValueInputTree/index.js';
+import { TreeExpansion } from '../../../shared/treeExpansion.js';
+import { createClassStateFsUpdater } from './shared.js';
 
 type Props = {
   fsClassState: FixtureStateClassState;

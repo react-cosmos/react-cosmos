@@ -7,8 +7,8 @@ import {
   mockNotifications,
   mockRouter,
   onRendererCore,
-} from '../../../testHelpers/pluginMocks';
-import { createRendererReadyResponse } from '../testHelpers';
+} from '../../../testHelpers/pluginMocks.js';
+import { createRendererReadyResponse } from '../testHelpers/index.js';
 
 beforeEach(register);
 

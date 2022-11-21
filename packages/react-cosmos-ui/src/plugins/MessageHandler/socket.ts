@@ -4,8 +4,8 @@ import {
   SERVER_MESSAGE_EVENT_NAME,
 } from 'react-cosmos-core';
 import { io, Socket } from 'socket.io-client';
-import { CoreSpec } from '../Core/spec';
-import { MessageHandlerContext } from './shared';
+import { CoreSpec } from '../Core/spec.js';
+import { MessageHandlerContext } from './shared.js';
 
 let socket: void | Socket;
 

@@ -1,7 +1,7 @@
 import { omit } from 'lodash-es';
 import { registerPlaygroundShortcuts } from 'react-cosmos-core';
 import { createPlugin, PluginContext } from 'react-plugin';
-import { Commands, CoreSpec } from './spec';
+import { Commands, CoreSpec } from './spec.js';
 
 type CoreContext = PluginContext<CoreSpec>;
 

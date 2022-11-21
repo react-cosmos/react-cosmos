@@ -1,5 +1,5 @@
 import React from 'react';
-import { Label, UneditableInput, ValueDataContainer } from './shared';
+import { Label, UneditableInput, ValueDataContainer } from './shared.js';
 
 type Props = {
   name: string;

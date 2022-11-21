@@ -1,7 +1,7 @@
 import React from 'react';
 import { FixtureId, useValue } from 'react-cosmos-core';
-import { fixtures } from '../../testHelpers/dataMocks';
-import { FixtureSearchOverlay } from './FixtureSearchOverlay';
+import { fixtures } from '../../testHelpers/dataMocks.js';
+import { FixtureSearchOverlay } from './FixtureSearchOverlay.js';
 
 export default {
   'no fixture selected': createFixture(),

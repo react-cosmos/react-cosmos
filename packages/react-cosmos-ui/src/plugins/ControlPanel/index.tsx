@@ -1,8 +1,8 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { SidePanelRowSlotProps } from '../../slots/SidePanelRowSlot';
-import { ControlPanel } from './ControlPanel';
-import { ControlPanelSpec } from './spec';
+import { SidePanelRowSlotProps } from '../../slots/SidePanelRowSlot.js';
+import { ControlPanel } from './ControlPanel.js';
+import { ControlPanelSpec } from './spec.js';
 
 const { namedPlug, register } = createPlugin<ControlPanelSpec>({
   name: 'controlPanel',

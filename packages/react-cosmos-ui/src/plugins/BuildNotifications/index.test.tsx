@@ -5,7 +5,7 @@ import {
   getMessageHandlerContext,
   mockMessageHandler,
   mockNotifications,
-} from '../../testHelpers/pluginMocks';
+} from '../../testHelpers/pluginMocks.js';
 
 beforeEach(register);
 

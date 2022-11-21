@@ -1,8 +1,8 @@
 import React from 'react';
 import { useValue } from 'react-cosmos-core';
-import { DEFAULT_DEVICES } from '../shared';
-import { Header } from './Header';
-import { getViewportScaleFactor } from './style';
+import { DEFAULT_DEVICES } from '../shared.js';
+import { Header } from './Header.js';
+import { getViewportScaleFactor } from './style.js';
 
 const { width, height } = DEFAULT_DEVICES[0];
 const initialViewport = { width, height };

@@ -3,9 +3,9 @@ import {
   getRendererCoreMethods,
   mockNotifications,
   mockRouter,
-} from '../../../testHelpers/pluginMocks';
+} from '../../../testHelpers/pluginMocks.js';
 import { register } from '..';
-import { mockRendererReady } from '../testHelpers';
+import { mockRendererReady } from '../testHelpers/index.js';
 
 beforeEach(register);
 

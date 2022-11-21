@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useCallback } from 'react';
 import styled from 'styled-components';
-import { useFocus } from '../../hooks/useFocus';
-import { blue, grey32 } from '../../style/colors';
-import { ChevronDownIcon } from '../icons';
+import { useFocus } from '../../hooks/useFocus.js';
+import { blue, grey32 } from '../../style/colors.js';
+import { ChevronDownIcon } from '../icons/index.js';
 
 type BaseOption = { value: string; label: string };
 

@@ -1,14 +1,14 @@
 import React from 'react';
 import { PrimitiveData } from 'react-cosmos-core';
-import { ValueInputSlot } from '../../../slots/ValueInputSlot';
-import { LeafValue, ValueTreeItem } from '../shared';
-import { BooleanValueInput } from './BooleanValueInput';
-import { NullValueInput } from './NullValueInput';
-import { NumberValueInput } from './NumberValueInput';
-import { ValueInputContainer } from './shared';
-import { StringValueInput } from './StringValueInput';
-import { UndefinedValueInput } from './UndefinedValueInput';
-import { UnserializableValueInput } from './UnserializableValueInput';
+import { ValueInputSlot } from '../../../slots/ValueInputSlot.js';
+import { LeafValue, ValueTreeItem } from '../shared.js';
+import { BooleanValueInput } from './BooleanValueInput.js';
+import { NullValueInput } from './NullValueInput.js';
+import { NumberValueInput } from './NumberValueInput.js';
+import { ValueInputContainer } from './shared.js';
+import { StringValueInput } from './StringValueInput.js';
+import { UndefinedValueInput } from './UndefinedValueInput.js';
+import { UnserializableValueInput } from './UnserializableValueInput.js';
 
 type Props = {
   value: LeafValue;

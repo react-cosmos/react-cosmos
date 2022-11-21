@@ -5,8 +5,11 @@ import {
   getRendererCoreMethods,
   mockNotifications,
   mockRouter,
-} from '../../../testHelpers/pluginMocks';
-import { mockFixtureStateChange, mockRendererReady } from '../testHelpers';
+} from '../../../testHelpers/pluginMocks.js';
+import {
+  mockFixtureStateChange,
+  mockRendererReady,
+} from '../testHelpers/index.js';
 
 beforeEach(register);
 

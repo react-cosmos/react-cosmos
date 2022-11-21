@@ -1,7 +1,7 @@
 import { clone, setWith } from 'lodash-es';
 import { FixtureElementId, FixtureId } from 'react-cosmos-core';
-import { TreeExpansion } from '../../shared/treeExpansion';
-import { stringifyElementId, stringifyFixtureId } from './shared';
+import { TreeExpansion } from '../../shared/treeExpansion.js';
+import { stringifyElementId, stringifyFixtureId } from './shared.js';
 
 export type FixtureExpansion = Record<string, void | TreeExpansion>;
 

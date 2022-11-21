@@ -6,7 +6,7 @@ import {
   createGreyColor,
   grey64,
   selectedColors,
-} from '../../style/colors';
+} from '../../style/colors.js';
 
 type Props = {
   active: boolean;

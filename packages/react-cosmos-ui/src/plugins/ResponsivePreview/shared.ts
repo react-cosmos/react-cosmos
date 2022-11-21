@@ -1,7 +1,7 @@
 import { FixtureState } from 'react-cosmos-core';
 import { PluginContext } from 'react-plugin';
-import { StorageSpec } from '../Storage/spec';
-import { ResponsivePreviewSpec, ResponsiveViewport } from './spec';
+import { StorageSpec } from '../Storage/spec.js';
+import { ResponsivePreviewSpec, ResponsiveViewport } from './spec.js';
 
 export type ResponsivePreviewContext = PluginContext<ResponsivePreviewSpec>;
 

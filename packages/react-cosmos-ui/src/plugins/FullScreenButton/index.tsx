@@ -1,10 +1,10 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
 import { stringifyRendererUrlQuery } from 'react-cosmos-core';
-import { RendererActionSlotProps } from '../../slots/RendererActionSlot';
-import { CoreSpec } from '../Core/spec';
-import { FullScreenButton } from './FullScreenButton';
-import { FullScreenButtonSpec } from './spec';
+import { RendererActionSlotProps } from '../../slots/RendererActionSlot.js';
+import { CoreSpec } from '../Core/spec.js';
+import { FullScreenButton } from './FullScreenButton.js';
+import { FullScreenButtonSpec } from './spec.js';
 
 const { namedPlug, register } = createPlugin<FullScreenButtonSpec>({
   name: 'fullScreenButton',

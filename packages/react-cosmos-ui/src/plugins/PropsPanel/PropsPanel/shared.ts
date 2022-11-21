@@ -5,7 +5,7 @@ import {
   FixtureStateProps,
   StateUpdater,
 } from 'react-cosmos-core';
-import { stringifyElementId } from '../../../components/ValueInputTree';
+import { stringifyElementId } from '../../../components/ValueInputTree/index.js';
 
 export function createPropsFsUpdater(
   elementId: FixtureElementId,

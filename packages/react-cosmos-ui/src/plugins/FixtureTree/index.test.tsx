@@ -3,13 +3,13 @@ import React from 'react';
 import { FixtureList } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '.';
-import { NavRowSlot } from '../../slots/NavRowSlot';
+import { NavRowSlot } from '../../slots/NavRowSlot.js';
 import {
   mockCore,
   mockRendererCore,
   mockRouter,
   mockStorage,
-} from '../../testHelpers/pluginMocks';
+} from '../../testHelpers/pluginMocks.js';
 
 beforeEach(register);
 

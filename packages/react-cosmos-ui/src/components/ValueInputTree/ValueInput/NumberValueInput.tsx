@@ -1,7 +1,7 @@
 import React from 'react';
-import { blue, grey248, grey8 } from '../../../style/colors';
-import { NumberInput } from '../../inputs/NumberInput';
-import { Label, ValueDataContainer } from './shared';
+import { blue, grey248, grey8 } from '../../../style/colors.js';
+import { NumberInput } from '../../inputs/NumberInput.js';
+import { Label, ValueDataContainer } from './shared.js';
 
 type Props = {
   id: string;

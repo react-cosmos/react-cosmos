@@ -7,12 +7,12 @@ import {
 } from 'react-cosmos-core';
 import { ArraySlot, Slot } from 'react-plugin';
 import styled from 'styled-components';
-import { useDrag } from '../../hooks/useDrag';
-import { NavRowSlot } from '../../slots/NavRowSlot';
-import { grey32, grey8, white10 } from '../../style/colors';
-import { GlobalHeader } from './GlobalHeader';
-import { RendererHeader } from './RendererHeader';
-import { SidePanel } from './SidePanel';
+import { useDrag } from '../../hooks/useDrag.js';
+import { NavRowSlot } from '../../slots/NavRowSlot.js';
+import { grey32, grey8, white10 } from '../../style/colors.js';
+import { GlobalHeader } from './GlobalHeader.js';
+import { RendererHeader } from './RendererHeader.js';
+import { SidePanel } from './SidePanel.js';
 
 type Props = {
   storageCacheReady: boolean;

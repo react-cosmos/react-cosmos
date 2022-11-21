@@ -1,6 +1,6 @@
 import { RendererResponse } from 'react-cosmos-core';
-import { RendererCoreSpec } from '../RendererCore/spec';
-import { RendererPreviewContext } from './shared';
+import { RendererCoreSpec } from '../RendererCore/spec.js';
+import { RendererPreviewContext } from './shared.js';
 
 type WindowMsg = { data: { [key: string]: unknown } };
 

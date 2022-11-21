@@ -5,12 +5,12 @@ import {
   FixtureStateValues,
 } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
-import { ValueInputTree } from '../../components/ValueInputTree';
-import { ExpandCollapseValues } from '../../components/ValueInputTree/ExpandCollapseValues';
-import { ControlActionSlotProps } from '../../slots/ControlActionSlot';
-import { ControlSlotProps } from '../../slots/ControlSlot';
-import { StandardControlSpec } from './spec';
-import { useTreeExpansionStorage } from './storage';
+import { ExpandCollapseValues } from '../../components/ValueInputTree/ExpandCollapseValues.js';
+import { ValueInputTree } from '../../components/ValueInputTree/index.js';
+import { ControlActionSlotProps } from '../../slots/ControlActionSlot.js';
+import { ControlSlotProps } from '../../slots/ControlSlot.js';
+import { StandardControlSpec } from './spec.js';
+import { useTreeExpansionStorage } from './storage.js';
 
 const { namedPlug, plug, register } = createPlugin<StandardControlSpec>({
   name: 'standardControl',

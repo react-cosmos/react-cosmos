@@ -1,6 +1,6 @@
 import { PlaygroundCommandResponse } from 'react-cosmos-core';
-import { CoreSpec } from '../../Core/spec';
-import { RendererCoreContext } from '../shared';
+import { CoreSpec } from '../../Core/spec.js';
+import { RendererCoreContext } from '../shared/index.js';
 
 export function receivePlaygroundCommandResponse(
   context: RendererCoreContext,

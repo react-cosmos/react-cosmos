@@ -2,16 +2,16 @@ import { isEqual } from 'lodash-es';
 import React from 'react';
 import { FixtureId, FlatFixtureTreeItem } from 'react-cosmos-core';
 import styled from 'styled-components';
-import { IconButton32 } from '../../components/buttons';
+import { IconButton32 } from '../../components/buttons/index.js';
 import {
   MenuIcon,
   RotateCcwIcon,
   SlidersIcon,
   XCircleIcon,
-} from '../../components/icons';
-import { FixtureActionSlot } from '../../slots/FixtureActionSlot';
-import { RendererActionSlot } from '../../slots/RendererActionSlot';
-import { grey176, grey32, white10 } from '../../style/colors';
+} from '../../components/icons/index.js';
+import { FixtureActionSlot } from '../../slots/FixtureActionSlot.js';
+import { RendererActionSlot } from '../../slots/RendererActionSlot.js';
+import { grey176, grey32, white10 } from '../../style/colors.js';
 
 type Props = {
   fixtureItems: FlatFixtureTreeItem[];

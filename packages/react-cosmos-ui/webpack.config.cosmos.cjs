@@ -9,6 +9,10 @@ module.exports = {
   mode: env,
   devtool: false,
   resolve: {
+    // https://github.com/TypeStrong/ts-loader/issues/465#issuecomment-1227798353
+    extensionAlias: {
+      '.js': ['.ts', '.tsx', '.js'],
+    },
     extensions: ['.js', '.ts', '.tsx'],
   },
   module: {

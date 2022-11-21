@@ -7,8 +7,8 @@ import {
   grey248,
   grey32,
   grey8,
-} from '../../style/colors';
-import { StyledButton, StyledIcon } from './shared';
+} from '../../style/colors.js';
+import { StyledButton, StyledIcon } from './shared.js';
 
 type Props = {
   icon: React.ReactNode;

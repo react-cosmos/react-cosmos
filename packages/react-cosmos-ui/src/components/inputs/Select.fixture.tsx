@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { grey248 } from '../../style/colors';
-import { Select } from './Select';
+import { grey248 } from '../../style/colors.js';
+import { Select } from './Select.js';
 
 const planets = [
   { value: 'Mercury', label: 'Mercury' },

@@ -2,10 +2,10 @@ import { isEqual } from 'lodash-es';
 import React, { RefObject } from 'react';
 import { FixtureId } from 'react-cosmos-core';
 import styled from 'styled-components';
-import { grey8 } from '../../../style/colors';
-import { FixtureLink } from './FixtureLink';
-import { FixtureTreeItem } from './FixtureTreeItem';
-import { MultiFixtureChildButton } from './MultiFixtureChildButton';
+import { grey8 } from '../../../style/colors.js';
+import { FixtureLink } from './FixtureLink.js';
+import { FixtureTreeItem } from './FixtureTreeItem.js';
+import { MultiFixtureChildButton } from './MultiFixtureChildButton.js';
 
 type Props = {
   name: string;

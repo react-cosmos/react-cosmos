@@ -5,13 +5,13 @@ import {
   FixtureExpansionGroup,
   getFixtureExpansion,
   updateElementExpansion,
-} from '../../components/ValueInputTree';
-import { TreeExpansion } from '../../shared/treeExpansion';
-import { SidePanelRowSlotProps } from '../../slots/SidePanelRowSlot';
-import { StorageSpec } from '../Storage/spec';
-import { ClassStatePanel } from './ClassStatePanel';
-import { CLASS_STATE_TREE_EXPANSION_STORAGE_KEY } from './shared';
-import { ClassStatePanelSpec } from './spec';
+} from '../../components/ValueInputTree/index.js';
+import { TreeExpansion } from '../../shared/treeExpansion.js';
+import { SidePanelRowSlotProps } from '../../slots/SidePanelRowSlot.js';
+import { StorageSpec } from '../Storage/spec.js';
+import { ClassStatePanel } from './ClassStatePanel/index.js';
+import { CLASS_STATE_TREE_EXPANSION_STORAGE_KEY } from './shared.js';
+import { ClassStatePanelSpec } from './spec.js';
 
 type ClassStatePanelContext = PluginContext<ClassStatePanelSpec>;
 

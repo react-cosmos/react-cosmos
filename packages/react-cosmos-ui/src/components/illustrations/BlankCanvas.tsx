@@ -1,6 +1,6 @@
 import React from 'react';
-import { screenPrimary3 } from '../../style/colors';
-import { Illustration } from '../Illustration';
+import { screenPrimary3 } from '../../style/colors.js';
+import { Illustration } from '../Illustration.js';
 
 export const BlankCanvasIllustration = ({ title }: { title: string }) => (
   <Illustration viewBox="0 0 998.95 833.99">

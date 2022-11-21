@@ -1,5 +1,5 @@
 // NOTE: Mock files need to imported before modules that use the mocked APIs
-import { mockSocketIo } from './testHelpers/mockSocketIo';
+import { mockSocketIo } from './testHelpers/mockSocketIo.js';
 
 import { waitFor } from '@testing-library/dom';
 import {
@@ -13,7 +13,7 @@ import {
   getMessageHandlerMethods,
   mockCore,
   onMessageHandler,
-} from '../../testHelpers/pluginMocks';
+} from '../../testHelpers/pluginMocks.js';
 
 beforeEach(register);
 

@@ -4,10 +4,10 @@ import React from 'react';
 import { FixtureState, FixtureStateValues } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '.';
-import { SidePanelRowSlot } from '../../slots/SidePanelRowSlot';
-import { mockStorage } from '../../testHelpers/pluginMocks';
-import { getParentButton } from '../../testHelpers/selectors';
-import { PROPS_TREE_EXPANSION_STORAGE_KEY } from './shared';
+import { SidePanelRowSlot } from '../../slots/SidePanelRowSlot.js';
+import { mockStorage } from '../../testHelpers/pluginMocks.js';
+import { getParentButton } from '../../testHelpers/selectors.js';
+import { PROPS_TREE_EXPANSION_STORAGE_KEY } from './shared.js';
 
 beforeEach(register);
 

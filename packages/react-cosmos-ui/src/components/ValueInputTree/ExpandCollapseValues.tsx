@@ -5,10 +5,10 @@ import {
   hasExpandableNodes,
   isTreeFullyCollapsed,
   TreeExpansion,
-} from '../../shared/treeExpansion';
-import { IconButton32 } from '../buttons';
-import { MinusSquareIcon, PlusSquareIcon } from '../icons';
-import { createValueTree } from './valueTree';
+} from '../../shared/treeExpansion.js';
+import { IconButton32 } from '../buttons/index.js';
+import { MinusSquareIcon, PlusSquareIcon } from '../icons/index.js';
+import { createValueTree } from './valueTree.js';
 
 type Props = {
   values: FixtureStateValues;

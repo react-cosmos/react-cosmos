@@ -1,12 +1,12 @@
 import { RendererId } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
-import { RouterSpec } from '../Router/spec';
-import { isValidFixtureSelected } from './isValidFixtureSelected';
-import { onRouterFixtureChange } from './onRouterFixtureChange';
-import { receiveResponse } from './receiveResponse';
-import { setFixtureState } from './setFixtureState';
-import { RendererCoreContext } from './shared';
-import { RendererCoreSpec } from './spec';
+import { RouterSpec } from '../Router/spec.js';
+import { isValidFixtureSelected } from './isValidFixtureSelected.js';
+import { onRouterFixtureChange } from './onRouterFixtureChange.js';
+import { receiveResponse } from './receiveResponse/index.js';
+import { setFixtureState } from './setFixtureState.js';
+import { RendererCoreContext } from './shared/index.js';
+import { RendererCoreSpec } from './spec.js';
 
 const { on, register } = createPlugin<RendererCoreSpec>({
   name: 'rendererCore',

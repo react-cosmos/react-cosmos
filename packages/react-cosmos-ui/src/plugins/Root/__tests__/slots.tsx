@@ -1,13 +1,13 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
-import { mockPlug } from '../../../testHelpers/pluginHelpers';
+import { mockPlug } from '../../../testHelpers/pluginHelpers.js';
 import {
   mockCore,
   mockRendererCore,
   mockRouter,
   mockStorage,
-} from '../../../testHelpers/pluginMocks';
+} from '../../../testHelpers/pluginMocks.js';
 import { register } from '..';
 
 beforeEach(register);
