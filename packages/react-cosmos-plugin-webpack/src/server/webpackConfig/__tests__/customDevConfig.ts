@@ -5,6 +5,7 @@ import {
   mockFile,
   unmockCliArgs,
 } from 'react-cosmos/jest';
+import '../../testHelpers/mockEsmClientPath.js';
 
 import { createCosmosConfig, RENDERER_FILENAME } from 'react-cosmos/server.js';
 import webpack from 'webpack';
