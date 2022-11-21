@@ -1,6 +1,7 @@
 // NOTE: Mock files need to imported before modules that use the mocked APIs
 import { mockConsole, unmockCliArgs } from 'react-cosmos/jest';
 import '../../testHelpers/mockEsmClientPath.js';
+import '../../testHelpers/mockEsmLoaderPath.js';
 
 import { createCosmosConfig, RENDERER_FILENAME } from 'react-cosmos/server.js';
 import webpack from 'webpack';
