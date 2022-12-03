@@ -43,10 +43,10 @@ it('returns fixture info', async () => {
       name: 'small number',
       parents: [],
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounter%2FCounter.fixture.tsx%22%2C%22name%22%3A%22small%20number%22%7D',
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounter%2FCounter.fixture.tsx%22%2C%22name%22%3A%22small+number%22%7D',
       relativeFilePath: 'src/Counter/Counter.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22src%2FCounter%2FCounter.fixture.tsx%22%2C%22name%22%3A%22small%20number%22%7D',
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22src%2FCounter%2FCounter.fixture.tsx%22%2C%22name%22%3A%22small+number%22%7D',
       treePath: ['Counter', 'small number'],
     },
     {
@@ -56,10 +56,10 @@ it('returns fixture info', async () => {
       name: 'large number',
       parents: [],
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounter%2FCounter.fixture.tsx%22%2C%22name%22%3A%22large%20number%22%7D',
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounter%2FCounter.fixture.tsx%22%2C%22name%22%3A%22large+number%22%7D',
       relativeFilePath: 'src/Counter/Counter.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22src%2FCounter%2FCounter.fixture.tsx%22%2C%22name%22%3A%22large%20number%22%7D',
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22src%2FCounter%2FCounter.fixture.tsx%22%2C%22name%22%3A%22large+number%22%7D',
       treePath: ['Counter', 'large number'],
     },
     {
