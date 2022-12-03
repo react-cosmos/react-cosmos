@@ -50,7 +50,7 @@ testFixtureLoader(
             values: {
               children: {
                 type: 'unserializable',
-                stringifiedData: `<Wrapper>\n  brah\n</Wrapper>`,
+                stringifiedData: `<React.Element />`,
               },
             },
           }),
@@ -98,7 +98,7 @@ testFixtureLoader(
             values: {
               children: {
                 type: 'unserializable',
-                stringifiedData: `<Wrapper>\n  brah\n</Wrapper>`,
+                stringifiedData: `<React.Element />`,
               },
             },
           }),

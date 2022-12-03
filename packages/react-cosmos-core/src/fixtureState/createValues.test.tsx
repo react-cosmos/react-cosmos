@@ -76,7 +76,7 @@ it('creates unserializable React element value', () => {
   expect(values).toEqual({
     myProp: {
       type: 'unserializable',
-      stringifiedData: '<div />',
+      stringifiedData: '<React.Element />',
     },
   });
 });
