@@ -2,8 +2,8 @@ import { waitFor } from '@testing-library/dom';
 import {
   BuildErrorMessage,
   RendererResponse,
+  rendererSocketMessage,
   serverSocketMessage,
-  SocketMessage,
 } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { WebSocketServer } from 'ws';
@@ -62,10 +62,7 @@ it('emits renderer request externally', async () => {
     messageHandler.postRendererRequest(selectFixtureReq);
 
     await waitFor(() =>
-      expect(onMessage).toBeCalledWith({
-        eventName: 'renderer',
-        body: selectFixtureReq,
-      })
+      expect(onMessage).toBeCalledWith(rendererSocketMessage(selectFixtureReq))
     );
   });
 });
@@ -87,13 +84,11 @@ it('emits renderer response internally', async () => {
         },
       },
     };
-    const socketMessage: SocketMessage = {
-      eventName: 'renderer',
-      body: rendererReadyRes,
-    };
 
     const { rendererResponse } = onMessageHandler();
-    wss.clients.forEach(client => client.send(JSON.stringify(socketMessage)));
+    wss.clients.forEach(client =>
+      client.send(JSON.stringify(rendererSocketMessage(rendererReadyRes)))
+    );
 
     await waitFor(() =>
       expect(rendererResponse).toBeCalledWith(
