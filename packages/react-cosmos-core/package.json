@@ -8,8 +8,7 @@
   "main": "./dist/index.js",
   "dependencies": {
     "lodash-es": "^4.17.21",
-    "react-is": "^18.0.0",
-    "socket.io-client": "4.5.3"
+    "react-is": "^18.0.0"
   },
   "devDependencies": {}
 }

@@ -102,5 +102,3 @@ export type RendererConnect<
   postMessage: (msg: Response) => unknown;
   onMessage(handler: (msg: Request) => unknown): () => unknown;
 };
-
-export const RENDERER_MESSAGE_EVENT_NAME = 'cosmos-renderer-message';

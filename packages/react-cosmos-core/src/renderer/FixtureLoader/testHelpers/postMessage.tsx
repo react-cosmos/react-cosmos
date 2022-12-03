@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, create } from 'react-test-renderer';
+import { create } from 'react-test-renderer';
 import { FixtureLoader } from '../FixtureLoader.js';
 import { createPostMessageConnect } from '../postMessage.js';
 import {
@@ -22,12 +22,6 @@ export async function mountPostMessage(
 
   function postMessage(msg: RendererMessage) {
     parent.postMessage(msg, '*');
-    // window message events are received in the next
-    // frame, which is why we have to skip a loop before
-    // executing React updates
-    setTimeout(() => {
-      act(() => {});
-    });
   }
 
   function cleanup() {
@@ -39,10 +33,7 @@ export async function mountPostMessage(
   try {
     await cb({
       renderer,
-      update: newArgs =>
-        act(() => {
-          renderer.update(getElement(newArgs));
-        }),
+      update: newArgs => renderer.update(getElement(newArgs)),
       ...createRendererConnectMockApi({ getMessages, postMessage }),
     });
   } finally {

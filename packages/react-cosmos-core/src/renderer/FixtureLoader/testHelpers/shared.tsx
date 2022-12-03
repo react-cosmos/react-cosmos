@@ -1,8 +1,9 @@
 import until from 'async-until';
+import { findLast } from 'lodash-es';
 import { ReactTestRenderer } from 'react-test-renderer';
+import { FixtureId } from '../../../fixture/types.js';
 import { FixtureState } from '../../../fixtureState/types.js';
 import { ReactDecorators, ReactFixtureWrappers } from '../../reactTypes.js';
-import { FixtureId } from '../../../fixture/types.js';
 import {
   FixtureListUpdateResponse,
   FixtureStateChangeResponse,
@@ -138,9 +139,6 @@ export function createRendererConnectMockApi(
 
   async function postMessage(msg: RendererRequest) {
     args.postMessage(msg);
-    // This is very convenient because we don't have to await manually for
-    // each dispatched event to be fulfilled inside test cases
-    await untilMessage(msg);
   }
 
   async function untilMessage(msg: RendererMessage) {
@@ -150,7 +148,7 @@ export function createRendererConnectMockApi(
           try {
             // Support expect.any(constructor) matches
             // https://jestjs.io/docs/en/expect#expectanyconstructor
-            expect(getLastMessage()).toEqual(msg);
+            expect(findLastMessageWithType(msg.type)).toEqual(msg);
             return true;
           } catch (err) {
             return false;
@@ -185,5 +183,10 @@ export function createRendererConnectMockApi(
   function getLastMessage(): null | RendererMessage {
     const messages = args.getMessages();
     return messages.length === 0 ? null : messages[messages.length - 1];
+  }
+
+  function findLastMessageWithType(type: string): null | RendererMessage {
+    const messages = args.getMessages();
+    return findLast(messages, msg => msg.type === type) ?? null;
   }
 }

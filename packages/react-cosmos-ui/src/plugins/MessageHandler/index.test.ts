@@ -1,13 +1,11 @@
-// NOTE: Mock files need to imported before modules that use the mocked APIs
-import { mockSocketIo } from './testHelpers/mockSocketIo.js';
-
 import { waitFor } from '@testing-library/dom';
 import {
   BuildErrorMessage,
-  RENDERER_MESSAGE_EVENT_NAME,
-  SERVER_MESSAGE_EVENT_NAME,
+  RendererResponse,
+  SocketMessage,
 } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
+import { WebSocketServer } from 'ws';
 import { register } from '.';
 import {
   getMessageHandlerMethods,
@@ -19,6 +17,27 @@ beforeEach(register);
 
 afterEach(resetPlugins);
 
+async function withWebSocketServer(
+  cb: (args: {
+    wss: WebSocketServer;
+    onMessage: () => unknown;
+  }) => Promise<void>
+) {
+  const onMessage = jest.fn();
+
+  const wss = new WebSocketServer({ port: 80 });
+  wss.on('connection', ws => {
+    ws.on('message', msg => {
+      onMessage(JSON.parse(msg.toString()));
+    });
+  });
+
+  await cb({ wss, onMessage });
+
+  wss.clients.forEach(client => client.close());
+  wss.close();
+}
+
 function registerTestPlugins() {
   mockCore({
     isDevServerOn: () => true,
@@ -26,42 +45,54 @@ function registerTestPlugins() {
 }
 
 it('emits renderer request externally', async () => {
-  registerTestPlugins();
-  loadPlugins();
+  await withWebSocketServer(async ({ onMessage }) => {
+    registerTestPlugins();
+    loadPlugins();
 
-  const selectFixtureReq = {
-    type: 'selectFixture',
-    payload: {
-      rendererId: 'mockRendererId',
-      fixtureId: { path: 'mockFixturePath', name: null },
-      fixtureState: {},
-    },
-  };
-  const messageHandler = getMessageHandlerMethods();
-  messageHandler.postRendererRequest(selectFixtureReq);
+    const selectFixtureReq = {
+      type: 'selectFixture',
+      payload: {
+        rendererId: 'mockRendererId',
+        fixtureId: { path: 'mockFixturePath', name: null },
+        fixtureState: {},
+      },
+    };
+    const messageHandler = getMessageHandlerMethods();
+    messageHandler.postRendererRequest(selectFixtureReq);
 
-  await mockSocketIo(async ({ emit }) => {
     await waitFor(() =>
-      expect(emit).toBeCalledWith(RENDERER_MESSAGE_EVENT_NAME, selectFixtureReq)
+      expect(onMessage).toBeCalledWith({
+        eventName: 'renderer',
+        body: selectFixtureReq,
+      })
     );
   });
 });
 
 it('emits renderer response internally', async () => {
-  registerTestPlugins();
-  loadPlugins();
+  await withWebSocketServer(async ({ wss }) => {
+    registerTestPlugins();
+    loadPlugins();
+    await waitFor(() => expect(wss.clients.size).toBe(1));
 
-  await mockSocketIo(async ({ fakeEvent }) => {
-    const rendererReadyRes = {
+    const rendererReadyRes: RendererResponse = {
       type: 'rendererReady',
       payload: {
         rendererId: 'mockRendererId',
-        fixtures: { 'ein.js': null, 'zwei.js': null, 'drei.js': null },
+        fixtures: {
+          'ein.js': { type: 'single' },
+          'zwei.js': { type: 'single' },
+          'drei.js': { type: 'single' },
+        },
       },
+    };
+    const socketMessage: SocketMessage = {
+      eventName: 'renderer',
+      body: rendererReadyRes,
     };
 
     const { rendererResponse } = onMessageHandler();
-    fakeEvent(RENDERER_MESSAGE_EVENT_NAME, rendererReadyRes);
+    wss.clients.forEach(client => client.send(JSON.stringify(socketMessage)));
 
     await waitFor(() =>
       expect(rendererResponse).toBeCalledWith(
@@ -73,16 +104,21 @@ it('emits renderer response internally', async () => {
 });
 
 it('emits server message internally', async () => {
-  registerTestPlugins();
-  loadPlugins();
+  await withWebSocketServer(async ({ wss }) => {
+    registerTestPlugins();
+    loadPlugins();
+    await waitFor(() => expect(wss.clients.size).toBe(1));
 
-  await mockSocketIo(async ({ fakeEvent }) => {
     const buildErrorMsg: BuildErrorMessage = {
       type: 'buildError',
     };
+    const socketMessage: SocketMessage = {
+      eventName: 'server',
+      body: buildErrorMsg,
+    };
 
     const { serverMessage } = onMessageHandler();
-    fakeEvent(SERVER_MESSAGE_EVENT_NAME, buildErrorMsg);
+    wss.clients.forEach(client => client.send(JSON.stringify(socketMessage)));
 
     await waitFor(() =>
       expect(serverMessage).toBeCalledWith(expect.any(Object), buildErrorMsg)

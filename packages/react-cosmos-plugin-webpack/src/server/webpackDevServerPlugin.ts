@@ -1,6 +1,6 @@
 import webpackHotMiddleware from '@skidding/webpack-hot-middleware';
 import path from 'path';
-import { BuildMessage, removeLeadingDot } from 'react-cosmos-core';
+import { removeLeadingDot, ServerMessage } from 'react-cosmos-core';
 import { DevServerPluginArgs, serveStaticDir } from 'react-cosmos/server.js';
 import webpack from 'webpack';
 import { createWebpackCosmosConfig } from './cosmosConfig/createWebpackCosmosConfig.js';
@@ -45,7 +45,7 @@ export default async function webpackDevServerPlugin({
     }
   }
 
-  function sendBuildMessage(msg: BuildMessage) {
+  function sendBuildMessage(msg: ServerMessage) {
     sendMessage(msg);
   }
 

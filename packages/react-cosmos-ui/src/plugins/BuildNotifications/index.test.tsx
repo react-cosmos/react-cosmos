@@ -1,4 +1,4 @@
-import { BuildMessage } from 'react-cosmos-core';
+import { ServerMessage } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '.';
 import {
@@ -11,7 +11,7 @@ beforeEach(register);
 
 afterEach(resetPlugins);
 
-function emitBuildMessage(msg: BuildMessage) {
+function emitServerMessage(msg: ServerMessage) {
   getMessageHandlerContext().emit('serverMessage', msg);
 }
 
@@ -20,7 +20,7 @@ it('pushes build start notification', () => {
   const { pushStickyNotification } = mockNotifications();
 
   loadPlugins();
-  emitBuildMessage({ type: 'buildStart' });
+  emitServerMessage({ type: 'buildStart' });
 
   expect(pushStickyNotification).toBeCalledWith(expect.any(Object), {
     id: 'build',
@@ -35,7 +35,7 @@ it('pushes build error notification', () => {
   const { pushStickyNotification } = mockNotifications();
 
   loadPlugins();
-  emitBuildMessage({ type: 'buildError' });
+  emitServerMessage({ type: 'buildError' });
 
   expect(pushStickyNotification).toBeCalledWith(expect.any(Object), {
     id: 'build',
@@ -50,7 +50,7 @@ it('clears build notification', () => {
   const { removeStickyNotification } = mockNotifications();
 
   loadPlugins();
-  emitBuildMessage({ type: 'buildDone' });
+  emitServerMessage({ type: 'buildDone' });
 
   expect(removeStickyNotification).toBeCalledWith(expect.any(Object), 'build');
 });

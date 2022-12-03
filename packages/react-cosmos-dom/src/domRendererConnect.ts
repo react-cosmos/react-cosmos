@@ -10,5 +10,5 @@ export const domRendererConnect = isInsideCosmosPreviewIframe()
 
 function getWebSocketsUrl() {
   // TODO: Allow user to input URL
-  return location.origin;
+  return location.origin.replace(/^https?:/, 'ws:');
 }

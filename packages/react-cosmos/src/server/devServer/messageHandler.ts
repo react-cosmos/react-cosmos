@@ -1,32 +1,38 @@
 import http from 'http';
-import {
-  BuildMessage,
-  RENDERER_MESSAGE_EVENT_NAME,
-  SERVER_MESSAGE_EVENT_NAME,
-} from 'react-cosmos-core';
-import { Server } from 'socket.io';
+import { ServerMessage, SocketMessage } from 'react-cosmos-core';
+import WebSocket, { WebSocketServer } from 'ws';
 
 export function createMessageHandler(httpServer: http.Server) {
-  const io = new Server(httpServer);
+  const wss = new WebSocketServer({ server: httpServer });
 
-  io.on('connection', socket => {
+  wss.on('connection', ws => {
     // Forward commands between connected clients. Parties involved can be the
     // - The Cosmos UI, which acts as a remote control
     // - The web iframe or the React Native component renderers
-    socket.on(RENDERER_MESSAGE_EVENT_NAME, (msg: {}) => {
-      socket.broadcast.emit(RENDERER_MESSAGE_EVENT_NAME, msg);
+    ws.on('message', msg => {
+      wss.clients.forEach(client => {
+        if (client !== ws && client.readyState === WebSocket.OPEN) {
+          client.send(msg.toString());
+        }
+      });
     });
   });
 
-  function sendMessage(msg: BuildMessage) {
-    io.emit(SERVER_MESSAGE_EVENT_NAME, msg);
+  function sendMessage(msg: ServerMessage) {
+    wss.clients.forEach(client => {
+      if (client.readyState === WebSocket.OPEN) {
+        const socketMessage: SocketMessage = {
+          eventName: 'server',
+          body: msg,
+        };
+        client.send(JSON.stringify(socketMessage));
+      }
+    });
   }
 
   function cleanUp() {
-    const { sockets } = io.sockets;
-    Object.keys(sockets).forEach(id => {
-      sockets.get(id)?.disconnect(true);
-    });
+    wss.clients.forEach(client => client.close());
+    wss.close();
   }
 
   return { sendMessage, cleanUp };
