@@ -1,4 +1,3 @@
-import qs from 'query-string';
 import { FixtureId } from '../fixture/types.js';
 
 export type PlaygroundUrlParams = {
@@ -26,7 +25,7 @@ export function stringifyPlaygroundUrlQuery(
     encodedUrlParams.fixtureId = JSON.stringify(urlParams.fixtureId);
   }
 
-  return qs.stringify(encodedUrlParams);
+  return stringifyUrlQuery(encodedUrlParams);
 }
 
 export function parsePlaygroundUrlQuery(query: string): PlaygroundUrlParams {
@@ -49,7 +48,7 @@ export function stringifyRendererUrlQuery(
     encodedUrlParams._fixtureId = JSON.stringify(urlParams._fixtureId);
   }
 
-  return qs.stringify(encodedUrlParams);
+  return stringifyUrlQuery(encodedUrlParams);
 }
 
 export function parseRendererUrlQuery(query: string): RendererUrlParams {
@@ -64,9 +63,9 @@ export function parseRendererUrlQuery(query: string): RendererUrlParams {
 }
 
 export function parseUrlQuery<T extends {}>(query: string): T {
-  return qs.parse(query) as T;
+  return Object.fromEntries(new URLSearchParams(query)) as T;
 }
 
 export function stringifyUrlQuery(params: {}): string {
-  return qs.stringify(params);
+  return new URLSearchParams(params).toString();
 }

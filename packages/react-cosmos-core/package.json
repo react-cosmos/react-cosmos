@@ -8,7 +8,6 @@
   "main": "./dist/index.js",
   "dependencies": {
     "lodash-es": "^4.17.21",
-    "query-string": "7.1.1",
     "react-element-to-jsx-string": "^15.0.0",
     "react-is": "^18.0.0",
     "socket.io-client": "4.5.3"
