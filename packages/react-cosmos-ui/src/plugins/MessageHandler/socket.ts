@@ -16,15 +16,14 @@ export function initSocket(context: MessageHandlerContext) {
   }
 
   socket = new WebSocket(location.origin.replace(/^https?:/, 'ws:'));
-
   socket.addEventListener('open', () => {
     if (socket && pendingMessages.length > 0) {
-      pendingMessages.forEach(msg => socket!.send(JSON.stringify(msg)));
+      for (const msg of pendingMessages) socket.send(JSON.stringify(msg));
       pendingMessages = [];
     }
   });
 
-  function handler(event: MessageEvent<string>) {
+  function handleMessage(event: MessageEvent<string>) {
     const message = JSON.parse(event.data) as SocketMessage;
     switch (message.eventName) {
       case 'renderer':
@@ -35,11 +34,11 @@ export function initSocket(context: MessageHandlerContext) {
         console.log('Unknown socket message', message);
     }
   }
-  socket.addEventListener('message', handler);
+  socket.addEventListener('message', handleMessage);
 
   return () => {
     if (socket) {
-      socket.removeEventListener('message', handler);
+      socket.removeEventListener('message', handleMessage);
       socket.close();
       socket = null;
     }
