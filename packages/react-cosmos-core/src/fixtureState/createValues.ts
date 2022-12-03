@@ -1,4 +1,3 @@
-import reactElementToJSXString from 'react-element-to-jsx-string';
 import { isElement } from 'react-is';
 import { isArray, isObject, isPrimitiveData } from './shared.js';
 import { FixtureStateValue, FixtureStateValues, ObjectData } from './types.js';
@@ -39,6 +38,8 @@ export function createValue(data: unknown): FixtureStateValue {
 }
 
 function stringifyUnserializableData(data: unknown) {
-  // TODO: Enable custom stringifier plugins
-  return isElement(data) ? reactElementToJSXString(data) : String(data);
+  // NOTE: We used to use the react-element-to-jsx-string package but it added
+  // bloat and complicated ESM support. We might go back to something similar
+  // in the future. Or expose a plugin API for custom stringifiers.
+  return isElement(data) ? '<React.Element />' : String(data);
 }
