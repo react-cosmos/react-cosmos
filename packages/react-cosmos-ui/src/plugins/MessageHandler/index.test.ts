@@ -2,6 +2,7 @@ import { waitFor } from '@testing-library/dom';
 import {
   BuildErrorMessage,
   RendererResponse,
+  serverSocketMessage,
   SocketMessage,
 } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
@@ -112,13 +113,11 @@ it('emits server message internally', async () => {
     const buildErrorMsg: BuildErrorMessage = {
       type: 'buildError',
     };
-    const socketMessage: SocketMessage = {
-      eventName: 'server',
-      body: buildErrorMsg,
-    };
 
     const { serverMessage } = onMessageHandler();
-    wss.clients.forEach(client => client.send(JSON.stringify(socketMessage)));
+    wss.clients.forEach(client =>
+      client.send(JSON.stringify(serverSocketMessage(buildErrorMsg)))
+    );
 
     await waitFor(() =>
       expect(serverMessage).toBeCalledWith(expect.any(Object), buildErrorMsg)

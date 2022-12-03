@@ -1,4 +1,7 @@
-import { SocketMessage } from '../../playground/socketMessage.js';
+import {
+  rendererSocketMessage,
+  SocketMessage,
+} from '../../playground/socketMessage.js';
 import { RendererConnect, RendererRequest } from '../types.js';
 
 export function createWebSocketsConnect(url: string): RendererConnect {
@@ -14,10 +17,7 @@ export function createWebSocketsConnect(url: string): RendererConnect {
 
   return {
     postMessage(rendererResponse) {
-      const socketMessage: SocketMessage = {
-        eventName: 'renderer',
-        body: rendererResponse,
-      };
+      const socketMessage = rendererSocketMessage(rendererResponse);
       if (socket && socket.readyState === WebSocket.OPEN) {
         socket.send(JSON.stringify(socketMessage));
       } else {

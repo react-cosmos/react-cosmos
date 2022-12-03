@@ -1,5 +1,5 @@
 import http from 'http';
-import { ServerMessage, SocketMessage } from 'react-cosmos-core';
+import { ServerMessage, serverSocketMessage } from 'react-cosmos-core';
 import WebSocket, { WebSocketServer } from 'ws';
 
 export function createMessageHandler(httpServer: http.Server) {
@@ -21,11 +21,7 @@ export function createMessageHandler(httpServer: http.Server) {
   function sendMessage(msg: ServerMessage) {
     wss.clients.forEach(client => {
       if (client.readyState === WebSocket.OPEN) {
-        const socketMessage: SocketMessage = {
-          eventName: 'server',
-          body: msg,
-        };
-        client.send(JSON.stringify(socketMessage));
+        client.send(JSON.stringify(serverSocketMessage(msg)));
       }
     });
   }

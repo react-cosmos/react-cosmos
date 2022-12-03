@@ -1,4 +1,8 @@
-import { MessageType, SocketMessage } from 'react-cosmos-core';
+import {
+  MessageType,
+  rendererSocketMessage,
+  SocketMessage,
+} from 'react-cosmos-core';
 import { CoreSpec } from '../Core/spec.js';
 import { MessageHandlerContext } from './shared.js';
 
@@ -46,13 +50,10 @@ export function postRendererRequest(
   context: MessageHandlerContext,
   msg: MessageType
 ) {
-  const message: SocketMessage = {
-    eventName: 'renderer',
-    body: msg,
-  };
+  const socketMessage = rendererSocketMessage(msg);
   if (socket && socket.readyState === WebSocket.OPEN) {
-    socket.send(JSON.stringify(message));
+    socket.send(JSON.stringify(socketMessage));
   } else {
-    pendingMessages.push(message);
+    pendingMessages.push(socketMessage);
   }
 }

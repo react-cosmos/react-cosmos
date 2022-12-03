@@ -2,7 +2,7 @@ import { waitFor } from '@testing-library/react';
 import React from 'react';
 import { create } from 'react-test-renderer';
 import { WebSocketServer } from 'ws';
-import { SocketMessage } from '../../../playground/socketMessage.js';
+import { rendererSocketMessage } from '../../../playground/socketMessage.js';
 import { FixtureLoader } from '../FixtureLoader.js';
 import { createWebSocketsConnect } from '../webSockets.js';
 import {
@@ -32,10 +32,7 @@ export async function mountWebSockets(
   }
 
   function postMessage(msg: RendererMessage) {
-    const socketMessage: SocketMessage = {
-      eventName: 'renderer',
-      body: msg,
-    };
+    const socketMessage = rendererSocketMessage(msg);
     wss.clients.forEach(client => client.send(JSON.stringify(socketMessage)));
   }
 
