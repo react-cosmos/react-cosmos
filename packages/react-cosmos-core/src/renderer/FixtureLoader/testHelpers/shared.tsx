@@ -26,6 +26,7 @@ export type FixtureLoaderTestArgs = {
   selectedFixtureId?: null | FixtureId;
   initialFixtureId?: FixtureId;
   decorators?: ReactDecorators;
+  only?: boolean | 'postMessage' | 'webSocket';
   onErrorReset?: () => unknown;
 };
 

@@ -5,14 +5,16 @@ import { mountWebSockets } from './webSockets.js';
 export function testFixtureLoader(
   testName: string,
   args: FixtureLoaderTestArgs,
-  cb: FixtureLoaderTestCallback,
-  only = false
+  cb: FixtureLoaderTestCallback
 ) {
-  if (only) {
-    it.only(`[postMessage] ${testName}`, () => mountPostMessage(args, cb));
-    it.only(`[webSockets] ${testName}`, () => mountWebSockets(args, cb));
+  const pmTest = () => mountPostMessage(args, cb);
+  const wsTest = () => mountWebSockets(args, cb);
+
+  if (args.only) {
+    if (args.only !== 'webSocket') it.only(`[postMessage] ${testName}`, pmTest);
+    if (args.only !== 'postMessage') it.only(`[webSocket] ${testName}`, wsTest);
   } else {
-    it(`[postMessage] ${testName}`, () => mountPostMessage(args, cb));
-    it(`[webSockets] ${testName}`, () => mountWebSockets(args, cb));
+    it(`[postMessage] ${testName}`, pmTest);
+    it(`[webSocket] ${testName}`, wsTest);
   }
 }
