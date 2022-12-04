@@ -32,8 +32,9 @@ export async function mountWebSockets(
   }
 
   function postMessage(msg: RendererMessage) {
-    const socketMessage = rendererSocketMessage(msg);
-    wss.clients.forEach(client => client.send(JSON.stringify(socketMessage)));
+    wss.clients.forEach(client =>
+      client.send(JSON.stringify(rendererSocketMessage(msg)))
+    );
   }
 
   async function cleanup() {
