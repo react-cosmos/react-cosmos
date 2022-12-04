@@ -5,9 +5,9 @@ import {
 import { RendererConnect, RendererRequest } from '../types.js';
 
 export function createWebSocketsConnect(url: string): RendererConnect {
-  const socket = new WebSocket(url);
   let pendingMessages: SocketMessage[] = [];
 
+  const socket = new WebSocket(url);
   socket.addEventListener('open', () => {
     if (pendingMessages.length > 0) {
       pendingMessages.forEach(msg => socket.send(JSON.stringify(msg)));
