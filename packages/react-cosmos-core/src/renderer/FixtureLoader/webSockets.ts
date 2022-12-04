@@ -26,14 +26,14 @@ export function createWebSocketsConnect(url: string): RendererConnect {
     },
 
     onMessage(onMessage) {
-      const handler = (msg: MessageEvent<string>) => {
+      function handleMessage(msg: MessageEvent<string>) {
         const socketMessage = JSON.parse(msg.data) as SocketMessage;
         if (socketMessage.eventName === 'renderer') {
           onMessage(socketMessage.body as RendererRequest);
         }
-      };
-      socket.addEventListener('message', handler);
-      return () => socket.removeEventListener('message', handler);
+      }
+      socket.addEventListener('message', handleMessage);
+      return () => socket.removeEventListener('message', handleMessage);
     },
   };
 }
