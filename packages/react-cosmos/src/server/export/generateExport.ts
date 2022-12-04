@@ -114,7 +114,7 @@ async function exportPlaygroundFiles(
 
   await fs.copyFile(
     resolve('react-cosmos-ui/dist/playground.bundle.js'),
-    path.resolve(exportPath, '_playground.js')
+    path.resolve(exportPath, 'playground.bundle.js')
   );
   await fs.copyFile(
     getStaticPath('favicon.ico'),

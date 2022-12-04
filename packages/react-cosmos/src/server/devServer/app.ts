@@ -44,9 +44,19 @@ export async function createApp(
     }
   );
 
-  app.get('/_playground.js', (req: express.Request, res: express.Response) => {
-    res.sendFile(resolve('react-cosmos-ui/dist/playground.bundle.js'));
-  });
+  app.get(
+    '/playground.bundle.js',
+    (req: express.Request, res: express.Response) => {
+      res.sendFile(resolve('react-cosmos-ui/dist/playground.bundle.js'));
+    }
+  );
+
+  app.get(
+    '/playground.bundle.js.map',
+    (req: express.Request, res: express.Response) => {
+      res.sendFile(resolve('react-cosmos-ui/dist/playground.bundle.js.map'));
+    }
+  );
 
   app.get('/_cosmos.ico', (req: express.Request, res: express.Response) => {
     res.sendFile(getStaticPath('favicon.ico'));

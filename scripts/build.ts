@@ -144,7 +144,7 @@ function runWebpack(config: string) {
   } else {
     args.push('--stats', 'errors-only');
   }
-  const env = { NODE_ENV: 'development' };
+  const env = { NODE_ENV: 'production' };
   const promise = runAsyncTask({ cmd: 'webpack', args, env });
   return watch ? null : promise;
 }
