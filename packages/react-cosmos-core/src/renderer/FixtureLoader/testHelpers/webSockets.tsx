@@ -12,7 +12,7 @@ import {
   RendererMessage,
 } from './shared.js';
 
-const port = 80 + parseInt(process.env.JEST_WORKER_ID ?? '0', 10);
+const port = 8000 + parseInt(process.env.JEST_WORKER_ID ?? '0', 10);
 
 export async function mountWebSockets(
   args: FixtureLoaderTestArgs,
