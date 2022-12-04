@@ -10,9 +10,7 @@ export type BuildDoneMessage = {
   type: 'buildDone';
 };
 
-export type BuildMessage =
+export type ServerMessage =
   | BuildStartMessage
   | BuildErrorMessage
   | BuildDoneMessage;
-
-export const SERVER_MESSAGE_EVENT_NAME = 'cosmos-build-message';

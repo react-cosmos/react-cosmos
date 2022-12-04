@@ -19,7 +19,7 @@
     "pkg-up": "^4.0.0",
     "react-cosmos-core": "5.7.2",
     "react-cosmos-ui": "5.7.2",
-    "socket.io": "4.5.3",
+    "ws": "^8.11.0",
     "yargs": "^17.6.2"
   },
   "devDependencies": {},

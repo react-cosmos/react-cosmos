@@ -1,4 +1,4 @@
-import { BuildMessage, MessageType } from 'react-cosmos-core';
+import { ServerMessage, MessageType } from 'react-cosmos-core';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { MessageHandlerSpec } from '../MessageHandler/spec.js';
 import { NotificationsSpec } from '../Notifications/spec.js';
@@ -22,8 +22,8 @@ function onServerMessage(context: BuildNotificationsContext, msg: MessageType) {
   const { getMethodsOf } = context;
   const notifications = getMethodsOf<NotificationsSpec>('notifications');
 
-  const buildMsg = msg as BuildMessage;
-  switch (buildMsg.type) {
+  const serverMessage = msg as ServerMessage;
+  switch (serverMessage.type) {
     case 'buildStart':
       return notifications.pushStickyNotification({
         id: 'build',
