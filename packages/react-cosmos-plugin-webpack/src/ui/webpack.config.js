@@ -20,6 +20,7 @@ export default {
     'react-dom': 'ReactDom',
     'react-plugin': 'ReactPlugin',
     react: 'React',
+    'styled-components': 'StyledComponents',
   },
   plugins,
 };

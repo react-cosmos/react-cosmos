@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import * as ReactPlugin from 'react-plugin';
+import styled from 'styled-components';
 import { PlaygroundMountArgs } from './playgroundConfig.js';
 import './plugins/pluginEntry.js';
 import { DEFAULT_PLUGIN_CONFIG } from './shared/defaultPluginConfig.js';
@@ -11,6 +12,7 @@ declare global {
     ReactPlugin: any;
     React: any;
     ReactDom: any;
+    StyledComponents: any;
   }
 }
 
@@ -19,6 +21,7 @@ declare global {
 window.ReactPlugin = ReactPlugin;
 window.React = React;
 window.ReactDom = ReactDom;
+window.StyledComponents = styled;
 
 export default async function mount({
   playgroundConfig,
