@@ -2,7 +2,10 @@ import { waitFor } from '@testing-library/react';
 import React from 'react';
 import { create } from 'react-test-renderer';
 import { WebSocketServer } from 'ws';
-import { rendererSocketMessage } from '../../../playground/socketMessage.js';
+import {
+  rendererSocketMessage,
+  SocketMessage,
+} from '../../../server/socketMessage.js';
 import { FixtureLoader } from '../FixtureLoader.js';
 import { createWebSocketsConnect } from '../webSockets.js';
 import {
@@ -28,7 +31,9 @@ export async function mountWebSockets(
   });
 
   function getMessages() {
-    return onMessage.mock.calls.map(call => call[0].body);
+    return onMessage.mock.calls.map(
+      call => (call[0] as SocketMessage<RendererMessage>).message
+    );
   }
 
   function postMessage(msg: RendererMessage) {

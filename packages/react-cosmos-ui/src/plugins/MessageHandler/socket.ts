@@ -25,11 +25,11 @@ export function initSocket(context: MessageHandlerContext) {
 
   function handleMessage(event: MessageEvent<string>) {
     const message = JSON.parse(event.data) as SocketMessage;
-    switch (message.eventName) {
+    switch (message.channel) {
       case 'renderer':
-        return context.emit('rendererResponse', message.body);
+        return context.emit('rendererResponse', message.message);
       case 'server':
-        return context.emit('serverMessage', message.body);
+        return context.emit('serverMessage', message.message);
       default:
         console.log('Unknown socket message', message);
     }

@@ -1,7 +1,7 @@
 import {
   rendererSocketMessage,
   SocketMessage,
-} from '../../playground/socketMessage.js';
+} from '../../server/socketMessage.js';
 import { RendererConnect, RendererRequest } from '../types.js';
 
 export function createWebSocketsConnect(url: string): RendererConnect {
@@ -28,8 +28,8 @@ export function createWebSocketsConnect(url: string): RendererConnect {
     onMessage(onMessage) {
       function handleMessage(msg: MessageEvent<string>) {
         const socketMessage = JSON.parse(msg.data) as SocketMessage;
-        if (socketMessage.eventName === 'renderer') {
-          onMessage(socketMessage.body as RendererRequest);
+        if (socketMessage.channel === 'renderer') {
+          onMessage(socketMessage.message as RendererRequest);
         }
       }
       socket.addEventListener('message', handleMessage);
