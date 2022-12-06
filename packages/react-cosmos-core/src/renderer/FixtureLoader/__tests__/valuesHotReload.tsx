@@ -62,7 +62,7 @@ testFixtureLoader(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: expect.any<any>(Array),
+        props: expect.any(Array),
         controls: {
           // `count` was reset, `toggled` was preserved
           count: {
@@ -119,7 +119,7 @@ testFixtureLoader(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: expect.any<any>(Array),
+        props: expect.any(Array),
         controls: {
           // `count` was preserved, `toggled` was reset
           count: {
@@ -149,7 +149,7 @@ testFixtureLoader(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: expect.any<any>(Array),
+        props: expect.any(Array),
         controls: {
           count: {
             type: 'standard',
@@ -176,7 +176,7 @@ testFixtureLoader(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: expect.any<any>(Array),
+        props: expect.any(Array),
         controls: {
           count: {
             type: 'standard',

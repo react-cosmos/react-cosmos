@@ -51,7 +51,7 @@ testFixtureLoader(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: expect.any<any>(Array),
+        props: expect.any(Array),
         controls: {
           selectName: {
             type: 'select',
@@ -104,7 +104,7 @@ testFixtureLoader(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: expect.any<any>(Array),
+        props: expect.any(Array),
         controls: {
           selectName: {
             type: 'select',
@@ -133,7 +133,7 @@ testFixtureLoader(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: expect.any<any>(Array),
+        props: expect.any(Array),
         controls: {
           selectName: {
             type: 'select',
