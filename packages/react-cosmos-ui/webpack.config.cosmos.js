@@ -20,6 +20,11 @@ export default {
     rules: [
       {
         test: /\.[jt]sx?$/,
+        enforce: 'pre',
+        use: ['source-map-loader'],
+      },
+      {
+        test: /\.[jt]sx?$/,
         include: [src],
         loader: 'ts-loader',
         options: {
