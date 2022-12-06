@@ -6,6 +6,7 @@
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
+  "sideEffects": false,
   "dependencies": {
     "lodash-es": "^4.17.21",
     "react-is": "^18.0.0"

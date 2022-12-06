@@ -125,7 +125,10 @@ async function buildPkgTs(pkgName: string, tsConfig: string) {
 }
 
 async function buildPkgWebpack(pkgName: string, webpackConfig: string) {
-  await runWebpack(`packages/${pkgName}/${webpackConfig}`);
+  await runWebpack(
+    `packages/${pkgName}/${webpackConfig}`,
+    pkgName === 'react-cosmos-ui'
+  );
 }
 
 function runTypeScript(config: string) {
@@ -135,7 +138,7 @@ function runTypeScript(config: string) {
   return watch ? null : promise;
 }
 
-function runWebpack(config: string) {
+function runWebpack(config: string, production = false) {
   const args = ['--config', config];
   // Showing webpack output in watch mode because it's nice to get feedback
   // after saving a file
@@ -144,7 +147,7 @@ function runWebpack(config: string) {
   } else {
     args.push('--stats', 'errors-only');
   }
-  const env = { NODE_ENV: 'production' };
+  const env = { NODE_ENV: production ? 'production' : 'development' };
   const promise = runAsyncTask({ cmd: 'webpack', args, env });
   return watch ? null : promise;
 }

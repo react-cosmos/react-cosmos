@@ -6,6 +6,7 @@
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
+  "sideEffects": ["./dist/plugins/pluginEntry.js", "./dist/plugins/*/index.js"],
   "dependencies": {
     "lodash-es": "^4.17.21",
     "react-cosmos-core": "5.7.2"
