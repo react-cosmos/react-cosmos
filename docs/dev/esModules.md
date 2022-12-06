@@ -21,6 +21,7 @@ Loading pure ESM fixtures without a bundler is almost possible. Here's what's re
 
 - [x] Publish React Cosmos utils and renderer APIs as ESM.
 - [ ] Embed fixture and decorator maps, and mount renderer in generated index.html (via `"module"` script).
+- [ ] Serve user's source modules.
 - [ ] **Tricky part:** Serve user's NPM dependencies and make them accessible through generated [import maps](https://github.com/WICG/import-maps) in the renderer index. This requires a smart static server for resolving and serving node_modules, which can be nested and/or come from a parent directory in monorepos. In static exports NPM dependencies have to be extracted and resolved from their new location.
 
 The closer we get to ESM fixture support, however, the more unlikely it seems anyone would use it. Any real world front-end project needs to package its NPM dependencies at some point. Adding support for Vite (which Snowpack also deprecated itself in favor of) sounds like a more fruitful endeavour on the bundler front at the moment.
