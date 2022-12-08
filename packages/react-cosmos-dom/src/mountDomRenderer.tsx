@@ -1,6 +1,6 @@
 import React from 'react';
 import { ReactDecorators, ReactFixtureWrappers } from 'react-cosmos-core';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { DomFixtureLoader } from './DomFixtureLoader.js';
 import { domRendererConnect } from './domRendererConnect.js';
 import { domRendererId } from './domRendererId.js';
@@ -27,12 +27,12 @@ export function mountDomRenderer({
   onErrorReset,
 }: Args) {
   const domContainer = getDomContainer(rendererConfig.containerQuerySelector);
-  render(
+  const root = createRoot(domContainer);
+  root.render(
     <DomFixtureLoader
       fixtures={fixtures}
       decorators={decorators}
       onErrorReset={onErrorReset}
-    />,
-    domContainer
+    />
   );
 }

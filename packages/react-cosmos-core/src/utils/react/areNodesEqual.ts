@@ -1,5 +1,5 @@
-import { isEqual, isEqualWith, isPlainObject } from 'lodash-es';
-import { ComponentType, ReactElement, ReactNode, ReactNodeArray } from 'react';
+import { isEqual, isEqualWith } from 'lodash-es';
+import { ComponentType, ReactElement, ReactNode } from 'react';
 import { getComponentName } from './getComponentName.js';
 import { isReactElement } from './isReactElement.js';
 
@@ -14,14 +14,12 @@ export function areNodesEqual(
   if (Array.isArray(node1) && Array.isArray(node2))
     return areArrayNodesEqual(node1, node2, strictTypeCheck);
 
-  if (isObject(node1) && isObject(node2)) return areObjectsEqual(node1, node2);
-
   return isEqual(node1, node2);
 }
 
 function areElementsEqual(
-  element1: ReactElement<any>,
-  element2: ReactElement<any>,
+  element1: ReactElement,
+  element2: ReactElement,
   strictTypeCheck: boolean
 ) {
   if (!areElementTypesEqual(element1.type, element2.type, strictTypeCheck))
@@ -34,7 +32,7 @@ function areElementsEqual(
     // @ts-ignore
     element1.ref === element2.ref &&
     // Children (and props in general) can contain Elements and other Nodes
-    areNodesEqual(element1.props, element2.props, strictTypeCheck)
+    arePropsEqual(element1.props, element2.props)
   );
 }
 
@@ -49,8 +47,8 @@ function areElementTypesEqual(
 }
 
 function areArrayNodesEqual(
-  node1: ReactNodeArray,
-  node2: ReactNodeArray,
+  node1: ReactNode[],
+  node2: ReactNode[],
   strictTypeCheck: boolean
 ) {
   if (node1.length !== node2.length) return false;
@@ -62,11 +60,7 @@ function areArrayNodesEqual(
 
 type PlainObject = Record<string, unknown>;
 
-function isObject(node: ReactNode): node is PlainObject {
-  return isPlainObject(node);
-}
-
-function areObjectsEqual(object1: PlainObject, object2: PlainObject) {
+function arePropsEqual(object1: PlainObject, object2: PlainObject) {
   if (!isEqual(Object.keys(object1), Object.keys(object2))) return false;
 
   return Object.keys(object1).every(key =>

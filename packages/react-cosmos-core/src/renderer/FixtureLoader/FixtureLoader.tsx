@@ -1,5 +1,6 @@
 import { isEqual } from 'lodash-es';
-import React, { Component } from 'react';
+import React, { Component, ReactNode } from 'react';
+import { FixtureId } from '../../fixture/types.js';
 import { FixtureState, SetFixtureState } from '../../fixtureState/types.js';
 import { getFixtureListFromWrappers } from '../getFixtureList.js';
 import {
@@ -7,7 +8,6 @@ import {
   ReactDecorators,
   ReactFixtureWrappers,
 } from '../reactTypes.js';
-import { FixtureId } from '../../fixture/types.js';
 import {
   RendererConnect,
   RendererRequest,
@@ -27,7 +27,7 @@ export type Props = {
   selectedFixtureId?: null | FixtureId;
   systemDecorators: ReactDecorator[];
   userDecorators: ReactDecorators;
-  renderMessage?: (args: { msg: string }) => React.ReactNode;
+  renderMessage?: (args: { msg: string }) => ReactNode;
   onErrorReset?: () => unknown;
 };
 

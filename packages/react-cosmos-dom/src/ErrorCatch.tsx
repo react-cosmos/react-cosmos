@@ -1,12 +1,12 @@
 import { isEqual } from 'lodash-es';
-import React from 'react';
+import React, { Component, ReactNode } from 'react';
 import { areNodesEqual, ReactDecoratorProps } from 'react-cosmos-core';
 
 type State = {
   error: null | string;
 };
 
-export class ErrorCatch extends React.Component<ReactDecoratorProps, State> {
+export class ErrorCatch extends Component<ReactDecoratorProps, State> {
   state: State = {
     error: null,
   };
@@ -61,10 +61,10 @@ export class ErrorCatch extends React.Component<ReactDecoratorProps, State> {
   }
 }
 
-function fixtureChanged(f1: React.ReactNode, f2: React.ReactNode) {
+function fixtureChanged(f1: ReactNode, f2: ReactNode) {
   return !areNodesEqual(f1, f2, true);
 }
 
-function fixtureStateChanged(fS1: React.ReactNode, fS2: React.ReactNode) {
+function fixtureStateChanged(fS1: object, fS2: object) {
   return !isEqual(fS1, fS2);
 }
