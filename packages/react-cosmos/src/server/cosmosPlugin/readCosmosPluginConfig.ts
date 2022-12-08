@@ -3,10 +3,16 @@ import { CosmosPluginConfig, RawCosmosPluginConfig } from 'react-cosmos-core';
 import { importModule } from '../utils/fs.js';
 import { resolveSilent } from '../utils/resolveSilent.js';
 
-export async function readCosmosPluginConfig(
-  rootDir: string,
-  moduleNameOrPath: string
-) {
+type ReadCosmosPluginConfigArgs = {
+  rootDir: string;
+  moduleNameOrPath: string;
+  relativePaths: boolean;
+};
+export async function readCosmosPluginConfig({
+  rootDir,
+  moduleNameOrPath,
+  relativePaths,
+}: ReadCosmosPluginConfigArgs) {
   const rawConfig = await importModule<RawCosmosPluginConfig>(moduleNameOrPath);
   const pluginRootDir = path.dirname(moduleNameOrPath);
   const relativePluginRootDir = path.relative(rootDir, pluginRootDir);
@@ -21,7 +27,8 @@ export async function readCosmosPluginConfig(
       config.name,
       rootDir,
       pluginRootDir,
-      rawConfig.ui
+      rawConfig.ui,
+      relativePaths
     );
   }
 
@@ -30,7 +37,8 @@ export async function readCosmosPluginConfig(
       config.name,
       rootDir,
       pluginRootDir,
-      rawConfig.devServer
+      rawConfig.devServer,
+      relativePaths
     );
   }
 
@@ -39,7 +47,8 @@ export async function readCosmosPluginConfig(
       config.name,
       rootDir,
       pluginRootDir,
-      rawConfig.export
+      rawConfig.export,
+      relativePaths
     );
   }
 
@@ -50,12 +59,13 @@ function resolvePluginPath(
   pluginName: string,
   rootDir: string,
   pluginRootDir: string,
-  filePath: string
+  filePath: string,
+  relativePath: boolean
 ) {
   const absolutePath = path.join(pluginRootDir, filePath);
   const resolvedPath = resolveSilent(absolutePath);
   if (!resolvedPath) {
     throw new Error(`Invalid path in plugin "${pluginName}": ${filePath}`);
   }
-  return path.relative(rootDir, resolvedPath);
+  return relativePath ? path.relative(rootDir, resolvedPath) : resolvedPath;
 }

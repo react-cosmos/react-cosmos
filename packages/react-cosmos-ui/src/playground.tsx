@@ -51,18 +51,9 @@ export default async function mount({
 
 async function loadPluginScript(scriptPath: string) {
   console.log(`[Cosmos] Loading plugin script at ${scriptPath}`);
-
-  const script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.src = `_plugin/${encodeURIComponent(scriptPath)}`;
-
-  document.getElementsByTagName('head')[0].appendChild(script);
-
-  return new Promise(resolve => {
-    script.onload = resolve;
-    script.onerror = () => {
-      console.log('Failed to load plugin script.');
-      resolve(null);
-    };
-  });
+  // Handle both absolute (dev server) and relative paths (static export)
+  const normalizedPath = scriptPath.startsWith('/')
+    ? scriptPath
+    : `/${scriptPath}`;
+  await import(/* webpackIgnore: true */ `./_plugin${normalizedPath}`);
 }

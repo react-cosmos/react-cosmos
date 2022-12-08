@@ -4,15 +4,23 @@ import { readCosmosPluginConfig } from './readCosmosPluginConfig.js';
 
 type Args = {
   rootDir: string;
+  relativePaths: boolean;
   ignore?: string[];
 };
 export async function findCosmosPluginConfigs({
   rootDir,
+  relativePaths,
   ignore,
 }: Args): Promise<CosmosPluginConfig[]> {
   const configPaths = findCosmosPluginConfigPaths(rootDir, ignore);
   return Promise.all(
-    configPaths.map(configPath => readCosmosPluginConfig(rootDir, configPath))
+    configPaths.map(configPath =>
+      readCosmosPluginConfig({
+        rootDir,
+        moduleNameOrPath: configPath,
+        relativePaths,
+      })
+    )
   );
 }
 

@@ -21,7 +21,12 @@ const corePlugins: ExportPlugin[] = [];
 export async function generateExport() {
   const cosmosConfig = await detectCosmosConfig();
 
-  const pluginConfigs = await getPluginConfigs(cosmosConfig);
+  const pluginConfigs = await getPluginConfigs({
+    cosmosConfig,
+    // Relative paths work in exports because all plugin modules are copied
+    // inside the export path
+    relativePaths: true,
+  });
   logPluginInfo(pluginConfigs);
 
   // Clear previous export (or other files at export path)

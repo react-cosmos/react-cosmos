@@ -17,6 +17,7 @@ import { serveStaticDir } from '../shared/staticServer.js';
 import { createApp } from './app.js';
 import { httpProxyDevServerPlugin } from './corePlugins/httpProxy.js';
 import openFileDevServerPlugin from './corePlugins/openFile.js';
+import pluginEndpointDevServerPlugin from './corePlugins/pluginEndpoint.js';
 import { userDepsFileDevServerPlugin } from './corePlugins/userDepsFile.js';
 import { createHttpServer } from './httpServer.js';
 import { createMessageHandler } from './messageHandler.js';
@@ -25,13 +26,20 @@ const corePlugins: DevServerPlugin[] = [
   userDepsFileDevServerPlugin,
   httpProxyDevServerPlugin,
   openFileDevServerPlugin,
+  pluginEndpointDevServerPlugin,
 ];
 
 export async function startDevServer(platformType: PlatformType) {
   const cosmosConfig = await detectCosmosConfig();
   logCosmosConfigInfo();
 
-  const pluginConfigs = await getPluginConfigs(cosmosConfig);
+  const pluginConfigs = await getPluginConfigs({
+    cosmosConfig,
+    // Absolute paths are required in dev mode because the dev server could
+    // run in a monorepo package that's not the root of the project and plugins
+    // could be installed in the root
+    relativePaths: false,
+  });
   logPluginInfo(pluginConfigs);
 
   const app = await createApp(platformType, cosmosConfig, pluginConfigs);
