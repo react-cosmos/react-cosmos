@@ -98,7 +98,7 @@ export default async function webpackDevServerPlugin({
   await onCompilationDone;
 
   return async () => {
-    await new Promise<void>(res => wdmInst.close(res));
+    await new Promise(res => wdmInst.close(res));
   };
 }
 
