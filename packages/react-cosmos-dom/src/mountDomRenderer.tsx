@@ -14,6 +14,12 @@ window.addEventListener('error', () => {
   });
 });
 
+type CachedRoot = {
+  domContainer: Element;
+  reactRoot: ReturnType<typeof createRoot>;
+};
+let cachedRoot: CachedRoot | null = null;
+
 type Args = {
   rendererConfig: DomRendererConfig;
   fixtures: ReactFixtureWrappers;
@@ -27,8 +33,12 @@ export function mountDomRenderer({
   onErrorReset,
 }: Args) {
   const domContainer = getDomContainer(rendererConfig.containerQuerySelector);
-  const root = createRoot(domContainer);
-  root.render(
+  if (!cachedRoot || cachedRoot.domContainer !== domContainer) {
+    const reactRoot = createRoot(domContainer);
+    cachedRoot = { domContainer, reactRoot };
+  }
+
+  cachedRoot.reactRoot.render(
     <DomFixtureLoader
       fixtures={fixtures}
       decorators={decorators}
