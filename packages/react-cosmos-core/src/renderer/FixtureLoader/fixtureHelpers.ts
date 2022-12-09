@@ -1,11 +1,14 @@
-import { ReactNode } from 'react';
 import { isMultiFixture } from '../isMultiFixture.js';
-import { ReactFixtureExport, ReactFixtureMap } from '../reactTypes.js';
+import {
+  ReactFixture,
+  ReactFixtureExport,
+  ReactFixtureMap,
+} from '../reactTypes.js';
 
 export function getFixture(
   fixtureExport: ReactFixtureExport,
   fixtureName?: string
-): void | ReactNode {
+): void | ReactFixture {
   if (fixtureName === undefined) {
     if (isMultiFixture(fixtureExport)) {
       // Fixture name missing in multi fixture

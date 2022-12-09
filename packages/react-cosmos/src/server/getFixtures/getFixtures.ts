@@ -1,4 +1,5 @@
 import path from 'path';
+import { ReactElement } from 'react';
 import {
   createFixtureTree,
   FixtureId,
@@ -21,7 +22,7 @@ import { getUserModules } from '../userDeps/getUserModules.js';
 export type FixtureApi = {
   absoluteFilePath: string;
   fileName: string;
-  getElement: () => React.ReactElement<any>;
+  getElement: () => ReactElement;
   name: string | null;
   parents: string[];
   playgroundUrl: string;
@@ -46,7 +47,7 @@ export function getFixtures(cosmosConfig: CosmosConfig) {
     const fixtureExport = fixtures[fixtureId.path];
     const fixture: ReactFixture =
       fixtureId.name === undefined
-        ? fixtureExport
+        ? (fixtureExport as ReactFixture)
         : (fixtureExport as ReactFixtureMap)[fixtureId.name];
 
     const treePath = [...parents, fileName];
@@ -96,7 +97,7 @@ function createFixtureElementGetter(
   fixture: ReactFixture,
   fixturePath: string,
   decoratorsByPath: ReactDecorators
-): () => React.ReactElement<any> {
+): () => ReactElement {
   const decorators: ReactDecorator[] = getSortedDecoratorsForFixturePath(
     fixturePath,
     decoratorsByPath

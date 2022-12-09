@@ -1,5 +1,5 @@
 import { get } from 'lodash-es';
-import React from 'react';
+import { ReactElement, ReactNode } from 'react';
 import { isReactElement } from '../../../../../utils/react/isReactElement.js';
 import { isRootPath } from './shared.js';
 
@@ -9,14 +9,14 @@ import { isRootPath } from './shared.js';
 // array of elements, etc.) is irrelevant.
 // NICETOHAVE: Assert child path validity
 export function getElementAtPath(
-  node: React.ReactNode,
+  node: ReactNode,
   elPath: string
-): null | React.ReactElement<any> {
+): null | ReactElement {
   if (!isReactElement(node) && !Array.isArray(node)) {
     return null;
   }
 
-  const rootNode = node as React.ReactElement<any> | React.ReactNode[];
+  const rootNode = node as ReactElement | ReactNode[];
   const childNode = isRootPath(elPath) ? rootNode : get(rootNode, elPath);
 
   if (!isReactElement(childNode)) {
@@ -27,9 +27,9 @@ export function getElementAtPath(
 }
 
 export function getExpectedElementAtPath(
-  node: React.ReactNode,
+  node: ReactNode,
   elPath: string
-): React.ReactElement<any> {
+): ReactElement {
   const el = getElementAtPath(node, elPath);
 
   if (!el) {

@@ -1,10 +1,10 @@
 import { get } from 'lodash-es';
-import React from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import { isElement } from 'react-is';
 import { findElementPaths } from '..';
 
 it('finds no paths on empty node', () => {
-  const noChildrenNodes: React.ReactNode[] = [null, true, false, 'Hello', 7];
+  const noChildrenNodes: ReactNode[] = [null, true, false, 'Hello', 7];
 
   noChildrenNodes.forEach(node => {
     expect(findElementPaths(node)).toEqual([]);
@@ -72,7 +72,7 @@ it('finds nested paths', () => {
 });
 
 it('only finds paths outside function children', () => {
-  const Comp = (props: { children: () => React.ReactElement<any> }) => null;
+  const Comp = (props: { children: () => ReactElement }) => null;
   expect(
     findElementPaths(
       <div>

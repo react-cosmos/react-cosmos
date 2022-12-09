@@ -1,28 +1,35 @@
-import React from 'react';
+import {
+  cloneElement,
+  Component,
+  MutableRefObject,
+  ReactElement,
+  ReactNode,
+  Ref,
+} from 'react';
 import { findRelevantElementPaths } from '../../shared/findRelevantElementPaths.js';
 import { setElementAtPath } from '../../shared/nodeTree/index.js';
 import { CachedRefHandlers } from '../shared.js';
 import { isRefSupported } from './isRefSupported.js';
 
-type ElementWithRef = React.ReactElement<any> & {
-  ref: null | React.Ref<any>;
+type ElementWithRef = ReactElement & {
+  ref: null | Ref<any>;
 };
 
-type SpyRef = (elPath: string, elRef: null | React.Component) => unknown;
+type SpyRef = (elPath: string, elRef: null | Component) => unknown;
 
 export function decorateFixtureRefs(
-  fixture: React.ReactNode,
+  fixture: ReactNode,
   spyRef: SpyRef,
   cachedRefHandlers: CachedRefHandlers
 ) {
   const elPaths = findRelevantElementPaths(fixture);
-  return elPaths.reduce((decoratedFixture, elPath): React.ReactNode => {
+  return elPaths.reduce((decoratedFixture, elPath): ReactNode => {
     return setElementAtPath(decoratedFixture, elPath, element => {
       if (!isRefSupported(element.type)) {
         return element;
       }
 
-      return React.cloneElement(element, {
+      return cloneElement(element, {
         ref: getDecoratedRef(
           (element as ElementWithRef).ref,
           spyRef,
@@ -35,7 +42,7 @@ export function decorateFixtureRefs(
 }
 
 function getDecoratedRef(
-  origRef: null | React.Ref<any>,
+  origRef: null | Ref<any>,
   spyRef: SpyRef,
   elPath: string,
   cachedRefHandlers: CachedRefHandlers
@@ -52,11 +59,11 @@ function getDecoratedRef(
 }
 
 function decorateRefWithSpy(
-  origRef: null | React.Ref<any>,
+  origRef: null | Ref<any>,
   spyRef: SpyRef,
   elPath: string
 ) {
-  return (elRef: null | React.Component) => {
+  return (elRef: null | Component) => {
     if (origRef) {
       callOriginalRef(origRef, elRef);
     }
@@ -64,7 +71,7 @@ function decorateRefWithSpy(
   };
 }
 
-function callOriginalRef(ref: React.Ref<any>, elRef: null | React.Component) {
+function callOriginalRef(ref: Ref<any>, elRef: null | Component) {
   if (typeof ref === 'string') {
     console.warn('[decorateFixtureRefs] String refs are not supported');
     return;
@@ -75,6 +82,6 @@ function callOriginalRef(ref: React.Ref<any>, elRef: null | React.Component) {
     return;
   }
 
-  const refObj = ref as React.MutableRefObject<any>;
+  const refObj = ref as MutableRefObject<any>;
   refObj.current = elRef;
 }

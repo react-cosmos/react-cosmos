@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
+import { register } from '..';
 import { mockPlug } from '../../../testHelpers/pluginHelpers.js';
 import {
   mockCore,
@@ -8,7 +9,6 @@ import {
   mockRouter,
   mockStorage,
 } from '../../../testHelpers/pluginMocks.js';
-import { register } from '..';
 
 beforeEach(register);
 
@@ -45,24 +45,24 @@ it('renders "navRow" slot', async () => {
   registerTestPlugins();
   mockPlug('navRow', () => <>we are the robots</>);
 
-  const { getByText } = await loadTestPlugins();
-  getByText(/we are the robots/i);
+  const { findByText } = await loadTestPlugins();
+  await findByText(/we are the robots/i);
 });
 
 it('renders "rendererPreview" slot', async () => {
   registerTestPlugins();
   mockPlug('rendererPreview', () => <>we are the robots</>);
 
-  const { getByText } = await loadTestPlugins();
-  getByText(/we are the robots/i);
+  const { findByText } = await loadTestPlugins();
+  await findByText(/we are the robots/i);
 });
 
 it('renders "contentOverlay" slot', async () => {
   registerTestPlugins();
   mockPlug('contentOverlay', () => <>we are the robots</>);
 
-  const { getByText } = await loadTestPlugins();
-  getByText(/we are the robots/i);
+  const { findByText } = await loadTestPlugins();
+  await findByText(/we are the robots/i);
 });
 
 it('renders "global" plugs', async () => {
@@ -71,8 +71,8 @@ it('renders "global" plugs', async () => {
   mockPlug('global', () => <>third</>);
   registerTestPlugins();
 
-  const { getByText } = await loadTestPlugins();
-  getByText(/first/i);
-  getByText(/second/i);
-  getByText(/third/i);
+  const { findByText } = await loadTestPlugins();
+  await findByText(/first/i);
+  await findByText(/second/i);
+  await findByText(/third/i);
 });

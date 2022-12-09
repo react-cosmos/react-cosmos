@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDom from 'react-dom';
+import ReactDom from 'react-dom/client';
 import * as ReactPlugin from 'react-plugin';
 import styled from 'styled-components';
 import { PlaygroundMountArgs } from './playgroundConfig.js';
@@ -40,12 +40,12 @@ export default async function mount({
     })
   );
 
-  ReactDom.render(
+  const root = ReactDom.createRoot(document.getElementById('root')!);
+  root.render(
     <>
       <GlobalStyle />
       <Slot name="root" />
-    </>,
-    document.getElementById('root')
+    </>
   );
 }
 

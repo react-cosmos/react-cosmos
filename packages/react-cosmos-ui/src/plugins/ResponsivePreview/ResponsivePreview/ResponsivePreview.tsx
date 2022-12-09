@@ -45,11 +45,13 @@ export function ResponsivePreview({
   const [container, setContainer] = useState<null | ResponsiveViewport>(null);
 
   const onWidthChange = useCallback(
-    width => setViewport(prevViewport => ({ ...prevViewport, width })),
+    (width: number) =>
+      setViewport(prevViewport => ({ ...prevViewport, width })),
     [setViewport]
   );
   const onHeightChange = useCallback(
-    height => setViewport(prevViewport => ({ ...prevViewport, height })),
+    (height: number) =>
+      setViewport(prevViewport => ({ ...prevViewport, height })),
     [setViewport]
   );
 

@@ -75,7 +75,7 @@ function useErrorNotification(context: OpenFixtureContext) {
   const notifications = getMethodsOf<NotificationsSpec>('notifications');
   const { pushTimedNotification } = notifications;
   return useCallback(
-    info =>
+    (info: string) =>
       pushTimedNotification({
         id: 'edit-fixture',
         type: 'error',

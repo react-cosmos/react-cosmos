@@ -1,6 +1,6 @@
 import React from 'react';
 import { ReactDecorators, ReactFixtureWrappers } from 'react-cosmos-core';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { DomFixtureLoader } from './DomFixtureLoader.js';
 import { domRendererConnect } from './domRendererConnect.js';
 import { domRendererId } from './domRendererId.js';
@@ -13,6 +13,12 @@ window.addEventListener('error', () => {
     payload: { rendererId: domRendererId },
   });
 });
+
+type CachedRoot = {
+  domContainer: Element;
+  reactRoot: ReturnType<typeof createRoot>;
+};
+let cachedRoot: CachedRoot | null = null;
 
 type Args = {
   rendererConfig: DomRendererConfig;
@@ -27,12 +33,16 @@ export function mountDomRenderer({
   onErrorReset,
 }: Args) {
   const domContainer = getDomContainer(rendererConfig.containerQuerySelector);
-  render(
+  if (!cachedRoot || cachedRoot.domContainer !== domContainer) {
+    const reactRoot = createRoot(domContainer);
+    cachedRoot = { domContainer, reactRoot };
+  }
+
+  cachedRoot.reactRoot.render(
     <DomFixtureLoader
       fixtures={fixtures}
       decorators={decorators}
       onErrorReset={onErrorReset}
-    />,
-    domContainer
+    />
   );
 }
