@@ -1,4 +1,5 @@
-import React from 'react';
+import { ReactNode, useContext, useEffect, useRef } from 'react';
+import { FixtureContext } from '../../../../fixture/FixtureContext.js';
 import { createValues } from '../../../../fixtureState/createValues.js';
 import {
   createFixtureStateProps,
@@ -10,7 +11,6 @@ import {
 import { FixtureDecoratorId } from '../../../../fixtureState/types.js';
 import { areNodesEqual } from '../../../../utils/react/areNodesEqual.js';
 import { getComponentName } from '../../../../utils/react/getComponentName.js';
-import { FixtureContext } from '../../../../fixture/FixtureContext.js';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
 import {
   getElementAtPath,
@@ -19,14 +19,14 @@ import {
 import { useFixtureProps } from './useFixtureProps.js';
 
 export function usePropsCapture(
-  fixture: React.ReactNode,
+  fixture: ReactNode,
   decoratorId: FixtureDecoratorId
 ) {
-  const { fixtureState, setFixtureState } = React.useContext(FixtureContext);
-  const prevFixtureRef = React.useRef(fixture);
+  const { fixtureState, setFixtureState } = useContext(FixtureContext);
+  const prevFixtureRef = useRef(fixture);
   const elPaths = findRelevantElementPaths(fixture);
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Create empty fixture state
     if (!fixtureState.props && elPaths.length === 0) {
       // Make sure not to override any (currently pending) fixture state props
@@ -87,7 +87,7 @@ export function usePropsCapture(
     setFixtureState,
   ]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     prevFixtureRef.current = fixture;
   });
 
