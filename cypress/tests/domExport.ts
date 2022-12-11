@@ -6,8 +6,7 @@ import {
 } from '../support/testBlocks';
 
 describe('DOM export', () => {
-  // WARNING: These tests are serial and share state
-  before(() => {
+  beforeEach(() => {
     cy.clearStorage();
     cy.visit('http://localhost:5001');
   });

@@ -51,6 +51,7 @@ export function selectFixtureTests() {
     });
 
     it('renders searched fixture', () => {
+      cy.contains('HelloWorld').click();
       getRendererBody().type(`{meta}{shift}p`);
       cy.get('[placeholder="Fixture search"]').type(`Hello`).type('{enter}');
       getRendererBody().find('#root').should('have.text', 'Hello World!');

@@ -1,6 +1,5 @@
 describe('Native', () => {
-  // WARNING: These tests are serial and share state
-  before(() => {
+  beforeEach(() => {
     cy.clearStorage();
     cy.visit('http://localhost:5002');
   });
