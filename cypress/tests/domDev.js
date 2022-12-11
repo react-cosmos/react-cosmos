@@ -3,7 +3,7 @@ import {
   navTests,
   selectFixtureTests,
   staticTests,
-} from '../support/testBlocks';
+} from '../support/testBlocks.js';
 
 describe('DOM dev', () => {
   // WARNING: These tests are serial and share state

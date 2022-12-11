@@ -12,7 +12,7 @@
 // You can read more here:
 // https://on.cypress.io/guides/configuration#section-global
 // ***********************************************************
-import { clearStorage } from '../support/storage';
+import { clearStorage } from '../support/storage.js';
 
 Cypress.Commands.add('clearStorage', () => {
   return clearStorage();
