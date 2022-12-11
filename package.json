@@ -65,7 +65,7 @@
     "codecov": "^3.8.3",
     "create-react-class": "^15.7.0",
     "css-loader": "^6.7.2",
-    "cypress": "10.11.0",
+    "cypress": "11.2.0",
     "delay": "^5.0.0",
     "eslint": "^8.29.0",
     "eslint-plugin-import": "^2.26.0",
