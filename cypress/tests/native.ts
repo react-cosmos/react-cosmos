@@ -36,7 +36,7 @@ function getUserDepsFile() {
   return cy.readFile('example/cosmos.userdeps.js');
 }
 
-function userDepsContainsModule(modulePath) {
+function userDepsContainsModule(modulePath: string) {
   getUserDepsFile().should(
     'match',
     new RegExp(`import (fixture|decorator)[0-9]+ from './${modulePath}'`)

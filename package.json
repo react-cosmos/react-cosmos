@@ -11,11 +11,12 @@
   "scripts": {
     "prettify": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
     "check-types": "tsc",
+    "check-types:cypress": "yarn tsc -p cypress/tsconfig.json",
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "test:unit": "jest --config .jest/config.cjs",
     "test:watch": "yarn test:unit --watch",
     "test:coverage": "yarn test:unit --coverage",
-    "test:cypress": "cypress run --record false",
+    "test:cypress": "cypress run --config-file cypress/cypress.config.ts --record false",
     "link-entries": "ts-node --esm ./scripts/linkEntries.ts",
     "src": "yarn link-entries src",
     "dist": "yarn link-entries dist",

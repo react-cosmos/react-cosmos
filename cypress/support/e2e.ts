@@ -12,7 +12,15 @@
 // You can read more here:
 // https://on.cypress.io/guides/configuration#section-global
 // ***********************************************************
-import { clearStorage } from '../support/storage.js';
+import { clearStorage } from './storage';
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      clearStorage(): void;
+    }
+  }
+}
 
 Cypress.Commands.add('clearStorage', () => {
   return clearStorage();
