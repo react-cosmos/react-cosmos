@@ -1,9 +1,5 @@
 import { isMultiFixture } from '../isMultiFixture.js';
-import {
-  ReactFixture,
-  ReactFixtureExport,
-  ReactFixtureMap,
-} from '../reactTypes.js';
+import { ReactFixture, ReactFixtureExport } from '../reactTypes.js';
 
 export function getFixture(
   fixtureExport: ReactFixtureExport,
@@ -23,8 +19,5 @@ export function getFixture(
     return;
   }
 
-  // FIXME: Why does fixtureExport need to be cast as ReactFixtureMap when
-  // the type predicate returned by isMultiFixture already ensures it?
-  const multiFixtureExport: ReactFixtureMap = fixtureExport;
-  return multiFixtureExport[fixtureName];
+  return fixtureExport[fixtureName];
 }
