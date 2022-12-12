@@ -11,7 +11,8 @@ export async function getPluginConfigs({
   cosmosConfig,
   relativePaths,
 }: GetPluginConfigArgs): Promise<CosmosPluginConfig[]> {
-  const { rootDir, disablePlugins, plugins, exportPath } = cosmosConfig;
+  const { rootDir, detectLocalPlugins, disablePlugins, plugins, exportPath } =
+    cosmosConfig;
 
   if (disablePlugins) return [];
 
@@ -24,6 +25,8 @@ export async function getPluginConfigs({
       })
     )
   );
+
+  if (!detectLocalPlugins) return moduleConfigs;
 
   const localConfigs = await findCosmosPluginConfigs({
     rootDir,

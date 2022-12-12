@@ -5,6 +5,7 @@ interface HttpsOptions {
 
 export type CosmosConfig = {
   exportPath: string;
+  detectLocalPlugins: boolean;
   disablePlugins: boolean;
   fixtureFileSuffix: string;
   fixturesDir: string;
