@@ -1,5 +1,5 @@
 {
-  "globalImports": [],
+  "globalImports": ["src/cosmos.loadPlugins.ts"],
   "webpack": {
     "configPath": "./webpack.config.cosmos.js"
   },

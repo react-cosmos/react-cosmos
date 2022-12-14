@@ -30,6 +30,8 @@ export default {
         options: {
           configFile: path.join(dirname, './tsconfig.build.json'),
         },
+        // Allow react-plugin to work inside "inception" fixture
+        sideEffects: true,
       },
     ],
   },
