@@ -1,2 +1,4 @@
 src
-tsconfig.build.json
+tsconfig.build.client.json
+tsconfig.build.server.json
+tsconfig.build.ui.json
