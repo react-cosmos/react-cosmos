@@ -8,10 +8,7 @@ const plugins = [];
 export default {
   mode: env,
   devtool: false,
-  entry: [
-    path.join(dist, 'ui/WebpackHmrNotification'),
-    path.join(dist, 'ui/WebpackRendererError'),
-  ],
+  entry: [path.join(dist, 'ui/WebpackRendererError')],
   output: {
     path: dist,
     filename: 'ui/build.js',

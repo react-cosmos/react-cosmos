@@ -1844,16 +1844,6 @@
   resolved "https://registry.yarnpkg.com/@skidding/linked-list/-/linked-list-2.0.0.tgz#d40db391363121e7d01206ae62e97e2065dc1e94"
   integrity sha512-+IsapD7RTKuMqVZflanEs0j5zNzDYMYYZuoIhMKqGk3quN86tf5cMwqLNWB85Qc+Y7DG3dh48ViX8peWBI/hrw==
 
-"@skidding/webpack-hot-middleware@^2.25.1":
-  version "2.25.1"
-  resolved "https://registry.yarnpkg.com/@skidding/webpack-hot-middleware/-/webpack-hot-middleware-2.25.1.tgz#705b313316b2e1b3597b88572ee536666d4c7f41"
-  integrity sha512-wefdJD57sBB9Crq/nWjx/4EPZYzR6gFjIaWiCHgqOrwhGD1GDQPcARlr0u4ebLRxYFq8CKkUwpHInBxjDZdnJw==
-  dependencies:
-    ansi-html-community "0.0.8"
-    html-entities "^2.1.0"
-    querystring "^0.2.0"
-    strip-ansi "^6.0.0"
-
 "@testing-library/dom@^8.5.0":
   version "8.19.0"
   resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-8.19.0.tgz#bd3f83c217ebac16694329e413d9ad5fdcfd785f"
@@ -2304,6 +2294,15 @@
   integrity sha512-sqbKBFegMRBvFOTq1+dXmRNfZvGZTNT+PlmIla/RFWLTQuNIKK3F9txxuG35Hk5Yl72pQLKdMBKwieqDcgzJ4Q==
   dependencies:
     "@types/node" "*"
+
+"@types/webpack-hot-middleware@^2.25.6":
+  version "2.25.6"
+  resolved "https://registry.yarnpkg.com/@types/webpack-hot-middleware/-/webpack-hot-middleware-2.25.6.tgz#4336abd668dc73284a777907cfd00147e794354a"
+  integrity sha512-1Q9ClNvZR30HIsEAHYQL3bXJK1K7IsrqjGMTfIureFjphsGOZ3TkbeoCupbCmi26pSLjVTPHp+pFrJNpOkBSVg==
+  dependencies:
+    "@types/connect" "*"
+    tapable "^2.2.0"
+    webpack "^5"
 
 "@types/webpack@5.28.0":
   version "5.28.0"
@@ -8266,11 +8265,6 @@ qs@~6.5.2:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.3.tgz#3aeeffc91967ef6e35c0e488ef46fb296ab76aad"
   integrity sha512-qxXIEh4pCGfHICj1mAJQ2/2XVZkjCDTcEgfoSQxc/fYivUZxTkk7L3bDBJSoNrEzXI17oUO5Dp07ktqE5KzczA==
 
-querystring@^0.2.0:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.1.tgz#40d77615bb09d16902a85c3e38aa8b5ed761c2dd"
-  integrity sha512-wkvS7mL/JMugcup3/rMitHmd9ecIGd2lhFhK9N3UUQ450h66d1r3Y9nvXzQAW1Lq+wyx61k/1pfKS5KuKiyEbg==
-
 querystringify@^2.1.1:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.2.0.tgz#3345941b4153cb9d082d8eee4cda2016a9aef7f6"
@@ -9763,6 +9757,15 @@ webpack-dev-middleware@^6.0.1:
     mime-types "^2.1.31"
     range-parser "^1.2.1"
     schema-utils "^4.0.0"
+
+webpack-hot-middleware@^2.25.3:
+  version "2.25.3"
+  resolved "https://registry.yarnpkg.com/webpack-hot-middleware/-/webpack-hot-middleware-2.25.3.tgz#be343ce2848022cfd854dd82820cd730998c6794"
+  integrity sha512-IK/0WAHs7MTu1tzLTjio73LjS3Ov+VvBKQmE8WPlJutgG5zT6Urgq/BbAdRrHTRpyzK0dvAvFh1Qg98akxgZpA==
+  dependencies:
+    ansi-html-community "0.0.8"
+    html-entities "^2.1.0"
+    strip-ansi "^6.0.0"
 
 webpack-merge@^5.7.3:
   version "5.8.0"

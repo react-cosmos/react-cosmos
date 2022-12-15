@@ -1,6 +1,5 @@
 import { mountDomRenderer } from 'react-cosmos-dom';
 import { dismissErrorOverlay } from './errorOverlay/index.js';
-import './hmrErrorHandler.js';
 
 mount();
 

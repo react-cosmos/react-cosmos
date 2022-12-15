@@ -1,4 +1,4 @@
-import webpackHotMiddleware from '@skidding/webpack-hot-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
 import path from 'path';
 import { removeLeadingDot, ServerMessage } from 'react-cosmos-core';
 import { DevServerPluginArgs, serveStaticDir } from 'react-cosmos/server.js';

@@ -88,6 +88,6 @@ function getPlugins(
 }
 
 function getHotMiddlewareEntry(reloadOnFail: boolean) {
-  const clientPath = resolve('@skidding/webpack-hot-middleware/client');
+  const clientPath = resolve('webpack-hot-middleware/client');
   return `${clientPath}?reload=${reloadOnFail}&overlay=false`;
 }

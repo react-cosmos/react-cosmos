@@ -57,6 +57,7 @@
     "@types/url-parse": "^1.4.8",
     "@types/util.promisify": "1.0.4",
     "@types/webpack": "5.28.0",
+    "@types/webpack-hot-middleware": "^2.25.6",
     "@types/ws": "^8.5.3",
     "@typescript-eslint/eslint-plugin": "^5.46.0",
     "@typescript-eslint/parser": "^5.46.0",
