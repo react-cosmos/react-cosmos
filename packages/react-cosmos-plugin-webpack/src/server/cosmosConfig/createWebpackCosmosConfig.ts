@@ -88,6 +88,6 @@ function getHotReload({ hotReload = true }: WebpackCosmosConfigInput) {
   return hotReload;
 }
 
-function getReloadOnFail({ reloadOnFail = true }: WebpackCosmosConfigInput) {
+function getReloadOnFail({ reloadOnFail = false }: WebpackCosmosConfigInput) {
   return reloadOnFail;
 }

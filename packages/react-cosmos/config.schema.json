@@ -164,7 +164,7 @@
           "type": "boolean"
         },
         "reloadOnFail": {
-          "description": "When using webpack's Hot Module Replacement, enable automatic location reload after webpack fails to update modules. [default: true]",
+          "description": "When using webpack's Hot Module Replacement, enable automatic location reload after webpack fails to update modules. [default: false]",
           "type": "boolean"
         }
       }
