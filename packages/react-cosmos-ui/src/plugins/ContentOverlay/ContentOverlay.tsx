@@ -35,6 +35,10 @@ export function ContentOverlay({
   }
 
   if (validFixtureSelected || rendererPreviewRuntimeStatus === 'error') {
+    // Usually the content overlay is only hidden when a valid fixture is
+    // selected. However, when the renderer is in error state, we also hide the
+    // content overlay to avoid showing a blank screen and to uncover the error
+    // message.
     return null;
   }
 

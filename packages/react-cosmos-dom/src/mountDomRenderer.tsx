@@ -7,12 +7,17 @@ import { domRendererId } from './domRendererId.js';
 import { getDomContainer } from './getDomContainer.js';
 import { DomRendererConfig } from './types.js';
 
-window.addEventListener('error', () => {
+function handleGlobalError() {
   domRendererConnect.postMessage({
     type: 'rendererError',
     payload: { rendererId: domRendererId },
   });
-});
+}
+
+// Unhandled errors from async code will not be caught by the error event, but
+// the unhandledrejection event instead.
+window.addEventListener('error', handleGlobalError);
+window.addEventListener('unhandledrejection', handleGlobalError);
 
 type CachedRoot = {
   domContainer: Element;
