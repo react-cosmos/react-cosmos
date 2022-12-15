@@ -35,7 +35,7 @@ it('includes webpack-hot-middleware entry', async () => {
   expect(entry).toContain(
     `${require.resolve(
       '@skidding/webpack-hot-middleware/client'
-    )}?reload=true&overlay=false`
+    )}?reload=false&overlay=false`
   );
 });
 
