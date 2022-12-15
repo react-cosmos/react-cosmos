@@ -17,12 +17,8 @@ export async function getPluginConfigs({
   if (disablePlugins) return [];
 
   const moduleConfigs = await Promise.all(
-    plugins.map(pluginId =>
-      readCosmosPluginConfig({
-        rootDir,
-        moduleNameOrPath: pluginId,
-        relativePaths,
-      })
+    plugins.map(configPath =>
+      readCosmosPluginConfig({ rootDir, configPath, relativePaths })
     )
   );
 

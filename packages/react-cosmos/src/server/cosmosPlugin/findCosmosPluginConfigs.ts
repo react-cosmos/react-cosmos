@@ -15,11 +15,7 @@ export async function findCosmosPluginConfigs({
   const configPaths = findCosmosPluginConfigPaths(rootDir, ignore);
   return Promise.all(
     configPaths.map(configPath =>
-      readCosmosPluginConfig({
-        rootDir,
-        moduleNameOrPath: configPath,
-        relativePaths,
-      })
+      readCosmosPluginConfig({ rootDir, configPath, relativePaths })
     )
   );
 }

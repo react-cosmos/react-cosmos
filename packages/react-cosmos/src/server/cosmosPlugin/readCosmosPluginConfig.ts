@@ -5,16 +5,16 @@ import { resolveSilent } from '../utils/resolveSilent.js';
 
 type ReadCosmosPluginConfigArgs = {
   rootDir: string;
-  moduleNameOrPath: string;
+  configPath: string;
   relativePaths: boolean;
 };
 export async function readCosmosPluginConfig({
   rootDir,
-  moduleNameOrPath,
+  configPath,
   relativePaths,
 }: ReadCosmosPluginConfigArgs) {
-  const rawConfig = await importModule<RawCosmosPluginConfig>(moduleNameOrPath);
-  const pluginRootDir = path.dirname(moduleNameOrPath);
+  const rawConfig = await importModule<RawCosmosPluginConfig>(configPath);
+  const pluginRootDir = path.dirname(configPath);
   const relativePluginRootDir = path.relative(rootDir, pluginRootDir);
 
   const config: CosmosPluginConfig = {
