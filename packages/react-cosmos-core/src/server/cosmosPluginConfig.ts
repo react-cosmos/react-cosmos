@@ -18,7 +18,3 @@ export type CosmosPluginConfig = {
 export type UiCosmosPluginConfig = CosmosPluginConfig & {
   ui: string;
 };
-
-export type PartialCosmosPluginConfig = Omit<CosmosPluginConfig, 'rootDir'> & {
-  rootDir?: string;
-};

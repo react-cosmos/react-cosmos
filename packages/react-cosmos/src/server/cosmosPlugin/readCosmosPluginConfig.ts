@@ -15,11 +15,12 @@ export async function readCosmosPluginConfig({
 }: ReadCosmosPluginConfigArgs) {
   const rawConfig = await importModule<RawCosmosPluginConfig>(configPath);
   const pluginRootDir = path.dirname(configPath);
-  const relativePluginRootDir = path.relative(rootDir, pluginRootDir);
 
   const config: CosmosPluginConfig = {
     name: rawConfig.name,
-    rootDir: relativePluginRootDir,
+    rootDir: relativePaths
+      ? path.relative(rootDir, pluginRootDir)
+      : pluginRootDir,
   };
 
   if (rawConfig.ui) {

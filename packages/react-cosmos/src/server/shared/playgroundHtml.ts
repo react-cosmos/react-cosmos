@@ -1,11 +1,7 @@
 import fs from 'fs';
 import { readFile } from 'fs/promises';
 import { pkgUpSync } from 'pkg-up';
-import {
-  CosmosPluginConfig,
-  PartialCosmosPluginConfig,
-  replaceKeys,
-} from 'react-cosmos-core';
+import { CosmosPluginConfig, replaceKeys } from 'react-cosmos-core';
 import { PlaygroundConfig, PlaygroundMountArgs } from 'react-cosmos-ui';
 import url from 'url';
 import { CosmosConfig } from '../cosmosConfig/types.js';
@@ -31,7 +27,7 @@ export async function getDevPlaygroundHtml(
 
 export async function getExportPlaygroundHtml(
   cosmosConfig: CosmosConfig,
-  pluginConfigs: PartialCosmosPluginConfig[]
+  pluginConfigs: CosmosPluginConfig[]
 ) {
   const { ui } = cosmosConfig;
   return getPlaygroundHtml({

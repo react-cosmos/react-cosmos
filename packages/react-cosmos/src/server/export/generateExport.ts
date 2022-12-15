@@ -2,7 +2,6 @@ import fs from 'fs/promises';
 import path from 'path';
 import {
   CosmosPluginConfig,
-  PartialCosmosPluginConfig,
   removeLeadingSlash,
   UiCosmosPluginConfig,
 } from 'react-cosmos-core';
@@ -136,7 +135,7 @@ async function exportPlaygroundFiles(
 async function exportUiPlugin(
   cosmosConfig: CosmosConfig,
   pluginConfig: UiCosmosPluginConfig
-): Promise<PartialCosmosPluginConfig> {
+): Promise<CosmosPluginConfig> {
   const { rootDir, exportPath } = cosmosConfig;
   const pluginPath = path.join(exportPath, '_plugin');
 
@@ -152,6 +151,7 @@ async function exportUiPlugin(
 
   return {
     name: pluginConfig.name,
+    rootDir: pluginDirName,
     ui: path.relative(pluginPath, targetUiPath),
   };
 }
