@@ -3,7 +3,7 @@
 ## Bundler
 
 - [ ] Revamp webpack integration.
-  - [ ] Make webpack and external package (and plugin).
+  - [x] Make webpack and external package (and plugin).
   - [ ] [Move from webpack middlewares to webpack-dev-server](https://github.com/react-cosmos/react-cosmos/issues/1272#issuecomment-733091647).
   - [ ] Fast Refresh out of the box integration.
 - [ ] Integrate with Vite.
@@ -12,13 +12,13 @@
 
 - [ ] Redesign codebase packages and APIs.
 - [ ] Decide what to do with [Lazy fixture importing](https://github.com/react-cosmos/react-cosmos/pull/1313). Salvage what you can and move on. No need to linger if the complexity required to achieve this is unreasonable. Document everything learned for future reference.
-- [ ] Research: ES6 modules (React Cosmos with no bundler and no compiler).
+- [x] Research: ES6 modules (React Cosmos with no bundler and no compiler).
 
 ## Plugins
 
-- [ ] Extract react-cosmos-plugin-open-fixture plugin.
-- [ ] Move Boolean input plugin from example to built-in UI plugins.
-- [ ] Add support for server plugins.
+- [x] Extract react-cosmos-plugin-open-fixture plugin package.
+- [x] Move Boolean input plugin from example to plugin package.
+- [x] Add support for server plugins.
 - [ ] Document plugin APIs.
 - [ ] Add guide for creating UI + server plugin.
 
@@ -26,10 +26,10 @@
 
 - [ ] Change default port because [port 5000 is taken on macOS 12](https://github.com/react-cosmos/react-cosmos/issues/1355).
 - [ ] Fix [issues with Yarn 2 and PnP](https://github.com/react-cosmos/react-cosmos/issues/946) (if any).
-- [ ] Fix security issues.
-  - [ ] Drop IE support.
-  - [ ] Drop Node <12 support.
-  - [ ] Minimize 3rd party depedencies.
+- [x] Fix security issues.
+  - [x] Drop IE support.
+  - [x] Drop Node <12 support.
+  - [x] Minimize 3rd party depedencies.
 - [ ] _Can we publish ES modules instead of CJS on NPM? Would be useful for tree shaking because we're reducing the core package entry points._
 - [ ] Migrate from Slack to Discord?
 
