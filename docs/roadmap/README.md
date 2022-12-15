@@ -30,7 +30,7 @@
   - [x] Drop IE support.
   - [x] Drop Node <12 support.
   - [x] Minimize 3rd party depedencies.
-- [ ] _Can we publish ES modules instead of CJS on NPM? Would be useful for tree shaking because we're reducing the core package entry points._
+- [x] Publish ES modules instead of CJS on NPM. Useful for tree shaking while reducing the core package entry points.
 - [ ] Migrate from Slack to Discord?
 
 ## Docs & website
