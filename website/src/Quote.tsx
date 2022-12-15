@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { mobileMaxWidth } from './shared/breakpoints';
-import { getSlideInStyle, slideInTransition } from './shared/slideIn';
-import { NoWrap } from './shared/styledPrimitives';
-import { useViewportEnter } from './shared/useViewportEnter';
+import { mobileMaxWidth } from './shared/breakpoints.js';
+import { getSlideInStyle, slideInTransition } from './shared/slideIn.js';
+import { NoWrap } from './shared/styledPrimitives.js';
+import { useViewportEnter } from './shared/useViewportEnter.js';
 
 export function Quote() {
   const [ref, entered] = useViewportEnter(0.7);

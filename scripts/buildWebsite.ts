@@ -1,16 +1,16 @@
 import { execSync } from 'child_process';
-import { copy, mkdir, outputFile, readFile, remove } from 'fs-extra';
+import fs from 'fs/promises';
 import webpack from 'webpack';
 
 process.env.NODE_ENV = 'production';
 
 (async function () {
   // Clear prev build
-  await remove('./website/dist');
-  await mkdir('./website/dist');
+  await fs.rm('./website/dist', { recursive: true, force: true });
+  await fs.mkdir('./website/dist');
 
   // Copy static files
-  await copy('./website/static', './website/dist');
+  await fs.cp('./website/static', './website/dist', { recursive: true });
 
   // Generate pages
   await createPage({
@@ -62,18 +62,19 @@ type PageParams = {
 };
 
 async function createPage({ pageName, title, description }: PageParams) {
-  const indexTemplate = await readFile(`./website/src/index.html`, 'utf8');
+  const indexTemplate = await fs.readFile(`./website/src/index.html`, 'utf8');
   const indexPage = indexTemplate
     .replace(/\$PAGE_NAME/g, pageName ? `"${pageName}"` : 'undefined')
     .replace(/\$TITLE/g, title)
     .replace(/\$DESCRIPTION/g, description);
   const outputPath = pageName ? `${pageName}.html` : 'index.html';
-  await outputFile(`./website/dist/${outputPath}`, indexPage, 'utf8');
+  await fs.writeFile(`./website/dist/${outputPath}`, indexPage, 'utf8');
 }
 
 function buildWebpack() {
   return new Promise<void>(async (resolve, reject) => {
-    const webpackConfig = await require('../website/webpack.config')();
+    const configFn = await import('../website/webpack.config.js');
+    const webpackConfig = await configFn.default();
     webpack(webpackConfig, (err, stats) => {
       if (err) {
         reject(err);

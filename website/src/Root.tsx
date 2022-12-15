@@ -1,18 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-import { About } from './About';
-import { Benefits } from './Benefits';
-import { Demo } from './Demo';
-import { Features } from './Features/Features';
-import { Footer } from './Footer/Footer';
-import { StickyHeader } from './Header/StickyHeader';
-import { Highlights } from './Highlights';
-import { Logos } from './Logos';
-import { Quote } from './Quote';
-import { Rocket } from './Rocket';
-import { grayToWhiteGradient, whiteToGrayGradient } from './shared/colors';
-import { Height } from './shared/Height';
-import { SplashScreen } from './SplashScreen/SplashScreen';
+import { About } from './About.js';
+import { Benefits } from './Benefits.js';
+import { Demo } from './Demo.js';
+import { Features } from './Features/Features.js';
+import { Footer } from './Footer/Footer.js';
+import { StickyHeader } from './Header/StickyHeader.js';
+import { Highlights } from './Highlights.js';
+import { Logos } from './Logos.js';
+import { Quote } from './Quote.js';
+import { Rocket } from './Rocket.js';
+import { grayToWhiteGradient, whiteToGrayGradient } from './shared/colors.js';
+import { Height } from './shared/Height.js';
+import { SplashScreen } from './SplashScreen/SplashScreen.js';
 
 const headerHeight = 81;
 

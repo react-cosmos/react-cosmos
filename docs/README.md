@@ -1,6 +1,6 @@
 ## Table of contents
 
-- Setup: [Getting started](#getting-started) · [Requirements](#requirements) · [Config](#config) · [Compilation](#compilation) · [Webpack](#webpack) · [Snowpack](snowpack.md)
+- Setup: [Getting started](#getting-started) · [Requirements](#requirements) · [Config](#config) · [Compilation](#compilation) · [Webpack](#webpack)
 - Usage: [Fixtures](#fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [Control panel](#control-panel) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
 - FAQ: [Create React App](#create-react-app) · [Next.js](#nextjs) · [Troubleshooting](#troubleshooting) · [Where's my old Cosmos?](#wheres-my-old-cosmos) · [Roadmap](../TODO.md)
 
@@ -416,7 +416,7 @@ Fetching a Cosmos config can be done in a number of ways, depending on whether o
 ```js
 import { detectCosmosConfig } from 'react-cosmos';
 
-const cosmosConfig = detectCosmosConfig();
+const cosmosConfig = await detectCosmosConfig();
 ```
 
 #### Read existing config at exact path

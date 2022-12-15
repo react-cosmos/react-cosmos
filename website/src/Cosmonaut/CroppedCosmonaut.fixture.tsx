@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CroppedCosmonaut } from './CroppedCosmonaut';
+import { CroppedCosmonaut } from './CroppedCosmonaut.js';
 
 const Container = styled.div`
   background: #fff;

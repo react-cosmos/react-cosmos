@@ -4,12 +4,12 @@ import {
   getCosmonautSize,
   getViewportLength,
   Viewport,
-} from '../shared/viewport';
-import { Body } from './Body';
-import { Helmet } from './Helmet';
-import { Planet } from './Planet';
-import { Stars } from './Stars';
-import { Tube } from './Tube';
+} from '../shared/viewport.js';
+import { Body } from './Body.js';
+import { Helmet } from './Helmet.js';
+import { Planet } from './Planet.js';
+import { Stars } from './Stars.js';
+import { Tube } from './Tube.js';
 
 type Props = {
   windowViewport: Viewport;

@@ -1,0 +1,14 @@
+{
+  "name": "react-cosmos-dom",
+  "version": "5.7.2",
+  "description": "React Cosmos DOM",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-dom",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "dependencies": {
+    "lodash-es": "^4.17.21",
+    "react-cosmos-core": "5.7.2"
+  },
+  "devDependencies": {}
+}

@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ExternalLink } from '../shared/ExternalLink';
-import { InternalLink } from '../shared/InternalLink';
-import { livePreviewUrl } from '../shared/livePreviewUrl';
-import { getSlideInStyle, slideInTransition } from '../shared/slideIn';
-import { Center, NoWrap } from '../shared/styledPrimitives';
-import { useViewportEnter } from '../shared/useViewportEnter';
-import { useGitHubContributors } from './useGitHubContributors';
+import { ExternalLink } from '../shared/ExternalLink.js';
+import { InternalLink } from '../shared/InternalLink.js';
+import { livePreviewUrl } from '../shared/livePreviewUrl.js';
+import { getSlideInStyle, slideInTransition } from '../shared/slideIn.js';
+import { Center, NoWrap } from '../shared/styledPrimitives.js';
+import { useViewportEnter } from '../shared/useViewportEnter.js';
+import { useGitHubContributors } from './useGitHubContributors.js';
 
 export function Footer() {
   const contributors = useGitHubContributors();

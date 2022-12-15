@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { mobileMaxWidth } from './breakpoints';
-import { minFeatureColumnsWidth } from '../Features/shared';
+import { minFeatureColumnsWidth } from '../Features/shared.js';
+import { mobileMaxWidth } from './breakpoints.js';
 
 export const Height = styled.div<{
   mobile: number;

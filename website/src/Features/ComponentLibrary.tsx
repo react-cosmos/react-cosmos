@@ -1,12 +1,12 @@
 import React from 'react';
-import { getSlideInStyle } from '../shared/slideIn';
-import { useViewportEnter } from '../shared/useViewportEnter';
+import { getSlideInStyle } from '../shared/slideIn.js';
+import { useViewportEnter } from '../shared/useViewportEnter.js';
 import {
   Feature,
   FeatureDescription,
   FeatureIconContainer,
   FeatureTitle,
-} from './shared';
+} from './shared.js';
 
 export function ComponentLibrary() {
   const [ref, entered] = useViewportEnter(0.7);

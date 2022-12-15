@@ -70,7 +70,7 @@ yarn
 
 # Basic commands
 yarn build
-yarn test
+yarn test:unit
 yarn check-types
 
 # Run example and test React Cosmos end to end

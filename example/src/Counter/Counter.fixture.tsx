@@ -1,6 +1,6 @@
-import React from 'react';
 import { StateMock } from '@react-mock/state';
-import { Counter } from './Counter';
+import React from 'react';
+import { Counter } from './Counter.js';
 
 export default {
   default: <Counter suffix="times" />,

@@ -1,6 +1,6 @@
 import React from 'react';
-import { useWindowViewport } from '../shared/useWindowViewport';
-import { FullScreenCosmonaut } from './FullScreenCosmonaut';
+import { useWindowViewport } from '../shared/useWindowViewport.js';
+import { FullScreenCosmonaut } from './FullScreenCosmonaut.js';
 
 export default () => {
   const windowViewport = useWindowViewport();

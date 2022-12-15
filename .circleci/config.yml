@@ -29,6 +29,7 @@ jobs:
       # Test source (with cross-package coverage)
       - run: yarn src
       - run: yarn check-types
+      - run: yarn check-types:cypress
       - run: yarn lint
       - run: yarn test:coverage --maxWorkers=2
       - run: yarn codecov
@@ -36,7 +37,6 @@ jobs:
       # Test build
       - run: yarn dist
       - run: yarn build
-      - run: yarn build:plugin
       - run: yarn export
       - run:
           command: yarn start
@@ -47,29 +47,19 @@ jobs:
       - run:
           command: yarn start:native
           background: true
-      - run:
-          command: yarn start:snowpack:playground
-          background: true
-      - run:
-          command: yarn start:snowpack:renderer
-          background: true
       - run: yarn test:cypress
 
       - store_artifacts:
           path: /root/app/cypress/videos
 
-  node-v10:
+  node-v16:
     <<: *node-base
     docker:
-      - image: cypress/base:10
-  node-v12:
+      - image: cypress/base:16.18.0
+  node-v18:
     <<: *node-base
     docker:
-      - image: cypress/base:12
-  node-v14:
-    <<: *node-base
-    docker:
-      - image: cypress/base:14
+      - image: cypress/base:18.12.0
 
 # https://github.com/teppeis-sandbox/circleci2-multiple-node-versions/tree/yarn-with-test-report
 workflows:
@@ -77,6 +67,5 @@ workflows:
   node-multi-build:
     jobs:
       # Limitting CircleCI usage
-      - node-v10
-      - node-v12
-      - node-v14
+      - node-v16
+      - node-v18
