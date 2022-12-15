@@ -3,10 +3,11 @@
 // Set the env before any code reads it
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-require('regenerator-runtime/runtime');
-const { startNativeServer } = require('../dist/nativeServer');
+const { startDevServer } = await import(
+  '../dist/server/devServer/startDevServer.js'
+);
 
-startNativeServer().catch(err => {
+startDevServer('native').catch(err => {
   console.log('[Cosmos] Server crashed...');
   console.log(`\n  (╯°□°)╯︵ ┻━┻\n`);
   console.log(err);

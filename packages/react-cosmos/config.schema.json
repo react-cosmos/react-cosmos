@@ -17,14 +17,24 @@
       "type": "string",
       "minLength": 1
     },
+    "detectLocalPlugins": {
+      "description": "Automatically detect and load local plugins",
+      "type": "boolean"
+    },
     "disablePlugins": {
-      "description": "Disable plugins",
+      "description": "Disable all plugins 3rd party plugins",
       "type": "boolean"
     },
     "staticPath": {
       "description": "Dir path to serve static assets from.",
       "type": "string",
       "minLength": 1
+    },
+    "plugins": {
+      "description": "Module IDs of Cosmos plugins (eg. \"react-cosmos-plugin-open-fixture\" or \"../path/to/my-plugin\").",
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
     },
     "publicUrl": {
       "description": "Base URL for static assets. [default: \"/\"]",
@@ -154,7 +164,7 @@
           "type": "boolean"
         },
         "reloadOnFail": {
-          "description": "When using webpack's Hot Module Replacement, enable automatic location reload after webpack fails to update modules. [default: true]",
+          "description": "When using webpack's Hot Module Replacement, enable automatic location reload after webpack fails to update modules. [default: false]",
           "type": "boolean"
         }
       }

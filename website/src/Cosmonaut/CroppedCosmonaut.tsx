@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Body } from './Body';
-import { Helmet } from './Helmet';
-import { Planet } from './Planet';
-import { Stars } from './Stars';
-import { Tube } from './Tube';
+import { Body } from './Body.js';
+import { Helmet } from './Helmet.js';
+import { Planet } from './Planet.js';
+import { Stars } from './Stars.js';
+import { Tube } from './Tube.js';
 
 export function CroppedCosmonaut() {
   return (

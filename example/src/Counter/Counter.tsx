@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CounterButton } from '../CounterButton/CounterButton';
+import { CounterButton } from '../CounterButton/CounterButton.js';
 
 type Props = {
   suffix: string;
