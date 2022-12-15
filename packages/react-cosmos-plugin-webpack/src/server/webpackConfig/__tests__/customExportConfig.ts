@@ -1,5 +1,5 @@
 // NOTE: Mock files need to imported before modules that use the mocked APIs
-import { mockConsole, mockFile, unmockCliArgs } from 'react-cosmos/jest';
+import { mockConsole, mockFile, unmockCliArgs } from 'react-cosmos/jest.js';
 import '../../testHelpers/mockEsmClientPath.js';
 import '../../testHelpers/mockEsmLoaderPath.js';
 

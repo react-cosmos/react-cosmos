@@ -4,7 +4,7 @@ import {
   mockConsole,
   mockFile,
   unmockCliArgs,
-} from 'react-cosmos/jest';
+} from 'react-cosmos/jest.js';
 import '../../testHelpers/mockEsmClientPath.js';
 import '../../testHelpers/mockEsmLoaderPath.js';
 
