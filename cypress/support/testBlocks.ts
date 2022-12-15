@@ -45,11 +45,7 @@ export function selectFixtureTests() {
       getRendererBody().find('button').should('have.text', '555555555 times');
       getRendererBody()
         .find('button')
-        .click()
-        .should('have.text', '555555556 times');
-      getRendererBody()
-        .find('button')
-        .click()
+        .dblclick()
         .should('have.text', '555555557 times');
     });
 
