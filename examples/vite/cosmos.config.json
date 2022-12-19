@@ -1,0 +1,6 @@
+{
+  "plugins": [
+    "react-cosmos-plugin-open-fixture",
+    "react-cosmos-plugin-boolean-input"
+  ]
+}

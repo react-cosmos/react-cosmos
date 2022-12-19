@@ -23,6 +23,7 @@
     "build:clear": "ts-node --esm ./scripts/clearBuild.ts",
     "build": "ts-node --esm ./scripts/build.ts",
     "start": "yarn cosmos --root-dir examples/webpack-babel",
+    "start:vite": "yarn cosmos --root-dir examples/vite",
     "export": "yarn cosmos-export --root-dir examples/webpack-babel",
     "start:export": "http-server -p 5001 ./examples/webpack-babel/cosmos-export",
     "start:native": "yarn cosmos-native --root-dir examples/webpack-babel --port 5002",
