@@ -1,0 +1,4 @@
+{
+  "name": "React Cosmos Vite",
+  "devServer": "./viteDevServerPlugin.js"
+}
