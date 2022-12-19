@@ -2,7 +2,7 @@
   "private": true,
   "workspaces": [
     "packages/*",
-    "example",
+    "examples/*",
     "website"
   ],
   "repository": "https://github.com/react-cosmos/react-cosmos",
@@ -22,10 +22,10 @@
     "dist": "yarn link-entries dist",
     "build:clear": "ts-node --esm ./scripts/clearBuild.ts",
     "build": "ts-node --esm ./scripts/build.ts",
-    "start": "yarn cosmos --root-dir example",
-    "export": "yarn cosmos-export --root-dir example",
-    "start:export": "http-server -p 5001 ./example/cosmos-export",
-    "start:native": "yarn cosmos-native --root-dir example --port 5002",
+    "start": "yarn cosmos --root-dir examples/webpack-babel",
+    "export": "yarn cosmos-export --root-dir examples/webpack-babel",
+    "start:export": "http-server -p 5001 ./examples/webpack-babel/cosmos-export",
+    "start:native": "yarn cosmos-native --root-dir examples/webpack-babel --port 5002",
     "start:playground": "yarn cosmos --root-dir packages/react-cosmos-ui",
     "website:start": "yarn cosmos --root-dir website",
     "website:build": "ts-node --esm ./scripts/buildWebsite.ts",

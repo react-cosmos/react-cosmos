@@ -32,7 +32,7 @@ describe('Native', () => {
 });
 
 function getUserDepsFile() {
-  return cy.readFile('example/cosmos.userdeps.js');
+  return cy.readFile('examples/webpack-babel/cosmos.userdeps.js');
 }
 
 function userDepsContainsModule(modulePath: string) {

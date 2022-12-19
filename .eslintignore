@@ -1,7 +1,7 @@
 node_modules
 
 packages/*/dist
-example/cosmos-export
+examples/*/cosmos-export
 website/dist
 
 **/__fsmocks__/**
