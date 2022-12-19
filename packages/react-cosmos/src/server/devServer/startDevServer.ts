@@ -117,7 +117,7 @@ async function getDevServerPlugins(
 ) {
   return Promise.all(
     pluginConfigs
-      .filter(pluginConfig => pluginConfig.export)
+      .filter(pluginConfig => pluginConfig.devServer)
       .map(pluginConfig =>
         requirePluginModule<DevServerPlugin>(
           cosmosConfig.rootDir,
