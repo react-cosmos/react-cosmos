@@ -6,7 +6,7 @@ describe('Native', () => {
 
   context('homepage', () => {
     it('has document title', () => {
-      cy.title().should('include', 'react-cosmos-example');
+      cy.title().should('include', 'example-webpack-babel');
     });
 
     it('displays pending renderer message', () => {
