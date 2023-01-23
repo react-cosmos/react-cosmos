@@ -53,7 +53,6 @@ async function getHttpsOpts(cosmosConfig: CosmosConfig): Promise<Credentials> {
 
 async function handleStart(server: http.Server, cosmosConfig: CosmosConfig) {
   const { port, hostname } = cosmosConfig;
-
   await new Promise<void>(resolve => {
     if (hostname === null) {
       server.listen(port, resolve);

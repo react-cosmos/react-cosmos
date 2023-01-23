@@ -127,7 +127,7 @@
       "items": { "type": "string", "minLength": 1 },
       "uniqueItems": true
     },
-    "experimentalRendererUrl": {
+    "rendererUrl": {
       "description": "Custom renderer URL. This setting disables webpack bundling and allows integration with other build tools like Snowpack. [default: null]",
       "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
     },

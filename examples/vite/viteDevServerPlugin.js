@@ -8,7 +8,7 @@ export default async function viteDevServerPlugin({
   setCosmosConfig,
 }) {
   setCosmosConfig({
-    experimentalRendererUrl: 'http://localhost:5050',
+    rendererUrl: 'http://localhost:5050',
   });
 
   const server = await createServer({

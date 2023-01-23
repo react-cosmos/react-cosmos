@@ -30,7 +30,7 @@ function shouldGenerateUserDepsFile({
 }: DevServerPluginArgs): boolean {
   return (
     platformType === 'native' ||
-    cosmosConfig.experimentalRendererUrl !== null ||
+    cosmosConfig.rendererUrl !== null ||
     // CLI support for --external-userdeps flag (useful with react-native-web)
     Boolean(getCliArgs().externalUserdeps)
   );

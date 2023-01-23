@@ -96,11 +96,8 @@ async function getProjectId(rootDir: string) {
   }
 }
 
-function getWebRendererUrl({
-  publicUrl,
-  experimentalRendererUrl,
-}: CosmosConfig) {
-  return experimentalRendererUrl || url.resolve(publicUrl, RENDERER_FILENAME);
+function getWebRendererUrl({ publicUrl, rendererUrl }: CosmosConfig) {
+  return rendererUrl || url.resolve(publicUrl, RENDERER_FILENAME);
 }
 
 function getPlaygroundHtml(playgroundArgs: PlaygroundMountArgs) {
