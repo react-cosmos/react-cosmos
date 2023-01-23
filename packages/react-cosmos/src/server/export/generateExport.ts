@@ -36,7 +36,10 @@ export async function generateExport() {
   // template file (in case the static assets are served from the root path)
   await copyStaticAssets(cosmosConfig);
 
-  const exportPlugins = await getExportPlugins(cosmosConfig, pluginConfigs);
+  const exportPlugins = await getExportPlugins(
+    pluginConfigs,
+    cosmosConfig.rootDir
+  );
 
   for (const plugin of [...corePlugins, ...exportPlugins]) {
     try {
@@ -87,18 +90,14 @@ async function copyStaticAssets(cosmosConfig: CosmosConfig) {
 }
 
 async function getExportPlugins(
-  cosmosConfig: CosmosConfig,
-  pluginConfigs: CosmosPluginConfig[]
+  pluginConfigs: CosmosPluginConfig[],
+  rootDir: string
 ) {
   return Promise.all(
     pluginConfigs
       .filter(pluginConfig => pluginConfig.export)
       .map(pluginConfig =>
-        requirePluginModule<ExportPlugin>(
-          cosmosConfig.rootDir,
-          pluginConfig,
-          'export'
-        )
+        requirePluginModule<ExportPlugin>(rootDir, pluginConfig, 'export')
       )
   );
 }

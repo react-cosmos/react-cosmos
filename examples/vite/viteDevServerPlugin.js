@@ -5,7 +5,12 @@ export default async function viteDevServerPlugin({
   cosmosConfig,
   expressApp,
   sendMessage,
+  setCosmosConfig,
 }) {
+  setCosmosConfig({
+    experimentalRendererUrl: 'http://localhost:5050',
+  });
+
   const server = await createServer({
     // any valid user config options, plus `mode` and `configFile`
     configFile: false,

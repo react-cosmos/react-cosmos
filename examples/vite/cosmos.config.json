@@ -1,5 +1,4 @@
 {
-  "experimentalRendererUrl": "http://localhost:5050",
   "plugins": [
     "react-cosmos-plugin-open-fixture",
     "react-cosmos-plugin-boolean-input"

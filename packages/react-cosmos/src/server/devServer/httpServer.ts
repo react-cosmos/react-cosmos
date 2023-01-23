@@ -1,43 +1,35 @@
 import fs from 'fs';
-import http from 'http';
+import http, { RequestListener } from 'http';
 import https from 'https';
 import pem from 'pem';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 
-type RequestListener = (
-  request: http.IncomingMessage,
-  response: http.ServerResponse
-) => void;
+type OnStart = (httpServer: http.Server) => unknown;
 
-export async function createHttpServer(
-  cosmosConfig: CosmosConfig,
-  requestListener: RequestListener
-) {
-  const { port, hostname, https: httpsEnabled } = cosmosConfig;
+export function createHttpServer(onStart: OnStart) {
+  let _server: http.Server | https.Server | undefined;
 
-  const server = httpsEnabled
-    ? https.createServer(await getHttpsOpts(cosmosConfig), requestListener)
-    : http.createServer(requestListener);
+  async function startServer(cosmosConfig: CosmosConfig, app: RequestListener) {
+    const { port, hostname, https: httpsEnabled } = cosmosConfig;
 
-  async function start() {
-    await new Promise<void>(resolve => {
-      if (hostname === null) {
-        server.listen(port, resolve);
-      } else {
-        server.listen(port, hostname, resolve);
-      }
-    });
+    _server = httpsEnabled
+      ? https.createServer(await getHttpsOpts(cosmosConfig), app)
+      : http.createServer(app);
+
+    handleStart(_server, cosmosConfig);
+
+    onStart(_server);
 
     const hostnameDisplay = hostname || 'localhost';
     const protocol = httpsEnabled ? 'https' : 'http';
     console.log(`[Cosmos] See you at ${protocol}://${hostnameDisplay}:${port}`);
   }
 
-  async function stop() {
-    await new Promise(resolve => server.close(resolve));
+  async function stopServer() {
+    if (_server) await handleClose(_server);
   }
 
-  return { server, start, stop };
+  return { startServer, stopServer };
 }
 
 type Credentials = { key: string; cert: string };
@@ -57,4 +49,20 @@ async function getHttpsOpts(cosmosConfig: CosmosConfig): Promise<Credentials> {
       return resolve({ key: keys.serviceKey, cert: keys.certificate });
     });
   });
+}
+
+async function handleStart(server: http.Server, cosmosConfig: CosmosConfig) {
+  const { port, hostname } = cosmosConfig;
+
+  await new Promise<void>(resolve => {
+    if (hostname === null) {
+      server.listen(port, resolve);
+    } else {
+      server.listen(port, hostname, resolve);
+    }
+  });
+}
+
+async function handleClose(server: http.Server | https.Server) {
+  await new Promise(resolve => server.close(resolve));
 }
