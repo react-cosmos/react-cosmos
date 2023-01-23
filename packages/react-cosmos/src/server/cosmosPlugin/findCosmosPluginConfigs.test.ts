@@ -34,7 +34,7 @@ it('loads mono repo plugins', async () => {
       {
         "devServer": "react-cosmos-plugin-webpack/dist/server/webpackDevServerPlugin.js",
         "export": "react-cosmos-plugin-webpack/dist/server/webpackExportPlugin.js",
-        "name": "React Cosmos Webpack",
+        "name": "Webpack",
         "rootDir": "react-cosmos-plugin-webpack",
         "ui": "react-cosmos-plugin-webpack/dist/ui/build.js",
       },
