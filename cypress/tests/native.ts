@@ -21,7 +21,7 @@ describe('Native', () => {
 
     it('has fixture paths', () => {
       userDepsContainsModule('src/__fixtures__/HelloWorld.ts');
-      userDepsContainsModule('src/Counter/Counter.fixture.tsx');
+      userDepsContainsModule('src/Counter.fixture.tsx');
       userDepsContainsModule('src/WelcomeMessage/WelcomeMessage.fixture.tsx');
     });
 
