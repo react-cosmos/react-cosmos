@@ -1,12 +1,6 @@
 import { createServer } from 'vite';
 
-export default async function viteDevServerPlugin({
-  platformType,
-  cosmosConfig,
-  expressApp,
-  sendMessage,
-  setCosmosConfig,
-}) {
+export default async function viteDevServerPlugin({ setCosmosConfig }) {
   setCosmosConfig({
     rendererUrl: 'http://localhost:5050',
   });
