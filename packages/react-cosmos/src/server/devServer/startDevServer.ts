@@ -23,7 +23,7 @@ import { userDepsFileDevServerPlugin } from './corePlugins/userDepsFile.js';
 import { createHttpServer } from './httpServer.js';
 import { createMessageHandler } from './messageHandler.js';
 
-const corePlugins: DevServerPlugin[] = [
+const standardPlugins: DevServerPlugin[] = [
   userDepsFileDevServerPlugin,
   httpProxyDevServerPlugin,
   openFileDevServerPlugin,
@@ -68,7 +68,7 @@ export async function startDevServer(platformType: PlatformType) {
     cosmosConfig.rootDir
   );
 
-  for (const plugin of [...corePlugins, ...devServerPlugins]) {
+  for (const plugin of [...devServerPlugins, ...standardPlugins]) {
     try {
       const pluginReturn = await plugin({
         cosmosConfig,
