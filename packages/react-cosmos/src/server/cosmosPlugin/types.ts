@@ -4,13 +4,8 @@ import { CosmosConfig } from '../cosmosConfig/types.js';
 
 export type PlatformType = 'web' | 'native';
 
-export type CosmosConfigChange =
-  | Partial<CosmosConfig>
-  | ((config: CosmosConfig) => CosmosConfig);
-
 export type DevServerPluginArgs = {
   cosmosConfig: CosmosConfig;
-  setCosmosConfig: (change: CosmosConfigChange) => unknown;
   platformType: PlatformType;
   expressApp: express.Express;
   sendMessage(msg: MessageType): unknown;

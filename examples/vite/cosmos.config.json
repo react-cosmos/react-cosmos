@@ -2,5 +2,6 @@
   "plugins": [
     "react-cosmos-plugin-open-fixture",
     "react-cosmos-plugin-boolean-input"
-  ]
+  ],
+  "rendererUrl": "http://localhost:5050"
 }

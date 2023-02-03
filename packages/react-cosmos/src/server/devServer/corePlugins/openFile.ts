@@ -3,7 +3,6 @@ import express from 'express';
 import fs from 'fs';
 import open from 'open';
 import path from 'path';
-import { CosmosConfig } from '../../cosmosConfig/types.js';
 import { DevServerPluginArgs } from '../../cosmosPlugin/types.js';
 
 type ReqQuery = { filePath: void | string; line: number; column: number };
@@ -19,7 +18,7 @@ export default function openFileDevServerPlugin({
       return;
     }
 
-    const absFilePath = resolveFilePath(cosmosConfig, filePath);
+    const absFilePath = resolveFilePath(cosmosConfig.rootDir, filePath);
     if (!fs.existsSync(absFilePath)) {
       res.status(404).send(`File not found at path: ${absFilePath}`);
       return;
@@ -50,7 +49,7 @@ function getReqQuery(req: express.Request): ReqQuery {
   };
 }
 
-function resolveFilePath(cosmosConfig: CosmosConfig, filePath: string) {
+function resolveFilePath(rootDir: string, filePath: string) {
   // This heuristic is needed because the open file endpoint is used for
   // multiple applications, which provide different file path types:
   // 1. Edit fixture button: Sends path relative to Cosmos rootDir
@@ -60,7 +59,7 @@ function resolveFilePath(cosmosConfig: CosmosConfig, filePath: string) {
     return filePath;
   }
 
-  const cosmosRelPath = path.join(cosmosConfig.rootDir, filePath);
+  const cosmosRelPath = path.join(rootDir, filePath);
   const cwdRelPath = path.join(process.cwd(), filePath);
   return fs.existsSync(cosmosRelPath) ? cosmosRelPath : cwdRelPath;
 }

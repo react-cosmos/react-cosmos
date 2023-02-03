@@ -7,7 +7,6 @@ import {
 } from '../cosmosConfig/detectCosmosConfig.js';
 import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
 import {
-  CosmosConfigChange,
   DevServerPlugin,
   DevServerPluginCleanupCallback,
   PlatformType,
@@ -23,7 +22,7 @@ import { userDepsFileDevServerPlugin } from './corePlugins/userDepsFile.js';
 import { createHttpServer } from './httpServer.js';
 import { createMessageHandler } from './messageHandler.js';
 
-const standardPlugins: DevServerPlugin[] = [
+const builtInPlugins: DevServerPlugin[] = [
   userDepsFileDevServerPlugin,
   httpProxyDevServerPlugin,
   openFileDevServerPlugin,
@@ -31,16 +30,8 @@ const standardPlugins: DevServerPlugin[] = [
 ];
 
 export async function startDevServer(platformType: PlatformType) {
-  let cosmosConfig = await detectCosmosConfig();
+  const cosmosConfig = await detectCosmosConfig();
   logCosmosConfigInfo();
-
-  function setCosmosConfig(change: CosmosConfigChange) {
-    if (typeof change === 'function') {
-      cosmosConfig = change(cosmosConfig);
-    } else {
-      cosmosConfig = { ...cosmosConfig, ...change };
-    }
-  }
 
   const pluginConfigs = await getPluginConfigs({
     cosmosConfig,
@@ -63,16 +54,15 @@ export async function startDevServer(platformType: PlatformType) {
     msgHandler.cleanUp();
   }
 
-  const devServerPlugins = await getDevServerPlugins(
+  const userPlugins = await getDevServerPlugins(
     pluginConfigs,
     cosmosConfig.rootDir
   );
 
-  for (const plugin of [...devServerPlugins, ...standardPlugins]) {
+  for (const plugin of [...builtInPlugins, ...userPlugins]) {
     try {
       const pluginReturn = await plugin({
         cosmosConfig,
-        setCosmosConfig,
         platformType,
         expressApp: app,
         sendMessage: msgHandler.sendMessage,

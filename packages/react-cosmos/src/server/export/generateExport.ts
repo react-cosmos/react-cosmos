@@ -36,12 +36,12 @@ export async function generateExport() {
   // template file (in case the static assets are served from the root path)
   await copyStaticAssets(cosmosConfig);
 
-  const exportPlugins = await getExportPlugins(
+  const userPlugins = await getExportPlugins(
     pluginConfigs,
     cosmosConfig.rootDir
   );
 
-  for (const plugin of [...corePlugins, ...exportPlugins]) {
+  for (const plugin of [...corePlugins, ...userPlugins]) {
     try {
       await plugin({ cosmosConfig });
     } catch (err) {
