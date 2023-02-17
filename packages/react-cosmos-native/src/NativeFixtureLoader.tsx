@@ -23,12 +23,12 @@ type Props = {
 };
 
 export function NativeFixtureLoader({
-  rendererConfig: { port },
+  rendererConfig: { playgroundUrl },
   fixtures,
   decorators,
   initialFixtureId,
 }: Props) {
-  const socketUrl = getSocketUrl(port);
+  const socketUrl = getSocketUrl(playgroundUrl);
   return (
     <FixtureLoader
       rendererId={rendererId}
@@ -42,9 +42,10 @@ export function NativeFixtureLoader({
   );
 }
 
-function getSocketUrl(port: number) {
-  const host = parse(NativeModules.SourceCode.scriptURL).hostname;
-  return `ws://${host}:${port}`;
+function getSocketUrl(playgroundUrl: string) {
+  const { hostname } = parse(NativeModules.SourceCode.scriptURL);
+  const { port } = new URL(playgroundUrl);
+  return `ws://${hostname}:${port}`;
 }
 
 function renderMessage({ msg }: { msg: string }) {

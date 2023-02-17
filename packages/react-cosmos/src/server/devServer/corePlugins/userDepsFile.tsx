@@ -5,6 +5,7 @@ import path from 'path';
 import { RemoteRendererConfig } from 'react-cosmos-core';
 import { CosmosConfig } from '../../cosmosConfig/types.js';
 import { DevServerPluginArgs } from '../../cosmosPlugin/types.js';
+import { getPlaygroundUrl } from '../../shared/playgroundUrl.js';
 import { generateUserDepsModule } from '../../userDeps/generateUserDepsModule.js';
 import {
   getDecoratorPatterns,
@@ -61,9 +62,11 @@ async function startFixtureFileWatcher(
 }
 
 async function generateUserDepsFile(cosmosConfig: CosmosConfig) {
-  const { userDepsFilePath, port } = cosmosConfig;
+  const { userDepsFilePath } = cosmosConfig;
 
-  const rendererConfig: RemoteRendererConfig = { port };
+  const rendererConfig: RemoteRendererConfig = {
+    playgroundUrl: getPlaygroundUrl(cosmosConfig),
+  };
   const userDepsModule = generateUserDepsModule({
     cosmosConfig,
     rendererConfig,

@@ -15,7 +15,8 @@ import fixture1 from '/Users/ovidiu/cosmos/src/CounterButton/CounterButton.fixtu
 import decorator0 from '/Users/ovidiu/cosmos/src/cosmos.decorator.tsx';
 
 export const rendererConfig = {
-  "port": 5002
+  "playgroundUrl": "http://localhost:5002",
+  "containerQuerySelector": null
 };
 
 export const fixtures = {
@@ -44,7 +45,8 @@ import fixture1 from './CounterButton/CounterButton.fixture.tsx';
 import decorator0 from './cosmos.decorator.tsx';
 
 export const rendererConfig = {
-  "port": 5002
+  "playgroundUrl": "http://localhost:5002",
+  "containerQuerySelector": null
 };
 
 export const fixtures = {

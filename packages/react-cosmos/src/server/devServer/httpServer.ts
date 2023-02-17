@@ -3,6 +3,7 @@ import http, { RequestListener } from 'http';
 import https from 'https';
 import pem from 'pem';
 import { CosmosConfig } from '../cosmosConfig/types.js';
+import { getPlaygroundUrl } from '../shared/playgroundUrl.js';
 
 type OnStart = (httpServer: http.Server) => unknown;
 
@@ -10,7 +11,7 @@ export function createHttpServer(onStart: OnStart) {
   let _server: http.Server | https.Server | undefined;
 
   async function startServer(cosmosConfig: CosmosConfig, app: RequestListener) {
-    const { port, hostname, https: httpsEnabled } = cosmosConfig;
+    const { https: httpsEnabled } = cosmosConfig;
 
     _server = httpsEnabled
       ? https.createServer(await getHttpsOpts(cosmosConfig), app)
@@ -20,9 +21,7 @@ export function createHttpServer(onStart: OnStart) {
 
     onStart(_server);
 
-    const hostnameDisplay = hostname || 'localhost';
-    const protocol = httpsEnabled ? 'https' : 'http';
-    console.log(`[Cosmos] See you at ${protocol}://${hostnameDisplay}:${port}`);
+    console.log(`[Cosmos] See you at ${getPlaygroundUrl(cosmosConfig)}`);
   }
 
   async function stopServer() {

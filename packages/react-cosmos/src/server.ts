@@ -7,6 +7,7 @@ export * from './server/cosmosPlugin/pluginConfigs.js';
 export * from './server/cosmosPlugin/types.js';
 export * from './server/getFixtures/getFixtures.js';
 export { RENDERER_FILENAME } from './server/shared/playgroundHtml.js';
+export * from './server/shared/playgroundUrl.js';
 export * from './server/shared/staticServer.js';
 export * from './server/testHelpers/cwd.js';
 export * from './server/userDeps/generateUserDepsModule.js';
