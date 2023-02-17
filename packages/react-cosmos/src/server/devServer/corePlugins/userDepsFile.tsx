@@ -1,64 +1,34 @@
-import { FSWatcher, watch } from 'chokidar';
 import fs from 'fs/promises';
-import { debounce } from 'lodash-es';
 import path from 'path';
 import { RemoteRendererConfig } from 'react-cosmos-core';
 import { CosmosConfig } from '../../cosmosConfig/types.js';
-import { DevServerPluginArgs } from '../../cosmosPlugin/types.js';
+import { DevServerPluginArgs, PlatformType } from '../../cosmosPlugin/types.js';
+import { startFixtureWatcher } from '../../shared/fixtureWatcher.js';
 import { getPlaygroundUrl } from '../../shared/playgroundUrl.js';
 import { generateUserDepsModule } from '../../userDeps/generateUserDepsModule.js';
-import {
-  getDecoratorPatterns,
-  getFixturePatterns,
-  getIgnorePatterns,
-} from '../../userDeps/shared.js';
 import { getCliArgs } from '../../utils/cli.js';
 
 export async function userDepsFileDevServerPlugin(args: DevServerPluginArgs) {
-  if (!shouldGenerateUserDepsFile(args)) return;
+  if (!shouldGenerateUserDepsFile(args.platformType)) return;
 
   const { cosmosConfig } = args;
   await generateUserDepsFile(cosmosConfig);
-  const watcher = await startFixtureFileWatcher(cosmosConfig);
+  const watcher = await startFixtureWatcher(cosmosConfig, 'all', () => {
+    generateUserDepsFile(cosmosConfig);
+  });
+
   return () => {
     watcher.close();
   };
 }
 
-function shouldGenerateUserDepsFile({
-  cosmosConfig,
-  platformType,
-}: DevServerPluginArgs): boolean {
+function shouldGenerateUserDepsFile(platformType: PlatformType): boolean {
   return (
     platformType === 'native' ||
     cosmosConfig.rendererUrl !== null ||
     // CLI support for --external-userdeps flag (useful with react-native-web)
     Boolean(getCliArgs().externalUserdeps)
   );
-}
-
-const DEBOUNCE_INTERVAL = 50;
-
-async function startFixtureFileWatcher(
-  cosmosConfig: CosmosConfig
-): Promise<FSWatcher> {
-  const { fixturesDir, fixtureFileSuffix } = cosmosConfig;
-  const FILE_PATTERNS = [
-    ...getFixturePatterns(fixturesDir, fixtureFileSuffix),
-    ...getDecoratorPatterns(),
-  ];
-  return new Promise(resolve => {
-    const watcher: FSWatcher = watch(FILE_PATTERNS, {
-      ignored: getIgnorePatterns(),
-      ignoreInitial: true,
-      cwd: cosmosConfig.rootDir,
-    })
-      .on('ready', () => resolve(watcher))
-      .on(
-        'all',
-        debounce(() => generateUserDepsFile(cosmosConfig), DEBOUNCE_INTERVAL)
-      );
-  });
 }
 
 async function generateUserDepsFile(cosmosConfig: CosmosConfig) {
