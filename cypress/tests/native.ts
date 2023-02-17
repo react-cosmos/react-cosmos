@@ -16,7 +16,10 @@ describe('Native', () => {
 
   context('user deps file', () => {
     it('has port option', () => {
-      getUserDepsFile().should('contain', `"port": 5002`);
+      getUserDepsFile().should(
+        'contain',
+        `"playgroundUrl": "http://localhost:5002"`
+      );
     });
 
     it('has fixture paths', () => {
