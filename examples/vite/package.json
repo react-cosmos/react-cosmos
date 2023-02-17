@@ -13,7 +13,7 @@
     "react-cosmos": "^5.7.2",
     "react-cosmos-plugin-boolean-input": "^5.7.2",
     "react-cosmos-plugin-open-fixture": "^5.7.2",
-    "vite": "^4.0.2"
+    "vite": "^4.1.2"
   },
   "devDependencies": {}
 }
