@@ -15,7 +15,7 @@ import { requirePluginModule } from '../shared/requirePluginModule.js';
 import { getStaticPath } from '../shared/staticPath.js';
 import { resolve } from '../utils/resolve.js';
 
-const corePlugins: ExportPlugin[] = [];
+const builtInPlugins: ExportPlugin[] = [];
 
 export async function generateExport() {
   const cosmosConfig = await detectCosmosConfig();
@@ -41,7 +41,7 @@ export async function generateExport() {
     cosmosConfig.rootDir
   );
 
-  for (const plugin of [...corePlugins, ...userPlugins]) {
+  for (const plugin of [...builtInPlugins, ...userPlugins]) {
     try {
       await plugin({ cosmosConfig });
     } catch (err) {
