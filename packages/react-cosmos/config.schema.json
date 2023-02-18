@@ -128,7 +128,7 @@
       "uniqueItems": true
     },
     "rendererUrl": {
-      "description": "Required when renderer doesn't run on the same port as the Playground. Useful for integrations with build tools. [default: null]",
+      "description": "Required when renderer doesn't run on the same port (or host) as the Playground. Useful for integrations with build tools. [default: null]",
       "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
     },
     "dom": {
