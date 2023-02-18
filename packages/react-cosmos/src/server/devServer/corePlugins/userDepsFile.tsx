@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { RemoteRendererConfig } from 'react-cosmos-core';
+import { RendererConfig } from 'react-cosmos-core';
 import { CosmosConfig } from '../../cosmosConfig/types.js';
 import { DevServerPluginArgs, PlatformType } from '../../cosmosPlugin/types.js';
 import { startFixtureWatcher } from '../../userDeps/fixtureWatcher.js';
@@ -33,7 +33,7 @@ function shouldGenerateUserDepsFile(platformType: PlatformType): boolean {
 async function generateUserDepsFile(cosmosConfig: CosmosConfig) {
   const { userDepsFilePath } = cosmosConfig;
 
-  const rendererConfig: RemoteRendererConfig = {
+  const rendererConfig: RendererConfig = {
     playgroundUrl: getPlaygroundUrl(cosmosConfig),
   };
   const userDepsModule = generateUserDepsModule({

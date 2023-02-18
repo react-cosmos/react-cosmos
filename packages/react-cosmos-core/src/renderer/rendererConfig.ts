@@ -1,3 +1,3 @@
-export type RemoteRendererConfig = {
+export type RendererConfig = {
   playgroundUrl: string;
 };

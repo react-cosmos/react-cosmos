@@ -5,7 +5,7 @@ import {
   FixtureLoader,
   ReactDecorators,
   ReactFixtureWrappers,
-  RemoteRendererConfig,
+  RendererConfig,
 } from 'react-cosmos-core';
 import * as ReactNative from 'react-native';
 
@@ -15,7 +15,7 @@ const { View, Text, StyleSheet, NativeModules } = ReactNative;
 const rendererId = 'native-renderer';
 
 type Props = {
-  rendererConfig: RemoteRendererConfig;
+  rendererConfig: RendererConfig;
   fixtures: ReactFixtureWrappers;
   decorators: ReactDecorators;
   initialFixtureId?: FixtureId;

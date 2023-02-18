@@ -32,7 +32,7 @@ export function reactCosmosViteRollupPlugin(
           cosmosConfig,
           rendererConfig: {
             playgroundUrl: getPlaygroundUrl(cosmosConfig),
-            containerQuerySelector: null,
+            // TODO: Allow passing dom.containerQuerySelector
           },
           relativeToDir: null,
         });
