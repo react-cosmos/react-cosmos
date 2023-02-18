@@ -1,9 +1,9 @@
 import { startFixtureWatcher } from 'react-cosmos/server.js';
 import { createServer } from 'vite';
 import {
-  cosmosViteRollupPlugin,
-  resolvedUserDepsModuleId,
-} from './cosmosViteRollupPlugin.js';
+  reactCosmosViteRollupPlugin,
+  resolvedReactCosmosUserDepsModuleId,
+} from './reactCosmosViteRollupPlugin.js';
 
 export default async function viteDevServerPlugin({ cosmosConfig }) {
   const { rendererUrl } = cosmosConfig;
@@ -19,14 +19,22 @@ export default async function viteDevServerPlugin({ cosmosConfig }) {
     server: {
       port: new URL(rendererUrl).port,
     },
-    plugins: [cosmosViteRollupPlugin(cosmosConfig)],
+    plugins: [
+      reactCosmosViteRollupPlugin({
+        cosmosConfig,
+        // TODO: Allow indexFile customization via cosmosConfig.vite.indexFile
+        indexFile: undefined,
+      }),
+    ],
   });
   await server.listen();
 
   server.printUrls();
 
   const watcher = await startFixtureWatcher(cosmosConfig, 'add', () => {
-    const module = server.moduleGraph.getModuleById(resolvedUserDepsModuleId);
+    const module = server.moduleGraph.getModuleById(
+      resolvedReactCosmosUserDepsModuleId
+    );
     server.moduleGraph.invalidateModule(module);
     server.reloadModule(module);
   });

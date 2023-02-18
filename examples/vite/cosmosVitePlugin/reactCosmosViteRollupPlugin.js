@@ -6,10 +6,12 @@ import {
 
 const virtualModuleId = 'virtual:cosmos-userdeps';
 
-export const resolvedUserDepsModuleId = '\0' + virtualModuleId;
+export const resolvedReactCosmosUserDepsModuleId = '\0' + virtualModuleId;
 
-export function cosmosViteRollupPlugin(cosmosConfig) {
-  const indexRegExp = new RegExp(
+export function reactCosmosViteRollupPlugin(options) {
+  const { cosmosConfig } = options;
+
+  const defaultIndex = new RegExp(
     `${path.join(cosmosConfig.rootDir, 'index')}\\.(js|ts)x?`
   );
 
@@ -18,12 +20,12 @@ export function cosmosViteRollupPlugin(cosmosConfig) {
 
     resolveId(id) {
       if (id === virtualModuleId) {
-        return resolvedUserDepsModuleId;
+        return resolvedReactCosmosUserDepsModuleId;
       }
     },
 
     load(id) {
-      if (id === resolvedUserDepsModuleId) {
+      if (id === resolvedReactCosmosUserDepsModuleId) {
         return generateUserDepsModule({
           cosmosConfig,
           rendererConfig: {
@@ -36,16 +38,16 @@ export function cosmosViteRollupPlugin(cosmosConfig) {
     },
 
     transform(src, id) {
-      if (id.match(indexRegExp)) {
+      const isIndexFile = options.indexFile
+        ? id === path.join(cosmosConfig.rootDir, options.indexFile)
+        : id.match(defaultIndex);
+
+      if (isIndexFile) {
         return {
           code: getRendererIndex(virtualModuleId),
           map: null,
         };
       }
-    },
-
-    watchChange: id => {
-      console.log('watchChange', id);
     },
   };
 }
