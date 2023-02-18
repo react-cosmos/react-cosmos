@@ -1,34 +1,42 @@
 import fs from 'fs';
-import http, { RequestListener } from 'http';
+import http from 'http';
 import https from 'https';
 import pem from 'pem';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { getPlaygroundUrl } from '../shared/playgroundUrl.js';
 
-type OnStart = (httpServer: http.Server) => unknown;
+type RequestListener = (
+  request: http.IncomingMessage,
+  response: http.ServerResponse
+) => void;
 
-export function createHttpServer(onStart: OnStart) {
-  let _server: http.Server | https.Server | undefined;
+export async function createHttpServer(
+  cosmosConfig: CosmosConfig,
+  requestListener: RequestListener
+) {
+  const { port, hostname, https: httpsEnabled } = cosmosConfig;
 
-  async function startServer(cosmosConfig: CosmosConfig, app: RequestListener) {
-    const { https: httpsEnabled } = cosmosConfig;
+  const server = httpsEnabled
+    ? https.createServer(await getHttpsOpts(cosmosConfig), requestListener)
+    : http.createServer(requestListener);
 
-    _server = httpsEnabled
-      ? https.createServer(await getHttpsOpts(cosmosConfig), app)
-      : http.createServer(app);
-
-    handleStart(_server, cosmosConfig);
-
-    onStart(_server);
+  async function start() {
+    await new Promise<void>(resolve => {
+      if (hostname === null) {
+        server.listen(port, resolve);
+      } else {
+        server.listen(port, hostname, resolve);
+      }
+    });
 
     console.log(`[Cosmos] See you at ${getPlaygroundUrl(cosmosConfig)}`);
   }
 
-  async function stopServer() {
-    if (_server) await handleClose(_server);
+  async function stop() {
+    await new Promise(resolve => server.close(resolve));
   }
 
-  return { startServer, stopServer };
+  return { server, start, stop };
 }
 
 type Credentials = { key: string; cert: string };
@@ -48,19 +56,4 @@ async function getHttpsOpts(cosmosConfig: CosmosConfig): Promise<Credentials> {
       return resolve({ key: keys.serviceKey, cert: keys.certificate });
     });
   });
-}
-
-async function handleStart(server: http.Server, cosmosConfig: CosmosConfig) {
-  const { port, hostname } = cosmosConfig;
-  await new Promise<void>(resolve => {
-    if (hostname === null) {
-      server.listen(port, resolve);
-    } else {
-      server.listen(port, hostname, resolve);
-    }
-  });
-}
-
-async function handleClose(server: http.Server | https.Server) {
-  await new Promise(resolve => server.close(resolve));
 }

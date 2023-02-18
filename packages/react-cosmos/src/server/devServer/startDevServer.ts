@@ -1,4 +1,3 @@
-import express from 'express';
 import path from 'path';
 import { CosmosPluginConfig } from 'react-cosmos-core';
 import {
@@ -14,11 +13,11 @@ import {
 import { logPluginInfo } from '../shared/logPluginInfo.js';
 import { requirePluginModule } from '../shared/requirePluginModule.js';
 import { serveStaticDir } from '../shared/staticServer.js';
-import { configureExpressApp } from './configureExpressApp.js';
 import { httpProxyDevServerPlugin } from './corePlugins/httpProxy.js';
 import openFileDevServerPlugin from './corePlugins/openFile.js';
 import pluginEndpointDevServerPlugin from './corePlugins/pluginEndpoint.js';
 import { userDepsFileDevServerPlugin } from './corePlugins/userDepsFile.js';
+import { createExpressApp } from './expressApp.js';
 import { createHttpServer } from './httpServer.js';
 import { createMessageHandler } from './messageHandler.js';
 
@@ -42,15 +41,15 @@ export async function startDevServer(platformType: PlatformType) {
   });
   logPluginInfo(pluginConfigs);
 
-  const app = express();
-  const msgHandler = createMessageHandler();
-  const httpServer = createHttpServer(msgHandler.startListening);
+  const app = await createExpressApp(platformType, cosmosConfig, pluginConfigs);
+  const httpServer = await createHttpServer(cosmosConfig, app);
+  const msgHandler = createMessageHandler(httpServer.server);
 
   const pluginCleanupCallbacks: DevServerPluginCleanupCallback[] = [];
 
   async function cleanUp() {
     await Promise.all(pluginCleanupCallbacks.map(cleanup => cleanup()));
-    await httpServer.stopServer();
+    await httpServer.stop();
     msgHandler.cleanUp();
   }
 
@@ -64,6 +63,7 @@ export async function startDevServer(platformType: PlatformType) {
       const pluginReturn = await plugin({
         cosmosConfig,
         platformType,
+        httpServer: httpServer.server,
         expressApp: app,
         sendMessage: msgHandler.sendMessage,
       });
@@ -95,8 +95,7 @@ export async function startDevServer(platformType: PlatformType) {
     serveStaticDir(app, cosmosConfig.staticPath, cosmosConfig.publicUrl);
   }
 
-  await configureExpressApp({ app, platformType, cosmosConfig, pluginConfigs });
-  await httpServer.startServer(cosmosConfig, app);
+  await httpServer.start();
 
   return cleanUp;
 }

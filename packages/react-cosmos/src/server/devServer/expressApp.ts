@@ -6,19 +6,13 @@ import { getDevPlaygroundHtml } from '../shared/playgroundHtml.js';
 import { getStaticPath } from '../shared/staticPath.js';
 import { resolve } from '../utils/resolve.js';
 
-type ConfigureExpressAppArgs = {
-  app: express.Express;
-  platformType: PlatformType;
-  cosmosConfig: CosmosConfig;
-  pluginConfigs: CosmosPluginConfig[];
-};
+export async function createExpressApp(
+  platformType: PlatformType,
+  cosmosConfig: CosmosConfig,
+  pluginConfigs: CosmosPluginConfig[]
+): Promise<express.Express> {
+  const app = express();
 
-export async function configureExpressApp({
-  app,
-  platformType,
-  cosmosConfig,
-  pluginConfigs,
-}: ConfigureExpressAppArgs) {
   const playgroundHtml = await getDevPlaygroundHtml(
     platformType,
     cosmosConfig,

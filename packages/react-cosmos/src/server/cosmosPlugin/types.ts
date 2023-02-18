@@ -1,4 +1,5 @@
 import express from 'express';
+import http from 'http';
 import { MessageType } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 
@@ -7,6 +8,7 @@ export type PlatformType = 'web' | 'native';
 export type DevServerPluginArgs = {
   cosmosConfig: CosmosConfig;
   platformType: PlatformType;
+  httpServer: http.Server;
   expressApp: express.Express;
   sendMessage(msg: MessageType): unknown;
 };
