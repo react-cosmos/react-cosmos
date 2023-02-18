@@ -3,29 +3,23 @@ import {
   generateUserDepsModule,
   getPlaygroundUrl,
 } from 'react-cosmos/server.js';
-
-const virtualModuleId = 'virtual:cosmos-userdeps';
-
-export const resolvedReactCosmosUserDepsModuleId = '\0' + virtualModuleId;
+import { createViteRendererIndex } from './createViteRendererIndex.js';
 
 export function reactCosmosViteRollupPlugin(options) {
   const { cosmosConfig } = options;
-
-  const defaultIndex = new RegExp(
-    `${path.join(cosmosConfig.rootDir, 'index')}\\.(js|ts)x?`
-  );
+  const defaultIndexPattern = createDefaultIndexPattern(cosmosConfig.rootDir);
 
   return {
     name: 'react-cosmos-renderer-vite',
 
     resolveId(id) {
-      if (id === virtualModuleId) {
-        return resolvedReactCosmosUserDepsModuleId;
+      if (id === options.userDepsVirtualModuleId) {
+        return options.userDepsResolvedModuleId;
       }
     },
 
     load(id) {
-      if (id === resolvedReactCosmosUserDepsModuleId) {
+      if (id === options.userDepsResolvedModuleId) {
         return generateUserDepsModule({
           cosmosConfig,
           rendererConfig: {
@@ -40,11 +34,11 @@ export function reactCosmosViteRollupPlugin(options) {
     transform(src, id) {
       const isIndexFile = options.indexFile
         ? id === path.join(cosmosConfig.rootDir, options.indexFile)
-        : id.match(defaultIndex);
+        : id.match(defaultIndexPattern);
 
       if (isIndexFile) {
         return {
-          code: getRendererIndex(virtualModuleId),
+          code: createViteRendererIndex(options.userDepsVirtualModuleId),
           map: null,
         };
       }
@@ -52,21 +46,6 @@ export function reactCosmosViteRollupPlugin(options) {
   };
 }
 
-function getRendererIndex(userDepsModuleId) {
-  return `
-import { mountDomRenderer } from 'react-cosmos-dom';
-
-mount();
-
-async function mount() {
-  // Use dynamic import to load updated modules upon hot reloading
-  const args = await import('${userDepsModuleId}');
-  mountDomRenderer(args);
-}
-
-if (import.meta.hot) {
-  import.meta.hot.accept(() => {
-    mount();
-  });
-}\n`;
+function createDefaultIndexPattern(rootDir) {
+  return new RegExp(`${path.join(rootDir, 'index')}\\.(js|ts)x?`);
 }
