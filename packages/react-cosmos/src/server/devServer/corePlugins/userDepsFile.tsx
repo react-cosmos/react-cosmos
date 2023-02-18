@@ -2,14 +2,14 @@ import fs from 'fs/promises';
 import path from 'path';
 import { RemoteRendererConfig } from 'react-cosmos-core';
 import { CosmosConfig } from '../../cosmosConfig/types.js';
-import { DevServerPluginArgs } from '../../cosmosPlugin/types.js';
+import { DevServerPluginArgs, PlatformType } from '../../cosmosPlugin/types.js';
 import { startFixtureWatcher } from '../../shared/fixtureWatcher.js';
 import { getPlaygroundUrl } from '../../shared/playgroundUrl.js';
 import { generateUserDepsModule } from '../../userDeps/generateUserDepsModule.js';
 import { getCliArgs } from '../../utils/cli.js';
 
 export async function userDepsFileDevServerPlugin(args: DevServerPluginArgs) {
-  if (!shouldGenerateUserDepsFile(args)) return;
+  if (!shouldGenerateUserDepsFile(args.platformType)) return;
 
   const { cosmosConfig } = args;
   await generateUserDepsFile(cosmosConfig);
@@ -22,13 +22,9 @@ export async function userDepsFileDevServerPlugin(args: DevServerPluginArgs) {
   };
 }
 
-function shouldGenerateUserDepsFile({
-  cosmosConfig,
-  platformType,
-}: DevServerPluginArgs): boolean {
+function shouldGenerateUserDepsFile(platformType: PlatformType): boolean {
   return (
     platformType === 'native' ||
-    cosmosConfig.rendererUrl !== null ||
     // CLI support for --external-userdeps flag (useful with react-native-web)
     Boolean(getCliArgs().externalUserdeps)
   );
