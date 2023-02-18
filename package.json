@@ -25,6 +25,8 @@
     "start": "yarn cosmos --root-dir examples/webpack-babel",
     "start:vite": "yarn cosmos --root-dir examples/vite",
     "export": "yarn cosmos-export --root-dir examples/webpack-babel",
+    "export:vite": "yarn cosmos-export --root-dir examples/vite",
+    "export:vite:serve": "http-server -p 5001 ./examples/vite/cosmos-export",
     "start:export": "http-server -p 5001 ./examples/webpack-babel/cosmos-export",
     "start:native": "yarn cosmos-native --root-dir examples/webpack-babel --port 5002",
     "start:playground": "yarn cosmos --root-dir packages/react-cosmos-ui",

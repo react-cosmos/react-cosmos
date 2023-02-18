@@ -5,21 +5,23 @@ import {
 } from 'react-cosmos/server.js';
 import { createViteRendererIndex } from './createViteRendererIndex.js';
 
-export function reactCosmosViteRollupPlugin(options) {
-  const { cosmosConfig } = options;
+export const userDepsVirtualModuleId = 'virtual:cosmos-userdeps';
+export const userDepsResolvedModuleId = '\0' + userDepsVirtualModuleId;
+
+export function reactCosmosViteRollupPlugin(cosmosConfig) {
   const defaultIndexPattern = createDefaultIndexPattern(cosmosConfig.rootDir);
 
   return {
     name: 'react-cosmos-renderer-vite',
 
     resolveId(id) {
-      if (id === options.userDepsVirtualModuleId) {
-        return options.userDepsResolvedModuleId;
+      if (id === userDepsVirtualModuleId) {
+        return userDepsResolvedModuleId;
       }
     },
 
     load(id) {
-      if (id === options.userDepsResolvedModuleId) {
+      if (id === userDepsResolvedModuleId) {
         return generateUserDepsModule({
           cosmosConfig,
           rendererConfig: {
@@ -32,13 +34,10 @@ export function reactCosmosViteRollupPlugin(options) {
     },
 
     transform(src, id) {
-      const isIndexFile = options.indexFile
-        ? id === path.join(cosmosConfig.rootDir, options.indexFile)
-        : id.match(defaultIndexPattern);
-
-      if (isIndexFile) {
+      // TODO: Allow indexFile customization via cosmosConfig.vite.indexFile
+      if (id.match(defaultIndexPattern)) {
         return {
-          code: createViteRendererIndex(options.userDepsVirtualModuleId),
+          code: createViteRendererIndex(userDepsVirtualModuleId),
           map: null,
         };
       }
