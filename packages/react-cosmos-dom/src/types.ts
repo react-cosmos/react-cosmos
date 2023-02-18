@@ -1,4 +1,5 @@
-export type DomRendererConfig = {
-  playgroundUrl: string;
+import { RendererConfig } from 'react-cosmos-core';
+
+export type DomRendererConfig = RendererConfig & {
   containerQuerySelector?: null | string;
 };
