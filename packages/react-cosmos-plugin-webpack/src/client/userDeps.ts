@@ -1,8 +1,11 @@
-import { ReactDecorators, ReactFixtureWrappers } from 'react-cosmos-core';
-import { DomRendererConfig } from 'react-cosmos-dom';
+import {
+  ReactDecorators,
+  ReactFixtureWrappers,
+  RendererConfig,
+} from 'react-cosmos-core';
 
 // NOTE: Renderer data is statically injected at compile time
-export const rendererConfig: DomRendererConfig = {
+export const rendererConfig: RendererConfig = {
   playgroundUrl: 'http://localhost:5000',
 };
 export const fixtures: ReactFixtureWrappers = {};
