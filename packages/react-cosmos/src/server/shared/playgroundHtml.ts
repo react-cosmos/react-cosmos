@@ -3,9 +3,9 @@ import { readFile } from 'fs/promises';
 import { pkgUpSync } from 'pkg-up';
 import { CosmosPluginConfig, replaceKeys } from 'react-cosmos-core';
 import { PlaygroundConfig, PlaygroundMountArgs } from 'react-cosmos-ui';
-import url from 'url';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { PlatformType } from '../cosmosPlugin/types.js';
+import { resolveUrlPath } from './resolveUrlPath.js';
 import { getStaticPath } from './staticPath.js';
 
 export const RENDERER_FILENAME = '_renderer.html';
@@ -97,7 +97,7 @@ async function getProjectId(rootDir: string) {
 }
 
 function getWebRendererUrl({ publicUrl, rendererUrl }: CosmosConfig) {
-  return rendererUrl || url.resolve(publicUrl, RENDERER_FILENAME);
+  return rendererUrl || resolveUrlPath(publicUrl, RENDERER_FILENAME);
 }
 
 function getPlaygroundHtml(playgroundArgs: PlaygroundMountArgs) {
