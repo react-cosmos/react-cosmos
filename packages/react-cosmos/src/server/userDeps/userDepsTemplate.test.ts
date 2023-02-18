@@ -1,4 +1,4 @@
-import { DomRendererConfig } from 'react-cosmos-dom';
+import { RendererConfig } from 'react-cosmos-core';
 import { userDepsTemplate } from './userDepsTemplate.js';
 
 const globalImports = [
@@ -13,7 +13,7 @@ const fixturePaths = [
 
 const decoratorPaths = ['/Users/ovidiu/cosmos/src/cosmos.decorator.tsx'];
 
-const rendererConfig: DomRendererConfig = {
+const rendererConfig: RendererConfig = {
   playgroundUrl: 'http://localhost:5002',
 };
 
