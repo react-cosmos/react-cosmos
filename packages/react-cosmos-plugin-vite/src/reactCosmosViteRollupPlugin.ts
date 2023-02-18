@@ -16,7 +16,7 @@ export function reactCosmosViteRollupPlugin(
   const defaultIndexPattern = createDefaultIndexPattern(cosmosConfig.rootDir);
 
   return {
-    name: 'react-cosmos-renderer-vite',
+    name: 'react-cosmos-vite-renderer',
 
     resolveId(id) {
       if (id === userDepsVirtualModuleId) {
