@@ -8,7 +8,6 @@ import {
   RemoteRendererConfig,
 } from 'react-cosmos-core';
 import * as ReactNative from 'react-native';
-import parse from 'url-parse';
 
 const { View, Text, StyleSheet, NativeModules } = ReactNative;
 
@@ -43,7 +42,7 @@ export function NativeFixtureLoader({
 }
 
 function getSocketUrl(playgroundUrl: string) {
-  const { hostname } = parse(NativeModules.SourceCode.scriptURL);
+  const { hostname } = new URL(NativeModules.SourceCode.scriptURL);
   const { port } = new URL(playgroundUrl);
   return `ws://${hostname}:${port}`;
 }

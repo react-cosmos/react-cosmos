@@ -55,7 +55,6 @@
     "@types/react-native": "^0.70.8",
     "@types/react-test-renderer": "^18.0.0",
     "@types/styled-components": "^5.1.26",
-    "@types/url-parse": "^1.4.8",
     "@types/util.promisify": "1.0.4",
     "@types/webpack": "5.28.0",
     "@types/webpack-hot-middleware": "^2.25.6",
