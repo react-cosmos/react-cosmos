@@ -16,6 +16,7 @@ const packageMap = {
   'react-cosmos': true,
   'react-cosmos-plugin-boolean-input': true,
   'react-cosmos-plugin-open-fixture': true,
+  'react-cosmos-plugin-vite': true,
   'react-cosmos-plugin-webpack': true,
 };
 

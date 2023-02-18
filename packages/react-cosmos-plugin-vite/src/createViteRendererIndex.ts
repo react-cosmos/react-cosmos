@@ -1,4 +1,4 @@
-export function createViteRendererIndex(userDepsModuleId) {
+export function createViteRendererIndex(userDepsModuleId: string) {
   return `
 import { mountDomRenderer } from 'react-cosmos-dom';
 

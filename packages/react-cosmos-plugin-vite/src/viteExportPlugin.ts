@@ -1,11 +1,13 @@
 import { rename } from 'node:fs/promises';
 import path from 'path';
 import { removeLeadingSlash } from 'react-cosmos-core';
-import { RENDERER_FILENAME } from 'react-cosmos/server.js';
+import { ExportPluginArgs, RENDERER_FILENAME } from 'react-cosmos/server.js';
 import { build } from 'vite';
 import { reactCosmosViteRollupPlugin } from './reactCosmosViteRollupPlugin.js';
 
-export default async function viteExportPlugin({ cosmosConfig }) {
+export default async function viteExportPlugin({
+  cosmosConfig,
+}: ExportPluginArgs) {
   const { exportPath, publicUrl } = cosmosConfig;
 
   await build({

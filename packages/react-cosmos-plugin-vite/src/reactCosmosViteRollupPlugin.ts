@@ -1,14 +1,18 @@
 import path from 'path';
 import {
+  CosmosConfig,
   generateUserDepsModule,
   getPlaygroundUrl,
 } from 'react-cosmos/server.js';
+import { Plugin } from 'rollup';
 import { createViteRendererIndex } from './createViteRendererIndex.js';
 
 export const userDepsVirtualModuleId = 'virtual:cosmos-userdeps';
 export const userDepsResolvedModuleId = '\0' + userDepsVirtualModuleId;
 
-export function reactCosmosViteRollupPlugin(cosmosConfig) {
+export function reactCosmosViteRollupPlugin(
+  cosmosConfig: CosmosConfig
+): Plugin {
   const defaultIndexPattern = createDefaultIndexPattern(cosmosConfig.rootDir);
 
   return {
@@ -17,11 +21,13 @@ export function reactCosmosViteRollupPlugin(cosmosConfig) {
     resolveId(id) {
       if (id === userDepsVirtualModuleId) {
         return userDepsResolvedModuleId;
+      } else {
+        return null;
       }
     },
 
-    load(id) {
-      if (id === userDepsResolvedModuleId) {
+    load(id: string) {
+      if (id == userDepsResolvedModuleId) {
         return generateUserDepsModule({
           cosmosConfig,
           rendererConfig: {
@@ -30,6 +36,8 @@ export function reactCosmosViteRollupPlugin(cosmosConfig) {
           },
           relativeToDir: null,
         });
+      } else {
+        return null;
       }
     },
 
@@ -40,11 +48,13 @@ export function reactCosmosViteRollupPlugin(cosmosConfig) {
           code: createViteRendererIndex(userDepsVirtualModuleId),
           map: null,
         };
+      } else {
+        return null;
       }
     },
   };
 }
 
-function createDefaultIndexPattern(rootDir) {
+function createDefaultIndexPattern(rootDir: string) {
   return new RegExp(`${path.join(rootDir, 'index')}\\.(js|ts)x?`);
 }
