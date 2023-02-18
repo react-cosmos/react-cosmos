@@ -5,7 +5,7 @@ import {
   getDecoratorPatterns,
   getFixturePatterns,
   getIgnorePatterns,
-} from '../userDeps/shared.js';
+} from './shared.js';
 
 const DEBOUNCE_INTERVAL = 50;
 

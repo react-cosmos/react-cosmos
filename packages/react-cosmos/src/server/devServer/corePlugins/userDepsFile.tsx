@@ -3,7 +3,7 @@ import path from 'path';
 import { RemoteRendererConfig } from 'react-cosmos-core';
 import { CosmosConfig } from '../../cosmosConfig/types.js';
 import { DevServerPluginArgs, PlatformType } from '../../cosmosPlugin/types.js';
-import { startFixtureWatcher } from '../../shared/fixtureWatcher.js';
+import { startFixtureWatcher } from '../../userDeps/fixtureWatcher.js';
 import { getPlaygroundUrl } from '../../shared/playgroundUrl.js';
 import { generateUserDepsModule } from '../../userDeps/generateUserDepsModule.js';
 import { getCliArgs } from '../../utils/cli.js';
