@@ -54,7 +54,9 @@ async function getDevCoreConfig(
       return {
         ...(await getSharedCoreConfig(cosmosConfig)),
         devServerOn: true,
-        webRendererUrl: getWebRendererUrl(cosmosConfig),
+        webRendererUrl:
+          cosmosConfig.rendererUrl ||
+          resolveUrlPath(cosmosConfig.publicUrl, RENDERER_FILENAME),
       };
     default:
       throw new Error(`Invalid platform type: ${platformType}`);
@@ -67,7 +69,7 @@ async function getExportCoreConfig(
   return {
     ...(await getSharedCoreConfig(cosmosConfig)),
     devServerOn: false,
-    webRendererUrl: getWebRendererUrl(cosmosConfig),
+    webRendererUrl: resolveUrlPath(cosmosConfig.publicUrl, RENDERER_FILENAME),
   };
 }
 
@@ -94,10 +96,6 @@ async function getProjectId(rootDir: string) {
     console.log(err);
     return 'new-project';
   }
-}
-
-function getWebRendererUrl({ publicUrl, rendererUrl }: CosmosConfig) {
-  return rendererUrl || resolveUrlPath(publicUrl, RENDERER_FILENAME);
 }
 
 function getPlaygroundHtml(playgroundArgs: PlaygroundMountArgs) {
