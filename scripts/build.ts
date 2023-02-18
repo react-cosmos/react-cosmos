@@ -36,6 +36,9 @@ const builders: Partial<Record<Package, Builder>> & { default: Builder } = {
     await copyStaticAssets(pkgName);
     await buildPkgTs(pkgName, 'tsconfig.build.json');
   },
+  'react-cosmos-plugin-vite': async pkgName => {
+    await buildPkgTs(pkgName, 'tsconfig.build.json');
+  },
   'react-cosmos-plugin-webpack': async pkgName => {
     await buildPkgTs(pkgName, 'tsconfig.build.client.json');
     await buildPkgTs(pkgName, 'tsconfig.build.server.json');

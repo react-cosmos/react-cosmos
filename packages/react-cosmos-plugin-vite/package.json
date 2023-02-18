@@ -1,0 +1,17 @@
+{
+  "name": "react-cosmos-plugin-vite",
+  "version": "5.7.2",
+  "description": "Vite plugin for React Cosmos",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-plugin-vite",
+  "license": "MIT",
+  "type": "module",
+  "main": "cosmos.plugin.json",
+  "dependencies": {
+    "react-cosmos-core": "5.7.2",
+    "react-cosmos-dom": "5.7.2"
+  },
+  "devDependencies": {},
+  "peerDependencies": {
+    "react-cosmos": "^5.7.2"
+  }
+}

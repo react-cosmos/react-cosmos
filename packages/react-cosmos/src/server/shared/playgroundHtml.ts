@@ -3,9 +3,9 @@ import { readFile } from 'fs/promises';
 import { pkgUpSync } from 'pkg-up';
 import { CosmosPluginConfig, replaceKeys } from 'react-cosmos-core';
 import { PlaygroundConfig, PlaygroundMountArgs } from 'react-cosmos-ui';
-import url from 'url';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { PlatformType } from '../cosmosPlugin/types.js';
+import { resolveUrlPath } from './resolveUrlPath.js';
 import { getStaticPath } from './staticPath.js';
 
 export const RENDERER_FILENAME = '_renderer.html';
@@ -54,7 +54,9 @@ async function getDevCoreConfig(
       return {
         ...(await getSharedCoreConfig(cosmosConfig)),
         devServerOn: true,
-        webRendererUrl: getWebRendererUrl(cosmosConfig),
+        webRendererUrl:
+          cosmosConfig.rendererUrl ||
+          resolveUrlPath(cosmosConfig.publicUrl, RENDERER_FILENAME),
       };
     default:
       throw new Error(`Invalid platform type: ${platformType}`);
@@ -67,7 +69,7 @@ async function getExportCoreConfig(
   return {
     ...(await getSharedCoreConfig(cosmosConfig)),
     devServerOn: false,
-    webRendererUrl: getWebRendererUrl(cosmosConfig),
+    webRendererUrl: resolveUrlPath(cosmosConfig.publicUrl, RENDERER_FILENAME),
   };
 }
 
@@ -94,13 +96,6 @@ async function getProjectId(rootDir: string) {
     console.log(err);
     return 'new-project';
   }
-}
-
-function getWebRendererUrl({
-  publicUrl,
-  experimentalRendererUrl,
-}: CosmosConfig) {
-  return experimentalRendererUrl || url.resolve(publicUrl, RENDERER_FILENAME);
 }
 
 function getPlaygroundHtml(playgroundArgs: PlaygroundMountArgs) {

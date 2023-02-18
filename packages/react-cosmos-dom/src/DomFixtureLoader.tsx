@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
   FixtureLoader,
   ReactDecorators,
   ReactFixtureWrappers,
 } from 'react-cosmos-core';
-import { domRendererConnect } from './domRendererConnect.js';
+import { createDomRendererConnect } from './domRendererConnect.js';
 import { domRendererId } from './domRendererId.js';
 import { ErrorCatch } from './ErrorCatch.js';
 import { selectedFixtureId } from './selectedFixtureId.js';
@@ -12,13 +12,38 @@ import { selectedFixtureId } from './selectedFixtureId.js';
 type Props = {
   fixtures: ReactFixtureWrappers;
   decorators: ReactDecorators;
+  playgroundUrl: string;
   onErrorReset?: () => unknown;
 };
 export function DomFixtureLoader({
   fixtures,
   decorators,
+  playgroundUrl,
   onErrorReset,
 }: Props) {
+  const domRendererConnect = useMemo(
+    () => createDomRendererConnect(playgroundUrl),
+    [playgroundUrl]
+  );
+
+  useEffect(() => {
+    function handleGlobalError() {
+      domRendererConnect.postMessage({
+        type: 'rendererError',
+        payload: { rendererId: domRendererId },
+      });
+    }
+    // Unhandled errors from async code will not be caught by the error event, but
+    // the unhandledrejection event instead.
+    window.addEventListener('error', handleGlobalError);
+    window.addEventListener('unhandledrejection', handleGlobalError);
+
+    return () => {
+      window.removeEventListener('error', handleGlobalError);
+      window.removeEventListener('unhandledrejection', handleGlobalError);
+    };
+  }, [domRendererConnect]);
+
   return (
     <FixtureLoader
       rendererId={domRendererId}

@@ -15,7 +15,7 @@ import { requirePluginModule } from '../shared/requirePluginModule.js';
 import { getStaticPath } from '../shared/staticPath.js';
 import { resolve } from '../utils/resolve.js';
 
-const corePlugins: ExportPlugin[] = [];
+const builtInPlugins: ExportPlugin[] = [];
 
 export async function generateExport() {
   const cosmosConfig = await detectCosmosConfig();
@@ -36,9 +36,12 @@ export async function generateExport() {
   // template file (in case the static assets are served from the root path)
   await copyStaticAssets(cosmosConfig);
 
-  const exportPlugins = await getExportPlugins(cosmosConfig, pluginConfigs);
+  const userPlugins = await getExportPlugins(
+    pluginConfigs,
+    cosmosConfig.rootDir
+  );
 
-  for (const plugin of [...corePlugins, ...exportPlugins]) {
+  for (const plugin of [...builtInPlugins, ...userPlugins]) {
     try {
       await plugin({ cosmosConfig });
     } catch (err) {
@@ -87,18 +90,14 @@ async function copyStaticAssets(cosmosConfig: CosmosConfig) {
 }
 
 async function getExportPlugins(
-  cosmosConfig: CosmosConfig,
-  pluginConfigs: CosmosPluginConfig[]
+  pluginConfigs: CosmosPluginConfig[],
+  rootDir: string
 ) {
   return Promise.all(
     pluginConfigs
       .filter(pluginConfig => pluginConfig.export)
       .map(pluginConfig =>
-        requirePluginModule<ExportPlugin>(
-          cosmosConfig.rootDir,
-          pluginConfig,
-          'export'
-        )
+        requirePluginModule<ExportPlugin>(rootDir, pluginConfig, 'export')
       )
   );
 }
@@ -119,6 +118,10 @@ async function exportPlaygroundFiles(
   await fs.copyFile(
     resolve('react-cosmos-ui/dist/playground.bundle.js'),
     path.resolve(exportPath, 'playground.bundle.js')
+  );
+  await fs.copyFile(
+    resolve('react-cosmos-ui/dist/playground.bundle.js.map'),
+    path.resolve(exportPath, 'playground.bundle.js.map')
   );
   await fs.copyFile(
     getStaticPath('favicon.ico'),

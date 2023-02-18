@@ -1,6 +1,6 @@
 > Run `yarn` and `yarn build` in the root directory first. Then you can run `yarn start` inside this example directory.
 
-This example is tied to the Cosmos [monorepo](../CONTRIBUTING.md#monorepo), which makes it useful for internal development, but not as useful as a starter kit because some dependencies are implicit.
+This example is tied to the Cosmos [monorepo](../../CONTRIBUTING.md#monorepo), which makes it useful for internal development, but not as useful as a starter kit because some dependencies are implicit.
 
 Here are some external examples that didn't sit comfortably in this monorepo:
 

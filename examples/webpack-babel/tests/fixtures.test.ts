@@ -24,55 +24,55 @@ it('returns fixture info', async () => {
       treePath: ['Controls'],
     },
     {
-      absoluteFilePath: `${rootDir}/src/Counter/Counter.fixture.tsx`,
+      absoluteFilePath: `${rootDir}/src/Counter.fixture.tsx`,
       fileName: 'Counter',
       getElement: expect.any(Function),
       name: 'default',
       parents: [],
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounter%2FCounter.fixture.tsx%22%2C%22name%22%3A%22default%22%7D',
-      relativeFilePath: 'src/Counter/Counter.fixture.tsx',
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22default%22%7D',
+      relativeFilePath: 'src/Counter.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22src%2FCounter%2FCounter.fixture.tsx%22%2C%22name%22%3A%22default%22%7D',
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22default%22%7D',
       treePath: ['Counter', 'default'],
     },
     {
-      absoluteFilePath: `${rootDir}/src/Counter/Counter.fixture.tsx`,
+      absoluteFilePath: `${rootDir}/src/Counter.fixture.tsx`,
       fileName: 'Counter',
       getElement: expect.any(Function),
       name: 'small number',
       parents: [],
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounter%2FCounter.fixture.tsx%22%2C%22name%22%3A%22small+number%22%7D',
-      relativeFilePath: 'src/Counter/Counter.fixture.tsx',
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22small+number%22%7D',
+      relativeFilePath: 'src/Counter.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22src%2FCounter%2FCounter.fixture.tsx%22%2C%22name%22%3A%22small+number%22%7D',
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22small+number%22%7D',
       treePath: ['Counter', 'small number'],
     },
     {
-      absoluteFilePath: `${rootDir}/src/Counter/Counter.fixture.tsx`,
+      absoluteFilePath: `${rootDir}/src/Counter.fixture.tsx`,
       fileName: 'Counter',
       getElement: expect.any(Function),
       name: 'large number',
       parents: [],
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounter%2FCounter.fixture.tsx%22%2C%22name%22%3A%22large+number%22%7D',
-      relativeFilePath: 'src/Counter/Counter.fixture.tsx',
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22large+number%22%7D',
+      relativeFilePath: 'src/Counter.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22src%2FCounter%2FCounter.fixture.tsx%22%2C%22name%22%3A%22large+number%22%7D',
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22large+number%22%7D',
       treePath: ['Counter', 'large number'],
     },
     {
-      absoluteFilePath: `${rootDir}/src/CounterButton/CounterButton.fixture.tsx`,
+      absoluteFilePath: `${rootDir}/src/CounterButton.fixture.tsx`,
       fileName: 'CounterButton',
       getElement: expect.any(Function),
       name: null,
       parents: [],
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounterButton%2FCounterButton.fixture.tsx%22%7D',
-      relativeFilePath: 'src/CounterButton/CounterButton.fixture.tsx',
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounterButton.fixture.tsx%22%7D',
+      relativeFilePath: 'src/CounterButton.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22src%2FCounterButton%2FCounterButton.fixture.tsx%22%7D',
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22src%2FCounterButton.fixture.tsx%22%7D',
       treePath: ['CounterButton'],
     },
     {

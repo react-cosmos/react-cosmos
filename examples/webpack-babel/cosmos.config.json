@@ -2,8 +2,8 @@
   "globalImports": ["src/global.css"],
   "staticPath": "static",
   "plugins": [
+    "react-cosmos-plugin-boolean-input",
     "react-cosmos-plugin-open-fixture",
-    "react-cosmos-plugin-webpack",
-    "react-cosmos-plugin-boolean-input"
+    "react-cosmos-plugin-webpack"
   ]
 }

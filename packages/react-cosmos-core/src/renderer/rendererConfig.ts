@@ -1,3 +1,3 @@
-export type RemoteRendererConfig = {
-  port: number;
+export type RendererConfig = {
+  playgroundUrl: string;
 };

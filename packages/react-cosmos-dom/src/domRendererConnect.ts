@@ -4,11 +4,12 @@ import {
 } from 'react-cosmos-core';
 import { isInsideCosmosPreviewIframe } from './utils/isInsideCosmosPreviewIframe.js';
 
-export const domRendererConnect = isInsideCosmosPreviewIframe()
-  ? createPostMessageConnect()
-  : createWebSocketsConnect(getWebSocketsUrl());
+export function createDomRendererConnect(playgroundUrl: string) {
+  return isInsideCosmosPreviewIframe()
+    ? createPostMessageConnect()
+    : createWebSocketsConnect(getWebSocketsUrl(playgroundUrl));
+}
 
-function getWebSocketsUrl() {
-  // TODO: Allow user to input URL
-  return location.origin.replace(/^https?:/, 'ws:');
+function getWebSocketsUrl(playgroundUrl: string) {
+  return playgroundUrl.replace(/^https?:/, 'ws:');
 }

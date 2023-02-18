@@ -23,7 +23,7 @@ export default async function webpackDevServerPlugin({
   if (platformType !== 'web') return;
 
   // Skip webpack bundling if custom renderer URL is passed
-  if (cosmosConfig.experimentalRendererUrl) return;
+  if (cosmosConfig.rendererUrl) return;
 
   const userWebpack = getWebpack(cosmosConfig.rootDir);
   if (!userWebpack) return;

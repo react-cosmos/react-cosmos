@@ -4,7 +4,6 @@ import {
   detectCosmosConfig,
   detectCosmosConfigPath,
 } from '../cosmosConfig/detectCosmosConfig.js';
-import { CosmosConfig } from '../cosmosConfig/types.js';
 import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
 import {
   DevServerPlugin,
@@ -14,15 +13,15 @@ import {
 import { logPluginInfo } from '../shared/logPluginInfo.js';
 import { requirePluginModule } from '../shared/requirePluginModule.js';
 import { serveStaticDir } from '../shared/staticServer.js';
-import { createApp } from './app.js';
 import { httpProxyDevServerPlugin } from './corePlugins/httpProxy.js';
 import openFileDevServerPlugin from './corePlugins/openFile.js';
 import pluginEndpointDevServerPlugin from './corePlugins/pluginEndpoint.js';
 import { userDepsFileDevServerPlugin } from './corePlugins/userDepsFile.js';
+import { createExpressApp } from './expressApp.js';
 import { createHttpServer } from './httpServer.js';
 import { createMessageHandler } from './messageHandler.js';
 
-const corePlugins: DevServerPlugin[] = [
+const builtInPlugins: DevServerPlugin[] = [
   userDepsFileDevServerPlugin,
   httpProxyDevServerPlugin,
   openFileDevServerPlugin,
@@ -42,16 +41,11 @@ export async function startDevServer(platformType: PlatformType) {
   });
   logPluginInfo(pluginConfigs);
 
-  const app = await createApp(platformType, cosmosConfig, pluginConfigs);
-  if (cosmosConfig.staticPath) {
-    serveStaticDir(app, cosmosConfig.staticPath, cosmosConfig.publicUrl);
-  }
+  const app = await createExpressApp(platformType, cosmosConfig, pluginConfigs);
+  const httpServer = await createHttpServer(cosmosConfig, app);
+  const msgHandler = createMessageHandler(httpServer.server);
 
   const pluginCleanupCallbacks: DevServerPluginCleanupCallback[] = [];
-  const httpServer = await createHttpServer(cosmosConfig, app);
-  await httpServer.start();
-
-  const msgHandler = createMessageHandler(httpServer.server);
 
   async function cleanUp() {
     await Promise.all(pluginCleanupCallbacks.map(cleanup => cleanup()));
@@ -59,12 +53,12 @@ export async function startDevServer(platformType: PlatformType) {
     msgHandler.cleanUp();
   }
 
-  const devServerPlugins = await getDevServerPlugins(
-    cosmosConfig,
-    pluginConfigs
+  const userPlugins = await getDevServerPlugins(
+    pluginConfigs,
+    cosmosConfig.rootDir
   );
 
-  for (const plugin of [...corePlugins, ...devServerPlugins]) {
+  for (const plugin of [...builtInPlugins, ...userPlugins]) {
     try {
       const pluginReturn = await plugin({
         cosmosConfig,
@@ -97,6 +91,12 @@ export async function startDevServer(platformType: PlatformType) {
     }
   }
 
+  if (cosmosConfig.staticPath) {
+    serveStaticDir(app, cosmosConfig.staticPath, cosmosConfig.publicUrl);
+  }
+
+  await httpServer.start();
+
   return cleanUp;
 }
 
@@ -112,18 +112,14 @@ function logCosmosConfigInfo() {
 }
 
 async function getDevServerPlugins(
-  cosmosConfig: CosmosConfig,
-  pluginConfigs: CosmosPluginConfig[]
+  pluginConfigs: CosmosPluginConfig[],
+  rootDir: string
 ) {
   return Promise.all(
     pluginConfigs
-      .filter(pluginConfig => pluginConfig.export)
+      .filter(pluginConfig => pluginConfig.devServer)
       .map(pluginConfig =>
-        requirePluginModule<DevServerPlugin>(
-          cosmosConfig.rootDir,
-          pluginConfig,
-          'devServer'
-        )
+        requirePluginModule<DevServerPlugin>(rootDir, pluginConfig, 'devServer')
       )
   );
 }
