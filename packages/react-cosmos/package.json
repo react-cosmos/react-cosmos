@@ -14,7 +14,7 @@
     "http-proxy-middleware": "^2.0.6",
     "lodash-es": "^4.17.21",
     "micromatch": "^4.0.5",
-    "open": "^8.4.0",
+    "open": "^8.4.1",
     "pem": "^1.14.6",
     "pkg-up": "^4.0.0",
     "react-cosmos-core": "5.7.2",
