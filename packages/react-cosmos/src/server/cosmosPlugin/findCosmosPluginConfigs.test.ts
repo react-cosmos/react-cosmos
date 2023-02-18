@@ -8,7 +8,8 @@ import { findCosmosPluginConfigs } from './findCosmosPluginConfigs.js';
 // the plugin packages
 jest.mock('../utils/resolveSilent.js', () => {
   return {
-    resolveSilent: (moduleId: string) => `${moduleId}.js`,
+    resolveSilent: (moduleId: string) =>
+      moduleId.endsWith('.js') ? moduleId : `${moduleId}.js`,
   };
 });
 
@@ -30,6 +31,12 @@ it('loads mono repo plugins', async () => {
         "name": "Open fixture",
         "rootDir": "react-cosmos-plugin-open-fixture",
         "ui": "react-cosmos-plugin-open-fixture/dist/ui.js",
+      },
+      {
+        "devServer": "react-cosmos-plugin-vite/dist/viteDevServerPlugin.js",
+        "export": "react-cosmos-plugin-vite/dist/viteExportPlugin.js",
+        "name": "Vite",
+        "rootDir": "react-cosmos-plugin-vite",
       },
       {
         "devServer": "react-cosmos-plugin-webpack/dist/server/webpackDevServerPlugin.js",
