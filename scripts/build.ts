@@ -163,6 +163,7 @@ type RunAsyncTaskArgs = {
 
 function runAsyncTask({ cmd, args, env = {} }: RunAsyncTaskArgs) {
   return new Promise<void>((resolve, reject) => {
+    console.log(new URL('..', import.meta.url).pathname);
     const child = spawn(cmd, args, {
       cwd: new URL('..', import.meta.url).pathname,
       env: {
