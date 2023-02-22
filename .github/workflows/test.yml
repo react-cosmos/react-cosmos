@@ -22,6 +22,7 @@ jobs:
       - run: yarn build
       # Expose package builds with next jobs
       - uses: actions/upload-artifact@v3
+        with:
           name: react-cosmos-core
           path: packages/react-cosmos-core/dist
 
