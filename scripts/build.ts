@@ -124,12 +124,12 @@ async function clearPackage(pkgName: string) {
 }
 
 async function buildPkgTs(pkgName: string, tsConfig: string) {
-  await runTypeScript(`packages/${pkgName}/${tsConfig}`);
+  await runTypeScript(`./packages/${pkgName}/${tsConfig}`);
 }
 
 async function buildPkgWebpack(pkgName: string, webpackConfig: string) {
   await runWebpack(
-    `packages/${pkgName}/${webpackConfig}`,
+    `./packages/${pkgName}/${webpackConfig}`,
     pkgName === 'react-cosmos-ui'
   );
 }
