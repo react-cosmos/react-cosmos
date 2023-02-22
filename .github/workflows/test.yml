@@ -27,15 +27,15 @@ jobs:
 
   dom-dev:
     needs: build
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os:
-          - ubuntu-latest
-          - macos-latest
-          - windows-latest
+          - ubuntu
+          - macos
+          # - windows
         node-version: [16, 18]
         # TODO: example: [webpack, vite]
+    runs-on: ${{ matrix.os }}-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -61,11 +61,15 @@ jobs:
 
   dom-export:
     needs: build
-    runs-on: ubuntu-latest
     strategy:
       matrix:
+        os:
+          - ubuntu
+          - macos
+          # - windows
         node-version: [16, 18]
         # TODO: example: [webpack, vite]
+    runs-on: ${{ matrix.os }}-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -83,19 +87,23 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
-          name: cypress-screenshots-node-${{ matrix.node-version }}
+          name: cypress-screenshots-${{ matrix.os }}-node-${{ matrix.node-version }}
           path: cypress/screenshots
       - uses: actions/upload-artifact@v3
         with:
-          name: cypress-videos-node-${{ matrix.node-version }}
+          name: cypress-videos-${{ matrix.os }}-node-${{ matrix.node-version }}
           path: cypress/videos
 
   native:
     needs: build
-    runs-on: ubuntu-latest
     strategy:
       matrix:
+        os:
+          - ubuntu
+          - macos
+          # - windows
         node-version: [16, 18]
+    runs-on: ${{ matrix.os }}-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -112,9 +120,9 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
-          name: cypress-screenshots-node-${{ matrix.node-version }}
+          name: cypress-screenshots-${{ matrix.os }}-node-${{ matrix.node-version }}
           path: cypress/screenshots
       - uses: actions/upload-artifact@v3
         with:
-          name: cypress-videos-node-${{ matrix.node-version }}
+          name: cypress-videos-${{ matrix.os }}-node-${{ matrix.node-version }}
           path: cypress/videos
