@@ -1,0 +1,14 @@
+name: test
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          # Test on node 16 too
+          node-version: '18'
+      - run: yarn install --frozen-lockfile
+      - run: yarn src
+      - run: yarn check-types
