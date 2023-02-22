@@ -1,7 +1,7 @@
 name: test
 on: [push]
 jobs:
-  test-source-and-build:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -27,8 +27,8 @@ jobs:
 
   # https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#multiple-operating-systems-and-architectures
   # Test on Windows and Mac too?
-  test-dom-dev:
-    needs: test-source-and-build
+  dom-dev:
+    needs: build
     runs-on: ubuntu-latest
     # runs-on: ${{ matrix.os }}
     strategy:
@@ -53,8 +53,8 @@ jobs:
       - run: yarn start &
       - run: yarn test:cypress -s cypress/tests/domDev.ts
 
-  test-dom-export:
-    needs: test-source-and-build
+  dom-export:
+    needs: build
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -75,4 +75,22 @@ jobs:
       - run: yarn start:export &
       - run: yarn test:cypress -s cypress/tests/domExport.ts
 
-  # TODO: test-native
+  native:
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16, 18]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile
+      - uses: actions/download-artifact@v3
+        with:
+          name: packages-dist
+          path: packages
+      - run: yarn start:native &
+      - run: yarn test:cypress -s cypress/tests/native.ts
