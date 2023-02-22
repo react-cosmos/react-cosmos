@@ -27,7 +27,7 @@ jobs:
 
   # https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#multiple-operating-systems-and-architectures
   # Test on Windows and Mac too?
-  test-dev-server:
+  test-dom-dev:
     needs: test-source-and-build
     runs-on: ubuntu-latest
     # runs-on: ${{ matrix.os }}
@@ -45,37 +45,34 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
+      - run: yarn install --frozen-lockfile
       - uses: actions/download-artifact@v3
         with:
           name: packages-dist
           path: packages
-      - run: ls -la
-      - run: cd packages && ls -la
-      - run: cd packages/react-cosmos-core && ls -la
-      - run: cd packages/react-cosmos-core/dist && ls -la
-      - run: yarn install --frozen-lockfile
-      # - run: yarn build
       - run: yarn start &
-      # TODO: Artefacts
       - run: yarn test:cypress -s cypress/tests/domDev.ts
 
-  # test-export:
-  #   needs: test-source-and-build
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       node-version: [16, 18]
-  #       # TODO: example: [webpack, vite]
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
-  #         cache: 'yarn'
-  #     - run: yarn install --frozen-lockfile
-  #     - run: yarn build
-  #     - run: yarn export
-  #     - run: yarn start:export &
-  #     - run: yarn test:cypress -s cypress/tests/domExport.ts
+  test-dom-export:
+    needs: test-source-and-build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16, 18]
+        # TODO: example: [webpack, vite]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile
+      - uses: actions/download-artifact@v3
+        with:
+          name: packages-dist
+          path: packages
+      - run: yarn export
+      - run: yarn start:export &
+      - run: yarn test:cypress -s cypress/tests/domExport.ts
 
   # TODO: test-native
