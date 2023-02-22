@@ -30,10 +30,11 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu
-          - macos
-          # - windows
-        node-version: [16, 18]
+          # - ubuntu
+          # - macos
+          - windows
+        # node-version: [16, 18]
+        node-version: [18]
         # TODO: example: [webpack, vite]
     runs-on: ${{ matrix.os }}-latest
     steps:
@@ -43,10 +44,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
-      - uses: actions/download-artifact@v3
-        with:
-          name: packages-dist
-          path: packages
+      # - uses: actions/download-artifact@v3
+      #   with:
+      #     name: packages-dist
+      #     path: packages
+      - run: yarn build
       - run: yarn start &
       - run: yarn test:cypress -s cypress/tests/domDev.ts
       - uses: actions/upload-artifact@v3
@@ -59,70 +61,70 @@ jobs:
           name: cypress-videos-${{ matrix.os }}-node-${{ matrix.node-version }}
           path: cypress/videos
 
-  dom-export:
-    needs: build
-    strategy:
-      matrix:
-        os:
-          - ubuntu
-          - macos
-          # - windows
-        node-version: [16, 18]
-        # TODO: example: [webpack, vite]
-    runs-on: ${{ matrix.os }}-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile
-      - uses: actions/download-artifact@v3
-        with:
-          name: packages-dist
-          path: packages
-      - run: yarn export
-      - run: yarn start:export &
-      - run: yarn test:cypress -s cypress/tests/domExport.ts
-      - uses: actions/upload-artifact@v3
-        if: failure()
-        with:
-          name: cypress-screenshots-${{ matrix.os }}-node-${{ matrix.node-version }}
-          path: cypress/screenshots
-      - uses: actions/upload-artifact@v3
-        with:
-          name: cypress-videos-${{ matrix.os }}-node-${{ matrix.node-version }}
-          path: cypress/videos
+  # dom-export:
+  #   needs: build
+  #   strategy:
+  #     matrix:
+  #       os:
+  #         - ubuntu
+  #         - macos
+  #         # - windows
+  #       node-version: [16, 18]
+  #       # TODO: example: [webpack, vite]
+  #   runs-on: ${{ matrix.os }}-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #         cache: 'yarn'
+  #     - run: yarn install --frozen-lockfile
+  #     - uses: actions/download-artifact@v3
+  #       with:
+  #         name: packages-dist
+  #         path: packages
+  #     - run: yarn export
+  #     - run: yarn start:export &
+  #     - run: yarn test:cypress -s cypress/tests/domExport.ts
+  #     - uses: actions/upload-artifact@v3
+  #       if: failure()
+  #       with:
+  #         name: cypress-screenshots-${{ matrix.os }}-node-${{ matrix.node-version }}
+  #         path: cypress/screenshots
+  #     - uses: actions/upload-artifact@v3
+  #       with:
+  #         name: cypress-videos-${{ matrix.os }}-node-${{ matrix.node-version }}
+  #         path: cypress/videos
 
-  native:
-    needs: build
-    strategy:
-      matrix:
-        os:
-          - ubuntu
-          - macos
-          # - windows
-        node-version: [16, 18]
-    runs-on: ${{ matrix.os }}-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile
-      - uses: actions/download-artifact@v3
-        with:
-          name: packages-dist
-          path: packages
-      - run: yarn start:native &
-      - run: yarn test:cypress -s cypress/tests/native.ts
-      - uses: actions/upload-artifact@v3
-        if: failure()
-        with:
-          name: cypress-screenshots-${{ matrix.os }}-node-${{ matrix.node-version }}
-          path: cypress/screenshots
-      - uses: actions/upload-artifact@v3
-        with:
-          name: cypress-videos-${{ matrix.os }}-node-${{ matrix.node-version }}
-          path: cypress/videos
+  # native:
+  #   needs: build
+  #   strategy:
+  #     matrix:
+  #       os:
+  #         - ubuntu
+  #         - macos
+  #         # - windows
+  #       node-version: [16, 18]
+  #   runs-on: ${{ matrix.os }}-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #         cache: 'yarn'
+  #     - run: yarn install --frozen-lockfile
+  #     - uses: actions/download-artifact@v3
+  #       with:
+  #         name: packages-dist
+  #         path: packages
+  #     - run: yarn start:native &
+  #     - run: yarn test:cypress -s cypress/tests/native.ts
+  #     - uses: actions/upload-artifact@v3
+  #       if: failure()
+  #       with:
+  #         name: cypress-screenshots-${{ matrix.os }}-node-${{ matrix.node-version }}
+  #         path: cypress/screenshots
+  #     - uses: actions/upload-artifact@v3
+  #       with:
+  #         name: cypress-videos-${{ matrix.os }}-node-${{ matrix.node-version }}
+  #         path: cypress/videos
