@@ -20,6 +20,10 @@ jobs:
       # Build packages
       - run: yarn dist
       - run: yarn build
+      # Expose package builds with next jobs
+      - uses: actions/upload-artifact@v3
+          name: react-cosmos-core
+          path: packages/react-cosmos-core/dist
 
   test-dev-server:
     needs: test-source-and-build
