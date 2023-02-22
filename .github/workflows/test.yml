@@ -7,7 +7,6 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          # Test on node 16 too
           node-version: '18'
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
@@ -22,7 +21,7 @@ jobs:
       - run: yarn dist
       - run: yarn build
 
-  test-webpack-dev:
+  test-dev-server:
     needs: test-source-and-build
     runs-on: ubuntu-latest
     strategy:
@@ -38,3 +37,18 @@ jobs:
       - run: yarn build
       - run: yarn start &
       - run: yarn test:cypress -s cypress/tests/domDev.ts
+
+  test-export:
+    needs: test-source-and-build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16, 18]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+      - run: yarn export
+      - run: yarn test:cypress -s cypress/tests/domExport.ts
