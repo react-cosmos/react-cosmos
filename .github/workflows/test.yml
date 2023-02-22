@@ -46,6 +46,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
+      - uses: actions/download-artifact@v3
+        with:
+          name: packages-dist
       # - run: yarn build
       - run: yarn start &
       # TODO: Artefacts
