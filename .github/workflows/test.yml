@@ -52,6 +52,15 @@ jobs:
           path: packages
       - run: yarn start &
       - run: yarn test:cypress -s cypress/tests/domDev.ts
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+      - uses: actions/upload-artifact@v3
+        with:
+          name: cypress-videos
+          path: cypress/videos
 
   dom-export:
     needs: build
@@ -74,6 +83,15 @@ jobs:
       - run: yarn export
       - run: yarn start:export &
       - run: yarn test:cypress -s cypress/tests/domExport.ts
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+      - uses: actions/upload-artifact@v3
+        with:
+          name: cypress-videos
+          path: cypress/videos
 
   native:
     needs: build
@@ -94,3 +112,12 @@ jobs:
           path: packages
       - run: yarn start:native &
       - run: yarn test:cypress -s cypress/tests/native.ts
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+      - uses: actions/upload-artifact@v3
+        with:
+          name: cypress-videos
+          path: cypress/videos
