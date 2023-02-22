@@ -36,5 +36,5 @@ jobs:
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
       - run: yarn build
-      - run: yarn start
+      - run: yarn start &
       - run: yarn test:cypress -s cypress/tests/domDev.ts
