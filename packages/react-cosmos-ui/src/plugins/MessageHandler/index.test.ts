@@ -14,6 +14,12 @@ import {
   onMessageHandler,
 } from '../../testHelpers/pluginMocks.js';
 
+beforeAll(() => {
+  const jestWindow = window as any;
+  delete jestWindow.location;
+  jestWindow.location = { origin: 'http://localhost:8080' };
+});
+
 beforeEach(register);
 
 afterEach(resetPlugins);
@@ -26,7 +32,7 @@ async function withWebSocketServer(
 ) {
   const onMessage = jest.fn();
 
-  const wss = new WebSocketServer({ port: 80 });
+  const wss = new WebSocketServer({ port: 8080 });
   wss.on('connection', ws => {
     ws.on('message', msg => {
       onMessage(JSON.parse(msg.toString()));

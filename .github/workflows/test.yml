@@ -17,3 +17,6 @@ jobs:
       - run: yarn lint
       - run: yarn test:coverage --maxWorkers=2
       - run: yarn codecov
+      # Build packages
+      - run: yarn dist
+      - run: yarn build
