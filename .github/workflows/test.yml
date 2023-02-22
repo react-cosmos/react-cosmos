@@ -50,6 +50,7 @@ jobs:
         with:
           name: packages-dist
       # - run: yarn build
+      - run: ls -la
       - run: yarn start &
       # TODO: Artefacts
       - run: yarn test:cypress -s cypress/tests/domDev.ts
