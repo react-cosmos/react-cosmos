@@ -25,18 +25,15 @@ jobs:
           name: packages-dist
           path: packages/*/dist
 
-  # https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#multiple-operating-systems-and-architectures
-  # Test on Windows and Mac too?
   dom-dev:
     needs: build
-    runs-on: ubuntu-latest
-    # runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # os:
-        #   - ubuntu-latest
-        #   - macos-latest
-        #   - windows-latest
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
         node-version: [16, 18]
         # TODO: example: [webpack, vite]
     steps:
@@ -55,11 +52,11 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
-          name: cypress-screenshots
+          name: cypress-screenshots-${{ matrix.os }}-node-${{ matrix.node-version }}
           path: cypress/screenshots
       - uses: actions/upload-artifact@v3
         with:
-          name: cypress-videos
+          name: cypress-videos-${{ matrix.os }}-node-${{ matrix.node-version }}
           path: cypress/videos
 
   dom-export:
@@ -86,11 +83,11 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
-          name: cypress-screenshots
+          name: cypress-screenshots-node-${{ matrix.node-version }}
           path: cypress/screenshots
       - uses: actions/upload-artifact@v3
         with:
-          name: cypress-videos
+          name: cypress-videos-node-${{ matrix.node-version }}
           path: cypress/videos
 
   native:
@@ -115,9 +112,9 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
-          name: cypress-screenshots
+          name: cypress-screenshots-node-${{ matrix.node-version }}
           path: cypress/screenshots
       - uses: actions/upload-artifact@v3
         with:
-          name: cypress-videos
+          name: cypress-videos-node-${{ matrix.node-version }}
           path: cypress/videos
