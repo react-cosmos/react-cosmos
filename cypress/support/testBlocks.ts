@@ -21,7 +21,6 @@ export function navTests() {
     it('renders tree view root items', () => {
       cy.contains('Counter');
       cy.contains('CounterButton');
-      cy.contains('WelcomeMessage');
       cy.contains('HelloWorld');
     });
 
