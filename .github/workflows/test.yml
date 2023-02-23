@@ -31,13 +31,11 @@ jobs:
     # needs: test-source-and-build
     strategy:
       matrix:
-        # example: [webpack, vite]
-        example: [vite]
+        example: [webpack, vite]
         os:
           - ubuntu
           # - windows
-        # node-version: [16, 18]
-        node-version: [18]
+        node-version: [16, 18]
     runs-on: ${{ matrix.os }}-latest
     steps:
       - uses: actions/checkout@v3
@@ -60,10 +58,10 @@ jobs:
       # - DOM dev server
       # - DOM export
       # - Native dev server
-      # - run: yarn example:${{ matrix.example }}:export
+      - run: yarn example:${{ matrix.example }}:export
       - run: yarn example:${{ matrix.example }} &
-      # - run: yarn example:${{ matrix.example }}:serve &
-      # - run: yarn example:${{ matrix.example }}:native &
+      - run: yarn example:${{ matrix.example }}:serve &
+      - run: yarn example:${{ matrix.example }}:native &
 
       - run: CYPRESS_EXAMPLE_NAME=${{ matrix.example }} yarn test:cypress -s cypress/tests/domDev.ts
       - uses: actions/upload-artifact@v3
