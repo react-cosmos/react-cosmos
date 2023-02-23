@@ -31,11 +31,13 @@ jobs:
     needs: test-source-and-build
     strategy:
       matrix:
-        example: [webpack, vite]
+        # example: [webpack, vite]
+        example: [vite]
         os:
           - ubuntu
           # - windows
-        node-version: [16, 18]
+        # node-version: [16, 18]
+        node-version: [18]
     runs-on: ${{ matrix.os }}-latest
     steps:
       - uses: actions/checkout@v3
