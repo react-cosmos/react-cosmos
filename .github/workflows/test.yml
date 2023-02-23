@@ -1,7 +1,7 @@
 name: test
 on: [push]
 jobs:
-  build:
+  test-source-and-build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -10,6 +10,7 @@ jobs:
           node-version: '18'
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
+
       # Test source (with cross-package coverage)
       - run: yarn src
       - run: yarn check-types
@@ -17,6 +18,7 @@ jobs:
       - run: yarn lint
       - run: yarn test:coverage --maxWorkers=2
       - run: yarn codecov
+
       # Build packages
       - run: yarn dist
       - run: yarn build
@@ -25,8 +27,8 @@ jobs:
           name: packages-dist
           path: packages/*/dist
 
-  dom-dev:
-    needs: build
+  test-e2e:
+    needs: test-source-and-build
     strategy:
       matrix:
         os:
@@ -42,78 +44,23 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
-      - uses: actions/download-artifact@v3
-        with:
-          name: packages-dist
-          path: packages
-      - run: yarn start &
-      - run: yarn test:cypress -s cypress/tests/domDev.ts
-      - uses: actions/upload-artifact@v3
-        if: failure()
-        with:
-          name: cypress-screenshots-${{ matrix.os }}-node-${{ matrix.node-version }}
-          path: cypress/screenshots
-      - uses: actions/upload-artifact@v3
-        with:
-          name: cypress-videos-${{ matrix.os }}-node-${{ matrix.node-version }}
-          path: cypress/videos
 
-  dom-export:
-    needs: build
-    strategy:
-      matrix:
-        os:
-          - ubuntu
-          # - windows
-        node-version: [16, 18]
-        # TODO: example: [webpack, vite]
-    runs-on: ${{ matrix.os }}-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile
+      # Copy packages builds from previous job
       - uses: actions/download-artifact@v3
         with:
           name: packages-dist
           path: packages
+
+      # Start web servers for each test type:
+      # - DOM dev server
+      # - DOM export
+      # - Native dev server
       - run: yarn export
+      - run: yarn start &
       - run: yarn start:export &
-      - run: yarn test:cypress -s cypress/tests/domExport.ts
-      - uses: actions/upload-artifact@v3
-        if: failure()
-        with:
-          name: cypress-screenshots-${{ matrix.os }}-node-${{ matrix.node-version }}
-          path: cypress/screenshots
-      - uses: actions/upload-artifact@v3
-        with:
-          name: cypress-videos-${{ matrix.os }}-node-${{ matrix.node-version }}
-          path: cypress/videos
-
-  native:
-    needs: build
-    strategy:
-      matrix:
-        os:
-          - ubuntu
-          # - windows
-        node-version: [16, 18]
-    runs-on: ${{ matrix.os }}-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile
-      - uses: actions/download-artifact@v3
-        with:
-          name: packages-dist
-          path: packages
       - run: yarn start:native &
-      - run: yarn test:cypress -s cypress/tests/native.ts
+
+      - run: yarn test:cypress
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
