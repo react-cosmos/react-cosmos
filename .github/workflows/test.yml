@@ -51,10 +51,10 @@ jobs:
       - run: yarn build
 
       # Copy packages builds from previous job
-      - uses: actions/download-artifact@v3
-        with:
-          name: packages-dist
-          path: packages
+      # - uses: actions/download-artifact@v3
+      #   with:
+      #     name: packages-dist
+      #     path: packages
 
       # Start web servers for each test type:
       # - DOM dev server
