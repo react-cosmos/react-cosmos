@@ -1,8 +1,8 @@
 {
   "private": true,
-  "name": "example-webpack-babel",
+  "name": "example-webpack",
   "version": "5.7.2",
-  "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/examples/webpack-babel",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/examples/webpack",
   "license": "MIT",
   "type": "module",
   "scripts": {

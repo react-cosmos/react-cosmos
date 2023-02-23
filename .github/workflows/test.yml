@@ -55,10 +55,10 @@ jobs:
       # - DOM dev server
       # - DOM export
       # - Native dev server
-      - run: yarn export
-      - run: yarn start &
-      - run: yarn start:export &
-      - run: yarn start:native &
+      - run: yarn webpack:export
+      - run: yarn example:webpack &
+      - run: yarn example:webpack:serve &
+      - run: yarn example:webpack:native &
 
       - run: yarn test:cypress
       - uses: actions/upload-artifact@v3

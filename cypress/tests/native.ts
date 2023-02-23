@@ -6,7 +6,7 @@ describe('Native', () => {
 
   context('homepage', () => {
     it('has document title', () => {
-      cy.title().should('include', 'example-webpack-babel');
+      cy.title().should('include', 'example-webpack');
     });
 
     it('displays pending renderer message', () => {
@@ -35,7 +35,7 @@ describe('Native', () => {
 });
 
 function getUserDepsFile() {
-  return cy.readFile('examples/webpack-babel/cosmos.userdeps.js');
+  return cy.readFile('examples/webpack/cosmos.userdeps.js');
 }
 
 function userDepsContainsModule(modulePath: string) {

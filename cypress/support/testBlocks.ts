@@ -1,7 +1,7 @@
 export function homepageTests() {
   context('homepage', () => {
     it('has document title', () => {
-      cy.title().should('include', 'example-webpack-babel');
+      cy.title().should('include', 'example-webpack');
     });
 
     it('displays welcome message', () => {
