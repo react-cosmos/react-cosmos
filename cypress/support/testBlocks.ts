@@ -1,7 +1,9 @@
+import { exampleName } from './envVars';
+
 export function homepageTests() {
   context('homepage', () => {
     it('has document title', () => {
-      cy.title().should('include', 'example-webpack');
+      cy.title().should('include', `example-${exampleName()}`);
     });
 
     it('displays welcome message', () => {

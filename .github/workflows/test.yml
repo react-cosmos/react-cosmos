@@ -35,7 +35,7 @@ jobs:
           - ubuntu
           # - windows
         node-version: [16, 18]
-        # TODO: example: [webpack, vite]
+        example: [webpack, vite]
     runs-on: ${{ matrix.os }}-latest
     steps:
       - uses: actions/checkout@v3
@@ -55,12 +55,12 @@ jobs:
       # - DOM dev server
       # - DOM export
       # - Native dev server
-      - run: yarn webpack:export
-      - run: yarn example:webpack &
-      - run: yarn example:webpack:serve &
-      - run: yarn example:webpack:native &
+      - run: yarn example:${{ matrix.example }}:export
+      - run: yarn example:${{ matrix.example }} &
+      - run: yarn example:${{ matrix.example }}:serve &
+      - run: yarn example:${{ matrix.example }}:native &
 
-      - run: yarn test:cypress
+      - run: EXAMPLE_NAME=${{ matrix.example }} yarn test:cypress
       - uses: actions/upload-artifact@v3
         if: failure()
         with:

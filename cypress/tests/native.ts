@@ -1,3 +1,5 @@
+import { exampleName } from '../support/envVars';
+
 describe('Native', () => {
   beforeEach(() => {
     cy.clearStorage();
@@ -6,7 +8,7 @@ describe('Native', () => {
 
   context('homepage', () => {
     it('has document title', () => {
-      cy.title().should('include', 'example-webpack');
+      cy.title().should('include', `example-${exampleName()}`);
     });
 
     it('displays pending renderer message', () => {
@@ -35,7 +37,7 @@ describe('Native', () => {
 });
 
 function getUserDepsFile() {
-  return cy.readFile('examples/webpack/cosmos.userdeps.js');
+  return cy.readFile(`examples/${exampleName()}/cosmos.userdeps.js`);
 }
 
 function userDepsContainsModule(modulePath: string) {
