@@ -25,7 +25,7 @@ export default async function viteDevServerPlugin({
     configFile: false,
     root: cosmosConfig.rootDir,
     server: {
-      host: new URL(rendererUrl).hostname,
+      host: '0.0.0.0',
       port: parseInt(new URL(rendererUrl).port, 10),
     },
     plugins: [reactCosmosViteRollupPlugin(cosmosConfig)],
