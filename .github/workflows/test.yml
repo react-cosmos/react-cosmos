@@ -31,11 +31,11 @@ jobs:
     needs: test-source-and-build
     strategy:
       matrix:
+        example: [webpack, vite]
         os:
           - ubuntu
           # - windows
         node-version: [16, 18]
-        example: [webpack, vite]
     runs-on: ${{ matrix.os }}-latest
     steps:
       - uses: actions/checkout@v3
@@ -60,13 +60,13 @@ jobs:
       - run: yarn example:${{ matrix.example }}:serve &
       - run: yarn example:${{ matrix.example }}:native &
 
-      - run: EXAMPLE_NAME=${{ matrix.example }} yarn test:cypress
+      - run: CYPRESS_EXAMPLE_NAME=${{ matrix.example }} yarn test:cypress
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
-          name: cypress-screenshots-${{ matrix.os }}-node-${{ matrix.node-version }}
+          name: cypress-screenshots-${{ matrix.example }}-${{ matrix.os }}-node-${{ matrix.node-version }}
           path: cypress/screenshots
       - uses: actions/upload-artifact@v3
         with:
-          name: cypress-videos-${{ matrix.os }}-node-${{ matrix.node-version }}
+          name: cypress-videos-${{ matrix.example }}-${{ matrix.os }}-node-${{ matrix.node-version }}
           path: cypress/videos
