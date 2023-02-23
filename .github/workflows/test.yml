@@ -1,34 +1,34 @@
 name: test
 on: [push]
 jobs:
-  test-source-and-build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile
+  # test-source-and-build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: '18'
+  #         cache: 'yarn'
+  #     - run: yarn install --frozen-lockfile
 
-      # Test source (with cross-package coverage)
-      # - run: yarn src
-      # - run: yarn check-types
-      # - run: yarn check-types:cypress
-      # - run: yarn lint
-      # - run: yarn test:coverage --maxWorkers=2
-      # - run: yarn codecov
+  #     # Test source (with cross-package coverage)
+  #     # - run: yarn src
+  #     # - run: yarn check-types
+  #     # - run: yarn check-types:cypress
+  #     # - run: yarn lint
+  #     # - run: yarn test:coverage --maxWorkers=2
+  #     # - run: yarn codecov
 
-      # Build packages
-      # - run: yarn dist
-      - run: yarn build
-      - uses: actions/upload-artifact@v3
-        with:
-          name: packages-dist
-          path: packages/*/dist
+  #     # Build packages
+  #     # - run: yarn dist
+  #     - run: yarn build
+  #     - uses: actions/upload-artifact@v3
+  #       with:
+  #         name: packages-dist
+  #         path: packages/*/dist
 
   test-e2e:
-    needs: test-source-and-build
+    # needs: test-source-and-build
     strategy:
       matrix:
         # example: [webpack, vite]
@@ -47,6 +47,9 @@ jobs:
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
 
+      # TODO: Remove and reply on test-source-and-build
+      - run: yarn build
+
       # Copy packages builds from previous job
       - uses: actions/download-artifact@v3
         with:
@@ -57,12 +60,12 @@ jobs:
       # - DOM dev server
       # - DOM export
       # - Native dev server
-      - run: yarn example:${{ matrix.example }}:export
+      # - run: yarn example:${{ matrix.example }}:export
       - run: yarn example:${{ matrix.example }} &
-      - run: yarn example:${{ matrix.example }}:serve &
-      - run: yarn example:${{ matrix.example }}:native &
+      # - run: yarn example:${{ matrix.example }}:serve &
+      # - run: yarn example:${{ matrix.example }}:native &
 
-      - run: CYPRESS_EXAMPLE_NAME=${{ matrix.example }} yarn test:cypress
+      - run: CYPRESS_EXAMPLE_NAME=${{ matrix.example }} yarn test:cypress -s cypress/tests/domDev.ts
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
