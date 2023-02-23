@@ -21,6 +21,7 @@ export function navTests() {
     it('renders tree view root items', () => {
       cy.contains('Counter');
       cy.contains('CounterButton');
+      cy.contains('WelcomeMessage');
       cy.contains('HelloWorld');
     });
 
@@ -61,7 +62,7 @@ export function selectFixtureTests() {
 
 export function staticTests() {
   context('static path', () => {
-    it('server static asset', () => {
+    it('serves static asset', () => {
       cy.request('/cookie.txt').its('body').should('include', 'nom nom nom');
     });
   });
