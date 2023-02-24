@@ -1,26 +1,33 @@
 name: test
 on: [push]
 jobs:
-  # source:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: '18'
-  #         cache: 'yarn'
-  #     - run: yarn install --frozen-lockfile
+  source:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu
+          # - windows
+        node-version: [16, 18]
+    runs-on: ${{ matrix.os }}-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile
 
-  #     # Test source (with cross-package coverage)
-  #     - run: yarn src
-  #     - run: yarn check-types
-  #     - run: yarn check-types:cypress
-  #     - run: yarn lint
-  #     - run: yarn test:coverage --maxWorkers=2
-  #     - run: yarn codecov
+      # Test source (with cross-package coverage)
+      - run: yarn src
+      - run: yarn check-types
+      - run: yarn check-types:cypress
+      - run: yarn lint
+      - run: yarn test:coverage --maxWorkers=2
+      - run: yarn codecov
 
   build:
-    # needs: source
+    needs: source
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
