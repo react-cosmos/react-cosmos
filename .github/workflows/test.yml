@@ -1,7 +1,7 @@
 name: test
 on: [push]
 jobs:
-  # test-source-and-build:
+  # source:
   #   runs-on: ubuntu-latest
   #   steps:
   #     - uses: actions/checkout@v3
@@ -19,17 +19,27 @@ jobs:
   #     - run: yarn test:coverage --maxWorkers=2
   #     - run: yarn codecov
 
-  #     # Build packages
-  #     - run: yarn dist
-  #     - run: yarn build
-  #     - uses: actions/upload-artifact@v3
-  #       with:
-  #         name: packages-dist
-  #         path: packages/*/dist
+  build:
+    # needs: source
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile
 
-  test-e2e:
-    # needs: test-source-and-build
+      - run: yarn build
+      - uses: actions/upload-artifact@v3
+        with:
+          name: packages-dist
+          path: packages/*/dist
+
+  examples:
+    needs: build
     strategy:
+      fail-fast: false
       matrix:
         example: [webpack, vite]
         os:
@@ -46,11 +56,10 @@ jobs:
       - run: yarn install --frozen-lockfile
 
       # Copy packages builds from previous job
-      # - uses: actions/download-artifact@v3
-      #   with:
-      #     name: packages-dist
-      #     path: packages
-      - run: yarn build
+      - uses: actions/download-artifact@v3
+        with:
+          name: packages-dist
+          path: packages
 
       # Generate static export for domExport test
       - run: yarn example:${{ matrix.example }}:export
