@@ -1,6 +1,7 @@
 // Import mocks first
 import 'react-cosmos/jest';
 
+import path from 'path';
 import { getCosmosConfigAtPath, getFixtures } from 'react-cosmos/server';
 
 it('returns fixture info', async () => {
@@ -11,7 +12,7 @@ it('returns fixture info', async () => {
   const fixtures = getFixtures(cosmosConfig);
   expect(fixtures).toEqual([
     {
-      absoluteFilePath: `${rootDir}/src/__fixtures__/Controls.tsx`,
+      absoluteFilePath: path.join(rootDir, 'src/__fixtures__/Controls.tsx'),
       fileName: 'Controls',
       getElement: expect.any(Function),
       name: null,
@@ -24,7 +25,7 @@ it('returns fixture info', async () => {
       treePath: ['Controls'],
     },
     {
-      absoluteFilePath: `${rootDir}/src/Counter.fixture.tsx`,
+      absoluteFilePath: path.join(rootDir, 'src/Counter.fixture.tsx'),
       fileName: 'Counter',
       getElement: expect.any(Function),
       name: 'default',
@@ -37,7 +38,7 @@ it('returns fixture info', async () => {
       treePath: ['Counter', 'default'],
     },
     {
-      absoluteFilePath: `${rootDir}/src/Counter.fixture.tsx`,
+      absoluteFilePath: path.join(rootDir, 'src/Counter.fixture.tsx'),
       fileName: 'Counter',
       getElement: expect.any(Function),
       name: 'small number',
@@ -50,7 +51,7 @@ it('returns fixture info', async () => {
       treePath: ['Counter', 'small number'],
     },
     {
-      absoluteFilePath: `${rootDir}/src/Counter.fixture.tsx`,
+      absoluteFilePath: path.join(rootDir, 'src/Counter.fixture.tsx'),
       fileName: 'Counter',
       getElement: expect.any(Function),
       name: 'large number',
@@ -63,7 +64,7 @@ it('returns fixture info', async () => {
       treePath: ['Counter', 'large number'],
     },
     {
-      absoluteFilePath: `${rootDir}/src/CounterButton.fixture.tsx`,
+      absoluteFilePath: path.join(rootDir, 'src/CounterButton.fixture.tsx'),
       fileName: 'CounterButton',
       getElement: expect.any(Function),
       name: null,
@@ -76,7 +77,7 @@ it('returns fixture info', async () => {
       treePath: ['CounterButton'],
     },
     {
-      absoluteFilePath: `${rootDir}/src/__fixtures__/HelloWorld.ts`,
+      absoluteFilePath: path.join(rootDir, 'src/__fixtures__/HelloWorld.ts'),
       fileName: 'HelloWorld',
       getElement: expect.any(Function),
       name: null,
@@ -89,7 +90,10 @@ it('returns fixture info', async () => {
       treePath: ['HelloWorld'],
     },
     {
-      absoluteFilePath: `${rootDir}/src/NestedDecorators/NestedDecorators.fixture.tsx`,
+      absoluteFilePath: path.join(
+        rootDir,
+        'src/NestedDecorators/NestedDecorators.fixture.tsx'
+      ),
       fileName: 'NestedDecorators',
       getElement: expect.any(Function),
       name: null,
@@ -102,7 +106,7 @@ it('returns fixture info', async () => {
       treePath: ['NestedDecorators'],
     },
     {
-      absoluteFilePath: `${rootDir}/src/__fixtures__/Props.tsx`,
+      absoluteFilePath: path.join(rootDir, 'src/__fixtures__/Props.tsx'),
       fileName: 'Props',
       getElement: expect.any(Function),
       name: null,
@@ -115,7 +119,10 @@ it('returns fixture info', async () => {
       treePath: ['Props'],
     },
     {
-      absoluteFilePath: `${rootDir}/src/WelcomeMessage/WelcomeMessage.fixture.tsx`,
+      absoluteFilePath: path.join(
+        rootDir,
+        'src/WelcomeMessage/WelcomeMessage.fixture.tsx'
+      ),
       fileName: 'WelcomeMessage',
       getElement: expect.any(Function),
       name: null,

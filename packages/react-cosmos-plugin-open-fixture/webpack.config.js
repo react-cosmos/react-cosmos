@@ -1,4 +1,6 @@
-const dist = new URL('./dist', import.meta.url).pathname;
+import { fileURLToPath } from 'url';
+
+const dist = fileURLToPath(new URL('./dist', import.meta.url));
 const env = process.env.NODE_ENV || 'development';
 
 const plugins = [];

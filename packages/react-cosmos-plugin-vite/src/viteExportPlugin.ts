@@ -16,6 +16,7 @@ export default async function viteExportPlugin({
     base: publicUrl,
     build: {
       outDir: path.resolve(exportPath, removeLeadingSlash(publicUrl)),
+      emptyOutDir: false,
       minify: false,
     },
     plugins: [reactCosmosViteRollupPlugin(cosmosConfig)],

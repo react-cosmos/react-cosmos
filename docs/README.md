@@ -281,7 +281,7 @@ export default ({ children }) => <Provider store={store}>{children}</Provider>;
 
 ### Migrating _proxies_
 
-Migrating Cosmos Classic proxies to React Cosmos 5 is not intuitive. _Sorry for that!_ Check out the [nested decorators example](../examples/webpack-babel/src/NestedDecorators) and join the `#proxies-upgrade` [Slack](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw) channel to learn more about this and to get help with your migration.
+Migrating Cosmos Classic proxies to React Cosmos 5 is not intuitive. _Sorry for that!_ Check out the [nested decorators example](../examples/webpack/src/NestedDecorators) and join the `#proxies-upgrade` [Slack](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw) channel to learn more about this and to get help with your migration.
 
 ### Redux state mock
 

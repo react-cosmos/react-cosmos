@@ -1,7 +1,8 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-const dirname = new URL('.', import.meta.url).pathname;
+const dirname = fileURLToPath(new URL('.', import.meta.url));
 const src = path.join(dirname, 'src');
 
 const env = process.env.NODE_ENV || 'development';
