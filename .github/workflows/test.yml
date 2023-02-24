@@ -8,7 +8,6 @@ jobs:
         os:
           - ubuntu
           # - windows
-        node-version: [16, 18]
     runs-on: ${{ matrix.os }}-latest
     steps:
       - uses: actions/checkout@v3
