@@ -1,0 +1,5 @@
+{
+  "name": "Vite",
+  "devServer": "dist/viteDevServerPlugin.js",
+  "export": "dist/viteExportPlugin.js"
+}

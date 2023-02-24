@@ -21,7 +21,10 @@ module.exports = async function injectUserDeps() {
   watchDirs.forEach(watchDir => this.addContextDependency(watchDir));
 
   const { containerQuerySelector } = createDomCosmosConfig(cosmosConfig);
-  const rendererConfig = { containerQuerySelector };
+  const rendererConfig = {
+    playgroundUrl: server.getPlaygroundUrl(cosmosConfig),
+    containerQuerySelector,
+  };
   return server.generateUserDepsModule({
     cosmosConfig,
     rendererConfig,

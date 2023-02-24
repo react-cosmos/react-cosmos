@@ -1,6 +1,6 @@
 {
-  "name": "React Cosmos Webpack",
-  "ui": "dist/ui/build",
-  "devServer": "dist/server/webpackDevServerPlugin",
-  "export": "dist/server/webpackExportPlugin"
+  "name": "Webpack",
+  "ui": "dist/ui/build.js",
+  "devServer": "dist/server/webpackDevServerPlugin.js",
+  "export": "dist/server/webpackExportPlugin.js"
 }

@@ -21,6 +21,7 @@ export type CosmosConfig = {
   port: number;
   plugins: string[];
   publicUrl: string;
+  rendererUrl: string | null;
   rootDir: string;
   staticPath: null | string;
   // Only used by the React Native server, userDepsFilePath specifies where to
@@ -29,7 +30,6 @@ export type CosmosConfig = {
   // is used as an output file path and it requires a file extension.
   userDepsFilePath: string;
   watchDirs: string[];
-  experimentalRendererUrl: string | null;
   // Plugin configs
   [option: string]: unknown;
   // UI plugin configs

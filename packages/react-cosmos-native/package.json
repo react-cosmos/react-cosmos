@@ -7,8 +7,7 @@
   "type": "module",
   "main": "./dist/index.js",
   "dependencies": {
-    "react-cosmos-core": "5.7.2",
-    "url-parse": "^1.5.10"
+    "react-cosmos-core": "5.7.2"
   },
   "devDependencies": {}
 }

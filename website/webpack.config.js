@@ -2,10 +2,11 @@ import fs from 'fs/promises';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import 'isomorphic-fetch';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import webpack from 'webpack';
 import { getGitHubContributors, getGitHubStars } from './src/shared/gitHub.js';
 
-const dirname = new URL('.', import.meta.url).pathname;
+const dirname = fileURLToPath(new URL('.', import.meta.url));
 const src = path.join(dirname, 'src');
 const dist = path.join(dirname, 'dist');
 

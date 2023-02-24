@@ -1,11 +1,13 @@
+import { exampleName } from './envVars';
+
 export function homepageTests() {
   context('homepage', () => {
     it('has document title', () => {
-      cy.title().should('include', 'react-cosmos-example');
+      cy.title().should('include', `example-${exampleName()}`);
     });
 
     it('displays welcome message', () => {
-      cy.contains('Welcome to React Cosmos');
+      cy.contains('Welcome to React Cosmos', { timeout: 10000 });
     });
 
     it('shows renderer connected notification', () => {
@@ -60,7 +62,7 @@ export function selectFixtureTests() {
 
 export function staticTests() {
   context('static path', () => {
-    it('server static asset', () => {
+    it('serves static asset', () => {
       cy.request('/cookie.txt').its('body').should('include', 'nom nom nom');
     });
   });

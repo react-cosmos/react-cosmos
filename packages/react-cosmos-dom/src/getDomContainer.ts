@@ -1,4 +1,4 @@
-export function getDomContainer(querySelector: null | string) {
+export function getDomContainer(querySelector?: null | string) {
   if (!querySelector) {
     return getFallbackDomContainer();
   }

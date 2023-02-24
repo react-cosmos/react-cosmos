@@ -1,23 +1,24 @@
 {
   "private": true,
-  "name": "react-cosmos-example",
+  "name": "example-webpack",
   "version": "5.7.2",
-  "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/example",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/examples/webpack",
   "license": "MIT",
   "type": "module",
   "scripts": {
     "start": "cosmos"
   },
   "dependencies": {
+    "examples-shared": "^5.7.2",
     "react-cosmos": "^5.7.2",
     "react-cosmos-plugin-boolean-input": "^5.7.2",
     "react-cosmos-plugin-open-fixture": "^5.7.2",
     "react-cosmos-plugin-webpack": "^5.7.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.5",
+    "@babel/core": "^7.21.0",
     "@babel/preset-react": "^7.18.6",
-    "@babel/preset-typescript": "^7.18.6",
-    "babel-loader": "^9.1.0"
+    "@babel/preset-typescript": "^7.21.0",
+    "babel-loader": "^9.1.2"
   }
 }

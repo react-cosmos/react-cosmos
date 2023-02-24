@@ -1,3 +1,5 @@
+import { exampleName } from '../support/envVars';
+
 describe('Native', () => {
   beforeEach(() => {
     cy.clearStorage();
@@ -6,7 +8,7 @@ describe('Native', () => {
 
   context('homepage', () => {
     it('has document title', () => {
-      cy.title().should('include', 'react-cosmos-example');
+      cy.title().should('include', `example-${exampleName()}`);
     });
 
     it('displays pending renderer message', () => {
@@ -16,12 +18,15 @@ describe('Native', () => {
 
   context('user deps file', () => {
     it('has port option', () => {
-      getUserDepsFile().should('contain', `"port": 5002`);
+      getUserDepsFile().should(
+        'contain',
+        `"playgroundUrl": "http://localhost:5002"`
+      );
     });
 
     it('has fixture paths', () => {
       userDepsContainsModule('src/__fixtures__/HelloWorld.ts');
-      userDepsContainsModule('src/Counter/Counter.fixture.tsx');
+      userDepsContainsModule('src/Counter.fixture.tsx');
       userDepsContainsModule('src/WelcomeMessage/WelcomeMessage.fixture.tsx');
     });
 
@@ -32,7 +37,7 @@ describe('Native', () => {
 });
 
 function getUserDepsFile() {
-  return cy.readFile('example/cosmos.userdeps.js');
+  return cy.readFile(`examples/${exampleName()}/cosmos.userdeps.js`);
 }
 
 function userDepsContainsModule(modulePath: string) {

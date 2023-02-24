@@ -10,17 +10,17 @@
     "@skidding/launch-editor": "^2.2.3",
     "chokidar": "^3.5.3",
     "express": "^4.18.2",
-    "glob": "^8.0.3",
+    "glob": "^8.1.0",
     "http-proxy-middleware": "^2.0.6",
     "lodash-es": "^4.17.21",
     "micromatch": "^4.0.5",
-    "open": "^8.4.0",
+    "open": "^8.4.2",
     "pem": "^1.14.6",
     "pkg-up": "^4.0.0",
     "react-cosmos-core": "5.7.2",
     "react-cosmos-ui": "5.7.2",
-    "ws": "^8.11.0",
-    "yargs": "^17.6.2"
+    "ws": "^8.12.1",
+    "yargs": "^17.7.0"
   },
   "devDependencies": {},
   "bin": {

@@ -3,6 +3,7 @@ import http from 'http';
 import https from 'https';
 import pem from 'pem';
 import { CosmosConfig } from '../cosmosConfig/types.js';
+import { getPlaygroundUrl } from '../shared/playgroundUrl.js';
 
 type RequestListener = (
   request: http.IncomingMessage,
@@ -28,9 +29,7 @@ export async function createHttpServer(
       }
     });
 
-    const hostnameDisplay = hostname || 'localhost';
-    const protocol = httpsEnabled ? 'https' : 'http';
-    console.log(`[Cosmos] See you at ${protocol}://${hostnameDisplay}:${port}`);
+    console.log(`[Cosmos] See you at ${getPlaygroundUrl(cosmosConfig)}`);
   }
 
   async function stop() {

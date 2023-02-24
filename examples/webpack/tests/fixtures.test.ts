@@ -1,6 +1,7 @@
 // Import mocks first
 import 'react-cosmos/jest';
 
+import path from 'path';
 import { getCosmosConfigAtPath, getFixtures } from 'react-cosmos/server';
 
 it('returns fixture info', async () => {
@@ -11,7 +12,7 @@ it('returns fixture info', async () => {
   const fixtures = getFixtures(cosmosConfig);
   expect(fixtures).toEqual([
     {
-      absoluteFilePath: `${rootDir}/src/__fixtures__/Controls.tsx`,
+      absoluteFilePath: path.join(rootDir, 'src/__fixtures__/Controls.tsx'),
       fileName: 'Controls',
       getElement: expect.any(Function),
       name: null,
@@ -24,59 +25,59 @@ it('returns fixture info', async () => {
       treePath: ['Controls'],
     },
     {
-      absoluteFilePath: `${rootDir}/src/Counter/Counter.fixture.tsx`,
+      absoluteFilePath: path.join(rootDir, 'src/Counter.fixture.tsx'),
       fileName: 'Counter',
       getElement: expect.any(Function),
       name: 'default',
       parents: [],
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounter%2FCounter.fixture.tsx%22%2C%22name%22%3A%22default%22%7D',
-      relativeFilePath: 'src/Counter/Counter.fixture.tsx',
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22default%22%7D',
+      relativeFilePath: 'src/Counter.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22src%2FCounter%2FCounter.fixture.tsx%22%2C%22name%22%3A%22default%22%7D',
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22default%22%7D',
       treePath: ['Counter', 'default'],
     },
     {
-      absoluteFilePath: `${rootDir}/src/Counter/Counter.fixture.tsx`,
+      absoluteFilePath: path.join(rootDir, 'src/Counter.fixture.tsx'),
       fileName: 'Counter',
       getElement: expect.any(Function),
       name: 'small number',
       parents: [],
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounter%2FCounter.fixture.tsx%22%2C%22name%22%3A%22small+number%22%7D',
-      relativeFilePath: 'src/Counter/Counter.fixture.tsx',
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22small+number%22%7D',
+      relativeFilePath: 'src/Counter.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22src%2FCounter%2FCounter.fixture.tsx%22%2C%22name%22%3A%22small+number%22%7D',
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22small+number%22%7D',
       treePath: ['Counter', 'small number'],
     },
     {
-      absoluteFilePath: `${rootDir}/src/Counter/Counter.fixture.tsx`,
+      absoluteFilePath: path.join(rootDir, 'src/Counter.fixture.tsx'),
       fileName: 'Counter',
       getElement: expect.any(Function),
       name: 'large number',
       parents: [],
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounter%2FCounter.fixture.tsx%22%2C%22name%22%3A%22large+number%22%7D',
-      relativeFilePath: 'src/Counter/Counter.fixture.tsx',
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22large+number%22%7D',
+      relativeFilePath: 'src/Counter.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22src%2FCounter%2FCounter.fixture.tsx%22%2C%22name%22%3A%22large+number%22%7D',
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22large+number%22%7D',
       treePath: ['Counter', 'large number'],
     },
     {
-      absoluteFilePath: `${rootDir}/src/CounterButton/CounterButton.fixture.tsx`,
+      absoluteFilePath: path.join(rootDir, 'src/CounterButton.fixture.tsx'),
       fileName: 'CounterButton',
       getElement: expect.any(Function),
       name: null,
       parents: [],
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounterButton%2FCounterButton.fixture.tsx%22%7D',
-      relativeFilePath: 'src/CounterButton/CounterButton.fixture.tsx',
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounterButton.fixture.tsx%22%7D',
+      relativeFilePath: 'src/CounterButton.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22src%2FCounterButton%2FCounterButton.fixture.tsx%22%7D',
+        'http://localhost:5000/_renderer.html?_fixtureId=%7B%22path%22%3A%22src%2FCounterButton.fixture.tsx%22%7D',
       treePath: ['CounterButton'],
     },
     {
-      absoluteFilePath: `${rootDir}/src/__fixtures__/HelloWorld.ts`,
+      absoluteFilePath: path.join(rootDir, 'src/__fixtures__/HelloWorld.ts'),
       fileName: 'HelloWorld',
       getElement: expect.any(Function),
       name: null,
@@ -89,7 +90,10 @@ it('returns fixture info', async () => {
       treePath: ['HelloWorld'],
     },
     {
-      absoluteFilePath: `${rootDir}/src/NestedDecorators/NestedDecorators.fixture.tsx`,
+      absoluteFilePath: path.join(
+        rootDir,
+        'src/NestedDecorators/NestedDecorators.fixture.tsx'
+      ),
       fileName: 'NestedDecorators',
       getElement: expect.any(Function),
       name: null,
@@ -102,7 +106,7 @@ it('returns fixture info', async () => {
       treePath: ['NestedDecorators'],
     },
     {
-      absoluteFilePath: `${rootDir}/src/__fixtures__/Props.tsx`,
+      absoluteFilePath: path.join(rootDir, 'src/__fixtures__/Props.tsx'),
       fileName: 'Props',
       getElement: expect.any(Function),
       name: null,
@@ -115,7 +119,10 @@ it('returns fixture info', async () => {
       treePath: ['Props'],
     },
     {
-      absoluteFilePath: `${rootDir}/src/WelcomeMessage/WelcomeMessage.fixture.tsx`,
+      absoluteFilePath: path.join(
+        rootDir,
+        'src/WelcomeMessage/WelcomeMessage.fixture.tsx'
+      ),
       fileName: 'WelcomeMessage',
       getElement: expect.any(Function),
       name: null,

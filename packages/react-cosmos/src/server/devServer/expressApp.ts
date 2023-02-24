@@ -6,7 +6,7 @@ import { getDevPlaygroundHtml } from '../shared/playgroundHtml.js';
 import { getStaticPath } from '../shared/staticPath.js';
 import { resolve } from '../utils/resolve.js';
 
-export async function createApp(
+export async function createExpressApp(
   platformType: PlatformType,
   cosmosConfig: CosmosConfig,
   pluginConfigs: CosmosPluginConfig[]

@@ -5,10 +5,9 @@ import {
   FixtureLoader,
   ReactDecorators,
   ReactFixtureWrappers,
-  RemoteRendererConfig,
+  RendererConfig,
 } from 'react-cosmos-core';
 import * as ReactNative from 'react-native';
-import parse from 'url-parse';
 
 const { View, Text, StyleSheet, NativeModules } = ReactNative;
 
@@ -16,19 +15,19 @@ const { View, Text, StyleSheet, NativeModules } = ReactNative;
 const rendererId = 'native-renderer';
 
 type Props = {
-  rendererConfig: RemoteRendererConfig;
+  rendererConfig: RendererConfig;
   fixtures: ReactFixtureWrappers;
   decorators: ReactDecorators;
   initialFixtureId?: FixtureId;
 };
 
 export function NativeFixtureLoader({
-  rendererConfig: { port },
+  rendererConfig: { playgroundUrl },
   fixtures,
   decorators,
   initialFixtureId,
 }: Props) {
-  const socketUrl = getSocketUrl(port);
+  const socketUrl = getSocketUrl(playgroundUrl);
   return (
     <FixtureLoader
       rendererId={rendererId}
@@ -42,9 +41,10 @@ export function NativeFixtureLoader({
   );
 }
 
-function getSocketUrl(port: number) {
-  const host = parse(NativeModules.SourceCode.scriptURL).hostname;
-  return `ws://${host}:${port}`;
+function getSocketUrl(playgroundUrl: string) {
+  const { hostname } = new URL(NativeModules.SourceCode.scriptURL);
+  const { port } = new URL(playgroundUrl);
+  return `ws://${hostname}:${port}`;
 }
 
 function renderMessage({ msg }: { msg: string }) {

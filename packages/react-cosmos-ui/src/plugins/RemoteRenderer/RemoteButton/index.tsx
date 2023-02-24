@@ -48,6 +48,9 @@ export function RemoteButton({
   }
 }
 
-function getFullUrl(relativeUrl: string) {
-  return `${location.origin}${relativeUrl}`;
+function getFullUrl(rendererUrl: string) {
+  // Renderer URL can be absolute or relative, depending on whether the renderer
+  // is running on the same host/port as the playground
+  if (rendererUrl.startsWith('http')) return rendererUrl;
+  return `${location.origin}${rendererUrl}`;
 }

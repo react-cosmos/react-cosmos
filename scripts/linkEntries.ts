@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import fs from 'fs/promises';
 import glob from 'glob';
+import { fileURLToPath } from 'url';
 import {
   done,
   error,
@@ -100,7 +101,7 @@ async function getPackageEntryPoints(targetPackages: Package[]): Promise<{
       ? `{${targetPackages.join(',')}}`
       : targetPackages[0];
 
-  const cwd = new URL('..', import.meta.url).pathname;
+  const cwd = fileURLToPath(new URL('..', import.meta.url));
   const modules = glob.sync(`packages/${pkgMatch}/{*,bin/*}.{js,d.ts}`, {
     cwd,
     absolute: true,

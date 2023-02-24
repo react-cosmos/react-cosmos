@@ -127,8 +127,8 @@
       "items": { "type": "string", "minLength": 1 },
       "uniqueItems": true
     },
-    "experimentalRendererUrl": {
-      "description": "Custom renderer URL. This setting disables webpack bundling and allows integration with other build tools like Snowpack. [default: null]",
+    "rendererUrl": {
+      "description": "Required when renderer doesn't run on the same port (or host) as the Playground. Useful for integrations with build tools. [default: null]",
       "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
     },
     "dom": {

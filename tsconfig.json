@@ -10,6 +10,7 @@
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
     "moduleResolution": "node",
+    "newLine": "LF",
     "noEmit": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,

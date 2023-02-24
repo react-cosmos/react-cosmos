@@ -4,7 +4,7 @@ import { dismissErrorOverlay } from './errorOverlay/index.js';
 mount();
 
 async function mount() {
-  // Use dynamic import to load updated modules upon hot reloading
+  // Use dynamic import to reload updated modules upon hot reloading
   const { rendererConfig, fixtures, decorators } = await import(
     './userDeps.js'
   );

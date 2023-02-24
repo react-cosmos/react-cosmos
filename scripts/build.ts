@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import { spawn } from 'child_process';
 import fs from 'fs/promises';
+import { fileURLToPath } from 'url';
 import {
   done,
   error,
@@ -34,6 +35,9 @@ const builders: Partial<Record<Package, Builder>> & { default: Builder } = {
   },
   'react-cosmos': async pkgName => {
     await copyStaticAssets(pkgName);
+    await buildPkgTs(pkgName, 'tsconfig.build.json');
+  },
+  'react-cosmos-plugin-vite': async pkgName => {
     await buildPkgTs(pkgName, 'tsconfig.build.json');
   },
   'react-cosmos-plugin-webpack': async pkgName => {
@@ -161,7 +165,7 @@ type RunAsyncTaskArgs = {
 function runAsyncTask({ cmd, args, env = {} }: RunAsyncTaskArgs) {
   return new Promise<void>((resolve, reject) => {
     const child = spawn(cmd, args, {
-      cwd: new URL('..', import.meta.url).pathname,
+      cwd: fileURLToPath(new URL('..', import.meta.url)),
       env: {
         ...process.env,
         ...env,
@@ -187,12 +191,16 @@ function runAsyncTask({ cmd, args, env = {} }: RunAsyncTaskArgs) {
 const STATIC_PATH = 'server/static';
 
 async function copyStaticAssets(pkgName: string) {
-  const pkgDir = new URL(`../packages/${pkgName}`, import.meta.url).pathname;
+  const pkgDir = fileURLToPath(
+    new URL(`../packages/${pkgName}`, import.meta.url)
+  );
   await fs.cp(`${pkgDir}/src/${STATIC_PATH}`, `${pkgDir}/dist/${STATIC_PATH}`, {
     recursive: true,
   });
 }
 
 function pkgPath(pkgName: string, relPath: string) {
-  return new URL(`../packages/${pkgName}/${relPath}`, import.meta.url).pathname;
+  return fileURLToPath(
+    new URL(`../packages/${pkgName}/${relPath}`, import.meta.url)
+  );
 }

@@ -1,5 +1,6 @@
 import path from 'path';
 import { CosmosPluginConfig } from 'react-cosmos-core';
+import { pathToFileURL } from 'url';
 
 export async function requirePluginModule<T>(
   rootDir: string,
@@ -13,6 +14,8 @@ export async function requirePluginModule<T>(
     );
   }
 
-  const esModule = await import(path.resolve(rootDir, moduleId));
+  const esModule = await import(
+    pathToFileURL(path.resolve(rootDir, moduleId)).href
+  );
   return esModule.default as T;
 }

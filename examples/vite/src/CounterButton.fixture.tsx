@@ -1,6 +1,6 @@
+import { CounterButton } from 'examples-shared/components/CounterButton.js';
 import React from 'react';
 import { useValue } from 'react-cosmos-core';
-import { CounterButton } from './CounterButton.js';
 
 export default () => {
   const [count, setCount] = useValue<number>('count', { defaultValue: 0 });
