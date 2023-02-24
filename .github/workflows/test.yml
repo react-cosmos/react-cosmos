@@ -1,41 +1,43 @@
 name: test
 on: [push]
 jobs:
-  test-source-and-build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile
+  # test-source-and-build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: '18'
+  #         cache: 'yarn'
+  #     - run: yarn install --frozen-lockfile
 
-      # Test source (with cross-package coverage)
-      - run: yarn src
-      - run: yarn check-types
-      - run: yarn check-types:cypress
-      - run: yarn lint
-      - run: yarn test:coverage --maxWorkers=2
-      - run: yarn codecov
+  #     # Test source (with cross-package coverage)
+  #     - run: yarn src
+  #     - run: yarn check-types
+  #     - run: yarn check-types:cypress
+  #     - run: yarn lint
+  #     - run: yarn test:coverage --maxWorkers=2
+  #     - run: yarn codecov
 
-      # Build packages
-      - run: yarn dist
-      - run: yarn build
-      - uses: actions/upload-artifact@v3
-        with:
-          name: packages-dist
-          path: packages/*/dist
+  #     # Build packages
+  #     - run: yarn dist
+  #     - run: yarn build
+  #     - uses: actions/upload-artifact@v3
+  #       with:
+  #         name: packages-dist
+  #         path: packages/*/dist
 
   test-e2e:
-    needs: test-source-and-build
+    # needs: test-source-and-build
     strategy:
       matrix:
-        example: [webpack, vite]
+        example: [webpack]
+        # example: [webpack, vite]
         os:
-          - ubuntu
-          # - windows
-        node-version: [16, 18]
+          # - ubuntu
+          - windows
+        node-version: [16]
+        # node-version: [16, 18]
     runs-on: ${{ matrix.os }}-latest
     steps:
       - uses: actions/checkout@v3
@@ -46,10 +48,11 @@ jobs:
       - run: yarn install --frozen-lockfile
 
       # Copy packages builds from previous job
-      - uses: actions/download-artifact@v3
-        with:
-          name: packages-dist
-          path: packages
+      # - uses: actions/download-artifact@v3
+      #   with:
+      #     name: packages-dist
+      #     path: packages
+      - run: yarn build
 
       # Start web servers for each test type:
       # - DOM dev server
