@@ -1,3 +1,5 @@
+import { fileURLToPath } from 'url';
+
 export function getStaticPath(relPath: string) {
-  return new URL(`../static/${relPath}`, import.meta.url).pathname;
+  return fileURLToPath(new URL(`../static/${relPath}`, import.meta.url));
 }
