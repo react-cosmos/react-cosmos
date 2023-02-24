@@ -59,9 +59,12 @@ jobs:
       # - DOM export
       # - Native dev server
       - run: yarn example:${{ matrix.example }}:export
-      - run: yarn example:${{ matrix.example }} &
-      - run: yarn example:${{ matrix.example }}:serve &
-      - run: yarn example:${{ matrix.example }}:native &
+      - run: START "" yarn example:${{ matrix.example }}
+      - run: START "" yarn example:${{ matrix.example }}:serve
+      - run: START "" yarn example:${{ matrix.example }}:native
+      # - run: yarn example:${{ matrix.example }} &
+      # - run: yarn example:${{ matrix.example }}:serve &
+      # - run: yarn example:${{ matrix.example }}:native &
 
       - run: curl http://localhost:5000
       - run: yarn test:cypress
