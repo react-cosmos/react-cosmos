@@ -20,31 +20,45 @@ it('loads mono repo plugins', async () => {
     rootDir: packagesDir,
     relativePaths: true,
   });
-  expect(configs).toMatchInlineSnapshot(`
-    [
-      {
-        "name": "Boolean input",
-        "rootDir": "react-cosmos-plugin-boolean-input",
-        "ui": "react-cosmos-plugin-boolean-input/dist/ui.js",
-      },
-      {
-        "name": "Open fixture",
-        "rootDir": "react-cosmos-plugin-open-fixture",
-        "ui": "react-cosmos-plugin-open-fixture/dist/ui.js",
-      },
-      {
-        "devServer": "react-cosmos-plugin-vite/dist/viteDevServerPlugin.js",
-        "export": "react-cosmos-plugin-vite/dist/viteExportPlugin.js",
-        "name": "Vite",
-        "rootDir": "react-cosmos-plugin-vite",
-      },
-      {
-        "devServer": "react-cosmos-plugin-webpack/dist/server/webpackDevServerPlugin.js",
-        "export": "react-cosmos-plugin-webpack/dist/server/webpackExportPlugin.js",
-        "name": "Webpack",
-        "rootDir": "react-cosmos-plugin-webpack",
-        "ui": "react-cosmos-plugin-webpack/dist/ui/build.js",
-      },
-    ]
-  `);
+  expect(configs).toContainEqual({
+    name: 'Boolean input',
+    rootDir: 'react-cosmos-plugin-boolean-input',
+    ui: path.join('react-cosmos-plugin-boolean-input', 'dist', 'ui.js'),
+  });
+  expect(configs).toContainEqual({
+    name: 'Open fixture',
+    rootDir: 'react-cosmos-plugin-open-fixture',
+    ui: path.join('react-cosmos-plugin-open-fixture', 'dist', 'ui.js'),
+  });
+  expect(configs).toContainEqual({
+    name: 'Vite',
+    rootDir: 'react-cosmos-plugin-vite',
+    devServer: path.join(
+      'react-cosmos-plugin-vite',
+      'dist',
+      'viteDevServerPlugin.js'
+    ),
+    export: path.join(
+      'react-cosmos-plugin-vite',
+      'dist',
+      'viteExportPlugin.js'
+    ),
+  });
+  expect(configs).toContainEqual({
+    name: 'Webpack',
+    rootDir: 'react-cosmos-plugin-webpack',
+    ui: path.join('react-cosmos-plugin-webpack', 'dist', 'ui', 'build.js'),
+    devServer: path.join(
+      'react-cosmos-plugin-webpack',
+      'dist',
+      'server',
+      'webpackDevServerPlugin.js'
+    ),
+    export: path.join(
+      'react-cosmos-plugin-webpack',
+      'dist',
+      'server',
+      'webpackExportPlugin.js'
+    ),
+  });
 });
