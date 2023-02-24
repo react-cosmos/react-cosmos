@@ -23,7 +23,7 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/.jest/setup.ts'],
   moduleNameMapper: {
     // This seems faster than transpiling node_modules/lodash-es
-    'lodash-es': '<rootDir>/node_modules/lodash/build/index.js',
+    'lodash-es': '<rootDir>/node_modules/lodash/lodash.js',
     // Jest with jsdom environment imports the "browser" ws export, which
     // is a noop because wp isn't meant to be used in a browser environment.
     // Issue introduced here https://github.com/websockets/ws/pull/2118
