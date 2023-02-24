@@ -34,7 +34,7 @@ jobs:
         example: [webpack]
         # example: [webpack, vite]
         os:
-          # - ubuntu
+          - ubuntu
           - windows
         node-version: [18]
         # node-version: [16, 18]
@@ -59,17 +59,27 @@ jobs:
       # - DOM export
       # - Native dev server
       - run: yarn example:${{ matrix.example }}:export
-      - run: START "" yarn example:${{ matrix.example }}
-      - run: START "" yarn example:${{ matrix.example }}:serve
-      - run: START "" yarn example:${{ matrix.example }}:native
+      # - run: yarn example:${{ matrix.example }}
+      # - run: yarn example:${{ matrix.example }}:serve
+      # - run: yarn example:${{ matrix.example }}:native
       # - run: yarn example:${{ matrix.example }} &
       # - run: yarn example:${{ matrix.example }}:serve &
       # - run: yarn example:${{ matrix.example }}:native &
 
-      - run: curl http://localhost:5000
-      - run: yarn test:cypress
+      # - run: curl http://localhost:5000
+      - uses: cypress-io/github-action@v5
+        with:
+          project: cypress
+          spec: cypress/tests/domDev.ts
+          start: yarn example:${{ matrix.example }}
+          # record: true
         env:
           CYPRESS_EXAMPLE_NAME: ${{ matrix.example }}
+
+      # - run: yarn test:cypress
+      #   env:
+      #     CYPRESS_EXAMPLE_NAME: ${{ matrix.example }}
+
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
