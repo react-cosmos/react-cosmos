@@ -79,7 +79,7 @@ jobs:
 
       - uses: BerniWittmann/background-server-action@v1
         with:
-          command: yarn test:cypress
+          command: yarn test:cypress -s cypress/cypress.config.ts
           start: yarn example:${{ matrix.example }}
           wait-on: 'http://localhost:5000'
         env:
