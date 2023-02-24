@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { readFile } from 'fs/promises';
+import path from 'path';
 import { pkgUpSync } from 'pkg-up';
 import { CosmosPluginConfig, replaceKeys } from 'react-cosmos-core';
 import { PlaygroundConfig, PlaygroundMountArgs } from 'react-cosmos-ui';
@@ -85,7 +86,7 @@ async function getSharedCoreConfig(cosmosConfig: CosmosConfig) {
 async function getProjectId(rootDir: string) {
   const pkgPath = pkgUpSync({ cwd: rootDir });
   if (!pkgPath) {
-    return rootDir.split('/').pop();
+    return rootDir.split(path.sep).pop();
   }
 
   try {
