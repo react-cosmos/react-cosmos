@@ -63,7 +63,9 @@ jobs:
       - run: yarn example:${{ matrix.example }}:serve &
       - run: yarn example:${{ matrix.example }}:native &
 
-      - run: CYPRESS_EXAMPLE_NAME=${{ matrix.example }} yarn test:cypress
+      - run: yarn test:cypress
+        env:
+          CYPRESS_EXAMPLE_NAME: ${{ matrix.example }}
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
