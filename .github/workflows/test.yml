@@ -10,6 +10,7 @@ jobs:
           - windows
     runs-on: ${{ matrix.os }}-latest
     steps:
+      - run: git config --global core.autocrlf false
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
