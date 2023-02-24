@@ -69,7 +69,7 @@ jobs:
       # - run: curl http://localhost:5000
       - uses: cypress-io/github-action@v5
         with:
-          project: cypress
+          config-file: cypress/cypress.config.ts
           spec: cypress/tests/domDev.ts
           start: yarn example:${{ matrix.example }}
           # record: true
