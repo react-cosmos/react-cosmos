@@ -6,11 +6,11 @@
   - [x] Make webpack and external package (and plugin).
   - [ ] [Move from webpack middlewares to webpack-dev-server](https://github.com/react-cosmos/react-cosmos/issues/1272#issuecomment-733091647).
   - [ ] Fast Refresh out of the box integration.
-- [ ] Integrate with Vite.
+- [x] Integrate with Vite.
 
 ## Core
 
-- [ ] Redesign codebase packages and APIs.
+- [x] Redesign codebase packages and APIs.
 - [ ] Decide what to do with [Lazy fixture importing](https://github.com/react-cosmos/react-cosmos/pull/1313). Salvage what you can and move on. No need to linger if the complexity required to achieve this is unreasonable. Document everything learned for future reference.
 - [x] Research: ES6 modules (React Cosmos with no bundler and no compiler).
 
@@ -32,6 +32,8 @@
   - [x] Minimize 3rd party depedencies.
 - [x] Publish ES modules instead of CJS on NPM. Useful for tree shaking while reducing the core package entry points.
 - [ ] Migrate from Slack to Discord?
+- [x] Migrate CI to GitHub Actions.
+- [ ] Automate publishing with GitHub Actions.
 
 ## Docs & website
 
