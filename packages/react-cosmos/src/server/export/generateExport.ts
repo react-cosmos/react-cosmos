@@ -146,7 +146,7 @@ async function exportUiPlugin(
   const srcUiPath = path.resolve(rootDir, pluginConfig.ui);
 
   const relUiPath = path.relative(pluginRootDir, srcUiPath);
-  const pluginDirName = pluginRootDir.split('/').pop()!;
+  const pluginDirName = pluginRootDir.split(path.sep).pop()!;
   const targetUiPath = path.resolve(pluginPath, pluginDirName, relUiPath);
 
   await fs.mkdir(path.dirname(targetUiPath), { recursive: true });
