@@ -7,7 +7,7 @@ jobs:
       matrix:
         os:
           - ubuntu
-          # - windows
+          - windows
     runs-on: ${{ matrix.os }}-latest
     steps:
       - uses: actions/checkout@v3
@@ -85,10 +85,10 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
-          name: cypress-screenshots-${{ matrix.example }}-${{ matrix.os }}-node-${{ matrix.node-version }}
+          name: cypress-screenshots-${{ matrix.example }}-${{ matrix.os }}-node${{ matrix.node-version }}
           path: cypress/screenshots
       - uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: cypress-videos-${{ matrix.example }}-${{ matrix.os }}-node-${{ matrix.node-version }}
+          name: cypress-videos-${{ matrix.example }}-${{ matrix.os }}-node${{ matrix.node-version }}
           path: cypress/videos
