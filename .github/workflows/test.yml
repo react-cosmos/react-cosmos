@@ -36,7 +36,7 @@ jobs:
         os:
           # - ubuntu
           - windows
-        node-version: [16]
+        node-version: [18]
         # node-version: [16, 18]
     runs-on: ${{ matrix.os }}-latest
     steps:
@@ -63,6 +63,7 @@ jobs:
       - run: yarn example:${{ matrix.example }}:serve &
       - run: yarn example:${{ matrix.example }}:native &
 
+      - run: curl http://localhost:5000
       - run: yarn test:cypress
         env:
           CYPRESS_EXAMPLE_NAME: ${{ matrix.example }}
