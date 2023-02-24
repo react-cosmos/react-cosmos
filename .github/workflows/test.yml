@@ -25,25 +25,8 @@ jobs:
       - run: yarn test:coverage --maxWorkers=2
       - run: yarn codecov
 
-  build:
-    needs: source
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile
-
-      - run: yarn build
-      - uses: actions/upload-artifact@v3
-        with:
-          name: packages-dist
-          path: packages/*/dist
-
   examples:
-    needs: build
+    needs: source
     strategy:
       fail-fast: false
       matrix:
@@ -60,12 +43,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
-
-      # Copy packages builds from previous job
-      - uses: actions/download-artifact@v3
-        with:
-          name: packages-dist
-          path: packages
+      - run: yarn build
 
       # Generate static export for domExport test
       - run: yarn example:${{ matrix.example }}:export
