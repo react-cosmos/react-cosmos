@@ -67,13 +67,21 @@ jobs:
       # - run: yarn example:${{ matrix.example }}:native &
 
       # - run: curl http://localhost:5000
-      - uses: cypress-io/github-action@v5
+      # - uses: cypress-io/github-action@v5
+      #   with:
+      #     config-file: cypress/cypress.config.ts
+      #     spec: cypress/tests/domDev.ts
+      #     start: yarn example:${{ matrix.example }}
+      #     wait-on: 'http://localhost:5000'
+      #     # record: true
+      #   env:
+      #     CYPRESS_EXAMPLE_NAME: ${{ matrix.example }}
+
+      - uses: BerniWittmann/background-server-action@v1
         with:
-          config-file: cypress/cypress.config.ts
-          spec: cypress/tests/domDev.ts
+          command: yarn test:cypress
           start: yarn example:${{ matrix.example }}
           wait-on: 'http://localhost:5000'
-          # record: true
         env:
           CYPRESS_EXAMPLE_NAME: ${{ matrix.example }}
 
