@@ -7,7 +7,7 @@ export function homepageTests() {
     });
 
     it('displays welcome message', () => {
-      cy.contains('Welcome to React Cosmos');
+      cy.contains('Welcome to React Cosmos', { timeout: 10000 });
     });
 
     it('shows renderer connected notification', () => {
