@@ -3,6 +3,7 @@ import { mockConsole, mockFile } from 'react-cosmos/jest.js';
 import '../../testHelpers/mockEsmClientPath.js';
 import '../../testHelpers/mockEsmLoaderPath.js';
 
+import path from 'path';
 import { createCosmosConfig } from 'react-cosmos/server.js';
 import webpack from 'webpack';
 import { getDevWebpackConfig } from '../getDevWebpackConfig.js';
@@ -96,8 +97,12 @@ it('adds missing React aliases', async () => {
   const { resolve } = await getCustomDevWebpackConfig();
   if (resolve && resolve.alias && !Array.isArray(resolve.alias)) {
     expect(resolve.alias.xyz).toBe('abc');
-    expect(resolve.alias.react).toMatch(/node_modules\/react$/);
-    expect(resolve.alias['react-dom']).toMatch(/node_modules\/react-dom$/);
+    expect(resolve.alias.react).toMatch(
+      new RegExp(`node_modules\\${path.sep}react$`)
+    );
+    expect(resolve.alias['react-dom']).toMatch(
+      new RegExp(`node_modules\\${path.sep}react-dom$`)
+    );
   } else {
     fail('Invalid resolve.alias');
   }
@@ -118,11 +123,15 @@ it('adds missing React aliases using array form', async () => {
     });
     expect(resolve.alias).toContainEqual({
       name: 'react',
-      alias: expect.stringMatching(/node_modules\/react$/),
+      alias: expect.stringMatching(
+        new RegExp(`node_modules\\${path.sep}react$`)
+      ),
     });
     expect(resolve.alias).toContainEqual({
       name: 'react-dom',
-      alias: expect.stringMatching(/node_modules\/react-dom$/),
+      alias: expect.stringMatching(
+        new RegExp(`node_modules\\${path.sep}react-dom$`)
+      ),
     });
   } else {
     fail('Invalid resolve.alias');
