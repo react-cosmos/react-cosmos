@@ -27,7 +27,6 @@ jobs:
       - run: yarn codecov
 
   examples:
-    needs: source
     strategy:
       fail-fast: false
       matrix:
