@@ -10,11 +10,11 @@ import { createViteRendererIndex } from './createViteRendererIndex.js';
 export const userDepsVirtualModuleId = 'virtual:cosmos-userdeps';
 export const userDepsResolvedModuleId = '\0' + userDepsVirtualModuleId;
 
+const defaultIndexPattern = /^index\.(js|ts)x?$/;
+
 export function reactCosmosViteRollupPlugin(
   cosmosConfig: CosmosConfig
 ): Plugin {
-  const defaultIndexPattern = createDefaultIndexPattern(cosmosConfig.rootDir);
-
   return {
     name: 'react-cosmos-vite-renderer',
 
@@ -43,7 +43,7 @@ export function reactCosmosViteRollupPlugin(
 
     transform(src, id) {
       // TODO: Allow indexFile customization via cosmosConfig.vite.indexFile
-      if (id.match(defaultIndexPattern)) {
+      if (path.relative(cosmosConfig.rootDir, id).match(defaultIndexPattern)) {
         return {
           code: createViteRendererIndex(userDepsVirtualModuleId),
           map: null,
@@ -53,8 +53,4 @@ export function reactCosmosViteRollupPlugin(
       }
     },
   };
-}
-
-function createDefaultIndexPattern(rootDir: string) {
-  return new RegExp(`${path.join(rootDir, 'index')}\\.(js|ts)x?`);
 }
