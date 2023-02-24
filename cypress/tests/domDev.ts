@@ -8,7 +8,7 @@ import {
 describe('DOM dev', () => {
   beforeEach(() => {
     cy.clearStorage();
-    cy.visit('http://localhost:5000', { timeout: 120000 });
+    cy.visit('http://localhost:5000');
   });
 
   homepageTests();

@@ -72,6 +72,7 @@ jobs:
           config-file: cypress/cypress.config.ts
           spec: cypress/tests/domDev.ts
           start: yarn example:${{ matrix.example }}
+          wait-on: 'http://localhost:5000'
           # record: true
         env:
           CYPRESS_EXAMPLE_NAME: ${{ matrix.example }}
