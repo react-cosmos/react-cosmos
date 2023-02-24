@@ -31,8 +31,7 @@ jobs:
     # needs: test-source-and-build
     strategy:
       matrix:
-        example: [webpack]
-        # example: [webpack, vite]
+        example: [webpack, vite]
         os:
           - ubuntu
           - windows
