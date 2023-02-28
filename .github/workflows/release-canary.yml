@@ -1,0 +1,32 @@
+name: release-canary
+on:
+  push:
+    branches:
+      - master
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - run: git config --global core.autocrlf false
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile
+
+      - run: npm set "//registry.npmjs.org/:_authToken" ${{ secrets.NPM_TOKEN }}
+      - run: release:check
+
+      # https://github.com/lerna/lerna/issues/2622
+      # https://github.com/lerna/lerna/issues/3554
+      # https://github.com/lerna/lerna/issues/2060#issuecomment-658182391
+      - run: |
+          yarn lerna publish \
+            --canary \
+            --preid canary.$(git rev-parse --short HEAD) \
+            --dist-tag=canary \
+            --no-push \
+            --no-git-tag-version \
+            --force-publish \
+            --yes

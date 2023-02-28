@@ -22,6 +22,7 @@
     "dist": "yarn link-entries dist",
     "build:clear": "ts-node --esm ./scripts/clearBuild.ts",
     "build": "ts-node --esm ./scripts/build.ts",
+    "playground": "yarn cosmos --root-dir packages/react-cosmos-ui",
     "example:webpack": "yarn cosmos --root-dir examples/webpack",
     "example:webpack:export": "yarn cosmos-export --root-dir examples/webpack",
     "example:webpack:serve": "http-server -p 5001 ./examples/webpack/cosmos-export",
@@ -30,14 +31,12 @@
     "example:vite:export": "yarn cosmos-export --root-dir examples/vite",
     "example:vite:serve": "http-server -p 5001 ./examples/vite/cosmos-export",
     "example:vite:native": "yarn cosmos-native --root-dir examples/vite --port 5002",
-    "start:playground": "yarn cosmos --root-dir packages/react-cosmos-ui",
     "website:start": "yarn cosmos --root-dir website",
     "website:build": "ts-node --esm ./scripts/buildWebsite.ts",
     "website:serve": "http-server -p 5001 ./website/dist",
     "release:check": "yarn build:clear && yarn build && yarn src && yarn lint && yarn dist && yarn test:unit",
-    "release:lerna": "lerna publish --registry=https://registry.npmjs.org/",
-    "release": "yarn release:check && yarn release:lerna",
-    "release:next": "yarn release:check && yarn release:lerna --dist-tag=next"
+    "release": "yarn release:check && yarn lerna publish",
+    "release:next": "yarn release:check && yarn lerna publish --dist-tag=next"
   },
   "devDependencies": {
     "@react-mock/state": "^0.1.8",

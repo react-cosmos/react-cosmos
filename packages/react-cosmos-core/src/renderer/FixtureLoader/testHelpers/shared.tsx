@@ -168,10 +168,13 @@ export function createRendererConnectMockApi(
     let lastMsg = null as null | RendererMessage;
 
     try {
-      await until(() => {
-        lastMsg = getLastMessage();
-        return lastMsg && lastMsg.type === msgType;
-      });
+      await until(
+        () => {
+          lastMsg = getLastMessage();
+          return lastMsg && lastMsg.type === msgType;
+        },
+        { timeout: 1000 }
+      );
     } finally {
       if (!lastMsg || lastMsg.type !== msgType) {
         throw new Error(`"${msgType}" message never arrived`);

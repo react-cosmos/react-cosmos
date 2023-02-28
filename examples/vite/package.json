@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "example-vite",
-  "version": "6.0.0-alpha.0",
+  "version": "6.0.0-alpha.5",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/examples/vite",
   "license": "MIT",
   "type": "module",
@@ -9,11 +9,11 @@
     "start": "cosmos"
   },
   "dependencies": {
-    "examples-shared": "^6.0.0-alpha.0",
-    "react-cosmos": "^6.0.0-alpha.0",
-    "react-cosmos-plugin-boolean-input": "^6.0.0-alpha.0",
-    "react-cosmos-plugin-open-fixture": "^6.0.0-alpha.0",
-    "react-cosmos-plugin-vite": "^6.0.0-alpha.0",
+    "examples-shared": "^6.0.0-alpha.5",
+    "react-cosmos": "^6.0.0-alpha.5",
+    "react-cosmos-plugin-boolean-input": "^6.0.0-alpha.5",
+    "react-cosmos-plugin-open-fixture": "^6.0.0-alpha.5",
+    "react-cosmos-plugin-vite": "^6.0.0-alpha.5",
     "vite": "^4.1.3"
   }
 }
