@@ -17,4 +17,4 @@ jobs:
       - run: yarn install --frozen-lockfile
 
       - run: npm set "//registry.npmjs.org/:_authToken" ${{ secrets.NPM_TOKEN }}
-      - run: yarn release:canary
+      - run: yarn lerna publish --dist-tag=next --canary --yes --no-push --no-git-tag-version --skip-npm --allow-branch canary-release-workflow
