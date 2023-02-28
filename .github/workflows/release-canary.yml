@@ -1,0 +1,19 @@
+name: release-canary
+on:
+  push:
+    branches:
+      - master
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - run: git config --global core.autocrlf false
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile
+
+      - run: npm set "//registry.npmjs.org/:_authToken" ${{ secrets.NPM_TOKEN }}
+      - run: release:canary
