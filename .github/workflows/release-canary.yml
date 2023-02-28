@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - canary-release-workflow
 jobs:
   release:
     runs-on: ubuntu-latest

@@ -77,7 +77,7 @@ yarn check-types
 yarn start
 
 # Cosmos #inception
-yarn start:playground
+yarn playground
 
 # Build single package in watch mode
 yarn build react-cosmos-playground2 --watch
