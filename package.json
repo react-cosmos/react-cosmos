@@ -35,10 +35,9 @@
     "website:build": "ts-node --esm ./scripts/buildWebsite.ts",
     "website:serve": "http-server -p 5001 ./website/dist",
     "release:check": "yarn build:clear && yarn build && yarn src && yarn lint && yarn dist && yarn test:unit",
-    "release:cmd": "lerna publish --registry=https://registry.npmjs.org/",
-    "release": "yarn release:check && yarn release:cmd",
-    "release:next": "yarn release:check && yarn release:cmd --dist-tag=next",
-    "release:canary": "yarn release:next --canary --yes --no-push --no-git-tag-version --skip-npm"
+    "release": "yarn release:check && yarn lerna publish",
+    "release:next": "yarn release:check && yarn lerna publish --dist-tag=next",
+    "release:canary": "yarn release:check && yarn lerna publish prerelease --dist-tag=next --no-push --no-git-tag-version --force-publish --yes"
   },
   "devDependencies": {
     "@react-mock/state": "^0.1.8",
