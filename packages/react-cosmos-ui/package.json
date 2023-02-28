@@ -1,15 +1,18 @@
 {
   "name": "react-cosmos-ui",
-  "version": "5.7.2",
+  "version": "6.0.0-alpha.0",
   "description": "React Cosmos UI",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-ui",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
-  "sideEffects": ["./dist/plugins/pluginEntry.js", "./dist/plugins/*/index.js"],
+  "sideEffects": [
+    "./dist/plugins/pluginEntry.js",
+    "./dist/plugins/*/index.js"
+  ],
   "dependencies": {
     "lodash-es": "^4.17.21",
-    "react-cosmos-core": "5.7.2"
+    "react-cosmos-core": "^6.0.0-alpha.0"
   },
   "devDependencies": {
     "fuzzaldrin-plus": "^0.6.0",

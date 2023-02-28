@@ -1,11 +1,9 @@
 {
   "private": true,
   "name": "examples-shared",
-  "version": "5.7.2",
+  "version": "6.0.0-alpha.0",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/examples/shared",
   "license": "MIT",
   "type": "module",
-  "scripts": {},
-  "dependencies": {},
-  "devDependencies": {}
+  "scripts": {}
 }
