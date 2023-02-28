@@ -16,4 +16,17 @@ jobs:
       - run: yarn install --frozen-lockfile
 
       - run: npm set "//registry.npmjs.org/:_authToken" ${{ secrets.NPM_TOKEN }}
-      - run: release:canary
+      - run: release:check
+
+      # https://github.com/lerna/lerna/issues/2622
+      # https://github.com/lerna/lerna/issues/3554
+      # https://github.com/lerna/lerna/issues/2060#issuecomment-658182391
+      - run: |
+          yarn lerna publish \
+            --canary \
+            --preid canary.$(git rev-parse --short HEAD) \
+            --dist-tag=canary \
+            --no-push \
+            --no-git-tag-version \
+            --force-publish \
+            --yes
