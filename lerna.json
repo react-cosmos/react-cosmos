@@ -4,6 +4,7 @@
   "useWorkspaces": true,
   "command": {
     "publish": {
+      "registry": "https://registry.npmjs.org",
       "allowBranch": "main",
       "ignoreChanges": [
         "packages/*/README.md",
