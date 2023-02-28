@@ -16,7 +16,7 @@ jobs:
       - run: yarn install --frozen-lockfile
 
       - run: npm set "//registry.npmjs.org/:_authToken" ${{ secrets.NPM_TOKEN }}
-      - run: release:check
+      - run: yarn release:check
 
       # https://github.com/lerna/lerna/issues/2622
       # https://github.com/lerna/lerna/issues/3554
