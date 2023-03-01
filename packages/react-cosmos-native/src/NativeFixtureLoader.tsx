@@ -8,8 +8,9 @@ import {
   RendererConfig,
 } from 'react-cosmos-core';
 import * as ReactNative from 'react-native';
+import { getSocketUrl } from './getSocketUrl.js';
 
-const { View, Text, StyleSheet, NativeModules } = ReactNative;
+const { View, Text, StyleSheet } = ReactNative;
 
 // TODO: Generate unique ID per device
 const rendererId = 'native-renderer';
@@ -39,12 +40,6 @@ export function NativeFixtureLoader({
       renderMessage={renderMessage}
     />
   );
-}
-
-function getSocketUrl(playgroundUrl: string) {
-  const { hostname } = new URL(NativeModules.SourceCode.scriptURL);
-  const { port } = new URL(playgroundUrl);
-  return `ws://${hostname}:${port}`;
 }
 
 function renderMessage({ msg }: { msg: string }) {
