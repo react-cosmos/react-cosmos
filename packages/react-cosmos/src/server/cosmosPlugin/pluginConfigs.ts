@@ -26,7 +26,7 @@ export async function getPluginConfigs({
 
   const localConfigs = await findCosmosPluginConfigs({
     rootDir,
-    ignore: [`${exportPath}/**`],
+    ignore: ['**/node_modules/**', `${exportPath}/**`],
     relativePaths,
   });
 
