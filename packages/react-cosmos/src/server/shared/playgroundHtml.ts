@@ -6,7 +6,7 @@ import { CosmosPluginConfig, replaceKeys } from 'react-cosmos-core';
 import { PlaygroundConfig, PlaygroundMountArgs } from 'react-cosmos-ui';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { PlatformType } from '../cosmosPlugin/types.js';
-import { resolveUrlPath } from './resolveUrlPath.js';
+import { resolveRendererUrl } from './resolveRendererUrl.js';
 import { getStaticPath } from './staticPath.js';
 
 export const RENDERER_FILENAME = '_renderer.html';
@@ -57,7 +57,7 @@ async function getDevCoreConfig(
         devServerOn: true,
         webRendererUrl:
           cosmosConfig.rendererUrl ||
-          resolveUrlPath(cosmosConfig.publicUrl, RENDERER_FILENAME),
+          resolveRendererUrl(cosmosConfig.publicUrl, RENDERER_FILENAME),
       };
     default:
       throw new Error(`Invalid platform type: ${platformType}`);
@@ -70,7 +70,10 @@ async function getExportCoreConfig(
   return {
     ...(await getSharedCoreConfig(cosmosConfig)),
     devServerOn: false,
-    webRendererUrl: resolveUrlPath(cosmosConfig.publicUrl, RENDERER_FILENAME),
+    webRendererUrl: resolveRendererUrl(
+      cosmosConfig.publicUrl,
+      RENDERER_FILENAME
+    ),
   };
 }
 
