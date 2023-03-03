@@ -1,0 +1,6 @@
+{
+  "name": "Webpack",
+  "ui": "dist/ui/build.js",
+  "devServer": "dist/server/webpackDevServerPlugin.js",
+  "export": "dist/server/webpackExportPlugin.js"
+}

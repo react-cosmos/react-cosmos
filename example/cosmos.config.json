@@ -1,5 +1,0 @@
-{
-  "disablePlugins": false,
-  "globalImports": ["src/polyfills.ts", "src/global.css"],
-  "staticPath": "static"
-}

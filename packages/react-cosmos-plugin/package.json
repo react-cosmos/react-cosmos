@@ -1,8 +1,0 @@
-{
-  "name": "react-cosmos-plugin",
-  "version": "5.6.0",
-  "description": "Plugin APIs for React Cosmos",
-  "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-plugin",
-  "license": "MIT",
-  "main": "index.js"
-}

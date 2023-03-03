@@ -1,13 +1,8 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    // The TS compiler will only emit declaration files. Source is built by
-    // Babel for Node modules and by webpack + babel-loader for browser modules
     "noEmit": false,
-    "emitDeclarationOnly": true,
-    "declaration": true,
-    // TS requires cross-module knowledge to generate declarations
-    "isolatedModules": false
+    "declaration": true
   },
   "exclude": [
     "node_modules",
@@ -18,6 +13,6 @@
     "**/*.test.tsx",
     "**/*.fixture.ts",
     "**/*.fixture.tsx",
-    "**/testHelpers/**"
+    "**/testHelpers/**/*"
   ]
 }

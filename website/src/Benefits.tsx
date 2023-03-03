@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { mobileMaxWidth } from './shared/breakpoints';
+import { mobileMaxWidth } from './shared/breakpoints.js';
 import {
   getSlideInStyle,
   slideInDelay,
   slideInTransition,
-} from './shared/slideIn';
-import { useViewportEnter } from './shared/useViewportEnter';
+} from './shared/slideIn.js';
+import { useViewportEnter } from './shared/useViewportEnter.js';
 
 export function Benefits() {
   const [ref1, entered1] = useViewportEnter(0.66);

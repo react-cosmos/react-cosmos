@@ -1,16 +1,16 @@
 import chalk from 'chalk';
+import fs from 'fs/promises';
+import glob from 'glob';
+import { fileURLToPath } from 'url';
 import {
   done,
   error,
   findPackage,
   getFormattedPackageList,
   getUnnamedArg,
-  globAsync,
   Package,
   packages,
-  readFileAsync,
-  writeFileAsync,
-} from './shared';
+} from './shared.js';
 
 const SRC_DIR = 'src';
 const DIST_DIR = 'dist';
@@ -36,10 +36,9 @@ class InvalidTargetPackage extends Error {
     const targetDir = getTargetDir();
     const targetPackages = getTargetPackages();
 
-    const entryPoints = await getPackageEntryPoints(targetPackages);
-    await Promise.all(
-      entryPoints.map(f => linkFileRequiresToDir(f, targetDir))
-    );
+    const { modules, configs } = await getPackageEntryPoints(targetPackages);
+    await Promise.all(modules.map(f => linkFileRequiresToDir(f, targetDir)));
+    await Promise.all(configs.map(f => linkConfigPathsToDir(f, targetDir)));
 
     console.log(done(`Linked entry points to ${chalk.bold(targetDir)}.`));
   } catch (err) {
@@ -64,24 +63,56 @@ class InvalidTargetPackage extends Error {
 async function linkFileRequiresToDir(filePath: string, targetDir: TargetDir) {
   // NOTE: Use static transform + pretty format if future requires it.
   // For now this is JustFine™
-  const prevContents = await readFileAsync(filePath, 'utf8');
+  const prevContents = await fs.readFile(filePath, 'utf8');
   const regExp = new RegExp(`'(\\.{1,2})/(${SRC_DIR}|${DIST_DIR})`, 'g');
   const nextContents = prevContents.replace(regExp, `'$1/${targetDir}`);
 
-  writeFileAsync(filePath, nextContents, 'utf8');
+  await fs.writeFile(filePath, nextContents, 'utf8');
 }
 
-async function getPackageEntryPoints(
-  targetPackages: Package[]
-): Promise<string[]> {
+async function linkConfigPathsToDir(filePath: string, targetDir: TargetDir) {
+  const prev = await fs.readFile(filePath, 'utf8');
+  let next = prev;
+
+  if (prev.match(/"main": "/)) {
+    if (targetDir === SRC_DIR) {
+      const regExp = new RegExp(`"main": "./${DIST_DIR}/(.+).js"`, 'g');
+      next = next.replace(regExp, `"main": "./${SRC_DIR}/$1.ts"`);
+    } else {
+      const regExp = new RegExp(`"main": "./${SRC_DIR}/(.+).ts"`, 'g');
+      next = next.replace(regExp, `"main": "./${DIST_DIR}/$1.js"`);
+    }
+  }
+
+  if (next !== prev) {
+    await fs.writeFile(filePath, next, 'utf8');
+  }
+}
+
+async function getPackageEntryPoints(targetPackages: Package[]): Promise<{
+  modules: string[];
+  configs: string[];
+}> {
   if (targetPackages.length === 0)
     throw new Error('No package entry points to link for empty package list');
 
-  const packageNames = targetPackages.map(p => p.name);
   const pkgMatch =
-    packageNames.length > 1 ? `{${packageNames.join(',')}}` : packageNames[0];
+    targetPackages.length > 1
+      ? `{${targetPackages.join(',')}}`
+      : targetPackages[0];
 
-  return globAsync(`./packages/${pkgMatch}/{*,bin/*}.{js,d.ts}`);
+  const cwd = fileURLToPath(new URL('..', import.meta.url));
+  const modules = glob.sync(`packages/${pkgMatch}/{*,bin/*}.{js,d.ts}`, {
+    cwd,
+    absolute: true,
+    ignore: ['**/webpack.config*.js'],
+  });
+  const configs = glob.sync(`packages/${pkgMatch}/package.json`, {
+    cwd,
+    absolute: true,
+  });
+
+  return { modules, configs };
 }
 
 function getTargetDir(): TargetDir {

@@ -1,6 +1,11 @@
 {
   "exportPath": "dist/live-demo",
-  "globalImports": ["src/polyfills.ts", "src/global.css"],
+  "globalImports": ["src/global.css"],
   "publicUrl": "./",
-  "staticPath": "static"
+  "staticPath": "static",
+  "plugins": [
+    "react-cosmos-plugin-boolean-input",
+    "react-cosmos-plugin-open-fixture",
+    "react-cosmos-plugin-webpack"
+  ]
 }

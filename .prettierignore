@@ -1,12 +1,10 @@
 .vscode
 coverage
-example/cosmos-export
-example/cosmos.userdeps.js
-example/package.json
-example/*/dist
+examples/*/cosmos-export
+examples/*/cosmos.userdeps.js
+examples/*/package.json
 lerna.json
 package.json
 packages/*/dist
 packages/*/package.json
-packages/react-cosmos-playground2/src/plugins/pluginEntry.ts
 website/dist

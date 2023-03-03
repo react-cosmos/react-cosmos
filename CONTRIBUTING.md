@@ -69,15 +69,15 @@ cd react-cosmos
 yarn
 
 # Basic commands
-yarn check-types
-yarn test
 yarn build
+yarn test:unit
+yarn check-types
 
 # Run example and test React Cosmos end to end
 yarn start
 
 # Cosmos #inception
-yarn start:playground
+yarn playground
 
 # Build single package in watch mode
 yarn build react-cosmos-playground2 --watch

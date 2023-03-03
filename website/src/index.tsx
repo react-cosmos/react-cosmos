@@ -1,16 +1,13 @@
-// This import comes first
-import 'regenerator-runtime/runtime';
-
 import React from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import './global.css';
 import pages from './Page.fixture';
-import './polyfills';
-import { Root } from './Root';
+import { Root } from './Root.js';
 
 type PageName = keyof typeof pages;
 
-render(getRootElement(), document.getElementById('root'));
+const root = createRoot(document.getElementById('root')!);
+root.render(getRootElement());
 
 function getRootElement() {
   const pageName = (window as any).pageName as PageName | undefined;

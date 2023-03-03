@@ -1,4 +1,0 @@
-import { PluginContext } from 'react-plugin';
-import { MessageHandlerSpec } from './public';
-
-export type MessageHandlerContext = PluginContext<MessageHandlerSpec>;

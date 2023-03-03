@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { mobileMaxWidth } from './shared/breakpoints';
-import { useViewportEnter } from './shared/useViewportEnter';
+import { mobileMaxWidth } from './shared/breakpoints.js';
+import { useViewportEnter } from './shared/useViewportEnter.js';
 
 export function Rocket() {
   const [ref, entered] = useViewportEnter(0.66);

@@ -6,18 +6,20 @@
 // 3. Used by global check-types command (which runs in CI)
 {
   "compilerOptions": {
-    "lib": ["dom", "es2015", "esnext"],
-    "target": "es5",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
+    "moduleResolution": "node",
+    "newLine": "LF",
     "noEmit": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
+    "skipLibCheck": true,
     "strict": true,
-    "skipLibCheck": true
+    "target": "ES2022",
+    "module": "ES2022"
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "cypress"]
 }

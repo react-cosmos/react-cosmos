@@ -1,6 +1,0 @@
-{
-  "integrationFolder": "cypress/tests",
-  "projectId": "7gsfa8",
-  "chromeWebSecurity": false,
-  "modifyObstructiveCode": false
-}
