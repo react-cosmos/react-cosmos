@@ -28,5 +28,4 @@ jobs:
             --dist-tag=canary \
             --no-push \
             --no-git-tag-version \
-            --force-publish \
             --yes
