@@ -16,7 +16,7 @@ import {
 } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { RENDERER_FILENAME } from '../shared/playgroundHtml.js';
-import { resolveUrlPath } from '../shared/resolveUrlPath.js';
+import { resolveRendererUrl } from '../shared/resolveRendererUrl.js';
 import { getUserModules } from '../userDeps/getUserModules.js';
 
 export type FixtureApi = {
@@ -85,8 +85,8 @@ function getRendererUrl(cosmosConfig: CosmosConfig, fixtureId: FixtureId) {
   if (rendererUrl) return `${rendererUrl}?${query}`;
 
   const host = getPlaygroundHost(cosmosConfig);
-  const urlPath = resolveUrlPath(publicUrl, RENDERER_FILENAME);
-  return `${host}${urlPath}?${query}`;
+  const urlPath = resolveRendererUrl(publicUrl, RENDERER_FILENAME);
+  return new URL(`${urlPath}?${query}`, host).toString();
 }
 
 function getPlaygroundHost({ hostname, port, https }: CosmosConfig) {
