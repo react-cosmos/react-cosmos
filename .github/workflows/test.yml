@@ -24,6 +24,7 @@ jobs:
       - run: yarn check-types:cypress
       - run: yarn lint
       - run: yarn test:coverage --maxWorkers=2
+      - uses: codecov/codecov-action@v3
 
   examples:
     strategy:
