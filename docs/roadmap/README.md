@@ -31,9 +31,12 @@
   - [x] Drop Node <12 support.
   - [x] Minimize 3rd party depedencies.
 - [x] Publish ES modules instead of CJS on NPM. Useful for tree shaking while reducing the core package entry points.
-- [ ] Migrate from Slack to Discord?
+- [x] Get rid of unessential dependencies.
 - [x] Migrate CI to GitHub Actions.
 - [ ] Automate publishing with GitHub Actions.
+  - [x] Auto-publish canary versions from main branch. 
+  - [ ] Create publish workflow with manual dispatch.
+- [ ] Migrate from Slack to Discord.
 
 ## Docs & website
 
