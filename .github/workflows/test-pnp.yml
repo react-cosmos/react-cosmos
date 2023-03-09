@@ -1,7 +1,7 @@
 name: test-pnp
 on: [push]
 jobs:
-  test:
+  pnp-install-and-run:
     runs-on: ubuntu-latest
     steps:
       - run: git config --global core.autocrlf false
