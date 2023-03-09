@@ -1,5 +1,5 @@
-import { requireFromSilent } from 'react-cosmos/server.js';
 import webpack from 'webpack';
+import { requireFromSilent } from './utils/requireSilent.js';
 
 export function getWebpack(rootDir: string) {
   const userWebpack = requireFromSilent(rootDir, 'webpack') as typeof webpack;
