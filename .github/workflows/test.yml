@@ -46,7 +46,7 @@ jobs:
       - run: yarn build
 
       # Generate static export for domExport test
-      - run: yarn workspace example-${{ matrix.example }} start
+      - run: yarn workspace example-${{ matrix.example }} export
 
       - uses: BerniWittmann/background-server-action@v1
         with:
