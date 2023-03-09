@@ -1,5 +1,6 @@
+import { createRequire } from 'node:module';
 import path from 'path';
-import { CosmosConfig, resolve } from 'react-cosmos/server.js';
+import { CosmosConfig } from 'react-cosmos/server.js';
 import webpack from 'webpack';
 import { createWebpackCosmosConfig } from '../cosmosConfig/createWebpackCosmosConfig.js';
 import { getUserWebpackConfig } from './getUserWebpackConfig.js';
@@ -90,4 +91,9 @@ function getPlugins(
 function getHotMiddlewareEntry(reloadOnFail: boolean) {
   const clientPath = resolve('webpack-hot-middleware/client');
   return `${clientPath}?reload=${reloadOnFail}&overlay=false`;
+}
+
+function resolve(moduleId: string) {
+  const require = createRequire(import.meta.url);
+  return require.resolve(moduleId);
 }
