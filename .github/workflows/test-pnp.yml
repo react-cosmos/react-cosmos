@@ -41,12 +41,12 @@ jobs:
           yarn link ../react-cosmos/packages/react-cosmos-plugin-webpack
           yarn cosmos &
 
-      - name: Wait until Playground URL is live
+      - name: Wait until Cosmos is live
         uses: iFaxity/wait-on-action@v1
         with:
           resource: http://localhost:5000
 
-      - name: Wait until renderer URL is live
+      - name: Wait until Cosmos renderer is live
         uses: iFaxity/wait-on-action@v1
         with:
           resource: http://localhost:5000/_renderer.html
