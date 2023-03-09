@@ -1,4 +1,4 @@
-name: test
+name: test-pnp
 on: [push]
 jobs:
   test:
@@ -8,6 +8,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
+          # https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#caching-packages-data
 
       - uses: actions/checkout@v3
         with:
@@ -24,5 +25,8 @@ jobs:
           yarn install --frozen-lockfile
           yarn build
 
+      # --immutable
       - run: |
           cd pnp-example
+          yarn install --frozen-lockfile
+          yarn cosmos
