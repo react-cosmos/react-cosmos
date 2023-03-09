@@ -1,14 +1,13 @@
 name: test
 on: [push]
 jobs:
-  source:
+  test:
     runs-on: ubuntu-latest
     steps:
       - run: git config --global core.autocrlf false
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
-          cache: 'yarn'
 
       - uses: actions/checkout@v3
         with:
