@@ -25,7 +25,7 @@
 ## Quality of life
 
 - [ ] Change default port because [port 5000 is taken on macOS 12](https://github.com/react-cosmos/react-cosmos/issues/1355).
-- [x] Fix issues with Yarn 2 and PnP #946 #1266 #1337 #1386
+- [x] Fix issues with Yarn 2 and PnP [#946](https://github.com/react-cosmos/react-cosmos/issues/946) [#1266](https://github.com/react-cosmos/react-cosmos/issues/1266) [#1337](https://github.com/react-cosmos/react-cosmos/pull/1337) [#1386](https://github.com/react-cosmos/react-cosmos/issues/1386)
 - [x] Fix security issues.
   - [x] Drop IE support.
   - [x] Drop Node <12 support.
