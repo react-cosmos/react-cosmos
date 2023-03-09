@@ -33,7 +33,7 @@ jobs:
           yarn build
 
       - name: Run PnP example with linked react-cosmos packages
-      - run: |
+        run: |
           cd pnp-example
           yarn set version stable
           yarn install --immutable
