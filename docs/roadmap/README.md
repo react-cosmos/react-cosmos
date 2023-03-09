@@ -25,7 +25,7 @@
 ## Quality of life
 
 - [ ] Change default port because [port 5000 is taken on macOS 12](https://github.com/react-cosmos/react-cosmos/issues/1355).
-- [ ] Fix [issues with Yarn 2 and PnP](https://github.com/react-cosmos/react-cosmos/issues/946) (if any).
+- [x] Fix issues with Yarn 2 and PnP #946 #1266 #1337 #1386
 - [x] Fix security issues.
   - [x] Drop IE support.
   - [x] Drop Node <12 support.
@@ -34,7 +34,7 @@
 - [x] Get rid of unessential dependencies.
 - [x] Migrate CI to GitHub Actions.
 - [ ] Automate publishing with GitHub Actions.
-  - [x] Auto-publish canary versions from main branch. 
+  - [x] Auto-publish canary versions from main branch.
   - [ ] Create publish workflow with manual dispatch.
 - [ ] Migrate from Slack to Discord.
 
