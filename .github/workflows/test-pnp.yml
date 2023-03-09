@@ -30,4 +30,8 @@ jobs:
           cd pnp-example
           yarn set version stable
           yarn install
+
+          yarn link ../react-cosmos/packages/react-cosmos
+          yarn link ../react-cosmos/packages/react-cosmos-plugin-webpack
+
           yarn cosmos
