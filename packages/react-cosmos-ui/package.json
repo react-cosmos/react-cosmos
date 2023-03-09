@@ -10,6 +10,9 @@
     "./dist/plugins/pluginEntry.js",
     "./dist/plugins/*/index.js"
   ],
+  "scripts": {
+    "playground": "cosmos"
+  },
   "dependencies": {
     "lodash-es": "^4.17.21",
     "react-cosmos-core": "^6.0.0-alpha.5"
@@ -18,6 +21,6 @@
     "fuzzaldrin-plus": "^0.6.0",
     "localforage": "^1.10.0",
     "react-plugin": "^3.0.0-alpha.4",
-    "styled-components": "^5.3.6"
+    "styled-components": "^5.3.8"
   }
 }

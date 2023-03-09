@@ -46,7 +46,7 @@ jobs:
       - run: yarn build
 
       # Generate static export for domExport test
-      - run: yarn example:${{ matrix.example }}:export
+      - run: yarn workspace example-${{ matrix.example }} export
 
       - uses: BerniWittmann/background-server-action@v1
         with:
@@ -55,7 +55,7 @@ jobs:
           # - DOM dev server
           # - DOM export
           # - Native dev server
-          start: yarn example:${{ matrix.example }},yarn example:${{ matrix.example }}:serve,yarn example:${{ matrix.example }}:native
+          start: yarn workspace example-${{ matrix.example }} start,yarn workspace example-${{ matrix.example }} serve,yarn workspace example-${{ matrix.example }} native
           wait-on: 'http://localhost:5000,http://localhost:5001,http://localhost:5002'
         env:
           CYPRESS_EXAMPLE_NAME: ${{ matrix.example }}
