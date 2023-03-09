@@ -21,6 +21,6 @@
     "fuzzaldrin-plus": "^0.6.0",
     "localforage": "^1.10.0",
     "react-plugin": "^3.0.0-alpha.4",
-    "styled-components": "^5.3.6"
+    "styled-components": "^5.3.8"
   }
 }

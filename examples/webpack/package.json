@@ -24,11 +24,5 @@
     "react-cosmos-plugin-webpack": "^6.0.0-alpha.5",
     "react-dom": "^18.2.0",
     "webpack": "^5.75.0"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.21.0",
-    "@babel/preset-react": "^7.18.6",
-    "@babel/preset-typescript": "^7.21.0",
-    "babel-loader": "^9.1.2"
   }
 }
