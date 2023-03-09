@@ -25,8 +25,9 @@ jobs:
           yarn install --frozen-lockfile
           yarn build
 
+      # immutable?
       - run: |
           cd pnp-example
           yarn set version stable
-          yarn install --immutable
+          yarn install
           yarn cosmos
