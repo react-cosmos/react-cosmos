@@ -38,4 +38,4 @@ jobs:
           resource: http://localhost:5000
       - uses: iFaxity/wait-on-action@v1
         with:
-          resource: http://localhost:5000/_renderer.html
+          resource: http://localhost:5000/_renderer2.html
