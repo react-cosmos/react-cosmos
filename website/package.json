@@ -1,15 +1,18 @@
 {
   "private": true,
-  "name": "react-cosmos-website",
+  "name": "website",
   "version": "6.0.0-alpha.5",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/website",
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "start": "cosmos"
+    "start": "cosmos",
+    "export": "cosmos-export"
   },
-  "devDependencies": {
+  "dependencies": {
     "isomorphic-fetch": "^3.0.0",
-    "react-cosmos": "^6.0.0-alpha.5"
+    "react": "^18.2.0",
+    "react-cosmos": "^6.0.0-alpha.5",
+    "react-dom": "^18.2.0"
   }
 }

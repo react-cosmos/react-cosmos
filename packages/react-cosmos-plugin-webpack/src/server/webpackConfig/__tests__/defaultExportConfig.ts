@@ -2,6 +2,8 @@
 import { mockConsole, unmockCliArgs } from 'react-cosmos/jest.js';
 import '../../testHelpers/mockEsmClientPath.js';
 import '../../testHelpers/mockEsmLoaderPath.js';
+import '../../testHelpers/mockEsmRequire.js';
+import '../../testHelpers/mockEsmResolve.js';
 
 import {
   createCosmosConfig,

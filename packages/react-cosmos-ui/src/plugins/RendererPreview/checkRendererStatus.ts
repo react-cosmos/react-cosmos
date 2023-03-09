@@ -15,7 +15,7 @@ export function checkRendererStatus(
   // case we no longer want to update the (unmounted) plugin state
   let unmounted = false;
 
-  fetch(rendererUrl, { credentials: 'include' })
+  fetch(rendererUrl, { credentials: 'same-origin' })
     .then(({ status }) => {
       if (!unmounted) {
         context.setState(state => ({

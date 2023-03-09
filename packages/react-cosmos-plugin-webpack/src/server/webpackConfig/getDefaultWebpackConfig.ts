@@ -1,5 +1,6 @@
-import { RENDERER_FILENAME, resolveFromSilent } from 'react-cosmos/server.js';
+import { RENDERER_FILENAME } from 'react-cosmos/server.js';
 import webpack from 'webpack';
+import { resolveFromSilent } from '../utils/resolveSilent.js';
 import { getWebpackNodeEnv } from './getWebpackNodeEnv.js';
 import { getHtmlWebpackPlugin } from './htmlPlugin.js';
 
