@@ -5,26 +5,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: git config --global core.autocrlf false
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          # https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#caching-packages-data
 
-      - uses: actions/checkout@v3
+      - name: Clone react-cosmos monorepo
+        uses: actions/checkout@v3
         with:
           path: react-cosmos
 
-      - uses: actions/checkout@v3
+      - name: Clone PnP example repo
+        uses: actions/checkout@v3
         with:
           repository: react-cosmos/pnp-example
           path: pnp-example
           ref: upgrade
 
-      - run: |
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'yarn'
+          cache-dependency-path: |
+            react-cosmos/yarn.lock
+            pnp-example/yarn.lock
+
+      - name: Build react-cosmos packages
+        run: |
           cd react-cosmos
           yarn install --frozen-lockfile
           yarn build
 
+      - name: Run PnP example with linked react-cosmos packages
       - run: |
           cd pnp-example
           yarn set version stable
@@ -33,9 +41,12 @@ jobs:
           yarn link ../react-cosmos/packages/react-cosmos-plugin-webpack
           yarn cosmos &
 
-      - uses: iFaxity/wait-on-action@v1
+      - name: Wait until Playground URL is live
+        uses: iFaxity/wait-on-action@v1
         with:
           resource: http://localhost:5000
-      - uses: iFaxity/wait-on-action@v1
+
+      - name: Wait until renderer URL is live
+        uses: iFaxity/wait-on-action@v1
         with:
           resource: http://localhost:5000/_renderer.html
