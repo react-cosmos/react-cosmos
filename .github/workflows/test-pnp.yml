@@ -1,0 +1,29 @@
+name: test
+on: [push]
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    steps:
+      - run: git config --global core.autocrlf false
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'yarn'
+
+      - uses: actions/checkout@v3
+        with:
+          path: react-cosmos
+
+      - uses: actions/checkout@v3
+        with:
+          repository: react-cosmos/pnp-example
+          path: pnp-example
+          ref: upgrade
+
+      - run: |
+          cd react-cosmos
+          yarn install --frozen-lockfile
+          yarn build
+
+      - run: |
+          cd pnp-example
