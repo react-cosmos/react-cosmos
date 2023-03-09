@@ -42,11 +42,7 @@ jobs:
           yarn cosmos &
 
       - name: Wait until Cosmos is live
-        uses: iFaxity/wait-on-action@v1
-        with:
-          resource: http://localhost:5000
+        run: npx wait-on -t 10000 http://localhost:5000
 
       - name: Wait until Cosmos renderer is live
-        uses: iFaxity/wait-on-action@v1
-        with:
-          resource: http://localhost:5000/_renderer.html
+        run: npx wait-on -t 10000 http://localhost:5000/_renderer.html
