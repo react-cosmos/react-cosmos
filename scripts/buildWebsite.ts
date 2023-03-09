@@ -52,7 +52,7 @@ process.env.NODE_ENV = 'production';
   await buildWebpack();
 
   // Export live demo instance
-  execSync('yarn cosmos-export --root-dir website');
+  execSync('yarn workspace website export');
 })();
 
 type PageParams = {

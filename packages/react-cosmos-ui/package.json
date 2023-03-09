@@ -10,6 +10,9 @@
     "./dist/plugins/pluginEntry.js",
     "./dist/plugins/*/index.js"
   ],
+  "scripts": {
+    "playground": "cosmos"
+  },
   "dependencies": {
     "lodash-es": "^4.17.21",
     "react-cosmos-core": "^6.0.0-alpha.5"

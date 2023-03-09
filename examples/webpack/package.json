@@ -6,14 +6,24 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "start": "cosmos"
+    "start": "cosmos",
+    "export": "cosmos-export",
+    "serve": "http-server -p 5001 ./cosmos-export",
+    "native": "cosmos-native --port 5002"
   },
   "dependencies": {
+    "@babel/core": "^7.21.0",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.21.0",
+    "babel-loader": "^9.1.2",
     "examples-shared": "^6.0.0-alpha.5",
+    "react": "^18.2.0",
     "react-cosmos": "^6.0.0-alpha.5",
     "react-cosmos-plugin-boolean-input": "^6.0.0-alpha.5",
     "react-cosmos-plugin-open-fixture": "^6.0.0-alpha.5",
-    "react-cosmos-plugin-webpack": "^6.0.0-alpha.5"
+    "react-cosmos-plugin-webpack": "^6.0.0-alpha.5",
+    "react-dom": "^18.2.0",
+    "webpack": "^5.75.0"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",

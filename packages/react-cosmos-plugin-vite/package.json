@@ -9,5 +9,8 @@
   "dependencies": {
     "react-cosmos-core": "^6.0.0-alpha.5",
     "react-cosmos-dom": "^6.0.0-alpha.5"
+  },
+  "peerDependencies": {
+    "vite": "*"
   }
 }
