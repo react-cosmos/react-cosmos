@@ -63,3 +63,16 @@ React Cosmos 6 comes with a brand new Vite plugin, too. To set up a Vite codebas
 - For visual regression testing you may need to make Jest transpile Cosmos modules by adding `/node_modules/react-cosmos` to `transformIgnorePatterns` in your Jest config.
 
 There might be some other subtle breaking changes, especially if you're implementing a custom Cosmos renderer or if you're integrated with a bundler other than webpack. Please send us a message on Discord if this is the case and we'll do our best to help you with the migration.
+
+### Next steps
+
+A rough outline for this release:
+
+1. Get the alpha in the user's hands, make sure everything webpack-related works well with the new plugin.
+1. Close long-standing issues that were already addressed in this version (eg. PnP support).
+1. Get feedback and add customization to the Vite plugin.
+1. Document, get feedback and and stabilize the plugin APIs.
+1. Revamp the docs and possibly the website, too.
+1. Make v6 official and start rolling out new features.
+
+Please [join us on Discord](https://discord.gg/3X95VgfnW5) on this journey to take React Cosmos to the next level.
