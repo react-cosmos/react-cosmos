@@ -62,7 +62,7 @@ React Cosmos 6 also comes with a brand new Vite plugin. To set up a Vite codebas
 - `experiments.topLevelAwait` webpack setting is required if use a custom webpack config (see example [here](https://github.com/react-cosmos/react-cosmos/blob/88f992bbcbf954fd8b4b672362efd0d50fcb9885/packages/react-cosmos-ui/webpack.config.cosmos.js#L44-L46)).
 - For visual regression testing you may need to make Jest transpile Cosmos modules by adding `/node_modules/react-cosmos` to `transformIgnorePatterns` in your Jest config.
 
-There might be some other subtle breaking changes, especially if you're implementing a custom Cosmos renderer or if you're integrated with a bundler other than webpack. Please send us a message on Discord if this is the case and we'll do our best to help you with the migration.
+There might be some other subtle breaking changes, especially if you're implementing a custom Cosmos renderer or if you're integrated with a bundler other than webpack. Create an issue or send us a message on [Discord](https://discord.gg/3X95VgfnW5) if this is the case and we'll do our best to help you with the migration.
 
 ### Next steps
 
@@ -75,4 +75,4 @@ A rough outline for this release:
 1. Revamp the docs and possibly the website, too.
 1. Make v6 official and start rolling out new features.
 
-Please [join us on Discord](https://discord.gg/3X95VgfnW5) on this journey to take React Cosmos to the next level.
+Please [join us on Discord](https://discord.gg/3X95VgfnW5) on this journey to take React Cosmos to the next level!
