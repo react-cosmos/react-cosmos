@@ -1,6 +1,6 @@
 # React Cosmos 6 migration guide
 
-> We're using this opportunity to migrate from Slack to Discord so please join in on Discord as you go through this journey.
+> We're also migrating our community from Slack to Discord. [Join our brand new Discord Server](https://discord.gg/3X95VgfnW5) to interact with fellow Cosmonauts.
 
 ## Installation
 
@@ -14,9 +14,9 @@ Or if you’re using Yarn:
 yarn add --dev react-cosmos@alpha react-cosmos-plugin-webpack@alpha
 ```
 
-Install `react-cosmos-plugin-vite` instead of `react-cosmos-plugin-webpack` if you're looking to use React Cosmos with Vite.
+Install `react-cosmos-plugin-vite` instead of `react-cosmos-plugin-webpack` to use React Cosmos with Vite.
 
-> Replace `alpha` with `canary` if you want to get the bleeding edge versions (latest commit from main branch).
+> Replace `alpha` with `canary` if you want to get the bleeding edge versions (latest commit from the main branch).
 
 This major version accomplishes the following:
 
@@ -24,6 +24,7 @@ This major version accomplishes the following:
 - Webpack plugin extracted from core packages.
 - New Vite plugin.
 - In progress: Official APIs for both bundler and UI plugins.
+- Other project improvements mentioned in [Roadmap](https://github.com/react-cosmos/react-cosmos/blob/main/docs/roadmap/README.md).
 
 > The packages are published as _alpha_ versions to allow for changes to the plugin APIs as feedback rolls in. That said the core functionality should work as reliably as before if not more.
 
@@ -31,9 +32,9 @@ This major version accomplishes the following:
 
 - Dropped Node <14 support.
 - Dropped IE support.
-- Migrated to React 18+.
+- Migrated to React 18.
 
-Dropping backwards compatibility with older versions of Node, browsers or React might be unfortunate for some but it's the only way to move forward. It allowed us to get the codebase into a much better shape by minimizing 3rd party dependencies and converting the code to ESM.
+Dropping backwards compatibility with older versions of Node, browsers or React might be unfortunate for some but it's the only way to move forward. It allowed us to get the codebase into a much better shape by minimizing 3rd party dependencies and publishing ESM modules.
 
 ### Webpack plugin
 
