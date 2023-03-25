@@ -5,18 +5,18 @@
 ## Installation
 
 ```
-npm install --dev react-cosmos@alpha react-cosmos-plugin-webpack@alpha
+npm install -D react-cosmos@next react-cosmos-plugin-webpack@next
 ```
 
 Or if you’re using Yarn:
 
 ```
-yarn add --dev react-cosmos@alpha react-cosmos-plugin-webpack@alpha
+yarn add --dev react-cosmos@next react-cosmos-plugin-webpack@next
 ```
 
 Install `react-cosmos-plugin-vite` instead of `react-cosmos-plugin-webpack` to use React Cosmos with Vite.
 
-> Replace `alpha` with `canary` if you want to get the bleeding edge versions (latest commit from the main branch).
+> Replace `next` with `canary` if you want to get the bleeding edge versions (latest commit from the main branch).
 
 This major version accomplishes the following:
 
