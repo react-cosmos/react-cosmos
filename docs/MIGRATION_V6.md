@@ -4,6 +4,8 @@
 
 ## Installation
 
+[![npm version](https://img.shields.io/npm/v/react-cosmos/next.svg?style=flat)](https://www.npmjs.com/package/react-cosmos)
+
 ```
 npm i -D react-cosmos@next react-cosmos-plugin-webpack@next
 ```
