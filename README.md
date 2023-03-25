@@ -4,7 +4,9 @@
 
 # React Cosmos
 
-[![npm version](https://img.shields.io/npm/v/react-cosmos.svg?style=flat)](https://www.npmjs.com/package/react-cosmos) [![CI Status](https://github.com/react-cosmos/react-cosmos/actions/workflows/test.yml/badge.svg)](https://github.com/react-cosmos/react-cosmos/actions/workflows/test.yml) [![Twitter](https://img.shields.io/twitter/follow/ReactCosmos.svg?color=%2338A1F3&label=twitter&style=flat)](https://twitter.com/ReactCosmos) [![Slack](https://img.shields.io/badge/slack-join%20300%2B%20community-blueviolet)](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/react-cosmos/react-cosmos/blob/main/CONTRIBUTING.md#how-to-contribute)
+> 🚀 **React Cosmos 6 is here! Check out the [migration guide](docs/MIGRATION_V6.md) to get started.**
+
+[![npm version](https://img.shields.io/npm/v/react-cosmos.svg?style=flat)](https://www.npmjs.com/package/react-cosmos) [![CI Status](https://github.com/react-cosmos/react-cosmos/actions/workflows/test.yml/badge.svg)](https://github.com/react-cosmos/react-cosmos/actions/workflows/test.yml) [![Twitter](https://img.shields.io/badge/twitter-follow-%2300acee)](https://twitter.com/ReactCosmos) [![Discord](https://img.shields.io/discord/620737684859781150?color=%236D74EF)](https://discord.gg/3X95VgfnW5) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/react-cosmos/react-cosmos/blob/main/CONTRIBUTING.md#how-to-contribute)
 
 Sandbox for developing and testing UI components in isolation.
 
