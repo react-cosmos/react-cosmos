@@ -59,6 +59,7 @@ React Cosmos 6 also comes with a brand new Vite plugin. To set up a Vite codebas
 ### Other breaking changes
 
 - `react-cosmos/fixture` exports moved to react-cosmos-core (eg. `import { useValue } from 'react-cosmos-core'`).
+- `NativeFixtureLoader` component moved from `react-cosmos/native` to new `react-cosmos-native` package. Install `react-cosmos-native@next` as well for a React Native setup.
 - `getFixtures2()` renamed to `getFixtures()`.
 - `getCosmosConfigAtPath()` is now async. To replicate the old sync behavior, require() the config module manually and pass it to `createCosmosConfig()`.
 - `experiments.topLevelAwait` webpack setting is required when using a custom webpack config (see example [here](https://github.com/react-cosmos/react-cosmos/blob/88f992bbcbf954fd8b4b672362efd0d50fcb9885/packages/react-cosmos-ui/webpack.config.cosmos.js#L44-L46)).
