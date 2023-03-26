@@ -59,41 +59,13 @@ React Cosmos 6 also comes with a brand new Vite plugin. To set up a Vite codebas
 ### Other breaking changes
 
 - `react-cosmos/fixture` exports moved to react-cosmos-core (eg. `import { useValue } from 'react-cosmos-core'`).
+- `NativeFixtureLoader` component moved from `react-cosmos/native` to new `react-cosmos-native` package. Install `react-cosmos-native@next` as well for a React Native setup.
 - `getFixtures2()` renamed to `getFixtures()`.
 - `getCosmosConfigAtPath()` is now async. To replicate the old sync behavior, require() the config module manually and pass it to `createCosmosConfig()`.
 - `experiments.topLevelAwait` webpack setting is required when using a custom webpack config (see example [here](https://github.com/react-cosmos/react-cosmos/blob/88f992bbcbf954fd8b4b672362efd0d50fcb9885/packages/react-cosmos-ui/webpack.config.cosmos.js#L44-L46)).
 - For visual regression testing you may need to make Jest transpile Cosmos modules by adding `"/node_modules/react-cosmos"` to `transformIgnorePatterns` in your Jest config.
 
 There might be some other subtle breaking changes, especially if you're implementing a custom Cosmos renderer or if you're integrated with a bundler other than webpack. Create an issue or send us a message on [Discord](https://discord.gg/3X95VgfnW5) if this is the case and we'll do our best to help you with the migration.
-
-### React Native
-
-```
-npm i -D react-cosmos-native@next
-```
-
-Or if you’re using Yarn:
-
-```
-yarn add --dev react-cosmos-native@next
-```
-
-```jsx
-import React from 'react';
-import { NativeFixtureLoader } from 'react-cosmos-native';
-import { rendererConfig, fixtures, decorators } from './cosmos.userdeps';
-
-// Replace the App component with CosmosApp in development
-export function CosmosApp() {
-  return (
-    <NativeFixtureLoader
-      rendererConfig={rendererConfig}
-      fixtures={fixtures}
-      decorators={decorators}
-    />
-  );
-}
-```
 
 ### Next steps
 
