@@ -1,4 +1,5 @@
 {
+  "$schema": "../../packages/react-cosmos/config.schema.json",
   "globalImports": ["src/global.css"],
   "staticPath": "static",
   "plugins": [
