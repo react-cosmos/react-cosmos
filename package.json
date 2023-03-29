@@ -25,8 +25,8 @@
     "website:build": "ts-node --esm ./scripts/buildWebsite.ts",
     "website:serve": "http-server -p 5001 ./website/dist",
     "release:check": "yarn build:clear && yarn build && yarn src && yarn lint && yarn dist && yarn test:unit",
-    "release": "yarn release:check && yarn lerna publish",
-    "release:next": "yarn release:check && yarn lerna publish --dist-tag=next"
+    "release": "yarn release:check && yarn lerna publish -m \"[skip ci] %s\"",
+    "release:next": "yarn release:check && yarn lerna publish --dist-tag=next -m \"[skip ci] %s\""
   },
   "devDependencies": {
     "@react-mock/state": "^0.1.8",
