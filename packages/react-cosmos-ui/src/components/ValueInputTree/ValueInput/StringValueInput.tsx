@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFocus } from '../../../hooks/useFocus.js';
 import { blue, grey248, grey8 } from '../../../style/colors.js';
 import {
@@ -17,16 +17,29 @@ type Props = {
 };
 
 export function StringValueInput({ id, name, data, onChange }: Props) {
+  // The data state is duplicated locally to solve the jumping cursor bug
+  // that occurs in controlled React inputs that don't immediately re-render
+  // with the new input value on change (because they await for the parent to
+  // propagate the changed value back down).
+  // https://github.com/facebook/react/issues/955
+  // https://github.com/react-cosmos/react-cosmos/issues/1372
+  const [localData, setLocalData] = useState(data);
+  useEffect(() => {
+    setLocalData(data);
+  }, [data]);
+
   const { focused, onFocus, onBlur } = useFocus();
 
   const onInputChange = React.useCallback(
-    (e: React.ChangeEvent<HTMLTextAreaElement>) =>
-      onChange(e.currentTarget.value),
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setLocalData(e.currentTarget.value);
+      onChange(e.currentTarget.value);
+    },
     [onChange]
   );
 
   // Mirror textarea behavior and add an extra row after user adds a new line
-  const mirrorText = focused ? data.replace(/\n$/, `\n `) : data;
+  const mirrorText = focused ? localData.replace(/\n$/, `\n `) : localData;
   return (
     <>
       <Label title={name} htmlFor={id}>
@@ -40,12 +53,12 @@ export function StringValueInput({ id, name, data, onChange }: Props) {
         >
           <TextContainer>
             <TextMirror minWidth={64} focused={focused}>
-              {data.length > 0 || focused ? mirrorText : <em>empty</em>}
+              {localData.length > 0 || focused ? mirrorText : <em>empty</em>}
             </TextMirror>
             <TextField
               rows={1}
               id={id}
-              value={data}
+              value={localData}
               focused={focused}
               color={grey248}
               onChange={onInputChange}

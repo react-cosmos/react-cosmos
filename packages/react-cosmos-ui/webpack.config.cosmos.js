@@ -30,6 +30,9 @@ export default {
         loader: 'ts-loader',
         options: {
           configFile: path.join(dirname, './tsconfig.build.json'),
+          compilerOptions: {
+            noUnusedLocals: false,
+          },
         },
         // Allow react-plugin to work inside "inception" fixture
         sideEffects: true,
