@@ -1,4 +1,5 @@
 {
+  "$schema": "../react-cosmos/config.schema.json",
   "globalImports": ["src/cosmos.loadPlugins.ts"],
   "webpack": {
     "configPath": "./webpack.config.cosmos.js"

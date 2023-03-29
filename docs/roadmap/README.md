@@ -36,7 +36,7 @@
 - [ ] Automate publishing with GitHub Actions.
   - [x] Auto-publish canary versions from main branch.
   - [ ] Create publish workflow with manual dispatch.
-- [ ] Migrate from Slack to Discord.
+- [x] Migrate from Slack to Discord.
 
 ## Docs & website
 
