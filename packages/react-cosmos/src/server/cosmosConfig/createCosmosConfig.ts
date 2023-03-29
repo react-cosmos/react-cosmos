@@ -19,6 +19,7 @@ export function createCosmosConfig(
     hostname: getHostname(cosmosConfigInput),
     https: getHttps(cosmosConfigInput),
     httpsOptions: getHttpsOptions(cosmosConfigInput, rootDir),
+    ignore: getIgnore(cosmosConfigInput),
     port: getPort(cosmosConfigInput),
     plugins: getPlugins(cosmosConfigInput, rootDir),
     publicUrl: getPublicUrl(cosmosConfigInput),
@@ -59,6 +60,10 @@ function getHttpsOptions(
     };
   }
   return null;
+}
+
+function getIgnore({ ignore = [] }: CosmosConfigInput) {
+  return ['**/node_modules/**', ...ignore];
 }
 
 function getPublicUrl({ publicUrl = '/' }: CosmosConfigInput) {

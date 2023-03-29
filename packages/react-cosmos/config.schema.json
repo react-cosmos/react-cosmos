@@ -50,6 +50,12 @@
       "type": "string",
       "minLength": 1
     },
+    "ignore": {
+      "description": "Patterns for ignoring fixture and decorator files (eg. [\"**/dist/**\"]])",
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
     "watchDirs": {
       "description": "Directories where the Cosmos server watches for fixture files changes while running. [default: [\".\"]]",
       "type": "array",

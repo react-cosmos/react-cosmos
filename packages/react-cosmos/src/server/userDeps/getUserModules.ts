@@ -18,11 +18,13 @@ export function getUserModules({
   rootDir,
   fixturesDir,
   fixtureFileSuffix,
+  ignore,
 }: CosmosConfig): UserModules {
   const { fixturePaths, decoratorPaths } = findUserModulePaths({
     rootDir,
     fixturesDir,
     fixtureFileSuffix,
+    ignore,
   });
   return {
     fixtures: getDefaultExports<ReactFixtureExport>(fixturePaths, rootDir),

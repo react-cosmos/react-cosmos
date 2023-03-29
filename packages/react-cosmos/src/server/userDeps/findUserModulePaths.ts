@@ -1,15 +1,12 @@
 import glob from 'glob';
 import micromatch from 'micromatch';
-import {
-  getDecoratorPatterns,
-  getFixturePatterns,
-  getIgnorePatterns,
-} from './shared.js';
+import { getDecoratorPatterns, getFixturePatterns } from './shared.js';
 
 type FindUserModulePathsArgs = {
   rootDir: string;
   fixturesDir: string;
   fixtureFileSuffix: string;
+  ignore: string[];
 };
 
 type UserModulePaths = {
@@ -21,11 +18,12 @@ export function findUserModulePaths({
   rootDir,
   fixturesDir,
   fixtureFileSuffix,
+  ignore,
 }: FindUserModulePathsArgs): UserModulePaths {
   const paths = glob.sync('**/*', {
     cwd: rootDir,
     absolute: true,
-    ignore: getIgnorePatterns(),
+    ignore,
   });
 
   const fixturePatterns = getFixturePatterns(fixturesDir, fixtureFileSuffix);
