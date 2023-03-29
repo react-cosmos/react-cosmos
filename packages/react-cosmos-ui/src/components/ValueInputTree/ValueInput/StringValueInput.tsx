@@ -17,6 +17,8 @@ type Props = {
 };
 
 export function StringValueInput({ id, name, data, onChange }: Props) {
+  const { focused, onFocus, onBlur } = useFocus();
+
   // The data state is duplicated locally to solve the jumping cursor bug
   // that occurs in controlled React inputs that don't immediately re-render
   // with the new input value on change (because they await for the parent to
@@ -25,10 +27,8 @@ export function StringValueInput({ id, name, data, onChange }: Props) {
   // https://github.com/react-cosmos/react-cosmos/issues/1372
   const [localData, setLocalData] = useState(data);
   useEffect(() => {
-    setLocalData(data);
-  }, [data]);
-
-  const { focused, onFocus, onBlur } = useFocus();
+    if (!focused) setLocalData(data);
+  }, [data, focused]);
 
   const onInputChange = React.useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
