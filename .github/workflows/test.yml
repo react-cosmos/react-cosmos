@@ -37,7 +37,14 @@ jobs:
         os:
           - ubuntu
           - windows
-        node-version: [16, 18]
+        node-version: [18]
+        include:
+          - example: webpack
+            os: ubuntu
+            node-version: 16
+          - example: webpack
+            os: windows
+            node-version: 16
     runs-on: ${{ matrix.os }}-latest
     steps:
       - uses: actions/checkout@v3
