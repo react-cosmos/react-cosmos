@@ -73,7 +73,7 @@ The `hello` fixture will show up in your React Cosmos UI and will render when yo
 
 You've taken the first step towards designing reusable components. You can now prototype, test and interate on components in isolation. Use this to your advantage!
 
-_Something wrong?_ Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) (be helpful and include details) and to [join us on Slack](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw).
+_Something wrong?_ Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) (be helpful and include details) and to [join us on Discord](https://discord.gg/3X95VgfnW5).
 
 ## Requirements
 
@@ -91,7 +91,7 @@ The React Cosmos config is a **JSON** file, so it can only host serializable val
 
 By default, Cosmos reads `cosmos.config.json` from your root directory. You can pass a `--config` CLI arg for a custom config path.
 
-> Most Cosmos Classic config options are still supported in the new JSON format. [Let me know](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw) if you need old config options that no longer work.
+> Most Cosmos Classic config options are still supported in the new JSON format. [Let me know](https://discord.gg/3X95VgfnW5) if you need old config options that no longer work.
 
 ### Available options
 
@@ -280,8 +280,6 @@ export default ({ children }) => <Provider store={store}>{children}</Provider>;
 > A decorator only applies to fixture files contained in the decorator's directory. Decorators can be composed, in the order of their position in the file system hierarchy (from outer to inner).
 
 ### Migrating _proxies_
-
-Migrating Cosmos Classic proxies to React Cosmos 5 is not intuitive. _Sorry for that!_ Check out the [nested decorators example](../examples/webpack/src/NestedDecorators) and join the `#proxies-upgrade` [Slack](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw) channel to learn more about this and to get help with your migration.
 
 ### Redux state mock
 
@@ -547,7 +545,7 @@ module.exports = webpackConfig;
 
 > **Currently Cosmos doesn't work with Next.js v10.0.6 or above. Downgrade to `next@10.0.5` until the issue is resolved. Read [#1289](https://github.com/react-cosmos/react-cosmos/issues/1289) for more context.**
 
-> The following steps are required for running Cosmos in **Next.js v10**. [This repo](https://github.com/react-cosmos/react-cosmos-nextjs) is a working example. [Ask for help](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw) if you're having issues integrating Cosmos with an older version of Next.js.
+> The following steps are required for running Cosmos in **Next.js v10**. [This repo](https://github.com/react-cosmos/react-cosmos-nextjs) is a working example. [Ask for help](https://discord.gg/3X95VgfnW5) if you're having issues integrating Cosmos with an older version of Next.js.
 
 - Install `html-webpack-plugin@4` as a dev dependency.
 - Configure Babel to use the `next/babel` preset.
@@ -610,8 +608,8 @@ This is a `.babelrc` example for Next.js:
 
 Cosmos Classic packages have been moved to [a dedicated repo](https://github.com/react-cosmos/react-cosmos-classic), which means we can continue to maintain Cosmos Classic or even run it alongside React Cosmos 5 in the same project (during the migration period).
 
-That said, it's ideal for all Cosmos users to use the latest version. Please [let me know](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw) if you need help upgrading.
+That said, it's ideal for all Cosmos users to use the latest version. Please [let me know](https://discord.gg/3X95VgfnW5) if you need help upgrading.
 
 ---
 
-[Join us on Slack](https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw) for feedback and questions.
+[Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback and questions.

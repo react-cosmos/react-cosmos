@@ -46,7 +46,5 @@ it('renders "help" link', () => {
   const { getByText } = loadTestPlugins();
 
   const helpLink = getByText(/ask for help/i) as HTMLAnchorElement;
-  expect(helpLink.href).toMatch(
-    'https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw'
-  );
+  expect(helpLink.href).toMatch('https://discord.gg/3X95VgfnW5');
 });

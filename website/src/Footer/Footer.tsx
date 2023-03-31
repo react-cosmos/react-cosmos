@@ -33,8 +33,8 @@ export function Footer() {
             <ExternalLink href="https://github.com/react-cosmos/react-cosmos">
               <ExternalLabel>GitHub</ExternalLabel>
             </ExternalLink>
-            <ExternalLink href="https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw">
-              <ExternalLabel>Slack</ExternalLabel>
+            <ExternalLink href="https://discord.gg/3X95VgfnW5">
+              <ExternalLabel>Discord</ExternalLabel>
             </ExternalLink>
             <ExternalLink href="https://twitter.com/ReactCosmos">
               <ExternalLabel>Twitter</ExternalLabel>
