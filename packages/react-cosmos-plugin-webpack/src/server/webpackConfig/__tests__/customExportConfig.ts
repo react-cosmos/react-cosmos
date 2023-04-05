@@ -106,3 +106,8 @@ it('does not include HotModuleReplacementPlugin', async () => {
   );
   expect(hotModuleReplacementPlugin).not.toBeDefined();
 });
+
+it('sets experiments.topLevelAwait to true', async () => {
+  const { experiments } = await getCustomExportWebpackConfig();
+  expect(experiments?.topLevelAwait).toBe(true);
+});

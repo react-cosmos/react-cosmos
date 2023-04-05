@@ -44,7 +44,4 @@ export default {
       title: 'React Cosmos',
     }),
   ],
-  experiments: {
-    topLevelAwait: true,
-  },
 };
