@@ -1,0 +1,50 @@
+name: test-pnp
+on:
+  push:
+    branches-ignore:
+      - main
+jobs:
+  pnp-install-and-run:
+    runs-on: ubuntu-latest
+    steps:
+      - run: git config --global core.autocrlf false
+
+      - name: Clone react-cosmos monorepo
+        uses: actions/checkout@v3
+        with:
+          path: react-cosmos
+
+      - name: Clone PnP example repo
+        uses: actions/checkout@v3
+        with:
+          repository: react-cosmos/pnp-example
+          path: pnp-example
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'yarn'
+          cache-dependency-path: |
+            react-cosmos/yarn.lock
+            pnp-example/yarn.lock
+
+      - name: Build react-cosmos packages
+        run: |
+          cd react-cosmos
+          yarn install --frozen-lockfile
+          yarn build
+
+      - name: Run PnP example with linked react-cosmos packages
+        run: |
+          cd pnp-example
+          yarn set version stable
+          yarn install --immutable
+          yarn link ../react-cosmos/packages/react-cosmos
+          yarn link ../react-cosmos/packages/react-cosmos-plugin-webpack
+          yarn cosmos &
+
+      - name: Wait until Cosmos is live
+        run: npx wait-on -t 10000 http://localhost:5000
+
+      - name: Wait until Cosmos renderer is live
+        run: npx wait-on -t 10000 http://localhost:5000/_renderer.html
