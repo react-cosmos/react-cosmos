@@ -77,3 +77,8 @@ it('includes HotModuleReplacementPlugin', async () => {
   );
   expect(hotModuleReplacementPlugin).toBeDefined();
 });
+
+it('sets experiments.topLevelAwait to true', async () => {
+  const { experiments } = await getDefaultDevWebpackConfig();
+  expect(experiments?.topLevelAwait).toBe(true);
+});

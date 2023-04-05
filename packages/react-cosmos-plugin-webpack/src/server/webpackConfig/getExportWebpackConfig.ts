@@ -9,6 +9,7 @@ import { getWebpackConfigResolve } from './getWebpackConfigResolve.js';
 import { ensureHtmlWebackPlugin } from './htmlPlugin.js';
 import { getGlobalsPlugin } from './plugins.js';
 import { resolveWebpackClientPath } from './resolveWebpackClientPath.js';
+import { ensureWebpackConfigTopLevelAwait } from './webpackConfigTopLevelAwait.js';
 
 export async function getExportWebpackConfig(
   cosmosConfig: CosmosConfig,
@@ -25,6 +26,7 @@ export async function getExportWebpackConfig(
     module: getWebpackConfigModule(baseWebpackConfig),
     resolve: getWebpackConfigResolve(cosmosConfig, baseWebpackConfig),
     plugins: getPlugins(cosmosConfig, baseWebpackConfig, userWebpack),
+    experiments: getExperiments(baseWebpackConfig),
   };
 }
 
@@ -64,4 +66,8 @@ function getPlugins(
     globalsPlugin,
     noEmitErrorsPlugin,
   ]);
+}
+
+function getExperiments(baseWebpackConfig: webpack.Configuration) {
+  return ensureWebpackConfigTopLevelAwait(baseWebpackConfig);
 }
