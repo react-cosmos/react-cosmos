@@ -26,7 +26,7 @@ jobs:
       - run: yarn check-types
       - run: yarn check-types:cypress
       - run: yarn lint
-      - run: yarn test:coverage --runInBand --detectOpenHandles
+      - run: yarn test:unit --runInBand --detectOpenHandles
       - uses: codecov/codecov-action@v3
         # Only report coverage once
         if: matrix.os == 'ubuntu'
