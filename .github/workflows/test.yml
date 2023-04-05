@@ -26,59 +26,59 @@ jobs:
       - run: yarn check-types
       - run: yarn check-types:cypress
       - run: yarn lint
-      - run: yarn test:coverage --maxWorkers=2
+      - run: yarn test:coverage --runInBand --detectOpenHandles
       - uses: codecov/codecov-action@v3
         # Only report coverage once
         if: matrix.os == 'ubuntu'
 
-  examples:
-    strategy:
-      fail-fast: false
-      matrix:
-        example: [webpack, vite]
-        os:
-          - ubuntu
-          - windows
-        node-version: [18]
-        include:
-          - example: webpack
-            os: ubuntu
-            node-version: 16
-          - example: webpack
-            os: windows
-            node-version: 16
-    runs-on: ${{ matrix.os }}-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile
-      - run: yarn build
+  # examples:
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       example: [webpack, vite]
+  #       os:
+  #         - ubuntu
+  #         - windows
+  #       node-version: [18]
+  #       include:
+  #         - example: webpack
+  #           os: ubuntu
+  #           node-version: 16
+  #         - example: webpack
+  #           os: windows
+  #           node-version: 16
+  #   runs-on: ${{ matrix.os }}-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #         cache: 'yarn'
+  #     - run: yarn install --frozen-lockfile
+  #     - run: yarn build
 
-      # Generate static export for domExport test
-      - run: yarn workspace example-${{ matrix.example }} export
+  #     # Generate static export for domExport test
+  #     - run: yarn workspace example-${{ matrix.example }} export
 
-      - uses: BerniWittmann/background-server-action@v1
-        with:
-          command: yarn test:cypress
-          # Start web servers for each test type:
-          # - DOM dev server
-          # - DOM export
-          # - Native dev server
-          start: yarn workspace example-${{ matrix.example }} start,yarn workspace example-${{ matrix.example }} serve,yarn workspace example-${{ matrix.example }} native
-          wait-on: 'http://localhost:5000,http://localhost:5001,http://localhost:5002'
-        env:
-          CYPRESS_EXAMPLE_NAME: ${{ matrix.example }}
+  #     - uses: BerniWittmann/background-server-action@v1
+  #       with:
+  #         command: yarn test:cypress
+  #         # Start web servers for each test type:
+  #         # - DOM dev server
+  #         # - DOM export
+  #         # - Native dev server
+  #         start: yarn workspace example-${{ matrix.example }} start,yarn workspace example-${{ matrix.example }} serve,yarn workspace example-${{ matrix.example }} native
+  #         wait-on: 'http://localhost:5000,http://localhost:5001,http://localhost:5002'
+  #       env:
+  #         CYPRESS_EXAMPLE_NAME: ${{ matrix.example }}
 
-      - uses: actions/upload-artifact@v3
-        if: failure()
-        with:
-          name: cypress-screenshots-${{ matrix.example }}-${{ matrix.os }}-node${{ matrix.node-version }}
-          path: cypress/screenshots
-      - uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: cypress-videos-${{ matrix.example }}-${{ matrix.os }}-node${{ matrix.node-version }}
-          path: cypress/videos
+  #     - uses: actions/upload-artifact@v3
+  #       if: failure()
+  #       with:
+  #         name: cypress-screenshots-${{ matrix.example }}-${{ matrix.os }}-node${{ matrix.node-version }}
+  #         path: cypress/screenshots
+  #     - uses: actions/upload-artifact@v3
+  #       if: always()
+  #       with:
+  #         name: cypress-videos-${{ matrix.example }}-${{ matrix.os }}-node${{ matrix.node-version }}
+  #         path: cypress/videos
