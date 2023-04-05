@@ -1,7 +1,11 @@
 import path from 'path';
 import { getCliArgs } from '../utils/cli.js';
 import { resolveLoose } from '../utils/resolveLoose.js';
-import { CosmosConfig, CosmosConfigInput } from './types.js';
+import {
+  CosmosConfig,
+  CosmosConfigInput,
+  CosmosDomConfigInput,
+} from './types.js';
 
 export function createCosmosConfig(
   rootDir: string,
@@ -27,6 +31,7 @@ export function createCosmosConfig(
     userDepsFilePath: getUserDepsFilePath(cosmosConfigInput, rootDir),
     watchDirs: getWatchDirs(cosmosConfigInput, rootDir),
     rendererUrl: cosmosConfigInput.rendererUrl ?? null,
+    dom: getDomConfig(cosmosConfigInput.dom || {}),
     ui: cosmosConfigInput.ui || {},
   };
 }
@@ -118,4 +123,11 @@ function getGlobalImports(
 function getPlugins(cosmosConfigInput: CosmosConfigInput, rootDir: string) {
   const { plugins = [] } = cosmosConfigInput;
   return plugins.map(plugin => resolveLoose(rootDir, plugin));
+}
+
+function getDomConfig(cosmosConfigInput: CosmosDomConfigInput) {
+  const { containerQuerySelector = null } = cosmosConfigInput;
+  return {
+    containerQuerySelector,
+  };
 }
