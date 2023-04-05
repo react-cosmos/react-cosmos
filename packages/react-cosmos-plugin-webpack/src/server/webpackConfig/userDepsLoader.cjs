@@ -4,9 +4,6 @@
 // dist folder as part of the build process
 module.exports = async function injectUserDeps() {
   const server = await import('react-cosmos/server.js');
-  const { createDomCosmosConfig } = await import(
-    '../cosmosConfig/createDomCosmosConfig.js'
-  );
 
   const cosmosConfig = await server.detectCosmosConfig();
 
@@ -20,7 +17,7 @@ module.exports = async function injectUserDeps() {
   const watchDirs = cosmosConfig.watchDirs;
   watchDirs.forEach(watchDir => this.addContextDependency(watchDir));
 
-  const { containerQuerySelector } = createDomCosmosConfig(cosmosConfig);
+  const { containerQuerySelector } = cosmosConfig.dom;
   const rendererConfig = {
     playgroundUrl: server.getPlaygroundUrl(cosmosConfig),
     containerQuerySelector,

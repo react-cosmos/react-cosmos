@@ -3,10 +3,15 @@ interface HttpsOptions {
   certPath: string;
 }
 
+export type CosmosDomConfig = {
+  containerQuerySelector: null | string;
+};
+
 export type CosmosConfig = {
   exportPath: string;
   detectLocalPlugins: boolean;
   disablePlugins: boolean;
+  dom: CosmosDomConfig;
   fixtureFileSuffix: string;
   fixturesDir: string;
   globalImports: string[];
@@ -39,4 +44,5 @@ export type CosmosConfig = {
   };
 };
 
+export type CosmosDomConfigInput = Partial<CosmosDomConfig>;
 export type CosmosConfigInput = Partial<CosmosConfig>;
