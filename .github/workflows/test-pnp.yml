@@ -1,8 +1,5 @@
 name: test-pnp
-on:
-  push:
-    branches-ignore:
-      - main
+on: [pull_request]
 jobs:
   pnp-install-and-run:
     runs-on: ubuntu-latest
