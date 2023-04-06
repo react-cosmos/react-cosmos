@@ -21,6 +21,7 @@ afterAll(() => {
 async function getDefaultExportWebpackConfig() {
   return mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using default webpack config');
+    expectLog('[Cosmos] Learn how to override webpack config for cosmos: https://github.com/react-cosmos/react-cosmos/tree/main/docs#webpack-config-override');
     const cosmosConfig = createCosmosConfig(process.cwd());
     return await getExportWebpackConfig(cosmosConfig, webpack);
   });

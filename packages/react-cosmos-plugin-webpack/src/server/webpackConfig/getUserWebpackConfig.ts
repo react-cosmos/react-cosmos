@@ -37,6 +37,7 @@ export async function getUserWebpackConfig(
   const { overridePath } = createWebpackCosmosConfig(cosmosConfig);
 
   if (!overridePath || !moduleExists(overridePath)) {
+    console.log(`[Cosmos] Learn how to override webpack config for cosmos: https://github.com/react-cosmos/react-cosmos/tree/main/docs#webpack-config-override`);
     return baseWebpackConfig;
   }
 
