@@ -1,8 +1,5 @@
 name: test
-on:
-  push:
-    branches-ignore:
-      - main
+on: [pull_request]
 jobs:
   source:
     strategy:
