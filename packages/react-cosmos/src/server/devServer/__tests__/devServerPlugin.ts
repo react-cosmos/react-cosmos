@@ -98,16 +98,7 @@ it('calls dev server hook (with updated config)', async () => {
       httpServer: expect.any(http.Server),
       sendMessage: expect.any(Function),
     });
-  });
-});
 
-it('calls async dev server cleanup hook', async () => {
-  return mockConsole(async ({ expectLog }) => {
-    expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
-    expectLog('[Cosmos] Found 1 plugin: Test Cosmos plugin');
-    expectLog(`[Cosmos] See you at http://localhost:${port}`);
-
-    _stopServer = await startDevServer('web');
     await stopServer();
 
     expect(devServerCleanup).toBeCalled();

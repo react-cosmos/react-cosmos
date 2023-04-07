@@ -16,7 +16,7 @@ import { getStaticPath } from '../shared/staticPath.js';
 import { resolve } from '../utils/resolve.js';
 
 export async function generateExport() {
-  const cosmosConfig = await detectCosmosConfig();
+  let cosmosConfig = await detectCosmosConfig();
 
   const pluginConfigs = await getPluginConfigs({
     cosmosConfig,
@@ -30,8 +30,13 @@ export async function generateExport() {
     pluginConfigs,
     cosmosConfig.rootDir
   );
+  const plugins = [...coreServerPlugins, ...userPlugins];
 
-  // TODO: Apply config plugins
+  for (const plugin of plugins) {
+    if (plugin.config) {
+      cosmosConfig = await plugin.config({ cosmosConfig, platformType: 'web' });
+    }
+  }
 
   // Clear previous export (or other files at export path)
   const { exportPath } = cosmosConfig;
@@ -42,7 +47,7 @@ export async function generateExport() {
   // template file (in case the static assets are served from the root path)
   await copyStaticAssets(cosmosConfig);
 
-  for (const plugin of [...coreServerPlugins, ...userPlugins]) {
+  for (const plugin of plugins) {
     if (!plugin.export) continue;
 
     try {

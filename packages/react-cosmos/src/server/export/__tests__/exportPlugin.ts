@@ -3,7 +3,10 @@ import { jestWorkerId } from '../../testHelpers/jestWorkerId.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
 import { mockCosmosPlugins } from '../../testHelpers/mockCosmosPlugins.js';
 import '../../testHelpers/mockEsmRequire.js';
-import { mockResolve } from '../../testHelpers/mockEsmResolve.js';
+import {
+  mockResolve,
+  resetResolveMock,
+} from '../../testHelpers/mockEsmResolve.js';
 import '../../testHelpers/mockEsmStaticPath.js';
 import {
   mockCosmosConfig,
@@ -12,7 +15,6 @@ import {
 } from '../../testHelpers/mockFs.js';
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
-import 'isomorphic-fetch';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { CosmosServerPlugin } from '../../cosmosPlugin/types.js';
@@ -29,6 +31,13 @@ const asyncMock = jest.fn();
 const testServerPlugin: CosmosServerPlugin = {
   name: 'testServerPlugin',
 
+  config: jest.fn(async ({ cosmosConfig }) => {
+    return {
+      ...cosmosConfig,
+      ignore: ['**/ignored.fixture.js'],
+    };
+  }),
+
   export: jest.fn(async () => {
     await new Promise(resolve => setTimeout(resolve, 50));
     asyncMock();
@@ -41,43 +50,68 @@ beforeEach(() => {
   mockCliArgs({});
   mockCosmosConfig('cosmos.config.json', { exportPath });
   mockFileUrl(testCosmosPlugin.server, testServerPlugin);
+
+  // These files are mocked because they are only available after all
+  // Cosmos packages are built, and tests should run with source code only.
+  mockResolve(
+    'react-cosmos-ui/dist/playground.bundle.js',
+    require.resolve('../../testHelpers/mock.bundle.js.txt')
+  );
+  mockResolve(
+    'react-cosmos-ui/dist/playground.bundle.js.map',
+    require.resolve('../../testHelpers/mock.bundle.js.map.txt')
+  );
 });
 
 afterEach(async () => {
   unmockCliArgs();
   resetFsMock();
+  resetResolveMock();
   await fs.rm(exportPath, { recursive: true, force: true });
 });
 
-it('calls export hook', async () => {
+it('calls config hook', async () => {
   return mockConsole(async ({ expectLog }) => {
-    // These files are mocked because they are only available after all
-    // Cosmos packages are built, and tests should run with source code only.
-    mockResolve(
-      'react-cosmos-ui/dist/playground.bundle.js',
-      require.resolve('../../testHelpers/mock.bundle.js.txt')
-    );
-    mockResolve(
-      'react-cosmos-ui/dist/playground.bundle.js.map',
-      require.resolve('../../testHelpers/mock.bundle.js.map.txt')
-    );
-
     expectLog('[Cosmos] Export complete!');
     expectLog('[Cosmos] Found 1 plugin: Test Cosmos plugin');
     expectLog(`Export path: ${exportPath}`);
 
     await generateExport();
 
-    expect(testServerPlugin.export).toBeCalled();
+    expect(testServerPlugin.config).toBeCalledWith({
+      cosmosConfig: expect.objectContaining({ exportPath }),
+      platformType: 'web',
+    });
+  });
+});
+
+it('calls export hook (with updated config)', async () => {
+  return mockConsole(async ({ expectLog }) => {
+    expectLog('[Cosmos] Export complete!');
+    expectLog('[Cosmos] Found 1 plugin: Test Cosmos plugin');
+    expectLog(`Export path: ${exportPath}`);
+
+    await generateExport();
+
+    expect(testServerPlugin.export).toBeCalledWith({
+      cosmosConfig: expect.objectContaining({
+        exportPath,
+        ignore: ['**/ignored.fixture.js'],
+      }),
+    });
     expect(asyncMock).toBeCalled();
+  });
+});
 
-    // Index HTML
+it('does not embed server-only plugins in playground HTML', async () => {
+  return mockConsole(async ({ expectLog }) => {
+    expectLog('[Cosmos] Export complete!');
+    expectLog('[Cosmos] Found 1 plugin: Test Cosmos plugin');
+    expectLog(`Export path: ${exportPath}`);
+
+    await generateExport();
+
     const html = await readExportFile('index.html');
-
-    expect(html).toContain('<title>React Cosmos</title>');
-    expect(html).toContain('<script src="playground.bundle.js"></script>');
-
-    // Doesn't include non-UI plugins in exports
     expect(html).toContain(`"pluginConfigs":[]`);
   });
 });

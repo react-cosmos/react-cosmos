@@ -33,8 +33,9 @@ export async function startDevServer(platformType: PlatformType) {
     pluginConfigs,
     cosmosConfig.rootDir
   );
+  const plugins = [...coreServerPlugins, ...userPlugins];
 
-  for (const plugin of [...coreServerPlugins, ...userPlugins]) {
+  for (const plugin of plugins) {
     if (plugin.config) {
       cosmosConfig = await plugin.config({ cosmosConfig, platformType });
     }
@@ -56,7 +57,7 @@ export async function startDevServer(platformType: PlatformType) {
     await httpServer.stop();
   }
 
-  for (const plugin of [...coreServerPlugins, ...userPlugins]) {
+  for (const plugin of plugins) {
     try {
       if (!plugin.devServer) continue;
 

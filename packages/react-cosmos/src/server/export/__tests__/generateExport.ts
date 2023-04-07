@@ -3,12 +3,14 @@ import { jestWorkerId } from '../../testHelpers/jestWorkerId.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
 import { mockCosmosPlugins } from '../../testHelpers/mockCosmosPlugins.js';
 import '../../testHelpers/mockEsmRequire.js';
-import { mockResolve } from '../../testHelpers/mockEsmResolve.js';
+import {
+  mockResolve,
+  resetResolveMock,
+} from '../../testHelpers/mockEsmResolve.js';
 import '../../testHelpers/mockEsmStaticPath.js';
 import { mockCosmosConfig, resetFsMock } from '../../testHelpers/mockFs.js';
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
-import 'isomorphic-fetch';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { generateExport } from '../generateExport.js';
@@ -20,49 +22,33 @@ const exportPath = path.join(__dirname, `../test-export-${jestWorkerId()}`);
 beforeEach(() => {
   mockCliArgs({});
   mockCosmosConfig('cosmos.config.json', { exportPath });
+
+  // These files are mocked because they are only available after all
+  // Cosmos packages are built, and tests should run with source code only.
+  mockResolve(
+    'react-cosmos-ui/dist/playground.bundle.js',
+    require.resolve('../../testHelpers/mock.bundle.js.txt')
+  );
+  mockResolve(
+    'react-cosmos-ui/dist/playground.bundle.js.map',
+    require.resolve('../../testHelpers/mock.bundle.js.map.txt')
+  );
 });
 
 afterEach(async () => {
   unmockCliArgs();
   resetFsMock();
+  resetResolveMock();
   await fs.rm(exportPath, { recursive: true, force: true });
 });
 
-it('generates export', async () => {
+it('generates playground HTML', async () => {
   return mockConsole(async ({ expectLog }) => {
-    // These files are mocked because they are only available after all
-    // Cosmos packages are built, and tests should run with source code only.
-    mockResolve(
-      'react-cosmos-ui/dist/playground.bundle.js',
-      require.resolve('../../testHelpers/mock.bundle.js.txt')
-    );
-    mockResolve(
-      'react-cosmos-ui/dist/playground.bundle.js.map',
-      require.resolve('../../testHelpers/mock.bundle.js.map.txt')
-    );
-
     expectLog('[Cosmos] Export complete!');
     expectLog(`Export path: ${exportPath}`);
 
     await generateExport();
 
-    // JS bundle and source map
-    expect((await readExportFile('playground.bundle.js')).trim()).toBe(
-      '__mock_bundle__'
-    );
-    expect((await readExportFile('playground.bundle.js.map')).trim()).toBe(
-      '__mock_map__'
-    );
-
-    // Favicon
-    expect(await readExportFile('_cosmos.ico')).toBe(
-      await fs.readFile(
-        path.join(__dirname, '../../static/favicon.ico'),
-        'utf8'
-      )
-    );
-
-    // Index HTML
     const html = await readExportFile('index.html');
 
     expect(html).toContain('<title>React Cosmos</title>');
@@ -81,6 +67,37 @@ it('generates export', async () => {
         },
         pluginConfigs: [],
       })
+    );
+  });
+});
+
+it('generates playground JS', async () => {
+  return mockConsole(async ({ expectLog }) => {
+    expectLog('[Cosmos] Export complete!');
+    expectLog(`Export path: ${exportPath}`);
+
+    await generateExport();
+
+    const bundle = await readExportFile('playground.bundle.js');
+    expect(bundle.trim()).toBe('__mock_bundle__');
+
+    const sourceMap = await readExportFile('playground.bundle.js.map');
+    expect(sourceMap.trim()).toBe('__mock_map__');
+  });
+});
+
+it('generates favicon', async () => {
+  return mockConsole(async ({ expectLog }) => {
+    expectLog('[Cosmos] Export complete!');
+    expectLog(`Export path: ${exportPath}`);
+
+    await generateExport();
+
+    expect(await readExportFile('_cosmos.ico')).toBe(
+      await fs.readFile(
+        path.join(__dirname, '../../static/favicon.ico'),
+        'utf8'
+      )
     );
   });
 });
