@@ -11,12 +11,11 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { ServerMessage, SocketMessage } from 'react-cosmos-core';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
+import {
+  mockResolve,
+  resetResolveMock,
+} from '../../testHelpers/mockEsmResolve.js';
 import { startDevServer } from '../startDevServer.js';
-
-// This became necessary since using fetch with { method: 'HEAD' } in
-// dev server tests.
-// Copied from https://github.com/prisma/prisma/issues/8558#issuecomment-1129055580
-global.setImmediate = jest.useRealTimers as unknown as typeof setImmediate;
 
 jest.mock('../../cosmosPlugin/pluginConfigs.js', () => {
   return {
@@ -32,6 +31,7 @@ beforeEach(() => {
 afterEach(() => {
   unmockCliArgs();
   resetFsMock();
+  resetResolveMock();
 });
 
 it('logs messages', async () => {
@@ -78,15 +78,24 @@ it('serves playground JS', async () => {
   return mockConsole(async () => {
     const stopServer = await startDevServer('web');
 
-    const res1 = await fetch('http://localhost:5001/playground.bundle.js', {
-      method: 'HEAD',
-    });
-    expect(res1.status).toBe(200);
+    // These files are mocked because they are only available after all
+    // Cosmos packages are built, and tests should run with source code only.
+    mockResolve(
+      'react-cosmos-ui/dist/playground.bundle.js',
+      require.resolve('../testHelpers/mock.bundle.js.txt')
+    );
+    mockResolve(
+      'react-cosmos-ui/dist/playground.bundle.js.map',
+      require.resolve('../testHelpers/mock.bundle.js.map.txt')
+    );
 
-    const res2 = await fetch('http://localhost:5001/playground.bundle.js.map', {
-      method: 'HEAD',
-    });
+    const res1 = await fetch('http://localhost:5001/playground.bundle.js');
+    expect(res1.status).toBe(200);
+    expect((await res1.text()).trim()).toBe('__mock_bundle__');
+
+    const res2 = await fetch('http://localhost:5001/playground.bundle.js.map');
     expect(res2.status).toBe(200);
+    expect((await res2.text()).trim()).toBe('__mock_map__');
 
     await stopServer();
   });
