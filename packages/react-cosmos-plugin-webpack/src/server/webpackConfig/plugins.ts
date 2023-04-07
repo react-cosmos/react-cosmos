@@ -11,10 +11,8 @@ export function getGlobalsPlugin(
   return new userWebpack.DefinePlugin({
     // "if (__DEV__)" blocks get stripped when compiling a static export build
     __DEV__: JSON.stringify(devServerOn),
-    'process.env': {
-      NODE_ENV: JSON.stringify(getWebpackNodeEnv()),
-      PUBLIC_URL: JSON.stringify(cleanPublicUrl),
-    },
+    'process.env.NODE_ENV': JSON.stringify(getWebpackNodeEnv()),
+    'process.env.PUBLIC_URL': JSON.stringify(cleanPublicUrl)
   });
 }
 
