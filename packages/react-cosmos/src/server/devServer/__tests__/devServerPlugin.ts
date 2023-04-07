@@ -48,7 +48,7 @@ afterEach(() => {
   resetFsMock();
 });
 
-it.only('calls dev server hook', async () => {
+it('calls dev server hook', async () => {
   return mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
     expectLog('[Cosmos] Found 1 plugin: Test Cosmos plugin');
