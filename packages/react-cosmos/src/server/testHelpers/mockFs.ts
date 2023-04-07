@@ -12,6 +12,13 @@ jest.mock('../utils/fs', () => {
   async function importModule(moduleId: string) {
     if (!mocked) return actual.importModule(moduleId);
 
+    if (
+      !fileMocks.hasOwnProperty(moduleId) &&
+      !fileMocks.hasOwnProperty(`${moduleId}.js`)
+    ) {
+      throw new Error(`Cannot find module '${moduleId}'`);
+    }
+
     return fileMocks[moduleId] || fileMocks[`${moduleId}.js`];
   }
 
