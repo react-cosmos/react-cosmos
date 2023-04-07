@@ -74,7 +74,7 @@ export function mockCosmosConfig(
   mockFile(cosmosConfigPath, cosmosConfig);
 }
 
-export function mockModulePath(filePath: string, fileContent: {}) {
+export function mockFileUrl(filePath: string, fileContent: {}) {
   const fileUrl = pathToFileURL(filePath);
   requireMocked().__mockFile(fileUrl, fileContent);
 }

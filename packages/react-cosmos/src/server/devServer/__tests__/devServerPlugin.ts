@@ -10,7 +10,7 @@ import { jestWorkerId } from '../../testHelpers/jestWorkerId.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
 import {
   mockCosmosConfig,
-  mockModulePath,
+  mockFileUrl,
   resetFsMock,
 } from '../../testHelpers/mockFs.js';
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
@@ -44,7 +44,7 @@ const port = 5000 + jestWorkerId();
 beforeEach(() => {
   mockCliArgs({});
   mockCosmosConfig('cosmos.config.json', { port });
-  mockModulePath(testCosmosPlugin.server, testServerPlugin);
+  mockFileUrl(testCosmosPlugin.server, testServerPlugin);
 });
 
 afterEach(() => {
