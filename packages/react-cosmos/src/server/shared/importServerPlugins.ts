@@ -2,6 +2,7 @@ import path from 'path';
 import { CosmosPluginConfig } from 'react-cosmos-core';
 import { pathToFileURL } from 'url';
 import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
+import { importModule } from '../utils/fs.js';
 
 export async function importServerPlugins(
   pluginConfigs: CosmosPluginConfig[],
@@ -23,8 +24,7 @@ async function importServerModule(
     throw new Error(`Server module missing in plugin "${pluginConfig.name}"`);
   }
 
-  const esModule = await import(
+  return importModule<CosmosServerPlugin>(
     pathToFileURL(path.resolve(rootDir, moduleId)).href
   );
-  return esModule.default as CosmosServerPlugin;
 }
