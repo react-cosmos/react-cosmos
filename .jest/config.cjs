@@ -21,6 +21,7 @@ module.exports = {
   testMatch: ['**/__tests__/**/*.{ts,tsx}', '**/?(*.)test.{ts,tsx}'],
   testPathIgnorePatterns: ['<rootDir>/node_modules/'],
   setupFilesAfterEnv: ['<rootDir>/.jest/setup.ts'],
+  modulePathIgnorePatterns: ['test-export-*'],
   moduleNameMapper: {
     // This seems faster than transpiling node_modules/lodash-es
     'lodash-es': '<rootDir>/node_modules/lodash/lodash.js',

@@ -5,21 +5,42 @@ import { mockCosmosPlugins } from '../../testHelpers/mockCosmosPlugins.js';
 import '../../testHelpers/mockEsmRequire.js';
 import { mockResolve } from '../../testHelpers/mockEsmResolve.js';
 import '../../testHelpers/mockEsmStaticPath.js';
-import { mockCosmosConfig, resetFsMock } from '../../testHelpers/mockFs.js';
+import {
+  mockCosmosConfig,
+  mockFileUrl,
+  resetFsMock,
+} from '../../testHelpers/mockFs.js';
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
 import 'isomorphic-fetch';
-import fs, { readFile } from 'node:fs/promises';
+import fs from 'node:fs/promises';
 import path from 'node:path';
+import { CosmosServerPlugin } from '../../cosmosPlugin/types.js';
 import { generateExport } from '../generateExport.js';
 
-mockCosmosPlugins([]);
+const testCosmosPlugin = {
+  name: 'Test Cosmos plugin',
+  rootDir: path.join(__dirname, 'mock-cosmos-plugin'),
+  server: path.join(__dirname, 'mock-cosmos-plugin/server.js'),
+};
+mockCosmosPlugins([testCosmosPlugin]);
+
+const asyncMock = jest.fn();
+const testServerPlugin: CosmosServerPlugin = {
+  name: 'testServerPlugin',
+
+  export: jest.fn(async () => {
+    await new Promise(resolve => setTimeout(resolve, 50));
+    asyncMock();
+  }),
+};
 
 const exportPath = path.join(__dirname, `../test-export-${jestWorkerId()}`);
 
 beforeEach(() => {
   mockCliArgs({});
   mockCosmosConfig('cosmos.config.json', { exportPath });
+  mockFileUrl(testCosmosPlugin.server, testServerPlugin);
 });
 
 afterEach(async () => {
@@ -28,7 +49,7 @@ afterEach(async () => {
   await fs.rm(exportPath, { recursive: true, force: true });
 });
 
-it('generates export', async () => {
+it('calls export hook', async () => {
   return mockConsole(async ({ expectLog }) => {
     // These files are mocked because they are only available after all
     // Cosmos packages are built, and tests should run with source code only.
@@ -42,22 +63,13 @@ it('generates export', async () => {
     );
 
     expectLog('[Cosmos] Export complete!');
+    expectLog('[Cosmos] Found 1 plugin: Test Cosmos plugin');
     expectLog(`Export path: ${exportPath}`);
 
     await generateExport();
 
-    // JS bundle and source map
-    expect((await readExportFile('playground.bundle.js')).trim()).toBe(
-      '__mock_bundle__'
-    );
-    expect((await readExportFile('playground.bundle.js.map')).trim()).toBe(
-      '__mock_map__'
-    );
-
-    // Favicon
-    expect(await readExportFile('_cosmos.ico')).toBe(
-      await readFile(path.join(__dirname, '../../static/favicon.ico'), 'utf8')
-    );
+    expect(testServerPlugin.export).toBeCalled();
+    expect(asyncMock).toBeCalled();
 
     // Index HTML
     const html = await readExportFile('index.html');
@@ -65,20 +77,8 @@ it('generates export', async () => {
     expect(html).toContain('<title>React Cosmos</title>');
     expect(html).toContain('<script src="playground.bundle.js"></script>');
 
-    expect(html).toContain(
-      JSON.stringify({
-        playgroundConfig: {
-          core: {
-            projectId: 'new-project',
-            fixturesDir: '__fixtures__',
-            fixtureFileSuffix: 'fixture',
-            devServerOn: false,
-            webRendererUrl: '/_renderer.html',
-          },
-        },
-        pluginConfigs: [],
-      })
-    );
+    // Doesn't include non-UI plugins in exports
+    expect(html).toContain(`"pluginConfigs":[]`);
   });
 });
 
