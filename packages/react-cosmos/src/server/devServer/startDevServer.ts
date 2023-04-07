@@ -37,7 +37,12 @@ export async function startDevServer(platformType: PlatformType) {
 
   for (const plugin of plugins) {
     if (plugin.config) {
-      cosmosConfig = await plugin.config({ cosmosConfig, platformType });
+      try {
+        cosmosConfig = await plugin.config({ cosmosConfig, platformType });
+      } catch (err) {
+        console.log(`[Cosmos][plugin:${plugin.name}] Config hook failed`);
+        throw err;
+      }
     }
   }
 
@@ -77,7 +82,7 @@ export async function startDevServer(platformType: PlatformType) {
             // Log when a plugin fails to clean up, but continue to attempt
             // to clean up the remaining plugins
             console.log(
-              `[Cosmos][${plugin.name}] Dev server plugin cleanup failed`
+              `[Cosmos][plugin:${plugin.name}] Dev server cleanup failed`
             );
             console.log(err);
           }
@@ -86,7 +91,7 @@ export async function startDevServer(platformType: PlatformType) {
     } catch (err) {
       // Abort starting server if a plugin init fails and attempt cleanup of all
       // plugins that have already initialized
-      console.log(`[Cosmos][${plugin.name}] Dev server plugin init failed`);
+      console.log(`[Cosmos][plugin:${plugin.name}] Dev server init failed`);
       cleanUp();
       throw err;
     }

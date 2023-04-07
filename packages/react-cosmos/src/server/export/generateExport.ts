@@ -16,6 +16,7 @@ import { getStaticPath } from '../shared/staticPath.js';
 import { resolve } from '../utils/resolve.js';
 
 export async function generateExport() {
+  const platformType = 'web';
   let cosmosConfig = await detectCosmosConfig();
 
   const pluginConfigs = await getPluginConfigs({
@@ -34,7 +35,12 @@ export async function generateExport() {
 
   for (const plugin of plugins) {
     if (plugin.config) {
-      cosmosConfig = await plugin.config({ cosmosConfig, platformType: 'web' });
+      try {
+        cosmosConfig = await plugin.config({ cosmosConfig, platformType });
+      } catch (err) {
+        console.log(`[Cosmos][plugin:${plugin.name}] Config hook failed`);
+        throw err;
+      }
     }
   }
 
@@ -53,7 +59,7 @@ export async function generateExport() {
     try {
       await plugin.export({ cosmosConfig });
     } catch (err) {
-      console.log(`[Cosmos][${plugin.name}] Export plugin failed`);
+      console.log(`[Cosmos][plugin:${plugin.name}] Export failed`);
       throw err;
     }
   }
