@@ -31,7 +31,7 @@ const testServerPlugin: CosmosServerPlugin = {
 
   devServer: jest.fn(async () => {
     await new Promise(resolve => setTimeout(resolve, 50));
-    devServerCleanup();
+    return () => devServerCleanup();
   }),
 };
 
@@ -75,10 +75,9 @@ it('calls async dev server cleanup hook', async () => {
     expectLog(`[Cosmos] See you at http://localhost:${port}`);
 
     const stopServer = await startDevServer('web');
+    await stopServer();
 
     expect(devServerCleanup).toBeCalled();
-
-    await stopServer();
   });
 });
 
