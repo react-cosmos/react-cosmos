@@ -14,17 +14,21 @@ export const portRetryServerPlugin: CosmosServerPlugin = {
 };
 
 // Inspired by https://stackoverflow.com/q/19129570
-async function findNextAvailablePort(port: number, retries: number) {
+async function findNextAvailablePort(
+  port: number,
+  retries: number,
+  retriesLeft = retries
+) {
   return new Promise<number>((resolve, reject) => {
     const socket = new net.Socket();
 
     socket.on('connect', () => {
       console.log(`[Cosmos] Port ${port} already in use, trying next...`);
-      if (retries > 0) {
+      if (retriesLeft > 0) {
         socket.destroy();
-        resolve(findNextAvailablePort(port + 1, retries - 1));
+        resolve(findNextAvailablePort(port + 1, retries, retriesLeft - 1));
       } else {
-        reject(`No available port found after ${retries} retries`);
+        reject(`No available port found after ${retries} retries.`);
       }
     });
 
