@@ -10,7 +10,9 @@ export type CosmosConfigPluginArgs = {
   platformType: PlatformType;
 };
 
-export type CosmosConfigPlugin = (args: CosmosConfigPluginArgs) => unknown;
+export type CosmosConfigPlugin = (
+  args: CosmosConfigPluginArgs
+) => Promise<CosmosConfig> | CosmosConfig;
 
 export type DevServerPluginArgs = {
   cosmosConfig: CosmosConfig;

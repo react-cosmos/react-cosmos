@@ -9,7 +9,7 @@ import { mockCosmosConfig, resetFsMock } from '../../testHelpers/mockFs.js';
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
 import 'isomorphic-fetch';
-import fs, { readFile } from 'node:fs/promises';
+import fs from 'node:fs/promises';
 import path from 'node:path';
 import { generateExport } from '../generateExport.js';
 
@@ -56,7 +56,10 @@ it('generates export', async () => {
 
     // Favicon
     expect(await readExportFile('_cosmos.ico')).toBe(
-      await readFile(path.join(__dirname, '../../static/favicon.ico'), 'utf8')
+      await fs.readFile(
+        path.join(__dirname, '../../static/favicon.ico'),
+        'utf8'
+      )
     );
 
     // Index HTML

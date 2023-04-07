@@ -17,7 +17,7 @@ import { createHttpServer } from './httpServer.js';
 import { createMessageHandler } from './messageHandler.js';
 
 export async function startDevServer(platformType: PlatformType) {
-  const cosmosConfig = await detectCosmosConfig();
+  let cosmosConfig = await detectCosmosConfig();
   logCosmosConfigInfo();
 
   const pluginConfigs = await getPluginConfigs({
@@ -34,7 +34,11 @@ export async function startDevServer(platformType: PlatformType) {
     cosmosConfig.rootDir
   );
 
-  // TODO: Apply config plugins
+  for (const plugin of [...coreServerPlugins, ...userPlugins]) {
+    if (plugin.config) {
+      cosmosConfig = await plugin.config({ cosmosConfig, platformType });
+    }
+  }
 
   const app = await createExpressApp(platformType, cosmosConfig, pluginConfigs);
   const httpServer = await createHttpServer(cosmosConfig, app);

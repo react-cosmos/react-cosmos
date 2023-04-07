@@ -13,7 +13,7 @@ import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
 import retry from '@skidding/async-retry';
 import 'isomorphic-fetch';
-import { readFileSync } from 'node:fs';
+import fs from 'node:fs/promises';
 import path from 'node:path';
 import { ServerMessage, SocketMessage } from 'react-cosmos-core';
 import { startDevServer } from '../startDevServer.js';
@@ -22,12 +22,22 @@ mockCosmosPlugins([]);
 
 const port = 5000 + jestWorkerId();
 
+let _stopServer: (() => Promise<unknown>) | undefined;
+
+async function stopServer() {
+  if (_stopServer) {
+    await _stopServer();
+    _stopServer = undefined;
+  }
+}
+
 beforeEach(() => {
   mockCliArgs({});
   mockCosmosConfig('cosmos.config.json', { port });
 });
 
-afterEach(() => {
+afterEach(async () => {
+  await stopServer();
   unmockCliArgs();
   resetFsMock();
   resetResolveMock();
@@ -38,7 +48,7 @@ it('serves playground HTML', async () => {
     expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
     expectLog(`[Cosmos] See you at http://localhost:${port}`);
 
-    const stopServer = await startDevServer('web');
+    _stopServer = await startDevServer('web');
 
     const res = await fetch(`http://localhost:${port}`);
     expect(res.status).toBe(200);
@@ -61,8 +71,6 @@ it('serves playground HTML', async () => {
         pluginConfigs: [],
       })
     );
-
-    await stopServer();
   });
 });
 
@@ -71,7 +79,7 @@ it('serves playground JS', async () => {
     expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
     expectLog(`[Cosmos] See you at http://localhost:${port}`);
 
-    const stopServer = await startDevServer('web');
+    _stopServer = await startDevServer('web');
 
     // These files are mocked because they are only available after all
     // Cosmos packages are built, and tests should run with source code only.
@@ -93,8 +101,6 @@ it('serves playground JS', async () => {
     );
     expect(res2.status).toBe(200);
     expect((await res2.text()).trim()).toBe('__mock_map__');
-
-    await stopServer();
   });
 });
 
@@ -103,16 +109,17 @@ it('serves favicon', async () => {
     expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
     expectLog(`[Cosmos] See you at http://localhost:${port}`);
 
-    const stopServer = await startDevServer('web');
+    _stopServer = await startDevServer('web');
 
     const res = await fetch(`http://localhost:${port}/_cosmos.ico`);
     expect(res.status).toBe(200);
 
     expect(await res.text()).toEqual(
-      readFileSync(path.join(__dirname, '../../static/favicon.ico'), 'utf8')
+      await fs.readFile(
+        path.join(__dirname, '../../static/favicon.ico'),
+        'utf8'
+      )
     );
-
-    await stopServer();
   });
 });
 
@@ -121,7 +128,7 @@ it('creates message handler', async () => {
     expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
     expectLog(`[Cosmos] See you at http://localhost:${port}`);
 
-    const stopServer = await startDevServer('web');
+    _stopServer = await startDevServer('web');
 
     const client1 = new WebSocket(`ws://localhost:${port}`);
     const client2 = new WebSocket(`ws://localhost:${port}`);
@@ -144,8 +151,6 @@ it('creates message handler', async () => {
     await retry(() =>
       expect(onMessage).toBeCalledWith(JSON.stringify(message))
     );
-
-    await stopServer();
   });
 });
 
@@ -154,7 +159,7 @@ it('stops server', async () => {
     expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
     expectLog(`[Cosmos] See you at http://localhost:${port}`);
 
-    const stopServer = await startDevServer('web');
+    _stopServer = await startDevServer('web');
     await stopServer();
 
     await expect(fetch(`http://localhost:${port}`)).rejects.toThrow(
@@ -168,7 +173,7 @@ it('closes message handler clients', async () => {
     expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
     expectLog(`[Cosmos] See you at http://localhost:${port}`);
 
-    const stopServer = await startDevServer('web');
+    _stopServer = await startDevServer('web');
 
     const onOpen = jest.fn();
     const onClose = jest.fn();
