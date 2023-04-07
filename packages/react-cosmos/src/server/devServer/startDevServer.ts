@@ -1,4 +1,5 @@
 import path from 'path';
+import { coreServerPlugins } from '../corePlugins/index.js';
 import {
   detectCosmosConfig,
   detectCosmosConfigPath,
@@ -11,7 +12,6 @@ import {
 import { importServerPlugins } from '../shared/importServerPlugins.js';
 import { logPluginInfo } from '../shared/logPluginInfo.js';
 import { serveStaticDir } from '../shared/staticServer.js';
-import { coreServerPlugins } from './corePlugins/index.js';
 import { createExpressApp } from './expressApp.js';
 import { createHttpServer } from './httpServer.js';
 import { createMessageHandler } from './messageHandler.js';

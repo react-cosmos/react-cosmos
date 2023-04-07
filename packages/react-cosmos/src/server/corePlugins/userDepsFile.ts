@@ -1,12 +1,12 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { RendererConfig } from 'react-cosmos-core';
-import { CosmosConfig } from '../../cosmosConfig/types.js';
-import { CosmosServerPlugin, PlatformType } from '../../cosmosPlugin/types.js';
-import { getPlaygroundUrl } from '../../shared/playgroundUrl.js';
-import { startFixtureWatcher } from '../../userDeps/fixtureWatcher.js';
-import { generateUserDepsModule } from '../../userDeps/generateUserDepsModule.js';
-import { getCliArgs } from '../../utils/cli.js';
+import { CosmosConfig } from '../cosmosConfig/types.js';
+import { CosmosServerPlugin, PlatformType } from '../cosmosPlugin/types.js';
+import { getPlaygroundUrl } from '../shared/playgroundUrl.js';
+import { startFixtureWatcher } from '../userDeps/fixtureWatcher.js';
+import { generateUserDepsModule } from '../userDeps/generateUserDepsModule.js';
+import { getCliArgs } from '../utils/cli.js';
 
 export const userDepsFileServerPlugin: CosmosServerPlugin = {
   name: 'userDepsFile',

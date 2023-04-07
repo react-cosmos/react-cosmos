@@ -5,10 +5,10 @@ import {
   removeLeadingSlash,
   UiCosmosPluginConfig,
 } from 'react-cosmos-core';
+import { coreServerPlugins } from '../corePlugins/index.js';
 import { detectCosmosConfig } from '../cosmosConfig/detectCosmosConfig.js';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
-import { coreServerPlugins } from '../devServer/corePlugins/index.js';
 import { importServerPlugins } from '../shared/importServerPlugins.js';
 import { logPluginInfo } from '../shared/logPluginInfo.js';
 import { getExportPlaygroundHtml } from '../shared/playgroundHtml.js';

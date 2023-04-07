@@ -1,6 +1,6 @@
 import express from 'express';
-import { CosmosServerPlugin } from '../../cosmosPlugin/types.js';
-import { resolveFromSilent, resolveSilent } from '../../utils/resolveSilent.js';
+import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
+import { resolveFromSilent, resolveSilent } from '../utils/resolveSilent.js';
 
 export const pluginEndpointServerPlugin: CosmosServerPlugin = {
   name: 'pluginEndpoint',
