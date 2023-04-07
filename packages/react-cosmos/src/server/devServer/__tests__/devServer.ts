@@ -13,6 +13,11 @@ import { ServerMessage, SocketMessage } from 'react-cosmos-core';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
 import { startDevServer } from '../startDevServer.js';
 
+// This became necessary since using fetch with { method: 'HEAD' } in
+// dev server tests.
+// Copied from https://github.com/prisma/prisma/issues/8558#issuecomment-1129055580
+global.setImmediate = jest.useRealTimers as unknown as typeof setImmediate;
+
 jest.mock('../../cosmosPlugin/pluginConfigs.js', () => {
   return {
     getPluginConfigs: jest.fn(() => []),
