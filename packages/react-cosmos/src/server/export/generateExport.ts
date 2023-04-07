@@ -36,6 +36,7 @@ export async function generateExport() {
   // Clear previous export (or other files at export path)
   const { exportPath } = cosmosConfig;
   await fs.rm(exportPath, { recursive: true, force: true });
+  await fs.mkdir(exportPath, { recursive: true });
 
   // Copy static assets first, so that the built index.html overrides the its
   // template file (in case the static assets are served from the root path)
