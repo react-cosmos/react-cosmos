@@ -32,7 +32,10 @@ module.exports = {
   // https://kulshekhar.github.io/ts-jest/docs/getting-started/options/tsconfig
   transform: {
     '^.+\\.tsx?$': ['ts-jest', { tsconfig: { noUnusedLocals: false } }],
-    '^.+\\.js$': ['ts-jest', { tsconfig: { allowJs: true } }],
+    '^.+\\.js$': [
+      'ts-jest',
+      { tsconfig: { allowJs: true, noUnusedLocals: false } },
+    ],
   },
   // https://jestjs.io/docs/configuration#transformignorepatterns-arraystring
   transformIgnorePatterns: [

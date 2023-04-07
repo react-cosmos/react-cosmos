@@ -48,8 +48,8 @@ export async function startDevServer(platformType: PlatformType) {
 
   async function cleanUp() {
     await Promise.all(pluginCleanupCallbacks.map(cleanup => cleanup()));
+    msgHandler.close();
     await httpServer.stop();
-    msgHandler.cleanUp();
   }
 
   for (const plugin of [...coreServerPlugins, ...userPlugins]) {

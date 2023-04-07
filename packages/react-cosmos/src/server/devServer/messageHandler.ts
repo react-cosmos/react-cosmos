@@ -26,10 +26,10 @@ export function createMessageHandler(httpServer: http.Server) {
     });
   }
 
-  function cleanUp() {
+  function close() {
     wss.clients.forEach(client => client.close());
     wss.close();
   }
 
-  return { sendMessage, cleanUp };
+  return { sendMessage, close };
 }
