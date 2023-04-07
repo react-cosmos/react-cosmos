@@ -1,6 +1,6 @@
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { CosmosConfig } from '../../cosmosConfig/types.js';
-import { DevServerPluginArgs } from '../../cosmosPlugin/types.js';
+import { CosmosServerPlugin } from '../../cosmosPlugin/types.js';
 
 type HttpProxyConfig = {
   [context: string]:
@@ -13,26 +13,26 @@ type HttpProxyConfig = {
       };
 };
 
-export function httpProxyDevServerPlugin({
-  platformType,
-  cosmosConfig,
-  expressApp,
-}: DevServerPluginArgs) {
-  if (platformType !== 'web') return;
+export const httpProxyServerPlugin: CosmosServerPlugin = {
+  name: 'httpProxy',
 
-  const httpProxyConfig = getHttpProxyCosmosConfig(cosmosConfig);
-  Object.keys(httpProxyConfig).forEach(context => {
-    const config = httpProxyConfig[context];
-    if (typeof config === 'string') {
-      expressApp.use(
-        context,
-        createProxyMiddleware(context, { target: config })
-      );
-    } else if (typeof config === 'object') {
-      expressApp.use(context, createProxyMiddleware(context, config));
-    }
-  });
-}
+  devServer({ platformType, cosmosConfig, expressApp }) {
+    if (platformType !== 'web') return;
+
+    const httpProxyConfig = getHttpProxyCosmosConfig(cosmosConfig);
+    Object.keys(httpProxyConfig).forEach(context => {
+      const config = httpProxyConfig[context];
+      if (typeof config === 'string') {
+        expressApp.use(
+          context,
+          createProxyMiddleware(context, { target: config })
+        );
+      } else if (typeof config === 'object') {
+        expressApp.use(context, createProxyMiddleware(context, config));
+      }
+    });
+  },
+};
 
 function getHttpProxyCosmosConfig(cosmosConfig: CosmosConfig) {
   return (cosmosConfig.httpProxy || {}) as HttpProxyConfig;

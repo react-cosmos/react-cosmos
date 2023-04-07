@@ -33,22 +33,12 @@ export async function readCosmosPluginConfig({
     );
   }
 
-  if (rawConfig.devServer) {
-    config.devServer = resolvePluginPath(
+  if (rawConfig.server) {
+    config.server = resolvePluginPath(
       config.name,
       rootDir,
       pluginRootDir,
-      rawConfig.devServer,
-      relativePaths
-    );
-  }
-
-  if (rawConfig.export) {
-    config.export = resolvePluginPath(
-      config.name,
-      rootDir,
-      pluginRootDir,
-      rawConfig.export,
+      rawConfig.server,
       relativePaths
     );
   }

@@ -2,25 +2,29 @@ import fs from 'fs/promises';
 import path from 'path';
 import { RendererConfig } from 'react-cosmos-core';
 import { CosmosConfig } from '../../cosmosConfig/types.js';
-import { DevServerPluginArgs, PlatformType } from '../../cosmosPlugin/types.js';
-import { startFixtureWatcher } from '../../userDeps/fixtureWatcher.js';
+import { CosmosServerPlugin, PlatformType } from '../../cosmosPlugin/types.js';
 import { getPlaygroundUrl } from '../../shared/playgroundUrl.js';
+import { startFixtureWatcher } from '../../userDeps/fixtureWatcher.js';
 import { generateUserDepsModule } from '../../userDeps/generateUserDepsModule.js';
 import { getCliArgs } from '../../utils/cli.js';
 
-export async function userDepsFileDevServerPlugin(args: DevServerPluginArgs) {
-  if (!shouldGenerateUserDepsFile(args.platformType)) return;
+export const userDepsFileServerPlugin: CosmosServerPlugin = {
+  name: 'userDepsFile',
 
-  const { cosmosConfig } = args;
-  await generateUserDepsFile(cosmosConfig);
-  const watcher = await startFixtureWatcher(cosmosConfig, 'all', () => {
-    generateUserDepsFile(cosmosConfig);
-  });
+  async devServer(args) {
+    if (!shouldGenerateUserDepsFile(args.platformType)) return;
 
-  return () => {
-    watcher.close();
-  };
-}
+    const { cosmosConfig } = args;
+    await generateUserDepsFile(cosmosConfig);
+    const watcher = await startFixtureWatcher(cosmosConfig, 'all', () => {
+      generateUserDepsFile(cosmosConfig);
+    });
+
+    return () => {
+      watcher.close();
+    };
+  },
+};
 
 function shouldGenerateUserDepsFile(platformType: PlatformType): boolean {
   return (

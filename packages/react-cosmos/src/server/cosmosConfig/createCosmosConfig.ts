@@ -25,6 +25,7 @@ export function createCosmosConfig(
     httpsOptions: getHttpsOptions(cosmosConfigInput, rootDir),
     ignore: getIgnore(cosmosConfigInput),
     port: getPort(cosmosConfigInput),
+    portRetryIncrements: getPortRetryIncrements(cosmosConfigInput),
     plugins: getPlugins(cosmosConfigInput, rootDir),
     publicUrl: getPublicUrl(cosmosConfigInput),
     staticPath: getStaticPath(cosmosConfigInput, rootDir),
@@ -110,6 +111,12 @@ function getPort(cosmosConfigInput: CosmosConfigInput) {
 
   const { port = 5000 } = cosmosConfigInput;
   return port;
+}
+
+function getPortRetryIncrements({
+  portRetryIncrements = 10,
+}: CosmosConfigInput) {
+  return portRetryIncrements;
 }
 
 function getGlobalImports(

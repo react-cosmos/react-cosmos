@@ -1,32 +1,20 @@
 import path from 'path';
-import { CosmosPluginConfig } from 'react-cosmos-core';
 import {
   detectCosmosConfig,
   detectCosmosConfigPath,
 } from '../cosmosConfig/detectCosmosConfig.js';
 import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
 import {
-  DevServerPlugin,
   DevServerPluginCleanupCallback,
   PlatformType,
 } from '../cosmosPlugin/types.js';
+import { importServerPlugins } from '../shared/importServerPlugins.js';
 import { logPluginInfo } from '../shared/logPluginInfo.js';
-import { requirePluginModule } from '../shared/requirePluginModule.js';
 import { serveStaticDir } from '../shared/staticServer.js';
-import { httpProxyDevServerPlugin } from './corePlugins/httpProxy.js';
-import openFileDevServerPlugin from './corePlugins/openFile.js';
-import pluginEndpointDevServerPlugin from './corePlugins/pluginEndpoint.js';
-import { userDepsFileDevServerPlugin } from './corePlugins/userDepsFile.js';
+import { coreServerPlugins } from './corePlugins/index.js';
 import { createExpressApp } from './expressApp.js';
 import { createHttpServer } from './httpServer.js';
 import { createMessageHandler } from './messageHandler.js';
-
-const builtInPlugins: DevServerPlugin[] = [
-  userDepsFileDevServerPlugin,
-  httpProxyDevServerPlugin,
-  openFileDevServerPlugin,
-  pluginEndpointDevServerPlugin,
-];
 
 export async function startDevServer(platformType: PlatformType) {
   const cosmosConfig = await detectCosmosConfig();
@@ -40,6 +28,13 @@ export async function startDevServer(platformType: PlatformType) {
     relativePaths: false,
   });
   logPluginInfo(pluginConfigs);
+
+  const userPlugins = await importServerPlugins(
+    pluginConfigs,
+    cosmosConfig.rootDir
+  );
+
+  // TODO: Apply config plugins
 
   const app = await createExpressApp(platformType, cosmosConfig, pluginConfigs);
   const httpServer = await createHttpServer(cosmosConfig, app);
@@ -57,14 +52,11 @@ export async function startDevServer(platformType: PlatformType) {
     msgHandler.cleanUp();
   }
 
-  const userPlugins = await getDevServerPlugins(
-    pluginConfigs,
-    cosmosConfig.rootDir
-  );
-
-  for (const plugin of [...builtInPlugins, ...userPlugins]) {
+  for (const plugin of [...coreServerPlugins, ...userPlugins]) {
     try {
-      const pluginReturn = await plugin({
+      if (!plugin.devServer) continue;
+
+      const pluginReturn = await plugin.devServer({
         cosmosConfig,
         platformType,
         httpServer: httpServer.server,
@@ -111,17 +103,4 @@ function logCosmosConfigInfo() {
 
   const relConfigPath = path.relative(process.cwd(), cosmosConfigPath);
   console.log(`[Cosmos] Using cosmos config found at ${relConfigPath}`);
-}
-
-async function getDevServerPlugins(
-  pluginConfigs: CosmosPluginConfig[],
-  rootDir: string
-) {
-  return Promise.all(
-    pluginConfigs
-      .filter(pluginConfig => pluginConfig.devServer)
-      .map(pluginConfig =>
-        requirePluginModule<DevServerPlugin>(rootDir, pluginConfig, 'devServer')
-      )
-  );
 }

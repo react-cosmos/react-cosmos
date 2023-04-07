@@ -8,14 +8,12 @@ import {
 import { detectCosmosConfig } from '../cosmosConfig/detectCosmosConfig.js';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
-import { ExportPlugin } from '../cosmosPlugin/types.js';
+import { coreServerPlugins } from '../devServer/corePlugins/index.js';
+import { importServerPlugins } from '../shared/importServerPlugins.js';
 import { logPluginInfo } from '../shared/logPluginInfo.js';
 import { getExportPlaygroundHtml } from '../shared/playgroundHtml.js';
-import { requirePluginModule } from '../shared/requirePluginModule.js';
 import { getStaticPath } from '../shared/staticPath.js';
 import { resolve } from '../utils/resolve.js';
-
-const builtInPlugins: ExportPlugin[] = [];
 
 export async function generateExport() {
   const cosmosConfig = await detectCosmosConfig();
@@ -28,6 +26,13 @@ export async function generateExport() {
   });
   logPluginInfo(pluginConfigs);
 
+  const userPlugins = await importServerPlugins(
+    pluginConfigs,
+    cosmosConfig.rootDir
+  );
+
+  // TODO: Apply config plugins
+
   // Clear previous export (or other files at export path)
   const { exportPath } = cosmosConfig;
   await fs.rm(exportPath, { recursive: true, force: true });
@@ -36,14 +41,11 @@ export async function generateExport() {
   // template file (in case the static assets are served from the root path)
   await copyStaticAssets(cosmosConfig);
 
-  const userPlugins = await getExportPlugins(
-    pluginConfigs,
-    cosmosConfig.rootDir
-  );
+  for (const plugin of [...coreServerPlugins, ...userPlugins]) {
+    if (!plugin.export) continue;
 
-  for (const plugin of [...builtInPlugins, ...userPlugins]) {
     try {
-      await plugin({ cosmosConfig });
+      await plugin.export({ cosmosConfig });
     } catch (err) {
       console.log(`[Cosmos][${plugin.name}] Export plugin failed`);
       throw err;
@@ -87,19 +89,6 @@ async function copyStaticAssets(cosmosConfig: CosmosConfig) {
     removeLeadingSlash(publicUrl)
   );
   fs.cp(staticPath, exportStaticPath, { recursive: true });
-}
-
-async function getExportPlugins(
-  pluginConfigs: CosmosPluginConfig[],
-  rootDir: string
-) {
-  return Promise.all(
-    pluginConfigs
-      .filter(pluginConfig => pluginConfig.export)
-      .map(pluginConfig =>
-        requirePluginModule<ExportPlugin>(rootDir, pluginConfig, 'export')
-      )
-  );
 }
 
 async function exportPlaygroundFiles(

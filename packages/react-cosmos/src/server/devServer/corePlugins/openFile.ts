@@ -3,41 +3,42 @@ import express from 'express';
 import fs from 'fs';
 import open from 'open';
 import path from 'path';
-import { DevServerPluginArgs } from '../../cosmosPlugin/types.js';
+import { CosmosServerPlugin } from '../../cosmosPlugin/types.js';
 
 type ReqQuery = { filePath: void | string; line: number; column: number };
 
-export default function openFileDevServerPlugin({
-  cosmosConfig,
-  expressApp,
-}: DevServerPluginArgs) {
-  expressApp.get('/_open', (req: express.Request, res: express.Response) => {
-    const { filePath, line, column } = getReqQuery(req);
-    if (!filePath) {
-      res.status(400).send(`File path missing`);
-      return;
-    }
+export const openFileServerPlugin: CosmosServerPlugin = {
+  name: 'openFile',
 
-    const absFilePath = resolveFilePath(cosmosConfig.rootDir, filePath);
-    if (!fs.existsSync(absFilePath)) {
-      res.status(404).send(`File not found at path: ${absFilePath}`);
-      return;
-    }
+  devServer({ cosmosConfig, expressApp }) {
+    expressApp.get('/_open', (req: express.Request, res: express.Response) => {
+      const { filePath, line, column } = getReqQuery(req);
+      if (!filePath) {
+        res.status(400).send(`File path missing`);
+        return;
+      }
 
-    new Promise((resolve, reject) => {
-      const file = `${absFilePath}:${line}:${column}`;
-      launchEditor(file, (fileName, errorMsg) => reject(errorMsg));
-      // If launchEditor doesn't report error within 500ms we assume it worked
-      setTimeout(resolve, 500);
-    })
-      // Fall back to open in case launchEditor fails. launchEditor only works
-      // when the editor app is already open, but is favorable because it can
-      // open a code file on a specific line & column.
-      .catch(err => open(absFilePath))
-      .catch(err => res.status(500).send('Failed to open file'))
-      .then(() => res.send());
-  });
-}
+      const absFilePath = resolveFilePath(cosmosConfig.rootDir, filePath);
+      if (!fs.existsSync(absFilePath)) {
+        res.status(404).send(`File not found at path: ${absFilePath}`);
+        return;
+      }
+
+      new Promise((resolve, reject) => {
+        const file = `${absFilePath}:${line}:${column}`;
+        launchEditor(file, (fileName, errorMsg) => reject(errorMsg));
+        // If launchEditor doesn't report error within 500ms we assume it worked
+        setTimeout(resolve, 500);
+      })
+        // Fall back to open in case launchEditor fails. launchEditor only works
+        // when the editor app is already open, but is favorable because it can
+        // open a code file on a specific line & column.
+        .catch(err => open(absFilePath))
+        .catch(err => res.status(500).send('Failed to open file'))
+        .then(() => res.send());
+    });
+  },
+};
 
 function getReqQuery(req: express.Request): ReqQuery {
   const { filePath, line, column } = req.query;
