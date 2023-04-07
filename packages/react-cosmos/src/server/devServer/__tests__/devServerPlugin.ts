@@ -3,6 +3,7 @@ import '../../testHelpers/mockEsmRequire.js';
 import '../../testHelpers/mockEsmResolve.js';
 import '../../testHelpers/mockEsmStaticPath.js';
 
+import 'isomorphic-fetch';
 import * as http from 'node:http';
 import path from 'node:path';
 import { CosmosServerPlugin } from '../../cosmosPlugin/types.js';
@@ -86,6 +87,23 @@ it('calls async dev server cleanup hook', async () => {
   });
 });
 
+it('embeds plugins in playground HTML', async () => {
+  return mockConsole(async ({ expectLog }) => {
+    expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
+    expectLog('[Cosmos] Found 1 plugin: Test Cosmos plugin');
+    expectLog(`[Cosmos] See you at http://localhost:${port}`);
+
+    const stopServer = await startDevServer('web');
+
+    const res = await fetch(`http://localhost:${port}`);
+    expect(res.status).toBe(200);
+
+    const body = await res.text();
+    expect(body).toContain(JSON.stringify([testCosmosPlugin]));
+
+    await stopServer();
+  });
+});
+
 // TODO
 // - calls async config hook
-// - embeds plugins in playground HTML
