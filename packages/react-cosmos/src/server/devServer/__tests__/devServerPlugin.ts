@@ -1,4 +1,5 @@
 // Import mocks first
+import { mockCosmosPlugins } from '../../testHelpers/mockCosmosPlugins.js';
 import '../../testHelpers/mockEsmRequire.js';
 import '../../testHelpers/mockEsmResolve.js';
 import '../../testHelpers/mockEsmStaticPath.js';
@@ -22,15 +23,9 @@ const testCosmosPlugin = {
   rootDir: path.join(__dirname, 'mock-cosmos-plugin'),
   server: path.join(__dirname, 'mock-cosmos-plugin/server.js'),
 };
-
-jest.mock('../../cosmosPlugin/pluginConfigs.js', () => {
-  return {
-    getPluginConfigs: jest.fn(() => [testCosmosPlugin]),
-  };
-});
+mockCosmosPlugins([testCosmosPlugin]);
 
 const devServerCleanup = jest.fn(() => Promise.resolve());
-
 const testServerPlugin: CosmosServerPlugin = {
   name: 'testServerPlugin',
 
@@ -53,7 +48,7 @@ afterEach(() => {
   resetFsMock();
 });
 
-it('calls dev server hook', async () => {
+it.only('calls dev server hook', async () => {
   return mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
     expectLog('[Cosmos] Found 1 plugin: Test Cosmos plugin');

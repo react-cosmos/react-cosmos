@@ -1,4 +1,5 @@
 // Import mocks first
+import { mockCosmosPlugins } from '../../testHelpers/mockCosmosPlugins.js';
 import '../../testHelpers/mockEsmRequire.js';
 import '../../testHelpers/mockEsmResolve.js';
 import '../../testHelpers/mockEsmStaticPath.js';
@@ -18,11 +19,7 @@ import {
 } from '../../testHelpers/mockEsmResolve.js';
 import { startDevServer } from '../startDevServer.js';
 
-jest.mock('../../cosmosPlugin/pluginConfigs.js', () => {
-  return {
-    getPluginConfigs: jest.fn(() => []),
-  };
-});
+mockCosmosPlugins([]);
 
 const port = 5000 + jestWorkerId();
 
