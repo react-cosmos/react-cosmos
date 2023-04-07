@@ -77,11 +77,11 @@ it('serves playground JS', async () => {
     // Cosmos packages are built, and tests should run with source code only.
     mockResolve(
       'react-cosmos-ui/dist/playground.bundle.js',
-      require.resolve('../testHelpers/mock.bundle.js.txt')
+      require.resolve('../../testHelpers/mock.bundle.js.txt')
     );
     mockResolve(
       'react-cosmos-ui/dist/playground.bundle.js.map',
-      require.resolve('../testHelpers/mock.bundle.js.map.txt')
+      require.resolve('../../testHelpers/mock.bundle.js.map.txt')
     );
 
     const res1 = await fetch(`http://localhost:${port}/playground.bundle.js`);
