@@ -34,18 +34,11 @@ afterEach(() => {
   resetResolveMock();
 });
 
-it('logs messages', async () => {
+it('serves playground HTML', async () => {
   return mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
     expectLog('[Cosmos] See you at http://localhost:5001');
 
-    const stopServer = await startDevServer('web');
-    await stopServer();
-  });
-});
-
-it('serves playground HTML', async () => {
-  return mockConsole(async () => {
     const stopServer = await startDevServer('web');
 
     const res = await fetch('http://localhost:5001');
@@ -75,7 +68,10 @@ it('serves playground HTML', async () => {
 });
 
 it('serves playground JS', async () => {
-  return mockConsole(async () => {
+  return mockConsole(async ({ expectLog }) => {
+    expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
+    expectLog('[Cosmos] See you at http://localhost:5001');
+
     const stopServer = await startDevServer('web');
 
     // These files are mocked because they are only available after all
@@ -102,7 +98,10 @@ it('serves playground JS', async () => {
 });
 
 it('serves favicon', async () => {
-  return mockConsole(async () => {
+  return mockConsole(async ({ expectLog }) => {
+    expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
+    expectLog('[Cosmos] See you at http://localhost:5001');
+
     const stopServer = await startDevServer('web');
 
     const res = await fetch('http://localhost:5001/_cosmos.ico');
@@ -117,7 +116,10 @@ it('serves favicon', async () => {
 });
 
 it('creates message handler', async () => {
-  return mockConsole(async () => {
+  return mockConsole(async ({ expectLog }) => {
+    expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
+    expectLog('[Cosmos] See you at http://localhost:5001');
+
     const stopServer = await startDevServer('web');
 
     const client1 = new WebSocket('ws://localhost:5001');
@@ -147,7 +149,10 @@ it('creates message handler', async () => {
 });
 
 it('stops server', async () => {
-  return mockConsole(async () => {
+  return mockConsole(async ({ expectLog }) => {
+    expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
+    expectLog('[Cosmos] See you at http://localhost:5001');
+
     const stopServer = await startDevServer('web');
     await stopServer();
 
@@ -158,7 +163,10 @@ it('stops server', async () => {
 });
 
 it('closes message handler clients', async () => {
-  return mockConsole(async () => {
+  return mockConsole(async ({ expectLog }) => {
+    expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
+    expectLog('[Cosmos] See you at http://localhost:5001');
+
     const stopServer = await startDevServer('web');
 
     const onOpen = jest.fn();
