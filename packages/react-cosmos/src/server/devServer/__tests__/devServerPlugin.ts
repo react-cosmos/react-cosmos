@@ -1,21 +1,21 @@
 // Import mocks first
+import { jestWorkerId } from '../../testHelpers/jestWorkerId.js';
+import { mockConsole } from '../../testHelpers/mockConsole.js';
 import { mockCosmosPlugins } from '../../testHelpers/mockCosmosPlugins.js';
 import '../../testHelpers/mockEsmRequire.js';
 import '../../testHelpers/mockEsmResolve.js';
 import '../../testHelpers/mockEsmStaticPath.js';
-
-import 'isomorphic-fetch';
-import * as http from 'node:http';
-import path from 'node:path';
-import { CosmosServerPlugin } from '../../cosmosPlugin/types.js';
-import { jestWorkerId } from '../../testHelpers/jestWorkerId.js';
-import { mockConsole } from '../../testHelpers/mockConsole.js';
 import {
   mockCosmosConfig,
   mockFileUrl,
   resetFsMock,
 } from '../../testHelpers/mockFs.js';
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
+
+import 'isomorphic-fetch';
+import * as http from 'node:http';
+import path from 'node:path';
+import { CosmosServerPlugin } from '../../cosmosPlugin/types.js';
 import { startDevServer } from '../startDevServer.js';
 
 const testCosmosPlugin = {

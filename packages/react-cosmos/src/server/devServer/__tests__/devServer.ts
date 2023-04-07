@@ -1,7 +1,12 @@
 // Import mocks first
+import { jestWorkerId } from '../../testHelpers/jestWorkerId.js';
+import { mockConsole } from '../../testHelpers/mockConsole.js';
 import { mockCosmosPlugins } from '../../testHelpers/mockCosmosPlugins.js';
 import '../../testHelpers/mockEsmRequire.js';
-import '../../testHelpers/mockEsmResolve.js';
+import {
+  mockResolve,
+  resetResolveMock,
+} from '../../testHelpers/mockEsmResolve.js';
 import '../../testHelpers/mockEsmStaticPath.js';
 import { mockCosmosConfig, resetFsMock } from '../../testHelpers/mockFs.js';
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
@@ -11,12 +16,6 @@ import 'isomorphic-fetch';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { ServerMessage, SocketMessage } from 'react-cosmos-core';
-import { jestWorkerId } from '../../testHelpers/jestWorkerId.js';
-import { mockConsole } from '../../testHelpers/mockConsole.js';
-import {
-  mockResolve,
-  resetResolveMock,
-} from '../../testHelpers/mockEsmResolve.js';
 import { startDevServer } from '../startDevServer.js';
 
 mockCosmosPlugins([]);
