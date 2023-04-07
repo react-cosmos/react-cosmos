@@ -1,8 +1,8 @@
-import webpackHotMiddleware from 'webpack-hot-middleware';
 import path from 'path';
 import { removeLeadingDot, ServerMessage } from 'react-cosmos-core';
 import { DevServerPluginArgs, serveStaticDir } from 'react-cosmos/server.js';
 import webpack from 'webpack';
+import webpackHotMiddleware from 'webpack-hot-middleware';
 import { createWebpackCosmosConfig } from './cosmosConfig/createWebpackCosmosConfig.js';
 import { getWebpack } from './getWebpack.js';
 import { getDevWebpackConfig } from './webpackConfig/getDevWebpackConfig.js';
@@ -14,7 +14,7 @@ type WebpackConfig = webpack.Configuration & {
   };
 };
 
-export default async function webpackDevServerPlugin({
+export async function webpackDevServerPlugin({
   platformType,
   cosmosConfig,
   expressApp,
