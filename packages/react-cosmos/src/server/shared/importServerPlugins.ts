@@ -1,4 +1,5 @@
-import path from 'path';
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { CosmosPluginConfig } from 'react-cosmos-core';
 import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
 import { importModule } from '../utils/fs.js';
@@ -24,8 +25,6 @@ async function importServerModule(
   }
 
   return importModule<CosmosServerPlugin>(
-    // TODO: Is this needed?
-    // pathToFileURL(path.resolve(rootDir, moduleId)).href
-    path.resolve(rootDir, moduleId)
+    pathToFileURL(path.resolve(rootDir, moduleId)).href
   );
 }

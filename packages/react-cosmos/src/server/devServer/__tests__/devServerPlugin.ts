@@ -1,5 +1,4 @@
 // Import mocks first
-import { CosmosPluginConfig } from 'react-cosmos-core';
 import '../../testHelpers/mockEsmRequire.js';
 import '../../testHelpers/mockEsmResolve.js';
 import '../../testHelpers/mockEsmStaticPath.js';
@@ -10,13 +9,13 @@ import { CosmosServerPlugin } from '../../cosmosPlugin/types.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
 import {
   mockCosmosConfig,
-  mockFile,
+  mockModule,
   resetFsMock,
 } from '../../testHelpers/mockFs.js';
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 import { startDevServer } from '../startDevServer.js';
 
-const testCosmosPlugin: CosmosPluginConfig = {
+const testCosmosPlugin = {
   name: 'Test Cosmos plugin',
   rootDir: path.join(__dirname, 'mock-cosmos-plugin'),
   server: path.join(__dirname, 'mock-cosmos-plugin/server.js'),
@@ -42,10 +41,7 @@ const testServerPlugin: CosmosServerPlugin = {
 beforeEach(() => {
   mockCliArgs({});
   mockCosmosConfig('cosmos.config.json', { port: 5001 });
-  mockFile(
-    path.join(__dirname, 'mock-cosmos-plugin/server.js'),
-    testServerPlugin
-  );
+  mockModule(testCosmosPlugin.server, testServerPlugin);
 });
 
 afterEach(() => {
