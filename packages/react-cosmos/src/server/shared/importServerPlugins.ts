@@ -28,6 +28,6 @@ async function importServerModule(
   const fileUrl = pathToFileURL(filePath).href;
   console.log('importServerModule');
   console.log({ filePath, fileUrl });
-  const module = await importModule<{ default: CosmosServerPlugin }>(filePath);
+  const module = await importModule<{ default: CosmosServerPlugin }>(fileUrl);
   return module.default;
 }
