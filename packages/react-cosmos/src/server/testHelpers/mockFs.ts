@@ -1,5 +1,4 @@
 import path from 'node:path';
-import url from 'node:url';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { getCwdPath } from './cwd.js';
 
@@ -9,16 +8,6 @@ jest.mock('../utils/fs', () => {
 
   let fileMocks: { [path: string]: {} } = {};
   let dirMocks: string[] = [];
-
-  async function importJson(filePath: string) {
-    if (!mocked) return actual.importJson(filePath);
-
-    if (!fileMocks.hasOwnProperty(filePath)) {
-      throw new Error(`Cannot find JSON '${filePath}'`);
-    }
-
-    return fileMocks[filePath];
-  }
 
   async function importModule(moduleId: string) {
     if (!mocked) return actual.importModule(moduleId);
@@ -31,6 +20,16 @@ jest.mock('../utils/fs', () => {
     }
 
     return fileMocks[moduleId] || fileMocks[`${moduleId}.js`];
+  }
+
+  async function importJson(filePath: string) {
+    if (!mocked) return actual.importJson(filePath);
+
+    if (!fileMocks.hasOwnProperty(filePath)) {
+      throw new Error(`Cannot find JSON '${filePath}'`);
+    }
+
+    return fileMocks[filePath];
   }
 
   function moduleExists(moduleId: string) {
@@ -55,20 +54,20 @@ jest.mock('../utils/fs', () => {
   }
 
   return {
-    importJson,
     importModule,
+    importJson,
     moduleExists,
     fileExists,
     dirExists,
 
-    __mockJson(filePath: string, jsonMock: {}) {
-      mocked = true;
-      fileMocks = { ...fileMocks, [filePath]: jsonMock };
-    },
-
     __mockFile(filePath: string, fileMock: {}) {
       mocked = true;
       fileMocks = { ...fileMocks, [filePath]: fileMock };
+    },
+
+    __mockJson(filePath: string, jsonMock: {}) {
+      mocked = true;
+      fileMocks = { ...fileMocks, [filePath]: jsonMock };
     },
 
     __mockDir(dirPath: string) {
@@ -83,30 +82,22 @@ jest.mock('../utils/fs', () => {
   };
 });
 
+export function mockFile(filePath: string, fileMock: {}) {
+  requireMocked().__mockFile(filePath, fileMock);
+  requireMocked().__mockDir(path.dirname(filePath));
+}
+
 export function mockCosmosConfig(
   cosmosConfigPath: string,
   cosmosConfig: Partial<CosmosConfig>
 ) {
   const absPath = getCwdPath(cosmosConfigPath);
-  requireMocked().__mockFile(absPath, cosmosConfig);
-  requireMocked().__mockDir(path.dirname(absPath));
+  mockFile(absPath, cosmosConfig);
 }
 
-// TODO: Combine mockFileUrl with mockFileUrl
-
-export function mockFileUrl(filePath: string, fileContent: {}) {
-  const fileUrl = url.pathToFileURL(filePath);
-  requireMocked().__mockFile(fileUrl, { default: fileContent });
-}
-
-export function mockFile(filePath: string, fileContent: {}) {
+export function mockCwdModuleDefault(filePath: string, fileMock: {}) {
   const absPath = getCwdPath(filePath);
-  requireMocked().__mockFile(absPath, { default: fileContent });
-  requireMocked().__mockDir(path.dirname(absPath));
-}
-
-export function mockDir(dirPath: string) {
-  requireMocked().__mockDir(getCwdPath(dirPath));
+  mockFile(absPath, { default: fileMock });
 }
 
 export function resetFsMock() {

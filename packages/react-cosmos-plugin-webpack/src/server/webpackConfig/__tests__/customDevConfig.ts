@@ -2,7 +2,7 @@
 import {
   mockCliArgs,
   mockConsole,
-  mockFile,
+  mockCwdModuleDefault,
   unmockCliArgs,
 } from 'react-cosmos/jest.js';
 import '../../testHelpers/mockEsmClientPath.js';
@@ -28,8 +28,8 @@ const mockWebpackOverride = jest.fn((webpackConfig: webpack.Configuration) => ({
 beforeAll(() => {
   mockWebpackConfig.mockClear();
   mockCliArgs({ env: { prod: true }, fooEnvVar: true });
-  mockFile('mywebpack.config.js', mockWebpackConfig);
-  mockFile('mywebpack.override.js', mockWebpackOverride);
+  mockCwdModuleDefault('mywebpack.config.js', mockWebpackConfig);
+  mockCwdModuleDefault('mywebpack.override.js', mockWebpackOverride);
 });
 
 afterAll(() => {

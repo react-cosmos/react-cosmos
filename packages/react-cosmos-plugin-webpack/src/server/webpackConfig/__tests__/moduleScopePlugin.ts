@@ -1,5 +1,5 @@
 // NOTE: Mock files need to imported before modules that use the mocked APIs
-import { mockConsole, mockFile } from 'react-cosmos/jest.js';
+import { mockConsole, mockCwdModuleDefault } from 'react-cosmos/jest.js';
 import '../../testHelpers/mockEsmClientPath.js';
 import '../../testHelpers/mockEsmLoaderPath.js';
 import '../../testHelpers/mockEsmRequire.js';
@@ -29,7 +29,7 @@ class BarResolvePlugin {}
 class ModuleScopePlugin {}
 
 it('removes ModuleScopePlugin resolve plugin', async () => {
-  mockFile('mywebpack.config.js', () => ({
+  mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       plugins: [new ModuleScopePlugin()],
     },
@@ -40,7 +40,7 @@ it('removes ModuleScopePlugin resolve plugin', async () => {
 });
 
 it('keeps other resolve plugins', async () => {
-  mockFile('mywebpack.config.js', () => ({
+  mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       plugins: [
         new ModuleScopePlugin(),

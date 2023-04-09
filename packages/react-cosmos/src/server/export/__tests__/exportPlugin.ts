@@ -10,7 +10,7 @@ import {
 import '../../testHelpers/mockEsmStaticPath.js';
 import {
   mockCosmosConfig,
-  mockFileUrl,
+  mockFile,
   resetFsMock,
 } from '../../testHelpers/mockFs.js';
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
@@ -50,7 +50,7 @@ const exportPath = path.join(__dirname, `../test-export-${jestWorkerId()}`);
 beforeEach(() => {
   mockCliArgs({});
   mockCosmosConfig('cosmos.config.json', { port, exportPath });
-  mockFileUrl(testCosmosPlugin.server, testServerPlugin);
+  mockFile(testCosmosPlugin.server, { default: testServerPlugin });
 
   // These files are mocked because they are only available after all
   // Cosmos packages are built, and tests should run with source code only.

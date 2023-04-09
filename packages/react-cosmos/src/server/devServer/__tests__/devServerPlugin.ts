@@ -7,7 +7,7 @@ import '../../testHelpers/mockEsmResolve.js';
 import '../../testHelpers/mockEsmStaticPath.js';
 import {
   mockCosmosConfig,
-  mockFileUrl,
+  mockFile,
   resetFsMock,
 } from '../../testHelpers/mockFs.js';
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
@@ -56,7 +56,7 @@ async function stopServer() {
 beforeEach(() => {
   mockCliArgs({});
   mockCosmosConfig('cosmos.config.json', { port });
-  mockFileUrl(testCosmosPlugin.server, testServerPlugin);
+  mockFile(testCosmosPlugin.server, { default: testServerPlugin });
 });
 
 afterEach(async () => {

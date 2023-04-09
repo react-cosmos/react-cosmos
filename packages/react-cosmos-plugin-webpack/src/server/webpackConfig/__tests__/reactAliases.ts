@@ -1,5 +1,5 @@
 // NOTE: Mock files need to imported before modules that use the mocked APIs
-import { mockConsole, mockFile } from 'react-cosmos/jest.js';
+import { mockConsole, mockCwdModuleDefault } from 'react-cosmos/jest.js';
 import '../../testHelpers/mockEsmClientPath.js';
 import '../../testHelpers/mockEsmLoaderPath.js';
 import '../../testHelpers/mockEsmRequire.js';
@@ -29,7 +29,7 @@ async function getCustomDevWebpackConfig(expectAliasLog: boolean) {
 }
 
 it('preserves React aliases', async () => {
-  mockFile('mywebpack.config.js', () => ({
+  mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       alias: {
         react: 'preact/compat',
@@ -48,7 +48,7 @@ it('preserves React aliases', async () => {
 });
 
 it('preserves React aliases with exact matches', async () => {
-  mockFile('mywebpack.config.js', () => ({
+  mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       alias: {
         react$: 'preact/compat',
@@ -69,7 +69,7 @@ it('preserves React aliases with exact matches', async () => {
 });
 
 it('preserves React aliases using array form', async () => {
-  mockFile('mywebpack.config.js', () => ({
+  mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       alias: [
         { name: 'react', alias: 'preact/compat' },
@@ -94,7 +94,7 @@ it('preserves React aliases using array form', async () => {
 });
 
 it('adds missing React aliases', async () => {
-  mockFile('mywebpack.config.js', () => ({
+  mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       alias: {
         xyz: 'abc',
@@ -117,7 +117,7 @@ it('adds missing React aliases', async () => {
 });
 
 it('adds missing React aliases using array form', async () => {
-  mockFile('mywebpack.config.js', () => ({
+  mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       alias: [{ name: 'xyz', alias: 'abc' }],
     },
