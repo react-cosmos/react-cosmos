@@ -44,11 +44,12 @@ const testServerPlugin: CosmosServerPlugin = {
   }),
 };
 
+const port = 5000 + jestWorkerId();
 const exportPath = path.join(__dirname, `../test-export-${jestWorkerId()}`);
 
 beforeEach(() => {
   mockCliArgs({});
-  mockCosmosConfig('cosmos.config.json', { exportPath });
+  mockCosmosConfig('cosmos.config.json', { port, exportPath });
   mockFileUrl(testCosmosPlugin.server, testServerPlugin);
 
   // These files are mocked because they are only available after all

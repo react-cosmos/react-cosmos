@@ -17,11 +17,12 @@ import { generateExport } from '../generateExport.js';
 
 mockCosmosPlugins([]);
 
+const port = 5000 + jestWorkerId();
 const exportPath = path.join(__dirname, `../test-export-${jestWorkerId()}`);
 
 beforeEach(() => {
   mockCliArgs({});
-  mockCosmosConfig('cosmos.config.json', { exportPath });
+  mockCosmosConfig('cosmos.config.json', { port, exportPath });
 
   // These files are mocked because they are only available after all
   // Cosmos packages are built, and tests should run with source code only.
