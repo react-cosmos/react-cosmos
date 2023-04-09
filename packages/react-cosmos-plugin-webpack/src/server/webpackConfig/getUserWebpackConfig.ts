@@ -65,10 +65,10 @@ async function getBaseWebpackConfig(
   const relPath = path.relative(process.cwd(), configPath);
   console.log(`[Cosmos] Using webpack config found at ${relPath}`);
 
-  const userConfigExport = await importModule<WebpackConfigExport>(configPath);
+  const webpackConfig = await importModule<WebpackConfigExport>(configPath);
 
   const cliArgs = getCliArgs();
-  return typeof userConfigExport === 'function'
-    ? await userConfigExport(cliArgs.env || getWebpackNodeEnv(), cliArgs)
-    : userConfigExport;
+  return typeof webpackConfig === 'function'
+    ? await webpackConfig(cliArgs.env || getWebpackNodeEnv(), cliArgs)
+    : webpackConfig;
 }
