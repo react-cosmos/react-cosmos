@@ -6,5 +6,8 @@
     "react-cosmos-plugin-boolean-input",
     "react-cosmos-plugin-open-fixture",
     "react-cosmos-plugin-webpack"
-  ]
+  ],
+  "webpack": {
+    "overridePath": "webpack.override.js"
+  }
 }
