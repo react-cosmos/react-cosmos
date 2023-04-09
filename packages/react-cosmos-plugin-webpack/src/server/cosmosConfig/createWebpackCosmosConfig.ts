@@ -19,7 +19,7 @@ export function createWebpackCosmosConfig(
   cosmosConfig: CosmosConfig
 ): WebpackCosmosConfig {
   const { rootDir } = cosmosConfig;
-  const configInput = (cosmosConfig.webpack || {}) as WebpackCosmosConfigInput;
+  const configInput: WebpackCosmosConfigInput = cosmosConfig.webpack || {};
 
   return {
     configPath: getWebpackConfigPath(configInput, rootDir),

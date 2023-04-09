@@ -6,6 +6,5 @@
     "react-cosmos-plugin-boolean-input",
     "react-cosmos-plugin-open-fixture",
     "react-cosmos-plugin-vite"
-  ],
-  "rendererUrl": "http://localhost:5050"
+  ]
 }
