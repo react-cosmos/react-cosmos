@@ -2,12 +2,12 @@
   "$schema": "../../packages/react-cosmos/config.schema.json",
   "globalImports": ["src/global.css"],
   "staticPath": "static",
+  "webpack": {
+    "overridePath": "webpack.override.js"
+  },
   "plugins": [
     "react-cosmos-plugin-boolean-input",
     "react-cosmos-plugin-open-fixture",
     "react-cosmos-plugin-webpack"
-  ],
-  "webpack": {
-    "overridePath": "webpack.override.js"
-  }
+  ]
 }

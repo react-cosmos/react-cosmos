@@ -1,5 +1,4 @@
-export default function override(config, env) {
-  console.log('webpack example override');
-  //do stuff with the webpack config...
-  return config;
+export default function (webpackConfig, env) {
+  // Customize webpack config for Cosmos...
+  return webpackConfig;
 }
