@@ -4,10 +4,12 @@ import fs from 'fs';
 import { requireModule } from './requireModule.js';
 import { resolve } from './resolve.js';
 
+export async function importJson<T>(moduleId: string): Promise<T> {
+  return requireModule(moduleId);
+}
+
 export async function importModule<T>(moduleId: string): Promise<T> {
-  return moduleId.endsWith('.json')
-    ? requireModule(moduleId)
-    : getDefaultExport(await import(moduleId));
+  return import(moduleId);
 }
 
 // Better than fs.exists because it works for module paths without an extension
@@ -25,14 +27,4 @@ export function fileExists(filePath: string) {
 
 export function dirExists(dirPath: string) {
   return fs.existsSync(dirPath) && fs.lstatSync(dirPath).isDirectory();
-}
-
-// Get "default" export from either an ES or CJS module
-// More context: https://github.com/react-cosmos/react-cosmos/issues/895
-function getDefaultExport<T extends object>(module: T | { default: T }): T {
-  if (typeof module === 'object' && 'default' in module) {
-    return module.default;
-  }
-
-  return module;
 }

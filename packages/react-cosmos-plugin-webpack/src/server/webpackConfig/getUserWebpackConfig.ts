@@ -10,7 +10,7 @@ import { createWebpackCosmosConfig } from '../cosmosConfig/createWebpackCosmosCo
 import { getDefaultWebpackConfig } from './getDefaultWebpackConfig.js';
 import { getWebpackNodeEnv } from './getWebpackNodeEnv.js';
 
-type WebpackConfigExport =
+type WebpackConfig =
   | webpack.Configuration
   // Mirror webpack API for config functions
   // https://webpack.js.org/configuration/configuration-types/#exporting-a-function
@@ -45,7 +45,9 @@ export async function getUserWebpackConfig(
 
   const relPath = path.relative(process.cwd(), overridePath);
   console.log(`[Cosmos] Overriding webpack config at ${relPath}`);
-  const webpackOverride = await importModule<WebpackOverride>(overridePath);
+
+  const module = await importModule<{ default: WebpackOverride }>(overridePath);
+  const webpackOverride = module.default;
 
   return webpackOverride(baseWebpackConfig, getWebpackNodeEnv());
 }
@@ -65,7 +67,8 @@ async function getBaseWebpackConfig(
   const relPath = path.relative(process.cwd(), configPath);
   console.log(`[Cosmos] Using webpack config found at ${relPath}`);
 
-  const webpackConfig = await importModule<WebpackConfigExport>(configPath);
+  const module = await importModule<{ default: WebpackConfig }>(configPath);
+  const webpackConfig = module.default;
 
   const cliArgs = getCliArgs();
   return typeof webpackConfig === 'function'
