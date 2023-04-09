@@ -24,7 +24,10 @@ async function importServerModule(
     throw new Error(`Server module missing in plugin "${pluginConfig.name}"`);
   }
 
-  const fileUrl = pathToFileURL(path.resolve(rootDir, moduleId)).href;
-  const module = await importModule<{ default: CosmosServerPlugin }>(fileUrl);
+  const filePath = path.resolve(rootDir, moduleId);
+  const fileUrl = pathToFileURL(filePath).href;
+  console.log('importServerModule');
+  console.log({ filePath, fileUrl });
+  const module = await importModule<{ default: CosmosServerPlugin }>(filePath);
   return module.default;
 }

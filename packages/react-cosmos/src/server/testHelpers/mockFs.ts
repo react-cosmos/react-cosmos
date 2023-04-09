@@ -1,5 +1,4 @@
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { getCwdPath } from './cwd.js';
 
@@ -95,8 +94,9 @@ export function mockCosmosConfig(
 // TODO: Combine mockFileUrl with mockFileUrl
 
 export function mockFileUrl(filePath: string, fileContent: {}) {
-  const fileUrl = pathToFileURL(filePath);
-  requireMocked().__mockFile(fileUrl, { default: fileContent });
+  // const fileUrl = pathToFileURL(filePath);
+  // requireMocked().__mockFile(fileUrl, { default: fileContent });
+  requireMocked().__mockFile(filePath, { default: fileContent });
 }
 
 export function mockFile(filePath: string, fileContent: {}) {
