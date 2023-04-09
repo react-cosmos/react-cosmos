@@ -5,7 +5,7 @@ import {
 } from 'react-cosmos/server.js';
 import { createViteCosmosConfig } from './createViteCosmosConfig.js';
 
-export async function viteConfigPluginHook({
+export async function viteConfigPlugin({
   cosmosConfig,
 }: CosmosConfigPluginArgs): Promise<CosmosConfig> {
   const { rendererUrl } = cosmosConfig;

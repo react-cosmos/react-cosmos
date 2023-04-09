@@ -1,13 +1,13 @@
 import { CosmosServerPlugin } from 'react-cosmos/server.js';
-import { viteConfigPluginHook } from './viteConfigPluginHook.js';
-import { viteDevServerPluginHook } from './viteDevServerPluginHook.js';
-import { viteExportPluginHook } from './viteExportPluginHook.js';
+import { viteConfigPlugin } from './viteConfigPlugin.js';
+import { viteDevServerPlugin } from './viteDevServerPlugin.js';
+import { viteExportPlugin } from './viteExportPlugin.js';
 
 const viteServerPlugin: CosmosServerPlugin = {
   name: 'vite',
-  config: viteConfigPluginHook,
-  devServer: viteDevServerPluginHook,
-  export: viteExportPluginHook,
+  config: viteConfigPlugin,
+  devServer: viteDevServerPlugin,
+  export: viteExportPlugin,
 };
 
 export default viteServerPlugin;
