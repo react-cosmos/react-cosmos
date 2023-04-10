@@ -21,7 +21,7 @@ const exportPath = path.join(testFsPath, `export-${jestWorkerId()}`);
 const testCosmosPlugin = {
   name: 'Test Cosmos plugin',
   rootDir: pluginPath,
-  ui: path.join(pluginPath, '/ui.js'),
+  ui: path.join(pluginPath, 'ui.js'),
 };
 mockCosmosPlugins([testCosmosPlugin]);
 
