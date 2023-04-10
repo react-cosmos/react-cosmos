@@ -88,7 +88,7 @@ it('copies plugin files to export directory', async () => {
     const uiPath = path.join(`_plugin/plugin-${jestWorkerId()}/ui.js`);
     const uiModule = await readExportFile(uiPath);
 
-    expect(uiModule.trim()).toBe('export {}');
+    expect(uiModule).toBe('export {}');
   });
 });
 
