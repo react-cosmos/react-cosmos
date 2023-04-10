@@ -76,6 +76,7 @@ it('serves plugin JS files', async () => {
 
     _stopServer = await startDevServer('web');
 
+    // Windows paths don't start with a slash (e.g. C:\foo\bar.js)
     const uiPath = testCosmosPlugin.ui.startsWith('/')
       ? testCosmosPlugin.ui
       : `/${testCosmosPlugin.ui}`;
