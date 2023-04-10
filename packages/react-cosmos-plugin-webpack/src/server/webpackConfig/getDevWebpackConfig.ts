@@ -1,5 +1,5 @@
 import path from 'path';
-import { CosmosConfig } from 'react-cosmos/server.js';
+import { CosmosConfig } from 'react-cosmos';
 import webpack from 'webpack';
 import { createWebpackCosmosConfig } from '../cosmosConfig/createWebpackCosmosConfig.js';
 import { resolve } from '../utils/resolve.js';

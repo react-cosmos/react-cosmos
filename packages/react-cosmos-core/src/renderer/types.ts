@@ -1,5 +1,5 @@
-import { FixtureState } from '../fixtureState/types.js';
 import { FixtureId, FixtureList } from '../fixture/types.js';
+import { FixtureState } from '../fixtureState/types.js';
 
 // FYI: Renderer ids are self assigned in remote environments, so uniqueness
 // cannot be established by consensus

@@ -2,7 +2,7 @@
 import 'react-cosmos/jest';
 
 import path from 'path';
-import { getCosmosConfigAtPath, getFixtures } from 'react-cosmos/server';
+import { getCosmosConfigAtPath, getFixtures } from 'react-cosmos';
 
 it('returns fixture info', async () => {
   const cosmosConfig = await getCosmosConfigAtPath(

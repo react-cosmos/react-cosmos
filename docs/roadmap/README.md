@@ -2,11 +2,11 @@
 
 ## Bundler
 
+- [x] Integrate with Vite.
 - [ ] Revamp webpack integration.
-  - [x] Make webpack and external package (and plugin).
+  - [x] Make webpack an external package (and plugin).
   - [ ] [Move from webpack middlewares to webpack-dev-server](https://github.com/react-cosmos/react-cosmos/issues/1272#issuecomment-733091647).
   - [ ] Fast Refresh out of the box integration.
-- [x] Integrate with Vite.
 
 ## Core
 
@@ -19,12 +19,13 @@
 - [x] Extract react-cosmos-plugin-open-fixture plugin package.
 - [x] Move Boolean input plugin from example to plugin package.
 - [x] Add support for server plugins.
+- [x] Test plugin APIs.
 - [ ] Document plugin APIs.
 - [ ] Add guide for creating UI + server plugin.
 
 ## Quality of life
 
-- [ ] Change default port because [port 5000 is taken on macOS 12](https://github.com/react-cosmos/react-cosmos/issues/1355).
+- [x] Auto port retry because [port 5000 is taken on macOS 12](https://github.com/react-cosmos/react-cosmos/issues/1355).
 - [x] Fix issues with Yarn 2 and PnP [#946](https://github.com/react-cosmos/react-cosmos/issues/946) [#1266](https://github.com/react-cosmos/react-cosmos/issues/1266) [#1337](https://github.com/react-cosmos/react-cosmos/pull/1337) [#1386](https://github.com/react-cosmos/react-cosmos/issues/1386).
 - [x] Fix security issues.
   - [x] Drop IE support.

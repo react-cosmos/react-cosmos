@@ -1,4 +1,4 @@
-import { ServerMessage, MessageType } from 'react-cosmos-core';
+import { MessageType, ServerMessage } from 'react-cosmos-core';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { MessageHandlerSpec } from '../MessageHandler/spec.js';
 import { NotificationsSpec } from '../Notifications/spec.js';

@@ -3,7 +3,7 @@ import {
   CosmosConfig,
   generateUserDepsModule,
   getPlaygroundUrl,
-} from 'react-cosmos/server.js';
+} from 'react-cosmos';
 import { Plugin } from 'rollup';
 import { createViteRendererIndex } from './createViteRendererIndex.js';
 

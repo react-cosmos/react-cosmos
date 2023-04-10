@@ -1,14 +1,11 @@
-import {
-  DevServerPluginArgs,
-  startFixtureWatcher,
-} from 'react-cosmos/server.js';
+import { DevServerPluginArgs, startFixtureWatcher } from 'react-cosmos';
 import { createServer } from 'vite';
 import {
   reactCosmosViteRollupPlugin,
   userDepsResolvedModuleId,
 } from './reactCosmosViteRollupPlugin.js';
 
-export default async function viteDevServerPlugin({
+export async function viteDevServerPlugin({
   platformType,
   cosmosConfig,
 }: DevServerPluginArgs) {

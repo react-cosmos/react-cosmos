@@ -13,6 +13,7 @@
     "**/*.test.tsx",
     "**/*.fixture.ts",
     "**/*.fixture.tsx",
-    "**/testHelpers/**/*"
+    "**/testHelpers/**/*",
+    "**/testMocks/**/*"
   ]
 }

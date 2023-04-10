@@ -1,5 +1,5 @@
 import path from 'path';
-import { CosmosConfig, fileExists } from 'react-cosmos/server.js';
+import { CosmosConfig, fileExists } from 'react-cosmos';
 import { resolveLoose } from '../utils/resolveLoose.js';
 
 type WebpackCosmosConfig = {
@@ -19,7 +19,7 @@ export function createWebpackCosmosConfig(
   cosmosConfig: CosmosConfig
 ): WebpackCosmosConfig {
   const { rootDir } = cosmosConfig;
-  const configInput = (cosmosConfig.webpack || {}) as WebpackCosmosConfigInput;
+  const configInput: WebpackCosmosConfigInput = cosmosConfig.webpack || {};
 
   return {
     configPath: getWebpackConfigPath(configInput, rootDir),

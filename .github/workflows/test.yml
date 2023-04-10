@@ -1,8 +1,8 @@
 name: test
 on:
+  pull_request:
   push:
-    branches-ignore:
-      - main
+    branches: main
 jobs:
   source:
     strategy:
@@ -28,6 +28,8 @@ jobs:
       - run: yarn lint
       - run: yarn test:coverage --maxWorkers=2
       - uses: codecov/codecov-action@v3
+        # Only report coverage once
+        if: matrix.os == 'ubuntu'
 
   examples:
     strategy:

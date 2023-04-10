@@ -51,7 +51,12 @@ export default async function mount({
 
 async function loadPluginScript(scriptPath: string) {
   console.log(`[Cosmos] Loading plugin script at ${scriptPath}`);
-  // Handle both absolute (dev server) and relative paths (static export)
+  // Paths are absolute with the dev server, and relative with static
+  // exports. Why aren't they always relative? Because in dev mode
+  // the plugins could be loaded from folders outside the project rootDir,
+  // for example when using a monorepo. In that case relative paths would
+  // have to contain "../" segments, which are not allowed in URLs, and
+  // for this reason we pass full paths when using the dev server.
   const normalizedPath = scriptPath.startsWith('/')
     ? scriptPath
     : `/${scriptPath}`;
