@@ -76,8 +76,9 @@ it('serves plugin JS files', async () => {
 
     _stopServer = await startDevServer('web');
 
+    const uiPath = testCosmosPlugin.ui.startsWith('/') ? testCosmosPlugin.ui : `/{testCosmosPlugin.ui}`;
     const res = await fetch(
-      `http://localhost:${port}/_plugin${testCosmosPlugin.ui}`
+      `http://localhost:${port}/_plugin${uiPath}`
     );
     expect(res.status).toBe(200);
 
