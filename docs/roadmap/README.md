@@ -2,11 +2,11 @@
 
 ## Bundler
 
+- [x] Integrate with Vite.
 - [ ] Revamp webpack integration.
-  - [x] Make webpack and external package (and plugin).
+  - [x] Make webpack an external package (and plugin).
   - [ ] [Move from webpack middlewares to webpack-dev-server](https://github.com/react-cosmos/react-cosmos/issues/1272#issuecomment-733091647).
   - [ ] Fast Refresh out of the box integration.
-- [x] Integrate with Vite.
 
 ## Core
 
