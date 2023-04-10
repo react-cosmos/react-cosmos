@@ -3,6 +3,7 @@ npm-debug.log
 yarn-error.log
 
 packages/*/dist
+__testMocks__
 
 coverage
 cypress/screenshots

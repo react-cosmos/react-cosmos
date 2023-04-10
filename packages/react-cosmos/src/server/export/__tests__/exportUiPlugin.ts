@@ -15,16 +15,25 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { generateExport } from '../generateExport.js';
 
-mockCosmosPlugins([]);
-
 const port = 5000 + jestWorkerId();
 
 const mocksPath = path.join(__dirname, '../__testMocks__');
+const pluginPath = path.join(mocksPath, `plugin-${jestWorkerId()}`);
 const exportPath = path.join(mocksPath, `export-${jestWorkerId()}`);
 
-beforeEach(() => {
+const testCosmosPlugin = {
+  name: 'Test Cosmos plugin',
+  rootDir: pluginPath,
+  ui: path.join(pluginPath, '/ui.js'),
+};
+mockCosmosPlugins([testCosmosPlugin]);
+
+beforeEach(async () => {
   mockCliArgs({});
   mockCosmosConfig('cosmos.config.json', { port, exportPath });
+
+  await fs.mkdir(testCosmosPlugin.rootDir, { recursive: true });
+  await fs.writeFile(testCosmosPlugin.ui, 'export {}', 'utf8');
 
   // These files are mocked because they are only available after all
   // Cosmos packages are built, and tests should run with source code only.
@@ -42,66 +51,44 @@ afterEach(async () => {
   unmockCliArgs();
   resetFsMock();
   resetResolveMock();
+  await fs.rm(pluginPath, { recursive: true, force: true });
   await fs.rm(exportPath, { recursive: true, force: true });
 });
 
-it('generates playground HTML', async () => {
+it('embeds UI plugin in playground HTML', async () => {
   return mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Export complete!');
+    expectLog('[Cosmos] Found 1 plugin: Test Cosmos plugin');
     expectLog(`Export path: ${exportPath}`);
 
     await generateExport();
 
     const html = await readExportFile('index.html');
-
-    expect(html).toContain('<title>React Cosmos</title>');
-    expect(html).toContain('<script src="playground.bundle.js"></script>');
-
     expect(html).toContain(
-      JSON.stringify({
-        playgroundConfig: {
-          core: {
-            projectId: 'new-project',
-            fixturesDir: '__fixtures__',
-            fixtureFileSuffix: 'fixture',
-            devServerOn: false,
-            webRendererUrl: '/_renderer.html',
-          },
+      JSON.stringify([
+        {
+          name: 'Test Cosmos plugin',
+          // Paths are relative to the export directory
+          rootDir: `plugin-${jestWorkerId()}`,
+          ui: `plugin-${jestWorkerId()}/ui.js`,
         },
-        pluginConfigs: [],
-      })
+      ])
     );
   });
 });
 
-it('generates playground JS', async () => {
+it('copies plugin files to export directory', async () => {
   return mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Export complete!');
+    expectLog('[Cosmos] Found 1 plugin: Test Cosmos plugin');
     expectLog(`Export path: ${exportPath}`);
 
     await generateExport();
 
-    const bundle = await readExportFile('playground.bundle.js');
-    expect(bundle.trim()).toBe('__mock_bundle__');
+    const uiPath = path.join(`_plugin/plugin-${jestWorkerId()}/ui.js`);
+    const uiModule = await readExportFile(uiPath);
 
-    const sourceMap = await readExportFile('playground.bundle.js.map');
-    expect(sourceMap.trim()).toBe('__mock_map__');
-  });
-});
-
-it('generates favicon', async () => {
-  return mockConsole(async ({ expectLog }) => {
-    expectLog('[Cosmos] Export complete!');
-    expectLog(`Export path: ${exportPath}`);
-
-    await generateExport();
-
-    expect(await readExportFile('_cosmos.ico')).toBe(
-      await fs.readFile(
-        path.join(__dirname, '../../static/favicon.ico'),
-        'utf8'
-      )
-    );
+    expect(uiModule.trim()).toBe('export {}');
   });
 });
 

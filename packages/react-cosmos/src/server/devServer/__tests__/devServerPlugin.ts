@@ -154,7 +154,7 @@ it('embeds plugins in playground HTML', async () => {
     const res = await fetch(`http://localhost:${port}`);
     expect(res.status).toBe(200);
 
-    const body = await res.text();
-    expect(body).toContain(JSON.stringify([testCosmosPlugin]));
+    const html = await res.text();
+    expect(html).toContain(JSON.stringify([testCosmosPlugin]));
   });
 });

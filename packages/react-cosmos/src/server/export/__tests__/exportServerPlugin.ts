@@ -44,7 +44,9 @@ const testServerPlugin = {
 };
 
 const port = 5000 + jestWorkerId();
-const exportPath = path.join(__dirname, `../test-export-${jestWorkerId()}`);
+
+const mocksPath = path.join(__dirname, '../__testMocks__');
+const exportPath = path.join(mocksPath, `export-${jestWorkerId()}`);
 
 beforeEach(() => {
   mockCliArgs({});

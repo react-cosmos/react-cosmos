@@ -53,11 +53,11 @@ it('serves playground HTML', async () => {
     const res = await fetch(`http://localhost:${port}`);
     expect(res.status).toBe(200);
 
-    const body = await res.text();
-    expect(body).toContain('<title>React Cosmos</title>');
-    expect(body).toContain('<script src="playground.bundle.js"></script>');
+    const html = await res.text();
+    expect(html).toContain('<title>React Cosmos</title>');
+    expect(html).toContain('<script src="playground.bundle.js"></script>');
 
-    expect(body).toContain(
+    expect(html).toContain(
       JSON.stringify({
         playgroundConfig: {
           core: {
