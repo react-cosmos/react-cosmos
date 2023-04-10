@@ -143,7 +143,7 @@ it('calls dev server hook with send message API', async () => {
   });
 });
 
-it('embeds plugins in playground HTML', async () => {
+it('embeds plugin in playground HTML', async () => {
   return mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
     expectLog('[Cosmos] Found 1 plugin: Test Cosmos plugin');
