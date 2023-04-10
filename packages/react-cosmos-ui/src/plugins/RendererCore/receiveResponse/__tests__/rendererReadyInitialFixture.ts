@@ -1,11 +1,11 @@
 import { waitFor } from '@testing-library/dom';
 import { FixtureList } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { register } from '../../index.js';
 import {
   mockNotifications,
   mockRouter,
 } from '../../../../testHelpers/pluginMocks.js';
+import { register } from '../../index.js';
 import { mockRendererReady } from '../../testHelpers/index.js';
 
 beforeEach(register);
