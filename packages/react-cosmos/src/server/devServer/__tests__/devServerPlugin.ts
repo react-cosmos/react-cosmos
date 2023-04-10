@@ -12,10 +12,12 @@ import {
 } from '../../testHelpers/mockFs.js';
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
+import retry from '@skidding/async-retry';
 import 'isomorphic-fetch';
 import * as http from 'node:http';
 import path from 'node:path';
-import { CosmosServerPlugin } from '../../cosmosPlugin/types.js';
+import { ServerMessage, SocketMessage } from 'react-cosmos-core';
+import { DevServerPluginArgs } from '../../cosmosPlugin/types.js';
 import { startDevServer } from '../startDevServer.js';
 
 const testCosmosPlugin = {
@@ -26,7 +28,7 @@ const testCosmosPlugin = {
 mockCosmosPlugins([testCosmosPlugin]);
 
 const devServerCleanup = jest.fn(() => Promise.resolve());
-const testServerPlugin: CosmosServerPlugin = {
+const testServerPlugin = {
   name: 'testServerPlugin',
 
   config: jest.fn(async ({ cosmosConfig }) => {
@@ -57,6 +59,10 @@ beforeEach(() => {
   mockCliArgs({});
   mockCosmosConfig('cosmos.config.json', { port });
   mockFile(testCosmosPlugin.server, { default: testServerPlugin });
+
+  devServerCleanup.mockClear();
+  testServerPlugin.config.mockClear();
+  testServerPlugin.devServer.mockClear();
 });
 
 afterEach(async () => {
@@ -102,6 +108,38 @@ it('calls dev server hook (with updated config)', async () => {
     await stopServer();
 
     expect(devServerCleanup).toBeCalled();
+  });
+});
+
+it('calls dev server hook with send message API', async () => {
+  return mockConsole(async ({ expectLog }) => {
+    expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
+    expectLog('[Cosmos] Found 1 plugin: Test Cosmos plugin');
+    expectLog(`[Cosmos] See you at http://localhost:${port}`);
+
+    _stopServer = await startDevServer('web');
+
+    const client = new WebSocket(`ws://localhost:${port}`);
+
+    const message: SocketMessage<ServerMessage> = {
+      channel: 'server',
+      message: {
+        type: 'buildStart',
+      },
+    };
+
+    const onMessage = jest.fn();
+    client.addEventListener('open', () => {
+      client.addEventListener('message', msg => onMessage(msg.data));
+
+      const [args] = testServerPlugin.devServer.mock
+        .calls[0] as DevServerPluginArgs[];
+      args.sendMessage(message.message);
+    });
+
+    await retry(() =>
+      expect(onMessage).toBeCalledWith(JSON.stringify(message))
+    );
   });
 });
 

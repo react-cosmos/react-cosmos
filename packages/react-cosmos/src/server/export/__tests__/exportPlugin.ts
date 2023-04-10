@@ -17,7 +17,6 @@ import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { CosmosServerPlugin } from '../../cosmosPlugin/types.js';
 import { generateExport } from '../generateExport.js';
 
 const testCosmosPlugin = {
@@ -28,7 +27,7 @@ const testCosmosPlugin = {
 mockCosmosPlugins([testCosmosPlugin]);
 
 const asyncMock = jest.fn();
-const testServerPlugin: CosmosServerPlugin = {
+const testServerPlugin = {
   name: 'testServerPlugin',
 
   config: jest.fn(async ({ cosmosConfig }) => {
@@ -51,6 +50,10 @@ beforeEach(() => {
   mockCliArgs({});
   mockCosmosConfig('cosmos.config.json', { port, exportPath });
   mockFile(testCosmosPlugin.server, { default: testServerPlugin });
+
+  asyncMock.mockClear();
+  testServerPlugin.config.mockClear();
+  testServerPlugin.export.mockClear();
 
   // These files are mocked because they are only available after all
   // Cosmos packages are built, and tests should run with source code only.
