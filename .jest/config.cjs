@@ -32,9 +32,9 @@ module.exports = {
     // These files are mocked because they are only available after
     // Cosmos packages are built, and tests should run with source code only.
     'react-cosmos-ui/dist/playground.bundle.js.map':
-      '<rootDir>/packages/react-cosmos/src/server/testMocks/playground.bundle.js.map',
+      '<rootDir>/packages/react-cosmos/src/testMocks/playground.bundle.js.map',
     'react-cosmos-ui/dist/playground.bundle.js':
-      '<rootDir>/packages/react-cosmos/src/server/testMocks/playground.bundle.js',
+      '<rootDir>/packages/react-cosmos/src/testMocks/playground.bundle.js',
   },
   // https://kulshekhar.github.io/ts-jest/docs/getting-started/options/tsconfig
   transform: {
@@ -61,9 +61,9 @@ module.exports = {
     '!packages/react-cosmos-ui/src/plugins/PluginList/**',
     '!packages/react-cosmos-ui/src/plugins/RendererSelect/**',
     // Ignore coverage from unsupported ES modules
-    '!packages/react-cosmos/src/server/utils/requireModule.ts',
-    '!packages/react-cosmos/src/server/utils/resolve.ts',
-    '!packages/react-cosmos/src/server/shared/staticPath.ts',
+    '!packages/react-cosmos/src/utils/requireModule.ts',
+    '!packages/react-cosmos/src/utils/resolve.ts',
+    '!packages/react-cosmos/src/shared/staticPath.ts',
     '!packages/react-cosmos-plugin-webpack/src/client/index.ts',
     '!packages/react-cosmos-plugin-webpack/src/client/errorOverlay/index.ts',
     '!packages/react-cosmos-plugin-webpack/src/server/utils/requireModule.ts',
