@@ -52,8 +52,8 @@ export default async function mount({
 async function loadPluginScript(scriptPath: string) {
   console.log(`[Cosmos] Loading plugin script at ${scriptPath}`);
   // Handle both absolute (dev server) and relative paths (static export)
-  // Later check is for Windows paths (e.g. C:\foo\bar.js)
-  const isAbsolute = scriptPath.startsWith('/') || scriptPath.match(/^[a-z]:/i);
-  const normalizedPath = isAbsolute ? scriptPath : `/${scriptPath}`;
+  const normalizedPath = scriptPath.startsWith('/')
+    ? scriptPath
+    : `/${scriptPath}`;
   await import(/* webpackIgnore: true */ `./_plugin${normalizedPath}`);
 }

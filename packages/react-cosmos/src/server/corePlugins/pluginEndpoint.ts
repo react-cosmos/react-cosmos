@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'node:path';
 import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
 import { resolveSilent } from '../utils/resolveSilent.js';
 
@@ -16,7 +17,10 @@ export const pluginEndpointServerPlugin: CosmosServerPlugin = {
           return;
         }
 
-        const resolvedPath = resolveSilent(`/${moduleId}`);
+        const resolvedPath = path.isAbsolute(moduleId)
+          ? // Windows paths don't start with a slash (e.g. C:\foo\bar.js)
+            moduleId
+          : resolveSilent(`/${moduleId}`);
 
         if (!resolvedPath) {
           res.sendStatus(404);
