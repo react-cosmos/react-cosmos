@@ -3,9 +3,7 @@
 // Set the env before any code reads it
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
-const { generateExport } = await import(
-  '../dist/server/export/generateExport.js'
-);
+const { generateExport } = await import('../dist/export/generateExport.js');
 
 generateExport().catch(err => {
   console.log('[Cosmos] Export failed...');
