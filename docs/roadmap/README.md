@@ -19,6 +19,7 @@
 - [x] Extract react-cosmos-plugin-open-fixture plugin package.
 - [x] Move Boolean input plugin from example to plugin package.
 - [x] Add support for server plugins.
+- [x] Test plugin APIs.
 - [ ] Document plugin APIs.
 - [ ] Add guide for creating UI + server plugin.
 

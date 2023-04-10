@@ -77,7 +77,7 @@ it('serves plugin JS files', async () => {
     _stopServer = await startDevServer('web');
 
     const res = await fetch(
-      `http://localhost:${port}/_plugin/plugin-${jestWorkerId()}/ui.js`
+      `http://localhost:${port}/_plugin${testCosmosPlugin.ui}`
     );
     expect(res.status).toBe(200);
 

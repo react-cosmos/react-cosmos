@@ -1,6 +1,6 @@
 import express from 'express';
 import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
-import { resolveFromSilent, resolveSilent } from '../utils/resolveSilent.js';
+import { resolveSilent } from '../utils/resolveSilent.js';
 
 export const pluginEndpointServerPlugin: CosmosServerPlugin = {
   name: 'pluginEndpoint',
@@ -16,9 +16,7 @@ export const pluginEndpointServerPlugin: CosmosServerPlugin = {
           return;
         }
 
-        const resolvedPath =
-          resolveSilent(`/${moduleId}`) ||
-          resolveFromSilent(cosmosConfig.rootDir, moduleId);
+        const resolvedPath = resolveSilent(`/${moduleId}`);
 
         if (!resolvedPath) {
           res.sendStatus(404);
