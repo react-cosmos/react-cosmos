@@ -18,6 +18,7 @@ export async function createExpressApp(
     cosmosConfig,
     pluginConfigs
   );
+
   app.get('/', (req: express.Request, res: express.Response) => {
     res.send(playgroundHtml);
   });

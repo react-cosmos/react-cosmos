@@ -78,6 +78,10 @@
       "description": "Dev server port. [default: 5000]",
       "type": "number"
     },
+    "portRetries": {
+      "description": "Max number of port retries. [default: 10]",
+      "type": "number"
+    },
     "https": {
       "description": "Server will be served over HTTPS",
       "type": "boolean"

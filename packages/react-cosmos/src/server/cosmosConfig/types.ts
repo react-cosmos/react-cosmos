@@ -25,6 +25,7 @@ export type CosmosConfig = {
   httpsOptions: null | HttpsOptions;
   ignore: string[];
   port: number;
+  portRetries: number;
   plugins: string[];
   publicUrl: string;
   rendererUrl: string | null;

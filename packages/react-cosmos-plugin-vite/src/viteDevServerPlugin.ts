@@ -8,7 +8,7 @@ import {
   userDepsResolvedModuleId,
 } from './reactCosmosViteRollupPlugin.js';
 
-export default async function viteDevServerPlugin({
+export async function viteDevServerPlugin({
   platformType,
   cosmosConfig,
 }: DevServerPluginArgs) {

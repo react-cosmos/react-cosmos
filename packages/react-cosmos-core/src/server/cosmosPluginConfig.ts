@@ -3,16 +3,14 @@
 export type RawCosmosPluginConfig = {
   name: string;
   ui?: string;
-  devServer?: string;
-  export?: string;
+  server?: string;
 };
 
 export type CosmosPluginConfig = {
   name: string;
   rootDir: string;
   ui?: string;
-  devServer?: string;
-  export?: string;
+  server?: string;
 };
 
 export type UiCosmosPluginConfig = CosmosPluginConfig & {

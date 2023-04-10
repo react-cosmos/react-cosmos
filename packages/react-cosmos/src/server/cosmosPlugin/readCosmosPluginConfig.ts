@@ -1,6 +1,6 @@
 import path from 'path';
 import { CosmosPluginConfig, RawCosmosPluginConfig } from 'react-cosmos-core';
-import { importModule } from '../utils/fs.js';
+import { importJson } from '../utils/fs.js';
 import { resolveSilent } from '../utils/resolveSilent.js';
 
 type ReadCosmosPluginConfigArgs = {
@@ -13,7 +13,7 @@ export async function readCosmosPluginConfig({
   configPath,
   relativePaths,
 }: ReadCosmosPluginConfigArgs) {
-  const rawConfig = await importModule<RawCosmosPluginConfig>(configPath);
+  const rawConfig = await importJson<RawCosmosPluginConfig>(configPath);
   const pluginRootDir = path.dirname(configPath);
 
   const config: CosmosPluginConfig = {
@@ -33,22 +33,12 @@ export async function readCosmosPluginConfig({
     );
   }
 
-  if (rawConfig.devServer) {
-    config.devServer = resolvePluginPath(
+  if (rawConfig.server) {
+    config.server = resolvePluginPath(
       config.name,
       rootDir,
       pluginRootDir,
-      rawConfig.devServer,
-      relativePaths
-    );
-  }
-
-  if (rawConfig.export) {
-    config.export = resolvePluginPath(
-      config.name,
-      rootDir,
-      pluginRootDir,
-      rawConfig.export,
+      rawConfig.server,
       relativePaths
     );
   }

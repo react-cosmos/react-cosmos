@@ -5,6 +5,15 @@ import { CosmosConfig } from '../cosmosConfig/types.js';
 
 export type PlatformType = 'web' | 'native';
 
+export type CosmosConfigPluginArgs = {
+  cosmosConfig: CosmosConfig;
+  platformType: PlatformType;
+};
+
+export type CosmosConfigPlugin = (
+  args: CosmosConfigPluginArgs
+) => Promise<CosmosConfig> | CosmosConfig;
+
 export type DevServerPluginArgs = {
   cosmosConfig: CosmosConfig;
   platformType: PlatformType;
@@ -31,3 +40,10 @@ export type ExportPluginArgs = {
 };
 
 export type ExportPlugin = (args: ExportPluginArgs) => unknown;
+
+export type CosmosServerPlugin = {
+  name: string;
+  config?: CosmosConfigPlugin;
+  devServer?: DevServerPlugin;
+  export?: ExportPlugin;
+};
