@@ -29,6 +29,12 @@ module.exports = {
     // is a noop because wp isn't meant to be used in a browser environment.
     // Issue introduced here https://github.com/websockets/ws/pull/2118
     ws: '<rootDir>/node_modules/ws/index.js',
+    // These files are mocked because they are only available after
+    // Cosmos packages are built, and tests should run with source code only.
+    'react-cosmos-ui/dist/playground.bundle.js.map':
+      '<rootDir>/packages/react-cosmos/src/server/testMocks/playground.bundle.js.map',
+    'react-cosmos-ui/dist/playground.bundle.js':
+      '<rootDir>/packages/react-cosmos/src/server/testMocks/playground.bundle.js',
   },
   // https://kulshekhar.github.io/ts-jest/docs/getting-started/options/tsconfig
   transform: {
@@ -49,6 +55,7 @@ module.exports = {
     '!**/*.fixture.{js,ts,tsx}',
     '!**/cosmos.decorator.{js,ts,tsx}',
     '!**/testHelpers/**',
+    '!**/testMocks/**',
     '!**/@types/**',
     // Ignore coverage from dark launched plugins
     '!packages/react-cosmos-ui/src/plugins/PluginList/**',

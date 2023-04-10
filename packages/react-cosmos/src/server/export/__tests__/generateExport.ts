@@ -3,10 +3,7 @@ import { jestWorkerId } from '../../testHelpers/jestWorkerId.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
 import { mockCosmosPlugins } from '../../testHelpers/mockCosmosPlugins.js';
 import '../../testHelpers/mockEsmRequire.js';
-import {
-  mockResolve,
-  resetResolveMock,
-} from '../../testHelpers/mockEsmResolve.js';
+import '../../testHelpers/mockEsmResolve.js';
 import '../../testHelpers/mockEsmStaticPath.js';
 import { mockCosmosConfig, resetFsMock } from '../../testHelpers/mockFs.js';
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
@@ -25,23 +22,11 @@ const exportPath = path.join(testFsPath, `export-${jestWorkerId()}`);
 beforeEach(() => {
   mockCliArgs({});
   mockCosmosConfig('cosmos.config.json', { port, exportPath });
-
-  // These files are mocked because they are only available after all
-  // Cosmos packages are built, and tests should run with source code only.
-  mockResolve(
-    'react-cosmos-ui/dist/playground.bundle.js',
-    require.resolve('../../testHelpers/mock.bundle.js.txt')
-  );
-  mockResolve(
-    'react-cosmos-ui/dist/playground.bundle.js.map',
-    require.resolve('../../testHelpers/mock.bundle.js.map.txt')
-  );
 });
 
 afterEach(async () => {
   unmockCliArgs();
   resetFsMock();
-  resetResolveMock();
   await fs.rm(exportPath, { recursive: true, force: true });
 });
 
