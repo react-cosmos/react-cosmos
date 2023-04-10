@@ -1,6 +1,6 @@
 import path from 'path';
+import { CosmosConfig } from 'react-cosmos';
 import { removeLeadingSlash } from 'react-cosmos-core';
-import { CosmosConfig } from 'react-cosmos/server.js';
 import webpack from 'webpack';
 import { createWebpackCosmosConfig } from '../cosmosConfig/createWebpackCosmosConfig.js';
 import { getUserWebpackConfig } from './getUserWebpackConfig.js';

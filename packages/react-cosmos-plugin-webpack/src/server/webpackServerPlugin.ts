@@ -1,4 +1,4 @@
-import { CosmosServerPlugin } from 'react-cosmos/server.js';
+import { CosmosServerPlugin } from 'react-cosmos';
 import { webpackDevServerPlugin } from './webpackDevServerPlugin.js';
 import { webpackExportPlugin } from './webpackExportPlugin.js';
 

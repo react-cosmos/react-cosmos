@@ -1,6 +1,6 @@
 import path from 'path';
+import { DevServerPluginArgs, serveStaticDir } from 'react-cosmos';
 import { removeLeadingDot, ServerMessage } from 'react-cosmos-core';
-import { DevServerPluginArgs, serveStaticDir } from 'react-cosmos/server.js';
 import webpack from 'webpack';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { createWebpackCosmosConfig } from './cosmosConfig/createWebpackCosmosConfig.js';

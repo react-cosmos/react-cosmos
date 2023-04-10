@@ -13,7 +13,7 @@ import {
   createCosmosConfig,
   getCwdPath,
   RENDERER_FILENAME,
-} from 'react-cosmos/server.js';
+} from 'react-cosmos';
 import webpack from 'webpack';
 import { getExportWebpackConfig } from '../getExportWebpackConfig.js';
 import { HtmlWebpackPlugin } from '../htmlPlugin.js';

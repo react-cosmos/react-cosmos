@@ -1,7 +1,4 @@
-import {
-  DevServerPluginArgs,
-  startFixtureWatcher,
-} from 'react-cosmos/server.js';
+import { DevServerPluginArgs, startFixtureWatcher } from 'react-cosmos';
 import { createServer } from 'vite';
 import {
   reactCosmosViteRollupPlugin,

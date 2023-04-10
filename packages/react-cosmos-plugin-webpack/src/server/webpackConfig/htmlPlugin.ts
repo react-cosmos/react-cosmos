@@ -1,6 +1,6 @@
 import { Options as HtmlWebpackPluginOptions } from 'html-webpack-plugin';
 import { omit } from 'lodash-es';
-import { CosmosConfig, RENDERER_FILENAME } from 'react-cosmos/server.js';
+import { CosmosConfig, RENDERER_FILENAME } from 'react-cosmos';
 import webpack from 'webpack';
 import { requireFromSilent } from '../utils/requireSilent.js';
 import { hasPlugin, isInstanceOfWebpackPlugin } from './plugins.js';

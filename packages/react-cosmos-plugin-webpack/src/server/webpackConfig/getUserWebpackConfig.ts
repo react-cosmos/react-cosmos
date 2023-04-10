@@ -4,7 +4,7 @@ import {
   getCliArgs,
   importModule,
   moduleExists,
-} from 'react-cosmos/server.js';
+} from 'react-cosmos';
 import webpack from 'webpack';
 import { createWebpackCosmosConfig } from '../cosmosConfig/createWebpackCosmosConfig.js';
 import { getDefaultWebpackConfig } from './getDefaultWebpackConfig.js';
