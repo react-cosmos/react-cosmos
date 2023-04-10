@@ -1,18 +1,24 @@
 // NOTE: Mock files need to imported before modules that use the mocked APIs
-import { mockConsole, mockFile } from 'react-cosmos/jest.js';
+import { mockConsole, mockCwdModuleDefault } from 'react-cosmos/jest.js';
 import '../../testHelpers/mockEsmClientPath.js';
 import '../../testHelpers/mockEsmLoaderPath.js';
 import '../../testHelpers/mockEsmRequire.js';
 import '../../testHelpers/mockEsmResolve.js';
 
 import path from 'path';
-import { createCosmosConfig } from 'react-cosmos/server.js';
+import { createCosmosConfig } from 'react-cosmos';
 import webpack from 'webpack';
 import { getDevWebpackConfig } from '../getDevWebpackConfig.js';
 
-async function getCustomDevWebpackConfig() {
+async function getCustomDevWebpackConfig(expectAliasLog: boolean) {
   return mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using webpack config found at mywebpack.config.js');
+    expectLog(
+      '[Cosmos] Learn how to override webpack config for cosmos: https://github.com/react-cosmos/react-cosmos/tree/main/docs#webpack-config-override'
+    );
+    if (expectAliasLog) {
+      expectLog('[Cosmos] React and React DOM aliases found in webpack config');
+    }
     const cosmosConfig = createCosmosConfig(process.cwd(), {
       webpack: {
         configPath: 'mywebpack.config.js',
@@ -23,7 +29,7 @@ async function getCustomDevWebpackConfig() {
 }
 
 it('preserves React aliases', async () => {
-  mockFile('mywebpack.config.js', () => ({
+  mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       alias: {
         react: 'preact/compat',
@@ -32,7 +38,7 @@ it('preserves React aliases', async () => {
     },
   }));
 
-  const { resolve } = await getCustomDevWebpackConfig();
+  const { resolve } = await getCustomDevWebpackConfig(true);
   if (resolve && resolve.alias && !Array.isArray(resolve.alias)) {
     expect(resolve.alias.react).toEqual('preact/compat');
     expect(resolve.alias['react-dom']).toEqual('preact/compat');
@@ -42,7 +48,7 @@ it('preserves React aliases', async () => {
 });
 
 it('preserves React aliases with exact matches', async () => {
-  mockFile('mywebpack.config.js', () => ({
+  mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       alias: {
         react$: 'preact/compat',
@@ -51,7 +57,7 @@ it('preserves React aliases with exact matches', async () => {
     },
   }));
 
-  const { resolve } = await getCustomDevWebpackConfig();
+  const { resolve } = await getCustomDevWebpackConfig(true);
   if (resolve && resolve.alias && !Array.isArray(resolve.alias)) {
     expect(resolve.alias.react$).toEqual('preact/compat');
     expect(resolve.alias.react).toBeUndefined();
@@ -63,7 +69,7 @@ it('preserves React aliases with exact matches', async () => {
 });
 
 it('preserves React aliases using array form', async () => {
-  mockFile('mywebpack.config.js', () => ({
+  mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       alias: [
         { name: 'react', alias: 'preact/compat' },
@@ -72,7 +78,7 @@ it('preserves React aliases using array form', async () => {
     },
   }));
 
-  const { resolve } = await getCustomDevWebpackConfig();
+  const { resolve } = await getCustomDevWebpackConfig(true);
   if (resolve && Array.isArray(resolve.alias)) {
     expect(resolve.alias).toContainEqual({
       name: 'react',
@@ -88,7 +94,7 @@ it('preserves React aliases using array form', async () => {
 });
 
 it('adds missing React aliases', async () => {
-  mockFile('mywebpack.config.js', () => ({
+  mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       alias: {
         xyz: 'abc',
@@ -96,7 +102,7 @@ it('adds missing React aliases', async () => {
     },
   }));
 
-  const { resolve } = await getCustomDevWebpackConfig();
+  const { resolve } = await getCustomDevWebpackConfig(false);
   if (resolve && resolve.alias && !Array.isArray(resolve.alias)) {
     expect(resolve.alias.xyz).toBe('abc');
     expect(resolve.alias.react).toMatch(
@@ -111,13 +117,13 @@ it('adds missing React aliases', async () => {
 });
 
 it('adds missing React aliases using array form', async () => {
-  mockFile('mywebpack.config.js', () => ({
+  mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       alias: [{ name: 'xyz', alias: 'abc' }],
     },
   }));
 
-  const { resolve } = await getCustomDevWebpackConfig();
+  const { resolve } = await getCustomDevWebpackConfig(false);
   if (resolve && Array.isArray(resolve.alias)) {
     expect(resolve.alias).toContainEqual({
       name: 'xyz',

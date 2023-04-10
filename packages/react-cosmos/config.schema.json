@@ -50,6 +50,12 @@
       "type": "string",
       "minLength": 1
     },
+    "ignore": {
+      "description": "Patterns for ignoring fixture and decorator files (eg. [\"**/dist/**\"]]).",
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
     "watchDirs": {
       "description": "Directories where the Cosmos server watches for fixture files changes while running. [default: [\".\"]]",
       "type": "array",
@@ -70,6 +76,10 @@
     },
     "port": {
       "description": "Dev server port. [default: 5000]",
+      "type": "number"
+    },
+    "portRetries": {
+      "description": "Max number of port retries. [default: 10]",
       "type": "number"
     },
     "https": {

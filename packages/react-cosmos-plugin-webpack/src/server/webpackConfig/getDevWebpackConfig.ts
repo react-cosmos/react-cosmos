@@ -1,5 +1,5 @@
 import path from 'path';
-import { CosmosConfig } from 'react-cosmos/server.js';
+import { CosmosConfig } from 'react-cosmos';
 import webpack from 'webpack';
 import { createWebpackCosmosConfig } from '../cosmosConfig/createWebpackCosmosConfig.js';
 import { resolve } from '../utils/resolve.js';
@@ -9,6 +9,7 @@ import { getWebpackConfigResolve } from './getWebpackConfigResolve.js';
 import { ensureHtmlWebackPlugin } from './htmlPlugin.js';
 import { getGlobalsPlugin, hasPlugin } from './plugins.js';
 import { resolveWebpackClientPath } from './resolveWebpackClientPath.js';
+import { ensureWebpackConfigTopLevelAwait } from './webpackConfigTopLevelAwait.js';
 
 export async function getDevWebpackConfig(
   cosmosConfig: CosmosConfig,
@@ -26,6 +27,7 @@ export async function getDevWebpackConfig(
     module: getWebpackConfigModule(baseWebpackConfig),
     resolve: getWebpackConfigResolve(cosmosConfig, baseWebpackConfig),
     plugins: getPlugins(cosmosConfig, baseWebpackConfig, userWebpack),
+    experiments: getExperiments(baseWebpackConfig),
   };
 
   // optimization.splitChunks.name = false breaks auto fixture file discovery.
@@ -91,4 +93,8 @@ function getPlugins(
 function getHotMiddlewareEntry(reloadOnFail: boolean) {
   const clientPath = resolve('webpack-hot-middleware/client');
   return `${clientPath}?reload=${reloadOnFail}&overlay=false`;
+}
+
+function getExperiments(baseWebpackConfig: webpack.Configuration) {
+  return ensureWebpackConfigTopLevelAwait(baseWebpackConfig);
 }

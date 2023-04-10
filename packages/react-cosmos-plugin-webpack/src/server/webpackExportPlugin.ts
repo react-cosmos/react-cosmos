@@ -1,11 +1,9 @@
-import { ExportPluginArgs } from 'react-cosmos/server.js';
+import { ExportPluginArgs } from 'react-cosmos';
 import webpack, { StatsCompilation } from 'webpack';
 import { getWebpack } from './getWebpack.js';
 import { getExportWebpackConfig } from './webpackConfig/getExportWebpackConfig.js';
 
-export default async function webpackExportPlugin({
-  cosmosConfig,
-}: ExportPluginArgs) {
+export async function webpackExportPlugin({ cosmosConfig }: ExportPluginArgs) {
   const userWebpack = getWebpack(cosmosConfig.rootDir);
   if (!userWebpack) {
     return;

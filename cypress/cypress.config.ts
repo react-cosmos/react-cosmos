@@ -6,5 +6,10 @@ export default defineConfig({
   modifyObstructiveCode: false,
   e2e: {
     specPattern: 'cypress/tests/**/*.{js,jsx,ts,tsx}',
+    // Disabled test isoation to try to fix flakiness of domDev test on Windows.
+    // Every now and then it would fail before running any test with the message:
+    // "This page was cleared by navigating to about:blank."
+    // Found it here: https://stackoverflow.com/a/74762655
+    testIsolation: false,
   },
 });

@@ -65,9 +65,6 @@ export default async () => {
     optimization: {
       minimize: false,
     },
-    experiments: {
-      topLevelAwait: true,
-    },
   };
 
   if (env === 'development') {

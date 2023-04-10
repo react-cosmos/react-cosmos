@@ -7,6 +7,6 @@ about: Suggest an idea for React Cosmos
 
 It keeps this issue list clean, which makes it easier for maintainers to prioritize questions and bugs.
 
-Also join the `#ideas` channel on Slack to bounce around ideas https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw
+Also join Discord to bounce around ideas https://discord.gg/3X95VgfnW5
 
 Thank you!

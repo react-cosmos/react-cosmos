@@ -1,10 +1,10 @@
 import { loadPlugins, resetPlugins } from 'react-plugin';
+import { register } from '..';
 import {
   getRendererCoreMethods,
   mockNotifications,
   mockRouter,
 } from '../../../testHelpers/pluginMocks.js';
-import { register } from '..';
 import { mockRendererReady } from '../testHelpers/index.js';
 
 beforeEach(register);

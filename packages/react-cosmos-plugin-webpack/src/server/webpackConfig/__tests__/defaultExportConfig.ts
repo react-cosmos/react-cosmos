@@ -9,7 +9,7 @@ import {
   createCosmosConfig,
   getCwdPath,
   RENDERER_FILENAME,
-} from 'react-cosmos/server.js';
+} from 'react-cosmos';
 import webpack from 'webpack';
 import { getExportWebpackConfig } from '../getExportWebpackConfig.js';
 import { HtmlWebpackPlugin } from '../htmlPlugin.js';
@@ -21,6 +21,9 @@ afterAll(() => {
 async function getDefaultExportWebpackConfig() {
   return mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using default webpack config');
+    expectLog(
+      '[Cosmos] Learn how to override webpack config for cosmos: https://github.com/react-cosmos/react-cosmos/tree/main/docs#webpack-config-override'
+    );
     const cosmosConfig = createCosmosConfig(process.cwd());
     return await getExportWebpackConfig(cosmosConfig, webpack);
   });
@@ -81,4 +84,9 @@ it('does not include HotModuleReplacementPlugin', async () => {
     p => p.constructor.name === 'HotModuleReplacementPlugin'
   );
   expect(hotModuleReplacementPlugin).not.toBeDefined();
+});
+
+it('sets experiments.topLevelAwait to true', async () => {
+  const { experiments } = await getDefaultExportWebpackConfig();
+  expect(experiments?.topLevelAwait).toBe(true);
 });

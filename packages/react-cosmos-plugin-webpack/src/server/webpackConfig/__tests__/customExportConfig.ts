@@ -1,5 +1,9 @@
 // NOTE: Mock files need to imported before modules that use the mocked APIs
-import { mockConsole, mockFile, unmockCliArgs } from 'react-cosmos/jest.js';
+import {
+  mockConsole,
+  mockCwdModuleDefault,
+  unmockCliArgs,
+} from 'react-cosmos/jest.js';
 import '../../testHelpers/mockEsmClientPath.js';
 import '../../testHelpers/mockEsmLoaderPath.js';
 import '../../testHelpers/mockEsmRequire.js';
@@ -9,13 +13,13 @@ import {
   createCosmosConfig,
   getCwdPath,
   RENDERER_FILENAME,
-} from 'react-cosmos/server.js';
+} from 'react-cosmos';
 import webpack from 'webpack';
 import { getExportWebpackConfig } from '../getExportWebpackConfig.js';
 import { HtmlWebpackPlugin } from '../htmlPlugin.js';
 
 beforeAll(() => {
-  mockFile('mywebpack.config.js', {
+  mockCwdModuleDefault('mywebpack.config.js', {
     module: { rules: [MY_RULE] },
     plugins: [MY_PLUGIN],
   });
@@ -31,6 +35,9 @@ const MY_PLUGIN = {};
 async function getCustomExportWebpackConfig() {
   return mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using webpack config found at mywebpack.config.js');
+    expectLog(
+      '[Cosmos] Learn how to override webpack config for cosmos: https://github.com/react-cosmos/react-cosmos/tree/main/docs#webpack-config-override'
+    );
     const cosmosConfig = createCosmosConfig(process.cwd(), {
       webpack: {
         configPath: 'mywebpack.config.js',
@@ -105,4 +112,9 @@ it('does not include HotModuleReplacementPlugin', async () => {
     p => p.constructor.name === 'HotModuleReplacementPlugin'
   );
   expect(hotModuleReplacementPlugin).not.toBeDefined();
+});
+
+it('sets experiments.topLevelAwait to true', async () => {
+  const { experiments } = await getCustomExportWebpackConfig();
+  expect(experiments?.topLevelAwait).toBe(true);
 });

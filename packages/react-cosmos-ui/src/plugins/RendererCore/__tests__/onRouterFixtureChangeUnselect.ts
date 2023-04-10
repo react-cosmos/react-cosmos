@@ -1,5 +1,6 @@
 import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
+import { register } from '..';
 import {
   getRendererCoreMethods,
   getRouterContext,
@@ -7,7 +8,6 @@ import {
   mockRouter,
   onRendererCore,
 } from '../../../testHelpers/pluginMocks.js';
-import { register } from '..';
 import { mockRendererReady } from '../testHelpers/index.js';
 
 beforeEach(register);

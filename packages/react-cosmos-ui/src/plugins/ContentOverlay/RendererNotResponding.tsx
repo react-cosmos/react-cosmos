@@ -48,7 +48,7 @@ export function RendererNotResponding() {
         </List>
         <Paragraph>
           <ActionLink
-            href="https://react-cosmos.slack.com/join/shared_invite/zt-g9rsalqq-clCoV7DWttVvzO5FAAmVAw"
+            href="https://discord.gg/3X95VgfnW5"
             rel="noopener noreferrer"
             target="_blank"
           >

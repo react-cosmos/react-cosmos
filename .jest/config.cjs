@@ -21,6 +21,7 @@ module.exports = {
   testMatch: ['**/__tests__/**/*.{ts,tsx}', '**/?(*.)test.{ts,tsx}'],
   testPathIgnorePatterns: ['<rootDir>/node_modules/'],
   setupFilesAfterEnv: ['<rootDir>/.jest/setup.ts'],
+  modulePathIgnorePatterns: ['__testFs__'],
   moduleNameMapper: {
     // This seems faster than transpiling node_modules/lodash-es
     'lodash-es': '<rootDir>/node_modules/lodash/lodash.js',
@@ -28,11 +29,20 @@ module.exports = {
     // is a noop because wp isn't meant to be used in a browser environment.
     // Issue introduced here https://github.com/websockets/ws/pull/2118
     ws: '<rootDir>/node_modules/ws/index.js',
+    // These files are mocked because they are only available after
+    // Cosmos packages are built, and tests should run with source code only.
+    'react-cosmos-ui/dist/playground.bundle.js.map':
+      '<rootDir>/packages/react-cosmos/src/testMocks/playground.bundle.js.map',
+    'react-cosmos-ui/dist/playground.bundle.js':
+      '<rootDir>/packages/react-cosmos/src/testMocks/playground.bundle.js',
   },
   // https://kulshekhar.github.io/ts-jest/docs/getting-started/options/tsconfig
   transform: {
     '^.+\\.tsx?$': ['ts-jest', { tsconfig: { noUnusedLocals: false } }],
-    '^.+\\.js$': ['ts-jest', { tsconfig: { allowJs: true } }],
+    '^.+\\.js$': [
+      'ts-jest',
+      { tsconfig: { allowJs: true, noUnusedLocals: false } },
+    ],
   },
   // https://jestjs.io/docs/configuration#transformignorepatterns-arraystring
   transformIgnorePatterns: [
@@ -45,16 +55,19 @@ module.exports = {
     '!**/*.fixture.{js,ts,tsx}',
     '!**/cosmos.decorator.{js,ts,tsx}',
     '!**/testHelpers/**',
+    '!**/testMocks/**',
     '!**/@types/**',
     // Ignore coverage from dark launched plugins
     '!packages/react-cosmos-ui/src/plugins/PluginList/**',
     '!packages/react-cosmos-ui/src/plugins/RendererSelect/**',
     // Ignore coverage from unsupported ES modules
-    '!packages/react-cosmos/src/server/utils/requireModule.ts',
-    '!packages/react-cosmos/src/server/utils/resolve.ts',
-    '!packages/react-cosmos/src/server/shared/staticPath.ts',
+    '!packages/react-cosmos/src/utils/requireModule.ts',
+    '!packages/react-cosmos/src/utils/resolve.ts',
+    '!packages/react-cosmos/src/shared/staticPath.ts',
     '!packages/react-cosmos-plugin-webpack/src/client/index.ts',
     '!packages/react-cosmos-plugin-webpack/src/client/errorOverlay/index.ts',
+    '!packages/react-cosmos-plugin-webpack/src/server/utils/requireModule.ts',
+    '!packages/react-cosmos-plugin-webpack/src/server/utils/resolve.ts',
     '!packages/react-cosmos-plugin-webpack/src/server/webpackConfig/resolveWebpackClientPath.ts',
     '!packages/react-cosmos-plugin-webpack/src/server/webpackConfig/resolveWebpackLoaderPath.ts',
   ],

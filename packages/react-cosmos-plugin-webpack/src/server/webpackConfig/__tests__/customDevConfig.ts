@@ -2,7 +2,7 @@
 import {
   mockCliArgs,
   mockConsole,
-  mockFile,
+  mockCwdModuleDefault,
   unmockCliArgs,
 } from 'react-cosmos/jest.js';
 import '../../testHelpers/mockEsmClientPath.js';
@@ -10,7 +10,7 @@ import '../../testHelpers/mockEsmLoaderPath.js';
 import '../../testHelpers/mockEsmRequire.js';
 import '../../testHelpers/mockEsmResolve.js';
 
-import { createCosmosConfig, RENDERER_FILENAME } from 'react-cosmos/server.js';
+import { createCosmosConfig, RENDERER_FILENAME } from 'react-cosmos';
 import webpack from 'webpack';
 import { getDevWebpackConfig } from '../getDevWebpackConfig.js';
 import { HtmlWebpackPlugin } from '../htmlPlugin.js';
@@ -28,8 +28,8 @@ const mockWebpackOverride = jest.fn((webpackConfig: webpack.Configuration) => ({
 beforeAll(() => {
   mockWebpackConfig.mockClear();
   mockCliArgs({ env: { prod: true }, fooEnvVar: true });
-  mockFile('mywebpack.config.js', mockWebpackConfig);
-  mockFile('mywebpack.override.js', mockWebpackOverride);
+  mockCwdModuleDefault('mywebpack.config.js', mockWebpackConfig);
+  mockCwdModuleDefault('mywebpack.override.js', mockWebpackOverride);
 });
 
 afterAll(() => {
@@ -43,6 +43,7 @@ const MY_PLUGIN2 = {};
 async function getCustomDevWebpackConfig() {
   return mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using webpack config found at mywebpack.config.js');
+    expectLog('[Cosmos] Overriding webpack config at mywebpack.override.js');
     const cosmosConfig = createCosmosConfig(process.cwd(), {
       webpack: {
         configPath: 'mywebpack.config.js',
@@ -134,4 +135,9 @@ it('includes HotModuleReplacementPlugin', async () => {
     p => p.constructor.name === 'HotModuleReplacementPlugin'
   );
   expect(hotModuleReplacementPlugin).toBeDefined();
+});
+
+it('sets experiments.topLevelAwait to true', async () => {
+  const { experiments } = await getCustomDevWebpackConfig();
+  expect(experiments?.topLevelAwait).toBe(true);
 });

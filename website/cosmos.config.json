@@ -1,4 +1,5 @@
 {
+  "$schema": "../packages/react-cosmos/config.schema.json",
   "exportPath": "dist/live-demo",
   "globalImports": ["src/global.css"],
   "publicUrl": "./",
