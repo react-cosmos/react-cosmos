@@ -6,7 +6,7 @@ import '../../testHelpers/mockEsmRequire.js';
 import '../../testHelpers/mockEsmResolve.js';
 
 import path from 'path';
-import { createCosmosConfig } from 'react-cosmos/server.js';
+import { createCosmosConfig } from 'react-cosmos';
 import webpack from 'webpack';
 import { getDevWebpackConfig } from '../getDevWebpackConfig.js';
 

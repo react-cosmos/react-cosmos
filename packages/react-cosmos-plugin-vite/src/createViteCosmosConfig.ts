@@ -1,4 +1,4 @@
-import { CosmosConfig } from 'react-cosmos/server.js';
+import { CosmosConfig } from 'react-cosmos';
 
 type ViteCosmosConfig = {
   port: number;

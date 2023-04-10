@@ -3,9 +3,7 @@
 // Set the env before any code reads it
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-const { startDevServer } = await import(
-  '../dist/server/devServer/startDevServer.js'
-);
+const { startDevServer } = await import('../dist/devServer/startDevServer.js');
 
 startDevServer('native').catch(err => {
   console.log('[Cosmos] Server crashed...');

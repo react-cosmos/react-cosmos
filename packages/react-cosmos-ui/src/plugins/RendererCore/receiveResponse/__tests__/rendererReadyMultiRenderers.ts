@@ -1,6 +1,6 @@
 import { waitFor } from '@testing-library/dom';
-import { loadPlugins, resetPlugins } from 'react-plugin';
 import { FixtureList } from 'react-cosmos-core';
+import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
   mockNotifications,

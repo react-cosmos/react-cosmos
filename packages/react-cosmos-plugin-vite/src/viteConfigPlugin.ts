@@ -2,7 +2,7 @@ import {
   CosmosConfig,
   CosmosConfigPluginArgs,
   findNextAvailablePort,
-} from 'react-cosmos/server.js';
+} from 'react-cosmos';
 import { createViteCosmosConfig } from './createViteCosmosConfig.js';
 
 export async function viteConfigPlugin({

@@ -1,4 +1,4 @@
-import { CosmosServerPlugin } from 'react-cosmos/server.js';
+import { CosmosServerPlugin } from 'react-cosmos';
 import { viteConfigPlugin } from './viteConfigPlugin.js';
 import { viteDevServerPlugin } from './viteDevServerPlugin.js';
 import { viteExportPlugin } from './viteExportPlugin.js';

@@ -3,9 +3,9 @@
 // To circumvent this we use this CJS source file that's manually copied in the
 // dist folder as part of the build process
 module.exports = async function injectUserDeps() {
-  const server = await import('react-cosmos/server.js');
+  const cosmos = await import('react-cosmos');
 
-  const cosmosConfig = await server.detectCosmosConfig();
+  const cosmosConfig = await cosmos.detectCosmosConfig();
 
   // This ensures this loader is invalidated whenever a new file is added to or
   // removed from user's project, which in turn triggers react-cosmos-voyager2
@@ -19,10 +19,10 @@ module.exports = async function injectUserDeps() {
 
   const { containerQuerySelector } = cosmosConfig.dom;
   const rendererConfig = {
-    playgroundUrl: server.getPlaygroundUrl(cosmosConfig),
+    playgroundUrl: cosmos.getPlaygroundUrl(cosmosConfig),
     containerQuerySelector,
   };
-  return server.generateUserDepsModule({
+  return cosmos.generateUserDepsModule({
     cosmosConfig,
     rendererConfig,
     relativeToDir: null,

@@ -14,7 +14,7 @@ jest.mock('../utils/resolveSilent.js', () => {
 });
 
 it('loads mono repo plugins', async () => {
-  const packagesDir = path.join(__dirname, '../../../..');
+  const packagesDir = path.join(__dirname, '../../..');
 
   const configs = await findCosmosPluginConfigs({
     rootDir: packagesDir,

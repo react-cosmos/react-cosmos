@@ -188,13 +188,11 @@ function runAsyncTask({ cmd, args, env = {} }: RunAsyncTaskArgs) {
   });
 }
 
-const STATIC_PATH = 'server/static';
-
 async function copyStaticAssets(pkgName: string) {
   const pkgDir = fileURLToPath(
     new URL(`../packages/${pkgName}`, import.meta.url)
   );
-  await fs.cp(`${pkgDir}/src/${STATIC_PATH}`, `${pkgDir}/dist/${STATIC_PATH}`, {
+  await fs.cp(`${pkgDir}/src/static`, `${pkgDir}/dist/static`, {
     recursive: true,
   });
 }

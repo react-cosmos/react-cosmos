@@ -1,5 +1,5 @@
 import path from 'path';
-import { CosmosConfig } from 'react-cosmos/server.js';
+import { CosmosConfig } from 'react-cosmos';
 import webpack from 'webpack';
 import { resolveFromSilent } from '../utils/resolveSilent.js';
 
