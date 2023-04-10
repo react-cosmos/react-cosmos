@@ -19,8 +19,8 @@ mockCosmosPlugins([]);
 
 const port = 5000 + jestWorkerId();
 
-const mocksPath = path.join(__dirname, '../__testMocks__');
-const exportPath = path.join(mocksPath, `export-${jestWorkerId()}`);
+const testFsPath = path.join(__dirname, '../__testFs__');
+const exportPath = path.join(testFsPath, `export-${jestWorkerId()}`);
 
 beforeEach(() => {
   mockCliArgs({});

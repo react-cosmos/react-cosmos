@@ -17,9 +17,9 @@ import { generateExport } from '../generateExport.js';
 
 const port = 5000 + jestWorkerId();
 
-const mocksPath = path.join(__dirname, '../__testMocks__');
-const pluginPath = path.join(mocksPath, `plugin-${jestWorkerId()}`);
-const exportPath = path.join(mocksPath, `export-${jestWorkerId()}`);
+const testFsPath = path.join(__dirname, '../__testFs__');
+const pluginPath = path.join(testFsPath, `plugin-${jestWorkerId()}`);
+const exportPath = path.join(testFsPath, `export-${jestWorkerId()}`);
 
 const testCosmosPlugin = {
   name: 'Test Cosmos plugin',
@@ -70,7 +70,7 @@ it('embeds UI plugin in playground HTML', async () => {
           name: 'Test Cosmos plugin',
           // Paths are relative to the export directory
           rootDir: `plugin-${jestWorkerId()}`,
-          ui: `plugin-${jestWorkerId()}/ui.js`,
+          ui: path.join(`plugin-${jestWorkerId()}`, 'ui.js'),
         },
       ])
     );
