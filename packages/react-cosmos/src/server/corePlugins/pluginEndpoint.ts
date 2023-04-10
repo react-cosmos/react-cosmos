@@ -17,10 +17,10 @@ export const pluginEndpointServerPlugin: CosmosServerPlugin = {
           return;
         }
 
-        const resolvedPath = path.isAbsolute(moduleId)
-          ? // Windows paths don't start with a slash (e.g. C:\foo\bar.js)
-            moduleId
-          : resolveSilent(`/${moduleId}`);
+        const resolvedPath = resolveSilent(
+          // Windows paths don't start with a slash (e.g. C:\foo\bar.js)
+          path.isAbsolute(moduleId) ? moduleId : `/${moduleId}`
+        );
 
         if (!resolvedPath) {
           res.sendStatus(404);
