@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo } from 'react';
 import {
-  FixtureLoader,
-  ReactDecorators,
-  ReactFixtureWrappers,
+  FixtureConnect,
+  LazyReactDecoratorWrappersByPath,
+  LazyReactFixtureWrappersByPath,
 } from 'react-cosmos-core';
 import { createDomRendererConnect } from './domRendererConnect.js';
 import { domRendererId } from './domRendererId.js';
@@ -10,8 +10,8 @@ import { ErrorCatch } from './ErrorCatch.js';
 import { selectedFixtureId } from './selectedFixtureId.js';
 
 type Props = {
-  fixtures: ReactFixtureWrappers;
-  decorators: ReactDecorators;
+  fixtures: LazyReactFixtureWrappersByPath;
+  decorators: LazyReactDecoratorWrappersByPath;
   playgroundUrl: string;
   onErrorReset?: () => unknown;
 };
@@ -45,18 +45,32 @@ export function DomFixtureLoader({
   }, [domRendererConnect]);
 
   return (
-    <FixtureLoader
+    <FixtureConnect
       rendererId={domRendererId}
       rendererConnect={domRendererConnect}
       fixtures={fixtures}
+      decorators={decorators}
+      systemDecorators={systemDecorators}
       selectedFixtureId={selectedFixtureId}
-      systemDecorators={[ErrorCatch]}
-      userDecorators={decorators}
       renderMessage={renderDomMessage}
       onErrorReset={onErrorReset}
     />
   );
+  // return (
+  //   <FixtureLoader
+  //     rendererId={domRendererId}
+  //     rendererConnect={domRendererConnect}
+  //     fixtures={fixtures}
+  //     selectedFixtureId={selectedFixtureId}
+  //     systemDecorators={[ErrorCatch]}
+  //     userDecorators={decorators}
+  //     renderMessage={renderDomMessage}
+  //     onErrorReset={onErrorReset}
+  //   />
+  // );
 }
+
+const systemDecorators = [ErrorCatch];
 
 const containerStyle: React.CSSProperties = {
   position: 'absolute',
@@ -72,6 +86,6 @@ const containerStyle: React.CSSProperties = {
   fontSize: 14,
 };
 
-export function renderDomMessage({ msg }: { msg: string }) {
+export function renderDomMessage(msg: string) {
   return <div style={containerStyle}>{msg}</div>;
 }

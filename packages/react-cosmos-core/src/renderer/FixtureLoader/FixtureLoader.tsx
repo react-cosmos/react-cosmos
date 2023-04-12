@@ -19,7 +19,7 @@ import { getFixture } from './fixtureHelpers.js';
 import { FixtureProvider } from './FixtureProvider.js';
 
 // TODO: Split into FixtureLoader and FixtureLoaderConnect
-export type Props = {
+type Props = {
   rendererId: string;
   rendererConnect: RendererConnect;
   fixtures: ReactFixtureWrappers;

@@ -4,6 +4,7 @@ export type FixtureId = {
 };
 
 export type FixtureListItem =
+  | { type: 'unknown' }
   | { type: 'single' }
   | { type: 'multi'; fixtureNames: string[] };
 

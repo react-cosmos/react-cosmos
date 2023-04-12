@@ -34,24 +34,22 @@ ${globalImports
   .map(p => `import '${resolveImportPath(p, relativeToDir)}';`)
   .join(`\n`)}
 
-${fixtureKeys
-  .map((k, i) => `import fixture${i} from '${fixtures[k]}';`)
-  .join(`\n`)}
-
-${decoratorKeys
-  .map((k, i) => `import decorator${i} from '${decorators[k]}';`)
-  .join(`\n`)}
-
 export const rendererConfig = ${JSON.stringify(rendererConfig, null, 2)};
 
 export const fixtures = {
 ${fixtureKeys
-  .map((k, i) => `  '${k}': { module: { default: fixture${i} } }`)
+  .map(
+    k => `  '${k}': { lazy: true, getModule: () => import('${fixtures[k]}') }`
+  )
   .join(`,\n`)}
 };
 
 export const decorators = {
-${decoratorKeys.map((k, i) => `  '${k}': decorator${i}`).join(`,\n`)}
+${decoratorKeys
+  .map(
+    k => `  '${k}': { lazy: true, getModule: () => import('${decorators[k]}') }`
+  )
+  .join(`,\n`)}
 };
 `.trimStart();
 }

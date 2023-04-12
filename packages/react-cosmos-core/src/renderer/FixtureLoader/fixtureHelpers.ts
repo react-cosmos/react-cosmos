@@ -1,6 +1,7 @@
 import { isMultiFixture } from '../isMultiFixture.js';
 import { ReactFixture, ReactFixtureExport } from '../reactTypes.js';
 
+// TODO: Rename file to getFixture.ts
 export function getFixture(
   fixtureExport: ReactFixtureExport,
   fixtureName?: string
@@ -8,7 +9,8 @@ export function getFixture(
   if (fixtureName === undefined) {
     if (isMultiFixture(fixtureExport)) {
       // Fixture name missing in multi fixture
-      return;
+      const fixtureNames = Object.keys(fixtureExport);
+      return fixtureExport[fixtureNames[0]];
     }
 
     return fixtureExport;

@@ -1,6 +1,6 @@
 import {
-  ReactDecorators,
-  ReactFixtureWrappers,
+  LazyReactDecoratorWrappersByPath,
+  LazyReactFixtureWrappersByPath,
   RendererConfig,
 } from 'react-cosmos-core';
 
@@ -8,5 +8,5 @@ import {
 export const rendererConfig: RendererConfig = {
   playgroundUrl: 'http://localhost:5000',
 };
-export const fixtures: ReactFixtureWrappers = {};
-export const decorators: ReactDecorators = {};
+export const fixtures: LazyReactFixtureWrappersByPath = {};
+export const decorators: LazyReactDecoratorWrappersByPath = {};
