@@ -7,11 +7,13 @@ import {
 } from '../reactTypes.js';
 
 type FixtureModules = {
+  fixturePath: string;
   fixtureModule: ReactFixtureModule;
   decoratorModules: ReactDecoratorModule[];
 };
 
 export function useLazyFixtureModules(
+  fixturePath: string,
   fixtureWrapper: LazyReactFixtureWrapper,
   decoratorWrappers: LazyReactDecoratorWrapper[]
 ) {
@@ -28,14 +30,20 @@ export function useLazyFixtureModules(
       );
 
       if (!canceled) {
-        setModules({ fixtureModule, decoratorModules });
+        setModules({
+          fixturePath,
+          fixtureModule,
+          decoratorModules,
+        });
       }
     })();
 
     return () => {
       canceled = true;
     };
-  }, [decoratorWrappers, fixtureWrapper]);
+  }, [decoratorWrappers, fixturePath, fixtureWrapper]);
 
-  return modules;
+  // Stop returning modules once fixturePath changed to prevent rendering
+  // the previous fixture until the new fixture modules are loaded
+  return modules && modules.fixturePath === fixturePath ? modules : null;
 }

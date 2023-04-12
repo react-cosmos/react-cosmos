@@ -42,7 +42,11 @@ export function LazyFixtureLoader({
     [allDecoratorWrappersByPath, fixtureId.path]
   );
 
-  const modules = useLazyFixtureModules(fixtureWrapper, decoratorWrappers);
+  const modules = useLazyFixtureModules(
+    fixtureId.path,
+    fixtureWrapper,
+    decoratorWrappers
+  );
 
   if (!modules) {
     return null;

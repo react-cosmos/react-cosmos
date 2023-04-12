@@ -13,32 +13,22 @@ export function useSelectedFixture(
 ) {
   const [selectedFixture, setSelectedFixture] =
     useState<SelectedFixture | null>(() => {
-      if (!selectedFixtureId) return null;
+      const fixtureId = selectedFixtureId ?? initialFixtureId;
+      if (!fixtureId) return null;
 
       return {
-        fixtureId: selectedFixtureId || initialFixtureId,
+        fixtureId,
         fixtureState: {},
       };
     });
 
-  const fixtureSelected = selectedFixture !== null;
   const setFixtureState = useCallback<SetFixtureState>(
     stateUpdate => {
-      if (!fixtureSelected) {
-        console.warn(
-          '[FixtureLoader] Trying to set fixture state with no fixture selected'
-        );
-        return;
-      }
-
-      // Multiple state changes can be dispatched by fixture plugins at almost
-      // the same time. Since state changes are batched in React, current state
-      // (this.state.fixtureState) can be stale at dispatch time, and extending
-      // it can result in cancelling previous state changes that are queued.
-      // Using an updater function like ({ prevState }) => nextState ensures
-      // every state change is honored, regardless of timing.
       setSelectedFixture(prevState => {
-        if (!prevState) return null;
+        if (!prevState) {
+          console.warn('Trying to set fixture state with no fixture selected');
+          return null;
+        }
 
         return {
           ...prevState,
@@ -46,7 +36,7 @@ export function useSelectedFixture(
         };
       });
     },
-    [fixtureSelected, setSelectedFixture]
+    [setSelectedFixture]
   );
 
   return {
