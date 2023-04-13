@@ -65,6 +65,10 @@
       },
       "uniqueItems": true
     },
+    "lazy": {
+      "description": "Dynamically import fixture and decorator modules as they are loaded. When false all fixture and decorator modules are imported statically and bundled together. [default: false]",
+      "type": "boolean"
+    },
     "userDepsFilePath": {
       "description": "Where to generate a file that contains a map to all fixtures and other Cosmos-related user modules. Only used in setups where Cosmos can't piggyback on the user's build (eg. React Native setups). [default: \"cosmos.userdeps.js\"]",
       "type": "string",
@@ -83,11 +87,11 @@
       "type": "number"
     },
     "https": {
-      "description": "Server will be served over HTTPS",
+      "description": "Server will be served over HTTPS.",
       "type": "boolean"
     },
     "httpsOptions": {
-      "description": "Additional options for HTTPS server",
+      "description": "Additional options for HTTPS server.",
       "type": "object",
       "additionalProperties": false,
       "properties": {

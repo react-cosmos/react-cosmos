@@ -24,6 +24,7 @@ export type CosmosConfig = {
   https: boolean;
   httpsOptions: null | HttpsOptions;
   ignore: string[];
+  lazy: boolean;
   port: number;
   portRetries: number;
   plugins: string[];

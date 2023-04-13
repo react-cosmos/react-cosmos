@@ -24,6 +24,7 @@ export function createCosmosConfig(
     https: getHttps(cosmosConfigInput),
     httpsOptions: getHttpsOptions(cosmosConfigInput, rootDir),
     ignore: getIgnore(cosmosConfigInput),
+    lazy: cosmosConfigInput.lazy ?? false,
     port: getPort(cosmosConfigInput),
     portRetries: getPortRetries(cosmosConfigInput),
     plugins: getPlugins(cosmosConfigInput, rootDir),
