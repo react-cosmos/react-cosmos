@@ -1,22 +1,36 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useMemo, useState } from 'react';
 import { FixtureId } from '../../fixture/types.js';
 import {
-  LazyReactDecoratorWrappersByPath,
-  LazyReactFixtureWrappersByPath,
+  ByPath,
+  LazyReactDecoratorWrapper,
+  LazyReactFixtureWrapper,
   ReactDecorator,
+  ReactDecoratorWrapper,
+  ReactFixtureWrapper,
 } from '../reactTypes.js';
 import { RendererConnect } from '../types.js';
 import { FixtureStateChangeResponse } from './FixtureStateChangeResponse.js';
 import { LazyFixtureLoader } from './LazyFixtureLoader.js';
+import { StaticFixtureLoader } from './StaticFixtureLoader.js';
 import { useRendererRequest } from './useRendererRequest.js';
 import { useRendererResponse } from './useRendererResponse.js';
 import { useSelectedFixture } from './useSelectedFixture.js';
 
-type Props = {
+type ModuleWrappers =
+  | {
+      lazy: true;
+      fixtures: ByPath<LazyReactFixtureWrapper>;
+      decorators: ByPath<LazyReactDecoratorWrapper>;
+    }
+  | {
+      lazy: false;
+      fixtures: ByPath<ReactFixtureWrapper>;
+      decorators: ByPath<ReactDecoratorWrapper>;
+    };
+
+type Props = ModuleWrappers & {
   rendererId: string;
   rendererConnect: RendererConnect;
-  fixtures: LazyReactFixtureWrappersByPath;
-  decorators: LazyReactDecoratorWrappersByPath;
   systemDecorators: ReactDecorator[];
   initialFixtureId?: FixtureId;
   selectedFixtureId?: null | FixtureId;
@@ -26,6 +40,7 @@ type Props = {
 export function FixtureConnect({
   rendererId,
   rendererConnect,
+  lazy,
   fixtures,
   decorators,
   systemDecorators,
@@ -39,23 +54,33 @@ export function FixtureConnect({
   const { selectedFixture, setSelectedFixture, setFixtureState } =
     useSelectedFixture(initialFixtureId, selectedFixtureId);
 
+  // Memoize object and create union type that can be refined by lazy flag
+  const fixtureWrappers = useMemo(
+    () => (lazy ? { lazy, wrappers: fixtures } : { lazy, wrappers: fixtures }),
+    [fixtures, lazy]
+  );
+
   useRendererRequest(
     rendererId,
     rendererConnect,
-    fixtures,
+    fixtureWrappers,
     setSelectedFixture,
     setRenderKey,
     onErrorReset
   );
 
-  useRendererResponse(rendererId, rendererConnect, fixtures, initialFixtureId);
+  useRendererResponse(
+    rendererId,
+    rendererConnect,
+    fixtureWrappers,
+    initialFixtureId
+  );
 
   if (!selectedFixture) {
     return renderMessage('No fixture selected.');
   }
 
-  const fixtureWrapper = fixtures[selectedFixture.fixtureId.path];
-  if (!fixtureWrapper) {
+  if (!fixtures[selectedFixture.fixtureId.path]) {
     return renderMessage(
       `Invalid fixture path: ${selectedFixture.fixtureId.path}`
     );
@@ -69,17 +94,31 @@ export function FixtureConnect({
       fixtureId={fixtureId}
       fixtureState={fixtureState}
     >
-      <LazyFixtureLoader
-        fixtureWrapper={fixtureWrapper}
-        allDecoratorWrappersByPath={decorators}
-        systemDecorators={systemDecorators}
-        fixtureId={fixtureId}
-        fixtureState={fixtureState}
-        setFixtureState={setFixtureState}
-        renderMessage={renderMessage}
-        renderKey={renderKey}
-        onErrorReset={onErrorReset}
-      />
+      {lazy ? (
+        <LazyFixtureLoader
+          fixtureWrapper={fixtures[selectedFixture.fixtureId.path]}
+          allDecoratorWrappersByPath={decorators}
+          systemDecorators={systemDecorators}
+          fixtureId={fixtureId}
+          fixtureState={fixtureState}
+          setFixtureState={setFixtureState}
+          renderMessage={renderMessage}
+          renderKey={renderKey}
+          onErrorReset={onErrorReset}
+        />
+      ) : (
+        <StaticFixtureLoader
+          fixtureWrapper={fixtures[selectedFixture.fixtureId.path]}
+          allDecoratorWrappersByPath={decorators}
+          systemDecorators={systemDecorators}
+          fixtureId={fixtureId}
+          fixtureState={fixtureState}
+          setFixtureState={setFixtureState}
+          renderMessage={renderMessage}
+          renderKey={renderKey}
+          onErrorReset={onErrorReset}
+        />
+      )}
     </FixtureStateChangeResponse>
   );
 }

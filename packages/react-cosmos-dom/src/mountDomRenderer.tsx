@@ -1,7 +1,8 @@
 import React from 'react';
 import {
-  LazyReactDecoratorWrappersByPath,
-  LazyReactFixtureWrappersByPath,
+  ByPath,
+  LazyReactDecoratorWrapper,
+  LazyReactFixtureWrapper,
 } from 'react-cosmos-core';
 import { createRoot } from 'react-dom/client';
 import { DomFixtureLoader } from './DomFixtureLoader.js';
@@ -16,8 +17,8 @@ let cachedRoot: CachedRoot | null = null;
 
 type Args = {
   rendererConfig: DomRendererConfig;
-  fixtures: LazyReactFixtureWrappersByPath;
-  decorators: LazyReactDecoratorWrappersByPath;
+  fixtures: ByPath<LazyReactFixtureWrapper>;
+  decorators: ByPath<LazyReactDecoratorWrapper>;
   onErrorReset?: () => unknown;
 };
 export function mountDomRenderer({

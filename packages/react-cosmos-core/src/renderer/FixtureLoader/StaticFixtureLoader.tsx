@@ -1,20 +1,20 @@
 import React, { ReactElement, useMemo } from 'react';
 import { FixtureId } from '../../fixture/types.js';
 import { FixtureState, SetFixtureState } from '../../fixtureState/types.js';
-import { getSortedLazyDecoratorsForFixturePath } from '../getSortedLazyDecoratorsForFixturePath.js';
+import { getSortedStaticDecoratorsForFixturePath } from '../getSortedStaticDecoratorsForFixturePath.js';
 import {
   ByPath,
-  LazyReactDecoratorWrapper,
-  LazyReactFixtureWrapper,
   ReactDecorator,
+  ReactDecoratorWrapper,
+  ReactFixtureWrapper,
 } from '../reactTypes.js';
 import { DecoratedFixture } from './DecoratedFixture.js';
 import { getFixture } from './fixtureHelpers.js';
-import { useLazyFixtureModules } from './useLazyFixtureModules.js';
+import { useStaticFixtureModules } from './useStaticFixtureModules.js';
 
 type Props = {
-  fixtureWrapper: LazyReactFixtureWrapper;
-  allDecoratorWrappersByPath: ByPath<LazyReactDecoratorWrapper>;
+  fixtureWrapper: ReactFixtureWrapper;
+  allDecoratorWrappersByPath: ByPath<ReactDecoratorWrapper>;
   systemDecorators: ReactDecorator[];
   fixtureId: FixtureId;
   fixtureState: FixtureState;
@@ -23,7 +23,7 @@ type Props = {
   renderKey: number;
   onErrorReset?: () => unknown;
 };
-export function LazyFixtureLoader({
+export function StaticFixtureLoader({
   fixtureWrapper,
   allDecoratorWrappersByPath,
   systemDecorators,
@@ -36,22 +36,18 @@ export function LazyFixtureLoader({
 }: Props) {
   const decoratorWrappers = useMemo(
     () =>
-      getSortedLazyDecoratorsForFixturePath(
+      getSortedStaticDecoratorsForFixturePath(
         fixtureId.path,
         allDecoratorWrappersByPath
       ),
     [allDecoratorWrappersByPath, fixtureId.path]
   );
 
-  const modules = useLazyFixtureModules(
+  const modules = useStaticFixtureModules(
     fixtureId.path,
     fixtureWrapper,
     decoratorWrappers
   );
-
-  if (!modules) {
-    return null;
-  }
 
   const { fixtureModule, decoratorModules } = modules;
   const fixtureExport = fixtureModule.default;

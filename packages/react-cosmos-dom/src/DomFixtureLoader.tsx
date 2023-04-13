@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
 import {
+  ByPath,
   FixtureConnect,
-  LazyReactDecoratorWrappersByPath,
-  LazyReactFixtureWrappersByPath,
+  LazyReactDecoratorWrapper,
+  LazyReactFixtureWrapper,
 } from 'react-cosmos-core';
 import { createDomRendererConnect } from './domRendererConnect.js';
 import { domRendererId } from './domRendererId.js';
@@ -10,8 +11,8 @@ import { ErrorCatch } from './ErrorCatch.js';
 import { selectedFixtureId } from './selectedFixtureId.js';
 
 type Props = {
-  fixtures: LazyReactFixtureWrappersByPath;
-  decorators: LazyReactDecoratorWrappersByPath;
+  fixtures: ByPath<LazyReactFixtureWrapper>;
+  decorators: ByPath<LazyReactDecoratorWrapper>;
   playgroundUrl: string;
   onErrorReset?: () => unknown;
 };
@@ -48,6 +49,7 @@ export function DomFixtureLoader({
     <FixtureConnect
       rendererId={domRendererId}
       rendererConnect={domRendererConnect}
+      lazy={true}
       fixtures={fixtures}
       decorators={decorators}
       systemDecorators={systemDecorators}

@@ -1,21 +1,21 @@
-import { ByPath, LazyReactDecoratorWrapper } from './reactTypes.js';
+import { ByPath, ReactDecoratorWrapper } from './reactTypes.js';
 
-export function getSortedLazyDecoratorsForFixturePath(
+export function getSortedStaticDecoratorsForFixturePath(
   fixturePath: string,
-  decoratorsByPath: ByPath<LazyReactDecoratorWrapper>
-): LazyReactDecoratorWrapper[] {
+  decoratorsByPath: ByPath<ReactDecoratorWrapper>
+): ReactDecoratorWrapper[] {
   return getSortedDecorators(
     getDecoratorsForFixturePath(decoratorsByPath, fixturePath)
   );
 }
 
 function getDecoratorsForFixturePath(
-  decoratorsByPath: ByPath<LazyReactDecoratorWrapper>,
+  decoratorsByPath: ByPath<ReactDecoratorWrapper>,
   fixturePath: string
 ) {
   return Object.keys(decoratorsByPath)
     .filter(dPath => isParentDir(getParentPath(dPath), fixturePath))
-    .reduce<ByPath<LazyReactDecoratorWrapper>>(
+    .reduce<ByPath<ReactDecoratorWrapper>>(
       (acc, dPath) => ({ ...acc, [dPath]: decoratorsByPath[dPath] }),
       {}
     );
@@ -32,8 +32,8 @@ function getParentPath(nestedPath: string) {
 }
 
 function getSortedDecorators(
-  decoratorsByPath: ByPath<LazyReactDecoratorWrapper>
-): LazyReactDecoratorWrapper[] {
+  decoratorsByPath: ByPath<ReactDecoratorWrapper>
+): ReactDecoratorWrapper[] {
   return sortPathsByDepthAsc(Object.keys(decoratorsByPath)).map(
     decoratorPath => decoratorsByPath[decoratorPath]
   );

@@ -1,6 +1,7 @@
+import { mapValues } from 'lodash-es';
 import React from 'react';
 import { create } from 'react-test-renderer';
-import { FixtureLoader } from '../FixtureLoader.js';
+import { FixtureConnect } from '../FixtureConnect.js';
 import { createPostMessageConnect } from '../postMessage.js';
 import {
   createRendererConnectMockApi,
@@ -43,12 +44,16 @@ export async function mountPostMessage(
 }
 
 function getElement({ decorators = {}, ...otherArgs }: FixtureLoaderTestArgs) {
+  const decoratorsWrappers = mapValues(decorators, decorator => {
+    return { module: { default: decorator } };
+  });
   return (
-    <FixtureLoader
+    <FixtureConnect
       {...otherArgs}
       rendererConnect={createPostMessageConnect()}
+      lazy={false}
+      decorators={decoratorsWrappers}
       systemDecorators={[]}
-      userDecorators={decorators}
     />
   );
 }

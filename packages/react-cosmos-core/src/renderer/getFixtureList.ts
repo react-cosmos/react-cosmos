@@ -1,19 +1,26 @@
 import { FixtureList, FixtureListItem } from '../fixture/types.js';
 import { isMultiFixture } from './isMultiFixture.js';
 import {
-  LazyReactFixtureWrappersByPath,
+  FixtureWrappers,
   ReactFixtureExport,
   ReactFixtureExports,
   ReactFixtureWrapper,
   ReactFixtureWrappers,
 } from './reactTypes.js';
 
-export function getFixtureListFromLazyWrappers(
-  wrappers: LazyReactFixtureWrappersByPath
-) {
-  return Object.keys(wrappers).reduce((acc: FixtureList, fixturePath) => {
-    return { ...acc, [fixturePath]: { type: 'single' } as FixtureListItem };
-  }, {});
+export function getFixtureListFromWrappersNew(fixtures: FixtureWrappers) {
+  return Object.keys(fixtures.wrappers).reduce(
+    (acc: FixtureList, fixturePath) => {
+      return {
+        ...acc,
+        [fixturePath]: fixtures.lazy
+          ? // Maybe: { type: 'unknown' }
+            ({ type: 'single' } as FixtureListItem)
+          : getItemFromWrapper(fixtures.wrappers[fixturePath]),
+      };
+    },
+    {}
+  );
 }
 
 export function getFixtureListFromWrappers(wrappers: ReactFixtureWrappers) {

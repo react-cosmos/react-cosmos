@@ -1,4 +1,5 @@
 import { waitFor } from '@testing-library/react';
+import { mapValues } from 'lodash-es';
 import React from 'react';
 import { create } from 'react-test-renderer';
 import { WebSocketServer } from 'ws';
@@ -6,7 +7,7 @@ import {
   rendererSocketMessage,
   SocketMessage,
 } from '../../../server/socketMessage.js';
-import { FixtureLoader } from '../FixtureLoader.js';
+import { FixtureConnect } from '../FixtureConnect.js';
 import { createWebSocketsConnect } from '../webSockets.js';
 import {
   createRendererConnectMockApi,
@@ -64,12 +65,16 @@ export async function mountWebSockets(
 }
 
 function getElement({ decorators = {}, ...otherArgs }: FixtureLoaderTestArgs) {
+  const decoratorsWrappers = mapValues(decorators, decorator => {
+    return { module: { default: decorator } };
+  });
   return (
-    <FixtureLoader
+    <FixtureConnect
       {...otherArgs}
       rendererConnect={createWebSocketsConnect(`ws://localhost:${port}`)}
+      lazy={false}
+      decorators={decoratorsWrappers}
       systemDecorators={[]}
-      userDecorators={decorators}
     />
   );
 }

@@ -31,14 +31,12 @@ export type LazyReactDecoratorWrapper = {
 };
 
 // TODO: Rename the maps to end with ByPath
+export type ByPath<T> = Record<string, T>;
 export type ReactFixtureExports = Record<string, ReactFixtureExport>;
 export type ReactFixtureWrappers = Record<string, ReactFixtureWrapper>;
-export type LazyReactFixtureWrappersByPath = Record<
-  string,
-  LazyReactFixtureWrapper
->;
 export type ReactDecorators = Record<string, ReactDecorator>;
-export type LazyReactDecoratorWrappersByPath = Record<
-  string,
-  LazyReactDecoratorWrapper
->;
+
+// TODO: Rename to ReactFixtureWrappers
+export type FixtureWrappers =
+  | { lazy: true; wrappers: ByPath<LazyReactFixtureWrapper> }
+  | { lazy: false; wrappers: ByPath<ReactFixtureWrapper> };
