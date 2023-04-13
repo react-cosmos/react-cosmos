@@ -1,5 +1,5 @@
 import { RendererConfig } from 'react-cosmos-core';
-import { userDepsTemplate } from './userDepsTemplate.js';
+import { userDepsStaticTemplate } from './userDepsStaticTemplate.js';
 
 const globalImports = [
   '/Users/ovidiu/cosmos/src/polyfills.ts',
@@ -19,7 +19,7 @@ const rendererConfig: RendererConfig = {
 
 it('should generate user deps module with absolute paths', () => {
   expect(
-    userDepsTemplate({
+    userDepsStaticTemplate({
       globalImports,
       fixturePaths,
       decoratorPaths,
@@ -32,7 +32,7 @@ it('should generate user deps module with absolute paths', () => {
 
 it('should generate user deps module with relative paths', () => {
   expect(
-    userDepsTemplate({
+    userDepsStaticTemplate({
       globalImports,
       fixturePaths,
       decoratorPaths,
