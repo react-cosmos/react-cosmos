@@ -1,13 +1,6 @@
-import React, { ReactElement, useMemo } from 'react';
+import React, { ReactElement } from 'react';
 import { FixtureId } from '../../fixture/types.js';
-import {
-  ByPath,
-  LazyReactDecoratorWrapper,
-  LazyReactFixtureWrapper,
-  ReactDecorator,
-  ReactDecoratorWrapper,
-  ReactFixtureWrapper,
-} from '../reactTypes.js';
+import { ReactDecorator, UserModuleWrappers } from '../reactTypes.js';
 import { RendererConnect } from '../types.js';
 import { FixtureStateChangeResponse } from './FixtureStateChangeResponse.js';
 import { LazyFixtureLoader } from './LazyFixtureLoader.js';
@@ -16,21 +9,10 @@ import { useRendererRequest } from './useRendererRequest.js';
 import { useRendererResponse } from './useRendererResponse.js';
 import { useSelectedFixture } from './useSelectedFixture.js';
 
-type ModuleWrappers =
-  | {
-      lazy: true;
-      fixtures: ByPath<LazyReactFixtureWrapper>;
-      decorators: ByPath<LazyReactDecoratorWrapper>;
-    }
-  | {
-      lazy: false;
-      fixtures: ByPath<ReactFixtureWrapper>;
-      decorators: ByPath<ReactDecoratorWrapper>;
-    };
-
-type Props = ModuleWrappers & {
+type Props = {
   rendererId: string;
   rendererConnect: RendererConnect;
+  moduleWrappers: UserModuleWrappers;
   systemDecorators: ReactDecorator[];
   initialFixtureId?: FixtureId;
   selectedFixtureId?: null | FixtureId;
@@ -40,9 +22,7 @@ type Props = ModuleWrappers & {
 export function FixtureConnect({
   rendererId,
   rendererConnect,
-  lazy,
-  fixtures,
-  decorators,
+  moduleWrappers,
   systemDecorators,
   initialFixtureId,
   selectedFixtureId,
@@ -52,16 +32,10 @@ export function FixtureConnect({
   const { selectedFixture, setSelectedFixture, setFixtureState } =
     useSelectedFixture(initialFixtureId, selectedFixtureId);
 
-  // Memoize object and create union type that can be refined by lazy flag
-  const fixtureWrappers = useMemo(
-    () => (lazy ? { lazy, wrappers: fixtures } : { lazy, wrappers: fixtures }),
-    [fixtures, lazy]
-  );
-
   useRendererRequest(
     rendererId,
     rendererConnect,
-    fixtureWrappers,
+    moduleWrappers,
     setSelectedFixture,
     onErrorReset
   );
@@ -69,7 +43,7 @@ export function FixtureConnect({
   useRendererResponse(
     rendererId,
     rendererConnect,
-    fixtureWrappers,
+    moduleWrappers,
     initialFixtureId
   );
 
@@ -77,7 +51,7 @@ export function FixtureConnect({
     return renderMessage('No fixture selected.');
   }
 
-  if (!fixtures[selectedFixture.fixtureId.path]) {
+  if (!moduleWrappers.fixtures[selectedFixture.fixtureId.path]) {
     return renderMessage(
       `Fixture path not found: ${selectedFixture.fixtureId.path}`
     );
@@ -91,10 +65,10 @@ export function FixtureConnect({
       fixtureId={fixtureId}
       fixtureState={fixtureState}
     >
-      {lazy ? (
+      {moduleWrappers.lazy ? (
         <LazyFixtureLoader
-          fixtureWrapper={fixtures[selectedFixture.fixtureId.path]}
-          allDecoratorWrappersByPath={decorators}
+          fixtureWrapper={moduleWrappers.fixtures[fixtureId.path]}
+          allDecoratorWrappersByPath={moduleWrappers.decorators}
           systemDecorators={systemDecorators}
           fixtureId={fixtureId}
           fixtureState={fixtureState}
@@ -105,8 +79,8 @@ export function FixtureConnect({
         />
       ) : (
         <StaticFixtureLoader
-          fixtureWrapper={fixtures[selectedFixture.fixtureId.path]}
-          allDecoratorWrappersByPath={decorators}
+          fixtureWrapper={moduleWrappers.fixtures[fixtureId.path]}
+          allDecoratorWrappersByPath={moduleWrappers.decorators}
           systemDecorators={systemDecorators}
           fixtureId={fixtureId}
           fixtureState={fixtureState}
