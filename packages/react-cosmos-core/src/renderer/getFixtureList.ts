@@ -9,13 +9,12 @@ import {
 } from './reactTypes.js';
 
 export function getFixtureListFromWrappersNew(wrappers: UserModuleWrappers) {
-  return Object.keys(wrappers.fixtures).reduce(
-    (acc: FixtureList, fixturePath) => {
+  return Object.keys(wrappers.fixtures).reduce<FixtureList>(
+    (acc, fixturePath) => {
       return {
         ...acc,
         [fixturePath]: wrappers.lazy
-          ? // Maybe: { type: 'unknown' }
-            ({ type: 'single' } as FixtureListItem)
+          ? { type: 'single' }
           : getItemFromWrapper(wrappers.fixtures[fixturePath]),
       };
     },
