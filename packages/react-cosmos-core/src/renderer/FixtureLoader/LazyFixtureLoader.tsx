@@ -1,7 +1,7 @@
 import React, { ReactElement, useMemo } from 'react';
 import { FixtureId } from '../../fixture/types.js';
 import { FixtureState, SetFixtureState } from '../../fixtureState/types.js';
-import { getSortedLazyDecoratorsForFixturePath } from '../getSortedLazyDecoratorsForFixturePath.js';
+import { getSortedDecoratorsForFixturePath } from '../getSortedDecoratorsForFixturePath.js';
 import {
   ByPath,
   LazyReactDecoratorWrapper,
@@ -14,7 +14,7 @@ import { useLazyFixtureModules } from './useLazyFixtureModules.js';
 
 type Props = {
   fixtureWrapper: LazyReactFixtureWrapper;
-  allDecoratorWrappersByPath: ByPath<LazyReactDecoratorWrapper>;
+  decorators: ByPath<LazyReactDecoratorWrapper>;
   systemDecorators: ReactDecorator[];
   fixtureId: FixtureId;
   fixtureState: FixtureState;
@@ -25,7 +25,7 @@ type Props = {
 };
 export function LazyFixtureLoader({
   fixtureWrapper,
-  allDecoratorWrappersByPath,
+  decorators,
   systemDecorators,
   fixtureId,
   fixtureState,
@@ -35,12 +35,8 @@ export function LazyFixtureLoader({
   onErrorReset,
 }: Props) {
   const decoratorWrappers = useMemo(
-    () =>
-      getSortedLazyDecoratorsForFixturePath(
-        fixtureId.path,
-        allDecoratorWrappersByPath
-      ),
-    [allDecoratorWrappersByPath, fixtureId.path]
+    () => getSortedDecoratorsForFixturePath(fixtureId.path, decorators),
+    [decorators, fixtureId.path]
   );
 
   const modules = useLazyFixtureModules(

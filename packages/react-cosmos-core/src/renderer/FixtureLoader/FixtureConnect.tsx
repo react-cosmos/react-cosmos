@@ -67,7 +67,7 @@ export function FixtureConnect({
       {moduleWrappers.lazy ? (
         <LazyFixtureLoader
           fixtureWrapper={moduleWrappers.fixtures[fixtureId.path]}
-          allDecoratorWrappersByPath={moduleWrappers.decorators}
+          decorators={moduleWrappers.decorators}
           systemDecorators={systemDecorators}
           fixtureId={fixtureId}
           fixtureState={fixtureState}
@@ -79,7 +79,7 @@ export function FixtureConnect({
       ) : (
         <StaticFixtureLoader
           fixtureWrapper={moduleWrappers.fixtures[fixtureId.path]}
-          allDecoratorWrappersByPath={moduleWrappers.decorators}
+          decorators={moduleWrappers.decorators}
           systemDecorators={systemDecorators}
           fixtureId={fixtureId}
           fixtureState={fixtureState}

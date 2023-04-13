@@ -1,7 +1,7 @@
 import React, { ReactElement, useMemo } from 'react';
 import { FixtureId } from '../../fixture/types.js';
 import { FixtureState, SetFixtureState } from '../../fixtureState/types.js';
-import { getSortedStaticDecoratorsForFixturePath } from '../getSortedStaticDecoratorsForFixturePath.js';
+import { getSortedDecoratorsForFixturePath } from '../getSortedDecoratorsForFixturePath.js';
 import {
   ByPath,
   ReactDecorator,
@@ -14,7 +14,7 @@ import { useStaticFixtureModules } from './useStaticFixtureModules.js';
 
 type Props = {
   fixtureWrapper: ReactFixtureWrapper;
-  allDecoratorWrappersByPath: ByPath<ReactDecoratorWrapper>;
+  decorators: ByPath<ReactDecoratorWrapper>;
   systemDecorators: ReactDecorator[];
   fixtureId: FixtureId;
   fixtureState: FixtureState;
@@ -25,7 +25,7 @@ type Props = {
 };
 export function StaticFixtureLoader({
   fixtureWrapper,
-  allDecoratorWrappersByPath,
+  decorators,
   systemDecorators,
   fixtureId,
   fixtureState,
@@ -35,12 +35,8 @@ export function StaticFixtureLoader({
   onErrorReset,
 }: Props) {
   const decoratorWrappers = useMemo(
-    () =>
-      getSortedStaticDecoratorsForFixturePath(
-        fixtureId.path,
-        allDecoratorWrappersByPath
-      ),
-    [allDecoratorWrappersByPath, fixtureId.path]
+    () => getSortedDecoratorsForFixturePath(fixtureId.path, decorators),
+    [decorators, fixtureId.path]
   );
 
   const modules = useStaticFixtureModules(
