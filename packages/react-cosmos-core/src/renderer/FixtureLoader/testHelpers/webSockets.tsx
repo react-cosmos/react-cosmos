@@ -7,8 +7,8 @@ import {
   rendererSocketMessage,
   SocketMessage,
 } from '../../../server/socketMessage.js';
+import { createWebSocketsConnect } from '../createWebSocketsConnect.js';
 import { FixtureConnect } from '../FixtureConnect.js';
-import { createWebSocketsConnect } from '../webSockets.js';
 import {
   createRendererConnectMockApi,
   FixtureLoaderTestArgs,

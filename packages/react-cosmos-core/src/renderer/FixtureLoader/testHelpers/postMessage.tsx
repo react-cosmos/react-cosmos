@@ -1,8 +1,8 @@
 import { mapValues } from 'lodash-es';
 import React from 'react';
 import { create } from 'react-test-renderer';
+import { createPostMessageConnect } from '../createPostMessageConnect.js';
 import { FixtureConnect } from '../FixtureConnect.js';
-import { createPostMessageConnect } from '../postMessage.js';
 import {
   createRendererConnectMockApi,
   FixtureLoaderTestArgs,
