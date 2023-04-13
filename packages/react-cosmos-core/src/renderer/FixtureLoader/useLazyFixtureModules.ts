@@ -2,15 +2,8 @@ import { useEffect, useState } from 'react';
 import {
   LazyReactDecoratorWrapper,
   LazyReactFixtureWrapper,
-  ReactDecoratorModule,
-  ReactFixtureModule,
 } from '../reactTypes.js';
-
-type FixtureModules = {
-  fixturePath: string;
-  fixtureModule: ReactFixtureModule;
-  decoratorModules: ReactDecoratorModule[];
-};
+import { FixtureModules } from './types.js';
 
 export function useLazyFixtureModules(
   fixturePath: string,

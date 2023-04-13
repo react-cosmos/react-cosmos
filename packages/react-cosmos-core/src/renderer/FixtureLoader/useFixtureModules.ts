@@ -1,16 +1,6 @@
 import { useMemo } from 'react';
-import {
-  ReactDecoratorModule,
-  ReactDecoratorWrapper,
-  ReactFixtureModule,
-  ReactFixtureWrapper,
-} from '../reactTypes.js';
-
-type FixtureModules = {
-  fixturePath: string;
-  fixtureModule: ReactFixtureModule;
-  decoratorModules: ReactDecoratorModule[];
-};
+import { ReactDecoratorWrapper, ReactFixtureWrapper } from '../reactTypes.js';
+import { FixtureModules } from './types.js';
 
 export function useFixtureModules(
   fixturePath: string,
