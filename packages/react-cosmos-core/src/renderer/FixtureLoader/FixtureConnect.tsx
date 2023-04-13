@@ -51,13 +51,12 @@ export function FixtureConnect({
     return renderMessage('No fixture selected.');
   }
 
-  if (!moduleWrappers.fixtures[selectedFixture.fixtureId.path]) {
-    return renderMessage(
-      `Fixture path not found: ${selectedFixture.fixtureId.path}`
-    );
+  const { fixtureId, fixtureState, renderKey } = selectedFixture;
+
+  if (!moduleWrappers.fixtures[fixtureId.path]) {
+    return renderMessage(`Fixture path not found: ${fixtureId.path}`);
   }
 
-  const { fixtureId, fixtureState, renderKey } = selectedFixture;
   return (
     <FixtureStateChangeResponse
       rendererId={rendererId}
