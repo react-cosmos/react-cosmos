@@ -1,4 +1,4 @@
-import { waitFor } from '@testing-library/react';
+import retry from '@skidding/async-retry';
 import { mapValues } from 'lodash-es';
 import React from 'react';
 import { create } from 'react-test-renderer';
@@ -46,13 +46,13 @@ export async function mountWebSockets(
   async function cleanup() {
     wss.clients.forEach(client => client.close());
     wss.close();
-    await waitFor(() => expect(wss.clients.size).toBe(0));
+    await retry(() => expect(wss.clients.size).toBe(0));
   }
 
   expect.hasAssertions();
   const renderer = create(getElement(args));
   try {
-    await waitFor(() => expect(wss.clients.size).toBe(1));
+    await retry(() => expect(wss.clients.size).toBe(1));
     await cb({
       renderer,
       update: newArgs => renderer.update(getElement(newArgs)),
@@ -64,7 +64,11 @@ export async function mountWebSockets(
   }
 }
 
-function getElement({ decorators = {}, ...otherArgs }: FixtureLoaderTestArgs) {
+function getElement({
+  fixtures,
+  decorators = {},
+  ...otherArgs
+}: FixtureLoaderTestArgs) {
   const decoratorsWrappers = mapValues(decorators, decorator => {
     return { module: { default: decorator } };
   });
@@ -72,8 +76,11 @@ function getElement({ decorators = {}, ...otherArgs }: FixtureLoaderTestArgs) {
     <FixtureConnect
       {...otherArgs}
       rendererConnect={createWebSocketsConnect(`ws://localhost:${port}`)}
-      lazy={false}
-      decorators={decoratorsWrappers}
+      moduleWrappers={{
+        lazy: false,
+        fixtures,
+        decorators: decoratorsWrappers,
+      }}
       systemDecorators={[]}
     />
   );

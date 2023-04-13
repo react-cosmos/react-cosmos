@@ -43,7 +43,11 @@ export async function mountPostMessage(
   }
 }
 
-function getElement({ decorators = {}, ...otherArgs }: FixtureLoaderTestArgs) {
+function getElement({
+  fixtures,
+  decorators = {},
+  ...otherArgs
+}: FixtureLoaderTestArgs) {
   const decoratorsWrappers = mapValues(decorators, decorator => {
     return { module: { default: decorator } };
   });
@@ -51,8 +55,11 @@ function getElement({ decorators = {}, ...otherArgs }: FixtureLoaderTestArgs) {
     <FixtureConnect
       {...otherArgs}
       rendererConnect={createPostMessageConnect()}
-      lazy={false}
-      decorators={decoratorsWrappers}
+      moduleWrappers={{
+        lazy: false,
+        fixtures,
+        decorators: decoratorsWrappers,
+      }}
       systemDecorators={[]}
     />
   );
