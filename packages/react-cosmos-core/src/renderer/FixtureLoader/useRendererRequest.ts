@@ -1,7 +1,7 @@
 import { isEqual } from 'lodash-es';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { getFixtureListFromWrappersNew } from '../getFixtureList.js';
-import { FixtureWrappers } from '../reactTypes.js';
+import { UserModuleWrappers } from '../reactTypes.js';
 import {
   RendererConnect,
   RendererRequest,
@@ -13,13 +13,13 @@ import { SelectedFixture } from './useSelectedFixture.js';
 export function useRendererRequest(
   rendererId: string,
   rendererConnect: RendererConnect,
-  fixtureWrappers: FixtureWrappers,
+  moduleWrappers: UserModuleWrappers,
   setSelectedFixture: Dispatch<SetStateAction<SelectedFixture | null>>,
   onErrorReset?: () => unknown
 ) {
   useEffect(() => {
     function postReadyState() {
-      const fixtures = getFixtureListFromWrappersNew(fixtureWrappers);
+      const fixtures = getFixtureListFromWrappersNew(moduleWrappers);
       rendererConnect.postMessage({
         type: 'rendererReady',
         payload: { rendererId, fixtures },
@@ -90,7 +90,7 @@ export function useRendererRequest(
       unsubscribe();
     };
   }, [
-    fixtureWrappers,
+    moduleWrappers,
     onErrorReset,
     rendererConnect,
     rendererId,

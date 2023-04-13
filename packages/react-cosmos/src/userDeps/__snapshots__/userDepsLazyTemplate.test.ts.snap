@@ -13,13 +13,19 @@ export const rendererConfig = {
   "playgroundUrl": "http://localhost:5002"
 };
 
-export const fixtures = {
+const fixtures = {
   'src/Counter/Counter.fixture.tsx': { getModule: () => import('/Users/ovidiu/cosmos/src/Counter/Counter.fixture.tsx') },
   'src/CounterButton/CounterButton.fixture.tsx': { getModule: () => import('/Users/ovidiu/cosmos/src/CounterButton/CounterButton.fixture.tsx') }
 };
 
-export const decorators = {
+const decorators = {
   'src/cosmos.decorator.tsx': { getModule: () => import('/Users/ovidiu/cosmos/src/cosmos.decorator.tsx') }
+};
+
+export const moduleWrappers = {
+  lazy: true,
+  fixtures,
+  decorators,
 };
 "
 `;
@@ -37,13 +43,19 @@ export const rendererConfig = {
   "playgroundUrl": "http://localhost:5002"
 };
 
-export const fixtures = {
+const fixtures = {
   'src/Counter/Counter.fixture.tsx': { getModule: () => import('./Counter/Counter.fixture.tsx') },
   'src/CounterButton/CounterButton.fixture.tsx': { getModule: () => import('./CounterButton/CounterButton.fixture.tsx') }
 };
 
-export const decorators = {
+const decorators = {
   'src/cosmos.decorator.tsx': { getModule: () => import('./cosmos.decorator.tsx') }
+};
+
+export const moduleWrappers = {
+  lazy: true,
+  fixtures,
+  decorators,
 };
 "
 `;

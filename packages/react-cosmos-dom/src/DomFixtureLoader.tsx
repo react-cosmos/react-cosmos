@@ -1,27 +1,18 @@
 import React, { useEffect, useMemo } from 'react';
-import {
-  ByPath,
-  FixtureConnect,
-  LazyReactDecoratorWrapper,
-  LazyReactFixtureWrapper,
-} from 'react-cosmos-core';
+import { FixtureConnect, UserModuleWrappers } from 'react-cosmos-core';
 import { createDomRendererConnect } from './domRendererConnect.js';
 import { domRendererId } from './domRendererId.js';
 import { ErrorCatch } from './ErrorCatch.js';
 import { selectedFixtureId } from './selectedFixtureId.js';
 
 type Props = {
-  fixtures: ByPath<LazyReactFixtureWrapper>;
-  decorators: ByPath<LazyReactDecoratorWrapper>;
+  moduleWrappers: UserModuleWrappers;
   playgroundUrl: string;
   onErrorReset?: () => unknown;
 };
-export function DomFixtureLoader({
-  fixtures,
-  decorators,
-  playgroundUrl,
-  onErrorReset,
-}: Props) {
+export function DomFixtureLoader(props: Props) {
+  const { moduleWrappers, playgroundUrl, onErrorReset } = props;
+
   const domRendererConnect = useMemo(
     () => createDomRendererConnect(playgroundUrl),
     [playgroundUrl]
@@ -49,27 +40,13 @@ export function DomFixtureLoader({
     <FixtureConnect
       rendererId={domRendererId}
       rendererConnect={domRendererConnect}
-      lazy={true}
-      fixtures={fixtures}
-      decorators={decorators}
+      moduleWrappers={moduleWrappers}
       systemDecorators={systemDecorators}
       selectedFixtureId={selectedFixtureId}
       renderMessage={renderDomMessage}
       onErrorReset={onErrorReset}
     />
   );
-  // return (
-  //   <FixtureLoader
-  //     rendererId={domRendererId}
-  //     rendererConnect={domRendererConnect}
-  //     fixtures={fixtures}
-  //     selectedFixtureId={selectedFixtureId}
-  //     systemDecorators={[ErrorCatch]}
-  //     userDecorators={decorators}
-  //     renderMessage={renderDomMessage}
-  //     onErrorReset={onErrorReset}
-  //   />
-  // );
 }
 
 const systemDecorators = [ErrorCatch];

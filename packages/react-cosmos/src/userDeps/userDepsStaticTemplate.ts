@@ -38,16 +38,21 @@ ${decoratorKeys
 
 export const rendererConfig = ${JSON.stringify(rendererConfig, null, 2)};
 
-export const fixtures = {
+const fixtures = {
 ${fixtureKeys
   .map((k, i) => ` '${k}': { module: { default: fixture${i} } }`)
   .join(`,\n`)}
 };
-
-export const decorators = {
+const decorators = {
 ${decoratorKeys
   .map((k, i) => ` '${k}': { module: { default: decorator${i} } }`)
   .join(`,\n`)}
+};
+
+export const moduleWrappers = {
+  lazy: false,
+  fixtures,
+  decorators,
 };
 `.trimStart();
 }

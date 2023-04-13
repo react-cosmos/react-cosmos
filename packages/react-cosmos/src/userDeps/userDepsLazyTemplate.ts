@@ -30,16 +30,22 @@ ${globalImports
 
 export const rendererConfig = ${JSON.stringify(rendererConfig, null, 2)};
 
-export const fixtures = {
+const fixtures = {
 ${fixtureKeys
   .map(k => `  '${k}': { getModule: () => import('${fixtures[k]}') }`)
   .join(`,\n`)}
 };
 
-export const decorators = {
+const decorators = {
 ${decoratorKeys
   .map(k => `  '${k}': { getModule: () => import('${decorators[k]}') }`)
   .join(`,\n`)}
+};
+
+export const moduleWrappers = {
+  lazy: true,
+  fixtures,
+  decorators,
 };
 `.trimStart();
 }

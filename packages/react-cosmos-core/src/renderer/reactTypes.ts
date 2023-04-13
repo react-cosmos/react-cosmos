@@ -36,7 +36,14 @@ export type ReactFixtureExports = Record<string, ReactFixtureExport>;
 export type ReactFixtureWrappers = Record<string, ReactFixtureWrapper>;
 export type ReactDecorators = Record<string, ReactDecorator>;
 
-// TODO: Rename to ReactFixtureWrappers
-export type FixtureWrappers =
-  | { lazy: true; wrappers: ByPath<LazyReactFixtureWrapper> }
-  | { lazy: false; wrappers: ByPath<ReactFixtureWrapper> };
+export type UserModuleWrappers =
+  | {
+      lazy: true;
+      fixtures: ByPath<LazyReactFixtureWrapper>;
+      decorators: ByPath<LazyReactDecoratorWrapper>;
+    }
+  | {
+      lazy: false;
+      fixtures: ByPath<ReactFixtureWrapper>;
+      decorators: ByPath<ReactDecoratorWrapper>;
+    };
