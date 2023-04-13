@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { FixtureId } from '../../fixture/types.js';
-import { getFixtureListFromWrappersNew } from '../getFixtureList.js';
+import { getFixtureListFromWrappers } from '../getFixtureList.js';
 import { UserModuleWrappers } from '../reactTypes.js';
 import { RendererConnect } from '../types.js';
 
@@ -14,7 +14,7 @@ export function useRendererResponse(
 
   useEffect(() => {
     if (!mountedRef.current) {
-      const fixtures = getFixtureListFromWrappersNew(moduleWrappers);
+      const fixtures = getFixtureListFromWrappers(moduleWrappers);
       rendererConnect.postMessage({
         type: 'rendererReady',
         payload: initialFixtureId
@@ -26,7 +26,7 @@ export function useRendererResponse(
 
   useEffect(() => {
     if (mountedRef.current) {
-      const fixtures = getFixtureListFromWrappersNew(moduleWrappers);
+      const fixtures = getFixtureListFromWrappers(moduleWrappers);
       rendererConnect.postMessage({
         type: 'fixtureListUpdate',
         payload: { rendererId, fixtures },

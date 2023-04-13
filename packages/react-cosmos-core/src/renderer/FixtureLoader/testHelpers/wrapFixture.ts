@@ -1,13 +1,12 @@
 import {
+  ByPath,
   ReactFixtureExport,
-  ReactFixtureExports,
   ReactFixtureWrapper,
-  ReactFixtureWrappers,
 } from '../../reactTypes.js';
 
 export function wrapFixtures(
-  fixtureExports: ReactFixtureExports
-): ReactFixtureWrappers {
+  fixtureExports: ByPath<ReactFixtureExport>
+): ByPath<ReactFixtureWrapper> {
   return Object.keys(fixtureExports).reduce((acc, fixturePath) => {
     return { ...acc, [fixturePath]: wrapFixture(fixtureExports[fixturePath]) };
   }, {});

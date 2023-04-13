@@ -9,7 +9,7 @@ import {
   ReactFixtureWrapper,
 } from '../reactTypes.js';
 import { DecoratedFixture } from './DecoratedFixture.js';
-import { getFixture } from './fixtureHelpers.js';
+import { getFixture } from './getFixture.js';
 import { useStaticFixtureModules } from './useStaticFixtureModules.js';
 
 type Props = {

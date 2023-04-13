@@ -30,12 +30,7 @@ export type LazyReactDecoratorWrapper = {
   getModule: () => Promise<ReactDecoratorModule>;
 };
 
-// TODO: Rename the maps to end with ByPath
 export type ByPath<T> = Record<string, T>;
-export type ReactFixtureExports = Record<string, ReactFixtureExport>;
-export type ReactFixtureWrappers = Record<string, ReactFixtureWrapper>;
-export type ReactDecorators = Record<string, ReactDecorator>;
-
 export type UserModuleWrappers =
   | {
       lazy: true;

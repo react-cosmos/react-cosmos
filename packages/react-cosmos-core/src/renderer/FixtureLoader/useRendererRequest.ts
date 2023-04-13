@@ -1,6 +1,6 @@
 import { isEqual } from 'lodash-es';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import { getFixtureListFromWrappersNew } from '../getFixtureList.js';
+import { getFixtureListFromWrappers } from '../getFixtureList.js';
 import { UserModuleWrappers } from '../reactTypes.js';
 import {
   RendererConnect,
@@ -19,7 +19,7 @@ export function useRendererRequest(
 ) {
   useEffect(() => {
     function postReadyState() {
-      const fixtures = getFixtureListFromWrappersNew(moduleWrappers);
+      const fixtures = getFixtureListFromWrappers(moduleWrappers);
       rendererConnect.postMessage({
         type: 'rendererReady',
         payload: { rendererId, fixtures },

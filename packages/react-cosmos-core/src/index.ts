@@ -11,7 +11,6 @@ export * from './fixtureTree/flattenFixtureTree.js';
 export * from './fixtureTree/types.js';
 export * from './playground/playgroundUrl.js';
 export * from './renderer/FixtureLoader/FixtureConnect.js';
-export * from './renderer/FixtureLoader/FixtureLoader.js';
 export * from './renderer/FixtureLoader/getDecoratedFixtureElement/index.js';
 export * from './renderer/FixtureLoader/postMessage.js';
 export * from './renderer/FixtureLoader/webSockets.js';

@@ -9,7 +9,7 @@ import {
   ReactDecorator,
 } from '../reactTypes.js';
 import { DecoratedFixture } from './DecoratedFixture.js';
-import { getFixture } from './fixtureHelpers.js';
+import { getFixture } from './getFixture.js';
 import { useLazyFixtureModules } from './useLazyFixtureModules.js';
 
 type Props = {

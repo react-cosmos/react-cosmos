@@ -3,7 +3,11 @@ import { findLast } from 'lodash-es';
 import { ReactTestRenderer } from 'react-test-renderer';
 import { FixtureId } from '../../../fixture/types.js';
 import { FixtureState } from '../../../fixtureState/types.js';
-import { ReactDecorators, ReactFixtureWrappers } from '../../reactTypes.js';
+import {
+  ByPath,
+  ReactDecorator,
+  ReactFixtureWrapper,
+} from '../../reactTypes.js';
 import {
   FixtureListUpdateResponse,
   FixtureStateChangeResponse,
@@ -22,10 +26,10 @@ type GetMessages = () => RendererMessage[];
 
 export type FixtureLoaderTestArgs = {
   rendererId: RendererId;
-  fixtures: ReactFixtureWrappers;
+  fixtures: ByPath<ReactFixtureWrapper>;
   selectedFixtureId?: null | FixtureId;
   initialFixtureId?: FixtureId;
-  decorators?: ReactDecorators;
+  decorators?: ByPath<ReactDecorator>;
   only?: boolean | 'postMessage' | 'webSocket';
   onErrorReset?: () => unknown;
 };

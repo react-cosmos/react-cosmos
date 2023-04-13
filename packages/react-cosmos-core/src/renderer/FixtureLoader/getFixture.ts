@@ -1,7 +1,6 @@
 import { isMultiFixture } from '../isMultiFixture.js';
 import { ReactFixture, ReactFixtureExport } from '../reactTypes.js';
 
-// TODO: Rename file to getFixture.ts
 export function getFixture(
   fixtureExport: ReactFixtureExport,
   fixtureName?: string

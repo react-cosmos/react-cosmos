@@ -1,11 +1,10 @@
 import React from 'react';
 import {
   createWebSocketsConnect,
+  FixtureConnect,
   FixtureId,
-  FixtureLoader,
-  ReactDecorators,
-  ReactFixtureWrappers,
   RendererConfig,
+  UserModuleWrappers,
 } from 'react-cosmos-core';
 import * as ReactNative from 'react-native';
 import { getSocketUrl } from './getSocketUrl.js';
@@ -17,32 +16,29 @@ const rendererId = 'native-renderer';
 
 type Props = {
   rendererConfig: RendererConfig;
-  fixtures: ReactFixtureWrappers;
-  decorators: ReactDecorators;
+  moduleWrappers: UserModuleWrappers;
   initialFixtureId?: FixtureId;
 };
 
 export function NativeFixtureLoader({
   rendererConfig: { playgroundUrl },
-  fixtures,
-  decorators,
+  moduleWrappers,
   initialFixtureId,
 }: Props) {
   const socketUrl = getSocketUrl(playgroundUrl);
   return (
-    <FixtureLoader
+    <FixtureConnect
       rendererId={rendererId}
       rendererConnect={createWebSocketsConnect(socketUrl)}
-      fixtures={fixtures}
-      initialFixtureId={initialFixtureId}
+      moduleWrappers={moduleWrappers}
       systemDecorators={[]}
-      userDecorators={decorators}
+      initialFixtureId={initialFixtureId}
       renderMessage={renderMessage}
     />
   );
 }
 
-function renderMessage({ msg }: { msg: string }) {
+function renderMessage(msg: string) {
   return (
     <View style={styles.container}>
       <Text>{msg}</Text>

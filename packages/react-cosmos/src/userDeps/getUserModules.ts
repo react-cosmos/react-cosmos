@@ -1,17 +1,12 @@
 import path from 'path';
-import {
-  ReactDecorator,
-  ReactDecorators,
-  ReactFixtureExport,
-  ReactFixtureExports,
-} from 'react-cosmos-core';
+import { ByPath, ReactDecorator, ReactFixtureExport } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { slash } from '../utils/slash.js';
 import { findUserModulePaths } from './findUserModulePaths.js';
 
 type UserModules = {
-  fixtures: ReactFixtureExports;
-  decorators: ReactDecorators;
+  fixtures: ByPath<ReactFixtureExport>;
+  decorators: ByPath<ReactDecorator>;
 };
 
 export function getUserModules({

@@ -1,8 +1,8 @@
-import { ReactDecorator, ReactDecorators } from './reactTypes.js';
+import { ByPath, ReactDecorator } from './reactTypes.js';
 
 export function getSortedDecoratorsForFixturePath(
   fixturePath: string,
-  decoratorsByPath: ReactDecorators
+  decoratorsByPath: ByPath<ReactDecorator>
 ): ReactDecorator[] {
   return getSortedDecorators(
     getDecoratorsForFixturePath(decoratorsByPath, fixturePath)
@@ -10,7 +10,7 @@ export function getSortedDecoratorsForFixturePath(
 }
 
 function getDecoratorsForFixturePath(
-  decoratorsByPath: ReactDecorators,
+  decoratorsByPath: ByPath<ReactDecorator>,
   fixturePath: string
 ) {
   return Object.keys(decoratorsByPath)
@@ -29,7 +29,7 @@ function getParentPath(nestedPath: string) {
 }
 
 function getSortedDecorators(
-  decoratorsByPath: ReactDecorators
+  decoratorsByPath: ByPath<ReactDecorator>
 ): ReactDecorator[] {
   return sortPathsByDepthAsc(Object.keys(decoratorsByPath)).map(
     decoratorPath => decoratorsByPath[decoratorPath]
