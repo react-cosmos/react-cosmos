@@ -82,7 +82,7 @@ export function FixtureConnect({
 
   if (!fixtures[selectedFixture.fixtureId.path]) {
     return renderMessage(
-      `Invalid fixture path: ${selectedFixture.fixtureId.path}`
+      `Fixture path not found: ${selectedFixture.fixtureId.path}`
     );
   }
 
