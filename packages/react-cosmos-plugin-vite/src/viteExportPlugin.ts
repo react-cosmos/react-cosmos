@@ -1,3 +1,4 @@
+import viteReactPlugin from '@vitejs/plugin-react';
 import { rename } from 'node:fs/promises';
 import path from 'path';
 import { ExportPluginArgs, RENDERER_FILENAME } from 'react-cosmos';
@@ -17,7 +18,7 @@ export async function viteExportPlugin({ cosmosConfig }: ExportPluginArgs) {
       emptyOutDir: false,
       minify: false,
     },
-    plugins: [reactCosmosViteRollupPlugin(cosmosConfig)],
+    plugins: [viteReactPlugin(), reactCosmosViteRollupPlugin(cosmosConfig)],
   });
 
   // Make way for the Playground's index.html
