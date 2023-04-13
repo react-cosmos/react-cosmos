@@ -4,7 +4,7 @@ import {
   UserDepsTemplateArgs,
 } from './userDepsShared.js';
 
-export function userDepsStaticTemplate({
+export function userDepsTemplate({
   globalImports,
   fixturePaths,
   decoratorPaths,

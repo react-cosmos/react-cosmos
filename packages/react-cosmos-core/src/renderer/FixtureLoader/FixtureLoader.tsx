@@ -10,7 +10,7 @@ import {
 } from '../reactTypes.js';
 import { DecoratedFixture } from './DecoratedFixture.js';
 import { getFixture } from './getFixture.js';
-import { useStaticFixtureModules } from './useStaticFixtureModules.js';
+import { useFixtureModules } from './useFixtureModules.js';
 
 type Props = {
   fixtureWrapper: ReactFixtureWrapper;
@@ -23,7 +23,7 @@ type Props = {
   renderKey: number;
   onErrorReset?: () => unknown;
 };
-export function StaticFixtureLoader({
+export function FixtureLoader({
   fixtureWrapper,
   decorators,
   systemDecorators,
@@ -39,7 +39,7 @@ export function StaticFixtureLoader({
     [decorators, fixtureId.path]
   );
 
-  const modules = useStaticFixtureModules(
+  const modules = useFixtureModules(
     fixtureId.path,
     fixtureWrapper,
     decoratorWrappers

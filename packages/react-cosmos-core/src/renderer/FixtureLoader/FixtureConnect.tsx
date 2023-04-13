@@ -2,9 +2,9 @@ import React, { ReactElement } from 'react';
 import { FixtureId } from '../../fixture/types.js';
 import { ReactDecorator, UserModuleWrappers } from '../reactTypes.js';
 import { RendererConnect } from '../types.js';
+import { FixtureLoader } from './FixtureLoader.js';
 import { FixtureStateChangeResponse } from './FixtureStateChangeResponse.js';
 import { LazyFixtureLoader } from './LazyFixtureLoader.js';
-import { StaticFixtureLoader } from './StaticFixtureLoader.js';
 import { useRendererRequest } from './useRendererRequest.js';
 import { useRendererResponse } from './useRendererResponse.js';
 import { useSelectedFixture } from './useSelectedFixture.js';
@@ -77,7 +77,7 @@ export function FixtureConnect({
           onErrorReset={onErrorReset}
         />
       ) : (
-        <StaticFixtureLoader
+        <FixtureLoader
           fixtureWrapper={moduleWrappers.fixtures[fixtureId.path]}
           decorators={moduleWrappers.decorators}
           systemDecorators={systemDecorators}

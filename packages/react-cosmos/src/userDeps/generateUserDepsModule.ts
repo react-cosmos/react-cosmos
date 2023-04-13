@@ -2,7 +2,7 @@ import { CosmosConfig } from '../cosmosConfig/types.js';
 import { findUserModulePaths } from './findUserModulePaths.js';
 import { Json } from './shared.js';
 import { userDepsLazyTemplate } from './userDepsLazyTemplate.js';
-import { userDepsStaticTemplate } from './userDepsStaticTemplate.js';
+import { userDepsTemplate } from './userDepsTemplate.js';
 
 type Args = {
   cosmosConfig: CosmosConfig;
@@ -23,9 +23,7 @@ export function generateUserDepsModule({
     ignore,
   });
 
-  const template = cosmosConfig.lazy
-    ? userDepsLazyTemplate
-    : userDepsStaticTemplate;
+  const template = cosmosConfig.lazy ? userDepsLazyTemplate : userDepsTemplate;
 
   return template({
     globalImports,

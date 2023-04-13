@@ -12,7 +12,7 @@ type FixtureModules = {
   decoratorModules: ReactDecoratorModule[];
 };
 
-export function useStaticFixtureModules(
+export function useFixtureModules(
   fixturePath: string,
   fixtureWrapper: ReactFixtureWrapper,
   decoratorWrappers: ReactDecoratorWrapper[]
