@@ -48,7 +48,12 @@ export function DecoratedFixture({
   );
 
   return (
-    <FixtureContext.Provider key={renderKey} value={contextValue}>
+    <FixtureContext.Provider
+      // renderKey controls whether to reuse previous instances (and
+      // transition props) or rebuild render tree from scratch
+      key={renderKey}
+      value={contextValue}
+    >
       {decoratedFixture}
     </FixtureContext.Provider>
   );

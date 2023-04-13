@@ -15,7 +15,6 @@ export function useRendererRequest(
   rendererConnect: RendererConnect,
   fixtureWrappers: FixtureWrappers,
   setSelectedFixture: Dispatch<SetStateAction<SelectedFixture | null>>,
-  setRenderKey: Dispatch<SetStateAction<number>>,
   onErrorReset?: () => unknown
 ) {
   useEffect(() => {
@@ -35,13 +34,17 @@ export function useRendererRequest(
 
     function handleSelectFixtureRequest({ payload }: SelectFixtureRequest) {
       const { fixtureId, fixtureState } = payload;
-      setSelectedFixture({ fixtureId, fixtureState });
-      setRenderKey(prev => prev + 1);
+      setSelectedFixture(prev => {
+        return {
+          fixtureId,
+          fixtureState,
+          renderKey: prev ? prev.renderKey + 1 : 0,
+        };
+      });
     }
 
     function handleUnselectFixtureRequest() {
       setSelectedFixture(null);
-      setRenderKey(0);
     }
 
     function handleSetFixtureStateRequest({ payload }: SetFixtureStateRequest) {
@@ -91,7 +94,6 @@ export function useRendererRequest(
     onErrorReset,
     rendererConnect,
     rendererId,
-    setRenderKey,
     setSelectedFixture,
   ]);
 }

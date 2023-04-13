@@ -5,6 +5,7 @@ import { FixtureState, SetFixtureState } from '../../fixtureState/types.js';
 export type SelectedFixture = {
   fixtureId: FixtureId;
   fixtureState: FixtureState;
+  renderKey: number;
 };
 
 export function useSelectedFixture(
@@ -19,6 +20,7 @@ export function useSelectedFixture(
       return {
         fixtureId,
         fixtureState: {},
+        renderKey: 0,
       };
     });
 

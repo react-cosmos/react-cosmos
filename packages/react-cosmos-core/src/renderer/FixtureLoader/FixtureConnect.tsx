@@ -1,4 +1,4 @@
-import React, { ReactElement, useMemo, useState } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import { FixtureId } from '../../fixture/types.js';
 import {
   ByPath,
@@ -49,8 +49,6 @@ export function FixtureConnect({
   onErrorReset,
   renderMessage = defaultRenderMessage,
 }: Props) {
-  const [renderKey, setRenderKey] = useState(0);
-
   const { selectedFixture, setSelectedFixture, setFixtureState } =
     useSelectedFixture(initialFixtureId, selectedFixtureId);
 
@@ -65,7 +63,6 @@ export function FixtureConnect({
     rendererConnect,
     fixtureWrappers,
     setSelectedFixture,
-    setRenderKey,
     onErrorReset
   );
 
@@ -86,7 +83,7 @@ export function FixtureConnect({
     );
   }
 
-  const { fixtureId, fixtureState } = selectedFixture;
+  const { fixtureId, fixtureState, renderKey } = selectedFixture;
   return (
     <FixtureStateChangeResponse
       rendererId={rendererId}
