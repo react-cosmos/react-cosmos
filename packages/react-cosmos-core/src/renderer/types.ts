@@ -1,4 +1,4 @@
-import { FixtureId, FixtureList, FixtureListItem } from '../fixture/types.js';
+import { FixtureId, FixtureList } from '../fixture/types.js';
 import { FixtureState } from '../fixtureState/types.js';
 
 // FYI: Renderer ids are self assigned in remote environments, so uniqueness
@@ -63,15 +63,6 @@ export type FixtureListUpdateResponse = {
   payload: {
     rendererId: RendererId;
     fixtures: FixtureList;
-  };
-};
-
-export type FixtureListItemUpdateResponse = {
-  type: 'fixtureListItemUpdate';
-  payload: {
-    rendererId: RendererId;
-    fixturePath: string;
-    fixtureItem: FixtureListItem;
   };
 };
 
