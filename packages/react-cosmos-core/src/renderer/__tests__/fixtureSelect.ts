@@ -36,6 +36,19 @@ testFixtureLoader(
 );
 
 testFixtureLoader(
+  'renders first named fixture',
+  { rendererId, fixtures },
+  async ({ renderer, selectFixture }) => {
+    selectFixture({
+      rendererId,
+      fixtureId: { path: 'first' },
+      fixtureState: {},
+    });
+    await retry(() => expect(renderer.toJSON()).toBe('First'));
+  }
+);
+
+testFixtureLoader(
   'creates fixture state',
   { rendererId, fixtures },
   async ({ selectFixture, fixtureStateChange }) => {
