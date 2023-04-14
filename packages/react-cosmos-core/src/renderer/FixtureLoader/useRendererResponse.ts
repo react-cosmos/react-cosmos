@@ -10,31 +10,24 @@ export function useRendererResponse(
   moduleWrappers: UserModuleWrappers,
   initialFixtureId?: FixtureId
 ) {
-  const mountedRef = useRef(false);
+  const readyRef = useRef(false);
 
   useEffect(() => {
-    if (!mountedRef.current) {
-      const fixtures = getFixtureListFromWrappers(moduleWrappers);
+    const fixtures = getFixtureListFromWrappers(moduleWrappers);
+
+    if (readyRef.current) {
+      rendererConnect.postMessage({
+        type: 'fixtureListUpdate',
+        payload: { rendererId, fixtures },
+      });
+    } else {
       rendererConnect.postMessage({
         type: 'rendererReady',
         payload: initialFixtureId
           ? { rendererId, fixtures, initialFixtureId }
           : { rendererId, fixtures },
       });
+      readyRef.current = true;
     }
   }, [initialFixtureId, moduleWrappers, rendererConnect, rendererId]);
-
-  useEffect(() => {
-    if (mountedRef.current) {
-      const fixtures = getFixtureListFromWrappers(moduleWrappers);
-      rendererConnect.postMessage({
-        type: 'fixtureListUpdate',
-        payload: { rendererId, fixtures },
-      });
-    }
-  }, [moduleWrappers, rendererConnect, rendererId]);
-
-  useEffect(() => {
-    mountedRef.current = true;
-  }, []);
 }
