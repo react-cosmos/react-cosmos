@@ -95,8 +95,16 @@ function findFixtureItemById(
   fixtureItems: FlatFixtureTreeItem[],
   fixtureId: FixtureId
 ) {
-  return fixtureItems.find(fixtureItem =>
-    isEqual(fixtureItem.fixtureId, fixtureId)
+  if (fixtureId.name) {
+    return fixtureItems.find(fixtureItem =>
+      isEqual(fixtureItem.fixtureId, fixtureId)
+    );
+  }
+
+  // When a multi fixture is selected by path only, the first of its named
+  // fixtures will be selected.
+  return fixtureItems.find(
+    fixtureItem => fixtureItem.fixtureId.path === fixtureId.path
   );
 }
 
