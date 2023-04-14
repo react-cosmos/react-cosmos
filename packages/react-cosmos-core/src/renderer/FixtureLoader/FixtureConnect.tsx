@@ -58,12 +58,7 @@ export function FixtureConnect({
   }
 
   return (
-    <FixtureStateChangeResponse
-      rendererId={rendererId}
-      rendererConnect={rendererConnect}
-      fixtureId={fixtureId}
-      fixtureState={fixtureState}
-    >
+    <>
       {moduleWrappers.lazy ? (
         <LazyFixtureLoader
           fixtureWrapper={moduleWrappers.fixtures[fixtureId.path]}
@@ -89,10 +84,24 @@ export function FixtureConnect({
           onErrorReset={onErrorReset}
         />
       )}
-    </FixtureStateChangeResponse>
+      <FixtureStateChangeResponse
+        // Reset internal state when fixture ID changes
+        key={fixtureIdKey(fixtureId)}
+        rendererId={rendererId}
+        rendererConnect={rendererConnect}
+        fixtureId={fixtureId}
+        fixtureState={fixtureState}
+      />
+    </>
   );
 }
 
 function defaultRenderMessage(msg: string) {
   return <>{msg}</>;
+}
+
+function fixtureIdKey(fixtureId: FixtureId) {
+  return fixtureId.name
+    ? [fixtureId.path, fixtureId.name].join('-')
+    : fixtureId.path;
 }

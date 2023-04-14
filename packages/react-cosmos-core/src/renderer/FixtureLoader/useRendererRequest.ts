@@ -86,6 +86,7 @@ export function useRendererRequest(
         // devtools communications.
       }
     });
+
     return () => {
       unsubscribe();
     };

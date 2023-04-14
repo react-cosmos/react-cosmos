@@ -1,4 +1,5 @@
-import React, { ReactNode, useEffect, useRef } from 'react';
+import { isEqual } from 'lodash-es';
+import { useEffect, useRef } from 'react';
 import { FixtureId } from '../../fixture/types.js';
 import { FixtureState } from '../../fixtureState/types.js';
 import { RendererConnect } from '../types.js';
@@ -8,19 +9,17 @@ type Props = {
   rendererConnect: RendererConnect;
   fixtureId: FixtureId;
   fixtureState: FixtureState;
-  children: ReactNode;
 };
 export function FixtureStateChangeResponse({
   rendererId,
   rendererConnect,
   fixtureId,
   fixtureState,
-  children,
 }: Props) {
-  const mountedRef = useRef(false);
+  const syncedFixtureState = useRef(fixtureState);
 
   useEffect(() => {
-    if (mountedRef.current) {
+    if (!isEqual(syncedFixtureState.current, fixtureState)) {
       rendererConnect.postMessage({
         type: 'fixtureStateChange',
         payload: {
@@ -29,12 +28,9 @@ export function FixtureStateChangeResponse({
           fixtureState,
         },
       });
+      syncedFixtureState.current = fixtureState;
     }
   }, [fixtureId, fixtureState, rendererConnect, rendererId]);
 
-  useEffect(() => {
-    mountedRef.current = true;
-  }, []);
-
-  return <>{children}</>;
+  return null;
 }
