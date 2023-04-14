@@ -4,7 +4,7 @@ import { createValues } from '../../fixtureState/createValues.js';
 import { updateFixtureStateProps } from '../../fixtureState/props.js';
 import { uuid } from '../../utils/uuid.js';
 import { getProps } from '../testHelpers/fixtureState.js';
-import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
+import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
@@ -20,7 +20,7 @@ function createFixtures() {
   });
 }
 
-testFixtureLoader(
+testRenderer(
   'persists props after type changes reference but keeps name (hmr simulation)',
   { rendererId, fixtures },
   async ({

@@ -10,7 +10,7 @@ import {
   anyProps,
   getProps,
 } from '../testHelpers/fixtureState.js';
-import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
+import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
@@ -27,7 +27,7 @@ const fixtures = wrapFixtures({
 });
 const fixtureId = { path: 'first' };
 
-testFixtureLoader(
+testRenderer(
   'keeps state when resetting props',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
@@ -60,7 +60,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'keeps state when transitioning props',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
@@ -93,7 +93,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'keeps props when changing state',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
@@ -126,7 +126,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'updates props on fixture change',
   { rendererId, fixtures },
   async ({ renderer, update, selectFixture, fixtureStateChange }) => {

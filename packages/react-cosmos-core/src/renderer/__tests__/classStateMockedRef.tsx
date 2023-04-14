@@ -9,7 +9,7 @@ import { uuid } from '../../utils/uuid.js';
 import { __wrapClassStateTimeout } from '../FixtureCapture/classState/useReadClassState.js';
 import { Counter } from '../testHelpers/components.js';
 import { getClassState } from '../testHelpers/fixtureState.js';
-import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
+import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 beforeEach(() => {
@@ -40,7 +40,7 @@ const getFixtures = () =>
   });
 const fixtureId = { path: 'first' };
 
-testFixtureLoader(
+testRenderer(
   'captures component state changes',
   { rendererId, fixtures: getFixtures() },
   async ({ selectFixture, getLastFixtureState }) => {

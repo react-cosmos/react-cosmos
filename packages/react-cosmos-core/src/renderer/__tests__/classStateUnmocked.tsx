@@ -12,7 +12,7 @@ import {
   anyProps,
   getClassState,
 } from '../testHelpers/fixtureState.js';
-import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
+import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
@@ -21,7 +21,7 @@ const fixtures = wrapFixtures({
 });
 const fixtureId = { path: 'first' };
 
-testFixtureLoader(
+testRenderer(
   'captures initial state',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, fixtureStateChange }) => {
@@ -43,7 +43,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'overwrites initial state',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
@@ -65,7 +65,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'removes initial state property',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
@@ -87,7 +87,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'reverts to initial state',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {

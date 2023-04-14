@@ -4,7 +4,7 @@ import { createValues } from '../../fixtureState/createValues.js';
 import { updateFixtureStateProps } from '../../fixtureState/props.js';
 import { uuid } from '../../utils/uuid.js';
 import { getProps } from '../testHelpers/fixtureState.js';
-import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
+import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
@@ -26,7 +26,7 @@ function createFixtures(obj: {}, cb: (newObj: {}) => unknown) {
   });
 }
 
-testFixtureLoader(
+testRenderer(
   'preserves object reference',
   { rendererId, fixtures: {} },
   async ({ update, selectFixture }) => {
@@ -38,7 +38,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'preserves updated object reference',
   { rendererId, fixtures: {} },
   async ({ update, selectFixture, getLastFixtureState, setFixtureState }) => {

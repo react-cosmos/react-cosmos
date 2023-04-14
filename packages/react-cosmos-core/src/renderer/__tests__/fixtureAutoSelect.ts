@@ -1,6 +1,6 @@
 import retry from '@skidding/async-retry';
 import { uuid } from '../../utils/uuid.js';
-import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
+import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
@@ -9,7 +9,7 @@ const fixtures = wrapFixtures({
   second: 'Second',
 });
 
-testFixtureLoader(
+testRenderer(
   'renders auto selected named fixture',
   { rendererId, fixtures, selectedFixtureId: { path: 'first', name: 'one' } },
   async ({ renderer }) => {
@@ -17,7 +17,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'renders auto selected unnamed fixture',
   { rendererId, fixtures, selectedFixtureId: { path: 'second' } },
   async ({ renderer }) => {

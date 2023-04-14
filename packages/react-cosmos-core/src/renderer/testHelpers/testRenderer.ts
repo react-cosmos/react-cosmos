@@ -4,7 +4,7 @@ import {
   RendererTestCallback,
 } from './mountTestRenderer.js';
 
-export function testFixtureLoader(
+export function testRenderer(
   testName: string,
   args: RendererTestArgs,
   cb: RendererTestCallback
@@ -12,8 +12,8 @@ export function testFixtureLoader(
   const test = () => mountTestRenderer(args, cb);
 
   if (args.only) {
-    it.only(`[FixtureLoader] ${testName}`, test);
+    it.only(testName, test);
   } else {
-    it(`[FixtureLoader] ${testName}`, test);
+    it(testName, test);
   }
 }

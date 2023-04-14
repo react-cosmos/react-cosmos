@@ -3,7 +3,7 @@ import React from 'react';
 import { act, ReactTestRenderer } from 'react-test-renderer';
 import { FixtureContext } from '../../fixture/FixtureContext.js';
 import { uuid } from '../../utils/uuid.js';
-import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
+import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 function MyComponent() {
@@ -30,7 +30,7 @@ const fixtures = wrapFixtures({
   first: MyComponent,
 });
 
-testFixtureLoader(
+testRenderer(
   'creates fixture state',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, fixtureStateChange }) => {

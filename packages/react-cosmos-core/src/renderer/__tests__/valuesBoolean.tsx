@@ -8,7 +8,7 @@ import {
 import { useValue } from '../../fixture/useValue/index.js';
 import { createValue } from '../../fixtureState/createValues.js';
 import { uuid } from '../../utils/uuid.js';
-import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
+import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 function createFixtures({ defaultValue }: { defaultValue: boolean }) {
@@ -27,7 +27,7 @@ const rendererId = uuid();
 const fixtures = createFixtures({ defaultValue: false });
 const fixtureId = { path: 'first' };
 
-testFixtureLoader(
+testRenderer(
   'renders fixture',
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
@@ -36,7 +36,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'creates fixture state',
   { rendererId, fixtures },
   async ({ selectFixture, fixtureStateChange }) => {
@@ -58,7 +58,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'updates fixture state via setter',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, fixtureStateChange }) => {
@@ -82,7 +82,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'resets fixture state on default value change',
   { rendererId, fixtures },
   async ({ renderer, update, selectFixture, fixtureStateChange }) => {

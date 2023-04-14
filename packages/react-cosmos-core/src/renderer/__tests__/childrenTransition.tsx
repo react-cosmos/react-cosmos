@@ -3,7 +3,7 @@ import { createValue, createValues } from '../../fixtureState/createValues.js';
 import { uuid } from '../../utils/uuid.js';
 import { Wrapper } from '../testHelpers/components.js';
 import { anyProps } from '../testHelpers/fixtureState.js';
-import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
+import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
@@ -12,7 +12,7 @@ const fixtures = wrapFixtures({
 });
 const fixtureId = { path: 'first' };
 
-testFixtureLoader(
+testRenderer(
   'transitions string children into an element with children',
   { rendererId, fixtures },
   async ({ update, selectFixture, fixtureStateChange }) => {
@@ -60,7 +60,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'transitions string children into an element with children',
   { rendererId, fixtures },
   async ({ update, selectFixture, fixtureStateChange }) => {
@@ -108,7 +108,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'transitions string children into an element with multiple children',
   { rendererId, fixtures },
   async ({ update, selectFixture, fixtureStateChange }) => {

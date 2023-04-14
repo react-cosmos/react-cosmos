@@ -12,7 +12,7 @@ import {
   anyProps,
   getProps,
 } from '../testHelpers/fixtureState.js';
-import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
+import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 beforeEach(() => {
@@ -42,7 +42,7 @@ const getFixtures = () =>
   });
 const fixtureId = { path: 'first' };
 
-testFixtureLoader(
+testRenderer(
   'keeps props when state changes',
   { rendererId, fixtures: getFixtures() },
   async ({

@@ -8,7 +8,7 @@ import {
 import { useValue } from '../../fixture/useValue/index.js';
 import { createValue } from '../../fixtureState/createValues.js';
 import { uuid } from '../../utils/uuid.js';
-import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
+import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 type CreateFixtureArgs = {
@@ -49,7 +49,7 @@ const rendererId = uuid();
 const fixtures = createFixtures();
 const fixtureId = { path: 'first' };
 
-testFixtureLoader(
+testRenderer(
   'preserves fixture state change (via setter) on default value change',
   { rendererId, fixtures },
   async ({ renderer, update, selectFixture, fixtureStateChange }) => {
@@ -85,7 +85,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'preserves fixture state change (via setFixtureState) on default value change',
   { rendererId, fixtures },
   async ({
@@ -142,7 +142,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'cleans up fixture state on input rename',
   { rendererId, fixtures },
   async ({ renderer, update, selectFixture, fixtureStateChange }) => {

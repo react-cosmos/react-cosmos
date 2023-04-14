@@ -1,7 +1,7 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
 import { uuid } from '../../utils/uuid.js';
-import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
+import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 type Props = {
@@ -23,7 +23,7 @@ const decorators = {
   ),
 };
 
-testFixtureLoader(
+testRenderer(
   'renders selected fixture inside decorator',
   { rendererId, fixtures, decorators },
   async ({ renderer, selectFixture }) => {

@@ -2,13 +2,13 @@ import React from 'react';
 import { createValues } from '../../fixtureState/createValues.js';
 import { uuid } from '../../utils/uuid.js';
 import { anyProps } from '../testHelpers/fixtureState.js';
-import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
+import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
 const fixtureId = { path: 'first' };
 
-testFixtureLoader(
+testRenderer(
   'collects fixture state for interesting string element type',
   { rendererId, fixtures: wrapFixtures({ first: <input type="text" /> }) },
   async ({ selectFixture, fixtureStateChange }) => {
@@ -28,7 +28,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'collects no fixture state for uninteresting string element type',
   { rendererId, fixtures: wrapFixtures({ first: <div>yo</div> }) },
   async ({ selectFixture, fixtureStateChange }) => {

@@ -7,7 +7,7 @@ import {
 } from 'react-test-renderer';
 import { useSelect } from '../../fixture/useSelect/index.js';
 import { uuid } from '../../utils/uuid.js';
-import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
+import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 type Option = 'first' | 'second' | 'third';
@@ -37,7 +37,7 @@ const rendererId = uuid();
 const fixtures = createFixtures({ defaultValue: 'first' });
 const fixtureId = { path: 'first' };
 
-testFixtureLoader(
+testRenderer(
   'renders fixture',
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
@@ -46,7 +46,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'creates fixture state',
   { rendererId, fixtures },
   async ({ selectFixture, fixtureStateChange }) => {
@@ -69,7 +69,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'reflects fixture state change',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
@@ -96,7 +96,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'updates fixture state via setter',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, fixtureStateChange }) => {
@@ -122,7 +122,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'resets fixture state on default value change',
   { rendererId, fixtures },
   async ({ renderer, update, selectFixture, fixtureStateChange }) => {

@@ -1,6 +1,6 @@
 import retry from '@skidding/async-retry';
 import { uuid } from '../../utils/uuid.js';
-import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
+import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
@@ -12,7 +12,7 @@ beforeEach(() => {
   onErrorReset.mockReset();
 });
 
-testFixtureLoader(
+testRenderer(
   'fires error reset callback when selecting fixture',
   { rendererId, fixtures, onErrorReset },
   async ({ selectFixture }) => {
@@ -21,7 +21,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'fires error reset callback when unselecting fixture',
   { rendererId, fixtures, onErrorReset },
   async ({ selectFixture, unselectFixture }) => {

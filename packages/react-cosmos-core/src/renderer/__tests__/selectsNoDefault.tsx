@@ -3,7 +3,7 @@ import React from 'react';
 import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
 import { useSelect } from '../../fixture/useSelect/index.js';
 import { uuid } from '../../utils/uuid.js';
-import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
+import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 function createFixtures() {
@@ -28,7 +28,7 @@ const rendererId = uuid();
 const fixtures = createFixtures();
 const fixtureId = { path: 'first' };
 
-testFixtureLoader(
+testRenderer(
   'renders fixture',
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
@@ -37,7 +37,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'creates fixture state',
   { rendererId, fixtures },
   async ({ selectFixture, fixtureStateChange }) => {

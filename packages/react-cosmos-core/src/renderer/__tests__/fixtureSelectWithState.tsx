@@ -4,7 +4,7 @@ import { createValues } from '../../fixtureState/createValues.js';
 import { createFixtureStateProps } from '../../fixtureState/props.js';
 import { uuid } from '../../utils/uuid.js';
 import { HelloMessage } from '../testHelpers/components.js';
-import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
+import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
@@ -13,7 +13,7 @@ const fixtures = wrapFixtures({
 });
 const fixtureId = { path: 'first' };
 
-testFixtureLoader(
+testRenderer(
   'renders selected fixture with fixture state',
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {

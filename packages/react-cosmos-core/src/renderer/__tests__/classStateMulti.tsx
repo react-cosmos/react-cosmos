@@ -10,7 +10,7 @@ import {
   anyProps,
   getClassState,
 } from '../testHelpers/fixtureState.js';
-import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
+import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
@@ -28,7 +28,7 @@ const fixtures = wrapFixtures({
 });
 const fixtureId = { path: 'first' };
 
-testFixtureLoader(
+testRenderer(
   'captures mocked state from multiple instances',
   { rendererId, fixtures },
   async ({ selectFixture, fixtureStateChange }) => {
@@ -53,7 +53,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'overwrites mocked state in second instances',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {

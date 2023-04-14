@@ -5,7 +5,7 @@ import { uuid } from '../../utils/uuid.js';
 import { FixtureCapture } from '../FixtureCapture/index.js';
 import { HelloMessage } from '../testHelpers/components.js';
 import { anyProps } from '../testHelpers/fixtureState.js';
-import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
+import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 function Wrap({ children }: { children: () => React.ReactNode }) {
@@ -30,7 +30,7 @@ const fixtures = wrapFixtures({
 });
 const fixtureId = { path: 'first' };
 
-testFixtureLoader(
+testRenderer(
   'captures props from render callback',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, fixtureStateChange }) => {

@@ -1,11 +1,11 @@
 import { uuid } from '../../utils/uuid.js';
-import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
+import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
 const fixtures = wrapFixtures({ first: null, second: null });
 
-testFixtureLoader(
+testRenderer(
   'renders blank state message',
   { rendererId, fixtures },
   async ({ renderer }) => {
@@ -13,7 +13,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'posts ready response on mount',
   { rendererId, fixtures },
   async ({ rendererReady }) => {
@@ -27,7 +27,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'posts ready response again on ping request',
   { rendererId, fixtures },
   async ({ rendererReady, pingRenderers }) => {
@@ -49,7 +49,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'posts fixture list on "fixtures" prop change',
   { rendererId, fixtures },
   async ({ update, rendererReady, fixtureListUpdate }) => {

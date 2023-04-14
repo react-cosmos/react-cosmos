@@ -3,7 +3,7 @@ import { createValues } from '../../fixtureState/createValues.js';
 import { uuid } from '../../utils/uuid.js';
 import { Counter } from '../testHelpers/components.js';
 import { anyClassState, anyProps } from '../testHelpers/fixtureState.js';
-import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
+import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
@@ -19,7 +19,7 @@ const fixtureId = { path: 'first' };
 // FixtureCapture remounted. This was related to the refactor of
 // FixtureCapture/attachChildRefs in
 // https://github.com/react-cosmos/react-cosmos/commit/56494b6ea10785cc3db8dda7a7fbcad62c8e1c12
-testFixtureLoader(
+testRenderer(
   'captures initial state after re-selecting fixture',
   { rendererId, fixtures },
   async ({ selectFixture, fixtureStateChange }) => {

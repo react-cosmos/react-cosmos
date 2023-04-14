@@ -1,6 +1,6 @@
 import retry from '@skidding/async-retry';
 import { uuid } from '../../utils/uuid.js';
-import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
+import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
@@ -9,7 +9,7 @@ const fixtures = wrapFixtures({
   second: 'Second',
 });
 
-testFixtureLoader(
+testRenderer(
   'renders selected fixture',
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
@@ -22,7 +22,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'renders selected named fixture',
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
@@ -35,7 +35,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'renders first named fixture',
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
@@ -48,7 +48,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'creates fixture state',
   { rendererId, fixtures },
   async ({ selectFixture, fixtureStateChange }) => {
@@ -67,7 +67,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'renders blank state after unselecting fixture',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, unselectFixture }) => {
@@ -82,7 +82,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'ignores "selectFixture" message for different renderer',
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
@@ -95,7 +95,7 @@ testFixtureLoader(
   }
 );
 
-testFixtureLoader(
+testRenderer(
   'renders missing state on unknown fixture path',
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
