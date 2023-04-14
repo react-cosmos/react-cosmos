@@ -1,12 +1,8 @@
-import { isEqual } from 'lodash-es';
 import React, { RefObject } from 'react';
 import { FixtureId, FixtureTreeNode } from 'react-cosmos-core';
 import styled from 'styled-components';
 import { TreeView } from '../../../components/TreeView.js';
-import {
-  nodeContainsFixtureId,
-  recordContainsFixtureId,
-} from '../../../shared/fixtureTree.js';
+import { fixtureTreeNodeContainsFixtureId } from '../../../shared/fixtureTree.js';
 import { TreeExpansion } from '../../../shared/treeExpansion.js';
 import { grey32 } from '../../../style/colors.js';
 import { FixtureButton } from './FixtureButton.js';
@@ -40,11 +36,11 @@ export const FixtureTree = React.memo(function FixtureTree({
           const { data, children } = node;
 
           if (data.type === 'fixture') {
-            const selected = isEqual(selectedFixtureId, data.fixtureId);
+            const selected = selectedFixtureId?.path === data.path;
             return (
               <FixtureButton
                 name={name}
-                fixtureId={data.fixtureId}
+                fixturePath={data.path}
                 indentLevel={parents.length}
                 selected={selected}
                 selectedRef={selectedRef}
@@ -54,13 +50,12 @@ export const FixtureTree = React.memo(function FixtureTree({
           }
 
           if (data.type === 'multiFixture') {
-            const selected =
-              selectedFixtureId !== null &&
-              recordContainsFixtureId(data.fixtureIds, selectedFixtureId);
+            const selected = selectedFixtureId?.path === data.path;
             return (
               <MultiFixtureButton
                 name={name}
-                fixtureIds={data.fixtureIds}
+                fixturePath={data.path}
+                fixtureNames={data.names}
                 indentLevel={parents.length}
                 selected={selected}
                 selectedFixtureId={selectedFixtureId}
@@ -75,7 +70,7 @@ export const FixtureTree = React.memo(function FixtureTree({
           const selected =
             !expanded &&
             selectedFixtureId !== null &&
-            nodeContainsFixtureId(node, selectedFixtureId);
+            fixtureTreeNodeContainsFixtureId(node, selectedFixtureId);
           return (
             <FixtureDir
               name={name}

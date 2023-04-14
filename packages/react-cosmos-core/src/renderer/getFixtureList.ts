@@ -14,7 +14,7 @@ export function getFixtureListFromWrappers(wrappers: UserModuleWrappers) {
         ...acc,
         [fixturePath]: wrappers.lazy
           ? { type: 'single' }
-          : getItemFromWrapper(wrappers.fixtures[fixturePath]),
+          : getFixtureItemFromWrapper(wrappers.fixtures[fixturePath]),
       };
     },
     {}
@@ -23,15 +23,22 @@ export function getFixtureListFromWrappers(wrappers: UserModuleWrappers) {
 
 export function getFixtureListFromExports(exports: ByPath<ReactFixtureExport>) {
   return Object.keys(exports).reduce((acc: FixtureList, fixturePath) => {
-    return { ...acc, [fixturePath]: getItemFromExport(exports[fixturePath]) };
+    return {
+      ...acc,
+      [fixturePath]: getFixtureItemFromExport(exports[fixturePath]),
+    };
   }, {});
 }
 
-function getItemFromWrapper(wrapper: ReactFixtureWrapper): FixtureListItem {
-  return getItemFromExport(wrapper.module.default);
+function getFixtureItemFromWrapper(
+  wrapper: ReactFixtureWrapper
+): FixtureListItem {
+  return getFixtureItemFromExport(wrapper.module.default);
 }
 
-function getItemFromExport(fixtureExport: ReactFixtureExport): FixtureListItem {
+export function getFixtureItemFromExport(
+  fixtureExport: ReactFixtureExport
+): FixtureListItem {
   return isMultiFixture(fixtureExport)
     ? { type: 'multi', fixtureNames: Object.keys(fixtureExport) }
     : { type: 'single' };

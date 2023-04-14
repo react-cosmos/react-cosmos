@@ -3,7 +3,7 @@ import {
   FixtureId,
   FixtureTreeNode,
 } from 'react-cosmos-core';
-import { nodeContainsFixtureId } from '../../shared/fixtureTree.js';
+import { fixtureTreeNodeContainsFixtureId } from '../../shared/fixtureTree.js';
 import { TreeExpansion } from '../../shared/treeExpansion.js';
 import { CoreSpec } from '../Core/spec.js';
 import { RendererCoreSpec } from '../RendererCore/spec.js';
@@ -55,7 +55,8 @@ function findDirPath(
     const childNode = children[childName];
 
     if (childNode.data.type !== 'fileDir') {
-      if (nodeContainsFixtureId(childNode, fixtureId)) return parents;
+      if (fixtureTreeNodeContainsFixtureId(childNode, fixtureId))
+        return parents;
     } else {
       const dirPath = findDirPath(childNode, fixtureId, [
         ...parents,

@@ -4,15 +4,19 @@ import { FixtureState, SetFixtureState } from '../fixtureState/types.js';
 import { DecoratedFixture } from './DecoratedFixture.js';
 import { getFixture } from './getFixture.js';
 import { getSortedDecoratorsForFixturePath } from './getSortedDecoratorsForFixturePath.js';
+import { LazyFixtureListItemUpdate } from './LazyFixtureListItemUpdate.js';
 import {
   ByPath,
   LazyReactDecoratorWrapper,
   LazyReactFixtureWrapper,
   ReactDecorator,
 } from './reactTypes.js';
+import { RendererConnect } from './types.js';
 import { useLazyFixtureModules } from './useLazyFixtureModules.js';
 
 type Props = {
+  rendererId: string;
+  rendererConnect: RendererConnect;
   fixtureWrapper: LazyReactFixtureWrapper;
   decorators: ByPath<LazyReactDecoratorWrapper>;
   systemDecorators: ReactDecorator[];
@@ -24,6 +28,8 @@ type Props = {
   onErrorReset?: () => unknown;
 };
 export function LazyFixtureLoader({
+  rendererId,
+  rendererConnect,
   fixtureWrapper,
   decorators,
   systemDecorators,
@@ -58,14 +64,22 @@ export function LazyFixtureLoader({
   }
 
   return (
-    <DecoratedFixture
-      fixture={fixture}
-      systemDecorators={systemDecorators}
-      userDecoratorModules={decoratorModules}
-      fixtureState={fixtureState}
-      setFixtureState={setFixtureState}
-      renderKey={renderKey}
-      onErrorReset={onErrorReset}
-    />
+    <>
+      <DecoratedFixture
+        fixture={fixture}
+        systemDecorators={systemDecorators}
+        userDecoratorModules={decoratorModules}
+        fixtureState={fixtureState}
+        setFixtureState={setFixtureState}
+        renderKey={renderKey}
+        onErrorReset={onErrorReset}
+      />
+      <LazyFixtureListItemUpdate
+        rendererId={rendererId}
+        rendererConnect={rendererConnect}
+        fixturePath={fixtureId.path}
+        fixtureModule={fixtureModule}
+      />
+    </>
   );
 }

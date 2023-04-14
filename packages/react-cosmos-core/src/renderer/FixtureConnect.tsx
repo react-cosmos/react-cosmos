@@ -61,6 +61,8 @@ export function FixtureConnect({
     <>
       {moduleWrappers.lazy ? (
         <LazyFixtureLoader
+          rendererId={rendererId}
+          rendererConnect={rendererConnect}
           fixtureWrapper={moduleWrappers.fixtures[fixtureId.path]}
           decorators={moduleWrappers.decorators}
           systemDecorators={systemDecorators}

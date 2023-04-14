@@ -13,8 +13,11 @@ export function isValidFixtureSelected(context: RendererCoreContext) {
   }
 
   const fixtureItem = fixtures[fixtureId.path];
-  return fixtureItem.type === 'multi'
-    ? fixtureId.name !== undefined &&
-        fixtureItem.fixtureNames.indexOf(fixtureId.name) !== -1
-    : fixtureId.name === undefined;
+  return (
+    (fixtureItem.type === 'single' && fixtureId.name === undefined) ||
+    // Allow selecting multi fixtures by path only
+    (fixtureItem.type === 'multi' &&
+      (fixtureId.name === undefined ||
+        fixtureItem.fixtureNames.indexOf(fixtureId.name) !== -1))
+  );
 }
