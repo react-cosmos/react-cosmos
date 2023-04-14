@@ -42,3 +42,9 @@ export type UserModuleWrappers =
       fixtures: ByPath<ReactFixtureWrapper>;
       decorators: ByPath<ReactDecoratorWrapper>;
     };
+
+export type FixtureModules = {
+  fixturePath: string;
+  fixtureModule: ReactFixtureModule;
+  decoratorModules: ReactDecoratorModule[];
+};
