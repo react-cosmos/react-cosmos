@@ -4,7 +4,7 @@ import { createValues } from '../../../fixtureState/createValues.js';
 import { updateFixtureStateProps } from '../../../fixtureState/props.js';
 import { uuid } from '../../../utils/uuid.js';
 import { getProps } from '../testHelpers/fixtureState.js';
-import { testFixtureLoader } from '../testHelpers/index.js';
+import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
@@ -33,7 +33,7 @@ testFixtureLoader(
     const obj = {};
     const cb = jest.fn();
     update({ rendererId, fixtures: createFixtures(obj, cb) });
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await retry(() => expect(getLastMockCall(cb)[0]).toBe(obj));
   }
 );
@@ -41,20 +41,14 @@ testFixtureLoader(
 testFixtureLoader(
   'preserves updated object reference',
   { rendererId, fixtures: {} },
-  async ({
-    renderer,
-    update,
-    selectFixture,
-    getLastFixtureState,
-    setFixtureState,
-  }) => {
+  async ({ update, selectFixture, getLastFixtureState, setFixtureState }) => {
     const obj = {};
     const cb = jest.fn();
     update({ rendererId, fixtures: createFixtures(obj, cb) });
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const [{ elementId }] = getProps(fixtureState);
-    await setFixtureState({
+    setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {

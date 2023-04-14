@@ -4,7 +4,7 @@ import { createValues } from '../../../fixtureState/createValues.js';
 import { updateFixtureStateProps } from '../../../fixtureState/props.js';
 import { uuid } from '../../../utils/uuid.js';
 import { getProps } from '../testHelpers/fixtureState.js';
-import { testFixtureLoader } from '../testHelpers/index.js';
+import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
@@ -30,11 +30,11 @@ testFixtureLoader(
     getLastFixtureState,
     setFixtureState,
   }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await retry(() => expect(renderer.toJSON()).toBe('Hello Theo'));
     const fixtureState = await getLastFixtureState();
     const [{ elementId }] = getProps(fixtureState);
-    await setFixtureState({
+    setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {

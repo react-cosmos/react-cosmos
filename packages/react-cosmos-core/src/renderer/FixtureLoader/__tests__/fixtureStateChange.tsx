@@ -1,9 +1,9 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
-import { ReactTestRenderer } from 'react-test-renderer';
+import { act, ReactTestRenderer } from 'react-test-renderer';
 import { FixtureContext } from '../../../fixture/FixtureContext.js';
 import { uuid } from '../../../utils/uuid.js';
-import { testFixtureLoader } from '../testHelpers/index.js';
+import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 function MyComponent() {
@@ -34,7 +34,7 @@ testFixtureLoader(
   'creates fixture state',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, fixtureStateChange }) => {
-    await selectFixture({
+    selectFixture({
       rendererId,
       fixtureId: { path: 'first' },
       fixtureState: { props: [] },
@@ -60,5 +60,7 @@ testFixtureLoader(
 );
 
 function clickButtonByLabel(renderer: ReactTestRenderer, label: string) {
-  renderer.root.findByProps({ children: label }).props.onClick();
+  act(() => {
+    renderer.root.findByProps({ children: label }).props.onClick();
+  });
 }

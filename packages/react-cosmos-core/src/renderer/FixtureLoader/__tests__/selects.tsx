@@ -1,9 +1,13 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
-import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
+import {
+  act,
+  ReactTestRenderer,
+  ReactTestRendererJSON,
+} from 'react-test-renderer';
 import { useSelect } from '../../../fixture/useSelect/index.js';
 import { uuid } from '../../../utils/uuid.js';
-import { testFixtureLoader } from '../testHelpers/index.js';
+import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 type Option = 'first' | 'second' | 'third';
@@ -37,7 +41,7 @@ testFixtureLoader(
   'renders fixture',
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await rendered(renderer, 'first');
   }
 );
@@ -46,7 +50,7 @@ testFixtureLoader(
   'creates fixture state',
   { rendererId, fixtures },
   async ({ selectFixture, fixtureStateChange }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await fixtureStateChange({
       rendererId,
       fixtureId,
@@ -69,10 +73,10 @@ testFixtureLoader(
   'reflects fixture state change',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await rendered(renderer, 'first');
     const fixtureState = await getLastFixtureState();
-    await setFixtureState({
+    setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
@@ -96,7 +100,7 @@ testFixtureLoader(
   'updates fixture state via setter',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, fixtureStateChange }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await rendered(renderer, 'first');
     changeValue(renderer, 'second');
     await rendered(renderer, 'second');
@@ -122,7 +126,7 @@ testFixtureLoader(
   'resets fixture state on default value change',
   { rendererId, fixtures },
   async ({ renderer, update, selectFixture, fixtureStateChange }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await rendered(renderer, 'first');
     update({
       rendererId,
@@ -154,7 +158,9 @@ async function rendered(renderer: ReactTestRenderer, text: string) {
 }
 
 function changeValue(renderer: ReactTestRenderer, value: Option) {
-  getSingleRendererElement(renderer).props.onChange({ target: { value } });
+  act(() => {
+    getSingleRendererElement(renderer).props.onChange({ target: { value } });
+  });
 }
 
 function getSingleRendererElement(renderer: ReactTestRenderer) {

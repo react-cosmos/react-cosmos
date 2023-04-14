@@ -4,7 +4,7 @@ import { createValues } from '../../../fixtureState/createValues.js';
 import { createFixtureStateProps } from '../../../fixtureState/props.js';
 import { uuid } from '../../../utils/uuid.js';
 import { HelloMessage } from '../testHelpers/components.js';
-import { testFixtureLoader } from '../testHelpers/index.js';
+import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
@@ -17,7 +17,7 @@ testFixtureLoader(
   'renders selected fixture with fixture state',
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
-    await selectFixture({
+    selectFixture({
       rendererId,
       fixtureId,
       fixtureState: {

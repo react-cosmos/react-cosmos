@@ -1,17 +1,25 @@
 import retry from '@skidding/async-retry';
 import until from 'async-until';
 import React from 'react';
+import { act } from 'react-test-renderer';
 import { createValues } from '../../../fixtureState/createValues.js';
 import { updateFixtureStateProps } from '../../../fixtureState/props.js';
 import { uuid } from '../../../utils/uuid.js';
+import { __wrapClassStateTimeout } from '../FixtureCapture/classState/useReadClassState.js';
 import { SuffixCounter } from '../testHelpers/components.js';
 import {
   anyClassState,
   anyProps,
   getProps,
 } from '../testHelpers/fixtureState.js';
-import { testFixtureLoader } from '../testHelpers/index.js';
+import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
+
+beforeEach(() => {
+  __wrapClassStateTimeout(cb => {
+    act(() => cb());
+  });
+});
 
 let counterRef: null | SuffixCounter = null;
 beforeEach(() => {
@@ -44,10 +52,10 @@ testFixtureLoader(
     fixtureStateChange,
     getLastFixtureState,
   }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const [{ elementId }] = getProps(fixtureState);
-    await setFixtureState({
+    setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {

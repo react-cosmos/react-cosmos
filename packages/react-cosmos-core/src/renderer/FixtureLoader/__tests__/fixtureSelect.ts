@@ -1,6 +1,6 @@
 import retry from '@skidding/async-retry';
 import { uuid } from '../../../utils/uuid.js';
-import { testFixtureLoader } from '../testHelpers/index.js';
+import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
@@ -13,7 +13,7 @@ testFixtureLoader(
   'renders selected fixture',
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
-    await selectFixture({
+    selectFixture({
       rendererId,
       fixtureId: { path: 'second' },
       fixtureState: {},
@@ -26,7 +26,7 @@ testFixtureLoader(
   'renders selected named fixture',
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
-    await selectFixture({
+    selectFixture({
       rendererId,
       fixtureId: { path: 'first', name: 'one' },
       fixtureState: {},
@@ -39,7 +39,7 @@ testFixtureLoader(
   'creates fixture state',
   { rendererId, fixtures },
   async ({ selectFixture, fixtureStateChange }) => {
-    await selectFixture({
+    selectFixture({
       rendererId,
       fixtureId: { path: 'second' },
       fixtureState: {},
@@ -58,13 +58,13 @@ testFixtureLoader(
   'renders blank state after unselecting fixture',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, unselectFixture }) => {
-    await selectFixture({
+    selectFixture({
       rendererId,
       fixtureId: { path: 'first', name: 'one' },
       fixtureState: {},
     });
     await retry(() => expect(renderer.toJSON()).toBe('First'));
-    await unselectFixture({ rendererId });
+    unselectFixture({ rendererId });
     await retry(() => expect(renderer.toJSON()).toBe('No fixture selected.'));
   }
 );
@@ -73,7 +73,7 @@ testFixtureLoader(
   'ignores "selectFixture" message for different renderer',
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
-    await selectFixture({
+    selectFixture({
       rendererId: 'foobar',
       fixtureId: { path: 'second' },
       fixtureState: {},
@@ -86,7 +86,7 @@ testFixtureLoader(
   'renders missing state on unknown fixture path',
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
-    await selectFixture({
+    selectFixture({
       rendererId,
       fixtureId: { path: 'third' },
       fixtureState: {},

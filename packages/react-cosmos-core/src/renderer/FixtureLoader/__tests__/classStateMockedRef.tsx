@@ -3,12 +3,20 @@ import retry from '@skidding/async-retry';
 import until from 'async-until';
 import delay from 'delay';
 import React from 'react';
+import { act } from 'react-test-renderer';
 import { FixtureStatePrimitiveValue } from '../../../fixtureState/types.js';
 import { uuid } from '../../../utils/uuid.js';
+import { __wrapClassStateTimeout } from '../FixtureCapture/classState/useReadClassState.js';
 import { Counter } from '../testHelpers/components.js';
 import { getClassState } from '../testHelpers/fixtureState.js';
-import { testFixtureLoader } from '../testHelpers/index.js';
+import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
+
+beforeEach(() => {
+  __wrapClassStateTimeout(cb => {
+    act(() => cb());
+  });
+});
 
 let counterRef: null | Counter = null;
 beforeEach(() => {
@@ -36,7 +44,7 @@ testFixtureLoader(
   'captures component state changes',
   { rendererId, fixtures: getFixtures() },
   async ({ selectFixture, getLastFixtureState }) => {
-    await selectFixture({
+    selectFixture({
       rendererId,
       fixtureId,
       fixtureState: {},

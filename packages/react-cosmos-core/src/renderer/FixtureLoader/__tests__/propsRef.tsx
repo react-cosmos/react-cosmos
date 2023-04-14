@@ -9,7 +9,7 @@ import {
 import { uuid } from '../../../utils/uuid.js';
 import { HelloMessageCls } from '../testHelpers/components.js';
 import { getProps } from '../testHelpers/fixtureState.js';
-import { testFixtureLoader } from '../testHelpers/index.js';
+import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
@@ -46,10 +46,10 @@ testFixtureLoader(
     setFixtureState,
     getLastFixtureState,
   }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const [{ elementId }] = getProps(fixtureState);
-    await setFixtureState({
+    setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
@@ -79,10 +79,10 @@ testFixtureLoader(
     setFixtureState,
     getLastFixtureState,
   }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const [{ elementId }] = getProps(fixtureState);
-    await setFixtureState({
+    setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {

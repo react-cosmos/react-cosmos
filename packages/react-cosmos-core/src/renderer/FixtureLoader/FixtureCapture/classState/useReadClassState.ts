@@ -20,6 +20,14 @@ import {
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
 import { ElRefs } from './shared.js';
 
+let timeoutFn = (cb: () => void, timeout: number) =>
+  window.setTimeout(cb, timeout);
+
+// Allow tests to apply React changes use act() when timeout fires.
+export function __wrapClassStateTimeout(wrapper: (cb: () => void) => void) {
+  timeoutFn = (cb, timeout) => window.setTimeout(() => wrapper(cb), timeout);
+}
+
 // How often to check the state of the loaded component and update the fixture
 // state if it changed
 const REFRESH_INTERVAL = 200;
@@ -47,7 +55,7 @@ export function useReadClassState(
 
   function scheduleStateCheck() {
     // Is there a better way to listen to component state changes?
-    timeoutId.current = window.setTimeout(checkState, REFRESH_INTERVAL);
+    timeoutId.current = timeoutFn(checkState, REFRESH_INTERVAL);
   }
 
   function checkState() {

@@ -1,10 +1,14 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
-import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
+import {
+  act,
+  ReactTestRenderer,
+  ReactTestRendererJSON,
+} from 'react-test-renderer';
 import { useValue } from '../../../fixture/useValue/index.js';
 import { createValue } from '../../../fixtureState/createValues.js';
 import { uuid } from '../../../utils/uuid.js';
-import { testFixtureLoader } from '../testHelpers/index.js';
+import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 type Profile = {
@@ -43,7 +47,7 @@ testFixtureLoader(
   'renders fixture',
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await rendered(renderer, { isAdmin: true, name: 'Pat D', age: 45 });
   }
 );
@@ -52,7 +56,7 @@ testFixtureLoader(
   'creates fixture state',
   { rendererId, fixtures },
   async ({ selectFixture, fixtureStateChange }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await fixtureStateChange({
       rendererId,
       fixtureId,
@@ -84,7 +88,7 @@ testFixtureLoader(
   'updates fixture state via setter',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, fixtureStateChange }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await rendered(renderer, { isAdmin: true, name: 'Pat D', age: 45 });
     toggleAdminButton(renderer);
     await fixtureStateChange({
@@ -118,7 +122,7 @@ testFixtureLoader(
   'resets fixture state on default value change',
   { rendererId, fixtures },
   async ({ renderer, update, selectFixture, fixtureStateChange }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await rendered(renderer, { isAdmin: true, name: 'Pat D', age: 45 });
     update({
       rendererId,
@@ -171,7 +175,9 @@ async function rendered(
 }
 
 function toggleAdminButton(renderer: ReactTestRenderer) {
-  getButtonNode(renderer).props.onClick();
+  act(() => {
+    getButtonNode(renderer).props.onClick();
+  });
 }
 
 function getProfileNode(renderer: ReactTestRenderer) {

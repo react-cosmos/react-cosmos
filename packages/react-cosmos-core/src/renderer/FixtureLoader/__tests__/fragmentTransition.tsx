@@ -4,7 +4,7 @@ import { createValues } from '../../../fixtureState/createValues.js';
 import { uuid } from '../../../utils/uuid.js';
 import { Counter } from '../testHelpers/components.js';
 import { anyClassState, anyProps } from '../testHelpers/fixtureState.js';
-import { testFixtureLoader } from '../testHelpers/index.js';
+import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
@@ -23,7 +23,7 @@ testFixtureLoader(
   'transitions Fragment from single to multi children',
   { rendererId, fixtures },
   async ({ update, selectFixture, fixtureStateChange }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     update({
       rendererId,
       fixtures: wrapFixtures({

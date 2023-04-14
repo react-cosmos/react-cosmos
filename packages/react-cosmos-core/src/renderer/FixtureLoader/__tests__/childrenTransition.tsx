@@ -6,7 +6,7 @@ import {
 import { uuid } from '../../../utils/uuid.js';
 import { Wrapper } from '../testHelpers/components.js';
 import { anyProps } from '../testHelpers/fixtureState.js';
-import { testFixtureLoader } from '../testHelpers/index.js';
+import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
@@ -19,7 +19,7 @@ testFixtureLoader(
   'transitions string children into an element with children',
   { rendererId, fixtures },
   async ({ update, selectFixture, fixtureStateChange }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await fixtureStateChange({
       rendererId,
       fixtureId,
@@ -67,7 +67,7 @@ testFixtureLoader(
   'transitions string children into an element with children',
   { rendererId, fixtures },
   async ({ update, selectFixture, fixtureStateChange }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await fixtureStateChange({
       rendererId,
       fixtureId,
@@ -115,7 +115,7 @@ testFixtureLoader(
   'transitions string children into an element with multiple children',
   { rendererId, fixtures },
   async ({ update, selectFixture, fixtureStateChange }) => {
-    await selectFixture({
+    selectFixture({
       rendererId,
       fixtureId,
       fixtureState: {},

@@ -8,7 +8,7 @@ import {
 import { uuid } from '../../../utils/uuid.js';
 import { HelloMessage } from '../testHelpers/components.js';
 import { anyProps, getProps } from '../testHelpers/fixtureState.js';
-import { testFixtureLoader } from '../testHelpers/index.js';
+import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
@@ -21,7 +21,7 @@ testFixtureLoader(
   'captures props',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, fixtureStateChange }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await retry(() => expect(renderer.toJSON()).toBe('Hello Bianca'));
     await fixtureStateChange({
       rendererId,
@@ -42,10 +42,10 @@ testFixtureLoader(
   'overwrites prop',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const [{ elementId }] = getProps(fixtureState);
-    await setFixtureState({
+    setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
@@ -64,10 +64,10 @@ testFixtureLoader(
   'removes prop',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const [{ elementId }] = getProps(fixtureState);
-    await setFixtureState({
+    setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
@@ -92,10 +92,10 @@ testFixtureLoader(
     fixtureStateChange,
     getLastFixtureState,
   }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const [{ elementId }] = getProps(fixtureState);
-    await setFixtureState({
+    setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
@@ -107,7 +107,7 @@ testFixtureLoader(
       },
     });
     await retry(() => expect(renderer.toJSON()).toBe('Hello B'));
-    await setFixtureState({
+    setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
@@ -143,10 +143,10 @@ testFixtureLoader(
     fixtureStateChange,
     getLastFixtureState,
   }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const [{ elementId }] = getProps(fixtureState);
-    await setFixtureState({
+    setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
@@ -184,7 +184,7 @@ testFixtureLoader(
   'clears fixture state for removed fixture element',
   { rendererId, fixtures },
   async ({ renderer, update, selectFixture, fixtureStateChange }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await fixtureStateChange({
       rendererId,
       fixtureId,

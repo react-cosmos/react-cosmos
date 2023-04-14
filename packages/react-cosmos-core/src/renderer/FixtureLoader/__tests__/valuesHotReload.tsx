@@ -1,10 +1,14 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
-import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
+import {
+  act,
+  ReactTestRenderer,
+  ReactTestRendererJSON,
+} from 'react-test-renderer';
 import { useValue } from '../../../fixture/useValue/index.js';
 import { createValue } from '../../../fixtureState/createValues.js';
 import { uuid } from '../../../utils/uuid.js';
-import { testFixtureLoader } from '../testHelpers/index.js';
+import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 type CreateFixtureArgs = {
@@ -49,7 +53,7 @@ testFixtureLoader(
   'preserves fixture state change (via setter) on default value change',
   { rendererId, fixtures },
   async ({ renderer, update, selectFixture, fixtureStateChange }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await rendered(renderer, { countText: '0', toggledText: 'false' });
     clickCountButton(renderer);
     clickToggledButton(renderer);
@@ -92,10 +96,10 @@ testFixtureLoader(
     getLastFixtureState,
     fixtureStateChange,
   }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await rendered(renderer, { countText: '0', toggledText: 'false' });
     const fixtureState = await getLastFixtureState();
-    await setFixtureState({
+    setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
@@ -142,7 +146,7 @@ testFixtureLoader(
   'cleans up fixture state on input rename',
   { rendererId, fixtures },
   async ({ renderer, update, selectFixture, fixtureStateChange }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await rendered(renderer, { countText: '0', toggledText: 'false' });
     clickCountButton(renderer);
     await fixtureStateChange({
@@ -234,5 +238,7 @@ function getButtonText(rendererNode: ReactTestRendererJSON) {
 }
 
 function toggleButton(rendererNode: ReactTestRendererJSON) {
-  rendererNode.props.onClick();
+  act(() => {
+    rendererNode.props.onClick();
+  });
 }

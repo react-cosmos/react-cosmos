@@ -5,7 +5,7 @@ import { uuid } from '../../../utils/uuid.js';
 import { FixtureCapture } from '../FixtureCapture/index.js';
 import { HelloMessage } from '../testHelpers/components.js';
 import { anyProps } from '../testHelpers/fixtureState.js';
-import { testFixtureLoader } from '../testHelpers/index.js';
+import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 function Wrap({ children }: { children: () => React.ReactNode }) {
@@ -34,7 +34,7 @@ testFixtureLoader(
   'captures props from render callback',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, fixtureStateChange }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await retry(() =>
       expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B'])
     );

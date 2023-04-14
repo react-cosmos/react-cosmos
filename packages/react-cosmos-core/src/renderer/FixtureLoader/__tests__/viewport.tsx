@@ -2,7 +2,7 @@ import retry from '@skidding/async-retry';
 import React from 'react';
 import { Viewport } from '../../../fixture/Viewport.js';
 import { uuid } from '../../../utils/uuid.js';
-import { testFixtureLoader } from '../testHelpers/index.js';
+import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
@@ -19,7 +19,7 @@ testFixtureLoader(
   'renders children',
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
-    await selectFixture({
+    selectFixture({
       rendererId,
       fixtureId,
       fixtureState: {},
@@ -32,7 +32,7 @@ testFixtureLoader(
   'creates viewport fixture state',
   { rendererId, fixtures },
   async ({ selectFixture, fixtureStateChange }) => {
-    await selectFixture({
+    selectFixture({
       rendererId,
       fixtureId,
       fixtureState: {},
@@ -52,7 +52,7 @@ testFixtureLoader(
   'updates viewport fixture state',
   { rendererId, fixtures },
   async ({ update, selectFixture, fixtureStateChange }) => {
-    await selectFixture({
+    selectFixture({
       rendererId,
       fixtureId,
       fixtureState: {},

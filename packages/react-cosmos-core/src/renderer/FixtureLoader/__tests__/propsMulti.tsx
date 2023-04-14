@@ -5,7 +5,7 @@ import { updateFixtureStateProps } from '../../../fixtureState/props.js';
 import { uuid } from '../../../utils/uuid.js';
 import { HelloMessage } from '../testHelpers/components.js';
 import { anyProps, getProps } from '../testHelpers/fixtureState.js';
-import { testFixtureLoader } from '../testHelpers/index.js';
+import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
@@ -23,7 +23,7 @@ testFixtureLoader(
   'captures multiple props instances',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, fixtureStateChange }) => {
-    await selectFixture({
+    selectFixture({
       rendererId,
       fixtureId,
       fixtureState: {},
@@ -56,14 +56,14 @@ testFixtureLoader(
   'overwrites prop in second instance',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
-    await selectFixture({
+    selectFixture({
       rendererId,
       fixtureId,
       fixtureState: {},
     });
     const fixtureState = await getLastFixtureState();
     const [, { elementId }] = getProps(fixtureState, 2);
-    await setFixtureState({
+    setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {

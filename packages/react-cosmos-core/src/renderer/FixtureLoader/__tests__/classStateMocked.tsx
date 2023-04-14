@@ -1,20 +1,28 @@
 import { StateMock } from '@react-mock/state';
 import retry from '@skidding/async-retry';
 import React from 'react';
+import { act } from 'react-test-renderer';
 import {
   removeFixtureStateClassState,
   updateFixtureStateClassState,
 } from '../../../fixtureState/classState.js';
 import { createValues } from '../../../fixtureState/createValues.js';
 import { uuid } from '../../../utils/uuid.js';
+import { __wrapClassStateTimeout } from '../FixtureCapture/classState/useReadClassState.js';
 import { CoolCounter, Counter } from '../testHelpers/components.js';
 import {
   anyClassState,
   anyProps,
   getClassState,
 } from '../testHelpers/fixtureState.js';
-import { testFixtureLoader } from '../testHelpers/index.js';
+import { testFixtureLoader } from '../testHelpers/testFixtureLoader.js';
 import { wrapFixtures } from '../testHelpers/wrapFixture.js';
+
+beforeEach(() => {
+  __wrapClassStateTimeout(cb => {
+    act(() => cb());
+  });
+});
 
 const rendererId = uuid();
 const fixtures = wrapFixtures({
@@ -30,7 +38,7 @@ testFixtureLoader(
   'captures mocked state',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, fixtureStateChange }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await retry(() => expect(renderer.toJSON()).toBe('5 times'));
     await fixtureStateChange({
       rendererId,
@@ -52,10 +60,10 @@ testFixtureLoader(
   'overwrites mocked state',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const [{ elementId }] = getClassState(fixtureState);
-    await setFixtureState({
+    setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
@@ -69,7 +77,7 @@ testFixtureLoader(
     await retry(() => expect(renderer.toJSON()).toBe('100 times'));
     // A second update will provide code coverage for a different branch:
     // the transition between fixture state values
-    await setFixtureState({
+    setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
@@ -88,10 +96,10 @@ testFixtureLoader(
   'removes mocked state property',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const [{ elementId }] = getClassState(fixtureState);
-    await setFixtureState({
+    setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
@@ -116,10 +124,10 @@ testFixtureLoader(
     fixtureStateChange,
     getLastFixtureState,
   }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const [{ elementId }] = getClassState(fixtureState);
-    await setFixtureState({
+    setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
@@ -131,7 +139,7 @@ testFixtureLoader(
       },
     });
     await retry(() => expect(renderer.toJSON()).toBe('10 times'));
-    await setFixtureState({
+    setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
@@ -167,10 +175,10 @@ testFixtureLoader(
     setFixtureState,
     getLastFixtureState,
   }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const [{ elementId }] = getClassState(fixtureState);
-    await setFixtureState({
+    setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
@@ -207,10 +215,10 @@ testFixtureLoader(
     fixtureStateChange,
     getLastFixtureState,
   }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const [{ elementId }] = getClassState(fixtureState);
-    await setFixtureState({
+    setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
@@ -254,7 +262,7 @@ testFixtureLoader(
   'clears fixture state for removed fixture element',
   { rendererId, fixtures },
   async ({ renderer, update, selectFixture, fixtureStateChange }) => {
-    await selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await fixtureStateChange({
       rendererId,
       fixtureId,
