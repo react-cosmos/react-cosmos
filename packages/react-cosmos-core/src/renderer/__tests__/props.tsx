@@ -13,7 +13,7 @@ import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
 const fixtures = wrapFixtures({
-  first: <HelloMessage name="Bianca" />,
+  first: <HelloMessage name="Blanca" />,
 });
 const fixtureId = { path: 'first' };
 
@@ -22,7 +22,7 @@ testRenderer(
   { rendererId, fixtures },
   async ({ renderer, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await retry(() => expect(renderer.toJSON()).toBe('Hello Bianca'));
+    await retry(() => expect(renderer.toJSON()).toBe('Hello Blanca'));
     await fixtureStateChange({
       rendererId,
       fixtureId,
@@ -30,7 +30,7 @@ testRenderer(
         props: [
           anyProps({
             componentName: 'HelloMessage',
-            values: createValues({ name: 'Bianca' }),
+            values: createValues({ name: 'Blanca' }),
           }),
         ],
       },
@@ -114,7 +114,7 @@ testRenderer(
         props: removeFixtureStateProps(fixtureState, elementId),
       },
     });
-    await retry(() => expect(renderer.toJSON()).toBe('Hello Bianca'));
+    await retry(() => expect(renderer.toJSON()).toBe('Hello Blanca'));
     // After the props are removed from the fixture state, the original
     // props are added back through a fixtureStateChange message
     await fixtureStateChange({
@@ -124,7 +124,7 @@ testRenderer(
         props: [
           anyProps({
             componentName: 'HelloMessage',
-            values: createValues({ name: 'Bianca' }),
+            values: createValues({ name: 'Blanca' }),
           }),
         ],
       },
@@ -161,7 +161,7 @@ testRenderer(
     update({
       rendererId,
       fixtures: wrapFixtures({
-        first: <HelloMessage name="Petec" />,
+        first: <HelloMessage name="Benjamin" />,
       }),
     });
     await fixtureStateChange({
@@ -171,12 +171,12 @@ testRenderer(
         props: [
           anyProps({
             componentName: 'HelloMessage',
-            values: createValues({ name: 'Petec' }),
+            values: createValues({ name: 'Benjamin' }),
           }),
         ],
       },
     });
-    await retry(() => expect(renderer.toJSON()).toBe('Hello Petec'));
+    await retry(() => expect(renderer.toJSON()).toBe('Hello Benjamin'));
   }
 );
 
@@ -192,7 +192,7 @@ testRenderer(
         props: [
           anyProps({
             componentName: 'HelloMessage',
-            values: createValues({ name: 'Bianca' }),
+            values: createValues({ name: 'Blanca' }),
           }),
         ],
       },

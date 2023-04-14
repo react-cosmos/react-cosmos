@@ -12,7 +12,7 @@ const rendererId = uuid();
 const fixtures = wrapFixtures({
   first: (
     <>
-      <HelloMessage name="Bianca" />
+      <HelloMessage name="Blanca" />
       <HelloMessage name="B" />
     </>
   ),
@@ -29,7 +29,7 @@ testRenderer(
       fixtureState: {},
     });
     await retry(() =>
-      expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B'])
+      expect(renderer.toJSON()).toEqual(['Hello Blanca', 'Hello B'])
     );
     await fixtureStateChange({
       rendererId,
@@ -39,7 +39,7 @@ testRenderer(
           anyProps({
             componentName: 'HelloMessage',
             elPath: 'props.children[0]',
-            values: createValues({ name: 'Bianca' }),
+            values: createValues({ name: 'Blanca' }),
           }),
           anyProps({
             componentName: 'HelloMessage',
@@ -70,12 +70,12 @@ testRenderer(
         props: updateFixtureStateProps({
           fixtureState,
           elementId,
-          values: createValues({ name: 'Petec' }),
+          values: createValues({ name: 'Benjamin' }),
         }),
       },
     });
     await retry(() =>
-      expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello Petec'])
+      expect(renderer.toJSON()).toEqual(['Hello Blanca', 'Hello Benjamin'])
     );
   }
 );

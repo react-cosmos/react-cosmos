@@ -31,7 +31,7 @@ const getFixtures = () =>
             refs.push(elRef);
           }
         }}
-        name="Bianca"
+        name="Blanca"
       />
     ),
   });
@@ -63,7 +63,7 @@ testRenderer(
     await retry(() => expect(renderer.toJSON()).toEqual('Hello B'));
     update({ rendererId, fixtures: getFixtures() });
     await retry(() => {
-      expect(renderer.toJSON()).toEqual('Hello Bianca');
+      expect(renderer.toJSON()).toEqual('Hello Blanca');
       expect(uniq(refs).length).toBe(1);
     });
   }
@@ -96,7 +96,7 @@ testRenderer(
     await retry(() => expect(renderer.toJSON()).toEqual('Hello B'));
     update({ rendererId, fixtures: getFixtures() });
     await retry(() => {
-      expect(renderer.toJSON()).toEqual('Hello Bianca');
+      expect(renderer.toJSON()).toEqual('Hello Blanca');
       expect(uniq(refs).length).toBe(2);
     });
   }

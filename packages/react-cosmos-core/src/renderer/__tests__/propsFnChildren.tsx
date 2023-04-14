@@ -17,7 +17,7 @@ const rendererId = uuid();
 const fixtures = wrapFixtures({
   first: (
     <>
-      <Wrap>{() => <HelloMessage name="Bianca" />}</Wrap>
+      <Wrap>{() => <HelloMessage name="Blanca" />}</Wrap>
       <Wrap>
         {() => (
           <FixtureCapture decoratorId="mockDecoratorId">
@@ -36,7 +36,7 @@ testRenderer(
   async ({ renderer, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await retry(() =>
-      expect(renderer.toJSON()).toEqual(['Hello Bianca', 'Hello B'])
+      expect(renderer.toJSON()).toEqual(['Hello Blanca', 'Hello B'])
     );
     await fixtureStateChange({
       rendererId,

@@ -9,7 +9,7 @@ import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
 const fixtures = wrapFixtures({
-  first: <HelloMessage name="Bianca" />,
+  first: <HelloMessage name="Blanca" />,
 });
 const fixtureId = { path: 'first' };
 
