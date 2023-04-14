@@ -1,3 +1,4 @@
+import delay from 'delay';
 import { act } from 'react-test-renderer';
 import {
   RendererConnect,
@@ -26,7 +27,9 @@ export function createTestRendererConnect({ onRendererResponse }: Args) {
     },
   };
 
-  function postRendererRequest(rendererRequest: RendererRequest) {
+  async function postRendererRequest(rendererRequest: RendererRequest) {
+    // Simulate async communication between renderer and parent
+    await delay(Math.round(Math.random() * 50));
     act(() => {
       messageHandlers.forEach(handler => {
         handler(rendererRequest);
