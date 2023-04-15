@@ -5,12 +5,11 @@ import { createFixtureStateProps } from '../../fixtureState/props.js';
 import { uuid } from '../../utils/uuid.js';
 import { HelloMessage } from '../testHelpers/components.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
-import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
-const fixtures = wrapFixtures({
+const fixtures = {
   first: <HelloMessage name="Blanca" />,
-});
+};
 const fixtureId = { path: 'first' };
 
 testRenderer(

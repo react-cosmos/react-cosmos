@@ -1,12 +1,11 @@
 import { uuid } from '../../utils/uuid.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
-import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
-const fixtures = wrapFixtures({
+const fixtures = {
   first: { a: null, b: null, c: null },
   second: null,
-});
+};
 
 testRenderer(
   'posts ready response on mount',

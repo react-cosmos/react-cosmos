@@ -13,7 +13,6 @@ import {
   getProps,
 } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
-import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 beforeEach(() => {
   __wrapClassStateTimeout(cb => {
@@ -27,19 +26,18 @@ beforeEach(() => {
 });
 
 const rendererId = uuid();
-const getFixtures = () =>
-  wrapFixtures({
-    first: (
-      <SuffixCounter
-        ref={elRef => {
-          if (elRef) {
-            counterRef = elRef;
-          }
-        }}
-        suffix="times"
-      />
-    ),
-  });
+const getFixtures = () => ({
+  first: (
+    <SuffixCounter
+      ref={elRef => {
+        if (elRef) {
+          counterRef = elRef;
+        }
+      }}
+      suffix="times"
+    />
+  ),
+});
 const fixtureId = { path: 'first' };
 
 testRenderer(

@@ -1,9 +1,8 @@
 import { uuid } from '../../utils/uuid.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
-import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
-const fixtures = wrapFixtures({ first: null, second: null });
+const fixtures = { first: null, second: null };
 
 testRenderer(
   'renders blank state message',
@@ -62,7 +61,7 @@ testRenderer(
     });
     update({
       rendererId,
-      fixtures: { ...fixtures, ...wrapFixtures({ third: null }) },
+      fixtures: { ...fixtures, ...{ third: null } },
     });
     await fixtureListUpdate({
       rendererId,

@@ -4,12 +4,11 @@ import { uuid } from '../../utils/uuid.js';
 import { Wrapper } from '../testHelpers/components.js';
 import { anyProps } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
-import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
-const fixtures = wrapFixtures({
+const fixtures = {
   first: <Wrapper>yo</Wrapper>,
-});
+};
 const fixtureId = { path: 'first' };
 
 testRenderer(
@@ -30,13 +29,13 @@ testRenderer(
     });
     update({
       rendererId,
-      fixtures: wrapFixtures({
+      fixtures: {
         first: (
           <Wrapper>
             <Wrapper>brah</Wrapper>
           </Wrapper>
         ),
-      }),
+      },
     });
     await fixtureStateChange({
       rendererId,
@@ -78,13 +77,13 @@ testRenderer(
     });
     update({
       rendererId,
-      fixtures: wrapFixtures({
+      fixtures: {
         first: (
           <Wrapper>
             <Wrapper>brah</Wrapper>
           </Wrapper>
         ),
-      }),
+      },
     });
     await fixtureStateChange({
       rendererId,
@@ -130,14 +129,14 @@ testRenderer(
     });
     update({
       rendererId,
-      fixtures: wrapFixtures({
+      fixtures: {
         first: (
           <Wrapper>
             <Wrapper>brah</Wrapper>
             <Wrapper>brah</Wrapper>
           </Wrapper>
         ),
-      }),
+      },
     });
     await fixtureStateChange({
       rendererId,

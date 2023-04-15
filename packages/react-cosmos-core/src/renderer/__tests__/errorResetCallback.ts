@@ -1,10 +1,9 @@
 import retry from '@skidding/async-retry';
 import { uuid } from '../../utils/uuid.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
-import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
-const fixtures = wrapFixtures({ first: 'First' });
+const fixtures = { first: 'First' };
 const fixtureId = { path: 'first' };
 
 const onErrorReset = jest.fn();

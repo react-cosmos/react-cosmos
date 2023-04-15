@@ -1,13 +1,12 @@
 import retry from '@skidding/async-retry';
 import { uuid } from '../../utils/uuid.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
-import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
-const fixtures = wrapFixtures({
+const fixtures = {
   first: { one: 'First' },
   second: 'Second',
-});
+};
 
 testRenderer(
   'renders selected fixture',

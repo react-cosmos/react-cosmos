@@ -2,16 +2,15 @@ import retry from '@skidding/async-retry';
 import React from 'react';
 import { uuid } from '../../utils/uuid.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
-import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 type Props = {
   children: React.ReactNode;
 };
 
 const rendererId = uuid();
-const fixtures = wrapFixtures({
+const fixtures = {
   'src/foo/__fixtures__/default.js': 'Hello!',
-});
+};
 // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/18051
 const decorators = {
   'src/decorator.js': ({ children }: Props) => <>Decorated at src{children}</>,

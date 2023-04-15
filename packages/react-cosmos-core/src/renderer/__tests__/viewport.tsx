@@ -3,16 +3,15 @@ import React from 'react';
 import { Viewport } from '../../fixture/Viewport.js';
 import { uuid } from '../../utils/uuid.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
-import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
-const fixtures = wrapFixtures({
+const fixtures = {
   first: (
     <Viewport width={320} height={240}>
       yo
     </Viewport>
   ),
-});
+};
 const fixtureId = { path: 'first' };
 
 testRenderer(
@@ -59,13 +58,13 @@ testRenderer(
     });
     update({
       rendererId,
-      fixtures: wrapFixtures({
+      fixtures: {
         first: (
           <Viewport width={640} height={480}>
             yo
           </Viewport>
         ),
-      }),
+      },
     });
     await fixtureStateChange({
       rendererId,

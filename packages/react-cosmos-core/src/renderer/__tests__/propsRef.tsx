@@ -10,7 +10,6 @@ import { uuid } from '../../utils/uuid.js';
 import { HelloMessageCls } from '../testHelpers/components.js';
 import { getProps } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
-import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
 const fixtureId = { path: 'first' };
@@ -22,19 +21,18 @@ beforeEach(() => {
 
 // Intentionally create new ref function on every update to get the ref
 // to be called more than once even if the component instance is reused
-const getFixtures = () =>
-  wrapFixtures({
-    first: (
-      <HelloMessageCls
-        ref={elRef => {
-          if (elRef) {
-            refs.push(elRef);
-          }
-        }}
-        name="Blanca"
-      />
-    ),
-  });
+const getFixtures = () => ({
+  first: (
+    <HelloMessageCls
+      ref={elRef => {
+        if (elRef) {
+          refs.push(elRef);
+        }
+      }}
+      name="Blanca"
+    />
+  ),
+});
 
 testRenderer(
   'transitions props (reuses component instance)',

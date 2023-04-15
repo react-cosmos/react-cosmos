@@ -3,7 +3,12 @@ import React from 'react';
 import { act, create, ReactTestRenderer } from 'react-test-renderer';
 import { FixtureId } from '../../fixture/types.js';
 import { FixtureConnect } from '../FixtureConnect.js';
-import { ByPath, ReactDecorator, ReactFixtureWrapper } from '../reactTypes.js';
+import {
+  ByPath,
+  ReactDecorator,
+  ReactFixtureExport,
+  UserModuleWrappers,
+} from '../reactTypes.js';
 import {
   RendererConnect,
   RendererId,
@@ -17,10 +22,11 @@ import { createTestRendererConnect } from './createTestRendererConnect.js';
 
 export type RendererTestArgs = {
   rendererId: RendererId;
-  fixtures: ByPath<ReactFixtureWrapper>;
+  fixtures: ByPath<ReactFixtureExport>;
   selectedFixtureId?: null | FixtureId;
   initialFixtureId?: FixtureId;
   decorators?: ByPath<ReactDecorator>;
+  lazy?: boolean;
   only?: boolean;
   onErrorReset?: () => unknown;
 };
@@ -71,17 +77,21 @@ export async function mountTestRenderer(
 
 function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
   const { fixtures, decorators = {}, ...otherArgs } = args;
-  const decoratorsWrappers = mapValues(decorators, decorator => {
-    return { module: { default: decorator } };
-  });
+
+  const userModules: UserModuleWrappers = {
+    lazy: false,
+    fixtures: mapValues(fixtures, fixture => ({
+      module: { default: fixture },
+    })),
+    decorators: mapValues(decorators, decorator => ({
+      module: { default: decorator },
+    })),
+  };
+
   return (
     <FixtureConnect
       rendererConnect={rendererConnect}
-      moduleWrappers={{
-        lazy: false,
-        fixtures,
-        decorators: decoratorsWrappers,
-      }}
+      moduleWrappers={userModules}
       systemDecorators={[]}
       {...otherArgs}
     />

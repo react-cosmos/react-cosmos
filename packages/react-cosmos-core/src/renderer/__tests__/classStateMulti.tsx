@@ -11,10 +11,9 @@ import {
   getClassState,
 } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
-import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
-const fixtures = wrapFixtures({
+const fixtures = {
   first: (
     <>
       <StateMock state={{ count: 5 }}>
@@ -25,7 +24,7 @@ const fixtures = wrapFixtures({
       </StateMock>
     </>
   ),
-});
+};
 const fixtureId = { path: 'first' };
 
 testRenderer(

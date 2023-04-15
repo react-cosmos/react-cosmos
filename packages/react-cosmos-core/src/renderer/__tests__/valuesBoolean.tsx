@@ -9,7 +9,6 @@ import { useValue } from '../../fixture/useValue/index.js';
 import { createValue } from '../../fixtureState/createValues.js';
 import { uuid } from '../../utils/uuid.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
-import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 function createFixtures({ defaultValue }: { defaultValue: boolean }) {
   const MyComponent = () => {
@@ -18,9 +17,9 @@ function createFixtures({ defaultValue }: { defaultValue: boolean }) {
       <button onClick={() => setToggled(!toggled)}>{String(toggled)}</button>
     );
   };
-  return wrapFixtures({
+  return {
     first: <MyComponent />,
-  });
+  };
 }
 
 const rendererId = uuid();

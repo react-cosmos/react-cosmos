@@ -11,10 +11,9 @@ import {
   getProps,
 } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
-import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 const rendererId = uuid();
-const fixtures = wrapFixtures({
+const fixtures = {
   first: (
     // The extra levels of nesting capture a complex case regarding deep
     // comparison of children nodes
@@ -24,7 +23,7 @@ const fixtures = wrapFixtures({
       </>
     </>
   ),
-});
+};
 const fixtureId = { path: 'first' };
 
 testRenderer(
@@ -133,9 +132,9 @@ testRenderer(
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     update({
       rendererId,
-      fixtures: wrapFixtures({
+      fixtures: {
         first: <SuffixCounter suffix="timez" />,
-      }),
+      },
     });
     await retry(() => expect(renderer.toJSON()).toBe('0 timez'));
     await fixtureStateChange({

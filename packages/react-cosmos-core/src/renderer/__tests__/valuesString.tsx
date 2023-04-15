@@ -9,7 +9,6 @@ import { useValue } from '../../fixture/useValue/index.js';
 import { createValue } from '../../fixtureState/createValues.js';
 import { uuid } from '../../utils/uuid.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
-import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 function createFixtures({ defaultValue }: { defaultValue: string }) {
   const MyComponent = () => {
@@ -22,9 +21,9 @@ function createFixtures({ defaultValue }: { defaultValue: string }) {
       />
     );
   };
-  return wrapFixtures({
+  return {
     first: <MyComponent />,
-  });
+  };
 }
 
 const rendererId = uuid();

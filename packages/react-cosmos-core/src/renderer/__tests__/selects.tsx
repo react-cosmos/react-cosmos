@@ -8,7 +8,6 @@ import {
 import { useSelect } from '../../fixture/useSelect/index.js';
 import { uuid } from '../../utils/uuid.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
-import { wrapFixtures } from '../testHelpers/wrapFixture.js';
 
 type Option = 'first' | 'second' | 'third';
 
@@ -28,9 +27,9 @@ function createFixtures({ defaultValue }: { defaultValue: Option }) {
       />
     );
   };
-  return wrapFixtures({
+  return {
     first: <MyComponent />,
-  });
+  };
 }
 
 const rendererId = uuid();
