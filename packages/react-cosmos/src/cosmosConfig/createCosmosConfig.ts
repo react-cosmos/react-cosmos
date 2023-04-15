@@ -24,7 +24,7 @@ export function createCosmosConfig(
     https: getHttps(cosmosConfigInput),
     httpsOptions: getHttpsOptions(cosmosConfigInput, rootDir),
     ignore: getIgnore(cosmosConfigInput),
-    lazy: cosmosConfigInput.lazy ?? false,
+    lazy: getLazy(cosmosConfigInput),
     port: getPort(cosmosConfigInput),
     portRetries: getPortRetries(cosmosConfigInput),
     plugins: getPlugins(cosmosConfigInput, rootDir),
@@ -136,4 +136,14 @@ function getDomConfig(cosmosConfigInput: CosmosDomConfigInput) {
   return {
     containerQuerySelector,
   };
+}
+
+function getLazy(cosmosConfigInput: CosmosConfigInput) {
+  const cliArgs = getCliArgs();
+  if (typeof cliArgs.lazy === 'boolean') {
+    return cliArgs.lazy;
+  }
+
+  const { lazy = false } = cosmosConfigInput;
+  return lazy;
 }
