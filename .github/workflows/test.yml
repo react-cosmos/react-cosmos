@@ -37,7 +37,6 @@ jobs:
       matrix:
         example: [webpack, vite]
         os: [ubuntu, windows]
-        lazy: [false]
         node-version: [18]
         include:
           - example: webpack
@@ -65,7 +64,7 @@ jobs:
       - run: yarn build
 
       # Generate static export for domExport test
-      - run: yarn workspace example-${{ matrix.example }} export lazy=${{ matrix.lazy }}
+      - run: yarn workspace example-${{ matrix.example }} export --lazy=${{ matrix.lazy == true }}
 
       - uses: BerniWittmann/background-server-action@v1
         with:
@@ -75,9 +74,9 @@ jobs:
           # - DOM export
           # - Native dev server
           start: |
-            yarn workspace example-${{ matrix.example }} start lazy=${{ matrix.lazy }},
+            yarn workspace example-${{ matrix.example }} start --lazy=${{ matrix.lazy == true }},
             yarn workspace example-${{ matrix.example }} serve,
-            yarn workspace example-${{ matrix.example }} native lazy=${{ matrix.lazy }}
+            yarn workspace example-${{ matrix.example }} native --lazy=${{ matrix.lazy == true }}
           wait-on: 'http://localhost:5000,http://localhost:5001,http://localhost:5002'
         env:
           CYPRESS_EXAMPLE_NAME: ${{ matrix.example }}
