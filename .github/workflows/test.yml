@@ -81,6 +81,7 @@ jobs:
           wait-on: 'http://localhost:5000,http://localhost:5001,http://localhost:5002'
         env:
           CYPRESS_EXAMPLE_NAME: ${{ matrix.example }}
+          CYPRESS_LAZY: ${{ matrix.lazy }}
 
       - uses: actions/upload-artifact@v3
         if: failure()
