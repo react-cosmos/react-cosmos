@@ -9,11 +9,12 @@ import { uuid } from '../../utils/uuid.js';
 import { HelloMessage } from '../testHelpers/components.js';
 import { anyProps, getProps } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
+import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 const rendererId = uuid();
-const fixtures = {
+const fixtures = wrapDefaultExport({
   first: <HelloMessage name="Blanca" />,
-};
+});
 const fixtureId = { path: 'first' };
 
 testRenderer(
@@ -159,9 +160,9 @@ testRenderer(
     await retry(() => expect(renderer.toJSON()).toBe('Hello B'));
     update({
       rendererId,
-      fixtures: {
+      fixtures: wrapDefaultExport({
         first: <HelloMessage name="Benjamin" />,
-      },
+      }),
     });
     await fixtureStateChange({
       rendererId,
@@ -198,11 +199,11 @@ testRenderer(
     });
     update({
       rendererId,
-      fixtures: {
+      fixtures: wrapDefaultExport({
         // HelloMessage element from fixture is gone, and so should the
         // fixture state related to it.
         first: 'Hello all',
-      },
+      }),
     });
     await retry(() => expect(renderer.toJSON()).toBe('Hello all'));
     await fixtureStateChange({

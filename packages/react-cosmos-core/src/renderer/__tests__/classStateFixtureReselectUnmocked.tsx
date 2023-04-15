@@ -4,11 +4,12 @@ import { uuid } from '../../utils/uuid.js';
 import { Counter } from '../testHelpers/components.js';
 import { anyClassState, anyProps } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
+import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 const rendererId = uuid();
-const fixtures = {
+const fixtures = wrapDefaultExport({
   first: <Counter />,
-};
+});
 const fixtureId = { path: 'first' };
 
 // NOTE: This is a regression test that was created for a bug that initally

@@ -13,11 +13,12 @@ import {
   getClassState,
 } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
+import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 const rendererId = uuid();
-const fixtures = {
+const fixtures = wrapDefaultExport({
   first: <Counter />,
-};
+});
 const fixtureId = { path: 'first' };
 
 testRenderer(

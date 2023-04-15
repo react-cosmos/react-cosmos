@@ -5,9 +5,10 @@ import { uuid } from '../../utils/uuid.js';
 import { Counter } from '../testHelpers/components.js';
 import { anyClassState, anyProps } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
+import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 const rendererId = uuid();
-const fixtures = {
+const fixtures = wrapDefaultExport({
   first: (
     <>
       <StateMock state={{ count: 5 }}>
@@ -15,7 +16,7 @@ const fixtures = {
       </StateMock>
     </>
   ),
-};
+});
 const fixtureId = { path: 'first' };
 
 testRenderer(
@@ -25,7 +26,7 @@ testRenderer(
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     update({
       rendererId,
-      fixtures: {
+      fixtures: wrapDefaultExport({
         // This is a very tricky case. When fragments have one child,
         // props.children will be that child. But when fragments have
         // two or more children, props.children will be an array. When
@@ -44,7 +45,7 @@ testRenderer(
             </StateMock>
           </>
         ),
-      },
+      }),
     });
     // Do not remove this line: It captures a regression regarding an error
     // that occurred when component state was read asynchronously

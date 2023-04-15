@@ -16,6 +16,7 @@ import {
   getClassState,
 } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
+import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 beforeEach(() => {
   __wrapClassStateTimeout(cb => {
@@ -24,13 +25,13 @@ beforeEach(() => {
 });
 
 const rendererId = uuid();
-const fixtures = {
+const fixtures = wrapDefaultExport({
   first: (
     <StateMock state={{ count: 5 }}>
       <Counter />
     </StateMock>
   ),
-};
+});
 const fixtureId = { path: 'first' };
 
 testRenderer(
@@ -191,13 +192,13 @@ testRenderer(
     await retry(() => expect(renderer.toJSON()).toBe('50 times'));
     update({
       rendererId,
-      fixtures: {
+      fixtures: wrapDefaultExport({
         first: (
           <StateMock state={{ count: 5 }}>
             <CoolCounter />
           </StateMock>
         ),
-      },
+      }),
     });
     await retry(() => expect(renderer.toJSON()).toBe('50 timez'));
   }
@@ -232,13 +233,13 @@ testRenderer(
     // When the fixture changes the fixture state follows along
     update({
       rendererId,
-      fixtures: {
+      fixtures: wrapDefaultExport({
         first: (
           <StateMock state={{ count: 50 }}>
             <Counter />
           </StateMock>
         ),
-      },
+      }),
     });
     await fixtureStateChange({
       rendererId,
@@ -277,11 +278,11 @@ testRenderer(
     });
     update({
       rendererId,
-      fixtures: {
+      fixtures: wrapDefaultExport({
         // Counter element from fixture is gone, and so should the
         // fixture state related to it.
         first: 'No counts for you.',
-      },
+      }),
     });
     await retry(() => expect(renderer.toJSON()).toBe('No counts for you.'));
     await fixtureStateChange({

@@ -4,6 +4,7 @@ import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
 import { useSelect } from '../../fixture/useSelect/index.js';
 import { uuid } from '../../utils/uuid.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
+import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 function createFixtures() {
   const MyComponent = () => {
@@ -18,9 +19,9 @@ function createFixtures() {
       />
     );
   };
-  return {
+  return wrapDefaultExport({
     first: <MyComponent />,
-  };
+  });
 }
 
 const rendererId = uuid();

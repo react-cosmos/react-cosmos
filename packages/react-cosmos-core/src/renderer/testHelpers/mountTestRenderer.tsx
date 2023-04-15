@@ -6,8 +6,8 @@ import { FixtureId } from '../../fixture/types.js';
 import { FixtureConnect } from '../FixtureConnect.js';
 import {
   ByPath,
-  ReactDecorator,
-  ReactFixtureExport,
+  ReactDecoratorModule,
+  ReactFixtureModule,
   UserModuleWrappers,
 } from '../reactTypes.js';
 import {
@@ -23,10 +23,10 @@ import { createTestRendererConnect } from './createTestRendererConnect.js';
 
 export type RendererTestArgs = {
   rendererId: RendererId;
-  fixtures: ByPath<ReactFixtureExport>;
+  fixtures: ByPath<ReactFixtureModule>;
   selectedFixtureId?: null | FixtureId;
   initialFixtureId?: FixtureId;
-  decorators?: ByPath<ReactDecorator>;
+  decorators?: ByPath<ReactDecoratorModule>;
   lazy?: boolean;
   only?: boolean;
   onErrorReset?: () => unknown;
@@ -89,29 +89,25 @@ function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
 }
 
 function getModuleWrappers(
-  fixtures: ByPath<ReactFixtureExport>,
-  decorators: ByPath<ReactDecorator>,
+  fixtures: ByPath<ReactFixtureModule>,
+  decorators: ByPath<ReactDecoratorModule>,
   lazy: boolean
 ): UserModuleWrappers {
   if (lazy) {
     return {
       lazy: true,
       fixtures: mapValues(fixtures, fixture => ({
-        getModule: () => dynamicImportWrapper({ default: fixture }),
+        getModule: () => dynamicImportWrapper(fixture),
       })),
       decorators: mapValues(decorators, decorator => ({
-        getModule: () => dynamicImportWrapper({ default: decorator }),
+        getModule: () => dynamicImportWrapper(decorator),
       })),
     };
   } else {
     return {
       lazy: false,
-      fixtures: mapValues(fixtures, fixture => ({
-        module: { default: fixture },
-      })),
-      decorators: mapValues(decorators, decorator => ({
-        module: { default: decorator },
-      })),
+      fixtures: mapValues(fixtures, fixture => ({ module: fixture })),
+      decorators: mapValues(decorators, decorator => ({ module: decorator })),
     };
   }
 }

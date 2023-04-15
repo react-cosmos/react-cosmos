@@ -2,17 +2,18 @@ import retry from '@skidding/async-retry';
 import React from 'react';
 import { uuid } from '../../utils/uuid.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
+import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 type Props = {
   children: React.ReactNode;
 };
 
 const rendererId = uuid();
-const fixtures = {
+const fixtures = wrapDefaultExport({
   'src/foo/__fixtures__/default.js': 'Hello!',
-};
+});
 // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/18051
-const decorators = {
+const decorators = wrapDefaultExport({
   'src/decorator.js': ({ children }: Props) => <>Decorated at src{children}</>,
   'src/foo/decorator.js': ({ children }: Props) => (
     <>Decorated at src/foo{children}</>
@@ -20,7 +21,7 @@ const decorators = {
   'src/bar/decorator.js': ({ children }: Props) => (
     <>Decorated at src/bar{children}</>
   ),
-};
+});
 
 testRenderer(
   'renders selected fixture inside decorator',

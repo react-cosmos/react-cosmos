@@ -6,16 +6,17 @@ import { uuid } from '../../utils/uuid.js';
 import { HelloMessage } from '../testHelpers/components.js';
 import { anyProps, getProps } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
+import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 const rendererId = uuid();
-const fixtures = {
+const fixtures = wrapDefaultExport({
   first: (
     <>
       <HelloMessage name="Blanca" />
       <HelloMessage name="B" />
     </>
   ),
-};
+});
 const fixtureId = { path: 'first' };
 
 testRenderer(

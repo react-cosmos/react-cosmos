@@ -10,6 +10,7 @@ import { __wrapClassStateTimeout } from '../FixtureCapture/classState/useReadCla
 import { Counter } from '../testHelpers/components.js';
 import { getClassState } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
+import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 beforeEach(() => {
   __wrapClassStateTimeout(cb => {
@@ -23,19 +24,20 @@ beforeEach(() => {
 });
 
 const rendererId = uuid();
-const getFixtures = () => ({
-  first: (
-    <StateMock state={{ count: 5 }}>
-      <Counter
-        ref={elRef => {
-          if (elRef) {
-            counterRef = elRef;
-          }
-        }}
-      />
-    </StateMock>
-  ),
-});
+const getFixtures = () =>
+  wrapDefaultExport({
+    first: (
+      <StateMock state={{ count: 5 }}>
+        <Counter
+          ref={elRef => {
+            if (elRef) {
+              counterRef = elRef;
+            }
+          }}
+        />
+      </StateMock>
+    ),
+  });
 const fixtureId = { path: 'first' };
 
 testRenderer(
