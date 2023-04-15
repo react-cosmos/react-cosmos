@@ -2,6 +2,7 @@ import until from 'async-until';
 import { findLast } from 'lodash-es';
 import { FixtureState } from '../../fixtureState/types.js';
 import {
+  FixtureListItemUpdateResponse,
   FixtureListUpdateResponse,
   FixtureStateChangeResponse,
   RendererReadyResponse,
@@ -21,6 +22,9 @@ export type RendererConnectTestApi = {
   fixtureListUpdate: (
     payload: FixtureListUpdateResponse['payload']
   ) => Promise<void>;
+  fixtureListItemUpdate: (
+    payload: FixtureListItemUpdateResponse['payload']
+  ) => Promise<void>;
   fixtureStateChange: (
     payload: FixtureStateChangeResponse['payload']
   ) => Promise<void>;
@@ -38,6 +42,7 @@ export function createRendererConnectTestApi(args: {
     setFixtureState,
     rendererReady,
     fixtureListUpdate,
+    fixtureListItemUpdate,
     fixtureStateChange,
     getLastFixtureState,
   };
@@ -81,6 +86,15 @@ export function createRendererConnectTestApi(args: {
   ) {
     await untilResponse({
       type: 'fixtureListUpdate',
+      payload,
+    });
+  }
+
+  async function fixtureListItemUpdate(
+    payload: FixtureListItemUpdateResponse['payload']
+  ) {
+    await untilResponse({
+      type: 'fixtureListItemUpdate',
       payload,
     });
   }
