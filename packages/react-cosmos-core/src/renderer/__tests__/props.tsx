@@ -204,7 +204,7 @@ testRenderer(
         first: 'Hello all',
       },
     });
-    expect(renderer.toJSON()).toBe('Hello all');
+    await retry(() => expect(renderer.toJSON()).toBe('Hello all'));
     await fixtureStateChange({
       rendererId,
       fixtureId,

@@ -199,7 +199,7 @@ testRenderer(
         ),
       },
     });
-    expect(renderer.toJSON()).toBe('50 timez');
+    await retry(() => expect(renderer.toJSON()).toBe('50 timez'));
   }
 );
 
@@ -283,7 +283,7 @@ testRenderer(
         first: 'No counts for you.',
       },
     });
-    expect(renderer.toJSON()).toBe('No counts for you.');
+    await retry(() => expect(renderer.toJSON()).toBe('No counts for you.'));
     await fixtureStateChange({
       rendererId,
       fixtureId,
