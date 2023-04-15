@@ -38,6 +38,7 @@ jobs:
         example: [webpack, vite]
         os: [ubuntu, windows]
         node-version: [18]
+        lazy: [false]
         include:
           - example: webpack
             os: ubuntu
