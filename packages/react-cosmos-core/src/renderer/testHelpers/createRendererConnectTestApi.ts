@@ -117,7 +117,7 @@ export function createRendererConnectTestApi(args: {
         { timeout: 1000 }
       );
     } catch (err) {
-      expect(getLastResponse()).toEqual(msg);
+      expect(findLastResponseWithType(msg.type)).toEqual(msg);
     }
   }
 
