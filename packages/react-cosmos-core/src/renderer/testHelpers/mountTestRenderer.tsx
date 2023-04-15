@@ -1,3 +1,4 @@
+import delay from 'delay';
 import { mapValues } from 'lodash-es';
 import React from 'react';
 import { act, create, ReactTestRenderer } from 'react-test-renderer';
@@ -76,24 +77,51 @@ export async function mountTestRenderer(
 }
 
 function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
-  const { fixtures, decorators = {}, ...otherArgs } = args;
-
-  const userModules: UserModuleWrappers = {
-    lazy: false,
-    fixtures: mapValues(fixtures, fixture => ({
-      module: { default: fixture },
-    })),
-    decorators: mapValues(decorators, decorator => ({
-      module: { default: decorator },
-    })),
-  };
-
+  const { fixtures, decorators = {}, lazy = false, ...otherArgs } = args;
   return (
     <FixtureConnect
       rendererConnect={rendererConnect}
-      moduleWrappers={userModules}
+      moduleWrappers={getModuleWrappers(fixtures, decorators, lazy)}
       systemDecorators={[]}
       {...otherArgs}
     />
   );
+}
+
+function getModuleWrappers(
+  fixtures: ByPath<ReactFixtureExport>,
+  decorators: ByPath<ReactDecorator>,
+  lazy: boolean
+): UserModuleWrappers {
+  if (lazy) {
+    return {
+      lazy: true,
+      fixtures: mapValues(fixtures, fixture => ({
+        getModule: () => dynamicImportWrapper({ default: fixture }),
+      })),
+      decorators: mapValues(decorators, decorator => ({
+        getModule: () => dynamicImportWrapper({ default: decorator }),
+      })),
+    };
+  } else {
+    return {
+      lazy: false,
+      fixtures: mapValues(fixtures, fixture => ({
+        module: { default: fixture },
+      })),
+      decorators: mapValues(decorators, decorator => ({
+        module: { default: decorator },
+      })),
+    };
+  }
+}
+
+function dynamicImportWrapper<T>(module: T) {
+  return new Promise<T>(async resolve => {
+    // Simulate module download time
+    await delay(Math.round(Math.random() * 50));
+    await act(() => {
+      resolve(module);
+    });
+  });
 }
