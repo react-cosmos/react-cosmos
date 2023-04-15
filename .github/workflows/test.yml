@@ -36,10 +36,8 @@ jobs:
       fail-fast: false
       matrix:
         example: [webpack, vite]
-        os:
-          - ubuntu
-          - windows
-        lazy: false
+        os: [ubuntu, windows]
+        lazy: [false]
         node-version: [18]
         include:
           - example: webpack
