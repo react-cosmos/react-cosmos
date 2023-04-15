@@ -2,7 +2,7 @@ import {
   rendererSocketMessage,
   SocketMessage,
 } from '../server/socketMessage.js';
-import { RendererConnect, RendererRequest } from './types.js';
+import { RendererConnect, RendererRequest } from './rendererConnectTypes.js';
 
 export function createWebSocketsConnect(url: string): RendererConnect {
   let pendingMessages: SocketMessage[] = [];

@@ -7,7 +7,7 @@ import {
   RendererRequest,
   SelectFixtureRequest,
   SetFixtureStateRequest,
-} from './types.js';
+} from './rendererConnectTypes.js';
 import { SelectedFixture } from './useSelectedFixture.js';
 
 export function useRendererRequest(

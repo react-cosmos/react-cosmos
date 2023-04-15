@@ -4,7 +4,7 @@ import { FixtureLoader } from './FixtureLoader.js';
 import { FixtureStateChangeResponse } from './FixtureStateChangeResponse.js';
 import { LazyFixtureLoader } from './LazyFixtureLoader.js';
 import { ReactDecorator, UserModuleWrappers } from './reactTypes.js';
-import { RendererConnect } from './types.js';
+import { RendererConnect } from './rendererConnectTypes.js';
 import { useRendererRequest } from './useRendererRequest.js';
 import { useRendererResponse } from './useRendererResponse.js';
 import { useSelectedFixture } from './useSelectedFixture.js';

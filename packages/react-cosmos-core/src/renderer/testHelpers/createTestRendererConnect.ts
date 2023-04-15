@@ -4,7 +4,7 @@ import {
   RendererConnect,
   RendererRequest,
   RendererResponse,
-} from '../types.js';
+} from '../rendererConnectTypes.js';
 
 type Args = {
   onRendererResponse: (msg: RendererResponse) => unknown;

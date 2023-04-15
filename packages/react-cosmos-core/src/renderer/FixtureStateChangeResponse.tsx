@@ -2,7 +2,7 @@ import { isEqual } from 'lodash-es';
 import { useEffect, useRef } from 'react';
 import { FixtureId } from '../fixture/types.js';
 import { FixtureState } from '../fixtureState/types.js';
-import { RendererConnect } from './types.js';
+import { RendererConnect } from './rendererConnectTypes.js';
 
 type Props = {
   rendererId: string;

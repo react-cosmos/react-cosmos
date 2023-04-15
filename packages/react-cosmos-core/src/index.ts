@@ -19,7 +19,7 @@ export * from './renderer/getSortedDecoratorsForFixturePath.js';
 export * from './renderer/reactTypes.js';
 export * from './renderer/registerPlaygroundShortcuts.js';
 export * from './renderer/rendererConfig.js';
-export * from './renderer/types.js';
+export * from './renderer/rendererConnectTypes.js';
 export * from './server/cosmosPluginConfig.js';
 export * from './server/serverMessage.js';
 export * from './server/socketMessage.js';

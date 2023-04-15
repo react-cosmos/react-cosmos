@@ -11,7 +11,7 @@ import {
   LazyReactFixtureWrapper,
   ReactDecorator,
 } from './reactTypes.js';
-import { RendererConnect } from './types.js';
+import { RendererConnect } from './rendererConnectTypes.js';
 import { useLazyFixtureModules } from './useLazyFixtureModules.js';
 
 type Props = {
