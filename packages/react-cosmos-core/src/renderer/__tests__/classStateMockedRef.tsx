@@ -3,20 +3,15 @@ import retry from '@skidding/async-retry';
 import until from 'async-until';
 import delay from 'delay';
 import React from 'react';
-import { act } from 'react-test-renderer';
 import { FixtureStatePrimitiveValue } from '../../fixtureState/types.js';
 import { uuid } from '../../utils/uuid.js';
-import { __wrapClassStateTimeout } from '../FixtureCapture/classState/useReadClassState.js';
 import { Counter } from '../testHelpers/components.js';
 import { getClassState } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
+import { wrapActSetTimeout } from '../testHelpers/wrapActSetTimeout.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
-beforeEach(() => {
-  __wrapClassStateTimeout(cb => {
-    act(() => cb());
-  });
-});
+beforeAll(wrapActSetTimeout);
 
 let counterRef: null | Counter = null;
 beforeEach(() => {

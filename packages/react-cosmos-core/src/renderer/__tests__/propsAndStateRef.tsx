@@ -1,11 +1,9 @@
 import retry from '@skidding/async-retry';
 import until from 'async-until';
 import React from 'react';
-import { act } from 'react-test-renderer';
 import { createValues } from '../../fixtureState/createValues.js';
 import { updateFixtureStateProps } from '../../fixtureState/props.js';
 import { uuid } from '../../utils/uuid.js';
-import { __wrapClassStateTimeout } from '../FixtureCapture/classState/useReadClassState.js';
 import { SuffixCounter } from '../testHelpers/components.js';
 import {
   anyClassState,
@@ -13,13 +11,10 @@ import {
   getProps,
 } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
+import { wrapActSetTimeout } from '../testHelpers/wrapActSetTimeout.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
-beforeEach(() => {
-  __wrapClassStateTimeout(cb => {
-    act(() => cb());
-  });
-});
+beforeAll(wrapActSetTimeout);
 
 let counterRef: null | SuffixCounter = null;
 beforeEach(() => {

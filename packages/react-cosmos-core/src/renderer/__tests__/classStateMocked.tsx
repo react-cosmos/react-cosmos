@@ -1,14 +1,12 @@
 import { StateMock } from '@react-mock/state';
 import retry from '@skidding/async-retry';
 import React from 'react';
-import { act } from 'react-test-renderer';
 import {
   removeFixtureStateClassState,
   updateFixtureStateClassState,
 } from '../../fixtureState/classState.js';
 import { createValues } from '../../fixtureState/createValues.js';
 import { uuid } from '../../utils/uuid.js';
-import { __wrapClassStateTimeout } from '../FixtureCapture/classState/useReadClassState.js';
 import { CoolCounter, Counter } from '../testHelpers/components.js';
 import {
   anyClassState,
@@ -16,13 +14,10 @@ import {
   getClassState,
 } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
+import { wrapActSetTimeout } from '../testHelpers/wrapActSetTimeout.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
-beforeEach(() => {
-  __wrapClassStateTimeout(cb => {
-    act(() => cb());
-  });
-});
+beforeAll(wrapActSetTimeout);
 
 const rendererId = uuid();
 const fixtures = wrapDefaultExport({
