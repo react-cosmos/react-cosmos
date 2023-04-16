@@ -43,6 +43,7 @@ ${fixtureKeys
   .map((k, i) => ` '${k}': { module: { default: fixture${i} } }`)
   .join(`,\n`)}
 };
+
 const decorators = {
 ${decoratorKeys
   .map((k, i) => ` '${k}': { module: { default: decorator${i} } }`)

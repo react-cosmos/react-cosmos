@@ -22,6 +22,7 @@ const fixtures = {
  'src/Counter/Counter.fixture.tsx': { module: { default: fixture0 } },
  'src/CounterButton/CounterButton.fixture.tsx': { module: { default: fixture1 } }
 };
+
 const decorators = {
  'src/cosmos.decorator.tsx': { module: { default: decorator0 } }
 };
