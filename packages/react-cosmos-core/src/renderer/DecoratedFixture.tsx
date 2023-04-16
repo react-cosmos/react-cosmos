@@ -32,20 +32,24 @@ export function DecoratedFixture({
     [fixtureState, setFixtureState]
   );
 
-  const decoratorProps = useMemo(
-    () => ({ fixtureState, setFixtureState, onErrorReset }),
-    [fixtureState, onErrorReset, setFixtureState]
-  );
-
-  const decorators = useMemo(
-    () => [...systemDecorators, ...userDecoratorModules.map(m => m.default)],
-    [systemDecorators, userDecoratorModules]
-  );
-
-  const decoratedFixture = useMemo(
-    () => getDecoratedFixtureElement(fixture, decorators, decoratorProps),
-    [decoratorProps, decorators, fixture]
-  );
+  const decoratedFixture = useMemo(() => {
+    const decorators = [
+      ...systemDecorators,
+      ...userDecoratorModules.map(m => m.default),
+    ];
+    return getDecoratedFixtureElement(fixture, decorators, {
+      fixtureState,
+      setFixtureState,
+      onErrorReset,
+    });
+  }, [
+    fixture,
+    fixtureState,
+    onErrorReset,
+    setFixtureState,
+    systemDecorators,
+    userDecoratorModules,
+  ]);
 
   return (
     <FixtureContext.Provider
