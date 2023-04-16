@@ -43,9 +43,11 @@ jobs:
           - example: webpack
             os: ubuntu
             node-version: 16
+            lazy: false
           - example: webpack
             os: windows
             node-version: 16
+            lazy: false
           - example: webpack
             os: ubuntu
             node-version: 18
