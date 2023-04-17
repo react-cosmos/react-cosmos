@@ -1,15 +1,9 @@
-import path from 'path';
-import { slash } from '../utils/slash.js';
-import { Json } from './shared.js';
+import {
+  userDepsImportMap,
+  userDepsImportPath,
+  UserDepsTemplateArgs,
+} from './userDepsShared.js';
 
-type Args = {
-  globalImports: string[];
-  fixturePaths: string[];
-  decoratorPaths: string[];
-  rendererConfig: Json;
-  rootDir: string;
-  relativeToDir: string | null;
-};
 export function userDepsTemplate({
   globalImports,
   fixturePaths,
@@ -17,11 +11,11 @@ export function userDepsTemplate({
   rendererConfig,
   rootDir,
   relativeToDir,
-}: Args) {
-  const fixtures = createImportMap(fixturePaths, rootDir, relativeToDir);
+}: UserDepsTemplateArgs) {
+  const fixtures = userDepsImportMap(fixturePaths, rootDir, relativeToDir);
   const fixtureKeys = Object.keys(fixtures);
 
-  const decorators = createImportMap(decoratorPaths, rootDir, relativeToDir);
+  const decorators = userDepsImportMap(decoratorPaths, rootDir, relativeToDir);
   const decoratorKeys = Object.keys(decorators);
 
   return `
@@ -31,7 +25,7 @@ export function userDepsTemplate({
 // Keeping global imports here is superior to making them bundle entry points
 // because this way they become hot-reloadable.
 ${globalImports
-  .map(p => `import '${resolveImportPath(p, relativeToDir)}';`)
+  .map(p => `import '${userDepsImportPath(p, relativeToDir)}';`)
   .join(`\n`)}
 
 ${fixtureKeys
@@ -44,36 +38,22 @@ ${decoratorKeys
 
 export const rendererConfig = ${JSON.stringify(rendererConfig, null, 2)};
 
-export const fixtures = {
+const fixtures = {
 ${fixtureKeys
-  .map((k, i) => `  '${k}': { module: { default: fixture${i} } }`)
+  .map((k, i) => ` '${k}': { module: { default: fixture${i} } }`)
   .join(`,\n`)}
 };
 
-export const decorators = {
-${decoratorKeys.map((k, i) => `  '${k}': decorator${i}`).join(`,\n`)}
+const decorators = {
+${decoratorKeys
+  .map((k, i) => ` '${k}': { module: { default: decorator${i} } }`)
+  .join(`,\n`)}
+};
+
+export const moduleWrappers = {
+  lazy: false,
+  fixtures,
+  decorators,
 };
 `.trimStart();
-}
-
-function createImportMap(
-  paths: string[],
-  rootDir: string,
-  relativeToDir: string | null
-): Record<string, string> {
-  return paths.reduce(
-    (acc, p) => ({
-      ...acc,
-      [slash(path.relative(rootDir, p))]: resolveImportPath(p, relativeToDir),
-    }),
-    {}
-  );
-}
-
-function resolveImportPath(filePath: string, relativeToDir: string | null) {
-  return slash(
-    relativeToDir
-      ? `.${path.sep}${path.relative(relativeToDir, filePath)}`
-      : filePath
-  );
 }

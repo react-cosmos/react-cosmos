@@ -4,6 +4,7 @@ jest.mock('yargs/yargs', () => {
   let argv = {};
 
   const yargs = () => ({
+    boolean: () => yargs(),
     parseSync: () => argv,
   });
 

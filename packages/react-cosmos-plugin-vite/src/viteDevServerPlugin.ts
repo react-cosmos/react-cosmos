@@ -1,3 +1,4 @@
+import viteReactPlugin from '@vitejs/plugin-react';
 import { DevServerPluginArgs, startFixtureWatcher } from 'react-cosmos';
 import { createServer } from 'vite';
 import {
@@ -26,7 +27,7 @@ export async function viteDevServerPlugin({
       host: '0.0.0.0',
       port: parseInt(new URL(rendererUrl).port, 10),
     },
-    plugins: [reactCosmosViteRollupPlugin(cosmosConfig)],
+    plugins: [viteReactPlugin(), reactCosmosViteRollupPlugin(cosmosConfig)],
   });
   await server.listen();
 

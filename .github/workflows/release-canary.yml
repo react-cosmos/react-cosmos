@@ -26,6 +26,7 @@ jobs:
             --canary \
             --preid canary.$(git rev-parse --short HEAD) \
             --dist-tag=canary \
+            --exact \
             --no-push \
             --no-git-tag-version \
             --yes

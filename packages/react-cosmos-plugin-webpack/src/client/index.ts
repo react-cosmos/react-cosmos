@@ -5,13 +5,10 @@ mount();
 
 async function mount() {
   // Use dynamic import to reload updated modules upon hot reloading
-  const { rendererConfig, fixtures, decorators } = await import(
-    './userDeps.js'
-  );
+  const { rendererConfig, moduleWrappers } = await import('./userDeps.js');
   mountDomRenderer({
     rendererConfig,
-    fixtures,
-    decorators,
+    moduleWrappers,
     onErrorReset: dismissErrorOverlay,
   });
 }
