@@ -28,10 +28,10 @@ export function flattenFixtureTree(
         );
 
       if (childData.type === 'multiFixture')
-        Object.keys(childData.fixtureIds).forEach(fixtureName =>
+        childData.names.forEach(fixtureName =>
           flatFixtureTree.push({
             fileName: childName,
-            fixtureId: childData.fixtureIds[fixtureName],
+            fixtureId: { path: childData.path, name: fixtureName },
             parents,
             name: fixtureName,
           })
@@ -40,7 +40,7 @@ export function flattenFixtureTree(
       if (childData.type === 'fixture')
         flatFixtureTree.push({
           fileName: childName,
-          fixtureId: childData.fixtureId,
+          fixtureId: { path: childData.path },
           parents,
           name: null,
         });

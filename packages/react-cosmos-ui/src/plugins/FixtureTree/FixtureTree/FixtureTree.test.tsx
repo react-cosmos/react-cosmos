@@ -9,6 +9,10 @@ const fixtures: FixtureList = {
   'zwei.js': { type: 'single' },
   'nested/drei.js': { type: 'single' },
   'deeply/nested/vier.js': { type: 'single' },
+  'fuenf.js': {
+    type: 'multi',
+    fixtureNames: ['fuenfA', 'fuenfB', 'fuenfC'],
+  },
 };
 const rootNode = createFixtureTree({
   fixtures,
@@ -74,4 +78,32 @@ it('collapses expanded dir on click', async () => {
   );
   fireEvent.click(getByText(/nested/i));
   expect(setExpansion).toBeCalledWith({ nested: false });
+});
+
+it('shows named fixture when multi fixture is selected', async () => {
+  const { findByText } = render(
+    <FixtureTree
+      rootNode={rootNode}
+      selectedFixtureId={{ path: 'fuenf.js', name: 'fuenfB' }}
+      selectedRef={{ current: null }}
+      expansion={{}}
+      onSelect={jest.fn()}
+      setExpansion={jest.fn()}
+    />
+  );
+  await findByText('fuenfB');
+});
+
+it('shows first named fixture when multi fixture path is selected', async () => {
+  const { findByText } = render(
+    <FixtureTree
+      rootNode={rootNode}
+      selectedFixtureId={{ path: 'fuenf.js' }}
+      selectedRef={{ current: null }}
+      expansion={{}}
+      onSelect={jest.fn()}
+      setExpansion={jest.fn()}
+    />
+  );
+  await findByText('fuenfA');
 });

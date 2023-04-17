@@ -11,7 +11,7 @@ it('collapses one outer dir', () => {
           Dashboard: {
             data: {
               type: 'fixture',
-              fixtureId: { path: 'src/Dashboard.fixture.js' },
+              path: 'src/Dashboard.fixture.js',
             },
           },
         },
@@ -24,7 +24,7 @@ it('collapses one outer dir', () => {
       Dashboard: {
         data: {
           type: 'fixture',
-          fixtureId: { path: 'src/Dashboard.fixture.js' },
+          path: 'src/Dashboard.fixture.js',
         },
       },
     },
@@ -42,10 +42,8 @@ it('collapses one outer dir (multi fixture)', () => {
           Button: {
             data: {
               type: 'multiFixture',
-              fixtureIds: {
-                normal: { path: 'src/Button.fixture.js', name: 'normal' },
-                disabled: { path: 'src/Button.fixture.js', name: 'disabled' },
-              },
+              path: 'src/Button.fixture.js',
+              names: ['normal', 'disabled'],
             },
           },
         },
@@ -58,10 +56,8 @@ it('collapses one outer dir (multi fixture)', () => {
       Button: {
         data: {
           type: 'multiFixture',
-          fixtureIds: {
-            normal: { path: 'src/Button.fixture.js', name: 'normal' },
-            disabled: { path: 'src/Button.fixture.js', name: 'disabled' },
-          },
+          path: 'src/Button.fixture.js',
+          names: ['normal', 'disabled'],
         },
       },
     },
@@ -85,7 +81,7 @@ it('collapses multiple outer dirs', () => {
                   Dashboard: {
                     data: {
                       type: 'fixture',
-                      fixtureId: { path: 'src/ui/admin/Dashboard.fixture.js' },
+                      path: 'src/ui/admin/Dashboard.fixture.js',
                     },
                   },
                 },
@@ -102,7 +98,7 @@ it('collapses multiple outer dirs', () => {
       Dashboard: {
         data: {
           type: 'fixture',
-          fixtureId: { path: 'src/ui/admin/Dashboard.fixture.js' },
+          path: 'src/ui/admin/Dashboard.fixture.js',
         },
       },
     },

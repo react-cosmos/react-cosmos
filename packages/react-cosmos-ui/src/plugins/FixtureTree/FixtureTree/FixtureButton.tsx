@@ -7,7 +7,7 @@ import { FixtureTreeItem } from './FixtureTreeItem.js';
 
 type Props = {
   name: string;
-  fixtureId: FixtureId;
+  fixturePath: string;
   indentLevel: number;
   selected: boolean;
   selectedRef: RefObject<HTMLElement>;
@@ -16,14 +16,14 @@ type Props = {
 
 export function FixtureButton({
   name,
-  fixtureId,
+  fixturePath,
   indentLevel,
   selected,
   selectedRef,
   onSelect,
 }: Props) {
   return (
-    <FixtureLink fixtureId={fixtureId} onSelect={onSelect}>
+    <FixtureLink fixtureId={{ path: fixturePath }} onSelect={onSelect}>
       <FixtureTreeItem
         ref={selected ? selectedRef : undefined}
         indentLevel={indentLevel}

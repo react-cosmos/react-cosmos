@@ -69,3 +69,10 @@ it('returns true on existing named fixture', async () => {
 
   expect(isValidFixtureSelected()).toBe(true);
 });
+
+it('returns true on existing multi fixture without name', async () => {
+  mockFixtureId({ path: 'ein.js' });
+  loadTestPlugins();
+
+  expect(isValidFixtureSelected()).toBe(true);
+});

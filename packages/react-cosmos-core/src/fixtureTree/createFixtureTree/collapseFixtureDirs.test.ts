@@ -17,16 +17,8 @@ it('collapses fixtures dir', () => {
                   Button: {
                     data: {
                       type: 'multiFixture',
-                      fixtureIds: {
-                        normal: {
-                          path: 'ui/__fixtures__/shared/Button.js',
-                          name: 'normal',
-                        },
-                        disabled: {
-                          path: 'ui/__fixtures__/shared/Button.js',
-                          name: 'disabled',
-                        },
-                      },
+                      path: 'ui/__fixtures__/shared/Button.js',
+                      names: ['normal', 'disabled'],
                     },
                   },
                 },
@@ -34,7 +26,7 @@ it('collapses fixtures dir', () => {
               Dashboard: {
                 data: {
                   type: 'fixture',
-                  fixtureId: { path: 'ui/__fixtures__/Dashboard.js' },
+                  path: 'ui/__fixtures__/Dashboard.js',
                 },
               },
             },
@@ -55,16 +47,8 @@ it('collapses fixtures dir', () => {
               Button: {
                 data: {
                   type: 'multiFixture',
-                  fixtureIds: {
-                    normal: {
-                      path: 'ui/__fixtures__/shared/Button.js',
-                      name: 'normal',
-                    },
-                    disabled: {
-                      path: 'ui/__fixtures__/shared/Button.js',
-                      name: 'disabled',
-                    },
-                  },
+                  path: 'ui/__fixtures__/shared/Button.js',
+                  names: ['normal', 'disabled'],
                 },
               },
             },
@@ -72,7 +56,7 @@ it('collapses fixtures dir', () => {
           Dashboard: {
             data: {
               type: 'fixture',
-              fixtureId: { path: 'ui/__fixtures__/Dashboard.js' },
+              path: 'ui/__fixtures__/Dashboard.js',
             },
           },
         },
@@ -95,7 +79,7 @@ it('collapses fixtures dir with sibling', () => {
               Dashboard: {
                 data: {
                   type: 'fixture',
-                  fixtureId: { path: 'ui/__fixtures__/Dashboard.js' },
+                  path: 'ui/__fixtures__/Dashboard.js',
                 },
               },
             },
@@ -106,7 +90,7 @@ it('collapses fixtures dir with sibling', () => {
               Button: {
                 data: {
                   type: 'fixture',
-                  fixtureId: { path: 'ui/shared/Button.fixture.js' },
+                  path: 'ui/shared/Button.fixture.js',
                 },
               },
             },
@@ -127,7 +111,7 @@ it('collapses fixtures dir with sibling', () => {
               Button: {
                 data: {
                   type: 'fixture',
-                  fixtureId: { path: 'ui/shared/Button.fixture.js' },
+                  path: 'ui/shared/Button.fixture.js',
                 },
               },
             },
@@ -135,7 +119,7 @@ it('collapses fixtures dir with sibling', () => {
           Dashboard: {
             data: {
               type: 'fixture',
-              fixtureId: { path: 'ui/__fixtures__/Dashboard.js' },
+              path: 'ui/__fixtures__/Dashboard.js',
             },
           },
         },
@@ -155,7 +139,7 @@ it('collapses fixtures dirs at different levels', () => {
           Dashboard: {
             data: {
               type: 'fixture',
-              fixtureId: { path: '__fixtures__/Dashboard.js' },
+              path: '__fixtures__/Dashboard.js',
             },
           },
         },
@@ -169,7 +153,7 @@ it('collapses fixtures dirs at different levels', () => {
               Button: {
                 data: {
                   type: 'fixture',
-                  fixtureId: { path: 'shared/__fixtures__/Button.js' },
+                  path: 'shared/__fixtures__/Button.js',
                 },
               },
             },
@@ -184,7 +168,7 @@ it('collapses fixtures dirs at different levels', () => {
       Dashboard: {
         data: {
           type: 'fixture',
-          fixtureId: { path: '__fixtures__/Dashboard.js' },
+          path: '__fixtures__/Dashboard.js',
         },
       },
       shared: {
@@ -193,7 +177,7 @@ it('collapses fixtures dirs at different levels', () => {
           Button: {
             data: {
               type: 'fixture',
-              fixtureId: { path: 'shared/__fixtures__/Button.js' },
+              path: 'shared/__fixtures__/Button.js',
             },
           },
         },

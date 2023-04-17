@@ -1,8 +1,7 @@
-import { FixtureId } from '../fixture/types.js';
 import { TreeNode } from '../utils/tree.js';
 
 export type FixtureTreeNode = TreeNode<
   | { type: 'fileDir' }
-  | { type: 'fixture'; fixtureId: FixtureId }
-  | { type: 'multiFixture'; fixtureIds: Record<string, FixtureId> }
+  | { type: 'fixture'; path: string }
+  | { type: 'multiFixture'; path: string; names: string[] }
 >;

@@ -18,13 +18,19 @@ export const rendererConfig = {
   "playgroundUrl": "http://localhost:5002"
 };
 
-export const fixtures = {
-  'src/Counter/Counter.fixture.tsx': { module: { default: fixture0 } },
-  'src/CounterButton/CounterButton.fixture.tsx': { module: { default: fixture1 } }
+const fixtures = {
+ 'src/Counter/Counter.fixture.tsx': { module: { default: fixture0 } },
+ 'src/CounterButton/CounterButton.fixture.tsx': { module: { default: fixture1 } }
 };
 
-export const decorators = {
-  'src/cosmos.decorator.tsx': decorator0
+const decorators = {
+ 'src/cosmos.decorator.tsx': { module: { default: decorator0 } }
+};
+
+export const moduleWrappers = {
+  lazy: false,
+  fixtures,
+  decorators,
 };
 "
 `;
@@ -47,13 +53,19 @@ export const rendererConfig = {
   "playgroundUrl": "http://localhost:5002"
 };
 
-export const fixtures = {
-  'src/Counter/Counter.fixture.tsx': { module: { default: fixture0 } },
-  'src/CounterButton/CounterButton.fixture.tsx': { module: { default: fixture1 } }
+const fixtures = {
+ 'src/Counter/Counter.fixture.tsx': { module: { default: fixture0 } },
+ 'src/CounterButton/CounterButton.fixture.tsx': { module: { default: fixture1 } }
 };
 
-export const decorators = {
-  'src/cosmos.decorator.tsx': decorator0
+const decorators = {
+ 'src/cosmos.decorator.tsx': { module: { default: decorator0 } }
+};
+
+export const moduleWrappers = {
+  lazy: false,
+  fixtures,
+  decorators,
 };
 "
 `;

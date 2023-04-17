@@ -10,6 +10,9 @@ async function mount() {
   mountDomRenderer(args);
 }
 
+// Fallback for when React Refresh isn't enabled.
+// Under normal conditions accepting HMR updates here isn't necessary because
+// individual React modules will be hot reloaded by React Refresh.
 if (import.meta.hot) {
   import.meta.hot.accept(() => {
     mount();
