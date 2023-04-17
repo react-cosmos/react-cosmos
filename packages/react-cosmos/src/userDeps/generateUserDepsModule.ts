@@ -1,6 +1,7 @@
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { findUserModulePaths } from './findUserModulePaths.js';
 import { Json } from './shared.js';
+import { userDepsLazyTemplate } from './userDepsLazyTemplate.js';
 import { userDepsTemplate } from './userDepsTemplate.js';
 
 type Args = {
@@ -21,7 +22,10 @@ export function generateUserDepsModule({
     fixtureFileSuffix,
     ignore,
   });
-  return userDepsTemplate({
+
+  const template = cosmosConfig.lazy ? userDepsLazyTemplate : userDepsTemplate;
+
+  return template({
     globalImports,
     fixturePaths,
     decoratorPaths,

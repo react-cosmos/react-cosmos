@@ -10,9 +10,10 @@
 
 ## Core
 
-- [x] Redesign codebase packages and APIs.
-- [ ] Decide what to do with [Lazy fixture importing](https://github.com/react-cosmos/react-cosmos/pull/1313). Salvage what you can and move on. No need to linger if the complexity required to achieve this is unreasonable. Document everything learned for future reference.
 - [x] Research: ES6 modules (React Cosmos with no bundler and no compiler).
+- [x] Redesign codebase packages and APIs.
+- [x] Lazy mode [#1313](https://github.com/react-cosmos/react-cosmos/pull/1313) [#1443](https://github.com/react-cosmos/react-cosmos/pull/1443).
+- [ ] Isolated mode?
 
 ## Plugins
 

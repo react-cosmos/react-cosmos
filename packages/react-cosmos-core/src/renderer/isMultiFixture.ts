@@ -1,5 +1,5 @@
 import { isElement } from 'react-is';
-import { ReactFixtureExport, ReactFixtureMap } from './reactTypes.js';
+import { ReactFixtureExport, ReactFixtureMap } from './userModuleTypes.js';
 
 export function isMultiFixture(
   fixtureExport: ReactFixtureExport

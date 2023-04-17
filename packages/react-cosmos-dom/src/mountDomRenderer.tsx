@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactDecorators, ReactFixtureWrappers } from 'react-cosmos-core';
+import { UserModuleWrappers } from 'react-cosmos-core';
 import { createRoot } from 'react-dom/client';
 import { DomFixtureLoader } from './DomFixtureLoader.js';
 import { getDomContainer } from './getDomContainer.js';
@@ -13,14 +13,12 @@ let cachedRoot: CachedRoot | null = null;
 
 type Args = {
   rendererConfig: DomRendererConfig;
-  fixtures: ReactFixtureWrappers;
-  decorators: ReactDecorators;
+  moduleWrappers: UserModuleWrappers;
   onErrorReset?: () => unknown;
 };
 export function mountDomRenderer({
   rendererConfig,
-  fixtures,
-  decorators,
+  moduleWrappers,
   onErrorReset,
 }: Args) {
   const domContainer = getDomContainer(rendererConfig.containerQuerySelector);
@@ -31,8 +29,7 @@ export function mountDomRenderer({
 
   cachedRoot.reactRoot.render(
     <DomFixtureLoader
-      fixtures={fixtures}
-      decorators={decorators}
+      moduleWrappers={moduleWrappers}
       playgroundUrl={rendererConfig.playgroundUrl}
       onErrorReset={onErrorReset}
     />

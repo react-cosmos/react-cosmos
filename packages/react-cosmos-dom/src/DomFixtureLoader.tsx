@@ -1,26 +1,18 @@
 import React, { useEffect, useMemo } from 'react';
-import {
-  FixtureLoader,
-  ReactDecorators,
-  ReactFixtureWrappers,
-} from 'react-cosmos-core';
+import { FixtureConnect, UserModuleWrappers } from 'react-cosmos-core';
 import { createDomRendererConnect } from './domRendererConnect.js';
 import { domRendererId } from './domRendererId.js';
 import { ErrorCatch } from './ErrorCatch.js';
 import { selectedFixtureId } from './selectedFixtureId.js';
 
 type Props = {
-  fixtures: ReactFixtureWrappers;
-  decorators: ReactDecorators;
+  moduleWrappers: UserModuleWrappers;
   playgroundUrl: string;
   onErrorReset?: () => unknown;
 };
-export function DomFixtureLoader({
-  fixtures,
-  decorators,
-  playgroundUrl,
-  onErrorReset,
-}: Props) {
+export function DomFixtureLoader(props: Props) {
+  const { moduleWrappers, playgroundUrl, onErrorReset } = props;
+
   const domRendererConnect = useMemo(
     () => createDomRendererConnect(playgroundUrl),
     [playgroundUrl]
@@ -45,18 +37,19 @@ export function DomFixtureLoader({
   }, [domRendererConnect]);
 
   return (
-    <FixtureLoader
+    <FixtureConnect
       rendererId={domRendererId}
       rendererConnect={domRendererConnect}
-      fixtures={fixtures}
+      moduleWrappers={moduleWrappers}
+      systemDecorators={systemDecorators}
       selectedFixtureId={selectedFixtureId}
-      systemDecorators={[ErrorCatch]}
-      userDecorators={decorators}
       renderMessage={renderDomMessage}
       onErrorReset={onErrorReset}
     />
   );
 }
+
+const systemDecorators = [ErrorCatch];
 
 const containerStyle: React.CSSProperties = {
   position: 'absolute',
@@ -72,6 +65,6 @@ const containerStyle: React.CSSProperties = {
   fontSize: 14,
 };
 
-export function renderDomMessage({ msg }: { msg: string }) {
+export function renderDomMessage(msg: string) {
   return <div style={containerStyle}>{msg}</div>;
 }

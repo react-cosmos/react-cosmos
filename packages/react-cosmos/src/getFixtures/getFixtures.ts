@@ -1,6 +1,7 @@
 import path from 'path';
 import { ReactElement } from 'react';
 import {
+  ByPath,
   createFixtureTree,
   FixtureId,
   flattenFixtureTree,
@@ -8,7 +9,6 @@ import {
   getFixtureListFromExports,
   getSortedDecoratorsForFixturePath,
   ReactDecorator,
-  ReactDecorators,
   ReactFixture,
   ReactFixtureMap,
   stringifyPlaygroundUrlQuery,
@@ -96,7 +96,7 @@ function getPlaygroundHost({ hostname, port, https }: CosmosConfig) {
 function createFixtureElementGetter(
   fixture: ReactFixture,
   fixturePath: string,
-  decoratorsByPath: ReactDecorators
+  decoratorsByPath: ByPath<ReactDecorator>
 ): () => ReactElement {
   const decorators: ReactDecorator[] = getSortedDecoratorsForFixturePath(
     fixturePath,

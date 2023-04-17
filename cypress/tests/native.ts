@@ -1,4 +1,4 @@
-import { exampleName } from '../support/envVars';
+import { exampleName, lazy } from '../support/envVars';
 
 describe('Native', () => {
   beforeEach(() => {
@@ -25,13 +25,13 @@ describe('Native', () => {
     });
 
     it('has fixture paths', () => {
-      userDepsContainsModule('src/__fixtures__/HelloWorld.ts');
-      userDepsContainsModule('src/Counter.fixture.tsx');
-      userDepsContainsModule('src/WelcomeMessage/WelcomeMessage.fixture.tsx');
+      containsImport('src/__fixtures__/HelloWorld.ts');
+      containsImport('src/Counter.fixture.tsx');
+      containsImport('src/WelcomeMessage/WelcomeMessage.fixture.tsx');
     });
 
     it('has decorator paths', () => {
-      userDepsContainsModule('src/WelcomeMessage/cosmos.decorator.tsx');
+      containsImport('src/WelcomeMessage/cosmos.decorator.tsx');
     });
   });
 });
@@ -40,9 +40,16 @@ function getUserDepsFile() {
   return cy.readFile(`examples/${exampleName()}/cosmos.userdeps.js`);
 }
 
-function userDepsContainsModule(modulePath: string) {
-  getUserDepsFile().should(
-    'match',
-    new RegExp(`import (fixture|decorator)[0-9]+ from './${modulePath}'`)
-  );
+function containsImport(modulePath: string) {
+  if (lazy()) {
+    getUserDepsFile().should(
+      'match',
+      new RegExp(`import\\('./${modulePath}'\\)`)
+    );
+  } else {
+    getUserDepsFile().should(
+      'match',
+      new RegExp(`import [a-z0-9]+ from './${modulePath}'`)
+    );
+  }
 }

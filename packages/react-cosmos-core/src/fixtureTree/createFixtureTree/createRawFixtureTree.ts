@@ -26,14 +26,15 @@ function addFixturePathToTree(
     injectNode(rootNode, parents, fileName, {
       data: {
         type: 'fixture',
-        fixtureId: { path: fixturePath },
+        path: fixturePath,
       },
     });
   } else if (fixtureItem.type == 'multi') {
     injectNode(rootNode, parents, fileName, {
       data: {
         type: 'multiFixture',
-        fixtureIds: createFixtureIds(fixturePath, fixtureItem.fixtureNames),
+        path: fixturePath,
+        names: fixtureItem.fixtureNames,
       },
     });
   }
@@ -53,16 +54,6 @@ function parseFixturePath(fixturePath: string) {
 
 function removeFixtureNameExtension(fixtureName: string) {
   return fixtureName.replace(/\.(j|t)sx?$/, '');
-}
-
-function createFixtureIds(fixturePath: string, fixtureNames: string[]) {
-  return fixtureNames.reduce(
-    (fixtureIds, fixtureName) => ({
-      ...fixtureIds,
-      [fixtureName]: { path: fixturePath, name: fixtureName },
-    }),
-    {}
-  );
 }
 
 function injectNode(

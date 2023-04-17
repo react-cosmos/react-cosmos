@@ -1,4 +1,3 @@
-import { isEqual } from 'lodash-es';
 import React, { RefObject } from 'react';
 import { FixtureId } from 'react-cosmos-core';
 import styled from 'styled-components';
@@ -9,7 +8,8 @@ import { MultiFixtureChildButton } from './MultiFixtureChildButton.js';
 
 type Props = {
   name: string;
-  fixtureIds: Record<string, FixtureId>;
+  fixturePath: string;
+  fixtureNames: string[];
   indentLevel: number;
   selected: boolean;
   selectedFixtureId: null | FixtureId;
@@ -19,20 +19,17 @@ type Props = {
 
 export function MultiFixtureButton({
   name,
-  fixtureIds,
+  fixturePath,
+  fixtureNames,
   indentLevel,
   selected,
   selectedFixtureId,
   selectedRef,
   onSelect,
 }: Props) {
-  const fixtureNames = Object.keys(fixtureIds);
-  const firstFixtureId = fixtureIds[fixtureNames[0]];
-  if (!firstFixtureId) return null;
-
   if (!selected)
     return (
-      <FixtureLink fixtureId={firstFixtureId} onSelect={onSelect}>
+      <FixtureLink fixtureId={{ path: fixturePath }} onSelect={onSelect}>
         <FixtureTreeItem indentLevel={indentLevel} selected={false}>
           <Name>{name}</Name>
           <Count>{fixtureNames.length}</Count>
@@ -46,9 +43,17 @@ export function MultiFixtureButton({
         <Name>{name}</Name>
         <Count>{fixtureNames.length}</Count>
       </FixtureTreeItem>
-      {fixtureNames.map(fixtureName => {
-        const fixtureId = fixtureIds[fixtureName];
-        const childSelected = isEqual(fixtureId, selectedFixtureId);
+      {fixtureNames.map((fixtureName, index) => {
+        const fixtureId = { path: fixturePath, name: fixtureName };
+
+        // Select first child when only the path of a multi fixture is selected
+        const childSelected =
+          selectedFixtureId !== null &&
+          selectedFixtureId.path === fixturePath &&
+          (selectedFixtureId.name === undefined
+            ? index === 0
+            : fixtureName === selectedFixtureId.name);
+
         return (
           <MultiFixtureChildButton
             key={fixtureName}

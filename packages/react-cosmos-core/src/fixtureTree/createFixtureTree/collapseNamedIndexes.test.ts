@@ -11,7 +11,7 @@ it('collapses named index fixture', () => {
           Dashboard: {
             data: {
               type: 'fixture',
-              fixtureId: { path: 'Dashboard/Dashboard.fixture.js' },
+              path: 'Dashboard/Dashboard.fixture.js',
             },
           },
         },
@@ -24,7 +24,7 @@ it('collapses named index fixture', () => {
       Dashboard: {
         data: {
           type: 'fixture',
-          fixtureId: { path: 'Dashboard/Dashboard.fixture.js' },
+          path: 'Dashboard/Dashboard.fixture.js',
         },
       },
     },
@@ -45,7 +45,7 @@ it('collapses nested named index fixture', () => {
               Dashboard: {
                 data: {
                   type: 'fixture',
-                  fixtureId: { path: 'ui/Dashboard/Dashboard.fixture.js' },
+                  path: 'ui/Dashboard/Dashboard.fixture.js',
                 },
               },
             },
@@ -63,7 +63,7 @@ it('collapses nested named index fixture', () => {
           Dashboard: {
             data: {
               type: 'fixture',
-              fixtureId: { path: 'ui/Dashboard/Dashboard.fixture.js' },
+              path: 'ui/Dashboard/Dashboard.fixture.js',
             },
           },
         },
@@ -83,7 +83,7 @@ it('collapses named index fixture (case insensitive)', () => {
           Dashboard: {
             data: {
               type: 'fixture',
-              fixtureId: { path: 'dashboard/Dashboard.fixture.js' },
+              path: 'dashboard/Dashboard.fixture.js',
             },
           },
         },
@@ -96,7 +96,7 @@ it('collapses named index fixture (case insensitive)', () => {
       Dashboard: {
         data: {
           type: 'fixture',
-          fixtureId: { path: 'dashboard/Dashboard.fixture.js' },
+          path: 'dashboard/Dashboard.fixture.js',
         },
       },
     },
