@@ -1,4 +1,4 @@
-import { ByPath } from './reactTypes.js';
+import { ByPath } from './userModuleTypes.js';
 
 export function getSortedDecoratorsForFixturePath<T>(
   fixturePath: string,

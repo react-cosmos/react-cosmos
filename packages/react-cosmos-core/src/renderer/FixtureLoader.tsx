@@ -4,13 +4,13 @@ import { FixtureState, SetFixtureState } from '../fixtureState/types.js';
 import { DecoratedFixture } from './DecoratedFixture.js';
 import { getFixture } from './getFixture.js';
 import { getSortedDecoratorsForFixturePath } from './getSortedDecoratorsForFixturePath.js';
+import { useFixtureModules } from './useFixtureModules.js';
 import {
   ByPath,
   ReactDecorator,
   ReactDecoratorWrapper,
   ReactFixtureWrapper,
-} from './reactTypes.js';
-import { useFixtureModules } from './useFixtureModules.js';
+} from './userModuleTypes.js';
 
 type Props = {
   fixtureWrapper: ReactFixtureWrapper;

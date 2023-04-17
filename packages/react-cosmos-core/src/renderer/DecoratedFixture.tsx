@@ -6,7 +6,7 @@ import {
   ReactDecorator,
   ReactDecoratorModule,
   ReactFixture,
-} from './reactTypes.js';
+} from './userModuleTypes.js';
 
 type Props = {
   fixture: ReactFixture;

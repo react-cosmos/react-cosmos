@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { getFixtureItemFromExport } from './getFixtureList.js';
-import { ReactFixtureModule } from './reactTypes.js';
 import { RendererConnect } from './rendererConnectTypes.js';
+import { ReactFixtureModule } from './userModuleTypes.js';
 
 type Props = {
   rendererId: string;

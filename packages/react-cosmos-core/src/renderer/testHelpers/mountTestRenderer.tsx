@@ -5,16 +5,16 @@ import { act, create, ReactTestRenderer } from 'react-test-renderer';
 import { FixtureId } from '../../fixture/types.js';
 import { FixtureConnect } from '../FixtureConnect.js';
 import {
-  ByPath,
-  ReactDecoratorModule,
-  ReactFixtureModule,
-  UserModuleWrappers,
-} from '../reactTypes.js';
-import {
   RendererConnect,
   RendererId,
   RendererResponse,
 } from '../rendererConnectTypes.js';
+import {
+  ByPath,
+  ReactDecoratorModule,
+  ReactFixtureModule,
+  UserModuleWrappers,
+} from '../userModuleTypes.js';
 import {
   createRendererConnectTestApi,
   RendererConnectTestApi,

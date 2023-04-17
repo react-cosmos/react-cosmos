@@ -4,7 +4,7 @@ import {
   ByPath,
   ReactFixtureExport,
   UserModuleWrappers,
-} from './reactTypes.js';
+} from './userModuleTypes.js';
 
 export function getFixtureListFromWrappers(wrappers: UserModuleWrappers) {
   return Object.keys(wrappers.fixtures).reduce<FixtureList>(

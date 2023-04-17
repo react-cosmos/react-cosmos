@@ -5,14 +5,14 @@ import { DecoratedFixture } from './DecoratedFixture.js';
 import { getFixture } from './getFixture.js';
 import { getSortedDecoratorsForFixturePath } from './getSortedDecoratorsForFixturePath.js';
 import { LazyFixtureListItemUpdate } from './LazyFixtureListItemUpdate.js';
+import { RendererConnect } from './rendererConnectTypes.js';
+import { useLazyFixtureModules } from './useLazyFixtureModules.js';
 import {
   ByPath,
   LazyReactDecoratorWrapper,
   LazyReactFixtureWrapper,
   ReactDecorator,
-} from './reactTypes.js';
-import { RendererConnect } from './rendererConnectTypes.js';
-import { useLazyFixtureModules } from './useLazyFixtureModules.js';
+} from './userModuleTypes.js';
 
 type Props = {
   rendererId: string;

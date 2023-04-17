@@ -3,7 +3,7 @@ import {
   FixtureModules,
   LazyReactDecoratorWrapper,
   LazyReactFixtureWrapper,
-} from './reactTypes.js';
+} from './userModuleTypes.js';
 
 export function useLazyFixtureModules(
   fixturePath: string,

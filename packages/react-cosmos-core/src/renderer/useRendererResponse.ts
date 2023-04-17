@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { FixtureId } from '../fixture/types.js';
 import { getFixtureListFromWrappers } from './getFixtureList.js';
-import { UserModuleWrappers } from './reactTypes.js';
 import { RendererConnect } from './rendererConnectTypes.js';
+import { UserModuleWrappers } from './userModuleTypes.js';
 
 export function useRendererResponse(
   rendererId: string,

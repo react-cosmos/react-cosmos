@@ -4,7 +4,7 @@ import {
   ReactDecorator,
   ReactDecoratorProps,
   ReactFixture,
-} from '../reactTypes.js';
+} from '../userModuleTypes.js';
 import { FixtureElement } from './FixtureElement.js';
 
 export function getDecoratedFixtureElement(

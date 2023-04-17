@@ -3,7 +3,7 @@ import {
   FixtureModules,
   ReactDecoratorWrapper,
   ReactFixtureWrapper,
-} from './reactTypes.js';
+} from './userModuleTypes.js';
 
 export function useFixtureModules(
   fixturePath: string,
