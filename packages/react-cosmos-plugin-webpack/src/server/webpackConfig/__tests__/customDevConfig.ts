@@ -40,16 +40,17 @@ const MY_RULE = {};
 const MY_PLUGIN = {};
 const MY_PLUGIN2 = {};
 
+const cosmosConfig = createCosmosConfig(process.cwd(), {
+  webpack: {
+    configPath: 'mywebpack.config.js',
+    overridePath: 'mywebpack.override.js',
+  },
+});
+
 async function getCustomDevWebpackConfig() {
   return mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using webpack config found at mywebpack.config.js');
     expectLog('[Cosmos] Overriding webpack config at mywebpack.override.js');
-    const cosmosConfig = createCosmosConfig(process.cwd(), {
-      webpack: {
-        configPath: 'mywebpack.config.js',
-        overridePath: 'mywebpack.override.js',
-      },
-    });
     return await getDevWebpackConfig(cosmosConfig, webpack);
   });
 }
@@ -115,6 +116,7 @@ it('includes user deps loader', async () => {
   expect(module!.rules).toContainEqual({
     loader: require.resolve('../userDepsLoader'),
     include: require.resolve('../../../client/userDeps'),
+    options: { cosmosConfig },
   });
 });
 

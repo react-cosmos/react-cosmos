@@ -4,11 +4,10 @@
 // dist folder as part of the build process
 module.exports = async function injectUserDeps() {
   const cosmos = await import('react-cosmos');
-
-  const cosmosConfig = await cosmos.detectCosmosConfig();
+  const { cosmosConfig } = this.getOptions();
 
   // This ensures this loader is invalidated whenever a new file is added to or
-  // removed from user's project, which in turn triggers react-cosmos-voyager2
+  // removed from user's project, which in turn triggers findUserModulePaths
   // to detect fixture files and finally update fixture list inside Playground.
   // Note that while this may not be very performant, it's not the equivalent
   // of require.context, which not only watches for file changes but also
