@@ -3,7 +3,6 @@ import { isMultiFixture } from './isMultiFixture.js';
 import {
   ByPath,
   ReactFixtureExport,
-  ReactFixtureWrapper,
   UserModuleWrappers,
 } from './reactTypes.js';
 
@@ -14,7 +13,9 @@ export function getFixtureListFromWrappers(wrappers: UserModuleWrappers) {
         ...acc,
         [fixturePath]: wrappers.lazy
           ? { type: 'single' }
-          : getFixtureItemFromWrapper(wrappers.fixtures[fixturePath]),
+          : getFixtureItemFromExport(
+              wrappers.fixtures[fixturePath].module.default
+            ),
       };
     },
     {}
@@ -28,12 +29,6 @@ export function getFixtureListFromExports(exports: ByPath<ReactFixtureExport>) {
       [fixturePath]: getFixtureItemFromExport(exports[fixturePath]),
     };
   }, {});
-}
-
-function getFixtureItemFromWrapper(
-  wrapper: ReactFixtureWrapper
-): FixtureListItem {
-  return getFixtureItemFromExport(wrapper.module.default);
 }
 
 export function getFixtureItemFromExport(
