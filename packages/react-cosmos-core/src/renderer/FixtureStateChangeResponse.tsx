@@ -1,25 +1,24 @@
 import { isEqual } from 'lodash-es';
-import { useEffect, useRef } from 'react';
-import { FixtureId } from '../fixture/types.js';
-import { FixtureState } from '../fixtureState/types.js';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { RendererConnect } from './rendererConnectTypes.js';
+import { SelectedFixture } from './useSelectedFixture.js';
 
 type Props = {
   rendererId: string;
   rendererConnect: RendererConnect;
-  fixtureId: FixtureId;
-  fixtureState: FixtureState;
+  selectedFixture: SelectedFixture;
+  setSelectedFixture: Dispatch<SetStateAction<SelectedFixture | null>>;
 };
 export function FixtureStateChangeResponse({
   rendererId,
   rendererConnect,
-  fixtureId,
-  fixtureState,
+  selectedFixture,
+  setSelectedFixture,
 }: Props) {
-  const syncedFixtureState = useRef(fixtureState);
+  const { fixtureId, fixtureState, syncedFixtureState } = selectedFixture;
 
   useEffect(() => {
-    if (!isEqual(syncedFixtureState.current, fixtureState)) {
+    if (!isEqual(fixtureState, syncedFixtureState)) {
       rendererConnect.postMessage({
         type: 'fixtureStateChange',
         payload: {
@@ -28,9 +27,23 @@ export function FixtureStateChangeResponse({
           fixtureState,
         },
       });
-      syncedFixtureState.current = fixtureState;
+      setSelectedFixture(prev => {
+        // Ensure fixture state applies to currently selected fixture
+        if (prev && isEqual(prev.fixtureId, fixtureId)) {
+          return { ...prev, syncedFixtureState: fixtureState };
+        } else {
+          return prev;
+        }
+      });
     }
-  }, [fixtureId, fixtureState, rendererConnect, rendererId]);
+  }, [
+    fixtureId,
+    fixtureState,
+    rendererConnect,
+    rendererId,
+    setSelectedFixture,
+    syncedFixtureState,
+  ]);
 
   return null;
 }

@@ -87,12 +87,10 @@ export function FixtureConnect({
         />
       )}
       <FixtureStateChangeResponse
-        // Reset internal state when fixture ID changes
-        key={fixtureIdKey(fixtureId)}
         rendererId={rendererId}
         rendererConnect={rendererConnect}
-        fixtureId={fixtureId}
-        fixtureState={fixtureState}
+        selectedFixture={selectedFixture}
+        setSelectedFixture={setSelectedFixture}
       />
     </>
   );
@@ -100,10 +98,4 @@ export function FixtureConnect({
 
 function defaultRenderMessage(msg: string) {
   return <>{msg}</>;
-}
-
-function fixtureIdKey(fixtureId: FixtureId) {
-  return fixtureId.name
-    ? [fixtureId.path, fixtureId.name].join('-')
-    : fixtureId.path;
 }

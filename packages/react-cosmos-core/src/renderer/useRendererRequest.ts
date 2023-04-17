@@ -38,6 +38,7 @@ export function useRendererRequest(
         return {
           fixtureId,
           fixtureState,
+          syncedFixtureState: fixtureState,
           renderKey: prev ? prev.renderKey + 1 : 0,
         };
       });
@@ -52,7 +53,11 @@ export function useRendererRequest(
       setSelectedFixture(prev => {
         // Ensure fixture state applies to currently selected fixture
         if (prev && isEqual(prev.fixtureId, fixtureId)) {
-          return { ...prev, fixtureState };
+          return {
+            ...prev,
+            fixtureState,
+            syncedFixtureState: fixtureState,
+          };
         } else {
           return prev;
         }
