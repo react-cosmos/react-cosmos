@@ -1,4 +1,4 @@
-import { CosmosConfig } from 'react-cosmos/dist/index.js';
+import { CosmosConfig } from 'react-cosmos';
 import webpack from 'webpack';
 import { resolveWebpackClientPath } from './resolveWebpackClientPath.js';
 import { resolveWebpackLoaderPath } from './resolveWebpackLoaderPath.js';
