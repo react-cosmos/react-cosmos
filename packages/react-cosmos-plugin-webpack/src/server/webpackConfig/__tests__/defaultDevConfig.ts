@@ -14,13 +14,14 @@ afterAll(() => {
   unmockCliArgs();
 });
 
+const cosmosConfig = createCosmosConfig(process.cwd());
+
 async function getDefaultDevWebpackConfig() {
   return mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using default webpack config');
     expectLog(
       '[Cosmos] Learn how to override webpack config for cosmos: https://github.com/react-cosmos/react-cosmos/tree/main/docs#webpack-config-override'
     );
-    const cosmosConfig = createCosmosConfig(process.cwd());
     return await getDevWebpackConfig(cosmosConfig, webpack);
   });
 }
@@ -59,6 +60,7 @@ it('includes user deps loader', async () => {
   expect(module!.rules).toContainEqual({
     loader: require.resolve('../userDepsLoader'),
     include: require.resolve('../../../client/userDeps'),
+    options: { cosmosConfig },
   });
 });
 
