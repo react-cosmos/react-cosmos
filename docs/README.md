@@ -38,7 +38,7 @@ Create `cosmos.config.json` and enable Vite plugin.
 </details>
 
 <details>
-  <summary>Set up webpack plugin</summary>
+  <summary>Set up Webpack plugin</summary>
 
 ```bash
 npm i -D react-cosmos-plugin-webpack@next
@@ -46,7 +46,7 @@ npm i -D react-cosmos-plugin-webpack@next
 yarn add --dev react-cosmos-plugin-webpack@next
 ```
 
-Create `cosmos.config.json` and enable webpack plugin.
+Create `cosmos.config.json` and enable Webpack plugin.
 
 ```json
 {
