@@ -117,9 +117,9 @@ You've taken the first step towards designing reusable components. You're ready 
 ### Next steps...
 
 - Set up React Cosmos with Create React App, Next.js or Gatsby.
-- Configure Vite config or webpack config.
+- Configure Vite config or Webpack config.
 - Create a decorator.
-- Check out Vite and webpack [examples](../examples).
+- Check out Vite and Webpack [examples](../examples).
 
 > Something wrong? Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) (make sure to include details) and to [join us on Discord](https://discord.gg/3X95VgfnW5).
 
