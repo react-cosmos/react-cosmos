@@ -2,7 +2,7 @@
 
 > The current docs are for React Cosmos 6. Check out the [migration guide](docs/MIGRATION_V6.md) to upgrade from v5.
 
-- Setup: [Getting started](#getting-started) · [Requirements](#requirements) · [Config](#config) · [Compilation](#compilation) · [Webpack](#webpack)
+- Setup: [Getting started](#getting-started) · [Config](#config) · [Compilation](#compilation) · [Webpack](#webpack)
 - Usage: [Fixtures](#fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [Control panel](#control-panel) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
 - FAQ: [Create React App](#create-react-app) · [Next.js](#nextjs) · [Troubleshooting](#troubleshooting) · [Roadmap](../roadmap)
 
@@ -114,25 +114,13 @@ You've taken the first step towards designing reusable components. You're ready 
 - Create a decorator.
 - Check out Vite and webpack [examples](../examples).
 
-_Something wrong?_ Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) (be helpful and include details) and to [join us on Discord](https://discord.gg/3X95VgfnW5).
-
-## Requirements
-
-The only hard requirements are React 16.8 and Node 10 (or newer).
-
-React Cosmos works best with webpack 4. It takes extra effort to make it work with other bundlers, but it's not as scary as it might seem. Don’t be afraid to ask for support.
-
-> [Browserify](https://github.com/react-cosmos/react-cosmos-classic/tree/14e1a258f746df401a41ab65429df0d296b910e4/examples/browserify) and [Parcel](https://github.com/react-cosmos/parcel-ts-example) examples are available for Cosmos Classic. Props to whoever adapts them to React Cosmos 5!
+> Something wrong? Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) (make sure to include details) and to [join us on Discord](https://discord.gg/3X95VgfnW5).
 
 ## Config
 
-No config is required to start. If you have custom needs or would like to convert a Cosmos Classic config, here's what you need to know.
-
-The React Cosmos config is a **JSON** file, so it can only host serializable values. This design decision is meant to discourage complex configuration, make it easy to embed config options into the UI, and enable visual config management in the future.
+The React Cosmos config is a **JSON** file, so it can only contain serializable values. This design decision is meant to discourage complex configuration, make it easy to embed config options into the React Cosmos UI, and enable visual config editing in the future.
 
 By default, Cosmos reads `cosmos.config.json` from your root directory. You can pass a `--config` CLI arg for a custom config path.
-
-> Most Cosmos Classic config options are still supported in the new JSON format. [Let me know](https://discord.gg/3X95VgfnW5) if you need old config options that no longer work.
 
 ### Available options
 
@@ -319,8 +307,6 @@ export default ({ children }) => <Provider store={store}>{children}</Provider>;
 ```
 
 > A decorator only applies to fixture files contained in the decorator's directory. Decorators can be composed, in the order of their position in the file system hierarchy (from outer to inner).
-
-### Migrating _proxies_
 
 ### Redux state mock
 
