@@ -57,9 +57,9 @@ Create `cosmos.config.json` and enable Webpack plugin.
 </details>
 
 <details>
-  <summary>Custom bundler plugin</summary>
+  <summary>Custom bundler setup</summary>
 
-[Check out this comment](https://github.com/react-cosmos/react-cosmos/issues/1393#issuecomment-1497438650) until an official guide is created.
+[Check out this guide](customBundlerSetup.md).
 
 </details>
 
