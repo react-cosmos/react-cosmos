@@ -19,7 +19,7 @@ yarn add --dev react-cosmos@next
 2\. **Set up bundler**
 
 <details>
-  <summary>Set up Vite plugin</summary>
+  <summary>Vite plugin</summary>
 
 ```bash
 npm i -D react-cosmos-plugin-vite@next
@@ -38,7 +38,7 @@ Create `cosmos.config.json` and enable Vite plugin.
 </details>
 
 <details>
-  <summary>Set up Webpack plugin</summary>
+  <summary>Webpack plugin</summary>
 
 ```bash
 npm i -D react-cosmos-plugin-webpack@next
@@ -53,6 +53,13 @@ Create `cosmos.config.json` and enable Webpack plugin.
   "plugins": ["react-cosmos-plugin-webpack"]
 }
 ```
+
+</details>
+
+<details>
+  <summary>Custom bundler plugin</summary>
+
+TODO
 
 </details>
 
