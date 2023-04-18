@@ -1,5 +1,7 @@
 ## Table of contents
 
+> The current docs are for React Cosmos 6, installed with `react-cosmos@next`. Check out the [migration guide](docs/MIGRATION_V6.md) to upgrade.
+
 - Setup: [Getting started](#getting-started) · [Requirements](#requirements) · [Config](#config) · [Compilation](#compilation) · [Webpack](#webpack)
 - Usage: [Fixtures](#fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [Control panel](#control-panel) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
 - FAQ: [Create React App](#create-react-app) · [Next.js](#nextjs) · [Troubleshooting](#troubleshooting) · [Where's my old Cosmos?](#wheres-my-old-cosmos) · [Roadmap](../roadmap)
