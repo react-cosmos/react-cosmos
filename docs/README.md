@@ -4,7 +4,7 @@
 
 - Setup: [Getting started](#getting-started) · [Requirements](#requirements) · [Config](#config) · [Compilation](#compilation) · [Webpack](#webpack)
 - Usage: [Fixtures](#fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [Control panel](#control-panel) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
-- FAQ: [Create React App](#create-react-app) · [Next.js](#nextjs) · [Troubleshooting](#troubleshooting) · [Where's my old Cosmos?](#wheres-my-old-cosmos) · [Roadmap](../roadmap)
+- FAQ: [Create React App](#create-react-app) · [Next.js](#nextjs) · [Troubleshooting](#troubleshooting) · [Roadmap](../roadmap)
 
 The [example package](../example) is a useful complement to this guide.
 
@@ -602,12 +602,6 @@ This is a `.babelrc` example for Next.js:
 - Run `cosmos` with the `--external-userdeps` flag. This should generate `cosmos.userdeps.js`. Check that file to see if your fixtures are being picked up by Cosmos.
 - Check your directory structure. If you are using a Cosmos config file, Cosmos will use the directory of the config file as the root of your project. If your Cosmos config file is nested in a directory that isn't an ancestor of your fixture files, Cosmos will not find your fixtures. To solve this add a [`rootDir`](https://github.com/react-cosmos/react-cosmos/blob/d800a31b39d82c810f37a2ad0d25eed5308b830a/packages/react-cosmos/config.schema.json#L10-L14) entry to your Cosmos config pointing to your root directory.
 
-## Where's my old Cosmos?
-
-Cosmos Classic packages have been moved to [a dedicated repo](https://github.com/react-cosmos/react-cosmos-classic), which means we can continue to maintain Cosmos Classic or even run it alongside React Cosmos 5 in the same project (during the migration period).
-
-That said, it's ideal for all Cosmos users to use the latest version. Please [let me know](https://discord.gg/3X95VgfnW5) if you need help upgrading.
-
 ---
 
-[Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback and questions.
+[Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.
