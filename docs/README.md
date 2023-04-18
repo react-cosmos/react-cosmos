@@ -89,7 +89,7 @@ export function Hello({ greeting, name }) {
 }
 ```
 
-Create a `.fixture` file. You can [customize this convention](#how-to-create-fixture-files) later.
+Create a `.fixture` file.
 
 > Fixture files contain a default export, which can be a React Component or any React Node.
 
@@ -103,9 +103,9 @@ export default <Hello greeting="Aloha" name="Alexa" />;
 
 The `hello` fixture will show up in your React Cosmos UI and will render when you select it.
 
-**Congratulations!**
+**Congratulations 😎**
 
-You've taken the first step towards designing reusable components. You're ready to prototype, test and interate on components in isolation 😎.
+You've taken the first step towards designing reusable components. You're ready to prototype, test and interate on components in isolation.
 
 ### Next steps...
 
