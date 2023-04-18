@@ -13,13 +13,12 @@ The [example package](../example) is a useful complement to this guide.
 1\. **Install React Cosmos**
 
 ```bash
-# Using npm
-npm i --D react-cosmos
-# or Yarn
-yarn add --dev react-cosmos
+npm i -D react-cosmos@next
+# or
+yarn add --dev react-cosmos@next
 ```
 
-> Please see [Compilation](#compilation) to make sure you installed all necessary dependencies.
+> Unless you're using a custom setup, you also need to install a bundler plugin like `react-cosmos-plugin-webpack@next` or `react-cosmos-plugin-vite@next`.
 
 2\. **Add package.json scripts**
 
@@ -33,15 +32,12 @@ yarn add --dev react-cosmos
 3\. **Start React Cosmos**
 
 ```bash
-# Using npm
 npm run cosmos
-# or Yarn
+# or
 yarn cosmos
 ```
 
 🚀 **[localhost:5000](http://localhost:5000)**
-
-> You may also run `npx react-cosmos` in your project without installing any deps.
 
 4\. **Create your first fixture**
 
