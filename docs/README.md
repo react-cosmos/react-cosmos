@@ -6,8 +6,6 @@
 - Usage: [Fixtures](#fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [Control panel](#control-panel) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
 - FAQ: [Create React App](#create-react-app) · [Next.js](#nextjs) · [Troubleshooting](#troubleshooting) · [Roadmap](../roadmap)
 
-The [example package](../example) is a useful complement to this guide.
-
 ## Getting started
 
 1\. **Install React Cosmos**
@@ -20,7 +18,8 @@ yarn add --dev react-cosmos@next
 
 2\. **Set up bundler**
 
-### Vite
+<details>
+  <summary>Set up Vite plugin</summary>
 
 ```bash
 npm i -D react-cosmos-plugin-vite@next
@@ -36,7 +35,10 @@ Create `cosmos.config.json` and enable Vite plugin.
 }
 ```
 
-### Webpack
+</details>
+
+<details>
+  <summary>Set up webpack plugin</summary>
 
 ```bash
 npm i -D react-cosmos-plugin-webpack@next
@@ -51,6 +53,8 @@ Create `cosmos.config.json` and enable webpack plugin.
   "plugins": ["react-cosmos-plugin-webpack"]
 }
 ```
+
+</details>
 
 3\. **Add package.json scripts**
 
@@ -101,11 +105,14 @@ The `hello` fixture will show up in your React Cosmos UI and will render when yo
 
 **Congratulations!**
 
-You've taken the first step towards designing reusable components. You can now prototype, test and interate on components in isolation 😎.
+You've taken the first step towards designing reusable components. You're ready to prototype, test and interate on components in isolation 😎.
 
 ### Next steps...
 
+- Set up React Cosmos with Create React App, Next.js or Gatsby.
+- Configure Vite config or webpack config.
 - Create a decorator.
+- Check out Vite and webpack [examples](../examples).
 
 _Something wrong?_ Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) (be helpful and include details) and to [join us on Discord](https://discord.gg/3X95VgfnW5).
 
