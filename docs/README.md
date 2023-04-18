@@ -1,6 +1,6 @@
 ## Table of contents
 
-> The current docs are for React Cosmos 6, installed with `react-cosmos@next`. Check out the [migration guide](docs/MIGRATION_V6.md) to upgrade.
+> The current docs are for React Cosmos 6. Check out the [migration guide](docs/MIGRATION_V6.md) to upgrade from v5.
 
 - Setup: [Getting started](#getting-started) · [Requirements](#requirements) · [Config](#config) · [Compilation](#compilation) · [Webpack](#webpack)
 - Usage: [Fixtures](#fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [Control panel](#control-panel) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
@@ -18,9 +18,41 @@ npm i -D react-cosmos@next
 yarn add --dev react-cosmos@next
 ```
 
-> Unless you're using a custom setup, you also need to install a bundler plugin like `react-cosmos-plugin-webpack@next` or `react-cosmos-plugin-vite@next`.
+2\. **Set up bundler**
 
-2\. **Add package.json scripts**
+### Vite
+
+```bash
+npm i -D react-cosmos-plugin-vite@next
+# or
+yarn add --dev react-cosmos-plugin-vite@next
+```
+
+Create `cosmos.config.json` and enable Vite plugin.
+
+```json
+{
+  "plugins": ["react-cosmos-plugin-vite"]
+}
+```
+
+### Webpack
+
+```bash
+npm i -D react-cosmos-plugin-webpack@next
+# or
+yarn add --dev react-cosmos-plugin-webpack@next
+```
+
+Create `cosmos.config.json` and enable webpack plugin.
+
+```json
+{
+  "plugins": ["react-cosmos-plugin-webpack"]
+}
+```
+
+3\. **Add package.json scripts**
 
 ```diff
 "scripts": {
@@ -29,7 +61,7 @@ yarn add --dev react-cosmos@next
 }
 ```
 
-3\. **Start React Cosmos**
+4\. **Start React Cosmos**
 
 ```bash
 npm run cosmos
@@ -37,9 +69,9 @@ npm run cosmos
 yarn cosmos
 ```
 
-🚀 **[localhost:5000](http://localhost:5000)**
+🚀 Open **[localhost:5000](http://localhost:5000)** in your browser.
 
-4\. **Create your first fixture**
+5\. **Create your first fixture**
 
 Choose a simple component to get started.
 
@@ -67,9 +99,13 @@ export default <Hello greeting="Aloha" name="Alexa" />;
 
 The `hello` fixture will show up in your React Cosmos UI and will render when you select it.
 
-5\. **Build amazing user interfaces**
+**Congratulations!**
 
-You've taken the first step towards designing reusable components. You can now prototype, test and interate on components in isolation. Use this to your advantage!
+You've taken the first step towards designing reusable components. You can now prototype, test and interate on components in isolation 😎.
+
+### Next steps...
+
+- Create a decorator.
 
 _Something wrong?_ Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) (be helpful and include details) and to [join us on Discord](https://discord.gg/3X95VgfnW5).
 
