@@ -59,7 +59,7 @@ Create `cosmos.config.json` and enable Webpack plugin.
 <details>
   <summary>Custom bundler plugin</summary>
 
-TODO
+[Check out this comment](https://github.com/react-cosmos/react-cosmos/issues/1393#issuecomment-1497438650) until an official guide is created.
 
 </details>
 
@@ -116,10 +116,10 @@ You've taken the first step towards designing reusable components. You're ready 
 
 ### Next steps...
 
-- Set up React Cosmos with Create React App, Next.js or Gatsby.
-- Configure Vite config or Webpack config.
-- Create a decorator.
-- Check out Vite and Webpack [examples](../examples).
+- [Set up React Cosmos with Create React App](#create-react-app).
+- [Configure Webpack config](#webpack).
+- [Create a decorator](#decorators).
+- [Check out Vite and Webpack examples](../examples).
 
 > Something wrong? Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) (make sure to include details) and to [join us on Discord](https://discord.gg/3X95VgfnW5).
 
@@ -335,7 +335,7 @@ The [props panel](https://twitter.com/ReactCosmos/status/1139838627976843264) al
 
 ```jsx
 // CounterButton.fixture.jsx
-import { useValue } from 'react-cosmos/fixture';
+import { useValue } from 'react-cosmos-core';
 
 export default () => {
   const [count, setCount] = useValue('count', { defaultValue: 0 });
@@ -347,7 +347,7 @@ export default () => {
 
 ```jsx
 // Button.fixture.jsx
-import { useSelect } from 'react-cosmos/fixture';
+import { useSelect } from 'react-cosmos-core';
 
 export default () => {
   // useSelect also returns a setter as the second value in the return tuple,
@@ -363,7 +363,7 @@ export default () => {
 
 ## UI plugins
 
-A main feature of the React Cosmos redesign is the brand-new UI plugin architecture. While the new UI is created 100% from plugins, the plugin API is not yet documented nor made accessible. It will take a few big steps to get there, but this is the future.
+The React Cosmos UI is made up 100% from plugins. Documenting the plugin API is in progress. In the meantime you can use and customize built-in plugins.
 
 ### Custom [responsive viewports](https://twitter.com/ReactCosmos/status/1158701342208208897)
 
@@ -402,17 +402,16 @@ React Cosmos works great with React Native. Put the following inside `App.js` to
 
 ```jsx
 import React, { Component } from 'react';
-import { NativeFixtureLoader } from 'react-cosmos/native';
-// You generate cosmos.userdeps.js when you start the Cosmos server
-import { rendererConfig, fixtures, decorators } from './cosmos.userdeps.js';
+import { NativeFixtureLoader } from 'react-cosmos-native';
+// cosmos.userdeps.js is auto-generated once you start the Cosmos server
+import { rendererConfig, moduleWrappers } from './cosmos.userdeps.js';
 
 export default class App extends Component {
   render() {
     return (
       <NativeFixtureLoader
         rendererConfig={rendererConfig}
-        fixtures={fixtures}
-        decorators={decorators}
+        moduleWrappers={moduleWrappers}
       />
     );
   }
@@ -458,7 +457,9 @@ const cosmosConfig = await detectCosmosConfig();
 ```js
 import { getCosmosConfigAtPath } from 'react-cosmos';
 
-const cosmosConfig = getCosmosConfigAtPath(require.resolve('./cosmos.config'));
+const cosmosConfig = await getCosmosConfigAtPath(
+  require.resolve('./cosmos.config')
+);
 ```
 
 #### Create default config
@@ -488,9 +489,9 @@ const cosmosConfig = createCosmosConfig(__dirname, {
 Get all your fixtures programatically. A ton of information is provided for each fixture, enabling you to hack away on top of React Cosmos. To generate visual snapshots from your fixtures, you load `rendererUrl` in a headless browser like [Puppeteer](https://github.com/puppeteer/puppeteer) and take a screenshot on page load. You can compare visual snapshots between deploys to catch sneaky UI regressions.
 
 ```js
-import { getFixtures2 } from 'react-cosmos';
+import { getFixtures } from 'react-cosmos';
 
-const fixtures = getFixtures2(cosmosConfig);
+const fixtures = getFixtures(cosmosConfig);
 
 console.log(fixtures);
 // [
@@ -507,11 +508,9 @@ console.log(fixtures);
 //   ...
 ```
 
-> See a more complete output example [here](https://github.com/react-cosmos/react-cosmos/blob/d8b94c4f088cc7b0fdbab3e080858ed4dbb04bcb/example/fixtures2.test.ts).
+> See a more complete output example [here](../examples/webpack/tests/fixtures.test.ts).
 
 Aside from the fixture information showcased above, each fixture object returned also contains a `getElement` function property, which takes no arguments. `getElement` allows you to render fixtures in your own time, in environments like jsdom. Just as in the React Cosmos UI, the fixture element will include any decorators you've defined for your fixtures. `getElement` can be used for Jest snapshot testing.
-
-> The function is called `getFixtures2` because it supersedes a previous function that's no longer documented, but wasn't removed for backwards compatibility.
 
 ## Create React App
 
