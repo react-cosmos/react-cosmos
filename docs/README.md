@@ -1,25 +1,69 @@
 ## Table of contents
 
-- Setup: [Getting started](#getting-started) · [Requirements](#requirements) · [Config](#config) · [Compilation](#compilation) · [Webpack](#webpack)
-- Usage: [Fixtures](#fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [Control panel](#control-panel) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
-- FAQ: [Create React App](#create-react-app) · [Next.js](#nextjs) · [Troubleshooting](#troubleshooting) · [Where's my old Cosmos?](#wheres-my-old-cosmos) · [Roadmap](../roadmap)
+> The current docs are for React Cosmos 6. Check out the [migration guide](docs/MIGRATION_V6.md) to upgrade from v5.
 
-The [example package](../example) is a useful complement to this guide.
+- Setup: [Getting started](#getting-started) · [Config](#config) · [Compilation](#compilation) · [Webpack](#webpack)
+- Usage: [Fixtures](#fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [Control panel](#control-panel) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
+- FAQ: [Create React App](#create-react-app) · [Next.js](#nextjs) · [Troubleshooting](#troubleshooting) · [Roadmap](../roadmap)
 
 ## Getting started
 
 1\. **Install React Cosmos**
 
 ```bash
-# Using npm
-npm i --D react-cosmos
-# or Yarn
-yarn add --dev react-cosmos
+npm i -D react-cosmos@next
+# or
+yarn add --dev react-cosmos@next
 ```
 
-> Please see [Compilation](#compilation) to make sure you installed all necessary dependencies.
+2\. **Set up bundler**
 
-2\. **Add package.json scripts**
+<details>
+  <summary>Vite plugin</summary>
+
+```bash
+npm i -D react-cosmos-plugin-vite@next
+# or
+yarn add --dev react-cosmos-plugin-vite@next
+```
+
+Create `cosmos.config.json` and enable Vite plugin.
+
+```json
+{
+  "plugins": ["react-cosmos-plugin-vite"]
+}
+```
+
+</details>
+
+<details>
+  <summary>Webpack plugin</summary>
+
+```bash
+npm i -D react-cosmos-plugin-webpack@next
+# or
+yarn add --dev react-cosmos-plugin-webpack@next
+```
+
+Create `cosmos.config.json` and enable Webpack plugin.
+
+```json
+{
+  "plugins": ["react-cosmos-plugin-webpack"]
+}
+```
+
+</details>
+
+<details>
+  <summary>Custom bundler plugin</summary>
+
+[Check out this comment](https://github.com/react-cosmos/react-cosmos/issues/1393#issuecomment-1497438650) until an official guide is created.
+
+</details>
+
+3\. **Add package.json scripts**
 
 ```diff
 "scripts": {
@@ -28,20 +72,17 @@ yarn add --dev react-cosmos
 }
 ```
 
-3\. **Start React Cosmos**
+4\. **Start React Cosmos**
 
 ```bash
-# Using npm
 npm run cosmos
-# or Yarn
+# or
 yarn cosmos
 ```
 
-🚀 **[localhost:5000](http://localhost:5000)**
+🚀 Open **[localhost:5000](http://localhost:5000)** in your browser.
 
-> You may also run `npx react-cosmos` in your project without installing any deps.
-
-4\. **Create your first fixture**
+5\. **Create your first fixture**
 
 Choose a simple component to get started.
 
@@ -55,7 +96,7 @@ export function Hello({ greeting, name }) {
 }
 ```
 
-Create a `.fixture` file. You can [customize this convention](#how-to-create-fixture-files) later.
+Create a `.fixture` file.
 
 > Fixture files contain a default export, which can be a React Component or any React Node.
 
@@ -69,29 +110,24 @@ export default <Hello greeting="Aloha" name="Alexa" />;
 
 The `hello` fixture will show up in your React Cosmos UI and will render when you select it.
 
-5\. **Build amazing user interfaces**
+**Congratulations 😎**
 
-You've taken the first step towards designing reusable components. You can now prototype, test and interate on components in isolation. Use this to your advantage!
+You've taken the first step towards designing reusable components. You're ready to prototype, test and interate on components in isolation.
 
-_Something wrong?_ Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) (be helpful and include details) and to [join us on Discord](https://discord.gg/3X95VgfnW5).
+### Next steps...
 
-## Requirements
+- [Set up React Cosmos with Create React App](#create-react-app).
+- [Configure Webpack config](#webpack).
+- [Create a decorator](#decorators).
+- [Check out Vite and Webpack examples](../examples).
 
-The only hard requirements are React 16.8 and Node 10 (or newer).
-
-React Cosmos works best with webpack 4. It takes extra effort to make it work with other bundlers, but it's not as scary as it might seem. Don’t be afraid to ask for support.
-
-> [Browserify](https://github.com/react-cosmos/react-cosmos-classic/tree/14e1a258f746df401a41ab65429df0d296b910e4/examples/browserify) and [Parcel](https://github.com/react-cosmos/parcel-ts-example) examples are available for Cosmos Classic. Props to whoever adapts them to React Cosmos 5!
+> Something wrong? Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) (make sure to include details) and to [join us on Discord](https://discord.gg/3X95VgfnW5).
 
 ## Config
 
-No config is required to start. If you have custom needs or would like to convert a Cosmos Classic config, here's what you need to know.
-
-The React Cosmos config is a **JSON** file, so it can only host serializable values. This design decision is meant to discourage complex configuration, make it easy to embed config options into the UI, and enable visual config management in the future.
+The React Cosmos config is a **JSON** file, so it can only contain serializable values. This design decision is meant to discourage complex configuration, make it easy to embed config options into the React Cosmos UI, and enable visual config editing in the future.
 
 By default, Cosmos reads `cosmos.config.json` from your root directory. You can pass a `--config` CLI arg for a custom config path.
-
-> Most Cosmos Classic config options are still supported in the new JSON format. [Let me know](https://discord.gg/3X95VgfnW5) if you need old config options that no longer work.
 
 ### Available options
 
@@ -134,9 +170,9 @@ How you compile your code is 100% your business. React Cosmos jumps through hoop
 
 **React Cosmos compiles your code using the build dependencies already installed in your project.**
 
-Unless you use a framework like Create React App or Next.js, you need to install build dependencies yourself. This includes stuff like Babel, TypeScript, webpack loaders, html-webpack-plugin, etc.
+Unless you use a framework like Create React App or Next.js, you need to install build dependencies yourself. This includes stuff like Babel, TypeScript, Webpack loaders, html-webpack-plugin, etc.
 
-Here is a common list of packages required to build React with webpack and Babel:
+Here is a common list of packages required to build React with Webpack and Babel:
 
 > @babel/core @babel/preset-env @babel/preset-react babel-loader style-loader css-loader html-webpack-plugin@4
 
@@ -150,15 +186,15 @@ And unless you use a framework that does it under the hood, create a `.babelrc` 
 
 ## Webpack
 
-Configuring webpack is the least romantic aspect of the Cosmos setup. Luckily, you only do it once. Depending on your setup, one of the following options will work for you.
+Configuring Webpack is the least romantic aspect of the Cosmos setup. Luckily, you only do it once. Depending on your setup, one of the following options will work for you.
 
-### Default webpack config
+### Default Webpack config
 
-In many cases Cosmos manages to get webpack working without human intervention. Try running Cosmos as is first.
+In many cases Cosmos manages to get Webpack working without human intervention. Try running Cosmos as is first.
 
-### Custom webpack config
+### Custom Webpack config
 
-Probably the most common scenario. Most of us end up with a hairy webpack config sooner or later. Use the `webpack.configPath` setting to point to an existing webpack config.
+Probably the most common scenario. Most of us end up with a hairy Webpack config sooner or later. Use the `webpack.configPath` setting to point to an existing Webpack config.
 
 ```json
 {
@@ -172,7 +208,7 @@ Probably the most common scenario. Most of us end up with a hairy webpack config
 
 ### Webpack config override
 
-Overriding the webpack config gives you complete control. Use the `webpack.overridePath` setting to point to a module that customizes the webpack config used by Cosmos.
+Overriding the Webpack config gives you complete control. Use the `webpack.overridePath` setting to point to a module that customizes the Webpack config used by Cosmos.
 
 ```json
 {
@@ -182,7 +218,7 @@ Overriding the webpack config gives you complete control. Use the `webpack.overr
 }
 ```
 
-The override function receives a base webpack config — the default one generated by Cosmos or a custom one loaded from `webpack.configPath`. Extend the input config and return the result.
+The override function receives a base Webpack config — the default one generated by Cosmos or a custom one loaded from `webpack.configPath`. Extend the input config and return the result.
 
 ```js
 // webpack.override.js
@@ -193,7 +229,7 @@ module.exports = (webpackConfig, env) => {
 
 ### Output filename
 
-Cosmos overwrites `output.filename` in the webpack config to `[name].js` by default. Due to caching, this isn't ideal when generating static exports via `cosmos-export` command. Use the `webpack.includeHashInOutputFilename` setting to change the filename template to `[name].[contenthash].js`.
+Cosmos overwrites `output.filename` in the Webpack config to `[name].js` by default. Due to caching, this isn't ideal when generating static exports via `cosmos-export` command. Use the `webpack.includeHashInOutputFilename` setting to change the filename template to `[name].[contenthash].js`.
 
 ```json
 {
@@ -279,8 +315,6 @@ export default ({ children }) => <Provider store={store}>{children}</Provider>;
 
 > A decorator only applies to fixture files contained in the decorator's directory. Decorators can be composed, in the order of their position in the file system hierarchy (from outer to inner).
 
-### Migrating _proxies_
-
 ### Redux state mock
 
 Check out [react-cosmos-redux](https://github.com/skidding/react-cosmos-redux) to see what an advanced React Cosmos decorator looks like.
@@ -301,7 +335,7 @@ The [props panel](https://twitter.com/ReactCosmos/status/1139838627976843264) al
 
 ```jsx
 // CounterButton.fixture.jsx
-import { useValue } from 'react-cosmos/fixture';
+import { useValue } from 'react-cosmos-core';
 
 export default () => {
   const [count, setCount] = useValue('count', { defaultValue: 0 });
@@ -313,7 +347,7 @@ export default () => {
 
 ```jsx
 // Button.fixture.jsx
-import { useSelect } from 'react-cosmos/fixture';
+import { useSelect } from 'react-cosmos-core';
 
 export default () => {
   // useSelect also returns a setter as the second value in the return tuple,
@@ -329,7 +363,7 @@ export default () => {
 
 ## UI plugins
 
-A main feature of the React Cosmos redesign is the brand-new UI plugin architecture. While the new UI is created 100% from plugins, the plugin API is not yet documented nor made accessible. It will take a few big steps to get there, but this is the future.
+The React Cosmos UI is made up 100% from plugins. Documenting the plugin API is in progress. In the meantime you can use and customize built-in plugins.
 
 ### Custom [responsive viewports](https://twitter.com/ReactCosmos/status/1158701342208208897)
 
@@ -368,17 +402,16 @@ React Cosmos works great with React Native. Put the following inside `App.js` to
 
 ```jsx
 import React, { Component } from 'react';
-import { NativeFixtureLoader } from 'react-cosmos/native';
-// You generate cosmos.userdeps.js when you start the Cosmos server
-import { rendererConfig, fixtures, decorators } from './cosmos.userdeps.js';
+import { NativeFixtureLoader } from 'react-cosmos-native';
+// cosmos.userdeps.js is auto-generated once you start the Cosmos server
+import { rendererConfig, moduleWrappers } from './cosmos.userdeps.js';
 
 export default class App extends Component {
   render() {
     return (
       <NativeFixtureLoader
         rendererConfig={rendererConfig}
-        fixtures={fixtures}
-        decorators={decorators}
+        moduleWrappers={moduleWrappers}
       />
     );
   }
@@ -424,7 +457,9 @@ const cosmosConfig = await detectCosmosConfig();
 ```js
 import { getCosmosConfigAtPath } from 'react-cosmos';
 
-const cosmosConfig = getCosmosConfigAtPath(require.resolve('./cosmos.config'));
+const cosmosConfig = await getCosmosConfigAtPath(
+  require.resolve('./cosmos.config')
+);
 ```
 
 #### Create default config
@@ -454,9 +489,9 @@ const cosmosConfig = createCosmosConfig(__dirname, {
 Get all your fixtures programatically. A ton of information is provided for each fixture, enabling you to hack away on top of React Cosmos. To generate visual snapshots from your fixtures, you load `rendererUrl` in a headless browser like [Puppeteer](https://github.com/puppeteer/puppeteer) and take a screenshot on page load. You can compare visual snapshots between deploys to catch sneaky UI regressions.
 
 ```js
-import { getFixtures2 } from 'react-cosmos';
+import { getFixtures } from 'react-cosmos';
 
-const fixtures = getFixtures2(cosmosConfig);
+const fixtures = getFixtures(cosmosConfig);
 
 console.log(fixtures);
 // [
@@ -473,11 +508,9 @@ console.log(fixtures);
 //   ...
 ```
 
-> See a more complete output example [here](https://github.com/react-cosmos/react-cosmos/blob/d8b94c4f088cc7b0fdbab3e080858ed4dbb04bcb/example/fixtures2.test.ts).
+> See a more complete output example [here](../examples/webpack/tests/fixtures.test.ts).
 
 Aside from the fixture information showcased above, each fixture object returned also contains a `getElement` function property, which takes no arguments. `getElement` allows you to render fixtures in your own time, in environments like jsdom. Just as in the React Cosmos UI, the fixture element will include any decorators you've defined for your fixtures. `getElement` can be used for Jest snapshot testing.
-
-> The function is called `getFixtures2` because it supersedes a previous function that's no longer documented, but wasn't removed for backwards compatibility.
 
 ## Create React App
 
@@ -500,7 +533,7 @@ This is a `cosmos.config.json` example for Create React App:
 
 ### Using react-app-rewired
 
-In a standard Create React App setup you config React Cosmos to use CRA's internal webpack config (see above). With react-app-rewired, however, create the following webpack config in your project root instead.
+In a standard Create React App setup you config React Cosmos to use CRA's internal Webpack config (see above). With react-app-rewired, however, create the following Webpack config in your project root instead.
 
 ```js
 // webpack.config.js
@@ -511,11 +544,11 @@ const config = require(paths.scriptVersion + '/config/webpack.config.dev');
 module.exports = overrides.webpack(config, process.env.NODE_ENV);
 ```
 
-> React Cosmos picks up `webpack.config.js` automatically. Use `webpack.configPath` if you prefer to customize the webpack config path.
+> React Cosmos picks up `webpack.config.js` automatically. Use `webpack.configPath` if you prefer to customize the Webpack config path.
 
 ### Using CRACO with Tailwind CSS
 
-[CRACO](https://github.com/gsoft-inc/craco) is an alternative to react-app-rewired for overriding CRA's internal webpack config. [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) recommends using CRACO to override CRA's PostCSS settings, which is why this guide targets CRACO and Tailwind CSS together.
+[CRACO](https://github.com/gsoft-inc/craco) is an alternative to react-app-rewired for overriding CRA's internal Webpack config. [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) recommends using CRACO to override CRA's PostCSS settings, which is why this guide targets CRACO and Tailwind CSS together.
 
 - Create `webpack.config.js` in your root folder (if you haven't already) with the following contents:
 
@@ -537,7 +570,7 @@ module.exports = webpackConfig;
 }
 ```
 
-> Cosmos picks up `webpack.config.js` automatically. Since you're relying on the exported wepack config generated by CRACO, don't forgot to remove `"webpack.configPath": "react-scripts/config/webpack.config"` from your `cosmos.config.json` if you previously set it. Use `webpack.configPath` if you prefer to customize the webpack config path.
+> Cosmos picks up `webpack.config.js` automatically. Since you're relying on the exported wepack config generated by CRACO, don't forgot to remove `"webpack.configPath": "react-scripts/config/webpack.config"` from your `cosmos.config.json` if you previously set it. Use `webpack.configPath` if you prefer to customize the Webpack config path.
 
 > `globalImports` accepts an array of paths and you can add additional global CSS files like this: `"globalImports": ["src/index.css", "src/app.css"]`.
 
@@ -581,7 +614,7 @@ This is a `.babelrc` example for Next.js:
 
 #### Renderer not responding?
 
-- Try renaming `filename` in HtmlWebpackPlugin options to `index.html`, or alternatively remove HtmlWebpackPlugin from your webpack config since Cosmos will create one for you if none is found. For more details see [this issue](https://github.com/react-cosmos/react-cosmos/issues/1220).
+- Try renaming `filename` in HtmlWebpackPlugin options to `index.html`, or alternatively remove HtmlWebpackPlugin from your Webpack config since Cosmos will create one for you if none is found. For more details see [this issue](https://github.com/react-cosmos/react-cosmos/issues/1220).
 
 #### "Failed to execute postMessage..."?
 
@@ -589,7 +622,7 @@ This is a `.babelrc` example for Next.js:
 
 #### "localhost:3001/\_\_get-internal-source..." 404s?
 
-- [Try changing your webpack `devtool` to something like `cheap-module-source-map`](https://github.com/react-cosmos/react-cosmos/issues/1045#issuecomment-535150617).
+- [Try changing your Webpack `devtool` to something like `cheap-module-source-map`](https://github.com/react-cosmos/react-cosmos/issues/1045#issuecomment-535150617).
 
 #### main.js file is cached?
 
@@ -604,12 +637,6 @@ This is a `.babelrc` example for Next.js:
 - Run `cosmos` with the `--external-userdeps` flag. This should generate `cosmos.userdeps.js`. Check that file to see if your fixtures are being picked up by Cosmos.
 - Check your directory structure. If you are using a Cosmos config file, Cosmos will use the directory of the config file as the root of your project. If your Cosmos config file is nested in a directory that isn't an ancestor of your fixture files, Cosmos will not find your fixtures. To solve this add a [`rootDir`](https://github.com/react-cosmos/react-cosmos/blob/d800a31b39d82c810f37a2ad0d25eed5308b830a/packages/react-cosmos/config.schema.json#L10-L14) entry to your Cosmos config pointing to your root directory.
 
-## Where's my old Cosmos?
-
-Cosmos Classic packages have been moved to [a dedicated repo](https://github.com/react-cosmos/react-cosmos-classic), which means we can continue to maintain Cosmos Classic or even run it alongside React Cosmos 5 in the same project (during the migration period).
-
-That said, it's ideal for all Cosmos users to use the latest version. Please [let me know](https://discord.gg/3X95VgfnW5) if you need help upgrading.
-
 ---
 
-[Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback and questions.
+[Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.
