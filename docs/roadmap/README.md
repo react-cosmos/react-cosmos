@@ -2,11 +2,10 @@
 
 ## Bundler
 
-- [x] Integrate with Vite.
-- [ ] Revamp webpack integration.
-  - [x] Make webpack an external package (and plugin).
-  - [ ] [Move from webpack middlewares to webpack-dev-server](https://github.com/react-cosmos/react-cosmos/issues/1272#issuecomment-733091647).
-  - [ ] Fast Refresh out of the box integration.
+- [x] Vite plugin.
+- [x] Extract webpack plugin.
+  - [ ] Fast Refresh compatibility [#1150](https://github.com/react-cosmos/react-cosmos/issues/1150) [#1430](https://github.com/react-cosmos/react-cosmos/pull/1430).
+  - [ ] Maybe: Move from webpack middlewares to webpack-dev-server. Read [this](https://github.com/react-cosmos/react-cosmos/issues/1272#issuecomment-733091647) and [this](https://github.com/react-cosmos/react-cosmos/issues/1272#issuecomment-733250093) for context.
 
 ## Core
 
