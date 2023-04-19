@@ -12,7 +12,11 @@
 
 ```bash
 npm i -D react-cosmos@next
-# or
+```
+
+Or if you’re using Yarn:
+
+```bash
 yarn add --dev react-cosmos@next
 ```
 
@@ -23,7 +27,11 @@ yarn add --dev react-cosmos@next
 
 ```bash
 npm i -D react-cosmos-plugin-vite@next
-# or
+```
+
+Or if you’re using Yarn:
+
+```bash
 yarn add --dev react-cosmos-plugin-vite@next
 ```
 
@@ -42,7 +50,11 @@ Create `cosmos.config.json` and enable Vite plugin.
 
 ```bash
 npm i -D react-cosmos-plugin-webpack@next
-# or
+```
+
+Or if you’re using Yarn:
+
+```bash
 yarn add --dev react-cosmos-plugin-webpack@next
 ```
 
@@ -76,7 +88,11 @@ Create `cosmos.config.json` and enable Webpack plugin.
 
 ```bash
 npm run cosmos
-# or
+```
+
+Or if you’re using Yarn:
+
+```bash
 yarn cosmos
 ```
 
