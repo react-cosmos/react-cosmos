@@ -8,8 +8,11 @@ import { setFixtureState } from './setFixtureState.js';
 import { RendererCoreContext } from './shared/index.js';
 import { RendererCoreSpec } from './spec.js';
 
-const { on, register } = createPlugin<RendererCoreSpec>({
+const { on, register, onLoad } = createPlugin<RendererCoreSpec>({
   name: 'rendererCore',
+  defaultConfig: {
+    fixtures: {},
+  },
   initialState: {
     connectedRendererIds: [],
     primaryRendererId: null,
@@ -27,6 +30,11 @@ const { on, register } = createPlugin<RendererCoreSpec>({
     selectPrimaryRenderer,
     receiveResponse,
   },
+});
+
+onLoad(({ getConfig, setState }) => {
+  const { fixtures } = getConfig();
+  setState(prevState => ({ ...prevState, fixtures }));
 });
 
 on<RouterSpec>('router', { fixtureChange: onRouterFixtureChange });

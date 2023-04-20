@@ -8,6 +8,9 @@ import {
 
 export type RendererCoreSpec = {
   name: 'rendererCore';
+  config: {
+    fixtures: FixtureList;
+  };
   state: {
     connectedRendererIds: RendererId[];
     primaryRendererId: null | RendererId;
