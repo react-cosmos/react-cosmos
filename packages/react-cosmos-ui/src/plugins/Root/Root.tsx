@@ -79,7 +79,7 @@ export function Root({
     return <Container />;
   }
 
-  const showNav = rendererConnected && (navOpen || !validFixtureSelected);
+  const showNav = navOpen || !validFixtureSelected;
   const dragging = navDrag.dragging || panelDrag.dragging;
 
   // z-indexes are set here on purpose to show the layer hierarchy at a glance
@@ -88,19 +88,17 @@ export function Root({
       {showNav && (
         <Draggable style={{ width: navWidth, zIndex: 2 }}>
           <Nav>
-            {rendererConnected && (
-              <NavRowSlot
-                slotProps={{ onCloseNav: onToggleNav }}
-                plugOrder={navRowOrder}
-              />
-            )}
+            <NavRowSlot
+              slotProps={{ onCloseNav: onToggleNav }}
+              plugOrder={navRowOrder}
+            />
           </Nav>
           {navDrag.dragging && <DragOverlay />}
           <NavDragHandle ref={navDrag.dragElRef} />
         </Draggable>
       )}
       <MainContainer key="main" style={{ zIndex: 1 }}>
-        {!validFixtureSelected && (
+        {(!rendererConnected || !validFixtureSelected) && (
           <GlobalHeader
             selectedFixtureId={selectedFixtureId}
             rendererConnected={rendererConnected}
@@ -109,7 +107,7 @@ export function Root({
           />
         )}
         <RendererContainer key="rendererContainer">
-          {selectedFixtureId && validFixtureSelected && (
+          {rendererConnected && selectedFixtureId && validFixtureSelected && (
             <RendererHeader
               fixtureItems={fixtureItems}
               fixtureId={selectedFixtureId}
@@ -126,7 +124,7 @@ export function Root({
           <RendererBody key="rendererBody">
             <Slot name="rendererPreview" />
             {dragging && <DragOverlay />}
-            {panelOpen && selectedFixtureId && (
+            {rendererConnected && panelOpen && selectedFixtureId && (
               <ControlPanelContainer style={{ width: panelWidth, zIndex: 3 }}>
                 <SidePanel
                   fixtureId={selectedFixtureId}

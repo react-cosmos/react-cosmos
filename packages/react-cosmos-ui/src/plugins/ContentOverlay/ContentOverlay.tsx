@@ -3,6 +3,7 @@ import { RuntimeStatus, UrlStatus } from '../RendererPreview/shared.js';
 import { NoFixtureSelected } from './NoFixtureSelected.js';
 import { RendererNotResponding } from './RendererNotResponding.js';
 import { ContentContainer, OverlayContainer } from './shared.js';
+import { WaitingForRenderer } from './WaitingForRenderer.js';
 import { WelcomeCosmos } from './WelcomeCosmos.js';
 
 type Props = {
@@ -34,11 +35,14 @@ export function ContentOverlay({
     );
   }
 
-  if (validFixtureSelected || rendererPreviewRuntimeStatus === 'error') {
+  if (
+    (rendererConnected && validFixtureSelected) ||
+    rendererPreviewRuntimeStatus === 'error'
+  ) {
     // Usually the content overlay is only hidden when a valid fixture is
-    // selected. However, when the renderer is in error state, we also hide the
-    // content overlay to avoid showing a blank screen and to uncover the error
-    // message.
+    // selected and the renderer connected. However, when the renderer is in
+    // error state, we also hide the content overlay to avoid showing a blank
+    // screen and to uncover the error message.
     return null;
   }
 
@@ -47,7 +51,7 @@ export function ContentOverlay({
     // states when renderer is already compiled and will respond immediately
     return (
       <OverlayContainer data-testid="waiting">
-        <ContentContainer />
+        <WaitingForRenderer />
       </OverlayContainer>
     );
   }

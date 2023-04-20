@@ -18,15 +18,7 @@ export function GlobalHeader({
   globalActionOrder,
 }: Props) {
   function getMessage() {
-    if (!rendererConnected) {
-      return <Message>Waiting for renderer...</Message>;
-    }
-
-    if (!selectedFixtureId) {
-      return <Message>No fixture selected</Message>;
-    }
-
-    if (!validFixtureSelected) {
+    if (selectedFixtureId && !validFixtureSelected) {
       return <Message>Fixture not found</Message>;
     }
 

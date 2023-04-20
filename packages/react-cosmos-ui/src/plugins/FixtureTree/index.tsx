@@ -35,7 +35,6 @@ namedPlug('navRow', 'fixtureTree', ({ pluginContext }) => {
       fixturesDir={fixturesDir}
       fixtureFileSuffix={fixtureFileSuffix}
       selectedFixtureId={router.getSelectedFixtureId()}
-      rendererConnected={rendererCore.isRendererConnected()}
       fixtures={rendererCore.getFixtures()}
       expansion={expansion}
       selectFixture={router.selectFixture}
