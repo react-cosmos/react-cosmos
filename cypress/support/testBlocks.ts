@@ -52,8 +52,8 @@ export function selectFixtureTests() {
     });
 
     it('renders searched fixture', () => {
-      // Open a fixture to open and focus inside the renderer and then search
-      // for a different fixture
+      // Open a fixture and reveal the renderer to search for a different
+      // fixture while focused inside the renderer iframe
       cy.contains('Counter').click();
       getRendererBody().find('button').should('have.text', '0 times');
 
