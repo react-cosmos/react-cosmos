@@ -52,7 +52,11 @@ export function selectFixtureTests() {
     });
 
     it('renders searched fixture', () => {
-      cy.contains('HelloWorld').click();
+      // Open a fixture to open and focus inside the renderer and then search
+      // for a different fixture
+      cy.contains('Counter').click();
+      getRendererBody().find('button').should('have.text', '0 times');
+
       getRendererBody().type(`{meta}{shift}p`);
       cy.get('[placeholder="Fixture search"]').type(`Hello`).type('{enter}');
       getRendererBody().find('#root').should('have.text', 'Hello World!');
