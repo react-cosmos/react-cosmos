@@ -23,7 +23,7 @@ Next, choose a port for the renderer other than the main Cosmos port, say `5050`
 }
 ```
 
-Next, start Cosmos with the `--generate-userdeps` CLI flag. This will generate a `cosmos.userdeps.js` module that contains maps of user module imports (fixtures and decorators) as well the renderer config. Feel free to add this file to .gitignore.
+Next, start Cosmos with the `--external-userdeps` CLI flag. This will generate a `cosmos.userdeps.js` module that contains maps of user module imports (fixtures and decorators) as well the renderer config. Feel free to add this file to .gitignore.
 
 Finally, create a web server using your bundler of choice that serves an `index.html`, which loads a JS module with the following code:
 
