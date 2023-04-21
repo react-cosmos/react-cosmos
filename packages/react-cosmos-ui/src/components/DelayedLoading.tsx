@@ -9,7 +9,7 @@ export function DelayedLoading(props: DelayedLoadingProps) {
 
   // Only enter loading state if this component remains rendered after after a
   // short amount of time. This prevents flashing loading screens when the
-  // requests take only a moment to complete.
+  // loading state goes away quick enough.
   useEffect(() => {
     const timeoutId = setTimeout(() => setLoading(true), props.delay ?? 400);
     return () => clearTimeout(timeoutId);
