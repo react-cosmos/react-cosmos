@@ -18,7 +18,7 @@ export function GlobalHeader({
   globalActionOrder,
 }: Props) {
   function getMessage() {
-    if (selectedFixtureId && !validFixtureSelected) {
+    if (rendererConnected && selectedFixtureId && !validFixtureSelected) {
       return <Message>Fixture not found</Message>;
     }
 
