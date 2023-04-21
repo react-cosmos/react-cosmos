@@ -539,6 +539,7 @@ This is a `cosmos.config.json` example for Create React App:
 
 ```json
 {
+  "plugins": ["react-cosmos-plugin-webpack"],
   "staticPath": "public",
   "watchDirs": ["src"],
   "webpack": {
