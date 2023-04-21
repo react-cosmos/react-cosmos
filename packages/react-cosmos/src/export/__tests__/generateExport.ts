@@ -21,7 +21,11 @@ const exportPath = path.join(testFsPath, `export-${jestWorkerId()}`);
 
 beforeEach(() => {
   mockCliArgs({});
-  mockCosmosConfig('cosmos.config.json', { port, exportPath });
+  mockCosmosConfig('cosmos.config.json', {
+    rootDir: __dirname,
+    port,
+    exportPath,
+  });
 });
 
 afterEach(async () => {
@@ -46,12 +50,13 @@ it('generates playground HTML', async () => {
       JSON.stringify({
         playgroundConfig: {
           core: {
-            projectId: 'new-project',
+            projectId: 'react-cosmos',
             fixturesDir: '__fixtures__',
             fixtureFileSuffix: 'fixture',
             devServerOn: false,
             webRendererUrl: '/_renderer.html',
           },
+          rendererCore: { fixtures: {} },
         },
         pluginConfigs: [],
       })
