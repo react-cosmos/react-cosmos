@@ -4,6 +4,7 @@ import { createDomRendererConnect } from './domRendererConnect.js';
 import { domRendererId } from './domRendererId.js';
 import { ErrorCatch } from './ErrorCatch.js';
 import { selectedFixtureId } from './selectedFixtureId.js';
+import { isInsideCosmosPreviewIframe } from './utils/isInsideCosmosPreviewIframe.js';
 
 type Props = {
   moduleWrappers: UserModuleWrappers;
@@ -44,6 +45,7 @@ export function DomFixtureLoader(props: Props) {
       systemDecorators={systemDecorators}
       selectedFixtureId={selectedFixtureId}
       renderMessage={renderDomMessage}
+      renderNoFixtureSelected={!isInsideCosmosPreviewIframe()}
       onErrorReset={onErrorReset}
     />
   );

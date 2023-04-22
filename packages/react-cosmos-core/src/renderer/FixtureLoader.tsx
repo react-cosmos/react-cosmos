@@ -50,7 +50,7 @@ export function FixtureLoader({
   const fixture = getFixture(fixtureExport, fixtureId.name);
 
   if (typeof fixture === 'undefined') {
-    return renderMessage(`Invalid fixture ID: ${JSON.stringify(fixtureId)}`);
+    return renderMessage(`Invalid fixture name: ${fixtureId.name}`);
   }
 
   return (
