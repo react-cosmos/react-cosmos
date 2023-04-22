@@ -6,6 +6,7 @@ import { register } from '..';
 import {
   getRendererPreviewMethods,
   mockCore,
+  mockRendererCore,
 } from '../../../testHelpers/pluginMocks.js';
 import { fakeFetchResponseStatus } from '../testHelpers/fetch.js';
 
@@ -17,6 +18,7 @@ function registerTestPlugins() {
   mockCore({
     getWebRendererUrl: () => 'mockRendererUrl',
   });
+  mockRendererCore();
 }
 
 function loadTestPlugins(status: number) {
