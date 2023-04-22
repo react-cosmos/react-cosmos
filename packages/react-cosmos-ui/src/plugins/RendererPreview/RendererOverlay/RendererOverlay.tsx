@@ -1,6 +1,6 @@
 import React from 'react';
 import { OverlayContainer } from '../../../components/ContentOverlay.js';
-import { UrlStatus } from '../shared.js';
+import { UrlStatus } from '../spec.js';
 import { RendererNotResponding } from './RendererNotResponding.js';
 
 type Props = {
