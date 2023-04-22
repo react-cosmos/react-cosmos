@@ -60,5 +60,11 @@ async function loadPluginScript(scriptPath: string) {
   const normalizedPath = scriptPath.startsWith('/')
     ? scriptPath
     : `/${scriptPath}`;
-  await import(/* webpackIgnore: true */ `./_plugin${normalizedPath}`);
+
+  try {
+    await import(/* webpackIgnore: true */ `./_plugin${normalizedPath}`);
+  } catch (err) {
+    console.log(`[Cosmos] Failed to load plugin script ${scriptPath}`);
+    console.log(err);
+  }
 }
