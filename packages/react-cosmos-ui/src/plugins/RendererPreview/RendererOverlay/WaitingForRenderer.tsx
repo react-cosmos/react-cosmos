@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {
   OverlayBody,
+  RendererOverlayContainer,
   TextContainer,
 } from '../../../components/ContentOverlay.js';
 import { DelayedLoading } from '../../../components/DelayedLoading.js';
@@ -17,13 +18,15 @@ export function WaitingForRenderer() {
     .fill('.')
     .join('');
   return (
-    <OverlayBody>
-      <TextContainer>
-        <DelayedLoading delay={500}>
-          <Message>Waiting for renderer{dots}</Message>
-        </DelayedLoading>
-      </TextContainer>
-    </OverlayBody>
+    <RendererOverlayContainer data-testid="waitingForRenderer">
+      <OverlayBody>
+        <TextContainer>
+          <DelayedLoading delay={500}>
+            <Message>Waiting for renderer{dots}</Message>
+          </DelayedLoading>
+        </TextContainer>
+      </OverlayBody>
+    </RendererOverlayContainer>
   );
 }
 

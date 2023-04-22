@@ -1,5 +1,4 @@
 import React from 'react';
-import { OverlayContainer } from '../../../components/ContentOverlay.js';
 import { NoFixtureSelected } from './NoFixtureSelected.js';
 import { WelcomeCosmos } from './WelcomeCosmos.js';
 
@@ -14,17 +13,9 @@ export function HomeOverlay({
   onDismissWelcome,
   onShowWelcome,
 }: Props) {
-  if (welcomeDismissed) {
-    return (
-      <OverlayContainer data-testid="blank">
-        <NoFixtureSelected onShowWelcome={onShowWelcome} />
-      </OverlayContainer>
-    );
-  }
-
-  return (
-    <OverlayContainer data-testid="welcome">
-      <WelcomeCosmos onDismissWelcome={onDismissWelcome} />
-    </OverlayContainer>
+  return welcomeDismissed ? (
+    <NoFixtureSelected onShowWelcome={onShowWelcome} />
+  ) : (
+    <WelcomeCosmos onDismissWelcome={onDismissWelcome} />
   );
 }

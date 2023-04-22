@@ -5,6 +5,7 @@ import {
   IllustrationContainer,
   NoWrap,
   OverlayBody,
+  RendererOverlayContainer,
   TextContainer,
 } from '../../../components/ContentOverlay.js';
 import { ArtificialIntelligenceIllustration } from '../../../components/illustrations/ArtificialIntelligence.js';
@@ -17,49 +18,51 @@ import {
 
 export function RendererNotResponding() {
   return (
-    <OverlayBody>
-      <TextContainer>
-        <Header>
-          Renderer <NoWrap>not responding</NoWrap>
-        </Header>
-        <Paragraph>{`It's usually one of the following...`}</Paragraph>
-        <List>
-          <li>
-            <No>1</No>
-            <span>
-              <strong>Please check your terminal for errors.</strong>
-              <br />
-              Your build might be broken.
-            </span>
-          </li>
-          <li>
-            <No>2</No>
-            <span>
-              <Slot name="rendererError">
-                If you use a bundler plugin,{' '}
-                <strong>
-                  make sure
-                  <br />
-                  your build is generating an index.html page.
-                </strong>
-              </Slot>
-            </span>
-          </li>
-        </List>
-        <Paragraph>
-          <ActionLink
-            href="https://discord.gg/3X95VgfnW5"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            ask for help
-          </ActionLink>
-        </Paragraph>
-      </TextContainer>
-      <IllustrationContainer>
-        <ArtificialIntelligenceIllustration title="robot" />
-      </IllustrationContainer>
-    </OverlayBody>
+    <RendererOverlayContainer data-testid="rendererNotResponding">
+      <OverlayBody>
+        <TextContainer>
+          <Header>
+            Renderer <NoWrap>not responding</NoWrap>
+          </Header>
+          <Paragraph>{`It's usually one of the following...`}</Paragraph>
+          <List>
+            <li>
+              <No>1</No>
+              <span>
+                <strong>Please check your terminal for errors.</strong>
+                <br />
+                Your build might be broken.
+              </span>
+            </li>
+            <li>
+              <No>2</No>
+              <span>
+                <Slot name="rendererError">
+                  If you use a bundler plugin,{' '}
+                  <strong>
+                    make sure
+                    <br />
+                    your build is generating an index.html page.
+                  </strong>
+                </Slot>
+              </span>
+            </li>
+          </List>
+          <Paragraph>
+            <ActionLink
+              href="https://discord.gg/3X95VgfnW5"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              ask for help
+            </ActionLink>
+          </Paragraph>
+        </TextContainer>
+        <IllustrationContainer>
+          <ArtificialIntelligenceIllustration title="robot" />
+        </IllustrationContainer>
+      </OverlayBody>
+    </RendererOverlayContainer>
   );
 }
 

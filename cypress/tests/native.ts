@@ -10,8 +10,20 @@ describe('Native', () => {
     it('has document title', () => {
       cy.title().should('include', `example-${exampleName()}`);
     });
+  });
 
+  context('nav', () => {
+    it('renders tree view root items', () => {
+      cy.contains('Counter');
+      cy.contains('CounterButton');
+      cy.contains('WelcomeMessage');
+      cy.contains('HelloWorld');
+    });
+  });
+
+  context('select fixture', () => {
     it('displays pending renderer message', () => {
+      cy.contains('HelloWorld').click();
       cy.contains('Waiting for renderer');
     });
   });

@@ -4,6 +4,7 @@ import {
   IllustrationContainer,
   NoWrap,
   OverlayBody,
+  OverlayContainer,
   SecondaryButton,
   TextContainer,
 } from '../../../components/ContentOverlay.js';
@@ -23,77 +24,79 @@ type Props = {
 
 export function WelcomeCosmos({ onDismissWelcome }: Props) {
   return (
-    <OverlayBody>
-      <TextContainer>
-        <Header>
-          Welcome to <NoWrap>React Cosmos</NoWrap>
-        </Header>
-        <List>
-          <li>
-            <Bullet />
-            <span>
-              <Link
-                href="https://github.com/react-cosmos/react-cosmos/tree/main/docs"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                <strong>Read the docs</strong>
-              </Link>{' '}
-              to get the most out of React Cosmos.
-              <br />
-              Chat with us on{' '}
-              <Link
-                href="https://discord.gg/3X95VgfnW5"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Discord
-              </Link>
-              . Report detailed issues on{' '}
-              <Link
-                href="https://github.com/react-cosmos/react-cosmos/issues"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                GitHub
-              </Link>
-              .
-            </span>
-          </li>
-          <li>
-            <Bullet />
-            <span>
-              <Link
-                href="https://github.com/users/skidding/sponsorship"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                <strong>Become a Sponsor</strong>
-              </Link>{' '}
-              to invest in the future of React Cosmos.
-              <br />
-              {`Don't worry if you can't. `}
-              <Highlight>React Cosmos will always be free.</Highlight>
-            </span>
-          </li>
-        </List>
-        <Paragraph>
-          <ActionLink
-            href="https://forms.gle/yvoie73Rfo6Zy7no7"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            share your feedback
-          </ActionLink>
-          <SecondaryButton onClick={onDismissWelcome}>
-            hide this screen
-          </SecondaryButton>
-        </Paragraph>
-      </TextContainer>
-      <IllustrationContainer>
-        <AstronautIllustration title="astronaut" />
-      </IllustrationContainer>
-    </OverlayBody>
+    <OverlayContainer data-testid="welcome">
+      <OverlayBody>
+        <TextContainer>
+          <Header>
+            Welcome to <NoWrap>React Cosmos</NoWrap>
+          </Header>
+          <List>
+            <li>
+              <Bullet />
+              <span>
+                <Link
+                  href="https://github.com/react-cosmos/react-cosmos/tree/main/docs"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <strong>Read the docs</strong>
+                </Link>{' '}
+                to get the most out of React Cosmos.
+                <br />
+                Chat with us on{' '}
+                <Link
+                  href="https://discord.gg/3X95VgfnW5"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  Discord
+                </Link>
+                . Report detailed issues on{' '}
+                <Link
+                  href="https://github.com/react-cosmos/react-cosmos/issues"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  GitHub
+                </Link>
+                .
+              </span>
+            </li>
+            <li>
+              <Bullet />
+              <span>
+                <Link
+                  href="https://github.com/users/skidding/sponsorship"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <strong>Become a Sponsor</strong>
+                </Link>{' '}
+                to invest in the future of React Cosmos.
+                <br />
+                {`Don't worry if you can't. `}
+                <Highlight>React Cosmos will always be free.</Highlight>
+              </span>
+            </li>
+          </List>
+          <Paragraph>
+            <ActionLink
+              href="https://forms.gle/yvoie73Rfo6Zy7no7"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              share your feedback
+            </ActionLink>
+            <SecondaryButton onClick={onDismissWelcome}>
+              hide this screen
+            </SecondaryButton>
+          </Paragraph>
+        </TextContainer>
+        <IllustrationContainer>
+          <AstronautIllustration title="astronaut" />
+        </IllustrationContainer>
+      </OverlayBody>
+    </OverlayContainer>
   );
 }
 

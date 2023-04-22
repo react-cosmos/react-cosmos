@@ -3,6 +3,7 @@ import { Slot } from 'react-plugin';
 import styled from 'styled-components';
 import { rendererBg } from '../../style/colors.js';
 import { RendererOverlay } from './RendererOverlay/RendererOverlay.js';
+import { WaitingForRenderer } from './RendererOverlay/WaitingForRenderer.js';
 import { UrlStatus } from './spec.js';
 
 export type OnIframeRef = (elRef: null | HTMLIFrameElement) => void;
@@ -21,7 +22,8 @@ export const RendererPreview = React.memo(function RendererPreview({
   onIframeRef,
 }: Props) {
   if (!rendererUrl) {
-    return null;
+    // This code path is used when Cosmos is in React Native mode
+    return <Container>{rendererConnected || <WaitingForRenderer />}</Container>;
   }
 
   return (

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {
   IllustrationContainer,
   OverlayBody,
+  OverlayContainer,
   SecondaryButton,
   TextContainer,
 } from '../../../components/ContentOverlay.js';
@@ -16,7 +17,7 @@ type Props = {
 
 export function NoFixtureSelected({ onShowWelcome }: Props) {
   return (
-    <>
+    <OverlayContainer data-testid="blank">
       <OverlayBody>
         <TextContainer>
           <KeyShortcut keys={['⌘', 'P']} label="Search fixtures" />
@@ -33,7 +34,7 @@ export function NoFixtureSelected({ onShowWelcome }: Props) {
       <ShowWelcomeButton onClick={onShowWelcome}>
         show welcome screen
       </ShowWelcomeButton>
-    </>
+    </OverlayContainer>
   );
 }
 
