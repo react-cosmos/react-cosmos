@@ -1,5 +1,5 @@
 import React from 'react';
-import { OverlayContainer } from '../../../components/ContentOverlay.js';
+import { RendererOverlayContainer } from '../../../components/ContentOverlay.js';
 import { UrlStatus } from '../spec.js';
 import { RendererNotResponding } from './RendererNotResponding.js';
 import { WaitingForRenderer } from './WaitingForRenderer.js';
@@ -15,17 +15,17 @@ export function RendererOverlay({
 }: Props) {
   if (rendererPreviewUrlStatus === 'error') {
     return (
-      <OverlayContainer data-testid="rendererNotResponding">
+      <RendererOverlayContainer data-testid="rendererNotResponding">
         <RendererNotResponding />
-      </OverlayContainer>
+      </RendererOverlayContainer>
     );
   }
 
   if (!rendererConnected) {
     return (
-      <OverlayContainer data-testid="waitingForRenderer">
+      <RendererOverlayContainer data-testid="waitingForRenderer">
         <WaitingForRenderer />
-      </OverlayContainer>
+      </RendererOverlayContainer>
     );
   }
 
