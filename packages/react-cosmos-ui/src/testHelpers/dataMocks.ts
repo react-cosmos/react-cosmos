@@ -6,15 +6,6 @@ export const fixtures: FixtureList = {
   'src/plugins/ClassStatePanel/ClassStatePanel/index.fixture.tsx': {
     type: 'single',
   },
-  'src/plugins/ContentOverlay/index.fixture.tsx': {
-    type: 'multi',
-    fixtureNames: [
-      'waiting',
-      'not found',
-      'welcome',
-      'renderer not responding',
-    ],
-  },
   'src/plugins/FixtureSearch/FixtureSearchOverlay.fixture.tsx': {
     type: 'single',
   },

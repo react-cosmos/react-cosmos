@@ -23,9 +23,8 @@ const { plug, namedPlug, register } = createPlugin<ResponsivePreviewSpec>({
 });
 
 plug('rendererPreviewOuter', ({ children, pluginContext }) => {
-  const { getConfig, getMethodsOf } = pluginContext;
+  const { getConfig } = pluginContext;
   const { devices } = getConfig();
-  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const { enabled, viewport, scaled } = getViewportState(pluginContext);
   const onViewportChange = useViewportChange(pluginContext);
   const onScaledChange = useScaledChange(pluginContext);
@@ -36,7 +35,6 @@ plug('rendererPreviewOuter', ({ children, pluginContext }) => {
       enabled={enabled}
       viewport={viewport}
       scaled={scaled}
-      validFixtureSelected={rendererCore.isValidFixtureSelected()}
       setViewport={onViewportChange}
       setScaled={onScaledChange}
     >

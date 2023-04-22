@@ -19,7 +19,6 @@ function registerTestPlugins() {
   mockStorage();
   mockRendererCore({
     getFixtureState: () => fixtureState,
-    isValidFixtureSelected: () => true,
   });
 }
 

@@ -30,7 +30,6 @@ function registerTestPlugins() {
   mockRendererCore({
     isRendererConnected: () => true,
     getFixtures: () => ({}),
-    isValidFixtureSelected: () => true,
   });
 }
 
@@ -52,14 +51,6 @@ it('renders "navRow" slot', async () => {
 it('renders "rendererPreview" slot', async () => {
   registerTestPlugins();
   mockPlug('rendererPreview', () => <>we are the robots</>);
-
-  const { findByText } = await loadTestPlugins();
-  await findByText(/we are the robots/i);
-});
-
-it('renders "contentOverlay" slot', async () => {
-  registerTestPlugins();
-  mockPlug('contentOverlay', () => <>we are the robots</>);
 
   const { findByText } = await loadTestPlugins();
   await findByText(/we are the robots/i);

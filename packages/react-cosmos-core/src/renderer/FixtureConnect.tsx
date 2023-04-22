@@ -17,6 +17,7 @@ type Props = {
   initialFixtureId?: FixtureId;
   selectedFixtureId?: null | FixtureId;
   renderMessage?: (msg: string) => ReactElement;
+  renderNoFixtureSelected?: boolean;
   onErrorReset?: () => unknown;
 };
 export function FixtureConnect({
@@ -28,6 +29,7 @@ export function FixtureConnect({
   selectedFixtureId,
   onErrorReset,
   renderMessage = defaultRenderMessage,
+  renderNoFixtureSelected = true,
 }: Props) {
   const { selectedFixture, setSelectedFixture, setFixtureState } =
     useSelectedFixture(initialFixtureId, selectedFixtureId);
@@ -48,7 +50,9 @@ export function FixtureConnect({
   );
 
   if (!selectedFixture) {
-    return renderMessage('No fixture selected.');
+    return renderNoFixtureSelected
+      ? renderMessage('No fixture selected.')
+      : null;
   }
 
   const { fixtureId, fixtureState, renderKey } = selectedFixture;

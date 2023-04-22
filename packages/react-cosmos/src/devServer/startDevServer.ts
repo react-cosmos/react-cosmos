@@ -50,6 +50,10 @@ export async function startDevServer(platformType: PlatformType) {
   const httpServer = await createHttpServer(cosmosConfig, app);
   const msgHandler = createMessageHandler(httpServer.server);
 
+  if (cosmosConfig.staticPath) {
+    serveStaticDir(app, cosmosConfig.staticPath, cosmosConfig.publicUrl);
+  }
+
   // Make Playground available as soon as possible and show a loading screen
   // while plugins are initializing
   await httpServer.start();
@@ -95,10 +99,6 @@ export async function startDevServer(platformType: PlatformType) {
       cleanUp();
       throw err;
     }
-  }
-
-  if (cosmosConfig.staticPath) {
-    serveStaticDir(app, cosmosConfig.staticPath, cosmosConfig.publicUrl);
   }
 
   return cleanUp;

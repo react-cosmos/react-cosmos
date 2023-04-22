@@ -5,7 +5,6 @@ import { PluginList, SimplePlugin } from './PluginList.js';
 const initialPlugins: SimplePlugin[] = [
   { name: 'buildNotifications', enabled: true },
   { name: 'classStatePanel', enabled: true },
-  { name: 'contentOverlay', enabled: true },
   { name: 'controlPanel', enabled: true },
   { name: 'core', enabled: true },
   { name: 'editFixtureButton', enabled: true },

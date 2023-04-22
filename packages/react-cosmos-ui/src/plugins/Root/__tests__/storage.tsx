@@ -1,10 +1,6 @@
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '..';
-import {
-  mockCore,
-  mockRendererCore,
-  mockStorage,
-} from '../../../testHelpers/pluginMocks.js';
+import { mockCore, mockStorage } from '../../../testHelpers/pluginMocks.js';
 
 beforeEach(register);
 
@@ -15,9 +11,6 @@ it('loads storage cache', () => {
   mockStorage({ loadCache: mockLoadCache });
   mockCore({
     getProjectId: () => 'mockProjectId',
-  });
-  mockRendererCore({
-    isValidFixtureSelected: () => false,
   });
   loadPlugins();
   expect(mockLoadCache).toBeCalledWith(expect.any(Object), 'mockProjectId');
