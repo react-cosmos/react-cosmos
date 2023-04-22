@@ -10,6 +10,10 @@ describe('Native', () => {
     it('has document title', () => {
       cy.title().should('include', `example-${exampleName()}`);
     });
+
+    it('displays welcome message', () => {
+      cy.contains('Welcome to React Cosmos');
+    });
   });
 
   context('nav', () => {
