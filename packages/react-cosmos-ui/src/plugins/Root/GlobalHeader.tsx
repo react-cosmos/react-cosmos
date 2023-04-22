@@ -1,34 +1,17 @@
 import React from 'react';
-import { FixtureId } from 'react-cosmos-core';
 import { ArraySlot } from 'react-plugin';
 import styled from 'styled-components';
-import { grey176, grey32, white10 } from '../../style/colors.js';
+import { grey32, white10 } from '../../style/colors.js';
 
 type Props = {
-  selectedFixtureId: FixtureId | null;
   rendererConnected: boolean;
-  validFixtureSelected: boolean;
   globalActionOrder: string[];
 };
 
-export function GlobalHeader({
-  selectedFixtureId,
-  rendererConnected,
-  validFixtureSelected,
-  globalActionOrder,
-}: Props) {
-  function getMessage() {
-    if (rendererConnected && selectedFixtureId && !validFixtureSelected) {
-      return <Message>Fixture not found</Message>;
-    }
-
-    return null;
-  }
-
+export function GlobalHeader({ rendererConnected, globalActionOrder }: Props) {
   return (
     <Container>
       <Left />
-      {getMessage()}
       <Right>
         {rendererConnected && (
           <ArraySlot name="globalAction" plugOrder={globalActionOrder} />
@@ -69,13 +52,4 @@ const Right = styled(Actions)`
   display: flex;
   flex-direction: row;
   align-items: center;
-`;
-
-const Message = styled.div`
-  padding: 4px;
-  color: ${grey176};
-  line-height: 24px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
 `;

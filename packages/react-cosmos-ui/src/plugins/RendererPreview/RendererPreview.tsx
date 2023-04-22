@@ -1,16 +1,20 @@
 import React from 'react';
 import { Slot } from 'react-plugin';
 import styled from 'styled-components';
+import { RendererOverlay } from './RendererOverlay/RendererOverlay.js';
+import { UrlStatus } from './spec.js';
 
 export type OnIframeRef = (elRef: null | HTMLIFrameElement) => void;
 
 type Props = {
   rendererUrl: null | string;
+  urlStatus: UrlStatus;
   onIframeRef: OnIframeRef;
 };
 
 export const RendererPreview = React.memo(function RendererPreview({
   rendererUrl,
+  urlStatus,
   onIframeRef,
 }: Props) {
   if (!rendererUrl) {
@@ -27,12 +31,14 @@ export const RendererPreview = React.memo(function RendererPreview({
           frameBorder={0}
           allow="clipboard-write *"
         />
+        <RendererOverlay rendererPreviewUrlStatus={urlStatus} />
       </Container>
     </Slot>
   );
 });
 
 const Container = styled.div`
+  position: relative;
   width: 100%;
   height: 100%;
   background-color: #fff;

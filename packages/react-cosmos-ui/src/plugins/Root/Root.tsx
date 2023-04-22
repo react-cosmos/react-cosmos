@@ -11,6 +11,7 @@ import { useDrag } from '../../hooks/useDrag.js';
 import { NavRowSlot } from '../../slots/NavRowSlot.js';
 import { grey32, grey8, white10 } from '../../style/colors.js';
 import { GlobalHeader } from './GlobalHeader.js';
+import { HomeOverlay } from './HomeOverlay/HomeOverlay.js';
 import { RendererHeader } from './RendererHeader.js';
 import { SidePanel } from './SidePanel.js';
 
@@ -38,6 +39,9 @@ type Props = {
   onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
   setNavWidth: (width: number) => unknown;
   setPanelWidth: (width: number) => unknown;
+  welcomeDismissed: boolean;
+  onDismissWelcome: () => unknown;
+  onShowWelcome: () => unknown;
 };
 
 export function Root({
@@ -64,6 +68,9 @@ export function Root({
   onFixtureStateChange,
   setNavWidth,
   setPanelWidth,
+  welcomeDismissed,
+  onDismissWelcome,
+  onShowWelcome,
 }: Props) {
   const navDrag = useDrag({
     value: navWidth,
@@ -98,16 +105,14 @@ export function Root({
         </Draggable>
       )}
       <MainContainer key="main" style={{ zIndex: 1 }}>
-        {(!rendererConnected || !validFixtureSelected) && (
+        {!selectedFixtureId && (
           <GlobalHeader
-            selectedFixtureId={selectedFixtureId}
             rendererConnected={rendererConnected}
-            validFixtureSelected={validFixtureSelected}
             globalActionOrder={globalActionOrder}
           />
         )}
         <RendererContainer key="rendererContainer">
-          {rendererConnected && selectedFixtureId && validFixtureSelected && (
+          {selectedFixtureId && (
             <RendererHeader
               fixtureItems={fixtureItems}
               fixtureId={selectedFixtureId}
@@ -124,7 +129,7 @@ export function Root({
           <RendererBody key="rendererBody">
             <Slot name="rendererPreview" />
             {dragging && <DragOverlay />}
-            {rendererConnected && panelOpen && selectedFixtureId && (
+            {selectedFixtureId && panelOpen && (
               <ControlPanelContainer style={{ width: panelWidth, zIndex: 3 }}>
                 <SidePanel
                   fixtureId={selectedFixtureId}
@@ -137,7 +142,13 @@ export function Root({
               </ControlPanelContainer>
             )}
           </RendererBody>
-          <Slot name="contentOverlay" />
+          {!selectedFixtureId && (
+            <HomeOverlay
+              welcomeDismissed={welcomeDismissed}
+              onDismissWelcome={onDismissWelcome}
+              onShowWelcome={onShowWelcome}
+            />
+          )}
         </RendererContainer>
       </MainContainer>
       <div style={{ zIndex: 4 }}>

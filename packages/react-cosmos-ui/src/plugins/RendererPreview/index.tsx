@@ -44,9 +44,11 @@ plug('rendererPreview', ({ pluginContext }) => {
   function handleIframeRef(ref: null | HTMLIFrameElement) {
     setIframeRef(pluginContext, ref);
   }
+
   return (
     <RendererPreview
       rendererUrl={getRendererUrl(pluginContext)}
+      urlStatus={pluginContext.getState().urlStatus}
       onIframeRef={handleIframeRef}
     />
   );

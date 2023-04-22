@@ -1,6 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AstronautIllustration } from '../../components/illustrations/Astronaut.js';
+import {
+  IllustrationContainer,
+  NoWrap,
+  OverlayBody,
+  SecondaryButton,
+  TextContainer,
+} from '../../../components/ContentOverlay.js';
+import { AstronautIllustration } from '../../../components/illustrations/Astronaut.js';
 import {
   screenGrey1,
   screenGrey3,
@@ -8,14 +15,7 @@ import {
   screenPrimary1,
   screenPrimary2,
   screenPrimary3,
-} from '../../style/colors.js';
-import {
-  ContentContainer,
-  IllustrationContainer,
-  NoWrap,
-  SecondaryButton,
-  TextContainer,
-} from './shared.js';
+} from '../../../style/colors.js';
 
 type Props = {
   onDismissWelcome: () => unknown;
@@ -23,7 +23,7 @@ type Props = {
 
 export function WelcomeCosmos({ onDismissWelcome }: Props) {
   return (
-    <ContentContainer>
+    <OverlayBody>
       <TextContainer>
         <Header>
           Welcome to <NoWrap>React Cosmos</NoWrap>
@@ -93,7 +93,7 @@ export function WelcomeCosmos({ onDismissWelcome }: Props) {
       <IllustrationContainer>
         <AstronautIllustration title="astronaut" />
       </IllustrationContainer>
-    </ContentContainer>
+    </OverlayBody>
   );
 }
 

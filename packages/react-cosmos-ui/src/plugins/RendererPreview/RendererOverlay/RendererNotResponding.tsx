@@ -1,23 +1,23 @@
 import React from 'react';
 import { Slot } from 'react-plugin';
 import styled from 'styled-components';
-import { ArtificialIntelligenceIllustration } from '../../components/illustrations/ArtificialIntelligence.js';
+import {
+  IllustrationContainer,
+  NoWrap,
+  OverlayBody,
+  TextContainer,
+} from '../../../components/ContentOverlay.js';
+import { ArtificialIntelligenceIllustration } from '../../../components/illustrations/ArtificialIntelligence.js';
 import {
   screenGrey3,
   screenGrey5,
   screenPrimary2,
   screenPrimary3,
-} from '../../style/colors.js';
-import {
-  ContentContainer,
-  IllustrationContainer,
-  NoWrap,
-  TextContainer,
-} from './shared.js';
+} from '../../../style/colors.js';
 
 export function RendererNotResponding() {
   return (
-    <ContentContainer>
+    <OverlayBody>
       <TextContainer>
         <Header>
           Renderer <NoWrap>not responding</NoWrap>
@@ -59,7 +59,7 @@ export function RendererNotResponding() {
       <IllustrationContainer>
         <ArtificialIntelligenceIllustration title="robot" />
       </IllustrationContainer>
-    </ContentContainer>
+    </OverlayBody>
   );
 }
 

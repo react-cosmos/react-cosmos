@@ -5,6 +5,7 @@ import { CoreSpec } from '../Core/spec.js';
 import { RendererCoreSpec } from '../RendererCore/spec.js';
 import { RouterSpec } from '../Router/spec.js';
 import { StorageSpec } from '../Storage/spec.js';
+import { useWelcomeDismiss } from './HomeOverlay/welcomeDismiss.js';
 import { isNavOpen, openNav } from './navOpen.js';
 import { getNavWidthApi } from './navWidth.js';
 import { isPanelOpen, openPanel } from './panelOpen.js';
@@ -52,6 +53,7 @@ plug('root', ({ pluginContext }) => {
   const fixtureItems = useFixtureItems(pluginContext);
   const onToggleNav = useOpenNav(pluginContext);
   const onTogglePanel = useOpenPanel(pluginContext);
+  const welcomeDismiss = useWelcomeDismiss(pluginContext);
 
   const { storageCacheReady } = getState();
   if (!storageCacheReady) {
@@ -80,6 +82,9 @@ plug('root', ({ pluginContext }) => {
         onFixtureStateChange={() => {}}
         setNavWidth={() => {}}
         setPanelWidth={() => {}}
+        welcomeDismissed={false}
+        onDismissWelcome={() => {}}
+        onShowWelcome={() => {}}
       />
     );
   }
@@ -119,6 +124,7 @@ plug('root', ({ pluginContext }) => {
       onFixtureStateChange={rendererCore.setFixtureState}
       setNavWidth={setNavWidth}
       setPanelWidth={setPanelWidth}
+      {...welcomeDismiss}
     />
   );
 });

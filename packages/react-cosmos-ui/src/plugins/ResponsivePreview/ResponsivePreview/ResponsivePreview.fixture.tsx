@@ -21,7 +21,6 @@ export default () => {
         enabled={true}
         viewport={viewport}
         scaled={scaled}
-        validFixtureSelected={true}
         setViewport={setViewport}
         setScaled={setScaled}
       />
