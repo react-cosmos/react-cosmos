@@ -27,7 +27,6 @@ it('renders responsive preview button', async () => {
   mockCore({ getWebRendererUrl: () => `/_renderer.html` });
   mockRendererCore({
     getFixtureState: () => ({}),
-    isValidFixtureSelected: () => true,
   });
 
   const { getByTitle } = loadTestPlugins();
@@ -39,7 +38,6 @@ it('does not render responsive preview button without renderer URL', async () =>
   mockCore({ getWebRendererUrl: () => null });
   mockRendererCore({
     getFixtureState: () => ({}),
-    isValidFixtureSelected: () => true,
   });
 
   const { queryByTitle } = loadTestPlugins();
