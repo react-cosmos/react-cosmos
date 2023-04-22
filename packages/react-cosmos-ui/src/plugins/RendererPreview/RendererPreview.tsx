@@ -4,26 +4,30 @@ import styled from 'styled-components';
 import { rendererBg } from '../../style/vars.js';
 import { RendererOverlay } from './RendererOverlay/RendererOverlay.js';
 import { WaitingForRenderer } from './RendererOverlay/WaitingForRenderer.js';
-import { UrlStatus } from './spec.js';
+import { RuntimeStatus, UrlStatus } from './spec.js';
 
 export type OnIframeRef = (elRef: null | HTMLIFrameElement) => void;
 
 type Props = {
-  urlStatus: UrlStatus;
   rendererUrl: null | string;
-  rendererConnected: boolean;
+  urlStatus: UrlStatus;
+  runtimeStatus: RuntimeStatus;
   onIframeRef: OnIframeRef;
 };
 
 export const RendererPreview = React.memo(function RendererPreview({
-  urlStatus,
   rendererUrl,
-  rendererConnected,
+  urlStatus,
+  runtimeStatus,
   onIframeRef,
 }: Props) {
   if (!rendererUrl) {
     // This code path is used when Cosmos is in React Native mode
-    return <Container>{rendererConnected || <WaitingForRenderer />}</Container>;
+    return (
+      <Container>
+        {runtimeStatus === 'pending' && <WaitingForRenderer />}
+      </Container>
+    );
   }
 
   return (
@@ -38,7 +42,7 @@ export const RendererPreview = React.memo(function RendererPreview({
         />
         <RendererOverlay
           rendererPreviewUrlStatus={urlStatus}
-          rendererConnected={rendererConnected}
+          rendererPreviewRuntimeStatus={runtimeStatus}
         />
       </Container>
     </Slot>
