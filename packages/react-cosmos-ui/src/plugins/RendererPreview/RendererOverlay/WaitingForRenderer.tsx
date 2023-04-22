@@ -18,15 +18,15 @@ export function WaitingForRenderer() {
     .fill('.')
     .join('');
   return (
-    <RendererOverlayContainer data-testid="waitingForRenderer">
-      <OverlayBody>
-        <TextContainer>
-          <DelayedLoading delay={500}>
+    <DelayedLoading delay={500}>
+      <RendererOverlayContainer>
+        <OverlayBody>
+          <TextContainer>
             <Message>Waiting for renderer{dots}</Message>
-          </DelayedLoading>
-        </TextContainer>
-      </OverlayBody>
-    </RendererOverlayContainer>
+          </TextContainer>
+        </OverlayBody>
+      </RendererOverlayContainer>
+    </DelayedLoading>
   );
 }
 

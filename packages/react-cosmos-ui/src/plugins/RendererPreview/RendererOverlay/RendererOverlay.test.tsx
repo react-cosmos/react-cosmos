@@ -8,7 +8,7 @@ it('does not render anything when status is "unknown"', () => {
   const { container } = render(
     <RendererOverlay
       rendererPreviewUrlStatus="unknown"
-      rendererConnected={true}
+      rendererConnected={false}
     />
   );
   expect(container).toMatchInlineSnapshot(`<div />`);

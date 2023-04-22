@@ -18,7 +18,7 @@ import {
 
 export function RendererNotResponding() {
   return (
-    <RendererOverlayContainer data-testid="rendererNotResponding">
+    <RendererOverlayContainer>
       <OverlayBody>
         <TextContainer>
           <Header>
