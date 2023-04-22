@@ -1,7 +1,7 @@
 import React from 'react';
 import { Slot } from 'react-plugin';
 import styled from 'styled-components';
-import { rendererBg } from '../../style/colors.js';
+import { rendererBg } from '../../style/vars.js';
 import { RendererOverlay } from './RendererOverlay/RendererOverlay.js';
 import { WaitingForRenderer } from './RendererOverlay/WaitingForRenderer.js';
 import { UrlStatus } from './spec.js';

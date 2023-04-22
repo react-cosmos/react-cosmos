@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import {
-  rendererBg,
   screenGrey1,
   screenGrey2,
   screenGrey5,
@@ -8,6 +7,7 @@ import {
   screenPrimary2,
   screenPrimary3,
 } from '../style/colors.js';
+import { rendererBg } from '../style/vars.js';
 
 export const OverlayContainer = styled.div`
   position: absolute;
