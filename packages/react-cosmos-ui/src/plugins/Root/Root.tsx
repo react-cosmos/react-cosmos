@@ -16,7 +16,6 @@ import { RendererHeader } from './RendererHeader.js';
 import { SidePanel } from './SidePanel.js';
 
 type Props = {
-  storageCacheReady: boolean;
   fixtureItems: FlatFixtureTreeItem[];
   selectedFixtureId: FixtureId | null;
   rendererConnected: boolean;
@@ -45,7 +44,6 @@ type Props = {
 };
 
 export function Root({
-  storageCacheReady,
   fixtureItems,
   selectedFixtureId,
   rendererConnected,
@@ -81,10 +79,6 @@ export function Root({
     reverse: true,
     onChange: setPanelWidth,
   });
-
-  if (!storageCacheReady) {
-    return <Container />;
-  }
 
   const showNav = navOpen || !validFixtureSelected;
   const dragging = navDrag.dragging || panelDrag.dragging;

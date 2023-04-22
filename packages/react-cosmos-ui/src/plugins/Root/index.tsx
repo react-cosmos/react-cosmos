@@ -56,38 +56,7 @@ plug('root', ({ pluginContext }) => {
   const welcomeDismiss = useWelcomeDismiss(pluginContext);
 
   const { storageCacheReady } = getState();
-  if (!storageCacheReady) {
-    return (
-      <Root
-        storageCacheReady={false}
-        fixtureItems={[]}
-        selectedFixtureId={null}
-        rendererConnected={false}
-        validFixtureSelected={false}
-        fixtureState={{}}
-        navOpen={false}
-        panelOpen={false}
-        navWidth={0}
-        panelWidth={0}
-        sidePanelRowOrder={[]}
-        globalActionOrder={[]}
-        globalOrder={[]}
-        navRowOrder={[]}
-        fixtureActionOrder={[]}
-        rendererActionOrder={[]}
-        onToggleNav={() => {}}
-        onTogglePanel={() => {}}
-        onFixtureSelect={() => {}}
-        onFixtureClose={() => {}}
-        onFixtureStateChange={() => {}}
-        setNavWidth={() => {}}
-        setPanelWidth={() => {}}
-        welcomeDismissed={false}
-        onDismissWelcome={() => {}}
-        onShowWelcome={() => {}}
-      />
-    );
-  }
+  if (!storageCacheReady) return null;
 
   const { navWidth, setNavWidth } = getNavWidthApi(pluginContext);
   const { panelWidth, setPanelWidth } = getPanelWidthApi(pluginContext);
@@ -101,7 +70,6 @@ plug('root', ({ pluginContext }) => {
   } = getConfig();
   return (
     <Root
-      storageCacheReady={true}
       fixtureItems={fixtureItems}
       selectedFixtureId={router.getSelectedFixtureId()}
       rendererConnected={rendererCore.isRendererConnected()}
@@ -124,7 +92,9 @@ plug('root', ({ pluginContext }) => {
       onFixtureStateChange={rendererCore.setFixtureState}
       setNavWidth={setNavWidth}
       setPanelWidth={setPanelWidth}
-      {...welcomeDismiss}
+      welcomeDismissed={welcomeDismiss.isWelcomeDismissed()}
+      onDismissWelcome={welcomeDismiss.onDismissWelcome}
+      onShowWelcome={welcomeDismiss.onShowWelcome}
     />
   );
 });
