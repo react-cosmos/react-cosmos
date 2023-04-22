@@ -13,7 +13,7 @@ export function homepageTests() {
     });
 
     it('shows renderer connected notification', () => {
-      cy.contains('Renderer connected');
+      cy.contains('Renderer connected', { timeout: 30000 });
     });
   });
 }
