@@ -10,7 +10,7 @@ import { createViteRendererIndex } from './createViteRendererIndex.js';
 export const userDepsVirtualModuleId = 'virtual:cosmos-userdeps';
 export const userDepsResolvedModuleId = '\0' + userDepsVirtualModuleId;
 
-const defaultIndexPattern = /^index\.(js|ts)x?$/;
+const defaultIndexPattern = /^(src\/)?(index|main)\.(js|ts)x?$/;
 
 export function reactCosmosViteRollupPlugin(
   cosmosConfig: CosmosConfig
