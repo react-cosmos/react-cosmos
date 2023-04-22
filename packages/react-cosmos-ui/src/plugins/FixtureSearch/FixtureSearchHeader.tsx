@@ -6,13 +6,13 @@ import { KeyBox } from '../../components/KeyBox.js';
 import { blue, grey160, grey32, white10 } from '../../style/colors.js';
 
 type Props = {
-  validFixtureSelected: boolean;
+  fixtureSelected: boolean;
   onOpen: () => unknown;
   onCloseNav: () => unknown;
 };
 
 export function FixtureSearchHeader({
-  validFixtureSelected,
+  fixtureSelected,
   onOpen,
   onCloseNav,
 }: Props) {
@@ -30,7 +30,7 @@ export function FixtureSearchHeader({
         <IconButton32
           icon={<ChevronLeftIcon />}
           title="Hide fixture list"
-          disabled={!validFixtureSelected}
+          disabled={!fixtureSelected}
           selected={false}
           onClick={onCloseNav}
         />

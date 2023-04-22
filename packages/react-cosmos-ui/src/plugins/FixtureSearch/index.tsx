@@ -33,6 +33,7 @@ namedPlug<NavRowSlotProps>(
   'fixtureSearch',
   ({ pluginContext, slotProps }) => {
     const { getMethodsOf } = pluginContext;
+    const router = getMethodsOf<RouterSpec>('router');
     const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
     const fixtures = rendererCore.getFixtures();
     const onOpen = useOnOpen(pluginContext);
@@ -45,7 +46,7 @@ namedPlug<NavRowSlotProps>(
 
     return (
       <FixtureSearchHeader
-        validFixtureSelected={rendererCore.isValidFixtureSelected()}
+        fixtureSelected={router.getSelectedFixtureId() !== null}
         onOpen={onOpen}
         onCloseNav={onCloseNav}
       />

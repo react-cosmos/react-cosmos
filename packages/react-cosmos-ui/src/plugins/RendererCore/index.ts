@@ -1,7 +1,6 @@
 import { RendererId } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
 import { RouterSpec } from '../Router/spec.js';
-import { isValidFixtureSelected } from './isValidFixtureSelected.js';
 import { onRouterFixtureChange } from './onRouterFixtureChange.js';
 import { receiveResponse } from './receiveResponse/index.js';
 import { setFixtureState } from './setFixtureState.js';
@@ -25,7 +24,6 @@ const { on, register, onLoad } = createPlugin<RendererCoreSpec>({
     getFixtures,
     getFixtureState,
     isRendererConnected,
-    isValidFixtureSelected,
     setFixtureState,
     selectPrimaryRenderer,
     receiveResponse,

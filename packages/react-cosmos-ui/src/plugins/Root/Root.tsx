@@ -19,7 +19,6 @@ type Props = {
   fixtureItems: FlatFixtureTreeItem[];
   selectedFixtureId: FixtureId | null;
   rendererConnected: boolean;
-  validFixtureSelected: boolean;
   fixtureState: FixtureState;
   navOpen: boolean;
   panelOpen: boolean;
@@ -47,7 +46,6 @@ export function Root({
   fixtureItems,
   selectedFixtureId,
   rendererConnected,
-  validFixtureSelected,
   fixtureState,
   navOpen,
   panelOpen,
@@ -80,7 +78,7 @@ export function Root({
     onChange: setPanelWidth,
   });
 
-  const showNav = navOpen || !validFixtureSelected;
+  const showNav = navOpen || !selectedFixtureId;
   const dragging = navDrag.dragging || panelDrag.dragging;
 
   // z-indexes are set here on purpose to show the layer hierarchy at a glance

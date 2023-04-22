@@ -73,7 +73,6 @@ plug('root', ({ pluginContext }) => {
       fixtureItems={fixtureItems}
       selectedFixtureId={router.getSelectedFixtureId()}
       rendererConnected={rendererCore.isRendererConnected()}
-      validFixtureSelected={rendererCore.isValidFixtureSelected()}
       fixtureState={rendererCore.getFixtureState()}
       navOpen={isNavOpen(pluginContext)}
       panelOpen={isPanelOpen(pluginContext)}
