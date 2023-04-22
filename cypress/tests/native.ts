@@ -1,7 +1,7 @@
 import { exampleName, lazy } from '../support/envVars';
 
 describe('Native', () => {
-  beforeEach(() => {
+  before(() => {
     cy.clearStorage();
     cy.visit('http://localhost:5002');
   });

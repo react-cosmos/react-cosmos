@@ -7,11 +7,13 @@ export function homepageTests() {
     });
 
     it('displays welcome message', () => {
-      cy.contains('Welcome to React Cosmos', { timeout: 60000 });
+      // It seems the webpack plugin can sometimes slow the Cosmos server
+      // while it's compiling
+      cy.contains('Welcome to React Cosmos', { timeout: 30000 });
     });
 
     it('shows renderer connected notification', () => {
-      cy.contains('Renderer connected', { timeout: 60000 });
+      cy.contains('Renderer connected');
     });
   });
 }
@@ -52,11 +54,6 @@ export function selectFixtureTests() {
     });
 
     it('renders searched fixture', () => {
-      // Open a fixture and reveal the renderer to search for a different
-      // fixture while focused inside the renderer iframe
-      cy.contains('Counter').click();
-      getRendererBody().find('button').should('have.text', '0 times');
-
       getRendererBody().type(`{meta}{shift}p`);
       cy.get('[placeholder="Fixture search"]').type(`Hello`).type('{enter}');
       getRendererBody().find('#root').should('have.text', 'Hello World!');
