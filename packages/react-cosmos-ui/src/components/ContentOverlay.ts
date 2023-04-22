@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import {
+  rendererBg,
   screenGrey1,
   screenGrey2,
   screenGrey5,
@@ -20,6 +21,11 @@ export const OverlayContainer = styled.div`
   align-items: flex-start;
   background: ${screenGrey6};
   overflow: auto;
+`;
+
+export const RendererOverlayContainer = styled(OverlayContainer)`
+  background-color: #fff;
+  background-image: ${rendererBg};
 `;
 
 export const OverlayBody = styled.div`

@@ -1,11 +1,18 @@
 import React from 'react';
-import { OverlayContainer } from '../../../components/ContentOverlay.js';
+import { RendererOverlayContainer } from '../../../components/ContentOverlay.js';
 import { RendererNotResponding } from './RendererNotResponding.js';
+import { WaitingForRenderer } from './WaitingForRenderer.js';
 
 export default {
   'renderer not responding': (
-    <OverlayContainer>
+    <RendererOverlayContainer>
       <RendererNotResponding />
-    </OverlayContainer>
+    </RendererOverlayContainer>
+  ),
+
+  'waiting for renderer': (
+    <RendererOverlayContainer>
+      <WaitingForRenderer />
+    </RendererOverlayContainer>
   ),
 };

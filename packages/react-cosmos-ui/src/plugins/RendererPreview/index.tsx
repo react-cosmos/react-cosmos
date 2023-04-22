@@ -47,8 +47,9 @@ plug('rendererPreview', ({ pluginContext }) => {
 
   return (
     <RendererPreview
-      rendererUrl={getRendererUrl(pluginContext)}
       urlStatus={pluginContext.getState().urlStatus}
+      rendererUrl={getRendererUrl(pluginContext)}
+      rendererConnected={getRendererConnected(pluginContext)}
       onIframeRef={handleIframeRef}
     />
   );
@@ -68,4 +69,8 @@ function getRuntimeStatus({ getState }: RendererPreviewContext) {
 
 function getRendererUrl({ getMethodsOf }: RendererPreviewContext) {
   return getMethodsOf<CoreSpec>('core').getWebRendererUrl();
+}
+
+function getRendererConnected({ getMethodsOf }: RendererPreviewContext) {
+  return getMethodsOf<RendererCoreSpec>('rendererCore').isRendererConnected();
 }
