@@ -12,7 +12,7 @@ describe('Native', () => {
     });
 
     it('displays pending renderer message', () => {
-      cy.contains('Waiting for renderer...');
+      cy.contains('Waiting for renderer');
     });
   });
 
