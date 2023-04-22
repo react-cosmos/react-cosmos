@@ -100,7 +100,6 @@ export function ResponsivePreview({
   // whenever switching between responsive and non responsive mode. By
   // returning the same element nesting between states for Preview the
   // component instances are preserved and the transition is seamless.
-  // if (!validFixtureSelected || !enabled || !container) {
   if (!enabled || !container) {
     return (
       <Container>
