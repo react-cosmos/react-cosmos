@@ -67,7 +67,7 @@ import { Hello } from './Hello';
 export default <Hello greeting="Aloha" name="Alexa" />;
 ```
 
-The `hello` fixture will show up in your React Cosmos UI.
+The `Hello` fixture will show up in your React Cosmos UI.
 
 **Nice, almost done 👍**
 
