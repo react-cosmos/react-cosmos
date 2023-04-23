@@ -38,7 +38,7 @@ yarn cosmos
 
 🚀 Open **[localhost:5000](http://localhost:5000)** in your browser.
 
-> You'll notice Cosmos generated a `cosmos.userdeps.js` module, which becomes relevant in step 5. This file can be safely gitignored.
+> You'll notice Cosmos generated a `cosmos.userdeps.js` module, which becomes relevant in step 5. You can add this file to .gitignore.
 
 4\. **Create your first fixture**
 
@@ -46,7 +46,7 @@ Choose a simple component to get started.
 
 <!-- prettier-ignore -->
 ```jsx
-// Hello.jsx
+// Hello.js
 import React from 'react';
 import { Text } from 'react-native';
 
@@ -60,7 +60,7 @@ Create a `.fixture` file.
 > Fixture files contain a default export, which can be a React Component or any React Node.
 
 ```jsx
-// Hello.fixture.jsx
+// Hello.fixture.js
 import React from 'react';
 import { Hello } from './Hello';
 
@@ -71,11 +71,11 @@ The `hello` fixture will show up in your React Cosmos UI.
 
 **Nice, almost done 👍**
 
-At this point Cosmos should successfully read your fixtures. You've one more step to be able to render them.
+At this point Cosmos should successfully read your fixtures. One more step before you can render them.
 
 5\. **Set up the React Native renderer**
 
-This is very similar to a [custom bundler setup](docs/customBundlerSetup.md). Cosmos cannot plug itself automatically into React Native's build pipeline (Metro), but you can do it with minimal effort.
+This is very similar to a [custom bundler setup](customBundlerSetup.md). Cosmos cannot plug itself automatically into React Native's build pipeline (Metro), but you can do it with minimal effort.
 
 Replace your `App.js` entrypoint with the following code:
 
@@ -97,7 +97,7 @@ export default class App extends Component {
 }
 ```
 
-This is a temporary solution to get going with Cosmos. Once you see your fixtures rendering properly, you'll probably want to split your App entry point to load Cosmos in development and your root component in production. Something like this:
+This is a temporary solution to get going with Cosmos. Once you see your fixtures rendering properly you'll probably want to split your App entry point to load Cosmos in development and your root component in production. Something like this:
 
 ```js
 // App.js
@@ -106,11 +106,11 @@ module.exports = global.__DEV__
   : require('./App.main');
 ```
 
-Where `App.cosmos.js` contains the code that loads `NativeFixtureLoader` and `App.main.js` contains your original App.js.
+Where `App.cosmos.js` contains the code above that renders `NativeFixtureLoader` and `App.main.js` contains your original App.js.
 
 ## Troubleshooting
 
-**IMPORTANT:** React Native blacklists `__fixtures__` dirs by default. Unless you configure Cosmos to use a different directory pattern, you need to [override `getBlacklistRE` in the React Native CLI config](https://github.com/skidding/jobs-done/blob/585b1c472a123c9221dfec9018c9fa1e976d715e/rn-cli.config.js).
+- React Native blacklists `__fixtures__` dirs by default (at least it used to). Unless you configure Cosmos to use a different directory pattern, you need to [override `getBlacklistRE` in the React Native CLI config](https://github.com/skidding/jobs-done/blob/585b1c472a123c9221dfec9018c9fa1e976d715e/rn-cli.config.js).
 
 ## React Native for Web
 
