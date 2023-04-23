@@ -1,5 +1,5 @@
-import { isEqual } from 'lodash-es';
-import React, { useMemo } from 'react';
+import { isEqual, sortBy } from 'lodash-es';
+import React from 'react';
 import {
   FixtureId,
   FlatFixtureTree,
@@ -23,30 +23,28 @@ import {
 import { quick } from '../../style/vars.js';
 
 type Props = {
-  fixtureItems: FlatFixtureTree;
-  bookmarks: FixtureId[];
+  bookmarks: FlatFixtureTree;
   selectedFixtureId: FixtureId | null;
   onFixtureSelect: (fixtureId: FixtureId) => void;
-  onBookmarkDelete: (fixtureId: FixtureId) => void;
+  onBookmarkDelete: (fixtureItem: FlatFixtureTreeItem) => void;
 };
 
 export function FixtureBookmarks({
-  fixtureItems,
   bookmarks,
   selectedFixtureId,
   onFixtureSelect,
   onBookmarkDelete,
 }: Props) {
-  const bookmarkedItems = useBookmarkedItems(fixtureItems, bookmarks);
+  const sortedBookmarks = useSortedBookmarks(bookmarks);
 
-  if (!bookmarkedItems.length) return null;
+  if (!sortedBookmarks.length) return null;
 
   return (
     <Container>
       <Header>
         <HeaderTitle>Bookmarks</HeaderTitle>
       </Header>
-      {bookmarkedItems.map(fixtureItem => {
+      {sortedBookmarks.map(fixtureItem => {
         const { fixtureId } = fixtureItem;
         const itemKey = stringifyFixtureId(fixtureId);
         const selected = isEqual(fixtureId, selectedFixtureId);
@@ -69,7 +67,7 @@ export function FixtureBookmarks({
             >
               {getFixtureName(fixtureItem)}
             </FixtureLink>
-            <DeleteButton onClick={() => onBookmarkDelete(fixtureId)}>
+            <DeleteButton onClick={() => onBookmarkDelete(fixtureItem)}>
               <DeleteIconContainer>
                 <XIcon />
               </DeleteIconContainer>
@@ -81,36 +79,10 @@ export function FixtureBookmarks({
   );
 }
 
-function useBookmarkedItems(
-  fixtureItems: FlatFixtureTree,
-  bookmarks: FixtureId[]
-) {
-  return useMemo(
-    () =>
-      fixtureItems.reduce<FlatFixtureTree>((acc, item) => {
-        const fixtureId = matchBookmark(bookmarks, item.fixtureId);
-        if (!fixtureId) return acc;
-
-        // Fixture names can be missing from fixture items in lazy mode and
-        // while renderer is connecting, while bookmarks are always complete.
-        const fixtureItem = {
-          ...item,
-          fixtureId,
-          name: fixtureId.name ?? null,
-        };
-        return [...acc, fixtureItem];
-      }, []),
-    [bookmarks, fixtureItems]
-  );
-}
-
-function matchBookmark(bookmarks: FixtureId[], fixtureId: FixtureId) {
-  return bookmarks.find(
-    b =>
-      b.path === fixtureId.path &&
-      // Match multi fixture by path only until fixture names are available.
-      // Relevant in lazy mode and before renderer connected.
-      (fixtureId.name === b.name || !fixtureId.name)
+function useSortedBookmarks(bookmarks: FlatFixtureTree) {
+  return React.useMemo(
+    () => sortBy(bookmarks, b => b.fixtureId.path),
+    [bookmarks]
   );
 }
 
