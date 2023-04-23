@@ -3,10 +3,12 @@
 > The current docs are for React Cosmos 6. Check out the [migration guide](MIGRATION_V6.md) to upgrade from v5.
 
 - Setup: [Getting started](#getting-started) · [Config](#config) · [Compilation](#compilation) · [Webpack](#webpack)
-- Usage: [Fixtures](#fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [Control panel](#control-panel) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](#react-native) · [Server-side APIs](#server-side-apis)
+- Usage: [Fixtures](#fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [Control panel](#control-panel) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](reactNative.md) · [Server-side APIs](#server-side-apis)
 - FAQ: [Create React App](#create-react-app) · [Next.js](#nextjs) · [Troubleshooting](#troubleshooting) · [Roadmap](../roadmap)
 
 ## Getting started
+
+> This is a web guide. See [this guide](reactNative.md) for React Native.
 
 1\. **Install React Cosmos**
 
@@ -407,46 +409,6 @@ The React Cosmos UI is made up 100% from plugins. Documenting the plugin API is 
 Run `cosmos-export` and get a nice component library that you can deploy to any static hosting service. The exported version won't have all the Cosmos features available in development (like opening the selected fixture in your code editor), but allows anybody with access to the static export URL to browse fixtures and play with component inputs.
 
 > Use [http-server](https://github.com/indexzero/http-server) or any static file server to load the export locally.
-
-## React Native
-
-```
-npm run cosmos-native
-```
-
-React Cosmos works great with React Native. Put the following inside `App.js` to get started.
-
-```jsx
-import React, { Component } from 'react';
-import { NativeFixtureLoader } from 'react-cosmos-native';
-// cosmos.userdeps.js is auto-generated once you start the Cosmos server
-import { rendererConfig, moduleWrappers } from './cosmos.userdeps.js';
-
-export default class App extends Component {
-  render() {
-    return (
-      <NativeFixtureLoader
-        rendererConfig={rendererConfig}
-        moduleWrappers={moduleWrappers}
-      />
-    );
-  }
-}
-```
-
-Once your fixtures are loading properly, you'll probably want to split your App entry point to load Cosmos in development and your root component in production. Something like this:
-
-```js
-module.exports = global.__DEV__
-  ? require('./App.cosmos')
-  : require('./App.main');
-```
-
-**IMPORTANT:** React Native blacklists `__fixtures__` dirs by default. Unless you configure Cosmos to use a different directory pattern, you need to [override `getBlacklistRE` in the React Native CLI config](https://github.com/skidding/jobs-done/blob/585b1c472a123c9221dfec9018c9fa1e976d715e/rn-cli.config.js).
-
-### React Native for Web
-
-Run `cosmos --external-userdeps` instead of `cosmos-native` and Cosmos will [mirror your fixtures on both DOM and Native renderers](https://twitter.com/ReactCosmos/status/1156147491026472964).
 
 ## Server-side APIs
 
