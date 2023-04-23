@@ -9,11 +9,11 @@ export function homepageTests() {
     it('displays welcome message', () => {
       // It seems the webpack plugin can sometimes slow the Cosmos server
       // while it's compiling
-      cy.contains('Welcome to React Cosmos', { timeout: 30000 });
+      cy.contains('Welcome to React Cosmos', { timeout: 60000 });
     });
 
     it('shows renderer connected notification', () => {
-      cy.contains('Renderer connected', { timeout: 30000 });
+      cy.contains('Renderer connected', { timeout: 60000 });
     });
   });
 }
