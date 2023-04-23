@@ -1,5 +1,5 @@
 import { isEqual } from 'lodash-es';
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   FixtureId,
   FlatFixtureTree,
@@ -37,15 +37,7 @@ export function FixtureBookmarks({
   onFixtureSelect,
   onBookmarkDelete,
 }: Props) {
-  const bookmarkedItems = fixtureItems.filter(item =>
-    bookmarks.some(
-      b =>
-        b.path === item.fixtureId.path &&
-        // Match multi fixture by path only until fixture names are available.
-        // Relevant in lazy mode and before renderer connected.
-        (item.fixtureId.name === b.name || !item.fixtureId.name)
-    )
-  );
+  const bookmarkedItems = useBookmarkedItems(fixtureItems, bookmarks);
 
   if (!bookmarkedItems.length) return null;
 
@@ -86,6 +78,39 @@ export function FixtureBookmarks({
         );
       })}
     </Container>
+  );
+}
+
+function useBookmarkedItems(
+  fixtureItems: FlatFixtureTree,
+  bookmarks: FixtureId[]
+) {
+  return useMemo(
+    () =>
+      fixtureItems.reduce<FlatFixtureTree>((acc, item) => {
+        const fixtureId = matchBookmark(bookmarks, item.fixtureId);
+        if (!fixtureId) return acc;
+
+        // Fixture names can be missing from fixture items in lazy mode and
+        // while renderer is connecting, while bookmarks are always complete.
+        const fixtureItem = {
+          ...item,
+          fixtureId,
+          name: fixtureId.name ?? null,
+        };
+        return [...acc, fixtureItem];
+      }, []),
+    [bookmarks, fixtureItems]
+  );
+}
+
+function matchBookmark(bookmarks: FixtureId[], fixtureId: FixtureId) {
+  return bookmarks.find(
+    b =>
+      b.path === fixtureId.path &&
+      // Match multi fixture by path only until fixture names are available.
+      // Relevant in lazy mode and before renderer connected.
+      (fixtureId.name === b.name || !fixtureId.name)
   );
 }
 
