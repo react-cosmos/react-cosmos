@@ -1,16 +1,15 @@
 import React from 'react';
-import { FixtureId } from 'react-cosmos-core';
+import { FlatFixtureTreeItem } from 'react-cosmos-core';
 import { ArraySlot } from 'react-plugin';
 
 export type FixtureActionSlotProps = {
-  fixtureId: FixtureId;
+  fixtureItem: FlatFixtureTreeItem;
 };
 
 type Props = {
   slotProps: FixtureActionSlotProps;
   plugOrder: string[];
 };
-
 export function FixtureActionSlot({ slotProps, plugOrder }: Props) {
   return (
     <ArraySlot
