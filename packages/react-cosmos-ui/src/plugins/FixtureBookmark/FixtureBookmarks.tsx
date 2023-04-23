@@ -38,7 +38,13 @@ export function FixtureBookmarks({
   onBookmarkDelete,
 }: Props) {
   const bookmarkedItems = fixtureItems.filter(item =>
-    bookmarks.some(b => isEqual(b, item.fixtureId))
+    bookmarks.some(
+      b =>
+        b.path === item.fixtureId.path &&
+        // Match multi fixture by path only until fixture names are available.
+        // Relevant in lazy mode and before renderer connected.
+        (item.fixtureId.name === b.name || !item.fixtureId.name)
+    )
   );
 
   if (!bookmarkedItems.length) return null;
