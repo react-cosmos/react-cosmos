@@ -108,6 +108,18 @@ module.exports = global.__DEV__
 
 Where `App.cosmos.js` contains the code above that renders `NativeFixtureLoader` and `App.main.js` contains your original App.js.
 
+## Initial fixture
+
+You can configure the Cosmos Native renderer to auto load a fixture on init.
+
+```diff
+<NativeFixtureLoader
+  rendererConfig={rendererConfig}
+  moduleWrappers={moduleWrappers}
++ initialFixtureId={{ path: 'Hello.fixture.js' }}
+/>
+```
+
 ## Troubleshooting
 
 - React Native blacklists `__fixtures__` dirs by default (at least it used to). Unless you configure Cosmos to use a different directory pattern, you need to [override `getBlacklistRE` in the React Native CLI config](https://github.com/skidding/jobs-done/blob/585b1c472a123c9221dfec9018c9fa1e976d715e/rn-cli.config.js).
