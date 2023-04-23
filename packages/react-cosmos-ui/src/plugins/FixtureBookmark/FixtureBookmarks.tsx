@@ -81,7 +81,12 @@ export function FixtureBookmarks({
 
 function useSortedBookmarks(bookmarks: FlatFixtureTree) {
   return React.useMemo(
-    () => sortBy(bookmarks, b => b.fixtureId.path),
+    () =>
+      sortBy(
+        bookmarks,
+        b => b.fixtureId.path,
+        b => b.fixtureId.name
+      ),
     [bookmarks]
   );
 }
