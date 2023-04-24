@@ -17,7 +17,6 @@ export function getViteConfigFile(
   }
 
   const absPath = resolveLoose(rootDir, configPath);
-
   if (!fileExists(absPath)) {
     const relPath = path.relative(process.cwd(), absPath);
     throw new Error(`Vite config not found at path: ${relPath}`);
