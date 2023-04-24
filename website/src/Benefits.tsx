@@ -20,7 +20,7 @@ export function Benefits() {
             <BenefitTitle>Prototype and iterate quickly</BenefitTitle>
             <BenefitDescription>
               {`New components require your undivided attention.
-              Minimize the feedback loop by zooming in on the feature you're building. Running unrelated code and reloading your whole app on every change is a waste of time.`}
+              Minimize the feedback loop by zooming in on the feature you're building. Running unrelated code and refreshing your whole app on every change is a waste of time.`}
             </BenefitDescription>
           </BenefitText>
         </Benefit>

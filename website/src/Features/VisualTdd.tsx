@@ -19,7 +19,7 @@ export function VisualTdd() {
         <FeatureTitle>Visual TDD</FeatureTitle>
         <FeatureDescription>
           Develop one component at a time. Isolate the UI you&apos;re working on
-          and iterate quickly. Reloading your whole app on every change is
+          and iterate quickly. Refreshing your whole app on every change is
           slowing you down!
         </FeatureDescription>
       </div>
