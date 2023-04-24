@@ -16,15 +16,7 @@ Or if you’re using Yarn:
 yarn add --dev react-cosmos@next react-cosmos-native@next
 ```
 
-2\. **Add package.json script**
-
-```diff
-"scripts": {
-+  "cosmos": "cosmos-native"
-}
-```
-
-3\. **Create your first fixture**
+2\. **Create your first fixture**
 
 Choose a simple component to get started.
 
@@ -66,6 +58,14 @@ import React from 'react';
 import { Hello } from './Hello';
 
 export default <Hello greeting="Aloha" name="Alexa" />;
+```
+
+3\. **Add package.json script**
+
+```diff
+"scripts": {
++  "cosmos": "cosmos-native"
+}
 ```
 
 4\. **Start React Cosmos**
