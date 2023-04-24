@@ -12,7 +12,7 @@
     "native": "cosmos-native --port 5002"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "^3.1.0",
+    "@vitejs/plugin-react": "^4.0.0",
     "examples-shared": "6.0.0-alpha.14",
     "react": "^18.2.0",
     "react-cosmos": "6.0.0-alpha.14",
