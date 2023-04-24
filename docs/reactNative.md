@@ -125,6 +125,14 @@ module.exports = global.__DEV__
 
 Where `App.cosmos.js` contains the code above that renders `NativeFixtureLoader` and `App.main.js` contains your original App.js.
 
+6\. **Render fixture in simulator**
+
+That's it. Open your app in the simulator and the Cosmos renderer should say "No fixture selected". Go back to your React Cosmos UI, click on the `Hello` fixture and it will render in the simulator.
+
+**Congratulations 😎**
+
+You've taken the first step towards designing reusable components. You're ready to prototype, test and interate on components in isolation.
+
 ## Initial fixture
 
 You can configure the Cosmos Native renderer to auto load a fixture on init.
