@@ -28,6 +28,8 @@ export async function viteDevServerPlugin({
   logViteConfigInfo(configFile);
 
   const server = await createServer({
+    // Last time I checked the user config is merged with this inline config:
+    // https://github.com/vitejs/vite/blob/07bd6d14e545d05c6a29cf341f117fcfe9536ba4/packages/vite/src/node/config.ts#L418
     configFile,
     root: rootDir,
     server: {
