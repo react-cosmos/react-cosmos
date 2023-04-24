@@ -24,7 +24,51 @@ yarn add --dev react-cosmos@next react-cosmos-native@next
 }
 ```
 
-3\. **Start React Cosmos**
+3\. **Create your first fixture**
+
+Choose a simple component to get started.
+
+<!-- prettier-ignore -->
+```jsx
+// Hello.js
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+
+export function Hello({ greeting, name }) {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>
+        {greeting}, {name}!
+      </Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    fontSize: 24,
+  },
+});
+```
+
+Create a `.fixture` file.
+
+> Fixture files contain a default export, which can be a React Component or any React Node.
+
+```jsx
+// Hello.fixture.js
+import React from 'react';
+import { Hello } from './Hello';
+
+export default <Hello greeting="Aloha" name="Alexa" />;
+```
+
+4\. **Start React Cosmos**
 
 ```bash
 npm run cosmos
@@ -39,33 +83,6 @@ yarn cosmos
 🚀 Open **[localhost:5000](http://localhost:5000)** in your browser.
 
 > You'll notice Cosmos generated a `cosmos.userdeps.js` module, which becomes relevant in step 5. You can add this file to .gitignore.
-
-4\. **Create your first fixture**
-
-Choose a simple component to get started.
-
-<!-- prettier-ignore -->
-```jsx
-// Hello.js
-import React from 'react';
-import { Text } from 'react-native';
-
-export function Hello({ greeting, name }) {
-  return <Text>{greeting}, {name}!</Text>;
-}
-```
-
-Create a `.fixture` file.
-
-> Fixture files contain a default export, which can be a React Component or any React Node.
-
-```jsx
-// Hello.fixture.js
-import React from 'react';
-import { Hello } from './Hello';
-
-export default <Hello greeting="Aloha" name="Alexa" />;
-```
 
 The `Hello` fixture will show up in your React Cosmos UI.
 
