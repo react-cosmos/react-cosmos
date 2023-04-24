@@ -1,6 +1,8 @@
-import viteReactPlugin from '@vitejs/plugin-react';
 import { DevServerPluginArgs, startFixtureWatcher } from 'react-cosmos';
 import { createServer } from 'vite';
+import { createViteCosmosConfig } from './createViteCosmosConfig.js';
+import { getViteConfigFile } from './getViteConfigFile.js';
+import { logViteConfigInfo } from './logViteConfigInfo.js';
 import {
   reactCosmosViteRollupPlugin,
   userDepsResolvedModuleId,
@@ -19,15 +21,21 @@ export async function viteDevServerPlugin({
     );
   }
 
+  const { rootDir } = cosmosConfig;
+  const viteCosmosConfig = createViteCosmosConfig(cosmosConfig);
+
+  const configFile = getViteConfigFile(viteCosmosConfig.configPath, rootDir);
+  logViteConfigInfo(configFile);
+
   const server = await createServer({
-    configFile: false,
-    root: cosmosConfig.rootDir,
+    configFile,
+    root: rootDir,
     server: {
       // https://vitejs.dev/config/server-options.html#server-host
       host: '0.0.0.0',
       port: parseInt(new URL(rendererUrl).port, 10),
     },
-    plugins: [viteReactPlugin(), reactCosmosViteRollupPlugin(cosmosConfig)],
+    plugins: [reactCosmosViteRollupPlugin(cosmosConfig)],
   });
   await server.listen();
 

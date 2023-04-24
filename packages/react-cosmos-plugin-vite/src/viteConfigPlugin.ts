@@ -3,7 +3,7 @@ import {
   CosmosConfigPluginArgs,
   findNextAvailablePort,
 } from 'react-cosmos';
-import { createViteCosmosConfig } from './createViteCosmosConfig.js';
+import { DEFAULT_VITE_PORT } from './createViteCosmosConfig.js';
 
 export async function viteConfigPlugin({
   cosmosConfig,
@@ -13,9 +13,8 @@ export async function viteConfigPlugin({
     return cosmosConfig;
   }
 
-  const viteCosmosConfig = createViteCosmosConfig(cosmosConfig);
   const port = await findNextAvailablePort(
-    viteCosmosConfig.port,
+    DEFAULT_VITE_PORT,
     cosmosConfig.portRetries
   );
 
@@ -23,7 +22,7 @@ export async function viteConfigPlugin({
     ...cosmosConfig,
     rendererUrl: `http://localhost:${port}`,
     vite: {
-      ...viteCosmosConfig,
+      ...(cosmosConfig.vite || {}),
       port: port,
     },
   };
