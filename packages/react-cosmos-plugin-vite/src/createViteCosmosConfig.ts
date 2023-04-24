@@ -7,8 +7,6 @@ export type ViteCosmosConfig = {
 
 type ViteCosmosConfigInput = Partial<ViteCosmosConfig>;
 
-export const DEFAULT_VITE_PORT = 5050;
-
 export function createViteCosmosConfig(
   cosmosConfig: CosmosConfig
 ): ViteCosmosConfig {
@@ -16,6 +14,6 @@ export function createViteCosmosConfig(
 
   return {
     configPath: configInput.configPath || null,
-    port: configInput.port || DEFAULT_VITE_PORT,
+    port: configInput.port ?? 5050,
   };
 }
