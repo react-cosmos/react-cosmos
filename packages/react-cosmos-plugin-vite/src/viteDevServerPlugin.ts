@@ -31,8 +31,6 @@ export async function viteDevServerPlugin({
   });
   await server.listen();
 
-  server.printUrls();
-
   const watcher = await startFixtureWatcher(cosmosConfig, 'add', () => {
     const module = server.moduleGraph.getModuleById(userDepsResolvedModuleId);
     if (!module) {
