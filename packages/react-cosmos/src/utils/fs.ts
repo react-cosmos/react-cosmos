@@ -17,7 +17,8 @@ export async function importJson<T>(filePath: string): Promise<T> {
 // Better than fs.exists because it works for module paths without an extension
 export function moduleExists(moduleId: string) {
   try {
-    return resolve(moduleId) && true;
+    resolve(moduleId);
+    return true;
   } catch (err) {
     return false;
   }
