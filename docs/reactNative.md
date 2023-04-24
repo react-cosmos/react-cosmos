@@ -16,7 +16,51 @@ Or if you’re using Yarn:
 yarn add --dev react-cosmos@next react-cosmos-native@next
 ```
 
-2\. **Add package.json script**
+2\. **Create your first fixture**
+
+Choose a simple component to get started.
+
+<!-- prettier-ignore -->
+```jsx
+// Hello.js
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+
+export function Hello({ greeting, name }) {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>
+        {greeting}, {name}!
+      </Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    fontSize: 24,
+  },
+});
+```
+
+Create a `.fixture` file.
+
+> Fixture files contain a default export, which can be a React Component or any React Node.
+
+```jsx
+// Hello.fixture.js
+import React from 'react';
+import { Hello } from './Hello';
+
+export default <Hello greeting="Aloha" name="Alexa" />;
+```
+
+3\. **Add package.json script**
 
 ```diff
 "scripts": {
@@ -24,7 +68,7 @@ yarn add --dev react-cosmos@next react-cosmos-native@next
 }
 ```
 
-3\. **Start React Cosmos**
+4\. **Start React Cosmos**
 
 ```bash
 npm run cosmos
@@ -39,33 +83,6 @@ yarn cosmos
 🚀 Open **[localhost:5000](http://localhost:5000)** in your browser.
 
 > You'll notice Cosmos generated a `cosmos.userdeps.js` module, which becomes relevant in step 5. You can add this file to .gitignore.
-
-4\. **Create your first fixture**
-
-Choose a simple component to get started.
-
-<!-- prettier-ignore -->
-```jsx
-// Hello.js
-import React from 'react';
-import { Text } from 'react-native';
-
-export function Hello({ greeting, name }) {
-  return <Text>{greeting}, {name}!</Text>;
-}
-```
-
-Create a `.fixture` file.
-
-> Fixture files contain a default export, which can be a React Component or any React Node.
-
-```jsx
-// Hello.fixture.js
-import React from 'react';
-import { Hello } from './Hello';
-
-export default <Hello greeting="Aloha" name="Alexa" />;
-```
 
 The `Hello` fixture will show up in your React Cosmos UI.
 
@@ -107,6 +124,14 @@ module.exports = global.__DEV__
 ```
 
 Where `App.cosmos.js` contains the code above that renders `NativeFixtureLoader` and `App.main.js` contains your original App.js.
+
+6\. **Render fixture in simulator**
+
+That's it. Open your app in the simulator and the Cosmos renderer should say "No fixture selected". Go back to your React Cosmos UI, click on the `Hello` fixture and it will render in the simulator.
+
+**Congratulations 😎**
+
+You've taken the first step towards designing reusable components. You're ready to prototype, test and interate on components in isolation.
 
 ## Initial fixture
 
