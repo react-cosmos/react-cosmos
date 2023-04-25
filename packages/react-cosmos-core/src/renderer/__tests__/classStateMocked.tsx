@@ -1,4 +1,3 @@
-import { StateMock } from '@react-mock/state';
 import retry from '@skidding/async-retry';
 import React from 'react';
 import {
@@ -6,6 +5,7 @@ import {
   updateFixtureStateClassState,
 } from '../../fixtureState/classState.js';
 import { createValues } from '../../fixtureState/createValues.js';
+import { ClassStateMock } from '../../utils/react/ClassStateMock.js';
 import { uuid } from '../../utils/uuid.js';
 import { CoolCounter, Counter } from '../testHelpers/components.js';
 import {
@@ -22,9 +22,9 @@ beforeAll(wrapActSetTimeout);
 const rendererId = uuid();
 const fixtures = wrapDefaultExport({
   first: (
-    <StateMock state={{ count: 5 }}>
+    <ClassStateMock state={{ count: 5 }}>
       <Counter />
-    </StateMock>
+    </ClassStateMock>
   ),
 });
 const fixtureId = { path: 'first' };
@@ -189,9 +189,9 @@ testRenderer(
       rendererId,
       fixtures: wrapDefaultExport({
         first: (
-          <StateMock state={{ count: 5 }}>
+          <ClassStateMock state={{ count: 5 }}>
             <CoolCounter />
-          </StateMock>
+          </ClassStateMock>
         ),
       }),
     });
@@ -230,9 +230,9 @@ testRenderer(
       rendererId,
       fixtures: wrapDefaultExport({
         first: (
-          <StateMock state={{ count: 50 }}>
+          <ClassStateMock state={{ count: 50 }}>
             <Counter />
-          </StateMock>
+          </ClassStateMock>
         ),
       }),
     });

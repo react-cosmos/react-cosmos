@@ -1,8 +1,8 @@
-import { StateMock } from '@react-mock/state';
 import retry from '@skidding/async-retry';
 import React from 'react';
 import { updateFixtureStateClassState } from '../../fixtureState/classState.js';
 import { createValues } from '../../fixtureState/createValues.js';
+import { ClassStateMock } from '../../utils/react/ClassStateMock.js';
 import { uuid } from '../../utils/uuid.js';
 import { Counter } from '../testHelpers/components.js';
 import {
@@ -17,12 +17,12 @@ const rendererId = uuid();
 const fixtures = wrapDefaultExport({
   first: (
     <>
-      <StateMock state={{ count: 5 }}>
+      <ClassStateMock state={{ count: 5 }}>
         <Counter />
-      </StateMock>
-      <StateMock state={{ count: 10 }}>
+      </ClassStateMock>
+      <ClassStateMock state={{ count: 10 }}>
         <Counter />
-      </StateMock>
+      </ClassStateMock>
     </>
   ),
 });

@@ -38,15 +38,14 @@ module.exports = {
   },
   // https://kulshekhar.github.io/ts-jest/docs/getting-started/options/tsconfig
   transform: {
-    '^.+\\.tsx?$': ['ts-jest', { tsconfig: { noUnusedLocals: false } }],
-    '^.+\\.js$': [
+    '^.+\\.[jt]sx?$': [
       'ts-jest',
       { tsconfig: { allowJs: true, noUnusedLocals: false } },
     ],
   },
   // https://jestjs.io/docs/configuration#transformignorepatterns-arraystring
   transformIgnorePatterns: [
-    `/node_modules/(?!${esDependencies.join('|')})`,
+    `/node_modules/(?!${esDependencies.join('|')}/)`,
     '\\.pnp\\.[^\\/]+$',
   ],
   collectCoverageFrom: [
