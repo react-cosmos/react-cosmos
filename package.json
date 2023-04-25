@@ -83,7 +83,7 @@
     "ts-loader": "^9.4.2",
     "ts-node": "^10.9.1",
     "typescript": "5.0.4",
-    "vite": "^4.3.1",
+    "vite": "^4.3.2",
     "webpack": "^5.80.0",
     "webpack-cli": "^5.0.2",
     "yargs": "^17.7.1"
