@@ -6,7 +6,7 @@ import { resolveSilent } from '../utils/resolveSilent.js';
 export const pluginEndpointServerPlugin: CosmosServerPlugin = {
   name: 'pluginEndpoint',
 
-  devServer({ cosmosConfig, expressApp }) {
+  devServer({ expressApp }) {
     expressApp.get(
       '/_plugin/*.js',
       (req: express.Request, res: express.Response) => {

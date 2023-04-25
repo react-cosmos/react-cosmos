@@ -4,20 +4,18 @@ import styled from 'styled-components';
 import { rendererBg } from '../../style/vars.js';
 import { RendererOverlay } from './RendererOverlay/RendererOverlay.js';
 import { WaitingForRenderer } from './RendererOverlay/WaitingForRenderer.js';
-import { RuntimeStatus, UrlStatus } from './spec.js';
+import { RuntimeStatus } from './spec.js';
 
 export type OnIframeRef = (elRef: null | HTMLIFrameElement) => void;
 
 type Props = {
   rendererUrl: null | string;
-  urlStatus: UrlStatus;
   runtimeStatus: RuntimeStatus;
   onIframeRef: OnIframeRef;
 };
 
 export const RendererPreview = React.memo(function RendererPreview({
   rendererUrl,
-  urlStatus,
   runtimeStatus,
   onIframeRef,
 }: Props) {
@@ -40,10 +38,7 @@ export const RendererPreview = React.memo(function RendererPreview({
           frameBorder={0}
           allow="clipboard-write *"
         />
-        <RendererOverlay
-          rendererPreviewUrlStatus={urlStatus}
-          rendererPreviewRuntimeStatus={runtimeStatus}
-        />
+        <RendererOverlay runtimeStatus={runtimeStatus} />
       </Container>
     </Slot>
   );

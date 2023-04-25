@@ -2,7 +2,6 @@ import React from 'react';
 import { createPlugin } from 'react-plugin';
 import { CoreSpec } from '../Core/spec.js';
 import { RendererCoreSpec } from '../RendererCore/spec.js';
-import { checkRendererStatus } from './checkRendererStatus.js';
 import { createRendererRequestHandler } from './handleRendererRequests.js';
 import { handleWindowMessages } from './handleWindowMessages.js';
 import { RendererPreview } from './RendererPreview.js';
@@ -14,11 +13,9 @@ const { postRendererRequest, setIframeRef } = createRendererRequestHandler();
 const { onLoad, on, plug, register } = createPlugin<RendererPreviewSpec>({
   name: 'rendererPreview',
   initialState: {
-    urlStatus: 'unknown',
     runtimeStatus: 'pending',
   },
   methods: {
-    getUrlStatus,
     getRuntimeStatus,
   },
 });
@@ -34,10 +31,7 @@ onLoad((context: RendererPreviewContext) => {
     return null;
   }
 
-  return [
-    checkRendererStatus(context, rendererUrl),
-    handleWindowMessages(context),
-  ];
+  return [handleWindowMessages(context)];
 });
 
 plug('rendererPreview', ({ pluginContext }) => {
@@ -48,7 +42,6 @@ plug('rendererPreview', ({ pluginContext }) => {
   return (
     <RendererPreview
       rendererUrl={getRendererUrl(pluginContext)}
-      urlStatus={pluginContext.getState().urlStatus}
       runtimeStatus={pluginContext.getState().runtimeStatus}
       onIframeRef={handleIframeRef}
     />
@@ -58,10 +51,6 @@ plug('rendererPreview', ({ pluginContext }) => {
 export { register };
 
 if (process.env.NODE_ENV !== 'test') register();
-
-function getUrlStatus({ getState }: RendererPreviewContext) {
-  return getState().urlStatus;
-}
 
 function getRuntimeStatus({ getState }: RendererPreviewContext) {
   return getState().runtimeStatus;

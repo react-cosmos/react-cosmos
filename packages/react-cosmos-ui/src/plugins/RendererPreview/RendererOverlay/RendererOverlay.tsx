@@ -1,22 +1,13 @@
 import React from 'react';
-import { RuntimeStatus, UrlStatus } from '../spec.js';
-import { RendererNotResponding } from './RendererNotResponding.js';
+import { RuntimeStatus } from '../spec.js';
 import { WaitingForRenderer } from './WaitingForRenderer.js';
 
 type Props = {
-  rendererPreviewUrlStatus: UrlStatus;
-  rendererPreviewRuntimeStatus: RuntimeStatus;
+  runtimeStatus: RuntimeStatus;
 };
 
-export function RendererOverlay({
-  rendererPreviewUrlStatus,
-  rendererPreviewRuntimeStatus,
-}: Props) {
-  if (rendererPreviewUrlStatus === 'error') {
-    return <RendererNotResponding />;
-  }
-
-  if (rendererPreviewRuntimeStatus === 'pending') {
+export function RendererOverlay({ runtimeStatus }: Props) {
+  if (runtimeStatus === 'pending') {
     return <WaitingForRenderer />;
   }
 
