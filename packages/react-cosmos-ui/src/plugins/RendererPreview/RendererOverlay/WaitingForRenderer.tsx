@@ -31,7 +31,6 @@ const Container = styled.div`
 const Loader = styled.div`
   width: 32px;
   height: 32px;
-  clear: both;
   border-radius: 50%;
   position: relative;
   margin: 12px 0 24px 0;
