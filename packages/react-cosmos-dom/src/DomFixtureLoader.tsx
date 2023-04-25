@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
 import { FixtureConnect, UserModuleWrappers } from 'react-cosmos-core';
 import { createDomRendererConnect } from './domRendererConnect.js';
-import { domRendererId } from './domRendererId.js';
+import { getRendererId } from './domRendererId.js';
 import { ErrorCatch } from './ErrorCatch.js';
-import { selectedFixtureId } from './selectedFixtureId.js';
+import { getSelectedFixtureId } from './selectedFixtureId.js';
 import { isInsideCosmosPreviewIframe } from './utils/isInsideCosmosPreviewIframe.js';
 
 type Props = {
@@ -23,7 +23,7 @@ export function DomFixtureLoader(props: Props) {
     function handleGlobalError() {
       domRendererConnect.postMessage({
         type: 'rendererError',
-        payload: { rendererId: domRendererId },
+        payload: { rendererId: getRendererId() },
       });
     }
     // Unhandled errors from async code will not be caught by the error event, but
@@ -39,11 +39,11 @@ export function DomFixtureLoader(props: Props) {
 
   return (
     <FixtureConnect
-      rendererId={domRendererId}
+      rendererId={getRendererId()}
       rendererConnect={domRendererConnect}
       moduleWrappers={moduleWrappers}
       systemDecorators={systemDecorators}
-      selectedFixtureId={selectedFixtureId}
+      selectedFixtureId={getSelectedFixtureId()}
       renderMessage={renderDomMessage}
       renderNoFixtureSelected={!isInsideCosmosPreviewIframe()}
       onErrorReset={onErrorReset}
