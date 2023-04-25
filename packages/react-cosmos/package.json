@@ -19,7 +19,7 @@
     "pkg-up": "^4.0.0",
     "react-cosmos-core": "6.0.0-alpha.14",
     "react-cosmos-ui": "6.0.0-alpha.15",
-    "ws": "^8.12.1",
+    "ws": "^8.13.0",
     "yargs": "^17.7.1"
   },
   "bin": {
