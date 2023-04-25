@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-plugin-webpack",
-  "version": "6.0.0-alpha.14",
+  "version": "6.0.0-alpha.15",
   "description": "Webpack plugin for React Cosmos",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-plugin-webpack",
   "license": "MIT",
@@ -15,7 +15,7 @@
     "webpack-hot-middleware": "^2.25.3"
   },
   "devDependencies": {
-    "react-cosmos-ui": "6.0.0-alpha.14",
+    "react-cosmos-ui": "6.0.0-alpha.15",
     "react-plugin": "^3.0.0-alpha.4"
   },
   "peerDependencies": {

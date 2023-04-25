@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-plugin-vite",
-  "version": "6.0.0-alpha.14",
+  "version": "6.0.0-alpha.15",
   "description": "Vite plugin for React Cosmos",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-plugin-vite",
   "license": "MIT",
