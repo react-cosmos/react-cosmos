@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash-es';
+import { isEqual, sortBy } from 'lodash-es';
 import React from 'react';
 import {
   FixtureId,
@@ -23,32 +23,28 @@ import {
 import { quick } from '../../style/vars.js';
 
 type Props = {
-  fixtureItems: FlatFixtureTree;
-  bookmarks: FixtureId[];
+  bookmarks: FlatFixtureTree;
   selectedFixtureId: FixtureId | null;
   onFixtureSelect: (fixtureId: FixtureId) => void;
-  onBookmarkDelete: (fixtureId: FixtureId) => void;
+  onBookmarkDelete: (fixtureItem: FlatFixtureTreeItem) => void;
 };
 
 export function FixtureBookmarks({
-  fixtureItems,
   bookmarks,
   selectedFixtureId,
   onFixtureSelect,
   onBookmarkDelete,
 }: Props) {
-  const bookmarkedItems = fixtureItems.filter(item =>
-    bookmarks.some(b => isEqual(b, item.fixtureId))
-  );
+  const sortedBookmarks = useSortedBookmarks(bookmarks);
 
-  if (!bookmarkedItems.length) return null;
+  if (!sortedBookmarks.length) return null;
 
   return (
     <Container>
       <Header>
         <HeaderTitle>Bookmarks</HeaderTitle>
       </Header>
-      {bookmarkedItems.map(fixtureItem => {
+      {sortedBookmarks.map(fixtureItem => {
         const { fixtureId } = fixtureItem;
         const itemKey = stringifyFixtureId(fixtureId);
         const selected = isEqual(fixtureId, selectedFixtureId);
@@ -71,7 +67,7 @@ export function FixtureBookmarks({
             >
               {getFixtureName(fixtureItem)}
             </FixtureLink>
-            <DeleteButton onClick={() => onBookmarkDelete(fixtureId)}>
+            <DeleteButton onClick={() => onBookmarkDelete(fixtureItem)}>
               <DeleteIconContainer>
                 <XIcon />
               </DeleteIconContainer>
@@ -80,6 +76,18 @@ export function FixtureBookmarks({
         );
       })}
     </Container>
+  );
+}
+
+function useSortedBookmarks(bookmarks: FlatFixtureTree) {
+  return React.useMemo(
+    () =>
+      sortBy(
+        bookmarks,
+        b => b.fixtureId.path,
+        b => b.fixtureId.name
+      ),
+    [bookmarks]
   );
 }
 

@@ -2,7 +2,6 @@ import { enablePlugin } from 'react-plugin';
 
 import './BuildNotifications/index.js';
 import './ClassStatePanel/index.js';
-import './ContentOverlay/index.js';
 import './ControlPanel/index.js';
 import './ControlSelect/index.js';
 import './Core/index.js';

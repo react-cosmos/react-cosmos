@@ -1,14 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BlankCanvasIllustration } from '../../components/illustrations/BlankCanvas.js';
-import { screenGrey3 } from '../../style/colors.js';
-import { KeyShortcut } from './KeyShortcut.js';
 import {
-  ContentContainer,
   IllustrationContainer,
+  OverlayBody,
+  OverlayContainer,
   SecondaryButton,
   TextContainer,
-} from './shared.js';
+} from '../../../components/ContentOverlay.js';
+import { BlankCanvasIllustration } from '../../../components/illustrations/BlankCanvas.js';
+import { screenGrey3 } from '../../../style/colors.js';
+import { KeyShortcut } from './KeyShortcut.js';
 
 type Props = {
   onShowWelcome: () => unknown;
@@ -16,8 +17,8 @@ type Props = {
 
 export function NoFixtureSelected({ onShowWelcome }: Props) {
   return (
-    <>
-      <ContentContainer>
+    <OverlayContainer data-testid="blank">
+      <OverlayBody>
         <TextContainer>
           <KeyShortcut keys={['⌘', 'P']} label="Search fixtures" />
           <Subtitle>FIXTURE SELECTED</Subtitle>
@@ -29,11 +30,11 @@ export function NoFixtureSelected({ onShowWelcome }: Props) {
         <IllustrationContainer>
           <BlankCanvasIllustration title="blank state" />
         </IllustrationContainer>
-      </ContentContainer>
+      </OverlayBody>
       <ShowWelcomeButton onClick={onShowWelcome}>
         show welcome screen
       </ShowWelcomeButton>
-    </>
+    </OverlayContainer>
   );
 }
 

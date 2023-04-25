@@ -19,10 +19,14 @@ export function userDepsImportMap(
   return paths.reduce(
     (acc, p) => ({
       ...acc,
-      [slash(path.relative(rootDir, p))]: userDepsImportPath(p, relativeToDir),
+      [userDepsKeyPath(p, rootDir)]: userDepsImportPath(p, relativeToDir),
     }),
     {}
   );
+}
+
+export function userDepsKeyPath(filePath: string, rootDir: string) {
+  return slash(path.relative(rootDir, filePath));
 }
 
 export function userDepsImportPath(

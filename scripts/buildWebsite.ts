@@ -20,7 +20,7 @@ process.env.NODE_ENV = 'production';
   await createPage({
     pageName: 'visual-tdd',
     title: `Visual TDD · React Cosmos`,
-    description: `Develop one component at a time. Isolate the UI you're working on and iterate quickly. Reloading your whole app on every change is slowing you down!`,
+    description: `Develop one component at a time. Isolate the UI you're working on and iterate quickly. Refreshing your whole app on every change is slowing you down!`,
   });
   await createPage({
     pageName: 'component-library',
@@ -30,7 +30,7 @@ process.env.NODE_ENV = 'production';
   await createPage({
     pageName: 'open-platform',
     title: `Open Platform · React Cosmos`,
-    description: `React Cosmos can be used in powerful ways. Snapshot and visual regression tests are possible, as well as custom integrations tailored to your needs.`,
+    description: `Integrate with Webpack, Vite, or any other bundler. Add snapshot or visual regression testing. Create custom decorators, UI controls, or server plugins.`,
   });
   await createPage({
     pageName: 'benefits',

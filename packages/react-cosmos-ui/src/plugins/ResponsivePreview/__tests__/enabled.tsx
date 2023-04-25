@@ -48,7 +48,6 @@ function mockViewportFixtureState() {
   };
   mockRendererCore({
     getFixtureState: () => ({}),
-    isValidFixtureSelected: () => true,
     setFixtureState: (context, stateUpdater) => {
       mocks.fixtureState = stateUpdater(mocks.fixtureState);
     },
@@ -84,7 +83,6 @@ it('renders children of "rendererPreviewOuter" slot', async () => {
   mockRendererUrl();
   mockRendererCore({
     getFixtureState: () => ({}),
-    isValidFixtureSelected: () => true,
   });
 
   const renderer = loadTestPlugins();
@@ -92,24 +90,11 @@ it('renders children of "rendererPreviewOuter" slot', async () => {
   renderer.getByTestId('previewMock');
 });
 
-it('does not render responsive header when no fixture is selected', async () => {
-  mockEnabledViewportStorage();
-  mockRendererUrl();
-  mockRendererCore({
-    getFixtureState: () => ({}),
-    isValidFixtureSelected: () => false,
-  });
-
-  const renderer = loadTestPlugins();
-  expect(renderer.queryByTestId('responsiveHeader')).toBeNull();
-});
-
 it('renders responsive header', async () => {
   mockEnabledViewportStorage();
   mockRendererUrl();
   mockRendererCore({
     getFixtureState: () => ({}),
-    isValidFixtureSelected: () => true,
   });
 
   const renderer = loadTestPlugins();
@@ -121,7 +106,6 @@ it('renders responsive device labels', async () => {
   mockRendererUrl();
   mockRendererCore({
     getFixtureState: () => ({}),
-    isValidFixtureSelected: () => true,
   });
 
   const renderer = loadTestPlugins();
@@ -149,7 +133,6 @@ it('saves viewport in storage on device select', async () => {
   mockRendererUrl();
   mockRendererCore({
     getFixtureState: () => ({}),
-    isValidFixtureSelected: () => true,
   });
 
   const renderer = loadTestPlugins();

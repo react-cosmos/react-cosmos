@@ -47,7 +47,7 @@ function getWebpackConfigPath(
   const absPath = resolveLoose(rootDir, configPath);
   if (!fileExists(absPath)) {
     const relPath = path.relative(process.cwd(), absPath);
-    throw new Error(`webpack config not found at path: ${relPath}`);
+    throw new Error(`Webpack config not found at path: ${relPath}`);
   }
 
   return absPath;
@@ -70,7 +70,7 @@ function getWebpackOverridePath(
   const absPath = resolveLoose(rootDir, overridePath);
   if (!fileExists(absPath)) {
     const relPath = path.relative(process.cwd(), absPath);
-    throw new Error(`webpack override module not found at path: ${relPath}`);
+    throw new Error(`Webpack override module not found at path: ${relPath}`);
   }
 
   return absPath;

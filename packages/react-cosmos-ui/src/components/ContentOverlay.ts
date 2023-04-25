@@ -1,4 +1,3 @@
-import { PluginContext } from 'react-plugin';
 import styled from 'styled-components';
 import {
   screenGrey1,
@@ -7,10 +6,8 @@ import {
   screenGrey6,
   screenPrimary2,
   screenPrimary3,
-} from '../../style/colors.js';
-import { ContentOverlaySpec } from './spec.js';
-
-export type ContentOverlayContext = PluginContext<ContentOverlaySpec>;
+} from '../style/colors.js';
+import { rendererBg } from '../style/vars.js';
 
 export const OverlayContainer = styled.div`
   position: absolute;
@@ -26,7 +23,12 @@ export const OverlayContainer = styled.div`
   overflow: auto;
 `;
 
-export const ContentContainer = styled.div`
+export const RendererOverlayContainer = styled(OverlayContainer)`
+  background-color: #fff;
+  background-image: ${rendererBg};
+`;
+
+export const OverlayBody = styled.div`
   flex-shrink: 0;
   display: flex;
   flex-direction: row;

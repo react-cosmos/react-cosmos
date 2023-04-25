@@ -26,7 +26,7 @@
     "website:serve": "http-server -p 5001 ./website/dist",
     "release:check": "yarn build:clear && yarn build && yarn src && yarn lint && yarn dist && yarn test:unit",
     "release": "yarn release:check && yarn lerna publish -m \"[skip ci] %s\"",
-    "release:next": "yarn release:check && yarn lerna publish --dist-tag=next -m \"[skip ci] %s\""
+    "release:next": "yarn release:check && yarn lerna publish --dist-tag=next --exact -m \"[skip ci] %s\""
   },
   "devDependencies": {
     "@react-mock/state": "^0.1.8",
@@ -87,7 +87,7 @@
     "ts-loader": "^9.4.2",
     "ts-node": "^10.9.1",
     "typescript": "4.9.5",
-    "vite": "^4.1.4",
+    "vite": "^4.3.1",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1",
     "yargs": "^17.7.1"

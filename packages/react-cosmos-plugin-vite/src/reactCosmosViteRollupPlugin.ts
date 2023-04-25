@@ -1,19 +1,23 @@
-import path from 'path';
+import path from 'node:path';
 import {
   CosmosConfig,
   generateUserDepsModule,
   getPlaygroundUrl,
 } from 'react-cosmos';
 import { Plugin } from 'rollup';
+import { CosmosViteConfig } from './createCosmosViteConfig.js';
 import { createViteRendererIndex } from './createViteRendererIndex.js';
 
 export const userDepsVirtualModuleId = 'virtual:cosmos-userdeps';
 export const userDepsResolvedModuleId = '\0' + userDepsVirtualModuleId;
 
-const defaultIndexPattern = /^index\.(js|ts)x?$/;
+const defaultIndexPattern = new RegExp(
+  `^(src\\${path.sep})?(index|main)\.(js|ts)x?$`
+);
 
 export function reactCosmosViteRollupPlugin(
-  cosmosConfig: CosmosConfig
+  cosmosConfig: CosmosConfig,
+  cosmosViteConfig: CosmosViteConfig
 ): Plugin {
   return {
     name: 'react-cosmos-vite-renderer',
@@ -32,7 +36,7 @@ export function reactCosmosViteRollupPlugin(
           cosmosConfig,
           rendererConfig: {
             playgroundUrl: getPlaygroundUrl(cosmosConfig),
-            // TODO: Allow passing dom.containerQuerySelector
+            containerQuerySelector: cosmosConfig.dom.containerQuerySelector,
           },
           relativeToDir: null,
         });
@@ -42,8 +46,14 @@ export function reactCosmosViteRollupPlugin(
     },
 
     transform(src, id) {
-      // TODO: Allow indexFile customization via cosmosConfig.vite.indexFile
-      if (path.relative(cosmosConfig.rootDir, id).match(defaultIndexPattern)) {
+      const isRendererIndex = cosmosViteConfig.indexPath
+        ? cosmosViteConfig.indexPath === id
+        : path.relative(cosmosConfig.rootDir, id).match(defaultIndexPattern);
+
+      if (isRendererIndex) {
+        const relPath = path.relative(process.cwd(), id);
+        console.log(`[Cosmos] Replacing vite index module at ${relPath}`);
+
         return {
           code: createViteRendererIndex(userDepsVirtualModuleId),
           map: null,

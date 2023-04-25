@@ -12,7 +12,6 @@ type Props = {
   fixturesDir: string;
   fixtureFileSuffix: string;
   selectedFixtureId: null | FixtureId;
-  rendererConnected: boolean;
   fixtures: FixtureList;
   expansion: TreeExpansion;
   selectFixture: (fixtureId: FixtureId) => void;
@@ -23,7 +22,6 @@ export function FixtureTreeContainer({
   fixturesDir,
   fixtureFileSuffix,
   selectedFixtureId,
-  rendererConnected,
   fixtures,
   expansion,
   selectFixture,
@@ -34,8 +32,6 @@ export function FixtureTreeContainer({
     [fixtures, fixturesDir, fixtureFileSuffix]
   );
   const { containerRef, selectedRef } = useScrollToSelected(selectedFixtureId);
-
-  if (!rendererConnected) return <TreeContainer />;
 
   if (Object.keys(fixtures).length === 0) {
     return (

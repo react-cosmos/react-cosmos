@@ -30,7 +30,10 @@ async function stopServer() {
 
 beforeEach(() => {
   mockCliArgs({});
-  mockCosmosConfig('cosmos.config.json', { port });
+  mockCosmosConfig('cosmos.config.json', {
+    rootDir: __dirname,
+    port,
+  });
 });
 
 afterEach(async () => {
@@ -57,12 +60,13 @@ it('serves playground HTML', async () => {
       JSON.stringify({
         playgroundConfig: {
           core: {
-            projectId: 'new-project',
+            projectId: 'react-cosmos',
             fixturesDir: '__fixtures__',
             fixtureFileSuffix: 'fixture',
             devServerOn: true,
             webRendererUrl: '/_renderer.html',
           },
+          rendererCore: { fixtures: {} },
         },
         pluginConfigs: [],
       })

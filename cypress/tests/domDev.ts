@@ -6,7 +6,7 @@ import {
 } from '../support/testBlocks';
 
 describe('DOM dev', () => {
-  beforeEach(() => {
+  before(() => {
     cy.clearStorage();
     cy.visit('http://localhost:5000');
   });

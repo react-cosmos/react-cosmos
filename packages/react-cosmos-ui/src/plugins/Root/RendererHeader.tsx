@@ -25,7 +25,6 @@ type Props = {
   onFixtureSelect: (fixtureId: FixtureId) => unknown;
   onClose: () => unknown;
 };
-
 export const RendererHeader = React.memo(function RendererHeader({
   fixtureItems,
   fixtureId,
@@ -69,10 +68,12 @@ export const RendererHeader = React.memo(function RendererHeader({
           title="Reload fixture"
           onClick={onReload}
         />
-        <FixtureActionSlot
-          slotProps={slotProps}
-          plugOrder={fixtureActionOrder}
-        />
+        {fixtureItem && (
+          <FixtureActionSlotContainer
+            fixtureActionOrder={fixtureActionOrder}
+            fixtureItem={fixtureItem}
+          />
+        )}
       </Left>
       {fixtureItem && <FixtureName>{getFixtureName(fixtureItem)}</FixtureName>}
       <Right>
@@ -90,6 +91,20 @@ export const RendererHeader = React.memo(function RendererHeader({
     </Container>
   );
 });
+
+type FixtureActionSlotContainerProps = {
+  fixtureActionOrder: string[];
+  fixtureItem: FlatFixtureTreeItem;
+};
+function FixtureActionSlotContainer({
+  fixtureActionOrder,
+  fixtureItem,
+}: FixtureActionSlotContainerProps) {
+  const slotProps = React.useMemo(() => ({ fixtureItem }), [fixtureItem]);
+  return (
+    <FixtureActionSlot slotProps={slotProps} plugOrder={fixtureActionOrder} />
+  );
+}
 
 function findFixtureItemById(
   fixtureItems: FlatFixtureTreeItem[],

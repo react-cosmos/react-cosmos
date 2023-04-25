@@ -5,6 +5,7 @@ import { CoreSpec } from '../Core/spec.js';
 import { RendererCoreSpec } from '../RendererCore/spec.js';
 import { RouterSpec } from '../Router/spec.js';
 import { StorageSpec } from '../Storage/spec.js';
+import { useWelcomeDismiss } from './HomeOverlay/welcomeDismiss.js';
 import { isNavOpen, openNav } from './navOpen.js';
 import { getNavWidthApi } from './navWidth.js';
 import { isPanelOpen, openPanel } from './panelOpen.js';
@@ -52,37 +53,10 @@ plug('root', ({ pluginContext }) => {
   const fixtureItems = useFixtureItems(pluginContext);
   const onToggleNav = useOpenNav(pluginContext);
   const onTogglePanel = useOpenPanel(pluginContext);
+  const welcomeDismiss = useWelcomeDismiss(pluginContext);
 
   const { storageCacheReady } = getState();
-  if (!storageCacheReady) {
-    return (
-      <Root
-        storageCacheReady={false}
-        fixtureItems={[]}
-        selectedFixtureId={null}
-        rendererConnected={false}
-        validFixtureSelected={false}
-        fixtureState={{}}
-        navOpen={false}
-        panelOpen={false}
-        navWidth={0}
-        panelWidth={0}
-        sidePanelRowOrder={[]}
-        globalActionOrder={[]}
-        globalOrder={[]}
-        navRowOrder={[]}
-        fixtureActionOrder={[]}
-        rendererActionOrder={[]}
-        onToggleNav={() => {}}
-        onTogglePanel={() => {}}
-        onFixtureSelect={() => {}}
-        onFixtureClose={() => {}}
-        onFixtureStateChange={() => {}}
-        setNavWidth={() => {}}
-        setPanelWidth={() => {}}
-      />
-    );
-  }
+  if (!storageCacheReady) return null;
 
   const { navWidth, setNavWidth } = getNavWidthApi(pluginContext);
   const { panelWidth, setPanelWidth } = getPanelWidthApi(pluginContext);
@@ -96,11 +70,9 @@ plug('root', ({ pluginContext }) => {
   } = getConfig();
   return (
     <Root
-      storageCacheReady={true}
       fixtureItems={fixtureItems}
       selectedFixtureId={router.getSelectedFixtureId()}
       rendererConnected={rendererCore.isRendererConnected()}
-      validFixtureSelected={rendererCore.isValidFixtureSelected()}
       fixtureState={rendererCore.getFixtureState()}
       navOpen={isNavOpen(pluginContext)}
       panelOpen={isPanelOpen(pluginContext)}
@@ -119,6 +91,9 @@ plug('root', ({ pluginContext }) => {
       onFixtureStateChange={rendererCore.setFixtureState}
       setNavWidth={setNavWidth}
       setPanelWidth={setPanelWidth}
+      welcomeDismissed={welcomeDismiss.isWelcomeDismissed()}
+      onDismissWelcome={welcomeDismiss.onDismissWelcome}
+      onShowWelcome={welcomeDismiss.onShowWelcome}
     />
   );
 });

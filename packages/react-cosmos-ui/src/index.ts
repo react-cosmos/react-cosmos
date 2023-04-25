@@ -3,7 +3,6 @@ export * from './components/icons/index.js';
 export * from './playgroundConfig.js';
 export * from './plugins/BuildNotifications/spec.js';
 export * from './plugins/ClassStatePanel/spec.js';
-export * from './plugins/ContentOverlay/spec.js';
 export * from './plugins/ControlPanel/spec.js';
 export * from './plugins/ControlSelect/spec.js';
 export * from './plugins/Core/spec.js';

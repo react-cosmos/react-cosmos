@@ -11,15 +11,14 @@ import { useDrag } from '../../hooks/useDrag.js';
 import { NavRowSlot } from '../../slots/NavRowSlot.js';
 import { grey32, grey8, white10 } from '../../style/colors.js';
 import { GlobalHeader } from './GlobalHeader.js';
+import { HomeOverlay } from './HomeOverlay/HomeOverlay.js';
 import { RendererHeader } from './RendererHeader.js';
 import { SidePanel } from './SidePanel.js';
 
 type Props = {
-  storageCacheReady: boolean;
   fixtureItems: FlatFixtureTreeItem[];
   selectedFixtureId: FixtureId | null;
   rendererConnected: boolean;
-  validFixtureSelected: boolean;
   fixtureState: FixtureState;
   navOpen: boolean;
   panelOpen: boolean;
@@ -38,14 +37,15 @@ type Props = {
   onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
   setNavWidth: (width: number) => unknown;
   setPanelWidth: (width: number) => unknown;
+  welcomeDismissed: boolean;
+  onDismissWelcome: () => unknown;
+  onShowWelcome: () => unknown;
 };
 
 export function Root({
-  storageCacheReady,
   fixtureItems,
   selectedFixtureId,
   rendererConnected,
-  validFixtureSelected,
   fixtureState,
   navOpen,
   panelOpen,
@@ -64,6 +64,9 @@ export function Root({
   onFixtureStateChange,
   setNavWidth,
   setPanelWidth,
+  welcomeDismissed,
+  onDismissWelcome,
+  onShowWelcome,
 }: Props) {
   const navDrag = useDrag({
     value: navWidth,
@@ -75,11 +78,7 @@ export function Root({
     onChange: setPanelWidth,
   });
 
-  if (!storageCacheReady) {
-    return <Container />;
-  }
-
-  const showNav = rendererConnected && (navOpen || !validFixtureSelected);
+  const showNav = navOpen || !selectedFixtureId;
   const dragging = navDrag.dragging || panelDrag.dragging;
 
   // z-indexes are set here on purpose to show the layer hierarchy at a glance
@@ -88,28 +87,24 @@ export function Root({
       {showNav && (
         <Draggable style={{ width: navWidth, zIndex: 2 }}>
           <Nav>
-            {rendererConnected && (
-              <NavRowSlot
-                slotProps={{ onCloseNav: onToggleNav }}
-                plugOrder={navRowOrder}
-              />
-            )}
+            <NavRowSlot
+              slotProps={{ onCloseNav: onToggleNav }}
+              plugOrder={navRowOrder}
+            />
           </Nav>
           {navDrag.dragging && <DragOverlay />}
           <NavDragHandle ref={navDrag.dragElRef} />
         </Draggable>
       )}
       <MainContainer key="main" style={{ zIndex: 1 }}>
-        {!validFixtureSelected && (
+        {!selectedFixtureId && (
           <GlobalHeader
-            selectedFixtureId={selectedFixtureId}
             rendererConnected={rendererConnected}
-            validFixtureSelected={validFixtureSelected}
             globalActionOrder={globalActionOrder}
           />
         )}
         <RendererContainer key="rendererContainer">
-          {selectedFixtureId && validFixtureSelected && (
+          {selectedFixtureId && (
             <RendererHeader
               fixtureItems={fixtureItems}
               fixtureId={selectedFixtureId}
@@ -126,7 +121,7 @@ export function Root({
           <RendererBody key="rendererBody">
             <Slot name="rendererPreview" />
             {dragging && <DragOverlay />}
-            {panelOpen && selectedFixtureId && (
+            {selectedFixtureId && panelOpen && (
               <ControlPanelContainer style={{ width: panelWidth, zIndex: 3 }}>
                 <SidePanel
                   fixtureId={selectedFixtureId}
@@ -139,7 +134,13 @@ export function Root({
               </ControlPanelContainer>
             )}
           </RendererBody>
-          <Slot name="contentOverlay" />
+          {!selectedFixtureId && (
+            <HomeOverlay
+              welcomeDismissed={welcomeDismissed}
+              onDismissWelcome={onDismissWelcome}
+              onShowWelcome={onShowWelcome}
+            />
+          )}
         </RendererContainer>
       </MainContainer>
       <div style={{ zIndex: 4 }}>
