@@ -24,7 +24,7 @@ export async function viteExportPlugin({ cosmosConfig }: ExportPluginArgs) {
       emptyOutDir: false,
       minify: false,
     },
-    plugins: [reactCosmosViteRollupPlugin(cosmosConfig)],
+    plugins: [reactCosmosViteRollupPlugin(cosmosConfig, viteCosmosConfig)],
   });
 
   // Make way for the Playground's index.html

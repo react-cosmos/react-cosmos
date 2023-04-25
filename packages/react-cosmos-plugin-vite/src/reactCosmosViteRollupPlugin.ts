@@ -5,6 +5,7 @@ import {
   getPlaygroundUrl,
 } from 'react-cosmos';
 import { Plugin } from 'rollup';
+import { ViteCosmosConfig } from './createViteCosmosConfig.js';
 import { createViteRendererIndex } from './createViteRendererIndex.js';
 
 export const userDepsVirtualModuleId = 'virtual:cosmos-userdeps';
@@ -13,7 +14,8 @@ export const userDepsResolvedModuleId = '\0' + userDepsVirtualModuleId;
 const defaultIndexPattern = /^(src\/)?(index|main)\.(js|ts)x?$/;
 
 export function reactCosmosViteRollupPlugin(
-  cosmosConfig: CosmosConfig
+  cosmosConfig: CosmosConfig,
+  cosmosViteConfig: ViteCosmosConfig
 ): Plugin {
   return {
     name: 'react-cosmos-vite-renderer',
@@ -42,8 +44,14 @@ export function reactCosmosViteRollupPlugin(
     },
 
     transform(src, id) {
-      // TODO: Allow indexFile customization via cosmosConfig.vite.indexFile
-      if (path.relative(cosmosConfig.rootDir, id).match(defaultIndexPattern)) {
+      const isRendererIndex = cosmosViteConfig.indexFile
+        ? cosmosViteConfig.indexFile === id
+        : path.relative(cosmosConfig.rootDir, id).match(defaultIndexPattern);
+
+      if (isRendererIndex) {
+        const relPath = path.relative(process.cwd(), id);
+        console.log(`[Cosmos] Replacing vite index module at ${relPath}`);
+
         return {
           code: createViteRendererIndex(userDepsVirtualModuleId),
           map: null,
