@@ -1,4 +1,4 @@
-import glob from 'glob';
+import { globSync } from 'glob';
 import micromatch from 'micromatch';
 import { getDecoratorPatterns, getFixturePatterns } from './shared.js';
 
@@ -20,7 +20,7 @@ export function findUserModulePaths({
   fixtureFileSuffix,
   ignore,
 }: FindUserModulePathsArgs): UserModulePaths {
-  const paths = glob.sync('**/*', {
+  const paths = globSync('**/*', {
     cwd: rootDir,
     absolute: true,
     ignore,

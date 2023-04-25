@@ -1,4 +1,4 @@
-import glob from 'glob';
+import { globSync } from 'glob';
 import { CosmosPluginConfig } from 'react-cosmos-core';
 import { readCosmosPluginConfig } from './readCosmosPluginConfig.js';
 
@@ -23,7 +23,7 @@ export async function findCosmosPluginConfigs({
 const defaultIgnore = ['**/node_modules/**'];
 
 function findCosmosPluginConfigPaths(rootDir: string, ignore = defaultIgnore) {
-  return glob.sync('**/cosmos.plugin.json', {
+  return globSync('**/cosmos.plugin.json', {
     cwd: rootDir,
     absolute: true,
     ignore,

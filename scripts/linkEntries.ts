@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import fs from 'fs/promises';
-import glob from 'glob';
+import { globSync } from 'glob';
 import { fileURLToPath } from 'url';
 import {
   done,
@@ -102,12 +102,12 @@ async function getPackageEntryPoints(targetPackages: Package[]): Promise<{
       : targetPackages[0];
 
   const cwd = fileURLToPath(new URL('..', import.meta.url));
-  const modules = glob.sync(`packages/${pkgMatch}/{*,bin/*}.{js,d.ts}`, {
+  const modules = globSync(`packages/${pkgMatch}/{*,bin/*}.{js,d.ts}`, {
     cwd,
     absolute: true,
     ignore: ['**/webpack.config*.js'],
   });
-  const configs = glob.sync(`packages/${pkgMatch}/package.json`, {
+  const configs = globSync(`packages/${pkgMatch}/package.json`, {
     cwd,
     absolute: true,
   });

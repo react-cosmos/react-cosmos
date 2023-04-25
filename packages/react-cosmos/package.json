@@ -10,7 +10,7 @@
     "@skidding/launch-editor": "^2.2.3",
     "chokidar": "^3.5.3",
     "express": "^4.18.2",
-    "glob": "^8.1.0",
+    "glob": "^10.2.2",
     "http-proxy-middleware": "^2.0.6",
     "lodash-es": "^4.17.21",
     "micromatch": "^4.0.5",
