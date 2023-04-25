@@ -30,7 +30,7 @@ process.env.NODE_ENV = 'production';
   await createPage({
     pageName: 'open-platform',
     title: `Open Platform · React Cosmos`,
-    description: `React Cosmos can be used in powerful ways. Snapshot and visual regression tests are possible, as well as custom integrations tailored to your needs.`,
+    description: `Integrate with Webpack, Vite, or any other bundler. Add snapshot or visual regression testing. Create custom decorators, UI controls, or server plugins.`,
   });
   await createPage({
     pageName: 'benefits',
