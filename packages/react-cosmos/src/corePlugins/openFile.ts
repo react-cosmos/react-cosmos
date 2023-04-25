@@ -34,7 +34,10 @@ export const openFileServerPlugin: CosmosServerPlugin = {
         // when the editor app is already open, but is favorable because it can
         // open a code file on a specific line & column.
         .catch(err => open(absFilePath))
-        .catch(err => res.status(500).send('Failed to open file'))
+        .catch(err => {
+          console.log(err);
+          res.status(500).send('Failed to open file');
+        })
         .then(() => res.send());
     });
   },
