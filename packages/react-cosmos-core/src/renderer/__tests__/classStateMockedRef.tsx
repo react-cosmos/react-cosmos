@@ -1,9 +1,9 @@
-import { StateMock } from '@react-mock/state';
 import retry from '@skidding/async-retry';
 import until from 'async-until';
 import delay from 'delay';
 import React from 'react';
 import { FixtureStatePrimitiveValue } from '../../fixtureState/types.js';
+import { ClassStateMock } from '../../utils/react/ClassStateMock.js';
 import { uuid } from '../../utils/uuid.js';
 import { Counter } from '../testHelpers/components.js';
 import { getClassState } from '../testHelpers/fixtureState.js';
@@ -22,7 +22,7 @@ const rendererId = uuid();
 const getFixtures = () =>
   wrapDefaultExport({
     first: (
-      <StateMock state={{ count: 5 }}>
+      <ClassStateMock state={{ count: 5 }}>
         <Counter
           ref={elRef => {
             if (elRef) {
@@ -30,7 +30,7 @@ const getFixtures = () =>
             }
           }}
         />
-      </StateMock>
+      </ClassStateMock>
     ),
   });
 const fixtureId = { path: 'first' };

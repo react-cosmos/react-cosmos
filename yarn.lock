@@ -523,7 +523,7 @@
     "@babel/plugin-transform-modules-commonjs" "^7.21.2"
     "@babel/plugin-transform-typescript" "^7.21.3"
 
-"@babel/runtime@^7.1.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.12.5", "@babel/runtime@^7.9.2":
   version "7.20.6"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.20.6.tgz#facf4879bfed9b5326326273a64220f099b0fce3"
   integrity sha512-Q+8MqP7TiHMWzSfwiJwXCjyf4GYA4Dgw3emg/7xmwsdLJOZUp+nMqcOwOzzYheuM1rhDu8FSj2l0aoMygEuXuA==
@@ -1575,14 +1575,6 @@
   integrity sha512-jjMmK1tnZbm1Jq5a7fBliM4gQwjxMU7TFoRNwIyzwlO+eHPRCFv/Nv+H/Gi1jc3WR7QURG8D5d0Tn12YGrUqBQ==
   dependencies:
     esquery "^1.0.1"
-
-"@react-mock/state@^0.1.8":
-  version "0.1.8"
-  resolved "https://registry.yarnpkg.com/@react-mock/state/-/state-0.1.8.tgz#5c579570964e0254ee27a5aad72e09b0c0ea40e8"
-  integrity sha512-oX16w3FKhfF2+nQE+C4frrfVddzwhF4YEYxF8frXzboEDZsxCRpFuQC0za3T59ZxI4ygBarBqDrhYzipGsD9TQ==
-  dependencies:
-    "@babel/runtime" "^7.1.2"
-    lodash "^4.17.11"
 
 "@sinclair/typebox@^0.24.1":
   version "0.24.51"

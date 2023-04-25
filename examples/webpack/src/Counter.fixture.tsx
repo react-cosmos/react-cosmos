@@ -1,19 +1,19 @@
-import { StateMock } from '@react-mock/state';
 import { Counter } from 'examples-shared/components/Counter.js';
 import React from 'react';
+import { ClassStateMock } from 'react-cosmos-core';
 
 export default {
   default: <Counter suffix="times" />,
 
   'small number': (
-    <StateMock state={{ count: 5 }}>
+    <ClassStateMock state={{ count: 5 }}>
       <Counter suffix="times" />
-    </StateMock>
+    </ClassStateMock>
   ),
 
   'large number': (
-    <StateMock state={{ count: 555555555 }}>
+    <ClassStateMock state={{ count: 555555555 }}>
       <Counter suffix="times" />
-    </StateMock>
+    </ClassStateMock>
   ),
 };

@@ -26,6 +26,7 @@ export * from './server/socketMessage.js';
 export * from './utils/array.js';
 export * from './utils/keys.js';
 export * from './utils/react/areNodesEqual.js';
+export * from './utils/react/ClassStateMock.js';
 export * from './utils/react/getComponentName.js';
 export * from './utils/react/isReactElement.js';
 export * from './utils/string.js';
