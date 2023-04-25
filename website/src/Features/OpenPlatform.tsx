@@ -18,9 +18,9 @@ export function OpenPlatform() {
       <div>
         <FeatureTitle>Open platform</FeatureTitle>
         <FeatureDescription>
-          React Cosmos can be used in powerful ways. Including snapshot and
-          visual regression testing, as well as custom integrations tailored to
-          your needs.
+          Integrate with Webpack, Vite, or any other bundler. Add snapshot or
+          visual regression testing. Create custom decorators, UI controls, or
+          server plugins.
         </FeatureDescription>
       </div>
     </Feature>

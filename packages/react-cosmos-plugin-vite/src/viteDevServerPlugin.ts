@@ -1,8 +1,6 @@
 import { DevServerPluginArgs, startFixtureWatcher } from 'react-cosmos';
 import { createServer } from 'vite';
-import { createViteCosmosConfig } from './createViteCosmosConfig.js';
-import { getViteConfigFile } from './getViteConfigFile.js';
-import { logViteConfigInfo } from './logViteConfigInfo.js';
+import { createCosmosViteConfig } from './createCosmosViteConfig.js';
 import {
   reactCosmosViteRollupPlugin,
   userDepsResolvedModuleId,
@@ -22,22 +20,19 @@ export async function viteDevServerPlugin({
   }
 
   const { rootDir } = cosmosConfig;
-  const viteCosmosConfig = createViteCosmosConfig(cosmosConfig);
-
-  const configFile = getViteConfigFile(viteCosmosConfig.configPath, rootDir);
-  logViteConfigInfo(configFile);
+  const cosmosViteConfig = createCosmosViteConfig(cosmosConfig);
 
   const server = await createServer({
     // Last time I checked the config file is merged with this inline config:
     // https://github.com/vitejs/vite/blob/07bd6d14e545d05c6a29cf341f117fcfe9536ba4/packages/vite/src/node/config.ts#L418
-    configFile,
+    configFile: cosmosViteConfig.configPath,
     root: rootDir,
     server: {
       // https://vitejs.dev/config/server-options.html#server-host
       host: '0.0.0.0',
       port: parseInt(new URL(rendererUrl).port, 10),
     },
-    plugins: [reactCosmosViteRollupPlugin(cosmosConfig)],
+    plugins: [reactCosmosViteRollupPlugin(cosmosConfig, cosmosViteConfig)],
   });
   await server.listen();
 

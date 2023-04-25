@@ -14,9 +14,9 @@ Sandbox for developing and testing UI components in isolation.
 - **Component library.** Bookmark component states, from blank states to edge
   cases. Your component library keeps you organized and provides a solid
   foundation of test cases.
-- **Open platform.** React Cosmos can be used in powerful ways. Including
-  snapshot and visual regression testing, as well as custom integrations
-  tailored to your needs.
+- **Open platform.** Integrate with Webpack, Vite, or any other bundler.
+  Add snapshot or visual regression testing. Create custom decorators, UI
+  controls, or server plugins.
 
 🚀 **[Get started](https://github.com/react-cosmos/react-cosmos/blob/main/docs/README.md#getting-started)** · [Live demo](https://reactcosmos.org/live-demo/) · [Documentation](docs) · [Sponsor](https://github.com/users/skidding/sponsorship)
 
