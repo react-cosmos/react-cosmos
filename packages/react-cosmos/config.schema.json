@@ -181,7 +181,7 @@
       "additionalProperties": false,
       "properties": {
         "configPath": {
-          "description": "Path to an existing Webpack config, which Cosmos will reuse to build your code. Set to null to disable this behavior. [default: \"webpack.config.js\"]",
+          "description": "Path to an existing webpack config, which Cosmos will reuse to build your code. Set to null to disable this behavior. [default: \"webpack.config.js\"]",
           "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
         },
         "overridePath": {
