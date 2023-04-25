@@ -163,11 +163,7 @@
       "properties": {
         "configPath": {
           "description": "Path to Vite config. Set to false to disable reading it from the default path. [default: looks for \"vite.config.js\" in your project root]",
-          "anyOf": [
-            { "type": "string", "minLength": 1 },
-            { "type": "null" },
-            { "type": "boolean" }
-          ]
+          "anyOf": [{ "type": "string", "minLength": 1 }, { "enum": [false] }]
         },
         "indexPath": {
           "description": "Path to index module (eg. \"src/my-index.tsx\"). [default: matches common index/main module path]",
