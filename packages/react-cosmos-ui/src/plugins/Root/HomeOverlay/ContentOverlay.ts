@@ -16,7 +16,7 @@ export const OverlayContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-items: flex-start;
+  justify-content: flex-start;
   align-items: flex-start;
   background: ${screenGrey6};
   overflow: auto;
