@@ -1,7 +1,7 @@
 import retry from '@skidding/async-retry';
 import { render } from '@testing-library/react';
 import React from 'react';
-import { wrapActSetTimeout } from 'react-cosmos-core/src/renderer/testHelpers/wrapActSetTimeout.js';
+import { wrapActSetTimeout } from '../../../testHelpers/wrapActSetTimeout.js';
 import { RendererOverlay } from './RendererOverlay.js';
 
 it('does not render anything before URL status is known', () => {
