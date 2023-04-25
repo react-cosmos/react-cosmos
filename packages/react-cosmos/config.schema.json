@@ -162,7 +162,7 @@
       "additionalProperties": false,
       "properties": {
         "configPath": {
-          "description": "Path to Vite config. Set to false to disable reading it from the default path. [default: looks for \"vite.config.js\" in your project root]",
+          "description": "Path to Vite config. Set to false to disable reading it from the default path. [default: \"vite.config.js\"]",
           "anyOf": [{ "type": "string", "minLength": 1 }, { "enum": [false] }]
         },
         "indexPath": {
