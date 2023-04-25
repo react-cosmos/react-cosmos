@@ -1,6 +1,6 @@
 import { DevServerPluginArgs, startFixtureWatcher } from 'react-cosmos';
 import { createServer } from 'vite';
-import { createViteCosmosConfig } from './createViteCosmosConfig.js';
+import { createCosmosViteConfig } from './createCosmosViteConfig.js';
 import { getViteConfigFile } from './getViteConfigFile.js';
 import { logViteConfigInfo } from './logViteConfigInfo.js';
 import {
@@ -22,7 +22,7 @@ export async function viteDevServerPlugin({
   }
 
   const { rootDir } = cosmosConfig;
-  const viteCosmosConfig = createViteCosmosConfig(cosmosConfig);
+  const viteCosmosConfig = createCosmosViteConfig(cosmosConfig);
 
   const configFile = getViteConfigFile(viteCosmosConfig.configPath, rootDir);
   logViteConfigInfo(configFile);
