@@ -166,7 +166,7 @@
           "anyOf": [{ "type": "string", "minLength": 1 }, { "enum": [false] }]
         },
         "indexPath": {
-          "description": "Path to index module (eg. \"src/my-index.tsx\"). [default: matches common index/main module path]",
+          "description": "Path to index module (eg. \"src/my-index.tsx\"). [default: matches common index/main module paths]",
           "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
         },
         "port": {
