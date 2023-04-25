@@ -6,8 +6,7 @@ import {
   screenGrey6,
   screenPrimary2,
   screenPrimary3,
-} from '../style/colors.js';
-import { rendererBg } from '../style/vars.js';
+} from '../../../style/colors.js';
 
 export const OverlayContainer = styled.div`
   position: absolute;
@@ -21,11 +20,6 @@ export const OverlayContainer = styled.div`
   align-items: flex-start;
   background: ${screenGrey6};
   overflow: auto;
-`;
-
-export const RendererOverlayContainer = styled(OverlayContainer)`
-  background-color: #fff;
-  background-image: ${rendererBg};
 `;
 
 export const OverlayBody = styled.div`
