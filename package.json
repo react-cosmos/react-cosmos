@@ -47,7 +47,6 @@
     "@types/react-test-renderer": "^18.0.0",
     "@types/styled-components": "^5.1.26",
     "@types/util.promisify": "1.0.4",
-    "@types/webpack": "5.28.1",
     "@types/webpack-hot-middleware": "^2.25.6",
     "@types/ws": "^8.5.4",
     "@typescript-eslint/eslint-plugin": "^5.59.1",
@@ -56,7 +55,7 @@
     "chalk": "5.2.0",
     "create-react-class": "^15.7.0",
     "css-loader": "^6.7.3",
-    "cypress": "12.7.0",
+    "cypress": "12.10.0",
     "delay": "^5.0.0",
     "eslint": "^8.39.0",
     "eslint-plugin-import": "^2.27.5",
@@ -86,7 +85,7 @@
     "ts-node": "^10.9.1",
     "typescript": "5.0.4",
     "vite": "^4.3.1",
-    "webpack": "^5.75.0",
+    "webpack": "^5.80.0",
     "webpack-cli": "^5.0.2",
     "yargs": "^17.7.1"
   }
