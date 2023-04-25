@@ -12,7 +12,7 @@ export const userDepsVirtualModuleId = 'virtual:cosmos-userdeps';
 export const userDepsResolvedModuleId = '\0' + userDepsVirtualModuleId;
 
 const defaultIndexPattern = new RegExp(
-  `^(src${path.sep})?(index|main)\.(js|ts)x?$`
+  `^(src\\${path.sep})?(index|main)\.(js|ts)x?$`
 );
 
 export function reactCosmosViteRollupPlugin(
