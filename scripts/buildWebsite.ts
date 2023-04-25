@@ -20,7 +20,7 @@ process.env.NODE_ENV = 'production';
   await createPage({
     pageName: 'visual-tdd',
     title: `Visual TDD · React Cosmos`,
-    description: `Develop one component at a time. Isolate the UI you're working on and iterate quickly. Reloading your whole app on every change is slowing you down!`,
+    description: `Develop one component at a time. Isolate the UI you're working on and iterate quickly. Refreshing your whole app on every change is slowing you down!`,
   });
   await createPage({
     pageName: 'component-library',

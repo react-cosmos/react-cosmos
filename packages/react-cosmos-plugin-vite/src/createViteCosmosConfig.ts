@@ -1,6 +1,7 @@
 import { CosmosConfig } from 'react-cosmos';
 
-type ViteCosmosConfig = {
+export type ViteCosmosConfig = {
+  configPath: string | null | false;
   port: number;
 };
 
@@ -12,6 +13,7 @@ export function createViteCosmosConfig(
   const configInput: ViteCosmosConfigInput = cosmosConfig.vite || {};
 
   return {
-    port: configInput.port || 5050,
+    configPath: configInput.configPath || null,
+    port: configInput.port ?? 5050,
   };
 }
