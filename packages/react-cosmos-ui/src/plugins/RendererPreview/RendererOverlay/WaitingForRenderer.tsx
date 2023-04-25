@@ -50,13 +50,13 @@ const Loader = styled.div`
   :before {
     transform: scale(1, 1);
     opacity: 1;
-    animation: spWaveBe ${1.6}s infinite linear;
+    animation: spWaveBe 1.5s infinite linear;
   }
 
   :after {
     transform: scale(0, 0);
     opacity: 0;
-    animation: spWaveAf ${1.6}s infinite linear;
+    animation: spWaveAf 1.5s infinite linear;
   }
 
   @keyframes spWaveAf {
