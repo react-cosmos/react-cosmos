@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import {
   CosmosConfig,
   generateUserDepsModule,
@@ -11,7 +11,9 @@ import { createViteRendererIndex } from './createViteRendererIndex.js';
 export const userDepsVirtualModuleId = 'virtual:cosmos-userdeps';
 export const userDepsResolvedModuleId = '\0' + userDepsVirtualModuleId;
 
-const defaultIndexPattern = /^(src\/)?(index|main)\.(js|ts)x?$/;
+const defaultIndexPattern = new RegExp(
+  `^(src${path.sep})?(index|main)\.(js|ts)x?$`
+);
 
 export function reactCosmosViteRollupPlugin(
   cosmosConfig: CosmosConfig,
