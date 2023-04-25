@@ -2,7 +2,7 @@ import { CosmosConfig, resolveLoose } from 'react-cosmos';
 
 export type ViteCosmosConfig = {
   configPath: string | null | false;
-  indexFile: string | null;
+  indexPath: string | null;
   port: number;
 };
 
@@ -17,8 +17,8 @@ export function createViteCosmosConfig(
   return {
     configPath: configInput.configPath ?? null,
 
-    indexFile: configInput.indexFile
-      ? resolveLoose(rootDir, configInput.indexFile)
+    indexPath: configInput.indexPath
+      ? resolveLoose(rootDir, configInput.indexPath)
       : null,
 
     port: configInput.port ?? 5050,

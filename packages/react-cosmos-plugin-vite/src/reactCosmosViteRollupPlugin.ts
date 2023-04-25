@@ -44,8 +44,8 @@ export function reactCosmosViteRollupPlugin(
     },
 
     transform(src, id) {
-      const isRendererIndex = cosmosViteConfig.indexFile
-        ? cosmosViteConfig.indexFile === id
+      const isRendererIndex = cosmosViteConfig.indexPath
+        ? cosmosViteConfig.indexPath === id
         : path.relative(cosmosConfig.rootDir, id).match(defaultIndexPattern);
 
       if (isRendererIndex) {

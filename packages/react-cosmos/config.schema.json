@@ -156,17 +156,40 @@
         }
       }
     },
+    "vite": {
+      "description": "Vite-related options",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "configPath": {
+          "description": "Path to Vite config. Set to false to disable reading it from the default path. [default: looks for \"vite.config.js\" in your project root]",
+          "anyOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "null" },
+            { "type": "boolean" }
+          ]
+        },
+        "indexPath": {
+          "description": "Path to index module (eg. \"src/my-index.tsx\"). [default: matches common index/main module path]",
+          "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
+        },
+        "port": {
+          "description": "Vite renderer port. [default: 5050]",
+          "type": "number"
+        }
+      }
+    },
     "webpack": {
       "description": "Webpack-related options",
       "type": "object",
       "additionalProperties": false,
       "properties": {
         "configPath": {
-          "description": "Path to an existing webpack config, which Cosmos will reuse to build your code. Set to null to disable this behavior. [default \"webpack.config.js\"]",
+          "description": "Path to an existing Webpack config, which Cosmos will reuse to build your code. Set to null to disable this behavior. [default: \"webpack.config.js\"]",
           "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
         },
         "overridePath": {
-          "description": "Path to a user module that customizes the webpack config used by Cosmos. Set to null to disable this behavior. [default \"webpack.override.js\"]",
+          "description": "Path to a user module that customizes the webpack config used by Cosmos. Set to null to disable this behavior. [default: \"webpack.override.js\"]",
           "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
         },
         "includeHashInOutputFilename": {
