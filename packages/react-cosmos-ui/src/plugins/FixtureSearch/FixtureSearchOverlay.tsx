@@ -267,15 +267,19 @@ export function FixtureSearchOverlay({
         </ShortcutsContainer>
         <ResultsViewport>
           <ResultsContainer>
-            {matchingFixturePaths.map(cleanFixturePath => (
-              <FixtureSearchResult
-                key={cleanFixturePath}
-                cleanFixturePath={cleanFixturePath}
-                fixtureItem={fixtureItems[cleanFixturePath]}
-                active={cleanFixturePath === activeFixturePath}
-                onSelect={onSelect}
-              />
-            ))}
+            {matchingFixturePaths.map(
+              cleanFixturePath =>
+                // TODO: Test this
+                fixtureItems[cleanFixturePath] && (
+                  <FixtureSearchResult
+                    key={cleanFixturePath}
+                    cleanFixturePath={cleanFixturePath}
+                    fixtureItem={fixtureItems[cleanFixturePath]}
+                    active={cleanFixturePath === activeFixturePath}
+                    onSelect={onSelect}
+                  />
+                )
+            )}
             {matchingFixturePaths.length === 0 && (
               <NoResults>No results</NoResults>
             )}
