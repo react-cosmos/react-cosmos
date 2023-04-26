@@ -134,7 +134,7 @@ export default class CosmosApp extends Component {
 > />
 > ```
 
-Finally, create a new `App.js` that'll merely route between main and Cosmos entry points based on enviromnent:
+Finally, create a new `App.js` that routes between your main and Cosmos entry points based on enviromnent:
 
 ```js
 // App.js
@@ -153,7 +153,7 @@ You've taken the first step towards designing reusable components. You're ready 
 
 ## App fixture
 
-You'll often want to back to load the entire app in development. The simplest way to do this without disconnecting the Cosmos entry point is to create an App fixture:
+You'll often want to load the entire app in development. The simplest way to do this without disconnecting the Cosmos entry point is to create an App fixture:
 
 ```jsx
 // App.fixture.js
