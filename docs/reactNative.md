@@ -96,11 +96,11 @@ This is very similar to a [custom bundler setup](customBundlerSetup.md). Cosmos 
 
 Here's a basic file structure to get going. You can tweak this after everything's working.
 
-> If you're using TypeScript replace `.js` with `.tsx` in all examples below.
-
 1. Your production app entry point: `App.main.js`.
 2. Your Cosmos renderer entry point: `App.cosmos.js`.
 3. The root entry point that decides which to load: `App.js`.
+
+> If you're using TypeScript replace `.js` file extensions with `.tsx`.
 
 First, rename your existing `App.js` to `App.main.js`.
 
