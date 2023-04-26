@@ -8,22 +8,18 @@ type Args = {
   cosmosConfig: CosmosConfig;
   rendererConfig: Json;
   relativeToDir: string | null;
+  typeScript: boolean;
   importJsExtension: boolean;
 };
 export function generateUserDepsModule({
   cosmosConfig,
   rendererConfig,
   relativeToDir,
+  typeScript,
   importJsExtension,
 }: Args): string {
-  const {
-    rootDir,
-    fixturesDir,
-    fixtureFileSuffix,
-    globalImports,
-    ignore,
-    typeScript,
-  } = cosmosConfig;
+  const { rootDir, fixturesDir, fixtureFileSuffix, globalImports, ignore } =
+    cosmosConfig;
   const { fixturePaths, decoratorPaths } = findUserModulePaths({
     rootDir,
     fixturesDir,

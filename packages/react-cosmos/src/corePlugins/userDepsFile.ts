@@ -35,7 +35,7 @@ function shouldGenerateUserDepsFile(platformType: PlatformType): boolean {
 }
 
 async function generateUserDepsFile(cosmosConfig: CosmosConfig) {
-  const { userDepsFilePath } = cosmosConfig;
+  const { userDepsFilePath, typeScript } = cosmosConfig;
 
   const rendererConfig: RendererConfig = {
     playgroundUrl: getPlaygroundUrl(cosmosConfig),
@@ -44,6 +44,7 @@ async function generateUserDepsFile(cosmosConfig: CosmosConfig) {
     cosmosConfig,
     rendererConfig,
     relativeToDir: path.dirname(userDepsFilePath),
+    typeScript,
     importJsExtension: true,
   });
   await fs.writeFile(userDepsFilePath, userDepsModule, 'utf8');

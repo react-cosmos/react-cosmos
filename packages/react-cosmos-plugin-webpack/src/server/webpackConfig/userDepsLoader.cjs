@@ -25,6 +25,7 @@ module.exports = async function injectUserDeps() {
     cosmosConfig,
     rendererConfig,
     relativeToDir: null,
+    typeScript: false,
     importJsExtension: false,
   });
 };
