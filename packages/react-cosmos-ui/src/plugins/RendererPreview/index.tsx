@@ -2,9 +2,9 @@ import React from 'react';
 import { createPlugin } from 'react-plugin';
 import { CoreSpec } from '../Core/spec.js';
 import { RendererCoreSpec } from '../RendererCore/spec.js';
+import { RendererPreview } from './RendererPreview.js';
 import { createRendererRequestHandler } from './handleRendererRequests.js';
 import { handleWindowMessages } from './handleWindowMessages.js';
-import { RendererPreview } from './RendererPreview.js';
 import { RendererPreviewContext } from './shared.js';
 import { RendererPreviewSpec } from './spec.js';
 

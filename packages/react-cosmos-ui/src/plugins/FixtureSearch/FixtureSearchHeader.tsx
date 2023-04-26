@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { KeyBox } from '../../components/KeyBox.js';
 import { IconButton32 } from '../../components/buttons/index.js';
 import { ChevronLeftIcon, SearchIcon } from '../../components/icons/index.js';
-import { KeyBox } from '../../components/KeyBox.js';
 import { blue, grey160, grey32, white10 } from '../../style/colors.js';
 
 type Props = {

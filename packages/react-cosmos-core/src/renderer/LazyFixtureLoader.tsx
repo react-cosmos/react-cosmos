@@ -2,9 +2,9 @@ import React, { ReactElement, useMemo } from 'react';
 import { FixtureId } from '../fixture/types.js';
 import { FixtureState, SetFixtureState } from '../fixtureState/types.js';
 import { DecoratedFixture } from './DecoratedFixture.js';
+import { LazyFixtureListItemUpdate } from './LazyFixtureListItemUpdate.js';
 import { getFixture } from './getFixture.js';
 import { getSortedDecoratorsForFixturePath } from './getSortedDecoratorsForFixturePath.js';
-import { LazyFixtureListItemUpdate } from './LazyFixtureListItemUpdate.js';
 import { RendererConnect } from './rendererConnectTypes.js';
 import { useLazyFixtureModules } from './useLazyFixtureModules.js';
 import {

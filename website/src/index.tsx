@@ -1,8 +1,8 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import './global.css';
 import pages from './Page.fixture';
 import { Root } from './Root.js';
+import './global.css';
 
 type PageName = keyof typeof pages;
 

@@ -1,6 +1,6 @@
 import { isEqual } from 'lodash-es';
 import React, { Component, ReactNode } from 'react';
-import { areNodesEqual, ReactDecoratorProps } from 'react-cosmos-core';
+import { ReactDecoratorProps, areNodesEqual } from 'react-cosmos-core';
 
 type State = {
   error: null | string;

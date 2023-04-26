@@ -10,9 +10,9 @@ import { Highlights } from './Highlights.js';
 import { Logos } from './Logos.js';
 import { Quote } from './Quote.js';
 import { Rocket } from './Rocket.js';
-import { grayToWhiteGradient, whiteToGrayGradient } from './shared/colors.js';
-import { Height } from './shared/Height.js';
 import { SplashScreen } from './SplashScreen/SplashScreen.js';
+import { Height } from './shared/Height.js';
+import { grayToWhiteGradient, whiteToGrayGradient } from './shared/colors.js';
 
 const headerHeight = 81;
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { mobileMaxWidth } from './shared/breakpoints.js';
 import { ExternalLink } from './shared/ExternalLink.js';
+import { mobileMaxWidth } from './shared/breakpoints.js';
 import { livePreviewUrl } from './shared/livePreviewUrl.js';
 import { getSlideInStyle, slideInTransition } from './shared/slideIn.js';
 import { NoWrap } from './shared/styledPrimitives.js';

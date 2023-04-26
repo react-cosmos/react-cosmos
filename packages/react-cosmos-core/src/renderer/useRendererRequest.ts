@@ -7,8 +7,8 @@ import {
   SelectFixtureRequest,
   SetFixtureStateRequest,
 } from './rendererConnectTypes.js';
-import { UserModuleWrappers } from './userModuleTypes.js';
 import { SelectedFixture } from './useSelectedFixture.js';
+import { UserModuleWrappers } from './userModuleTypes.js';
 
 export function useRendererRequest(
   rendererId: string,

@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo } from 'react';
 import { FixtureConnect, UserModuleWrappers } from 'react-cosmos-core';
+import { ErrorCatch } from './ErrorCatch.js';
 import { createDomRendererConnect } from './domRendererConnect.js';
 import { getRendererId } from './domRendererId.js';
-import { ErrorCatch } from './ErrorCatch.js';
 import { getSelectedFixtureId } from './selectedFixtureId.js';
 import { isInsideCosmosPreviewIframe } from './utils/isInsideCosmosPreviewIframe.js';
 

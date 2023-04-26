@@ -5,7 +5,7 @@ import {
   NotificationsSpec,
   RendererActionSlotProps,
 } from 'react-cosmos-ui';
-import { createPlugin, PluginContext } from 'react-plugin';
+import { PluginContext, createPlugin } from 'react-plugin';
 import { OpenFixtureButton } from './OpenFixtureButton.js';
 import { OpenFixtureSpec } from './spec.js';
 

@@ -6,11 +6,11 @@ import { RendererCoreSpec } from '../RendererCore/spec.js';
 import { RouterSpec } from '../Router/spec.js';
 import { StorageSpec } from '../Storage/spec.js';
 import { useWelcomeDismiss } from './HomeOverlay/welcomeDismiss.js';
+import { Root } from './Root.js';
 import { isNavOpen, openNav } from './navOpen.js';
 import { getNavWidthApi } from './navWidth.js';
 import { isPanelOpen, openPanel } from './panelOpen.js';
 import { getPanelWidthApi } from './panelWidth.js';
-import { Root } from './Root.js';
 import { RootContext } from './shared.js';
 import { RootSpec } from './spec.js';
 

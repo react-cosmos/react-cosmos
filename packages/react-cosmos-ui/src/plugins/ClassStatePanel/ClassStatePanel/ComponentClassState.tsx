@@ -7,8 +7,6 @@ import {
   StateUpdater,
   updateFixtureStateClassState,
 } from 'react-cosmos-core';
-import { IconButton32 } from '../../../components/buttons/index.js';
-import { RotateCcwIcon } from '../../../components/icons/index.js';
 import {
   SidePanelActions,
   SidePanelBody,
@@ -20,9 +18,11 @@ import { ExpandCollapseValues } from '../../../components/ValueInputTree/ExpandC
 import {
   FixtureExpansion,
   OnElementExpansionChange,
-  stringifyElementId,
   ValueInputTree,
+  stringifyElementId,
 } from '../../../components/ValueInputTree/index.js';
+import { IconButton32 } from '../../../components/buttons/index.js';
+import { RotateCcwIcon } from '../../../components/icons/index.js';
 import { TreeExpansion } from '../../../shared/treeExpansion.js';
 import { createClassStateFsUpdater } from './shared.js';
 

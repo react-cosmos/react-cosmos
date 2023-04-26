@@ -8,17 +8,17 @@ import React, {
   useState,
 } from 'react';
 import {
-  createFixtureTree,
   FixtureId,
   FixtureList,
   FlatFixtureTreeItem,
-  flattenFixtureTree,
   KEY_DOWN,
   KEY_ENTER,
   KEY_ESC,
   KEY_FWD_SLASH,
   KEY_TAB,
   KEY_UP,
+  createFixtureTree,
+  flattenFixtureTree,
 } from 'react-cosmos-core';
 import styled from 'styled-components';
 import { HelpCircleIcon, SearchIcon } from '../../components/icons/index.js';

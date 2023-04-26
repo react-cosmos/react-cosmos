@@ -6,8 +6,8 @@ import { LazyFixtureLoader } from './LazyFixtureLoader.js';
 import { RendererConnect } from './rendererConnectTypes.js';
 import { useRendererRequest } from './useRendererRequest.js';
 import { useRendererResponse } from './useRendererResponse.js';
-import { ReactDecorator, UserModuleWrappers } from './userModuleTypes.js';
 import { useSelectedFixture } from './useSelectedFixture.js';
+import { ReactDecorator, UserModuleWrappers } from './userModuleTypes.js';
 
 type Props = {
   rendererId: string;

@@ -2,8 +2,8 @@ import React from 'react';
 import { FixtureState, StateUpdater } from 'react-cosmos-core';
 import {
   FixtureExpansion,
-  hasFsValues,
   OnElementExpansionChange,
+  hasFsValues,
   sortFsValueGroups,
   stringifyElementId,
 } from '../../../components/ValueInputTree/index.js';
