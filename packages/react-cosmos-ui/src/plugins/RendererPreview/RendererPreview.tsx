@@ -21,7 +21,11 @@ export const RendererPreview = React.memo(function RendererPreview({
 }: Props) {
   if (!rendererUrl) {
     // This code path is used when Cosmos is in React Native mode
-    return <RemoteRendererOverlay rendererConnected={rendererConnected} />;
+    return (
+      <Container>
+        <RemoteRendererOverlay rendererConnected={rendererConnected} />
+      </Container>
+    );
   }
 
   return (
