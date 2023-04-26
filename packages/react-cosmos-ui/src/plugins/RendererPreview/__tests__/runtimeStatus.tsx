@@ -8,7 +8,6 @@ import {
   mockCore,
   mockRendererCore,
 } from '../../../testHelpers/pluginMocks.js';
-import { fakeFetchResponseStatus } from '../testHelpers/fetch.js';
 import { rendererErrorMsg, rendererReadyMsg } from '../testHelpers/messages.js';
 
 beforeEach(register);
@@ -23,7 +22,6 @@ function registerTestPlugins() {
 }
 
 function loadTestPlugins() {
-  fakeFetchResponseStatus(200);
   loadPlugins();
 
   return render(<Slot name="rendererPreview" />);

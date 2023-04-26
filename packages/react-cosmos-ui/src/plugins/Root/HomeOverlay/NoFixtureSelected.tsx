@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import { BlankCanvasIllustration } from '../../../components/illustrations/BlankCanvas.js';
+import { screenGrey3 } from '../../../style/colors.js';
 import {
   IllustrationContainer,
   OverlayBody,
   OverlayContainer,
   SecondaryButton,
   TextContainer,
-} from '../../../components/ContentOverlay.js';
-import { BlankCanvasIllustration } from '../../../components/illustrations/BlankCanvas.js';
-import { screenGrey3 } from '../../../style/colors.js';
+} from './ContentOverlay.js';
 import { KeyShortcut } from './KeyShortcut.js';
 
 type Props = {

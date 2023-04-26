@@ -4,58 +4,23 @@ import React from 'react';
 import { wrapActSetTimeout } from '../../../testHelpers/wrapActSetTimeout.js';
 import { RendererOverlay } from './RendererOverlay.js';
 
-it('does not render anything before URL status is known', () => {
-  const { container } = render(
-    <RendererOverlay
-      rendererPreviewUrlStatus="unknown"
-      rendererPreviewRuntimeStatus="pending"
-    />
-  );
+it('does not immediately render anything when status runtime status is "pending"', () => {
+  const { container } = render(<RendererOverlay runtimeStatus="pending" />);
   expect(container).toMatchInlineSnapshot(`<div />`);
 });
 
-it('does not render anything when status runtime status is "pending" (initially)', () => {
-  const { container } = render(
-    <RendererOverlay
-      rendererPreviewUrlStatus="ok"
-      rendererPreviewRuntimeStatus="pending"
-    />
-  );
-  expect(container).toMatchInlineSnapshot(`<div />`);
-});
-
-it('renders "waiting for renderer" state after a bit', async () => {
+it('renders "waiting for renderer" state after waiting for some time', async () => {
   wrapActSetTimeout();
-  const { getByText } = render(
-    <RendererOverlay
-      rendererPreviewUrlStatus="ok"
-      rendererPreviewRuntimeStatus="pending"
-    />
-  );
+  const { getByText } = render(<RendererOverlay runtimeStatus="pending" />);
   await retry(() => getByText(/waiting for renderer/i));
 });
 
-it('renders error state when URL status is "error"', () => {
-  const { getByText } = render(
-    <RendererOverlay
-      rendererPreviewUrlStatus="error"
-      rendererPreviewRuntimeStatus="pending"
-    />
-  );
-
-  getByText(/renderer/i);
-  getByText(/not responding/i);
-
-  const helpLink = getByText(/ask for help/i) as HTMLAnchorElement;
-  expect(helpLink.href).toMatch('https://discord.gg/3X95VgfnW5');
+it('does not render anything when runtime status is "error"', () => {
+  const { container } = render(<RendererOverlay runtimeStatus="error" />);
+  expect(container).toMatchInlineSnapshot(`<div />`);
 });
 
-it('does not render anything when runtime status is "error"', () => {
-  const { container } = render(
-    <RendererOverlay
-      rendererPreviewUrlStatus="ok"
-      rendererPreviewRuntimeStatus="error"
-    />
-  );
+it('does not render anything when runtime status is "connected"', () => {
+  const { container } = render(<RendererOverlay runtimeStatus="connected" />);
   expect(container).toMatchInlineSnapshot(`<div />`);
 });

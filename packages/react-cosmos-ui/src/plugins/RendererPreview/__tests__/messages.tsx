@@ -8,7 +8,6 @@ import {
   mockCore,
   mockRendererCore,
 } from '../../../testHelpers/pluginMocks.js';
-import { fakeFetchResponseStatus } from '../testHelpers/fetch.js';
 import { getIframe, mockIframeMessage } from '../testHelpers/iframe.js';
 import { rendererReadyMsg, selectFixtureMsg } from '../testHelpers/messages.js';
 
@@ -17,7 +16,6 @@ beforeEach(register);
 afterEach(resetPlugins);
 
 function loadTestPlugins() {
-  fakeFetchResponseStatus(200);
   loadPlugins();
   return render(<Slot name="rendererPreview" />);
 }
