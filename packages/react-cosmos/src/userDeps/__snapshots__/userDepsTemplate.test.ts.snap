@@ -5,13 +5,13 @@ exports[`should generate TypeScript user deps module with absolute paths 1`] = `
 // only edit if you know what you're doing.
 import { RendererConfig, UserModuleWrappers } from 'react-cosmos-core';
 
-import '/Users/ovidiu/cosmos/src/polyfills.ts';
+import '/Users/ovidiu/cosmos/src/polyfills.js';
 import '/Users/ovidiu/cosmos/src/global.css';
 
-import * as fixture0 from '/Users/ovidiu/cosmos/src/Counter/Counter.fixture.tsx';
-import * as fixture1 from '/Users/ovidiu/cosmos/src/CounterButton/CounterButton.fixture.tsx';
+import * as fixture0 from '/Users/ovidiu/cosmos/src/Counter/Counter.fixture.js';
+import * as fixture1 from '/Users/ovidiu/cosmos/src/CounterButton/CounterButton.fixture.js';
 
-import * as decorator0 from '/Users/ovidiu/cosmos/src/cosmos.decorator.tsx';
+import * as decorator0 from '/Users/ovidiu/cosmos/src/cosmos.decorator.js';
 
 export const rendererConfig: RendererConfig = {
   "playgroundUrl": "http://localhost:5002"

@@ -40,7 +40,6 @@ export function reactCosmosViteRollupPlugin(
           },
           relativeToDir: null,
           typeScript: false,
-          importJsExtension: false,
         });
       } else {
         return null;

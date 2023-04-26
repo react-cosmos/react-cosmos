@@ -27,7 +27,6 @@ it('should generate user deps module with absolute paths', () => {
       rootDir: '/Users/ovidiu/cosmos/',
       relativeToDir: null,
       typeScript: false,
-      importJsExtension: false,
     })
   ).toMatchSnapshot();
 });
@@ -42,7 +41,6 @@ it('should generate user deps module with relative paths', () => {
       rootDir: '/Users/ovidiu/cosmos',
       relativeToDir: '/Users/ovidiu/cosmos/src',
       typeScript: false,
-      importJsExtension: false,
     })
   ).toMatchSnapshot();
 });
@@ -57,7 +55,6 @@ it('should generate TypeScript user deps module with absolute paths', () => {
       rootDir: '/Users/ovidiu/cosmos/',
       relativeToDir: null,
       typeScript: true,
-      importJsExtension: false,
     })
   ).toMatchSnapshot();
 });
@@ -72,7 +69,6 @@ it('should generate TypeScript user deps module with relative paths', () => {
       rootDir: '/Users/ovidiu/cosmos',
       relativeToDir: '/Users/ovidiu/cosmos/src',
       typeScript: true,
-      importJsExtension: true,
     })
   ).toMatchSnapshot();
 });

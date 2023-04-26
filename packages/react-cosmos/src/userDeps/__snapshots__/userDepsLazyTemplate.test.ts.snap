@@ -5,7 +5,7 @@ exports[`should generate TypeScript user deps module with absolute paths 1`] = `
 // only edit if you know what you're doing.
 import { RendererConfig, UserModuleWrappers } from 'react-cosmos-core';
 
-import '/Users/ovidiu/cosmos/src/polyfills.ts';
+import '/Users/ovidiu/cosmos/src/polyfills.js';
 import '/Users/ovidiu/cosmos/src/global.css';
 
 export const rendererConfig: RendererConfig = {
@@ -13,12 +13,12 @@ export const rendererConfig: RendererConfig = {
 };
 
 const fixtures = {
-  'src/Counter/Counter.fixture.tsx': { getModule: () => import('/Users/ovidiu/cosmos/src/Counter/Counter.fixture.tsx') },
-  'src/CounterButton/CounterButton.fixture.tsx': { getModule: () => import('/Users/ovidiu/cosmos/src/CounterButton/CounterButton.fixture.tsx') }
+  'src/Counter/Counter.fixture.tsx': { getModule: () => import('/Users/ovidiu/cosmos/src/Counter/Counter.fixture.js') },
+  'src/CounterButton/CounterButton.fixture.tsx': { getModule: () => import('/Users/ovidiu/cosmos/src/CounterButton/CounterButton.fixture.js') }
 };
 
 const decorators = {
-  'src/cosmos.decorator.tsx': { getModule: () => import('/Users/ovidiu/cosmos/src/cosmos.decorator.tsx') }
+  'src/cosmos.decorator.tsx': { getModule: () => import('/Users/ovidiu/cosmos/src/cosmos.decorator.js') }
 };
 
 export const moduleWrappers: UserModuleWrappers = {

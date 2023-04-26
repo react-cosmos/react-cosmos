@@ -12,7 +12,6 @@ export function userDepsTemplate({
   rootDir,
   relativeToDir,
   typeScript,
-  importJsExtension,
 }: UserDepsTemplateArgs) {
   const fixtures = userDepsImportMap(fixturePaths, rootDir, relativeToDir);
   const fixtureKeys = Object.keys(fixtures);
@@ -27,9 +26,7 @@ export function userDepsTemplate({
   }
 
   function ext(importPath: string) {
-    return importJsExtension
-      ? importPath.replace(/\.tsx?$/, '.js')
-      : importPath;
+    return typeScript ? importPath.replace(/\.tsx?$/, '.js') : importPath;
   }
 
   return `

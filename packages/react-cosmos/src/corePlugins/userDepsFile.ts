@@ -37,6 +37,12 @@ function shouldGenerateUserDepsFile(platformType: PlatformType): boolean {
 async function generateUserDepsFile(cosmosConfig: CosmosConfig) {
   const { userDepsFilePath, typeScript } = cosmosConfig;
 
+  if (typeScript) {
+    console.log(
+      '[Cosmos] TypeScript detected, set "typeScript": false in cosmos.config.json to disable'
+    );
+  }
+
   const rendererConfig: RendererConfig = {
     playgroundUrl: getPlaygroundUrl(cosmosConfig),
   };
@@ -45,7 +51,6 @@ async function generateUserDepsFile(cosmosConfig: CosmosConfig) {
     rendererConfig,
     relativeToDir: path.dirname(userDepsFilePath),
     typeScript,
-    importJsExtension: true,
   });
   await fs.writeFile(userDepsFilePath, userDepsModule, 'utf8');
 

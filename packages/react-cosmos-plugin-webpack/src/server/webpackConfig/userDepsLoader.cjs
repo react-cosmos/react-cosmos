@@ -26,6 +26,5 @@ module.exports = async function injectUserDeps() {
     rendererConfig,
     relativeToDir: null,
     typeScript: false,
-    importJsExtension: false,
   });
 };
