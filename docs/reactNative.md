@@ -94,10 +94,20 @@ At this point Cosmos should successfully read your fixtures. One more step befor
 
 This is very similar to a [custom bundler setup](customBundlerSetup.md). Cosmos cannot plug itself automatically into React Native's build pipeline (Metro), but you can do it with minimal effort.
 
-Replace your `App.js` entrypoint with the following code:
+Here's a basic file structure to get going. You can tweak this after everything's working.
+
+> If you're using TypeScript replace `.js` with `.tsx` in all examples below.
+
+1. Your production app entry point: `App.main.js`.
+2. Your Cosmos renderer entry point: `App.cosmos.js`.
+3. The root entry point that decides which to load: `App.js`.
+
+First, rename your existing `App.js` to `App.main.js`.
+
+Then add the Cosmos renderer under `App.cosmos.js`:
 
 ```jsx
-// App.js
+// App.cosmos.js
 import React, { Component } from 'react';
 import { NativeFixtureLoader } from 'react-cosmos-native';
 import { rendererConfig, moduleWrappers } from './cosmos.userdeps.js';
@@ -114,7 +124,17 @@ export default class App extends Component {
 }
 ```
 
-This is a temporary solution to get going with Cosmos. Once you see your fixtures rendering properly you'll probably want to split your App entry point to load Cosmos in development and your root component in production. Something like this:
+> When using TypeScript you'll notice an error related to `cosmos.userdeps.js`, which is a plain JS module. We're working on providing an option to generate `cosmos.userdeps.ts` soon. Meanwhile you can ignore this error by slapping a naughty `@ts-ignore` comment:
+>
+> ```diff
+> <NativeFixtureLoader
+>   rendererConfig={rendererConfig}
+> + // @ts-ignore
+>   moduleWrappers={moduleWrappers}
+> />
+> ```
+
+Finally, create a new `App.js` that'll merely route between main and Cosmos entry points based on enviromnent:
 
 ```js
 // App.js
@@ -123,15 +143,26 @@ module.exports = global.__DEV__
   : require('./App.main');
 ```
 
-Where `App.cosmos.js` contains the code above that renders `NativeFixtureLoader` and `App.main.js` contains your original App.js.
+That's it!
 
-6\. **Render fixture in simulator**
-
-That's it. Open your app in the simulator and the Cosmos renderer should say "No fixture selected". Go back to your React Cosmos UI, click on the `Hello` fixture and it will render in the simulator.
+Open your app in the simulator and the Cosmos renderer should say "No fixture selected". Go back to your React Cosmos UI, click on the `Hello` fixture and it will render in the simulator.
 
 **Congratulations 😎**
 
 You've taken the first step towards designing reusable components. You're ready to prototype, test and interate on components in isolation.
+
+## TypeScript
+
+## App fixture
+
+You'll often want to back to load the entire app even in development. The simplest way to do this without disconnecting the Cosmos entry point is to create an App fixture:
+
+```jsx
+// App.fixture.js
+import App from './App.main';
+
+export default () => <App />;
+```
 
 ## Initial fixture
 
