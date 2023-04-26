@@ -112,7 +112,7 @@ import React, { Component } from 'react';
 import { NativeFixtureLoader } from 'react-cosmos-native';
 import { rendererConfig, moduleWrappers } from './cosmos.userdeps.js';
 
-export default class App extends Component {
+export default class CosmosApp extends Component {
   render() {
     return (
       <NativeFixtureLoader
