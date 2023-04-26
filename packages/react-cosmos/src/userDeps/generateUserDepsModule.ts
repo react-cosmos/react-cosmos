@@ -32,5 +32,6 @@ export function generateUserDepsModule({
     rendererConfig,
     rootDir,
     relativeToDir,
+    typeScript: false,
   });
 }

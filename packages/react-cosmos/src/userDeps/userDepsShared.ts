@@ -9,6 +9,7 @@ export type UserDepsTemplateArgs = {
   rendererConfig: Json;
   rootDir: string;
   relativeToDir: string | null;
+  typeScript: boolean;
 };
 
 export function userDepsImportMap(
