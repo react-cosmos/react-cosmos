@@ -29,11 +29,11 @@ const Container = styled.div`
 
 // Copied from https://codepen.io/bernethe/pen/dorozd
 const Loader = styled.div`
+  margin: 12px 0 24px 0;
   width: 32px;
   height: 32px;
   border-radius: 50%;
   position: relative;
-  margin: 12px 0 24px 0;
 
   :before,
   :after {
@@ -49,27 +49,16 @@ const Loader = styled.div`
   :before {
     transform: scale(1, 1);
     opacity: 1;
-    animation: spWaveBe 1.5s infinite linear;
+    animation: waveOuter 1.5s infinite linear;
   }
 
   :after {
     transform: scale(0, 0);
     opacity: 0;
-    animation: spWaveAf 1.5s infinite linear;
+    animation: waveInner 1.5s infinite linear;
   }
 
-  @keyframes spWaveAf {
-    from {
-      transform: scale(0.5, 0.5);
-      opacity: 0;
-    }
-    to {
-      transform: scale(1, 1);
-      opacity: 1;
-    }
-  }
-
-  @keyframes spWaveBe {
+  @keyframes waveOuter {
     from {
       -webkit-transform: scale(1, 1);
       opacity: 1;
@@ -77,6 +66,17 @@ const Loader = styled.div`
     to {
       -webkit-transform: scale(1.5, 1.5);
       opacity: 0;
+    }
+  }
+
+  @keyframes waveInner {
+    from {
+      transform: scale(0.5, 0.5);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1, 1);
+      opacity: 1;
     }
   }
 `;
