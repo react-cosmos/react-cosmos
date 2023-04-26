@@ -65,7 +65,7 @@ function containsImport(modulePath: string) {
   } else {
     getUserDepsFile().should(
       'match',
-      new RegExp(`import [a-z0-9]+ from './${modulePath}'`)
+      new RegExp(`import \\* as [a-z0-9]+ from './${modulePath}'`)
     );
   }
 }
