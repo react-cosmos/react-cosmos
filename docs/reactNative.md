@@ -151,11 +151,9 @@ Open your app in the simulator and the Cosmos renderer should say "No fixture se
 
 You've taken the first step towards designing reusable components. You're ready to prototype, test and interate on components in isolation.
 
-## TypeScript
-
 ## App fixture
 
-You'll often want to back to load the entire app even in development. The simplest way to do this without disconnecting the Cosmos entry point is to create an App fixture:
+You'll often want to back to load the entire app in development. The simplest way to do this without disconnecting the Cosmos entry point is to create an App fixture:
 
 ```jsx
 // App.fixture.js
