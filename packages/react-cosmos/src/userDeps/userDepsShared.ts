@@ -10,6 +10,7 @@ export type UserDepsTemplateArgs = {
   rootDir: string;
   relativeToDir: string | null;
   typeScript: boolean;
+  importJsExtension: boolean;
 };
 
 export function userDepsImportMap(

@@ -44,6 +44,7 @@ async function generateUserDepsFile(cosmosConfig: CosmosConfig) {
     cosmosConfig,
     rendererConfig,
     relativeToDir: path.dirname(userDepsFilePath),
+    importJsExtension: true,
   });
   await fs.writeFile(userDepsFilePath, userDepsModule, 'utf8');
 

@@ -8,11 +8,13 @@ type Args = {
   cosmosConfig: CosmosConfig;
   rendererConfig: Json;
   relativeToDir: string | null;
+  importJsExtension: boolean;
 };
 export function generateUserDepsModule({
   cosmosConfig,
   rendererConfig,
   relativeToDir,
+  importJsExtension,
 }: Args): string {
   const { rootDir, fixturesDir, fixtureFileSuffix, globalImports, ignore } =
     cosmosConfig;
@@ -33,5 +35,6 @@ export function generateUserDepsModule({
     rootDir,
     relativeToDir,
     typeScript: false,
+    importJsExtension,
   });
 }

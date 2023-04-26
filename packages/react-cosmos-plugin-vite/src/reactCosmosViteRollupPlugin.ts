@@ -39,6 +39,7 @@ export function reactCosmosViteRollupPlugin(
             containerQuerySelector: cosmosConfig.dom.containerQuerySelector,
           },
           relativeToDir: null,
+          importJsExtension: false,
         });
       } else {
         return null;
