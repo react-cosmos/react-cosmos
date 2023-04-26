@@ -1,30 +1,27 @@
 import React from 'react';
 import { Slot } from 'react-plugin';
 import styled from 'styled-components';
+import { RemoteRendererOverlay } from './RendererOverlay/RemoteRendererOverlay.js';
 import { RendererOverlay } from './RendererOverlay/RendererOverlay.js';
-import { WaitingForRenderer } from './RendererOverlay/WaitingForRenderer.js';
 import { RuntimeStatus } from './spec.js';
 
 export type OnIframeRef = (elRef: null | HTMLIFrameElement) => void;
 
 type Props = {
   rendererUrl: null | string;
+  rendererConnected: boolean;
   runtimeStatus: RuntimeStatus;
   onIframeRef: OnIframeRef;
 };
-
 export const RendererPreview = React.memo(function RendererPreview({
   rendererUrl,
+  rendererConnected,
   runtimeStatus,
   onIframeRef,
 }: Props) {
   if (!rendererUrl) {
     // This code path is used when Cosmos is in React Native mode
-    return (
-      <Container>
-        {runtimeStatus === 'pending' && <WaitingForRenderer />}
-      </Container>
-    );
+    return <RemoteRendererOverlay rendererConnected={rendererConnected} />;
   }
 
   return (
