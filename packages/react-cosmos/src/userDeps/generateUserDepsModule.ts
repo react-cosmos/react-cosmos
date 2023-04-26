@@ -16,8 +16,14 @@ export function generateUserDepsModule({
   relativeToDir,
   importJsExtension,
 }: Args): string {
-  const { rootDir, fixturesDir, fixtureFileSuffix, globalImports, ignore } =
-    cosmosConfig;
+  const {
+    rootDir,
+    fixturesDir,
+    fixtureFileSuffix,
+    globalImports,
+    ignore,
+    typeScript,
+  } = cosmosConfig;
   const { fixturePaths, decoratorPaths } = findUserModulePaths({
     rootDir,
     fixturesDir,
@@ -34,7 +40,7 @@ export function generateUserDepsModule({
     rendererConfig,
     rootDir,
     relativeToDir,
-    typeScript: false,
+    typeScript,
     importJsExtension,
   });
 }

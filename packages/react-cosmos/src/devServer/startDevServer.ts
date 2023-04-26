@@ -4,6 +4,7 @@ import {
   detectCosmosConfig,
   detectCosmosConfigPath,
 } from '../cosmosConfig/detectCosmosConfig.js';
+import { CosmosConfig } from '../cosmosConfig/types.js';
 import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
 import {
   DevServerPluginCleanupCallback,
@@ -18,7 +19,7 @@ import { createMessageHandler } from './messageHandler.js';
 
 export async function startDevServer(platformType: PlatformType) {
   let cosmosConfig = await detectCosmosConfig();
-  logCosmosConfigInfo();
+  logCosmosConfigInfo(cosmosConfig);
 
   const pluginConfigs = await getPluginConfigs({
     cosmosConfig,
@@ -104,7 +105,7 @@ export async function startDevServer(platformType: PlatformType) {
   return cleanUp;
 }
 
-function logCosmosConfigInfo() {
+function logCosmosConfigInfo(cosmosConfig: CosmosConfig) {
   const cosmosConfigPath = detectCosmosConfigPath();
   if (!cosmosConfigPath) {
     console.log(`[Cosmos] Using default cosmos config`);
@@ -113,4 +114,10 @@ function logCosmosConfigInfo() {
 
   const relConfigPath = path.relative(process.cwd(), cosmosConfigPath);
   console.log(`[Cosmos] Using cosmos config found at ${relConfigPath}`);
+
+  if (cosmosConfig.typeScript) {
+    console.log(
+      '[Cosmos] TypeScript detected, set "typeScript" in cosmos.config.json to disable'
+    );
+  }
 }

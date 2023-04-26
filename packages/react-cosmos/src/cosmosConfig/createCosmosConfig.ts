@@ -1,6 +1,7 @@
 import path from 'path';
 import { getCliArgs } from '../utils/cli.js';
 import { resolveLoose } from '../utils/resolveLoose.js';
+import { resolveSilent } from '../utils/resolveSilent.js';
 import {
   CosmosConfig,
   CosmosConfigInput,
@@ -11,12 +12,13 @@ export function createCosmosConfig(
   rootDir: string,
   cosmosConfigInput: CosmosConfigInput = {}
 ): CosmosConfig {
+  const typeScript = getTypeScript(cosmosConfigInput);
   return {
     ...cosmosConfigInput,
     rootDir,
-    exportPath: getExportPath(cosmosConfigInput, rootDir),
     detectLocalPlugins: cosmosConfigInput.detectLocalPlugins ?? true,
     disablePlugins: cosmosConfigInput.disablePlugins ?? false,
+    exportPath: getExportPath(cosmosConfigInput, rootDir),
     fixtureFileSuffix: getFixtureFileSuffix(cosmosConfigInput),
     fixturesDir: getFixturesDir(cosmosConfigInput),
     globalImports: getGlobalImports(cosmosConfigInput, rootDir),
@@ -25,14 +27,19 @@ export function createCosmosConfig(
     httpsOptions: getHttpsOptions(cosmosConfigInput, rootDir),
     ignore: getIgnore(cosmosConfigInput),
     lazy: getLazy(cosmosConfigInput),
+    plugins: getPlugins(cosmosConfigInput, rootDir),
     port: getPort(cosmosConfigInput),
     portRetries: getPortRetries(cosmosConfigInput),
-    plugins: getPlugins(cosmosConfigInput, rootDir),
     publicUrl: getPublicUrl(cosmosConfigInput),
-    staticPath: getStaticPath(cosmosConfigInput, rootDir),
-    userDepsFilePath: getUserDepsFilePath(cosmosConfigInput, rootDir),
-    watchDirs: getWatchDirs(cosmosConfigInput, rootDir),
     rendererUrl: cosmosConfigInput.rendererUrl ?? null,
+    staticPath: getStaticPath(cosmosConfigInput, rootDir),
+    typeScript,
+    userDepsFilePath: getUserDepsFilePath(
+      cosmosConfigInput,
+      rootDir,
+      typeScript
+    ),
+    watchDirs: getWatchDirs(cosmosConfigInput, rootDir),
     dom: getDomConfig(cosmosConfigInput.dom || {}),
     ui: cosmosConfigInput.ui || {},
   };
@@ -94,9 +101,11 @@ function getWatchDirs(cosmosConfigInput: CosmosConfigInput, rootDir: string) {
 
 function getUserDepsFilePath(
   cosmosConfigInput: CosmosConfigInput,
-  rootDir: string
+  rootDir: string,
+  typeScript: boolean
 ) {
-  const { userDepsFilePath = 'cosmos.userdeps.js' } = cosmosConfigInput;
+  const ext = typeScript ? 'ts' : 'js';
+  const { userDepsFilePath = `cosmos.userdeps.${ext}` } = cosmosConfigInput;
   return path.resolve(rootDir, userDepsFilePath);
 }
 
@@ -146,4 +155,10 @@ function getLazy(cosmosConfigInput: CosmosConfigInput) {
 
   const { lazy = false } = cosmosConfigInput;
   return lazy;
+}
+
+function getTypeScript({ typeScript }: CosmosConfigInput) {
+  return typeof typeScript === 'undefined'
+    ? Boolean(resolveSilent('typescript'))
+    : typeScript;
 }

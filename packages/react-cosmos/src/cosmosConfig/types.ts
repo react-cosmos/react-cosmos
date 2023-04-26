@@ -32,6 +32,7 @@ export type CosmosConfig = {
   rendererUrl: string | null;
   rootDir: string;
   staticPath: null | string;
+  typeScript: boolean;
   // Only used by the React Native server, userDepsFilePath specifies where to
   // generate the file with global imports, fixtures and decorators.
   // Whereas most of the other paths are used to import modules, userDepsFilePath

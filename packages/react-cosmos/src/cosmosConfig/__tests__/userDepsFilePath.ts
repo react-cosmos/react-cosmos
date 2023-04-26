@@ -6,7 +6,7 @@ import { createCosmosConfig } from '../createCosmosConfig.js';
 
 it('returns resolved default getUserDepsFilePath', () => {
   const cosmosConfig = createCosmosConfig(process.cwd());
-  expect(cosmosConfig.userDepsFilePath).toBe(getCwdPath('cosmos.userdeps.js'));
+  expect(cosmosConfig.userDepsFilePath).toBe(getCwdPath('cosmos.userdeps.ts'));
 });
 
 it('returns resolved custom getUserDepsFilePath', () => {
