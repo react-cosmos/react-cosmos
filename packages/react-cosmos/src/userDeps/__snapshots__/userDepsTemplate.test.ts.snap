@@ -8,22 +8,22 @@ import { RendererConfig, UserModuleWrappers } from 'react-cosmos-core';
 import '/Users/ovidiu/cosmos/src/polyfills.ts';
 import '/Users/ovidiu/cosmos/src/global.css';
 
-import fixture0 from '/Users/ovidiu/cosmos/src/Counter/Counter.fixture.tsx';
-import fixture1 from '/Users/ovidiu/cosmos/src/CounterButton/CounterButton.fixture.tsx';
+import * as fixture0 from '/Users/ovidiu/cosmos/src/Counter/Counter.fixture.tsx';
+import * as fixture1 from '/Users/ovidiu/cosmos/src/CounterButton/CounterButton.fixture.tsx';
 
-import decorator0 from '/Users/ovidiu/cosmos/src/cosmos.decorator.tsx';
+import * as decorator0 from '/Users/ovidiu/cosmos/src/cosmos.decorator.tsx';
 
 export const rendererConfig: RendererConfig = {
   "playgroundUrl": "http://localhost:5002"
 };
 
 const fixtures = {
- 'src/Counter/Counter.fixture.tsx': { module: { default: fixture0 } },
- 'src/CounterButton/CounterButton.fixture.tsx': { module: { default: fixture1 } }
+ 'src/Counter/Counter.fixture.tsx': { module: fixture0 },
+ 'src/CounterButton/CounterButton.fixture.tsx': { module: fixture1 }
 };
 
 const decorators = {
- 'src/cosmos.decorator.tsx': { module: { default: decorator0 } }
+ 'src/cosmos.decorator.tsx': { module: decorator0 }
 };
 
 export const moduleWrappers: UserModuleWrappers = {
@@ -42,22 +42,22 @@ import { RendererConfig, UserModuleWrappers } from 'react-cosmos-core';
 import './polyfills.js';
 import './global.css';
 
-import fixture0 from './Counter/Counter.fixture.js';
-import fixture1 from './CounterButton/CounterButton.fixture.js';
+import * as fixture0 from './Counter/Counter.fixture.js';
+import * as fixture1 from './CounterButton/CounterButton.fixture.js';
 
-import decorator0 from './cosmos.decorator.js';
+import * as decorator0 from './cosmos.decorator.js';
 
 export const rendererConfig: RendererConfig = {
   "playgroundUrl": "http://localhost:5002"
 };
 
 const fixtures = {
- 'src/Counter/Counter.fixture.tsx': { module: { default: fixture0 } },
- 'src/CounterButton/CounterButton.fixture.tsx': { module: { default: fixture1 } }
+ 'src/Counter/Counter.fixture.tsx': { module: fixture0 },
+ 'src/CounterButton/CounterButton.fixture.tsx': { module: fixture1 }
 };
 
 const decorators = {
- 'src/cosmos.decorator.tsx': { module: { default: decorator0 } }
+ 'src/cosmos.decorator.tsx': { module: decorator0 }
 };
 
 export const moduleWrappers: UserModuleWrappers = {
@@ -75,22 +75,22 @@ exports[`should generate user deps module with absolute paths 1`] = `
 import '/Users/ovidiu/cosmos/src/polyfills.ts';
 import '/Users/ovidiu/cosmos/src/global.css';
 
-import fixture0 from '/Users/ovidiu/cosmos/src/Counter/Counter.fixture.tsx';
-import fixture1 from '/Users/ovidiu/cosmos/src/CounterButton/CounterButton.fixture.tsx';
+import * as fixture0 from '/Users/ovidiu/cosmos/src/Counter/Counter.fixture.tsx';
+import * as fixture1 from '/Users/ovidiu/cosmos/src/CounterButton/CounterButton.fixture.tsx';
 
-import decorator0 from '/Users/ovidiu/cosmos/src/cosmos.decorator.tsx';
+import * as decorator0 from '/Users/ovidiu/cosmos/src/cosmos.decorator.tsx';
 
 export const rendererConfig = {
   "playgroundUrl": "http://localhost:5002"
 };
 
 const fixtures = {
- 'src/Counter/Counter.fixture.tsx': { module: { default: fixture0 } },
- 'src/CounterButton/CounterButton.fixture.tsx': { module: { default: fixture1 } }
+ 'src/Counter/Counter.fixture.tsx': { module: fixture0 },
+ 'src/CounterButton/CounterButton.fixture.tsx': { module: fixture1 }
 };
 
 const decorators = {
- 'src/cosmos.decorator.tsx': { module: { default: decorator0 } }
+ 'src/cosmos.decorator.tsx': { module: decorator0 }
 };
 
 export const moduleWrappers = {
@@ -108,22 +108,22 @@ exports[`should generate user deps module with relative paths 1`] = `
 import './polyfills.ts';
 import './global.css';
 
-import fixture0 from './Counter/Counter.fixture.tsx';
-import fixture1 from './CounterButton/CounterButton.fixture.tsx';
+import * as fixture0 from './Counter/Counter.fixture.tsx';
+import * as fixture1 from './CounterButton/CounterButton.fixture.tsx';
 
-import decorator0 from './cosmos.decorator.tsx';
+import * as decorator0 from './cosmos.decorator.tsx';
 
 export const rendererConfig = {
   "playgroundUrl": "http://localhost:5002"
 };
 
 const fixtures = {
- 'src/Counter/Counter.fixture.tsx': { module: { default: fixture0 } },
- 'src/CounterButton/CounterButton.fixture.tsx': { module: { default: fixture1 } }
+ 'src/Counter/Counter.fixture.tsx': { module: fixture0 },
+ 'src/CounterButton/CounterButton.fixture.tsx': { module: fixture1 }
 };
 
 const decorators = {
- 'src/cosmos.decorator.tsx': { module: { default: decorator0 } }
+ 'src/cosmos.decorator.tsx': { module: decorator0 }
 };
 
 export const moduleWrappers = {

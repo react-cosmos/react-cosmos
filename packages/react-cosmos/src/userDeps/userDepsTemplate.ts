@@ -42,25 +42,21 @@ ${globalImports
   .join(`\n`)}
 
 ${fixtureKeys
-  .map((k, i) => `import fixture${i} from '${ext(fixtures[k])}';`)
+  .map((k, i) => `import * as fixture${i} from '${ext(fixtures[k])}';`)
   .join(`\n`)}
 
 ${decoratorKeys
-  .map((k, i) => `import decorator${i} from '${ext(decorators[k])}';`)
+  .map((k, i) => `import * as decorator${i} from '${ext(decorators[k])}';`)
   .join(`\n`)}
 
 export const rendererConfig${ifTS(': RendererConfig')} = ${rendererConfigStr};
 
 const fixtures = {
-${fixtureKeys
-  .map((k, i) => ` '${k}': { module: { default: fixture${i} } }`)
-  .join(`,\n`)}
+${fixtureKeys.map((k, i) => ` '${k}': { module: fixture${i} }`).join(`,\n`)}
 };
 
 const decorators = {
-${decoratorKeys
-  .map((k, i) => ` '${k}': { module: { default: decorator${i} } }`)
-  .join(`,\n`)}
+${decoratorKeys.map((k, i) => ` '${k}': { module: decorator${i} }`).join(`,\n`)}
 };
 
 export const moduleWrappers${ifTS(': UserModuleWrappers')} = {
