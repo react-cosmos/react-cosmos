@@ -24,7 +24,7 @@ it('should generate user deps module with absolute paths', () => {
       fixturePaths,
       decoratorPaths,
       rendererConfig,
-      rootDir: '/Users/ovidiu/cosmos/',
+      rootDir: '/Users/ovidiu/cosmos',
       relativeToDir: null,
       typeScript: false,
     })
@@ -52,7 +52,7 @@ it('should generate TypeScript user deps module with absolute paths', () => {
       fixturePaths,
       decoratorPaths,
       rendererConfig,
-      rootDir: '/Users/ovidiu/cosmos/',
+      rootDir: '/Users/ovidiu/cosmos',
       relativeToDir: null,
       typeScript: true,
     })
