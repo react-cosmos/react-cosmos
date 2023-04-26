@@ -269,7 +269,6 @@ export function FixtureSearchOverlay({
           <ResultsContainer>
             {matchingFixturePaths.map(
               cleanFixturePath =>
-                // TODO: Test this
                 fixtureItems[cleanFixturePath] && (
                   <FixtureSearchResult
                     key={cleanFixturePath}
