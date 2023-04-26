@@ -1,12 +1,15 @@
 import React from 'react';
 import { BaseSvg, SvgChildren } from './BaseSvg.js';
 
-type IconProps = {
-  children: SvgChildren;
+export type IconProps = {
   size?: number | string;
+  strokeWidth?: number;
 };
 
-export function Icon({ children, size = '100%' }: IconProps) {
+type Props = IconProps & {
+  children: SvgChildren;
+};
+export function Icon({ children, size = '100%', strokeWidth = 1.5 }: Props) {
   return (
     <BaseSvg
       width={size}
@@ -14,7 +17,7 @@ export function Icon({ children, size = '100%' }: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.5"
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
     >

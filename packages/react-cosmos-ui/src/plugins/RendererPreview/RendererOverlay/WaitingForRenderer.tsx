@@ -1,43 +1,37 @@
 import React from 'react';
 import styled from 'styled-components';
 import { DelayedLoading } from '../../../components/DelayedLoading.js';
-import { createGreyColor, grey144, grey192 } from '../../../style/colors.js';
+import { grey144 } from '../../../style/colors.js';
+import {
+  RendererOverlayContainer,
+  RendererOverlayIconWrapper,
+  RendererOverlayMessage,
+} from './rendererOverlayShared.js';
 
 export function WaitingForRenderer() {
   return (
     <DelayedLoading delay={500}>
-      <Container>
-        <Loader />
-        <Message>Waiting for renderer...</Message>
-      </Container>
+      <RendererOverlayContainer>
+        <RendererOverlayIconWrapper>
+          <Loader />
+        </RendererOverlayIconWrapper>
+        <RendererOverlayMessage>Waiting for renderer...</RendererOverlayMessage>
+      </RendererOverlayContainer>
     </DelayedLoading>
   );
 }
 
-const Container = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: ${createGreyColor(8, 0.85)};
-  border-radius: 3px;
-  padding: 16px 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
 // Copied from https://codepen.io/bernethe/pen/dorozd
 const Loader = styled.div`
-  margin: 12px 0 24px 0;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   position: relative;
 
   :before,
   :after {
     content: '';
+    box-sizing: border-box;
     border: 1px ${grey144} solid;
     border-radius: 50%;
     width: 100%;
@@ -79,10 +73,4 @@ const Loader = styled.div`
       opacity: 1;
     }
   }
-`;
-
-const Message = styled.p`
-  color: ${grey192};
-  text-transform: uppercase;
-  white-space: nowrap;
 `;

@@ -1,30 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
-import { createGreyColor, grey192 } from '../../../style/colors.js';
+import { CheckCircleIcon } from '../../../components/icons/index.js';
+import { grey144 } from '../../../style/colors.js';
+import {
+  RendererOverlayContainer,
+  RendererOverlayIconWrapper,
+  RendererOverlayMessage,
+} from './rendererOverlayShared.js';
 
 export function RemoteRendererConnected() {
   return (
-    <Container>
-      <Message>Remote renderer connected</Message>
-    </Container>
+    <RendererOverlayContainer>
+      <RendererOverlayIconWrapper>
+        <IconContainer>{<CheckCircleIcon strokeWidth={0.55} />}</IconContainer>
+      </RendererOverlayIconWrapper>
+      <RendererOverlayMessage>Remote renderer connected</RendererOverlayMessage>
+    </RendererOverlayContainer>
   );
 }
 
-const Container = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: ${createGreyColor(8, 0.85)};
-  border-radius: 3px;
-  padding: 16px 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+const svgRingRatio = 26.667 / 32;
+const ringSize = 34;
+const iconSize = ringSize / svgRingRatio;
 
-const Message = styled.p`
-  color: ${grey192};
-  text-transform: uppercase;
-  white-space: nowrap;
+const IconContainer = styled.span`
+  width: ${iconSize}px;
+  height: ${iconSize}px;
+  color: ${grey144};
 `;

@@ -1,10 +1,5 @@
 import React from 'react';
-import { Icon } from '../Icon.js';
-
-// Add common interface to each icon when needed
-type Props = {
-  size?: number;
-};
+import { Icon, IconProps } from '../Icon.js';
 
 export const ChevronLeftIcon = () => (
   <Icon>
@@ -75,7 +70,7 @@ export const RefreshCwIcon = () => (
   </Icon>
 );
 
-export const RefreshCcwIcon = (props: Props) => (
+export const RefreshCcwIcon = (props: IconProps) => (
   <Icon {...props}>
     <polyline points="1 4 1 10 7 10"></polyline>
     <polyline points="23 20 23 14 17 14"></polyline>
@@ -104,8 +99,8 @@ export const EditIcon = () => (
   </Icon>
 );
 
-export const CheckCircleIcon = () => (
-  <Icon>
+export const CheckCircleIcon = (props: IconProps) => (
+  <Icon {...props}>
     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
     <polyline points="22 4 12 14.01 9 11.01" />
   </Icon>
