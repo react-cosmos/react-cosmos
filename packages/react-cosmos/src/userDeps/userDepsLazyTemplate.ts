@@ -31,20 +31,20 @@ export function userDepsLazyTemplate({
 import { RendererConfig, UserModuleWrappers } from 'react-cosmos-core';`)}
 
 ${globalImports
-  .map(p => `import '${userDepsImportPath(p, relativeToDir)}';`)
+  .map(p => `import '${jsExt(userDepsImportPath(p, relativeToDir))}';`)
   .join(`\n`)}
 
 export const rendererConfig${ifTS(': RendererConfig')} = ${rendererConfigStr};
 
 const fixtures = {
 ${fixtureKeys
-  .map(k => `  '${k}': { getModule: () => import('${fixtures[k]}') }`)
+  .map(k => `  '${k}': { getModule: () => import('${jsExt(fixtures[k])}') }`)
   .join(`,\n`)}
 };
 
 const decorators = {
 ${decoratorKeys
-  .map(k => `  '${k}': { getModule: () => import('${decorators[k]}') }`)
+  .map(k => `  '${k}': { getModule: () => import('${jsExt(decorators[k])}') }`)
   .join(`,\n`)}
 };
 
@@ -54,4 +54,8 @@ export const moduleWrappers${ifTS(': UserModuleWrappers')} = {
   decorators,
 };
 `.trimStart();
+}
+
+function jsExt(path: string) {
+  return path.replace(/\.tsx?$/, '.js');
 }
