@@ -9,7 +9,7 @@ it('does not immediately render anything when status runtime status is "pending"
   expect(container).toMatchInlineSnapshot(`<div />`);
 });
 
-it('renders "waiting for renderer" state after some time', async () => {
+it('renders "waiting for renderer" state after waiting for some time', async () => {
   wrapActSetTimeout();
   const { getByText } = render(<RendererOverlay runtimeStatus="pending" />);
   await retry(() => getByText(/waiting for renderer/i));
@@ -17,5 +17,10 @@ it('renders "waiting for renderer" state after some time', async () => {
 
 it('does not render anything when runtime status is "error"', () => {
   const { container } = render(<RendererOverlay runtimeStatus="error" />);
+  expect(container).toMatchInlineSnapshot(`<div />`);
+});
+
+it('does not render anything when runtime status is "connected"', () => {
+  const { container } = render(<RendererOverlay runtimeStatus="connected" />);
   expect(container).toMatchInlineSnapshot(`<div />`);
 });
