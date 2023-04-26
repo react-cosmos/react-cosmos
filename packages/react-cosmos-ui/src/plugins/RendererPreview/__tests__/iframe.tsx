@@ -9,7 +9,6 @@ import {
   mockNotifications,
   mockRendererCore,
 } from '../../../testHelpers/pluginMocks.js';
-import { fakeFetchResponseStatus } from '../testHelpers/fetch.js';
 import { getIframe } from '../testHelpers/iframe.js';
 import { rendererReadyMsg, selectFixtureMsg } from '../testHelpers/messages.js';
 
@@ -25,7 +24,6 @@ function registerTestPlugins() {
 }
 
 function loadTestPlugins() {
-  fakeFetchResponseStatus(200);
   loadPlugins();
   window.postMessage(rendererReadyMsg, '*');
 
