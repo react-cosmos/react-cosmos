@@ -9,7 +9,7 @@
     "start": "cosmos",
     "export": "cosmos-export",
     "serve": "http-server -p 5001 ./cosmos-export",
-    "native": "cosmos-native --port 5002"
+    "native": "cosmos-native"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.0.0",
