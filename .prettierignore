@@ -5,7 +5,6 @@ cosmos.imports.ts
 coverage
 lerna.json
 package.json
-package.json
 packages/*/dist
 testMocks
 website/dist
