@@ -63,8 +63,8 @@ it('create output', async () => {
 it('includes user deps loader', async () => {
   const { module } = await getDefaultExportWebpackConfig();
   expect(module!.rules).toContainEqual({
-    loader: require.resolve('../userDepsLoader'),
-    include: require.resolve('../../../client/userDeps'),
+    loader: require.resolve('../userImportsLoader'),
+    include: require.resolve('../../../client/userImports'),
     options: { cosmosConfig },
   });
 });
