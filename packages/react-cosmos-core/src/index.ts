@@ -10,6 +10,7 @@ export * from './fixtureTree/createFixtureTree/index.js';
 export * from './fixtureTree/flattenFixtureTree.js';
 export * from './fixtureTree/types.js';
 export * from './playground/playgroundUrl.js';
+export * from './renderer/FixtureCapture/index.js';
 export * from './renderer/FixtureConnect.js';
 export * from './renderer/createPostMessageConnect.js';
 export * from './renderer/createWebSocketsConnect.js';

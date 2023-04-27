@@ -1,7 +1,7 @@
 import { isEqual } from 'lodash-es';
 import React from 'react';
 
-export type Props = {
+type Props = {
   children: React.ClassicElement<unknown>;
   // `state` prop must be an object, as does React component state.
   // "The state is user-defined, and it should be a plain JavaScript object."
