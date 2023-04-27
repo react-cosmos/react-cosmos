@@ -54,11 +54,7 @@ async function generateImportsFile(cosmosConfig: CosmosConfig) {
   await fs.writeFile(filePath, fileSource, 'utf8');
 
   const relModulesPath = path.relative(process.cwd(), filePath);
-  if (typeScript && typeof exposeImports === 'boolean') {
-    console.log(`[Cosmos] Generated ${relModulesPath} (TypeScript detected)`);
-  } else {
-    console.log(`[Cosmos] Generated ${relModulesPath}`);
-  }
+  console.log(`[Cosmos] Generated ${relModulesPath}`);
 }
 
 function getDefaultFilePath(rootDir: string) {
