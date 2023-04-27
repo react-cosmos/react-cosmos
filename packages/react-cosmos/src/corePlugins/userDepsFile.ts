@@ -6,15 +6,18 @@ import { CosmosServerPlugin, PlatformType } from '../cosmosPlugin/types.js';
 import { getPlaygroundUrl } from '../shared/playgroundUrl.js';
 import { startFixtureWatcher } from '../userDeps/fixtureWatcher.js';
 import { generateUserDepsModule } from '../userDeps/generateUserDepsModule.js';
-import { getCliArgs } from '../utils/cli.js';
+import { moduleExists } from '../utils/fs.js';
 
 export const userDepsFileServerPlugin: CosmosServerPlugin = {
   name: 'userDepsFile',
 
   async devServer(args) {
-    if (!shouldGenerateUserDepsFile(args.platformType)) return;
-
     const { cosmosConfig } = args;
+
+    if (!shouldExposeModules(args.platformType, cosmosConfig)) {
+      return;
+    }
+
     await generateUserDepsFile(cosmosConfig);
     const watcher = await startFixtureWatcher(cosmosConfig, 'all', () => {
       generateUserDepsFile(cosmosConfig);
@@ -26,22 +29,22 @@ export const userDepsFileServerPlugin: CosmosServerPlugin = {
   },
 };
 
-function shouldGenerateUserDepsFile(platformType: PlatformType): boolean {
-  return (
-    platformType === 'native' ||
-    // CLI support for --external-userdeps flag (useful with react-native-web)
-    Boolean(getCliArgs().externalUserdeps)
-  );
+function shouldExposeModules(
+  platformType: PlatformType,
+  cosmosConfig: CosmosConfig
+) {
+  return platformType === 'native' || Boolean(cosmosConfig.exposeModules);
 }
 
 async function generateUserDepsFile(cosmosConfig: CosmosConfig) {
-  const { userDepsFilePath, typeScript } = cosmosConfig;
+  const { exposeModules } = cosmosConfig;
 
-  if (typeScript) {
-    console.log(
-      '[Cosmos] TypeScript detected, set "typeScript": false in cosmos.config.json to disable'
-    );
-  }
+  const modulesPath =
+    typeof exposeModules === 'string'
+      ? exposeModules
+      : getDefaultModulesPath(cosmosConfig.rootDir);
+
+  const typeScript = modulesPath.endsWith('.ts');
 
   const rendererConfig: RendererConfig = {
     playgroundUrl: getPlaygroundUrl(cosmosConfig),
@@ -49,11 +52,22 @@ async function generateUserDepsFile(cosmosConfig: CosmosConfig) {
   const userDepsModule = generateUserDepsModule({
     cosmosConfig,
     rendererConfig,
-    relativeToDir: path.dirname(userDepsFilePath),
+    relativeToDir: path.dirname(modulesPath),
     typeScript,
   });
-  await fs.writeFile(userDepsFilePath, userDepsModule, 'utf8');
+  await fs.writeFile(modulesPath, userDepsModule, 'utf8');
 
-  const relUserDepsFilePath = path.relative(process.cwd(), userDepsFilePath);
-  console.log(`[Cosmos] Generated ${relUserDepsFilePath}`);
+  const relModulesPath = path.relative(process.cwd(), modulesPath);
+  console.log(`[Cosmos] Generated ${relModulesPath}`);
+
+  if (typeof exposeModules === 'boolean') {
+    console.log(
+      '[Cosmos] Use the exposeModules config option to specify a custom path (including .js/.ts extension)'
+    );
+  }
+}
+
+function getDefaultModulesPath(rootDir: string) {
+  const ext = moduleExists('typescript') ? 'ts' : 'js';
+  return path.resolve(rootDir, `cosmos.modules.${ext}`);
 }

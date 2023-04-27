@@ -53,7 +53,7 @@ describe('Native', () => {
 });
 
 function getUserDepsFile() {
-  return cy.readFile(`examples/${exampleName()}/cosmos.userdeps.ts`);
+  return cy.readFile(`examples/${exampleName()}/cosmos.modules.ts`);
 }
 
 function containsImport(modulePath: string) {

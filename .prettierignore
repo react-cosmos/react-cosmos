@@ -1,7 +1,7 @@
 .vscode
 coverage
 examples/*/cosmos-export
-examples/*/cosmos.userdeps.js
+examples/*/cosmos.modules.js
 examples/*/package.json
 lerna.json
 package.json

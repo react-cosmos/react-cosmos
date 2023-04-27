@@ -1,7 +1,6 @@
 import path from 'path';
 import { getCliArgs } from '../utils/cli.js';
 import { resolveLoose } from '../utils/resolveLoose.js';
-import { resolveSilent } from '../utils/resolveSilent.js';
 import {
   CosmosConfig,
   CosmosConfigInput,
@@ -12,12 +11,12 @@ export function createCosmosConfig(
   rootDir: string,
   cosmosConfigInput: CosmosConfigInput = {}
 ): CosmosConfig {
-  const typeScript = getTypeScript(cosmosConfigInput);
   return {
     ...cosmosConfigInput,
     rootDir,
     detectLocalPlugins: cosmosConfigInput.detectLocalPlugins ?? true,
     disablePlugins: cosmosConfigInput.disablePlugins ?? false,
+    exposeModules: getExposeModules(cosmosConfigInput, rootDir),
     exportPath: getExportPath(cosmosConfigInput, rootDir),
     fixtureFileSuffix: getFixtureFileSuffix(cosmosConfigInput),
     fixturesDir: getFixturesDir(cosmosConfigInput),
@@ -33,12 +32,6 @@ export function createCosmosConfig(
     publicUrl: getPublicUrl(cosmosConfigInput),
     rendererUrl: cosmosConfigInput.rendererUrl ?? null,
     staticPath: getStaticPath(cosmosConfigInput, rootDir),
-    typeScript,
-    userDepsFilePath: getUserDepsFilePath(
-      cosmosConfigInput,
-      rootDir,
-      typeScript
-    ),
     watchDirs: getWatchDirs(cosmosConfigInput, rootDir),
     dom: getDomConfig(cosmosConfigInput.dom || {}),
     ui: cosmosConfigInput.ui || {},
@@ -99,14 +92,21 @@ function getWatchDirs(cosmosConfigInput: CosmosConfigInput, rootDir: string) {
   return watchDirs.map(watchDir => path.resolve(rootDir, watchDir));
 }
 
-function getUserDepsFilePath(
+function getExposeModules(
   cosmosConfigInput: CosmosConfigInput,
-  rootDir: string,
-  typeScript: boolean
+  rootDir: string
 ) {
-  const ext = typeScript ? 'ts' : 'js';
-  const { userDepsFilePath = `cosmos.userdeps.${ext}` } = cosmosConfigInput;
-  return path.resolve(rootDir, userDepsFilePath);
+  const cliArgs = getCliArgs();
+  if (typeof cliArgs.exposeModules === 'boolean') {
+    return cliArgs.exposeModules;
+  } else if (typeof cliArgs.exposeModules === 'string') {
+    return path.resolve(rootDir, cliArgs.exposeModules);
+  }
+
+  const { exposeModules = false } = cosmosConfigInput;
+  return typeof exposeModules === 'string'
+    ? path.resolve(rootDir, exposeModules)
+    : exposeModules;
 }
 
 function getHostname({ hostname = null }: CosmosConfigInput) {
@@ -155,10 +155,4 @@ function getLazy(cosmosConfigInput: CosmosConfigInput) {
 
   const { lazy = false } = cosmosConfigInput;
   return lazy;
-}
-
-function getTypeScript({ typeScript }: CosmosConfigInput) {
-  return typeof typeScript === 'undefined'
-    ? Boolean(resolveSilent('typescript'))
-    : typeScript;
 }
