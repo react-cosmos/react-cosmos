@@ -1,5 +1,5 @@
-import fs from 'fs/promises';
-import path from 'path';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import { RendererConfig } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { CosmosServerPlugin, PlatformType } from '../cosmosPlugin/types.js';
@@ -15,7 +15,6 @@ export const exposeImportsServerPlugin: CosmosServerPlugin = {
     if (!shouldExposeImports(platformType, cosmosConfig)) return;
 
     await generateImportsFile(cosmosConfig);
-
     const watcher = await startFixtureWatcher(cosmosConfig, 'all', () => {
       generateImportsFile(cosmosConfig);
     });
