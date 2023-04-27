@@ -14,23 +14,10 @@ export const exposeImportsServerPlugin: CosmosServerPlugin = {
   async devServer({ cosmosConfig, platformType }) {
     if (!shouldExposeImports(platformType, cosmosConfig)) return;
 
-    const { exposeImports } = cosmosConfig;
-
-    const filePath =
-      typeof exposeImports === 'string'
-        ? exposeImports
-        : getDefaultFilePath(cosmosConfig.rootDir);
-
-    if (typeof exposeImports === 'boolean') {
-      console.log(
-        '[Cosmos] Use the exposeImports config option to specify a custom path (including .js/.ts extension)'
-      );
-    }
-
-    await generateImportsFile(cosmosConfig, filePath);
+    await generateImportsFile(cosmosConfig);
 
     const watcher = await startFixtureWatcher(cosmosConfig, 'all', () => {
-      generateImportsFile(cosmosConfig, filePath);
+      generateImportsFile(cosmosConfig);
     });
 
     return () => {
@@ -46,10 +33,16 @@ function shouldExposeImports(
   return platformType === 'native' || Boolean(cosmosConfig.exposeImports);
 }
 
-async function generateImportsFile(
-  cosmosConfig: CosmosConfig,
-  filePath: string
-) {
+async function generateImportsFile(cosmosConfig: CosmosConfig) {
+  const { exposeImports } = cosmosConfig;
+
+  const filePath =
+    typeof exposeImports === 'string'
+      ? exposeImports
+      : getDefaultFilePath(cosmosConfig.rootDir);
+
+  const typeScript = filePath.endsWith('.ts');
+
   const rendererConfig: RendererConfig = {
     playgroundUrl: getPlaygroundUrl(cosmosConfig),
   };
@@ -57,12 +50,16 @@ async function generateImportsFile(
     cosmosConfig,
     rendererConfig,
     relativeToDir: path.dirname(filePath),
-    typeScript: filePath.endsWith('.ts'),
+    typeScript,
   });
   await fs.writeFile(filePath, fileSource, 'utf8');
 
   const relModulesPath = path.relative(process.cwd(), filePath);
-  console.log(`[Cosmos] Generated ${relModulesPath}`);
+  if (typeScript && typeof exposeImports === 'boolean') {
+    console.log(`[Cosmos] Generated ${relModulesPath} (TypeScript detected)`);
+  } else {
+    console.log(`[Cosmos] Generated ${relModulesPath}`);
+  }
 }
 
 function getDefaultFilePath(rootDir: string) {
