@@ -1,11 +1,11 @@
 import { flatten } from 'lodash-es';
 import {
-  userDepsImportMap,
-  userDepsImportPath,
-  UserDepsTemplateArgs,
-} from './userDepsShared.js';
+  UserImportsTemplateArgs,
+  createImportMap,
+  importPath,
+} from './shared.js';
 
-export function userDepsLazyTemplate({
+export function userImportsLazyTemplate({
   globalImports,
   fixturePaths,
   decoratorPaths,
@@ -13,7 +13,7 @@ export function userDepsLazyTemplate({
   rootDir,
   relativeToDir,
   typeScript,
-}: UserDepsTemplateArgs) {
+}: UserImportsTemplateArgs) {
   function ext(importPath: string) {
     return typeScript ? importPath.replace(/\.tsx?$/, '.js') : importPath;
   }
@@ -23,16 +23,16 @@ export function userDepsLazyTemplate({
   }
 
   const globalImportItems = globalImports.map(
-    p => `import '${ext(userDepsImportPath(p, relativeToDir))}';`
+    p => `import '${ext(importPath(p, relativeToDir))}';`
   );
 
-  const fixtures = userDepsImportMap(fixturePaths, rootDir, relativeToDir);
+  const fixtures = createImportMap(fixturePaths, rootDir, relativeToDir);
   const fixtureKeys = Object.keys(fixtures);
   const fixtureItems = fixtureKeys.map(
     k => `  '${k}': { getModule: () => import('${ext(fixtures[k])}') }`
   );
 
-  const decorators = userDepsImportMap(decoratorPaths, rootDir, relativeToDir);
+  const decorators = createImportMap(decoratorPaths, rootDir, relativeToDir);
   const decoratorKeys = Object.keys(decorators);
   const decoratorItems = decoratorKeys.map(
     k => `  '${k}': { getModule: () => import('${ext(decorators[k])}') }`

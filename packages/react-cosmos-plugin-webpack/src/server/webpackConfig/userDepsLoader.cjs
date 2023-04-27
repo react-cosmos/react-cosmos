@@ -21,7 +21,7 @@ module.exports = async function injectUserDeps() {
     playgroundUrl: cosmos.getPlaygroundUrl(cosmosConfig),
     containerQuerySelector,
   };
-  return cosmos.generateUserDepsModule({
+  return cosmos.generateUserImports({
     cosmosConfig,
     rendererConfig,
     relativeToDir: null,

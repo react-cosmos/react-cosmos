@@ -10,8 +10,8 @@ import {
 import { PlaygroundConfig, PlaygroundMountArgs } from 'react-cosmos-ui';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { PlatformType } from '../cosmosPlugin/types.js';
-import { findUserModulePaths } from '../userDeps/findUserModulePaths.js';
-import { userDepsKeyPath } from '../userDeps/userDepsShared.js';
+import { findUserModulePaths } from '../userModules/findUserModulePaths.js';
+import { importKeyPath } from '../userModules/shared.js';
 import { resolveRendererUrl } from './resolveRendererUrl.js';
 import { getStaticPath } from './staticPath.js';
 
@@ -125,7 +125,7 @@ function getFixtureList(cosmosConfig: CosmosConfig) {
   return fixturePaths.reduce<FixtureList>(
     (acc, fixturePath) => ({
       ...acc,
-      [userDepsKeyPath(fixturePath, cosmosConfig.rootDir)]: { type: 'single' },
+      [importKeyPath(fixturePath, cosmosConfig.rootDir)]: { type: 'single' },
     }),
     {}
   );

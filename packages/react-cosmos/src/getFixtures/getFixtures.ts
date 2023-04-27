@@ -17,7 +17,7 @@ import {
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { RENDERER_FILENAME } from '../shared/playgroundHtml.js';
 import { resolveRendererUrl } from '../shared/resolveRendererUrl.js';
-import { getUserModules } from '../userDeps/getUserModules.js';
+import { importUserModules } from '../userModules/importUserModules.js';
 
 export type FixtureApi = {
   absoluteFilePath: string;
@@ -35,7 +35,7 @@ export function getFixtures(cosmosConfig: CosmosConfig) {
   const { fixturesDir, fixtureFileSuffix, rootDir } = cosmosConfig;
 
   const fixtureInfo: FixtureApi[] = [];
-  const { fixtures, decorators } = getUserModules(cosmosConfig);
+  const { fixtures, decorators } = importUserModules(cosmosConfig);
   const fixtureList = getFixtureListFromExports(fixtures);
   const fixtureTree = createFixtureTree({
     fixtures: fixtureList,

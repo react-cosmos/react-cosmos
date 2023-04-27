@@ -1,5 +1,5 @@
 import { RendererConfig } from 'react-cosmos-core';
-import { userDepsTemplate } from './userDepsTemplate.js';
+import { userImportsTemplate } from './userImportsTemplate.js';
 
 const globalImports = [
   '/Users/ovidiu/cosmos/src/polyfills.ts',
@@ -17,9 +17,9 @@ const rendererConfig: RendererConfig = {
   playgroundUrl: 'http://localhost:5002',
 };
 
-it('should generate user deps module with absolute paths', () => {
+it('should generate user imports with absolute paths', () => {
   expect(
-    userDepsTemplate({
+    userImportsTemplate({
       globalImports,
       fixturePaths,
       decoratorPaths,
@@ -31,9 +31,9 @@ it('should generate user deps module with absolute paths', () => {
   ).toMatchSnapshot();
 });
 
-it('should generate user deps module with relative paths', () => {
+it('should generate user imports with relative paths', () => {
   expect(
-    userDepsTemplate({
+    userImportsTemplate({
       globalImports,
       fixturePaths,
       decoratorPaths,
@@ -45,9 +45,9 @@ it('should generate user deps module with relative paths', () => {
   ).toMatchSnapshot();
 });
 
-it('should generate TypeScript user deps module with absolute paths', () => {
+it('should generate TypeScript user imports with absolute paths', () => {
   expect(
-    userDepsTemplate({
+    userImportsTemplate({
       globalImports,
       fixturePaths,
       decoratorPaths,
@@ -59,9 +59,9 @@ it('should generate TypeScript user deps module with absolute paths', () => {
   ).toMatchSnapshot();
 });
 
-it('should generate TypeScript user deps module with relative paths', () => {
+it('should generate TypeScript user imports with relative paths', () => {
   expect(
-    userDepsTemplate({
+    userImportsTemplate({
       globalImports,
       fixturePaths,
       decoratorPaths,

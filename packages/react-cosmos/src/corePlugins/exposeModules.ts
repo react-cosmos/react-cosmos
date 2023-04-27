@@ -4,8 +4,8 @@ import { RendererConfig } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { CosmosServerPlugin, PlatformType } from '../cosmosPlugin/types.js';
 import { getPlaygroundUrl } from '../shared/playgroundUrl.js';
-import { startFixtureWatcher } from '../userDeps/fixtureWatcher.js';
-import { generateUserDepsModule } from '../userDeps/generateUserDepsModule.js';
+import { startFixtureWatcher } from '../userModules/fixtureWatcher.js';
+import { generateUserImports } from '../userModules/generateUserImports.js';
 import { moduleExists } from '../utils/fs.js';
 
 export const exposeModulesServerPlugin: CosmosServerPlugin = {
@@ -49,7 +49,7 @@ async function generateModulesFile(cosmosConfig: CosmosConfig) {
   const rendererConfig: RendererConfig = {
     playgroundUrl: getPlaygroundUrl(cosmosConfig),
   };
-  const modulesSource = generateUserDepsModule({
+  const modulesSource = generateUserImports({
     cosmosConfig,
     rendererConfig,
     relativeToDir: path.dirname(modulesPath),

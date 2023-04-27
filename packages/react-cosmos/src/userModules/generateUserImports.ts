@@ -1,8 +1,8 @@
 import { CosmosConfig } from '../cosmosConfig/types.js';
+import { Json } from '../utils/json.js';
 import { findUserModulePaths } from './findUserModulePaths.js';
-import { Json } from './shared.js';
-import { userDepsLazyTemplate } from './userDepsLazyTemplate.js';
-import { userDepsTemplate } from './userDepsTemplate.js';
+import { userImportsLazyTemplate } from './userImportsLazyTemplate.js';
+import { userImportsTemplate } from './userImportsTemplate.js';
 
 type Args = {
   cosmosConfig: CosmosConfig;
@@ -10,7 +10,7 @@ type Args = {
   relativeToDir: string | null;
   typeScript: boolean;
 };
-export function generateUserDepsModule({
+export function generateUserImports({
   cosmosConfig,
   rendererConfig,
   relativeToDir,
@@ -25,7 +25,9 @@ export function generateUserDepsModule({
     ignore,
   });
 
-  const template = cosmosConfig.lazy ? userDepsLazyTemplate : userDepsTemplate;
+  const template = cosmosConfig.lazy
+    ? userImportsLazyTemplate
+    : userImportsTemplate;
 
   return template({
     globalImports,

@@ -9,7 +9,7 @@ type UserModules = {
   decorators: ByPath<ReactDecorator>;
 };
 
-export function getUserModules({
+export function importUserModules({
   rootDir,
   fixturesDir,
   fixtureFileSuffix,
