@@ -111,7 +111,7 @@ it('create output', async () => {
   );
 });
 
-it('includes user deps loader', async () => {
+it('includes user imports loader', async () => {
   const { module } = await getCustomDevWebpackConfig();
   expect(module!.rules).toContainEqual({
     loader: require.resolve('../userImportsLoader'),
