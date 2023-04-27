@@ -8,8 +8,8 @@ import { startFixtureWatcher } from '../userDeps/fixtureWatcher.js';
 import { generateUserDepsModule } from '../userDeps/generateUserDepsModule.js';
 import { moduleExists } from '../utils/fs.js';
 
-export const userDepsFileServerPlugin: CosmosServerPlugin = {
-  name: 'userDepsFile',
+export const exposeModulesServerPlugin: CosmosServerPlugin = {
+  name: 'exposeModules',
 
   async devServer(args) {
     const { cosmosConfig } = args;
@@ -18,9 +18,9 @@ export const userDepsFileServerPlugin: CosmosServerPlugin = {
       return;
     }
 
-    await generateUserDepsFile(cosmosConfig);
+    await generateModulesFile(cosmosConfig);
     const watcher = await startFixtureWatcher(cosmosConfig, 'all', () => {
-      generateUserDepsFile(cosmosConfig);
+      generateModulesFile(cosmosConfig);
     });
 
     return () => {
@@ -36,7 +36,7 @@ function shouldExposeModules(
   return platformType === 'native' || Boolean(cosmosConfig.exposeModules);
 }
 
-async function generateUserDepsFile(cosmosConfig: CosmosConfig) {
+async function generateModulesFile(cosmosConfig: CosmosConfig) {
   const { exposeModules } = cosmosConfig;
 
   const modulesPath =
@@ -49,13 +49,13 @@ async function generateUserDepsFile(cosmosConfig: CosmosConfig) {
   const rendererConfig: RendererConfig = {
     playgroundUrl: getPlaygroundUrl(cosmosConfig),
   };
-  const userDepsModule = generateUserDepsModule({
+  const modulesSource = generateUserDepsModule({
     cosmosConfig,
     rendererConfig,
     relativeToDir: path.dirname(modulesPath),
     typeScript,
   });
-  await fs.writeFile(modulesPath, userDepsModule, 'utf8');
+  await fs.writeFile(modulesPath, modulesSource, 'utf8');
 
   const relModulesPath = path.relative(process.cwd(), modulesPath);
   console.log(`[Cosmos] Generated ${relModulesPath}`);
