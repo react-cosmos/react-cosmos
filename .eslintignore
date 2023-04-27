@@ -4,6 +4,6 @@ packages/*/dist
 examples/*/cosmos-export
 website/dist
 
-**/__fsmocks__/**
+**/__testFs__/**
 coverage
 !.jest
