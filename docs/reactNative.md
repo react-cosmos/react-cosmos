@@ -124,16 +124,6 @@ export default class CosmosApp extends Component {
 }
 ```
 
-> When using TypeScript you'll notice an error related to `cosmos.imports.js`, which is a plain JS module. We're working on providing an option to generate `cosmos.imports.ts` soon. Meanwhile you can ignore this error by slapping a naughty `@ts-ignore` comment:
->
-> ```diff
-> <NativeFixtureLoader
->   rendererConfig={rendererConfig}
-> + // @ts-ignore
->   moduleWrappers={moduleWrappers}
-> />
-> ```
-
 Finally, create a new `App.js` that routes between your main and Cosmos entry points based on enviromnent:
 
 ```js
@@ -170,9 +160,11 @@ You can configure the Cosmos Native renderer to auto load a fixture on init.
 <NativeFixtureLoader
   rendererConfig={rendererConfig}
   moduleWrappers={moduleWrappers}
-+ initialFixtureId={{ path: 'Hello.fixture.js' }}
++ initialFixtureId={{ path: 'src/__fixtures__/HelloWorld.ts' }}
 />
 ```
+
+`initialFixtureId` expects a fixture path relative to the project root. You'll find the exact path in `cosmos.imports.js` as a key in the `fixtures` object.
 
 ## Troubleshooting
 
