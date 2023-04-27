@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-dom",
-  "version": "6.0.0-alpha.16",
+  "version": "6.0.0-alpha.17",
   "description": "React Cosmos DOM",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-dom",
   "license": "MIT",
@@ -8,6 +8,6 @@
   "main": "./dist/index.js",
   "dependencies": {
     "lodash-es": "^4.17.21",
-    "react-cosmos-core": "6.0.0-alpha.16"
+    "react-cosmos-core": "6.0.0-alpha.17"
   }
 }

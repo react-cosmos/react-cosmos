@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "example-webpack",
-  "version": "6.0.0-alpha.16",
+  "version": "6.0.0-alpha.17",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/examples/webpack",
   "license": "MIT",
   "type": "module",
@@ -18,10 +18,10 @@
     "babel-loader": "^9.1.2",
     "examples-shared": "6.0.0-alpha.14",
     "react": "^18.2.0",
-    "react-cosmos": "6.0.0-alpha.16",
-    "react-cosmos-plugin-boolean-input": "6.0.0-alpha.16",
-    "react-cosmos-plugin-open-fixture": "6.0.0-alpha.16",
-    "react-cosmos-plugin-webpack": "6.0.0-alpha.16",
+    "react-cosmos": "6.0.0-alpha.17",
+    "react-cosmos-plugin-boolean-input": "6.0.0-alpha.17",
+    "react-cosmos-plugin-open-fixture": "6.0.0-alpha.17",
+    "react-cosmos-plugin-webpack": "6.0.0-alpha.17",
     "react-dom": "^18.2.0",
     "webpack": "^5.80.0"
   }
