@@ -15,7 +15,8 @@ export function userImportsLazyTemplate({
   typeScript,
 }: UserImportsTemplateArgs) {
   function ext(filePath: string) {
-    return typeScript ? filePath.replace(/\.tsx?$/, '.js') : filePath;
+    // Add compat with projects where allowImportingTsExtensions isn't enabled
+    return typeScript ? filePath.replace(/\.tsx?$/, '') : filePath;
   }
 
   function ts(annotation: string) {
