@@ -19,18 +19,18 @@ export const rendererConfig: RendererConfig = {
 };
 
 const fixtures = {
- 'src/Counter/Counter.fixture.tsx': { module: fixture0 },
- 'src/CounterButton/CounterButton.fixture.tsx': { module: fixture1 }
+  'src/Counter/Counter.fixture.tsx': { module: fixture0 },
+  'src/CounterButton/CounterButton.fixture.tsx': { module: fixture1 }
 };
 
 const decorators = {
- 'src/cosmos.decorator.tsx': { module: decorator0 }
+  'src/cosmos.decorator.tsx': { module: decorator0 }
 };
 
 export const moduleWrappers: UserModuleWrappers = {
   lazy: false,
   fixtures,
-  decorators,
+  decorators
 };
 "
 `;
@@ -54,18 +54,18 @@ export const rendererConfig: RendererConfig = {
 };
 
 const fixtures = {
- 'src/Counter/Counter.fixture.tsx': { module: fixture0 },
- 'src/CounterButton/CounterButton.fixture.tsx': { module: fixture1 }
+  'src/Counter/Counter.fixture.tsx': { module: fixture0 },
+  'src/CounterButton/CounterButton.fixture.tsx': { module: fixture1 }
 };
 
 const decorators = {
- 'src/cosmos.decorator.tsx': { module: decorator0 }
+  'src/cosmos.decorator.tsx': { module: decorator0 }
 };
 
 export const moduleWrappers: UserModuleWrappers = {
   lazy: false,
   fixtures,
-  decorators,
+  decorators
 };
 "
 `;
@@ -87,18 +87,18 @@ export const rendererConfig = {
 };
 
 const fixtures = {
- 'src/Counter/Counter.fixture.tsx': { module: fixture0 },
- 'src/CounterButton/CounterButton.fixture.tsx': { module: fixture1 }
+  'src/Counter/Counter.fixture.tsx': { module: fixture0 },
+  'src/CounterButton/CounterButton.fixture.tsx': { module: fixture1 }
 };
 
 const decorators = {
- 'src/cosmos.decorator.tsx': { module: decorator0 }
+  'src/cosmos.decorator.tsx': { module: decorator0 }
 };
 
 export const moduleWrappers = {
   lazy: false,
   fixtures,
-  decorators,
+  decorators
 };
 "
 `;
@@ -120,18 +120,18 @@ export const rendererConfig = {
 };
 
 const fixtures = {
- 'src/Counter/Counter.fixture.tsx': { module: fixture0 },
- 'src/CounterButton/CounterButton.fixture.tsx': { module: fixture1 }
+  'src/Counter/Counter.fixture.tsx': { module: fixture0 },
+  'src/CounterButton/CounterButton.fixture.tsx': { module: fixture1 }
 };
 
 const decorators = {
- 'src/cosmos.decorator.tsx': { module: decorator0 }
+  'src/cosmos.decorator.tsx': { module: decorator0 }
 };
 
 export const moduleWrappers = {
   lazy: false,
   fixtures,
-  decorators,
+  decorators
 };
 "
 `;

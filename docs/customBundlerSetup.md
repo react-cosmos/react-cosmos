@@ -29,7 +29,7 @@ Finally, create a web server using your bundler of choice that serves an `index.
 
 ```js
 import { mountDomRenderer } from 'react-cosmos-dom';
-import * as mountArgs from './cosmos.imports.js';
+import * as mountArgs from './cosmos.imports';
 
 mountDomRenderer(mountArgs);
 ```

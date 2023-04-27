@@ -33,7 +33,7 @@ export function userImportsTemplate({
     (k, i) => `import * as fixture${i} from '${ext(fixtures[k])}';`
   );
   const fixtureItems = fixtureKeys.map(
-    (k, i) => ` '${k}': { module: fixture${i} }`
+    (k, i) => `  '${k}': { module: fixture${i} }`
   );
 
   const decorators = createImportMap(decoratorPaths, rootDir, relativeToDir);
@@ -42,7 +42,7 @@ export function userImportsTemplate({
     (k, i) => `import * as decorator${i} from '${ext(decorators[k])}';`
   );
   const decoratorItems = decoratorKeys.map(
-    (k, i) => ` '${k}': { module: decorator${i} }`
+    (k, i) => `  '${k}': { module: decorator${i} }`
   );
 
   const rendererConfigStr = JSON.stringify(rendererConfig, null, 2);
@@ -67,7 +67,7 @@ const decorators = {${objBody(decoratorItems)}};
 export const moduleWrappers${ts(': UserModuleWrappers')} = {
   lazy: false,
   fixtures,
-  decorators,
+  decorators
 };
 `.trimStart();
 }

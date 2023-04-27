@@ -110,7 +110,7 @@ Then add the Cosmos renderer under `App.cosmos.js`:
 // App.cosmos.js
 import React, { Component } from 'react';
 import { NativeFixtureLoader } from 'react-cosmos-native';
-import { rendererConfig, moduleWrappers } from './cosmos.imports.js';
+import { rendererConfig, moduleWrappers } from './cosmos.imports';
 
 export default class CosmosApp extends Component {
   render() {
