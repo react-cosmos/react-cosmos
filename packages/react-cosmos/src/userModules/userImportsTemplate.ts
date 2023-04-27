@@ -67,7 +67,7 @@ const decorators = {${objBody(decoratorItems)}};
 export const moduleWrappers${ts(': UserModuleWrappers')} = {
   lazy: false,
   fixtures,
-  decorators,
+  decorators
 };
 `.trimStart();
 }

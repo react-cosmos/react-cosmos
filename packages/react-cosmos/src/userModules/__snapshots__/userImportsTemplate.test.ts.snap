@@ -30,7 +30,7 @@ const decorators = {
 export const moduleWrappers: UserModuleWrappers = {
   lazy: false,
   fixtures,
-  decorators,
+  decorators
 };
 "
 `;
@@ -65,7 +65,7 @@ const decorators = {
 export const moduleWrappers: UserModuleWrappers = {
   lazy: false,
   fixtures,
-  decorators,
+  decorators
 };
 "
 `;
@@ -98,7 +98,7 @@ const decorators = {
 export const moduleWrappers = {
   lazy: false,
   fixtures,
-  decorators,
+  decorators
 };
 "
 `;
@@ -131,7 +131,7 @@ const decorators = {
 export const moduleWrappers = {
   lazy: false,
   fixtures,
-  decorators,
+  decorators
 };
 "
 `;
