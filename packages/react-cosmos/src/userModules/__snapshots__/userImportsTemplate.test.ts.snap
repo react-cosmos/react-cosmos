@@ -6,13 +6,13 @@ exports[`should generate TypeScript user imports with absolute paths 1`] = `
 
 import { RendererConfig, UserModuleWrappers } from 'react-cosmos-core';
 
-import '/Users/ovidiu/cosmos/src/polyfills.js';
+import '/Users/ovidiu/cosmos/src/polyfills';
 import '/Users/ovidiu/cosmos/src/global.css';
 
-import * as fixture0 from '/Users/ovidiu/cosmos/src/Counter/Counter.fixture.js';
-import * as fixture1 from '/Users/ovidiu/cosmos/src/CounterButton/CounterButton.fixture.js';
+import * as fixture0 from '/Users/ovidiu/cosmos/src/Counter/Counter.fixture';
+import * as fixture1 from '/Users/ovidiu/cosmos/src/CounterButton/CounterButton.fixture';
 
-import * as decorator0 from '/Users/ovidiu/cosmos/src/cosmos.decorator.js';
+import * as decorator0 from '/Users/ovidiu/cosmos/src/cosmos.decorator';
 
 export const rendererConfig: RendererConfig = {
   "playgroundUrl": "http://localhost:5002"
@@ -41,13 +41,13 @@ exports[`should generate TypeScript user imports with relative paths 1`] = `
 
 import { RendererConfig, UserModuleWrappers } from 'react-cosmos-core';
 
-import './polyfills.js';
+import './polyfills';
 import './global.css';
 
-import * as fixture0 from './Counter/Counter.fixture.js';
-import * as fixture1 from './CounterButton/CounterButton.fixture.js';
+import * as fixture0 from './Counter/Counter.fixture';
+import * as fixture1 from './CounterButton/CounterButton.fixture';
 
-import * as decorator0 from './cosmos.decorator.js';
+import * as decorator0 from './cosmos.decorator';
 
 export const rendererConfig: RendererConfig = {
   "playgroundUrl": "http://localhost:5002"

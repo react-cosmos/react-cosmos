@@ -6,7 +6,7 @@ exports[`should generate TypeScript user imports with absolute paths 1`] = `
 
 import { RendererConfig, UserModuleWrappers } from 'react-cosmos-core';
 
-import '/Users/ovidiu/cosmos/src/polyfills.js';
+import '/Users/ovidiu/cosmos/src/polyfills';
 import '/Users/ovidiu/cosmos/src/global.css';
 
 export const rendererConfig: RendererConfig = {
@@ -14,12 +14,12 @@ export const rendererConfig: RendererConfig = {
 };
 
 const fixtures = {
-  'src/Counter/Counter.fixture.tsx': { getModule: () => import('/Users/ovidiu/cosmos/src/Counter/Counter.fixture.js') },
-  'src/CounterButton/CounterButton.fixture.tsx': { getModule: () => import('/Users/ovidiu/cosmos/src/CounterButton/CounterButton.fixture.js') }
+  'src/Counter/Counter.fixture.tsx': { getModule: () => import('/Users/ovidiu/cosmos/src/Counter/Counter.fixture') },
+  'src/CounterButton/CounterButton.fixture.tsx': { getModule: () => import('/Users/ovidiu/cosmos/src/CounterButton/CounterButton.fixture') }
 };
 
 const decorators = {
-  'src/cosmos.decorator.tsx': { getModule: () => import('/Users/ovidiu/cosmos/src/cosmos.decorator.js') }
+  'src/cosmos.decorator.tsx': { getModule: () => import('/Users/ovidiu/cosmos/src/cosmos.decorator') }
 };
 
 export const moduleWrappers: UserModuleWrappers = {
@@ -36,7 +36,7 @@ exports[`should generate TypeScript user imports with relative paths 1`] = `
 
 import { RendererConfig, UserModuleWrappers } from 'react-cosmos-core';
 
-import './polyfills.js';
+import './polyfills';
 import './global.css';
 
 export const rendererConfig: RendererConfig = {
@@ -44,12 +44,12 @@ export const rendererConfig: RendererConfig = {
 };
 
 const fixtures = {
-  'src/Counter/Counter.fixture.tsx': { getModule: () => import('./Counter/Counter.fixture.js') },
-  'src/CounterButton/CounterButton.fixture.tsx': { getModule: () => import('./CounterButton/CounterButton.fixture.js') }
+  'src/Counter/Counter.fixture.tsx': { getModule: () => import('./Counter/Counter.fixture') },
+  'src/CounterButton/CounterButton.fixture.tsx': { getModule: () => import('./CounterButton/CounterButton.fixture') }
 };
 
 const decorators = {
-  'src/cosmos.decorator.tsx': { getModule: () => import('./cosmos.decorator.js') }
+  'src/cosmos.decorator.tsx': { getModule: () => import('./cosmos.decorator') }
 };
 
 export const moduleWrappers: UserModuleWrappers = {
