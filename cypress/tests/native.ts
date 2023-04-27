@@ -41,13 +41,13 @@ describe('Native', () => {
     });
 
     it('has fixture paths', () => {
-      containsImport('src/__fixtures__/HelloWorld.js');
-      containsImport('src/Counter.fixture.js');
-      containsImport('src/WelcomeMessage/WelcomeMessage.fixture.js');
+      containsImport('src/__fixtures__/HelloWorld');
+      containsImport('src/Counter.fixture');
+      containsImport('src/WelcomeMessage/WelcomeMessage.fixture');
     });
 
     it('has decorator paths', () => {
-      containsImport('src/WelcomeMessage/cosmos.decorator.js');
+      containsImport('src/WelcomeMessage/cosmos.decorator');
     });
   });
 });
