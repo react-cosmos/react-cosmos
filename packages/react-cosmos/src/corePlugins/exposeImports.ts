@@ -40,7 +40,7 @@ async function generateImportsFile(cosmosConfig: CosmosConfig) {
       ? exposeImports
       : getDefaultFilePath(cosmosConfig.rootDir);
 
-  const typeScript = filePath.endsWith('.ts');
+  const typeScript = /\.tsx?$/.test(filePath);
 
   const rendererConfig: RendererConfig = {
     playgroundUrl: getPlaygroundUrl(cosmosConfig),
