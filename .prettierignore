@@ -1,11 +1,10 @@
 .vscode
+cosmos-export
+cosmos.imports.js
+cosmos.imports.ts
 coverage
-examples/*/cosmos-export
-examples/*/cosmos.userdeps.js
-examples/*/package.json
 lerna.json
 package.json
 packages/*/dist
-packages/*/package.json
-website/dist
 testMocks
+website/dist

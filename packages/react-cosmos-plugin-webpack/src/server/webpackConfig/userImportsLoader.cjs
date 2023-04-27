@@ -2,7 +2,7 @@
 // https://github.com/webpack/webpack/issues/13233
 // To circumvent this we use this CJS source file that's manually copied in the
 // dist folder as part of the build process
-module.exports = async function injectUserDeps() {
+module.exports = async function injectUserImports() {
   const cosmos = await import('react-cosmos');
   const { cosmosConfig } = this.getOptions();
 
@@ -21,9 +21,10 @@ module.exports = async function injectUserDeps() {
     playgroundUrl: cosmos.getPlaygroundUrl(cosmosConfig),
     containerQuerySelector,
   };
-  return cosmos.generateUserDepsModule({
+  return cosmos.generateUserImports({
     cosmosConfig,
     rendererConfig,
     relativeToDir: null,
+    typeScript: false,
   });
 };

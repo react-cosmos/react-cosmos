@@ -82,7 +82,7 @@ yarn cosmos
 
 🚀 Open **[localhost:5000](http://localhost:5000)** in your browser.
 
-> You'll notice Cosmos generated a `cosmos.userdeps.js` module, which becomes relevant in step 5. You can add this file to .gitignore.
+> You'll notice Cosmos generated a `cosmos.imports.js` module, which becomes relevant in step 5. You can add this file to .gitignore.
 
 The `Hello` fixture will show up in your React Cosmos UI.
 
@@ -110,7 +110,7 @@ Then add the Cosmos renderer under `App.cosmos.js`:
 // App.cosmos.js
 import React, { Component } from 'react';
 import { NativeFixtureLoader } from 'react-cosmos-native';
-import { rendererConfig, moduleWrappers } from './cosmos.userdeps.js';
+import { rendererConfig, moduleWrappers } from './cosmos.imports.js';
 
 export default class CosmosApp extends Component {
   render() {
@@ -123,16 +123,6 @@ export default class CosmosApp extends Component {
   }
 }
 ```
-
-> When using TypeScript you'll notice an error related to `cosmos.userdeps.js`, which is a plain JS module. We're working on providing an option to generate `cosmos.userdeps.ts` soon. Meanwhile you can ignore this error by slapping a naughty `@ts-ignore` comment:
->
-> ```diff
-> <NativeFixtureLoader
->   rendererConfig={rendererConfig}
-> + // @ts-ignore
->   moduleWrappers={moduleWrappers}
-> />
-> ```
 
 Finally, create a new `App.js` that routes between your main and Cosmos entry points based on enviromnent:
 
@@ -170,9 +160,11 @@ You can configure the Cosmos Native renderer to auto load a fixture on init.
 <NativeFixtureLoader
   rendererConfig={rendererConfig}
   moduleWrappers={moduleWrappers}
-+ initialFixtureId={{ path: 'Hello.fixture.js' }}
++ initialFixtureId={{ path: 'src/__fixtures__/HelloWorld.ts' }}
 />
 ```
+
+`initialFixtureId` expects a fixture path relative to the project root. You'll find the exact path in `cosmos.imports.js` as a key in the `fixtures` object.
 
 ## Troubleshooting
 
@@ -184,6 +176,6 @@ You can get Cosmos to [mirror your fixtures on both DOM and Native renderers](ht
 
 1. Set up Cosmos for Native using the steps above.
 2. Set up the react-cosmos-webpack-plugin as described [here](README.md#getting-started).
-3. Start Cosmos with the `cosmos --external-userdeps` command.
+3. Start Cosmos with the `cosmos --expose-imports` command.
 
 [Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.

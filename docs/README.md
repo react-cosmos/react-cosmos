@@ -613,7 +613,7 @@ This is a `.babelrc` example for Next.js:
 
 #### Fixtures not detected?
 
-- Run `cosmos` with the `--external-userdeps` flag. This should generate `cosmos.userdeps.js`. Check that file to see if your fixtures are being picked up by Cosmos.
+- Run `cosmos` with the `--expose-imports` flag. This should generate `cosmos.imports.js`. Check that file to see if your fixtures are being picked up by Cosmos.
 - Check your directory structure. If you are using a Cosmos config file, Cosmos will use the directory of the config file as the root of your project. If your Cosmos config file is nested in a directory that isn't an ancestor of your fixture files, Cosmos will not find your fixtures. To solve this add a [`rootDir`](https://github.com/react-cosmos/react-cosmos/blob/d800a31b39d82c810f37a2ad0d25eed5308b830a/packages/react-cosmos/config.schema.json#L10-L14) entry to your Cosmos config pointing to your root directory.
 
 ---

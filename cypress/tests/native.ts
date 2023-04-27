@@ -32,40 +32,40 @@ describe('Native', () => {
     });
   });
 
-  context('user deps file', () => {
+  context('imports file', () => {
     it('has port option', () => {
-      getUserDepsFile().should(
+      getImportsFile().should(
         'contain',
         `"playgroundUrl": "http://localhost:5002"`
       );
     });
 
     it('has fixture paths', () => {
-      containsImport('src/__fixtures__/HelloWorld.ts');
-      containsImport('src/Counter.fixture.tsx');
-      containsImport('src/WelcomeMessage/WelcomeMessage.fixture.tsx');
+      containsImport('src/__fixtures__/HelloWorld.js');
+      containsImport('src/Counter.fixture.js');
+      containsImport('src/WelcomeMessage/WelcomeMessage.fixture.js');
     });
 
     it('has decorator paths', () => {
-      containsImport('src/WelcomeMessage/cosmos.decorator.tsx');
+      containsImport('src/WelcomeMessage/cosmos.decorator.js');
     });
   });
 });
 
-function getUserDepsFile() {
-  return cy.readFile(`examples/${exampleName()}/cosmos.userdeps.js`);
+function getImportsFile() {
+  return cy.readFile(`examples/${exampleName()}/cosmos.imports.ts`);
 }
 
-function containsImport(modulePath: string) {
+function containsImport(importPath: string) {
   if (lazy()) {
-    getUserDepsFile().should(
+    getImportsFile().should(
       'match',
-      new RegExp(`import\\('./${modulePath}'\\)`)
+      new RegExp(`import\\('./${importPath}'\\)`)
     );
   } else {
-    getUserDepsFile().should(
+    getImportsFile().should(
       'match',
-      new RegExp(`import [a-z0-9]+ from './${modulePath}'`)
+      new RegExp(`import \\* as [a-z0-9]+ from './${importPath}'`)
     );
   }
 }
