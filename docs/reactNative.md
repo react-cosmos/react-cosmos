@@ -82,7 +82,7 @@ yarn cosmos
 
 🚀 Open **[localhost:5000](http://localhost:5000)** in your browser.
 
-> You'll notice Cosmos generated a `cosmos.modules.js` module, which becomes relevant in step 5. You can add this file to .gitignore.
+> You'll notice Cosmos generated a `cosmos.imports.js` module, which becomes relevant in step 5. You can add this file to .gitignore.
 
 The `Hello` fixture will show up in your React Cosmos UI.
 
@@ -110,7 +110,7 @@ Then add the Cosmos renderer under `App.cosmos.js`:
 // App.cosmos.js
 import React, { Component } from 'react';
 import { NativeFixtureLoader } from 'react-cosmos-native';
-import { rendererConfig, moduleWrappers } from './cosmos.modules.js';
+import { rendererConfig, moduleWrappers } from './cosmos.imports.js';
 
 export default class CosmosApp extends Component {
   render() {
@@ -124,7 +124,7 @@ export default class CosmosApp extends Component {
 }
 ```
 
-> When using TypeScript you'll notice an error related to `cosmos.modules.js`, which is a plain JS module. We're working on providing an option to generate `cosmos.modules.ts` soon. Meanwhile you can ignore this error by slapping a naughty `@ts-ignore` comment:
+> When using TypeScript you'll notice an error related to `cosmos.imports.js`, which is a plain JS module. We're working on providing an option to generate `cosmos.imports.ts` soon. Meanwhile you can ignore this error by slapping a naughty `@ts-ignore` comment:
 >
 > ```diff
 > <NativeFixtureLoader
@@ -184,6 +184,6 @@ You can get Cosmos to [mirror your fixtures on both DOM and Native renderers](ht
 
 1. Set up Cosmos for Native using the steps above.
 2. Set up the react-cosmos-webpack-plugin as described [here](README.md#getting-started).
-3. Start Cosmos with the `cosmos --expose-modules` command.
+3. Start Cosmos with the `cosmos --expose-imports` command.
 
 [Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.

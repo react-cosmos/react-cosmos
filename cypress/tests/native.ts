@@ -32,9 +32,9 @@ describe('Native', () => {
     });
   });
 
-  context('modules file', () => {
+  context('imports file', () => {
     it('has port option', () => {
-      getModulesFile().should(
+      getImportsFile().should(
         'contain',
         `"playgroundUrl": "http://localhost:5002"`
       );
@@ -52,20 +52,20 @@ describe('Native', () => {
   });
 });
 
-function getModulesFile() {
-  return cy.readFile(`examples/${exampleName()}/cosmos.modules.ts`);
+function getImportsFile() {
+  return cy.readFile(`examples/${exampleName()}/cosmos.imports.ts`);
 }
 
-function containsImport(modulePath: string) {
+function containsImport(importPath: string) {
   if (lazy()) {
-    getModulesFile().should(
+    getImportsFile().should(
       'match',
-      new RegExp(`import\\('./${modulePath}'\\)`)
+      new RegExp(`import\\('./${importPath}'\\)`)
     );
   } else {
-    getModulesFile().should(
+    getImportsFile().should(
       'match',
-      new RegExp(`import \\* as [a-z0-9]+ from './${modulePath}'`)
+      new RegExp(`import \\* as [a-z0-9]+ from './${importPath}'`)
     );
   }
 }

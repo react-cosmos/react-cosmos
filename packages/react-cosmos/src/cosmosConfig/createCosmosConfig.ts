@@ -16,7 +16,7 @@ export function createCosmosConfig(
     rootDir,
     detectLocalPlugins: cosmosConfigInput.detectLocalPlugins ?? true,
     disablePlugins: cosmosConfigInput.disablePlugins ?? false,
-    exposeModules: getExposeModules(cosmosConfigInput, rootDir),
+    exposeImports: getExposeImports(cosmosConfigInput, rootDir),
     exportPath: getExportPath(cosmosConfigInput, rootDir),
     fixtureFileSuffix: getFixtureFileSuffix(cosmosConfigInput),
     fixturesDir: getFixturesDir(cosmosConfigInput),
@@ -92,21 +92,21 @@ function getWatchDirs(cosmosConfigInput: CosmosConfigInput, rootDir: string) {
   return watchDirs.map(watchDir => path.resolve(rootDir, watchDir));
 }
 
-function getExposeModules(
+function getExposeImports(
   cosmosConfigInput: CosmosConfigInput,
   rootDir: string
 ) {
   const cliArgs = getCliArgs();
-  if (typeof cliArgs.exposeModules === 'boolean') {
-    return cliArgs.exposeModules;
-  } else if (typeof cliArgs.exposeModules === 'string') {
-    return path.resolve(rootDir, cliArgs.exposeModules);
+  if (typeof cliArgs.exposeImports === 'boolean') {
+    return cliArgs.exposeImports;
+  } else if (typeof cliArgs.exposeImports === 'string') {
+    return path.resolve(rootDir, cliArgs.exposeImports);
   }
 
-  const { exposeModules = false } = cosmosConfigInput;
-  return typeof exposeModules === 'string'
-    ? path.resolve(rootDir, exposeModules)
-    : exposeModules;
+  const { exposeImports = false } = cosmosConfigInput;
+  return typeof exposeImports === 'string'
+    ? path.resolve(rootDir, exposeImports)
+    : exposeImports;
 }
 
 function getHostname({ hostname = null }: CosmosConfigInput) {

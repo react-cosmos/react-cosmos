@@ -69,8 +69,8 @@
       "description": "Dynamically import fixture and decorator modules as they are loaded. When false all fixture and decorator modules are imported statically and bundled together. [default: false]",
       "type": "boolean"
     },
-    "exposeModules": {
-      "description": "Expose user modules and config required for the Cosmos renderer. Used with React Native and in custom integrations. When a path is specified it requires a file extension (eg. \"src/cosmos.modules.ts\"). [default: false]",
+    "exposeImports": {
+      "description": "Expose user imports and config required for the Cosmos renderer. Used with React Native and in custom integrations. When a path is specified it requires a file extension (eg. \"src/cosmos.modules.ts\"). [default: false]",
       "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "boolean" }]
     },
     "hostname": {

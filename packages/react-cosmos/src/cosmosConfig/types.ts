@@ -12,11 +12,11 @@ export type CosmosConfig = {
   detectLocalPlugins: boolean;
   disablePlugins: boolean;
   dom: CosmosDomConfig;
-  // Used with React Native and in custom integrations, exposeModules specifices
+  // Used with React Native and in custom integrations, exposeImports specifices
   // whether (and where when passed a string) to generate a file that exposes
-  // the user modules and config required for the Cosmos renderer (fixtures,
+  // the user imports and config required for the Cosmos renderer (fixtures,
   // decorators, etc.). When a path is specified it requires a file extension.
-  exposeModules: boolean | string;
+  exposeImports: boolean | string;
   fixtureFileSuffix: string;
   fixturesDir: string;
   globalImports: string[];
