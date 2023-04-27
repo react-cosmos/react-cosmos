@@ -3,7 +3,7 @@ import { FixtureDecoratorId } from '../../fixtureState/types.js';
 import { useClassStateCapture } from './classState/index.js';
 import { usePropsCapture } from './props/index.js';
 
-export type Props = {
+type Props = {
   children: React.ReactNode;
   decoratorId: FixtureDecoratorId;
 };
