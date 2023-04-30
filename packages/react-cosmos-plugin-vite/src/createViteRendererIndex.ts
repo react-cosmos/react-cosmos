@@ -1,6 +1,6 @@
 export function createViteRendererIndex(userImportsModuleId: string) {
   return `
-import { mountDomRenderer } from 'react-cosmos-dom';
+import { mountDomRenderer } from 'react-cosmos-plugin-vite/dom';
 
 mount();
 
