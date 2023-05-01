@@ -3,14 +3,14 @@ import {
   FixtureState,
   ReactDecorator,
   ReactDecoratorModule,
-  ReactFixture,
   SetFixtureState,
 } from 'react-cosmos-core';
 import { FixtureContext } from './FixtureContext.js';
 import { getDecoratedFixtureElement } from './getDecoratedFixtureElement.js';
 
 type Props = {
-  fixture: ReactFixture;
+  // fixture: ReactFixture;
+  children: React.ReactNode;
   systemDecorators: ReactDecorator[];
   userDecoratorModules: ReactDecoratorModule[];
   fixtureState: FixtureState;
@@ -19,7 +19,7 @@ type Props = {
   onErrorReset?: () => unknown;
 };
 export function DecoratedFixture({
-  fixture,
+  children,
   systemDecorators,
   userDecoratorModules,
   fixtureState,
@@ -38,13 +38,13 @@ export function DecoratedFixture({
       ...systemDecorators,
       ...userDecoratorModules.map(m => m.default),
     ];
-    return getDecoratedFixtureElement(fixture, decorators, {
+    return getDecoratedFixtureElement(children, decorators, {
       fixtureState,
       setFixtureState,
       onErrorReset,
     });
   }, [
-    fixture,
+    children,
     fixtureState,
     onErrorReset,
     setFixtureState,

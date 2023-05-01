@@ -4,6 +4,7 @@ import {
   LazyReactDecoratorWrapper,
   LazyReactFixtureWrapper,
 } from 'react-cosmos-core';
+import { importLazyFixtureModules } from '../shared/importLazyFixtureModules.js';
 
 export function useLazyFixtureModules(
   fixturePath: string,
@@ -16,11 +17,8 @@ export function useLazyFixtureModules(
     let canceled = false;
 
     (async () => {
-      const fixtureModule = await fixtureWrapper.getModule();
-
-      const decoratorModules = await Promise.all(
-        decoratorWrappers.map(d => d.getModule())
-      );
+      const { fixtureModule, decoratorModules } =
+        await importLazyFixtureModules(fixtureWrapper, decoratorWrappers);
 
       if (!canceled) {
         setModules({

@@ -13,6 +13,7 @@ import {
   stringifyPlaygroundUrlQuery,
   stringifyRendererUrlQuery,
 } from 'react-cosmos-core';
+import { getFixtureElement } from 'react-cosmos-renderer';
 import { getDecoratedFixtureElement } from 'react-cosmos-renderer/client';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { RENDERER_FILENAME } from '../shared/playgroundHtml.js';
@@ -104,7 +105,7 @@ function createFixtureElementGetter(
     decoratorsByPath
   );
   return () =>
-    getDecoratedFixtureElement(fixture, decorators, {
+    getDecoratedFixtureElement(getFixtureElement(fixture), decorators, {
       fixtureState: {},
       setFixtureState: () => {},
       onErrorReset: () => {},

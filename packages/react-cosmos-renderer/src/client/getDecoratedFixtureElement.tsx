@@ -1,21 +1,14 @@
 import React from 'react';
-import {
-  ReactDecorator,
-  ReactDecoratorProps,
-  ReactFixture,
-} from 'react-cosmos-core';
+import { ReactDecorator, ReactDecoratorProps } from 'react-cosmos-core';
 import { FixtureCapture } from './FixtureCapture/FixtureCapture.js';
-import { FixtureElement } from './FixtureElement.js';
 
 export function getDecoratedFixtureElement(
-  fixture: ReactFixture,
+  children: React.ReactNode,
   decorators: ReactDecorator[],
   decoratorProps: Omit<ReactDecoratorProps, 'children'>
 ) {
   const fixtureElement = (
-    <FixtureCapture decoratorId="root">
-      {getFixtureElement(fixture)}
-    </FixtureCapture>
+    <FixtureCapture decoratorId="root">{children}</FixtureCapture>
   );
 
   return [...decorators]
@@ -26,18 +19,4 @@ export function getDecoratedFixtureElement(
       ),
       fixtureElement
     );
-}
-
-function getFixtureElement(fixture: ReactFixture) {
-  return isFunctionFixture(fixture) ? (
-    <FixtureElement Component={fixture} />
-  ) : (
-    fixture
-  );
-}
-
-function isFunctionFixture(
-  fixture: ReactFixture
-): fixture is React.FunctionComponent {
-  return typeof fixture === 'function';
 }

@@ -7,7 +7,9 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    "./client": "./client.js"
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./server": "./server.js"
   },
   "dependencies": {
     "lodash-es": "^4.17.21",

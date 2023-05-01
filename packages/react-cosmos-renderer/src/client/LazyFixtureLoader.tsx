@@ -11,6 +11,7 @@ import {
   getFixtureFromExport,
   getSortedDecoratorsForFixturePath,
 } from 'react-cosmos-core';
+import { getFixtureElement } from '../shared/getFixtureElement.js';
 import { DecoratedFixture } from './DecoratedFixture.js';
 import { LazyFixtureListItemUpdate } from './LazyFixtureListItemUpdate.js';
 import { useLazyFixtureModules } from './useLazyFixtureModules.js';
@@ -67,14 +68,15 @@ export function LazyFixtureLoader({
   return (
     <>
       <DecoratedFixture
-        fixture={fixture}
         systemDecorators={systemDecorators}
         userDecoratorModules={decoratorModules}
         fixtureState={fixtureState}
         setFixtureState={setFixtureState}
         renderKey={renderKey}
         onErrorReset={onErrorReset}
-      />
+      >
+        {getFixtureElement(fixture)}
+      </DecoratedFixture>
       <LazyFixtureListItemUpdate
         rendererId={rendererId}
         rendererConnect={rendererConnect}
