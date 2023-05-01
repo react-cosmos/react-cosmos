@@ -5,9 +5,9 @@ import {
   ReactDecoratorModule,
   SetFixtureState,
 } from 'react-cosmos-core';
+import { FixtureContextProvider } from '../shared/FixtureContextProvider.js';
 import { decorateFixture } from '../shared/decorateFixture.js';
 import { FixtureCapture } from './FixtureCapture/FixtureCapture.js';
-import { FixtureContext } from './FixtureContext.js';
 
 type Props = {
   children: React.ReactNode;
@@ -27,12 +27,6 @@ export function DecoratedFixture({
   renderKey,
   onErrorReset = noop,
 }: Props) {
-  // Prevent unintentional renders https://reactjs.org/docs/context.html#caveats
-  const contextValue = useMemo(
-    () => ({ fixtureState, setFixtureState }),
-    [fixtureState, setFixtureState]
-  );
-
   const decoratedFixture = useMemo(() => {
     const decorators = [
       ...systemDecorators,
@@ -57,14 +51,13 @@ export function DecoratedFixture({
   ]);
 
   return (
-    <FixtureContext.Provider
-      // renderKey controls whether to reuse previous instances (and
-      // transition props) or rebuild render tree from scratch
-      key={renderKey}
-      value={contextValue}
+    <FixtureContextProvider
+      fixtureState={fixtureState}
+      setFixtureState={setFixtureState}
+      renderKey={renderKey}
     >
       {decoratedFixture}
-    </FixtureContext.Provider>
+    </FixtureContextProvider>
   );
 }
 

@@ -2,10 +2,10 @@ import React from 'react';
 import {
   FixtureId,
   ReactDecoratorModule,
-  ReactDecoratorProps,
   ReactFixtureModule,
   getFixtureFromExport,
 } from 'react-cosmos-core';
+import { FixtureContextProvider } from '../shared/FixtureContextProvider.js';
 import { decorateFixture } from '../shared/decorateFixture.js';
 import { createFixtureNode } from '../shared/fixtureNode.js';
 
@@ -26,18 +26,23 @@ export function FixtureModuleLoader({
   }
 
   return (
-    <>
+    <FixtureContextProvider
+      fixtureState={emplyObject}
+      setFixtureState={noopFunction}
+      renderKey={0}
+    >
       {decorateFixture(
         createFixtureNode(fixture),
         decoratorModules.map(m => m.default),
-        noopDecoratorProps
+        {
+          fixtureState: emplyObject,
+          setFixtureState: noopFunction,
+          onErrorReset: noopFunction,
+        }
       )}
-    </>
+    </FixtureContextProvider>
   );
 }
 
-const noopDecoratorProps: Omit<ReactDecoratorProps, 'children'> = {
-  fixtureState: {},
-  setFixtureState: () => {},
-  onErrorReset: () => {},
-};
+const emplyObject = {};
+const noopFunction = () => {};
