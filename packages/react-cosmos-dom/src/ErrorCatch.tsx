@@ -1,12 +1,26 @@
 import { isEqual } from 'lodash-es';
 import React, { Component, ReactNode } from 'react';
-import { ReactDecoratorProps, areNodesEqual } from 'react-cosmos-core';
+import { areNodesEqual } from 'react-cosmos-core';
+import {
+  FixtureContext,
+  FixtureContextValue,
+} from 'react-cosmos-renderer/client';
+
+type Props = {
+  children: React.ReactNode;
+};
 
 type State = {
   error: null | string;
 };
 
-export class ErrorCatch extends Component<ReactDecoratorProps, State> {
+export class ErrorCatch extends Component<Props, State, FixtureContextValue> {
+  declare context: FixtureContextValue;
+  static contextType = FixtureContext;
+
+  declare prevContext: FixtureContextValue | null;
+  static prevContext = null;
+
   state: State = {
     error: null,
   };
@@ -17,7 +31,11 @@ export class ErrorCatch extends Component<ReactDecoratorProps, State> {
     });
   }
 
-  componentDidUpdate(prevProps: ReactDecoratorProps) {
+  componentDidMount() {
+    this.prevContext = this.context;
+  }
+
+  componentDidUpdate(prevProps: Props) {
     // A change in fixture (children) or fixture state signifies that the
     // problem that caused the current error might've been solved. If the error
     // persists, it will organically trigger the error state again in the next
@@ -25,11 +43,15 @@ export class ErrorCatch extends Component<ReactDecoratorProps, State> {
     if (
       this.state.error &&
       (fixtureChanged(this.props.children, prevProps.children) ||
-        fixtureStateChanged(this.props.fixtureState, prevProps.fixtureState))
+        fixtureStateChanged(
+          this.context.fixtureState,
+          this.prevContext?.fixtureState
+        ))
     ) {
       this.setState({ error: null });
-      this.props.onErrorReset();
     }
+
+    this.prevContext = this.context;
   }
 
   render() {
@@ -65,6 +87,6 @@ function fixtureChanged(f1: ReactNode, f2: ReactNode) {
   return !areNodesEqual(f1, f2, true);
 }
 
-function fixtureStateChanged(fS1: object, fS2: object) {
+function fixtureStateChanged(fS1: object, fS2?: object) {
   return !isEqual(fS1, fS2);
 }

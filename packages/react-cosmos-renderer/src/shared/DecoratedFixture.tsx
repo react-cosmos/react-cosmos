@@ -38,21 +38,9 @@ export function DecoratedFixture({
       <FixtureCapture decoratorId="root">
         {createFixtureNode(fixture)}
       </FixtureCapture>,
-      decorators,
-      {
-        fixtureState,
-        setFixtureState,
-        onErrorReset,
-      }
+      decorators
     );
-  }, [
-    fixture,
-    fixtureState,
-    onErrorReset,
-    setFixtureState,
-    systemDecorators,
-    userDecoratorModules,
-  ]);
+  }, [fixture, systemDecorators, userDecoratorModules]);
 
   return (
     <FixtureContextProvider

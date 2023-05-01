@@ -103,10 +103,5 @@ function createFixtureElementGetter(
     fixturePath,
     decoratorsByPath
   );
-  return () =>
-    decorateFixture(createFixtureNode(fixture), decorators, {
-      fixtureState: {},
-      setFixtureState: () => {},
-      onErrorReset: () => {},
-    });
+  return () => decorateFixture(createFixtureNode(fixture), decorators);
 }
