@@ -5,9 +5,7 @@ import {
   ReactFixtureModule,
   getFixtureFromExport,
 } from 'react-cosmos-core';
-import { FixtureContextProvider } from '../shared/FixtureContextProvider.js';
-import { decorateFixture } from '../shared/decorateFixture.js';
-import { createFixtureNode } from '../shared/fixtureNode.js';
+import { DecoratedFixture } from '../shared/DecoratedFixture.js';
 
 type Props = {
   fixtureId: FixtureId;
@@ -26,23 +24,17 @@ export function FixtureModuleLoader({
   }
 
   return (
-    <FixtureContextProvider
+    <DecoratedFixture
+      fixture={fixture}
+      systemDecorators={emptyArray}
+      userDecoratorModules={decoratorModules}
       fixtureState={emplyObject}
       setFixtureState={noopFunction}
       renderKey={0}
-    >
-      {decorateFixture(
-        createFixtureNode(fixture),
-        decoratorModules.map(m => m.default),
-        {
-          fixtureState: emplyObject,
-          setFixtureState: noopFunction,
-          onErrorReset: noopFunction,
-        }
-      )}
-    </FixtureContextProvider>
+    />
   );
 }
 
+const emptyArray: any[] = [];
 const emplyObject = {};
 const noopFunction = () => {};

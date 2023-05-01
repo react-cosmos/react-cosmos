@@ -11,8 +11,7 @@ import {
   getFixtureFromExport,
   getSortedDecoratorsForFixturePath,
 } from 'react-cosmos-core';
-import { createFixtureNode } from '../shared/fixtureNode.js';
-import { DecoratedFixture } from './DecoratedFixture.js';
+import { DecoratedFixture } from '../shared/DecoratedFixture.js';
 
 type Props = {
   fixtureWrapper: ReactFixtureWrapper;
@@ -57,15 +56,14 @@ export function FixtureLoader({
 
   return (
     <DecoratedFixture
+      fixture={fixture}
       systemDecorators={systemDecorators}
       userDecoratorModules={decoratorModules}
       fixtureState={fixtureState}
       setFixtureState={setFixtureState}
       renderKey={renderKey}
       onErrorReset={onErrorReset}
-    >
-      {createFixtureNode(fixture)}
-    </DecoratedFixture>
+    />
   );
 }
 

@@ -3,14 +3,16 @@ import {
   FixtureState,
   ReactDecorator,
   ReactDecoratorModule,
+  ReactFixture,
   SetFixtureState,
 } from 'react-cosmos-core';
-import { FixtureContextProvider } from '../shared/FixtureContextProvider.js';
-import { decorateFixture } from '../shared/decorateFixture.js';
-import { FixtureCapture } from './FixtureCapture/FixtureCapture.js';
+import { FixtureCapture } from '../client/FixtureCapture/FixtureCapture.js';
+import { FixtureContextProvider } from './FixtureContextProvider.js';
+import { decorateFixture } from './decorateFixture.js';
+import { createFixtureNode } from './fixtureNode.js';
 
 type Props = {
-  children: React.ReactNode;
+  fixture: ReactFixture;
   systemDecorators: ReactDecorator[];
   userDecoratorModules: ReactDecoratorModule[];
   fixtureState: FixtureState;
@@ -19,7 +21,7 @@ type Props = {
   onErrorReset?: () => unknown;
 };
 export function DecoratedFixture({
-  children,
+  fixture,
   systemDecorators,
   userDecoratorModules,
   fixtureState,
@@ -33,7 +35,9 @@ export function DecoratedFixture({
       ...userDecoratorModules.map(m => m.default),
     ];
     return decorateFixture(
-      <FixtureCapture decoratorId="root">{children}</FixtureCapture>,
+      <FixtureCapture decoratorId="root">
+        {createFixtureNode(fixture)}
+      </FixtureCapture>,
       decorators,
       {
         fixtureState,
@@ -42,7 +46,7 @@ export function DecoratedFixture({
       }
     );
   }, [
-    children,
+    fixture,
     fixtureState,
     onErrorReset,
     setFixtureState,

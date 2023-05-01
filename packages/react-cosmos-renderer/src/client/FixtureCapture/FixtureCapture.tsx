@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { FixtureDecoratorId } from 'react-cosmos-core';
 import { useClassStateCapture } from './classState/index.js';
