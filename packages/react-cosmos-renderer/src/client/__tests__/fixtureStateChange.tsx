@@ -2,7 +2,7 @@ import retry from '@skidding/async-retry';
 import React from 'react';
 import { uuid } from 'react-cosmos-core';
 import { act, ReactTestRenderer } from 'react-test-renderer';
-import { FixtureContext } from '../FixtureContext.js';
+import { FixtureContext } from '../../shared/FixtureContext.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 

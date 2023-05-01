@@ -1,7 +1,7 @@
 'use client';
 import React, { useMemo } from 'react';
 import { FixtureState, SetFixtureState } from 'react-cosmos-core';
-import { FixtureContext } from '../client/FixtureContext.js';
+import { FixtureContext } from './FixtureContext.js';
 
 type Props = {
   children: React.ReactNode;
