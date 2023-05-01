@@ -11,7 +11,7 @@ import {
   getFixtureFromExport,
   getSortedDecoratorsForFixturePath,
 } from 'react-cosmos-core';
-import { getFixtureElement } from '../shared/getFixtureElement.js';
+import { createFixtureNode } from '../shared/fixtureNode.js';
 import { DecoratedFixture } from './DecoratedFixture.js';
 
 type Props = {
@@ -64,7 +64,7 @@ export function FixtureLoader({
       renderKey={renderKey}
       onErrorReset={onErrorReset}
     >
-      {getFixtureElement(fixture)}
+      {createFixtureNode(fixture)}
     </DecoratedFixture>
   );
 }

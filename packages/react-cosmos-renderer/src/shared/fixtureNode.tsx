@@ -1,7 +1,7 @@
 import React from 'react';
 import { ReactFixture } from 'react-cosmos-core';
 
-export function getFixtureElement(fixture: ReactFixture) {
+export function createFixtureNode(fixture: ReactFixture): React.ReactNode {
   return isFunctionFixture(fixture) ? (
     <FixtureElement Component={fixture} />
   ) : (
@@ -15,10 +15,7 @@ function isFunctionFixture(
   return typeof fixture === 'function';
 }
 
-type FixtureElementProps = {
-  Component: React.FunctionComponent;
-};
-function FixtureElement({ Component }: FixtureElementProps) {
+function FixtureElement({ Component }: { Component: React.FunctionComponent }) {
   return <Component />;
 }
 FixtureElement.cosmosCapture = false;

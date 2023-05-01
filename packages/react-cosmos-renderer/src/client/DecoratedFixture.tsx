@@ -5,11 +5,11 @@ import {
   ReactDecoratorModule,
   SetFixtureState,
 } from 'react-cosmos-core';
+import { decorateFixture } from '../shared/decorateFixture.js';
+import { FixtureCapture } from './FixtureCapture/FixtureCapture.js';
 import { FixtureContext } from './FixtureContext.js';
-import { getDecoratedFixtureElement } from './getDecoratedFixtureElement.js';
 
 type Props = {
-  // fixture: ReactFixture;
   children: React.ReactNode;
   systemDecorators: ReactDecorator[];
   userDecoratorModules: ReactDecoratorModule[];
@@ -38,11 +38,15 @@ export function DecoratedFixture({
       ...systemDecorators,
       ...userDecoratorModules.map(m => m.default),
     ];
-    return getDecoratedFixtureElement(children, decorators, {
-      fixtureState,
-      setFixtureState,
-      onErrorReset,
-    });
+    return decorateFixture(
+      <FixtureCapture decoratorId="root">{children}</FixtureCapture>,
+      decorators,
+      {
+        fixtureState,
+        setFixtureState,
+        onErrorReset,
+      }
+    );
   }, [
     children,
     fixtureState,
