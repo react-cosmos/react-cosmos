@@ -1,5 +1,5 @@
 import React from 'react';
-import { Viewport } from 'react-cosmos-core/client';
+import { Viewport } from 'react-cosmos-core/client.js';
 import { Hello } from './WelcomeMessage.js';
 
 export default (

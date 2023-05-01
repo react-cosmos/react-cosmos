@@ -1,5 +1,5 @@
 import React from 'react';
-import { useValue } from 'react-cosmos-core/client';
+import { useValue } from 'react-cosmos-core/client.js';
 import styled from 'styled-components';
 import { DEFAULT_DEVICES } from '../shared.js';
 import { ResponsivePreview } from './ResponsivePreview.js';

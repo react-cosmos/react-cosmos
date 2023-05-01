@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelect } from 'react-cosmos-core/client';
+import { useSelect } from 'react-cosmos-core/client.js';
 import { Notifications } from './Notifications.js';
 import { NotificationItem, NotificationType } from './spec.js';
 
