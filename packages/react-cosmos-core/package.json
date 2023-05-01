@@ -5,7 +5,8 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-core",
   "license": "MIT",
   "type": "module",
-  "main": "./dist/index.js",
+  "main": "./index.js",
+  "exports": ["./index.js", "./client.js"],
   "sideEffects": false,
   "dependencies": {
     "lodash-es": "^4.17.21",
