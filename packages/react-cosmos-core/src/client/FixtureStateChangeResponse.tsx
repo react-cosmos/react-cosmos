@@ -1,6 +1,6 @@
 import { isEqual } from 'lodash-es';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import { RendererConnect } from '../renderer/rendererConnectTypes.js';
+import { RendererConnect } from '../shared/rendererConnectTypes.js';
 import { SelectedFixture } from './useSelectedFixture.js';
 
 type Props = {

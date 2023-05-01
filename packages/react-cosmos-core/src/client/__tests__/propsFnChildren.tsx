@@ -1,8 +1,8 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
-import { FixtureCapture } from '../../client/FixtureCapture/FixtureCapture.js';
 import { createValues } from '../../shared/fixtureState/createValues.js';
 import { uuid } from '../../utils/uuid.js';
+import { FixtureCapture } from '../FixtureCapture/FixtureCapture.js';
 import { HelloMessage } from '../testHelpers/components.js';
 import { anyProps } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';

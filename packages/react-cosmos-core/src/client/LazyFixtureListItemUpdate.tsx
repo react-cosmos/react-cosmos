@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { RendererConnect } from '../renderer/rendererConnectTypes.js';
 import { getFixtureItemFromExport } from '../shared/getFixtureList.js';
+import { RendererConnect } from '../shared/rendererConnectTypes.js';
 import { ReactFixtureModule } from '../shared/userModuleTypes.js';
 
 type Props = {

@@ -1,11 +1,11 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
 import { ReactTestRenderer } from 'react-test-renderer';
-import { useValue } from '../../client/useValue/index.js';
 import { createValue } from '../../shared/fixtureState/createValues.js';
 import { uuid } from '../../utils/uuid.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
+import { useValue } from '../useValue/index.js';
 
 type Profile = {
   isAdmin: boolean;

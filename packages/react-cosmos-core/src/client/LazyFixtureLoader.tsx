@@ -1,9 +1,9 @@
 import React, { ReactElement, useMemo } from 'react';
-import { RendererConnect } from '../renderer/rendererConnectTypes.js';
 import { FixtureState, SetFixtureState } from '../shared/fixtureState/types.js';
 import { FixtureId } from '../shared/fixtureTypes.js';
 import { getFixtureFromExport } from '../shared/getFixtureFromExport.js';
 import { getSortedDecoratorsForFixturePath } from '../shared/getSortedDecoratorsForFixturePath.js';
+import { RendererConnect } from '../shared/rendererConnectTypes.js';
 import {
   ByPath,
   LazyReactDecoratorWrapper,

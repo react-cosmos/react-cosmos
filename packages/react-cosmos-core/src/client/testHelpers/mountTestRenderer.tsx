@@ -2,19 +2,19 @@ import delay from 'delay';
 import { mapValues } from 'lodash-es';
 import React from 'react';
 import { act, create, ReactTestRenderer } from 'react-test-renderer';
-import { FixtureConnect } from '../../client/FixtureConnect.js';
 import { FixtureId } from '../../shared/fixtureTypes.js';
+import {
+  RendererConnect,
+  RendererId,
+  RendererResponse,
+} from '../../shared/rendererConnectTypes.js';
 import {
   ByPath,
   ReactDecoratorModule,
   ReactFixtureModule,
   UserModuleWrappers,
 } from '../../shared/userModuleTypes.js';
-import {
-  RendererConnect,
-  RendererId,
-  RendererResponse,
-} from '../rendererConnectTypes.js';
+import { FixtureConnect } from '../FixtureConnect.js';
 import {
   createRendererConnectTestApi,
   RendererConnectTestApi,

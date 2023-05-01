@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
-import { RendererConnect } from '../renderer/rendererConnectTypes.js';
 import { FixtureId } from '../shared/fixtureTypes.js';
+import { RendererConnect } from '../shared/rendererConnectTypes.js';
 import {
   ReactDecorator,
   UserModuleWrappers,

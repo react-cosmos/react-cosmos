@@ -11,7 +11,7 @@ import {
   SelectFixtureRequest,
   SetFixtureStateRequest,
   UnselectFixtureRequest,
-} from '../rendererConnectTypes.js';
+} from '../../shared/rendererConnectTypes.js';
 
 export type RendererConnectTestApi = {
   pingRenderers: () => void;

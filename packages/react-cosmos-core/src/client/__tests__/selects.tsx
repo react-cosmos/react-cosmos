@@ -5,20 +5,26 @@ import {
   ReactTestRenderer,
   ReactTestRendererJSON,
 } from 'react-test-renderer';
-import { useValue } from '../../client/useValue/index.js';
-import { createValue } from '../../shared/fixtureState/createValues.js';
 import { uuid } from '../../utils/uuid.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
+import { useSelect } from '../useSelect/index.js';
 
-function createFixtures({ defaultValue }: { defaultValue: string }) {
+type Option = 'first' | 'second' | 'third';
+
+const options: Option[] = ['first', 'second', 'third'];
+
+function createFixtures({ defaultValue }: { defaultValue: Option }) {
   const MyComponent = () => {
-    const [value, setValue] = useValue('name', { defaultValue });
+    const [value, setValue] = useSelect('selectName', {
+      defaultValue,
+      options,
+    });
     return (
       <input
         type="text"
         value={value}
-        onChange={e => setValue(e.target.value)}
+        onChange={e => setValue(e.target.value as Option)}
       />
     );
   };
@@ -28,7 +34,7 @@ function createFixtures({ defaultValue }: { defaultValue: string }) {
 }
 
 const rendererId = uuid();
-const fixtures = createFixtures({ defaultValue: 'Fu Barr' });
+const fixtures = createFixtures({ defaultValue: 'first' });
 const fixtureId = { path: 'first' };
 
 testRenderer(
@@ -36,7 +42,7 @@ testRenderer(
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, 'Fu Barr');
+    await rendered(renderer, 'first');
   }
 );
 
@@ -51,10 +57,11 @@ testRenderer(
       fixtureState: {
         props: expect.any(Array),
         controls: {
-          name: {
-            type: 'standard',
-            defaultValue: createValue('Fu Barr'),
-            currentValue: createValue('Fu Barr'),
+          selectName: {
+            type: 'select',
+            options: ['first', 'second', 'third'],
+            defaultValue: 'first',
+            currentValue: 'first',
           },
         },
       },
@@ -63,22 +70,51 @@ testRenderer(
 );
 
 testRenderer(
+  'reflects fixture state change',
+  { rendererId, fixtures },
+  async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
+    selectFixture({ rendererId, fixtureId, fixtureState: {} });
+    await rendered(renderer, 'first');
+    const fixtureState = await getLastFixtureState();
+    setFixtureState({
+      rendererId,
+      fixtureId,
+      fixtureState: {
+        ...setFixtureState,
+        controls: {
+          ...fixtureState.controls,
+          selectName: {
+            type: 'select',
+            options: ['first', 'second', 'third'],
+            defaultValue: 'first',
+            currentValue: 'second',
+          },
+        },
+      },
+    });
+    await rendered(renderer, 'second');
+  }
+);
+
+testRenderer(
   'updates fixture state via setter',
   { rendererId, fixtures },
   async ({ renderer, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, 'Fu Barr');
-    changeInput(renderer, 'Fu Barr Bhaz');
+    await rendered(renderer, 'first');
+    changeValue(renderer, 'second');
+    await rendered(renderer, 'second');
     await fixtureStateChange({
       rendererId,
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
         controls: {
-          name: {
-            type: 'standard',
-            defaultValue: createValue('Fu Barr'),
-            currentValue: createValue('Fu Barr Bhaz'),
+          selectName: {
+            type: 'select',
+            options: ['first', 'second', 'third'],
+            defaultValue: 'first',
+            currentValue: 'second',
           },
         },
       },
@@ -91,21 +127,23 @@ testRenderer(
   { rendererId, fixtures },
   async ({ renderer, update, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, 'Fu Barr');
+    await rendered(renderer, 'first');
     update({
       rendererId,
-      fixtures: createFixtures({ defaultValue: 'Fu Barr Bhaz' }),
+      fixtures: createFixtures({ defaultValue: 'third' }),
     });
+    await rendered(renderer, 'third');
     await fixtureStateChange({
       rendererId,
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
         controls: {
-          name: {
-            type: 'standard',
-            defaultValue: createValue('Fu Barr Bhaz'),
-            currentValue: createValue('Fu Barr Bhaz'),
+          selectName: {
+            type: 'select',
+            options: ['first', 'second', 'third'],
+            defaultValue: 'third',
+            currentValue: 'third',
           },
         },
       },
@@ -113,15 +151,13 @@ testRenderer(
   }
 );
 
-function getInputValue(renderer: ReactTestRenderer) {
-  return getSingleRendererElement(renderer).props.value;
-}
-
 async function rendered(renderer: ReactTestRenderer, text: string) {
-  await retry(() => expect(getInputValue(renderer)).toEqual(text));
+  await retry(() =>
+    expect(getSingleRendererElement(renderer).props.value).toEqual(text)
+  );
 }
 
-function changeInput(renderer: ReactTestRenderer, value: string) {
+function changeValue(renderer: ReactTestRenderer, value: Option) {
   act(() => {
     getSingleRendererElement(renderer).props.onChange({ target: { value } });
   });

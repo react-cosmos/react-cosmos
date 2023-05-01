@@ -1,10 +1,10 @@
 import {
   RendererConnect,
   RendererRequest,
-} from '../renderer/rendererConnectTypes.js';
+} from '../shared/rendererConnectTypes.js';
 import {
-  rendererSocketMessage,
   SocketMessage,
+  rendererSocketMessage,
 } from '../shared/socketMessage.js';
 
 export function createWebSocketsConnect(url: string): RendererConnect {

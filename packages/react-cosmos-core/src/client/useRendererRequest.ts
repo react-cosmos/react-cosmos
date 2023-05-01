@@ -1,12 +1,12 @@
 import { isEqual } from 'lodash-es';
 import { Dispatch, SetStateAction, useEffect } from 'react';
+import { getFixtureListFromWrappers } from '../shared/getFixtureList.js';
 import {
   RendererConnect,
   RendererRequest,
   SelectFixtureRequest,
   SetFixtureStateRequest,
-} from '../renderer/rendererConnectTypes.js';
-import { getFixtureListFromWrappers } from '../shared/getFixtureList.js';
+} from '../shared/rendererConnectTypes.js';
 import { UserModuleWrappers } from '../shared/userModuleTypes.js';
 import { SelectedFixture } from './useSelectedFixture.js';
 

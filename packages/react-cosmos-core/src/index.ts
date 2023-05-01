@@ -1,4 +1,3 @@
-export * from './renderer/rendererConnectTypes.js';
 export * from './shared/cosmosPluginConfig.js';
 export * from './shared/fixtureState/classState.js';
 export * from './shared/fixtureState/props.js';
@@ -13,6 +12,7 @@ export * from './shared/getSortedDecoratorsForFixturePath.js';
 export * from './shared/playgroundUrl.js';
 export * from './shared/registerPlaygroundShortcuts.js';
 export * from './shared/rendererConfig.js';
+export * from './shared/rendererConnectTypes.js';
 export * from './shared/serverMessage.js';
 export * from './shared/socketMessage.js';
 export * from './shared/userModuleTypes.js';
