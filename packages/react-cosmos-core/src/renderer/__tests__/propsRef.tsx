@@ -1,11 +1,11 @@
 import retry from '@skidding/async-retry';
 import { uniq } from 'lodash-es';
 import React from 'react';
-import { createValues } from '../../fixtureState/createValues.js';
+import { createValues } from '../../shared/fixtureState/createValues.js';
 import {
   resetFixtureStateProps,
   updateFixtureStateProps,
-} from '../../fixtureState/props.js';
+} from '../../shared/fixtureState/props.js';
 import { uuid } from '../../utils/uuid.js';
 import { HelloMessageCls } from '../testHelpers/components.js';
 import { getProps } from '../testHelpers/fixtureState.js';

@@ -1,6 +1,6 @@
 import until from 'async-until';
 import { findLast } from 'lodash-es';
-import { FixtureState } from '../../fixtureState/types.js';
+import { FixtureState } from '../../shared/fixtureState/types.js';
 import {
   FixtureListItemUpdateResponse,
   FixtureListUpdateResponse,

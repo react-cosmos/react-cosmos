@@ -1,5 +1,5 @@
 import React from 'react';
-import { createValues } from '../../fixtureState/createValues.js';
+import { createValues } from '../../shared/fixtureState/createValues.js';
 import { uuid } from '../../utils/uuid.js';
 import { anyProps } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';

@@ -5,8 +5,8 @@ import {
   ReactTestRenderer,
   ReactTestRendererJSON,
 } from 'react-test-renderer';
-import { useValue } from '../../fixture/useValue/index.js';
-import { createValue } from '../../fixtureState/createValues.js';
+import { useValue } from '../../client/useValue/index.js';
+import { createValue } from '../../shared/fixtureState/createValues.js';
 import { uuid } from '../../utils/uuid.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';

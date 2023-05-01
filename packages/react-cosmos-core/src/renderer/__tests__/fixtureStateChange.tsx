@@ -1,7 +1,7 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
 import { act, ReactTestRenderer } from 'react-test-renderer';
-import { FixtureContext } from '../../fixture/FixtureContext.js';
+import { FixtureContext } from '../../client/FixtureContext.js';
 import { uuid } from '../../utils/uuid.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';

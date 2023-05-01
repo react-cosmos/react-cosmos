@@ -2,7 +2,7 @@ import retry from '@skidding/async-retry';
 import until from 'async-until';
 import delay from 'delay';
 import React from 'react';
-import { FixtureStatePrimitiveValue } from '../../fixtureState/types.js';
+import { FixtureStatePrimitiveValue } from '../../shared/fixtureState/types.js';
 import { ClassStateMock } from '../../utils/react/ClassStateMock.js';
 import { uuid } from '../../utils/uuid.js';
 import { Counter } from '../testHelpers/components.js';

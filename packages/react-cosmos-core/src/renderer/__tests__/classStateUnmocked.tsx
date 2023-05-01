@@ -3,8 +3,8 @@ import React from 'react';
 import {
   removeFixtureStateClassState,
   updateFixtureStateClassState,
-} from '../../fixtureState/classState.js';
-import { createValues } from '../../fixtureState/createValues.js';
+} from '../../shared/fixtureState/classState.js';
+import { createValues } from '../../shared/fixtureState/createValues.js';
 import { uuid } from '../../utils/uuid.js';
 import { Counter } from '../testHelpers/components.js';
 import {

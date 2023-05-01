@@ -5,15 +5,15 @@ import {
   createFixtureTree,
   FixtureId,
   flattenFixtureTree,
-  getDecoratedFixtureElement,
+  getFixtureFromExport,
   getFixtureListFromExports,
   getSortedDecoratorsForFixturePath,
   ReactDecorator,
   ReactFixture,
-  ReactFixtureMap,
   stringifyPlaygroundUrlQuery,
   stringifyRendererUrlQuery,
 } from 'react-cosmos-core';
+import { getDecoratedFixtureElement } from 'react-cosmos-core/client';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { RENDERER_FILENAME } from '../shared/playgroundHtml.js';
 import { resolveRendererUrl } from '../shared/resolveRendererUrl.js';
@@ -45,10 +45,11 @@ export function getFixtures(cosmosConfig: CosmosConfig) {
   const flatFixtureTree = flattenFixtureTree(fixtureTree);
   flatFixtureTree.forEach(({ fileName, fixtureId, name, parents }) => {
     const fixtureExport = fixtures[fixtureId.path];
-    const fixture: ReactFixture =
-      fixtureId.name === undefined
-        ? (fixtureExport as ReactFixture)
-        : (fixtureExport as ReactFixtureMap)[fixtureId.name];
+    const fixture = getFixtureFromExport(fixtureExport, fixtureId.name);
+
+    if (!fixture) {
+      throw new Error(`Could not read fixture: ${JSON.stringify(fixtureId)}`);
+    }
 
     const treePath = [...parents, fileName];
     if (name) treePath.push(name);

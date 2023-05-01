@@ -1,7 +1,7 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
-import { createValues } from '../../fixtureState/createValues.js';
-import { createFixtureStateProps } from '../../fixtureState/props.js';
+import { createValues } from '../../shared/fixtureState/createValues.js';
+import { createFixtureStateProps } from '../../shared/fixtureState/props.js';
 import { uuid } from '../../utils/uuid.js';
 import { HelloMessage } from '../testHelpers/components.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
