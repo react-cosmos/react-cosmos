@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { UserModuleWrappers } from 'react-cosmos-core';
-import { FixtureConnect } from 'react-cosmos-core/client';
+import { FixtureConnect } from 'react-cosmos-renderer/client';
 import { ErrorCatch } from './ErrorCatch.js';
 import { createDomRendererConnect } from './domRendererConnect.js';
 import { getRendererId } from './domRendererId.js';

@@ -13,7 +13,7 @@ import {
   stringifyPlaygroundUrlQuery,
   stringifyRendererUrlQuery,
 } from 'react-cosmos-core';
-import { getDecoratedFixtureElement } from 'react-cosmos-core/client';
+import { getDecoratedFixtureElement } from 'react-cosmos-renderer/client';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { RENDERER_FILENAME } from '../shared/playgroundHtml.js';
 import { resolveRendererUrl } from '../shared/resolveRendererUrl.js';
