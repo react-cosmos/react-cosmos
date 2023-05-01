@@ -40,6 +40,7 @@ jobs:
           yarn set version stable
           yarn install --immutable
           yarn link ../react-cosmos/packages/react-cosmos-core
+          yarn link ../react-cosmos/packages/react-cosmos-renderer
           yarn link ../react-cosmos/packages/react-cosmos-dom
           yarn link ../react-cosmos/packages/react-cosmos-ui
           yarn link ../react-cosmos/packages/react-cosmos
