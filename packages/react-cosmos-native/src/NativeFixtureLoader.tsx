@@ -7,7 +7,7 @@ import {
 import {
   FixtureConnect,
   createWebSocketsConnect,
-} from 'react-cosmos-core/client.js';
+} from 'react-cosmos-core/client';
 import * as ReactNative from 'react-native';
 import { getSocketUrl } from './getSocketUrl.js';
 

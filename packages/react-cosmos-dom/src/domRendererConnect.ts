@@ -1,7 +1,7 @@
 import {
   createPostMessageConnect,
   createWebSocketsConnect,
-} from 'react-cosmos-core/client.js';
+} from 'react-cosmos-core/client';
 import { isInsideCosmosPreviewIframe } from './utils/isInsideCosmosPreviewIframe.js';
 
 export function createDomRendererConnect(playgroundUrl: string) {

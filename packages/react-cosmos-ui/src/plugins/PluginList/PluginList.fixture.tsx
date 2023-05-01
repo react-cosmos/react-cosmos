@@ -1,5 +1,5 @@
 import React from 'react';
-import { useValue } from 'react-cosmos-core/client.js';
+import { useValue } from 'react-cosmos-core/client';
 import { PluginList, SimplePlugin } from './PluginList.js';
 
 const initialPlugins: SimplePlugin[] = [
