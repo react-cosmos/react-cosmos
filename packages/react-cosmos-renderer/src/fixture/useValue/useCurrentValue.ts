@@ -4,7 +4,7 @@ import {
   extendWithValue,
   findFixtureStateControl,
 } from 'react-cosmos-core';
-import { FixtureContext } from '../../shared/FixtureContext.js';
+import { FixtureContext } from '../FixtureContext.js';
 
 export function useCurrentValue<T extends FixtureStateData>(
   inputName: string,

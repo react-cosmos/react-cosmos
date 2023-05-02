@@ -10,7 +10,7 @@ import {
   removeFixtureStateProps,
   updateFixtureStateProps,
 } from 'react-cosmos-core';
-import { FixtureContext } from '../../../shared/FixtureContext.js';
+import { FixtureContext } from '../../FixtureContext.js';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
 import {
   getElementAtPath,

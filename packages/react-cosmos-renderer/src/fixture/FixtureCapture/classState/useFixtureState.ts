@@ -20,7 +20,7 @@ import {
   getFixtureStateClassState,
   removeFixtureStateClassState,
 } from 'react-cosmos-core';
-import { FixtureContext } from '../../../shared/FixtureContext.js';
+import { FixtureContext } from '../../FixtureContext.js';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
 import { decorateFixtureRefs } from './decorateFixtureRefs/index.js';
 import {

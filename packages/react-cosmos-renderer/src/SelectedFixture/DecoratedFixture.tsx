@@ -4,7 +4,7 @@ import {
   ReactDecoratorModule,
   ReactFixture,
 } from 'react-cosmos-core';
-import { FixtureCapture } from '../client/FixtureCapture/FixtureCapture.js';
+import { FixtureCapture } from '../fixture/FixtureCapture/FixtureCapture.js';
 import { decorateFixture } from './decorateFixture.js';
 import { createFixtureNode } from './fixtureNode.js';
 

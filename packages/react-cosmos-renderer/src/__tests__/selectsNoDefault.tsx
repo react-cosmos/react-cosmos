@@ -2,9 +2,9 @@ import retry from '@skidding/async-retry';
 import React from 'react';
 import { uuid } from 'react-cosmos-core';
 import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
+import { useSelect } from '../fixture/useSelect/index.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
-import { useSelect } from '../useSelect/index.js';
 
 function createFixtures() {
   const MyComponent = () => {
