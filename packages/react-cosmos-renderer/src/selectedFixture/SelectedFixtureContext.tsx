@@ -1,32 +1,21 @@
 'use client';
 import { isEqual } from 'lodash-es';
 import React from 'react';
-import { FixtureId, FixtureState, SetFixtureState } from 'react-cosmos-core';
+import {
+  FixtureId,
+  FixtureListItem,
+  FixtureState,
+  SetFixtureState,
+} from 'react-cosmos-core';
 import { FixtureContextProvider } from '../fixture/FixtureContext.js';
 import { RendererConnectContext } from '../rendererConnect/RendererConnectContext.js';
-
-type SelectedFixtureContextValue = {
-  fixtureId: FixtureId;
-  fixtureState: FixtureState;
-  setFixtureState: SetFixtureState;
-  receiveFixtureState: (
-    fixtureId: FixtureId,
-    fixtureState: FixtureState
-  ) => void;
-};
-
-export const SelectedFixtureContext =
-  React.createContext<SelectedFixtureContextValue>({
-    fixtureId: { path: '' },
-    fixtureState: {},
-    setFixtureState: () => {},
-    receiveFixtureState: () => {},
-  });
+import { useRendererMessage } from '../rendererConnect/useRendererMessage.js';
 
 type ProviderProps = {
   children: React.ReactNode;
   fixtureId: FixtureId;
   initialFixtureState?: FixtureState;
+  fixtureItem: FixtureListItem;
 };
 
 type ProviderState = {
@@ -50,27 +39,21 @@ export function SelectedFixtureProvider(props: ProviderProps) {
     [setState]
   );
 
-  const receiveFixtureState = React.useCallback(
-    (fixtureId: FixtureId, fixtureState: FixtureState) => {
-      setState(prevState => {
-        // Ensure fixture state applies to currently selected fixture
-        if (prevState && isEqual(fixtureId, props.fixtureId)) {
-          return {
-            ...prevState,
-            fixtureState,
-            syncedFixtureState: fixtureState,
-          };
-        } else {
-          return prevState;
-        }
-      });
-    },
-    [props.fixtureId]
-  );
-
   const { rendererId, rendererConnect } = React.useContext(
     RendererConnectContext
   );
+
+  React.useEffect(() => {
+    rendererConnect.postMessage({
+      type: 'fixtureListItemUpdate',
+      payload: {
+        rendererId,
+        fixturePath: props.fixtureId.path,
+        fixtureItem: props.fixtureItem,
+      },
+    });
+  }, [props.fixtureId.path, props.fixtureItem, rendererConnect, rendererId]);
+
   React.useEffect(() => {
     if (!isEqual(state.fixtureState, state.syncedFixtureState)) {
       rendererConnect.postMessage({
@@ -94,25 +77,36 @@ export function SelectedFixtureProvider(props: ProviderProps) {
     state.syncedFixtureState,
   ]);
 
-  const value = React.useMemo<SelectedFixtureContextValue>(
-    () => ({
-      fixtureId: props.fixtureId,
-      fixtureState: state.fixtureState,
-      setFixtureState,
-      receiveFixtureState,
-    }),
-    [props.fixtureId, receiveFixtureState, setFixtureState, state.fixtureState]
+  useRendererMessage(
+    React.useCallback(
+      msg => {
+        if (msg.type === 'setFixtureState') {
+          const { fixtureId, fixtureState } = msg.payload;
+          setState(prevState => {
+            // Ensure fixture state applies to currently selected fixture
+            if (prevState && isEqual(fixtureId, props.fixtureId)) {
+              return {
+                ...prevState,
+                fixtureState,
+                syncedFixtureState: fixtureState,
+              };
+            } else {
+              return prevState;
+            }
+          });
+        }
+      },
+      [props.fixtureId]
+    )
   );
 
   return (
-    <SelectedFixtureContext.Provider value={value}>
-      <FixtureContextProvider
-        fixtureId={props.fixtureId}
-        fixtureState={state.fixtureState}
-        setFixtureState={setFixtureState}
-      >
-        {props.children}
-      </FixtureContextProvider>
-    </SelectedFixtureContext.Provider>
+    <FixtureContextProvider
+      fixtureId={props.fixtureId}
+      fixtureState={state.fixtureState}
+      setFixtureState={setFixtureState}
+    >
+      {props.children}
+    </FixtureContextProvider>
   );
 }
