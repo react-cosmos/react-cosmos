@@ -7,7 +7,7 @@ import {
 import { AsyncModuleLoader } from '../moduleLoaders/AsyncModuleLoader.js';
 import { RendererConnectProvider } from '../rendererConnect/RendererConnectContext.js';
 import { SelectedFixture } from '../selectedFixture/SelectedFixture.js';
-import { FixtureLoaderLink } from './FixtureLoaderLink.js';
+import { FixtureLoader } from './FixtureLoader.js';
 
 const rendererId = 'fooRendererId';
 
@@ -27,7 +27,7 @@ export function ServerFixtureLoader({
 }: Props) {
   return (
     <RendererConnectProvider rendererId={rendererId}>
-      <FixtureLoaderLink
+      <FixtureLoader
         moduleWrappers={moduleWrappers}
         selectedFixture={
           selectedFixtureId && {

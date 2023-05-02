@@ -6,7 +6,7 @@ import {
   UserModuleWrappers,
 } from 'react-cosmos-core';
 import {
-  ClientFixtureLoader,
+  FixtureConnect,
   RendererConnectProvider,
   createWebSocketsConnect,
 } from 'react-cosmos-renderer/client';
@@ -35,7 +35,7 @@ export function NativeFixtureLoader({
       rendererId={rendererId}
       rendererConnect={createWebSocketsConnect(socketUrl)}
     >
-      <ClientFixtureLoader
+      <FixtureConnect
         moduleWrappers={moduleWrappers}
         globalDecorators={globalDecorators}
         initialFixtureId={initialFixtureId}

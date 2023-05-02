@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { UserModuleWrappers } from 'react-cosmos-core';
 import {
-  ClientFixtureLoader,
+  FixtureConnect,
   RendererConnectProvider,
 } from 'react-cosmos-renderer/client';
 import { ErrorCatch } from './ErrorCatch.js';
@@ -45,7 +45,7 @@ export function DomFixtureLoader(props: Props) {
       rendererId={getRendererId()}
       rendererConnect={domRendererConnect}
     >
-      <ClientFixtureLoader
+      <FixtureConnect
         moduleWrappers={moduleWrappers}
         globalDecorators={globalDecorators}
         selectedFixtureId={getSelectedFixtureId()}
