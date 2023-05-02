@@ -1,1 +1,1 @@
-export * from './server/ServerFixtureLoader.js';
+export * from './fixtureLoader/ServerFixtureLoader.js';

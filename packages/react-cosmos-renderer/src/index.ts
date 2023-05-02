@@ -1,2 +1,2 @@
-export * from './SelectedFixture/decorateFixture.js';
-export * from './SelectedFixture/fixtureNode.js';
+export * from './selectedFixture/decorateFixture.js';
+export * from './selectedFixture/fixtureNode.js';
