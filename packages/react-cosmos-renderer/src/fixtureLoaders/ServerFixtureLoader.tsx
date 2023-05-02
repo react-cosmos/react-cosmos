@@ -27,7 +27,7 @@ export function ServerFixtureLoader({
     <DomRendererProvider playgroundUrl={playgroundUrl}>
       <FixtureSelector
         moduleWrappers={moduleWrappers}
-        selection={
+        fixtureSelection={
           selectedFixtureId && {
             fixtureId: selectedFixtureId,
             initialFixtureState: {},

@@ -9,7 +9,7 @@ import { LazyModuleLoader } from '../moduleLoaders/LazyModuleLoader.js';
 import { StaticModuleLoader } from '../moduleLoaders/StaticModuleLoader.js';
 import { SelectedFixture } from '../selectedFixture/SelectedFixture.js';
 import { FixtureSelector } from './FixtureSelector.js';
-import { useFixtureLoaderState } from './useFixtureLoaderState.js';
+import { useFixtureSelectionConnect } from './useFixtureSelectionConnect.js';
 
 type Props = {
   moduleWrappers: UserModuleWrappers;
@@ -25,12 +25,15 @@ export function ClientFixtureLoader({
   selectedFixtureId = null,
   renderMessage = defaultRenderMessage,
 }: Props) {
-  const selection = useFixtureLoaderState(initialFixtureId, selectedFixtureId);
+  const fixtureSelection = useFixtureSelectionConnect(
+    initialFixtureId,
+    selectedFixtureId
+  );
 
   return (
     <FixtureSelector
       moduleWrappers={moduleWrappers}
-      selection={selection}
+      fixtureSelection={fixtureSelection}
       initialFixtureId={initialFixtureId}
       renderMessage={renderMessage}
       renderFixture={({ fixtureId, initialFixtureState, renderKey }) => {

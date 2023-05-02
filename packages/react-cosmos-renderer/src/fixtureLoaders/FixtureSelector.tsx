@@ -6,18 +6,18 @@ import {
   isInsideWindowIframe,
 } from 'react-cosmos-core';
 import { FixtureSelectorConnect } from './FixtureSelectorConnect.js';
-import { FixtureLoaderSelection } from './useFixtureLoaderState.js';
+import { FixtureSelection } from './useFixtureSelectionConnect.js';
 
 type Props = {
   moduleWrappers: UserModuleWrappers;
-  selection: FixtureLoaderSelection | null;
+  fixtureSelection: FixtureSelection | null;
   initialFixtureId?: FixtureId | null;
   renderMessage: (msg: string) => React.ReactElement;
-  renderFixture: (selection: FixtureLoaderSelection) => React.ReactElement;
+  renderFixture: (selection: FixtureSelection) => React.ReactElement;
 };
 export function FixtureSelector({
   moduleWrappers,
-  selection = null,
+  fixtureSelection = null,
   initialFixtureId = null,
   renderMessage,
   renderFixture,
@@ -28,18 +28,18 @@ export function FixtureSelector({
   );
 
   function renderInner() {
-    if (!selection) {
+    if (!fixtureSelection) {
       return isInsideWindowIframe()
         ? null
         : renderMessage('No fixture selected.');
     }
 
-    const { fixtureId } = selection;
+    const { fixtureId } = fixtureSelection;
     if (!fixtures[fixtureId.path]) {
       return renderMessage(`Fixture path not found: ${fixtureId.path}`);
     }
 
-    return renderFixture(selection);
+    return renderFixture(fixtureSelection);
   }
 
   return (

@@ -2,17 +2,17 @@ import React from 'react';
 import { FixtureId, FixtureState } from 'react-cosmos-core';
 import { RendererContext } from '../rendererConnect/RendererContext.js';
 
-export type FixtureLoaderSelection = {
+export type FixtureSelection = {
   fixtureId: FixtureId;
   initialFixtureState: FixtureState;
   renderKey: number;
 };
 
-export function useFixtureLoaderState(
+export function useFixtureSelectionConnect(
   initialFixtureId: FixtureId | null,
   selectedFixtureId: FixtureId | null
 ) {
-  const [state, setState] = React.useState<FixtureLoaderSelection | null>(
+  const [selection, setSelection] = React.useState<FixtureSelection | null>(
     () => {
       const fixtureId = selectedFixtureId ?? initialFixtureId;
       if (!fixtureId) return null;
@@ -35,7 +35,7 @@ export function useFixtureLoaderState(
           msg.payload.rendererId === rendererId
         ) {
           const { fixtureId, fixtureState } = msg.payload;
-          setState(prevState => {
+          setSelection(prevState => {
             return {
               fixtureId,
               initialFixtureState: fixtureState,
@@ -46,11 +46,11 @@ export function useFixtureLoaderState(
           msg.type === 'unselectFixture' &&
           msg.payload.rendererId === rendererId
         ) {
-          setState(null);
+          setSelection(null);
         }
       }),
     [rendererConnect, rendererId]
   );
 
-  return state;
+  return selection;
 }
