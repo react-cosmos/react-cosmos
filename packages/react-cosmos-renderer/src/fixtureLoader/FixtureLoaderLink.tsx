@@ -15,7 +15,7 @@ type Props = {
   renderNoFixtureSelected?: boolean;
   renderFixture: (selectedFixture: SelectedFixtureState) => React.ReactElement;
 };
-export function FixtureLoader({
+export function FixtureLoaderLink({
   moduleWrappers,
   selectedFixture = null,
   initialFixtureId = null,

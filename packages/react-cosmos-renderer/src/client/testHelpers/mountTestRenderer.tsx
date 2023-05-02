@@ -12,7 +12,7 @@ import {
   UserModuleWrappers,
 } from 'react-cosmos-core';
 import { ReactTestRenderer, act, create } from 'react-test-renderer';
-import { FixtureConnect } from '../../fixtureLoader/FixtureConnect.js';
+import { ClientFixtureLoader } from '../../fixtureLoader/ClientFixtureLoader.js';
 import { RendererConnectProvider } from '../../rendererConnect/RendererConnectContext.js';
 import {
   RendererConnectTestApi,
@@ -84,7 +84,7 @@ function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
       rendererId={rendererId}
       rendererConnect={rendererConnect}
     >
-      <FixtureConnect
+      <ClientFixtureLoader
         moduleWrappers={getModuleWrappers(fixtures, decorators, lazy)}
         globalDecorators={[]}
         initialFixtureId={args.initialFixtureId}
