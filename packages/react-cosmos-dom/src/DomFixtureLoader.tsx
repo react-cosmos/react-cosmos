@@ -1,10 +1,9 @@
 import React from 'react';
-import { UserModuleWrappers } from 'react-cosmos-core';
+import { UserModuleWrappers, isInsideWindowIframe } from 'react-cosmos-core';
 import { ClientFixtureLoader } from 'react-cosmos-renderer';
 import { DomRendererProvider } from 'react-cosmos-renderer/client';
 import { ErrorCatch } from './ErrorCatch.js';
 import { getSelectedFixtureId } from './selectedFixtureId.js';
-import { isInsideCosmosPreviewIframe } from './utils/isInsideCosmosPreviewIframe.js';
 
 type Props = {
   playgroundUrl: string;
@@ -18,7 +17,7 @@ export function DomFixtureLoader({ playgroundUrl, moduleWrappers }: Props) {
         globalDecorators={globalDecorators}
         selectedFixtureId={getSelectedFixtureId()}
         renderMessage={renderDomMessage}
-        renderNoFixtureSelected={!isInsideCosmosPreviewIframe()}
+        renderNoFixtureSelected={!isInsideWindowIframe()}
       />
     </DomRendererProvider>
   );

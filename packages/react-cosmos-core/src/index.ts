@@ -29,3 +29,4 @@ export * from './utils/string.js';
 export * from './utils/tree.js';
 export * from './utils/types.js';
 export * from './utils/uuid.js';
+export * from './utils/window.js';

@@ -1,5 +1,8 @@
-import { FixtureId, parseRendererUrlQuery } from 'react-cosmos-core';
-import { isInsideCosmosPreviewIframe } from './utils/isInsideCosmosPreviewIframe.js';
+import {
+  FixtureId,
+  isInsideWindowIframe,
+  parseRendererUrlQuery,
+} from 'react-cosmos-core';
 
 // The selected fixture ID is stored in session because components might change
 // the URL as a side effect. This means that after the renderer stores the
@@ -20,7 +23,7 @@ function setFixtureIdToSession(fixtureId: FixtureId) {
 }
 
 function getFixtureIdFromSession(): null | FixtureId {
-  if (isInsideCosmosPreviewIframe()) {
+  if (isInsideWindowIframe()) {
     return null;
   }
 
