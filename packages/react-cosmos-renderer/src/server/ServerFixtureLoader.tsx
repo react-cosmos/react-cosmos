@@ -4,10 +4,10 @@ import {
   ReactDecorator,
   UserModuleWrappers,
 } from 'react-cosmos-core';
+import { FixtureLoader } from '../FixtureLoader/FixtureLoader.js';
+import { RendererConnectProvider } from '../RendererConnect/RendererConnectContext.js';
+import { SelectedFixture } from '../SelectedFixture/SelectedFixture.js';
 import { AsyncModuleLoader } from '../moduleLoaders/AsyncModuleLoader.js';
-import { RendererConnectProvider } from '../rendererConnect/RendererConnectContext.js';
-import { SelectedFixture } from '../selectedFixture/SelectedFixture.js';
-import { FixtureLoader } from './FixtureLoader.js';
 
 const rendererId = 'fooRendererId';
 

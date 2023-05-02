@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
 import { FixtureId, FixtureList } from 'react-cosmos-core';
-import { RendererConnectContext } from '../rendererConnect/RendererConnectContext.js';
-import { useRendererMessage } from '../rendererConnect/useRendererMessage.js';
+import { RendererConnectContext } from '../RendererConnect/RendererConnectContext.js';
+import { useRendererMessage } from '../RendererConnect/useRendererMessage.js';
 
 type Props = {
   children: React.ReactNode;
