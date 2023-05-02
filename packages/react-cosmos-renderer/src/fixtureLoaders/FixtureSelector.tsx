@@ -3,6 +3,7 @@ import {
   FixtureId,
   UserModuleWrappers,
   getFixtureListFromWrappers,
+  isInsideWindowIframe,
 } from 'react-cosmos-core';
 import { FixtureSelectorConnect } from './FixtureSelectorConnect.js';
 import { FixtureLoaderSelection } from './useFixtureLoaderState.js';
@@ -12,7 +13,6 @@ type Props = {
   selection: FixtureLoaderSelection | null;
   initialFixtureId?: FixtureId | null;
   renderMessage: (msg: string) => React.ReactElement;
-  renderNoFixtureSelected?: boolean;
   renderFixture: (selection: FixtureLoaderSelection) => React.ReactElement;
 };
 export function FixtureSelector({
@@ -20,7 +20,6 @@ export function FixtureSelector({
   selection = null,
   initialFixtureId = null,
   renderMessage,
-  renderNoFixtureSelected,
   renderFixture,
 }: Props) {
   const fixtures = React.useMemo(
@@ -30,9 +29,9 @@ export function FixtureSelector({
 
   function renderInner() {
     if (!selection) {
-      return renderNoFixtureSelected
-        ? renderMessage('No fixture selected.')
-        : null;
+      return isInsideWindowIframe()
+        ? null
+        : renderMessage('No fixture selected.');
     }
 
     const { fixtureId } = selection;

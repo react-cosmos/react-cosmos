@@ -15,7 +15,6 @@ type Props = {
   globalDecorators?: ReactDecorator[];
   selectedFixtureId?: FixtureId | null;
   renderMessage?: (msg: string) => React.ReactElement;
-  renderNoFixtureSelected?: boolean;
 };
 export function ServerFixtureLoader({
   playgroundUrl,
@@ -23,7 +22,6 @@ export function ServerFixtureLoader({
   globalDecorators = [],
   selectedFixtureId = null,
   renderMessage = defaultRenderMessage,
-  renderNoFixtureSelected = true,
 }: Props) {
   return (
     <DomRendererProvider playgroundUrl={playgroundUrl}>
@@ -37,7 +35,6 @@ export function ServerFixtureLoader({
           }
         }
         renderMessage={renderMessage}
-        renderNoFixtureSelected={renderNoFixtureSelected}
         renderFixture={({ fixtureId }) => (
           // @ts-expect-error Async Server Component
           <AsyncModuleLoader

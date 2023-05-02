@@ -17,7 +17,6 @@ type Props = {
   initialFixtureId?: FixtureId | null;
   selectedFixtureId?: FixtureId | null;
   renderMessage?: (msg: string) => ReactElement;
-  renderNoFixtureSelected?: boolean;
 };
 export function ClientFixtureLoader({
   moduleWrappers,
@@ -25,7 +24,6 @@ export function ClientFixtureLoader({
   initialFixtureId = null,
   selectedFixtureId = null,
   renderMessage = defaultRenderMessage,
-  renderNoFixtureSelected = true,
 }: Props) {
   const selection = useFixtureLoaderState(initialFixtureId, selectedFixtureId);
 
@@ -35,7 +33,6 @@ export function ClientFixtureLoader({
       selection={selection}
       initialFixtureId={initialFixtureId}
       renderMessage={renderMessage}
-      renderNoFixtureSelected={renderNoFixtureSelected}
       renderFixture={({ fixtureId, initialFixtureState, renderKey }) => {
         function renderModules(modules: FixtureModules) {
           return (
