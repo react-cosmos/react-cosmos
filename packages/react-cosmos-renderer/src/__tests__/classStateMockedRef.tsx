@@ -1,10 +1,10 @@
+import retry from '@skidding/async-retry';
 import until from 'async-until';
 import delay from 'delay';
 import React from 'react';
 import {
   ClassStateMock,
   FixtureStatePrimitiveValue,
-  retry,
   uuid,
 } from 'react-cosmos-core';
 import { Counter } from '../testHelpers/components.js';

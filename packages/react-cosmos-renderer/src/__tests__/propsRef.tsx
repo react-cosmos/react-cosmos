@@ -1,9 +1,9 @@
+import retry from '@skidding/async-retry';
 import { uniq } from 'lodash-es';
 import React from 'react';
 import {
   createValues,
   resetFixtureStateProps,
-  retry,
   updateFixtureStateProps,
   uuid,
 } from 'react-cosmos-core';

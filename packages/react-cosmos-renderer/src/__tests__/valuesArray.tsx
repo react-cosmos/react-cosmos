@@ -1,5 +1,6 @@
+import retry from '@skidding/async-retry';
 import React from 'react';
-import { createValue, retry, uuid } from 'react-cosmos-core';
+import { createValue, uuid } from 'react-cosmos-core';
 import { ReactTestRenderer } from 'react-test-renderer';
 import { useValue } from '../fixture/useValue/index.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';

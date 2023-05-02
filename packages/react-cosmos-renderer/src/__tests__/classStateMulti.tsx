@@ -1,8 +1,8 @@
+import retry from '@skidding/async-retry';
 import React from 'react';
 import {
   ClassStateMock,
   createValues,
-  retry,
   updateFixtureStateClassState,
   uuid,
 } from 'react-cosmos-core';

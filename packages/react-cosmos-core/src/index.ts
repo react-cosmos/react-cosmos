@@ -25,7 +25,6 @@ export * from './utils/react/ClassStateMock.js';
 export * from './utils/react/areNodesEqual.js';
 export * from './utils/react/getComponentName.js';
 export * from './utils/react/isReactElement.js';
-export * from './utils/retry.js';
 export * from './utils/string.js';
 export * from './utils/tree.js';
 export * from './utils/types.js';

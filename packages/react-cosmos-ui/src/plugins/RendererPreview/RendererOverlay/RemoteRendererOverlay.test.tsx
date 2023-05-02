@@ -1,6 +1,6 @@
+import retry from '@skidding/async-retry';
 import { render } from '@testing-library/react';
 import React from 'react';
-import { retry } from 'react-cosmos-core';
 import { wrapActSetTimeout } from '../../../testHelpers/wrapActSetTimeout.js';
 import { RemoteRendererOverlay } from './RemoteRendererOverlay.js';
 

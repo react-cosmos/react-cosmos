@@ -1,7 +1,7 @@
+import retry from '@skidding/async-retry';
 import React from 'react';
 import {
   createValues,
-  retry,
   updateFixtureStateClassState,
   updateFixtureStateProps,
   uuid,

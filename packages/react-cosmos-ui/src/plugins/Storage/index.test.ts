@@ -1,4 +1,4 @@
-import { retry } from 'react-cosmos-core';
+import retry from '@skidding/async-retry';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '.';
 import { getMethodsOf } from '../../testHelpers/pluginHelpers.js';

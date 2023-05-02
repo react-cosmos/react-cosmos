@@ -1,11 +1,7 @@
+import retry from '@skidding/async-retry';
 import until from 'async-until';
 import React from 'react';
-import {
-  createValues,
-  retry,
-  updateFixtureStateProps,
-  uuid,
-} from 'react-cosmos-core';
+import { createValues, updateFixtureStateProps, uuid } from 'react-cosmos-core';
 import { SuffixCounter } from '../testHelpers/components.js';
 import {
   anyClassState,

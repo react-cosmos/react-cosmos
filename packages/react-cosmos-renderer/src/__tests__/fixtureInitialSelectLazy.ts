@@ -1,4 +1,5 @@
-import { retry, uuid } from 'react-cosmos-core';
+import retry from '@skidding/async-retry';
+import { uuid } from 'react-cosmos-core';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 

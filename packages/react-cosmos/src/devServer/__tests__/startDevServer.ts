@@ -8,10 +8,11 @@ import '../../testHelpers/mockEsmStaticPath.js';
 import { mockCosmosConfig, resetFsMock } from '../../testHelpers/mockFs.js';
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
+import retry from '@skidding/async-retry';
 import 'isomorphic-fetch';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { retry, ServerMessage, SocketMessage } from 'react-cosmos-core';
+import { ServerMessage, SocketMessage } from 'react-cosmos-core';
 import { startDevServer } from '../startDevServer.js';
 
 mockCosmosPlugins([]);
