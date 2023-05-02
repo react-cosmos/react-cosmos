@@ -11,7 +11,7 @@ type Props = {
   fixturePath: string;
   renderModules: (modules: FixtureModules) => React.ReactElement;
 };
-export async function AsyncModuleLoader({
+export async function AsyncFixtureModuleLoader({
   moduleWrappers,
   fixturePath,
   renderModules,

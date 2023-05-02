@@ -14,7 +14,7 @@ type Props = {
   fixturePath: string;
   renderModules: (modules: FixtureModules) => React.ReactElement;
 };
-export function LazyModuleLoader({
+export function LazyFixtureModuleLoader({
   fixtureWrapper,
   decorators,
   fixturePath,
