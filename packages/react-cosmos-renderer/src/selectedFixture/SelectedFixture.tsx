@@ -9,7 +9,7 @@ import {
   getFixtureItemFromExport,
 } from 'react-cosmos-core';
 import { DecoratedFixture } from './DecoratedFixture.js';
-import { SelectedFixtureProvider } from './SelectedFixtureContext.js';
+import { SelectedFixtureProvider } from './SelectedFixtureProvider.js';
 
 type Props = {
   fixtureModule: ReactFixtureModule;
