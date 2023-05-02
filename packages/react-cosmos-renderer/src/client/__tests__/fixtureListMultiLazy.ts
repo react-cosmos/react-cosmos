@@ -23,7 +23,7 @@ testRenderer(
 );
 
 testRenderer(
-  'posts lazy ready response on mount without fixture names',
+  'posts subsequent fixture list item update with fixture names',
   { rendererId, fixtures, lazy: true },
   async ({ selectFixture, fixtureListItemUpdate }) => {
     selectFixture({

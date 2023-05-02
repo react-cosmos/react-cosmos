@@ -1,11 +1,13 @@
 import React from 'react';
 import {
   FixtureId,
+  ReactDecorator,
   RendererConfig,
   UserModuleWrappers,
 } from 'react-cosmos-core';
 import {
   FixtureConnect,
+  RendererContextProvider,
   createWebSocketsConnect,
 } from 'react-cosmos-renderer/client';
 import * as ReactNative from 'react-native';
@@ -29,16 +31,21 @@ export function NativeFixtureLoader({
 }: Props) {
   const socketUrl = getSocketUrl(playgroundUrl);
   return (
-    <FixtureConnect
+    <RendererContextProvider
       rendererId={rendererId}
       rendererConnect={createWebSocketsConnect(socketUrl)}
-      moduleWrappers={moduleWrappers}
-      systemDecorators={[]}
-      initialFixtureId={initialFixtureId}
-      renderMessage={renderMessage}
-    />
+    >
+      <FixtureConnect
+        moduleWrappers={moduleWrappers}
+        globalDecorators={globalDecorators}
+        initialFixtureId={initialFixtureId}
+        renderMessage={renderMessage}
+      />
+    </RendererContextProvider>
   );
 }
+
+const globalDecorators: ReactDecorator[] = [];
 
 function renderMessage(msg: string) {
   return (

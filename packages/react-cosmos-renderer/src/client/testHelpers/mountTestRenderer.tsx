@@ -12,7 +12,8 @@ import {
   UserModuleWrappers,
 } from 'react-cosmos-core';
 import { ReactTestRenderer, act, create } from 'react-test-renderer';
-import { FixtureConnect } from '../FixtureConnect.js';
+import { FixtureConnect } from '../../client/FixtureConnect.js';
+import { RendererContextProvider } from '../../shared/RendererContext.js';
 import {
   RendererConnectTestApi,
   createRendererConnectTestApi,
@@ -27,6 +28,7 @@ export type RendererTestArgs = {
   decorators?: ByPath<ReactDecoratorModule>;
   lazy?: boolean;
   only?: boolean;
+  // TODO: Remove
   onErrorReset?: () => unknown;
 };
 
@@ -67,6 +69,9 @@ export async function mountTestRenderer(
       ...createRendererConnectTestApi({
         getResponses: () => responses,
         postRequest: postRendererRequest,
+        clearResponses: () => {
+          responses = [];
+        },
       }),
     });
   } finally {
@@ -75,14 +80,19 @@ export async function mountTestRenderer(
 }
 
 function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
-  const { fixtures, decorators = {}, lazy = false, ...otherArgs } = args;
+  const { rendererId, fixtures, decorators = {}, lazy = false } = args;
   return (
-    <FixtureConnect
+    <RendererContextProvider
+      rendererId={rendererId}
       rendererConnect={rendererConnect}
-      moduleWrappers={getModuleWrappers(fixtures, decorators, lazy)}
-      systemDecorators={[]}
-      {...otherArgs}
-    />
+    >
+      <FixtureConnect
+        moduleWrappers={getModuleWrappers(fixtures, decorators, lazy)}
+        globalDecorators={[]}
+        initialFixtureId={args.initialFixtureId}
+        selectedFixtureId={args.selectedFixtureId}
+      />
+    </RendererContextProvider>
   );
 }
 

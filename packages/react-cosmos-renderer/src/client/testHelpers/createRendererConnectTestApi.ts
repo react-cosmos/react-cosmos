@@ -29,11 +29,13 @@ export type RendererConnectTestApi = {
     payload: FixtureStateChangeResponse['payload']
   ) => Promise<void>;
   getLastFixtureState: () => Promise<FixtureState>;
+  clearResponses: () => void;
 };
 
 export function createRendererConnectTestApi(args: {
   getResponses: () => RendererResponse[];
   postRequest: (msg: RendererRequest) => unknown | Promise<unknown>;
+  clearResponses: () => void;
 }): RendererConnectTestApi {
   return {
     pingRenderers,
@@ -45,6 +47,7 @@ export function createRendererConnectTestApi(args: {
     fixtureListItemUpdate,
     fixtureStateChange,
     getLastFixtureState,
+    clearResponses: args.clearResponses,
   };
 
   function pingRenderers() {

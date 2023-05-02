@@ -1,56 +1,63 @@
 import React from 'react';
 import {
   FixtureId,
+  ReactDecorator,
   UserModuleWrappers,
-  getSortedDecoratorsForFixturePath,
 } from 'react-cosmos-core';
-import { importLazyFixtureModules } from '../shared/importLazyFixtureModules.js';
-import { FixtureModuleLoader } from './FixtureModuleLoader.js';
+import { FixtureLoader } from '../FixtureLoader/FixtureLoader.js';
+import { AsyncFixtureModuleLoader } from '../FixtureModuleLoader/AsyncFixtureModuleLoader.js';
+import { SelectedFixture } from '../SelectedFixture/SelectedFixture.js';
+import { RendererContextProvider } from '../shared/RendererContext.js';
+
+const rendererId = 'fooRendererId';
 
 type Props = {
   moduleWrappers: UserModuleWrappers;
-  fixtureId?: FixtureId;
+  globalDecorators?: ReactDecorator[];
+  selectedFixtureId?: FixtureId | null;
+  renderMessage?: (msg: string) => React.ReactElement;
   renderNoFixtureSelected?: boolean;
 };
-export async function ServerFixtureLoader({
+export function ServerFixtureLoader({
   moduleWrappers,
-  fixtureId,
+  globalDecorators = [],
+  selectedFixtureId = null,
+  renderMessage = defaultRenderMessage,
   renderNoFixtureSelected = true,
 }: Props) {
-  if (!fixtureId) {
-    return renderNoFixtureSelected ? 'No fixture selected.' : null;
-  }
-
-  if (!moduleWrappers.fixtures[fixtureId.path]) {
-    return `Fixture path not found: ${fixtureId.path}`;
-  }
-
-  if (moduleWrappers.lazy) {
-    const { fixtureModule, decoratorModules } = await importLazyFixtureModules(
-      moduleWrappers.fixtures[fixtureId.path],
-      getSortedDecoratorsForFixturePath(
-        fixtureId.path,
-        moduleWrappers.decorators
-      )
-    );
-
-    return (
-      <FixtureModuleLoader
-        fixtureId={fixtureId}
-        fixtureModule={fixtureModule}
-        decoratorModules={decoratorModules}
-      />
-    );
-  }
-
   return (
-    <FixtureModuleLoader
-      fixtureId={fixtureId}
-      fixtureModule={moduleWrappers.fixtures[fixtureId.path].module}
-      decoratorModules={getSortedDecoratorsForFixturePath(
-        fixtureId.path,
-        moduleWrappers.decorators
-      ).map(d => d.module)}
-    />
+    <RendererContextProvider rendererId={rendererId}>
+      <FixtureLoader
+        moduleWrappers={moduleWrappers}
+        selectedFixture={
+          selectedFixtureId && {
+            fixtureId: selectedFixtureId,
+            fixtureState: {},
+            renderKey: 0,
+          }
+        }
+        renderMessage={renderMessage}
+        renderNoFixtureSelected={renderNoFixtureSelected}
+        renderFixture={({ fixtureId }) => (
+          // @ts-expect-error Async Server Component
+          <AsyncFixtureModuleLoader
+            moduleWrappers={moduleWrappers}
+            fixturePath={fixtureId.path}
+            renderModules={modules => (
+              <SelectedFixture
+                {...modules}
+                fixtureId={fixtureId}
+                globalDecorators={globalDecorators}
+                renderMessage={renderMessage}
+              />
+            )}
+          />
+        )}
+      />
+    </RendererContextProvider>
   );
+}
+
+function defaultRenderMessage(msg: string) {
+  return <>{msg}</>;
 }

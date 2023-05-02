@@ -7,3 +7,4 @@ export * from './client/createWebSocketsConnect.js';
 export * from './client/useSelect/index.js';
 export * from './client/useValue/index.js';
 export * from './shared/FixtureContext.js';
+export * from './shared/RendererContext.js';

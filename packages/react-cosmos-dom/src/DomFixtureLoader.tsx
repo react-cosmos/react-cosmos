@@ -1,6 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
 import { UserModuleWrappers } from 'react-cosmos-core';
-import { FixtureConnect } from 'react-cosmos-renderer/client';
+import {
+  FixtureConnect,
+  RendererContextProvider,
+} from 'react-cosmos-renderer/client';
 import { ErrorCatch } from './ErrorCatch.js';
 import { createDomRendererConnect } from './domRendererConnect.js';
 import { getRendererId } from './domRendererId.js';
@@ -39,20 +42,23 @@ export function DomFixtureLoader(props: Props) {
   }, [domRendererConnect]);
 
   return (
-    <FixtureConnect
+    <RendererContextProvider
       rendererId={getRendererId()}
       rendererConnect={domRendererConnect}
-      moduleWrappers={moduleWrappers}
-      systemDecorators={systemDecorators}
-      selectedFixtureId={getSelectedFixtureId()}
-      renderMessage={renderDomMessage}
-      renderNoFixtureSelected={!isInsideCosmosPreviewIframe()}
-      onErrorReset={onErrorReset}
-    />
+    >
+      <FixtureConnect
+        moduleWrappers={moduleWrappers}
+        globalDecorators={globalDecorators}
+        selectedFixtureId={getSelectedFixtureId()}
+        renderMessage={renderDomMessage}
+        renderNoFixtureSelected={!isInsideCosmosPreviewIframe()}
+        onErrorReset={onErrorReset}
+      />
+    </RendererContextProvider>
   );
 }
 
-const systemDecorators = [ErrorCatch];
+const globalDecorators = [ErrorCatch];
 
 const containerStyle: React.CSSProperties = {
   position: 'absolute',

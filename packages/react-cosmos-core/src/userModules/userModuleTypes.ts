@@ -34,7 +34,6 @@ export type UserModuleWrappers =
     };
 
 export type FixtureModules = {
-  fixturePath: string;
   fixtureModule: ReactFixtureModule;
   decoratorModules: ReactDecoratorModule[];
 };

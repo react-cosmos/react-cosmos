@@ -1,105 +1,75 @@
 import React, { ReactElement } from 'react';
 import {
   FixtureId,
+  FixtureModules,
   ReactDecorator,
-  RendererConnect,
   UserModuleWrappers,
 } from 'react-cosmos-core';
-import { FixtureLoader } from './FixtureLoader.js';
-import { FixtureStateChangeResponse } from './FixtureStateChangeResponse.js';
-import { LazyFixtureLoader } from './LazyFixtureLoader.js';
-import { useRendererRequest } from './useRendererRequest.js';
-import { useRendererResponse } from './useRendererResponse.js';
-import { useSelectedFixture } from './useSelectedFixture.js';
+import { FixtureLoader } from '../FixtureLoader/FixtureLoader.js';
+import { useSelectedFixture } from '../FixtureLoader/useSelectedFixture.js';
+import { LazyFixtureModuleLoader } from '../FixtureModuleLoader/LazyFixtureModuleLoader.js';
+import { StaticFixtureModuleLoader } from '../FixtureModuleLoader/StaticFixtureModuleLoader.js';
+import { SelectedFixture } from '../SelectedFixture/SelectedFixture.js';
 
 type Props = {
-  rendererId: string;
-  rendererConnect: RendererConnect;
   moduleWrappers: UserModuleWrappers;
-  systemDecorators: ReactDecorator[];
-  initialFixtureId?: FixtureId;
-  selectedFixtureId?: null | FixtureId;
+  globalDecorators: ReactDecorator[];
+  initialFixtureId?: FixtureId | null;
+  selectedFixtureId?: FixtureId | null;
   renderMessage?: (msg: string) => ReactElement;
   renderNoFixtureSelected?: boolean;
   onErrorReset?: () => unknown;
 };
+// TODO: Rename to ClientFixtureLoader
 export function FixtureConnect({
-  rendererId,
-  rendererConnect,
   moduleWrappers,
-  systemDecorators,
-  initialFixtureId,
-  selectedFixtureId,
-  onErrorReset,
+  globalDecorators,
+  initialFixtureId = null,
+  selectedFixtureId = null,
   renderMessage = defaultRenderMessage,
   renderNoFixtureSelected = true,
 }: Props) {
-  const { selectedFixture, setSelectedFixture, setFixtureState } =
-    useSelectedFixture(initialFixtureId, selectedFixtureId);
-
-  useRendererRequest(
-    rendererId,
-    rendererConnect,
-    moduleWrappers,
-    setSelectedFixture,
-    onErrorReset
-  );
-
-  useRendererResponse(
-    rendererId,
-    rendererConnect,
-    moduleWrappers,
-    initialFixtureId
-  );
-
-  if (!selectedFixture) {
-    return renderNoFixtureSelected
-      ? renderMessage('No fixture selected.')
-      : null;
-  }
-
-  const { fixtureId, fixtureState, renderKey } = selectedFixture;
-
-  if (!moduleWrappers.fixtures[fixtureId.path]) {
-    return renderMessage(`Fixture path not found: ${fixtureId.path}`);
-  }
+  const state = useSelectedFixture(initialFixtureId, selectedFixtureId);
 
   return (
-    <>
-      {moduleWrappers.lazy ? (
-        <LazyFixtureLoader
-          rendererId={rendererId}
-          rendererConnect={rendererConnect}
-          fixtureWrapper={moduleWrappers.fixtures[fixtureId.path]}
-          decorators={moduleWrappers.decorators}
-          systemDecorators={systemDecorators}
-          fixtureId={fixtureId}
-          fixtureState={fixtureState}
-          setFixtureState={setFixtureState}
-          renderMessage={renderMessage}
-          renderKey={renderKey}
-          onErrorReset={onErrorReset}
-        />
-      ) : (
-        <FixtureLoader
-          fixtureWrapper={moduleWrappers.fixtures[fixtureId.path]}
-          decorators={moduleWrappers.decorators}
-          systemDecorators={systemDecorators}
-          fixtureId={fixtureId}
-          fixtureState={fixtureState}
-          setFixtureState={setFixtureState}
-          renderMessage={renderMessage}
-          renderKey={renderKey}
-          onErrorReset={onErrorReset}
-        />
-      )}
-      <FixtureStateChangeResponse
-        rendererId={rendererId}
-        rendererConnect={rendererConnect}
-        selectedFixture={selectedFixture}
-        setSelectedFixture={setSelectedFixture}
-      />
-    </>
+    <FixtureLoader
+      moduleWrappers={moduleWrappers}
+      selectedFixture={state}
+      initialFixtureId={initialFixtureId}
+      renderMessage={renderMessage}
+      renderNoFixtureSelected={renderNoFixtureSelected}
+      renderFixture={selectedFixture => {
+        const { fixtureId } = selectedFixture;
+
+        function renderModules(modules: FixtureModules) {
+          return (
+            <SelectedFixture
+              {...modules}
+              fixtureId={fixtureId}
+              initialFixtureState={selectedFixture.fixtureState}
+              globalDecorators={globalDecorators}
+              renderMessage={renderMessage}
+            />
+          );
+        }
+
+        return moduleWrappers.lazy ? (
+          <LazyFixtureModuleLoader
+            fixtureWrapper={moduleWrappers.fixtures[fixtureId.path]}
+            decorators={moduleWrappers.decorators}
+            fixturePath={fixtureId.path}
+            renderModules={renderModules}
+          />
+        ) : (
+          <StaticFixtureModuleLoader
+            fixtureWrapper={moduleWrappers.fixtures[fixtureId.path]}
+            decorators={moduleWrappers.decorators}
+            fixturePath={fixtureId.path}
+            renderModules={renderModules}
+          />
+        );
+      }}
+    />
   );
 }
 

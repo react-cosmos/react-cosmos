@@ -1,0 +1,67 @@
+import React from 'react';
+import {
+  FixtureId,
+  FixtureState,
+  ReactDecorator,
+  ReactDecoratorModule,
+  ReactFixtureModule,
+  getFixtureFromExport,
+  getFixtureItemFromExport,
+} from 'react-cosmos-core';
+import { DecoratedFixture } from './DecoratedFixture.js';
+import { SelectedFixtureConnect } from './SelectedFixtureConnect.js';
+import { SelectedFixtureProvider } from './SelectedFixtureContext.js';
+
+type Props = {
+  fixtureModule: ReactFixtureModule;
+  decoratorModules: ReactDecoratorModule[];
+  globalDecorators: ReactDecorator[];
+  fixtureId: FixtureId;
+  initialFixtureState?: FixtureState;
+  renderMessage: (msg: string) => React.ReactElement;
+};
+export function SelectedFixture({
+  fixtureModule,
+  decoratorModules,
+  globalDecorators,
+  fixtureId,
+  initialFixtureState,
+  renderMessage,
+}: Props) {
+  const fixtureItem = React.useMemo(
+    () => getFixtureItemFromExport(fixtureModule.default),
+    [fixtureModule.default]
+  );
+
+  const fixture = getFixtureFromExport(fixtureModule.default, fixtureId.name);
+
+  if (typeof fixture === 'undefined') {
+    return renderMessage(`Invalid fixture name: ${fixtureId.name}`);
+  }
+
+  return (
+    <SelectedFixtureProvider
+      // TODO: Is this needed?
+      key={stringifyFixtureId(fixtureId)}
+      fixtureId={fixtureId}
+      initialFixtureState={initialFixtureState}
+    >
+      <SelectedFixtureConnect
+        fixturePath={fixtureId.path}
+        fixtureItem={fixtureItem}
+      >
+        <DecoratedFixture
+          fixture={fixture}
+          userDecoratorModules={decoratorModules}
+          globalDecorators={globalDecorators}
+        />
+      </SelectedFixtureConnect>
+    </SelectedFixtureProvider>
+  );
+}
+
+// TODO: Move to react-cosmos-core
+export function stringifyFixtureId(fixtureId: FixtureId) {
+  const { path, name } = fixtureId;
+  return name ? `${path}-${name}` : path;
+}

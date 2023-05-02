@@ -30,7 +30,7 @@ testRenderer(
 testRenderer(
   'posts ready response again on ping request',
   { rendererId, fixtures },
-  async ({ rendererReady, pingRenderers }) => {
+  async ({ rendererReady, pingRenderers, clearResponses }) => {
     await rendererReady({
       rendererId,
       fixtures: {
@@ -38,6 +38,7 @@ testRenderer(
         second: { type: 'single' },
       },
     });
+    clearResponses();
     pingRenderers();
     await rendererReady({
       rendererId,
