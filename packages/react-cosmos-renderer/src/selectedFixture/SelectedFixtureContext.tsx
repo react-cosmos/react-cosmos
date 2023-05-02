@@ -9,7 +9,6 @@ import {
 } from 'react-cosmos-core';
 import { FixtureContextProvider } from '../fixture/FixtureContext.js';
 import { RendererConnectContext } from '../rendererConnect/RendererConnectContext.js';
-import { useRendererMessage } from '../rendererConnect/useRendererMessage.js';
 
 type ProviderProps = {
   children: React.ReactNode;
@@ -77,10 +76,13 @@ export function SelectedFixtureProvider(props: ProviderProps) {
     state.syncedFixtureState,
   ]);
 
-  useRendererMessage(
-    React.useCallback(
-      msg => {
-        if (msg.type === 'setFixtureState') {
+  React.useEffect(
+    () =>
+      rendererConnect.onMessage(msg => {
+        if (
+          msg.type === 'setFixtureState' &&
+          msg.payload.rendererId === rendererId
+        ) {
           const { fixtureId, fixtureState } = msg.payload;
           setState(prevState => {
             // Ensure fixture state applies to currently selected fixture
@@ -95,9 +97,8 @@ export function SelectedFixtureProvider(props: ProviderProps) {
             }
           });
         }
-      },
-      [props.fixtureId]
-    )
+      }),
+    [props.fixtureId, rendererConnect, rendererId]
   );
 
   return (

@@ -2,7 +2,6 @@
 import React from 'react';
 import { FixtureId, FixtureList } from 'react-cosmos-core';
 import { RendererConnectContext } from '../rendererConnect/RendererConnectContext.js';
-import { useRendererMessage } from '../rendererConnect/useRendererMessage.js';
 
 type Props = {
   children: React.ReactNode;
@@ -52,17 +51,16 @@ function useHandlePingRequest(fixtures: FixtureList) {
     RendererConnectContext
   );
 
-  useRendererMessage(
-    React.useCallback(
-      msg => {
+  React.useEffect(
+    () =>
+      rendererConnect.onMessage(msg => {
         if (msg.type === 'pingRenderers') {
           rendererConnect.postMessage({
             type: 'rendererReady',
             payload: { rendererId, fixtures },
           });
         }
-      },
-      [fixtures, rendererConnect, rendererId]
-    )
+      }),
+    [fixtures, rendererConnect, rendererId]
   );
 }

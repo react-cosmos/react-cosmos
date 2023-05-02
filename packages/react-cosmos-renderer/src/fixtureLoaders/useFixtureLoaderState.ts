@@ -1,6 +1,6 @@
 import React from 'react';
 import { FixtureId, FixtureState } from 'react-cosmos-core';
-import { useRendererMessage } from '../rendererConnect/useRendererMessage.js';
+import { RendererConnectContext } from '../rendererConnect/RendererConnectContext.js';
 
 export type FixtureLoaderSelection = {
   fixtureId: FixtureId;
@@ -25,10 +25,17 @@ export function useFixtureLoaderState(
     }
   );
 
-  useRendererMessage(
-    React.useCallback(
-      msg => {
-        if (msg.type === 'selectFixture') {
+  const { rendererId, rendererConnect } = React.useContext(
+    RendererConnectContext
+  );
+
+  React.useEffect(
+    () =>
+      rendererConnect.onMessage(msg => {
+        if (
+          msg.type === 'selectFixture' &&
+          msg.payload.rendererId === rendererId
+        ) {
           const { fixtureId, fixtureState } = msg.payload;
           setState(prevState => {
             return {
@@ -37,12 +44,14 @@ export function useFixtureLoaderState(
               renderKey: prevState ? prevState.renderKey + 1 : 0,
             };
           });
-        } else if (msg.type === 'unselectFixture') {
+        } else if (
+          msg.type === 'unselectFixture' &&
+          msg.payload.rendererId === rendererId
+        ) {
           setState(null);
         }
-      },
-      [setState]
-    )
+      }),
+    [rendererConnect, rendererId]
   );
 
   return state;
