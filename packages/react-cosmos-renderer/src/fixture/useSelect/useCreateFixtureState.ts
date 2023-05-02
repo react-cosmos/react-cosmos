@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { findFixtureStateControl } from 'react-cosmos-core';
-import { FixtureContext } from '../../shared/FixtureContext.js';
+import { FixtureContext } from '../FixtureContext.js';
 import { getDefaultSelectValue, UseSelectArgs } from './shared.js';
 
 export function useCreateFixtureState<Option extends string>(

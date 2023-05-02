@@ -12,8 +12,8 @@ import {
   UserModuleWrappers,
 } from 'react-cosmos-core';
 import { ReactTestRenderer, act, create } from 'react-test-renderer';
-import { ClientFixtureLoader } from '../../fixtureLoader/ClientFixtureLoader.js';
-import { RendererConnectProvider } from '../../rendererConnect/RendererConnectContext.js';
+import { ClientFixtureLoader } from '../fixtureLoader/ClientFixtureLoader.js';
+import { RendererConnectProvider } from '../rendererConnect/RendererConnectContext.js';
 import {
   RendererConnectTestApi,
   createRendererConnectTestApi,
