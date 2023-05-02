@@ -2,8 +2,8 @@
 import { isEqual } from 'lodash-es';
 import React from 'react';
 import { FixtureListItem } from 'react-cosmos-core';
-import { RendererConnectContext } from '../rendererConnect2/RendererConnectContext.js';
-import { useRendererMessage } from '../rendererConnect2/useRendererMessage.js';
+import { RendererConnectContext } from '../rendererConnect/RendererConnectContext.js';
+import { useRendererMessage } from '../rendererConnect/useRendererMessage.js';
 import { SelectedFixtureContext } from './SelectedFixtureContext.js';
 
 type Props = {
