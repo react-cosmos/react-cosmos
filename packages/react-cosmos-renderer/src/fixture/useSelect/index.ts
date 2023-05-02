@@ -1,3 +1,4 @@
+'use client';
 import { SetSelectValue, UseSelectArgs } from './shared.js';
 import { useCreateFixtureState } from './useCreateFixtureState.js';
 import { useCurrentValue } from './useCurrentValue.js';
@@ -13,5 +14,6 @@ export function useSelect<Option extends string>(
   useCreateFixtureState(selectName, args);
   const currentValue = useCurrentValue(selectName, args);
   const setValue = useSetValue<Option>(selectName);
+
   return [currentValue, setValue];
 }

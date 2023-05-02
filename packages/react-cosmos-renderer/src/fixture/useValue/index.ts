@@ -1,3 +1,4 @@
+'use client';
 import { FixtureStateData } from 'react-cosmos-core';
 import { SetValue } from './shared.js';
 import { useCreateFixtureState } from './useCreateFixtureState.js';
@@ -15,5 +16,6 @@ export function useValue<T extends FixtureStateData>(
   useCreateFixtureState(inputName, defaultValue);
   const currentValue = useCurrentValue(inputName, defaultValue);
   const setValue = useSetValue(inputName, defaultValue);
+
   return [currentValue, setValue];
 }
