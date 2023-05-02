@@ -1,5 +1,4 @@
 'use client';
-import { isEqual } from 'lodash-es';
 import React from 'react';
 import { FixtureListItem } from 'react-cosmos-core';
 import { RendererConnectContext } from '../rendererConnect/RendererConnectContext.js';
@@ -17,7 +16,6 @@ export function SelectedFixtureConnect({
   fixtureItem,
 }: Props) {
   useFixtureListItemUpdate(fixturePath, fixtureItem);
-  useFixtureStateChangeResponse();
   useReceiveFixtureState();
 
   return <>{children}</>;
@@ -40,35 +38,6 @@ function useFixtureListItemUpdate(
       },
     });
   }, [fixtureItem, fixturePath, rendererConnect, rendererId]);
-}
-
-function useFixtureStateChangeResponse() {
-  const { rendererId, rendererConnect } = React.useContext(
-    RendererConnectContext
-  );
-  const { fixtureId, fixtureState, syncedFixtureState, syncFixtureState } =
-    React.useContext(SelectedFixtureContext);
-
-  React.useEffect(() => {
-    if (!isEqual(fixtureState, syncedFixtureState)) {
-      rendererConnect.postMessage({
-        type: 'fixtureStateChange',
-        payload: {
-          rendererId,
-          fixtureId,
-          fixtureState,
-        },
-      });
-      syncFixtureState(fixtureState);
-    }
-  }, [
-    fixtureId,
-    fixtureState,
-    rendererConnect,
-    rendererId,
-    syncFixtureState,
-    syncedFixtureState,
-  ]);
 }
 
 function useReceiveFixtureState() {

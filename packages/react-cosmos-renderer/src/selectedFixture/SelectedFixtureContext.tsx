@@ -3,17 +3,12 @@ import { isEqual } from 'lodash-es';
 import React from 'react';
 import { FixtureId, FixtureState, SetFixtureState } from 'react-cosmos-core';
 import { FixtureContextProvider } from '../fixture/FixtureContext.js';
+import { RendererConnectContext } from '../rendererConnect/RendererConnectContext.js';
 
-type SelectedFixtureState = {
-  fixtureState: FixtureState;
-  syncedFixtureState: FixtureState;
-  renderKey: number;
-};
-
-type SelectedFixtureContextValue = SelectedFixtureState & {
+type SelectedFixtureContextValue = {
   fixtureId: FixtureId;
+  fixtureState: FixtureState;
   setFixtureState: SetFixtureState;
-  syncFixtureState: (fixtureState: FixtureState) => void;
   receiveFixtureState: (
     fixtureId: FixtureId,
     fixtureState: FixtureState
@@ -24,10 +19,7 @@ export const SelectedFixtureContext =
   React.createContext<SelectedFixtureContextValue>({
     fixtureId: { path: '' },
     fixtureState: {},
-    syncedFixtureState: {},
-    renderKey: 0,
     setFixtureState: () => {},
-    syncFixtureState: () => {},
     receiveFixtureState: () => {},
   });
 
@@ -36,11 +28,16 @@ type ProviderProps = {
   fixtureId: FixtureId;
   initialFixtureState?: FixtureState;
 };
+
+type ProviderState = {
+  fixtureState: FixtureState;
+  syncedFixtureState: FixtureState;
+};
+
 export function SelectedFixtureProvider(props: ProviderProps) {
-  const [state, setState] = React.useState<SelectedFixtureState>({
+  const [state, setState] = React.useState<ProviderState>({
     fixtureState: props.initialFixtureState || {},
     syncedFixtureState: {},
-    renderKey: 0,
   });
 
   const setFixtureState = React.useCallback<SetFixtureState>(
@@ -52,13 +49,6 @@ export function SelectedFixtureProvider(props: ProviderProps) {
     },
     [setState]
   );
-
-  const syncFixtureState = React.useCallback((fixtureState: FixtureState) => {
-    setState(prevState => ({
-      ...prevState,
-      syncedFixtureState: fixtureState,
-    }));
-  }, []);
 
   const receiveFixtureState = React.useCallback(
     (fixtureId: FixtureId, fixtureState: FixtureState) => {
@@ -78,33 +68,45 @@ export function SelectedFixtureProvider(props: ProviderProps) {
     [props.fixtureId]
   );
 
+  const { rendererId, rendererConnect } = React.useContext(
+    RendererConnectContext
+  );
+  React.useEffect(() => {
+    if (!isEqual(state.fixtureState, state.syncedFixtureState)) {
+      rendererConnect.postMessage({
+        type: 'fixtureStateChange',
+        payload: {
+          rendererId,
+          fixtureId: props.fixtureId,
+          fixtureState: state.fixtureState,
+        },
+      });
+      setState(prevState => ({
+        ...prevState,
+        syncedFixtureState: state.fixtureState,
+      }));
+    }
+  }, [
+    props.fixtureId,
+    rendererConnect,
+    rendererId,
+    state.fixtureState,
+    state.syncedFixtureState,
+  ]);
+
   const value = React.useMemo<SelectedFixtureContextValue>(
     () => ({
       fixtureId: props.fixtureId,
       fixtureState: state.fixtureState,
-      syncedFixtureState: state.syncedFixtureState,
-      renderKey: state.renderKey,
       setFixtureState,
-      syncFixtureState,
       receiveFixtureState,
     }),
-    [
-      props.fixtureId,
-      receiveFixtureState,
-      setFixtureState,
-      state.fixtureState,
-      state.renderKey,
-      state.syncedFixtureState,
-      syncFixtureState,
-    ]
+    [props.fixtureId, receiveFixtureState, setFixtureState, state.fixtureState]
   );
 
   return (
     <SelectedFixtureContext.Provider value={value}>
       <FixtureContextProvider
-        // renderKey controls whether to reuse previous instances (and
-        // transition props) or rebuild render tree from scratch
-        key={state.renderKey}
         fixtureId={props.fixtureId}
         fixtureState={state.fixtureState}
         setFixtureState={setFixtureState}
