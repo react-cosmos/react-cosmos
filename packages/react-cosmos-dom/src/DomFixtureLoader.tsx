@@ -1,48 +1,18 @@
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 import { UserModuleWrappers } from 'react-cosmos-core';
 import { ClientFixtureLoader } from 'react-cosmos-renderer';
-import { RendererProvider } from 'react-cosmos-renderer/client';
+import { DomRendererProvider } from 'react-cosmos-renderer/src/client.js';
 import { ErrorCatch } from './ErrorCatch.js';
-import { createDomRendererConnect } from './domRendererConnect.js';
-import { getRendererId } from './domRendererId.js';
 import { getSelectedFixtureId } from './selectedFixtureId.js';
 import { isInsideCosmosPreviewIframe } from './utils/isInsideCosmosPreviewIframe.js';
 
 type Props = {
-  moduleWrappers: UserModuleWrappers;
   playgroundUrl: string;
+  moduleWrappers: UserModuleWrappers;
 };
-export function DomFixtureLoader(props: Props) {
-  const { moduleWrappers, playgroundUrl } = props;
-
-  const domRendererConnect = useMemo(
-    () => createDomRendererConnect(playgroundUrl),
-    [playgroundUrl]
-  );
-
-  useEffect(() => {
-    function handleGlobalError() {
-      domRendererConnect.postMessage({
-        type: 'rendererError',
-        payload: { rendererId: getRendererId() },
-      });
-    }
-    // Unhandled errors from async code will not be caught by the error event, but
-    // the unhandledrejection event instead.
-    window.addEventListener('error', handleGlobalError);
-    window.addEventListener('unhandledrejection', handleGlobalError);
-
-    return () => {
-      window.removeEventListener('error', handleGlobalError);
-      window.removeEventListener('unhandledrejection', handleGlobalError);
-    };
-  }, [domRendererConnect]);
-
+export function DomFixtureLoader({ playgroundUrl, moduleWrappers }: Props) {
   return (
-    <RendererProvider
-      rendererId={getRendererId()}
-      rendererConnect={domRendererConnect}
-    >
+    <DomRendererProvider playgroundUrl={playgroundUrl}>
       <ClientFixtureLoader
         moduleWrappers={moduleWrappers}
         globalDecorators={globalDecorators}
@@ -50,7 +20,7 @@ export function DomFixtureLoader(props: Props) {
         renderMessage={renderDomMessage}
         renderNoFixtureSelected={!isInsideCosmosPreviewIframe()}
       />
-    </RendererProvider>
+    </DomRendererProvider>
   );
 }
 

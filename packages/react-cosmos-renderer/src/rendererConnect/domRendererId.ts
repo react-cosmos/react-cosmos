@@ -4,7 +4,11 @@ import { RendererId, uuid } from 'react-cosmos-core';
 // the renderer window. Note that each tab has creates a new session and thus
 // a new rendererId.
 // https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage
-export function getRendererId(): RendererId {
+export function getDomRendererId(): RendererId {
+  if (typeof sessionStorage === 'undefined') {
+    return uuid();
+  }
+
   let id = sessionStorage.getItem('cosmosRendererId');
 
   if (!id) {

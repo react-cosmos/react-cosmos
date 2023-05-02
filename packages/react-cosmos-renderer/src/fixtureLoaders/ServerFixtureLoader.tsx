@@ -5,13 +5,12 @@ import {
   UserModuleWrappers,
 } from 'react-cosmos-core';
 import { AsyncModuleLoader } from '../moduleLoaders/AsyncModuleLoader.js';
-import { RendererProvider } from '../rendererConnect/RendererContext.js';
+import { DomRendererProvider } from '../rendererConnect/DomRendererProvider.js';
 import { SelectedFixture } from '../selectedFixture/SelectedFixture.js';
 import { FixtureSelector } from './FixtureSelector.js';
 
-const rendererId = 'fooRendererId';
-
 type Props = {
+  playgroundUrl: string;
   moduleWrappers: UserModuleWrappers;
   globalDecorators?: ReactDecorator[];
   selectedFixtureId?: FixtureId | null;
@@ -19,6 +18,7 @@ type Props = {
   renderNoFixtureSelected?: boolean;
 };
 export function ServerFixtureLoader({
+  playgroundUrl,
   moduleWrappers,
   globalDecorators = [],
   selectedFixtureId = null,
@@ -26,7 +26,7 @@ export function ServerFixtureLoader({
   renderNoFixtureSelected = true,
 }: Props) {
   return (
-    <RendererProvider rendererId={rendererId}>
+    <DomRendererProvider playgroundUrl={playgroundUrl}>
       <FixtureSelector
         moduleWrappers={moduleWrappers}
         selection={
@@ -54,7 +54,7 @@ export function ServerFixtureLoader({
           />
         )}
       />
-    </RendererProvider>
+    </DomRendererProvider>
   );
 }
 

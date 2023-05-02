@@ -1,7 +1,6 @@
 'use client';
 import React from 'react';
 import { RendererConnect } from 'react-cosmos-core';
-import { createPostMessageConnect } from './createPostMessageConnect.js';
 
 type RendererContextValue = {
   rendererId: string;
@@ -19,13 +18,12 @@ export const RendererContext = React.createContext<RendererContextValue>({
 type ProviderProps = {
   children: React.ReactNode;
   rendererId: string;
-  rendererConnect?: RendererConnect;
+  rendererConnect: RendererConnect;
 };
 export function RendererProvider({
   children,
   rendererId,
-  // TODO: Decide based on environment (iframe, root window, server);
-  rendererConnect = createPostMessageConnect(),
+  rendererConnect,
 }: ProviderProps) {
   const value = React.useMemo(
     () => ({ rendererId, rendererConnect }),
