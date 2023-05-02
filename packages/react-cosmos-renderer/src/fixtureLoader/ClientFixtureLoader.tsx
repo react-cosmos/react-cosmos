@@ -8,7 +8,7 @@ import {
 import { LazyModuleLoader } from '../moduleLoaders/LazyModuleLoader.js';
 import { StaticModuleLoader } from '../moduleLoaders/StaticModuleLoader.js';
 import { SelectedFixture } from '../selectedFixture/SelectedFixture.js';
-import { FixtureLoader } from './FixtureLoader.js';
+import { FixtureLoaderLink } from './FixtureLoaderLink.js';
 import { useSelectedFixture } from './useSelectedFixture.js';
 
 type Props = {
@@ -19,8 +19,7 @@ type Props = {
   renderMessage?: (msg: string) => ReactElement;
   renderNoFixtureSelected?: boolean;
 };
-// TODO: Rename to ClientFixtureLoader
-export function FixtureConnect({
+export function ClientFixtureLoader({
   moduleWrappers,
   globalDecorators,
   initialFixtureId = null,
@@ -31,7 +30,7 @@ export function FixtureConnect({
   const state = useSelectedFixture(initialFixtureId, selectedFixtureId);
 
   return (
-    <FixtureLoader
+    <FixtureLoaderLink
       moduleWrappers={moduleWrappers}
       selectedFixture={state}
       initialFixtureId={initialFixtureId}
