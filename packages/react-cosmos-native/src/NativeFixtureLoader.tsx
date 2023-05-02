@@ -7,7 +7,7 @@ import {
 } from 'react-cosmos-core';
 import {
   FixtureConnect,
-  RendererContextProvider,
+  RendererConnectProvider,
   createWebSocketsConnect,
 } from 'react-cosmos-renderer/client';
 import * as ReactNative from 'react-native';
@@ -31,7 +31,7 @@ export function NativeFixtureLoader({
 }: Props) {
   const socketUrl = getSocketUrl(playgroundUrl);
   return (
-    <RendererContextProvider
+    <RendererConnectProvider
       rendererId={rendererId}
       rendererConnect={createWebSocketsConnect(socketUrl)}
     >
@@ -41,7 +41,7 @@ export function NativeFixtureLoader({
         initialFixtureId={initialFixtureId}
         renderMessage={renderMessage}
       />
-    </RendererContextProvider>
+    </RendererConnectProvider>
   );
 }
 

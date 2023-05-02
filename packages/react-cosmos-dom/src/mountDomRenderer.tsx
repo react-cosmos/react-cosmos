@@ -14,13 +14,8 @@ let cachedRoot: CachedRoot | null = null;
 type Args = {
   rendererConfig: DomRendererConfig;
   moduleWrappers: UserModuleWrappers;
-  onErrorReset?: () => unknown;
 };
-export function mountDomRenderer({
-  rendererConfig,
-  moduleWrappers,
-  onErrorReset,
-}: Args) {
+export function mountDomRenderer({ rendererConfig, moduleWrappers }: Args) {
   const domContainer = getDomContainer(rendererConfig.containerQuerySelector);
   if (!cachedRoot || cachedRoot.domContainer !== domContainer) {
     const reactRoot = createRoot(domContainer);
@@ -31,7 +26,6 @@ export function mountDomRenderer({
     <DomFixtureLoader
       moduleWrappers={moduleWrappers}
       playgroundUrl={rendererConfig.playgroundUrl}
-      onErrorReset={onErrorReset}
     />
   );
 }

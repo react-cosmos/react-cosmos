@@ -18,7 +18,6 @@ type Props = {
   selectedFixtureId?: FixtureId | null;
   renderMessage?: (msg: string) => ReactElement;
   renderNoFixtureSelected?: boolean;
-  onErrorReset?: () => unknown;
 };
 // TODO: Rename to ClientFixtureLoader
 export function FixtureConnect({

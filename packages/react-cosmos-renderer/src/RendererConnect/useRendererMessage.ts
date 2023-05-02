@@ -1,9 +1,11 @@
 import React from 'react';
 import { RendererRequest } from 'react-cosmos-core';
-import { RendererContext } from './RendererContext.js';
+import { RendererConnectContext } from './RendererConnectContext.js';
 
 export function useRendererMessage(cb: (msg: RendererRequest) => void) {
-  const { rendererId, rendererConnect } = React.useContext(RendererContext);
+  const { rendererId, rendererConnect } = React.useContext(
+    RendererConnectContext
+  );
 
   React.useEffect(() => {
     const unsubscribe = rendererConnect.onMessage((msg: RendererRequest) => {

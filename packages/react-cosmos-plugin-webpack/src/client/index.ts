@@ -9,7 +9,6 @@ async function mount() {
   mountDomRenderer({
     rendererConfig,
     moduleWrappers,
-    onErrorReset: dismissErrorOverlay,
   });
 }
 

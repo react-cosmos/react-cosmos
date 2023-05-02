@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
 import { FixtureId, FixtureList } from 'react-cosmos-core';
-import { RendererContext } from '../shared/RendererContext.js';
-import { useRendererMessage } from '../shared/useRendererMessage.js';
+import { RendererConnectContext } from '../RendererConnect/RendererConnectContext.js';
+import { useRendererMessage } from '../RendererConnect/useRendererMessage.js';
 
 type Props = {
   children: React.ReactNode;
@@ -24,7 +24,9 @@ function useFixtureListRendererResponse(
   fixtures: FixtureList,
   initialFixtureId: FixtureId | null
 ) {
-  const { rendererId, rendererConnect } = React.useContext(RendererContext);
+  const { rendererId, rendererConnect } = React.useContext(
+    RendererConnectContext
+  );
   const readyRef = React.useRef(false);
 
   React.useEffect(() => {
@@ -46,7 +48,9 @@ function useFixtureListRendererResponse(
 }
 
 function useHandlePingRequest(fixtures: FixtureList) {
-  const { rendererId, rendererConnect } = React.useContext(RendererContext);
+  const { rendererId, rendererConnect } = React.useContext(
+    RendererConnectContext
+  );
 
   useRendererMessage(
     React.useCallback(

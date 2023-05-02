@@ -12,8 +12,8 @@ import {
   UserModuleWrappers,
 } from 'react-cosmos-core';
 import { ReactTestRenderer, act, create } from 'react-test-renderer';
+import { RendererConnectProvider } from '../../RendererConnect/RendererConnectContext.js';
 import { FixtureConnect } from '../../client/FixtureConnect.js';
-import { RendererContextProvider } from '../../shared/RendererContext.js';
 import {
   RendererConnectTestApi,
   createRendererConnectTestApi,
@@ -28,8 +28,6 @@ export type RendererTestArgs = {
   decorators?: ByPath<ReactDecoratorModule>;
   lazy?: boolean;
   only?: boolean;
-  // TODO: Remove
-  onErrorReset?: () => unknown;
 };
 
 type RendererTestApi = RendererConnectTestApi & {
@@ -82,7 +80,7 @@ export async function mountTestRenderer(
 function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
   const { rendererId, fixtures, decorators = {}, lazy = false } = args;
   return (
-    <RendererContextProvider
+    <RendererConnectProvider
       rendererId={rendererId}
       rendererConnect={rendererConnect}
     >
@@ -92,7 +90,7 @@ function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
         initialFixtureId={args.initialFixtureId}
         selectedFixtureId={args.selectedFixtureId}
       />
-    </RendererContextProvider>
+    </RendererConnectProvider>
   );
 }
 

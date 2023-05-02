@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import { UserModuleWrappers } from 'react-cosmos-core';
 import {
   FixtureConnect,
-  RendererContextProvider,
+  RendererConnectProvider,
 } from 'react-cosmos-renderer/client';
 import { ErrorCatch } from './ErrorCatch.js';
 import { createDomRendererConnect } from './domRendererConnect.js';
@@ -13,10 +13,9 @@ import { isInsideCosmosPreviewIframe } from './utils/isInsideCosmosPreviewIframe
 type Props = {
   moduleWrappers: UserModuleWrappers;
   playgroundUrl: string;
-  onErrorReset?: () => unknown;
 };
 export function DomFixtureLoader(props: Props) {
-  const { moduleWrappers, playgroundUrl, onErrorReset } = props;
+  const { moduleWrappers, playgroundUrl } = props;
 
   const domRendererConnect = useMemo(
     () => createDomRendererConnect(playgroundUrl),
@@ -42,7 +41,7 @@ export function DomFixtureLoader(props: Props) {
   }, [domRendererConnect]);
 
   return (
-    <RendererContextProvider
+    <RendererConnectProvider
       rendererId={getRendererId()}
       rendererConnect={domRendererConnect}
     >
@@ -52,9 +51,8 @@ export function DomFixtureLoader(props: Props) {
         selectedFixtureId={getSelectedFixtureId()}
         renderMessage={renderDomMessage}
         renderNoFixtureSelected={!isInsideCosmosPreviewIframe()}
-        onErrorReset={onErrorReset}
       />
-    </RendererContextProvider>
+    </RendererConnectProvider>
   );
 }
 

@@ -2,8 +2,8 @@
 import { isEqual } from 'lodash-es';
 import React from 'react';
 import { FixtureListItem } from 'react-cosmos-core';
-import { RendererContext } from '../shared/RendererContext.js';
-import { useRendererMessage } from '../shared/useRendererMessage.js';
+import { RendererConnectContext } from '../RendererConnect/RendererConnectContext.js';
+import { useRendererMessage } from '../RendererConnect/useRendererMessage.js';
 import { SelectedFixtureContext } from './SelectedFixtureContext.js';
 
 type Props = {
@@ -27,7 +27,9 @@ function useFixtureListItemUpdate(
   fixturePath: string,
   fixtureItem: FixtureListItem
 ) {
-  const { rendererId, rendererConnect } = React.useContext(RendererContext);
+  const { rendererId, rendererConnect } = React.useContext(
+    RendererConnectContext
+  );
   React.useEffect(() => {
     rendererConnect.postMessage({
       type: 'fixtureListItemUpdate',
@@ -41,7 +43,9 @@ function useFixtureListItemUpdate(
 }
 
 function useFixtureStateChangeResponse() {
-  const { rendererId, rendererConnect } = React.useContext(RendererContext);
+  const { rendererId, rendererConnect } = React.useContext(
+    RendererConnectContext
+  );
   const { fixtureId, fixtureState, syncedFixtureState, syncFixtureState } =
     React.useContext(SelectedFixtureContext);
 
