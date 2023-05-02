@@ -1,6 +1,6 @@
 import React from 'react';
 import { FixtureId, FixtureState } from 'react-cosmos-core';
-import { useRendererMessage } from '../rendererConnect/useRendererMessage.js';
+import { useRendererMessage } from '../rendererConnect2/useRendererMessage.js';
 
 export type SelectedFixtureState = {
   fixtureId: FixtureId;

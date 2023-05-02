@@ -5,7 +5,7 @@ import {
   UserModuleWrappers,
 } from 'react-cosmos-core';
 import { AsyncModuleLoader } from '../moduleLoaders/AsyncModuleLoader.js';
-import { RendererConnectProvider } from '../rendererConnect/RendererConnectContext.js';
+import { RendererConnectProvider } from '../rendererConnect2/RendererConnectContext.js';
 import { SelectedFixture } from '../selectedFixture/SelectedFixture.js';
 import { FixtureLoaderLink } from './FixtureLoaderLink.js';
 
