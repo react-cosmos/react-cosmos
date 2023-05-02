@@ -6,7 +6,7 @@ import {
 } from 'react-cosmos-core';
 import { AsyncModuleLoader } from '../moduleLoaders/AsyncModuleLoader.js';
 import { RendererConnectProvider } from '../rendererConnect/RendererConnectContext.js';
-import { SelectedFixture } from '../selectedFixture2/SelectedFixture.js';
+import { SelectedFixture } from '../selectedFixture/SelectedFixture.js';
 import { FixtureLoaderLink } from './FixtureLoaderLink.js';
 
 const rendererId = 'fooRendererId';

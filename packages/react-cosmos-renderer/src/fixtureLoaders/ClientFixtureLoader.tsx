@@ -7,7 +7,7 @@ import {
 } from 'react-cosmos-core';
 import { LazyModuleLoader } from '../moduleLoaders/LazyModuleLoader.js';
 import { StaticModuleLoader } from '../moduleLoaders/StaticModuleLoader.js';
-import { SelectedFixture } from '../selectedFixture2/SelectedFixture.js';
+import { SelectedFixture } from '../selectedFixture/SelectedFixture.js';
 import { FixtureLoaderLink } from './FixtureLoaderLink.js';
 import { useSelectedFixture } from './useSelectedFixture.js';
 
