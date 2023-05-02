@@ -24,17 +24,17 @@ export function ServerFixtureLoader({
   selectedFixtureId = null,
   renderMessage = defaultRenderMessage,
 }: Props) {
+  const fixtureSelection = selectedFixtureId && {
+    fixtureId: selectedFixtureId,
+    initialFixtureState: {},
+    renderKey: 0,
+  };
+
   return (
     <DomRendererProvider playgroundUrl={playgroundUrl}>
       <FixtureSelector
         moduleWrappers={moduleWrappers}
-        fixtureSelection={
-          selectedFixtureId && {
-            fixtureId: selectedFixtureId,
-            initialFixtureState: {},
-            renderKey: 0,
-          }
-        }
+        fixtureSelection={fixtureSelection}
         renderMessage={renderMessage}
         renderFixture={({ fixtureId }) => (
           // @ts-expect-error Async Server Component
