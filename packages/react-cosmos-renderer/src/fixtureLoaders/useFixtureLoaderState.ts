@@ -2,26 +2,28 @@ import React from 'react';
 import { FixtureId, FixtureState } from 'react-cosmos-core';
 import { useRendererMessage } from '../rendererConnect/useRendererMessage.js';
 
-export type SelectedFixtureState = {
+export type FixtureLoaderSelection = {
   fixtureId: FixtureId;
-  fixtureState: FixtureState;
+  initialFixtureState: FixtureState;
   renderKey: number;
 };
 
-export function useSelectedFixture(
+export function useFixtureLoaderState(
   initialFixtureId: FixtureId | null,
   selectedFixtureId: FixtureId | null
 ) {
-  const [state, setState] = React.useState<SelectedFixtureState | null>(() => {
-    const fixtureId = selectedFixtureId ?? initialFixtureId;
-    if (!fixtureId) return null;
+  const [state, setState] = React.useState<FixtureLoaderSelection | null>(
+    () => {
+      const fixtureId = selectedFixtureId ?? initialFixtureId;
+      if (!fixtureId) return null;
 
-    return {
-      fixtureId,
-      fixtureState: {},
-      renderKey: 0,
-    };
-  });
+      return {
+        fixtureId,
+        initialFixtureState: {},
+        renderKey: 0,
+      };
+    }
+  );
 
   useRendererMessage(
     React.useCallback(
@@ -31,7 +33,7 @@ export function useSelectedFixture(
           setState(prevState => {
             return {
               fixtureId,
-              fixtureState,
+              initialFixtureState: fixtureState,
               renderKey: prevState ? prevState.renderKey + 1 : 0,
             };
           });

@@ -1524,13 +1524,6 @@
   dependencies:
     "@sinonjs/commons" "^2.0.0"
 
-"@skidding/async-retry@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@skidding/async-retry/-/async-retry-3.0.0.tgz#b896b067493c0c3bfba2e567df07c642253fcfd3"
-  integrity sha512-LJT8Hbft533846E4poCY3oAA5HWD6kHPGUWGItbWHHsTWwNkGsM90k91sbzOb8em0BGn0BCA+xc1jCESRX5Vpw==
-  dependencies:
-    async-until "^3.0.0"
-
 "@skidding/launch-editor@^2.2.3":
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/@skidding/launch-editor/-/launch-editor-2.2.3.tgz#553d3bcf3ce468bd0ee46cb081276342e120d2b3"

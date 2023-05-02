@@ -29,10 +29,10 @@ export function ServerFixtureLoader({
     <RendererConnectProvider rendererId={rendererId}>
       <FixtureLoaderLink
         moduleWrappers={moduleWrappers}
-        selectedFixture={
+        selection={
           selectedFixtureId && {
             fixtureId: selectedFixtureId,
-            fixtureState: {},
+            initialFixtureState: {},
             renderKey: 0,
           }
         }

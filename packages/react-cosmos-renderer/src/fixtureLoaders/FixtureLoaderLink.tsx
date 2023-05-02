@@ -5,19 +5,19 @@ import {
   getFixtureListFromWrappers,
 } from 'react-cosmos-core';
 import { FixtureLoaderConnect } from './FixtureLoaderConnect.js';
-import { SelectedFixtureState } from './useSelectedFixture.js';
+import { FixtureLoaderSelection } from './useFixtureLoaderState.js';
 
 type Props = {
   moduleWrappers: UserModuleWrappers;
-  selectedFixture: SelectedFixtureState | null;
+  selection: FixtureLoaderSelection | null;
   initialFixtureId?: FixtureId | null;
   renderMessage: (msg: string) => React.ReactElement;
   renderNoFixtureSelected?: boolean;
-  renderFixture: (selectedFixture: SelectedFixtureState) => React.ReactElement;
+  renderFixture: (selection: FixtureLoaderSelection) => React.ReactElement;
 };
 export function FixtureLoaderLink({
   moduleWrappers,
-  selectedFixture = null,
+  selection = null,
   initialFixtureId = null,
   renderMessage,
   renderNoFixtureSelected,
@@ -29,18 +29,18 @@ export function FixtureLoaderLink({
   );
 
   function renderInner() {
-    if (!selectedFixture) {
+    if (!selection) {
       return renderNoFixtureSelected
         ? renderMessage('No fixture selected.')
         : null;
     }
 
-    const { fixtureId } = selectedFixture;
+    const { fixtureId } = selection;
     if (!fixtures[fixtureId.path]) {
       return renderMessage(`Fixture path not found: ${fixtureId.path}`);
     }
 
-    return renderFixture(selectedFixture);
+    return renderFixture(selection);
   }
 
   return (

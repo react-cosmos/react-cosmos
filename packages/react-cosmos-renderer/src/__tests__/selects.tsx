@@ -1,10 +1,9 @@
-import retry from '@skidding/async-retry';
 import React from 'react';
-import { uuid } from 'react-cosmos-core';
+import { retry, uuid } from 'react-cosmos-core';
 import {
-  act,
   ReactTestRenderer,
   ReactTestRendererJSON,
+  act,
 } from 'react-test-renderer';
 import { useSelect } from '../fixture/useSelect/index.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';

@@ -41,8 +41,6 @@ export function SelectedFixture({
 
   return (
     <SelectedFixtureProvider
-      // TODO: Is this needed?
-      key={stringifyFixtureId(fixtureId)}
       fixtureId={fixtureId}
       initialFixtureState={initialFixtureState}
     >
@@ -58,10 +56,4 @@ export function SelectedFixture({
       </SelectedFixtureConnect>
     </SelectedFixtureProvider>
   );
-}
-
-// TODO: Move to react-cosmos-core
-export function stringifyFixtureId(fixtureId: FixtureId) {
-  const { path, name } = fixtureId;
-  return name ? `${path}-${name}` : path;
 }

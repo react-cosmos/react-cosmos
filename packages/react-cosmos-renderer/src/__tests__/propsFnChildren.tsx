@@ -1,6 +1,5 @@
-import retry from '@skidding/async-retry';
 import React from 'react';
-import { createValues, uuid } from 'react-cosmos-core';
+import { createValues, retry, uuid } from 'react-cosmos-core';
 import { FixtureCapture } from '../fixture/FixtureCapture/FixtureCapture.js';
 import { HelloMessage } from '../testHelpers/components.js';
 import { anyProps } from '../testHelpers/fixtureState.js';

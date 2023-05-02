@@ -12,11 +12,10 @@ import {
 } from '../../testHelpers/mockFs.js';
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
-import retry from '@skidding/async-retry';
 import 'isomorphic-fetch';
 import * as http from 'node:http';
 import path from 'node:path';
-import { ServerMessage, SocketMessage } from 'react-cosmos-core';
+import { retry, ServerMessage, SocketMessage } from 'react-cosmos-core';
 import { DevServerPluginArgs } from '../../cosmosPlugin/types.js';
 import { startDevServer } from '../startDevServer.js';
 

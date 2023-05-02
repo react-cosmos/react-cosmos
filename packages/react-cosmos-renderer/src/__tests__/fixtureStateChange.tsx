@@ -1,7 +1,6 @@
-import retry from '@skidding/async-retry';
 import React from 'react';
-import { uuid } from 'react-cosmos-core';
-import { act, ReactTestRenderer } from 'react-test-renderer';
+import { retry, uuid } from 'react-cosmos-core';
+import { ReactTestRenderer, act } from 'react-test-renderer';
 import { FixtureContext } from '../fixture/FixtureContext.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';

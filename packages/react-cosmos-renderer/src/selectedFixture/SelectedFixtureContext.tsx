@@ -4,13 +4,13 @@ import React from 'react';
 import { FixtureId, FixtureState, SetFixtureState } from 'react-cosmos-core';
 import { FixtureContextProvider } from '../fixture/FixtureContext.js';
 
-type SelectedFixture = {
+type SelectedFixtureState = {
   fixtureState: FixtureState;
   syncedFixtureState: FixtureState;
   renderKey: number;
 };
 
-type SelectedFixtureContextValue = SelectedFixture & {
+type SelectedFixtureContextValue = SelectedFixtureState & {
   fixtureId: FixtureId;
   setFixtureState: SetFixtureState;
   syncFixtureState: (fixtureState: FixtureState) => void;
@@ -37,7 +37,7 @@ type ProviderProps = {
   initialFixtureState?: FixtureState;
 };
 export function SelectedFixtureProvider(props: ProviderProps) {
-  const [state, setState] = React.useState<SelectedFixture>({
+  const [state, setState] = React.useState<SelectedFixtureState>({
     fixtureState: props.initialFixtureState || {},
     syncedFixtureState: {},
     renderKey: 0,
