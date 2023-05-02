@@ -1,7 +1,7 @@
 import React from 'react';
 import { UserModuleWrappers } from 'react-cosmos-core';
 import { ClientFixtureLoader } from 'react-cosmos-renderer';
-import { DomRendererProvider } from 'react-cosmos-renderer/src/client.js';
+import { DomRendererProvider } from 'react-cosmos-renderer/client';
 import { ErrorCatch } from './ErrorCatch.js';
 import { getSelectedFixtureId } from './selectedFixtureId.js';
 import { isInsideCosmosPreviewIframe } from './utils/isInsideCosmosPreviewIframe.js';
