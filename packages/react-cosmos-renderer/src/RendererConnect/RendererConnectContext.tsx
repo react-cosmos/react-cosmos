@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { RendererConnect } from 'react-cosmos-core';
-import { createPostMessageConnect } from '../client/createPostMessageConnect.js';
+import { createPostMessageConnect } from './createPostMessageConnect.js';
 
 type RendererConnectContext = {
   rendererId: string;

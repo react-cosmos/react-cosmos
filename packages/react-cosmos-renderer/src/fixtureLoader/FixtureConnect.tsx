@@ -5,11 +5,11 @@ import {
   ReactDecorator,
   UserModuleWrappers,
 } from 'react-cosmos-core';
-import { FixtureLoader } from '../FixtureLoader/FixtureLoader.js';
-import { useSelectedFixture } from '../FixtureLoader/useSelectedFixture.js';
-import { SelectedFixture } from '../SelectedFixture/SelectedFixture.js';
 import { LazyModuleLoader } from '../moduleLoaders/LazyModuleLoader.js';
 import { StaticModuleLoader } from '../moduleLoaders/StaticModuleLoader.js';
+import { SelectedFixture } from '../selectedFixture/SelectedFixture.js';
+import { FixtureLoader } from './FixtureLoader.js';
+import { useSelectedFixture } from './useSelectedFixture.js';
 
 type Props = {
   moduleWrappers: UserModuleWrappers;
