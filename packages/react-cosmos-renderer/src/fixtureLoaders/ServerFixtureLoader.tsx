@@ -8,6 +8,7 @@ import { AsyncModuleLoader } from '../moduleLoaders/AsyncModuleLoader.js';
 import { DomRendererProvider } from '../rendererConnect/DomRendererProvider.js';
 import { SelectedFixture } from '../selectedFixture/SelectedFixture.js';
 import { FixtureSelector } from './FixtureSelector.js';
+import { defaultRenderMessage } from './defaultRenderMessage.js';
 
 type Props = {
   playgroundUrl: string;
@@ -53,8 +54,4 @@ export function ServerFixtureLoader({
       />
     </DomRendererProvider>
   );
-}
-
-function defaultRenderMessage(msg: string) {
-  return <>{msg}</>;
 }

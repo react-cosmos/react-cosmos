@@ -9,6 +9,7 @@ import { LazyModuleLoader } from '../moduleLoaders/LazyModuleLoader.js';
 import { StaticModuleLoader } from '../moduleLoaders/StaticModuleLoader.js';
 import { SelectedFixture } from '../selectedFixture/SelectedFixture.js';
 import { FixtureSelector } from './FixtureSelector.js';
+import { defaultRenderMessage } from './defaultRenderMessage.js';
 import { useFixtureSelectionConnect } from './useFixtureSelectionConnect.js';
 
 type Props = {
@@ -68,8 +69,4 @@ export function ClientFixtureLoader({
       }}
     />
   );
-}
-
-function defaultRenderMessage(msg: string) {
-  return <>{msg}</>;
 }
