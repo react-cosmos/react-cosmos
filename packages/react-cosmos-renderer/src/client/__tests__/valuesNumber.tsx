@@ -6,15 +6,17 @@ import {
   ReactTestRendererJSON,
   act,
 } from 'react-test-renderer';
-import { useValue } from '../fixture/useValue/index.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
+import { useValue } from '../useValue/index.js';
 
-function createFixtures({ defaultValue }: { defaultValue: boolean }) {
+function createFixtures({ defaultValue }: { defaultValue: number }) {
   const MyComponent = () => {
-    const [toggled, setToggled] = useValue('toggled', { defaultValue });
+    const [count, setCount] = useValue('count', { defaultValue });
     return (
-      <button onClick={() => setToggled(!toggled)}>{String(toggled)}</button>
+      <button onClick={() => setCount(prevCount => prevCount + 1)}>
+        {count} clicks
+      </button>
     );
   };
   return wrapDefaultExport({
@@ -23,7 +25,7 @@ function createFixtures({ defaultValue }: { defaultValue: boolean }) {
 }
 
 const rendererId = uuid();
-const fixtures = createFixtures({ defaultValue: false });
+const fixtures = createFixtures({ defaultValue: 0 });
 const fixtureId = { path: 'first' };
 
 testRenderer(
@@ -31,7 +33,7 @@ testRenderer(
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, 'false');
+    await rendered(renderer, '0 clicks');
   }
 );
 
@@ -46,10 +48,10 @@ testRenderer(
       fixtureState: {
         props: expect.any(Array),
         controls: {
-          toggled: {
+          count: {
             type: 'standard',
-            defaultValue: createValue(false),
-            currentValue: createValue(false),
+            defaultValue: createValue(0),
+            currentValue: createValue(0),
           },
         },
       },
@@ -62,18 +64,19 @@ testRenderer(
   { rendererId, fixtures },
   async ({ renderer, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, 'false');
-    toggleButton(renderer);
+    await rendered(renderer, '0 clicks');
+    clickButton(renderer);
+    clickButton(renderer);
     await fixtureStateChange({
       rendererId,
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
         controls: {
-          toggled: {
+          count: {
             type: 'standard',
-            defaultValue: createValue(false),
-            currentValue: createValue(true),
+            defaultValue: createValue(0),
+            currentValue: createValue(2),
           },
         },
       },
@@ -86,10 +89,10 @@ testRenderer(
   { rendererId, fixtures },
   async ({ renderer, update, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, 'false');
+    await rendered(renderer, '0 clicks');
     update({
       rendererId,
-      fixtures: createFixtures({ defaultValue: true }),
+      fixtures: createFixtures({ defaultValue: 5 }),
     });
     await fixtureStateChange({
       rendererId,
@@ -97,10 +100,10 @@ testRenderer(
       fixtureState: {
         props: expect.any(Array),
         controls: {
-          toggled: {
+          count: {
             type: 'standard',
-            defaultValue: createValue(true),
-            currentValue: createValue(true),
+            defaultValue: createValue(5),
+            currentValue: createValue(5),
           },
         },
       },
@@ -116,7 +119,7 @@ async function rendered(renderer: ReactTestRenderer, text: string) {
   await retry(() => expect(getButtonText(renderer)).toEqual(text));
 }
 
-function toggleButton(renderer: ReactTestRenderer) {
+function clickButton(renderer: ReactTestRenderer) {
   act(() => {
     getSingleRendererElement(renderer).props.onClick();
   });

@@ -6,9 +6,9 @@ import {
   ReactTestRendererJSON,
   act,
 } from 'react-test-renderer';
-import { useValue } from '../fixture/useValue/index.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
+import { useValue } from '../useValue/index.js';
 
 type CreateFixtureArgs = {
   countName?: string;

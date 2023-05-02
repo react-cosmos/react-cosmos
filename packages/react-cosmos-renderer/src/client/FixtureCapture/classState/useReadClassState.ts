@@ -14,7 +14,7 @@ import {
   findFixtureStateClassState,
   updateFixtureStateClassState,
 } from 'react-cosmos-core';
-import { FixtureContext } from '../../FixtureContext.js';
+import { FixtureContext } from '../../../shared/FixtureContext.js';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
 import { ElRefs } from './shared.js';
 

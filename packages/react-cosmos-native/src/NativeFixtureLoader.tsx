@@ -5,10 +5,10 @@ import {
   RendererConfig,
   UserModuleWrappers,
 } from 'react-cosmos-core';
-import { createWebSocketsConnect } from 'react-cosmos-renderer';
 import {
   ClientFixtureLoader,
   RendererConnectProvider,
+  createWebSocketsConnect,
 } from 'react-cosmos-renderer/client';
 import * as ReactNative from 'react-native';
 import { getSocketUrl } from './getSocketUrl.js';

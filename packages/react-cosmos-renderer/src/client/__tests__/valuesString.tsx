@@ -6,17 +6,19 @@ import {
   ReactTestRendererJSON,
   act,
 } from 'react-test-renderer';
-import { useValue } from '../fixture/useValue/index.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
+import { useValue } from '../useValue/index.js';
 
-function createFixtures({ defaultValue }: { defaultValue: number }) {
+function createFixtures({ defaultValue }: { defaultValue: string }) {
   const MyComponent = () => {
-    const [count, setCount] = useValue('count', { defaultValue });
+    const [value, setValue] = useValue('name', { defaultValue });
     return (
-      <button onClick={() => setCount(prevCount => prevCount + 1)}>
-        {count} clicks
-      </button>
+      <input
+        type="text"
+        value={value}
+        onChange={e => setValue(e.target.value)}
+      />
     );
   };
   return wrapDefaultExport({
@@ -25,7 +27,7 @@ function createFixtures({ defaultValue }: { defaultValue: number }) {
 }
 
 const rendererId = uuid();
-const fixtures = createFixtures({ defaultValue: 0 });
+const fixtures = createFixtures({ defaultValue: 'Fu Barr' });
 const fixtureId = { path: 'first' };
 
 testRenderer(
@@ -33,7 +35,7 @@ testRenderer(
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, '0 clicks');
+    await rendered(renderer, 'Fu Barr');
   }
 );
 
@@ -48,10 +50,10 @@ testRenderer(
       fixtureState: {
         props: expect.any(Array),
         controls: {
-          count: {
+          name: {
             type: 'standard',
-            defaultValue: createValue(0),
-            currentValue: createValue(0),
+            defaultValue: createValue('Fu Barr'),
+            currentValue: createValue('Fu Barr'),
           },
         },
       },
@@ -64,19 +66,18 @@ testRenderer(
   { rendererId, fixtures },
   async ({ renderer, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, '0 clicks');
-    clickButton(renderer);
-    clickButton(renderer);
+    await rendered(renderer, 'Fu Barr');
+    changeInput(renderer, 'Fu Barr Bhaz');
     await fixtureStateChange({
       rendererId,
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
         controls: {
-          count: {
+          name: {
             type: 'standard',
-            defaultValue: createValue(0),
-            currentValue: createValue(2),
+            defaultValue: createValue('Fu Barr'),
+            currentValue: createValue('Fu Barr Bhaz'),
           },
         },
       },
@@ -89,10 +90,10 @@ testRenderer(
   { rendererId, fixtures },
   async ({ renderer, update, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, '0 clicks');
+    await rendered(renderer, 'Fu Barr');
     update({
       rendererId,
-      fixtures: createFixtures({ defaultValue: 5 }),
+      fixtures: createFixtures({ defaultValue: 'Fu Barr Bhaz' }),
     });
     await fixtureStateChange({
       rendererId,
@@ -100,10 +101,10 @@ testRenderer(
       fixtureState: {
         props: expect.any(Array),
         controls: {
-          count: {
+          name: {
             type: 'standard',
-            defaultValue: createValue(5),
-            currentValue: createValue(5),
+            defaultValue: createValue('Fu Barr Bhaz'),
+            currentValue: createValue('Fu Barr Bhaz'),
           },
         },
       },
@@ -111,17 +112,17 @@ testRenderer(
   }
 );
 
-function getButtonText(renderer: ReactTestRenderer) {
-  return getSingleRendererElement(renderer).children!.join('');
+function getInputValue(renderer: ReactTestRenderer) {
+  return getSingleRendererElement(renderer).props.value;
 }
 
 async function rendered(renderer: ReactTestRenderer, text: string) {
-  await retry(() => expect(getButtonText(renderer)).toEqual(text));
+  await retry(() => expect(getInputValue(renderer)).toEqual(text));
 }
 
-function clickButton(renderer: ReactTestRenderer) {
+function changeInput(renderer: ReactTestRenderer, value: string) {
   act(() => {
-    getSingleRendererElement(renderer).props.onClick();
+    getSingleRendererElement(renderer).props.onChange({ target: { value } });
   });
 }
 

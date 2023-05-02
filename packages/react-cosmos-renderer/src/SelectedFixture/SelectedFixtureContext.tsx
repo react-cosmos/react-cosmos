@@ -2,7 +2,7 @@
 import { isEqual } from 'lodash-es';
 import React from 'react';
 import { FixtureId, FixtureState, SetFixtureState } from 'react-cosmos-core';
-import { FixtureContextProvider } from '../fixture/FixtureContext.js';
+import { FixtureContextProvider } from '../shared/FixtureContext.js';
 
 type SelectedFixture = {
   fixtureState: FixtureState;

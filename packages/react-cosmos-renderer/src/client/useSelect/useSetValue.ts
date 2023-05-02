@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react';
 import { findFixtureStateControl } from 'react-cosmos-core';
-import { FixtureContext } from '../FixtureContext.js';
+import { FixtureContext } from '../../shared/FixtureContext.js';
 import { SetSelectValue } from './shared.js';
 
 export function useSetValue<Option extends string>(
