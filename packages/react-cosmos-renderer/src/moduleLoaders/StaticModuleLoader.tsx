@@ -13,7 +13,7 @@ type Props = {
   fixturePath: string;
   renderModules: (modules: FixtureModules) => React.ReactElement;
 };
-export function StaticFixtureModuleLoader({
+export function StaticModuleLoader({
   fixtureWrapper,
   decorators,
   fixturePath,

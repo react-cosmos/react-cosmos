@@ -5,9 +5,9 @@ import {
   UserModuleWrappers,
 } from 'react-cosmos-core';
 import { FixtureLoader } from '../FixtureLoader/FixtureLoader.js';
-import { AsyncFixtureModuleLoader } from '../FixtureModuleLoader/AsyncFixtureModuleLoader.js';
 import { RendererConnectProvider } from '../RendererConnect/RendererConnectContext.js';
 import { SelectedFixture } from '../SelectedFixture/SelectedFixture.js';
+import { AsyncModuleLoader } from '../moduleLoaders/AsyncModuleLoader.js';
 
 const rendererId = 'fooRendererId';
 
@@ -40,7 +40,7 @@ export function ServerFixtureLoader({
         renderNoFixtureSelected={renderNoFixtureSelected}
         renderFixture={({ fixtureId }) => (
           // @ts-expect-error Async Server Component
-          <AsyncFixtureModuleLoader
+          <AsyncModuleLoader
             moduleWrappers={moduleWrappers}
             fixturePath={fixtureId.path}
             renderModules={modules => (

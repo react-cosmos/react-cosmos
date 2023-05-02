@@ -7,9 +7,9 @@ import {
 } from 'react-cosmos-core';
 import { FixtureLoader } from '../FixtureLoader/FixtureLoader.js';
 import { useSelectedFixture } from '../FixtureLoader/useSelectedFixture.js';
-import { LazyFixtureModuleLoader } from '../FixtureModuleLoader/LazyFixtureModuleLoader.js';
-import { StaticFixtureModuleLoader } from '../FixtureModuleLoader/StaticFixtureModuleLoader.js';
 import { SelectedFixture } from '../SelectedFixture/SelectedFixture.js';
+import { LazyModuleLoader } from '../moduleLoaders/LazyModuleLoader.js';
+import { StaticModuleLoader } from '../moduleLoaders/StaticModuleLoader.js';
 
 type Props = {
   moduleWrappers: UserModuleWrappers;
@@ -53,14 +53,14 @@ export function FixtureConnect({
         }
 
         return moduleWrappers.lazy ? (
-          <LazyFixtureModuleLoader
+          <LazyModuleLoader
             fixtureWrapper={moduleWrappers.fixtures[fixtureId.path]}
             decorators={moduleWrappers.decorators}
             fixturePath={fixtureId.path}
             renderModules={renderModules}
           />
         ) : (
-          <StaticFixtureModuleLoader
+          <StaticModuleLoader
             fixtureWrapper={moduleWrappers.fixtures[fixtureId.path]}
             decorators={moduleWrappers.decorators}
             fixturePath={fixtureId.path}
