@@ -10,33 +10,23 @@ import {
 import { FixtureContextProvider } from '../fixture/FixtureContext.js';
 import { RendererConnectContext } from '../rendererConnect/RendererConnectContext.js';
 
-type ProviderProps = {
+type Props = {
   children: React.ReactNode;
   fixtureId: FixtureId;
   initialFixtureState?: FixtureState;
   fixtureItem: FixtureListItem;
 };
 
-type ProviderState = {
+type State = {
   fixtureState: FixtureState;
   syncedFixtureState: FixtureState;
 };
 
-export function SelectedFixtureProvider(props: ProviderProps) {
-  const [state, setState] = React.useState<ProviderState>({
+export function SelectedFixtureProvider(props: Props) {
+  const [state, setState] = React.useState<State>({
     fixtureState: props.initialFixtureState || {},
     syncedFixtureState: {},
   });
-
-  const setFixtureState = React.useCallback<SetFixtureState>(
-    stateUpdate => {
-      setState(prevState => ({
-        ...prevState,
-        fixtureState: stateUpdate(prevState.fixtureState),
-      }));
-    },
-    [setState]
-  );
 
   const { rendererId, rendererConnect } = React.useContext(
     RendererConnectContext
@@ -84,21 +74,25 @@ export function SelectedFixtureProvider(props: ProviderProps) {
           msg.payload.rendererId === rendererId
         ) {
           const { fixtureId, fixtureState } = msg.payload;
-          setState(prevState => {
+          setState(prevState =>
             // Ensure fixture state applies to currently selected fixture
-            if (prevState && isEqual(fixtureId, props.fixtureId)) {
-              return {
-                ...prevState,
-                fixtureState,
-                syncedFixtureState: fixtureState,
-              };
-            } else {
-              return prevState;
-            }
-          });
+            isEqual(fixtureId, props.fixtureId)
+              ? { ...prevState, fixtureState, syncedFixtureState: fixtureState }
+              : prevState
+          );
         }
       }),
     [props.fixtureId, rendererConnect, rendererId]
+  );
+
+  const setFixtureState = React.useCallback<SetFixtureState>(
+    stateUpdate => {
+      setState(prevState => ({
+        ...prevState,
+        fixtureState: stateUpdate(prevState.fixtureState),
+      }));
+    },
+    [setState]
   );
 
   return (
