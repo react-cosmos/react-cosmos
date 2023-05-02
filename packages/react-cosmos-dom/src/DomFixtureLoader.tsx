@@ -1,7 +1,9 @@
 import React from 'react';
 import { UserModuleWrappers } from 'react-cosmos-core';
-import { ClientFixtureLoader } from 'react-cosmos-renderer';
-import { DomRendererProvider } from 'react-cosmos-renderer/client';
+import {
+  ClientFixtureLoader,
+  DomRendererProvider,
+} from 'react-cosmos-renderer/client';
 import { ErrorCatch } from './ErrorCatch.js';
 import { getSelectedFixtureId } from './selectedFixtureId.js';
 
@@ -15,7 +17,6 @@ export function DomFixtureLoader({ playgroundUrl, moduleWrappers }: Props) {
       <ClientFixtureLoader
         moduleWrappers={moduleWrappers}
         globalDecorators={globalDecorators}
-        // TODO: Move selectedFixtureId inside ClientFixtureLoader
         selectedFixtureId={getSelectedFixtureId()}
         renderMessage={renderDomMessage}
       />
