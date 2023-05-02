@@ -8,8 +8,7 @@
   "sideEffects": false,
   "exports": {
     ".": "./index.js",
-    "./client": "./client.js",
-    "./server": "./server.js"
+    "./client": "./client.js"
   },
   "dependencies": {
     "lodash-es": "^4.17.21",
