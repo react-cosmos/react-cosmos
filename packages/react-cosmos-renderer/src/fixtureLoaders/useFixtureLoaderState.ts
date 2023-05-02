@@ -1,6 +1,6 @@
 import React from 'react';
 import { FixtureId, FixtureState } from 'react-cosmos-core';
-import { RendererConnectContext } from '../rendererConnect/RendererConnectContext.js';
+import { RendererContext } from '../rendererConnect/RendererContext.js';
 
 export type FixtureLoaderSelection = {
   fixtureId: FixtureId;
@@ -25,9 +25,7 @@ export function useFixtureLoaderState(
     }
   );
 
-  const { rendererId, rendererConnect } = React.useContext(
-    RendererConnectContext
-  );
+  const { rendererId, rendererConnect } = React.useContext(RendererContext);
 
   React.useEffect(
     () =>

@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { UserModuleWrappers } from 'react-cosmos-core';
 import { ClientFixtureLoader } from 'react-cosmos-renderer';
-import { RendererConnectProvider } from 'react-cosmos-renderer/client';
+import { RendererProvider } from 'react-cosmos-renderer/client';
 import { ErrorCatch } from './ErrorCatch.js';
 import { createDomRendererConnect } from './domRendererConnect.js';
 import { getRendererId } from './domRendererId.js';
@@ -39,7 +39,7 @@ export function DomFixtureLoader(props: Props) {
   }, [domRendererConnect]);
 
   return (
-    <RendererConnectProvider
+    <RendererProvider
       rendererId={getRendererId()}
       rendererConnect={domRendererConnect}
     >
@@ -50,7 +50,7 @@ export function DomFixtureLoader(props: Props) {
         renderMessage={renderDomMessage}
         renderNoFixtureSelected={!isInsideCosmosPreviewIframe()}
       />
-    </RendererConnectProvider>
+    </RendererProvider>
   );
 }
 

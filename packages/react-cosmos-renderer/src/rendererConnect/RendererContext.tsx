@@ -3,26 +3,25 @@ import React from 'react';
 import { RendererConnect } from 'react-cosmos-core';
 import { createPostMessageConnect } from './createPostMessageConnect.js';
 
-type RendererConnectContext = {
+type RendererContextValue = {
   rendererId: string;
   rendererConnect: RendererConnect;
 };
 
-export const RendererConnectContext =
-  React.createContext<RendererConnectContext>({
-    rendererId: 'defaultRendererId',
-    rendererConnect: {
-      postMessage: () => {},
-      onMessage: () => () => {},
-    },
-  });
+export const RendererContext = React.createContext<RendererContextValue>({
+  rendererId: 'defaultRendererId',
+  rendererConnect: {
+    postMessage: () => {},
+    onMessage: () => () => {},
+  },
+});
 
 type ProviderProps = {
   children: React.ReactNode;
   rendererId: string;
   rendererConnect?: RendererConnect;
 };
-export function RendererConnectProvider({
+export function RendererProvider({
   children,
   rendererId,
   // TODO: Decide based on environment (iframe, root window, server);
@@ -33,8 +32,8 @@ export function RendererConnectProvider({
     [rendererConnect, rendererId]
   );
   return (
-    <RendererConnectContext.Provider value={value}>
+    <RendererContext.Provider value={value}>
       {children}
-    </RendererConnectContext.Provider>
+    </RendererContext.Provider>
   );
 }

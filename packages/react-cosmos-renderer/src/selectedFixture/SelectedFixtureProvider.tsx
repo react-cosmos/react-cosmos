@@ -8,7 +8,7 @@ import {
   SetFixtureState,
 } from 'react-cosmos-core';
 import { FixtureContextProvider } from '../fixture/FixtureContext.js';
-import { RendererConnectContext } from '../rendererConnect/RendererConnectContext.js';
+import { RendererContext } from '../rendererConnect/RendererContext.js';
 
 type Props = {
   children: React.ReactNode;
@@ -28,9 +28,7 @@ export function SelectedFixtureProvider(props: Props) {
     syncedFixtureState: {},
   });
 
-  const { rendererId, rendererConnect } = React.useContext(
-    RendererConnectContext
-  );
+  const { rendererId, rendererConnect } = React.useContext(RendererContext);
 
   React.useEffect(() => {
     rendererConnect.postMessage({

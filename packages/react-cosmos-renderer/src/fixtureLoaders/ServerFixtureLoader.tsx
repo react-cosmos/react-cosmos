@@ -5,9 +5,9 @@ import {
   UserModuleWrappers,
 } from 'react-cosmos-core';
 import { AsyncModuleLoader } from '../moduleLoaders/AsyncModuleLoader.js';
-import { RendererConnectProvider } from '../rendererConnect/RendererConnectContext.js';
+import { RendererProvider } from '../rendererConnect/RendererContext.js';
 import { SelectedFixture } from '../selectedFixture/SelectedFixture.js';
-import { FixtureLoaderLink } from './FixtureLoaderLink.js';
+import { FixtureSelector } from './FixtureSelector.js';
 
 const rendererId = 'fooRendererId';
 
@@ -26,8 +26,8 @@ export function ServerFixtureLoader({
   renderNoFixtureSelected = true,
 }: Props) {
   return (
-    <RendererConnectProvider rendererId={rendererId}>
-      <FixtureLoaderLink
+    <RendererProvider rendererId={rendererId}>
+      <FixtureSelector
         moduleWrappers={moduleWrappers}
         selection={
           selectedFixtureId && {
@@ -54,7 +54,7 @@ export function ServerFixtureLoader({
           />
         )}
       />
-    </RendererConnectProvider>
+    </RendererProvider>
   );
 }
 
