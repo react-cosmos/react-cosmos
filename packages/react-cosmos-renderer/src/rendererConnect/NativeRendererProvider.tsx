@@ -1,4 +1,3 @@
-'use client';
 import React from 'react';
 import { RendererContext } from './RendererContext.js';
 import { createWebSocketsConnect } from './createWebSocketsConnect.js';
