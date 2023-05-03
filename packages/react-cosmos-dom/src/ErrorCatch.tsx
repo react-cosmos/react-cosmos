@@ -1,5 +1,5 @@
 import { isEqual } from 'lodash-es';
-import React, { Component, ReactNode } from 'react';
+import React from 'react';
 import { areNodesEqual } from 'react-cosmos-core';
 import {
   FixtureContext,
@@ -14,7 +14,7 @@ type State = {
   error: null | string;
 };
 
-export class ErrorCatch extends Component<Props, State, FixtureContextValue> {
+export class ErrorCatch extends React.Component<Props, State> {
   declare context: FixtureContextValue;
   static contextType = FixtureContext;
 
@@ -61,21 +61,9 @@ export class ErrorCatch extends Component<Props, State, FixtureContextValue> {
   }
 
   renderError(error: string) {
-    // Don't render error details here in dev mode because react-error-overlay
-    // takes care of it in a nicer way. We used to render both for a while but
-    // it proved annoying. react-error-overlay has a slight delay and seeing
-    // the same error reported twice feels clumsy.
-    if (__DEV__) {
-      return null;
-    }
-
-    // In static exports, however, where react-error-overlay is missing,
-    // rendering plain error details is superior to showing a blank screen.
     return (
       <>
-        <p>
-          <strong>Ouch, something wrong!</strong>
-        </p>
+        <h1>Ouch, something wrong!</h1>
         <pre>{error}</pre>
         <p>Check console for more info.</p>
       </>
@@ -83,7 +71,7 @@ export class ErrorCatch extends Component<Props, State, FixtureContextValue> {
   }
 }
 
-function fixtureChanged(f1: ReactNode, f2: ReactNode) {
+function fixtureChanged(f1: React.ReactNode, f2: React.ReactNode) {
   return !areNodesEqual(f1, f2, true);
 }
 
