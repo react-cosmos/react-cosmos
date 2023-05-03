@@ -10,7 +10,7 @@ import { StaticModuleLoader } from '../moduleLoaders/StaticModuleLoader.js';
 import { SelectedFixture } from '../selectedFixture/SelectedFixture.js';
 import { FixtureSelector } from './FixtureSelector.js';
 import { defaultRenderMessage } from './defaultRenderMessage.js';
-import { useFixtureSelectionConnect } from './useFixtureSelectionConnect.js';
+import { useFixtureSelectionConnect } from './useFixtureSelection.js';
 
 type Props = {
   moduleWrappers: UserModuleWrappers;

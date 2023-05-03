@@ -5,8 +5,8 @@ import {
   getFixtureListFromWrappers,
   isInsideWindowIframe,
 } from 'react-cosmos-core';
-import { RendererReadyFixtureListConnect } from './RendererReadyFixtureListConnect.js';
-import { FixtureSelection } from './useFixtureSelectionConnect.js';
+import { FixtureListRendererResponse } from './FixtureListRendererResponse.js';
+import { FixtureSelection } from './useFixtureSelection.js';
 
 type Props = {
   moduleWrappers: UserModuleWrappers;
@@ -43,11 +43,11 @@ export function FixtureSelector({
   }
 
   return (
-    <RendererReadyFixtureListConnect
+    <FixtureListRendererResponse
       fixtures={fixtures}
       initialFixtureId={initialFixtureId}
     >
       {renderInner()}
-    </RendererReadyFixtureListConnect>
+    </FixtureListRendererResponse>
   );
 }
