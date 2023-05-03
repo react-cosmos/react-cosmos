@@ -10,7 +10,7 @@ import { LazyModuleLoader } from '../moduleLoaders/LazyModuleLoader.js';
 import { StaticModuleLoader } from '../moduleLoaders/StaticModuleLoader.js';
 import { FixtureLoaderConnect } from './FixtureLoaderConnect.js';
 import { defaultRenderMessage } from './defaultRenderMessage.js';
-import { useFixtureSelectionConnect } from './useFixtureSelection.js';
+import { useFixtureSelection } from './useFixtureSelection.js';
 
 type Props = {
   moduleWrappers: UserModuleWrappers;
@@ -26,7 +26,7 @@ export function ClientFixtureLoader({
   selectedFixtureId = null,
   renderMessage = defaultRenderMessage,
 }: Props) {
-  const fixtureSelection = useFixtureSelectionConnect(
+  const fixtureSelection = useFixtureSelection(
     initialFixtureId,
     selectedFixtureId
   );
@@ -37,20 +37,19 @@ export function ClientFixtureLoader({
       fixtureSelection={fixtureSelection}
       initialFixtureId={initialFixtureId}
       renderMessage={renderMessage}
-      renderFixture={({ fixtureId, initialFixtureState, renderKey }) => {
+      renderFixture={selection => {
         function renderModules(modules: FixtureModules) {
           return (
             <FixtureModule
               {...modules}
-              fixtureId={fixtureId}
-              initialFixtureState={initialFixtureState}
+              {...selection}
               globalDecorators={globalDecorators}
-              renderKey={renderKey}
               renderMessage={renderMessage}
             />
           );
         }
 
+        const { fixtureId } = selection;
         return moduleWrappers.lazy ? (
           <LazyModuleLoader
             fixtureWrapper={moduleWrappers.fixtures[fixtureId.path]}

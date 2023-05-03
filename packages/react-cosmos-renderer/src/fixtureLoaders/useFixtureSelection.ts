@@ -8,7 +8,7 @@ export type FixtureSelection = {
   renderKey: number;
 };
 
-export function useFixtureSelectionConnect(
+export function useFixtureSelection(
   initialFixtureId: FixtureId | null,
   selectedFixtureId: FixtureId | null
 ) {
