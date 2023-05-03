@@ -3,6 +3,25 @@ import 'react-cosmos/jest';
 
 import path from 'path';
 import { getCosmosConfigAtPath, getFixtures } from 'react-cosmos';
+import { create } from 'react-test-renderer';
+
+it('renders fixture elements', async () => {
+  const cosmosConfig = await getCosmosConfigAtPath(
+    require.resolve('../cosmos.config')
+  );
+  const fixures = getFixtures(cosmosConfig);
+
+  function testFixtureElement(relPath: string, name: string | null = null) {
+    const match = fixures.find(
+      f => f.relativeFilePath === relPath && f.name === name
+    );
+    expect(create(match!.getElement())).toMatchSnapshot();
+  }
+
+  testFixtureElement('src/CounterButton.fixture.tsx');
+  testFixtureElement('src/Counter.fixture.tsx', 'large number');
+  testFixtureElement('src/WelcomeMessage/WelcomeMessage.fixture.tsx');
+});
 
 it('returns fixture info', async () => {
   const cosmosConfig = await getCosmosConfigAtPath(

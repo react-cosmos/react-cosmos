@@ -5,8 +5,8 @@ import {
   ReactFixture,
 } from 'react-cosmos-core';
 import { FixtureCapture } from '../fixture/FixtureCapture/FixtureCapture.js';
+import { createFixtureNode } from './createFixtureNode.js';
 import { decorateFixture } from './decorateFixture.js';
-import { createFixtureNode } from './fixtureNode.js';
 
 type Props = {
   fixture: ReactFixture;

@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders fixture elements 1`] = `
+<button
+  onClick={[Function]}
+>
+  0
+   
+  times
+</button>
+`;
+
+exports[`renders fixture elements 2`] = `
+<button
+  onClick={[Function]}
+>
+  555555555
+   
+  times
+</button>
+`;
+
+exports[`renders fixture elements 3`] = `
+<div
+  style={
+    {
+      "border": "2px dashed #AAA",
+      "borderRadius": 8,
+      "padding": "0 16px",
+    }
+  }
+>
+  <h1>
+    Hi
+     
+    <strong>
+      Maggie
+    </strong>
+    !
+  </h1>
+</div>
+`;
