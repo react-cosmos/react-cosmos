@@ -15,7 +15,7 @@ type Props = {
   renderMessage: (msg: string) => React.ReactElement;
   renderFixture: (selection: FixtureSelection) => React.ReactElement;
 };
-export function FixtureSelector({
+export function FixtureLoaderConnect({
   moduleWrappers,
   fixtureSelection = null,
   initialFixtureId = null,

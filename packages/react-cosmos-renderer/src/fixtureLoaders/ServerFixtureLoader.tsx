@@ -5,10 +5,10 @@ import {
   RendererConfig,
   UserModuleWrappers,
 } from 'react-cosmos-core';
+import { FixtureModule } from '../fixtureModule/FixtureModule.js';
 import { AsyncModuleLoader } from '../moduleLoaders/AsyncModuleLoader.js';
 import { DomRendererProvider } from '../rendererConnect/DomRendererProvider.js';
-import { SelectedFixture } from '../selectedFixture/SelectedFixture.js';
-import { FixtureSelector } from './FixtureSelector.js';
+import { FixtureLoaderConnect } from './FixtureLoaderConnect.js';
 import { defaultRenderMessage } from './defaultRenderMessage.js';
 
 type Props = {
@@ -33,7 +33,7 @@ export function ServerFixtureLoader({
 
   return (
     <DomRendererProvider playgroundUrl={rendererConfig.playgroundUrl}>
-      <FixtureSelector
+      <FixtureLoaderConnect
         moduleWrappers={moduleWrappers}
         fixtureSelection={fixtureSelection}
         renderMessage={renderMessage}
@@ -43,7 +43,7 @@ export function ServerFixtureLoader({
             moduleWrappers={moduleWrappers}
             fixturePath={fixtureId.path}
             renderModules={modules => (
-              <SelectedFixture
+              <FixtureModule
                 {...modules}
                 fixtureId={fixtureId}
                 globalDecorators={globalDecorators}

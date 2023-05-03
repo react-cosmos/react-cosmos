@@ -19,7 +19,7 @@ type Props = {
   initialFixtureState?: FixtureState;
   renderMessage: (msg: string) => React.ReactElement;
 };
-export function SelectedFixture({
+export function FixtureModule({
   fixtureModule,
   decoratorModules,
   globalDecorators,

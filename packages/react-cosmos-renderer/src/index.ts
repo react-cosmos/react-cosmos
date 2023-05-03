@@ -1,3 +1,3 @@
 export * from './fixtureLoaders/ServerFixtureLoader.js';
-export * from './selectedFixture/createFixtureNode.js';
-export * from './selectedFixture/decorateFixture.js';
+export * from './fixtureModule/createFixtureNode.js';
+export * from './fixtureModule/decorateFixture.js';

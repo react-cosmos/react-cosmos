@@ -5,10 +5,10 @@ import {
   ReactDecorator,
   UserModuleWrappers,
 } from 'react-cosmos-core';
+import { FixtureModule } from '../fixtureModule/FixtureModule.js';
 import { LazyModuleLoader } from '../moduleLoaders/LazyModuleLoader.js';
 import { StaticModuleLoader } from '../moduleLoaders/StaticModuleLoader.js';
-import { SelectedFixture } from '../selectedFixture/SelectedFixture.js';
-import { FixtureSelector } from './FixtureSelector.js';
+import { FixtureLoaderConnect } from './FixtureLoaderConnect.js';
 import { defaultRenderMessage } from './defaultRenderMessage.js';
 import { useFixtureSelectionConnect } from './useFixtureSelection.js';
 
@@ -32,7 +32,7 @@ export function ClientFixtureLoader({
   );
 
   return (
-    <FixtureSelector
+    <FixtureLoaderConnect
       moduleWrappers={moduleWrappers}
       fixtureSelection={fixtureSelection}
       initialFixtureId={initialFixtureId}
@@ -40,7 +40,7 @@ export function ClientFixtureLoader({
       renderFixture={({ fixtureId, initialFixtureState, renderKey }) => {
         function renderModules(modules: FixtureModules) {
           return (
-            <SelectedFixture
+            <FixtureModule
               key={renderKey}
               {...modules}
               fixtureId={fixtureId}
