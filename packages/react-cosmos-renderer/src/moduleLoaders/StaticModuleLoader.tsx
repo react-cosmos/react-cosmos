@@ -19,23 +19,16 @@ export function StaticModuleLoader({
   fixturePath,
   renderModules,
 }: Props) {
-  const modules = useFixtureModules(fixturePath, fixtureWrapper, decorators);
-
-  return renderModules(modules);
-}
-
-function useFixtureModules(
-  fixturePath: string,
-  fixtureWrapper: ReactFixtureWrapper,
-  decoratorWrappers: ByPath<ReactDecoratorWrapper>
-) {
-  return React.useMemo<FixtureModules>(() => {
-    return {
-      fixtureModule: fixtureWrapper.module,
-      decoratorModules: getSortedDecoratorsForFixturePath(
-        fixturePath,
-        decoratorWrappers
-      ).map(d => d.module),
-    };
-  }, [decoratorWrappers, fixturePath, fixtureWrapper]);
+  return renderModules(
+    React.useMemo<FixtureModules>(
+      () => ({
+        fixtureModule: fixtureWrapper.module,
+        decoratorModules: getSortedDecoratorsForFixturePath(
+          fixturePath,
+          decorators
+        ).map(d => d.module),
+      }),
+      [decorators, fixturePath, fixtureWrapper.module]
+    )
+  );
 }
