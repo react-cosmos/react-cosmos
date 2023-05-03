@@ -7,7 +7,7 @@ import {
   FixtureState,
   SetFixtureState,
 } from 'react-cosmos-core';
-import { FixtureContextProvider } from '../fixture/FixtureContext.js';
+import { FixtureContext } from '../fixture/FixtureContext.js';
 import { RendererContext } from '../rendererConnect/RendererContext.js';
 
 type Props = {
@@ -93,12 +93,14 @@ export function SelectedFixtureProvider(props: Props) {
     [setState]
   );
 
+  const contextValue = React.useMemo(
+    () => ({ fixtureState: state.fixtureState, setFixtureState }),
+    [setFixtureState, state.fixtureState]
+  );
+
   return (
-    <FixtureContextProvider
-      fixtureState={state.fixtureState}
-      setFixtureState={setFixtureState}
-    >
+    <FixtureContext.Provider value={contextValue}>
       {props.children}
-    </FixtureContextProvider>
+    </FixtureContext.Provider>
   );
 }
