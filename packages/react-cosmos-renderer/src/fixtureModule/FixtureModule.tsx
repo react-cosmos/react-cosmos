@@ -17,6 +17,7 @@ type Props = {
   globalDecorators?: ReactDecorator[];
   fixtureId: FixtureId;
   initialFixtureState?: FixtureState;
+  renderKey: number;
   renderMessage: (msg: string) => React.ReactElement;
 };
 export function FixtureModule({
@@ -25,6 +26,7 @@ export function FixtureModule({
   globalDecorators,
   fixtureId,
   initialFixtureState,
+  renderKey,
   renderMessage,
 }: Props) {
   const fixtureItem = React.useMemo(
@@ -40,6 +42,7 @@ export function FixtureModule({
 
   return (
     <FixtureProvider
+      key={renderKey}
       fixtureId={fixtureId}
       initialFixtureState={initialFixtureState}
       fixtureItem={fixtureItem}

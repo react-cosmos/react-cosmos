@@ -37,7 +37,7 @@ export function ServerFixtureLoader({
         moduleWrappers={moduleWrappers}
         fixtureSelection={fixtureSelection}
         renderMessage={renderMessage}
-        renderFixture={({ fixtureId }) => (
+        renderFixture={({ fixtureId, renderKey }) => (
           // @ts-expect-error Async Server Component
           <AsyncModuleLoader
             moduleWrappers={moduleWrappers}
@@ -46,6 +46,7 @@ export function ServerFixtureLoader({
               <FixtureModule
                 {...modules}
                 fixtureId={fixtureId}
+                renderKey={renderKey}
                 globalDecorators={globalDecorators}
                 renderMessage={renderMessage}
               />

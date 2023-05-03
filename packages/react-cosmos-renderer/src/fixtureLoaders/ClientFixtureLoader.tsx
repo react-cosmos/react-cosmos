@@ -41,10 +41,10 @@ export function ClientFixtureLoader({
         function renderModules(modules: FixtureModules) {
           return (
             <FixtureModule
-              key={renderKey}
               {...modules}
               fixtureId={fixtureId}
               initialFixtureState={initialFixtureState}
+              renderKey={renderKey}
               globalDecorators={globalDecorators}
               renderMessage={renderMessage}
             />
