@@ -1,4 +1,3 @@
-'use client';
 import React from 'react';
 import { RendererConnect } from 'react-cosmos-core';
 
@@ -14,24 +13,3 @@ export const RendererContext = React.createContext<RendererContextValue>({
     onMessage: () => () => {},
   },
 });
-
-type ProviderProps = {
-  children: React.ReactNode;
-  rendererId: string;
-  rendererConnect: RendererConnect;
-};
-export function RendererProvider({
-  children,
-  rendererId,
-  rendererConnect,
-}: ProviderProps) {
-  const value = React.useMemo(
-    () => ({ rendererId, rendererConnect }),
-    [rendererConnect, rendererId]
-  );
-  return (
-    <RendererContext.Provider value={value}>
-      {children}
-    </RendererContext.Provider>
-  );
-}

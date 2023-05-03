@@ -1,4 +1,3 @@
-'use client';
 import { FixtureStateData } from 'react-cosmos-core';
 import { SetValue } from './shared.js';
 import { useCreateFixtureState } from './useCreateFixtureState.js';

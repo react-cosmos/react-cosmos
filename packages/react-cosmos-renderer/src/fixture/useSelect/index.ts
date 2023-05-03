@@ -1,4 +1,3 @@
-'use client';
 import { SetSelectValue, UseSelectArgs } from './shared.js';
 import { useCreateFixtureState } from './useCreateFixtureState.js';
 import { useCurrentValue } from './useCurrentValue.js';

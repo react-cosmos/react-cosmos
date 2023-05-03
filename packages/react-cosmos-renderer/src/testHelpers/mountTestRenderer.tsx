@@ -13,7 +13,7 @@ import {
 } from 'react-cosmos-core';
 import { ReactTestRenderer, act, create } from 'react-test-renderer';
 import { ClientFixtureLoader } from '../fixtureLoaders/ClientFixtureLoader.js';
-import { RendererProvider } from '../rendererConnect/RendererContext.js';
+import { RendererContext } from '../rendererConnect/RendererContext.js';
 import {
   RendererConnectTestApi,
   createRendererConnectTestApi,
@@ -80,14 +80,14 @@ export async function mountTestRenderer(
 function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
   const { rendererId, fixtures, decorators = {}, lazy = false } = args;
   return (
-    <RendererProvider rendererId={rendererId} rendererConnect={rendererConnect}>
+    <RendererContext.Provider value={{ rendererId, rendererConnect }}>
       <ClientFixtureLoader
         moduleWrappers={getModuleWrappers(fixtures, decorators, lazy)}
         globalDecorators={[]}
         initialFixtureId={args.initialFixtureId}
         selectedFixtureId={args.selectedFixtureId}
       />
-    </RendererProvider>
+    </RendererContext.Provider>
   );
 }
 

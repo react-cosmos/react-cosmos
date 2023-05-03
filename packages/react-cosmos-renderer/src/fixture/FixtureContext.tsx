@@ -1,4 +1,3 @@
-'use client';
 import React from 'react';
 import { FixtureState, SetFixtureState } from 'react-cosmos-core';
 
