@@ -46,8 +46,8 @@ export function ServerFixtureLoader({
               <FixtureModule
                 {...modules}
                 fixtureId={fixtureId}
-                renderKey={renderKey}
                 globalDecorators={globalDecorators}
+                renderKey={renderKey}
                 renderMessage={renderMessage}
               />
             )}

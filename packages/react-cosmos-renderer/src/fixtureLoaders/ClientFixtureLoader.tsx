@@ -44,8 +44,8 @@ export function ClientFixtureLoader({
               {...modules}
               fixtureId={fixtureId}
               initialFixtureState={initialFixtureState}
-              renderKey={renderKey}
               globalDecorators={globalDecorators}
+              renderKey={renderKey}
               renderMessage={renderMessage}
             />
           );
