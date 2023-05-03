@@ -15,13 +15,13 @@ export function useFixtureSelectionConnect(
   const [selection, setSelection] = React.useState<FixtureSelection | null>(
     () => {
       const fixtureId = selectedFixtureId ?? initialFixtureId;
-      if (!fixtureId) return null;
-
-      return {
-        fixtureId,
-        initialFixtureState: {},
-        renderKey: 0,
-      };
+      return (
+        fixtureId && {
+          fixtureId,
+          initialFixtureState: {},
+          renderKey: 0,
+        }
+      );
     }
   );
 
