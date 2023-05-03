@@ -14,7 +14,7 @@ import { useFixtureSelectionConnect } from './useFixtureSelectionConnect.js';
 
 type Props = {
   moduleWrappers: UserModuleWrappers;
-  globalDecorators: ReactDecorator[];
+  globalDecorators?: ReactDecorator[];
   initialFixtureId?: FixtureId | null;
   selectedFixtureId?: FixtureId | null;
   renderMessage?: (msg: string) => ReactElement;

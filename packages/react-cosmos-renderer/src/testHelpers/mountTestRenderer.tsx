@@ -83,7 +83,6 @@ function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
     <RendererContext.Provider value={{ rendererId, rendererConnect }}>
       <ClientFixtureLoader
         moduleWrappers={getModuleWrappers(fixtures, decorators, lazy)}
-        globalDecorators={[]}
         initialFixtureId={args.initialFixtureId}
         selectedFixtureId={args.selectedFixtureId}
       />

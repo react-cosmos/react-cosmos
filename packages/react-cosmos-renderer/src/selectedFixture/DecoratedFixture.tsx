@@ -16,7 +16,7 @@ type Props = {
 export function DecoratedFixture({
   fixture,
   userDecoratorModules,
-  globalDecorators = noDecorators,
+  globalDecorators = [],
 }: Props) {
   return useMemo(() => {
     const decorators = [
@@ -31,5 +31,3 @@ export function DecoratedFixture({
     );
   }, [fixture, globalDecorators, userDecoratorModules]);
 }
-
-const noDecorators: ReactDecorator[] = [];

@@ -14,7 +14,7 @@ import { SelectedFixtureProvider } from './SelectedFixtureProvider.js';
 type Props = {
   fixtureModule: ReactFixtureModule;
   decoratorModules: ReactDecoratorModule[];
-  globalDecorators: ReactDecorator[];
+  globalDecorators?: ReactDecorator[];
   fixtureId: FixtureId;
   initialFixtureState?: FixtureState;
   renderMessage: (msg: string) => React.ReactElement;

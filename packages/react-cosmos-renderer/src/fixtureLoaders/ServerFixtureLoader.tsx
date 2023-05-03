@@ -21,7 +21,7 @@ type Props = {
 export function ServerFixtureLoader({
   rendererConfig,
   moduleWrappers,
-  globalDecorators = [],
+  globalDecorators,
   selectedFixtureId = null,
   renderMessage = defaultRenderMessage,
 }: Props) {

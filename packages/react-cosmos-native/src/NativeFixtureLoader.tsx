@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   FixtureId,
-  ReactDecorator,
   RendererConfig,
   UserModuleWrappers,
 } from 'react-cosmos-core';
@@ -30,15 +29,12 @@ export function NativeFixtureLoader({
     <NativeRendererProvider socketUrl={socketUrl}>
       <ClientFixtureLoader
         moduleWrappers={moduleWrappers}
-        globalDecorators={globalDecorators}
         initialFixtureId={initialFixtureId}
         renderMessage={renderMessage}
       />
     </NativeRendererProvider>
   );
 }
-
-const globalDecorators: ReactDecorator[] = [];
 
 function renderMessage(msg: string) {
   return (
