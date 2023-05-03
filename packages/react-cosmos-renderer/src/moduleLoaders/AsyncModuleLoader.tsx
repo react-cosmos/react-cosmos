@@ -16,9 +16,7 @@ export async function AsyncModuleLoader({
   fixturePath,
   renderModules,
 }: Props) {
-  const modules = await getModules(moduleWrappers, fixturePath);
-
-  return renderModules(modules);
+  return renderModules(await getModules(moduleWrappers, fixturePath));
 }
 
 async function getModules(
