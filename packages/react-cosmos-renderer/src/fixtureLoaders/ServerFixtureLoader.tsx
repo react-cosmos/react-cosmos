@@ -2,6 +2,7 @@ import React from 'react';
 import {
   FixtureId,
   ReactDecorator,
+  RendererConfig,
   UserModuleWrappers,
 } from 'react-cosmos-core';
 import { AsyncModuleLoader } from '../moduleLoaders/AsyncModuleLoader.js';
@@ -11,14 +12,14 @@ import { FixtureSelector } from './FixtureSelector.js';
 import { defaultRenderMessage } from './defaultRenderMessage.js';
 
 type Props = {
-  playgroundUrl: string;
+  rendererConfig: RendererConfig;
   moduleWrappers: UserModuleWrappers;
   globalDecorators?: ReactDecorator[];
   selectedFixtureId?: FixtureId | null;
   renderMessage?: (msg: string) => React.ReactElement;
 };
 export function ServerFixtureLoader({
-  playgroundUrl,
+  rendererConfig,
   moduleWrappers,
   globalDecorators = [],
   selectedFixtureId = null,
@@ -31,7 +32,7 @@ export function ServerFixtureLoader({
   };
 
   return (
-    <DomRendererProvider playgroundUrl={playgroundUrl}>
+    <DomRendererProvider playgroundUrl={rendererConfig.playgroundUrl}>
       <FixtureSelector
         moduleWrappers={moduleWrappers}
         fixtureSelection={fixtureSelection}

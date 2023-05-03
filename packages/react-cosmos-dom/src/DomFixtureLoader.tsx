@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserModuleWrappers } from 'react-cosmos-core';
+import { RendererConfig, UserModuleWrappers } from 'react-cosmos-core';
 import {
   ClientFixtureLoader,
   DomRendererProvider,
@@ -8,12 +8,12 @@ import { ErrorCatch } from './ErrorCatch.js';
 import { getSelectedFixtureId } from './selectedFixtureId.js';
 
 type Props = {
-  playgroundUrl: string;
+  rendererConfig: RendererConfig;
   moduleWrappers: UserModuleWrappers;
 };
-export function DomFixtureLoader({ playgroundUrl, moduleWrappers }: Props) {
+export function DomFixtureLoader({ rendererConfig, moduleWrappers }: Props) {
   return (
-    <DomRendererProvider playgroundUrl={playgroundUrl}>
+    <DomRendererProvider playgroundUrl={rendererConfig.playgroundUrl}>
       <ClientFixtureLoader
         moduleWrappers={moduleWrappers}
         globalDecorators={globalDecorators}

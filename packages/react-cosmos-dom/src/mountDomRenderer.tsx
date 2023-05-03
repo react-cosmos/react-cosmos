@@ -24,8 +24,8 @@ export function mountDomRenderer({ rendererConfig, moduleWrappers }: Args) {
 
   cachedRoot.reactRoot.render(
     <DomFixtureLoader
+      rendererConfig={rendererConfig}
       moduleWrappers={moduleWrappers}
-      playgroundUrl={rendererConfig.playgroundUrl}
     />
   );
 }

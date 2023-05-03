@@ -21,11 +21,11 @@ type Props = {
 };
 
 export function NativeFixtureLoader({
-  rendererConfig: { playgroundUrl },
+  rendererConfig,
   moduleWrappers,
   initialFixtureId,
 }: Props) {
-  const socketUrl = getSocketUrl(playgroundUrl);
+  const socketUrl = getSocketUrl(rendererConfig.playgroundUrl);
   return (
     <NativeRendererProvider socketUrl={socketUrl}>
       <ClientFixtureLoader
