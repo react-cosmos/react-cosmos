@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { RendererContext } from './RendererContext.js';
 import { createDomRendererConnect } from './domRendererConnect.js';
