@@ -8,7 +8,7 @@ type Props = {
   fixtures: FixtureList;
   initialFixtureId?: FixtureId | null;
 };
-export function FixtureSelectorConnect({
+export function RendererReadyFixtureListConnect({
   children,
   fixtures,
   initialFixtureId = null,
