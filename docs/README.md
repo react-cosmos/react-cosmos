@@ -353,7 +353,7 @@ The [props panel](https://twitter.com/ReactCosmos/status/1139838627976843264) al
 
 ```jsx
 // CounterButton.fixture.jsx
-import { useValue } from 'react-cosmos-core';
+import { useValue } from 'react-cosmos-renderer/client';
 
 export default () => {
   const [count, setCount] = useValue('count', { defaultValue: 0 });
@@ -365,7 +365,7 @@ export default () => {
 
 ```jsx
 // Button.fixture.jsx
-import { useSelect } from 'react-cosmos-core';
+import { useSelect } from 'react-cosmos-renderer/client';
 
 export default () => {
   // useSelect also returns a setter as the second value in the return tuple,
