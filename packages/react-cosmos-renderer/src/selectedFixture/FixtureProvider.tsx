@@ -22,7 +22,7 @@ type State = {
   syncedFixtureState: FixtureState;
 };
 
-export function SelectedFixtureProvider(props: Props) {
+export function FixtureProvider(props: Props) {
   const [state, setState] = React.useState<State>({
     fixtureState: props.initialFixtureState || {},
     syncedFixtureState: {},

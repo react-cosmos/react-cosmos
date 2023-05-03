@@ -9,7 +9,7 @@ import {
   getFixtureItemFromExport,
 } from 'react-cosmos-core';
 import { DecoratedFixture } from './DecoratedFixture.js';
-import { SelectedFixtureProvider } from './SelectedFixtureProvider.js';
+import { FixtureProvider } from './FixtureProvider.js';
 
 type Props = {
   fixtureModule: ReactFixtureModule;
@@ -39,7 +39,7 @@ export function SelectedFixture({
   }
 
   return (
-    <SelectedFixtureProvider
+    <FixtureProvider
       fixtureId={fixtureId}
       initialFixtureState={initialFixtureState}
       fixtureItem={fixtureItem}
@@ -49,6 +49,6 @@ export function SelectedFixture({
         userDecoratorModules={decoratorModules}
         globalDecorators={globalDecorators}
       />
-    </SelectedFixtureProvider>
+    </FixtureProvider>
   );
 }
