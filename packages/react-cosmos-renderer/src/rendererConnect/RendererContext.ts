@@ -7,7 +7,7 @@ type RendererContextValue = {
 };
 
 export const RendererContext = React.createContext<RendererContextValue>({
-  rendererId: 'defaultRendererId',
+  rendererId: 'default-renderer-id',
   rendererConnect: {
     postMessage: () => {},
     onMessage: () => () => {},
