@@ -95,7 +95,6 @@ export function SelectedFixtureProvider(props: Props) {
 
   return (
     <FixtureContextProvider
-      fixtureId={props.fixtureId}
       fixtureState={state.fixtureState}
       setFixtureState={setFixtureState}
     >
