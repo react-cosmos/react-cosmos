@@ -37,9 +37,10 @@ jobs:
         run: |
           cd pnp-example
           yarn set version stable
-          yarn install --immutable
+          yarn link ../react-cosmos/packages/react-cosmos-renderer
           yarn link ../react-cosmos/packages/react-cosmos
           yarn link ../react-cosmos/packages/react-cosmos-plugin-webpack
+          yarn install --immutable
           yarn cosmos &
 
       - name: Wait until Cosmos is live
