@@ -34,6 +34,7 @@ export function receiveRendererReadyResponse(
   function afterStateChanged() {
     if (initialFixtureId) selectInitialFixture(context, initialFixtureId);
     else selectFixtureFromUrlParams(context, rendererId);
+    // TODO: Don't notify if renderer is already connected
     notifyRendererConnection(context, rendererId);
   }
 }

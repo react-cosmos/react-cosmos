@@ -51,6 +51,7 @@ export function stringifyRendererUrlQuery(
   return stringifyUrlQuery(encodedUrlParams);
 }
 
+// TODO: File name is misleading
 export function parseRendererUrlQuery(query: string): RendererUrlParams {
   const encodedUrlParams = parseUrlQuery<EncodedRendererUrlParams>(query);
   const decoded: RendererUrlParams = {};
