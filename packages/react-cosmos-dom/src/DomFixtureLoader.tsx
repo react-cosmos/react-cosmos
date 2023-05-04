@@ -1,57 +1,30 @@
-import React, { useEffect, useMemo } from 'react';
-import { FixtureConnect, UserModuleWrappers } from 'react-cosmos-core';
+import React from 'react';
+import { RendererConfig, UserModuleWrappers } from 'react-cosmos-core';
+import {
+  ClientFixtureLoader,
+  DomRendererProvider,
+} from 'react-cosmos-renderer/client';
 import { ErrorCatch } from './ErrorCatch.js';
-import { createDomRendererConnect } from './domRendererConnect.js';
-import { getRendererId } from './domRendererId.js';
 import { getSelectedFixtureId } from './selectedFixtureId.js';
-import { isInsideCosmosPreviewIframe } from './utils/isInsideCosmosPreviewIframe.js';
 
 type Props = {
+  rendererConfig: RendererConfig;
   moduleWrappers: UserModuleWrappers;
-  playgroundUrl: string;
-  onErrorReset?: () => unknown;
 };
-export function DomFixtureLoader(props: Props) {
-  const { moduleWrappers, playgroundUrl, onErrorReset } = props;
-
-  const domRendererConnect = useMemo(
-    () => createDomRendererConnect(playgroundUrl),
-    [playgroundUrl]
-  );
-
-  useEffect(() => {
-    function handleGlobalError() {
-      domRendererConnect.postMessage({
-        type: 'rendererError',
-        payload: { rendererId: getRendererId() },
-      });
-    }
-    // Unhandled errors from async code will not be caught by the error event, but
-    // the unhandledrejection event instead.
-    window.addEventListener('error', handleGlobalError);
-    window.addEventListener('unhandledrejection', handleGlobalError);
-
-    return () => {
-      window.removeEventListener('error', handleGlobalError);
-      window.removeEventListener('unhandledrejection', handleGlobalError);
-    };
-  }, [domRendererConnect]);
-
+export function DomFixtureLoader({ rendererConfig, moduleWrappers }: Props) {
   return (
-    <FixtureConnect
-      rendererId={getRendererId()}
-      rendererConnect={domRendererConnect}
-      moduleWrappers={moduleWrappers}
-      systemDecorators={systemDecorators}
-      selectedFixtureId={getSelectedFixtureId()}
-      renderMessage={renderDomMessage}
-      renderNoFixtureSelected={!isInsideCosmosPreviewIframe()}
-      onErrorReset={onErrorReset}
-    />
+    <DomRendererProvider playgroundUrl={rendererConfig.playgroundUrl}>
+      <ClientFixtureLoader
+        moduleWrappers={moduleWrappers}
+        globalDecorators={globalDecorators}
+        selectedFixtureId={getSelectedFixtureId()}
+        renderMessage={renderDomMessage}
+      />
+    </DomRendererProvider>
   );
 }
 
-const systemDecorators = [ErrorCatch];
+const globalDecorators = [ErrorCatch];
 
 const containerStyle: React.CSSProperties = {
   position: 'absolute',

@@ -4,6 +4,8 @@ const { join } = require('path');
 // Once Jest ESM is safe to use, we can remove this.
 // https://jestjs.io/docs/ecmascript-modules
 const esDependencies = [
+  '@skidding/async-retry',
+  'async-until',
   'find-up',
   'locate-path',
   'p-limit',

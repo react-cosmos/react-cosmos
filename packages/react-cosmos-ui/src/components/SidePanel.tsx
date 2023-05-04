@@ -31,7 +31,7 @@ export function SidePanelTitle({ label, componentName }: TitleProps) {
       <TitleLabel>{label}</TitleLabel>
       {typeof componentName === 'string' && (
         <ComponentName>
-          {componentName ? componentName : <em>Unnamed</em>}
+          {componentName ? componentName : `(anonymous)`}
         </ComponentName>
       )}
     </TitleContainer>

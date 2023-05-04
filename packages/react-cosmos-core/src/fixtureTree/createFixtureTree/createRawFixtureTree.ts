@@ -1,5 +1,8 @@
 import { get, set } from 'lodash-es';
-import { FixtureList, FixtureListItem } from '../../fixture/types.js';
+import {
+  FixtureList,
+  FixtureListItem,
+} from '../../userModules/fixtureTypes.js';
 import { addTreeNodeChild } from '../../utils/tree.js';
 import { FixtureTreeNode } from '../types.js';
 

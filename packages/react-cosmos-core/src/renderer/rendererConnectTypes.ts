@@ -1,5 +1,9 @@
-import { FixtureId, FixtureList, FixtureListItem } from '../fixture/types.js';
 import { FixtureState } from '../fixtureState/types.js';
+import {
+  FixtureId,
+  FixtureList,
+  FixtureListItem,
+} from '../userModules/fixtureTypes.js';
 
 // FYI: Renderer ids are self assigned in remote environments, so uniqueness
 // cannot be established by consensus
@@ -110,5 +114,5 @@ export type RendererConnect<
   Response = RendererResponse
 > = {
   postMessage: (msg: Response) => unknown;
-  onMessage(handler: (msg: Request) => unknown): () => unknown;
+  onMessage(handler: (msg: Request) => unknown): () => void;
 };

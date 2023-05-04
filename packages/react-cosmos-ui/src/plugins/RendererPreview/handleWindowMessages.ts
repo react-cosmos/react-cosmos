@@ -1,4 +1,5 @@
 import { RendererResponse } from 'react-cosmos-core';
+import { NotificationsSpec } from '../Notifications/spec.js';
 import { RendererCoreSpec } from '../RendererCore/spec.js';
 import { RendererPreviewContext } from './shared.js';
 
@@ -44,10 +45,20 @@ function isValidResponse(msg: WindowMsg) {
 }
 
 function updateRuntimeStatus(
-  { getState, setState }: RendererPreviewContext,
+  { getState, setState, getMethodsOf }: RendererPreviewContext,
   response: RendererResponse
 ) {
   const { runtimeStatus } = getState();
+
+  if (response.type === 'rendererError') {
+    const notifications = getMethodsOf<NotificationsSpec>('notifications');
+    notifications.pushTimedNotification({
+      id: 'renderer-error',
+      type: 'error',
+      title: 'Renderer error',
+      info: 'Check the browser console for details.',
+    });
+  }
 
   // Errors are not of interest anymore after renderer connectivity has been
   // established. Errors that occur after renderer is connected are likely

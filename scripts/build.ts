@@ -23,6 +23,9 @@ const builders: Partial<Record<Package, Builder>> & { default: Builder } = {
   'react-cosmos-core': async pkgName => {
     await buildPkgTs(pkgName, 'tsconfig.build.json');
   },
+  'react-cosmos-renderer': async pkgName => {
+    await buildPkgTs(pkgName, 'tsconfig.build.json');
+  },
   'react-cosmos-dom': async pkgName => {
     await buildPkgTs(pkgName, 'tsconfig.build.json');
   },

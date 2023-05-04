@@ -1,4 +1,4 @@
-import { FixtureList } from '../../fixture/types.js';
+import { FixtureList } from '../../userModules/fixtureTypes.js';
 import { sortTreeChildren } from '../../utils/tree.js';
 import { FixtureTreeNode } from '../types.js';
 import { collapseFixtureDirs } from './collapseFixtureDirs.js';

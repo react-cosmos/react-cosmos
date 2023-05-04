@@ -77,7 +77,7 @@ In case you don't have any boolean values throughout your fixtures, here's a dum
 
 ```jsx
 // example.fixture.jsx
-import { useValue } from 'react-cosmos/fixture';
+import { useValue } from 'react-cosmos-renderer/client';
 
 export default () => {
   const [toggle, setToggle] = useValue('toggle me', { defaultValue: false });

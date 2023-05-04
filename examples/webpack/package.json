@@ -12,9 +12,9 @@
     "native": "cosmos-native"
   },
   "dependencies": {
-    "@babel/core": "^7.21.4",
+    "@babel/core": "^7.21.8",
     "@babel/preset-react": "^7.18.6",
-    "@babel/preset-typescript": "^7.21.4",
+    "@babel/preset-typescript": "^7.21.5",
     "babel-loader": "^9.1.2",
     "examples-shared": "6.0.0-alpha.14",
     "react": "^18.2.0",
@@ -23,6 +23,6 @@
     "react-cosmos-plugin-open-fixture": "6.0.0-alpha.18",
     "react-cosmos-plugin-webpack": "6.0.0-alpha.18",
     "react-dom": "^18.2.0",
-    "webpack": "^5.80.0"
+    "webpack": "^5.82.0"
   }
 }

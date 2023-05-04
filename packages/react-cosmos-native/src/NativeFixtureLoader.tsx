@@ -1,18 +1,17 @@
 import React from 'react';
 import {
-  createWebSocketsConnect,
-  FixtureConnect,
   FixtureId,
   RendererConfig,
   UserModuleWrappers,
 } from 'react-cosmos-core';
+import {
+  ClientFixtureLoader,
+  NativeRendererProvider,
+} from 'react-cosmos-renderer/client';
 import * as ReactNative from 'react-native';
 import { getSocketUrl } from './getSocketUrl.js';
 
 const { View, Text, StyleSheet } = ReactNative;
-
-// TODO: Generate unique ID per device
-const rendererId = 'native-renderer';
 
 type Props = {
   rendererConfig: RendererConfig;
@@ -21,20 +20,19 @@ type Props = {
 };
 
 export function NativeFixtureLoader({
-  rendererConfig: { playgroundUrl },
+  rendererConfig,
   moduleWrappers,
   initialFixtureId,
 }: Props) {
-  const socketUrl = getSocketUrl(playgroundUrl);
+  const socketUrl = getSocketUrl(rendererConfig.playgroundUrl);
   return (
-    <FixtureConnect
-      rendererId={rendererId}
-      rendererConnect={createWebSocketsConnect(socketUrl)}
-      moduleWrappers={moduleWrappers}
-      systemDecorators={[]}
-      initialFixtureId={initialFixtureId}
-      renderMessage={renderMessage}
-    />
+    <NativeRendererProvider socketUrl={socketUrl}>
+      <ClientFixtureLoader
+        moduleWrappers={moduleWrappers}
+        initialFixtureId={initialFixtureId}
+        renderMessage={renderMessage}
+      />
+    </NativeRendererProvider>
   );
 }
 
