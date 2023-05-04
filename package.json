@@ -40,7 +40,7 @@
     "@types/micromatch": "^4.0.2",
     "@types/node": "^18.16.3",
     "@types/pem": "^1.9.6",
-    "@types/react": "^18.2.4",
+    "@types/react": "^18.2.5",
     "@types/react-dom": "^18.2.3",
     "@types/react-is": "^18.2.0",
     "@types/react-native": "^0.71.6",
