@@ -1,11 +1,11 @@
 import React from 'react';
 import { FixtureStateSelectControl } from 'react-cosmos-core';
-import { Select } from '../../components/inputs/Select.js';
 import {
   Label,
   ValueDataContainer,
   ValueInputContainer,
 } from '../../components/ValueInputTree/ValueInput/shared.js';
+import { Select } from '../../components/inputs/Select.js';
 import { lightBlue } from '../../style/colors.js';
 
 type Props = {

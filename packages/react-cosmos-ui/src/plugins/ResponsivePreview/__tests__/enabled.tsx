@@ -12,8 +12,8 @@ import {
   DEFAULT_DEVICES,
   DEFAULT_VIEWPORT_STATE,
   FixtureStateWithViewport,
-  ViewportState,
   VIEWPORT_STORAGE_KEY,
+  ViewportState,
 } from '../shared.js';
 import { StorageMock } from '../testHelpers/index.js';
 

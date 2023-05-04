@@ -8,17 +8,17 @@ import React, {
   useState,
 } from 'react';
 import {
-  createFixtureTree,
   FixtureId,
   FixtureList,
   FlatFixtureTreeItem,
-  flattenFixtureTree,
   KEY_DOWN,
   KEY_ENTER,
   KEY_ESC,
   KEY_FWD_SLASH,
   KEY_TAB,
   KEY_UP,
+  createFixtureTree,
+  flattenFixtureTree,
 } from 'react-cosmos-core';
 import styled from 'styled-components';
 import { HelpCircleIcon, SearchIcon } from '../../components/icons/index.js';
@@ -267,15 +267,18 @@ export function FixtureSearchOverlay({
         </ShortcutsContainer>
         <ResultsViewport>
           <ResultsContainer>
-            {matchingFixturePaths.map(cleanFixturePath => (
-              <FixtureSearchResult
-                key={cleanFixturePath}
-                cleanFixturePath={cleanFixturePath}
-                fixtureItem={fixtureItems[cleanFixturePath]}
-                active={cleanFixturePath === activeFixturePath}
-                onSelect={onSelect}
-              />
-            ))}
+            {matchingFixturePaths.map(
+              cleanFixturePath =>
+                fixtureItems[cleanFixturePath] && (
+                  <FixtureSearchResult
+                    key={cleanFixturePath}
+                    cleanFixturePath={cleanFixturePath}
+                    fixtureItem={fixtureItems[cleanFixturePath]}
+                    active={cleanFixturePath === activeFixturePath}
+                    onSelect={onSelect}
+                  />
+                )
+            )}
             {matchingFixturePaths.length === 0 && (
               <NoResults>No results</NoResults>
             )}

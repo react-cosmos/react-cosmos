@@ -79,7 +79,7 @@ jobs:
           start: |
             yarn workspace example-${{ matrix.example }} start --lazy=${{ matrix.lazy == true }},
             yarn workspace example-${{ matrix.example }} serve,
-            yarn workspace example-${{ matrix.example }} native --lazy=${{ matrix.lazy == true }}
+            yarn workspace example-${{ matrix.example }} native --lazy=${{ matrix.lazy == true }} --port 5002
           wait-on: 'http://localhost:5000,http://localhost:5001,http://localhost:5002'
         env:
           CYPRESS_EXAMPLE_NAME: ${{ matrix.example }}

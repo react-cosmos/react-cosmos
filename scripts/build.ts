@@ -23,6 +23,9 @@ const builders: Partial<Record<Package, Builder>> & { default: Builder } = {
   'react-cosmos-core': async pkgName => {
     await buildPkgTs(pkgName, 'tsconfig.build.json');
   },
+  'react-cosmos-renderer': async pkgName => {
+    await buildPkgTs(pkgName, 'tsconfig.build.json');
+  },
   'react-cosmos-dom': async pkgName => {
     await buildPkgTs(pkgName, 'tsconfig.build.json');
   },
@@ -44,8 +47,8 @@ const builders: Partial<Record<Package, Builder>> & { default: Builder } = {
     await buildPkgTs(pkgName, 'tsconfig.build.client.json');
     await buildPkgTs(pkgName, 'tsconfig.build.server.json');
     await fs.copyFile(
-      pkgPath(pkgName, 'src/server/webpackConfig/userDepsLoader.cjs'),
-      pkgPath(pkgName, 'dist/server/webpackConfig/userDepsLoader.cjs')
+      pkgPath(pkgName, 'src/server/webpackConfig/userImportsLoader.cjs'),
+      pkgPath(pkgName, 'dist/server/webpackConfig/userImportsLoader.cjs')
     );
     await buildPkgTs(pkgName, 'tsconfig.build.ui.json');
     await buildPkgWebpack(pkgName, 'src/ui/webpack.config.js');

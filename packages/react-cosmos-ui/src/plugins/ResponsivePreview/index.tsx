@@ -4,16 +4,16 @@ import { CoreSpec } from '../Core/spec.js';
 import { RendererCoreSpec } from '../RendererCore/spec.js';
 import { StorageSpec } from '../Storage/spec.js';
 import { ResponsivePreview } from './ResponsivePreview/ResponsivePreview.js';
+import { ToggleButton } from './ToggleButton/index.js';
 import {
   DEFAULT_DEVICES,
   DEFAULT_VIEWPORT_STATE,
   FixtureStateWithViewport,
   ResponsivePreviewContext,
-  ViewportState,
   VIEWPORT_STORAGE_KEY,
+  ViewportState,
 } from './shared.js';
 import { ResponsivePreviewSpec, ResponsiveViewport } from './spec.js';
-import { ToggleButton } from './ToggleButton/index.js';
 
 const { plug, namedPlug, register } = createPlugin<ResponsivePreviewSpec>({
   name: 'responsivePreview',

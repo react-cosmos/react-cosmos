@@ -5,10 +5,10 @@ import { LeafValue, ValueTreeItem } from '../shared.js';
 import { BooleanValueInput } from './BooleanValueInput.js';
 import { NullValueInput } from './NullValueInput.js';
 import { NumberValueInput } from './NumberValueInput.js';
-import { ValueInputContainer } from './shared.js';
 import { StringValueInput } from './StringValueInput.js';
 import { UndefinedValueInput } from './UndefinedValueInput.js';
 import { UnserializableValueInput } from './UnserializableValueInput.js';
+import { ValueInputContainer } from './shared.js';
 
 type Props = {
   value: LeafValue;

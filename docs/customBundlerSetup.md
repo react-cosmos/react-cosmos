@@ -23,18 +23,18 @@ Next, choose a port for the renderer other than the main Cosmos port, say `5050`
 }
 ```
 
-Next, start Cosmos with the `--external-userdeps` CLI flag. This will generate a `cosmos.userdeps.js` module that contains maps of user module imports (fixtures and decorators) as well the renderer config. Feel free to add this file to .gitignore.
+Next, start Cosmos with the `--expose-imports` CLI flag. This will generate a `cosmos.imports.js` module that contains maps of user module imports (fixtures and decorators) as well the renderer config. Feel free to add this file to .gitignore.
 
 Finally, create a web server using your bundler of choice that serves an `index.html`, which loads a JS module with the following code:
 
 ```js
 import { mountDomRenderer } from 'react-cosmos-dom';
-import * as mountArgs from './cosmos.userdeps.js';
+import * as mountArgs from './cosmos.imports';
 
 mountDomRenderer(mountArgs);
 ```
 
-That's it, really. The Cosmos Server will automatically update `cosmos.userdeps.js` when fixture/decorator files are added, changed or removed.
+That's it, really. The Cosmos Server will automatically update `cosmos.imports.js` when fixture/decorator files are added, changed or removed.
 
 To learn how turn your setup into a Cosmos plugin check out the [Vite plugin](../packages/react-cosmos-plugin-vite).
 

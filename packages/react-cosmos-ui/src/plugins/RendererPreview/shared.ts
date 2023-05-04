@@ -1,9 +1,4 @@
 import { PluginContext } from 'react-plugin';
-import { RendererPreviewSpec, RuntimeStatus, UrlStatus } from './spec.js';
-
-export type State = {
-  urlStatus: UrlStatus;
-  runtimeStatus: RuntimeStatus;
-};
+import { RendererPreviewSpec } from './spec.js';
 
 export type RendererPreviewContext = PluginContext<RendererPreviewSpec>;

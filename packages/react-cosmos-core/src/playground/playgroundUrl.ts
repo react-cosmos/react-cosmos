@@ -1,4 +1,4 @@
-import { FixtureId } from '../fixture/types.js';
+import { FixtureId } from '../userModules/fixtureTypes.js';
 
 export type PlaygroundUrlParams = {
   fixtureId?: FixtureId;

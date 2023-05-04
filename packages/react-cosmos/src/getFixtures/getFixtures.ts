@@ -5,19 +5,19 @@ import {
   createFixtureTree,
   FixtureId,
   flattenFixtureTree,
-  getDecoratedFixtureElement,
+  getFixtureFromExport,
   getFixtureListFromExports,
   getSortedDecoratorsForFixturePath,
   ReactDecorator,
   ReactFixture,
-  ReactFixtureMap,
   stringifyPlaygroundUrlQuery,
   stringifyRendererUrlQuery,
 } from 'react-cosmos-core';
+import { createFixtureNode, decorateFixture } from 'react-cosmos-renderer';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { RENDERER_FILENAME } from '../shared/playgroundHtml.js';
 import { resolveRendererUrl } from '../shared/resolveRendererUrl.js';
-import { getUserModules } from '../userDeps/getUserModules.js';
+import { importUserModules } from '../userModules/importUserModules.js';
 
 export type FixtureApi = {
   absoluteFilePath: string;
@@ -35,7 +35,7 @@ export function getFixtures(cosmosConfig: CosmosConfig) {
   const { fixturesDir, fixtureFileSuffix, rootDir } = cosmosConfig;
 
   const fixtureInfo: FixtureApi[] = [];
-  const { fixtures, decorators } = getUserModules(cosmosConfig);
+  const { fixtures, decorators } = importUserModules(cosmosConfig);
   const fixtureList = getFixtureListFromExports(fixtures);
   const fixtureTree = createFixtureTree({
     fixtures: fixtureList,
@@ -45,10 +45,11 @@ export function getFixtures(cosmosConfig: CosmosConfig) {
   const flatFixtureTree = flattenFixtureTree(fixtureTree);
   flatFixtureTree.forEach(({ fileName, fixtureId, name, parents }) => {
     const fixtureExport = fixtures[fixtureId.path];
-    const fixture: ReactFixture =
-      fixtureId.name === undefined
-        ? (fixtureExport as ReactFixture)
-        : (fixtureExport as ReactFixtureMap)[fixtureId.name];
+    const fixture = getFixtureFromExport(fixtureExport, fixtureId.name);
+
+    if (!fixture) {
+      throw new Error(`Could not read fixture: ${JSON.stringify(fixtureId)}`);
+    }
 
     const treePath = [...parents, fileName];
     if (name) treePath.push(name);
@@ -102,10 +103,5 @@ function createFixtureElementGetter(
     fixturePath,
     decoratorsByPath
   );
-  return () =>
-    getDecoratedFixtureElement(fixture, decorators, {
-      fixtureState: {},
-      setFixtureState: () => {},
-      onErrorReset: () => {},
-    });
+  return () => decorateFixture(createFixtureNode(fixture), decorators);
 }

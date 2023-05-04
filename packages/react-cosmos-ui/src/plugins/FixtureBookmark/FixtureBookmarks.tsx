@@ -6,8 +6,8 @@ import {
   FlatFixtureTreeItem,
 } from 'react-cosmos-core';
 import styled from 'styled-components';
-import { XIcon } from '../../components/icons/index.js';
 import { stringifyFixtureId } from '../../components/ValueInputTree/index.js';
+import { XIcon } from '../../components/icons/index.js';
 import { createRelativePlaygroundUrl } from '../../shared/url.js';
 import {
   blue,

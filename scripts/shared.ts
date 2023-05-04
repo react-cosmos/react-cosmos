@@ -10,6 +10,7 @@ export type PackageNames = string[];
 // Packages are built in this order
 const packageMap = {
   'react-cosmos-core': true,
+  'react-cosmos-renderer': true,
   'react-cosmos-dom': true,
   'react-cosmos-native': true,
   'react-cosmos-ui': true,

@@ -6,8 +6,6 @@ import {
   FixtureStateControls,
   StateUpdater,
 } from 'react-cosmos-core';
-import { IconButton32 } from '../../components/buttons/index.js';
-import { RotateCcwIcon } from '../../components/icons/index.js';
 import {
   SidePanelActions,
   SidePanelBody,
@@ -15,6 +13,8 @@ import {
   SidePanelHeader,
   SidePanelTitle,
 } from '../../components/SidePanel.js';
+import { IconButton32 } from '../../components/buttons/index.js';
+import { RotateCcwIcon } from '../../components/icons/index.js';
 import { ControlActionSlot } from '../../slots/ControlActionSlot.js';
 import { ControlSlot } from '../../slots/ControlSlot.js';
 

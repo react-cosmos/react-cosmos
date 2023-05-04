@@ -1,9 +1,9 @@
 import React from 'react';
-import { RendererNotResponding } from './RendererNotResponding.js';
+import { RemoteRendererConnected } from './RemoteRendererConnected.js';
 import { WaitingForRenderer } from './WaitingForRenderer.js';
 
 export default {
-  'renderer not responding': <RendererNotResponding />,
-
   'waiting for renderer': <WaitingForRenderer />,
+
+  'remote renderer connected': <RemoteRendererConnected />,
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Space } from '../../../components/Space.js';
 import { Button8 } from '../../../components/buttons/index.js';
 import {
   Minimize2Icon,
@@ -7,7 +8,6 @@ import {
 } from '../../../components/icons/index.js';
 import { NumberInput } from '../../../components/inputs/NumberInput.js';
 import { Select } from '../../../components/inputs/Select.js';
-import { Space } from '../../../components/Space.js';
 import {
   blue,
   grey128,

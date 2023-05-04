@@ -6,9 +6,9 @@ import { register } from '..';
 import {
   getRendererPreviewMethods,
   mockCore,
+  mockNotifications,
   mockRendererCore,
 } from '../../../testHelpers/pluginMocks.js';
-import { fakeFetchResponseStatus } from '../testHelpers/fetch.js';
 import { rendererErrorMsg, rendererReadyMsg } from '../testHelpers/messages.js';
 
 beforeEach(register);
@@ -23,7 +23,6 @@ function registerTestPlugins() {
 }
 
 function loadTestPlugins() {
-  fakeFetchResponseStatus(200);
   loadPlugins();
 
   return render(<Slot name="rendererPreview" />);
@@ -36,6 +35,7 @@ function getRuntimeStatus() {
 
 it('sets "error" runtime status', async () => {
   registerTestPlugins();
+  mockNotifications();
   loadTestPlugins();
 
   window.postMessage(rendererErrorMsg, '*');
@@ -45,6 +45,7 @@ it('sets "error" runtime status', async () => {
 
 it('sets "connected" runtime status', async () => {
   registerTestPlugins();
+  mockNotifications();
   loadTestPlugins();
 
   window.postMessage(rendererErrorMsg, '*');
@@ -55,10 +56,28 @@ it('sets "connected" runtime status', async () => {
 
 it('keeps "connected" runtime status once set', async () => {
   registerTestPlugins();
+  mockNotifications();
   loadTestPlugins();
 
   window.postMessage(rendererReadyMsg, '*');
   window.postMessage(rendererErrorMsg, '*');
 
   await waitFor(() => expect(getRuntimeStatus()).toBe('connected'));
+});
+
+it('shows "renderer error" notification', async () => {
+  registerTestPlugins();
+  const { pushTimedNotification } = mockNotifications();
+  loadTestPlugins();
+
+  window.postMessage(rendererErrorMsg, '*');
+
+  await waitFor(() =>
+    expect(pushTimedNotification).toBeCalledWith(expect.any(Object), {
+      id: expect.any(String),
+      type: 'error',
+      title: 'Renderer error',
+      info: 'Check the browser console for details.',
+    })
+  );
 });

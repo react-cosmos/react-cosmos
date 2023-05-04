@@ -18,15 +18,15 @@ function getRules(
   { module }: webpack.Configuration
 ) {
   const existingRules = (module && module.rules) || [];
-  return [...existingRules, getUserDepsLoaderRule(cosmosConfig)];
+  return [...existingRules, getUserImportsLoaderRule(cosmosConfig)];
 }
 
-function getUserDepsLoaderRule(
+function getUserImportsLoaderRule(
   cosmosConfig: CosmosConfig
 ): webpack.RuleSetRule {
   return {
     loader: resolveWebpackLoaderPath(),
-    include: resolveWebpackClientPath('userDeps'),
+    include: resolveWebpackClientPath('userImports'),
     options: { cosmosConfig },
   };
 }

@@ -12,6 +12,11 @@ export type CosmosConfig = {
   detectLocalPlugins: boolean;
   disablePlugins: boolean;
   dom: CosmosDomConfig;
+  // Used with React Native and in custom integrations, exposeImports specifies
+  // whether (and where when passed a string) to generate a file that exposes
+  // the user imports and config required for the Cosmos renderer (fixtures,
+  // decorators, etc.) When a path is specified it requires a file extension.
+  exposeImports: boolean | string;
   fixtureFileSuffix: string;
   fixturesDir: string;
   globalImports: string[];
@@ -32,11 +37,6 @@ export type CosmosConfig = {
   rendererUrl: string | null;
   rootDir: string;
   staticPath: null | string;
-  // Only used by the React Native server, userDepsFilePath specifies where to
-  // generate the file with global imports, fixtures and decorators.
-  // Whereas most of the other paths are used to import modules, userDepsFilePath
-  // is used as an output file path and it requires a file extension.
-  userDepsFilePath: string;
   watchDirs: string[];
   // Plugin configs
   [option: string]: unknown;

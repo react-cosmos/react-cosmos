@@ -82,7 +82,7 @@ yarn cosmos
 
 🚀 Open **[localhost:5000](http://localhost:5000)** in your browser.
 
-> You'll notice Cosmos generated a `cosmos.userdeps.js` module, which becomes relevant in step 5. You can add this file to .gitignore.
+> You'll notice Cosmos generated a `cosmos.imports.js` module, which becomes relevant in step 5. You can add this file to .gitignore.
 
 The `Hello` fixture will show up in your React Cosmos UI.
 
@@ -94,15 +94,25 @@ At this point Cosmos should successfully read your fixtures. One more step befor
 
 This is very similar to a [custom bundler setup](customBundlerSetup.md). Cosmos cannot plug itself automatically into React Native's build pipeline (Metro), but you can do it with minimal effort.
 
-Replace your `App.js` entrypoint with the following code:
+Here's a basic file structure to get going. You can tweak this after everything's working.
+
+1. Your production app entry point: `App.main.js`.
+2. Your Cosmos renderer entry point: `App.cosmos.js`.
+3. The root entry point that decides which to load: `App.js`.
+
+> If you're using TypeScript replace `.js` file extensions with `.tsx`.
+
+First, rename your existing `App.js` to `App.main.js`.
+
+Then add the Cosmos renderer under `App.cosmos.js`:
 
 ```jsx
-// App.js
+// App.cosmos.js
 import React, { Component } from 'react';
 import { NativeFixtureLoader } from 'react-cosmos-native';
-import { rendererConfig, moduleWrappers } from './cosmos.userdeps.js';
+import { rendererConfig, moduleWrappers } from './cosmos.imports';
 
-export default class App extends Component {
+export default class CosmosApp extends Component {
   render() {
     return (
       <NativeFixtureLoader
@@ -114,7 +124,7 @@ export default class App extends Component {
 }
 ```
 
-This is a temporary solution to get going with Cosmos. Once you see your fixtures rendering properly you'll probably want to split your App entry point to load Cosmos in development and your root component in production. Something like this:
+Finally, create a new `App.js` that routes between your main and Cosmos entry points based on enviromnent:
 
 ```js
 // App.js
@@ -123,15 +133,24 @@ module.exports = global.__DEV__
   : require('./App.main');
 ```
 
-Where `App.cosmos.js` contains the code above that renders `NativeFixtureLoader` and `App.main.js` contains your original App.js.
+That's it!
 
-6\. **Render fixture in simulator**
-
-That's it. Open your app in the simulator and the Cosmos renderer should say "No fixture selected". Go back to your React Cosmos UI, click on the `Hello` fixture and it will render in the simulator.
+Open your app in the simulator and the Cosmos renderer should say "No fixture selected". Go back to your React Cosmos UI, click on the `Hello` fixture and it will render in the simulator.
 
 **Congratulations 😎**
 
 You've taken the first step towards designing reusable components. You're ready to prototype, test and interate on components in isolation.
+
+## App fixture
+
+You'll often want to load the entire app in development. The simplest way to do this without disconnecting the Cosmos entry point is to create an App fixture:
+
+```jsx
+// App.fixture.js
+import App from './App.main';
+
+export default () => <App />;
+```
 
 ## Initial fixture
 
@@ -141,9 +160,11 @@ You can configure the Cosmos Native renderer to auto load a fixture on init.
 <NativeFixtureLoader
   rendererConfig={rendererConfig}
   moduleWrappers={moduleWrappers}
-+ initialFixtureId={{ path: 'Hello.fixture.js' }}
++ initialFixtureId={{ path: 'src/__fixtures__/HelloWorld.ts' }}
 />
 ```
+
+`initialFixtureId` expects a fixture path relative to the project root. You'll find the exact path in `cosmos.imports.js` as a key in the `fixtures` object.
 
 ## Troubleshooting
 
@@ -155,6 +176,6 @@ You can get Cosmos to [mirror your fixtures on both DOM and Native renderers](ht
 
 1. Set up Cosmos for Native using the steps above.
 2. Set up the react-cosmos-webpack-plugin as described [here](README.md#getting-started).
-3. Start Cosmos with the `cosmos --external-userdeps` command.
+3. Start Cosmos with the `cosmos --expose-imports` command.
 
 [Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.

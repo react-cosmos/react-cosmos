@@ -1,15 +1,15 @@
 import path from 'node:path';
 import {
   CosmosConfig,
-  generateUserDepsModule,
+  generateUserImports,
   getPlaygroundUrl,
 } from 'react-cosmos';
 import { Plugin } from 'rollup';
 import { CosmosViteConfig } from './createCosmosViteConfig.js';
 import { createViteRendererIndex } from './createViteRendererIndex.js';
 
-export const userDepsVirtualModuleId = 'virtual:cosmos-userdeps';
-export const userDepsResolvedModuleId = '\0' + userDepsVirtualModuleId;
+export const userImportsVirtualModuleId = 'virtual:cosmos-imports';
+export const userImportsResolvedModuleId = '\0' + userImportsVirtualModuleId;
 
 const defaultIndexPattern = new RegExp(
   `^(src\\${path.sep})?(index|main)\.(js|ts)x?$`
@@ -23,22 +23,23 @@ export function reactCosmosViteRollupPlugin(
     name: 'react-cosmos-vite-renderer',
 
     resolveId(id) {
-      if (id === userDepsVirtualModuleId) {
-        return userDepsResolvedModuleId;
+      if (id === userImportsVirtualModuleId) {
+        return userImportsResolvedModuleId;
       } else {
         return null;
       }
     },
 
     load(id: string) {
-      if (id == userDepsResolvedModuleId) {
-        return generateUserDepsModule({
+      if (id == userImportsResolvedModuleId) {
+        return generateUserImports({
           cosmosConfig,
           rendererConfig: {
             playgroundUrl: getPlaygroundUrl(cosmosConfig),
             containerQuerySelector: cosmosConfig.dom.containerQuerySelector,
           },
           relativeToDir: null,
+          typeScript: false,
         });
       } else {
         return null;
@@ -55,7 +56,7 @@ export function reactCosmosViteRollupPlugin(
         console.log(`[Cosmos] Replacing vite index module at ${relPath}`);
 
         return {
-          code: createViteRendererIndex(userDepsVirtualModuleId),
+          code: createViteRendererIndex(userImportsVirtualModuleId),
           map: null,
         };
       } else {

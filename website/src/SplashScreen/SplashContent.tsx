@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { ExternalLink } from '../shared/ExternalLink.js';
 import { getSlideInStyle, slideInTransition } from '../shared/slideIn.js';
 import {
+  Viewport,
   getBaseFontSize,
   getCosmonautSize,
-  Viewport,
 } from '../shared/viewport.js';
 
 type Props = {

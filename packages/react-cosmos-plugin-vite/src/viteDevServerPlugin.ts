@@ -3,7 +3,7 @@ import { createServer } from 'vite';
 import { createCosmosViteConfig } from './createCosmosViteConfig.js';
 import {
   reactCosmosViteRollupPlugin,
-  userDepsResolvedModuleId,
+  userImportsResolvedModuleId,
 } from './reactCosmosViteRollupPlugin.js';
 
 export async function viteDevServerPlugin({
@@ -37,10 +37,12 @@ export async function viteDevServerPlugin({
   await server.listen();
 
   const watcher = await startFixtureWatcher(cosmosConfig, 'add', () => {
-    const module = server.moduleGraph.getModuleById(userDepsResolvedModuleId);
+    const module = server.moduleGraph.getModuleById(
+      userImportsResolvedModuleId
+    );
     if (!module) {
       throw new Error(
-        `Vite module graph doesn't contain module with id ${userDepsResolvedModuleId}`
+        `Vite module graph doesn't contain module with id ${userImportsResolvedModuleId}`
       );
     }
     server.moduleGraph.invalidateModule(module);

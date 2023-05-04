@@ -1,12 +1,26 @@
 import { isEqual } from 'lodash-es';
-import React, { Component, ReactNode } from 'react';
-import { areNodesEqual, ReactDecoratorProps } from 'react-cosmos-core';
+import React from 'react';
+import { areNodesEqual } from 'react-cosmos-core';
+import {
+  FixtureContext,
+  FixtureContextValue,
+} from 'react-cosmos-renderer/client';
+
+type Props = {
+  children: React.ReactNode;
+};
 
 type State = {
   error: null | string;
 };
 
-export class ErrorCatch extends Component<ReactDecoratorProps, State> {
+export class ErrorCatch extends React.Component<Props, State> {
+  declare context: FixtureContextValue;
+  static contextType = FixtureContext;
+
+  declare prevContext: FixtureContextValue | null;
+  static prevContext = null;
+
   state: State = {
     error: null,
   };
@@ -17,7 +31,11 @@ export class ErrorCatch extends Component<ReactDecoratorProps, State> {
     });
   }
 
-  componentDidUpdate(prevProps: ReactDecoratorProps) {
+  componentDidMount() {
+    this.prevContext = this.context;
+  }
+
+  componentDidUpdate(prevProps: Props) {
     // A change in fixture (children) or fixture state signifies that the
     // problem that caused the current error might've been solved. If the error
     // persists, it will organically trigger the error state again in the next
@@ -25,11 +43,15 @@ export class ErrorCatch extends Component<ReactDecoratorProps, State> {
     if (
       this.state.error &&
       (fixtureChanged(this.props.children, prevProps.children) ||
-        fixtureStateChanged(this.props.fixtureState, prevProps.fixtureState))
+        fixtureStateChanged(
+          this.context.fixtureState,
+          this.prevContext?.fixtureState
+        ))
     ) {
       this.setState({ error: null });
-      this.props.onErrorReset();
     }
+
+    this.prevContext = this.context;
   }
 
   render() {
@@ -39,21 +61,9 @@ export class ErrorCatch extends Component<ReactDecoratorProps, State> {
   }
 
   renderError(error: string) {
-    // Don't render error details here in dev mode because react-error-overlay
-    // takes care of it in a nicer way. We used to render both for a while but
-    // it proved annoying. react-error-overlay has a slight delay and seeing
-    // the same error reported twice feels clumsy.
-    if (__DEV__) {
-      return null;
-    }
-
-    // In static exports, however, where react-error-overlay is missing,
-    // rendering plain error details is superior to showing a blank screen.
     return (
       <>
-        <p>
-          <strong>Ouch, something wrong!</strong>
-        </p>
+        <h1>Ouch, something wrong!</h1>
         <pre>{error}</pre>
         <p>Check console for more info.</p>
       </>
@@ -61,10 +71,10 @@ export class ErrorCatch extends Component<ReactDecoratorProps, State> {
   }
 }
 
-function fixtureChanged(f1: ReactNode, f2: ReactNode) {
+function fixtureChanged(f1: React.ReactNode, f2: React.ReactNode) {
   return !areNodesEqual(f1, f2, true);
 }
 
-function fixtureStateChanged(fS1: object, fS2: object) {
+function fixtureStateChanged(fS1: object, fS2?: object) {
   return !isEqual(fS1, fS2);
 }

@@ -14,9 +14,10 @@ export function createCosmosConfig(
   return {
     ...cosmosConfigInput,
     rootDir,
-    exportPath: getExportPath(cosmosConfigInput, rootDir),
     detectLocalPlugins: cosmosConfigInput.detectLocalPlugins ?? true,
     disablePlugins: cosmosConfigInput.disablePlugins ?? false,
+    exposeImports: getExposeImports(cosmosConfigInput, rootDir),
+    exportPath: getExportPath(cosmosConfigInput, rootDir),
     fixtureFileSuffix: getFixtureFileSuffix(cosmosConfigInput),
     fixturesDir: getFixturesDir(cosmosConfigInput),
     globalImports: getGlobalImports(cosmosConfigInput, rootDir),
@@ -25,14 +26,13 @@ export function createCosmosConfig(
     httpsOptions: getHttpsOptions(cosmosConfigInput, rootDir),
     ignore: getIgnore(cosmosConfigInput),
     lazy: getLazy(cosmosConfigInput),
+    plugins: getPlugins(cosmosConfigInput, rootDir),
     port: getPort(cosmosConfigInput),
     portRetries: getPortRetries(cosmosConfigInput),
-    plugins: getPlugins(cosmosConfigInput, rootDir),
     publicUrl: getPublicUrl(cosmosConfigInput),
-    staticPath: getStaticPath(cosmosConfigInput, rootDir),
-    userDepsFilePath: getUserDepsFilePath(cosmosConfigInput, rootDir),
-    watchDirs: getWatchDirs(cosmosConfigInput, rootDir),
     rendererUrl: cosmosConfigInput.rendererUrl ?? null,
+    staticPath: getStaticPath(cosmosConfigInput, rootDir),
+    watchDirs: getWatchDirs(cosmosConfigInput, rootDir),
     dom: getDomConfig(cosmosConfigInput.dom || {}),
     ui: cosmosConfigInput.ui || {},
   };
@@ -92,12 +92,21 @@ function getWatchDirs(cosmosConfigInput: CosmosConfigInput, rootDir: string) {
   return watchDirs.map(watchDir => path.resolve(rootDir, watchDir));
 }
 
-function getUserDepsFilePath(
+function getExposeImports(
   cosmosConfigInput: CosmosConfigInput,
   rootDir: string
 ) {
-  const { userDepsFilePath = 'cosmos.userdeps.js' } = cosmosConfigInput;
-  return path.resolve(rootDir, userDepsFilePath);
+  const cliArgs = getCliArgs();
+  if (typeof cliArgs.exposeImports === 'boolean') {
+    return cliArgs.exposeImports;
+  } else if (typeof cliArgs.exposeImports === 'string') {
+    return path.resolve(rootDir, cliArgs.exposeImports);
+  }
+
+  const { exposeImports = false } = cosmosConfigInput;
+  return typeof exposeImports === 'string'
+    ? path.resolve(rootDir, exposeImports)
+    : exposeImports;
 }
 
 function getHostname({ hostname = null }: CosmosConfigInput) {

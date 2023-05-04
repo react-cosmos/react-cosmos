@@ -1,13 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import {
-  IllustrationContainer,
-  NoWrap,
-  OverlayBody,
-  OverlayContainer,
-  SecondaryButton,
-  TextContainer,
-} from '../../../components/ContentOverlay.js';
 import { AstronautIllustration } from '../../../components/illustrations/Astronaut.js';
 import {
   screenGrey1,
@@ -17,6 +9,14 @@ import {
   screenPrimary2,
   screenPrimary3,
 } from '../../../style/colors.js';
+import {
+  IllustrationContainer,
+  NoWrap,
+  OverlayBody,
+  OverlayContainer,
+  SecondaryButton,
+  TextContainer,
+} from './ContentOverlay.js';
 
 type Props = {
   onDismissWelcome: () => unknown;
