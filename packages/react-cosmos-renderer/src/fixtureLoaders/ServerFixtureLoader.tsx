@@ -11,6 +11,14 @@ import { DomRendererProvider } from '../rendererConnect/DomRendererProvider.js';
 import { FixtureLoaderConnect } from './FixtureLoaderConnect.js';
 import { defaultRenderMessage } from './defaultRenderMessage.js';
 
+// This fixture loader is designed for React Server Components setups.
+// Although server components are stateless, this fixture loader still
+// communicates with the Cosmos UI through Client components (via postMessage
+// or WebSocket messages). The main distinction from the client fixture loader
+// is that the fixture modules here are loaded on the server. This means that
+// the fixture loader cannot receive fixtureSelect messages from the Cosmos UI.
+// The fixture is selected on the server and a full page reload is required to
+// change the fixture.
 type Props = {
   rendererConfig: RendererConfig;
   moduleWrappers: UserModuleWrappers;
