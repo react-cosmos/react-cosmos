@@ -9,6 +9,7 @@ import { FixtureModule } from '../fixtureModule/FixtureModule.js';
 import { AsyncModuleLoader } from '../moduleLoaders/AsyncModuleLoader.js';
 import { DomRendererProvider } from '../rendererConnect/DomRendererProvider.js';
 import { FixtureLoaderConnect } from './FixtureLoaderConnect.js';
+import { ServerFixtureChangeListener } from './ServerFixtureChangeListener.js';
 import { defaultRenderMessage } from './defaultRenderMessage.js';
 
 // This fixture loader is designed for React Server Components setups.
@@ -19,6 +20,22 @@ import { defaultRenderMessage } from './defaultRenderMessage.js';
 // the fixture loader cannot receive fixtureSelect messages from the Cosmos UI.
 // The fixture is selected on the server and a full page reload is required to
 // change the fixture.
+
+// Example usage (src/app/cosmos/page.tsx):
+// import { parseRendererUrlQuery } from 'react-cosmos-core';
+// import { ServerFixtureLoader } from 'react-cosmos-renderer';
+// import { moduleWrappers, rendererConfig } from '../../../cosmos.imports';
+
+// export default ({ searchParams }: { searchParams: string }) => {
+//   return (
+//     <ServerFixtureLoader
+//       rendererConfig={rendererConfig}
+//       moduleWrappers={moduleWrappers}
+//       selectedFixtureId={parseRendererUrlQuery(searchParams)._fixtureId}
+//     />
+//   );
+// };
+
 type Props = {
   rendererConfig: RendererConfig;
   moduleWrappers: UserModuleWrappers;
@@ -41,30 +58,32 @@ export function ServerFixtureLoader({
 
   return (
     <DomRendererProvider playgroundUrl={rendererConfig.playgroundUrl}>
-      <FixtureLoaderConnect
-        moduleWrappers={moduleWrappers}
-        fixtureSelection={fixtureSelection}
-        renderMessage={renderMessage}
-        renderFixture={selection => (
-          // The suspense boundary allows the rendererReady response to be sent
-          // before loading the fixture modules.
-          <Suspense>
-            {/* @ts-expect-error Async Server Component */}
-            <AsyncModuleLoader
-              moduleWrappers={moduleWrappers}
-              fixturePath={selection.fixtureId.path}
-              renderModules={modules => (
-                <FixtureModule
-                  {...modules}
-                  {...selection}
-                  globalDecorators={globalDecorators}
-                  renderMessage={renderMessage}
-                />
-              )}
-            />
-          </Suspense>
-        )}
-      />
+      <ServerFixtureChangeListener selectedFixtureId={selectedFixtureId}>
+        <FixtureLoaderConnect
+          moduleWrappers={moduleWrappers}
+          fixtureSelection={fixtureSelection}
+          renderMessage={renderMessage}
+          renderFixture={selection => (
+            // The suspense boundary allows the rendererReady response to be sent
+            // before loading the fixture modules.
+            <Suspense>
+              {/* @ts-expect-error Async Server Component */}
+              <AsyncModuleLoader
+                moduleWrappers={moduleWrappers}
+                fixturePath={selection.fixtureId.path}
+                renderModules={modules => (
+                  <FixtureModule
+                    {...modules}
+                    {...selection}
+                    globalDecorators={globalDecorators}
+                    renderMessage={renderMessage}
+                  />
+                )}
+              />
+            </Suspense>
+          )}
+        />
+      </ServerFixtureChangeListener>
     </DomRendererProvider>
   );
 }
