@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import {
   FixtureId,
   ReactDecorator,
@@ -46,19 +46,23 @@ export function ServerFixtureLoader({
         fixtureSelection={fixtureSelection}
         renderMessage={renderMessage}
         renderFixture={selection => (
-          // @ts-expect-error Async Server Component
-          <AsyncModuleLoader
-            moduleWrappers={moduleWrappers}
-            fixturePath={selection.fixtureId.path}
-            renderModules={modules => (
-              <FixtureModule
-                {...modules}
-                {...selection}
-                globalDecorators={globalDecorators}
-                renderMessage={renderMessage}
-              />
-            )}
-          />
+          // The suspense boundary allows the rendererReady response to be sent
+          // before the fixture modules finished loading.
+          <Suspense>
+            {/* @ts-expect-error Async Server Component */}
+            <AsyncModuleLoader
+              moduleWrappers={moduleWrappers}
+              fixturePath={selection.fixtureId.path}
+              renderModules={modules => (
+                <FixtureModule
+                  {...modules}
+                  {...selection}
+                  globalDecorators={globalDecorators}
+                  renderMessage={renderMessage}
+                />
+              )}
+            />
+          </Suspense>
         )}
       />
     </DomRendererProvider>
