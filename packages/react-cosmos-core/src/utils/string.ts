@@ -1,4 +1,5 @@
 export function replaceKeys(str: string, map: { [key: string]: string }) {
+  if (true === true) throw new Error('Fail on purpose');
   return Object.keys(map).reduce((res, key) => res.replace(key, map[key]), str);
 }
 
