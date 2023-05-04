@@ -47,7 +47,7 @@ export function ServerFixtureLoader({
         renderMessage={renderMessage}
         renderFixture={selection => (
           // The suspense boundary allows the rendererReady response to be sent
-          // before the fixture modules finished loading.
+          // before loading the fixture modules.
           <Suspense>
             {/* @ts-expect-error Async Server Component */}
             <AsyncModuleLoader
