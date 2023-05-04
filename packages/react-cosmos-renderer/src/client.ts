@@ -1,4 +1,3 @@
-'use client';
 export * from './fixture/FixtureCapture/FixtureCapture.js';
 export * from './fixture/FixtureContext.js';
 export * from './fixture/Viewport.js';
