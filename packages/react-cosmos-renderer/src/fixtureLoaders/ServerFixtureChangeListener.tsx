@@ -38,6 +38,6 @@ export function ServerFixtureChangeListener({
 }
 
 function reloadPage(fixtureId?: FixtureId) {
-  const query = stringifyRendererUrlQuery({ _fixtureId: fixtureId });
+  const query = stringifyRendererUrlQuery({ fixtureId });
   window.location.search = query && `?${query}`;
 }

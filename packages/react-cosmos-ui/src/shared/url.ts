@@ -1,14 +1,14 @@
 import {
   parsePlaygroundUrlQuery,
-  PlaygroundUrlParams,
+  PlaygroundQueryParams,
   stringifyPlaygroundUrlQuery,
 } from 'react-cosmos-core';
 
-export function getUrlParams(): PlaygroundUrlParams {
+export function getUrlParams(): PlaygroundQueryParams {
   return parsePlaygroundUrlQuery(location.search);
 }
 
-export function pushUrlParams(urlParams: PlaygroundUrlParams) {
+export function pushUrlParams(urlParams: PlaygroundQueryParams) {
   const query = stringifyPlaygroundUrlQuery(urlParams);
 
   // Refresh page completely when pushState isn't supported
@@ -22,7 +22,7 @@ export function pushUrlParams(urlParams: PlaygroundUrlParams) {
 }
 
 export function subscribeToLocationChanges(
-  userHandler: (urlParams: PlaygroundUrlParams) => unknown
+  userHandler: (urlParams: PlaygroundQueryParams) => unknown
 ) {
   const handler = () => {
     userHandler(getUrlParams());
@@ -33,7 +33,7 @@ export function subscribeToLocationChanges(
   };
 }
 
-export function createRelativePlaygroundUrl(urlParams: PlaygroundUrlParams) {
+export function createRelativePlaygroundUrl(urlParams: PlaygroundQueryParams) {
   const query = stringifyPlaygroundUrlQuery(urlParams);
   return createRelativeUrlWithQuery(query);
 }

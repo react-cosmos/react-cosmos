@@ -31,7 +31,7 @@ import { defaultRenderMessage } from './defaultRenderMessage.js';
 //     <ServerFixtureLoader
 //       rendererConfig={rendererConfig}
 //       moduleWrappers={moduleWrappers}
-//       selectedFixtureId={parseRendererUrlQuery(searchParams)._fixtureId}
+//       selectedFixtureId={parseRendererUrlQuery(searchParams).fixtureId}
 //     />
 //   );
 // };
@@ -40,6 +40,7 @@ type Props = {
   rendererConfig: RendererConfig;
   moduleWrappers: UserModuleWrappers;
   globalDecorators?: ReactDecorator[];
+  // TODO: Receive all renderer query params
   selectedFixtureId?: FixtureId | null;
   renderMessage?: (msg: string) => React.ReactElement;
 };

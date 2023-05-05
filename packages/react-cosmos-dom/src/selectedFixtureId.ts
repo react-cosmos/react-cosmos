@@ -10,9 +10,9 @@ import {
 // fixture will be selected even if the URL no longer contains the fixture ID.
 export function getSelectedFixtureId(): null | FixtureId {
   const urlParams = parseRendererUrlQuery(location.search);
-  if (urlParams._fixtureId) {
-    setFixtureIdToSession(urlParams._fixtureId);
-    return urlParams._fixtureId;
+  if (urlParams.fixtureId) {
+    setFixtureIdToSession(urlParams.fixtureId);
+    return urlParams.fixtureId;
   }
 
   return getFixtureIdFromSession();

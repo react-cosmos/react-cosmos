@@ -20,7 +20,7 @@ namedPlug<RendererActionSlotProps>(
     const rendererUrl = core.getWebRendererUrl();
 
     const onSelect = React.useCallback(() => {
-      const query = stringifyRendererUrlQuery({ _fixtureId: fixtureId });
+      const query = stringifyRendererUrlQuery({ fixtureId });
       const fixtureUrl = `${rendererUrl}?${query}`;
       window.open(fixtureUrl, '_blank');
     }, [fixtureId, rendererUrl]);

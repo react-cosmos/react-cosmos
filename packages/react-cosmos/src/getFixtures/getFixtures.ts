@@ -82,7 +82,7 @@ function getPlaygroundUrl(cosmosConfig: CosmosConfig, fixtureId: FixtureId) {
 
 function getRendererUrl(cosmosConfig: CosmosConfig, fixtureId: FixtureId) {
   const { publicUrl, rendererUrl } = cosmosConfig;
-  const query = stringifyRendererUrlQuery({ _fixtureId: fixtureId });
+  const query = stringifyRendererUrlQuery({ fixtureId });
   if (rendererUrl) return `${rendererUrl}?${query}`;
 
   const host = getPlaygroundHost(cosmosConfig);

@@ -28,7 +28,7 @@ it('renders fullscreen button', async () => {
 
   const stringifiedFixtureId = encodeURIComponent(JSON.stringify(fixtureId));
   expect(windowOpenMock.value).toBeCalledWith(
-    `/_renderer.html?_fixtureId=${stringifiedFixtureId}`,
+    `/_renderer.html?fixtureId=${stringifiedFixtureId}`,
     '_blank'
   );
 
