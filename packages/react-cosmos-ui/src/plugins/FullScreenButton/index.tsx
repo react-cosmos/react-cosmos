@@ -22,7 +22,11 @@ namedPlug<RendererActionSlotProps>(
     const onSelect = React.useCallback(() => {
       const query = stringifyRendererUrlQuery({ fixtureId });
       const fixtureUrl = `${rendererUrl}?${query}`;
-      window.open(fixtureUrl, '_blank');
+      // noopener is required to prevent reuse of sessionStorage from the
+      // Playground window, thus making sure the remote renderer will generate
+      // a different rendererId from the iframe renderer.
+      // https://stackoverflow.com/a/73821739
+      window.open(fixtureUrl, '_blank', 'noopener=true');
     }, [fixtureId, rendererUrl]);
 
     React.useEffect(() => {
