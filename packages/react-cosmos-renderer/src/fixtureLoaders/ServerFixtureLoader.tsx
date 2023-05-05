@@ -42,6 +42,7 @@ type Props = {
   globalDecorators?: ReactDecorator[];
   // TODO: Receive all renderer query params
   selectedFixtureId?: FixtureId | null;
+  locked?: boolean;
   renderMessage?: (msg: string) => React.ReactElement;
 };
 export function ServerFixtureLoader({
@@ -49,6 +50,7 @@ export function ServerFixtureLoader({
   moduleWrappers,
   globalDecorators,
   selectedFixtureId = null,
+  locked = false,
   renderMessage = defaultRenderMessage,
 }: Props) {
   const fixtureSelection = selectedFixtureId && {
@@ -59,7 +61,10 @@ export function ServerFixtureLoader({
 
   return (
     <DomRendererProvider playgroundUrl={rendererConfig.playgroundUrl}>
-      <ServerFixtureChangeListener selectedFixtureId={selectedFixtureId}>
+      <ServerFixtureChangeListener
+        selectedFixtureId={selectedFixtureId}
+        locked={locked}
+      >
         <FixtureLoaderConnect
           moduleWrappers={moduleWrappers}
           fixtureSelection={fixtureSelection}

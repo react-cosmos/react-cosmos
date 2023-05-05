@@ -20,7 +20,7 @@ namedPlug<RendererActionSlotProps>(
     const rendererUrl = core.getWebRendererUrl();
 
     const onSelect = React.useCallback(() => {
-      const query = stringifyRendererUrlQuery({ fixtureId });
+      const query = stringifyRendererUrlQuery({ fixtureId, locked: true });
       const fixtureUrl = `${rendererUrl}?${query}`;
       // noopener is required to prevent reuse of sessionStorage from the
       // Playground window, thus making sure the remote renderer will generate

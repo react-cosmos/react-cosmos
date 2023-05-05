@@ -10,14 +10,13 @@ export type FixtureSelection = {
 
 export function useFixtureSelection(
   initialFixtureId: FixtureId | null,
-  selectedFixtureId: FixtureId | null
+  locked: boolean
 ) {
   const [selection, setSelection] = React.useState<FixtureSelection | null>(
     () => {
-      const fixtureId = selectedFixtureId ?? initialFixtureId;
       return (
-        fixtureId && {
-          fixtureId,
+        initialFixtureId && {
+          fixtureId: initialFixtureId,
           initialFixtureState: {},
           renderKey: 0,
         }
@@ -31,6 +30,7 @@ export function useFixtureSelection(
     () =>
       rendererConnect.onMessage(msg => {
         if (
+          !locked &&
           msg.type === 'selectFixture' &&
           msg.payload.rendererId === rendererId
         ) {
@@ -43,13 +43,14 @@ export function useFixtureSelection(
             };
           });
         } else if (
+          !locked &&
           msg.type === 'unselectFixture' &&
           msg.payload.rendererId === rendererId
         ) {
           setSelection(null);
         }
       }),
-    [rendererConnect, rendererId]
+    [locked, rendererConnect, rendererId]
   );
 
   return selection;

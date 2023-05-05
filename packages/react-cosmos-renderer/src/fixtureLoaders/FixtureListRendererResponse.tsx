@@ -26,7 +26,8 @@ export function FixtureListRendererResponse({
       rendererConnect.postMessage({
         type: 'rendererReady',
         payload: initialFixtureId
-          ? { rendererId, fixtures, initialFixtureId }
+          ? // TODO: Could this initialFixtureId be driven by selectedFixtureId?
+            { rendererId, fixtures, initialFixtureId }
           : { rendererId, fixtures },
       });
       readyRef.current = true;

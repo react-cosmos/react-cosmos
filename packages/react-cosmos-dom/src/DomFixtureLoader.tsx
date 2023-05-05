@@ -1,5 +1,9 @@
 import React from 'react';
-import { RendererConfig, UserModuleWrappers } from 'react-cosmos-core';
+import {
+  RendererConfig,
+  UserModuleWrappers,
+  parseRendererUrlQuery,
+} from 'react-cosmos-core';
 import {
   ClientFixtureLoader,
   DomRendererProvider,
@@ -18,6 +22,8 @@ export function DomFixtureLoader({ rendererConfig, moduleWrappers }: Props) {
         moduleWrappers={moduleWrappers}
         globalDecorators={globalDecorators}
         selectedFixtureId={getSelectedFixtureId()}
+        // WIP
+        locked={parseRendererUrlQuery(location.search).locked}
         renderMessage={renderDomMessage}
       />
     </DomRendererProvider>
