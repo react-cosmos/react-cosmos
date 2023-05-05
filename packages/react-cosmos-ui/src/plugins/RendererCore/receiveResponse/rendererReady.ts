@@ -14,6 +14,8 @@ export function receiveRendererReadyResponse(
   { payload }: RendererReadyResponse
 ) {
   const { rendererId, fixtures, initialFixtureId } = payload;
+  const { connectedRendererIds: prevRendererIds } = context.getState();
+
   context.setState(stateUpdater, afterStateChanged);
 
   function stateUpdater(prevState: State) {
@@ -34,8 +36,10 @@ export function receiveRendererReadyResponse(
   function afterStateChanged() {
     if (initialFixtureId) selectInitialFixture(context, initialFixtureId);
     else selectFixtureFromUrlParams(context, rendererId);
-    // TODO: Don't notify if renderer is already connected
-    notifyRendererConnection(context, rendererId);
+
+    if (!prevRendererIds.includes(rendererId)) {
+      notifyRendererConnection(context, rendererId);
+    }
   }
 }
 
