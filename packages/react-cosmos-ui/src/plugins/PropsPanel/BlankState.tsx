@@ -1,22 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
+import { DelayedLoading } from '../../components/DelayedLoading.js';
 import { SlidersIcon } from '../../components/icons/index.js';
 import { grey160, grey224, grey32, grey64 } from '../../style/colors.js';
 
 export function BlankState() {
   return (
-    <Container>
-      <IconContainer>
-        <SlidersIcon />
-      </IconContainer>
-      <Title>
-        No visible props in <NoWrap>selected fixture</NoWrap>
-      </Title>
-      <Description>
-        Props of exported JSX <NoWrap>elements from</NoWrap> your fixtures{' '}
-        <NoWrap>will appear here.</NoWrap>
-      </Description>
-    </Container>
+    <DelayedLoading delay={300}>
+      <Container>
+        <IconContainer>
+          <SlidersIcon />
+        </IconContainer>
+        <Title>
+          No visible props in <NoWrap>selected fixture</NoWrap>
+        </Title>
+        <Description>
+          Props of exported JSX <NoWrap>elements from</NoWrap> your fixtures{' '}
+          <NoWrap>will appear here.</NoWrap>
+        </Description>
+      </Container>
+    </DelayedLoading>
   );
 }
 
