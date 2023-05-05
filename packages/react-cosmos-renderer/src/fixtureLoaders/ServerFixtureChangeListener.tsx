@@ -1,7 +1,7 @@
 'use client';
 import { isEqual } from 'lodash-es';
 import React from 'react';
-import { FixtureId, stringifyRendererUrlQuery } from 'react-cosmos-core';
+import { FixtureId } from 'react-cosmos-core';
 import { RendererContext } from '../rendererConnect/RendererContext.js';
 
 type Props = {
@@ -14,7 +14,9 @@ export function ServerFixtureChangeListener({
   selectedFixtureId,
   locked,
 }: Props) {
-  const { rendererId, rendererConnect } = React.useContext(RendererContext);
+  const { rendererId, rendererConnect, reloadFixture } =
+    React.useContext(RendererContext);
+
   React.useEffect(
     () =>
       rendererConnect.onMessage(msg => {
@@ -25,23 +27,18 @@ export function ServerFixtureChangeListener({
         ) {
           const { fixtureId } = msg.payload;
           if (!isEqual(fixtureId, selectedFixtureId)) {
-            reloadPage(fixtureId);
+            reloadFixture(fixtureId);
           }
         } else if (
           !locked &&
           msg.type === 'unselectFixture' &&
           msg.payload.rendererId === rendererId
         ) {
-          reloadPage();
+          reloadFixture(null);
         }
       }),
-    [locked, rendererConnect, rendererId, selectedFixtureId]
+    [locked, reloadFixture, rendererConnect, rendererId, selectedFixtureId]
   );
 
   return <>{children}</>;
-}
-
-function reloadPage(fixtureId?: FixtureId) {
-  const query = stringifyRendererUrlQuery({ fixtureId });
-  window.location.search = query && `?${query}`;
 }

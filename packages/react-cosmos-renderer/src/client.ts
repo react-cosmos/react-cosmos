@@ -5,4 +5,5 @@ export * from './fixture/useSelect/index.js';
 export * from './fixture/useValue/index.js';
 export * from './fixtureLoaders/ClientFixtureLoader.js';
 export * from './rendererConnect/DomRendererProvider.js';
-export * from './rendererConnect/NativeRendererProvider.js';
+export * from './rendererConnect/RendererContext.js';
+export * from './rendererConnect/createWebSocketsConnect.js';

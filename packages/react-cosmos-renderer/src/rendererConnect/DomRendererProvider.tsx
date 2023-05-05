@@ -1,7 +1,10 @@
 'use client';
 import React from 'react';
-import { isInsideWindowIframe } from 'react-cosmos-core';
-import { RendererContext } from './RendererContext.js';
+import {
+  isInsideWindowIframe,
+  stringifyRendererQueryParams,
+} from 'react-cosmos-core';
+import { RendererContext, RendererContextValue } from './RendererContext.js';
 import { createNoopRendererConnect } from './createNoopRendererConnect.js';
 import { createPostMessageConnect } from './createPostMessageConnect.js';
 import { createWebSocketsConnect } from './createWebSocketsConnect.js';
@@ -10,14 +13,24 @@ import { getDomRendererId } from './domRendererId.js';
 type Props = {
   children: React.ReactNode;
   playgroundUrl: string;
+  onQueryParams: (queryParams: {}) => void;
 };
-export function DomRendererProvider({ children, playgroundUrl }: Props) {
-  const value = React.useMemo(() => {
+export function DomRendererProvider({
+  children,
+  playgroundUrl,
+  onQueryParams,
+}: Props) {
+  const value = React.useMemo<RendererContextValue>(() => {
     return {
       rendererId: getDomRendererId(),
       rendererConnect: createDomRendererConnect(playgroundUrl),
+      reloadFixture: fixtureId => {
+        onQueryParams(
+          fixtureId ? stringifyRendererQueryParams({ fixtureId }) : {}
+        );
+      },
     };
-  }, [playgroundUrl]);
+  }, [onQueryParams, playgroundUrl]);
 
   return (
     <RendererContext.Provider value={value}>

@@ -1,3 +1,4 @@
+// TODO: Rename to rendererMessageTypes.ts or rendererMessages.ts
 import { FixtureState } from '../fixtureState/types.js';
 import {
   FixtureId,
@@ -18,7 +19,8 @@ export type SelectFixtureRequest = {
   payload: {
     rendererId: RendererId;
     fixtureId: FixtureId;
-    fixtureState: FixtureState;
+    fixtureState?: FixtureState;
+    reload?: boolean;
   };
 };
 

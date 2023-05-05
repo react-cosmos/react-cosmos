@@ -22,6 +22,8 @@ import { createTestRendererConnect } from './createTestRendererConnect.js';
 
 export type RendererTestArgs = {
   rendererId: RendererId;
+  // TODO: Test this
+  reloadFixture?: (fixtureId: FixtureId | null) => void;
   fixtures: ByPath<ReactFixtureModule>;
   selectedFixtureId?: null | FixtureId;
   initialFixtureId?: FixtureId;
@@ -78,9 +80,16 @@ export async function mountTestRenderer(
 }
 
 function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
-  const { rendererId, fixtures, decorators = {}, lazy = false } = args;
+  const {
+    rendererId,
+    reloadFixture = () => {},
+    fixtures,
+    decorators = {},
+    lazy = false,
+  } = args;
+  const contextValue = { rendererId, rendererConnect, reloadFixture };
   return (
-    <RendererContext.Provider value={{ rendererId, rendererConnect }}>
+    <RendererContext.Provider value={contextValue}>
       <ClientFixtureLoader
         moduleWrappers={getModuleWrappers(fixtures, decorators, lazy)}
         initialFixtureId={args.initialFixtureId}

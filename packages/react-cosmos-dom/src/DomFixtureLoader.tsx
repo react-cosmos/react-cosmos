@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   RendererConfig,
   UserModuleWrappers,
   parseRendererUrlQuery,
+  stringifyUrlQuery,
 } from 'react-cosmos-core';
 import {
   ClientFixtureLoader,
@@ -16,8 +17,17 @@ type Props = {
   moduleWrappers: UserModuleWrappers;
 };
 export function DomFixtureLoader({ rendererConfig, moduleWrappers }: Props) {
+  const onQueryParams = useCallback((queryParams: {}) => {
+    const query = stringifyUrlQuery(queryParams);
+    // TODO: Figure out if this is the best way to update the URL
+    window.location.search = query && `?${query}`;
+  }, []);
+
   return (
-    <DomRendererProvider playgroundUrl={rendererConfig.playgroundUrl}>
+    <DomRendererProvider
+      playgroundUrl={rendererConfig.playgroundUrl}
+      onQueryParams={onQueryParams}
+    >
       <ClientFixtureLoader
         moduleWrappers={moduleWrappers}
         globalDecorators={globalDecorators}

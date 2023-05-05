@@ -1,9 +1,10 @@
 import React from 'react';
-import { RendererConnect } from 'react-cosmos-core';
+import { FixtureId, RendererConnect } from 'react-cosmos-core';
 
-type RendererContextValue = {
+export type RendererContextValue = {
   rendererId: string;
   rendererConnect: RendererConnect;
+  reloadFixture: (fixtureId: FixtureId | null) => void;
 };
 
 export const RendererContext = React.createContext<RendererContextValue>({
@@ -12,4 +13,5 @@ export const RendererContext = React.createContext<RendererContextValue>({
     postMessage: () => {},
     onMessage: () => () => {},
   },
+  reloadFixture: () => {},
 });

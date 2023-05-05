@@ -75,7 +75,7 @@ export function FixtureProvider(props: Props) {
           (msg.type === 'selectFixture' || msg.type === 'setFixtureState') &&
           msg.payload.rendererId === rendererId
         ) {
-          const { fixtureId, fixtureState } = msg.payload;
+          const { fixtureId, fixtureState = {} } = msg.payload;
           setState(prevState =>
             // Ensure fixture state applies to currently selected fixture
             isEqual(fixtureId, props.fixtureId)

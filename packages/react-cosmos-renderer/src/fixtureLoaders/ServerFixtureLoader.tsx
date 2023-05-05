@@ -60,7 +60,13 @@ export function ServerFixtureLoader({
   };
 
   return (
-    <DomRendererProvider playgroundUrl={rendererConfig.playgroundUrl}>
+    <DomRendererProvider
+      playgroundUrl={rendererConfig.playgroundUrl}
+      onQueryParams={queryParams => {
+        // TODO: Actually implement this outside (in Next);
+        console.log('Not implemented: onQueryParams', queryParams);
+      }}
+    >
       <ServerFixtureChangeListener
         selectedFixtureId={selectedFixtureId}
         locked={locked}

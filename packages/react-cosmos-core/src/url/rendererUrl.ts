@@ -11,7 +11,7 @@ type RendererStringQueryParams = {
   locked?: string;
 };
 
-export function stringifyRendererUrlQuery(params: RendererQueryParams): string {
+export function stringifyRendererQueryParams(params: RendererQueryParams) {
   const stringParams: RendererStringQueryParams = {};
 
   if (params.fixtureId) {
@@ -22,7 +22,11 @@ export function stringifyRendererUrlQuery(params: RendererQueryParams): string {
     stringParams.locked = String(params.locked);
   }
 
-  return stringifyUrlQuery(stringParams);
+  return stringParams;
+}
+
+export function stringifyRendererUrlQuery(params: RendererQueryParams): string {
+  return stringifyUrlQuery(stringifyRendererQueryParams(params));
 }
 
 export function parseRendererUrlQuery(query: string): RendererQueryParams {
