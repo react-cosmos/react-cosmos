@@ -52,6 +52,10 @@ export type RendererReadyResponse = {
   type: 'rendererReady';
   payload: {
     rendererId: RendererId;
+    // TODO: Don't return fixtures in lazy mode, it only make things worse by
+    // invalidating previous fixtureListItemUpdate when renderers re-connect.
+    // What does this mean for fixtureListUpdate? Does it ever gets called
+    // unnecessarily?
     fixtures: FixtureList;
     initialFixtureId?: FixtureId;
   };
