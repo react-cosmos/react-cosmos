@@ -55,7 +55,7 @@ export function ServerFixtureLoader({
   };
 
   return (
-    <ServerFixtureChangeListener selectedFixtureId={fixtureId}>
+    <ServerFixtureChangeListener>
       <FixtureLoaderConnect
         moduleWrappers={moduleWrappers}
         fixtureSelection={fixtureSelection}
