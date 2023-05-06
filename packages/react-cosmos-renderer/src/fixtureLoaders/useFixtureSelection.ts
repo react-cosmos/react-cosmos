@@ -1,3 +1,4 @@
+import { isEqual } from 'lodash-es';
 import React from 'react';
 import { FixtureId, FixtureState } from 'react-cosmos-core';
 import { RendererContext } from '../rendererConnect/RendererContext.js';
@@ -36,7 +37,10 @@ export function useFixtureSelection(
           msg.payload.rendererId === rendererId
         ) {
           const { fixtureId, fixtureState } = msg.payload;
-          if (rendererConfig.reloadOnFixtureChange) {
+          if (
+            rendererConfig.reloadOnFixtureChange &&
+            !isEqual(selection?.fixtureId, fixtureId)
+          ) {
             reloadFixture(fixtureId);
           } else {
             setSelection(prevState => {
@@ -61,6 +65,7 @@ export function useFixtureSelection(
       rendererConfig.reloadOnFixtureChange,
       rendererConnect,
       rendererId,
+      selection?.fixtureId,
     ]
   );
 
