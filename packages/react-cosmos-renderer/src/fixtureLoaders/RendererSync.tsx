@@ -1,3 +1,4 @@
+// TODO: Maybe move to rendererConnect folder
 'use client';
 import React from 'react';
 import { FixtureId, FixtureList } from 'react-cosmos-core';
@@ -8,7 +9,7 @@ type Props = {
   fixtures: FixtureList;
   initialFixtureId?: FixtureId | null;
 };
-export function FixtureListRendererResponse({
+export function RendererSync({
   children,
   fixtures,
   initialFixtureId = null,
@@ -28,6 +29,7 @@ export function FixtureListRendererResponse({
         type: 'rendererReady',
         payload: initialFixtureId
           ? // TODO: Could this initialFixtureId be driven by selectedFixtureId?
+            // Read searchParams from rendererConnect
             { rendererId, fixtures, initialFixtureId }
           : { rendererId, fixtures },
       });
