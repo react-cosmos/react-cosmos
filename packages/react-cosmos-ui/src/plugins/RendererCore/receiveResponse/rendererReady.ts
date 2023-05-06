@@ -37,6 +37,7 @@ export function receiveRendererReadyResponse(
     if (initialFixtureId) selectInitialFixture(context, initialFixtureId);
     else selectFixtureFromUrlParams(context, rendererId);
 
+    // Don't notify about already connected renderers that just reloaded
     if (!prevRendererIds.includes(rendererId)) {
       notifyRendererConnection(context, rendererId);
     }
