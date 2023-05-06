@@ -44,6 +44,7 @@ async function generateImportsFile(cosmosConfig: CosmosConfig) {
 
   const rendererConfig: RendererConfig = {
     playgroundUrl: getPlaygroundUrl(cosmosConfig),
+    reloadOnFixtureChange: cosmosConfig.reloadOnFixtureChange,
   };
   const fileSource = generateUserImports({
     cosmosConfig,
