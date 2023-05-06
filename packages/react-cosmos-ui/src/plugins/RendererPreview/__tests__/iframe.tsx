@@ -63,7 +63,7 @@ it('shows notification when renderer iframe location changes', async () => {
     id: 'renderer-location-change',
     type: 'info',
     title: 'Renderer iframe location changed',
-    info: `Reload or select another fixture to reset your preview.`,
+    info: `Select a fixture to reset your preview.`,
   });
 });
 
