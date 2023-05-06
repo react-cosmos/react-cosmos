@@ -79,8 +79,7 @@ function iframeLocationChanged(iframeWindow: Window, iframeSrc: string) {
   try {
     const { href } = iframeWindow.location;
     return (
-      // Don't register a location change when the iframe query string changed
-      // (eg. when a fixture was selected with reloadOnFixtureChange enabled).
+      // Don't register a location change when renderer searchParams change
       !href.startsWith(
         // Some static servers strip .html extensions automatically
         // https://github.com/zeit/serve-handler/tree/ce35fcd4e1c67356348f4735eed88fb084af9b43#cleanurls-booleanarray

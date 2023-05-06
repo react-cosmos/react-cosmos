@@ -37,7 +37,6 @@ export function reactCosmosViteRollupPlugin(
           cosmosConfig,
           rendererConfig: {
             playgroundUrl: getPlaygroundUrl(cosmosConfig),
-            reloadOnFixtureChange: cosmosConfig.reloadOnFixtureChange,
             containerQuerySelector: cosmosConfig.dom.containerQuerySelector,
           },
           relativeToDir: null,

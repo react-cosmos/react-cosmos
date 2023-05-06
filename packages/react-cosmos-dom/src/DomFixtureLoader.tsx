@@ -1,8 +1,7 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import {
   RendererConfig,
   UserModuleWrappers,
-  buildQueryString,
   parseQueryString,
 } from 'react-cosmos-core';
 import {
@@ -17,16 +16,10 @@ type Props = {
   moduleWrappers: UserModuleWrappers;
 };
 export function DomFixtureLoader({ rendererConfig, moduleWrappers }: Props) {
-  const onSearchParams = useCallback((queryParams: {}) => {
-    // TODO: Figure out if this is the best way to update the URL
-    window.location.search = buildQueryString(queryParams);
-  }, []);
-
   return (
     <DomRendererProvider
       rendererConfig={rendererConfig}
       searchParams={parseQueryString(location.search)}
-      onSearchParams={onSearchParams}
     >
       <ClientFixtureLoader
         moduleWrappers={moduleWrappers}

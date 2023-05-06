@@ -12,35 +12,35 @@ export function ServerFixtureChangeListener({
   children,
   selectedFixtureId,
 }: Props) {
-  const { rendererId, rendererConnect, lockedFixture, reloadRenderer } =
+  const { rendererId, rendererConnect, searchParams, setSearchParams } =
     React.useContext(RendererContext);
 
   React.useEffect(
     () =>
       rendererConnect.onMessage(msg => {
         if (
-          !lockedFixture &&
+          !searchParams.locked &&
           msg.type === 'selectFixture' &&
           msg.payload.rendererId === rendererId
         ) {
           const { fixtureId } = msg.payload;
           if (!isEqual(fixtureId, selectedFixtureId)) {
-            reloadRenderer(fixtureId);
+            setSearchParams({ fixtureId });
           }
         } else if (
-          !lockedFixture &&
+          !searchParams.locked &&
           msg.type === 'unselectFixture' &&
           msg.payload.rendererId === rendererId
         ) {
-          reloadRenderer(null);
+          setSearchParams({});
         }
       }),
     [
-      lockedFixture,
-      reloadRenderer,
       rendererConnect,
       rendererId,
+      searchParams.locked,
       selectedFixtureId,
+      setSearchParams,
     ]
   );
 

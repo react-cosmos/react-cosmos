@@ -9,6 +9,7 @@ import {
   RendererConnect,
   RendererId,
   RendererResponse,
+  RendererSearchParams,
   UserModuleWrappers,
 } from 'react-cosmos-core';
 import { ReactTestRenderer, act, create } from 'react-test-renderer';
@@ -26,8 +27,9 @@ import { createTestRendererConnect } from './createTestRendererConnect.js';
 export type RendererTestArgs = {
   rendererId: RendererId;
   // TODO: Test these
-  lockedFixture?: boolean;
-  reloadRenderer?: (fixtureId: FixtureId | null) => void;
+  searchParams?: RendererSearchParams;
+  setSearchParams?: (nextParams: RendererSearchParams) => void;
+  reloadRenderer?: () => void;
   fixtures: ByPath<ReactFixtureModule>;
   selectedFixtureId?: null | FixtureId;
   initialFixtureId?: FixtureId;
@@ -86,20 +88,18 @@ export async function mountTestRenderer(
 function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
   const {
     rendererId,
-    lockedFixture = false,
+    searchParams = {},
+    setSearchParams = () => {},
     reloadRenderer = () => {},
     fixtures,
     decorators = {},
     lazy = false,
   } = args;
   const contextValue: RendererContextValue = {
-    rendererConfig: {
-      playgroundUrl: 'http://localhost:5000',
-      reloadOnFixtureChange: false,
-    },
     rendererId,
     rendererConnect,
-    lockedFixture,
+    searchParams,
+    setSearchParams,
     reloadRenderer,
   };
   return (

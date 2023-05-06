@@ -72,7 +72,7 @@ export function FixtureProvider(props: Props) {
           msg.type === 'reloadFixture' &&
           msg.payload.rendererId === rendererId
         ) {
-          reloadRenderer(props.fixtureId);
+          reloadRenderer();
         } else if (
           // WIP: Checking for selectFixture is only needed when using
           // ServerFixtureLoader. When a server-side remote renderer mounts

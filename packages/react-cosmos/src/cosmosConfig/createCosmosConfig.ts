@@ -30,7 +30,6 @@ export function createCosmosConfig(
     port: getPort(cosmosConfigInput),
     portRetries: getPortRetries(cosmosConfigInput),
     publicUrl: getPublicUrl(cosmosConfigInput),
-    reloadOnFixtureChange: cosmosConfigInput.reloadOnFixtureChange ?? false,
     rendererUrl: cosmosConfigInput.rendererUrl ?? null,
     staticPath: getStaticPath(cosmosConfigInput, rootDir),
     watchDirs: getWatchDirs(cosmosConfigInput, rootDir),

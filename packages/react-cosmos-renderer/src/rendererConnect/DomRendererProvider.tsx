@@ -2,6 +2,7 @@
 import React from 'react';
 import {
   RendererConfig,
+  RendererSearchParams,
   StringRendererSearchParams,
   decodeRendererSearchParams,
   encodeRendererSearchParams,
@@ -17,28 +18,33 @@ type Props = {
   children: React.ReactNode;
   rendererConfig: RendererConfig;
   searchParams: StringRendererSearchParams;
-  onSearchParams: (queryParams: StringRendererSearchParams) => void;
+  setSearchParams?: (nextParams: StringRendererSearchParams) => void;
 };
 export function DomRendererProvider({
   children,
   rendererConfig,
   searchParams,
-  onSearchParams,
+  setSearchParams,
 }: Props) {
-  const { locked = false } = decodeRendererSearchParams(searchParams);
   const value = React.useMemo<RendererContextValue>(() => {
     return {
       rendererConfig,
       rendererId: getDomRendererId(),
       rendererConnect: createDomRendererConnect(rendererConfig.playgroundUrl),
-      lockedFixture: locked,
-      reloadRenderer: fixtureId => {
-        onSearchParams(
-          fixtureId ? encodeRendererSearchParams({ fixtureId, locked }) : {}
-        );
+      searchParams: decodeRendererSearchParams(searchParams),
+      setSearchParams: (nextParams: RendererSearchParams) => {
+        // Only some fixture loaders implement setSearchParams, like the
+        // ServerFixtureLoader, which cannot listen to client-side
+        // 'selectFixture' requests from the Playground UI.
+        if (setSearchParams) {
+          setSearchParams(encodeRendererSearchParams(nextParams));
+        }
+      },
+      reloadRenderer: () => {
+        window.location.reload();
       },
     };
-  }, [locked, onSearchParams, rendererConfig]);
+  }, [setSearchParams, rendererConfig, searchParams]);
 
   return (
     <RendererContext.Provider value={value}>

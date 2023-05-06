@@ -10,8 +10,7 @@ import '/Users/ovidiu/cosmos/src/polyfills';
 import '/Users/ovidiu/cosmos/src/global.css';
 
 export const rendererConfig: RendererConfig = {
-  "playgroundUrl": "http://localhost:5002",
-  "reloadOnFixtureChange": false
+  "playgroundUrl": "http://localhost:5002"
 };
 
 const fixtures = {
@@ -41,8 +40,7 @@ import './polyfills';
 import './global.css';
 
 export const rendererConfig: RendererConfig = {
-  "playgroundUrl": "http://localhost:5002",
-  "reloadOnFixtureChange": false
+  "playgroundUrl": "http://localhost:5002"
 };
 
 const fixtures = {
@@ -70,8 +68,7 @@ import '/Users/ovidiu/cosmos/src/polyfills.ts';
 import '/Users/ovidiu/cosmos/src/global.css';
 
 export const rendererConfig = {
-  "playgroundUrl": "http://localhost:5002",
-  "reloadOnFixtureChange": false
+  "playgroundUrl": "http://localhost:5002"
 };
 
 const fixtures = {
@@ -99,8 +96,7 @@ import './polyfills.ts';
 import './global.css';
 
 export const rendererConfig = {
-  "playgroundUrl": "http://localhost:5002",
-  "reloadOnFixtureChange": false
+  "playgroundUrl": "http://localhost:5002"
 };
 
 const fixtures = {

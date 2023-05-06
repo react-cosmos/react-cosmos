@@ -1,4 +1,3 @@
-import { isEqual } from 'lodash-es';
 import React from 'react';
 import { FixtureId, FixtureState } from 'react-cosmos-core';
 import { RendererContext } from '../rendererConnect/RendererContext.js';
@@ -22,53 +21,34 @@ export function useFixtureSelection(initialFixtureId: FixtureId | null) {
     }
   );
 
-  const {
-    rendererConfig,
-    rendererId,
-    rendererConnect,
-    lockedFixture,
-    reloadRenderer,
-  } = React.useContext(RendererContext);
+  const { rendererId, rendererConnect, searchParams } =
+    React.useContext(RendererContext);
 
   React.useEffect(
     () =>
       rendererConnect.onMessage(msg => {
         if (
-          !lockedFixture &&
+          !searchParams.locked &&
           msg.type === 'selectFixture' &&
           msg.payload.rendererId === rendererId
         ) {
           const { fixtureId, fixtureState } = msg.payload;
-          if (
-            rendererConfig.reloadOnFixtureChange &&
-            !isEqual(selection?.fixtureId, fixtureId)
-          ) {
-            reloadRenderer(fixtureId);
-          } else {
-            setSelection(prevState => {
-              return {
-                fixtureId,
-                initialFixtureState: fixtureState,
-                renderKey: prevState ? prevState.renderKey + 1 : 0,
-              };
-            });
-          }
+          setSelection(prevState => {
+            return {
+              fixtureId,
+              initialFixtureState: fixtureState,
+              renderKey: prevState ? prevState.renderKey + 1 : 0,
+            };
+          });
         } else if (
-          !lockedFixture &&
+          !searchParams.locked &&
           msg.type === 'unselectFixture' &&
           msg.payload.rendererId === rendererId
         ) {
           setSelection(null);
         }
       }),
-    [
-      lockedFixture,
-      reloadRenderer,
-      rendererConfig.reloadOnFixtureChange,
-      rendererConnect,
-      rendererId,
-      selection?.fixtureId,
-    ]
+    [rendererConnect, rendererId, searchParams.locked]
   );
 
   return selection;

@@ -65,6 +65,7 @@ export type RendererReadyResponse = {
     fixtures: FixtureList;
     // TODO: Return this always? Have UI not send a selectFixture request if
     // renderer mounted with selected fixture ID.
+    // Maybe this could even clear Playground fixture state.
     initialFixtureId?: FixtureId;
   };
 };

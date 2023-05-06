@@ -20,7 +20,8 @@ export function NativeRendererProvider({ children, rendererConfig }: Props) {
       // TODO: Generate unique ID per device
       rendererId: 'native-renderer',
       rendererConnect: createWebSocketsConnect(socketUrl),
-      lockedFixture: false,
+      searchParams: {},
+      setSearchParams: () => {},
       reloadRenderer: () => {
         // TODO: Test this manually
         DevSettings.reload();

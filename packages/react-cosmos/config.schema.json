@@ -140,10 +140,6 @@
       "items": { "type": "string", "minLength": 1 },
       "uniqueItems": true
     },
-    "reloadOnFixtureChange": {
-      "description": "Reload renderer on every fixture change to prevent leaking side effects from one fixture to another. [default: false]",
-      "type": "boolean"
-    },
     "rendererUrl": {
       "description": "Required when renderer doesn't run on the same port (or host) as the Playground. Useful for integrations with build tools. [default: null]",
       "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
