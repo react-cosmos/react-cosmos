@@ -1,9 +1,10 @@
 import React, { Suspense } from 'react';
 import {
-  FixtureId,
   ReactDecorator,
   RendererConfig,
+  StringRendererSearchParams,
   UserModuleWrappers,
+  decodeRendererSearchParams,
 } from 'react-cosmos-core';
 import { FixtureModule } from '../fixtureModule/FixtureModule.js';
 import { AsyncModuleLoader } from '../moduleLoaders/AsyncModuleLoader.js';
@@ -26,35 +27,35 @@ import { defaultRenderMessage } from './defaultRenderMessage.js';
 // import { ServerFixtureLoader } from 'react-cosmos-renderer';
 // import { moduleWrappers, rendererConfig } from '../../../cosmos.imports';
 
-// export default ({ searchParams }: { searchParams: string }) => {
+// export default ({ searchParams }: { searchParams: {} }) => {
 //   return (
 //     <ServerFixtureLoader
 //       rendererConfig={rendererConfig}
 //       moduleWrappers={moduleWrappers}
-//       selectedFixtureId={parseRendererUrlQuery(searchParams).fixtureId}
+//       searchParams={searchParams}
 //     />
 //   );
 // };
 
 type Props = {
   rendererConfig: RendererConfig;
+  searchParams: StringRendererSearchParams;
+  onSearchParams: (queryParams: StringRendererSearchParams) => void;
   moduleWrappers: UserModuleWrappers;
   globalDecorators?: ReactDecorator[];
-  // TODO: Receive all renderer query params
-  selectedFixtureId?: FixtureId | null;
-  locked?: boolean;
   renderMessage?: (msg: string) => React.ReactElement;
 };
 export function ServerFixtureLoader({
   rendererConfig,
+  searchParams,
+  onSearchParams,
   moduleWrappers,
   globalDecorators,
-  selectedFixtureId = null,
-  locked = false,
   renderMessage = defaultRenderMessage,
 }: Props) {
-  const fixtureSelection = selectedFixtureId && {
-    fixtureId: selectedFixtureId,
+  const { fixtureId = null } = decodeRendererSearchParams(searchParams);
+  const fixtureSelection = fixtureId && {
+    fixtureId,
     initialFixtureState: {},
     renderKey: 0,
   };
@@ -62,15 +63,11 @@ export function ServerFixtureLoader({
   return (
     <DomRendererProvider
       rendererConfig={rendererConfig}
-      onQueryParams={queryParams => {
-        // TODO: Actually implement this outside (in Next);
-        console.log('Not implemented: onQueryParams', queryParams);
-      }}
+      searchParams={searchParams}
+      // TODO: How to override this in Next with client component?
+      onSearchParams={onSearchParams}
     >
-      <ServerFixtureChangeListener
-        selectedFixtureId={selectedFixtureId}
-        locked={locked}
-      >
+      <ServerFixtureChangeListener selectedFixtureId={fixtureId}>
         <FixtureLoaderConnect
           moduleWrappers={moduleWrappers}
           fixtureSelection={fixtureSelection}

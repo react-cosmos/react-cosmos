@@ -2,6 +2,8 @@
 import React from 'react';
 import {
   RendererConfig,
+  StringRendererSearchParams,
+  decodeRendererSearchParams,
   encodeRendererSearchParams,
   isInsideWindowIframe,
 } from 'react-cosmos-core';
@@ -14,25 +16,29 @@ import { getDomRendererId } from './domRendererId.js';
 type Props = {
   children: React.ReactNode;
   rendererConfig: RendererConfig;
-  onQueryParams: (queryParams: {}) => void;
+  searchParams: StringRendererSearchParams;
+  onSearchParams: (queryParams: StringRendererSearchParams) => void;
 };
 export function DomRendererProvider({
   children,
   rendererConfig,
-  onQueryParams,
+  searchParams,
+  onSearchParams,
 }: Props) {
+  const { locked = false } = decodeRendererSearchParams(searchParams);
   const value = React.useMemo<RendererContextValue>(() => {
     return {
       rendererConfig,
       rendererId: getDomRendererId(),
       rendererConnect: createDomRendererConnect(rendererConfig.playgroundUrl),
-      reloadFixture: fixtureId => {
-        onQueryParams(
-          fixtureId ? encodeRendererSearchParams({ fixtureId }) : {}
+      lockedFixture: locked,
+      reloadRenderer: fixtureId => {
+        onSearchParams(
+          fixtureId ? encodeRendererSearchParams({ fixtureId, locked }) : {}
         );
       },
     };
-  }, [onQueryParams, rendererConfig]);
+  }, [locked, onSearchParams, rendererConfig]);
 
   return (
     <RendererContext.Provider value={value}>

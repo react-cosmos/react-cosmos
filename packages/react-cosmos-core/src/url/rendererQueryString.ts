@@ -6,7 +6,7 @@ export type RendererSearchParams = {
   locked?: boolean;
 };
 
-type StringSearchParams = {
+export type StringRendererSearchParams = {
   fixtureId?: string;
   locked?: string;
 };
@@ -17,25 +17,27 @@ export function buildRendererQueryString(params: RendererSearchParams) {
 
 export function parseRendererQueryString(query: string) {
   return decodeRendererSearchParams(
-    parseQueryString<StringSearchParams>(query)
+    parseQueryString<StringRendererSearchParams>(query)
   );
 }
 
 export function encodeRendererSearchParams(params: RendererSearchParams) {
-  const stringParams: StringSearchParams = {};
+  const stringParams: StringRendererSearchParams = {};
 
   if (params.fixtureId) {
     stringParams.fixtureId = JSON.stringify(params.fixtureId);
   }
 
   if (params.locked) {
-    stringParams.locked = String(params.locked);
+    stringParams.locked = 'true';
   }
 
   return stringParams;
 }
 
-function decodeRendererSearchParams(stringParams: StringSearchParams) {
+export function decodeRendererSearchParams(
+  stringParams: StringRendererSearchParams
+) {
   const params: RendererSearchParams = {};
 
   if (stringParams.fixtureId) {

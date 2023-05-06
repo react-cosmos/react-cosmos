@@ -9,10 +9,7 @@ export type FixtureSelection = {
   renderKey: number;
 };
 
-export function useFixtureSelection(
-  initialFixtureId: FixtureId | null,
-  locked: boolean
-) {
+export function useFixtureSelection(initialFixtureId: FixtureId | null) {
   const [selection, setSelection] = React.useState<FixtureSelection | null>(
     () => {
       return (
@@ -25,14 +22,19 @@ export function useFixtureSelection(
     }
   );
 
-  const { rendererConfig, rendererId, rendererConnect, reloadFixture } =
-    React.useContext(RendererContext);
+  const {
+    rendererConfig,
+    rendererId,
+    rendererConnect,
+    lockedFixture,
+    reloadRenderer,
+  } = React.useContext(RendererContext);
 
   React.useEffect(
     () =>
       rendererConnect.onMessage(msg => {
         if (
-          !locked &&
+          !lockedFixture &&
           msg.type === 'selectFixture' &&
           msg.payload.rendererId === rendererId
         ) {
@@ -41,7 +43,7 @@ export function useFixtureSelection(
             rendererConfig.reloadOnFixtureChange &&
             !isEqual(selection?.fixtureId, fixtureId)
           ) {
-            reloadFixture(fixtureId);
+            reloadRenderer(fixtureId);
           } else {
             setSelection(prevState => {
               return {
@@ -52,7 +54,7 @@ export function useFixtureSelection(
             });
           }
         } else if (
-          !locked &&
+          !lockedFixture &&
           msg.type === 'unselectFixture' &&
           msg.payload.rendererId === rendererId
         ) {
@@ -60,8 +62,8 @@ export function useFixtureSelection(
         }
       }),
     [
-      locked,
-      reloadFixture,
+      lockedFixture,
+      reloadRenderer,
       rendererConfig.reloadOnFixtureChange,
       rendererConnect,
       rendererId,

@@ -33,7 +33,6 @@ export type ReloadFixtureRequest = {
   type: 'reloadFixture';
   payload: {
     rendererId: RendererId;
-    fixtureId: FixtureId;
   };
 };
 
@@ -64,6 +63,8 @@ export type RendererReadyResponse = {
     // What does this mean for fixtureListUpdate? Does it ever gets called
     // unnecessarily?
     fixtures: FixtureList;
+    // TODO: Return this always? Have UI not send a selectFixture request if
+    // renderer mounted with selected fixture ID.
     initialFixtureId?: FixtureId;
   };
 };

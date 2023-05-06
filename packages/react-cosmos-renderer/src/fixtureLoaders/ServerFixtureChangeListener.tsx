@@ -7,37 +7,41 @@ import { RendererContext } from '../rendererConnect/RendererContext.js';
 type Props = {
   children: React.ReactNode;
   selectedFixtureId: FixtureId | null;
-  locked: boolean;
 };
 export function ServerFixtureChangeListener({
   children,
   selectedFixtureId,
-  locked,
 }: Props) {
-  const { rendererId, rendererConnect, reloadFixture } =
+  const { rendererId, rendererConnect, lockedFixture, reloadRenderer } =
     React.useContext(RendererContext);
 
   React.useEffect(
     () =>
       rendererConnect.onMessage(msg => {
         if (
-          !locked &&
+          !lockedFixture &&
           msg.type === 'selectFixture' &&
           msg.payload.rendererId === rendererId
         ) {
           const { fixtureId } = msg.payload;
           if (!isEqual(fixtureId, selectedFixtureId)) {
-            reloadFixture(fixtureId);
+            reloadRenderer(fixtureId);
           }
         } else if (
-          !locked &&
+          !lockedFixture &&
           msg.type === 'unselectFixture' &&
           msg.payload.rendererId === rendererId
         ) {
-          reloadFixture(null);
+          reloadRenderer(null);
         }
       }),
-    [locked, reloadFixture, rendererConnect, rendererId, selectedFixtureId]
+    [
+      lockedFixture,
+      reloadRenderer,
+      rendererConnect,
+      rendererId,
+      selectedFixtureId,
+    ]
   );
 
   return <>{children}</>;

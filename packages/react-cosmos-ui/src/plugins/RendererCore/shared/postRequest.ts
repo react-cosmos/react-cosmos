@@ -36,14 +36,12 @@ export function postUnselectFixtureRequest(
 
 export function postReloadFixtureRequest(
   context: RendererCoreContext,
-  rendererId: RendererId,
-  fixtureId: FixtureId
+  rendererId: RendererId
 ) {
   postRendererRequest(context, {
     type: 'reloadFixture',
     payload: {
       rendererId,
-      fixtureId,
     },
   });
 }

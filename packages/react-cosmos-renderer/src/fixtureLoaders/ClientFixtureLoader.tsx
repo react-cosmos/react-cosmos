@@ -22,7 +22,6 @@ type Props = {
   // Can this be achieved with selectedFixtureId only?
   initialFixtureId?: FixtureId | null;
   selectedFixtureId?: FixtureId | null;
-  locked?: boolean;
   renderMessage?: (msg: string) => ReactElement;
 };
 export function ClientFixtureLoader({
@@ -30,12 +29,10 @@ export function ClientFixtureLoader({
   globalDecorators,
   initialFixtureId = null,
   selectedFixtureId = null,
-  locked = false,
   renderMessage = defaultRenderMessage,
 }: Props) {
   const fixtureSelection = useFixtureSelection(
-    selectedFixtureId ?? initialFixtureId,
-    locked
+    selectedFixtureId ?? initialFixtureId
   );
 
   return (

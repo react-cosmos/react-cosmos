@@ -5,7 +5,8 @@ export type RendererContextValue = {
   rendererConfig: RendererConfig;
   rendererId: string;
   rendererConnect: RendererConnect;
-  reloadFixture: (fixtureId: FixtureId | null) => void;
+  lockedFixture: boolean;
+  reloadRenderer: (fixtureId: FixtureId | null) => void;
 };
 
 export const RendererContext = React.createContext<RendererContextValue>({
@@ -18,5 +19,6 @@ export const RendererContext = React.createContext<RendererContextValue>({
     postMessage: () => {},
     onMessage: () => () => {},
   },
-  reloadFixture: () => {},
+  lockedFixture: false,
+  reloadRenderer: () => {},
 });

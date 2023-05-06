@@ -3,7 +3,7 @@ import {
   RendererConfig,
   UserModuleWrappers,
   buildQueryString,
-  parseRendererQueryString,
+  parseQueryString,
 } from 'react-cosmos-core';
 import {
   ClientFixtureLoader,
@@ -17,7 +17,7 @@ type Props = {
   moduleWrappers: UserModuleWrappers;
 };
 export function DomFixtureLoader({ rendererConfig, moduleWrappers }: Props) {
-  const onQueryParams = useCallback((queryParams: {}) => {
+  const onSearchParams = useCallback((queryParams: {}) => {
     // TODO: Figure out if this is the best way to update the URL
     window.location.search = buildQueryString(queryParams);
   }, []);
@@ -25,14 +25,14 @@ export function DomFixtureLoader({ rendererConfig, moduleWrappers }: Props) {
   return (
     <DomRendererProvider
       rendererConfig={rendererConfig}
-      onQueryParams={onQueryParams}
+      searchParams={parseQueryString(location.search)}
+      onSearchParams={onSearchParams}
     >
       <ClientFixtureLoader
         moduleWrappers={moduleWrappers}
         globalDecorators={globalDecorators}
+        // TODO: Unify this with searchParams
         selectedFixtureId={getSelectedFixtureId()}
-        // WIP
-        locked={parseRendererQueryString(location.search).locked}
         renderMessage={renderDomMessage}
       />
     </DomRendererProvider>
