@@ -4,6 +4,7 @@ import {
   generateUserImports,
   getPlaygroundUrl,
 } from 'react-cosmos';
+import { DomRendererConfig } from 'react-cosmos-dom';
 import { Plugin } from 'rollup';
 import { CosmosViteConfig } from './createCosmosViteConfig.js';
 import { createViteRendererIndex } from './createViteRendererIndex.js';
@@ -32,10 +33,11 @@ export function reactCosmosViteRollupPlugin(
 
     load(id: string) {
       if (id == userImportsResolvedModuleId) {
-        return generateUserImports({
+        return generateUserImports<DomRendererConfig>({
           cosmosConfig,
           rendererConfig: {
             playgroundUrl: getPlaygroundUrl(cosmosConfig),
+            reloadOnFixtureChange: cosmosConfig.reloadOnFixtureChange,
             containerQuerySelector: cosmosConfig.dom.containerQuerySelector,
           },
           relativeToDir: null,
