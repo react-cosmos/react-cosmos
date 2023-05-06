@@ -23,7 +23,7 @@ const propDefaults = {
   rendererActionOrder: [],
   onOpenNav: () => {},
   onTogglePanel: () => {},
-  onFixtureSelect: () => {},
+  onFixtureReload: () => {},
   onClose: () => {},
 };
 
@@ -58,11 +58,11 @@ it('renders close button', async () => {
 });
 
 it('renders reload button', async () => {
-  const onFixtureSelect = jest.fn();
+  const onFixtureReload = jest.fn();
   const { getByTitle } = render(
-    <RendererHeader {...propDefaults} onFixtureSelect={onFixtureSelect} />
+    <RendererHeader {...propDefaults} onFixtureReload={onFixtureReload} />
   );
 
   fireEvent.click(getByTitle(/reload fixture/i));
-  expect(onFixtureSelect).toBeCalledWith(propDefaults.fixtureId);
+  expect(onFixtureReload).toBeCalled();
 });

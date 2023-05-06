@@ -22,7 +22,7 @@ type Props = {
   rendererActionOrder: string[];
   onOpenNav: () => unknown;
   onTogglePanel: () => unknown;
-  onFixtureSelect: (fixtureId: FixtureId) => unknown;
+  onFixtureReload: () => unknown;
   onClose: () => unknown;
 };
 export const RendererHeader = React.memo(function RendererHeader({
@@ -34,15 +34,11 @@ export const RendererHeader = React.memo(function RendererHeader({
   rendererActionOrder,
   onOpenNav,
   onTogglePanel,
-  onFixtureSelect,
+  onFixtureReload,
   onClose,
 }: Props) {
   const fixtureItem = findFixtureItemById(fixtureItems, fixtureId);
   const slotProps = React.useMemo(() => ({ fixtureId }), [fixtureId]);
-  const onReload = React.useCallback(
-    () => onFixtureSelect(fixtureId),
-    [fixtureId, onFixtureSelect]
-  );
 
   return (
     <Container>
@@ -66,7 +62,7 @@ export const RendererHeader = React.memo(function RendererHeader({
         <IconButton32
           icon={<RotateCcwIcon />}
           title="Reload fixture"
-          onClick={onReload}
+          onClick={onFixtureReload}
         />
         {fixtureItem && (
           <FixtureActionSlotContainer

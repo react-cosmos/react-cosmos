@@ -28,7 +28,8 @@ export function FixtureProvider(props: Props) {
     syncedFixtureState: {},
   });
 
-  const { rendererId, rendererConnect } = React.useContext(RendererContext);
+  const { rendererId, rendererConnect, reloadFixture } =
+    React.useContext(RendererContext);
 
   React.useEffect(() => {
     rendererConnect.postMessage({
@@ -68,14 +69,20 @@ export function FixtureProvider(props: Props) {
     () =>
       rendererConnect.onMessage(msg => {
         if (
+          msg.type === 'reloadFixture' &&
+          msg.payload.rendererId === rendererId
+        ) {
+          const { fixtureId } = msg.payload;
+          reloadFixture(fixtureId);
+        } else if (
           // WIP: Checking for selectFixture is only needed when using
           // ServerFixtureLoader. When a server-side remote renderer mounts
-          // its client components, it will receive a setFixture message to
+          // its client components, it will receive a selectFixture message to
           // syncronize
           (msg.type === 'selectFixture' || msg.type === 'setFixtureState') &&
           msg.payload.rendererId === rendererId
         ) {
-          const { fixtureId, fixtureState = {} } = msg.payload;
+          const { fixtureId, fixtureState } = msg.payload;
           setState(prevState =>
             // Ensure fixture state applies to currently selected fixture
             isEqual(fixtureId, props.fixtureId)
@@ -84,7 +91,7 @@ export function FixtureProvider(props: Props) {
           );
         }
       }),
-    [props.fixtureId, rendererConnect, rendererId]
+    [props.fixtureId, reloadFixture, rendererConnect, rendererId]
   );
 
   const setFixtureState = React.useCallback<SetFixtureState>(

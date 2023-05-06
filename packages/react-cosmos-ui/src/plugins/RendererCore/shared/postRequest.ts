@@ -34,6 +34,20 @@ export function postUnselectFixtureRequest(
   });
 }
 
+export function postReloadFixtureRequest(
+  context: RendererCoreContext,
+  rendererId: RendererId,
+  fixtureId: FixtureId
+) {
+  postRendererRequest(context, {
+    type: 'reloadFixture',
+    payload: {
+      rendererId,
+      fixtureId,
+    },
+  });
+}
+
 export function postSetFixtureStateRequest(
   context: RendererCoreContext,
   rendererId: RendererId,
