@@ -1,9 +1,9 @@
-import { FixtureId, PlaygroundQueryParams } from 'react-cosmos-core';
+import { FixtureId, PlaygroundSearchParams } from 'react-cosmos-core';
 
 export type RouterSpec = {
   name: 'router';
   state: {
-    urlParams: PlaygroundQueryParams;
+    urlParams: PlaygroundSearchParams;
   };
   methods: {
     getSelectedFixtureId(): null | FixtureId;

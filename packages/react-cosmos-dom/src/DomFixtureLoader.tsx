@@ -2,8 +2,8 @@ import React, { useCallback } from 'react';
 import {
   RendererConfig,
   UserModuleWrappers,
-  parseRendererUrlQuery,
-  stringifyUrlQuery,
+  buildQueryString,
+  parseRendererQueryString,
 } from 'react-cosmos-core';
 import {
   ClientFixtureLoader,
@@ -18,9 +18,8 @@ type Props = {
 };
 export function DomFixtureLoader({ rendererConfig, moduleWrappers }: Props) {
   const onQueryParams = useCallback((queryParams: {}) => {
-    const query = stringifyUrlQuery(queryParams);
     // TODO: Figure out if this is the best way to update the URL
-    window.location.search = query && `?${query}`;
+    window.location.search = buildQueryString(queryParams);
   }, []);
 
   return (
@@ -33,7 +32,7 @@ export function DomFixtureLoader({ rendererConfig, moduleWrappers }: Props) {
         globalDecorators={globalDecorators}
         selectedFixtureId={getSelectedFixtureId()}
         // WIP
-        locked={parseRendererUrlQuery(location.search).locked}
+        locked={parseRendererQueryString(location.search).locked}
         renderMessage={renderDomMessage}
       />
     </DomRendererProvider>

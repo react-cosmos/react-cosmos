@@ -2,8 +2,8 @@
 import React from 'react';
 import {
   RendererConfig,
+  encodeRendererSearchParams,
   isInsideWindowIframe,
-  stringifyRendererQueryParams,
 } from 'react-cosmos-core';
 import { RendererContext, RendererContextValue } from './RendererContext.js';
 import { createNoopRendererConnect } from './createNoopRendererConnect.js';
@@ -28,7 +28,7 @@ export function DomRendererProvider({
       rendererConnect: createDomRendererConnect(rendererConfig.playgroundUrl),
       reloadFixture: fixtureId => {
         onQueryParams(
-          fixtureId ? stringifyRendererQueryParams({ fixtureId }) : {}
+          fixtureId ? encodeRendererSearchParams({ fixtureId }) : {}
         );
       },
     };

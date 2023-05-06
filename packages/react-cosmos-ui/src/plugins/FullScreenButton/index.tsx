@@ -1,5 +1,5 @@
 import React from 'react';
-import { stringifyRendererUrlQuery } from 'react-cosmos-core';
+import { buildRendererQueryString } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
 import { RendererActionSlotProps } from '../../slots/RendererActionSlot.js';
 import { CoreSpec } from '../Core/spec.js';
@@ -22,8 +22,8 @@ namedPlug<RendererActionSlotProps>(
     const rendererUrl = rendererCore.getWebRendererUrl();
 
     const onSelect = React.useCallback(() => {
-      const query = stringifyRendererUrlQuery({ fixtureId, locked: true });
-      const fixtureUrl = `${rendererUrl}?${query}`;
+      const query = buildRendererQueryString({ fixtureId, locked: true });
+      const fixtureUrl = `${rendererUrl}${query}`;
       // noopener is required to prevent reuse of sessionStorage from the
       // Playground window, thus making sure the remote renderer will generate
       // a different rendererId from the iframe renderer.

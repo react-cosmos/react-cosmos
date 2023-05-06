@@ -1,15 +1,15 @@
 import {
-  parsePlaygroundUrlQuery,
-  PlaygroundQueryParams,
-  stringifyPlaygroundUrlQuery,
+  PlaygroundSearchParams,
+  buildPlaygroundQueryString,
+  parsePlaygroundQueryString,
 } from 'react-cosmos-core';
 
-export function getUrlParams(): PlaygroundQueryParams {
-  return parsePlaygroundUrlQuery(location.search);
+export function getUrlParams(): PlaygroundSearchParams {
+  return parsePlaygroundQueryString(location.search);
 }
 
-export function pushUrlParams(urlParams: PlaygroundQueryParams) {
-  const query = stringifyPlaygroundUrlQuery(urlParams);
+export function pushUrlParams(urlParams: PlaygroundSearchParams) {
+  const query = buildPlaygroundQueryString(urlParams);
 
   // Refresh page completely when pushState isn't supported
   if (!history.pushState) {
@@ -22,7 +22,7 @@ export function pushUrlParams(urlParams: PlaygroundQueryParams) {
 }
 
 export function subscribeToLocationChanges(
-  userHandler: (urlParams: PlaygroundQueryParams) => unknown
+  userHandler: (urlParams: PlaygroundSearchParams) => unknown
 ) {
   const handler = () => {
     userHandler(getUrlParams());
@@ -33,14 +33,14 @@ export function subscribeToLocationChanges(
   };
 }
 
-export function createRelativePlaygroundUrl(urlParams: PlaygroundQueryParams) {
-  const query = stringifyPlaygroundUrlQuery(urlParams);
+export function createRelativePlaygroundUrl(urlParams: PlaygroundSearchParams) {
+  const query = buildPlaygroundQueryString(urlParams);
   return createRelativeUrlWithQuery(query);
 }
 
-function createRelativeUrlWithQuery(query: string) {
+export function createRelativeUrlWithQuery(query: string) {
   // NOTE: "./" is used to return to the home URL. Passing an empty string
   // doesn't do anything. And passing "/" doesn't work if Cosmos is not hosted
   // at root (sub)domain level.
-  return query.length > 0 ? `?${query}` : './';
+  return query || './';
 }

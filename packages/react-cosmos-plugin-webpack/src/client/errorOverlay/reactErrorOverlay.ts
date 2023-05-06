@@ -1,4 +1,4 @@
-import { stringifyUrlQuery } from 'react-cosmos-core';
+import { buildQueryString } from 'react-cosmos-core';
 import * as ErrorOverlay from 'react-error-overlay';
 
 type WebpackHotMiddlewareReporter = {
@@ -29,7 +29,7 @@ export function dismiss() {
 }
 
 function getLaunchEditorUrl(errorLocation: ErrorOverlay.ErrorLocation) {
-  return `${LAUNCH_EDITOR_ENDPOINT}?${stringifyUrlQuery({
+  return `${LAUNCH_EDITOR_ENDPOINT}${buildQueryString({
     filePath: errorLocation.fileName,
     line: errorLocation.lineNumber || 1,
     column: errorLocation.colNumber || 1,

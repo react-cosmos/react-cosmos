@@ -1,6 +1,8 @@
 import path from 'path';
 import { ReactElement } from 'react';
 import {
+  buildPlaygroundQueryString,
+  buildRendererQueryString,
   ByPath,
   createFixtureTree,
   FixtureId,
@@ -10,8 +12,6 @@ import {
   getSortedDecoratorsForFixturePath,
   ReactDecorator,
   ReactFixture,
-  stringifyPlaygroundUrlQuery,
-  stringifyRendererUrlQuery,
 } from 'react-cosmos-core';
 import { createFixtureNode, decorateFixture } from 'react-cosmos-renderer';
 import { CosmosConfig } from '../cosmosConfig/types.js';
@@ -76,18 +76,18 @@ export function getFixtures(cosmosConfig: CosmosConfig) {
 
 function getPlaygroundUrl(cosmosConfig: CosmosConfig, fixtureId: FixtureId) {
   const host = getPlaygroundHost(cosmosConfig);
-  const query = stringifyPlaygroundUrlQuery({ fixtureId });
-  return `${host}/?${query}`;
+  const query = buildPlaygroundQueryString({ fixtureId });
+  return `${host}/${query}`;
 }
 
 function getRendererUrl(cosmosConfig: CosmosConfig, fixtureId: FixtureId) {
   const { publicUrl, rendererUrl } = cosmosConfig;
-  const query = stringifyRendererUrlQuery({ fixtureId });
-  if (rendererUrl) return `${rendererUrl}?${query}`;
+  const query = buildRendererQueryString({ fixtureId });
+  if (rendererUrl) return `${rendererUrl}${query}`;
 
   const host = getPlaygroundHost(cosmosConfig);
   const urlPath = resolveRendererUrl(publicUrl, RENDERER_FILENAME);
-  return new URL(`${urlPath}?${query}`, host).toString();
+  return new URL(`${urlPath}${query}`, host).toString();
 }
 
 function getPlaygroundHost({ hostname, port, https }: CosmosConfig) {

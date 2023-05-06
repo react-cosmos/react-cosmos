@@ -1,7 +1,7 @@
 import {
   FixtureId,
   isInsideWindowIframe,
-  parseRendererUrlQuery,
+  parseRendererQueryString,
 } from 'react-cosmos-core';
 
 // The selected fixture ID is stored in session because components might change
@@ -9,10 +9,10 @@ import {
 // fixture ID initially, the renderer window can be refreshed and the same
 // fixture will be selected even if the URL no longer contains the fixture ID.
 export function getSelectedFixtureId(): null | FixtureId {
-  const urlParams = parseRendererUrlQuery(location.search);
-  if (urlParams.fixtureId) {
-    setFixtureIdToSession(urlParams.fixtureId);
-    return urlParams.fixtureId;
+  const searchParams = parseRendererQueryString(location.search);
+  if (searchParams.fixtureId) {
+    setFixtureIdToSession(searchParams.fixtureId);
+    return searchParams.fixtureId;
   }
 
   return getFixtureIdFromSession();
