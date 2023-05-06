@@ -1,4 +1,3 @@
-// TODO: Rename to rendererMessageTypes.ts or rendererMessages.ts
 import { FixtureState } from '../fixtureState/types.js';
 import {
   FixtureId,

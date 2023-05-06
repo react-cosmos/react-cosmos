@@ -12,7 +12,7 @@ export * from './message/socketMessage.js';
 export * from './playground/registerPlaygroundShortcuts.js';
 export * from './plugin/cosmosPluginConfig.js';
 export * from './renderer/rendererConfig.js';
-export * from './renderer/rendererConnectTypes.js';
+export * from './renderer/rendererConnect.js';
 export * from './url/playgroundUrl.js';
 export * from './url/queryParams.js';
 export * from './url/rendererUrl.js';
