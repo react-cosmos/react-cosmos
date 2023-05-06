@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import {
+  RendererConfig,
   isInsideWindowIframe,
   stringifyRendererQueryParams,
 } from 'react-cosmos-core';
@@ -12,25 +13,26 @@ import { getDomRendererId } from './domRendererId.js';
 
 type Props = {
   children: React.ReactNode;
-  playgroundUrl: string;
+  rendererConfig: RendererConfig;
   onQueryParams: (queryParams: {}) => void;
 };
 export function DomRendererProvider({
   children,
-  playgroundUrl,
+  rendererConfig,
   onQueryParams,
 }: Props) {
   const value = React.useMemo<RendererContextValue>(() => {
     return {
+      rendererConfig,
       rendererId: getDomRendererId(),
-      rendererConnect: createDomRendererConnect(playgroundUrl),
+      rendererConnect: createDomRendererConnect(rendererConfig.playgroundUrl),
       reloadFixture: fixtureId => {
         onQueryParams(
           fixtureId ? stringifyRendererQueryParams({ fixtureId }) : {}
         );
       },
     };
-  }, [onQueryParams, playgroundUrl]);
+  }, [onQueryParams, rendererConfig]);
 
   return (
     <RendererContext.Provider value={value}>

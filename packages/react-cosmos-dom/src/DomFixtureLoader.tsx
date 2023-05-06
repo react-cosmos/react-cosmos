@@ -25,7 +25,7 @@ export function DomFixtureLoader({ rendererConfig, moduleWrappers }: Props) {
 
   return (
     <DomRendererProvider
-      playgroundUrl={rendererConfig.playgroundUrl}
+      rendererConfig={rendererConfig}
       onQueryParams={onQueryParams}
     >
       <ClientFixtureLoader

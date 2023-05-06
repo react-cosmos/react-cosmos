@@ -13,7 +13,10 @@ import {
 } from 'react-cosmos-core';
 import { ReactTestRenderer, act, create } from 'react-test-renderer';
 import { ClientFixtureLoader } from '../fixtureLoaders/ClientFixtureLoader.js';
-import { RendererContext } from '../rendererConnect/RendererContext.js';
+import {
+  RendererContext,
+  RendererContextValue,
+} from '../rendererConnect/RendererContext.js';
 import {
   RendererConnectTestApi,
   createRendererConnectTestApi,
@@ -87,7 +90,15 @@ function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
     decorators = {},
     lazy = false,
   } = args;
-  const contextValue = { rendererId, rendererConnect, reloadFixture };
+  const contextValue: RendererContextValue = {
+    rendererConfig: {
+      playgroundUrl: 'http://localhost:5000',
+      reloadOnFixtureChange: false,
+    },
+    rendererId,
+    rendererConnect,
+    reloadFixture,
+  };
   return (
     <RendererContext.Provider value={contextValue}>
       <ClientFixtureLoader
