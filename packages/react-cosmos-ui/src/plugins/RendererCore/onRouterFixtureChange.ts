@@ -18,6 +18,7 @@ export function onRouterFixtureChange(
   }
 
   // Clear fixture state between fixtures
+  // TODO: Is this also needed when reloading renderer?
   context.setState(emptyFixtureState, () => {
     getConnectedRendererIds(context).forEach(rendererId =>
       postSelectFixtureRequest(context, rendererId, fixtureId, {})
