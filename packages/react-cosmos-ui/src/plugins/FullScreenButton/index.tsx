@@ -3,6 +3,7 @@ import { stringifyRendererUrlQuery } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
 import { RendererActionSlotProps } from '../../slots/RendererActionSlot.js';
 import { CoreSpec } from '../Core/spec.js';
+import { RendererCoreSpec } from '../RendererCore/spec.js';
 import { FullScreenButton } from './FullScreenButton.js';
 import { FullScreenButtonSpec } from './spec.js';
 
@@ -17,7 +18,8 @@ namedPlug<RendererActionSlotProps>(
     const { getMethodsOf } = pluginContext;
     const { fixtureId } = slotProps;
     const core = getMethodsOf<CoreSpec>('core');
-    const rendererUrl = core.getWebRendererUrl();
+    const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
+    const rendererUrl = rendererCore.getWebRendererUrl();
 
     const onSelect = React.useCallback(() => {
       const query = stringifyRendererUrlQuery({ fixtureId, locked: true });

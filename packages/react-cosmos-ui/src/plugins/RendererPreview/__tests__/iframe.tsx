@@ -5,7 +5,6 @@ import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { register } from '..';
 import {
   getRendererCoreContext,
-  mockCore,
   mockNotifications,
   mockRendererCore,
 } from '../../../testHelpers/pluginMocks.js';
@@ -17,10 +16,9 @@ beforeEach(register);
 afterEach(resetPlugins);
 
 function registerTestPlugins() {
-  mockCore({
+  mockRendererCore({
     getWebRendererUrl: () => 'http://localhost:5000/_renderer.html',
   });
-  mockRendererCore();
 }
 
 function loadTestPlugins() {

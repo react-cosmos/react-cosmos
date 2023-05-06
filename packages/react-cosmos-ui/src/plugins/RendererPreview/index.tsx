@@ -1,6 +1,5 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
-import { CoreSpec } from '../Core/spec.js';
 import { RendererCoreSpec } from '../RendererCore/spec.js';
 import { RendererPreview } from './RendererPreview.js';
 import { createRendererRequestHandler } from './handleRendererRequests.js';
@@ -58,7 +57,7 @@ function getRuntimeStatus({ getState }: RendererPreviewContext) {
 }
 
 function getRendererUrl({ getMethodsOf }: RendererPreviewContext) {
-  return getMethodsOf<CoreSpec>('core').getWebRendererUrl();
+  return getMethodsOf<RendererCoreSpec>('rendererCore').getWebRendererUrl();
 }
 
 function getRendererConnected({ getMethodsOf }: RendererPreviewContext) {

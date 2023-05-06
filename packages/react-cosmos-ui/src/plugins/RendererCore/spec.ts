@@ -10,6 +10,7 @@ export type RendererCoreSpec = {
   name: 'rendererCore';
   config: {
     fixtures: FixtureList;
+    webRendererUrl: null | string;
   };
   state: {
     connectedRendererIds: RendererId[];
@@ -18,6 +19,7 @@ export type RendererCoreSpec = {
     fixtureState: FixtureState;
   };
   methods: {
+    getWebRendererUrl(): null | string;
     getConnectedRendererIds(): RendererId[];
     getPrimaryRendererId(): null | RendererId;
     getFixtures(): FixtureList;

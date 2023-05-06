@@ -36,11 +36,12 @@ onLoad(context => {
 namedPlug('globalAction', 'remoteRenderer', ({ pluginContext }) => {
   const { getMethodsOf } = pluginContext;
   const core = getMethodsOf<CoreSpec>('core');
+  const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const notifications = getMethodsOf<NotificationsSpec>('notifications');
   return (
     <RemoteButton
       devServerOn={core.isDevServerOn()}
-      webRendererUrl={core.getWebRendererUrl()}
+      webRendererUrl={rendererCore.getWebRendererUrl()}
       pushNotification={notifications.pushTimedNotification}
     />
   );

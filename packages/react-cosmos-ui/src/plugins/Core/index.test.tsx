@@ -12,7 +12,6 @@ const coreConfig: CoreSpec['config'] = {
   fixturesDir: 'mockFixturesDir',
   fixtureFileSuffix: 'mockFixturesFileSuffix',
   devServerOn: true,
-  webRendererUrl: 'mockWebUrl',
 };
 
 function registerTestPlugins() {
@@ -48,12 +47,6 @@ it('returns dev server on flag', () => {
   registerTestPlugins();
   loadTestPlugins();
   expect(getCoreMethods().isDevServerOn()).toBe(true);
-});
-
-it('returns web renderer URL', () => {
-  registerTestPlugins();
-  loadTestPlugins();
-  expect(getCoreMethods().getWebRendererUrl()).toBe('mockWebUrl');
 });
 
 it('sets document title to project ID', () => {

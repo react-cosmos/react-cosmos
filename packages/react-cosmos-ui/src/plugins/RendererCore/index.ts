@@ -12,6 +12,7 @@ const { on, register, onLoad } = createPlugin<RendererCoreSpec>({
   name: 'rendererCore',
   defaultConfig: {
     fixtures: {},
+    webRendererUrl: null,
   },
   initialState: {
     connectedRendererIds: [],
@@ -20,6 +21,7 @@ const { on, register, onLoad } = createPlugin<RendererCoreSpec>({
     fixtureState: {},
   },
   methods: {
+    getWebRendererUrl,
     getConnectedRendererIds,
     getPrimaryRendererId,
     getFixtures,
@@ -42,6 +44,10 @@ on<RouterSpec>('router', { fixtureChange: onRouterFixtureChange });
 export { register };
 
 if (process.env.NODE_ENV !== 'test') register();
+
+function getWebRendererUrl({ getConfig }: RendererCoreContext) {
+  return getConfig().webRendererUrl;
+}
 
 function getConnectedRendererIds({ getState }: RendererCoreContext) {
   return getState().connectedRendererIds;

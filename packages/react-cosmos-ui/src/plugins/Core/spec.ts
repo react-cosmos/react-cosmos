@@ -7,8 +7,6 @@ export type CoreSpec = {
     fixturesDir: string;
     fixtureFileSuffix: string;
     devServerOn: boolean;
-    // TODO: Should this be in renderer core config?
-    webRendererUrl: null | string;
   };
   state: {
     commands: Commands;
@@ -19,6 +17,5 @@ export type CoreSpec = {
     getProjectId(): string;
     getFixtureFileVars(): { fixturesDir: string; fixtureFileSuffix: string };
     isDevServerOn(): boolean;
-    getWebRendererUrl(): null | string;
   };
 };

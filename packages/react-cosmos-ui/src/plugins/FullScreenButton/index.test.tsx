@@ -3,7 +3,7 @@ import React from 'react';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '.';
 import { RendererActionSlot } from '../../slots/RendererActionSlot.js';
-import { mockCore } from '../../testHelpers/pluginMocks.js';
+import { mockCore, mockRendererCore } from '../../testHelpers/pluginMocks.js';
 import { mockWindowOpen } from '../../testHelpers/windowOpenMock.js';
 
 beforeEach(register);
@@ -20,7 +20,8 @@ function loadTestPlugins() {
 }
 
 it('renders fullscreen button', async () => {
-  mockCore({ getWebRendererUrl: () => `/_renderer.html` });
+  mockCore();
+  mockRendererCore({ getWebRendererUrl: () => `/_renderer.html` });
   const windowOpenMock = mockWindowOpen();
 
   const { getByTitle } = loadTestPlugins();
@@ -37,7 +38,8 @@ it('renders fullscreen button', async () => {
 });
 
 it('does not render fullscreen button without renderer URL', async () => {
-  mockCore({ getWebRendererUrl: () => null });
+  mockCore();
+  mockRendererCore({ getWebRendererUrl: () => null });
 
   const { queryByTitle } = loadTestPlugins();
   expect(queryByTitle(/go fullscreen/i)).toBeNull();

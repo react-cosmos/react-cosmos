@@ -85,7 +85,6 @@ export function mockCore(methods: MethodsOf<CoreSpec> = {}) {
     getProjectId: jest.fn(),
     getFixtureFileVars: jest.fn(),
     isDevServerOn: jest.fn(),
-    getWebRendererUrl: jest.fn(),
     ...methods,
   };
   mockMethodsOf<CoreSpec>('core', allMethods);
@@ -105,6 +104,7 @@ export function mockMessageHandler(
 
 export function mockRendererCore(methods: MethodsOf<RendererCoreSpec> = {}) {
   const allMethods = {
+    getWebRendererUrl: jest.fn(),
     getConnectedRendererIds: jest.fn(),
     getPrimaryRendererId: jest.fn(),
     getFixtures: jest.fn(),
