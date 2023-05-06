@@ -141,7 +141,7 @@
       "uniqueItems": true
     },
     "reloadOnFixtureChange": {
-      "description": "Reload renderer when selecting a fixture to avoid leaking side effects from one fixture to another. [default: false]",
+      "description": "Reload renderer on every fixture change to prevent leaking side effects from one fixture to another. [default: false]",
       "type": "boolean"
     },
     "rendererUrl": {
