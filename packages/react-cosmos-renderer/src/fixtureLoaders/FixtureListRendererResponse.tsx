@@ -13,7 +13,8 @@ export function FixtureListRendererResponse({
   fixtures,
   initialFixtureId = null,
 }: Props) {
-  const { rendererId, rendererConnect } = React.useContext(RendererContext);
+  const { rendererId, rendererConnect, reloadRenderer } =
+    React.useContext(RendererContext);
 
   const readyRef = React.useRef(false);
   React.useEffect(() => {
@@ -42,9 +43,14 @@ export function FixtureListRendererResponse({
             type: 'rendererReady',
             payload: { rendererId, fixtures },
           });
+        } else if (
+          msg.type === 'reloadRenderer' &&
+          msg.payload.rendererId === rendererId
+        ) {
+          reloadRenderer();
         }
       }),
-    [fixtures, rendererConnect, rendererId]
+    [fixtures, reloadRenderer, rendererConnect, rendererId]
   );
 
   return <>{children}</>;

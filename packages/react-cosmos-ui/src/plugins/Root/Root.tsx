@@ -32,8 +32,8 @@ type Props = {
   rendererActionOrder: string[];
   onToggleNav: () => unknown;
   onTogglePanel: () => unknown;
-  onFixtureReload: () => unknown;
-  onFixtureClose: () => unknown;
+  onReloadRenderer: () => unknown;
+  onCloseFixture: () => unknown;
   onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
   setNavWidth: (width: number) => unknown;
   setPanelWidth: (width: number) => unknown;
@@ -59,8 +59,8 @@ export function Root({
   rendererActionOrder,
   onToggleNav,
   onTogglePanel,
-  onFixtureReload,
-  onFixtureClose,
+  onReloadRenderer,
+  onCloseFixture,
   onFixtureStateChange,
   setNavWidth,
   setPanelWidth,
@@ -114,8 +114,8 @@ export function Root({
               rendererActionOrder={rendererActionOrder}
               onOpenNav={onToggleNav}
               onTogglePanel={onTogglePanel}
-              onFixtureReload={onFixtureReload}
-              onClose={onFixtureClose}
+              onReloadRenderer={onReloadRenderer}
+              onClose={onCloseFixture}
             />
           )}
           <RendererBody key="rendererBody">

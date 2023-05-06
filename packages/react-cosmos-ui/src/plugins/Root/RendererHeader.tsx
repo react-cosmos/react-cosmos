@@ -22,7 +22,7 @@ type Props = {
   rendererActionOrder: string[];
   onOpenNav: () => unknown;
   onTogglePanel: () => unknown;
-  onFixtureReload: () => unknown;
+  onReloadRenderer: () => unknown;
   onClose: () => unknown;
 };
 export const RendererHeader = React.memo(function RendererHeader({
@@ -34,7 +34,7 @@ export const RendererHeader = React.memo(function RendererHeader({
   rendererActionOrder,
   onOpenNav,
   onTogglePanel,
-  onFixtureReload,
+  onReloadRenderer,
   onClose,
 }: Props) {
   const fixtureItem = findFixtureItemById(fixtureItems, fixtureId);
@@ -62,7 +62,7 @@ export const RendererHeader = React.memo(function RendererHeader({
         <IconButton32
           icon={<RotateCcwIcon />}
           title="Reload fixture"
-          onClick={onFixtureReload}
+          onClick={onReloadRenderer}
         />
         {fixtureItem && (
           <FixtureActionSlotContainer

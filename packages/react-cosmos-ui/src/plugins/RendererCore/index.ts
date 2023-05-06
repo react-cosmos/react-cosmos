@@ -3,7 +3,7 @@ import { createPlugin } from 'react-plugin';
 import { RouterSpec } from '../Router/spec.js';
 import { onRouterFixtureChange } from './onRouterFixtureChange.js';
 import { receiveResponse } from './receiveResponse/index.js';
-import { reloadFixture } from './reloadFixture.js';
+import { reloadRenderer } from './reloadRenderer.js';
 import { setFixtureState } from './setFixtureState.js';
 import { RendererCoreContext } from './shared/index.js';
 import { RendererCoreSpec } from './spec.js';
@@ -27,7 +27,7 @@ const { on, register, onLoad } = createPlugin<RendererCoreSpec>({
     getFixtures,
     getFixtureState,
     isRendererConnected,
-    reloadFixture,
+    reloadRenderer,
     setFixtureState,
     selectPrimaryRenderer,
     receiveResponse,

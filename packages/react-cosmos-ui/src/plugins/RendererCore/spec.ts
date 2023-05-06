@@ -25,7 +25,7 @@ export type RendererCoreSpec = {
     getFixtures(): FixtureList;
     getFixtureState(): FixtureState;
     isRendererConnected(): boolean;
-    reloadFixture(): void;
+    reloadRenderer(): void;
     setFixtureState(stateUpdater: StateUpdater<FixtureState>): void;
     selectPrimaryRenderer(primaryRendererId: RendererId): void;
     receiveResponse(msg: MessageType): void;
