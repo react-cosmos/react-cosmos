@@ -6,9 +6,8 @@ import { RendererContext } from '../rendererConnect/RendererContext.js';
 type Props = {
   children: React.ReactNode;
   fixtures: FixtureList;
-  lazy: boolean;
 };
-export function RendererSync({ children, fixtures, lazy }: Props) {
+export function RendererSync({ children, fixtures }: Props) {
   const { searchParams, rendererId, rendererConnect, reloadRenderer } =
     React.useContext(RendererContext);
 
@@ -29,16 +28,14 @@ export function RendererSync({ children, fixtures, lazy }: Props) {
   }, [rendererConnect, rendererId, selectedFixtureId]);
 
   React.useEffect(() => {
-    if (!lazy) {
-      rendererConnect.postMessage({
-        type: 'fixtureListUpdate',
-        payload: {
-          rendererId,
-          fixtures,
-        },
-      });
-    }
-  }, [fixtures, lazy, rendererConnect, rendererId]);
+    rendererConnect.postMessage({
+      type: 'fixtureListUpdate',
+      payload: {
+        rendererId,
+        fixtures,
+      },
+    });
+  }, [fixtures, rendererConnect, rendererId]);
 
   React.useEffect(
     () =>
@@ -51,15 +48,13 @@ export function RendererSync({ children, fixtures, lazy }: Props) {
               selectedFixtureId,
             },
           });
-          if (!lazy) {
-            rendererConnect.postMessage({
-              type: 'fixtureListUpdate',
-              payload: {
-                rendererId,
-                fixtures,
-              },
-            });
-          }
+          rendererConnect.postMessage({
+            type: 'fixtureListUpdate',
+            payload: {
+              rendererId,
+              fixtures,
+            },
+          });
         } else if (
           msg.type === 'reloadRenderer' &&
           msg.payload.rendererId === rendererId
@@ -67,14 +62,7 @@ export function RendererSync({ children, fixtures, lazy }: Props) {
           reloadRenderer();
         }
       }),
-    [
-      fixtures,
-      lazy,
-      reloadRenderer,
-      rendererConnect,
-      rendererId,
-      selectedFixtureId,
-    ]
+    [fixtures, reloadRenderer, rendererConnect, rendererId, selectedFixtureId]
   );
 
   return <>{children}</>;

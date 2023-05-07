@@ -46,7 +46,7 @@ export function ServerFixtureLoader({
         moduleWrappers={moduleWrappers}
         fixtureSelection={fixtureSelection}
         renderMessage={renderMessage}
-        renderFixture={(selection, fixtures) => (
+        renderFixture={selection => (
           // The suspense boundary allows the rendererReady response to be sent
           // before loading the fixture modules.
           <Suspense>
@@ -59,7 +59,6 @@ export function ServerFixtureLoader({
                   {...modules}
                   {...selection}
                   globalDecorators={globalDecorators}
-                  fixtures={fixtures}
                   lazy={moduleWrappers.lazy}
                   renderMessage={renderMessage}
                 />

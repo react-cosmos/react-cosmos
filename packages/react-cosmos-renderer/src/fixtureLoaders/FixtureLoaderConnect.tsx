@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  FixtureList,
   UserModuleWrappers,
   getFixtureListFromWrappers,
   isInsideWindowIframe,
@@ -15,10 +14,7 @@ type Props = {
   // the selected fixture is read from the server-side URL search params.
   fixtureSelection: FixtureSelection | null;
   renderMessage: (msg: string) => React.ReactElement;
-  renderFixture: (
-    selection: FixtureSelection,
-    fixtures: FixtureList
-  ) => React.ReactElement;
+  renderFixture: (selection: FixtureSelection) => React.ReactElement;
 };
 export function FixtureLoaderConnect({
   moduleWrappers,
@@ -43,12 +39,8 @@ export function FixtureLoaderConnect({
       return renderMessage(`Fixture path not found: ${fixtureId.path}`);
     }
 
-    return renderFixture(fixtureSelection, fixtures);
+    return renderFixture(fixtureSelection);
   }
 
-  return (
-    <RendererSync fixtures={fixtures} lazy={moduleWrappers.lazy}>
-      {renderInner()}
-    </RendererSync>
-  );
+  return <RendererSync fixtures={fixtures}>{renderInner()}</RendererSync>;
 }

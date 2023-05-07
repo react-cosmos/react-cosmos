@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   FixtureId,
-  FixtureList,
   FixtureState,
   ReactDecorator,
   ReactDecoratorModule,
@@ -19,7 +18,6 @@ type Props = {
   fixtureId: FixtureId;
   initialFixtureState?: FixtureState;
   renderKey: number;
-  fixtures: FixtureList;
   lazy: boolean;
   renderMessage: (msg: string) => React.ReactElement;
 };
@@ -30,7 +28,6 @@ export function FixtureModule({
   fixtureId,
   initialFixtureState,
   renderKey,
-  fixtures,
   lazy,
   renderMessage,
 }: Props) {
@@ -50,7 +47,6 @@ export function FixtureModule({
       key={renderKey}
       fixtureId={fixtureId}
       initialFixtureState={initialFixtureState}
-      fixtures={fixtures}
       fixtureItem={fixtureItem}
       lazy={lazy}
     >
