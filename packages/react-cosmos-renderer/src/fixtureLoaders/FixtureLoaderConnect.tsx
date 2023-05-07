@@ -4,7 +4,7 @@ import {
   getFixtureListFromWrappers,
   isInsideWindowIframe,
 } from 'react-cosmos-core';
-import { RendererSync } from '../rendererConnect/RendererSync.js';
+import { RendererSync } from './RendererSync.js';
 import { FixtureSelection } from './useFixtureSelection.js';
 
 type Props = {
