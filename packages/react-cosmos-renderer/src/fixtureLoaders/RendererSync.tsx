@@ -6,8 +6,9 @@ import { RendererContext } from '../rendererConnect/RendererContext.js';
 type Props = {
   children: React.ReactNode;
   fixtures: FixtureList;
+  lazy: boolean;
 };
-export function RendererSync({ children, fixtures }: Props) {
+export function RendererSync({ children, fixtures, lazy }: Props) {
   const { searchParams, rendererId, rendererConnect, reloadRenderer } =
     React.useContext(RendererContext);
 
@@ -15,7 +16,20 @@ export function RendererSync({ children, fixtures }: Props) {
 
   const readyRef = React.useRef(false);
   React.useEffect(() => {
-    if (readyRef.current) {
+    if (!readyRef.current) {
+      rendererConnect.postMessage({
+        type: 'rendererReady',
+        payload: {
+          rendererId,
+          selectedFixtureId,
+        },
+      });
+      readyRef.current = true;
+    }
+  }, [rendererConnect, rendererId, selectedFixtureId]);
+
+  React.useEffect(() => {
+    if (!lazy) {
       rendererConnect.postMessage({
         type: 'fixtureListUpdate',
         payload: {
@@ -23,18 +37,8 @@ export function RendererSync({ children, fixtures }: Props) {
           fixtures,
         },
       });
-    } else {
-      rendererConnect.postMessage({
-        type: 'rendererReady',
-        payload: {
-          rendererId,
-          fixtures,
-          selectedFixtureId,
-        },
-      });
-      readyRef.current = true;
     }
-  }, [fixtures, rendererConnect, rendererId, selectedFixtureId]);
+  }, [fixtures, lazy, rendererConnect, rendererId]);
 
   React.useEffect(
     () =>
@@ -44,10 +48,18 @@ export function RendererSync({ children, fixtures }: Props) {
             type: 'rendererReady',
             payload: {
               rendererId,
-              fixtures,
               selectedFixtureId,
             },
           });
+          if (!lazy) {
+            rendererConnect.postMessage({
+              type: 'fixtureListUpdate',
+              payload: {
+                rendererId,
+                fixtures,
+              },
+            });
+          }
         } else if (
           msg.type === 'reloadRenderer' &&
           msg.payload.rendererId === rendererId
@@ -55,7 +67,14 @@ export function RendererSync({ children, fixtures }: Props) {
           reloadRenderer();
         }
       }),
-    [fixtures, reloadRenderer, rendererConnect, rendererId, selectedFixtureId]
+    [
+      fixtures,
+      lazy,
+      reloadRenderer,
+      rendererConnect,
+      rendererId,
+      selectedFixtureId,
+    ]
   );
 
   return <>{children}</>;

@@ -3,6 +3,7 @@ import { isEqual } from 'lodash-es';
 import React from 'react';
 import {
   FixtureId,
+  FixtureList,
   FixtureListItem,
   FixtureState,
   SetFixtureState,
@@ -14,7 +15,9 @@ type Props = {
   children: React.ReactNode;
   fixtureId: FixtureId;
   initialFixtureState?: FixtureState;
+  fixtures: FixtureList;
   fixtureItem: FixtureListItem;
+  lazy: boolean;
 };
 
 type State = {
@@ -31,20 +34,26 @@ export function FixtureProvider(props: Props) {
   const { rendererId, rendererConnect } = React.useContext(RendererContext);
 
   React.useEffect(() => {
-    // Only multi fixtures have extra info that isn't already available in the
-    // fixture list provided to the Cosmos UI (fixture names, which are revealed
-    // only when importing a fixture module).
-    if (props.fixtureItem.type === 'multi') {
+    if (props.lazy) {
       rendererConnect.postMessage({
-        type: 'fixtureListItemUpdate',
+        type: 'fixtureListUpdate',
         payload: {
           rendererId,
-          fixturePath: props.fixtureId.path,
-          fixtureItem: props.fixtureItem,
+          fixtures: {
+            ...props.fixtures,
+            [props.fixtureId.path]: props.fixtureItem,
+          },
         },
       });
     }
-  }, [props.fixtureId.path, props.fixtureItem, rendererConnect, rendererId]);
+  }, [
+    props.fixtureId.path,
+    props.fixtureItem,
+    props.fixtures,
+    props.lazy,
+    rendererConnect,
+    rendererId,
+  ]);
 
   React.useEffect(() => {
     if (!isEqual(state.fixtureState, state.syncedFixtureState)) {

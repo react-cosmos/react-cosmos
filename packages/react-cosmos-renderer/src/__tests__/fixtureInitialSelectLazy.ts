@@ -36,26 +36,24 @@ testRenderer(
 );
 
 testRenderer(
-  'posts lazy ready response and fixture list item update on mount with initialFixtureId',
+  'posts lazy fixture list with fixture names on mount with selected fixture',
   {
     rendererId,
     searchParams: { fixtureId: { path: 'first' } },
     fixtures,
     lazy: true,
   },
-  async ({ rendererReady, fixtureListItemUpdate }) => {
+  async ({ rendererReady, fixtureListUpdate }) => {
     await rendererReady({
       rendererId,
-      fixtures: {
-        first: { type: 'single' },
-        second: { type: 'single' },
-      },
       selectedFixtureId: { path: 'first' },
     });
-    await fixtureListItemUpdate({
+    await fixtureListUpdate({
       rendererId,
-      fixturePath: 'first',
-      fixtureItem: { type: 'multi', fixtureNames: ['one'] },
+      fixtures: {
+        first: { type: 'multi', fixtureNames: ['one'] },
+        second: { type: 'single' },
+      },
     });
   }
 );

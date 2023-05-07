@@ -29,13 +29,15 @@ export function ClientFixtureLoader({
       moduleWrappers={moduleWrappers}
       fixtureSelection={fixtureSelection}
       renderMessage={renderMessage}
-      renderFixture={selection => {
+      renderFixture={(selection, fixtures) => {
         function renderModules(modules: FixtureModules) {
           return (
             <FixtureModule
               {...modules}
               {...selection}
               globalDecorators={globalDecorators}
+              fixtures={fixtures}
+              lazy={moduleWrappers.lazy}
               renderMessage={renderMessage}
             />
           );

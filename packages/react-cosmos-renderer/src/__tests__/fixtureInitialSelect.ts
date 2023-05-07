@@ -43,10 +43,6 @@ testRenderer(
   async ({ rendererReady }) => {
     await rendererReady({
       rendererId,
-      fixtures: {
-        first: { type: 'multi', fixtureNames: ['one'] },
-        second: { type: 'single' },
-      },
       selectedFixtureId: { path: 'second' },
     });
   }

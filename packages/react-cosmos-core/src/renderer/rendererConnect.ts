@@ -1,9 +1,5 @@
 import { FixtureState } from '../fixtureState/types.js';
-import {
-  FixtureId,
-  FixtureList,
-  FixtureListItem,
-} from '../userModules/fixtureTypes.js';
+import { FixtureId, FixtureList } from '../userModules/fixtureTypes.js';
 
 // FYI: Renderer ids are self assigned in remote environments, so uniqueness
 // cannot be established by consensus
@@ -58,11 +54,6 @@ export type RendererReadyResponse = {
   type: 'rendererReady';
   payload: {
     rendererId: RendererId;
-    // TODO: Don't return fixtures in lazy mode, it only make things worse by
-    // invalidating previous fixtureListItemUpdate when renderers re-connect.
-    // What does this mean for fixtureListUpdate? Does it ever gets called
-    // unnecessarily?
-    fixtures: FixtureList;
     selectedFixtureId?: FixtureId | null;
   };
 };
@@ -79,15 +70,6 @@ export type FixtureListUpdateResponse = {
   payload: {
     rendererId: RendererId;
     fixtures: FixtureList;
-  };
-};
-
-export type FixtureListItemUpdateResponse = {
-  type: 'fixtureListItemUpdate';
-  payload: {
-    rendererId: RendererId;
-    fixturePath: string;
-    fixtureItem: FixtureListItem;
   };
 };
 
@@ -117,7 +99,6 @@ export type RendererResponse =
   | RendererReadyResponse
   | RendererErrorResponse
   | FixtureListUpdateResponse
-  | FixtureListItemUpdateResponse
   | FixtureStateChangeResponse
   | PlaygroundCommandResponse;
 
