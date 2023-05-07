@@ -5,6 +5,7 @@ import {
   FixtureListUpdateResponse,
   FixtureState,
   FixtureStateChangeResponse,
+  ReloadRendererRequest,
   RendererReadyResponse,
   RendererRequest,
   RendererResponse,
@@ -15,6 +16,7 @@ import {
 
 export type RendererConnectTestApi = {
   pingRenderers: () => void;
+  reloadRenderer: (payload: ReloadRendererRequest['payload']) => void;
   selectFixture: (payload: SelectFixtureRequest['payload']) => void;
   unselectFixture: (payload: UnselectFixtureRequest['payload']) => void;
   setFixtureState: (payload: SetFixtureStateRequest['payload']) => void;
@@ -39,6 +41,7 @@ export function createRendererConnectTestApi(args: {
 }): RendererConnectTestApi {
   return {
     pingRenderers,
+    reloadRenderer,
     selectFixture,
     unselectFixture,
     setFixtureState,
@@ -53,6 +56,13 @@ export function createRendererConnectTestApi(args: {
   function pingRenderers() {
     return args.postRequest({
       type: 'pingRenderers',
+    });
+  }
+
+  function reloadRenderer(payload: ReloadRendererRequest['payload']) {
+    return args.postRequest({
+      type: 'reloadRenderer',
+      payload,
     });
   }
 
