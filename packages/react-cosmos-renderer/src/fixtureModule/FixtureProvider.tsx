@@ -36,11 +36,12 @@ export function FixtureProvider(props: Props) {
     // Only multi fixtures have extra info that isn't already available in the
     // fixture list provided to the Cosmos UI (fixture names, which in lazy mode
     // are revealed after importing a fixture module).
-    if (props.lazy && props.fixtureItem.type === 'multi') {
-      setLazyItems(prevItems => ({
-        ...prevItems,
-        [props.fixtureId.path]: props.fixtureItem,
-      }));
+    if (props.lazy) {
+      setLazyItems(
+        props.fixtureItem.type === 'multi'
+          ? { [props.fixtureId.path]: props.fixtureItem }
+          : noLazyItem
+      );
     }
   }, [props.fixtureId.path, props.fixtureItem, props.lazy, setLazyItems]);
 
@@ -107,3 +108,5 @@ export function FixtureProvider(props: Props) {
     </FixtureContext.Provider>
   );
 }
+
+const noLazyItem = {};
