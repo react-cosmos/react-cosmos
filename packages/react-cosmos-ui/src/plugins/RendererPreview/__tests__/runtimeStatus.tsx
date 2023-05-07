@@ -5,7 +5,6 @@ import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { register } from '..';
 import {
   getRendererPreviewMethods,
-  mockCore,
   mockNotifications,
   mockRendererCore,
 } from '../../../testHelpers/pluginMocks.js';
@@ -16,10 +15,9 @@ beforeEach(register);
 afterEach(resetPlugins);
 
 function registerTestPlugins() {
-  mockCore({
+  mockRendererCore({
     getWebRendererUrl: () => 'mockRendererUrl',
   });
-  mockRendererCore();
 }
 
 function loadTestPlugins() {

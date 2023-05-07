@@ -8,29 +8,26 @@ export type FixtureSelection = {
   renderKey: number;
 };
 
-export function useFixtureSelection(
-  initialFixtureId: FixtureId | null,
-  selectedFixtureId: FixtureId | null
-) {
-  const [selection, setSelection] = React.useState<FixtureSelection | null>(
-    () => {
-      const fixtureId = selectedFixtureId ?? initialFixtureId;
-      return (
-        fixtureId && {
-          fixtureId,
-          initialFixtureState: {},
-          renderKey: 0,
-        }
-      );
-    }
-  );
+export function useFixtureSelection() {
+  const { rendererId, rendererConnect, searchParams } =
+    React.useContext(RendererContext);
 
-  const { rendererId, rendererConnect } = React.useContext(RendererContext);
+  const { fixtureId: selectedFixtureId = null } = searchParams;
+
+  const [selection, setSelection] = React.useState<FixtureSelection | null>(
+    () =>
+      selectedFixtureId && {
+        fixtureId: selectedFixtureId,
+        initialFixtureState: {},
+        renderKey: 0,
+      }
+  );
 
   React.useEffect(
     () =>
       rendererConnect.onMessage(msg => {
         if (
+          !searchParams.locked &&
           msg.type === 'selectFixture' &&
           msg.payload.rendererId === rendererId
         ) {
@@ -43,13 +40,14 @@ export function useFixtureSelection(
             };
           });
         } else if (
+          !searchParams.locked &&
           msg.type === 'unselectFixture' &&
           msg.payload.rendererId === rendererId
         ) {
           setSelection(null);
         }
       }),
-    [rendererConnect, rendererId]
+    [rendererConnect, rendererId, searchParams.locked]
   );
 
   return selection;

@@ -15,7 +15,6 @@ const { onLoad, register } = createPlugin<CoreSpec>({
     fixturesDir: '__fixtures__',
     fixtureFileSuffix: 'fixture',
     devServerOn: false,
-    webRendererUrl: null,
   },
   methods: {
     registerCommands,
@@ -23,7 +22,6 @@ const { onLoad, register } = createPlugin<CoreSpec>({
     getProjectId,
     getFixtureFileVars,
     isDevServerOn,
-    getWebRendererUrl,
   },
 });
 
@@ -77,8 +75,4 @@ function getFixtureFileVars({ getConfig }: CoreContext) {
 
 function isDevServerOn({ getConfig }: CoreContext) {
   return getConfig().devServerOn;
-}
-
-function getWebRendererUrl({ getConfig }: CoreContext) {
-  return getConfig().webRendererUrl;
 }

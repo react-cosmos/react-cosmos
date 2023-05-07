@@ -1,5 +1,5 @@
 import { waitFor } from '@testing-library/dom';
-import { FixtureList, RendererId } from 'react-cosmos-core';
+import { RendererId } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
@@ -17,11 +17,6 @@ beforeEach(register);
 
 afterEach(resetPlugins);
 
-const fixtures: FixtureList = {
-  'ein.js': { type: 'single' },
-  'zwei.js': { type: 'single' },
-  'drei.js': { type: 'single' },
-};
 const fixtureId = { path: 'zwei.js' };
 const fixtureState = { props: [] };
 
@@ -34,8 +29,8 @@ function registerTestPlugins() {
 
 function loadTestPlugins() {
   loadPlugins();
-  mockRendererReady('mockRendererId1', fixtures);
-  mockRendererReady('mockRendererId2', fixtures);
+  mockRendererReady('mockRendererId1');
+  mockRendererReady('mockRendererId2');
 }
 
 function mockFixtureStateChangeResponse(rendererId: RendererId) {

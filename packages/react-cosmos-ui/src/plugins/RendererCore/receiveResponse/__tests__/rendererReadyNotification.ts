@@ -22,7 +22,7 @@ it('notifies renderer connection', async () => {
   const { pushTimedNotification } = mockNotifications();
 
   loadPlugins();
-  mockRendererReady('mockRendererId1', {});
+  mockRendererReady('mockRendererId1');
 
   await waitFor(() =>
     expect(pushTimedNotification).toBeCalledWith(expect.any(Object), {

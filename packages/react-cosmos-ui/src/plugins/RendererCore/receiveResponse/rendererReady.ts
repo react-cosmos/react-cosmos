@@ -13,7 +13,9 @@ export function receiveRendererReadyResponse(
   context: RendererCoreContext,
   { payload }: RendererReadyResponse
 ) {
-  const { rendererId, fixtures, initialFixtureId } = payload;
+  const { rendererId, selectedFixtureId } = payload;
+  const { connectedRendererIds: prevRendererIds } = context.getState();
+
   context.setState(stateUpdater, afterStateChanged);
 
   function stateUpdater(prevState: State) {
@@ -26,15 +28,22 @@ export function receiveRendererReadyResponse(
       ...prevState,
       connectedRendererIds: addToSet(connectedRendererIds, rendererId),
       primaryRendererId,
-      fixtures,
       fixtureState: isPrimaryRenderer ? {} : fixtureState,
     };
   }
 
   function afterStateChanged() {
-    if (initialFixtureId) selectInitialFixture(context, initialFixtureId);
-    else selectFixtureFromUrlParams(context, rendererId);
-    notifyRendererConnection(context, rendererId);
+    const { primaryRendererId } = context.getState();
+    if (selectedFixtureId && rendererId === primaryRendererId) {
+      selectInitialFixture(context, selectedFixtureId);
+    } else {
+      selectFixtureFromUrlParams(context, rendererId);
+    }
+
+    // Don't notify about already connected renderers that just reloaded
+    if (!prevRendererIds.includes(rendererId)) {
+      notifyRendererConnection(context, rendererId);
+    }
   }
 }
 

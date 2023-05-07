@@ -3,6 +3,7 @@ import { createPlugin } from 'react-plugin';
 import { RouterSpec } from '../Router/spec.js';
 import { onRouterFixtureChange } from './onRouterFixtureChange.js';
 import { receiveResponse } from './receiveResponse/index.js';
+import { reloadRenderer } from './reloadRenderer.js';
 import { setFixtureState } from './setFixtureState.js';
 import { RendererCoreContext } from './shared/index.js';
 import { RendererCoreSpec } from './spec.js';
@@ -11,6 +12,7 @@ const { on, register, onLoad } = createPlugin<RendererCoreSpec>({
   name: 'rendererCore',
   defaultConfig: {
     fixtures: {},
+    webRendererUrl: null,
   },
   initialState: {
     connectedRendererIds: [],
@@ -19,11 +21,13 @@ const { on, register, onLoad } = createPlugin<RendererCoreSpec>({
     fixtureState: {},
   },
   methods: {
+    getWebRendererUrl,
     getConnectedRendererIds,
     getPrimaryRendererId,
     getFixtures,
     getFixtureState,
     isRendererConnected,
+    reloadRenderer,
     setFixtureState,
     selectPrimaryRenderer,
     receiveResponse,
@@ -40,6 +44,10 @@ on<RouterSpec>('router', { fixtureChange: onRouterFixtureChange });
 export { register };
 
 if (process.env.NODE_ENV !== 'test') register();
+
+function getWebRendererUrl({ getConfig }: RendererCoreContext) {
+  return getConfig().webRendererUrl;
+}
 
 function getConnectedRendererIds({ getState }: RendererCoreContext) {
   return getState().connectedRendererIds;

@@ -4,12 +4,9 @@ import {
   RendererConfig,
   UserModuleWrappers,
 } from 'react-cosmos-core';
-import {
-  ClientFixtureLoader,
-  NativeRendererProvider,
-} from 'react-cosmos-renderer/client';
+import { ClientFixtureLoader } from 'react-cosmos-renderer/client';
 import * as ReactNative from 'react-native';
-import { getSocketUrl } from './getSocketUrl.js';
+import { NativeRendererProvider } from './NativeRendererProvider.js';
 
 const { View, Text, StyleSheet } = ReactNative;
 
@@ -18,18 +15,18 @@ type Props = {
   moduleWrappers: UserModuleWrappers;
   initialFixtureId?: FixtureId;
 };
-
 export function NativeFixtureLoader({
   rendererConfig,
   moduleWrappers,
   initialFixtureId,
 }: Props) {
-  const socketUrl = getSocketUrl(rendererConfig.playgroundUrl);
   return (
-    <NativeRendererProvider socketUrl={socketUrl}>
+    <NativeRendererProvider
+      rendererConfig={rendererConfig}
+      initialFixtureId={initialFixtureId}
+    >
       <ClientFixtureLoader
         moduleWrappers={moduleWrappers}
-        initialFixtureId={initialFixtureId}
         renderMessage={renderMessage}
       />
     </NativeRendererProvider>

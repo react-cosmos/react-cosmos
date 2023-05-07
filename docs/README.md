@@ -480,7 +480,7 @@ console.log(fixtures);
 //     "parents": ["pages", "Error"]
 //     "playgroundUrl": "http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2Fpages%2FError%2F__fixtures__%2Fnot-found.js%22%2C%22name%22%3Anull%7D",
 //     "relativeFilePath": "components/pages/Error/__fixtures__/not-found.js",
-//     "rendererUrl": "http://localhost:5000/static/_renderer.html?_fixtureId=%7B%22path%22%3A%22components%2Fpages%2FError%2F__fixtures__%2Fnot-found.js%22%2C%22name%22%3Anull%7D",
+//     "rendererUrl": "http://localhost:5000/static/_renderer.html?fixtureId=%7B%22path%22%3A%22components%2Fpages%2FError%2F__fixtures__%2Fnot-found.js%22%2C%22name%22%3Anull%7D",
 //     "treePath": ["pages", "Error", "not-found"]
 //   },
 //   ...

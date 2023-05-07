@@ -1,6 +1,8 @@
 import {
   FixtureId,
   FixtureList,
+  FixtureListItem,
+  FixtureListItemUpdateResponse,
   FixtureListUpdateResponse,
   FixtureState,
   FixtureStateChangeResponse,
@@ -11,15 +13,13 @@ import { getRendererCoreMethods } from '../../../testHelpers/pluginMocks.js';
 
 export function createRendererReadyResponse(
   rendererId: RendererId,
-  fixtures: FixtureList,
-  initialFixtureId?: FixtureId
+  selectedFixtureId?: FixtureId
 ): RendererReadyResponse {
   return {
     type: 'rendererReady',
     payload: {
       rendererId,
-      fixtures,
-      initialFixtureId,
+      selectedFixtureId,
     },
   };
 }
@@ -33,6 +33,21 @@ export function createFixtureListUpdateResponse(
     payload: {
       rendererId,
       fixtures,
+    },
+  };
+}
+
+export function createFixtureListItemUpdateResponse(
+  rendererId: RendererId,
+  fixturePath: string,
+  fixtureItem: FixtureListItem
+): FixtureListItemUpdateResponse {
+  return {
+    type: 'fixtureListItemUpdate',
+    payload: {
+      rendererId,
+      fixturePath,
+      fixtureItem,
     },
   };
 }
@@ -54,11 +69,29 @@ export function createFixtureStateChangeResponse(
 
 export function mockRendererReady(
   rendererId: RendererId,
-  fixtures: FixtureList,
   initialFixtureId?: FixtureId
 ) {
   return getRendererCoreMethods().receiveResponse(
-    createRendererReadyResponse(rendererId, fixtures, initialFixtureId)
+    createRendererReadyResponse(rendererId, initialFixtureId)
+  );
+}
+
+export function mockFixtureListUpdate(
+  rendererId: RendererId,
+  fixtures: FixtureList
+) {
+  return getRendererCoreMethods().receiveResponse(
+    createFixtureListUpdateResponse(rendererId, fixtures)
+  );
+}
+
+export function mockFixtureListItemUpdate(
+  rendererId: RendererId,
+  fixturePath: string,
+  fixtureItem: FixtureListItem
+) {
+  return getRendererCoreMethods().receiveResponse(
+    createFixtureListItemUpdateResponse(rendererId, fixturePath, fixtureItem)
   );
 }
 

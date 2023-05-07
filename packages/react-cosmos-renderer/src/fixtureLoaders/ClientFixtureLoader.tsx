@@ -1,6 +1,6 @@
+'use client';
 import React, { ReactElement } from 'react';
 import {
-  FixtureId,
   FixtureModules,
   ReactDecorator,
   UserModuleWrappers,
@@ -15,27 +15,19 @@ import { useFixtureSelection } from './useFixtureSelection.js';
 type Props = {
   moduleWrappers: UserModuleWrappers;
   globalDecorators?: ReactDecorator[];
-  initialFixtureId?: FixtureId | null;
-  selectedFixtureId?: FixtureId | null;
   renderMessage?: (msg: string) => ReactElement;
 };
 export function ClientFixtureLoader({
   moduleWrappers,
   globalDecorators,
-  initialFixtureId = null,
-  selectedFixtureId = null,
   renderMessage = defaultRenderMessage,
 }: Props) {
-  const fixtureSelection = useFixtureSelection(
-    initialFixtureId,
-    selectedFixtureId
-  );
+  const fixtureSelection = useFixtureSelection();
 
   return (
     <FixtureLoaderConnect
       moduleWrappers={moduleWrappers}
       fixtureSelection={fixtureSelection}
-      initialFixtureId={initialFixtureId}
       renderMessage={renderMessage}
       renderFixture={selection => {
         function renderModules(modules: FixtureModules) {
@@ -44,6 +36,7 @@ export function ClientFixtureLoader({
               {...modules}
               {...selection}
               globalDecorators={globalDecorators}
+              lazy={moduleWrappers.lazy}
               renderMessage={renderMessage}
             />
           );

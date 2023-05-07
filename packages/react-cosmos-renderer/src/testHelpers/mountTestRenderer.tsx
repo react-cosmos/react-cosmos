@@ -3,17 +3,20 @@ import { mapValues } from 'lodash-es';
 import React from 'react';
 import {
   ByPath,
-  FixtureId,
   ReactDecoratorModule,
   ReactFixtureModule,
   RendererConnect,
   RendererId,
   RendererResponse,
+  RendererSearchParams,
   UserModuleWrappers,
 } from 'react-cosmos-core';
 import { ReactTestRenderer, act, create } from 'react-test-renderer';
 import { ClientFixtureLoader } from '../fixtureLoaders/ClientFixtureLoader.js';
-import { RendererContext } from '../rendererConnect/RendererContext.js';
+import {
+  RendererContext,
+  RendererContextValue,
+} from '../rendererConnect/RendererContext.js';
 import {
   RendererConnectTestApi,
   createRendererConnectTestApi,
@@ -22,9 +25,10 @@ import { createTestRendererConnect } from './createTestRendererConnect.js';
 
 export type RendererTestArgs = {
   rendererId: RendererId;
+  searchParams?: RendererSearchParams;
+  setSearchParams?: (nextParams: RendererSearchParams) => void;
+  reloadRenderer?: () => void;
   fixtures: ByPath<ReactFixtureModule>;
-  selectedFixtureId?: null | FixtureId;
-  initialFixtureId?: FixtureId;
   decorators?: ByPath<ReactDecoratorModule>;
   lazy?: boolean;
   only?: boolean;
@@ -78,19 +82,32 @@ export async function mountTestRenderer(
 }
 
 function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
-  const { rendererId, fixtures, decorators = {}, lazy = false } = args;
+  const {
+    rendererId,
+    searchParams = {},
+    setSearchParams = () => {},
+    reloadRenderer = () => {},
+    fixtures,
+    decorators = {},
+    lazy = false,
+  } = args;
+  const contextValue: RendererContextValue = {
+    rendererId,
+    rendererConnect,
+    searchParams,
+    setSearchParams,
+    reloadRenderer,
+  };
   return (
-    <RendererContext.Provider value={{ rendererId, rendererConnect }}>
+    <RendererContext.Provider value={contextValue}>
       <ClientFixtureLoader
-        moduleWrappers={getModuleWrappers(fixtures, decorators, lazy)}
-        initialFixtureId={args.initialFixtureId}
-        selectedFixtureId={args.selectedFixtureId}
+        moduleWrappers={createModuleWrappers(fixtures, decorators, lazy)}
       />
     </RendererContext.Provider>
   );
 }
 
-function getModuleWrappers(
+function createModuleWrappers(
   fixtures: ByPath<ReactFixtureModule>,
   decorators: ByPath<ReactDecoratorModule>,
   lazy: boolean

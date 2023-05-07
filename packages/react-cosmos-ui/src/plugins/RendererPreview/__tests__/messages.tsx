@@ -5,7 +5,6 @@ import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { register } from '..';
 import {
   getRendererCoreContext,
-  mockCore,
   mockRendererCore,
 } from '../../../testHelpers/pluginMocks.js';
 import { getIframe, mockIframeMessage } from '../testHelpers/iframe.js';
@@ -21,14 +20,13 @@ function loadTestPlugins() {
 }
 
 function mockRendererUrl() {
-  mockCore({
+  return mockRendererCore({
     getWebRendererUrl: () => 'mockRendererUrl',
   });
 }
 
 it('posts renderer request message to iframe', async () => {
   mockRendererUrl();
-  mockRendererCore();
 
   const renderer = loadTestPlugins();
   getRendererCoreContext().emit('request', selectFixtureMsg);
@@ -43,8 +41,7 @@ it('posts renderer request message to iframe', async () => {
 });
 
 it('sends renderer response message to renderer core', async () => {
-  mockRendererUrl();
-  const { receiveResponse } = mockRendererCore();
+  const { receiveResponse } = mockRendererUrl();
 
   loadTestPlugins();
   window.postMessage(rendererReadyMsg, '*');
@@ -55,8 +52,7 @@ it('sends renderer response message to renderer core', async () => {
 });
 
 it('makes connected renderer the primary renderer', async () => {
-  mockRendererUrl();
-  const { selectPrimaryRenderer } = mockRendererCore();
+  const { selectPrimaryRenderer } = mockRendererUrl();
 
   loadTestPlugins();
   window.postMessage(rendererReadyMsg, '*');

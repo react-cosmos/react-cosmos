@@ -64,9 +64,11 @@ it('serves playground HTML', async () => {
             fixturesDir: '__fixtures__',
             fixtureFileSuffix: 'fixture',
             devServerOn: true,
+          },
+          rendererCore: {
+            fixtures: {},
             webRendererUrl: '/_renderer.html',
           },
-          rendererCore: { fixtures: {} },
         },
         pluginConfigs: [],
       })

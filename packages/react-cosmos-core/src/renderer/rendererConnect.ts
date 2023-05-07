@@ -13,6 +13,13 @@ export type PingRenderersRequest = {
   type: 'pingRenderers';
 };
 
+export type ReloadRendererRequest = {
+  type: 'reloadRenderer';
+  payload: {
+    rendererId: RendererId;
+  };
+};
+
 export type SelectFixtureRequest = {
   type: 'selectFixture';
   payload: {
@@ -42,6 +49,7 @@ export type SetFixtureStateRequest = {
 
 export type RendererRequest =
   | PingRenderersRequest
+  | ReloadRendererRequest
   | SelectFixtureRequest
   | UnselectFixtureRequest
   | SetFixtureStateRequest;
@@ -50,8 +58,7 @@ export type RendererReadyResponse = {
   type: 'rendererReady';
   payload: {
     rendererId: RendererId;
-    fixtures: FixtureList;
-    initialFixtureId?: FixtureId;
+    selectedFixtureId?: FixtureId | null;
   };
 };
 

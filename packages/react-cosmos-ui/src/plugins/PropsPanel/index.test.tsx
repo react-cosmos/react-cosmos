@@ -35,8 +35,8 @@ it('renders blank state', async () => {
   mockStorage();
 
   const fixtureState = createFsState({});
-  const { getByText } = loadTestPlugins(fixtureState);
-  getByText(/no visible props/i);
+  const { findByText } = loadTestPlugins(fixtureState);
+  await findByText(/no visible props/i);
 });
 
 it('renders component name', async () => {

@@ -18,6 +18,7 @@ type Props = {
   fixtureId: FixtureId;
   initialFixtureState?: FixtureState;
   renderKey: number;
+  lazy: boolean;
   renderMessage: (msg: string) => React.ReactElement;
 };
 export function FixtureModule({
@@ -27,6 +28,7 @@ export function FixtureModule({
   fixtureId,
   initialFixtureState,
   renderKey,
+  lazy,
   renderMessage,
 }: Props) {
   const fixtureItem = React.useMemo(
@@ -46,6 +48,7 @@ export function FixtureModule({
       fixtureId={fixtureId}
       initialFixtureState={initialFixtureState}
       fixtureItem={fixtureItem}
+      lazy={lazy}
     >
       <DecoratedFixture
         fixture={fixture}

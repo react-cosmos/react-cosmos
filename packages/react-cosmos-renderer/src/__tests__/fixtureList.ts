@@ -14,10 +14,10 @@ testRenderer(
 );
 
 testRenderer(
-  'posts ready response on mount',
+  'posts fixture list',
   { rendererId, fixtures },
-  async ({ rendererReady }) => {
-    await rendererReady({
+  async ({ fixtureListUpdate }) => {
+    await fixtureListUpdate({
       rendererId,
       fixtures: {
         first: { type: 'single' },
@@ -28,10 +28,10 @@ testRenderer(
 );
 
 testRenderer(
-  'posts ready response again on ping request',
+  'posts fixture list again on ping request',
   { rendererId, fixtures },
-  async ({ rendererReady, pingRenderers, clearResponses }) => {
-    await rendererReady({
+  async ({ fixtureListUpdate, pingRenderers, clearResponses }) => {
+    await fixtureListUpdate({
       rendererId,
       fixtures: {
         first: { type: 'single' },
@@ -40,7 +40,7 @@ testRenderer(
     });
     clearResponses();
     pingRenderers();
-    await rendererReady({
+    await fixtureListUpdate({
       rendererId,
       fixtures: {
         first: { type: 'single' },
@@ -51,10 +51,10 @@ testRenderer(
 );
 
 testRenderer(
-  'posts fixture list on "fixtures" prop change',
+  'posts updated fixture list on "fixtures" prop change',
   { rendererId, fixtures },
-  async ({ update, rendererReady, fixtureListUpdate }) => {
-    await rendererReady({
+  async ({ update, fixtureListUpdate }) => {
+    await fixtureListUpdate({
       rendererId,
       fixtures: {
         first: { type: 'single' },

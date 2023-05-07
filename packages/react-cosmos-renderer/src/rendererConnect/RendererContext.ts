@@ -1,9 +1,12 @@
 import React from 'react';
-import { RendererConnect } from 'react-cosmos-core';
+import { RendererConnect, RendererSearchParams } from 'react-cosmos-core';
 
-type RendererContextValue = {
+export type RendererContextValue = {
   rendererId: string;
   rendererConnect: RendererConnect;
+  searchParams: RendererSearchParams;
+  setSearchParams(nextParams: RendererSearchParams): void;
+  reloadRenderer(): void;
 };
 
 export const RendererContext = React.createContext<RendererContextValue>({
@@ -12,4 +15,7 @@ export const RendererContext = React.createContext<RendererContextValue>({
     postMessage: () => {},
     onMessage: () => () => {},
   },
+  searchParams: {},
+  setSearchParams: () => {},
+  reloadRenderer: () => {},
 });

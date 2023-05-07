@@ -1,5 +1,4 @@
 import { waitFor } from '@testing-library/dom';
-import { FixtureList } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   mockNotifications,
@@ -17,7 +16,6 @@ beforeEach(register);
 afterEach(resetPlugins);
 
 const fixtureId = { path: 'ein.js' };
-const fixtures: FixtureList = { [fixtureId.path]: { type: 'single' } };
 const fixtureState = { props: [] };
 
 function registerTestPlugins() {
@@ -37,7 +35,7 @@ it('posts "selectFixture" renderer request', async () => {
   const { request } = registerTestPlugins();
 
   loadTestPlugins();
-  mockRendererReady('mockRendererId', fixtures);
+  mockRendererReady('mockRendererId');
 
   await waitFor(() =>
     expect(request).toBeCalledWith(expect.any(Object), {
@@ -55,9 +53,9 @@ it('posts "selectFixture" renderer request with fixture state', async () => {
   const { request } = registerTestPlugins();
 
   loadTestPlugins();
-  mockRendererReady('mockRendererId1', fixtures);
+  mockRendererReady('mockRendererId1');
   mockFixtureStateChange('mockRendererId1', fixtureId, fixtureState);
-  mockRendererReady('mockRendererId2', fixtures);
+  mockRendererReady('mockRendererId2');
 
   await waitFor(() =>
     expect(request).toBeCalledWith(expect.any(Object), {

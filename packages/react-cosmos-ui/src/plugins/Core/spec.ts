@@ -7,7 +7,6 @@ export type CoreSpec = {
     fixturesDir: string;
     fixtureFileSuffix: string;
     devServerOn: boolean;
-    webRendererUrl: null | string;
   };
   state: {
     commands: Commands;
@@ -18,6 +17,5 @@ export type CoreSpec = {
     getProjectId(): string;
     getFixtureFileVars(): { fixturesDir: string; fixtureFileSuffix: string };
     isDevServerOn(): boolean;
-    getWebRendererUrl(): null | string;
   };
 };

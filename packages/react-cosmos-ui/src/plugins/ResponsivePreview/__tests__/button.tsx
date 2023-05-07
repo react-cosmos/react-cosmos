@@ -4,7 +4,6 @@ import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '..';
 import { RendererActionSlot } from '../../../slots/RendererActionSlot.js';
 import {
-  mockCore,
   mockRendererCore,
   mockStorage,
 } from '../../../testHelpers/pluginMocks.js';
@@ -24,8 +23,8 @@ function loadTestPlugins() {
 
 it('renders responsive preview button', async () => {
   mockStorage();
-  mockCore({ getWebRendererUrl: () => `/_renderer.html` });
   mockRendererCore({
+    getWebRendererUrl: () => `/_renderer.html`,
     getFixtureState: () => ({}),
   });
 
@@ -35,8 +34,8 @@ it('renders responsive preview button', async () => {
 
 it('does not render responsive preview button without renderer URL', async () => {
   mockStorage();
-  mockCore({ getWebRendererUrl: () => null });
   mockRendererCore({
+    getWebRendererUrl: () => null,
     getFixtureState: () => ({}),
   });
 

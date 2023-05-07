@@ -1,23 +1,54 @@
 'use client';
 import React from 'react';
-import { isInsideWindowIframe } from 'react-cosmos-core';
-import { RendererContext } from './RendererContext.js';
-import { createNoopRendererConnect } from './createNoopRendererConnect.js';
-import { createPostMessageConnect } from './createPostMessageConnect.js';
-import { createWebSocketsConnect } from './createWebSocketsConnect.js';
+import {
+  RendererConfig,
+  RendererSearchParams,
+  StringRendererSearchParams,
+  decodeRendererSearchParams,
+  encodeRendererSearchParams,
+  isInsideWindowIframe,
+} from 'react-cosmos-core';
+import {
+  createNoopRendererConnect,
+  createPostMessageConnect,
+  createWebSocketsConnect,
+} from 'react-cosmos-renderer';
+import {
+  RendererContext,
+  RendererContextValue,
+} from 'react-cosmos-renderer/client';
 import { getDomRendererId } from './domRendererId.js';
 
 type Props = {
   children: React.ReactNode;
-  playgroundUrl: string;
+  rendererConfig: RendererConfig;
+  searchParams: StringRendererSearchParams;
+  setSearchParams?: (nextParams: StringRendererSearchParams) => void;
 };
-export function DomRendererProvider({ children, playgroundUrl }: Props) {
-  const value = React.useMemo(() => {
+export function DomRendererProvider({
+  children,
+  rendererConfig,
+  searchParams,
+  setSearchParams,
+}: Props) {
+  const value = React.useMemo<RendererContextValue>(() => {
     return {
       rendererId: getDomRendererId(),
-      rendererConnect: createDomRendererConnect(playgroundUrl),
+      rendererConnect: createDomRendererConnect(rendererConfig.playgroundUrl),
+      searchParams: decodeRendererSearchParams(searchParams),
+      setSearchParams: (nextParams: RendererSearchParams) => {
+        // Implementing setSearchParams is optional. It is required for server
+        // fixture loaders that cannot listen to client-side 'selectFixture'
+        // requests from the Cosmos UI.
+        if (setSearchParams) {
+          setSearchParams(encodeRendererSearchParams(nextParams));
+        }
+      },
+      reloadRenderer: () => {
+        window.location.reload();
+      },
     };
-  }, [playgroundUrl]);
+  }, [setSearchParams, rendererConfig, searchParams]);
 
   return (
     <RendererContext.Provider value={value}>
