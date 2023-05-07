@@ -38,7 +38,7 @@ export function DomRendererProvider({
       rendererConnect: createDomRendererConnect(rendererConfig.playgroundUrl),
       searchParams: decodeRendererSearchParams(searchParams),
       setSearchParams: (nextParams: RendererSearchParams) => {
-        // Implementing setSearchParams is optional. In is required for server
+        // Implementing setSearchParams is optional. It is required for server
         // fixture loaders that cannot listen to client-side 'selectFixture'
         // requests from the Cosmos UI.
         if (setSearchParams) {
