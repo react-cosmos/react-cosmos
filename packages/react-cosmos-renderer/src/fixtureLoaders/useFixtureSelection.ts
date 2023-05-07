@@ -8,21 +8,20 @@ export type FixtureSelection = {
   renderKey: number;
 };
 
-export function useFixtureSelection(initialFixtureId: FixtureId | null) {
-  const [selection, setSelection] = React.useState<FixtureSelection | null>(
-    () => {
-      return (
-        initialFixtureId && {
-          fixtureId: initialFixtureId,
-          initialFixtureState: {},
-          renderKey: 0,
-        }
-      );
-    }
-  );
-
+export function useFixtureSelection() {
   const { rendererId, rendererConnect, searchParams } =
     React.useContext(RendererContext);
+
+  const { fixtureId: selectedFixtureId = null } = searchParams;
+
+  const [selection, setSelection] = React.useState<FixtureSelection | null>(
+    () =>
+      selectedFixtureId && {
+        fixtureId: selectedFixtureId,
+        initialFixtureState: {},
+        renderKey: 0,
+      }
+  );
 
   React.useEffect(
     () =>

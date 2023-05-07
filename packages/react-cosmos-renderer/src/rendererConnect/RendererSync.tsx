@@ -1,41 +1,40 @@
-// TODO: Maybe move to rendererConnect folder
 'use client';
 import React from 'react';
-import { FixtureId, FixtureList } from 'react-cosmos-core';
-import { RendererContext } from '../rendererConnect/RendererContext.js';
+import { FixtureList } from 'react-cosmos-core';
+import { RendererContext } from './RendererContext.js';
 
 type Props = {
   children: React.ReactNode;
   fixtures: FixtureList;
-  initialFixtureId?: FixtureId | null;
 };
-export function RendererSync({
-  children,
-  fixtures,
-  initialFixtureId = null,
-}: Props) {
-  const { rendererId, rendererConnect, reloadRenderer } =
+export function RendererSync({ children, fixtures }: Props) {
+  const { searchParams, rendererId, rendererConnect, reloadRenderer } =
     React.useContext(RendererContext);
+
+  const { fixtureId: selectedFixtureId } = searchParams;
 
   const readyRef = React.useRef(false);
   React.useEffect(() => {
     if (readyRef.current) {
       rendererConnect.postMessage({
         type: 'fixtureListUpdate',
-        payload: { rendererId, fixtures },
+        payload: {
+          rendererId,
+          fixtures,
+        },
       });
     } else {
       rendererConnect.postMessage({
         type: 'rendererReady',
-        payload: initialFixtureId
-          ? // TODO: Could this initialFixtureId be driven by selectedFixtureId?
-            // Read searchParams from rendererConnect
-            { rendererId, fixtures, initialFixtureId }
-          : { rendererId, fixtures },
+        payload: {
+          rendererId,
+          fixtures,
+          selectedFixtureId,
+        },
       });
       readyRef.current = true;
     }
-  }, [fixtures, initialFixtureId, rendererConnect, rendererId]);
+  }, [fixtures, rendererConnect, rendererId, selectedFixtureId]);
 
   React.useEffect(
     () =>
@@ -43,7 +42,11 @@ export function RendererSync({
         if (msg.type === 'pingRenderers') {
           rendererConnect.postMessage({
             type: 'rendererReady',
-            payload: { rendererId, fixtures },
+            payload: {
+              rendererId,
+              fixtures,
+              selectedFixtureId,
+            },
           });
         } else if (
           msg.type === 'reloadRenderer' &&
@@ -52,7 +55,7 @@ export function RendererSync({
           reloadRenderer();
         }
       }),
-    [fixtures, reloadRenderer, rendererConnect, rendererId]
+    [fixtures, reloadRenderer, rendererConnect, rendererId, selectedFixtureId]
   );
 
   return <>{children}</>;

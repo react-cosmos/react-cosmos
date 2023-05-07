@@ -1,24 +1,24 @@
 import React from 'react';
 import {
-  FixtureId,
   UserModuleWrappers,
   getFixtureListFromWrappers,
   isInsideWindowIframe,
 } from 'react-cosmos-core';
-import { RendererSync } from './RendererSync.js';
+import { RendererSync } from '../rendererConnect/RendererSync.js';
 import { FixtureSelection } from './useFixtureSelection.js';
 
 type Props = {
   moduleWrappers: UserModuleWrappers;
+  // Receiving the fixture selection as a prop instead of reading it from
+  // the RendererContext enables using the FixtureLoader a Server component,
+  // in which case the selected fixture ID is read from the URL search params.
   fixtureSelection: FixtureSelection | null;
-  initialFixtureId?: FixtureId | null;
   renderMessage: (msg: string) => React.ReactElement;
   renderFixture: (selection: FixtureSelection) => React.ReactElement;
 };
 export function FixtureLoaderConnect({
   moduleWrappers,
   fixtureSelection = null,
-  initialFixtureId = null,
   renderMessage,
   renderFixture,
 }: Props) {
@@ -42,9 +42,5 @@ export function FixtureLoaderConnect({
     return renderFixture(fixtureSelection);
   }
 
-  return (
-    <RendererSync fixtures={fixtures} initialFixtureId={initialFixtureId}>
-      {renderInner()}
-    </RendererSync>
-  );
+  return <RendererSync fixtures={fixtures}>{renderInner()}</RendererSync>;
 }

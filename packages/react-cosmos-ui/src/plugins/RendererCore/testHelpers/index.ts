@@ -12,14 +12,14 @@ import { getRendererCoreMethods } from '../../../testHelpers/pluginMocks.js';
 export function createRendererReadyResponse(
   rendererId: RendererId,
   fixtures: FixtureList,
-  initialFixtureId?: FixtureId
+  selectedFixtureId?: FixtureId
 ): RendererReadyResponse {
   return {
     type: 'rendererReady',
     payload: {
       rendererId,
       fixtures,
-      initialFixtureId,
+      selectedFixtureId,
     },
   };
 }

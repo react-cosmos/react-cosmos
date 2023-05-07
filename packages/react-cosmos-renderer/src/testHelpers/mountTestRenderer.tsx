@@ -3,7 +3,6 @@ import { mapValues } from 'lodash-es';
 import React from 'react';
 import {
   ByPath,
-  FixtureId,
   ReactDecoratorModule,
   ReactFixtureModule,
   RendererConnect,
@@ -26,13 +25,11 @@ import { createTestRendererConnect } from './createTestRendererConnect.js';
 
 export type RendererTestArgs = {
   rendererId: RendererId;
-  // TODO: Test these
   searchParams?: RendererSearchParams;
+  // TODO: Test
   setSearchParams?: (nextParams: RendererSearchParams) => void;
   reloadRenderer?: () => void;
   fixtures: ByPath<ReactFixtureModule>;
-  selectedFixtureId?: null | FixtureId;
-  initialFixtureId?: FixtureId;
   decorators?: ByPath<ReactDecoratorModule>;
   lazy?: boolean;
   only?: boolean;
@@ -106,8 +103,6 @@ function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
     <RendererContext.Provider value={contextValue}>
       <ClientFixtureLoader
         moduleWrappers={getModuleWrappers(fixtures, decorators, lazy)}
-        initialFixtureId={args.initialFixtureId}
-        selectedFixtureId={args.selectedFixtureId}
       />
     </RendererContext.Provider>
   );

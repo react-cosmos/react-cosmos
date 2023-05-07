@@ -8,10 +8,15 @@ import {
   encodeRendererSearchParams,
   isInsideWindowIframe,
 } from 'react-cosmos-core';
-import { RendererContext, RendererContextValue } from './RendererContext.js';
-import { createNoopRendererConnect } from './createNoopRendererConnect.js';
-import { createPostMessageConnect } from './createPostMessageConnect.js';
-import { createWebSocketsConnect } from './createWebSocketsConnect.js';
+import {
+  createNoopRendererConnect,
+  createPostMessageConnect,
+  createWebSocketsConnect,
+} from 'react-cosmos-renderer';
+import {
+  RendererContext,
+  RendererContextValue,
+} from 'react-cosmos-renderer/client';
 import { getDomRendererId } from './domRendererId.js';
 
 type Props = {

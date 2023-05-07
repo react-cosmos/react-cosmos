@@ -21,10 +21,12 @@ export function NativeFixtureLoader({
   initialFixtureId,
 }: Props) {
   return (
-    <NativeRendererProvider rendererConfig={rendererConfig}>
+    <NativeRendererProvider
+      rendererConfig={rendererConfig}
+      initialFixtureId={initialFixtureId}
+    >
       <ClientFixtureLoader
         moduleWrappers={moduleWrappers}
-        initialFixtureId={initialFixtureId}
         renderMessage={renderMessage}
       />
     </NativeRendererProvider>

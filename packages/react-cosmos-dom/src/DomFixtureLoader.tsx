@@ -4,28 +4,24 @@ import {
   UserModuleWrappers,
   parseQueryString,
 } from 'react-cosmos-core';
-import {
-  ClientFixtureLoader,
-  DomRendererProvider,
-} from 'react-cosmos-renderer/client';
+import { ClientFixtureLoader } from 'react-cosmos-renderer/client';
+import { DomRendererProvider } from './DomRendererProvider.js';
 import { ErrorCatch } from './ErrorCatch.js';
-import { getSelectedFixtureId } from './selectedFixtureId.js';
 
 type Props = {
   rendererConfig: RendererConfig;
   moduleWrappers: UserModuleWrappers;
 };
 export function DomFixtureLoader({ rendererConfig, moduleWrappers }: Props) {
+  const searchParams = parseQueryString(location.search);
   return (
     <DomRendererProvider
       rendererConfig={rendererConfig}
-      searchParams={parseQueryString(location.search)}
+      searchParams={searchParams}
     >
       <ClientFixtureLoader
         moduleWrappers={moduleWrappers}
         globalDecorators={globalDecorators}
-        // TODO: Unify this with searchParams
-        selectedFixtureId={getSelectedFixtureId()}
         renderMessage={renderDomMessage}
       />
     </DomRendererProvider>

@@ -11,7 +11,11 @@ const fixtures = wrapDefaultExport({
 
 testRenderer(
   'renders auto selected named fixture',
-  { rendererId, fixtures, selectedFixtureId: { path: 'first', name: 'one' } },
+  {
+    rendererId,
+    searchParams: { fixtureId: { path: 'first', name: 'one' } },
+    fixtures,
+  },
   async ({ renderer }) => {
     await retry(() => expect(renderer.toJSON()).toBe('First'));
   }
@@ -19,7 +23,11 @@ testRenderer(
 
 testRenderer(
   'renders auto selected unnamed fixture',
-  { rendererId, fixtures, selectedFixtureId: { path: 'second' } },
+  {
+    rendererId,
+    searchParams: { fixtureId: { path: 'second' } },
+    fixtures,
+  },
   async ({ renderer }) => {
     await retry(() => expect(renderer.toJSON()).toBe('Second'));
   }

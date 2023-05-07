@@ -63,10 +63,7 @@ export type RendererReadyResponse = {
     // What does this mean for fixtureListUpdate? Does it ever gets called
     // unnecessarily?
     fixtures: FixtureList;
-    // TODO: Return this always? Have UI not send a selectFixture request if
-    // renderer mounted with selected fixture ID.
-    // Maybe this could even clear Playground fixture state.
-    initialFixtureId?: FixtureId;
+    selectedFixtureId?: FixtureId | null;
   };
 };
 

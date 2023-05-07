@@ -11,7 +11,11 @@ const fixtures = wrapDefaultExport({
 
 testRenderer(
   'renders lazy initially selected named fixture',
-  { rendererId, fixtures, initialFixtureId: { path: 'first', name: 'one' } },
+  {
+    rendererId,
+    searchParams: { fixtureId: { path: 'first', name: 'one' } },
+    fixtures,
+  },
   async ({ renderer }) => {
     await retry(() => expect(renderer.toJSON()).toBe('First'));
   }
@@ -19,7 +23,11 @@ testRenderer(
 
 testRenderer(
   'renders lazy initially selected unnamed fixture',
-  { rendererId, fixtures, initialFixtureId: { path: 'second' } },
+  {
+    rendererId,
+    searchParams: { fixtureId: { path: 'second' } },
+    fixtures,
+  },
   async ({ renderer }) => {
     await retry(() => expect(renderer.toJSON()).toBe('Second'));
   }
@@ -29,8 +37,8 @@ testRenderer(
   'posts lazy ready response and fixture list item update on mount with initialFixtureId',
   {
     rendererId,
+    searchParams: { fixtureId: { path: 'first' } },
     fixtures,
-    initialFixtureId: { path: 'first' },
     lazy: true,
   },
   async ({ rendererReady, fixtureListItemUpdate }) => {
@@ -40,7 +48,7 @@ testRenderer(
         first: { type: 'single' },
         second: { type: 'single' },
       },
-      initialFixtureId: { path: 'first' },
+      selectedFixtureId: { path: 'first' },
     });
     await fixtureListItemUpdate({
       rendererId,
