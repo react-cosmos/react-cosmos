@@ -15,6 +15,7 @@ testRenderer(
     rendererId,
     searchParams: { fixtureId: { path: 'first', name: 'one' } },
     fixtures,
+    lazy: true,
   },
   async ({ renderer }) => {
     await retry(() => expect(renderer.toJSON()).toBe('First'));
@@ -27,6 +28,7 @@ testRenderer(
     rendererId,
     searchParams: { fixtureId: { path: 'second' } },
     fixtures,
+    lazy: true,
   },
   async ({ renderer }) => {
     await retry(() => expect(renderer.toJSON()).toBe('Second'));
