@@ -1,10 +1,7 @@
 import React from 'react';
 import { FixtureId, RendererConfig } from 'react-cosmos-core';
 import { createWebSocketsConnect } from 'react-cosmos-renderer';
-import {
-  RendererContext,
-  RendererContextValue,
-} from 'react-cosmos-renderer/client';
+import { RendererProvider } from 'react-cosmos-renderer/client';
 import { DevSettings } from 'react-native';
 import { getSocketUrl } from './getSocketUrl.js';
 
@@ -18,23 +15,32 @@ export function NativeRendererProvider({
   rendererConfig,
   initialFixtureId,
 }: Props) {
-  const value = React.useMemo<RendererContextValue>(() => {
-    const socketUrl = getSocketUrl(rendererConfig.playgroundUrl);
-    return {
-      // TODO: Generate unique ID per device
-      rendererId: 'native-renderer',
-      rendererConnect: createWebSocketsConnect(socketUrl),
-      searchParams: { fixtureId: initialFixtureId },
-      setSearchParams: () => {},
-      reloadRenderer: () => {
-        DevSettings.reload();
-      },
-    };
-  }, [initialFixtureId, rendererConfig]);
+  const rendererConnect = React.useMemo(
+    () => createWebSocketsConnect(getSocketUrl(rendererConfig.playgroundUrl)),
+    [rendererConfig.playgroundUrl]
+  );
+
+  const searchParams = React.useMemo(
+    () => ({ fixtureId: initialFixtureId }),
+    [initialFixtureId]
+  );
 
   return (
-    <RendererContext.Provider value={value}>
+    <RendererProvider
+      // TODO: Generate unique ID per device
+      rendererId="native-renderer"
+      rendererConnect={rendererConnect}
+      searchParams={searchParams}
+      setSearchParams={noop}
+      reloadRenderer={reloadRenderer}
+    >
       {children}
-    </RendererContext.Provider>
+    </RendererProvider>
   );
 }
+
+function reloadRenderer() {
+  DevSettings.reload();
+}
+
+function noop() {}

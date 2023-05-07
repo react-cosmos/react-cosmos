@@ -29,29 +29,20 @@ export function FixtureProvider(props: Props) {
     syncedFixtureState: {},
   });
 
-  const { rendererId, rendererConnect } = React.useContext(RendererContext);
+  const { rendererId, rendererConnect, setLazyItems } =
+    React.useContext(RendererContext);
 
   React.useEffect(() => {
     // Only multi fixtures have extra info that isn't already available in the
     // fixture list provided to the Cosmos UI (fixture names, which in lazy mode
     // are revealed after importing a fixture module).
     if (props.lazy && props.fixtureItem.type === 'multi') {
-      rendererConnect.postMessage({
-        type: 'fixtureListItemUpdate',
-        payload: {
-          rendererId,
-          fixturePath: props.fixtureId.path,
-          fixtureItem: props.fixtureItem,
-        },
-      });
+      setLazyItems(prevItems => ({
+        ...prevItems,
+        [props.fixtureId.path]: props.fixtureItem,
+      }));
     }
-  }, [
-    props.fixtureId.path,
-    props.fixtureItem,
-    props.lazy,
-    rendererConnect,
-    rendererId,
-  ]);
+  }, [props.fixtureId.path, props.fixtureItem, props.lazy, setLazyItems]);
 
   React.useEffect(() => {
     if (!isEqual(state.fixtureState, state.syncedFixtureState)) {
