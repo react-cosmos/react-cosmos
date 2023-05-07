@@ -25,7 +25,7 @@ testRenderer(
       fixtureId: { path: 'second' },
       fixtureState: {},
     });
-    await delay(200);
+    await delay(50);
     expect(renderer.toJSON()).toBe('First');
   }
 );
@@ -42,7 +42,7 @@ testRenderer(
   },
   async ({ renderer, unselectFixture }) => {
     unselectFixture({ rendererId });
-    await delay(200);
+    await delay(50);
     expect(renderer.toJSON()).toBe('First');
   }
 );
