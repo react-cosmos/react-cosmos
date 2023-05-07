@@ -33,8 +33,12 @@ export function receiveRendererReadyResponse(
   }
 
   function afterStateChanged() {
-    if (selectedFixtureId) selectInitialFixture(context, selectedFixtureId);
-    else selectFixtureFromUrlParams(context, rendererId);
+    const { primaryRendererId } = context.getState();
+    if (selectedFixtureId && rendererId === primaryRendererId) {
+      selectInitialFixture(context, selectedFixtureId);
+    } else {
+      selectFixtureFromUrlParams(context, rendererId);
+    }
 
     // Don't notify about already connected renderers that just reloaded
     if (!prevRendererIds.includes(rendererId)) {

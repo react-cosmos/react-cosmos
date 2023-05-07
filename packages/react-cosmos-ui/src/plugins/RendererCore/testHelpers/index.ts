@@ -1,6 +1,8 @@
 import {
   FixtureId,
   FixtureList,
+  FixtureListItem,
+  FixtureListItemUpdateResponse,
   FixtureListUpdateResponse,
   FixtureState,
   FixtureStateChangeResponse,
@@ -35,6 +37,21 @@ export function createFixtureListUpdateResponse(
   };
 }
 
+export function createFixtureListItemUpdateResponse(
+  rendererId: RendererId,
+  fixturePath: string,
+  fixtureItem: FixtureListItem
+): FixtureListItemUpdateResponse {
+  return {
+    type: 'fixtureListItemUpdate',
+    payload: {
+      rendererId,
+      fixturePath,
+      fixtureItem,
+    },
+  };
+}
+
 export function createFixtureStateChangeResponse(
   rendererId: RendererId,
   fixtureId: FixtureId,
@@ -65,6 +82,16 @@ export function mockFixtureListUpdate(
 ) {
   return getRendererCoreMethods().receiveResponse(
     createFixtureListUpdateResponse(rendererId, fixtures)
+  );
+}
+
+export function mockFixtureListItemUpdate(
+  rendererId: RendererId,
+  fixturePath: string,
+  fixtureItem: FixtureListItem
+) {
+  return getRendererCoreMethods().receiveResponse(
+    createFixtureListItemUpdateResponse(rendererId, fixturePath, fixtureItem)
   );
 }
 
