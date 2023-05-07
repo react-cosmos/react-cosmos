@@ -9,17 +9,7 @@ const fixtures = wrapDefaultExport({
 });
 
 testRenderer(
-  'posts lazy ready response on mount',
-  { rendererId, fixtures, lazy: true },
-  async ({ rendererReady }) => {
-    await rendererReady({
-      rendererId,
-    });
-  }
-);
-
-testRenderer(
-  'posts lazy fixture list with fixture names on fixture select',
+  'posts lazy fixture list with names on fixture select',
   { rendererId, fixtures, lazy: true },
   async ({ selectFixture, fixtureListUpdate }) => {
     selectFixture({

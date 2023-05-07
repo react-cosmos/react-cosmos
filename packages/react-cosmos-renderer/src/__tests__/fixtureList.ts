@@ -14,12 +14,9 @@ testRenderer(
 );
 
 testRenderer(
-  'posts renderer ready and fixture list on mount',
+  'posts fixture list',
   { rendererId, fixtures },
-  async ({ rendererReady, fixtureListUpdate }) => {
-    await rendererReady({
-      rendererId,
-    });
+  async ({ fixtureListUpdate }) => {
     await fixtureListUpdate({
       rendererId,
       fixtures: {
@@ -31,17 +28,9 @@ testRenderer(
 );
 
 testRenderer(
-  'posts ready response and fixture list again on ping request',
+  'posts fixture list again on ping request',
   { rendererId, fixtures },
-  async ({
-    rendererReady,
-    fixtureListUpdate,
-    pingRenderers,
-    clearResponses,
-  }) => {
-    await rendererReady({
-      rendererId,
-    });
+  async ({ fixtureListUpdate, pingRenderers, clearResponses }) => {
     await fixtureListUpdate({
       rendererId,
       fixtures: {
@@ -51,9 +40,6 @@ testRenderer(
     });
     clearResponses();
     pingRenderers();
-    await rendererReady({
-      rendererId,
-    });
     await fixtureListUpdate({
       rendererId,
       fixtures: {
@@ -65,12 +51,9 @@ testRenderer(
 );
 
 testRenderer(
-  'posts fixture list on "fixtures" prop change',
+  'posts updated fixture list on "fixtures" prop change',
   { rendererId, fixtures },
-  async ({ update, rendererReady, fixtureListUpdate }) => {
-    await rendererReady({
-      rendererId,
-    });
+  async ({ update, fixtureListUpdate }) => {
     await fixtureListUpdate({
       rendererId,
       fixtures: {

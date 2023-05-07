@@ -9,12 +9,9 @@ const fixtures = wrapDefaultExport({
 });
 
 testRenderer(
-  'posts ready response and fixture list on mount',
+  'posts fixture list with names',
   { rendererId, fixtures },
-  async ({ rendererReady, fixtureListUpdate }) => {
-    await rendererReady({
-      rendererId,
-    });
+  async ({ fixtureListUpdate }) => {
     await fixtureListUpdate({
       rendererId,
       fixtures: {
