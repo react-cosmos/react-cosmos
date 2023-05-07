@@ -9,9 +9,9 @@ import { FixtureSelection } from './useFixtureSelection.js';
 
 type Props = {
   moduleWrappers: UserModuleWrappers;
-  // Receiving the fixture selection as a prop instead of reading it from
-  // the RendererContext enables using the FixtureLoader a Server component,
-  // in which case the selected fixture ID is read from the URL search params.
+  // Receiving the fixture selection as a prop instead of reading it from the
+  // RendererContext enables using this component on the server, in which case
+  // the selected fixture is read from the server-side URL search params.
   fixtureSelection: FixtureSelection | null;
   renderMessage: (msg: string) => React.ReactElement;
   renderFixture: (selection: FixtureSelection) => React.ReactElement;
