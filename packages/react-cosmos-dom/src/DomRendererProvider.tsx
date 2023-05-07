@@ -38,9 +38,9 @@ export function DomRendererProvider({
       rendererConnect: createDomRendererConnect(rendererConfig.playgroundUrl),
       searchParams: decodeRendererSearchParams(searchParams),
       setSearchParams: (nextParams: RendererSearchParams) => {
-        // Only some fixture loaders implement setSearchParams, like the
-        // ServerFixtureLoader, which cannot listen to client-side
-        // 'selectFixture' requests from the Playground UI.
+        // Implementing setSearchParams is optional. In is required for server
+        // fixture loaders that cannot listen to client-side 'selectFixture'
+        // requests from the Cosmos UI.
         if (setSearchParams) {
           setSearchParams(encodeRendererSearchParams(nextParams));
         }
