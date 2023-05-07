@@ -52,7 +52,9 @@ function selectInitialFixture(
   fixtureId: FixtureId
 ) {
   const router = getMethodsOf<RouterSpec>('router');
-  router.selectFixture(fixtureId);
+  if (!router.getSelectedFixtureId()) {
+    router.selectFixture(fixtureId);
+  }
 }
 
 function selectFixtureFromUrlParams(
