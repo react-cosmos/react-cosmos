@@ -36,7 +36,7 @@ testRenderer(
 );
 
 testRenderer(
-  'posts lazy fixture list with names on mount with selected fixture',
+  'posts lazy fixture list with names on initially selected fixture',
   {
     rendererId,
     searchParams: { fixtureId: { path: 'first' } },

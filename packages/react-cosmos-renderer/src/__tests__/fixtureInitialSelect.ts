@@ -34,7 +34,7 @@ testRenderer(
 );
 
 testRenderer(
-  'posts ready response on mount with selectedFixtureId',
+  'posts ready response on initially selected fixture',
   {
     rendererId,
     searchParams: { fixtureId: { path: 'second' } },
