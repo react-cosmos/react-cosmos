@@ -32,7 +32,7 @@ it('returns false', async () => {
 it('returns true', async () => {
   registerTestPlugins();
   loadPlugins();
-  mockRendererReady('mockRendererId', {});
+  mockRendererReady('mockRendererId');
 
   expect(isRendererConnected()).toBe(true);
 });

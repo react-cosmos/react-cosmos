@@ -12,8 +12,6 @@ beforeEach(register);
 
 afterEach(resetPlugins);
 
-const fixtures = {};
-
 function registerTestPlugins() {
   mockRouter({
     getSelectedFixtureId: () => null,
@@ -23,8 +21,8 @@ function registerTestPlugins() {
 
 function loadTestPlugins() {
   loadPlugins();
-  mockRendererReady('mockRendererId1', fixtures);
-  mockRendererReady('mockRendererId2', fixtures);
+  mockRendererReady('mockRendererId1');
+  mockRendererReady('mockRendererId2');
   getRendererCoreMethods().selectPrimaryRenderer('mockRendererId2');
 }
 

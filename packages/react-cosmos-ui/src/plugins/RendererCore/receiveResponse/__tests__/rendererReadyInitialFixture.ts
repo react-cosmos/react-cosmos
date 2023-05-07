@@ -1,5 +1,4 @@
 import { waitFor } from '@testing-library/dom';
-import { FixtureList } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   mockNotifications,
@@ -11,9 +10,6 @@ import { mockRendererReady } from '../../testHelpers/index.js';
 beforeEach(register);
 
 afterEach(resetPlugins);
-
-const fixtureId = { path: 'ein.js' };
-const fixtures: FixtureList = { [fixtureId.path]: { type: 'single' } };
 
 function registerTestPlugins() {
   const { selectFixture } = mockRouter({
@@ -31,7 +27,7 @@ it('selects initial fixture', async () => {
   const { selectFixture } = registerTestPlugins();
 
   loadTestPlugins();
-  mockRendererReady('mockRendererId', fixtures, { path: 'ein.js' });
+  mockRendererReady('mockRendererId', { path: 'ein.js' });
 
   await waitFor(() =>
     expect(selectFixture).toBeCalledWith(expect.any(Object), { path: 'ein.js' })

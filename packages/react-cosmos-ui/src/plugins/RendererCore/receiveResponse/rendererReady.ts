@@ -13,7 +13,7 @@ export function receiveRendererReadyResponse(
   context: RendererCoreContext,
   { payload }: RendererReadyResponse
 ) {
-  const { rendererId, fixtures, selectedFixtureId } = payload;
+  const { rendererId, selectedFixtureId } = payload;
   const { connectedRendererIds: prevRendererIds } = context.getState();
 
   context.setState(stateUpdater, afterStateChanged);
@@ -28,7 +28,6 @@ export function receiveRendererReadyResponse(
       ...prevState,
       connectedRendererIds: addToSet(connectedRendererIds, rendererId),
       primaryRendererId,
-      fixtures,
       fixtureState: isPrimaryRenderer ? {} : fixtureState,
     };
   }
