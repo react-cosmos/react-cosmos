@@ -18,7 +18,7 @@ type Props = {
 };
 export function FixtureLoaderConnect({
   moduleWrappers,
-  fixtureSelection = null,
+  fixtureSelection,
   renderMessage,
   renderFixture,
 }: Props) {
