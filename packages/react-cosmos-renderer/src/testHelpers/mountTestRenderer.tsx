@@ -26,7 +26,6 @@ import { createTestRendererConnect } from './createTestRendererConnect.js';
 export type RendererTestArgs = {
   rendererId: RendererId;
   searchParams?: RendererSearchParams;
-  // TODO: Test
   setSearchParams?: (nextParams: RendererSearchParams) => void;
   reloadRenderer?: () => void;
   fixtures: ByPath<ReactFixtureModule>;
