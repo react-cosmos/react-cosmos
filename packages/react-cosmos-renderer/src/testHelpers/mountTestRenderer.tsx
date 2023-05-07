@@ -102,13 +102,13 @@ function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
   return (
     <RendererContext.Provider value={contextValue}>
       <ClientFixtureLoader
-        moduleWrappers={getModuleWrappers(fixtures, decorators, lazy)}
+        moduleWrappers={createModuleWrappers(fixtures, decorators, lazy)}
       />
     </RendererContext.Provider>
   );
 }
 
-function getModuleWrappers(
+function createModuleWrappers(
   fixtures: ByPath<ReactFixtureModule>,
   decorators: ByPath<ReactDecoratorModule>,
   lazy: boolean
