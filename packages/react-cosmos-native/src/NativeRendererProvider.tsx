@@ -24,12 +24,9 @@ export function NativeRendererProvider({
       // TODO: Generate unique ID per device
       rendererId: 'native-renderer',
       rendererConnect: createWebSocketsConnect(socketUrl),
-      searchParams: {
-        fixtureId: initialFixtureId,
-      },
+      searchParams: { fixtureId: initialFixtureId },
       setSearchParams: () => {},
       reloadRenderer: () => {
-        // TODO: Test this manually
         DevSettings.reload();
       },
     };
