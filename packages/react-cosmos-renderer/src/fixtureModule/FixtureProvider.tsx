@@ -80,11 +80,7 @@ export function FixtureProvider(props: Props) {
     () =>
       rendererConnect.onMessage(msg => {
         if (
-          // WIP: Checking for selectFixture is only needed when using
-          // ServerFixtureLoader. When a server-side remote renderer mounts
-          // its client components, it will receive a selectFixture message to
-          // syncronize
-          (msg.type === 'selectFixture' || msg.type === 'setFixtureState') &&
+          msg.type === 'setFixtureState' &&
           msg.payload.rendererId === rendererId
         ) {
           const { fixtureId, fixtureState } = msg.payload;
