@@ -9,9 +9,9 @@ const fixtures = wrapDefaultExport({
 });
 
 testRenderer(
-  'posts lazy fixture list item update on fixture select',
+  'posts lazy fixture list with item names on fixture select',
   { rendererId, fixtures, lazy: true },
-  async ({ selectFixture, fixtureListUpdate, fixtureListItemUpdate }) => {
+  async ({ selectFixture, fixtureListUpdate }) => {
     await fixtureListUpdate({
       rendererId,
       fixtures: {
@@ -24,10 +24,12 @@ testRenderer(
       fixtureId: { path: 'first' },
       fixtureState: {},
     });
-    await fixtureListItemUpdate({
+    await fixtureListUpdate({
       rendererId,
-      fixturePath: 'first',
-      fixtureItem: { type: 'multi', fixtureNames: ['a', 'b', 'c'] },
+      fixtures: {
+        first: { type: 'multi', fixtureNames: ['a', 'b', 'c'] },
+        second: { type: 'single' },
+      },
     });
   }
 );
