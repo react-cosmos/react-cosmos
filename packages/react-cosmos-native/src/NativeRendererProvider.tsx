@@ -21,7 +21,6 @@ export function NativeRendererProvider({
   const value = React.useMemo<RendererContextValue>(() => {
     const socketUrl = getSocketUrl(rendererConfig.playgroundUrl);
     return {
-      rendererConfig,
       // TODO: Generate unique ID per device
       rendererId: 'native-renderer',
       rendererConnect: createWebSocketsConnect(socketUrl),

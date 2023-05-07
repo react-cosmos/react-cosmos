@@ -33,7 +33,6 @@ export function DomRendererProvider({
 }: Props) {
   const value = React.useMemo<RendererContextValue>(() => {
     return {
-      rendererConfig,
       rendererId: getDomRendererId(),
       rendererConnect: createDomRendererConnect(rendererConfig.playgroundUrl),
       searchParams: decodeRendererSearchParams(searchParams),
