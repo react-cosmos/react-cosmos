@@ -1,9 +1,5 @@
 import { FixtureState } from '../fixtureState/types.js';
-import {
-  FixtureId,
-  FixtureList,
-  FixtureListItem,
-} from '../userModules/fixtureTypes.js';
+import { FixtureId, FixtureList } from '../userModules/fixtureTypes.js';
 
 // FYI: Renderer ids are self assigned in remote environments, so uniqueness
 // cannot be established by consensus
@@ -77,15 +73,6 @@ export type FixtureListUpdateResponse = {
   };
 };
 
-export type FixtureListItemUpdateResponse = {
-  type: 'fixtureListItemUpdate';
-  payload: {
-    rendererId: RendererId;
-    fixturePath: string;
-    fixtureItem: FixtureListItem;
-  };
-};
-
 // Caused by an organic state change inside the renderer. Also dispatched
 // after a fixtureSelect request, when rendering stateful components, as their
 // initial state is read.
@@ -112,7 +99,6 @@ export type RendererResponse =
   | RendererReadyResponse
   | RendererErrorResponse
   | FixtureListUpdateResponse
-  | FixtureListItemUpdateResponse
   | FixtureStateChangeResponse
   | PlaygroundCommandResponse;
 

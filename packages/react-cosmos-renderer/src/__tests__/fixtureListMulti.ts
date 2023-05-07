@@ -9,7 +9,7 @@ const fixtures = wrapDefaultExport({
 });
 
 testRenderer(
-  'posts fixture list with names',
+  'posts fixture list with item names',
   { rendererId, fixtures },
   async ({ fixtureListUpdate }) => {
     await fixtureListUpdate({

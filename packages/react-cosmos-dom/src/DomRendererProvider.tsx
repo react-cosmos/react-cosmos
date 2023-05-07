@@ -15,7 +15,7 @@ import {
 } from 'react-cosmos-renderer';
 import {
   RendererContext,
-  RendererContextValue,
+  RendererProvider,
 } from 'react-cosmos-renderer/client';
 import { getDomRendererId } from './domRendererId.js';
 
@@ -31,31 +31,46 @@ export function DomRendererProvider({
   searchParams,
   setSearchParams,
 }: Props) {
-  const value = React.useMemo<RendererContextValue>(() => {
-    return {
-      rendererId: getDomRendererId(),
-      rendererConnect: createDomRendererConnect(rendererConfig.playgroundUrl),
-      searchParams: decodeRendererSearchParams(searchParams),
-      setSearchParams: (nextParams: RendererSearchParams) => {
-        // Implementing setSearchParams is optional. It is required for server
-        // fixture loaders that cannot listen to client-side 'selectFixture'
-        // requests from the Cosmos UI.
-        if (setSearchParams) {
-          setSearchParams(encodeRendererSearchParams(nextParams));
-        }
-      },
-      reloadRenderer: () => {
-        window.location.reload();
-      },
-    };
-  }, [setSearchParams, rendererConfig, searchParams]);
+  const rendererId = React.useMemo(() => getDomRendererId(), []);
+
+  const rendererConnect = React.useMemo(
+    () => createDomRendererConnect(rendererConfig.playgroundUrl),
+    [rendererConfig.playgroundUrl]
+  );
+
+  const decodedParams = React.useMemo(
+    () => decodeRendererSearchParams(searchParams),
+    [searchParams]
+  );
+
+  const setDecodedParams = React.useCallback(
+    (nextParams: RendererSearchParams) => {
+      // Implementing setSearchParams is optional. It is required for server
+      // fixture loaders that cannot listen to client-side 'selectFixture'
+      // requests from the Cosmos UI.
+      if (setSearchParams) {
+        setSearchParams(encodeRendererSearchParams(nextParams));
+      }
+    },
+    [setSearchParams]
+  );
 
   return (
-    <RendererContext.Provider value={value}>
+    <RendererProvider
+      rendererId={rendererId}
+      rendererConnect={rendererConnect}
+      searchParams={decodedParams}
+      setSearchParams={setDecodedParams}
+      reloadRenderer={reloadRenderer}
+    >
       {children}
       {typeof window !== 'undefined' && <GlobalErrorHandler />}
-    </RendererContext.Provider>
+    </RendererProvider>
   );
+}
+
+function reloadRenderer() {
+  window.location.reload();
 }
 
 function GlobalErrorHandler() {

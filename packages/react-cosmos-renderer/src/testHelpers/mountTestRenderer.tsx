@@ -13,10 +13,7 @@ import {
 } from 'react-cosmos-core';
 import { ReactTestRenderer, act, create } from 'react-test-renderer';
 import { ClientFixtureLoader } from '../fixtureLoaders/ClientFixtureLoader.js';
-import {
-  RendererContext,
-  RendererContextValue,
-} from '../rendererConnect/RendererContext.js';
+import { RendererProvider } from '../rendererConnect/RendererProvider.js';
 import {
   RendererConnectTestApi,
   createRendererConnectTestApi,
@@ -91,19 +88,19 @@ function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
     decorators = {},
     lazy = false,
   } = args;
-  const contextValue: RendererContextValue = {
-    rendererId,
-    rendererConnect,
-    searchParams,
-    setSearchParams,
-    reloadRenderer,
-  };
+
   return (
-    <RendererContext.Provider value={contextValue}>
+    <RendererProvider
+      rendererId={rendererId}
+      rendererConnect={rendererConnect}
+      searchParams={searchParams}
+      setSearchParams={setSearchParams}
+      reloadRenderer={reloadRenderer}
+    >
       <ClientFixtureLoader
         moduleWrappers={createModuleWrappers(fixtures, decorators, lazy)}
       />
-    </RendererContext.Provider>
+    </RendererProvider>
   );
 }
 

@@ -8,8 +8,13 @@ type Props = {
   fixtures: FixtureList;
 };
 export function RendererSync({ children, fixtures }: Props) {
-  const { searchParams, rendererId, rendererConnect, reloadRenderer } =
-    React.useContext(RendererContext);
+  const {
+    searchParams,
+    rendererId,
+    rendererConnect,
+    reloadRenderer,
+    lazyItems,
+  } = React.useContext(RendererContext);
 
   const { fixtureId: selectedFixtureId } = searchParams;
 
@@ -32,10 +37,10 @@ export function RendererSync({ children, fixtures }: Props) {
       type: 'fixtureListUpdate',
       payload: {
         rendererId,
-        fixtures,
+        fixtures: { ...fixtures, ...lazyItems },
       },
     });
-  }, [fixtures, rendererConnect, rendererId]);
+  }, [fixtures, lazyItems, rendererConnect, rendererId]);
 
   React.useEffect(
     () =>
