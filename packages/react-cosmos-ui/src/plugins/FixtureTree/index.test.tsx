@@ -80,6 +80,8 @@ it('renders blank state', async () => {
     getFixtures: () => ({}),
   });
 
-  const { getByTestId } = await loadTestPlugins();
-  getByTestId('nav-blank-state');
+  const { findByText } = await loadTestPlugins();
+  await findByText(/no component/i);
+  await findByText(/fixtures found/i);
+  await findByText(/place fixture files under/i);
 });
