@@ -1,8 +1,8 @@
 import React from 'react';
 import {
+  DelayRender,
   UserModuleWrappers,
   getFixtureListFromWrappers,
-  isInsideWindowIframe,
 } from 'react-cosmos-core';
 import { RendererSync } from './RendererSync.js';
 import { FixtureSelection } from './useFixtureSelection.js';
@@ -29,9 +29,11 @@ export function FixtureLoaderConnect({
 
   function renderInner() {
     if (!fixtureSelection) {
-      return isInsideWindowIframe()
-        ? null
-        : renderMessage('No fixture selected.');
+      return (
+        <DelayRender delay={500}>
+          {renderMessage('No fixture selected.')}
+        </DelayRender>
+      );
     }
 
     const { fixtureId } = fixtureSelection;

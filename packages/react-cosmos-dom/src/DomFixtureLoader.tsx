@@ -22,7 +22,7 @@ export function DomFixtureLoader({ rendererConfig, moduleWrappers }: Props) {
       <ClientFixtureLoader
         moduleWrappers={moduleWrappers}
         globalDecorators={globalDecorators}
-        renderMessage={renderDomMessage}
+        renderMessage={renderMessage}
       />
     </DomRendererProvider>
   );
@@ -44,6 +44,6 @@ const containerStyle: React.CSSProperties = {
   fontSize: 14,
 };
 
-export function renderDomMessage(msg: string) {
+function renderMessage(msg: string) {
   return <div style={containerStyle}>{msg}</div>;
 }
