@@ -36,7 +36,7 @@ export function NativeFixtureLoader({
 function renderMessage(msg: string) {
   return (
     <View style={styles.container}>
-      <Text>{msg}</Text>
+      <Text style={styles.text}>{msg}</Text>
     </View>
   );
 }
@@ -47,5 +47,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: '300',
   },
 });
