@@ -7,13 +7,13 @@ type Props = {
   children: React.ReactNode;
   delay: number;
 };
-export function DelayRender(props: Props) {
+export function DelayRender({ children, delay }: Props) {
   const [render, setRender] = React.useState(false);
 
   React.useEffect(() => {
-    const timeoutId = setTimeout(() => setRender(true), props.delay);
+    const timeoutId = setTimeout(() => setRender(true), delay);
     return () => clearTimeout(timeoutId);
-  }, [props.delay]);
+  }, [delay]);
 
-  return <>{render && props.children}</>;
+  return <>{render && children}</>;
 }
