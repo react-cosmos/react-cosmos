@@ -58,7 +58,7 @@ React Cosmos 6 also comes with a brand new Vite plugin. To set up a Vite codebas
 
 ### Other breaking changes
 
-- `react-cosmos/fixture` exports moved to react-cosmos-renderer (eg. `import { useValue } from 'react-cosmos/client'`).
+- `react-cosmos/fixture` exports moved to `react-cosmos/client` (eg. `import { useValue } from 'react-cosmos/client'`).
 - `NativeFixtureLoader` component moved from `react-cosmos/native` to new `react-cosmos-native` package. Install `react-cosmos-native@next` as well for a React Native setup.
 - `getFixtures2()` renamed to `getFixtures()`.
 - `getCosmosConfigAtPath()` is now async. To replicate the old sync behavior, require() the config module manually and pass it to `createCosmosConfig()`.
