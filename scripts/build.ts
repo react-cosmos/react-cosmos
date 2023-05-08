@@ -20,18 +20,6 @@ const watch = getBoolArg('watch');
 type Builder = (pkgName: string) => Promise<void>;
 
 const builders: Partial<Record<Package, Builder>> & { default: Builder } = {
-  'react-cosmos-core': async pkgName => {
-    await buildPkgTs(pkgName, 'tsconfig.build.json');
-  },
-  'react-cosmos-renderer': async pkgName => {
-    await buildPkgTs(pkgName, 'tsconfig.build.json');
-  },
-  'react-cosmos-dom': async pkgName => {
-    await buildPkgTs(pkgName, 'tsconfig.build.json');
-  },
-  'react-cosmos-native': async pkgName => {
-    await buildPkgTs(pkgName, 'tsconfig.build.json');
-  },
   'react-cosmos-ui': async pkgName => {
     await buildPkgTs(pkgName, 'tsconfig.build.json');
     await buildPkgWebpack(pkgName, 'webpack.config.build.js');
@@ -40,8 +28,13 @@ const builders: Partial<Record<Package, Builder>> & { default: Builder } = {
     await copyStaticAssets(pkgName);
     await buildPkgTs(pkgName, 'tsconfig.build.json');
   },
-  'react-cosmos-plugin-vite': async pkgName => {
+  'react-cosmos-plugin-boolean-input': async pkgName => {
     await buildPkgTs(pkgName, 'tsconfig.build.json');
+    await buildPkgWebpack(pkgName, 'webpack.config.js');
+  },
+  'react-cosmos-plugin-open-fixture': async pkgName => {
+    await buildPkgTs(pkgName, 'tsconfig.build.json');
+    await buildPkgWebpack(pkgName, 'webpack.config.js');
   },
   'react-cosmos-plugin-webpack': async pkgName => {
     await buildPkgTs(pkgName, 'tsconfig.build.client.json');
@@ -55,7 +48,6 @@ const builders: Partial<Record<Package, Builder>> & { default: Builder } = {
   },
   default: async pkgName => {
     await buildPkgTs(pkgName, 'tsconfig.build.json');
-    await buildPkgWebpack(pkgName, 'webpack.config.js');
   },
 };
 
