@@ -18,7 +18,10 @@ export function ServerFixtureChangeListener({ children }: Props) {
           msg.payload.rendererId === rendererId
         ) {
           const { fixtureId } = msg.payload;
-          setSearchParams({ fixtureId });
+          setSearchParams({
+            fixtureId,
+            key: (searchParams.key ?? 0) + 1,
+          });
         } else if (
           !searchParams.locked &&
           msg.type === 'unselectFixture' &&
@@ -27,7 +30,13 @@ export function ServerFixtureChangeListener({ children }: Props) {
           setSearchParams({});
         }
       }),
-    [rendererConnect, rendererId, searchParams.locked, setSearchParams]
+    [
+      rendererConnect,
+      rendererId,
+      searchParams.key,
+      searchParams.locked,
+      setSearchParams,
+    ]
   );
 
   return <>{children}</>;
