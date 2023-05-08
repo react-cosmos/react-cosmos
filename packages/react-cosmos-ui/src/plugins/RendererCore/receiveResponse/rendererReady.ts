@@ -1,8 +1,4 @@
-import {
-  FixtureId,
-  RendererId,
-  RendererReadyResponse,
-} from 'react-cosmos-core';
+import { RendererId, RendererReadyResponse } from 'react-cosmos-core';
 import { NotificationsSpec } from '../../Notifications/spec.js';
 import { RouterSpec } from '../../Router/spec.js';
 import { RendererCoreContext, State } from '../shared/index.js';
@@ -33,9 +29,14 @@ export function receiveRendererReadyResponse(
   }
 
   function afterStateChanged() {
+    const router = context.getMethodsOf<RouterSpec>('router');
     const { primaryRendererId } = context.getState();
-    if (selectedFixtureId && rendererId === primaryRendererId) {
-      selectInitialFixture(context, selectedFixtureId);
+    if (
+      selectedFixtureId &&
+      rendererId === primaryRendererId &&
+      !router.getSelectedFixtureId()
+    ) {
+      router.selectFixture(selectedFixtureId);
     } else {
       selectFixtureFromUrlParams(context, rendererId);
     }
@@ -44,16 +45,6 @@ export function receiveRendererReadyResponse(
     if (!prevRendererIds.includes(rendererId)) {
       notifyRendererConnection(context, rendererId);
     }
-  }
-}
-
-function selectInitialFixture(
-  { getMethodsOf }: RendererCoreContext,
-  fixtureId: FixtureId
-) {
-  const router = getMethodsOf<RouterSpec>('router');
-  if (!router.getSelectedFixtureId()) {
-    router.selectFixture(fixtureId);
   }
 }
 
