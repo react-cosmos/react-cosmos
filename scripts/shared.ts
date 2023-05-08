@@ -19,6 +19,7 @@ const packageMap = {
   'react-cosmos-plugin-open-fixture': true,
   'react-cosmos-plugin-vite': true,
   'react-cosmos-plugin-webpack': true,
+  'react-cosmos-next': true,
 };
 
 export type Package = keyof typeof packageMap;
