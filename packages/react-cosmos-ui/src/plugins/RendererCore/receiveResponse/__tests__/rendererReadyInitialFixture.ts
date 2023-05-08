@@ -13,29 +13,18 @@ beforeEach(register);
 
 afterEach(resetPlugins);
 
-function registerTestPlugins(selectedFixtureId: FixtureId | null = null) {
-  const { selectFixture } = mockRouter({
+function registerTestPlugins(selectedFixtureId: FixtureId) {
+  mockRouter({
     getSelectedFixtureId: () => selectedFixtureId,
   });
   mockNotifications();
   const { request } = onRendererCore();
-  return { selectFixture, request };
+  return { request };
 }
 
 function loadTestPlugins() {
   loadPlugins();
 }
-
-it('selects initial fixture', async () => {
-  const { selectFixture } = registerTestPlugins();
-
-  loadTestPlugins();
-  mockRendererReady('mockRendererId', { path: 'ein.js' });
-
-  await waitFor(() =>
-    expect(selectFixture).toBeCalledWith(expect.any(Object), { path: 'ein.js' })
-  );
-});
 
 it('does not send fixture select request to renderer with same selected fixture', async () => {
   const { request } = registerTestPlugins({ path: 'ein.js' });
@@ -55,14 +44,14 @@ it('does not send fixture select request to renderer with same selected fixture'
   );
 });
 
-it('does not send fixture select request to renderer with other selected fixture', async () => {
+it('sends fixture select request to renderer with different selected fixture', async () => {
   const { request } = registerTestPlugins({ path: 'ein.js' });
 
   loadTestPlugins();
   mockRendererReady('mockRendererId', { path: 'zwei.js' });
 
   await waitFor(() =>
-    expect(request).not.toBeCalledWith(expect.any(Object), {
+    expect(request).toBeCalledWith(expect.any(Object), {
       type: 'selectFixture',
       payload: {
         rendererId: 'mockRendererId',
