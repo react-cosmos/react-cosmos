@@ -33,11 +33,12 @@ export function ServerFixtureLoader({
   globalDecorators,
   renderMessage = defaultRenderMessage,
 }: Props) {
-  const { fixtureId = null } = decodeRendererSearchParams(searchParams);
+  const { fixtureId = null, key = 0 } =
+    decodeRendererSearchParams(searchParams);
   const fixtureSelection = fixtureId && {
     fixtureId,
     initialFixtureState: {},
-    renderKey: 0,
+    renderKey: key,
   };
 
   return (
