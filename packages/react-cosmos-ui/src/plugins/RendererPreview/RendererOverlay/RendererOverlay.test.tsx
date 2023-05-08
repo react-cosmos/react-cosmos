@@ -1,7 +1,5 @@
-import retry from '@skidding/async-retry';
 import { render } from '@testing-library/react';
 import React from 'react';
-import { wrapActSetTimeout } from '../../../testHelpers/wrapActSetTimeout.js';
 import { RendererOverlay } from './RendererOverlay.js';
 
 it('does not immediately render anything when status runtime status is "pending"', () => {
@@ -10,9 +8,8 @@ it('does not immediately render anything when status runtime status is "pending"
 });
 
 it('renders "waiting for renderer" state after waiting for some time', async () => {
-  wrapActSetTimeout();
-  const { getByText } = render(<RendererOverlay runtimeStatus="pending" />);
-  await retry(() => getByText(/waiting for renderer/i));
+  const { findByText } = render(<RendererOverlay runtimeStatus="pending" />);
+  await findByText(/waiting for renderer/i);
 });
 
 it('does not render anything when runtime status is "error"', () => {

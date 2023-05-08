@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DelayedLoading } from '../../components/DelayedLoading.js';
+import { DelayedRender } from '../../components/DelayedRender.js';
 import { SlidersIcon } from '../../components/icons/index.js';
 import { grey160, grey224, grey32, grey64 } from '../../style/colors.js';
 
 export function BlankState() {
   return (
-    <DelayedLoading delay={300}>
+    <DelayedRender delay={300}>
       <Container>
         <IconContainer>
           <SlidersIcon />
@@ -19,7 +19,7 @@ export function BlankState() {
           <NoWrap>will appear here.</NoWrap>
         </Description>
       </Container>
-    </DelayedLoading>
+    </DelayedRender>
   );
 }
 

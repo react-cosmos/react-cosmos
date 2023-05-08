@@ -4,7 +4,7 @@ type DelayedLoadingProps = {
   children: ReactNode;
   delay?: number;
 };
-export function DelayedLoading(props: DelayedLoadingProps) {
+export function DelayedRender(props: DelayedLoadingProps) {
   const [loading, setLoading] = useState(false);
 
   // Only enter loading state if this component remains rendered after after a
