@@ -13,13 +13,13 @@ beforeEach(register);
 
 afterEach(resetPlugins);
 
-function registerTestPlugins(selectedFixtureId: FixtureId | null = null) {
-  const { selectFixture } = mockRouter({
+function registerTestPlugins(selectedFixtureId: FixtureId) {
+  mockRouter({
     getSelectedFixtureId: () => selectedFixtureId,
   });
   mockNotifications();
   const { request } = onRendererCore();
-  return { selectFixture, request };
+  return { request };
 }
 
 function loadTestPlugins() {
