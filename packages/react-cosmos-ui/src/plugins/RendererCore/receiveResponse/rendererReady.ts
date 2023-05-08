@@ -1,3 +1,4 @@
+import { isEqual } from 'lodash-es';
 import { RendererId, RendererReadyResponse } from 'react-cosmos-core';
 import { NotificationsSpec } from '../../Notifications/spec.js';
 import { RouterSpec } from '../../Router/spec.js';
@@ -28,23 +29,11 @@ export function receiveRendererReadyResponse(
 
   function afterStateChanged() {
     const router = context.getMethodsOf<RouterSpec>('router');
-    const { primaryRendererId } = context.getState();
 
     const rendererFixtureId = payload.selectedFixtureId;
     const routerFixtureId = router.getSelectedFixtureId();
 
-    // This looks a bit hairy but here's the idea:
-    // - If a renderer connects with a fixture selected, go to that fixture
-    //   in the Cosmos UI if a) no fixture is already selected and b) the
-    //   connected renderer is the primary one.
-    // - If a renderer connects without a fixture selected and a fixture is
-    //   selected in the Cosmos UI, sent a request to load the selected fixture
-    //   in the connected renderer.
-    if (rendererFixtureId) {
-      if (!routerFixtureId && rendererId === primaryRendererId) {
-        router.selectFixture(rendererFixtureId);
-      }
-    } else if (routerFixtureId) {
+    if (routerFixtureId && !isEqual(routerFixtureId, rendererFixtureId)) {
       const { fixtureState } = context.getState();
       postSelectFixtureRequest(
         context,
