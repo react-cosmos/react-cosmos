@@ -1,5 +1,5 @@
 import React from 'react';
-import { useValue } from 'react-cosmos-renderer/client';
+import { useValue } from 'react-cosmos/client';
 import { useWindowViewport } from '../shared/useWindowViewport.js';
 import { SplashContent } from './SplashContent.js';
 
