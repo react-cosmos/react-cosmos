@@ -1,12 +1,12 @@
 import React from 'react';
+import { DelayRender } from 'react-cosmos-core';
 import styled from 'styled-components';
-import { DelayedRender } from '../../components/DelayedRender.js';
 import { SlidersIcon } from '../../components/icons/index.js';
 import { grey160, grey224, grey32, grey64 } from '../../style/colors.js';
 
 export function BlankState() {
   return (
-    <DelayedRender delay={300}>
+    <DelayRender delay={500}>
       <Container>
         <IconContainer>
           <SlidersIcon />
@@ -19,7 +19,7 @@ export function BlankState() {
           <NoWrap>will appear here.</NoWrap>
         </Description>
       </Container>
-    </DelayedRender>
+    </DelayRender>
   );
 }
 

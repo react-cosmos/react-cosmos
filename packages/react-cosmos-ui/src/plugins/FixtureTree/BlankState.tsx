@@ -1,6 +1,6 @@
 import React from 'react';
+import { DelayRender } from 'react-cosmos-core';
 import styled from 'styled-components';
-import { DelayedRender } from '../../components/DelayedRender.js';
 import { FileIcon } from '../../components/icons/index.js';
 import { grey160, grey224, grey32, grey64, grey8 } from '../../style/colors.js';
 
@@ -11,7 +11,7 @@ type Props = {
 
 export function BlankState({ fixturesDir, fixtureFileSuffix }: Props) {
   return (
-    <DelayedRender delay={300}>
+    <DelayRender delay={500}>
       <Container data-testid="nav-blank-state">
         <IconContainer>
           <FileIcon />
@@ -33,7 +33,7 @@ export function BlankState({ fixturesDir, fixtureFileSuffix }: Props) {
           </ol>
         </Description>
       </Container>
-    </DelayedRender>
+    </DelayRender>
   );
 }
 
