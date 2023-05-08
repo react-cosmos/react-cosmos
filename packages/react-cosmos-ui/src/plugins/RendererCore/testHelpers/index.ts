@@ -52,10 +52,10 @@ export function createFixtureStateChangeResponse(
 
 export function mockRendererReady(
   rendererId: RendererId,
-  initialFixtureId?: FixtureId
+  selectedFixtureId?: FixtureId
 ) {
   return getRendererCoreMethods().receiveResponse(
-    createRendererReadyResponse(rendererId, initialFixtureId)
+    createRendererReadyResponse(rendererId, selectedFixtureId)
   );
 }
 
