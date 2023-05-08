@@ -5,7 +5,7 @@
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos",
   "license": "MIT",
   "type": "module",
-  "main": "index.js",
+  "main": "./index.js",
   "dependencies": {
     "@skidding/launch-editor": "^2.2.3",
     "chokidar": "^3.5.3",
