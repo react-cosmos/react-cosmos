@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 
 // Delay the rendering of children until after a short amount of time. One
