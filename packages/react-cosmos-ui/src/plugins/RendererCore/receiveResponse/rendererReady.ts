@@ -16,14 +16,13 @@ export function receiveRendererReadyResponse(
   function stateUpdater(prevState: State) {
     // The first announced renderer becomes the primary one
     const primaryRendererId = prevState.primaryRendererId || rendererId;
-    const isPrimaryRenderer = rendererId === primaryRendererId;
     const { connectedRendererIds, fixtureState } = prevState;
 
     return {
       ...prevState,
       connectedRendererIds: addToSet(connectedRendererIds, rendererId),
       primaryRendererId,
-      fixtureState: isPrimaryRenderer ? {} : fixtureState,
+      fixtureState: rendererId === primaryRendererId ? {} : fixtureState,
     };
   }
 
