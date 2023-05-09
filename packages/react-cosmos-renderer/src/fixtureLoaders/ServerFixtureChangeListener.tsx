@@ -6,37 +6,31 @@ type Props = {
   children: React.ReactNode;
 };
 export function ServerFixtureChangeListener({ children }: Props) {
-  const { rendererId, rendererConnect, searchParams, setSearchParams } =
+  const { rendererId, rendererConnect, params, setParams } =
     React.useContext(RendererContext);
 
   React.useEffect(
     () =>
       rendererConnect.onMessage(msg => {
         if (
-          !searchParams.locked &&
+          !params.locked &&
           msg.type === 'selectFixture' &&
           msg.payload.rendererId === rendererId
         ) {
           const { fixtureId } = msg.payload;
-          setSearchParams({
+          setParams({
             fixtureId,
-            key: (searchParams.key ?? 0) + 1,
+            key: (params.key ?? 0) + 1,
           });
         } else if (
-          !searchParams.locked &&
+          !params.locked &&
           msg.type === 'unselectFixture' &&
           msg.payload.rendererId === rendererId
         ) {
-          setSearchParams({});
+          setParams({});
         }
       }),
-    [
-      rendererConnect,
-      rendererId,
-      searchParams.key,
-      searchParams.locked,
-      setSearchParams,
-    ]
+    [params.key, params.locked, rendererConnect, rendererId, setParams]
   );
 
   return <>{children}</>;

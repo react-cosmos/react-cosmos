@@ -1,30 +1,24 @@
-import { FixtureId } from '../userModules/fixtureTypes.js';
-import { buildQueryString, parseQueryString } from './queryString.js';
+import { buildQueryString, parseQueryString } from '../utils/queryString.js';
+import { RendererParams } from './rendererParams.js';
 
 export type RendererSearchParams = {
-  fixtureId?: FixtureId;
-  locked?: boolean;
-  key?: number;
-};
-
-export type StringRendererSearchParams = {
   fixtureId?: string;
   locked?: string;
   key?: string;
 };
 
-export function buildRendererQueryString(params: RendererSearchParams) {
+export function buildRendererQueryString(params: RendererParams) {
   return buildQueryString(encodeRendererSearchParams(params));
 }
 
 export function parseRendererQueryString(query: string) {
   return decodeRendererSearchParams(
-    parseQueryString<StringRendererSearchParams>(query)
+    parseQueryString<RendererSearchParams>(query)
   );
 }
 
-export function encodeRendererSearchParams(params: RendererSearchParams) {
-  const stringParams: StringRendererSearchParams = {};
+export function encodeRendererSearchParams(params: RendererParams) {
+  const stringParams: RendererSearchParams = {};
 
   if (params.fixtureId) {
     stringParams.fixtureId = JSON.stringify(params.fixtureId);
@@ -41,10 +35,8 @@ export function encodeRendererSearchParams(params: RendererSearchParams) {
   return stringParams;
 }
 
-export function decodeRendererSearchParams(
-  stringParams: StringRendererSearchParams
-) {
-  const params: RendererSearchParams = {};
+export function decodeRendererSearchParams(stringParams: RendererSearchParams) {
+  const params: RendererParams = {};
 
   if (stringParams.fixtureId) {
     params.fixtureId = JSON.parse(stringParams.fixtureId);

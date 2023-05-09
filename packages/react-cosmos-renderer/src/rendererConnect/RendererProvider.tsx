@@ -3,7 +3,7 @@ import React from 'react';
 import {
   FixtureList,
   RendererConnect,
-  RendererSearchParams,
+  RendererParams,
 } from 'react-cosmos-core';
 import { RendererContext } from './RendererContext.js';
 
@@ -11,8 +11,8 @@ export type Props = {
   children: React.ReactNode;
   rendererId: string;
   rendererConnect: RendererConnect;
-  searchParams: RendererSearchParams;
-  setSearchParams(nextParams: RendererSearchParams): void;
+  params: RendererParams;
+  setParams(nextParams: RendererParams): void;
   reloadRenderer(): void;
 };
 export function RendererProvider(props: Props) {
@@ -22,19 +22,19 @@ export function RendererProvider(props: Props) {
     return {
       rendererId: props.rendererId,
       rendererConnect: props.rendererConnect,
-      searchParams: props.searchParams,
-      setSearchParams: props.setSearchParams,
+      params: props.params,
+      setParams: props.setParams,
       reloadRenderer: props.reloadRenderer,
       lazyItems,
       setLazyItems,
     };
   }, [
     lazyItems,
+    props.params,
     props.reloadRenderer,
     props.rendererConnect,
     props.rendererId,
-    props.searchParams,
-    props.setSearchParams,
+    props.setParams,
   ]);
 
   return (

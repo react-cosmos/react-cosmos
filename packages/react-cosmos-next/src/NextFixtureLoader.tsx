@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   RendererConfig,
-  StringRendererSearchParams,
+  RendererSearchParams,
   UserModuleWrappers,
 } from 'react-cosmos-core';
 import { ServerFixtureLoader } from 'react-cosmos-renderer';
@@ -10,7 +10,7 @@ import { NextRendererProvider } from './NextRendererProvider.js';
 type Props = {
   rendererConfig: RendererConfig;
   moduleWrappers: UserModuleWrappers;
-  searchParams: StringRendererSearchParams;
+  searchParams: RendererSearchParams;
 };
 export function NextFixtureLoader({
   rendererConfig,

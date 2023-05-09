@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import {
   ReactDecorator,
-  StringRendererSearchParams,
+  RendererSearchParams,
   UserModuleWrappers,
   decodeRendererSearchParams,
 } from 'react-cosmos-core';
@@ -22,7 +22,7 @@ import { defaultRenderMessage } from './defaultRenderMessage.js';
 // client, which triggers a page reload by changing the URL's search params,
 // which in turn triggers a new fixture selection on the server.
 type Props = {
-  searchParams: StringRendererSearchParams;
+  searchParams: RendererSearchParams;
   moduleWrappers: UserModuleWrappers;
   globalDecorators?: ReactDecorator[];
   renderMessage?: (msg: string) => React.ReactElement;

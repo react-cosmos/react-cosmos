@@ -13,7 +13,7 @@ testRenderer(
   'does not change locked fixture',
   {
     rendererId,
-    searchParams: {
+    params: {
       fixtureId: { path: 'first', name: 'one' },
       locked: true,
     },
@@ -34,7 +34,7 @@ testRenderer(
   'does not close locked fixture',
   {
     rendererId,
-    searchParams: {
+    params: {
       fixtureId: { path: 'first', name: 'one' },
       locked: true,
     },
