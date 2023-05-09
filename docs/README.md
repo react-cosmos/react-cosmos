@@ -4,7 +4,7 @@
 
 - Setup: [Getting started](#getting-started) · [Config](#config) · [Compilation](#compilation) · [Webpack](#webpack)
 - Usage: [Fixtures](#fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [Control panel](#control-panel) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](reactNative.md) · [Server-side APIs](#server-side-apis)
-- FAQ: [Create React App](#create-react-app) · Next.js · [Troubleshooting](#troubleshooting) · [Roadmap](../roadmap)
+- FAQ: [Create React App](#create-react-app) · [Next.js](next.md) · [Troubleshooting](#troubleshooting) · [Roadmap](../roadmap)
 
 ## Getting started
 
