@@ -92,8 +92,6 @@ You can import both Server and Client components in your fixtures, which run on 
 
 ## Next steps
 
-There are two main steps for taking this integration to the next level:
-
 ### Static (_and dynamic?_) exports
 
 At the moment the `NextFixtureLoader` component uses URL search params for routing. This works well in development but isn't suited for static generation. Instead, [`generateStaticParams`](https://nextjs.org/docs/app/api-reference/functions/generate-static-params) could be used in combination with dynamic route segments (eg. `app/cosmos/[fixtureId]/page`) to statically generate fixtures at build time. This needs to be explored.
