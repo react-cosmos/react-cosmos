@@ -94,7 +94,7 @@ You can import both Server and Client components in your fixtures, which run on 
 
 ### Static (_and dynamic?_) exports
 
-At the moment the `NextFixtureLoader` component uses URL search params for routing. This works well in development but isn't suited for static generation. Instead, [`generateStaticParams`](https://nextjs.org/docs/app/api-reference/functions/generate-static-params) could be used in combination with dynamic route segments (eg. `/cosmos/[fixtureId]`) to statically generate fixtures at build time. This needs to be explored.
+At the moment the `NextFixtureLoader` component uses URL search params for routing. This works well in development but isn't suited for static generation. Instead, [`generateStaticParams`](https://nextjs.org/docs/app/api-reference/functions/generate-static-params) could be used in combination with dynamic route segments (eg. `/cosmos/[fixtureId]`) to statically generate fixtures routes at build time. This needs to be explored.
 
 While static exports are a must, dynamic exports might also be useful. Some Next.js pages will always be dynamic and the goal of React Cosmos is to be able to isolate and render _any_ part of your UI. Not sure if we'll ever want to export dynamic fixtures, which in this case means fixtures that run server-side code. Time will tell.
 
@@ -113,6 +113,6 @@ Making a Cosmos plugin is easy-peasy. _Docs for it will come soon, too, I promis
 - _How to omit the `/cosmos` page in production?_
 - _How to only build the `/cosmos` page when creating a static export?_
 
-If you or someone you know has answers to these questions please don't be shy. I'd greatly appreciate some Next.js insights on improving this integration!
+If you or someone you know has answers to these questions please don't be shy. I'd greatly appreciate some Next.js insights for improving this integration!
 
 [Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.
