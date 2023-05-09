@@ -81,7 +81,7 @@ yarn cosmos
 
 🚀 Open **[localhost:5000](http://localhost:5000)** in your browser.
 
-That's it. You're now running a Server fixtures in React Cosmos!
+That's it. You're now running Server fixtures in React Cosmos!
 
 You can import both Server and Client components in your fixtures, which run on the server by default. You can also add the `'use client'` directive to a fixture module (or decorator) if you want use Hooks inside it.
 
