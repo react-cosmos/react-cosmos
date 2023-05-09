@@ -88,7 +88,7 @@ You can import both Server and Client components in your fixtures, which run on 
 ## Limitations
 
 - Only single function fixtures can be exported from a fixture module with the `'use client'` descriptor. That's because Client fixtures are passed to the Server render tree as component types without being picked up by Cosmos first. While other fixture formats (React Node exports or multi fixture exports) cannot be used in Client fixtures, all Cosmos fixture formats as supported in Server fixtures.
-- So far this is a dev server-only setup. It's already possible to export a static Cosmos UI that connects to a built Cosmos Renderer (as done [here](https://cosmos-reactjs.vercel.app/)). In this case the Renderer is essentially a live Next.js app. Ideally we also want completely static exports. Next.js can generate static exports of Server components by rendering them at build time. But at the moment the `NextFixtureLoader` uses the `searchParams` prop, which opts the page into dynamic rendering.
+- So far this is a dev server-only setup. It's already possible to export a static Cosmos UI that connects to a built Cosmos Renderer (as done [here](https://cosmos-reactjs.vercel.app/)). In this case the Renderer is essentially a live Next.js app. Ideally we'd also support completely static exports. Next.js can generate static exports of Server components by rendering them at build time. But at the moment the `NextFixtureLoader` uses the `searchParams` prop, which opts Next into [dynamic rendering](https://nextjs.org/docs/app/building-your-application/rendering/static-and-dynamic-rendering#dynamic-rendering).
 
 ## Next steps
 
