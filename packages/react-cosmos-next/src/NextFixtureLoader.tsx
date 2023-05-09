@@ -3,6 +3,7 @@ import {
   RendererConfig,
   RendererSearchParams,
   UserModuleWrappers,
+  decodeRendererSearchParams,
 } from 'react-cosmos-core';
 import { ServerFixtureLoader } from 'react-cosmos-renderer';
 import { NextRendererProvider } from './NextRendererProvider.js';
@@ -23,7 +24,7 @@ export function NextFixtureLoader({
       searchParams={searchParams}
     >
       <ServerFixtureLoader
-        searchParams={searchParams}
+        params={decodeRendererSearchParams(searchParams)}
         moduleWrappers={moduleWrappers}
         renderMessage={renderMessage}
       />

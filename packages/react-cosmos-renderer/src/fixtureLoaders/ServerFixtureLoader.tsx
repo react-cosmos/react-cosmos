@@ -1,9 +1,8 @@
 import React, { Suspense } from 'react';
 import {
   ReactDecorator,
-  RendererSearchParams,
+  RendererParams,
   UserModuleWrappers,
-  decodeRendererSearchParams,
 } from 'react-cosmos-core';
 import { FixtureModule } from '../fixtureModule/FixtureModule.js';
 import { AsyncModuleLoader } from '../moduleLoaders/AsyncModuleLoader.js';
@@ -22,19 +21,19 @@ import { defaultRenderMessage } from './defaultRenderMessage.js';
 // client, which triggers a page reload by changing the URL's search params,
 // which in turn triggers a new fixture selection on the server.
 type Props = {
-  searchParams: RendererSearchParams;
+  params: RendererParams;
   moduleWrappers: UserModuleWrappers;
   globalDecorators?: ReactDecorator[];
   renderMessage?: (msg: string) => React.ReactElement;
 };
 export function ServerFixtureLoader({
-  searchParams,
+  params,
   moduleWrappers,
   globalDecorators,
   renderMessage = defaultRenderMessage,
 }: Props) {
-  const { fixtureId = null, key = 0 } =
-    decodeRendererSearchParams(searchParams);
+  const { fixtureId = null, key = 0 } = params;
+
   const fixtureSelection = fixtureId && {
     fixtureId,
     initialFixtureState: {},

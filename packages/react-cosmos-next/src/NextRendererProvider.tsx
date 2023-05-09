@@ -8,15 +8,16 @@ import {
 } from 'react-cosmos-core';
 import { DomRendererProvider } from 'react-cosmos-dom';
 
+type Props = {
+  children: React.ReactNode;
+  rendererConfig: RendererConfig;
+  searchParams: RendererSearchParams;
+};
 export function NextRendererProvider({
   children,
   rendererConfig,
   searchParams,
-}: {
-  children: React.ReactNode;
-  rendererConfig: RendererConfig;
-  searchParams: RendererSearchParams;
-}) {
+}: Props) {
   const pathname = usePathname();
   const router = useRouter();
 
