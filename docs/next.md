@@ -16,12 +16,6 @@ Install React Cosmos:
 npm i -D react-cosmos@next react-cosmos-next@next
 ```
 
-Or if you’re using Yarn:
-
-```bash
-yarn add --dev react-cosmos@next react-cosmos-next@next
-```
-
 Create a basic fixture at `src/hello-world.fixture.jsx`:
 
 ```jsx
@@ -65,16 +59,16 @@ Add `package.json` script:
 }
 ```
 
-Start React Cosmos:
+Start Next.js:
+
+```bash
+npm run dev
+```
+
+Start React Cosmos (in a 2nd terminal):
 
 ```bash
 npm run cosmos
-```
-
-Or if you’re using Yarn:
-
-```bash
-yarn cosmos
 ```
 
 > You'll notice `cosmos.imports.js` was generated. This module is a dependency of the Cosmos Renderer. The Cosmos Server updates this file automatically. You can add it to .gitignore.
