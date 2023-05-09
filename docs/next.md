@@ -81,13 +81,13 @@ yarn cosmos
 
 🚀 Open **[localhost:5000](http://localhost:5000)** in your browser.
 
-That's it. You're now running a Server fixture in React Cosmos.
+That's it. You're now running a Server fixtures in React Cosmos!
 
-You can import both Server and Client components in your fixtures, which are Server fixtures by default. You can also add the `'use client'` directive to a fixture (or decorator) module if you want use Hooks inside it.
+You can import both Server and Client components in your fixtures, which run on the server by default. You can also add the `'use client'` directive to a fixture module (or decorator) if you want use Hooks inside it.
 
 ## Limitations
 
-- TODO.
+- Only single function fixtures can be exported from a fixture module with the `'use client'` descriptor. That's because Client fixtures are passed to the Server render tree as component types without being picked up by Cosmos first. While other fixture formats (React Node exports or multi fixture exports) cannot be used in Client fixtures, all Cosmos fixture formats as supported in Server fixtures.
 
 ## Next steps
 
