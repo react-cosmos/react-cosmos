@@ -2,8 +2,8 @@
 import React from 'react';
 import {
   RendererConfig,
+  RendererParams,
   RendererSearchParams,
-  StringRendererSearchParams,
   decodeRendererSearchParams,
   encodeRendererSearchParams,
   isInsideWindowIframe,
@@ -22,8 +22,8 @@ import { getDomRendererId } from './domRendererId.js';
 type Props = {
   children: React.ReactNode;
   rendererConfig: RendererConfig;
-  searchParams: StringRendererSearchParams;
-  setSearchParams?: (nextParams: StringRendererSearchParams) => void;
+  searchParams: RendererSearchParams;
+  setSearchParams?: (nextParams: RendererSearchParams) => void;
 };
 export function DomRendererProvider({
   children,
@@ -38,13 +38,13 @@ export function DomRendererProvider({
     [rendererConfig.playgroundUrl]
   );
 
-  const decodedParams = React.useMemo(
+  const params = React.useMemo(
     () => decodeRendererSearchParams(searchParams),
     [searchParams]
   );
 
-  const setDecodedParams = React.useCallback(
-    (nextParams: RendererSearchParams) => {
+  const setParams = React.useCallback(
+    (nextParams: RendererParams) => {
       // Implementing setSearchParams is optional. It is required for server
       // fixture loaders that cannot listen to client-side 'selectFixture'
       // requests from the Cosmos UI.
@@ -59,8 +59,8 @@ export function DomRendererProvider({
     <RendererProvider
       rendererId={rendererId}
       rendererConnect={rendererConnect}
-      searchParams={decodedParams}
-      setSearchParams={setDecodedParams}
+      params={params}
+      setParams={setParams}
       reloadRenderer={reloadRenderer}
     >
       {children}
@@ -98,6 +98,7 @@ function GlobalErrorHandler() {
 }
 
 function createDomRendererConnect(playgroundUrl: string) {
+  // TODO: Don't try to connect to WS in static exports.
   if (typeof window === 'undefined') {
     return createNoopRendererConnect();
   } else {

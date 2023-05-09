@@ -13,7 +13,7 @@ testRenderer(
   'renders lazy initially selected named fixture',
   {
     rendererId,
-    searchParams: { fixtureId: { path: 'first', name: 'one' } },
+    params: { fixtureId: { path: 'first', name: 'one' } },
     fixtures,
     lazy: true,
   },
@@ -26,7 +26,7 @@ testRenderer(
   'renders lazy initially selected unnamed fixture',
   {
     rendererId,
-    searchParams: { fixtureId: { path: 'second' } },
+    params: { fixtureId: { path: 'second' } },
     fixtures,
     lazy: true,
   },
@@ -39,7 +39,7 @@ testRenderer(
   'posts lazy fixture list with item names on initially selected fixture',
   {
     rendererId,
-    searchParams: { fixtureId: { path: 'first' } },
+    params: { fixtureId: { path: 'first' } },
     fixtures,
     lazy: true,
   },

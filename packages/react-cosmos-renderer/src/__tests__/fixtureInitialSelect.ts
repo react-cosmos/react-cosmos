@@ -13,7 +13,7 @@ testRenderer(
   'renders initially selected named fixture',
   {
     rendererId,
-    searchParams: { fixtureId: { path: 'first', name: 'one' } },
+    params: { fixtureId: { path: 'first', name: 'one' } },
     fixtures,
   },
   async ({ renderer }) => {
@@ -25,7 +25,7 @@ testRenderer(
   'renders initially selected unnamed fixture',
   {
     rendererId,
-    searchParams: { fixtureId: { path: 'second' } },
+    params: { fixtureId: { path: 'second' } },
     fixtures,
   },
   async ({ renderer }) => {
@@ -37,7 +37,7 @@ testRenderer(
   'posts ready response on initially selected fixture',
   {
     rendererId,
-    searchParams: { fixtureId: { path: 'second' } },
+    params: { fixtureId: { path: 'second' } },
     fixtures,
   },
   async ({ rendererReady }) => {

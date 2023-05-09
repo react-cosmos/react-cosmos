@@ -2,14 +2,14 @@ import React from 'react';
 import {
   FixtureList,
   RendererConnect,
-  RendererSearchParams,
+  RendererParams,
 } from 'react-cosmos-core';
 
 export type RendererContextValue = {
   rendererId: string;
   rendererConnect: RendererConnect;
-  searchParams: RendererSearchParams;
-  setSearchParams(nextParams: RendererSearchParams): void;
+  params: RendererParams;
+  setParams(nextParams: RendererParams): void;
   reloadRenderer(): void;
   lazyItems: FixtureList;
   setLazyItems: React.Dispatch<React.SetStateAction<FixtureList>>;
@@ -21,8 +21,8 @@ export const RendererContext = React.createContext<RendererContextValue>({
     postMessage: () => {},
     onMessage: () => () => {},
   },
-  searchParams: {},
-  setSearchParams: () => {},
+  params: {},
+  setParams: () => {},
   reloadRenderer: () => {},
   lazyItems: {},
   setLazyItems: () => {},

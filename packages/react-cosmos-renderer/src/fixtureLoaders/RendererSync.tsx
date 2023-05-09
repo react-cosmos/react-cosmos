@@ -9,14 +9,12 @@ type Props = {
 };
 export function RendererSync({ children, fixtures }: Props) {
   const {
-    searchParams,
+    params: { fixtureId: selectedFixtureId },
     rendererId,
     rendererConnect,
     reloadRenderer,
     lazyItems,
   } = React.useContext(RendererContext);
-
-  const { fixtureId: selectedFixtureId } = searchParams;
 
   const readyRef = React.useRef(false);
   React.useEffect(() => {

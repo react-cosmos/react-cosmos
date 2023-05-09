@@ -7,8 +7,8 @@ import {
   ReactFixtureModule,
   RendererConnect,
   RendererId,
+  RendererParams,
   RendererResponse,
-  RendererSearchParams,
   UserModuleWrappers,
 } from 'react-cosmos-core';
 import { ReactTestRenderer, act, create } from 'react-test-renderer';
@@ -22,8 +22,8 @@ import { createTestRendererConnect } from './createTestRendererConnect.js';
 
 export type RendererTestArgs = {
   rendererId: RendererId;
-  searchParams?: RendererSearchParams;
-  setSearchParams?: (nextParams: RendererSearchParams) => void;
+  params?: RendererParams;
+  setParams?: (nextParams: RendererParams) => void;
   reloadRenderer?: () => void;
   fixtures: ByPath<ReactFixtureModule>;
   decorators?: ByPath<ReactDecoratorModule>;
@@ -81,8 +81,8 @@ export async function mountTestRenderer(
 function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
   const {
     rendererId,
-    searchParams = {},
-    setSearchParams = () => {},
+    params = {},
+    setParams = () => {},
     reloadRenderer = () => {},
     fixtures,
     decorators = {},
@@ -93,8 +93,8 @@ function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
     <RendererProvider
       rendererId={rendererId}
       rendererConnect={rendererConnect}
-      searchParams={searchParams}
-      setSearchParams={setSearchParams}
+      params={params}
+      setParams={setParams}
       reloadRenderer={reloadRenderer}
     >
       <ClientFixtureLoader

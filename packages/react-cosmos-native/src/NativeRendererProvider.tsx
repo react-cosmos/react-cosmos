@@ -20,7 +20,7 @@ export function NativeRendererProvider({
     [rendererConfig.playgroundUrl]
   );
 
-  const searchParams = React.useMemo(
+  const params = React.useMemo(
     () => ({ fixtureId: initialFixtureId }),
     [initialFixtureId]
   );
@@ -30,8 +30,8 @@ export function NativeRendererProvider({
       // TODO: Generate unique ID per device
       rendererId="native-renderer"
       rendererConnect={rendererConnect}
-      searchParams={searchParams}
-      setSearchParams={noop}
+      params={params}
+      setParams={noop}
       reloadRenderer={reloadRenderer}
     >
       {children}
