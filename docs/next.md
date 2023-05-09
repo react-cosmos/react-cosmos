@@ -88,13 +88,13 @@ You can import both Server and Client components in your fixtures, which run on 
 ## Limitations
 
 - Only single function fixtures can be exported from a fixture module with the `'use client'` descriptor. That's because Client fixtures are passed to the Server render tree as component types without being picked up by Cosmos first. While other fixture formats (React Node exports or multi fixture exports) cannot be used in Client fixtures, all Cosmos fixture formats as supported in Server fixtures.
-- So far this is a dev server-only setup. It's already possible to export a static Cosmos UI that connects to a built Cosmos Renderer (as done [here](https://cosmos-reactjs.vercel.app/)). In this case the Renderer is essentially a live Next.js app. Ideally we'd also support completely static exports. Next.js can generate static exports of Server components by rendering them at build time. But at the moment the `NextFixtureLoader` uses the `searchParams` prop, which opts Next.js into [dynamic rendering](https://nextjs.org/docs/app/building-your-application/rendering/static-and-dynamic-rendering#dynamic-rendering).
+- So far this is a dev server-only setup. It's already possible to export a static Cosmos UI that connects to a built Cosmos Renderer (as done [here](https://cosmos-reactjs.vercel.app/)). In this case the Renderer is essentially a live Next.js app. Ideally we'd also support completely static exports. Next.js can generate static exports of Server components by rendering them at build time. But at the moment the `NextFixtureLoader` component uses the `searchParams` prop, which opts Next.js into [dynamic rendering](https://nextjs.org/docs/app/building-your-application/rendering/static-and-dynamic-rendering#dynamic-rendering).
 
 ## Next steps
 
 ### Static (_and dynamic?_) exports
 
-At the moment the `NextFixtureLoader` component uses URL search params for routing. This works well in development but isn't suited for static generation. Instead, [`generateStaticParams`](https://nextjs.org/docs/app/api-reference/functions/generate-static-params) could be used in combination with dynamic route segments (eg. `/cosmos/[fixtureId]`) to statically generate fixtures routes at build time. This needs to be explored.
+At the moment the `NextFixtureLoader` component uses URL search params for routing. This works well in development but isn't suited for static generation. Instead, [`generateStaticParams`](https://nextjs.org/docs/app/api-reference/functions/generate-static-params) could be used in combination with dynamic route segments (eg. `/cosmos/[fixtureId]`) to statically generate fixture routes at build time. This needs to be explored.
 
 While static exports are a must, dynamic exports might also be useful. Some Next.js pages will always be dynamic and the goal of React Cosmos is to be able to isolate and render _any_ part of your UI. Not sure if we'll ever want to export dynamic fixtures, which in this case means fixtures that run server-side code. Time will tell.
 
