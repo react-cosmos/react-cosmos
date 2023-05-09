@@ -1,6 +1,6 @@
 # Next.js
 
-> _**Warning**: You're entering the realm of cutting edge tech. React Server Components, Next.js App Router and React Cosmos 6 are all new. See [Limitations](#limitations) and [Next steps](#next-steps) for the complete picture. That said, get ready for some awesome!_
+> _**Warning**: You're entering the realm of cutting edge tech. React Server Components, Next.js App Router and React Cosmos 6 are all new. See [Limitations](#limitations) and [Next steps](#next-steps) for the complete picture. That said, get ready for some awesomeness!_
 
 This guide covers how to integrate React Cosmos with Next.js 13.4+. It includes support for **React Server Components**. The Cosmos Renderer switches seamlessly between Server and Client components in the same project.
 
