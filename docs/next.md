@@ -86,11 +86,9 @@ You can import both Server and Client components in your fixtures, which run on 
 
 ## Next steps
 
-### Static (_and dynamic?_) exports
+### Static exports
 
 At the moment the `NextFixtureLoader` component uses URL search params for routing. This works well in development but isn't suited for static generation. Instead, [`generateStaticParams`](https://nextjs.org/docs/app/api-reference/functions/generate-static-params) could be used in combination with dynamic route segments (eg. `/cosmos/[fixtureId]`) to statically generate fixture routes at build time. This needs to be explored.
-
-While static exports are a must, dynamic exports might also be useful. Some Next.js pages will always be dynamic and the goal of React Cosmos is to be able to isolate and render _any_ part of your UI. Not sure if we'll ever want to export dynamic fixtures, which in this case means fixtures that run server-side code. Time will tell.
 
 ### Next.js plugin
 
