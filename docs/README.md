@@ -71,6 +71,13 @@ Create `cosmos.config.json` and enable Webpack plugin.
 </details>
 
 <details>
+  <summary>Next.js</summary>
+
+[Check out this guide](next.md).
+
+</details>
+
+<details>
   <summary>Custom bundler setup</summary>
 
 [Check out this guide](customBundlerSetup.md).
