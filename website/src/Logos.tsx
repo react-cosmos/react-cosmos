@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { contentMaxWidth, mobileMaxWidth } from './shared/breakpoints.js';
+import { contentMaxWidth } from './shared/breakpoints.js';
 import { getSlideInStyle, slideInTransition } from './shared/slideIn.js';
 import { useViewportEnter } from './shared/useViewportEnter.js';
 
@@ -18,6 +18,20 @@ export function Logos() {
         </Item>
         <Item>
           <LogoImage src="/logos/hootsuite.svg" alt="Hootsuite" />
+        </Item>
+        <Item>
+          <LogoImage
+            src="/logos/radity.png"
+            alt="Radity"
+            style={{ padding: '2% 10%' }}
+          />
+        </Item>
+        <Item>
+          <LogoImage
+            src="/logos/globalctoforum.png"
+            alt="Global CTO Forum"
+            style={{ padding: '3% 10%' }}
+          />
         </Item>
       </List>
     </Container>
@@ -41,7 +55,7 @@ const Title = styled.div`
 
 const List = styled.div`
   margin: 0 auto;
-  max-width: 1024px;
+  max-width: 1200px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -53,23 +67,23 @@ const List = styled.div`
 `;
 
 const Item = styled.div`
-  width: 320px;
+  flex: 1;
+  height: 70px;
   padding: 16px 0;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 
-  @media (max-width: ${mobileMaxWidth}px) {
-    width: 260px;
+  @media (max-width: ${contentMaxWidth}px) {
+    width: 200px;
   }
 `;
 
 const LogoImage = styled.img`
-  width: 288px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   opacity: 0.7;
-
-  @media (max-width: ${mobileMaxWidth}px) {
-    width: 234px;
-  }
 `;
