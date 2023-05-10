@@ -1,11 +1,10 @@
 import React from 'react';
 import { useValue } from 'react-cosmos/client';
-import { DEFAULT_DEVICES } from '../shared.js';
+import { DEFAULT_DEVICES, DEFAULT_VIEWPORT_STATE } from '../shared.js';
 import { Header } from './Header.js';
 import { getViewportScaleFactor } from './style.js';
 
-const { width, height } = DEFAULT_DEVICES[0];
-const initialViewport = { width, height };
+const initialViewport = DEFAULT_VIEWPORT_STATE.viewport;
 const containerViewport = { width: 640, height: 480 };
 
 export default () => {
