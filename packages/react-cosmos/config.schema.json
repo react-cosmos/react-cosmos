@@ -1,7 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema",
-  "title": "JSON schema for React Cosmos configs",
-  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema#",
   "additionalProperties": false,
   "properties": {
     "$schema": {
@@ -22,7 +20,7 @@
       "type": "boolean"
     },
     "disablePlugins": {
-      "description": "Disable all plugins 3rd party plugins",
+      "description": "Disable plugins",
       "type": "boolean"
     },
     "staticPath": {
@@ -228,5 +226,7 @@
         }
       }
     }
-  }
+  },
+  "title": "JSON schema for React Cosmos configs",
+  "type": "object"
 }
