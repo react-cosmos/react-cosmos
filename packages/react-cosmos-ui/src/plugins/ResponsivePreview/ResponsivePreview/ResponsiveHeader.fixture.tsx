@@ -1,7 +1,7 @@
 import React from 'react';
 import { useValue } from 'react-cosmos/client';
 import { DEFAULT_DEVICES, DEFAULT_VIEWPORT_STATE } from '../shared.js';
-import { Header } from './Header.js';
+import { ResponsiveHeader } from './ResponsiveHeader.js';
 import { getViewportScaleFactor } from './style.js';
 
 const initialViewport = DEFAULT_VIEWPORT_STATE.viewport;
@@ -16,7 +16,7 @@ export default () => {
   });
   const scaleFactor = getViewportScaleFactor(viewport, containerViewport);
   return (
-    <Header
+    <ResponsiveHeader
       devices={DEFAULT_DEVICES}
       selectedViewport={viewport}
       scaleFactor={scaleFactor}

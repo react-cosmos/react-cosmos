@@ -34,7 +34,7 @@ const numberInputStypes = {
   focusedBoxShadow: `0 0 0.5px 1px ${blue}`,
 };
 
-export const Header = React.memo(function Header({
+export const ResponsiveHeader = React.memo(function ResponsiveHeader({
   devices,
   selectedViewport,
   scaleFactor,
