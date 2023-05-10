@@ -21,16 +21,16 @@ export function Logos() {
         </Item>
         <Item>
           <LogoImage
-            src="/logos/radity.png"
-            alt="Radity"
+            src="/logos/globalctoforum.svg"
+            alt="Global CTO Forum"
             style={{ padding: '2% 10%' }}
           />
         </Item>
         <Item>
           <LogoImage
-            src="/logos/globalctoforum.png"
-            alt="Global CTO Forum"
-            style={{ padding: '3% 10%' }}
+            src="/logos/radity.png"
+            alt="Radity"
+            style={{ padding: '2% 10%' }}
           />
         </Item>
       </List>
