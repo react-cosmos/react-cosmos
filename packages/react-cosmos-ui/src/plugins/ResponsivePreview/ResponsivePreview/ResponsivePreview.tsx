@@ -12,7 +12,7 @@ import styled, { css } from 'styled-components';
 import { useDrag } from '../../../hooks/useDrag.js';
 import { grey64, grey8 } from '../../../style/colors.js';
 import { ResponsiveDevice, ResponsiveViewport } from '../spec.js';
-import { Header } from './Header.js';
+import { ResponsiveHeader } from './ResponsiveHeader.js';
 import {
   getStyles,
   getViewportScaleFactor,
@@ -123,7 +123,7 @@ export function ResponsivePreview({
   } = getStyles({ container, viewport, scaled });
   return (
     <Container>
-      <Header
+      <ResponsiveHeader
         devices={devices}
         selectedViewport={viewport}
         scaleFactor={scaleFactor}
