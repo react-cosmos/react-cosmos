@@ -113,11 +113,11 @@ it('sets viewport in fixture state on device select', async () => {
   const mocks = mockViewportFixtureState();
 
   const renderer = loadTestPlugins();
-  await selectViewport(renderer, '414x736');
+  await selectViewport(renderer, '428x926');
 
   expect(mocks.fixtureState.viewport).toEqual({
-    width: 414,
-    height: 736,
+    width: 428,
+    height: 926,
   });
 });
 
@@ -126,12 +126,12 @@ it('saves viewport in storage on device select', async () => {
   mockRendererUrl();
 
   const renderer = loadTestPlugins();
-  await selectViewport(renderer, '414x736');
+  await selectViewport(renderer, '428x926');
 
   expect(storageMock[VIEWPORT_STORAGE_KEY]).toEqual({
     enabled: true,
     scaled: true,
-    viewport: { width: 414, height: 736 },
+    viewport: { width: 428, height: 926 },
   });
 });
 
