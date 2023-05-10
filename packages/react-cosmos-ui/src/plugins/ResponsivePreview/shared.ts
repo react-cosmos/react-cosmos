@@ -26,7 +26,6 @@ export const DEFAULT_DEVICES = [
 
   { label: 'iPad mini', width: 744, height: 1133 },
   { label: 'iPad', width: 820, height: 1180 },
-  { label: 'iPad Air', width: 820, height: 1180 },
   { label: 'iPad Pro 11"', width: 834, height: 1194 },
   { label: 'iPad Pro 12.9"', width: 1024, height: 1366 },
 
