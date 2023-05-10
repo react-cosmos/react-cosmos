@@ -68,12 +68,10 @@ const List = styled.div`
 
 const Item = styled.div`
   flex: 1;
-  height: 70px;
-  padding: 16px 0;
+  padding: 20px 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
 
   @media (max-width: ${contentMaxWidth}px) {
     width: 200px;
@@ -83,7 +81,6 @@ const Item = styled.div`
 const LogoImage = styled.img`
   box-sizing: border-box;
   width: 100%;
-  height: 100%;
   object-fit: contain;
   opacity: 0.7;
 `;
