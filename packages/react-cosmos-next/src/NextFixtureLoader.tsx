@@ -18,13 +18,14 @@ export function NextFixtureLoader({
   moduleWrappers,
   searchParams,
 }: Props) {
+  const { fixtureId = null } = decodeRendererSearchParams(searchParams);
   return (
     <NextRendererProvider
       rendererConfig={rendererConfig}
       searchParams={searchParams}
     >
       <ServerFixtureLoader
-        params={decodeRendererSearchParams(searchParams)}
+        fixtureId={fixtureId}
         moduleWrappers={moduleWrappers}
         renderMessage={renderMessage}
       />

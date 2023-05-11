@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import {
+  FixtureId,
   ReactDecorator,
-  RendererParams,
   UserModuleWrappers,
 } from 'react-cosmos-core';
 import { FixtureModule } from '../fixtureModule/FixtureModule.js';
@@ -21,23 +21,27 @@ import { defaultRenderMessage } from './defaultRenderMessage.js';
 // client, which triggers a page reload by changing the URL's search params,
 // which in turn triggers a new fixture selection on the server.
 type Props = {
-  params: RendererParams;
+  fixtureId: FixtureId | null;
   moduleWrappers: UserModuleWrappers;
   globalDecorators?: ReactDecorator[];
   renderMessage?: (msg: string) => React.ReactElement;
 };
 export function ServerFixtureLoader({
-  params,
+  fixtureId,
   moduleWrappers,
   globalDecorators,
   renderMessage = defaultRenderMessage,
 }: Props) {
-  const { fixtureId = null, key = 0 } = params;
-
   const fixtureSelection = fixtureId && {
     fixtureId,
     initialFixtureState: {},
-    renderKey: key,
+    // Search fixture loader is meant to work with Next.js build-time static
+    // generation. Its props will be driven by finite URL segment params and not
+    // query strings, which are inherently dynamic. This means we can't receive
+    // an incrementing renderKey here. Instead, we'll rely solely on the fixture
+    // ID as the fixture render key and will not support refreshing the current
+    // fixture by selecting it again.
+    renderKey: 0,
   };
 
   return (
