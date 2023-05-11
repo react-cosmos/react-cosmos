@@ -82,6 +82,7 @@ function getDevServerWebRendereUrl(
 }
 
 function getExportWebRendereUrl(cosmosConfig: CosmosConfig) {
+  // TODO: Allow user to customize renderer URL in static export
   return resolveRendererUrl(cosmosConfig.publicUrl, RENDERER_FILENAME);
 }
 

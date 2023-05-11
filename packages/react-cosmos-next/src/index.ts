@@ -1,1 +1,1 @@
-export * from './NextFixtureLoader.js';
+export { nextCosmosRenderer } from './nextCosmosRenderer.js';

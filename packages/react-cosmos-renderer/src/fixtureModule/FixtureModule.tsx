@@ -7,6 +7,7 @@ import {
   ReactFixtureModule,
   getFixtureFromExport,
   getFixtureItemFromExport,
+  stringifyFixtureId,
 } from 'react-cosmos-core';
 import { DecoratedFixture } from './DecoratedFixture.js';
 import { FixtureProvider } from './FixtureProvider.js';
@@ -36,6 +37,11 @@ export function FixtureModule({
     [fixtureModule.default]
   );
 
+  const fixtureKey = React.useMemo(
+    () => `${stringifyFixtureId(fixtureId)}-${renderKey}`,
+    [fixtureId, renderKey]
+  );
+
   const fixture = getFixtureFromExport(fixtureModule.default, fixtureId.name);
 
   if (typeof fixture === 'undefined') {
@@ -44,7 +50,7 @@ export function FixtureModule({
 
   return (
     <FixtureProvider
-      key={renderKey}
+      key={fixtureKey}
       fixtureId={fixtureId}
       initialFixtureState={initialFixtureState}
       fixtureItem={fixtureItem}
