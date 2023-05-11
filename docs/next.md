@@ -75,7 +75,7 @@ You can import both Server and Client components in your fixtures, which run on 
 
 ## Limitations
 
-- Only single function fixtures can be exported from a fixture module with the `'use client'` descriptor. That's because Client fixture modules are passed _as is_ to the Server render tree and their exports are expected to be component types. While other fixture formats (React Node exports or multi fixture exports) cannot be used in Client fixtures, all Cosmos fixture formats as supported in Server fixtures.
+- Only single function fixtures can be exported from a fixture module with the `'use client'` descriptor. That's because Client fixture modules are passed _as is_ to the Server render tree and their exports are expected to be component types by design. While other fixture formats (React Node exports or multi fixture exports) cannot be used in Client fixtures, all Cosmos fixture formats as supported in Server fixtures.
 - So far this is a dev server-only setup. See [Static exports](#static-exports).
 
 ## Next steps
@@ -100,10 +100,12 @@ Similar to the Vite and Webpack plugins, a Next.js plugin would:
 
 Making a Cosmos plugin is easy-peasy. _Docs for it will come soon, too, I promise._ The hard(er) part here is figuring out how to plug into Next.js for the following:
 
-- _How to automatically create a `/cosmos` page and inject the `cosmos.imports` module under the hood?_
-- _How to omit the `/cosmos` page in production?_
-- _How to only build the `/cosmos` page when creating a static export?_
+Ideally we would call the `dev` and `build` Next.js commands programatically. But I don't know if Next.js supports this at the moment. There is a [Custom Server](https://nextjs.org/docs/pages/building-your-application/configuring/custom-server) API but I'm not sure if it works with the App Router architecture and the build part is missing.
 
-If you or someone you know has answers to these questions please don't be shy. I'd greatly appreciate some Next.js insights for improving this integration!
+A less ambitious goal would be to configure Next.js to omit the `/cosmos` page in production and only include the `/cosmos` page when generating a React Cosmos static export.
+
+The last resort would be a monorepo with a main Next.js app and a Cosmos Next.js app.
+
+> _If you or someone you know has Next.js expertise please don't be shy and reach out. Any help here is appreciated!_
 
 [Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.
