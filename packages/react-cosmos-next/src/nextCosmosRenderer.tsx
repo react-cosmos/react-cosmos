@@ -4,7 +4,7 @@ import {
   RendererSearchParams,
   UserModuleWrappers,
 } from 'react-cosmos-core';
-import { NextFixtureLoader } from 'react-cosmos-next';
+import { NextFixtureLoader } from './NextFixtureLoader.js';
 
 type NextCosmosRendererArgs = {
   rendererConfig: RendererConfig;
