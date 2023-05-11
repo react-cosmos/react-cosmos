@@ -21,6 +21,7 @@ export * from './userModules/fixtureTypes.js';
 export * from './userModules/getFixtureFromExport.js';
 export * from './userModules/getFixtureList.js';
 export * from './userModules/getSortedDecoratorsForFixturePath.js';
+export * from './userModules/stringifyFixtureId.js';
 export * from './userModules/userModuleTypes.js';
 export * from './utils/array.js';
 export * from './utils/keys.js';

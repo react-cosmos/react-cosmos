@@ -1,6 +1,5 @@
 import {
   FixtureElementId,
-  FixtureId,
   FixtureStatePrimitiveValue,
   FixtureStateUnserializableValue,
   TreeNode,
@@ -28,11 +27,6 @@ export const ValueTreeItem = styled.div<ValueTreeItemProps>`
 export function stringifyElementId(elementId: FixtureElementId) {
   const { decoratorId, elPath } = elementId;
   return elPath ? `${decoratorId}-${elPath}` : decoratorId;
-}
-
-export function stringifyFixtureId(fixtureId: FixtureId) {
-  const { path, name } = fixtureId;
-  return name ? `${path}-${name}` : path;
 }
 
 function getLeftPadding(depth: number) {
