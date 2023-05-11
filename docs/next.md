@@ -1,10 +1,10 @@
 # Next.js
 
-> _**Warning**: React Server Components, Next.js App Router are new technologies and their integration with React Cosmos is fresh from the oven. See [Limitations](#limitations) and [Next steps](#next-steps) for the full picture. That said, get ready for something awesome!_
+> _**Warning**: React Server Components and Next.js App Router are new technologies, and their integration with React Cosmos is fresh from the oven. See [Limitations](#limitations) and [Next steps](#next-steps) for the full picture. That said, get ready for something awesome!_
 
 This guide covers how to integrate React Cosmos with Next.js 13.4+. It includes support for **React Server Components**. The Cosmos Renderer switches seamlessly between Server and Client components in the same project.
 
-You may also want to check out [react-cosmos/nextjs-example](https://github.com/react-cosmos/nextjs-example), which features both Server and Client fixtures of the glorious [react-tweet](https://github.com/vercel-labs/react-tweet) component.
+Also check out [react-cosmos/nextjs-example](https://github.com/react-cosmos/nextjs-example), which features both Server and Client fixtures of the glorious [react-tweet](https://github.com/vercel-labs/react-tweet) component.
 
 [gif]
 
