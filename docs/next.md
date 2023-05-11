@@ -6,8 +6,6 @@ This guide covers how to integrate React Cosmos with Next.js 13.4+. It includes 
 
 Also check out [react-cosmos/nextjs-example](https://github.com/react-cosmos/nextjs-example), which features both Server and Client fixtures of the glorious [react-tweet](https://github.com/vercel-labs/react-tweet) component.
 
-[gif]
-
 ## Getting started
 
 Create a [new Next.js project](https://nextjs.org/docs/getting-started/installation) or open an existing one.
