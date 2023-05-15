@@ -22,8 +22,8 @@ import { createTestRendererConnect } from './createTestRendererConnect.js';
 
 export type RendererTestArgs = {
   rendererId: RendererId;
-  selectedFixtureId?: FixtureId;
   locked?: boolean;
+  selectedFixtureId?: FixtureId;
   reloadRenderer?: () => void;
   fixtures: ByPath<ReactFixtureModule>;
   decorators?: ByPath<ReactDecoratorModule>;
@@ -81,8 +81,8 @@ export async function mountTestRenderer(
 function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
   const {
     rendererId,
-    selectedFixtureId = null,
     locked = false,
+    selectedFixtureId = null,
     reloadRenderer = () => {},
     fixtures,
     decorators = {},
@@ -93,8 +93,8 @@ function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
     <StatefulRendererProvider
       rendererId={rendererId}
       rendererConnect={rendererConnect}
-      selectedFixtureId={selectedFixtureId}
       locked={locked}
+      selectedFixtureId={selectedFixtureId}
       reloadRenderer={reloadRenderer}
     >
       <ClientFixtureLoader
