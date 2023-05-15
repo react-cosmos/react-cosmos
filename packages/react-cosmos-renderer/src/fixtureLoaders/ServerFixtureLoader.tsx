@@ -7,7 +7,6 @@ import {
 import { FixtureModule } from '../fixtureModule/FixtureModule.js';
 import { AsyncModuleLoader } from '../moduleLoaders/AsyncModuleLoader.js';
 import { FixtureLoaderConnect } from './FixtureLoaderConnect.js';
-import { ServerFixtureChangeListener } from './ServerFixtureChangeListener.js';
 import { defaultRenderMessage } from './defaultRenderMessage.js';
 
 // This fixture loader is designed for React Server Components setups.
@@ -21,18 +20,18 @@ import { defaultRenderMessage } from './defaultRenderMessage.js';
 // client, which triggers a page reload by changing the URL's search params,
 // which in turn triggers a new fixture selection on the server.
 type Props = {
-  fixtureId: FixtureId | null;
+  fixtureId?: FixtureId | null;
   moduleWrappers: UserModuleWrappers;
   globalDecorators?: ReactDecorator[];
   renderMessage?: (msg: string) => React.ReactElement;
 };
 export function ServerFixtureLoader({
-  fixtureId,
+  fixtureId = null,
   moduleWrappers,
   globalDecorators,
   renderMessage = defaultRenderMessage,
 }: Props) {
-  const fixtureSelection = fixtureId && {
+  const selectedFixture = fixtureId && {
     fixtureId,
     initialFixtureState: {},
     // Search fixture loader is meant to work with Next.js build-time static
@@ -45,32 +44,30 @@ export function ServerFixtureLoader({
   };
 
   return (
-    <ServerFixtureChangeListener>
-      <FixtureLoaderConnect
-        moduleWrappers={moduleWrappers}
-        fixtureSelection={fixtureSelection}
-        renderMessage={renderMessage}
-        renderFixture={selection => (
-          // The suspense boundary allows the rendererReady response to be sent
-          // before loading the fixture modules.
-          <Suspense>
-            {/* @ts-expect-error Async Server Component */}
-            <AsyncModuleLoader
-              moduleWrappers={moduleWrappers}
-              fixturePath={selection.fixtureId.path}
-              renderModules={modules => (
-                <FixtureModule
-                  {...modules}
-                  {...selection}
-                  globalDecorators={globalDecorators}
-                  lazy={moduleWrappers.lazy}
-                  renderMessage={renderMessage}
-                />
-              )}
-            />
-          </Suspense>
-        )}
-      />
-    </ServerFixtureChangeListener>
+    <FixtureLoaderConnect
+      moduleWrappers={moduleWrappers}
+      selectedFixture={selectedFixture}
+      renderMessage={renderMessage}
+      renderFixture={selected => (
+        // The suspense boundary allows the rendererReady response to be sent
+        // before loading the fixture modules.
+        <Suspense>
+          {/* @ts-expect-error Async Server Component */}
+          <AsyncModuleLoader
+            moduleWrappers={moduleWrappers}
+            fixturePath={selected.fixtureId.path}
+            renderModules={modules => (
+              <FixtureModule
+                {...modules}
+                {...selected}
+                globalDecorators={globalDecorators}
+                lazy={moduleWrappers.lazy}
+                renderMessage={renderMessage}
+              />
+            )}
+          />
+        </Suspense>
+      )}
+    />
   );
 }

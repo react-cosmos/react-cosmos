@@ -2,39 +2,81 @@
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 import {
+  FixtureId,
   RendererConfig,
-  RendererSearchParams,
+  RendererParams,
   buildQueryString,
 } from 'react-cosmos-core';
-import { DomRendererProvider } from 'react-cosmos-dom';
+import {
+  GlobalErrorHandler,
+  getDomRendererId,
+  useDomRendererConnect,
+} from 'react-cosmos-dom';
+import {
+  RendererProvider,
+  SelectedFixture,
+} from 'react-cosmos-renderer/client';
 
 type Props = {
   children: React.ReactNode;
   rendererConfig: RendererConfig;
-  searchParams: RendererSearchParams;
+  params: RendererParams;
 };
 export function NextRendererProvider({
   children,
   rendererConfig,
-  searchParams,
+  params,
 }: Props) {
+  const rendererId = React.useMemo(() => getDomRendererId(), []);
+  const rendererConnect = useDomRendererConnect(rendererConfig);
+  const selectedFixture = useSelectedFixture(params.fixtureId);
+
   const pathname = usePathname();
   const router = useRouter();
 
-  const setSearchParams = React.useCallback(
-    (nextParams: RendererSearchParams) => {
-      router.push(pathname + buildQueryString(nextParams));
+  // TODO: WIP
+  const setSelectedFixture = React.useCallback(
+    (action: React.SetStateAction<SelectedFixture | null>) => {
+      const nextState =
+        typeof action === 'function' ? action(selectedFixture) : action;
+      router.push(
+        pathname +
+          buildQueryString({
+            locked: params.locked,
+            fixtureId: nextState?.fixtureId,
+          })
+      );
     },
-    [pathname, router]
+    [params.locked, pathname, router, selectedFixture]
   );
 
   return (
-    <DomRendererProvider
-      rendererConfig={rendererConfig}
-      searchParams={searchParams}
-      setSearchParams={setSearchParams}
+    <RendererProvider
+      rendererId={rendererId}
+      rendererConnect={rendererConnect}
+      locked={params.locked ?? false}
+      selectedFixture={selectedFixture}
+      setSelectedFixture={setSelectedFixture}
+      reloadRenderer={reloadRenderer}
     >
       {children}
-    </DomRendererProvider>
+      {typeof window !== 'undefined' && <GlobalErrorHandler />}
+    </RendererProvider>
   );
+}
+
+function useSelectedFixture(fixtureId: FixtureId | null = null) {
+  return React.useMemo(
+    () =>
+      fixtureId && {
+        fixtureId,
+        initialFixtureState: {},
+        renderKey: 0,
+      },
+    [fixtureId]
+  );
+}
+
+function reloadRenderer() {
+  window.location.reload();
 }

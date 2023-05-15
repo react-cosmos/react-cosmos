@@ -9,12 +9,16 @@ type Props = {
 };
 export function RendererSync({ children, fixtures }: Props) {
   const {
-    params: { fixtureId: selectedFixtureId },
     rendererId,
     rendererConnect,
+    selectedFixture,
+    setSelectedFixture,
+    locked,
     reloadRenderer,
     lazyItems,
   } = React.useContext(RendererContext);
+
+  const selectedFixtureId = selectedFixture?.fixtureId;
 
   const readyRef = React.useRef(false);
   React.useEffect(() => {
@@ -66,6 +70,32 @@ export function RendererSync({ children, fixtures }: Props) {
         }
       }),
     [fixtures, reloadRenderer, rendererConnect, rendererId, selectedFixtureId]
+  );
+
+  React.useEffect(
+    () =>
+      rendererConnect.onMessage(msg => {
+        if (
+          !locked &&
+          msg.type === 'selectFixture' &&
+          msg.payload.rendererId === rendererId
+        ) {
+          const { fixtureId, fixtureState } = msg.payload;
+          setSelectedFixture(prevState => ({
+            ...prevState,
+            fixtureId,
+            initialFixtureState: fixtureState,
+            renderKey: (prevState?.renderKey ?? 0) + 1,
+          }));
+        } else if (
+          !locked &&
+          msg.type === 'unselectFixture' &&
+          msg.payload.rendererId === rendererId
+        ) {
+          setSelectedFixture(null);
+        }
+      }),
+    [locked, rendererConnect, rendererId, setSelectedFixture]
   );
 
   return <>{children}</>;

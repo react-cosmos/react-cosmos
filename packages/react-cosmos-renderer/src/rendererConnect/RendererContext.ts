@@ -1,15 +1,25 @@
 import React from 'react';
 import {
+  FixtureId,
   FixtureList,
+  FixtureState,
   RendererConnect,
-  RendererParams,
 } from 'react-cosmos-core';
+
+export type SelectedFixture = {
+  fixtureId: FixtureId;
+  initialFixtureState: FixtureState;
+  renderKey: number;
+};
 
 export type RendererContextValue = {
   rendererId: string;
   rendererConnect: RendererConnect;
-  params: RendererParams;
-  setParams(nextParams: RendererParams): void;
+  locked: boolean;
+  selectedFixture: SelectedFixture | null;
+  setSelectedFixture: React.Dispatch<
+    React.SetStateAction<SelectedFixture | null>
+  >;
   reloadRenderer(): void;
   lazyItems: FixtureList;
   setLazyItems: React.Dispatch<React.SetStateAction<FixtureList>>;
@@ -21,8 +31,9 @@ export const RendererContext = React.createContext<RendererContextValue>({
     postMessage: () => {},
     onMessage: () => () => {},
   },
-  params: {},
-  setParams: () => {},
+  locked: false,
+  selectedFixture: null,
+  setSelectedFixture: () => {},
   reloadRenderer: () => {},
   lazyItems: {},
   setLazyItems: () => {},

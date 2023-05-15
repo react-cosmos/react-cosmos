@@ -18,18 +18,22 @@ export function NextFixtureLoader({
   moduleWrappers,
   searchParams,
 }: Props) {
-  const { fixtureId = null } = decodeRendererSearchParams(searchParams);
+  const params = useDecodedSearchParams(searchParams);
   return (
-    <NextRendererProvider
-      rendererConfig={rendererConfig}
-      searchParams={searchParams}
-    >
+    <NextRendererProvider rendererConfig={rendererConfig} params={params}>
       <ServerFixtureLoader
-        fixtureId={fixtureId}
+        fixtureId={params.fixtureId}
         moduleWrappers={moduleWrappers}
         renderMessage={renderMessage}
       />
     </NextRendererProvider>
+  );
+}
+
+function useDecodedSearchParams(searchParams: RendererSearchParams) {
+  return React.useMemo(
+    () => decodeRendererSearchParams(searchParams),
+    [searchParams]
   );
 }
 

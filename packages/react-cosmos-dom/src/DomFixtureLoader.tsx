@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  RendererConfig,
-  UserModuleWrappers,
-  parseQueryString,
-} from 'react-cosmos-core';
+import { RendererConfig, UserModuleWrappers } from 'react-cosmos-core';
 import { ClientFixtureLoader } from 'react-cosmos-renderer/client';
 import { DomRendererProvider } from './DomRendererProvider.js';
 import { ErrorCatch } from './ErrorCatch.js';
@@ -13,12 +9,8 @@ type Props = {
   moduleWrappers: UserModuleWrappers;
 };
 export function DomFixtureLoader({ rendererConfig, moduleWrappers }: Props) {
-  const searchParams = parseQueryString(location.search);
   return (
-    <DomRendererProvider
-      rendererConfig={rendererConfig}
-      searchParams={searchParams}
-    >
+    <DomRendererProvider rendererConfig={rendererConfig}>
       <ClientFixtureLoader
         moduleWrappers={moduleWrappers}
         globalDecorators={globalDecorators}
