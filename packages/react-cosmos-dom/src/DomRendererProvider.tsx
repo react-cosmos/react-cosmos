@@ -7,16 +7,16 @@ import {
 } from 'react-cosmos-core';
 import { StatefulRendererProvider } from 'react-cosmos-renderer/client';
 import { GlobalErrorHandler } from './GlobalErrorHandler.js';
-import { getDomRendererId } from './domRendererId.js';
 import { reloadDomRenderer } from './reloadDomRenderer.js';
 import { useDomRendererConnect } from './useDomRendererConnect.js';
+import { useDomRendererId } from './useDomRendererId.js';
 
 type Props = {
   children: React.ReactNode;
   rendererConfig: RendererConfig;
 };
 export function DomRendererProvider({ children, rendererConfig }: Props) {
-  const rendererId = React.useMemo(() => getDomRendererId(), []);
+  const rendererId = useDomRendererId();
   const rendererConnect = useDomRendererConnect(rendererConfig);
 
   const { locked = false, fixtureId = null } = React.useMemo(

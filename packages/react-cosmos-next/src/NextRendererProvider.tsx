@@ -8,9 +8,9 @@ import {
 } from 'react-cosmos-core';
 import {
   GlobalErrorHandler,
-  getDomRendererId,
   reloadDomRenderer,
   useDomRendererConnect,
+  useDomRendererId,
 } from 'react-cosmos-dom';
 import {
   RendererProvider,
@@ -29,7 +29,7 @@ export function NextRendererProvider({
   locked,
   selectedFixture,
 }: Props) {
-  const rendererId = React.useMemo(() => getDomRendererId(), []);
+  const rendererId = useDomRendererId();
   const rendererConnect = useDomRendererConnect(rendererConfig);
 
   const pathname = usePathname();
