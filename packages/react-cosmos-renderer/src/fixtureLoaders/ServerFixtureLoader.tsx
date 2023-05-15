@@ -26,7 +26,7 @@ type Props = {
   renderMessage?: (msg: string) => React.ReactElement;
 };
 export function ServerFixtureLoader({
-  fixtureId = null,
+  fixtureId,
   moduleWrappers,
   globalDecorators,
   renderMessage = defaultRenderMessage,
