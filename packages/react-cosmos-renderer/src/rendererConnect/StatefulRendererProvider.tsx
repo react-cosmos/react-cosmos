@@ -8,11 +8,14 @@ type Props = {
   rendererId: string;
   rendererConnect: RendererConnect;
   locked: boolean;
-  selectedFixtureId?: FixtureId | null;
+  selectedFixtureId: FixtureId | null;
   reloadRenderer(): void;
 };
-export function ClientRendererProvider(props: Props) {
-  const { selectedFixtureId = null } = props;
+export function StatefulRendererProvider({
+  children,
+  selectedFixtureId,
+  ...otherProps
+}: Props) {
   const [selectedFixture, setSelectedFixture] = React.useState(
     () =>
       selectedFixtureId && {
@@ -24,14 +27,11 @@ export function ClientRendererProvider(props: Props) {
 
   return (
     <RendererProvider
-      rendererId={props.rendererId}
-      rendererConnect={props.rendererConnect}
-      locked={props.locked}
+      {...otherProps}
       selectedFixture={selectedFixture}
       setSelectedFixture={setSelectedFixture}
-      reloadRenderer={props.reloadRenderer}
     >
-      {props.children}
+      {children}
     </RendererProvider>
   );
 }

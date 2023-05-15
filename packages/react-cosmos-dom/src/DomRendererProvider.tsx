@@ -5,9 +5,10 @@ import {
   decodeRendererSearchParams,
   parseQueryString,
 } from 'react-cosmos-core';
-import { ClientRendererProvider } from 'react-cosmos-renderer/client';
+import { StatefulRendererProvider } from 'react-cosmos-renderer/client';
 import { GlobalErrorHandler } from './GlobalErrorHandler.js';
 import { getDomRendererId } from './domRendererId.js';
+import { reloadDomRenderer } from './reloadDomRenderer.js';
 import { useDomRendererConnect } from './useDomRendererConnect.js';
 
 type Props = {
@@ -20,21 +21,17 @@ export function DomRendererProvider({ children, rendererConfig }: Props) {
   const searchParams = useDecodedSearchParams();
 
   return (
-    <ClientRendererProvider
+    <StatefulRendererProvider
       rendererId={rendererId}
       rendererConnect={rendererConnect}
       locked={searchParams.locked ?? false}
-      selectedFixtureId={searchParams.fixtureId}
-      reloadRenderer={reloadRenderer}
+      selectedFixtureId={searchParams.fixtureId ?? null}
+      reloadRenderer={reloadDomRenderer}
     >
       {children}
       {typeof window !== 'undefined' && <GlobalErrorHandler />}
-    </ClientRendererProvider>
+    </StatefulRendererProvider>
   );
-}
-
-function reloadRenderer() {
-  window.location.reload();
 }
 
 function useDecodedSearchParams() {

@@ -10,6 +10,7 @@ import {
 import {
   GlobalErrorHandler,
   getDomRendererId,
+  reloadDomRenderer,
   useDomRendererConnect,
 } from 'react-cosmos-dom';
 import {
@@ -57,7 +58,7 @@ export function NextRendererProvider({
       locked={params.locked ?? false}
       selectedFixture={selectedFixture}
       setSelectedFixture={setSelectedFixture}
-      reloadRenderer={reloadRenderer}
+      reloadRenderer={reloadDomRenderer}
     >
       {children}
       {typeof window !== 'undefined' && <GlobalErrorHandler />}
@@ -75,8 +76,4 @@ function useSelectedFixture(fixtureId: FixtureId | null = null) {
       },
     [fixtureId]
   );
-}
-
-function reloadRenderer() {
-  window.location.reload();
 }

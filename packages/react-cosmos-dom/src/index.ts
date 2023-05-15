@@ -4,4 +4,5 @@ export * from './DomRendererProvider.js';
 export * from './GlobalErrorHandler.js';
 export * from './domRendererId.js';
 export * from './mountDomRenderer.js';
+export * from './reloadDomRenderer.js';
 export * from './useDomRendererConnect.js';

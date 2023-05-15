@@ -13,7 +13,7 @@ import {
 } from 'react-cosmos-core';
 import { ReactTestRenderer, act, create } from 'react-test-renderer';
 import { ClientFixtureLoader } from '../fixtureLoaders/ClientFixtureLoader.js';
-import { ClientRendererProvider } from '../rendererConnect/ClientRendererProvider.js';
+import { StatefulRendererProvider } from '../rendererConnect/StatefulRendererProvider.js';
 import {
   RendererConnectTestApi,
   createRendererConnectTestApi,
@@ -81,7 +81,7 @@ export async function mountTestRenderer(
 function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
   const {
     rendererId,
-    selectedFixtureId,
+    selectedFixtureId = null,
     locked = false,
     reloadRenderer = () => {},
     fixtures,
@@ -90,7 +90,7 @@ function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
   } = args;
 
   return (
-    <ClientRendererProvider
+    <StatefulRendererProvider
       rendererId={rendererId}
       rendererConnect={rendererConnect}
       selectedFixtureId={selectedFixtureId}
@@ -100,7 +100,7 @@ function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
       <ClientFixtureLoader
         moduleWrappers={createModuleWrappers(fixtures, decorators, lazy)}
       />
-    </ClientRendererProvider>
+    </StatefulRendererProvider>
   );
 }
 
