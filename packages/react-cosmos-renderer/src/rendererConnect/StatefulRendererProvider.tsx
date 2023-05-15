@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { FixtureId, RendererConnect } from 'react-cosmos-core';
+import { FixtureId, FixtureState, RendererConnect } from 'react-cosmos-core';
 import { RendererProvider } from './RendererProvider.js';
 
 type Props = {
@@ -25,11 +25,27 @@ export function StatefulRendererProvider({
       }
   );
 
+  const selectFixture = React.useCallback(
+    (fixtureId: FixtureId, initialFixtureState: FixtureState) => {
+      setSelectedFixture(prevState => ({
+        fixtureId,
+        initialFixtureState,
+        renderKey: (prevState?.renderKey ?? 0) + 1,
+      }));
+    },
+    []
+  );
+
+  const unselectFixture = React.useCallback(() => {
+    setSelectedFixture(null);
+  }, []);
+
   return (
     <RendererProvider
       {...otherProps}
       selectedFixture={selectedFixture}
-      setSelectedFixture={setSelectedFixture}
+      selectFixture={selectFixture}
+      unselectFixture={unselectFixture}
     >
       {children}
     </RendererProvider>

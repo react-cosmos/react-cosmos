@@ -1,6 +1,11 @@
 'use client';
 import React from 'react';
-import { FixtureList, RendererConnect } from 'react-cosmos-core';
+import {
+  FixtureId,
+  FixtureList,
+  FixtureState,
+  RendererConnect,
+} from 'react-cosmos-core';
 import { RendererContext, SelectedFixture } from './RendererContext.js';
 
 type Props = {
@@ -9,9 +14,8 @@ type Props = {
   rendererConnect: RendererConnect;
   locked: boolean;
   selectedFixture: SelectedFixture | null;
-  setSelectedFixture: React.Dispatch<
-    React.SetStateAction<SelectedFixture | null>
-  >;
+  selectFixture(fixtureId: FixtureId, initialFixtureState: FixtureState): void;
+  unselectFixture(): void;
   reloadRenderer(): void;
 };
 export function RendererProvider(props: Props) {
@@ -23,7 +27,8 @@ export function RendererProvider(props: Props) {
       rendererConnect: props.rendererConnect,
       locked: props.locked,
       selectedFixture: props.selectedFixture,
-      setSelectedFixture: props.setSelectedFixture,
+      selectFixture: props.selectFixture,
+      unselectFixture: props.unselectFixture,
       reloadRenderer: props.reloadRenderer,
       lazyItems,
       setLazyItems,
@@ -34,8 +39,9 @@ export function RendererProvider(props: Props) {
     props.reloadRenderer,
     props.rendererConnect,
     props.rendererId,
+    props.selectFixture,
     props.selectedFixture,
-    props.setSelectedFixture,
+    props.unselectFixture,
   ]);
 
   return (

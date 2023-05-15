@@ -17,12 +17,11 @@ export type RendererContextValue = {
   rendererConnect: RendererConnect;
   locked: boolean;
   selectedFixture: SelectedFixture | null;
-  setSelectedFixture: React.Dispatch<
-    React.SetStateAction<SelectedFixture | null>
-  >;
+  selectFixture(fixtureId: FixtureId, initialFixtureState: FixtureState): void;
+  unselectFixture(): void;
   reloadRenderer(): void;
   lazyItems: FixtureList;
-  setLazyItems: React.Dispatch<React.SetStateAction<FixtureList>>;
+  setLazyItems(nextItems: FixtureList): void;
 };
 
 export const RendererContext = React.createContext<RendererContextValue>({
@@ -33,7 +32,8 @@ export const RendererContext = React.createContext<RendererContextValue>({
   },
   locked: false,
   selectedFixture: null,
-  setSelectedFixture: () => {},
+  selectFixture: () => {},
+  unselectFixture: () => {},
   reloadRenderer: () => {},
   lazyItems: {},
   setLazyItems: () => {},

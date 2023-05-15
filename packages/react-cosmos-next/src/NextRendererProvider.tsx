@@ -13,10 +13,7 @@ import {
   reloadDomRenderer,
   useDomRendererConnect,
 } from 'react-cosmos-dom';
-import {
-  RendererProvider,
-  SelectedFixture,
-} from 'react-cosmos-renderer/client';
+import { RendererProvider } from 'react-cosmos-renderer/client';
 
 type Props = {
   children: React.ReactNode;
@@ -28,13 +25,35 @@ export function NextRendererProvider({
   rendererConfig,
   params,
 }: Props) {
-  const { locked = false } = params;
-
   const rendererId = React.useMemo(() => getDomRendererId(), []);
   const rendererConnect = useDomRendererConnect(rendererConfig);
 
-  const selectedFixture = useSelectedFixture(params.fixtureId);
-  const setSelectedFixture = useSetSelectedFixture(selectedFixture, locked);
+  const { locked = false } = params;
+  const selectedFixtureId = params.fixtureId ?? null;
+
+  const selectedFixture = React.useMemo(
+    () =>
+      selectedFixtureId && {
+        fixtureId: selectedFixtureId,
+        initialFixtureState: {},
+        renderKey: 0,
+      },
+    [selectedFixtureId]
+  );
+
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const selectFixture = React.useCallback(
+    (fixtureId: FixtureId) => {
+      router.push(pathname + buildRendererQueryString({ locked, fixtureId }));
+    },
+    [locked, pathname, router]
+  );
+
+  const unselectFixture = React.useCallback(() => {
+    router.push(pathname + buildRendererQueryString({ locked }));
+  }, [locked, pathname, router]);
 
   return (
     <RendererProvider
@@ -42,44 +61,12 @@ export function NextRendererProvider({
       rendererConnect={rendererConnect}
       locked={locked}
       selectedFixture={selectedFixture}
-      setSelectedFixture={setSelectedFixture}
+      selectFixture={selectFixture}
+      unselectFixture={unselectFixture}
       reloadRenderer={reloadDomRenderer}
     >
       {children}
       {typeof window !== 'undefined' && <GlobalErrorHandler />}
     </RendererProvider>
-  );
-}
-
-function useSelectedFixture(fixtureId: FixtureId | null = null) {
-  return React.useMemo(
-    () =>
-      fixtureId && {
-        fixtureId,
-        initialFixtureState: {},
-        renderKey: 0,
-      },
-    [fixtureId]
-  );
-}
-
-function useSetSelectedFixture(
-  selectedFixture: SelectedFixture | null,
-  locked: boolean
-) {
-  const pathname = usePathname();
-  const router = useRouter();
-
-  return React.useCallback(
-    (action: React.SetStateAction<SelectedFixture | null>) => {
-      const nextState =
-        typeof action === 'function' ? action(selectedFixture) : action;
-
-      router.push(
-        pathname +
-          buildRendererQueryString({ locked, fixtureId: nextState?.fixtureId })
-      );
-    },
-    [locked, pathname, router, selectedFixture]
   );
 }
