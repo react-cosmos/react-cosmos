@@ -13,7 +13,7 @@ type Props = {
 export function NativeRendererProvider({
   children,
   rendererConfig,
-  initialFixtureId,
+  initialFixtureId = null,
 }: Props) {
   const rendererConnect = React.useMemo(
     () => createWebSocketsConnect(getSocketUrl(rendererConfig.playgroundUrl)),
@@ -26,7 +26,7 @@ export function NativeRendererProvider({
       rendererId="native-renderer"
       rendererConnect={rendererConnect}
       locked={false}
-      selectedFixtureId={initialFixtureId ?? null}
+      selectedFixtureId={initialFixtureId}
       reloadRenderer={reloadRenderer}
     >
       {children}
