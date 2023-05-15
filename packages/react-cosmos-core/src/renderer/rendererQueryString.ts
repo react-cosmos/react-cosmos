@@ -1,5 +1,11 @@
+import { FixtureId } from '../userModules/fixtureTypes.js';
 import { buildQueryString, parseQueryString } from '../utils/queryString.js';
-import { RendererParams } from './rendererParams.js';
+
+type RendererParams = {
+  fixtureId?: FixtureId;
+  locked?: boolean;
+  key?: number;
+};
 
 export type RendererSearchParams = {
   fixtureId?: string;
@@ -17,7 +23,7 @@ export function parseRendererQueryString(query: string) {
   );
 }
 
-export function encodeRendererSearchParams(params: RendererParams) {
+function encodeRendererSearchParams(params: RendererParams) {
   const stringParams: RendererSearchParams = {};
 
   if (params.fixtureId) {
