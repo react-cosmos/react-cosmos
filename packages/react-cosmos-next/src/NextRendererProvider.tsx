@@ -4,7 +4,6 @@ import React from 'react';
 import {
   FixtureId,
   RendererConfig,
-  RendererParams,
   buildRendererQueryString,
 } from 'react-cosmos-core';
 import {
@@ -13,33 +12,25 @@ import {
   reloadDomRenderer,
   useDomRendererConnect,
 } from 'react-cosmos-dom';
-import { RendererProvider } from 'react-cosmos-renderer/client';
+import {
+  RendererProvider,
+  SelectedFixture,
+} from 'react-cosmos-renderer/client';
 
 type Props = {
   children: React.ReactNode;
   rendererConfig: RendererConfig;
-  params: RendererParams;
+  locked: boolean;
+  selectedFixture: SelectedFixture | null;
 };
 export function NextRendererProvider({
   children,
   rendererConfig,
-  params,
+  locked,
+  selectedFixture,
 }: Props) {
   const rendererId = React.useMemo(() => getDomRendererId(), []);
   const rendererConnect = useDomRendererConnect(rendererConfig);
-
-  const { locked = false } = params;
-  const selectedFixtureId = params.fixtureId ?? null;
-
-  const selectedFixture = React.useMemo(
-    () =>
-      selectedFixtureId && {
-        fixtureId: selectedFixtureId,
-        initialFixtureState: {},
-        renderKey: 0,
-      },
-    [selectedFixtureId]
-  );
 
   const pathname = usePathname();
   const router = useRouter();

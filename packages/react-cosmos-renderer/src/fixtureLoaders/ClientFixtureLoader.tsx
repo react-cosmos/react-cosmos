@@ -23,7 +23,6 @@ export function ClientFixtureLoader({
   renderMessage = defaultRenderMessage,
 }: Props) {
   const { selectedFixture } = React.useContext(RendererContext);
-
   return (
     <FixtureLoaderConnect
       moduleWrappers={moduleWrappers}

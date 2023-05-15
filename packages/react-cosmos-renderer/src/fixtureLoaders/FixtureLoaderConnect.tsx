@@ -11,7 +11,7 @@ type Props = {
   moduleWrappers: UserModuleWrappers;
   // Receiving the fixture selection as a prop instead of reading it from the
   // RendererContext enables using this component on the server, in which case
-  // the selected fixture is read from the server-side URL search params.
+  // the selected fixture is read from server-side URL params.
   selectedFixture: SelectedFixture | null;
   renderMessage: (msg: string) => React.ReactElement;
   renderFixture: (selected: SelectedFixture) => React.ReactElement;

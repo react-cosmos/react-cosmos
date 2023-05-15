@@ -18,13 +18,31 @@ export function NextFixtureLoader({
   moduleWrappers,
   searchParams,
 }: Props) {
-  const params = useDecodedSearchParams(searchParams);
+  const { locked = false, fixtureId = null } =
+    useDecodedSearchParams(searchParams);
+
+  const selectedFixture = fixtureId && {
+    fixtureId,
+    initialFixtureState: {},
+    // This fixture loader is meant to work with Next.js build-time static
+    // generation. Its props will be driven by finite URL segment params and not
+    // query strings, which are inherently dynamic. This means we can't receive
+    // an incrementing renderKey here. Instead, we'll rely solely on the fixture
+    // ID as the fixture render key and will not support refreshing the current
+    // fixture by selecting it again.
+    renderKey: 0,
+  };
+
   return (
-    <NextRendererProvider rendererConfig={rendererConfig} params={params}>
+    <NextRendererProvider
+      rendererConfig={rendererConfig}
+      locked={locked}
+      selectedFixture={selectedFixture}
+    >
       <ServerFixtureLoader
-        fixtureId={params.fixtureId ?? null}
         moduleWrappers={moduleWrappers}
         renderMessage={renderMessage}
+        selectedFixture={selectedFixture}
       />
     </NextRendererProvider>
   );
