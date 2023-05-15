@@ -1,10 +1,6 @@
 'use client';
 import React from 'react';
-import {
-  RendererConfig,
-  decodeRendererSearchParams,
-  parseQueryString,
-} from 'react-cosmos-core';
+import { RendererConfig, parseRendererQueryString } from 'react-cosmos-core';
 import { StatefulRendererProvider } from 'react-cosmos-renderer/client';
 import { GlobalErrorHandler } from './GlobalErrorHandler.js';
 import { reloadDomRenderer } from './reloadDomRenderer.js';
@@ -20,7 +16,7 @@ export function DomRendererProvider({ children, rendererConfig }: Props) {
   const rendererConnect = useDomRendererConnect(rendererConfig);
 
   const { locked = false, fixtureId = null } = React.useMemo(
-    () => decodeRendererSearchParams(parseQueryString(location.search)),
+    () => parseRendererQueryString(location.search),
     []
   );
 
