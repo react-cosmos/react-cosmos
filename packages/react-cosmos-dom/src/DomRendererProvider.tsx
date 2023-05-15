@@ -18,25 +18,22 @@ type Props = {
 export function DomRendererProvider({ children, rendererConfig }: Props) {
   const rendererId = React.useMemo(() => getDomRendererId(), []);
   const rendererConnect = useDomRendererConnect(rendererConfig);
-  const searchParams = useDecodedSearchParams();
+
+  const { locked = false, fixtureId = null } = React.useMemo(
+    () => decodeRendererSearchParams(parseQueryString(location.search)),
+    []
+  );
 
   return (
     <StatefulRendererProvider
       rendererId={rendererId}
       rendererConnect={rendererConnect}
-      locked={searchParams.locked ?? false}
-      selectedFixtureId={searchParams.fixtureId ?? null}
+      locked={locked}
+      selectedFixtureId={fixtureId}
       reloadRenderer={reloadDomRenderer}
     >
       {children}
       {typeof window !== 'undefined' && <GlobalErrorHandler />}
     </StatefulRendererProvider>
-  );
-}
-
-function useDecodedSearchParams() {
-  return React.useMemo(
-    () => decodeRendererSearchParams(parseQueryString(location.search)),
-    []
   );
 }
