@@ -22,7 +22,7 @@ export function NextFixtureLoader({
   return (
     <NextRendererProvider rendererConfig={rendererConfig} params={params}>
       <ServerFixtureLoader
-        fixtureId={params.fixtureId}
+        fixtureId={params.fixtureId ?? null}
         moduleWrappers={moduleWrappers}
         renderMessage={renderMessage}
       />

@@ -20,7 +20,7 @@ import { defaultRenderMessage } from './defaultRenderMessage.js';
 // client, which triggers a page reload by changing the URL's search params,
 // which in turn triggers a new fixture selection on the server.
 type Props = {
-  fixtureId?: FixtureId | null;
+  fixtureId: FixtureId | null;
   moduleWrappers: UserModuleWrappers;
   globalDecorators?: ReactDecorator[];
   renderMessage?: (msg: string) => React.ReactElement;
