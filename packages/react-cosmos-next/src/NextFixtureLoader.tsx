@@ -18,8 +18,10 @@ export function NextFixtureLoader({
   moduleWrappers,
   searchParams,
 }: Props) {
-  const { locked = false, fixtureId = null } =
-    useDecodedSearchParams(searchParams);
+  const { locked = false, fixtureId = null } = React.useMemo(
+    () => decodeRendererSearchParams(searchParams),
+    [searchParams]
+  );
 
   const selectedFixture = fixtureId && {
     fixtureId,
@@ -45,13 +47,6 @@ export function NextFixtureLoader({
         selectedFixture={selectedFixture}
       />
     </NextRendererProvider>
-  );
-}
-
-function useDecodedSearchParams(searchParams: RendererSearchParams) {
-  return React.useMemo(
-    () => decodeRendererSearchParams(searchParams),
-    [searchParams]
   );
 }
 
