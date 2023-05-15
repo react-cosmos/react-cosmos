@@ -13,10 +13,8 @@ testRenderer(
   'does not change locked fixture',
   {
     rendererId,
-    params: {
-      fixtureId: { path: 'first', name: 'one' },
-      locked: true,
-    },
+    locked: true,
+    selectedFixtureId: { path: 'first', name: 'one' },
     fixtures,
   },
   async ({ renderer, selectFixture }) => {
@@ -34,10 +32,8 @@ testRenderer(
   'does not close locked fixture',
   {
     rendererId,
-    params: {
-      fixtureId: { path: 'first', name: 'one' },
-      locked: true,
-    },
+    locked: true,
+    selectedFixtureId: { path: 'first', name: 'one' },
     fixtures,
   },
   async ({ renderer, unselectFixture }) => {

@@ -4,21 +4,21 @@ import {
   UserModuleWrappers,
   getFixtureListFromWrappers,
 } from 'react-cosmos-core';
+import { SelectedFixture } from '../rendererConnect/RendererContext.js';
 import { RendererSync } from './RendererSync.js';
-import { FixtureSelection } from './useFixtureSelection.js';
 
 type Props = {
   moduleWrappers: UserModuleWrappers;
   // Receiving the fixture selection as a prop instead of reading it from the
   // RendererContext enables using this component on the server, in which case
-  // the selected fixture is read from the server-side URL search params.
-  fixtureSelection: FixtureSelection | null;
+  // the selected fixture is read from server-side URL params.
+  selectedFixture: SelectedFixture | null;
   renderMessage: (msg: string) => React.ReactElement;
-  renderFixture: (selection: FixtureSelection) => React.ReactElement;
+  renderFixture: (selected: SelectedFixture) => React.ReactElement;
 };
 export function FixtureLoaderConnect({
   moduleWrappers,
-  fixtureSelection,
+  selectedFixture,
   renderMessage,
   renderFixture,
 }: Props) {
@@ -28,7 +28,7 @@ export function FixtureLoaderConnect({
   );
 
   function renderInner() {
-    if (!fixtureSelection) {
+    if (!selectedFixture) {
       return (
         <DelayRender delay={500}>
           {renderMessage('No fixture selected.')}
@@ -36,12 +36,12 @@ export function FixtureLoaderConnect({
       );
     }
 
-    const { fixtureId } = fixtureSelection;
+    const { fixtureId } = selectedFixture;
     if (!fixtures[fixtureId.path]) {
       return renderMessage(`Fixture path not found: ${fixtureId.path}`);
     }
 
-    return renderFixture(fixtureSelection);
+    return renderFixture(selectedFixture);
   }
 
   return <RendererSync fixtures={fixtures}>{renderInner()}</RendererSync>;

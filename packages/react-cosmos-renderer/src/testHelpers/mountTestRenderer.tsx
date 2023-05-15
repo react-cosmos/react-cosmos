@@ -3,17 +3,17 @@ import { mapValues } from 'lodash-es';
 import React from 'react';
 import {
   ByPath,
+  FixtureId,
   ReactDecoratorModule,
   ReactFixtureModule,
   RendererConnect,
   RendererId,
-  RendererParams,
   RendererResponse,
   UserModuleWrappers,
 } from 'react-cosmos-core';
 import { ReactTestRenderer, act, create } from 'react-test-renderer';
 import { ClientFixtureLoader } from '../fixtureLoaders/ClientFixtureLoader.js';
-import { RendererProvider } from '../rendererConnect/RendererProvider.js';
+import { StatefulRendererProvider } from '../rendererConnect/StatefulRendererProvider.js';
 import {
   RendererConnectTestApi,
   createRendererConnectTestApi,
@@ -22,8 +22,8 @@ import { createTestRendererConnect } from './createTestRendererConnect.js';
 
 export type RendererTestArgs = {
   rendererId: RendererId;
-  params?: RendererParams;
-  setParams?: (nextParams: RendererParams) => void;
+  locked?: boolean;
+  selectedFixtureId?: FixtureId;
   reloadRenderer?: () => void;
   fixtures: ByPath<ReactFixtureModule>;
   decorators?: ByPath<ReactDecoratorModule>;
@@ -81,8 +81,8 @@ export async function mountTestRenderer(
 function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
   const {
     rendererId,
-    params = {},
-    setParams = () => {},
+    locked = false,
+    selectedFixtureId = null,
     reloadRenderer = () => {},
     fixtures,
     decorators = {},
@@ -90,17 +90,17 @@ function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
   } = args;
 
   return (
-    <RendererProvider
+    <StatefulRendererProvider
       rendererId={rendererId}
       rendererConnect={rendererConnect}
-      params={params}
-      setParams={setParams}
+      locked={locked}
+      selectedFixtureId={selectedFixtureId}
       reloadRenderer={reloadRenderer}
     >
       <ClientFixtureLoader
         moduleWrappers={createModuleWrappers(fixtures, decorators, lazy)}
       />
-    </RendererProvider>
+    </StatefulRendererProvider>
   );
 }
 

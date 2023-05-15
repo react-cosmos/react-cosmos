@@ -1,46 +1,39 @@
 import React from 'react';
 import { FixtureId, RendererConfig } from 'react-cosmos-core';
 import { createWebSocketsConnect } from 'react-cosmos-renderer';
-import { RendererProvider } from 'react-cosmos-renderer/client';
+import { StatefulRendererProvider } from 'react-cosmos-renderer/client';
 import { DevSettings } from 'react-native';
 import { getSocketUrl } from './getSocketUrl.js';
 
 type Props = {
   children: React.ReactNode;
   rendererConfig: RendererConfig;
-  initialFixtureId?: FixtureId;
+  initialFixtureId?: FixtureId | null;
 };
 export function NativeRendererProvider({
   children,
   rendererConfig,
-  initialFixtureId,
+  initialFixtureId = null,
 }: Props) {
   const rendererConnect = React.useMemo(
     () => createWebSocketsConnect(getSocketUrl(rendererConfig.playgroundUrl)),
     [rendererConfig.playgroundUrl]
   );
 
-  const params = React.useMemo(
-    () => ({ fixtureId: initialFixtureId }),
-    [initialFixtureId]
-  );
-
   return (
-    <RendererProvider
+    <StatefulRendererProvider
       // TODO: Generate unique ID per device
       rendererId="native-renderer"
       rendererConnect={rendererConnect}
-      params={params}
-      setParams={noop}
+      locked={false}
+      selectedFixtureId={initialFixtureId}
       reloadRenderer={reloadRenderer}
     >
       {children}
-    </RendererProvider>
+    </StatefulRendererProvider>
   );
 }
 
 function reloadRenderer() {
   DevSettings.reload();
 }
-
-function noop() {}

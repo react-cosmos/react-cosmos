@@ -1,18 +1,21 @@
 'use client';
 import React from 'react';
 import {
+  FixtureId,
   FixtureList,
+  FixtureState,
   RendererConnect,
-  RendererParams,
 } from 'react-cosmos-core';
-import { RendererContext } from './RendererContext.js';
+import { RendererContext, SelectedFixture } from './RendererContext.js';
 
-export type Props = {
+type Props = {
   children: React.ReactNode;
   rendererId: string;
   rendererConnect: RendererConnect;
-  params: RendererParams;
-  setParams(nextParams: RendererParams): void;
+  locked: boolean;
+  selectedFixture: SelectedFixture | null;
+  selectFixture(fixtureId: FixtureId, initialFixtureState: FixtureState): void;
+  unselectFixture(): void;
   reloadRenderer(): void;
 };
 export function RendererProvider(props: Props) {
@@ -22,19 +25,23 @@ export function RendererProvider(props: Props) {
     return {
       rendererId: props.rendererId,
       rendererConnect: props.rendererConnect,
-      params: props.params,
-      setParams: props.setParams,
+      locked: props.locked,
+      selectedFixture: props.selectedFixture,
+      selectFixture: props.selectFixture,
+      unselectFixture: props.unselectFixture,
       reloadRenderer: props.reloadRenderer,
       lazyItems,
       setLazyItems,
     };
   }, [
     lazyItems,
-    props.params,
+    props.locked,
     props.reloadRenderer,
     props.rendererConnect,
     props.rendererId,
-    props.setParams,
+    props.selectFixture,
+    props.selectedFixture,
+    props.unselectFixture,
   ]);
 
   return (

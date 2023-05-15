@@ -2,39 +2,62 @@
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 import {
+  FixtureId,
   RendererConfig,
-  RendererSearchParams,
-  buildQueryString,
+  buildRendererQueryString,
 } from 'react-cosmos-core';
-import { DomRendererProvider } from 'react-cosmos-dom';
+import {
+  GlobalErrorHandler,
+  reloadDomRenderer,
+  useDomRendererConnect,
+  useDomRendererId,
+} from 'react-cosmos-dom';
+import {
+  RendererProvider,
+  SelectedFixture,
+} from 'react-cosmos-renderer/client';
 
 type Props = {
   children: React.ReactNode;
   rendererConfig: RendererConfig;
-  searchParams: RendererSearchParams;
+  locked: boolean;
+  selectedFixture: SelectedFixture | null;
 };
 export function NextRendererProvider({
   children,
   rendererConfig,
-  searchParams,
+  locked,
+  selectedFixture,
 }: Props) {
+  const rendererId = useDomRendererId();
+  const rendererConnect = useDomRendererConnect(rendererConfig);
+
   const pathname = usePathname();
   const router = useRouter();
 
-  const setSearchParams = React.useCallback(
-    (nextParams: RendererSearchParams) => {
-      router.push(pathname + buildQueryString(nextParams));
+  const selectFixture = React.useCallback(
+    (fixtureId: FixtureId) => {
+      router.push(pathname + buildRendererQueryString({ locked, fixtureId }));
     },
-    [pathname, router]
+    [locked, pathname, router]
   );
 
+  const unselectFixture = React.useCallback(() => {
+    router.push(pathname + buildRendererQueryString({ locked }));
+  }, [locked, pathname, router]);
+
   return (
-    <DomRendererProvider
-      rendererConfig={rendererConfig}
-      searchParams={searchParams}
-      setSearchParams={setSearchParams}
+    <RendererProvider
+      rendererId={rendererId}
+      rendererConnect={rendererConnect}
+      locked={locked}
+      selectedFixture={selectedFixture}
+      selectFixture={selectFixture}
+      unselectFixture={unselectFixture}
+      reloadRenderer={reloadDomRenderer}
     >
       {children}
-    </DomRendererProvider>
+      {typeof window !== 'undefined' && <GlobalErrorHandler />}
+    </RendererProvider>
   );
 }
