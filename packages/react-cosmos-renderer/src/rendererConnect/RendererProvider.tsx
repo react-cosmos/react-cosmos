@@ -6,7 +6,8 @@ import {
   FixtureState,
   RendererConnect,
 } from 'react-cosmos-core';
-import { RendererContext, SelectedFixture } from './RendererContext.js';
+import { SelectedFixture } from '../fixtureLoaders/SelectedFixture.js';
+import { RendererContext } from './RendererContext.js';
 
 type Props = {
   children: React.ReactNode;

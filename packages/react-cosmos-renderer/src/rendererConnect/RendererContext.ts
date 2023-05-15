@@ -5,12 +5,7 @@ import {
   FixtureState,
   RendererConnect,
 } from 'react-cosmos-core';
-
-export type SelectedFixture = {
-  fixtureId: FixtureId;
-  initialFixtureState: FixtureState;
-  renderKey: number;
-};
+import { SelectedFixture } from '../fixtureLoaders/SelectedFixture.js';
 
 export type RendererContextValue = {
   rendererId: string;

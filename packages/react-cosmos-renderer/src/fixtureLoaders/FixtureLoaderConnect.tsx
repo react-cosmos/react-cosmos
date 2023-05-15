@@ -4,8 +4,8 @@ import {
   UserModuleWrappers,
   getFixtureListFromWrappers,
 } from 'react-cosmos-core';
-import { SelectedFixture } from '../rendererConnect/RendererContext.js';
 import { RendererSync } from './RendererSync.js';
+import { SelectedFixture } from './SelectedFixture.js';
 
 type Props = {
   moduleWrappers: UserModuleWrappers;

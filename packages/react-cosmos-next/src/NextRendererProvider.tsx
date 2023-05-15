@@ -12,10 +12,8 @@ import {
   useDomRendererConnect,
   useDomRendererId,
 } from 'react-cosmos-dom';
-import {
-  RendererProvider,
-  SelectedFixture,
-} from 'react-cosmos-renderer/client';
+import { SelectedFixture } from 'react-cosmos-renderer';
+import { RendererProvider } from 'react-cosmos-renderer/client';
 
 type Props = {
   children: React.ReactNode;
