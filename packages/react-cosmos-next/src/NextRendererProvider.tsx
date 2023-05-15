@@ -5,7 +5,7 @@ import {
   FixtureId,
   RendererConfig,
   RendererParams,
-  buildQueryString,
+  buildRendererQueryString,
 } from 'react-cosmos-core';
 import {
   GlobalErrorHandler,
@@ -28,34 +28,19 @@ export function NextRendererProvider({
   rendererConfig,
   params,
 }: Props) {
+  const { locked = false } = params;
+
   const rendererId = React.useMemo(() => getDomRendererId(), []);
   const rendererConnect = useDomRendererConnect(rendererConfig);
+
   const selectedFixture = useSelectedFixture(params.fixtureId);
-
-  const pathname = usePathname();
-  const router = useRouter();
-
-  // TODO: WIP
-  const setSelectedFixture = React.useCallback(
-    (action: React.SetStateAction<SelectedFixture | null>) => {
-      const nextState =
-        typeof action === 'function' ? action(selectedFixture) : action;
-      router.push(
-        pathname +
-          buildQueryString({
-            locked: params.locked,
-            fixtureId: nextState?.fixtureId,
-          })
-      );
-    },
-    [params.locked, pathname, router, selectedFixture]
-  );
+  const setSelectedFixture = useSetSelectedFixture(selectedFixture, locked);
 
   return (
     <RendererProvider
       rendererId={rendererId}
       rendererConnect={rendererConnect}
-      locked={params.locked ?? false}
+      locked={locked}
       selectedFixture={selectedFixture}
       setSelectedFixture={setSelectedFixture}
       reloadRenderer={reloadDomRenderer}
@@ -75,5 +60,26 @@ function useSelectedFixture(fixtureId: FixtureId | null = null) {
         renderKey: 0,
       },
     [fixtureId]
+  );
+}
+
+function useSetSelectedFixture(
+  selectedFixture: SelectedFixture | null,
+  locked: boolean
+) {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  return React.useCallback(
+    (action: React.SetStateAction<SelectedFixture | null>) => {
+      const nextState =
+        typeof action === 'function' ? action(selectedFixture) : action;
+
+      router.push(
+        pathname +
+          buildRendererQueryString({ locked, fixtureId: nextState?.fixtureId })
+      );
+    },
+    [locked, pathname, router, selectedFixture]
   );
 }
