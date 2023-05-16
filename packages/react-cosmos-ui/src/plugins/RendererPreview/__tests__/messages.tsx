@@ -21,7 +21,7 @@ function loadTestPlugins() {
 
 function mockRendererUrl() {
   return mockRendererCore({
-    getRendererUrl: () => 'mockRendererUrl',
+    getRendererUrl: () => '/mock-renderer.html',
   });
 }
 

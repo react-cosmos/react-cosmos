@@ -16,7 +16,7 @@ afterEach(resetPlugins);
 
 function registerTestPlugins() {
   mockRendererCore({
-    getRendererUrl: () => 'mockRendererUrl',
+    getRendererUrl: () => '/mock-renderer.html',
   });
 }
 
