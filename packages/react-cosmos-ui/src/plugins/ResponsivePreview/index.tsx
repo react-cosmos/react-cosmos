@@ -48,7 +48,7 @@ namedPlug('rendererAction', 'responsivePreview', ({ pluginContext }) => {
   const viewportState = getViewportState(pluginContext);
   const { enabled, viewport } = viewportState;
 
-  if (!rendererCore.getWebRendererUrl()) return null;
+  if (!rendererCore.getRendererUrl()) return null;
 
   return (
     <ToggleButton

@@ -58,7 +58,7 @@ it('generates playground HTML', async () => {
           },
           rendererCore: {
             fixtures: {},
-            webRendererUrl: '/_renderer.html',
+            rendererUrl: '/_renderer.html',
           },
         },
         pluginConfigs: [],

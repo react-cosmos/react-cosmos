@@ -12,7 +12,7 @@ const { on, register, onLoad } = createPlugin<RendererCoreSpec>({
   name: 'rendererCore',
   defaultConfig: {
     fixtures: {},
-    webRendererUrl: null,
+    rendererUrl: null,
   },
   initialState: {
     connectedRendererIds: [],
@@ -21,7 +21,7 @@ const { on, register, onLoad } = createPlugin<RendererCoreSpec>({
     fixtureState: {},
   },
   methods: {
-    getWebRendererUrl,
+    getRendererUrl,
     getConnectedRendererIds,
     getPrimaryRendererId,
     getFixtures,
@@ -45,8 +45,8 @@ export { register };
 
 if (process.env.NODE_ENV !== 'test') register();
 
-function getWebRendererUrl({ getConfig }: RendererCoreContext) {
-  return getConfig().webRendererUrl;
+function getRendererUrl({ getConfig }: RendererCoreContext) {
+  return getConfig().rendererUrl;
 }
 
 function getConnectedRendererIds({ getState }: RendererCoreContext) {

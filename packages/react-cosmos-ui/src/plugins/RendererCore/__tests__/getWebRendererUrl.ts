@@ -9,7 +9,7 @@ afterEach(resetPlugins);
 
 const rendererCoreConfig: RendererCoreSpec['config'] = {
   fixtures: {},
-  webRendererUrl: 'mockWebUrl',
+  rendererUrl: '/mock-renderer.html',
 };
 
 it('returns web renderer URL', () => {
@@ -18,5 +18,5 @@ it('returns web renderer URL', () => {
       rendererCore: rendererCoreConfig,
     },
   });
-  expect(getRendererCoreMethods().getWebRendererUrl()).toBe('mockWebUrl');
+  expect(getRendererCoreMethods().getRendererUrl()).toBe('/mock-renderer.html');
 });

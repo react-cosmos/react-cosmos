@@ -24,7 +24,7 @@ function loadTestPlugins() {
 it('renders responsive preview button', async () => {
   mockStorage();
   mockRendererCore({
-    getWebRendererUrl: () => `/_renderer.html`,
+    getRendererUrl: () => `/_renderer.html`,
     getFixtureState: () => ({}),
   });
 
@@ -35,7 +35,7 @@ it('renders responsive preview button', async () => {
 it('does not render responsive preview button without renderer URL', async () => {
   mockStorage();
   mockRendererCore({
-    getWebRendererUrl: () => null,
+    getRendererUrl: () => null,
     getFixtureState: () => ({}),
   });
 

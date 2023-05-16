@@ -104,7 +104,7 @@ export function mockMessageHandler(
 
 export function mockRendererCore(methods: MethodsOf<RendererCoreSpec> = {}) {
   const allMethods = {
-    getWebRendererUrl: jest.fn(),
+    getRendererUrl: jest.fn(),
     getConnectedRendererIds: jest.fn(),
     getPrimaryRendererId: jest.fn(),
     getFixtures: jest.fn(),

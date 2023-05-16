@@ -39,7 +39,7 @@ function mockEnabledViewportStorage() {
 
 function mockRendererUrl() {
   mockRendererCore({
-    getWebRendererUrl: () => `/_renderer.html`,
+    getRendererUrl: () => `/_renderer.html`,
     getFixtureState: () => ({}),
   });
 }
@@ -49,7 +49,7 @@ function mockViewportFixtureState() {
     fixtureState: {},
   };
   mockRendererCore({
-    getWebRendererUrl: () => `/_renderer.html`,
+    getRendererUrl: () => `/_renderer.html`,
     getFixtureState: () => ({}),
     setFixtureState: (context, stateUpdater) => {
       mocks.fixtureState = stateUpdater(mocks.fixtureState);

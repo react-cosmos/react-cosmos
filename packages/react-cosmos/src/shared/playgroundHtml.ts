@@ -27,7 +27,7 @@ export async function getDevPlaygroundHtml(
       core: await getCoreConfig(cosmosConfig, true),
       rendererCore: {
         fixtures: getFixtureList(cosmosConfig),
-        webRendererUrl:
+        rendererUrl:
           platform === 'web'
             ? getRendererUrlForCommand(cosmosConfig.rendererUrl, 'dev')
             : null,
@@ -48,7 +48,7 @@ export async function getExportPlaygroundHtml(
       core: await getCoreConfig(cosmosConfig, false),
       rendererCore: {
         fixtures: getFixtureList(cosmosConfig),
-        webRendererUrl: getRendererUrlForCommand(
+        rendererUrl: getRendererUrlForCommand(
           cosmosConfig.rendererUrl,
           'export'
         ),

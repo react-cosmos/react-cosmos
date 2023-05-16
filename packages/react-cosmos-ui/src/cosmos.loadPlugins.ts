@@ -12,7 +12,7 @@ loadPlugins({
       fixturesDir: '__fixtures__',
       fixtureFileSuffix: 'fixture',
       devServerOn: true,
-      webRendererUrl: '/_renderer.html',
+      rendererUrl: '/_renderer.html',
     },
   },
 });
