@@ -1,3 +1,4 @@
+import path from 'node:path';
 import {
   CosmosConfig,
   CosmosConfigPluginArgs,
@@ -10,15 +11,14 @@ export async function viteConfigPlugin({
   cosmosConfig,
   command,
 }: CosmosConfigPluginArgs): Promise<CosmosConfig> {
-  const { rendererUrl } = cosmosConfig;
-  if (rendererUrl) {
+  if (cosmosConfig.rendererUrl) {
     return cosmosConfig;
   }
 
   if (command === 'export') {
     return {
       ...cosmosConfig,
-      rendererUrl: `./${RENDERER_FILENAME}`,
+      rendererUrl: path.join(cosmosConfig.publicUrl, RENDERER_FILENAME),
     };
   }
 

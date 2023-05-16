@@ -29,6 +29,7 @@ export async function viteDevServerPlugin({
     // https://github.com/vitejs/vite/blob/07bd6d14e545d05c6a29cf341f117fcfe9536ba4/packages/vite/src/node/config.ts#L418
     configFile: cosmosViteConfig.configPath,
     root: rootDir,
+    base: cosmosConfig.publicUrl,
     server: {
       // https://vitejs.dev/config/server-options.html#server-host
       host: '0.0.0.0',
