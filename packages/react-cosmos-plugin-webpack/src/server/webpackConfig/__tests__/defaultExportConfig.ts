@@ -52,7 +52,7 @@ it('create output', async () => {
     expect.objectContaining({
       filename: '[name].js',
       path: getCwdPath('cosmos-export/'),
-      publicPath: '/',
+      publicPath: '',
     })
   );
 });

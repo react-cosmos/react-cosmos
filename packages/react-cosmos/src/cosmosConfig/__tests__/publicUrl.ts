@@ -5,7 +5,7 @@ import { createCosmosConfig } from '../createCosmosConfig.js';
 
 it('returns default publicUrl', () => {
   const { publicUrl } = createCosmosConfig(process.cwd());
-  expect(publicUrl).toBe('/');
+  expect(publicUrl).toBe('');
 });
 
 it('returns custom publicUrl', () => {

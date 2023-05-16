@@ -107,7 +107,7 @@ it('create output', async () => {
   expect(output).toEqual(
     expect.objectContaining({
       filename: '[name].js',
-      publicPath: '/',
+      publicPath: '',
     })
   );
 });
