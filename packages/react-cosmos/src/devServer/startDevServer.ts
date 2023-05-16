@@ -6,8 +6,8 @@ import {
 } from '../cosmosConfig/detectCosmosConfig.js';
 import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
 import {
+  CosmosPlatform,
   DevServerPluginCleanupCallback,
-  PlatformType,
 } from '../cosmosPlugin/types.js';
 import { importServerPlugins } from '../shared/importServerPlugins.js';
 import { logPluginInfo } from '../shared/logPluginInfo.js';
@@ -16,7 +16,7 @@ import { createExpressApp } from './expressApp.js';
 import { createHttpServer } from './httpServer.js';
 import { createMessageHandler } from './messageHandler.js';
 
-export async function startDevServer(platformType: PlatformType) {
+export async function startDevServer(platform: CosmosPlatform) {
   let cosmosConfig = await detectCosmosConfig();
   logCosmosConfigInfo();
 
@@ -38,7 +38,11 @@ export async function startDevServer(platformType: PlatformType) {
   for (const plugin of plugins) {
     if (plugin.config) {
       try {
-        cosmosConfig = await plugin.config({ cosmosConfig, platformType });
+        cosmosConfig = await plugin.config({
+          cosmosConfig,
+          command: 'dev',
+          platform,
+        });
       } catch (err) {
         console.log(`[Cosmos][plugin:${plugin.name}] Config hook failed`);
         throw err;
@@ -46,7 +50,7 @@ export async function startDevServer(platformType: PlatformType) {
     }
   }
 
-  const app = await createExpressApp(platformType, cosmosConfig, pluginConfigs);
+  const app = await createExpressApp(platform, cosmosConfig, pluginConfigs);
   const httpServer = await createHttpServer(cosmosConfig, app);
   const msgHandler = createMessageHandler(httpServer.server);
 
@@ -72,7 +76,7 @@ export async function startDevServer(platformType: PlatformType) {
 
       const pluginReturn = await plugin.devServer({
         cosmosConfig,
-        platformType,
+        platform,
         httpServer: httpServer.server,
         expressApp: app,
         sendMessage: msgHandler.sendMessage,

@@ -15,12 +15,12 @@ type WebpackConfig = webpack.Configuration & {
 };
 
 export async function webpackDevServerPlugin({
-  platformType,
   cosmosConfig,
+  platform,
   expressApp,
   sendMessage,
 }: DevServerPluginArgs) {
-  if (platformType !== 'web') return;
+  if (platform !== 'web') return;
 
   // Skip webpack bundling if custom renderer URL is passed
   if (cosmosConfig.rendererUrl) return;

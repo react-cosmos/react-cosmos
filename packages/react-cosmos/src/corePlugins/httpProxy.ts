@@ -16,8 +16,8 @@ type HttpProxyConfig = {
 export const httpProxyServerPlugin: CosmosServerPlugin = {
   name: 'httpProxy',
 
-  devServer({ platformType, cosmosConfig, expressApp }) {
-    if (platformType !== 'web') return;
+  devServer({ cosmosConfig, platform, expressApp }) {
+    if (platform !== 'web') return;
 
     const httpProxyConfig = getHttpProxyCosmosConfig(cosmosConfig);
     Object.keys(httpProxyConfig).forEach(context => {

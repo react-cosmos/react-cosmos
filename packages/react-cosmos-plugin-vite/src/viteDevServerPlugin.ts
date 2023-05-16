@@ -7,10 +7,10 @@ import {
 } from './reactCosmosViteRollupPlugin.js';
 
 export async function viteDevServerPlugin({
-  platformType,
   cosmosConfig,
+  platform,
 }: DevServerPluginArgs) {
-  if (platformType !== 'web') return;
+  if (platform !== 'web') return;
 
   const { rendererUrl } = cosmosConfig;
   if (!rendererUrl) {

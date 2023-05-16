@@ -9,7 +9,7 @@ import {
 } from 'react-cosmos-core';
 import { PlaygroundMountArgs } from 'react-cosmos-ui';
 import { CosmosConfig } from '../cosmosConfig/types.js';
-import { PlatformType } from '../cosmosPlugin/types.js';
+import { CosmosPlatform } from '../cosmosPlugin/types.js';
 import { findUserModulePaths } from '../userModules/findUserModulePaths.js';
 import { importKeyPath } from '../userModules/shared.js';
 import { resolveRendererUrl } from './resolveRendererUrl.js';
@@ -18,7 +18,7 @@ import { getStaticPath } from './staticPath.js';
 export const RENDERER_FILENAME = '_renderer.html';
 
 export async function getDevPlaygroundHtml(
-  platformType: PlatformType,
+  platform: CosmosPlatform,
   cosmosConfig: CosmosConfig,
   pluginConfigs: CosmosPluginConfig[]
 ) {
@@ -29,7 +29,7 @@ export async function getDevPlaygroundHtml(
       core: await getCoreConfig(cosmosConfig, true),
       rendererCore: {
         fixtures: getFixtureList(cosmosConfig),
-        webRendererUrl: getDevServerWebRendereUrl(platformType, cosmosConfig),
+        webRendererUrl: getDevServerWebRendereUrl(platform, cosmosConfig),
       },
     },
     pluginConfigs,
@@ -65,10 +65,10 @@ async function getCoreConfig(cosmosConfig: CosmosConfig, devServerOn: boolean) {
 }
 
 function getDevServerWebRendereUrl(
-  platformType: PlatformType,
+  platform: CosmosPlatform,
   cosmosConfig: CosmosConfig
 ) {
-  switch (platformType) {
+  switch (platform) {
     case 'native':
       return null;
     case 'web':
@@ -77,7 +77,7 @@ function getDevServerWebRendereUrl(
         resolveRendererUrl(cosmosConfig.publicUrl, RENDERER_FILENAME)
       );
     default:
-      throw new Error(`Invalid platform type: ${platformType}`);
+      throw new Error(`Invalid platform type: ${platform}`);
   }
 }
 
