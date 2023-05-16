@@ -582,10 +582,6 @@ module.exports = webpackConfig;
 
 - [Set `includeHashInOutputFilename` to `true`](https://github.com/react-cosmos/react-cosmos/tree/main/docs#output-filename).
 
-#### Serving a static export from a nested path?
-
-- [Set `publicUrl` to a relative path, like `"./"`](https://github.com/react-cosmos/react-cosmos/issues/1149).
-
 #### Fixtures not detected?
 
 - Run `cosmos` with the `--expose-imports` flag. This should generate `cosmos.imports.js`. Check that file to see if your fixtures are being picked up by Cosmos.
