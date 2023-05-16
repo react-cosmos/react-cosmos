@@ -1,8 +1,9 @@
 import { rename } from 'node:fs/promises';
 import path from 'path';
-import { ExportPluginArgs, RENDERER_FILENAME } from 'react-cosmos';
+import { ExportPluginArgs } from 'react-cosmos';
 import { removeLeadingSlash } from 'react-cosmos-core';
 import { build } from 'vite';
+import { RENDERER_FILENAME } from './constants.js';
 import { createCosmosViteConfig } from './createCosmosViteConfig.js';
 import { reactCosmosViteRollupPlugin } from './reactCosmosViteRollupPlugin.js';
 

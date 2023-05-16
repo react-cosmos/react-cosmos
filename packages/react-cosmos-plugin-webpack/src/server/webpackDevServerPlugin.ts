@@ -22,9 +22,6 @@ export async function webpackDevServerPlugin({
 }: DevServerPluginArgs) {
   if (platform !== 'web') return;
 
-  // Skip webpack bundling if custom renderer URL is passed
-  if (cosmosConfig.rendererUrl) return;
-
   const userWebpack = getWebpack(cosmosConfig.rootDir);
   if (!userWebpack) return;
 

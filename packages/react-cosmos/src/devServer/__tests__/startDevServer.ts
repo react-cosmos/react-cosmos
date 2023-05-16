@@ -33,6 +33,7 @@ beforeEach(() => {
   mockCosmosConfig('cosmos.config.json', {
     rootDir: __dirname,
     port,
+    rendererUrl: '/_renderer.html',
   });
 });
 

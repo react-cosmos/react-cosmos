@@ -1,4 +1,8 @@
-import { DevServerPluginArgs, startFixtureWatcher } from 'react-cosmos';
+import {
+  DevServerPluginArgs,
+  getRendererUrlForCommand,
+  startFixtureWatcher,
+} from 'react-cosmos';
 import { createServer } from 'vite';
 import { createCosmosViteConfig } from './createCosmosViteConfig.js';
 import {
@@ -12,11 +16,9 @@ export async function viteDevServerPlugin({
 }: DevServerPluginArgs) {
   if (platform !== 'web') return;
 
-  const { rendererUrl } = cosmosConfig;
+  const rendererUrl = getRendererUrlForCommand(cosmosConfig.rendererUrl, 'dev');
   if (!rendererUrl) {
-    throw new Error(
-      'Vite plugin requires cosmosConfig.rendererUrl to be set (eg. "http://localhost:5050")'
-    );
+    throw new Error('Vite plugin requires cosmosConfig.rendererUrl to be set');
   }
 
   const { rootDir } = cosmosConfig;

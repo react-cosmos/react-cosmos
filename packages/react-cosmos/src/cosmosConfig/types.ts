@@ -34,7 +34,7 @@ export type CosmosConfig = {
   portRetries: number;
   plugins: string[];
   publicUrl: string;
-  rendererUrl: string | null;
+  rendererUrl: null | string | { dev: string; export: string };
   rootDir: string;
   staticPath: null | string;
   watchDirs: string[];

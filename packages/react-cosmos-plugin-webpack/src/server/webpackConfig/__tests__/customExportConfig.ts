@@ -9,12 +9,9 @@ import '../../testHelpers/mockEsmLoaderPath.js';
 import '../../testHelpers/mockEsmRequire.js';
 import '../../testHelpers/mockEsmResolve.js';
 
-import {
-  createCosmosConfig,
-  getCwdPath,
-  RENDERER_FILENAME,
-} from 'react-cosmos';
+import { createCosmosConfig, getCwdPath } from 'react-cosmos';
 import webpack from 'webpack';
+import { RENDERER_FILENAME } from '../constants.js';
 import { getExportWebpackConfig } from '../getExportWebpackConfig.js';
 import { HtmlWebpackPlugin } from '../htmlPlugin.js';
 
