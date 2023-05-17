@@ -15,7 +15,7 @@ import {
 } from 'react-cosmos-core';
 import { createFixtureNode, decorateFixture } from 'react-cosmos-renderer';
 import { CosmosConfig } from '../cosmosConfig/types.js';
-import { getRendererUrlForCommand } from '../shared/rendererUrl.js';
+import { pickRendererUrl } from '../shared/pickRendererUrl.js';
 import { importUserModules } from '../userModules/importUserModules.js';
 
 export type FixtureApi = {
@@ -32,7 +32,7 @@ export type FixtureApi = {
 
 export function getFixtures(cosmosConfig: CosmosConfig) {
   const { fixturesDir, fixtureFileSuffix, rootDir } = cosmosConfig;
-  const rendererUrl = getRendererUrlForCommand(cosmosConfig.rendererUrl, 'dev');
+  const rendererUrl = pickRendererUrl(cosmosConfig.rendererUrl, 'dev');
 
   const fixtureInfo: FixtureApi[] = [];
   const { fixtures, decorators } = importUserModules(cosmosConfig);

@@ -22,7 +22,7 @@ export async function getExportWebpackConfig(
     ...baseWebpackConfig,
     entry: getEntry(),
     output: getOutput(cosmosConfig),
-    module: getWebpackConfigModule(cosmosConfig, baseWebpackConfig),
+    module: getWebpackConfigModule(cosmosConfig, baseWebpackConfig, 'export'),
     resolve: getWebpackConfigResolve(cosmosConfig, baseWebpackConfig),
     plugins: getPlugins(cosmosConfig, baseWebpackConfig, userWebpack),
     experiments: getExperiments(baseWebpackConfig),

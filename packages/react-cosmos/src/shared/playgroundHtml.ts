@@ -12,7 +12,7 @@ import { CosmosConfig } from '../cosmosConfig/types.js';
 import { CosmosPlatform } from '../cosmosPlugin/types.js';
 import { findUserModulePaths } from '../userModules/findUserModulePaths.js';
 import { importKeyPath } from '../userModules/shared.js';
-import { getRendererUrlForCommand } from './rendererUrl.js';
+import { pickRendererUrl } from './pickRendererUrl.js';
 import { getStaticPath } from './staticPath.js';
 
 export async function getDevPlaygroundHtml(
@@ -29,7 +29,7 @@ export async function getDevPlaygroundHtml(
         fixtures: getFixtureList(cosmosConfig),
         rendererUrl:
           platform === 'web'
-            ? getRendererUrlForCommand(cosmosConfig.rendererUrl, 'dev')
+            ? pickRendererUrl(cosmosConfig.rendererUrl, 'dev')
             : null,
       },
     },
@@ -48,10 +48,7 @@ export async function getExportPlaygroundHtml(
       core: await getCoreConfig(cosmosConfig, false),
       rendererCore: {
         fixtures: getFixtureList(cosmosConfig),
-        rendererUrl: getRendererUrlForCommand(
-          cosmosConfig.rendererUrl,
-          'export'
-        ),
+        rendererUrl: pickRendererUrl(cosmosConfig.rendererUrl, 'export'),
       },
     },
     pluginConfigs,

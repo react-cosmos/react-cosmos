@@ -4,7 +4,7 @@
 // dist folder as part of the build process
 module.exports = async function injectUserImports() {
   const cosmos = await import('react-cosmos');
-  const { cosmosConfig } = this.getOptions();
+  const { cosmosConfig, cosmosCommand } = this.getOptions();
 
   // This ensures this loader is invalidated whenever a new file is added to or
   // removed from user's project, which in turn triggers findUserModulePaths
@@ -19,6 +19,10 @@ module.exports = async function injectUserImports() {
   const { containerQuerySelector } = cosmosConfig.dom;
   const rendererConfig = {
     playgroundUrl: cosmos.getPlaygroundUrl(cosmosConfig),
+    rendererUrl: cosmos.pickRendererUrl(
+      cosmosConfig.rendererUrl,
+      cosmosCommand
+    ),
     containerQuerySelector,
   };
   return cosmos.generateUserImports({
