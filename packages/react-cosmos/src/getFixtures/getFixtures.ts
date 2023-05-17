@@ -2,9 +2,9 @@ import path from 'path';
 import { ReactElement } from 'react';
 import {
   buildPlaygroundQueryString,
-  buildRendererQueryString,
   ByPath,
   createFixtureTree,
+  createRendererUrl,
   FixtureId,
   flattenFixtureTree,
   getFixtureFromExport,
@@ -15,6 +15,7 @@ import {
 } from 'react-cosmos-core';
 import { createFixtureNode, decorateFixture } from 'react-cosmos-renderer';
 import { CosmosConfig } from '../cosmosConfig/types.js';
+import { getRendererUrlForCommand } from '../shared/rendererUrl.js';
 import { importUserModules } from '../userModules/importUserModules.js';
 
 export type FixtureApi = {
@@ -31,6 +32,7 @@ export type FixtureApi = {
 
 export function getFixtures(cosmosConfig: CosmosConfig) {
   const { fixturesDir, fixtureFileSuffix, rootDir } = cosmosConfig;
+  const rendererUrl = getRendererUrlForCommand(cosmosConfig.rendererUrl, 'dev');
 
   const fixtureInfo: FixtureApi[] = [];
   const { fixtures, decorators } = importUserModules(cosmosConfig);
@@ -64,7 +66,7 @@ export function getFixtures(cosmosConfig: CosmosConfig) {
       parents,
       playgroundUrl: getPlaygroundUrl(cosmosConfig, fixtureId),
       relativeFilePath: fixtureId.path,
-      rendererUrl: getRendererUrl(cosmosConfig, fixtureId),
+      rendererUrl: rendererUrl && createRendererUrl(rendererUrl, fixtureId),
       treePath,
     });
   });
@@ -76,12 +78,6 @@ function getPlaygroundUrl(cosmosConfig: CosmosConfig, fixtureId: FixtureId) {
   const host = getPlaygroundHost(cosmosConfig);
   const query = buildPlaygroundQueryString({ fixtureId });
   return `${host}/${query}`;
-}
-
-function getRendererUrl(cosmosConfig: CosmosConfig, fixtureId: FixtureId) {
-  const { rendererUrl } = cosmosConfig;
-  const query = buildRendererQueryString({ fixtureId });
-  return rendererUrl ? rendererUrl + query : null;
 }
 
 function getPlaygroundHost({ hostname, port, https }: CosmosConfig) {
