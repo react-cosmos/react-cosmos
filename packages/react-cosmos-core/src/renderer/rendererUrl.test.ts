@@ -152,61 +152,61 @@ describe('dynamic renderer URL', () => {
   });
 
   describe('relative path', () => {
-    const rendererUrl = '<fixture>.html';
+    const rendererUrl = '<fixture>';
 
     it('index', () => {
-      expect(createRendererUrl(rendererUrl)).toEqual('index.html');
+      expect(createRendererUrl(rendererUrl)).toEqual('index');
     });
 
     it('fixture', () => {
       expect(createRendererUrl(rendererUrl, fixtureId, false)).toEqual(
-        'eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9.html'
+        'eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9'
       );
     });
 
     it('fixture locked', () => {
       expect(createRendererUrl(rendererUrl, fixtureId, true)).toEqual(
-        'eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9.html?locked=true'
+        'eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9?locked=true'
       );
     });
   });
 
   describe('root path', () => {
-    const rendererUrl = '/<fixture>.html';
+    const rendererUrl = '/<fixture>';
 
     it('index', () => {
-      expect(createRendererUrl(rendererUrl)).toEqual('/index.html');
+      expect(createRendererUrl(rendererUrl)).toEqual('/index');
     });
 
     it('fixture', () => {
       expect(createRendererUrl(rendererUrl, fixtureId, false)).toEqual(
-        '/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9.html'
+        '/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9'
       );
     });
 
     it('fixture locked', () => {
       expect(createRendererUrl(rendererUrl, fixtureId, true)).toEqual(
-        '/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9.html?locked=true'
+        '/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9?locked=true'
       );
     });
   });
 
   describe('root nested path', () => {
-    const rendererUrl = '/cosmos/<fixture>.html';
+    const rendererUrl = '/cosmos/<fixture>';
 
     it('index', () => {
-      expect(createRendererUrl(rendererUrl)).toEqual('/cosmos/index.html');
+      expect(createRendererUrl(rendererUrl)).toEqual('/cosmos/index');
     });
 
     it('fixture', () => {
       expect(createRendererUrl(rendererUrl, fixtureId, false)).toEqual(
-        '/cosmos/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9.html'
+        '/cosmos/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9'
       );
     });
 
     it('fixture locked', () => {
       expect(createRendererUrl(rendererUrl, fixtureId, true)).toEqual(
-        '/cosmos/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9.html?locked=true'
+        '/cosmos/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9?locked=true'
       );
     });
   });
