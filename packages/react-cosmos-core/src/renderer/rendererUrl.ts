@@ -22,6 +22,10 @@ export function createRendererUrl(
   }
 }
 
+export function encodeFixtureId(fixtureId: FixtureId) {
+  return Base64.encode(JSON.stringify(fixtureId));
+}
+
 export function decodeRendererUrlFixture(fixture: string): FixtureId {
   return JSON.parse(Base64.decode(fixture));
 }
@@ -41,8 +45,4 @@ function hostOnlyUrl(url: string) {
   } catch (err) {
     return false;
   }
-}
-
-function encodeFixtureId(fixtureId: FixtureId) {
-  return Base64.encode(JSON.stringify(fixtureId));
 }
