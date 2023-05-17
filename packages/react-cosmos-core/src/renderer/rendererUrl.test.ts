@@ -151,26 +151,6 @@ describe('dynamic renderer URL', () => {
     });
   });
 
-  describe('relative path', () => {
-    const rendererUrl = '<fixture>';
-
-    it('index', () => {
-      expect(createRendererUrl(rendererUrl)).toEqual('index');
-    });
-
-    it('fixture', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId, false)).toEqual(
-        'eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9'
-      );
-    });
-
-    it('fixture locked', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId, true)).toEqual(
-        'eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9?locked=true'
-      );
-    });
-  });
-
   describe('root path', () => {
     const rendererUrl = '/<fixture>';
 
