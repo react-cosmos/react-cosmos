@@ -14,12 +14,9 @@ import {
   ReactFixture,
 } from 'react-cosmos-core';
 import { createFixtureNode, decorateFixture } from 'react-cosmos-renderer';
-import { coreServerPlugins } from '../corePlugins/index.js';
-import { getCosmosConfigAtPath } from '../cosmosConfig/getCosmosConfigAtPath.js';
 import { CosmosConfig } from '../cosmosConfig/types.js';
-import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
-import { CosmosCommand, CosmosPlatform } from '../cosmosPlugin/types.js';
-import { importServerPlugins } from '../shared/importServerPlugins.js';
+import { RENDERER_FILENAME } from '../shared/playgroundHtml.js';
+import { resolveRendererUrl } from '../shared/resolveRendererUrl.js';
 import { importUserModules } from '../userModules/importUserModules.js';
 
 export type FixtureApi = {
@@ -30,29 +27,21 @@ export type FixtureApi = {
   parents: string[];
   playgroundUrl: string;
   relativeFilePath: string;
-  rendererUrl: string | null;
+  rendererUrl: string;
   treePath: string[];
 };
 
-type Options = {
-  command?: CosmosCommand;
-  platform?: CosmosPlatform;
-};
-
-export async function getFixtures(configPath: string, options: Options = {}) {
-  const initCosmosConfig = await getCosmosConfigAtPath(configPath);
-  const cosmosConfig = await applyPlugins(initCosmosConfig, options);
-
-  const { fixtures, decorators } = importUserModules(cosmosConfig);
-
-  const fixtureTree = createFixtureTree({
-    fixtures: getFixtureListFromExports(fixtures),
-    fixturesDir: cosmosConfig.fixturesDir,
-    fixtureFileSuffix: cosmosConfig.fixtureFileSuffix,
-  });
+export function getFixtures(cosmosConfig: CosmosConfig) {
+  const { fixturesDir, fixtureFileSuffix, rootDir } = cosmosConfig;
 
   const fixtureInfo: FixtureApi[] = [];
-
+  const { fixtures, decorators } = importUserModules(cosmosConfig);
+  const fixtureList = getFixtureListFromExports(fixtures);
+  const fixtureTree = createFixtureTree({
+    fixtures: fixtureList,
+    fixturesDir,
+    fixtureFileSuffix,
+  });
   const flatFixtureTree = flattenFixtureTree(fixtureTree);
   flatFixtureTree.forEach(({ fileName, fixtureId, name, parents }) => {
     const fixtureExport = fixtures[fixtureId.path];
@@ -66,7 +55,7 @@ export async function getFixtures(configPath: string, options: Options = {}) {
     if (name) treePath.push(name);
 
     fixtureInfo.push({
-      absoluteFilePath: path.join(cosmosConfig.rootDir, fixtureId.path),
+      absoluteFilePath: path.join(rootDir, fixtureId.path),
       fileName,
       getElement: createFixtureElementGetter(
         fixture,
@@ -85,41 +74,6 @@ export async function getFixtures(configPath: string, options: Options = {}) {
   return fixtureInfo;
 }
 
-async function applyPlugins(
-  initCosmosConfig: CosmosConfig,
-  { command = 'dev', platform = 'web' }: Options
-) {
-  let cosmosConfig = initCosmosConfig;
-
-  const pluginConfigs = await getPluginConfigs({
-    cosmosConfig,
-    relativePaths: command === 'export',
-  });
-
-  const userPlugins = await importServerPlugins(
-    pluginConfigs,
-    cosmosConfig.rootDir
-  );
-  const plugins = [...coreServerPlugins, ...userPlugins];
-
-  for (const plugin of plugins) {
-    if (plugin.config) {
-      try {
-        cosmosConfig = await plugin.config({
-          cosmosConfig,
-          command,
-          platform,
-        });
-      } catch (err) {
-        console.log(`[Cosmos][plugin:${plugin.name}] Config hook failed`);
-        throw err;
-      }
-    }
-  }
-
-  return cosmosConfig;
-}
-
 function getPlaygroundUrl(cosmosConfig: CosmosConfig, fixtureId: FixtureId) {
   const host = getPlaygroundHost(cosmosConfig);
   const query = buildPlaygroundQueryString({ fixtureId });
@@ -127,9 +81,13 @@ function getPlaygroundUrl(cosmosConfig: CosmosConfig, fixtureId: FixtureId) {
 }
 
 function getRendererUrl(cosmosConfig: CosmosConfig, fixtureId: FixtureId) {
-  const { rendererUrl } = cosmosConfig;
+  const { publicUrl, rendererUrl } = cosmosConfig;
   const query = buildRendererQueryString({ fixtureId });
-  return rendererUrl ? rendererUrl + query : null;
+  if (rendererUrl) return rendererUrl + query;
+
+  const host = getPlaygroundHost(cosmosConfig);
+  const urlPath = resolveRendererUrl(publicUrl, RENDERER_FILENAME);
+  return new URL(urlPath + query, host).toString();
 }
 
 function getPlaygroundHost({ hostname, port, https }: CosmosConfig) {
