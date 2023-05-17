@@ -1,15 +1,42 @@
 // Import mocks first
-import 'react-cosmos/jest';
+import '../testHelpers/mockEsmRequire.js';
+import '../testHelpers/mockEsmResolve.js';
+import { mockCosmosConfig, mockFile } from '../testHelpers/mockFs.js';
+import { mockCliArgs } from '../testHelpers/mockYargs.js';
 
-import path from 'path';
-import { getCosmosConfigAtPath, getFixtures } from 'react-cosmos';
+import path from 'node:path';
 import { create } from 'react-test-renderer';
+import { mockCosmosPlugins } from '../testHelpers/mockCosmosPlugins.js';
+import { getFixtures } from './getFixtures.js';
+
+const rootDir = path.join(__dirname, '../../../../examples/webpack');
+
+const testCosmosPlugin = {
+  name: 'Test Cosmos plugin',
+  rootDir: path.join(__dirname, 'mock-cosmos-plugin'),
+  server: path.join(__dirname, 'mock-cosmos-plugin/server.js'),
+};
+mockCosmosPlugins([testCosmosPlugin]);
+
+const testServerPlugin = {
+  name: 'testServerPlugin',
+
+  config: jest.fn(async ({ cosmosConfig }) => {
+    return {
+      ...cosmosConfig,
+      rendererUrl: 'http://localhost:5000/renderer.html',
+    };
+  }),
+};
+
+beforeEach(() => {
+  mockCliArgs({});
+  mockCosmosConfig('cosmos.config.json', { rootDir });
+  mockFile(testCosmosPlugin.server, { default: testServerPlugin });
+});
 
 it('renders fixture elements', async () => {
-  const cosmosConfig = await getCosmosConfigAtPath(
-    require.resolve('../cosmos.config')
-  );
-  const fixures = getFixtures(cosmosConfig);
+  const fixures = await getFixtures();
 
   function testFixtureElement(relPath: string, name: string | null = null) {
     const match = fixures.find(
@@ -23,12 +50,8 @@ it('renders fixture elements', async () => {
   testFixtureElement('src/WelcomeMessage/WelcomeMessage.fixture.tsx');
 });
 
-it.skip('returns fixture info', async () => {
-  const cosmosConfig = await getCosmosConfigAtPath(
-    require.resolve('../cosmos.config')
-  );
-  const { rootDir } = cosmosConfig;
-  const fixtures = getFixtures(cosmosConfig);
+it('returns fixture info', async () => {
+  const fixtures = await getFixtures();
   expect(fixtures).toEqual([
     {
       absoluteFilePath: path.join(rootDir, 'src/__fixtures__/Controls.tsx'),
@@ -38,7 +61,7 @@ it.skip('returns fixture info', async () => {
       parents: [],
       relativeFilePath: 'src/__fixtures__/Controls.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2FControls.tsx%22%7D',
+        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2FControls.tsx%22%7D',
       playgroundUrl:
         'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2FControls.tsx%22%7D',
       treePath: ['Controls'],
@@ -53,7 +76,7 @@ it.skip('returns fixture info', async () => {
         'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22default%22%7D',
       relativeFilePath: 'src/Counter.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22default%22%7D',
+        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22default%22%7D',
       treePath: ['Counter', 'default'],
     },
     {
@@ -66,7 +89,7 @@ it.skip('returns fixture info', async () => {
         'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22small+number%22%7D',
       relativeFilePath: 'src/Counter.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22small+number%22%7D',
+        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22small+number%22%7D',
       treePath: ['Counter', 'small number'],
     },
     {
@@ -79,7 +102,7 @@ it.skip('returns fixture info', async () => {
         'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22large+number%22%7D',
       relativeFilePath: 'src/Counter.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22large+number%22%7D',
+        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22large+number%22%7D',
       treePath: ['Counter', 'large number'],
     },
     {
@@ -92,7 +115,7 @@ it.skip('returns fixture info', async () => {
         'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FCounterButton.fixture.tsx%22%7D',
       relativeFilePath: 'src/CounterButton.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?fixtureId=%7B%22path%22%3A%22src%2FCounterButton.fixture.tsx%22%7D',
+        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2FCounterButton.fixture.tsx%22%7D',
       treePath: ['CounterButton'],
     },
     {
@@ -105,7 +128,7 @@ it.skip('returns fixture info', async () => {
         'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2FHelloWorld.ts%22%7D',
       relativeFilePath: 'src/__fixtures__/HelloWorld.ts',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2FHelloWorld.ts%22%7D',
+        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2FHelloWorld.ts%22%7D',
       treePath: ['HelloWorld'],
     },
     {
@@ -121,7 +144,7 @@ it.skip('returns fixture info', async () => {
         'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FNestedDecorators%2FNestedDecorators.fixture.tsx%22%7D',
       relativeFilePath: 'src/NestedDecorators/NestedDecorators.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?fixtureId=%7B%22path%22%3A%22src%2FNestedDecorators%2FNestedDecorators.fixture.tsx%22%7D',
+        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2FNestedDecorators%2FNestedDecorators.fixture.tsx%22%7D',
       treePath: ['NestedDecorators'],
     },
     {
@@ -132,7 +155,7 @@ it.skip('returns fixture info', async () => {
       parents: [],
       relativeFilePath: 'src/__fixtures__/Props.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2FProps.tsx%22%7D',
+        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2FProps.tsx%22%7D',
       playgroundUrl:
         'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2FProps.tsx%22%7D',
       treePath: ['Props'],
@@ -150,7 +173,7 @@ it.skip('returns fixture info', async () => {
         'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FWelcomeMessage%2FWelcomeMessage.fixture.tsx%22%7D',
       relativeFilePath: 'src/WelcomeMessage/WelcomeMessage.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/_renderer.html?fixtureId=%7B%22path%22%3A%22src%2FWelcomeMessage%2FWelcomeMessage.fixture.tsx%22%7D',
+        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2FWelcomeMessage%2FWelcomeMessage.fixture.tsx%22%7D',
       treePath: ['WelcomeMessage'],
     },
   ]);
