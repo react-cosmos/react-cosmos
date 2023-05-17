@@ -19,6 +19,7 @@ module.exports = async function injectUserImports() {
   const { containerQuerySelector } = cosmosConfig.dom;
   const rendererConfig = {
     playgroundUrl: cosmos.getPlaygroundUrl(cosmosConfig),
+    rendererUrl: cosmos.pickRendererUrl(cosmosConfig.rendererUrl, 'dev'),
     containerQuerySelector,
   };
   return cosmos.generateUserImports({

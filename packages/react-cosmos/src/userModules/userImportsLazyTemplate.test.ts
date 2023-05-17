@@ -15,6 +15,7 @@ const decoratorPaths = ['/Users/ovidiu/cosmos/src/cosmos.decorator.tsx'];
 
 const rendererConfig: RendererConfig = {
   playgroundUrl: 'http://localhost:5002',
+  rendererUrl: null,
 };
 
 it('should generate user imports with absolute paths', () => {

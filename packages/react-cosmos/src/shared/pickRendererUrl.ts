@@ -1,6 +1,6 @@
 import { CosmosCommand } from '../cosmosPlugin/types.js';
 
-export function getRendererUrlForCommand(
+export function pickRendererUrl(
   rendererUrl: null | string | { dev: string; export: string },
   command: CosmosCommand
 ) {

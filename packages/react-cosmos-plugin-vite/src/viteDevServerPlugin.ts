@@ -1,6 +1,6 @@
 import {
   DevServerPluginArgs,
-  getRendererUrlForCommand,
+  pickRendererUrl,
   startFixtureWatcher,
 } from 'react-cosmos';
 import { createServer } from 'vite';
@@ -16,7 +16,7 @@ export async function viteDevServerPlugin({
 }: DevServerPluginArgs) {
   if (platform !== 'web') return;
 
-  const rendererUrl = getRendererUrlForCommand(cosmosConfig.rendererUrl, 'dev');
+  const rendererUrl = pickRendererUrl(cosmosConfig.rendererUrl, 'dev');
   if (!rendererUrl) {
     throw new Error('Vite plugin requires cosmosConfig.rendererUrl to be set');
   }
@@ -35,7 +35,9 @@ export async function viteDevServerPlugin({
       host: '0.0.0.0',
       port: parseInt(new URL(rendererUrl).port, 10),
     },
-    plugins: [reactCosmosViteRollupPlugin(cosmosConfig, cosmosViteConfig)],
+    plugins: [
+      reactCosmosViteRollupPlugin(cosmosConfig, cosmosViteConfig, 'dev'),
+    ],
   });
   await server.listen();
 

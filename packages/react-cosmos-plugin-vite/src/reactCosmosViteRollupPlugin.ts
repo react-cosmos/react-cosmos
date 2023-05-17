@@ -1,8 +1,10 @@
 import path from 'node:path';
 import {
+  CosmosCommand,
   CosmosConfig,
   generateUserImports,
   getPlaygroundUrl,
+  pickRendererUrl,
 } from 'react-cosmos';
 import { DomRendererConfig } from 'react-cosmos-dom';
 import { Plugin } from 'rollup';
@@ -18,7 +20,8 @@ const defaultIndexPattern = new RegExp(
 
 export function reactCosmosViteRollupPlugin(
   cosmosConfig: CosmosConfig,
-  cosmosViteConfig: CosmosViteConfig
+  cosmosViteConfig: CosmosViteConfig,
+  command: CosmosCommand
 ): Plugin {
   return {
     name: 'react-cosmos-vite-renderer',
@@ -37,6 +40,7 @@ export function reactCosmosViteRollupPlugin(
           cosmosConfig,
           rendererConfig: {
             playgroundUrl: getPlaygroundUrl(cosmosConfig),
+            rendererUrl: pickRendererUrl(cosmosConfig.rendererUrl, command),
             containerQuerySelector: cosmosConfig.dom.containerQuerySelector,
           },
           relativeToDir: null,
