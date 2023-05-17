@@ -1,6 +1,5 @@
 import path from 'path';
 import { CosmosConfig } from 'react-cosmos';
-import { removeLeadingSlash } from 'react-cosmos-core';
 import webpack from 'webpack';
 import { createWebpackCosmosConfig } from '../cosmosConfig/createWebpackCosmosConfig.js';
 import { getUserWebpackConfig } from './getUserWebpackConfig.js';
@@ -44,7 +43,7 @@ function getOutput(cosmosConfig: CosmosConfig) {
     createWebpackCosmosConfig(cosmosConfig);
 
   return {
-    path: path.resolve(exportPath, removeLeadingSlash(publicUrl)),
+    path: path.join(exportPath, publicUrl),
     filename: includeHashInOutputFilename
       ? '[name].[contenthash].js'
       : '[name].js',

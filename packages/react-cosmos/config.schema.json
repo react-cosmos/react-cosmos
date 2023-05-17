@@ -35,7 +35,7 @@
       "uniqueItems": true
     },
     "publicUrl": {
-      "description": "Base URL for static assets. [default: \"/\"]",
+      "description": "Base URL for static assets. [default: \"\"]",
       "type": "string"
     },
     "fixturesDir": {
@@ -140,7 +140,19 @@
     },
     "rendererUrl": {
       "description": "Required when renderer doesn't run on the same port (or host) as the Playground. Useful for integrations with build tools. [default: null]",
-      "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
+      "anyOf": [
+        { "type": "string", "minLength": 1 },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["dev", "export"],
+          "properties": {
+            "dev": { "type": "string", "minLength": 1 },
+            "export": { "type": "string", "minLength": 1 }
+          }
+        },
+        { "type": "null" }
+      ]
     },
     "dom": {
       "description": "DOM-related options",

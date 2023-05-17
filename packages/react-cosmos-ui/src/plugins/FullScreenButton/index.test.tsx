@@ -21,7 +21,7 @@ function loadTestPlugins() {
 
 it('renders fullscreen button', async () => {
   mockCore();
-  mockRendererCore({ getWebRendererUrl: () => `/_renderer.html` });
+  mockRendererCore({ getRendererUrl: () => `/_renderer.html` });
   const windowOpenMock = mockWindowOpen();
 
   const { getByTitle } = loadTestPlugins();
@@ -39,7 +39,7 @@ it('renders fullscreen button', async () => {
 
 it('does not render fullscreen button without renderer URL', async () => {
   mockCore();
-  mockRendererCore({ getWebRendererUrl: () => null });
+  mockRendererCore({ getRendererUrl: () => null });
 
   const { queryByTitle } = loadTestPlugins();
   expect(queryByTitle(/go fullscreen/i)).toBeNull();

@@ -1,6 +1,6 @@
 import path from 'path';
 import { DevServerPluginArgs, serveStaticDir } from 'react-cosmos';
-import { ServerMessage, removeLeadingDot } from 'react-cosmos-core';
+import { ServerMessage } from 'react-cosmos-core';
 import webpack from 'webpack';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { createWebpackCosmosConfig } from './cosmosConfig/createWebpackCosmosConfig.js';
@@ -15,15 +15,12 @@ type WebpackConfig = webpack.Configuration & {
 };
 
 export async function webpackDevServerPlugin({
-  platformType,
   cosmosConfig,
+  platform,
   expressApp,
   sendMessage,
 }: DevServerPluginArgs) {
-  if (platformType !== 'web') return;
-
-  // Skip webpack bundling if custom renderer URL is passed
-  if (cosmosConfig.rendererUrl) return;
+  if (platform !== 'web') return;
 
   const userWebpack = getWebpack(cosmosConfig.rootDir);
   if (!userWebpack) return;
@@ -84,8 +81,8 @@ export async function webpackDevServerPlugin({
   const wdmModule = await import('webpack-dev-middleware');
   const wdmInst = wdmModule.default(webpackCompiler as any, {
     // publicPath is the base path for the webpack assets and has to match
-    // webpack.output.path
-    publicPath: removeLeadingDot(cosmosConfig.publicUrl),
+    // webpack.output.publicPath
+    publicPath: cosmosConfig.publicUrl,
   });
 
   expressApp.use(wdmInst);

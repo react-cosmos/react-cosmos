@@ -1,4 +1,8 @@
-import { DevServerPluginArgs, startFixtureWatcher } from 'react-cosmos';
+import {
+  DevServerPluginArgs,
+  getRendererUrlForCommand,
+  startFixtureWatcher,
+} from 'react-cosmos';
 import { createServer } from 'vite';
 import { createCosmosViteConfig } from './createCosmosViteConfig.js';
 import {
@@ -7,16 +11,14 @@ import {
 } from './reactCosmosViteRollupPlugin.js';
 
 export async function viteDevServerPlugin({
-  platformType,
   cosmosConfig,
+  platform,
 }: DevServerPluginArgs) {
-  if (platformType !== 'web') return;
+  if (platform !== 'web') return;
 
-  const { rendererUrl } = cosmosConfig;
+  const rendererUrl = getRendererUrlForCommand(cosmosConfig.rendererUrl, 'dev');
   if (!rendererUrl) {
-    throw new Error(
-      'Vite plugin requires cosmosConfig.rendererUrl to be set (eg. "http://localhost:5050")'
-    );
+    throw new Error('Vite plugin requires cosmosConfig.rendererUrl to be set');
   }
 
   const { rootDir } = cosmosConfig;
@@ -27,6 +29,7 @@ export async function viteDevServerPlugin({
     // https://github.com/vitejs/vite/blob/07bd6d14e545d05c6a29cf341f117fcfe9536ba4/packages/vite/src/node/config.ts#L418
     configFile: cosmosViteConfig.configPath,
     root: rootDir,
+    base: cosmosConfig.publicUrl,
     server: {
       // https://vitejs.dev/config/server-options.html#server-host
       host: '0.0.0.0',

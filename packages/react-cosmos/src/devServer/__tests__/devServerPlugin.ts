@@ -81,7 +81,8 @@ it('calls config hook', async () => {
 
     expect(testServerPlugin.config).toBeCalledWith({
       cosmosConfig: expect.objectContaining({ port }),
-      platformType: 'web',
+      command: 'dev',
+      platform: 'web',
     });
   });
 });
@@ -99,7 +100,7 @@ it('calls dev server hook (with updated config)', async () => {
         port,
         ignore: ['**/ignored.fixture.js'],
       }),
-      platformType: 'web',
+      platform: 'web',
       expressApp: expect.any(Function),
       httpServer: expect.any(http.Server),
       sendMessage: expect.any(Function),

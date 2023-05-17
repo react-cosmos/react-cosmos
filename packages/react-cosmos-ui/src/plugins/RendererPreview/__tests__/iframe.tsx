@@ -17,7 +17,7 @@ afterEach(resetPlugins);
 
 function registerTestPlugins() {
   mockRendererCore({
-    getWebRendererUrl: () => 'http://localhost:5000/_renderer.html',
+    getRendererUrl: () => 'http://localhost:5000/_renderer.html',
   });
 }
 

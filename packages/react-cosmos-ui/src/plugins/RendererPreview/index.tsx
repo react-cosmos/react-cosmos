@@ -57,7 +57,7 @@ function getRuntimeStatus({ getState }: RendererPreviewContext) {
 }
 
 function getRendererUrl({ getMethodsOf }: RendererPreviewContext) {
-  return getMethodsOf<RendererCoreSpec>('rendererCore').getWebRendererUrl();
+  return getMethodsOf<RendererCoreSpec>('rendererCore').getRendererUrl();
 }
 
 function getRendererConnected({ getMethodsOf }: RendererPreviewContext) {

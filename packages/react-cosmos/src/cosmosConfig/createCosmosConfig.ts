@@ -29,7 +29,7 @@ export function createCosmosConfig(
     plugins: getPlugins(cosmosConfigInput, rootDir),
     port: getPort(cosmosConfigInput),
     portRetries: getPortRetries(cosmosConfigInput),
-    publicUrl: getPublicUrl(cosmosConfigInput),
+    publicUrl: cosmosConfigInput.publicUrl ?? '',
     rendererUrl: cosmosConfigInput.rendererUrl ?? null,
     staticPath: getStaticPath(cosmosConfigInput, rootDir),
     watchDirs: getWatchDirs(cosmosConfigInput, rootDir),
@@ -71,10 +71,6 @@ function getHttpsOptions(
 
 function getIgnore({ ignore = [] }: CosmosConfigInput) {
   return ['**/node_modules/**', ...ignore];
-}
-
-function getPublicUrl({ publicUrl = '/' }: CosmosConfigInput) {
-  return publicUrl;
 }
 
 function getFixturesDir({ fixturesDir = '__fixtures__' }: CosmosConfigInput) {

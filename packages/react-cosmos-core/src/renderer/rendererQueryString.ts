@@ -4,13 +4,11 @@ import { buildQueryString, parseQueryString } from '../utils/queryString.js';
 type RendererParams = {
   fixtureId?: FixtureId;
   locked?: boolean;
-  key?: number;
 };
 
 export type RendererSearchParams = {
   fixtureId?: string;
   locked?: string;
-  key?: string;
 };
 
 export function buildRendererQueryString(params: RendererParams) {
@@ -34,10 +32,6 @@ function encodeRendererSearchParams(params: RendererParams) {
     stringParams.locked = 'true';
   }
 
-  if (params.key) {
-    stringParams.key = params.key.toString();
-  }
-
   return stringParams;
 }
 
@@ -50,10 +44,6 @@ export function decodeRendererSearchParams(stringParams: RendererSearchParams) {
 
   if (stringParams.locked) {
     params.locked = stringParams.locked === 'true';
-  }
-
-  if (stringParams.key) {
-    params.key = parseInt(stringParams.key, 10);
   }
 
   return params;

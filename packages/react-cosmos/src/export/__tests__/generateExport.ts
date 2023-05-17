@@ -25,6 +25,7 @@ beforeEach(() => {
     rootDir: __dirname,
     port,
     exportPath,
+    rendererUrl: '/_renderer.html',
   });
 });
 
@@ -57,7 +58,7 @@ it('generates playground HTML', async () => {
           },
           rendererCore: {
             fixtures: {},
-            webRendererUrl: '/_renderer.html',
+            rendererUrl: '/_renderer.html',
           },
         },
         pluginConfigs: [],

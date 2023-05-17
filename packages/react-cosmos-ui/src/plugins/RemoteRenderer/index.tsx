@@ -41,7 +41,7 @@ namedPlug('globalAction', 'remoteRenderer', ({ pluginContext }) => {
   return (
     <RemoteButton
       devServerOn={core.isDevServerOn()}
-      webRendererUrl={rendererCore.getWebRendererUrl()}
+      rendererUrl={rendererCore.getRendererUrl()}
       pushNotification={notifications.pushTimedNotification}
     />
   );

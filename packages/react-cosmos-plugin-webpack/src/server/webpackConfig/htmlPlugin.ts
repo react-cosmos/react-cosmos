@@ -1,8 +1,9 @@
 import { Options as HtmlWebpackPluginOptions } from 'html-webpack-plugin';
 import { omit } from 'lodash-es';
-import { CosmosConfig, RENDERER_FILENAME } from 'react-cosmos';
+import { CosmosConfig } from 'react-cosmos';
 import webpack from 'webpack';
 import { requireFromSilent } from '../utils/requireSilent.js';
+import { RENDERER_FILENAME } from './constants.js';
 import { hasPlugin, isInstanceOfWebpackPlugin } from './plugins.js';
 
 // prettier-ignore

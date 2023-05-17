@@ -33,6 +33,7 @@ beforeEach(() => {
   mockCosmosConfig('cosmos.config.json', {
     rootDir: __dirname,
     port,
+    rendererUrl: '/_renderer.html',
   });
 });
 
@@ -67,7 +68,7 @@ it('serves playground HTML', async () => {
           },
           rendererCore: {
             fixtures: {},
-            webRendererUrl: '/_renderer.html',
+            rendererUrl: '/_renderer.html',
           },
         },
         pluginConfigs: [],

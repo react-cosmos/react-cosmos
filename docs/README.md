@@ -484,7 +484,7 @@ console.log(fixtures);
 //     "parents": ["pages", "Error"]
 //     "playgroundUrl": "http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2Fpages%2FError%2F__fixtures__%2Fnot-found.js%22%2C%22name%22%3Anull%7D",
 //     "relativeFilePath": "components/pages/Error/__fixtures__/not-found.js",
-//     "rendererUrl": "http://localhost:5000/static/_renderer.html?fixtureId=%7B%22path%22%3A%22components%2Fpages%2FError%2F__fixtures__%2Fnot-found.js%22%2C%22name%22%3Anull%7D",
+//     "rendererUrl": "http://localhost:5000/static/renderer.html?fixtureId=%7B%22path%22%3A%22components%2Fpages%2FError%2F__fixtures__%2Fnot-found.js%22%2C%22name%22%3Anull%7D",
 //     "treePath": ["pages", "Error", "not-found"]
 //   },
 //   ...
@@ -561,7 +561,7 @@ module.exports = webpackConfig;
 
 > **Warning**: Most React Cosmos issues are related to missing build dependencies. Please see [Compilation](#compilation).
 
-#### localhost:5000/\_renderer.html 404s?
+#### localhost:5000/\renderer.html 404s?
 
 - Check for build errors in your terminal.
 - Make sure you have html-webpack-plugin@4 installed, as well as [any other build dependency](#compilation).
@@ -581,10 +581,6 @@ module.exports = webpackConfig;
 #### main.js file is cached?
 
 - [Set `includeHashInOutputFilename` to `true`](https://github.com/react-cosmos/react-cosmos/tree/main/docs#output-filename).
-
-#### Serving a static export from a nested path?
-
-- [Set `publicUrl` to a relative path, like `"./"`](https://github.com/react-cosmos/react-cosmos/issues/1149).
 
 #### Fixtures not detected?
 

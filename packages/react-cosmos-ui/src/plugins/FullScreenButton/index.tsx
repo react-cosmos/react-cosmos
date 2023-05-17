@@ -19,7 +19,7 @@ namedPlug<RendererActionSlotProps>(
     const { fixtureId } = slotProps;
     const core = getMethodsOf<CoreSpec>('core');
     const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
-    const rendererUrl = rendererCore.getWebRendererUrl();
+    const rendererUrl = rendererCore.getRendererUrl();
 
     const onSelect = React.useCallback(() => {
       const query = buildRendererQueryString({ fixtureId, locked: true });

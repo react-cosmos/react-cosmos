@@ -6,16 +6,16 @@ import { copyToClipboard } from './copyToClipboard.js';
 
 type Props = {
   devServerOn: boolean;
-  webRendererUrl: null | string;
+  rendererUrl: null | string;
   pushNotification: (notification: NotificationItem) => unknown;
 };
 
 export function RemoteButton({
   devServerOn,
-  webRendererUrl,
+  rendererUrl,
   pushNotification,
 }: Props) {
-  if (!devServerOn || !webRendererUrl) {
+  if (!devServerOn || !rendererUrl) {
     return null;
   }
 
@@ -23,7 +23,7 @@ export function RemoteButton({
     <IconButton32
       icon={<CastIcon />}
       title="Copy remote renderer URL"
-      onClick={() => copyRendererUrlToClipboard(webRendererUrl)}
+      onClick={() => copyRendererUrlToClipboard(rendererUrl)}
     />
   );
 

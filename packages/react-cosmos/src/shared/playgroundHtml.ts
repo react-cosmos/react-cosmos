@@ -9,16 +9,14 @@ import {
 } from 'react-cosmos-core';
 import { PlaygroundMountArgs } from 'react-cosmos-ui';
 import { CosmosConfig } from '../cosmosConfig/types.js';
-import { PlatformType } from '../cosmosPlugin/types.js';
+import { CosmosPlatform } from '../cosmosPlugin/types.js';
 import { findUserModulePaths } from '../userModules/findUserModulePaths.js';
 import { importKeyPath } from '../userModules/shared.js';
-import { resolveRendererUrl } from './resolveRendererUrl.js';
+import { getRendererUrlForCommand } from './rendererUrl.js';
 import { getStaticPath } from './staticPath.js';
 
-export const RENDERER_FILENAME = '_renderer.html';
-
 export async function getDevPlaygroundHtml(
-  platformType: PlatformType,
+  platform: CosmosPlatform,
   cosmosConfig: CosmosConfig,
   pluginConfigs: CosmosPluginConfig[]
 ) {
@@ -29,7 +27,10 @@ export async function getDevPlaygroundHtml(
       core: await getCoreConfig(cosmosConfig, true),
       rendererCore: {
         fixtures: getFixtureList(cosmosConfig),
-        webRendererUrl: getDevServerWebRendereUrl(platformType, cosmosConfig),
+        rendererUrl:
+          platform === 'web'
+            ? getRendererUrlForCommand(cosmosConfig.rendererUrl, 'dev')
+            : null,
       },
     },
     pluginConfigs,
@@ -47,7 +48,10 @@ export async function getExportPlaygroundHtml(
       core: await getCoreConfig(cosmosConfig, false),
       rendererCore: {
         fixtures: getFixtureList(cosmosConfig),
-        webRendererUrl: getExportWebRendereUrl(cosmosConfig),
+        rendererUrl: getRendererUrlForCommand(
+          cosmosConfig.rendererUrl,
+          'export'
+        ),
       },
     },
     pluginConfigs,
@@ -62,28 +66,6 @@ async function getCoreConfig(cosmosConfig: CosmosConfig, devServerOn: boolean) {
     fixtureFileSuffix,
     devServerOn,
   };
-}
-
-function getDevServerWebRendereUrl(
-  platformType: PlatformType,
-  cosmosConfig: CosmosConfig
-) {
-  switch (platformType) {
-    case 'native':
-      return null;
-    case 'web':
-      return (
-        cosmosConfig.rendererUrl ||
-        resolveRendererUrl(cosmosConfig.publicUrl, RENDERER_FILENAME)
-      );
-    default:
-      throw new Error(`Invalid platform type: ${platformType}`);
-  }
-}
-
-function getExportWebRendereUrl(cosmosConfig: CosmosConfig) {
-  // TODO: Allow user to customize renderer URL in static export
-  return resolveRendererUrl(cosmosConfig.publicUrl, RENDERER_FILENAME);
 }
 
 async function getProjectId(rootDir: string) {
