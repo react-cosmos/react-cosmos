@@ -1,6 +1,5 @@
 import express from 'express';
 import path from 'path';
-import { removeLeadingDot } from 'react-cosmos-core';
 
 export function serveStaticDir(
   app: express.Application,
@@ -18,4 +17,8 @@ export function serveStaticDir(
       index: false,
     })
   );
+}
+
+function removeLeadingDot(fromPath: string) {
+  return fromPath.indexOf('.') === 0 ? fromPath.slice(1) : fromPath;
 }

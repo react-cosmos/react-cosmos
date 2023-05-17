@@ -58,5 +58,5 @@ async function generateImportsFile(cosmosConfig: CosmosConfig) {
 
 function getDefaultFilePath(rootDir: string) {
   const ext = moduleExists('typescript') ? 'ts' : 'js';
-  return path.resolve(rootDir, `cosmos.imports.${ext}`);
+  return path.join(rootDir, `cosmos.imports.${ext}`);
 }

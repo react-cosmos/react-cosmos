@@ -1,10 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
-import {
-  CosmosPluginConfig,
-  removeLeadingSlash,
-  UiCosmosPluginConfig,
-} from 'react-cosmos-core';
+import { CosmosPluginConfig, UiCosmosPluginConfig } from 'react-cosmos-core';
 import { coreServerPlugins } from '../corePlugins/index.js';
 import { detectCosmosConfig } from '../cosmosConfig/detectCosmosConfig.js';
 import { CosmosConfig } from '../cosmosConfig/types.js';
@@ -99,10 +95,7 @@ async function copyStaticAssets(cosmosConfig: CosmosConfig) {
   }
 
   const { publicUrl } = cosmosConfig;
-  const exportStaticPath = path.resolve(
-    exportPath,
-    removeLeadingSlash(publicUrl)
-  );
+  const exportStaticPath = path.join(exportPath, publicUrl);
   fs.cp(staticPath, exportStaticPath, { recursive: true });
 }
 
@@ -121,22 +114,22 @@ async function exportPlaygroundFiles(
 
   await fs.copyFile(
     resolve('react-cosmos-ui/dist/playground.bundle.js'),
-    path.resolve(exportPath, 'playground.bundle.js')
+    path.join(exportPath, 'playground.bundle.js')
   );
   await fs.copyFile(
     resolve('react-cosmos-ui/dist/playground.bundle.js.map'),
-    path.resolve(exportPath, 'playground.bundle.js.map')
+    path.join(exportPath, 'playground.bundle.js.map')
   );
   await fs.copyFile(
     getStaticPath('favicon.ico'),
-    path.resolve(exportPath, '_cosmos.ico')
+    path.join(exportPath, '_cosmos.ico')
   );
 
   const playgroundHtml = await getExportPlaygroundHtml(
     cosmosConfig,
     copiedUiPlugins
   );
-  await fs.writeFile(path.resolve(exportPath, 'index.html'), playgroundHtml);
+  await fs.writeFile(path.join(exportPath, 'index.html'), playgroundHtml);
 }
 
 async function exportUiPlugin(
