@@ -16,6 +16,7 @@ export * from './plugin/cosmosPluginConfig.js';
 export * from './renderer/rendererConfig.js';
 export * from './renderer/rendererConnect.js';
 export * from './renderer/rendererQueryString.js';
+export * from './renderer/rendererUrl.js';
 export * from './userModules/fixtureTypes.js';
 export * from './userModules/getFixtureFromExport.js';
 export * from './userModules/getFixtureList.js';
