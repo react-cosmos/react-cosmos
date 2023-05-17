@@ -9,6 +9,7 @@ import { create } from 'react-test-renderer';
 import { mockCosmosPlugins } from '../testHelpers/mockCosmosPlugins.js';
 import { getFixtures } from './getFixtures.js';
 
+const cosmosConfigPath = path.join(process.cwd(), 'cosmos.config.json');
 const rootDir = path.join(__dirname, '../../../../examples/webpack');
 
 const testCosmosPlugin = {
@@ -36,7 +37,7 @@ beforeEach(() => {
 });
 
 it('renders fixture elements', async () => {
-  const fixures = await getFixtures();
+  const fixures = await getFixtures(cosmosConfigPath);
 
   function testFixtureElement(relPath: string, name: string | null = null) {
     const match = fixures.find(
@@ -51,7 +52,7 @@ it('renders fixture elements', async () => {
 });
 
 it('returns fixture info', async () => {
-  const fixtures = await getFixtures();
+  const fixtures = await getFixtures(cosmosConfigPath);
   expect(fixtures).toEqual([
     {
       absoluteFilePath: path.join(rootDir, 'src/__fixtures__/Controls.tsx'),

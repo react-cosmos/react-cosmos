@@ -15,7 +15,7 @@ import {
 } from 'react-cosmos-core';
 import { createFixtureNode, decorateFixture } from 'react-cosmos-renderer';
 import { coreServerPlugins } from '../corePlugins/index.js';
-import { detectCosmosConfig } from '../cosmosConfig/detectCosmosConfig.js';
+import { getCosmosConfigAtPath } from '../cosmosConfig/getCosmosConfigAtPath.js';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
 import { CosmosCommand, CosmosPlatform } from '../cosmosPlugin/types.js';
@@ -39,8 +39,8 @@ type Options = {
   platform?: CosmosPlatform;
 };
 
-export async function getFixtures(options: Options = {}) {
-  const initCosmosConfig = await detectCosmosConfig();
+export async function getFixtures(configPath: string, options: Options = {}) {
+  const initCosmosConfig = await getCosmosConfigAtPath(configPath);
   const cosmosConfig = await applyPlugins(initCosmosConfig, options);
 
   const { fixtures, decorators } = importUserModules(cosmosConfig);
