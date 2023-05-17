@@ -28,7 +28,11 @@ it('returns fixture info', async () => {
     require.resolve('../cosmos.config')
   );
   const { rootDir } = cosmosConfig;
-  const fixtures = getFixtures(cosmosConfig);
+  const fixtures = getFixtures({
+    ...cosmosConfig,
+    // TODO: Remove this after getFixtures is refactored to use server plugins
+    rendererUrl: 'http://localhost:5000/_renderer.html',
+  });
   expect(fixtures).toEqual([
     {
       absoluteFilePath: path.join(rootDir, 'src/__fixtures__/Controls.tsx'),
