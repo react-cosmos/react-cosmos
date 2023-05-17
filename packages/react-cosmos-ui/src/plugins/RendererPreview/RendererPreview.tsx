@@ -1,4 +1,5 @@
 import React from 'react';
+import { createRendererUrl } from 'react-cosmos-core';
 import { Slot } from 'react-plugin';
 import styled from 'styled-components';
 import { RemoteRendererOverlay } from './RendererOverlay/RemoteRendererOverlay.js';
@@ -34,7 +35,7 @@ export const RendererPreview = React.memo(function RendererPreview({
         <Iframe
           data-testid="previewIframe"
           ref={onIframeRef}
-          src={rendererUrl}
+          src={createRendererUrl(rendererUrl)}
           frameBorder={0}
           allow="clipboard-write *"
         />

@@ -1,4 +1,5 @@
 import React from 'react';
+import { createRendererUrl } from 'react-cosmos-core';
 import { IconButton32 } from '../../../components/buttons/index.js';
 import { CastIcon } from '../../../components/icons/index.js';
 import { NotificationItem } from '../../Notifications/spec.js';
@@ -23,7 +24,7 @@ export function RemoteButton({
     <IconButton32
       icon={<CastIcon />}
       title="Copy remote renderer URL"
-      onClick={() => copyRendererUrlToClipboard(rendererUrl)}
+      onClick={() => copyRendererUrlToClipboard(createRendererUrl(rendererUrl))}
     />
   );
 
