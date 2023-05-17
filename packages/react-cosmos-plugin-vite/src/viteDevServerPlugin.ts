@@ -35,9 +35,7 @@ export async function viteDevServerPlugin({
       host: '0.0.0.0',
       port: parseInt(new URL(rendererUrl).port, 10),
     },
-    plugins: [
-      reactCosmosViteRollupPlugin(cosmosConfig, cosmosViteConfig, 'dev'),
-    ],
+    plugins: [reactCosmosViteRollupPlugin(cosmosConfig, cosmosViteConfig)],
   });
   await server.listen();
 

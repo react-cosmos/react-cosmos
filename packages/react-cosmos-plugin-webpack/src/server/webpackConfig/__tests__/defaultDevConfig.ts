@@ -61,7 +61,7 @@ it('includes user imports loader', async () => {
   expect(module!.rules).toContainEqual({
     loader: require.resolve('../userImportsLoader'),
     include: require.resolve('../../../client/userImports'),
-    options: { cosmosConfig, cosmosCommand: 'dev' },
+    options: { cosmosConfig },
   });
 });
 

@@ -2,7 +2,6 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { CosmosPlatform, CosmosServerPlugin } from '../cosmosPlugin/types.js';
-import { pickRendererUrl } from '../shared/pickRendererUrl.js';
 import { getPlaygroundUrl } from '../shared/playgroundUrl.js';
 import { startFixtureWatcher } from '../userModules/fixtureWatcher.js';
 import { generateUserImports } from '../userModules/generateUserImports.js';
@@ -44,7 +43,6 @@ async function generateImportsFile(cosmosConfig: CosmosConfig) {
 
   const rendererConfig = {
     playgroundUrl: getPlaygroundUrl(cosmosConfig),
-    rendererUrl: pickRendererUrl(cosmosConfig.rendererUrl, 'dev'),
   };
   const fileSource = generateUserImports({
     cosmosConfig,
