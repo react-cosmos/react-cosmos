@@ -141,9 +141,10 @@ You've taken the first step towards designing reusable components. You're ready 
 
 ### Next steps...
 
-- [Configure Webpack config](#webpack).
 - [Create a decorator](#decorators).
 - [Check out Vite and Webpack examples](../examples).
+- [Configure Cosmos config](#config).
+- [Configure Webpack config](#webpack).
 
 > Something wrong? Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) (make sure to include details) and to [join us on Discord](https://discord.gg/3X95VgfnW5).
 
@@ -523,7 +524,7 @@ Disable Fast Refresh in your `cosmos` commmand.
 }
 ```
 
-> Your mileage may vary, but using CRA's internal webpack config inside Cosmos has caused React Refresh [issues](https://github.com/react-cosmos/react-cosmos/issues/1272) in the past. You disable it as shown above or you may also _not_ set `webpack.configPath` to `"react-scripts/config/webpack.config"` and have Cosmos run with a more minimalistic alternative to the [CRA webpack config](https://github.com/facebook/create-react-app/blob/d960b9e38c062584ff6cfb1a70e1512509a966e7/packages/react-scripts/config/webpack.config.js).
+> Your mileage may vary, but using CRA's internal webpack config inside Cosmos has caused React Refresh [issues](https://github.com/react-cosmos/react-cosmos/issues/1272) in the past. You can disable it as shown above or you may also _not_ set `webpack.configPath` to `"react-scripts/config/webpack.config"` and have Cosmos run with a more minimalistic alternative to the [CRA webpack config](https://github.com/facebook/create-react-app/blob/d960b9e38c062584ff6cfb1a70e1512509a966e7/packages/react-scripts/config/webpack.config.js).
 
 ### Using react-app-rewired
 
