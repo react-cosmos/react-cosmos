@@ -141,10 +141,10 @@ You've taken the first step towards designing reusable components. You're ready 
 
 ### Next steps...
 
-- [Set up React Cosmos with Create React App](#create-react-app).
-- [Configure Webpack config](#webpack).
 - [Create a decorator](#decorators).
 - [Check out Vite and Webpack examples](../examples).
+- [Configure Cosmos config](#config).
+- [Configure Webpack config](#webpack).
 
 > Something wrong? Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) (make sure to include details) and to [join us on Discord](https://discord.gg/3X95VgfnW5).
 
@@ -496,10 +496,11 @@ Aside from the fixture information showcased above, each fixture object returned
 
 ## Create React App
 
-- Set `webpack.configPath` to `react-scripts/config/webpack.config`. Unless you use react-app-rewired (see below).
-- Make sure to place fixture and decorator files in the `src` directory.
+- Add `react-cosmos-plugin-webpack` plugin.
 - Set `staticPath` to `public` to load static assets inside React Cosmos.
 - Restrict `watchDirs` to `src` to ignore file changes outside the source directory.
+- Set `webpack.configPath` to `react-scripts/config/webpack.config`. Unless you use react-app-rewired (see below).
+- Make sure to place fixture and decorator files in the `src` directory.
 
 This is a `cosmos.config.json` example for Create React App:
 
@@ -513,6 +514,17 @@ This is a `cosmos.config.json` example for Create React App:
   }
 }
 ```
+
+Disable Fast Refresh in your `cosmos` commmand.
+
+```diff
+"scripts": {
+-  "cosmos": "cosmos",
++  "cosmos": "FAST_REFRESH=false cosmos"
+}
+```
+
+> Your mileage may vary, but using CRA's internal webpack config inside Cosmos has caused React Refresh [issues](https://github.com/react-cosmos/react-cosmos/issues/1272) in the past. You can disable it as shown above or you may also _not_ set `webpack.configPath` to `"react-scripts/config/webpack.config"` and have Cosmos run with a more minimalistic alternative to the [CRA webpack config](https://github.com/facebook/create-react-app/blob/d960b9e38c062584ff6cfb1a70e1512509a966e7/packages/react-scripts/config/webpack.config.js).
 
 ### Using react-app-rewired
 
