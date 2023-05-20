@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { CustomRendererConfig } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { CosmosPlatform, CosmosServerPlugin } from '../cosmosPlugin/types.js';
 import { getPlaygroundUrl } from '../shared/playgroundUrl.js';
@@ -43,8 +44,9 @@ async function generateImportsFile(cosmosConfig: CosmosConfig) {
 
   const rendererConfig = {
     playgroundUrl: getPlaygroundUrl(cosmosConfig),
+    rendererUrl: cosmosConfig.rendererUrl,
   };
-  const fileSource = generateUserImports({
+  const fileSource = generateUserImports<CustomRendererConfig>({
     cosmosConfig,
     rendererConfig,
     relativeToDir: path.dirname(filePath),
