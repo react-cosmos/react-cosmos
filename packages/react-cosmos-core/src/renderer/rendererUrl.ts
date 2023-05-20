@@ -24,12 +24,12 @@ export function createRendererUrl(
 }
 
 export function pickRendererUrl(
-  rendererUrl: null | string | { dev: string; export: string },
+  rendererUrl: undefined | null | string | { dev: string; export: string },
   command: CosmosCommand
-) {
+): null | string {
   return rendererUrl && typeof rendererUrl === 'object'
     ? rendererUrl[command]
-    : rendererUrl;
+    : rendererUrl ?? null;
 }
 
 export function encodeRendererUrlFixture(fixtureId: FixtureId) {
