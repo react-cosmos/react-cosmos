@@ -1,8 +1,5 @@
-import {
-  DevServerPluginArgs,
-  pickRendererUrl,
-  startFixtureWatcher,
-} from 'react-cosmos';
+import { DevServerPluginArgs, startFixtureWatcher } from 'react-cosmos';
+import { pickRendererUrl } from 'react-cosmos-core';
 import { createServer } from 'vite';
 import { createCosmosViteConfig } from './createCosmosViteConfig.js';
 import {
