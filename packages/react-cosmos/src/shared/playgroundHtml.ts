@@ -5,6 +5,7 @@ import { pkgUpSync } from 'pkg-up';
 import {
   CosmosPluginConfig,
   FixtureList,
+  pickRendererUrl,
   replaceKeys,
 } from 'react-cosmos-core';
 import { PlaygroundMountArgs } from 'react-cosmos-ui';
@@ -12,7 +13,6 @@ import { CosmosConfig } from '../cosmosConfig/types.js';
 import { CosmosPlatform } from '../cosmosPlugin/types.js';
 import { findUserModulePaths } from '../userModules/findUserModulePaths.js';
 import { importKeyPath } from '../userModules/shared.js';
-import { pickRendererUrl } from './pickRendererUrl.js';
 import { getStaticPath } from './staticPath.js';
 
 export async function getDevPlaygroundHtml(

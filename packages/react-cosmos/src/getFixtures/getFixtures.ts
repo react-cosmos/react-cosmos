@@ -10,12 +10,12 @@ import {
   getFixtureFromExport,
   getFixtureListFromExports,
   getSortedDecoratorsForFixturePath,
+  pickRendererUrl,
   ReactDecorator,
   ReactFixture,
 } from 'react-cosmos-core';
 import { createFixtureNode, decorateFixture } from 'react-cosmos-renderer';
 import { CosmosConfig } from '../cosmosConfig/types.js';
-import { pickRendererUrl } from '../shared/pickRendererUrl.js';
 import { importUserModules } from '../userModules/importUserModules.js';
 
 export type FixtureApi = {
