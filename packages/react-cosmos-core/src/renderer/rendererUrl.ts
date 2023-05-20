@@ -1,4 +1,5 @@
 import { Base64 } from 'js-base64';
+import { CosmosCommand } from '../server/serverTypes.js';
 import { FixtureId } from '../userModules/fixtureTypes.js';
 import { buildRendererQueryString } from './rendererQueryString.js';
 
@@ -11,7 +12,7 @@ export function createRendererUrl(
     if (!fixtureId) return replaceFixtureVar(rendererUrl, 'index');
 
     return (
-      replaceFixtureVar(rendererUrl, encodeFixtureId(fixtureId)) +
+      replaceFixtureVar(rendererUrl, encodeRendererUrlFixture(fixtureId)) +
       buildRendererQueryString({ locked })
     );
   } else {
@@ -22,7 +23,16 @@ export function createRendererUrl(
   }
 }
 
-export function encodeFixtureId(fixtureId: FixtureId) {
+export function pickRendererUrl(
+  rendererUrl: null | string | { dev: string; export: string },
+  command: CosmosCommand
+) {
+  return rendererUrl && typeof rendererUrl === 'object'
+    ? rendererUrl[command]
+    : rendererUrl;
+}
+
+export function encodeRendererUrlFixture(fixtureId: FixtureId) {
   return Base64.encode(JSON.stringify(fixtureId));
 }
 
