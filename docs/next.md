@@ -48,10 +48,10 @@ Create `cosmos.config.json` and point `rendererUrl` to your Next.js Cosmos Rende
 
 Add `package.json` script:
 
-```diff
+```json
 "scripts": {
-+  "cosmos": "cosmos --expose-imports",
-+  "cosmos-export": "cosmos-export --expose-imports
+  "cosmos": "cosmos --expose-imports",
+  "cosmos-export": "cosmos-export --expose-imports
 }
 ```
 
