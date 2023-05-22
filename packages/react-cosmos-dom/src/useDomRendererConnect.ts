@@ -1,16 +1,16 @@
 'use client';
 import React from 'react';
-import { RendererConfig, isInsideWindowIframe } from 'react-cosmos-core';
+import { isInsideWindowIframe } from 'react-cosmos-core';
 import {
   createNoopRendererConnect,
   createPostMessageConnect,
   createWebSocketsConnect,
 } from 'react-cosmos-renderer';
 
-export function useDomRendererConnect(rendererConfig: RendererConfig) {
+export function useDomRendererConnect(playgroundUrl: string) {
   return React.useMemo(
-    () => createDomRendererConnect(rendererConfig.playgroundUrl),
-    [rendererConfig.playgroundUrl]
+    () => createDomRendererConnect(playgroundUrl),
+    [playgroundUrl]
   );
 }
 

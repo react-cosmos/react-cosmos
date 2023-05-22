@@ -13,7 +13,7 @@ type Props = {
 };
 export function DomRendererProvider({ children, rendererConfig }: Props) {
   const rendererId = useDomRendererId();
-  const rendererConnect = useDomRendererConnect(rendererConfig);
+  const rendererConnect = useDomRendererConnect(rendererConfig.playgroundUrl);
 
   const { locked = false, fixtureId = null } = React.useMemo(
     () => parseRendererQueryString(location.search),
