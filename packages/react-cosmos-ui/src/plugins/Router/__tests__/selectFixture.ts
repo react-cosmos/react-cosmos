@@ -36,13 +36,13 @@ it('sets URL params', async () => {
   );
 });
 
-it('emits "fixtureChange" event', async () => {
-  const { fixtureChange } = onRouter();
+it('emits "fixtureSelect" event', async () => {
+  const { fixtureSelect } = onRouter();
 
   loadPlugins();
   getRouterMethods().selectFixture(fixtureId);
 
   await waitFor(() =>
-    expect(fixtureChange).toBeCalledWith(expect.any(Object), fixtureId)
+    expect(fixtureSelect).toBeCalledWith(expect.any(Object), fixtureId)
   );
 });

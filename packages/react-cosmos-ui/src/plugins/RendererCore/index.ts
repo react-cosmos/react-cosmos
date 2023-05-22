@@ -1,7 +1,9 @@
 import { RendererId } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
 import { RouterSpec } from '../Router/spec.js';
-import { onRouterFixtureChange } from './onRouterFixtureChange.js';
+import { onRouterFixtureReselect } from './onRouterFixtureReselect.js';
+import { onRouterFixtureSelect } from './onRouterFixtureSelect.js';
+import { onRouterFixtureUnselect } from './onRouterFixtureUnselect.js';
 import { receiveResponse } from './receiveResponse/index.js';
 import { reloadRenderer } from './reloadRenderer.js';
 import { setFixtureState } from './setFixtureState.js';
@@ -39,7 +41,11 @@ onLoad(({ getConfig, setState }) => {
   setState(prevState => ({ ...prevState, fixtures }));
 });
 
-on<RouterSpec>('router', { fixtureChange: onRouterFixtureChange });
+on<RouterSpec>('router', {
+  fixtureSelect: onRouterFixtureSelect,
+  fixtureReselect: onRouterFixtureReselect,
+  fixtureUnselect: onRouterFixtureUnselect,
+});
 
 export { register };
 
