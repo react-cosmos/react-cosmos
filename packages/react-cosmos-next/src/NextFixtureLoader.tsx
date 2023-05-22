@@ -1,27 +1,25 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import {
+  FixtureId,
   RendererConfig,
-  RendererSearchParams,
   UserModuleWrappers,
-  decodeRendererSearchParams,
+  decodeRendererUrlFixture,
 } from 'react-cosmos-core';
 import { ServerFixtureLoader } from 'react-cosmos-renderer';
 import { NextRendererProvider } from './NextRendererProvider.js';
+import { NextCosmosParams } from './nextTypes.js';
 
 type Props = {
   rendererConfig: RendererConfig;
   moduleWrappers: UserModuleWrappers;
-  searchParams: RendererSearchParams;
+  params: NextCosmosParams;
 };
 export function NextFixtureLoader({
   rendererConfig,
   moduleWrappers,
-  searchParams,
+  params,
 }: Props) {
-  const { locked = false, fixtureId = null } = React.useMemo(
-    () => decodeRendererSearchParams(searchParams),
-    [searchParams]
-  );
+  const fixtureId = getFixtureIdFromPageParams(params);
 
   const selectedFixture = fixtureId && {
     fixtureId,
@@ -36,18 +34,27 @@ export function NextFixtureLoader({
   };
 
   return (
-    <NextRendererProvider
-      rendererConfig={rendererConfig}
-      locked={locked}
-      selectedFixture={selectedFixture}
-    >
-      <ServerFixtureLoader
-        moduleWrappers={moduleWrappers}
-        renderMessage={renderMessage}
+    <Suspense>
+      <NextRendererProvider
+        rendererConfig={rendererConfig}
         selectedFixture={selectedFixture}
-      />
-    </NextRendererProvider>
+      >
+        <ServerFixtureLoader
+          moduleWrappers={moduleWrappers}
+          renderMessage={renderMessage}
+          selectedFixture={selectedFixture}
+        />
+      </NextRendererProvider>
+    </Suspense>
   );
+}
+
+function getFixtureIdFromPageParams(
+  params: NextCosmosParams
+): FixtureId | null {
+  return params.fixture && params.fixture !== 'index'
+    ? decodeRendererUrlFixture(decodeURIComponent(params.fixture))
+    : null;
 }
 
 const containerStyle: React.CSSProperties = {
