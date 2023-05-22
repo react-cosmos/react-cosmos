@@ -5,7 +5,6 @@ import {
   FixtureId,
   RendererConfig,
   createRendererUrl,
-  pickRendererUrl,
 } from 'react-cosmos-core';
 import {
   GlobalErrorHandler,
@@ -23,18 +22,13 @@ type Props = {
 };
 export function NextRendererProvider({
   children,
-  rendererConfig,
+  rendererConfig: { rendererUrl, playgroundUrl },
   selectedFixture,
 }: Props) {
   const rendererId = useDomRendererId();
-  const rendererConnect = useDomRendererConnect(rendererConfig);
+  const rendererConnect = useDomRendererConnect(playgroundUrl);
 
   const router = useRouter();
-  const rendererUrl = pickRendererUrl(
-    rendererConfig.rendererUrl,
-    process.env.NODE_ENV === 'production' ? 'export' : 'dev'
-  );
-
   const searchParams = useSearchParams();
   const locked = searchParams.get('locked') === 'true';
 

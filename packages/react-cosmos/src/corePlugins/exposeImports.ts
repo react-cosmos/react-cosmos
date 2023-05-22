@@ -1,6 +1,10 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { RendererConfig } from 'react-cosmos-core';
+import {
+  CosmosCommand,
+  RendererConfig,
+  pickRendererUrl,
+} from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { CosmosPlatform, CosmosServerPlugin } from '../cosmosPlugin/types.js';
 import { getPlaygroundUrl } from '../shared/playgroundUrl.js';
@@ -14,14 +18,20 @@ export const exposeImportsServerPlugin: CosmosServerPlugin = {
   async devServer({ cosmosConfig, platform }) {
     if (!shouldExposeImports(platform, cosmosConfig)) return;
 
-    await generateImportsFile(cosmosConfig);
+    await generateImportsFile(cosmosConfig, 'dev');
     const watcher = await startFixtureWatcher(cosmosConfig, 'all', () => {
-      generateImportsFile(cosmosConfig);
+      generateImportsFile(cosmosConfig, 'dev');
     });
 
     return () => {
       watcher.close();
     };
+  },
+
+  async export({ cosmosConfig }) {
+    if (shouldExposeImports('web', cosmosConfig)) {
+      await generateImportsFile(cosmosConfig, 'export');
+    }
   },
 };
 
@@ -32,7 +42,10 @@ function shouldExposeImports(
   return platform === 'native' || Boolean(cosmosConfig.exposeImports);
 }
 
-async function generateImportsFile(cosmosConfig: CosmosConfig) {
+async function generateImportsFile(
+  cosmosConfig: CosmosConfig,
+  command: CosmosCommand
+) {
   const { exposeImports } = cosmosConfig;
 
   const filePath =
@@ -44,7 +57,7 @@ async function generateImportsFile(cosmosConfig: CosmosConfig) {
 
   const rendererConfig = {
     playgroundUrl: getPlaygroundUrl(cosmosConfig),
-    rendererUrl: cosmosConfig.rendererUrl,
+    rendererUrl: pickRendererUrl(cosmosConfig.rendererUrl, command),
   };
   const fileSource = generateUserImports<RendererConfig>({
     cosmosConfig,
