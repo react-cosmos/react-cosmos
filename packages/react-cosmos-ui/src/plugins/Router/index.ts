@@ -56,19 +56,19 @@ function unselectFixture(context: RouterContext) {
 
 function setUrlParams(context: RouterContext, nextUrlParams: PlaygroundParams) {
   const { urlParams } = context.getState();
-  const fixtureChanged = !isEqual(nextUrlParams.fixtureId, urlParams.fixtureId);
   const urlParamsEqual = isEqual(nextUrlParams, urlParams);
 
-  context.setState({ urlParams: nextUrlParams }, () => {
-    // Setting identical url params is considered a "reset" request
-    if (fixtureChanged || urlParamsEqual) {
-      emitFixtureChangeEvent(context);
-    }
-
-    if (!urlParamsEqual) {
+  if (urlParamsEqual) {
+    // Setting identical url params can be considered a "reset" request, but
+    // this will only re-render the fixture if the renderer implements an
+    // auto-incrementing render key in its state
+    emitFixtureChangeEvent(context);
+  } else {
+    context.setState({ urlParams: nextUrlParams }, () => {
       pushUrlParams(context.getState().urlParams);
-    }
-  });
+      emitFixtureChangeEvent(context);
+    });
+  }
 }
 
 function emitFixtureChangeEvent(context: RouterContext) {
