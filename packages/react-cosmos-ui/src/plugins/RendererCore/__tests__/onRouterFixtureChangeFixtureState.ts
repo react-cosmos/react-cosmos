@@ -35,7 +35,7 @@ function emitRouterFixtureSelect() {
   getRouterContext().emit('fixtureSelect', fixtureId);
 }
 
-function emitRouterFixtureReelect() {
+function emitRouterFixtureReselect() {
   getRouterContext().emit('fixtureReselect', fixtureId);
 }
 
@@ -55,6 +55,6 @@ it('does not reset fixture state on reselect', async () => {
   registerTestPlugins();
   loadTestPlugins();
 
-  emitRouterFixtureReelect();
+  emitRouterFixtureReselect();
   await waitFor(() => expect(getFixtureState()).toEqual({ props: [] }));
 });
