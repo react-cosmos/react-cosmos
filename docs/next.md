@@ -116,9 +116,7 @@ Making a Cosmos plugin is easy-peasy. Plugging into Next.js is the missing link 
 
 Ideally we would call the `dev` and `build` Next.js commands programatically. But I don't know if Next.js supports this at the moment. There is a [Custom Server](https://nextjs.org/docs/pages/building-your-application/configuring/custom-server) API but I'm not sure if it works with the App Router architecture and the build part is missing.
 
-A less ambitious goal would be to configure Next.js to omit the `/cosmos` page in production and only include the `/cosmos` page when generating a React Cosmos static export.
-
-The last resort would be a monorepo with a main Next.js app and a Cosmos Next.js app.
+In the meantime we can remove the `/cosmos` page from the _out_ dir when deploying our app. Another options is a monorepo with a main Next.js app and a Cosmos Next.js app.
 
 > _If you or someone you know has Next.js expertise please don't be shy and reach out. Any help here is appreciated!_
 
