@@ -95,7 +95,7 @@ At this point your static export is ready to be served:
 npx http-server ./cosmos-export
 ```
 
-[Live demo](https://cosmos-nextjs.vercel.app).
+👀 **[Live demo](https://cosmos-nextjs.vercel.app)**
 
 ## Limitations
 
