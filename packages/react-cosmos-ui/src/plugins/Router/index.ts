@@ -60,7 +60,7 @@ function setUrlParams(context: RouterContext, nextUrlParams: PlaygroundParams) {
   const urlParamsEqual = isEqual(nextUrlParams, urlParams);
 
   if (urlParamsEqual) {
-    // Setting identical url params can be considered a "reset" request, but
+    // Setting identical URL params can be considered a "reset" request, but
     // this will only re-render the fixture if the renderer implements an
     // auto-incrementing render key in its state
     emitFixtureChangeEvent(context, false);
