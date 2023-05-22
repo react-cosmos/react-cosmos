@@ -11,9 +11,8 @@ export type RouterSpec = {
     unselectFixture(): void;
   };
   events: {
-    fixtureChange(
-      fixtureId: null | FixtureId,
-      resetFixtureState: boolean
-    ): void;
+    fixtureSelect(fixtureId: FixtureId): void;
+    fixtureReselect(fixtureId: FixtureId): void;
+    fixtureUnselect(): void;
   };
 };

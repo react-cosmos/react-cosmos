@@ -16,14 +16,14 @@ afterEach(() => {
 
 const fixtureId = { path: 'zwei.js' };
 
-it('emits "fixtureChange" event without fixture state reset false', async () => {
-  const { fixtureChange } = onRouter();
+it('emits "fixtureReselect" event', async () => {
+  const { fixtureReselect } = onRouter();
 
   loadPlugins();
   getRouterMethods().selectFixture(fixtureId);
   getRouterMethods().selectFixture(fixtureId);
 
   await waitFor(() =>
-    expect(fixtureChange).toBeCalledWith(expect.any(Object), fixtureId, false)
+    expect(fixtureReselect).toBeCalledWith(expect.any(Object), fixtureId)
   );
 });

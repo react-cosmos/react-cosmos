@@ -154,7 +154,9 @@ export function mockFixtureTree(methods: MethodsOf<FixtureTreeSpec> = {}) {
 
 export function onRouter(events: EventsOf<RouterSpec> = {}) {
   const allEvents = {
-    fixtureChange: jest.fn(),
+    fixtureSelect: jest.fn(),
+    fixtureReselect: jest.fn(),
+    fixtureUnselect: jest.fn(),
     ...events,
   };
   on<RouterSpec>('router', allEvents);

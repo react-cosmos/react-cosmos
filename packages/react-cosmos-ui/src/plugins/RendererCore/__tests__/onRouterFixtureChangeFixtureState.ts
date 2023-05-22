@@ -31,26 +31,30 @@ function loadTestPlugins() {
   mockFixtureStateChange('mockRendererId1', fixtureId, { props: [] });
 }
 
-function emitRouterFixtureChange(resetFixtureState: boolean) {
-  getRouterContext().emit('fixtureChange', fixtureId, resetFixtureState);
+function emitRouterFixtureSelect() {
+  getRouterContext().emit('fixtureSelect', fixtureId);
+}
+
+function emitRouterFixtureReelect() {
+  getRouterContext().emit('fixtureReselect', fixtureId);
 }
 
 function getFixtureState() {
   return getRendererCoreMethods().getFixtureState();
 }
 
-it('resets fixture state', async () => {
+it('resets fixture state on select', async () => {
   registerTestPlugins();
   loadTestPlugins();
 
-  emitRouterFixtureChange(true);
+  emitRouterFixtureSelect();
   await waitFor(() => expect(getFixtureState()).toEqual({}));
 });
 
-it('does not reset fixture state', async () => {
+it('does not reset fixture state on reselect', async () => {
   registerTestPlugins();
   loadTestPlugins();
 
-  emitRouterFixtureChange(false);
+  emitRouterFixtureReelect();
   await waitFor(() => expect(getFixtureState()).toEqual({ props: [] }));
 });

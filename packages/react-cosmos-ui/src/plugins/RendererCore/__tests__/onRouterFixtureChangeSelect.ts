@@ -28,8 +28,8 @@ function loadTestPlugins() {
   getRendererCoreMethods().selectPrimaryRenderer('mockRendererId2');
 }
 
-function emitRouterFixtureChange() {
-  getRouterContext().emit('fixtureChange', { path: 'zwei.js' }, true);
+function emitRouterFixtureSelect() {
+  getRouterContext().emit('fixtureSelect', { path: 'zwei.js' });
 }
 
 it('posts "selectFixture" renderer requests', async () => {
@@ -37,7 +37,7 @@ it('posts "selectFixture" renderer requests', async () => {
   const { request } = onRendererCore();
 
   loadTestPlugins();
-  emitRouterFixtureChange();
+  emitRouterFixtureSelect();
 
   await waitFor(() =>
     expect(request).toBeCalledWith(expect.any(Object), {

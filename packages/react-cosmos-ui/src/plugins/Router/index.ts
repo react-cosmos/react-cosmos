@@ -74,11 +74,14 @@ function setUrlParams(context: RouterContext, nextUrlParams: PlaygroundParams) {
 
 function emitFixtureChangeEvent(
   context: RouterContext,
-  resetFixtureState: boolean
+  fixtureChanged: boolean
 ) {
-  context.emit(
-    'fixtureChange',
-    getSelectedFixtureId(context),
-    resetFixtureState
-  );
+  const fixtureId = getSelectedFixtureId(context);
+  if (!fixtureId) {
+    context.emit('fixtureUnselect');
+  } else if (fixtureChanged) {
+    context.emit('fixtureSelect', fixtureId);
+  } else {
+    context.emit('fixtureReselect', fixtureId);
+  }
 }

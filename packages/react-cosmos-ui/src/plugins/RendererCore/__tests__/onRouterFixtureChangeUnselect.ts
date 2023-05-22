@@ -28,14 +28,14 @@ function loadTestPlugins() {
   getRendererCoreMethods().selectPrimaryRenderer('mockRendererId2');
 }
 
-function emitRouterFixtureChange() {
-  getRouterContext().emit('fixtureChange', null, true);
+function emitRouterFixtureUnselect() {
+  getRouterContext().emit('fixtureUnselect');
 }
 
 it('resets fixture state', async () => {
   registerTestPlugins();
   loadTestPlugins();
-  emitRouterFixtureChange();
+  emitRouterFixtureUnselect();
 
   await waitFor(() =>
     expect(getRendererCoreMethods().getFixtureState()).toEqual({})
@@ -47,7 +47,7 @@ it('posts "unselectFixture" renderer requests', async () => {
   const { request } = onRendererCore();
 
   loadTestPlugins();
-  emitRouterFixtureChange();
+  emitRouterFixtureUnselect();
 
   await waitFor(() =>
     expect(request).toBeCalledWith(expect.any(Object), {
