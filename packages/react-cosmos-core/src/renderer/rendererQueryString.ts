@@ -35,7 +35,7 @@ function encodeRendererSearchParams(params: RendererParams) {
   return stringParams;
 }
 
-export function decodeRendererSearchParams(stringParams: RendererSearchParams) {
+function decodeRendererSearchParams(stringParams: RendererSearchParams) {
   const params: RendererParams = {};
 
   if (stringParams.fixtureId) {
