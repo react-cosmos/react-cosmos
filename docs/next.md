@@ -95,6 +95,8 @@ At this point your static export is ready to be served:
 npx http-server ./cosmos-export
 ```
 
+[Live demo](https://cosmos-nextjs.vercel.app).
+
 ## Limitations
 
 - Only single function fixtures can be exported from a fixture module with the `'use client'` descriptor. That's because Client fixture modules are passed _as is_ to the Server render tree and their exports are expected to be component types by design. While other fixture formats (React Node exports or multi fixture exports) cannot be used in Client fixtures, all Cosmos fixture formats as supported in Server fixtures.
