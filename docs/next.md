@@ -103,7 +103,7 @@ npx http-server ./cosmos-export
 
 ## Let's make this better
 
-While running Server Components inside Cosmos is great, the current setup is a bit verbose. A plugin could take this integration to the next level (no pun intended).
+Running Server Components in Cosmos is awesome but a plugin could take this integration to the next level (no pun intended).
 
 Similar to the Vite and Webpack plugins, a Next.js plugin would:
 
