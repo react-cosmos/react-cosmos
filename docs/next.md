@@ -51,7 +51,7 @@ Add `package.json` script:
 ```json
 "scripts": {
   "cosmos": "cosmos --expose-imports",
-  "cosmos-export": "cosmos-export --expose-imports
+  "cosmos-export": "cosmos-export --expose-imports"
 }
 ```
 
