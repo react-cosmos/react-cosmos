@@ -92,10 +92,7 @@ function useFixtureExpansion(context: PropsPanelContext, fixtureId: FixtureId) {
 }
 
 function shouldShowBlankState(fixtureState: FixtureState) {
-  // Don't show blank state until props (empty or not) have been read
-  if (!fixtureState.props) return false;
-
-  const hasProps = fixtureState.props.some(hasFsValues);
+  const hasProps = fixtureState.props && fixtureState.props.some(hasFsValues);
   if (hasProps) return false;
 
   const hasClassState =
