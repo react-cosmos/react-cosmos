@@ -1,6 +1,6 @@
 # Next.js
 
-> _**Warning**: React Server Components and Next.js App Router are new technologies, and their integration with React Cosmos is fresh from the oven. See [Limitations](#limitations) and [Next steps](#next-steps) for the full picture. That said, get ready for something awesome!_
+> _**Warning**: React Server Components and Next.js App Router are new technologies, and their integration with React Cosmos is fresh from the oven. That said, get ready for something awesome!_
 
 This guide covers how to integrate React Cosmos with Next.js 13.4+. It includes support for **React Server Components**. The Cosmos Renderer switches seamlessly between Server and Client components in the same project.
 
@@ -39,7 +39,10 @@ Create `cosmos.config.json` and point `rendererUrl` to your Next.js Cosmos Rende
 
 ```json
 {
-  "rendererUrl": "http://localhost:3000/cosmos"
+  "rendererUrl": {
+    "dev": "http://localhost:3000/cosmos/<fixture>",
+    "export": "/cosmos/<fixture>"
+  }
 }
 ```
 
@@ -47,7 +50,8 @@ Add `package.json` script:
 
 ```diff
 "scripts": {
-+  "cosmos": "cosmos --expose-imports"
++  "cosmos": "cosmos --expose-imports",
++  "cosmos-export": "cosmos-export --expose-imports
 }
 ```
 
@@ -71,23 +75,33 @@ That's it. You're now running Server fixtures in React Cosmos!
 
 You can import both Server and Client components in your fixtures, which run on the server by default. You can also add the `'use client'` directive to a fixture module (or decorator) if you want use Hooks inside it.
 
+## Static exports
+
+The `cosmos-export` command creates a static export of the Cosmos UI shell, which expects a corresponding static Renderer to connect with. Generating the complete export requires stringing a few simple commands together:
+
+```bash
+# Build Cosmos
+npm run cosmos-export
+# Build Next.js
+npm run build
+# Copy Next.js build into Cosmos export
+cp -R ./out/_next ./cosmos-export
+cp -R ./out/cosmos ./cosmos-export
+```
+
+At this point your static export is ready to be served:
+
+```bash
+npx http-server ./cosmos-export
+```
+
 ## Limitations
 
 - Only single function fixtures can be exported from a fixture module with the `'use client'` descriptor. That's because Client fixture modules are passed _as is_ to the Server render tree and their exports are expected to be component types by design. While other fixture formats (React Node exports or multi fixture exports) cannot be used in Client fixtures, all Cosmos fixture formats as supported in Server fixtures.
-- So far this is a dev server-only setup. See [Static exports](#static-exports).
 
-## Next steps
+## Let's make this better
 
-### Static exports
-
-The `cosmos-export` command create a static export of the Cosmos UI shell, which expects a corresponding static Renderer to connect with. Getting the latter to work with Next.js is **work in progress:**
-
-- [x] Step 1: Export a static Cosmos UI that connects to a built Next.js Cosmos Renderer. [Demo here](https://cosmos-nextjs.vercel.app). In this case the Renderer is essentially a live Next.js app. It's nice but a completely static export is more desirable.
-- [ ] Step 2: Leverage dynamic route segments and [`generateStaticParams`](https://nextjs.org/docs/app/api-reference/functions/generate-static-params) in Next.js to statically generate all fixtures at build time. This requires migrating the Cosmos Renderer away from query string routing (which triggers [dynamic rendering](https://nextjs.org/docs/app/building-your-application/rendering/static-and-dynamic-rendering#dynamic-rendering) in Next.js).
-
-> _A working prototype has already been made for Step 2. Coming soon!_
-
-### Next.js plugin
+While running Server Components inside Cosmos is great, the current setup is a bit verbose. A plugin could take this integration to the next level (no pun intended).
 
 Similar to the Vite and Webpack plugins, a Next.js plugin would:
 
