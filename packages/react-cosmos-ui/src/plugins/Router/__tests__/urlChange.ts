@@ -22,7 +22,7 @@ it('emits "fixtureChange" event on "fixtureId" URL param change', () => {
   loadPlugins();
   popUrlParams({ fixtureId: JSON.stringify(fixtureId) });
 
-  expect(fixtureChange).toBeCalledWith(expect.any(Object), fixtureId);
+  expect(fixtureChange).toBeCalledWith(expect.any(Object), fixtureId, true);
 });
 
 it('emits "fixtureChange" event on removed "fixtureId" URL param', async () => {
@@ -34,5 +34,5 @@ it('emits "fixtureChange" event on removed "fixtureId" URL param', async () => {
   // This simulation is akin to going back home after selecting a fixture
   popUrlParams({});
 
-  expect(fixtureChange).toBeCalledWith(expect.any(Object), null);
+  expect(fixtureChange).toBeCalledWith(expect.any(Object), null, true);
 });

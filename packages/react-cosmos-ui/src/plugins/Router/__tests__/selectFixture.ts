@@ -43,6 +43,6 @@ it('emits "fixtureChange" event', async () => {
   getRouterMethods().selectFixture(fixtureId);
 
   await waitFor(() =>
-    expect(fixtureChange).toBeCalledWith(expect.any(Object), fixtureId)
+    expect(fixtureChange).toBeCalledWith(expect.any(Object), fixtureId, true)
   );
 });

@@ -47,6 +47,6 @@ it('emits "fixtureChange" event', async () => {
   getRouterMethods().unselectFixture();
 
   await waitFor(() =>
-    expect(fixtureChange).toBeCalledWith(expect.any(Object), null)
+    expect(fixtureChange).toBeCalledWith(expect.any(Object), null, true)
   );
 });
