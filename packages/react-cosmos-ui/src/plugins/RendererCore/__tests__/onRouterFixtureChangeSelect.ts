@@ -29,7 +29,7 @@ function loadTestPlugins() {
 }
 
 function emitRouterFixtureChange() {
-  getRouterContext().emit('fixtureChange', { path: 'zwei.js' });
+  getRouterContext().emit('fixtureChange', { path: 'zwei.js' }, true);
 }
 
 it('posts "selectFixture" renderer requests', async () => {

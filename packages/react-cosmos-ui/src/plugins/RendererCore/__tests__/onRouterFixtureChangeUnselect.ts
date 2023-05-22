@@ -29,7 +29,7 @@ function loadTestPlugins() {
 }
 
 function emitRouterFixtureChange() {
-  getRouterContext().emit('fixtureChange', null);
+  getRouterContext().emit('fixtureChange', null, true);
 }
 
 it('resets fixture state', async () => {

@@ -32,7 +32,7 @@ onLoad(context => {
 
     setState({ urlParams }, () => {
       if (fixtureChanged) {
-        emitFixtureChangeEvent(context);
+        emitFixtureChangeEvent(context, true);
       }
     });
   });
@@ -56,21 +56,29 @@ function unselectFixture(context: RouterContext) {
 
 function setUrlParams(context: RouterContext, nextUrlParams: PlaygroundParams) {
   const { urlParams } = context.getState();
+  const fixtureChanged = !isEqual(nextUrlParams.fixtureId, urlParams.fixtureId);
   const urlParamsEqual = isEqual(nextUrlParams, urlParams);
 
   if (urlParamsEqual) {
     // Setting identical url params can be considered a "reset" request, but
     // this will only re-render the fixture if the renderer implements an
     // auto-incrementing render key in its state
-    emitFixtureChangeEvent(context);
+    emitFixtureChangeEvent(context, false);
   } else {
     context.setState({ urlParams: nextUrlParams }, () => {
       pushUrlParams(context.getState().urlParams);
-      emitFixtureChangeEvent(context);
+      emitFixtureChangeEvent(context, fixtureChanged);
     });
   }
 }
 
-function emitFixtureChangeEvent(context: RouterContext) {
-  context.emit('fixtureChange', getSelectedFixtureId(context));
+function emitFixtureChangeEvent(
+  context: RouterContext,
+  resetFixtureState: boolean
+) {
+  context.emit(
+    'fixtureChange',
+    getSelectedFixtureId(context),
+    resetFixtureState
+  );
 }
