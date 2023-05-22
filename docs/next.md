@@ -112,7 +112,7 @@ Similar to the Vite and Webpack plugins, a Next.js plugin would:
 - Set the renderer URL automatically with no Cosmos config needed.
 - Support static exports out of the box with the `cosmos-export` command.
 
-Making a Cosmos plugin is easy-peasy. _Docs for it will come soon, too, I promise._ How to plug into Next.js is the missing link to make this integration seamless.
+Making a Cosmos plugin is easy-peasy. Plugging into Next.js is the missing link for a seamless integration.
 
 Ideally we would call the `dev` and `build` Next.js commands programatically. But I don't know if Next.js supports this at the moment. There is a [Custom Server](https://nextjs.org/docs/pages/building-your-application/configuring/custom-server) API but I'm not sure if it works with the App Router architecture and the build part is missing.
 
