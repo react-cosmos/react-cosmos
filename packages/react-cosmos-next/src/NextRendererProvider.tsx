@@ -34,13 +34,17 @@ export function NextRendererProvider({
 
   const selectFixture = React.useCallback(
     (fixtureId: FixtureId) => {
-      if (rendererUrl) router.push(createRendererUrl(rendererUrl, fixtureId));
+      if (rendererUrl) {
+        router.push(trimHrefHtmlExt(createRendererUrl(rendererUrl, fixtureId)));
+      }
     },
     [rendererUrl, router]
   );
 
   const unselectFixture = React.useCallback(() => {
-    if (rendererUrl) router.push(createRendererUrl(rendererUrl));
+    if (rendererUrl) {
+      router.push(trimHrefHtmlExt(createRendererUrl(rendererUrl)));
+    }
   }, [rendererUrl, router]);
 
   return (
@@ -57,4 +61,8 @@ export function NextRendererProvider({
       {typeof window !== 'undefined' && <GlobalErrorHandler />}
     </RendererProvider>
   );
+}
+
+function trimHrefHtmlExt(href: string) {
+  return href.replace(/\.html$/, '');
 }
