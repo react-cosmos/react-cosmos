@@ -1,6 +1,6 @@
 # Next.js
 
-> _**Warning**: React Server Components and Next.js App Router are new technologies, and their integration with React Cosmos is fresh from the oven. See [Limitations](#limitations) and [Next steps](#next-steps) for the full picture. That said, get ready for something awesome!_
+> _**Warning**: React Server Components and Next.js App Router are new technologies and their integration with React Cosmos is fresh from the oven. That said, get ready for something awesome!_
 
 This guide covers how to integrate React Cosmos with Next.js 13.4+. It includes support for **React Server Components**. The Cosmos Renderer switches seamlessly between Server and Client components in the same project.
 
@@ -24,13 +24,15 @@ export default <h1>Hello World!</h1>;
 
 > If you're using TypeScript replace `.jsx` file extensions with `.tsx`.
 
-Create a Next.js page at `src/app/cosmos/page.jsx`:
+Create a Next.js page at `src/app/cosmos/[fixture]/page.tsx`:
 
 ```jsx
-import { nextCosmosRenderer } from 'react-cosmos-next';
-import * as cosmosImports from '../../../cosmos.imports';
+import { nextCosmosPage, nextCosmosStaticParams } from 'react-cosmos-next';
+import * as cosmosImports from '../../../../cosmos.imports';
 
-export default nextCosmosRenderer(cosmosImports);
+export const generateStaticParams = nextCosmosStaticParams(cosmosImports);
+
+export default nextCosmosPage(cosmosImports);
 ```
 
 This is your Cosmos Renderer. We'll get back to it in a minute.
@@ -39,15 +41,19 @@ Create `cosmos.config.json` and point `rendererUrl` to your Next.js Cosmos Rende
 
 ```json
 {
-  "rendererUrl": "http://localhost:3000/cosmos"
+  "rendererUrl": {
+    "dev": "http://localhost:3000/cosmos/<fixture>",
+    "export": "/cosmos/<fixture>.html"
+  }
 }
 ```
 
-Add `package.json` script:
+Add `package.json` scripts:
 
-```diff
+```json
 "scripts": {
-+  "cosmos": "cosmos --expose-imports"
+  "cosmos": "cosmos --expose-imports",
+  "cosmos-export": "cosmos-export --expose-imports"
 }
 ```
 
@@ -71,23 +77,35 @@ That's it. You're now running Server fixtures in React Cosmos!
 
 You can import both Server and Client components in your fixtures, which run on the server by default. You can also add the `'use client'` directive to a fixture module (or decorator) if you want use Hooks inside it.
 
-## Limitations
+### Limitations
 
 - Only single function fixtures can be exported from a fixture module with the `'use client'` descriptor. That's because Client fixture modules are passed _as is_ to the Server render tree and their exports are expected to be component types by design. While other fixture formats (React Node exports or multi fixture exports) cannot be used in Client fixtures, all Cosmos fixture formats as supported in Server fixtures.
-- So far this is a dev server-only setup. See [Static exports](#static-exports).
 
-## Next steps
+## Static exports
 
-### Static exports
+The `cosmos-export` command creates a static export of the Cosmos UI shell, which expects a corresponding static Renderer to connect with. Generating the complete export requires stringing a few simple commands together:
 
-The `cosmos-export` command create a static export of the Cosmos UI shell, which expects a corresponding static Renderer to connect with. Getting the latter to work with Next.js is **work in progress:**
+```bash
+# Build Cosmos
+npm run cosmos-export
+# Build Next.js
+npm run build
+# Copy Next.js build into Cosmos export
+cp -R ./out/_next ./cosmos-export
+cp -R ./out/cosmos ./cosmos-export
+```
 
-- [x] Step 1: Export a static Cosmos UI that connects to a built Next.js Cosmos Renderer. [Demo here](https://cosmos-nextjs.vercel.app). In this case the Renderer is essentially a live Next.js app. It's nice but a completely static export is more desirable.
-- [ ] Step 2: Leverage dynamic route segments and [`generateStaticParams`](https://nextjs.org/docs/app/api-reference/functions/generate-static-params) in Next.js to statically generate all fixtures at build time. This requires migrating the Cosmos Renderer away from query string routing (which triggers [dynamic rendering](https://nextjs.org/docs/app/building-your-application/rendering/static-and-dynamic-rendering#dynamic-rendering) in Next.js).
+At this point your static export is ready to be served:
 
-> _A working prototype has already been made for Step 2. Coming soon!_
+```bash
+npx http-server ./cosmos-export
+```
 
-### Next.js plugin
+👀 **[Live demo](https://cosmos-nextjs.vercel.app)**
+
+## Let's make this better
+
+Running Server Components in Cosmos is awesome but a plugin could take this integration to the next level (no pun intended).
 
 Similar to the Vite and Webpack plugins, a Next.js plugin would:
 
@@ -96,13 +114,11 @@ Similar to the Vite and Webpack plugins, a Next.js plugin would:
 - Set the renderer URL automatically with no Cosmos config needed.
 - Support static exports out of the box with the `cosmos-export` command.
 
-Making a Cosmos plugin is easy-peasy. _Docs for it will come soon, too, I promise._ How to plug into Next.js is the missing link to make this integration seamless.
+Making a Cosmos plugin is easy-peasy. Plugging into Next.js is the missing link for a seamless integration.
 
 Ideally we would call the `dev` and `build` Next.js commands programatically. But I don't know if Next.js supports this at the moment. There is a [Custom Server](https://nextjs.org/docs/pages/building-your-application/configuring/custom-server) API but I'm not sure if it works with the App Router architecture and the build part is missing.
 
-A less ambitious goal would be to configure Next.js to omit the `/cosmos` page in production and only include the `/cosmos` page when generating a React Cosmos static export.
-
-The last resort would be a monorepo with a main Next.js app and a Cosmos Next.js app.
+In the meantime we can remove the `/cosmos` page from the _out_ dir when deploying our app. Another option is a monorepo with a main Next.js app and a Cosmos Next.js app.
 
 > _If you or someone you know has Next.js expertise please don't be shy and reach out. Any help here is appreciated!_
 
