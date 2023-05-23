@@ -41,7 +41,7 @@ Create `cosmos.config.json` and point `rendererUrl` to your Next.js Cosmos Rende
 {
   "rendererUrl": {
     "dev": "http://localhost:3000/cosmos/<fixture>",
-    "export": "/cosmos/<fixture>"
+    "export": "/cosmos/<fixture>.html"
   }
 }
 ```
