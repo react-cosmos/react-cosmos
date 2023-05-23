@@ -8,7 +8,6 @@ import {
 } from 'react-cosmos-core';
 import {
   GlobalErrorHandler,
-  reloadDomRenderer,
   useDomRendererConnect,
   useDomRendererId,
 } from 'react-cosmos-dom';
@@ -47,6 +46,15 @@ export function NextRendererProvider({
     }
   }, [rendererUrl, router]);
 
+  const reloadRenderer = React.useCallback(() => {
+    if (rendererUrl) {
+      window.location.href = createRendererUrl(
+        rendererUrl,
+        selectedFixture?.fixtureId
+      );
+    }
+  }, [rendererUrl, selectedFixture?.fixtureId]);
+
   return (
     <RendererProvider
       rendererId={rendererId}
@@ -55,7 +63,7 @@ export function NextRendererProvider({
       selectedFixture={selectedFixture}
       selectFixture={selectFixture}
       unselectFixture={unselectFixture}
-      reloadRenderer={reloadDomRenderer}
+      reloadRenderer={reloadRenderer}
     >
       {children}
       {typeof window !== 'undefined' && <GlobalErrorHandler />}
