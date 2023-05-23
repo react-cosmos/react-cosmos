@@ -48,12 +48,9 @@ export function NextRendererProvider({
 
   const reloadRenderer = React.useCallback(() => {
     if (rendererUrl) {
-      window.location.href = createRendererUrl(
-        rendererUrl,
-        selectedFixture?.fixtureId
-      );
+      window.location.href = createRendererUrl(rendererUrl);
     }
-  }, [rendererUrl, selectedFixture?.fixtureId]);
+  }, [rendererUrl]);
 
   return (
     <RendererProvider
