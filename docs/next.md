@@ -1,6 +1,6 @@
 # Next.js
 
-> _**Warning**: React Server Components and Next.js App Router are new technologies, and their integration with React Cosmos is fresh from the oven. That said, get ready for something awesome!_
+> _**Warning**: React Server Components and Next.js App Router are new technologies and their integration with React Cosmos is fresh from the oven. That said, get ready for something awesome!_
 
 This guide covers how to integrate React Cosmos with Next.js 13.4+. It includes support for **React Server Components**. The Cosmos Renderer switches seamlessly between Server and Client components in the same project.
 
@@ -116,7 +116,7 @@ Making a Cosmos plugin is easy-peasy. Plugging into Next.js is the missing link 
 
 Ideally we would call the `dev` and `build` Next.js commands programatically. But I don't know if Next.js supports this at the moment. There is a [Custom Server](https://nextjs.org/docs/pages/building-your-application/configuring/custom-server) API but I'm not sure if it works with the App Router architecture and the build part is missing.
 
-In the meantime we can remove the `/cosmos` page from the _out_ dir when deploying our app. Another options is a monorepo with a main Next.js app and a Cosmos Next.js app.
+In the meantime we can remove the `/cosmos` page from the _out_ dir when deploying our app. Another option is a monorepo with a main Next.js app and a Cosmos Next.js app.
 
 > _If you or someone you know has Next.js expertise please don't be shy and reach out. Any help here is appreciated!_
 
