@@ -27,6 +27,14 @@ module.exports = {
   moduleNameMapper: {
     // This seems faster than transpiling node_modules/lodash-es
     'lodash-es': '<rootDir>/node_modules/lodash/lodash.js',
+    // Mock ESM code that can't run in Jest yet ESM support is ready
+    // https://github.com/jestjs/jest/issues/9430
+    'requireModule.js$':
+      '<rootDir>/packages/react-cosmos/src/testHelpers/cjsMocks/requireModule.js',
+    'resolve.js$':
+      '<rootDir>/packages/react-cosmos/src/testHelpers/cjsMocks/resolve.js',
+    'staticPath.js$':
+      '<rootDir>/packages/react-cosmos/src/testHelpers/cjsMocks/staticPath.js',
     // Jest with jsdom environment imports the "browser" ws export, which
     // is a noop because wp isn't meant to be used in a browser environment.
     // Issue introduced here https://github.com/websockets/ws/pull/2118

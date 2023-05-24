@@ -2,9 +2,6 @@
 import { jestWorkerId } from '../../testHelpers/jestWorkerId.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
 import { mockCosmosPlugins } from '../../testHelpers/mockCosmosPlugins.js';
-import '../../testHelpers/mockEsmRequire.js';
-import '../../testHelpers/mockEsmResolve.js';
-import '../../testHelpers/mockEsmStaticPath.js';
 import { mockCosmosConfig, resetFsMock } from '../../testHelpers/mockFs.js';
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 

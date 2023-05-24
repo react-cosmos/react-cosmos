@@ -1,6 +1,3 @@
-// Import mocks first
-import '../../testHelpers/mockEsmResolve.js';
-
 import path from 'path';
 import { createCosmosConfig } from '../createCosmosConfig.js';
 
