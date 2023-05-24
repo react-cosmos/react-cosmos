@@ -14,6 +14,7 @@ import {
   pickRendererUrl,
   ReactDecorator,
   ReactFixture,
+  ReactFixtureExport,
 } from 'react-cosmos-core';
 import { createFixtureNode, decorateFixture } from 'react-cosmos-renderer';
 import { CosmosConfig } from '../cosmosConfig/types.js';
@@ -21,6 +22,7 @@ import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
 import { CosmosPlatform } from '../cosmosPlugin/types.js';
 import { applyServerConfigPlugins } from '../shared/applyServerConfigPlugins.js';
 import { getServerPlugins } from '../shared/getServerPlugins.js';
+import { getPlaygroundUrl } from '../shared/playgroundUrl.js';
 import { importUserModules } from '../userModules/importUserModules.js';
 
 export type FixtureApi = {
@@ -60,57 +62,64 @@ export async function getFixtures(args: Args) {
     platform,
   });
 
-  const { fixturesDir, fixtureFileSuffix, rootDir } = cosmosConfig;
-  const rendererUrl = pickRendererUrl(cosmosConfig.rendererUrl, command);
-
-  const fixtureInfo: FixtureApi[] = [];
   const { fixtures, decorators } = importUserModules(cosmosConfig);
-  const fixtureList = getFixtureListFromExports(fixtures);
-  const fixtureTree = createFixtureTree({
-    fixtures: fixtureList,
-    fixturesDir,
-    fixtureFileSuffix,
-  });
-  const flatFixtureTree = flattenFixtureTree(fixtureTree);
-  flatFixtureTree.forEach(({ fileName, fixtureId, name, parents }) => {
-    const fixtureExport = fixtures[fixtureId.path];
-    const fixture = getFixtureFromExport(fixtureExport, fixtureId.name);
+  const rendererUrl = pickRendererUrl(cosmosConfig.rendererUrl, command);
+  const result: FixtureApi[] = [];
 
-    if (!fixture) {
-      throw new Error(`Could not read fixture: ${JSON.stringify(fixtureId)}`);
+  getFlatFixtureTree(cosmosConfig, fixtures).forEach(
+    ({ fileName, fixtureId, name, parents }) => {
+      const fixtureExport = fixtures[fixtureId.path];
+      const fixture = getFixtureFromExport(fixtureExport, fixtureId.name);
+
+      if (!fixture) {
+        throw new Error(`Could not read fixture: ${JSON.stringify(fixtureId)}`);
+      }
+
+      const treePath = [...parents, fileName];
+      if (name) treePath.push(name);
+
+      result.push({
+        absoluteFilePath: path.join(cosmosConfig.rootDir, fixtureId.path),
+        fileName,
+        getElement: createFixtureElementGetter(
+          fixture,
+          fixtureId.path,
+          decorators
+        ),
+        name,
+        parents,
+        playgroundUrl: getPlaygroundFixtureUrl(cosmosConfig, fixtureId),
+        relativeFilePath: fixtureId.path,
+        rendererUrl: rendererUrl && createRendererUrl(rendererUrl, fixtureId),
+        treePath,
+      });
     }
+  );
 
-    const treePath = [...parents, fileName];
-    if (name) treePath.push(name);
-
-    fixtureInfo.push({
-      absoluteFilePath: path.join(rootDir, fixtureId.path),
-      fileName,
-      getElement: createFixtureElementGetter(
-        fixture,
-        fixtureId.path,
-        decorators
-      ),
-      name,
-      parents,
-      playgroundUrl: getPlaygroundUrl(cosmosConfig, fixtureId),
-      relativeFilePath: fixtureId.path,
-      rendererUrl: rendererUrl && createRendererUrl(rendererUrl, fixtureId),
-      treePath,
-    });
-  });
-
-  return fixtureInfo;
+  return result;
 }
 
-function getPlaygroundUrl(cosmosConfig: CosmosConfig, fixtureId: FixtureId) {
-  const host = getPlaygroundHost(cosmosConfig);
+function getFlatFixtureTree(
+  cosmosConfig: CosmosConfig,
+  fixtures: ByPath<ReactFixtureExport>
+) {
+  const { fixturesDir, fixtureFileSuffix } = cosmosConfig;
+  return flattenFixtureTree(
+    createFixtureTree({
+      fixtures: getFixtureListFromExports(fixtures),
+      fixturesDir,
+      fixtureFileSuffix,
+    })
+  );
+}
+
+function getPlaygroundFixtureUrl(
+  cosmosConfig: CosmosConfig,
+  fixtureId: FixtureId
+) {
+  const baseUrl = getPlaygroundUrl(cosmosConfig);
   const query = buildPlaygroundQueryString({ fixtureId });
-  return `${host}/${query}`;
-}
-
-function getPlaygroundHost({ hostname, port, https }: CosmosConfig) {
-  return `${https ? 'https' : 'http'}://${hostname || 'localhost'}:${port}`;
+  return `${baseUrl}/${query}`;
 }
 
 function createFixtureElementGetter(
