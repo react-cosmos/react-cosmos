@@ -37,15 +37,14 @@ export type FixtureApi = {
   treePath: string[];
 };
 
-type Args = {
-  cosmosConfig: CosmosConfig;
+type Options = {
   command?: CosmosCommand;
   platform?: CosmosPlatform;
 };
-export async function getFixtures(args: Args) {
-  const { command = 'dev', platform = 'web' } = args;
-  let cosmosConfig = args.cosmosConfig;
-
+export async function getFixtures(
+  cosmosConfig: CosmosConfig,
+  { command = 'dev', platform = 'web' }: Options = {}
+) {
   const pluginConfigs = await getPluginConfigs({
     cosmosConfig,
     // Absolute paths are required in dev mode because the dev server could
