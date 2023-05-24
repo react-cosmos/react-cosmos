@@ -3,6 +3,7 @@ import { ReactElement } from 'react';
 import {
   buildPlaygroundQueryString,
   ByPath,
+  CosmosCommand,
   createFixtureTree,
   createRendererUrl,
   FixtureId,
@@ -17,6 +18,7 @@ import {
 import { createFixtureNode, decorateFixture } from 'react-cosmos-renderer';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
+import { CosmosPlatform } from '../cosmosPlugin/types.js';
 import { applyServerConfigPlugins } from '../shared/applyServerConfigPlugins.js';
 import { getServerPlugins } from '../shared/getServerPlugins.js';
 import { importUserModules } from '../userModules/importUserModules.js';
@@ -35,8 +37,11 @@ export type FixtureApi = {
 
 type Args = {
   cosmosConfig: CosmosConfig;
+  command?: CosmosCommand;
+  platform?: CosmosPlatform;
 };
 export async function getFixtures(args: Args) {
+  const { command = 'dev', platform = 'web' } = args;
   let cosmosConfig = args.cosmosConfig;
 
   const pluginConfigs = await getPluginConfigs({
@@ -51,12 +56,12 @@ export async function getFixtures(args: Args) {
   cosmosConfig = await applyServerConfigPlugins({
     cosmosConfig,
     serverPlugins,
-    command: 'dev',
-    platform: 'web',
+    command,
+    platform,
   });
 
   const { fixturesDir, fixtureFileSuffix, rootDir } = cosmosConfig;
-  const rendererUrl = pickRendererUrl(cosmosConfig.rendererUrl, 'dev');
+  const rendererUrl = pickRendererUrl(cosmosConfig.rendererUrl, command);
 
   const fixtureInfo: FixtureApi[] = [];
   const { fixtures, decorators } = importUserModules(cosmosConfig);
