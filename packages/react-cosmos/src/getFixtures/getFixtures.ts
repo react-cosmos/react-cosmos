@@ -47,7 +47,7 @@ export async function getFixtures(
 ) {
   const pluginConfigs = await getPluginConfigs({
     cosmosConfig,
-    relativePaths: command === 'export',
+    relativePaths: false,
   });
 
   const serverPlugins = await getServerPlugins(
