@@ -1,3 +1,5 @@
+// CJS mock for packages/react-cosmos/src/utils/resolve.ts
+
 export function resolve(moduleId: string) {
   return require.resolve(moduleId);
 }

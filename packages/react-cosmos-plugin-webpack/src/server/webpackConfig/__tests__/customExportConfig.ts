@@ -4,8 +4,6 @@ import {
   mockCwdModuleDefault,
   unmockCliArgs,
 } from 'react-cosmos/jest.js';
-import '../../testHelpers/mockEsmClientPath.js';
-import '../../testHelpers/mockEsmLoaderPath.js';
 
 import { createCosmosConfig, getCwdPath } from 'react-cosmos';
 import webpack from 'webpack';
