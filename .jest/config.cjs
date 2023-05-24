@@ -37,6 +37,18 @@ module.exports = {
       '<rootDir>/packages/react-cosmos/src/testMocks/playground.bundle.js.map',
     'react-cosmos-ui/dist/playground.bundle.js':
       '<rootDir>/packages/react-cosmos/src/testMocks/playground.bundle.js',
+    // Mock ESM code that can't run in Jest until ESM support is ready
+    // https://github.com/jestjs/jest/issues/9430
+    'requireModule.js$':
+      '<rootDir>/packages/react-cosmos/src/testHelpers/cjsMocks/requireModule.js',
+    'resolve.js$':
+      '<rootDir>/packages/react-cosmos/src/testHelpers/cjsMocks/resolve.js',
+    'staticPath.js$':
+      '<rootDir>/packages/react-cosmos/src/testHelpers/cjsMocks/staticPath.js',
+    'resolveWebpackClientPath.js$':
+      '<rootDir>/packages/react-cosmos-plugin-webpack/src/server/testHelpers/cjsMocks/resolveWebpackClientPath.js',
+    'resolveWebpackLoaderPath.js$':
+      '<rootDir>/packages/react-cosmos-plugin-webpack/src/server/testHelpers/cjsMocks/resolveWebpackLoaderPath.js',
   },
   // https://kulshekhar.github.io/ts-jest/docs/getting-started/options/tsconfig
   transform: {

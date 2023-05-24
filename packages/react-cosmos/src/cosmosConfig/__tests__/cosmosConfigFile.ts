@@ -1,6 +1,4 @@
 // Import mocks first
-import '../../testHelpers/mockEsmRequire.js';
-import '../../testHelpers/mockEsmResolve.js';
 import { mockCosmosConfig, resetFsMock } from '../../testHelpers/mockFs.js';
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
