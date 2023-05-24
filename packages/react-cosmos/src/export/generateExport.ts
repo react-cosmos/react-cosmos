@@ -1,11 +1,11 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { CosmosPluginConfig, UiCosmosPluginConfig } from 'react-cosmos-core';
-import { coreServerPlugins } from '../corePlugins/index.js';
 import { detectCosmosConfig } from '../cosmosConfig/detectCosmosConfig.js';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
-import { importServerPlugins } from '../shared/importServerPlugins.js';
+import { applyServerConfigPlugins } from '../shared/applyServerConfigPlugins.js';
+import { getServerPlugins } from '../shared/getServerPlugins.js';
 import { logPluginInfo } from '../shared/logPluginInfo.js';
 import { getExportPlaygroundHtml } from '../shared/playgroundHtml.js';
 import { getStaticPath } from '../shared/staticPath.js';
@@ -22,26 +22,13 @@ export async function generateExport() {
   });
   logPluginInfo(pluginConfigs);
 
-  const userPlugins = await importServerPlugins(
-    pluginConfigs,
-    cosmosConfig.rootDir
-  );
-  const plugins = [...coreServerPlugins, ...userPlugins];
-
-  for (const plugin of plugins) {
-    if (plugin.config) {
-      try {
-        cosmosConfig = await plugin.config({
-          cosmosConfig,
-          command: 'export',
-          platform: 'web',
-        });
-      } catch (err) {
-        console.log(`[Cosmos][plugin:${plugin.name}] Config hook failed`);
-        throw err;
-      }
-    }
-  }
+  const serverPlugins = await getServerPlugins({ cosmosConfig, pluginConfigs });
+  cosmosConfig = await applyServerConfigPlugins({
+    cosmosConfig,
+    serverPlugins,
+    command: 'export',
+    platform: 'web',
+  });
 
   // Clear previous export (or other files at export path)
   const { exportPath } = cosmosConfig;
@@ -52,7 +39,7 @@ export async function generateExport() {
   // template file (in case the static assets are served from the root path)
   await copyStaticAssets(cosmosConfig);
 
-  for (const plugin of plugins) {
+  for (const plugin of serverPlugins) {
     if (!plugin.export) continue;
 
     try {

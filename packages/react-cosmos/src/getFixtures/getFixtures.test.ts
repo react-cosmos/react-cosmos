@@ -1,43 +1,41 @@
 // Import mocks first
-// import { mockFile } from '../testHelpers/mockFs.js';
+import { mockFile } from '../testHelpers/mockFs.js';
 import { mockCliArgs } from '../testHelpers/mockYargs.js';
 
 import path from 'node:path';
 import { create } from 'react-test-renderer';
 import { createCosmosConfig } from '../cosmosConfig/createCosmosConfig.js';
-// import { mockCosmosPlugins } from '../testHelpers/mockCosmosPlugins.js';
+import { mockCosmosPlugins } from '../testHelpers/mockCosmosPlugins.js';
 import { getFixtures } from './getFixtures.js';
 
 const rootDir = path.join(__dirname, '../../../../examples/webpack');
 
-// const testCosmosPlugin = {
-//   name: 'Test Cosmos plugin',
-//   rootDir: path.join(__dirname, 'mock-cosmos-plugin'),
-//   server: path.join(__dirname, 'mock-cosmos-plugin/server.js'),
-// };
-// mockCosmosPlugins([testCosmosPlugin]);
+const testCosmosPlugin = {
+  name: 'Test Cosmos plugin',
+  rootDir: path.join(__dirname, 'mock-cosmos-plugin'),
+  server: path.join(__dirname, 'mock-cosmos-plugin/server.js'),
+};
+mockCosmosPlugins([testCosmosPlugin]);
 
-// const testServerPlugin = {
-//   name: 'testServerPlugin',
+const testServerPlugin = {
+  name: 'testServerPlugin',
 
-//   config: jest.fn(async ({ cosmosConfig }) => {
-//     return {
-//       ...cosmosConfig,
-//       rendererUrl: 'http://localhost:5000/renderer.html',
-//     };
-//   }),
-// };
+  config: jest.fn(async ({ cosmosConfig }) => {
+    return {
+      ...cosmosConfig,
+      rendererUrl: 'http://localhost:5000/renderer.html',
+    };
+  }),
+};
 
 beforeEach(() => {
   mockCliArgs({});
-  // mockFile(testCosmosPlugin.server, { default: testServerPlugin });
+  mockFile(testCosmosPlugin.server, { default: testServerPlugin });
 });
 
 it('renders fixture elements', async () => {
-  const cosmosConfig = createCosmosConfig(rootDir, {
-    rendererUrl: 'http://localhost:5000/renderer.html',
-  });
-  const fixures = getFixtures(cosmosConfig);
+  const cosmosConfig = createCosmosConfig(rootDir);
+  const fixures = await getFixtures({ cosmosConfig });
 
   function testFixtureElement(relPath: string, name: string | null = null) {
     const match = fixures.find(
@@ -52,10 +50,8 @@ it('renders fixture elements', async () => {
 });
 
 it('returns fixture info', async () => {
-  const cosmosConfig = createCosmosConfig(rootDir, {
-    rendererUrl: 'http://localhost:5000/renderer.html',
-  });
-  const fixtures = getFixtures(cosmosConfig);
+  const cosmosConfig = createCosmosConfig(rootDir);
+  const fixtures = await getFixtures({ cosmosConfig });
   expect(fixtures).toEqual([
     {
       absoluteFilePath: path.join(rootDir, 'src/__fixtures__/Controls.tsx'),

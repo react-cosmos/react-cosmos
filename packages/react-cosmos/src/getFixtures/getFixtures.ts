@@ -16,6 +16,9 @@ import {
 } from 'react-cosmos-core';
 import { createFixtureNode, decorateFixture } from 'react-cosmos-renderer';
 import { CosmosConfig } from '../cosmosConfig/types.js';
+import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
+import { applyServerConfigPlugins } from '../shared/applyServerConfigPlugins.js';
+import { getServerPlugins } from '../shared/getServerPlugins.js';
 import { importUserModules } from '../userModules/importUserModules.js';
 
 export type FixtureApi = {
@@ -30,7 +33,28 @@ export type FixtureApi = {
   treePath: string[];
 };
 
-export function getFixtures(cosmosConfig: CosmosConfig) {
+type Args = {
+  cosmosConfig: CosmosConfig;
+};
+export async function getFixtures(args: Args) {
+  let cosmosConfig = args.cosmosConfig;
+
+  const pluginConfigs = await getPluginConfigs({
+    cosmosConfig,
+    // Absolute paths are required in dev mode because the dev server could
+    // run in a monorepo package that's not the root of the project and plugins
+    // could be installed in the root
+    relativePaths: false,
+  });
+
+  const serverPlugins = await getServerPlugins({ cosmosConfig, pluginConfigs });
+  cosmosConfig = await applyServerConfigPlugins({
+    cosmosConfig,
+    serverPlugins,
+    command: 'dev',
+    platform: 'web',
+  });
+
   const { fixturesDir, fixtureFileSuffix, rootDir } = cosmosConfig;
   const rendererUrl = pickRendererUrl(cosmosConfig.rendererUrl, 'dev');
 
