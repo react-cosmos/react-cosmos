@@ -1,6 +1,5 @@
 // Import mocks first
 import { mockFile } from '../testHelpers/mockFs.js';
-import { mockCliArgs } from '../testHelpers/mockYargs.js';
 
 import path from 'node:path';
 import { create } from 'react-test-renderer';
@@ -29,7 +28,6 @@ const testServerPlugin = {
 };
 
 beforeEach(() => {
-  mockCliArgs({});
   mockFile(testCosmosPlugin.server, { default: testServerPlugin });
 });
 
