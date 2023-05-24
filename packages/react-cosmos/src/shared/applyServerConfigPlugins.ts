@@ -9,13 +9,11 @@ type Args = {
   platform: CosmosPlatform;
 };
 export async function applyServerConfigPlugins({
-  cosmosConfig: initialCosmosConfig,
+  cosmosConfig,
   serverPlugins,
   command,
   platform,
 }: Args) {
-  let cosmosConfig = initialCosmosConfig;
-
   for (const plugin of serverPlugins) {
     if (plugin.config) {
       try {
