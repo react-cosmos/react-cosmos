@@ -1,17 +1,11 @@
 import { CosmosPluginConfig } from 'react-cosmos-core';
 import { coreServerPlugins } from '../corePlugins/index.js';
-import { CosmosConfig } from '../cosmosConfig/types.js';
 import { importServerPlugins } from './importServerPlugins.js';
 
-type Args = {
-  cosmosConfig: CosmosConfig;
-  pluginConfigs: CosmosPluginConfig[];
-};
-export async function getServerPlugins({ cosmosConfig, pluginConfigs }: Args) {
-  const userPlugins = await importServerPlugins(
-    pluginConfigs,
-    cosmosConfig.rootDir
-  );
-
+export async function getServerPlugins(
+  pluginConfigs: CosmosPluginConfig[],
+  rootDir: string
+) {
+  const userPlugins = await importServerPlugins(pluginConfigs, rootDir);
   return [...coreServerPlugins, ...userPlugins];
 }

@@ -22,7 +22,11 @@ export async function generateExport() {
   });
   logPluginInfo(pluginConfigs);
 
-  const serverPlugins = await getServerPlugins({ cosmosConfig, pluginConfigs });
+  const serverPlugins = await getServerPlugins(
+    pluginConfigs,
+    cosmosConfig.rootDir
+  );
+
   cosmosConfig = await applyServerConfigPlugins({
     cosmosConfig,
     serverPlugins,
