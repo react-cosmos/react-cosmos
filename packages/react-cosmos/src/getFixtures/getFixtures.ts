@@ -47,10 +47,7 @@ export async function getFixtures(
 ) {
   const pluginConfigs = await getPluginConfigs({
     cosmosConfig,
-    // Absolute paths are required in dev mode because the dev server could
-    // run in a monorepo package that's not the root of the project and plugins
-    // could be installed in the root
-    relativePaths: false,
+    relativePaths: command === 'export',
   });
 
   const serverPlugins = await getServerPlugins({ cosmosConfig, pluginConfigs });
