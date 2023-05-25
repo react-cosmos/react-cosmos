@@ -1,3 +1,4 @@
+import { mapValues } from 'lodash-es';
 import path from 'path';
 import { ReactElement } from 'react';
 import {
@@ -23,7 +24,7 @@ import { CosmosPlatform } from '../cosmosPlugin/types.js';
 import { applyServerConfigPlugins } from '../shared/applyServerConfigPlugins.js';
 import { getServerPlugins } from '../shared/getServerPlugins.js';
 import { getPlaygroundUrl } from '../shared/playgroundUrl.js';
-import { importUserModules } from '../userModules/importUserModules.js';
+import { importUserModules } from './importUserModules.js';
 
 export type FixtureApi = {
   absoluteFilePath: string;
@@ -62,13 +63,15 @@ export async function getFixtures(
     platform,
   });
 
-  const { fixtures, decorators } = importUserModules(cosmosConfig);
+  const { fixtures, decorators } = await importUserModules(cosmosConfig);
+  const fixtureExports = mapValues(fixtures, f => f.default);
+  const decoratorExports = mapValues(decorators, f => f.default);
   const rendererUrl = pickRendererUrl(cosmosConfig.rendererUrl, command);
   const result: FixtureApi[] = [];
 
-  getFlatFixtureTree(cosmosConfig, fixtures).forEach(
+  getFlatFixtureTree(cosmosConfig, fixtureExports).forEach(
     ({ fileName, fixtureId, name, parents }) => {
-      const fixtureExport = fixtures[fixtureId.path];
+      const fixtureExport = fixtures[fixtureId.path].default;
       const fixture = getFixtureFromExport(fixtureExport, fixtureId.name);
 
       if (!fixture) {
@@ -84,7 +87,7 @@ export async function getFixtures(
         getElement: createFixtureElementGetter(
           fixture,
           fixtureId.path,
-          decorators
+          decoratorExports
         ),
         name,
         parents,
