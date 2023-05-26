@@ -496,7 +496,7 @@ Aside from the fixture information showcased above, each fixture object returned
 
 #### Caveats
 
-`getFixtures()` is tricky to work with.
+The `getFixtures()` API is tricky to work with.
 
 To create URLs for each fixture, fixture modules are imported in order to retrieve the fixture names of _multi fixtures_. Fixture modules are non-standard (JSX or TypeScript files) and often expect a DOM environment. Thus calling `getFixtures()` in a Node environment isn't straightforward and Jest with `"jsdom"` [testEnvironment](https://jestjs.io/docs/configuration#testenvironment-string) is the de facto way of using this API.
 
