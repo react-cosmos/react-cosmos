@@ -9,32 +9,27 @@ const fixtures = wrapDefaultExport({
 });
 
 testRenderer(
-  'posts lazy ready response on mount without fixture names',
+  'posts lazy fixture list with item names on fixture select',
   { rendererId, fixtures, lazy: true },
-  async ({ rendererReady }) => {
-    await rendererReady({
+  async ({ selectFixture, fixtureListUpdate }) => {
+    await fixtureListUpdate({
       rendererId,
       fixtures: {
         first: { type: 'single' },
         second: { type: 'single' },
       },
     });
-  }
-);
-
-testRenderer(
-  'posts subsequent fixture list item update with fixture names',
-  { rendererId, fixtures, lazy: true },
-  async ({ selectFixture, fixtureListItemUpdate }) => {
     selectFixture({
       rendererId,
       fixtureId: { path: 'first' },
       fixtureState: {},
     });
-    await fixtureListItemUpdate({
+    await fixtureListUpdate({
       rendererId,
-      fixturePath: 'first',
-      fixtureItem: { type: 'multi', fixtureNames: ['a', 'b', 'c'] },
+      fixtures: {
+        first: { type: 'multi', fixtureNames: ['a', 'b', 'c'] },
+        second: { type: 'single' },
+      },
     });
   }
 );

@@ -14,8 +14,6 @@ beforeEach(register);
 
 afterEach(resetPlugins);
 
-const fixtures = {};
-
 function registerTestPlugins() {
   mockRouter({
     getSelectedFixtureId: () => null,
@@ -25,13 +23,13 @@ function registerTestPlugins() {
 
 function loadTestPlugins() {
   loadPlugins();
-  mockRendererReady('mockRendererId1', fixtures);
-  mockRendererReady('mockRendererId2', fixtures);
+  mockRendererReady('mockRendererId1');
+  mockRendererReady('mockRendererId2');
   getRendererCoreMethods().selectPrimaryRenderer('mockRendererId2');
 }
 
-function emitRouterFixtureChange() {
-  getRouterContext().emit('fixtureChange', { path: 'zwei.js' });
+function emitRouterFixtureSelect() {
+  getRouterContext().emit('fixtureSelect', { path: 'zwei.js' });
 }
 
 it('posts "selectFixture" renderer requests', async () => {
@@ -39,7 +37,7 @@ it('posts "selectFixture" renderer requests', async () => {
   const { request } = onRendererCore();
 
   loadTestPlugins();
-  emitRouterFixtureChange();
+  emitRouterFixtureSelect();
 
   await waitFor(() =>
     expect(request).toBeCalledWith(expect.any(Object), {

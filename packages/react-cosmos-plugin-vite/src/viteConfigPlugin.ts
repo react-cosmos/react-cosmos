@@ -1,16 +1,25 @@
+import path from 'node:path';
 import {
   CosmosConfig,
   CosmosConfigPluginArgs,
   findNextAvailablePort,
 } from 'react-cosmos';
+import { RENDERER_FILENAME } from './constants.js';
 import { getCosmosVitePort } from './createCosmosViteConfig.js';
 
 export async function viteConfigPlugin({
   cosmosConfig,
+  command,
 }: CosmosConfigPluginArgs): Promise<CosmosConfig> {
-  const { rendererUrl } = cosmosConfig;
-  if (rendererUrl) {
+  if (cosmosConfig.rendererUrl) {
     return cosmosConfig;
+  }
+
+  if (command === 'export') {
+    return {
+      ...cosmosConfig,
+      rendererUrl: path.join(cosmosConfig.publicUrl, RENDERER_FILENAME),
+    };
   }
 
   const cosmosViteConfig = cosmosConfig.vite || {};

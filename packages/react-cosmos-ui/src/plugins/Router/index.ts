@@ -1,5 +1,5 @@
 import { isEqual } from 'lodash-es';
-import { FixtureId, PlaygroundUrlParams } from 'react-cosmos-core';
+import { FixtureId, PlaygroundParams } from 'react-cosmos-core';
 import { PluginContext, createPlugin } from 'react-plugin';
 import {
   getUrlParams,
@@ -26,13 +26,13 @@ onLoad(context => {
   const { setState } = context;
   setState({ urlParams: getUrlParams() });
 
-  return subscribeToLocationChanges((urlParams: PlaygroundUrlParams) => {
+  return subscribeToLocationChanges((urlParams: PlaygroundParams) => {
     const { fixtureId } = context.getState().urlParams;
     const fixtureChanged = !isEqual(urlParams.fixtureId, fixtureId);
 
     setState({ urlParams }, () => {
       if (fixtureChanged) {
-        emitFixtureChangeEvent(context);
+        emitFixtureChangeEvent(context, true);
       }
     });
   });
@@ -54,26 +54,34 @@ function unselectFixture(context: RouterContext) {
   setUrlParams(context, {});
 }
 
-function setUrlParams(
-  context: RouterContext,
-  nextUrlParams: PlaygroundUrlParams
-) {
+function setUrlParams(context: RouterContext, nextUrlParams: PlaygroundParams) {
   const { urlParams } = context.getState();
   const fixtureChanged = !isEqual(nextUrlParams.fixtureId, urlParams.fixtureId);
   const urlParamsEqual = isEqual(nextUrlParams, urlParams);
 
-  context.setState({ urlParams: nextUrlParams }, () => {
-    // Setting identical url params is considered a "reset" request
-    if (fixtureChanged || urlParamsEqual) {
-      emitFixtureChangeEvent(context);
-    }
-
-    if (!urlParamsEqual) {
+  if (urlParamsEqual) {
+    // Setting identical URL params can be considered a "reset" request, but
+    // this will only re-render the fixture if the renderer implements an
+    // auto-incrementing render key in its state
+    emitFixtureChangeEvent(context, false);
+  } else {
+    context.setState({ urlParams: nextUrlParams }, () => {
       pushUrlParams(context.getState().urlParams);
-    }
-  });
+      emitFixtureChangeEvent(context, fixtureChanged);
+    });
+  }
 }
 
-function emitFixtureChangeEvent(context: RouterContext) {
-  context.emit('fixtureChange', getSelectedFixtureId(context));
+function emitFixtureChangeEvent(
+  context: RouterContext,
+  fixtureChanged: boolean
+) {
+  const fixtureId = getSelectedFixtureId(context);
+  if (!fixtureId) {
+    context.emit('fixtureUnselect');
+  } else if (fixtureChanged) {
+    context.emit('fixtureSelect', fixtureId);
+  } else {
+    context.emit('fixtureReselect', fixtureId);
+  }
 }

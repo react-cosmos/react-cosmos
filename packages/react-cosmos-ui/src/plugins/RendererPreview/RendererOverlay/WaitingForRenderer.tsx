@@ -1,6 +1,6 @@
 import React from 'react';
+import { DelayRender } from 'react-cosmos-core';
 import styled from 'styled-components';
-import { DelayedLoading } from '../../../components/DelayedLoading.js';
 import { grey144 } from '../../../style/colors.js';
 import {
   RendererOverlayContainer,
@@ -10,14 +10,14 @@ import {
 
 export function WaitingForRenderer() {
   return (
-    <DelayedLoading delay={500}>
+    <DelayRender delay={500}>
       <RendererOverlayContainer>
         <RendererOverlayIconWrapper>
           <Loader />
         </RendererOverlayIconWrapper>
         <RendererOverlayMessage>Waiting for renderer...</RendererOverlayMessage>
       </RendererOverlayContainer>
-    </DelayedLoading>
+    </DelayRender>
   );
 }
 

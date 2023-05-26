@@ -1,59 +1,52 @@
-import {
-  FixtureId,
-  RendererId,
-  RendererReadyResponse,
-} from 'react-cosmos-core';
+import { isEqual } from 'lodash-es';
+import { RendererId, RendererReadyResponse } from 'react-cosmos-core';
 import { NotificationsSpec } from '../../Notifications/spec.js';
 import { RouterSpec } from '../../Router/spec.js';
 import { RendererCoreContext, State } from '../shared/index.js';
 import { postSelectFixtureRequest } from '../shared/postRequest.js';
-import { getSelectedFixtureId } from '../shared/router.js';
 
 export function receiveRendererReadyResponse(
   context: RendererCoreContext,
   { payload }: RendererReadyResponse
 ) {
-  const { rendererId, fixtures, initialFixtureId } = payload;
+  const { rendererId } = payload;
+  const { connectedRendererIds: prevRendererIds } = context.getState();
+
   context.setState(stateUpdater, afterStateChanged);
 
   function stateUpdater(prevState: State) {
     // The first announced renderer becomes the primary one
     const primaryRendererId = prevState.primaryRendererId || rendererId;
-    const isPrimaryRenderer = rendererId === primaryRendererId;
     const { connectedRendererIds, fixtureState } = prevState;
 
     return {
       ...prevState,
       connectedRendererIds: addToSet(connectedRendererIds, rendererId),
       primaryRendererId,
-      fixtures,
-      fixtureState: isPrimaryRenderer ? {} : fixtureState,
+      fixtureState: rendererId === primaryRendererId ? {} : fixtureState,
     };
   }
 
   function afterStateChanged() {
-    if (initialFixtureId) selectInitialFixture(context, initialFixtureId);
-    else selectFixtureFromUrlParams(context, rendererId);
-    notifyRendererConnection(context, rendererId);
-  }
-}
+    const router = context.getMethodsOf<RouterSpec>('router');
 
-function selectInitialFixture(
-  { getMethodsOf }: RendererCoreContext,
-  fixtureId: FixtureId
-) {
-  const router = getMethodsOf<RouterSpec>('router');
-  router.selectFixture(fixtureId);
-}
+    const rendererFixtureId = payload.selectedFixtureId;
+    const routerFixtureId = router.getSelectedFixtureId();
 
-function selectFixtureFromUrlParams(
-  context: RendererCoreContext,
-  rendererId: RendererId
-) {
-  const fixtureId = getSelectedFixtureId(context);
-  if (fixtureId) {
-    const { fixtureState } = context.getState();
-    postSelectFixtureRequest(context, rendererId, fixtureId, fixtureState);
+    if (routerFixtureId && !isEqual(routerFixtureId, rendererFixtureId)) {
+      const { fixtureState } = context.getState();
+      postSelectFixtureRequest(
+        context,
+        rendererId,
+        routerFixtureId,
+        fixtureState
+      );
+    }
+
+    // Notify about connected renderers that weren't connected before
+    if (!prevRendererIds.includes(rendererId)) {
+      notifyRendererConnection(context, rendererId);
+    }
   }
 }
 

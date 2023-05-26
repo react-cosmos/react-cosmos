@@ -1,14 +1,15 @@
-import { parseUrlQuery, stringifyUrlQuery } from 'react-cosmos-core';
+import { buildQueryString, parseQueryString } from 'react-cosmos-core';
+import { createRelativeUrlWithQuery } from '../shared/url.js';
 
 type Params = Record<string, unknown>;
 
 export function getUrlParams() {
-  return parseUrlQuery(location.search);
+  return parseQueryString(location.search);
 }
 
 export function pushUrlParams(params: Params) {
-  const query = stringifyUrlQuery(params);
-  history.pushState({}, '', `?${query}`);
+  const query = buildQueryString(params);
+  history.pushState({}, '', createRelativeUrlWithQuery(query));
 }
 
 export function popUrlParams(params: Params) {

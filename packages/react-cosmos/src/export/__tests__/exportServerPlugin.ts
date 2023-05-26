@@ -2,9 +2,6 @@
 import { jestWorkerId } from '../../testHelpers/jestWorkerId.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
 import { mockCosmosPlugins } from '../../testHelpers/mockCosmosPlugins.js';
-import '../../testHelpers/mockEsmRequire.js';
-import '../../testHelpers/mockEsmResolve.js';
-import '../../testHelpers/mockEsmStaticPath.js';
 import {
   mockCosmosConfig,
   mockFile,
@@ -71,7 +68,8 @@ it('calls config hook', async () => {
 
     expect(testServerPlugin.config).toBeCalledWith({
       cosmosConfig: expect.objectContaining({ exportPath }),
-      platformType: 'web',
+      command: 'export',
+      platform: 'web',
     });
   });
 });

@@ -1,11 +1,10 @@
 import React from 'react';
-import { useValue } from 'react-cosmos-renderer/client';
+import { useValue } from 'react-cosmos/client';
 import styled from 'styled-components';
-import { DEFAULT_DEVICES } from '../shared.js';
+import { DEFAULT_DEVICES, DEFAULT_VIEWPORT_STATE } from '../shared.js';
 import { ResponsivePreview } from './ResponsivePreview.js';
 
-const { width, height } = DEFAULT_DEVICES[0];
-const initialViewport = { width, height };
+const initialViewport = DEFAULT_VIEWPORT_STATE.viewport;
 
 export default () => {
   const [viewport, setViewport] = useValue('viewport', {

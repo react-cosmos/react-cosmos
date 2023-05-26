@@ -40,13 +40,13 @@ it('sets URL params', async () => {
   await waitFor(() => expect(getUrlParams()).toEqual({}));
 });
 
-it('emits "fixtureChange" event', async () => {
-  const { fixtureChange } = onRouter();
+it('emits "fixtureUnselect" event', async () => {
+  const { fixtureUnselect } = onRouter();
 
   loadTestPlugins();
   getRouterMethods().unselectFixture();
 
   await waitFor(() =>
-    expect(fixtureChange).toBeCalledWith(expect.any(Object), null)
+    expect(fixtureUnselect).toBeCalledWith(expect.any(Object))
   );
 });

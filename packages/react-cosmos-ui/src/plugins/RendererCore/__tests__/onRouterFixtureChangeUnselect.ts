@@ -14,8 +14,6 @@ beforeEach(register);
 
 afterEach(resetPlugins);
 
-const fixtures = {};
-
 function registerTestPlugins() {
   mockRouter({
     getSelectedFixtureId: () => null,
@@ -25,19 +23,19 @@ function registerTestPlugins() {
 
 function loadTestPlugins() {
   loadPlugins();
-  mockRendererReady('mockRendererId1', fixtures);
-  mockRendererReady('mockRendererId2', fixtures);
+  mockRendererReady('mockRendererId1');
+  mockRendererReady('mockRendererId2');
   getRendererCoreMethods().selectPrimaryRenderer('mockRendererId2');
 }
 
-function emitRouterFixtureChange() {
-  getRouterContext().emit('fixtureChange', null);
+function emitRouterFixtureUnselect() {
+  getRouterContext().emit('fixtureUnselect');
 }
 
 it('resets fixture state', async () => {
   registerTestPlugins();
   loadTestPlugins();
-  emitRouterFixtureChange();
+  emitRouterFixtureUnselect();
 
   await waitFor(() =>
     expect(getRendererCoreMethods().getFixtureState()).toEqual({})
@@ -49,7 +47,7 @@ it('posts "unselectFixture" renderer requests', async () => {
   const { request } = onRendererCore();
 
   loadTestPlugins();
-  emitRouterFixtureChange();
+  emitRouterFixtureUnselect();
 
   await waitFor(() =>
     expect(request).toBeCalledWith(expect.any(Object), {

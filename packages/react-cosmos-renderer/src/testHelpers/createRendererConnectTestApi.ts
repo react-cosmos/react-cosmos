@@ -1,10 +1,10 @@
 import until from 'async-until';
 import { findLast } from 'lodash-es';
 import {
-  FixtureListItemUpdateResponse,
   FixtureListUpdateResponse,
   FixtureState,
   FixtureStateChangeResponse,
+  ReloadRendererRequest,
   RendererReadyResponse,
   RendererRequest,
   RendererResponse,
@@ -15,15 +15,13 @@ import {
 
 export type RendererConnectTestApi = {
   pingRenderers: () => void;
+  reloadRenderer: (payload: ReloadRendererRequest['payload']) => void;
   selectFixture: (payload: SelectFixtureRequest['payload']) => void;
   unselectFixture: (payload: UnselectFixtureRequest['payload']) => void;
   setFixtureState: (payload: SetFixtureStateRequest['payload']) => void;
   rendererReady: (payload: RendererReadyResponse['payload']) => Promise<void>;
   fixtureListUpdate: (
     payload: FixtureListUpdateResponse['payload']
-  ) => Promise<void>;
-  fixtureListItemUpdate: (
-    payload: FixtureListItemUpdateResponse['payload']
   ) => Promise<void>;
   fixtureStateChange: (
     payload: FixtureStateChangeResponse['payload']
@@ -39,12 +37,12 @@ export function createRendererConnectTestApi(args: {
 }): RendererConnectTestApi {
   return {
     pingRenderers,
+    reloadRenderer,
     selectFixture,
     unselectFixture,
     setFixtureState,
     rendererReady,
     fixtureListUpdate,
-    fixtureListItemUpdate,
     fixtureStateChange,
     getLastFixtureState,
     clearResponses: args.clearResponses,
@@ -53,6 +51,13 @@ export function createRendererConnectTestApi(args: {
   function pingRenderers() {
     return args.postRequest({
       type: 'pingRenderers',
+    });
+  }
+
+  function reloadRenderer(payload: ReloadRendererRequest['payload']) {
+    return args.postRequest({
+      type: 'reloadRenderer',
+      payload,
     });
   }
 
@@ -93,15 +98,6 @@ export function createRendererConnectTestApi(args: {
     });
   }
 
-  async function fixtureListItemUpdate(
-    payload: FixtureListItemUpdateResponse['payload']
-  ) {
-    await untilResponse({
-      type: 'fixtureListItemUpdate',
-      payload,
-    });
-  }
-
   async function fixtureStateChange(
     payload: FixtureStateChangeResponse['payload']
   ) {
@@ -131,7 +127,7 @@ export function createRendererConnectTestApi(args: {
             return false;
           }
         },
-        { timeout: 1000 }
+        { timeout: 3000 }
       );
     } catch (err) {
       expect(findLastResponseWithType(msg.type)).toEqual(msg);

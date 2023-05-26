@@ -1,5 +1,5 @@
 import { waitFor } from '@testing-library/dom';
-import { FixtureList, RendererId } from 'react-cosmos-core';
+import { FixtureList } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
@@ -8,7 +8,7 @@ import {
 } from '../../../../testHelpers/pluginMocks.js';
 import { register } from '../../index.js';
 import {
-  createFixtureListUpdateResponse,
+  mockFixtureListUpdate,
   mockRendererReady,
 } from '../../testHelpers/index.js';
 
@@ -31,24 +31,27 @@ function registerTestPlugins() {
 
 function loadTestPlugins() {
   loadPlugins();
-  mockRendererReady('mockRendererId1', fixtures);
-  mockRendererReady('mockRendererId2', fixtures);
+  mockRendererReady('mockRendererId1');
+  mockFixtureListUpdate('mockRendererId1', fixtures);
+  mockRendererReady('mockRendererId2');
+  mockFixtureListUpdate('mockRendererId2', fixtures);
 }
 
-function mockFixtureListUpdateResponse(rendererId: RendererId) {
-  const methods = getRendererCoreMethods();
-  methods.receiveResponse(
-    createFixtureListUpdateResponse(rendererId, {
-      ...fixtures,
-      'vier.js': { type: 'single' },
-    })
+it('returns fixtures', async () => {
+  registerTestPlugins();
+  loadTestPlugins();
+  await waitFor(() =>
+    expect(getRendererCoreMethods().getFixtures()).toEqual(fixtures)
   );
-}
+});
 
 it('updates fixtures in renderer state', async () => {
   registerTestPlugins();
   loadTestPlugins();
-  mockFixtureListUpdateResponse('mockRendererId1');
+  mockFixtureListUpdate('mockRendererId1', {
+    ...fixtures,
+    'vier.js': { type: 'single' },
+  });
 
   await waitFor(() =>
     expect(getRendererCoreMethods().getFixtures()).toEqual({
@@ -61,7 +64,10 @@ it('updates fixtures in renderer state', async () => {
 it('ignores update from secondary renderer', async () => {
   registerTestPlugins();
   loadTestPlugins();
-  mockFixtureListUpdateResponse('mockRendererId2');
+  mockFixtureListUpdate('mockRendererId2', {
+    ...fixtures,
+    'vier.js': { type: 'single' },
+  });
 
   await waitFor(() =>
     expect(getRendererCoreMethods().getFixtures()).toEqual(fixtures)

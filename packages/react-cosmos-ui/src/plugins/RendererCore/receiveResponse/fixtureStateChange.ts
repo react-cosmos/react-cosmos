@@ -13,16 +13,16 @@ export function receiveFixtureStateChangeResponse(
   const { primaryRendererId, fixtureState: prevFixtureState } =
     context.getState();
 
+  // Discard updates from secondary renderers
+  if (rendererId !== primaryRendererId) {
+    return;
+  }
+
   if (!isEqual(fixtureId, selectedFixtureId)) {
     console.warn(
       '[Renderer] fixtureStateChange response ignored ' +
         `because it doesn't match the selected fixture`
     );
-    return;
-  }
-
-  // Discard updates from secondary renderers
-  if (rendererId !== primaryRendererId) {
     return;
   }
 

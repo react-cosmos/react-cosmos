@@ -1,13 +1,12 @@
 import path from 'path';
-import { replaceKeys } from 'react-cosmos-core';
-import { Json } from '../utils/json.js';
+import { RendererConfig, replaceKeys } from 'react-cosmos-core';
 import { slash } from '../utils/slash.js';
 
 export type UserImportsTemplateArgs = {
   globalImports: string[];
   fixturePaths: string[];
   decoratorPaths: string[];
-  rendererConfig: Json;
+  rendererConfig: RendererConfig;
   rootDir: string;
   relativeToDir: string | null;
   typeScript: boolean;

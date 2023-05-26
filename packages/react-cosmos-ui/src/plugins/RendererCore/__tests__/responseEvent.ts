@@ -1,5 +1,4 @@
 import { waitFor } from '@testing-library/dom';
-import { FixtureList } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '..';
 import {
@@ -15,12 +14,7 @@ beforeEach(register);
 afterEach(resetPlugins);
 
 const rendererId = 'mockRendererId1';
-const fixtures: FixtureList = {
-  'ein.js': { type: 'single' },
-  'zwei.js': { type: 'single' },
-  'drei.js': { type: 'single' },
-};
-const rendererReadyMsg = createRendererReadyResponse(rendererId, fixtures);
+const rendererReadyMsg = createRendererReadyResponse(rendererId);
 
 function registerTestPlugins() {
   mockRouter({

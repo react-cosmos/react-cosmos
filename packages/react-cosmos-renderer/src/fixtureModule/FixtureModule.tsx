@@ -7,6 +7,7 @@ import {
   ReactFixtureModule,
   getFixtureFromExport,
   getFixtureItemFromExport,
+  stringifyFixtureId,
 } from 'react-cosmos-core';
 import { DecoratedFixture } from './DecoratedFixture.js';
 import { FixtureProvider } from './FixtureProvider.js';
@@ -18,6 +19,7 @@ type Props = {
   fixtureId: FixtureId;
   initialFixtureState?: FixtureState;
   renderKey: number;
+  lazy: boolean;
   renderMessage: (msg: string) => React.ReactElement;
 };
 export function FixtureModule({
@@ -27,11 +29,17 @@ export function FixtureModule({
   fixtureId,
   initialFixtureState,
   renderKey,
+  lazy,
   renderMessage,
 }: Props) {
   const fixtureItem = React.useMemo(
     () => getFixtureItemFromExport(fixtureModule.default),
     [fixtureModule.default]
+  );
+
+  const fixtureKey = React.useMemo(
+    () => `${stringifyFixtureId(fixtureId)}-${renderKey}`,
+    [fixtureId, renderKey]
   );
 
   const fixture = getFixtureFromExport(fixtureModule.default, fixtureId.name);
@@ -42,10 +50,11 @@ export function FixtureModule({
 
   return (
     <FixtureProvider
-      key={renderKey}
+      key={fixtureKey}
       fixtureId={fixtureId}
       initialFixtureState={initialFixtureState}
       fixtureItem={fixtureItem}
+      lazy={lazy}
     >
       <DecoratedFixture
         fixture={fixture}

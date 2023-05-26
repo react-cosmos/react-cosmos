@@ -1,5 +1,4 @@
 import { waitFor } from '@testing-library/dom';
-import { FixtureList } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
@@ -16,7 +15,6 @@ beforeEach(register);
 
 afterEach(resetPlugins);
 
-const fixtures: FixtureList = { 'ein.js': { type: 'single' } };
 const fixtureId = { path: 'zwei.js' };
 const fixtureState = { props: [] };
 
@@ -29,7 +27,7 @@ function registerTestPlugins() {
 
 function loadTestPlugins() {
   loadPlugins();
-  mockRendererReady('mockRendererId1', fixtures);
+  mockRendererReady('mockRendererId1');
 }
 
 it('returns connected renderer IDs', async () => {
@@ -52,14 +50,6 @@ it('returns primary renderer ID', async () => {
   );
 });
 
-it('returns fixtures', async () => {
-  registerTestPlugins();
-  loadTestPlugins();
-  await waitFor(() =>
-    expect(getRendererCoreMethods().getFixtures()).toEqual(fixtures)
-  );
-});
-
 it('returns empty fixture state', async () => {
   registerTestPlugins();
   loadTestPlugins();
@@ -72,7 +62,7 @@ it('keeps fixtures state when secondary renderer connects', async () => {
   registerTestPlugins();
   loadTestPlugins();
   mockFixtureStateChange('mockRendererId1', fixtureId, fixtureState);
-  mockRendererReady('mockRendererId2', fixtures);
+  mockRendererReady('mockRendererId2');
 
   await waitFor(() =>
     expect(getRendererCoreMethods().getFixtureState()).toEqual(fixtureState)

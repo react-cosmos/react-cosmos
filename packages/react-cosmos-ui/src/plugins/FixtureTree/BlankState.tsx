@@ -1,4 +1,5 @@
 import React from 'react';
+import { DelayRender } from 'react-cosmos-core';
 import styled from 'styled-components';
 import { FileIcon } from '../../components/icons/index.js';
 import { grey160, grey224, grey32, grey64, grey8 } from '../../style/colors.js';
@@ -10,27 +11,29 @@ type Props = {
 
 export function BlankState({ fixturesDir, fixtureFileSuffix }: Props) {
   return (
-    <Container data-testid="nav-blank-state">
-      <IconContainer>
-        <FileIcon />
-      </IconContainer>
-      <Title>
-        No component <NoWrap>fixtures found</NoWrap>
-      </Title>
-      <Description>
-        <ol>
-          <li>
-            Place fixture files under <code>{fixturesDir}</code> dirs or add the{' '}
-            <code>.{fixtureFileSuffix}</code> suffix to{' '}
-            <NoWrap>their name</NoWrap>
-          </li>
-          <li>
-            Default exports from your fixtures (any React element or component){' '}
-            will <NoWrap>appear here</NoWrap>
-          </li>
-        </ol>
-      </Description>
-    </Container>
+    <DelayRender delay={500}>
+      <Container data-testid="nav-blank-state">
+        <IconContainer>
+          <FileIcon />
+        </IconContainer>
+        <Title>
+          No component <NoWrap>fixtures found</NoWrap>
+        </Title>
+        <Description>
+          <ol>
+            <li>
+              Place fixture files under <code>{fixturesDir}</code> dirs or add
+              the <code>.{fixtureFileSuffix}</code> suffix to{' '}
+              <NoWrap>their name</NoWrap>
+            </li>
+            <li>
+              Default exports from your fixtures (any React element or
+              component) will <NoWrap>appear here</NoWrap>
+            </li>
+          </ol>
+        </Description>
+      </Container>
+    </DelayRender>
   );
 }
 

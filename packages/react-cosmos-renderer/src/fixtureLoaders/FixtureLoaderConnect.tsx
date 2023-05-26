@@ -1,24 +1,24 @@
 import React from 'react';
 import {
-  FixtureId,
+  DelayRender,
   UserModuleWrappers,
   getFixtureListFromWrappers,
-  isInsideWindowIframe,
 } from 'react-cosmos-core';
-import { FixtureListRendererResponse } from './FixtureListRendererResponse.js';
-import { FixtureSelection } from './useFixtureSelection.js';
+import { RendererSync } from './RendererSync.js';
+import { SelectedFixture } from './SelectedFixture.js';
 
 type Props = {
   moduleWrappers: UserModuleWrappers;
-  fixtureSelection: FixtureSelection | null;
-  initialFixtureId?: FixtureId | null;
+  // Receiving the fixture selection as a prop instead of reading it from the
+  // RendererContext enables using this component on the server, in which case
+  // the selected fixture is read from server-side URL params.
+  selectedFixture: SelectedFixture | null;
   renderMessage: (msg: string) => React.ReactElement;
-  renderFixture: (selection: FixtureSelection) => React.ReactElement;
+  renderFixture: (selected: SelectedFixture) => React.ReactElement;
 };
 export function FixtureLoaderConnect({
   moduleWrappers,
-  fixtureSelection = null,
-  initialFixtureId = null,
+  selectedFixture,
   renderMessage,
   renderFixture,
 }: Props) {
@@ -28,26 +28,21 @@ export function FixtureLoaderConnect({
   );
 
   function renderInner() {
-    if (!fixtureSelection) {
-      return isInsideWindowIframe()
-        ? null
-        : renderMessage('No fixture selected.');
+    if (!selectedFixture) {
+      return (
+        <DelayRender delay={500}>
+          {renderMessage('No fixture selected.')}
+        </DelayRender>
+      );
     }
 
-    const { fixtureId } = fixtureSelection;
+    const { fixtureId } = selectedFixture;
     if (!fixtures[fixtureId.path]) {
       return renderMessage(`Fixture path not found: ${fixtureId.path}`);
     }
 
-    return renderFixture(fixtureSelection);
+    return renderFixture(selectedFixture);
   }
 
-  return (
-    <FixtureListRendererResponse
-      fixtures={fixtures}
-      initialFixtureId={initialFixtureId}
-    >
-      {renderInner()}
-    </FixtureListRendererResponse>
-  );
+  return <RendererSync fixtures={fixtures}>{renderInner()}</RendererSync>;
 }

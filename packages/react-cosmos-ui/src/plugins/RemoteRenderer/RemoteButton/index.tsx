@@ -1,4 +1,5 @@
 import React from 'react';
+import { createRendererUrl } from 'react-cosmos-core';
 import { IconButton32 } from '../../../components/buttons/index.js';
 import { CastIcon } from '../../../components/icons/index.js';
 import { NotificationItem } from '../../Notifications/spec.js';
@@ -6,16 +7,16 @@ import { copyToClipboard } from './copyToClipboard.js';
 
 type Props = {
   devServerOn: boolean;
-  webRendererUrl: null | string;
+  rendererUrl: null | string;
   pushNotification: (notification: NotificationItem) => unknown;
 };
 
 export function RemoteButton({
   devServerOn,
-  webRendererUrl,
+  rendererUrl,
   pushNotification,
 }: Props) {
-  if (!devServerOn || !webRendererUrl) {
+  if (!devServerOn || !rendererUrl) {
     return null;
   }
 
@@ -23,7 +24,7 @@ export function RemoteButton({
     <IconButton32
       icon={<CastIcon />}
       title="Copy remote renderer URL"
-      onClick={() => copyRendererUrlToClipboard(webRendererUrl)}
+      onClick={() => copyRendererUrlToClipboard(createRendererUrl(rendererUrl))}
     />
   );
 
@@ -52,5 +53,5 @@ function getFullUrl(rendererUrl: string) {
   // Renderer URL can be absolute or relative, depending on whether the renderer
   // is running on the same host/port as the playground
   if (rendererUrl.startsWith('http')) return rendererUrl;
-  return `${location.origin}${rendererUrl}`;
+  return new URL(rendererUrl, location.origin).toString();
 }

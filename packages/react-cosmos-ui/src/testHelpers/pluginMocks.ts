@@ -85,7 +85,6 @@ export function mockCore(methods: MethodsOf<CoreSpec> = {}) {
     getProjectId: jest.fn(),
     getFixtureFileVars: jest.fn(),
     isDevServerOn: jest.fn(),
-    getWebRendererUrl: jest.fn(),
     ...methods,
   };
   mockMethodsOf<CoreSpec>('core', allMethods);
@@ -105,11 +104,13 @@ export function mockMessageHandler(
 
 export function mockRendererCore(methods: MethodsOf<RendererCoreSpec> = {}) {
   const allMethods = {
+    getRendererUrl: jest.fn(),
     getConnectedRendererIds: jest.fn(),
     getPrimaryRendererId: jest.fn(),
     getFixtures: jest.fn(),
     getFixtureState: jest.fn(),
     isRendererConnected: jest.fn(),
+    reloadRenderer: jest.fn(),
     setFixtureState: jest.fn(),
     selectPrimaryRenderer: jest.fn(),
     receiveResponse: jest.fn(),
@@ -153,7 +154,9 @@ export function mockFixtureTree(methods: MethodsOf<FixtureTreeSpec> = {}) {
 
 export function onRouter(events: EventsOf<RouterSpec> = {}) {
   const allEvents = {
-    fixtureChange: jest.fn(),
+    fixtureSelect: jest.fn(),
+    fixtureReselect: jest.fn(),
+    fixtureUnselect: jest.fn(),
     ...events,
   };
   on<RouterSpec>('router', allEvents);

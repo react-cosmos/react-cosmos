@@ -1,6 +1,3 @@
-// Import mocks first
-import '../../testHelpers/mockEsmResolve.js';
-
 import { createCosmosConfig } from '../createCosmosConfig.js';
 
 it('returns default hostname', () => {

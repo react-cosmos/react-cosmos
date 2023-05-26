@@ -51,4 +51,4 @@ jobs:
         run: npx wait-on -t 10000 http://localhost:5000
 
       - name: Wait until Cosmos renderer is live
-        run: npx wait-on -t 10000 http://localhost:5000/_renderer.html
+        run: npx wait-on -t 10000 http://localhost:5000/renderer.html

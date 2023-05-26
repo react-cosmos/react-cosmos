@@ -4,7 +4,7 @@
 
 - Setup: [Getting started](#getting-started) · [Config](#config) · [Compilation](#compilation) · [Webpack](#webpack)
 - Usage: [Fixtures](#fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [Control panel](#control-panel) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](reactNative.md) · [Server-side APIs](#server-side-apis)
-- FAQ: [Create React App](#create-react-app) · [Next.js](#nextjs) · [Troubleshooting](#troubleshooting) · [Roadmap](../roadmap)
+- FAQ: [Create React App](#create-react-app) · [Next.js](next.md) · [Troubleshooting](#troubleshooting) · [Roadmap](../roadmap)
 
 ## Getting started
 
@@ -67,6 +67,13 @@ Create `cosmos.config.json` and enable Webpack plugin.
   "plugins": ["react-cosmos-plugin-webpack"]
 }
 ```
+
+</details>
+
+<details>
+  <summary>Next.js</summary>
+
+[Check out this guide](next.md).
 
 </details>
 
@@ -134,10 +141,10 @@ You've taken the first step towards designing reusable components. You're ready 
 
 ### Next steps...
 
-- [Set up React Cosmos with Create React App](#create-react-app).
-- [Configure Webpack config](#webpack).
 - [Create a decorator](#decorators).
 - [Check out Vite and Webpack examples](../examples).
+- [Configure Cosmos config](#config).
+- [Configure Webpack config](#webpack).
 
 > Something wrong? Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) (make sure to include details) and to [join us on Discord](https://discord.gg/3X95VgfnW5).
 
@@ -353,7 +360,7 @@ The [props panel](https://twitter.com/ReactCosmos/status/1139838627976843264) al
 
 ```jsx
 // CounterButton.fixture.jsx
-import { useValue } from 'react-cosmos-renderer/client';
+import { useValue } from 'react-cosmos/client';
 
 export default () => {
   const [count, setCount] = useValue('count', { defaultValue: 0 });
@@ -365,7 +372,7 @@ export default () => {
 
 ```jsx
 // Button.fixture.jsx
-import { useSelect } from 'react-cosmos-renderer/client';
+import { useSelect } from 'react-cosmos/client';
 
 export default () => {
   // useSelect also returns a setter as the second value in the return tuple,
@@ -392,11 +399,8 @@ The React Cosmos UI is made up 100% from plugins. Documenting the plugin API is 
   "ui": {
     "responsivePreview": {
       "devices": [
-        { "label": "iPhone 5", "width": 320, "height": 568 },
-        { "label": "iPhone 6", "width": 375, "height": 667 },
-        { "label": "iPhone 6 Plus", "width": 414, "height": 736 },
-        { "label": "Medium", "width": 1024, "height": 768 },
-        { "label": "Large", "width": 1440, "height": 900 },
+        { "label": "iPhone SE", "width": 375, "height": 667 },
+        { "label": "iPad mini", "width": 744, "height": 1133 },
         { "label": "1080p", "width": 1920, "height": 1080 }
       ]
     }
@@ -469,7 +473,9 @@ Get all your fixtures programatically. A ton of information is provided for each
 ```js
 import { getFixtures } from 'react-cosmos';
 
-const fixtures = getFixtures(cosmosConfig);
+const fixtures = getFixtures(cosmosConfig, {
+  rendererUrl: 'http://localhost:5000/renderer.html',
+});
 
 console.log(fixtures);
 // [
@@ -480,22 +486,36 @@ console.log(fixtures);
 //     "parents": ["pages", "Error"]
 //     "playgroundUrl": "http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2Fpages%2FError%2F__fixtures__%2Fnot-found.js%22%2C%22name%22%3Anull%7D",
 //     "relativeFilePath": "components/pages/Error/__fixtures__/not-found.js",
-//     "rendererUrl": "http://localhost:5000/static/_renderer.html?_fixtureId=%7B%22path%22%3A%22components%2Fpages%2FError%2F__fixtures__%2Fnot-found.js%22%2C%22name%22%3Anull%7D",
+//     "rendererUrl": "http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22components%2Fpages%2FError%2F__fixtures__%2Fnot-found.js%22%2C%22name%22%3Anull%7D",
 //     "treePath": ["pages", "Error", "not-found"]
 //   },
 //   ...
 ```
 
-> See a more complete output example [here](../examples/webpack/tests/fixtures.test.ts).
-
 Aside from the fixture information showcased above, each fixture object returned also contains a `getElement` function property, which takes no arguments. `getElement` allows you to render fixtures in your own time, in environments like jsdom. Just as in the React Cosmos UI, the fixture element will include any decorators you've defined for your fixtures. `getElement` can be used for Jest snapshot testing.
+
+#### Caveats
+
+The `getFixtures()` API is tricky to work with.
+
+To create URLs for each fixture, fixture modules are imported in order to retrieve the fixture names of _multi fixtures_. Fixture modules are non-standard (JSX or TypeScript files) and often expect a DOM environment. Thus calling `getFixtures()` in a Node environment isn't straightforward and Jest with `"jsdom"` [testEnvironment](https://jestjs.io/docs/configuration#testenvironment-string) is the de facto way of using this API.
+
+Jest brings its own array of problems due to its limitations:
+
+1. [ESM support is unfinished.](https://github.com/jestjs/jest/issues/9430)
+2. [You can't create test cases asynchronously.](https://github.com/jestjs/jest/issues/2235#issuecomment-584387443) Using an async `globalSetup` [could work](https://github.com/jestjs/jest/issues/2235#issuecomment-584387443), but it can't import ESM and we're back to square one.
+
+For the reasons above `getFixtures()` is a synchronous API. It uses CommonJS `require()` to import user modules.
+
+Another limitation due to the lack of ESM support in Jest is the fact that `getFixtures()` doesn't run server plugins. The config hooks of server plugins usually auto-set the `rendererUrl` option in the user's Cosmos config. The Vite and Webpack plugins do this. With `getFixtures()`, however, we pass the renderer URL as a separate option after the Cosmos config.
 
 ## Create React App
 
-- Set `webpack.configPath` to `react-scripts/config/webpack.config`. Unless you use react-app-rewired (see below).
-- Make sure to place fixture and decorator files in the `src` directory.
+- Add `react-cosmos-plugin-webpack` plugin.
 - Set `staticPath` to `public` to load static assets inside React Cosmos.
 - Restrict `watchDirs` to `src` to ignore file changes outside the source directory.
+- Set `webpack.configPath` to `react-scripts/config/webpack.config`. Unless you use react-app-rewired (see below).
+- Make sure to place fixture and decorator files in the `src` directory.
 
 This is a `cosmos.config.json` example for Create React App:
 
@@ -509,6 +529,17 @@ This is a `cosmos.config.json` example for Create React App:
   }
 }
 ```
+
+Disable Fast Refresh in your `cosmos` commmand.
+
+```diff
+"scripts": {
+-  "cosmos": "cosmos",
++  "cosmos": "FAST_REFRESH=false cosmos"
+}
+```
+
+> Your mileage may vary, but using CRA's internal webpack config inside Cosmos has caused React Refresh [issues](https://github.com/react-cosmos/react-cosmos/issues/1272) in the past. You can disable it as shown above or you may also _not_ set `webpack.configPath` to `"react-scripts/config/webpack.config"` and have Cosmos run with a more minimalistic alternative to the [CRA webpack config](https://github.com/facebook/create-react-app/blob/d960b9e38c062584ff6cfb1a70e1512509a966e7/packages/react-scripts/config/webpack.config.js).
 
 ### Using react-app-rewired
 
@@ -553,40 +584,11 @@ module.exports = webpackConfig;
 
 > `globalImports` accepts an array of paths and you can add additional global CSS files like this: `"globalImports": ["src/index.css", "src/app.css"]`.
 
-## Next.js
-
-> **Currently Cosmos doesn't work with Next.js v10.0.6 or above. Downgrade to `next@10.0.5` until the issue is resolved. Read [#1289](https://github.com/react-cosmos/react-cosmos/issues/1289) for more context.**
-
-> The following steps are required for running Cosmos in **Next.js v10**. [This repo](https://github.com/react-cosmos/react-cosmos-nextjs) is a working example. [Ask for help](https://discord.gg/3X95VgfnW5) if you're having issues integrating Cosmos with an older version of Next.js.
-
-- Install `html-webpack-plugin@4` as a dev dependency.
-- Configure Babel to use the `next/babel` preset.
-- Optional: Set `staticPath` to `public` to load static assets inside Cosmos.
-- Optional: Add `styles/globals.css` to `globalImports` to automatically load global CSS in Cosmos fixtures.
-
-This is a `cosmos.config.json` example for Next.js:
-
-```json
-{
-  "globalImports": ["styles/globals.css"],
-  "staticPath": "public"
-}
-```
-
-This is a `.babelrc` example for Next.js:
-
-```json
-{
-  "presets": ["next/babel"],
-  "plugins": []
-}
-```
-
 ## Troubleshooting
 
 > **Warning**: Most React Cosmos issues are related to missing build dependencies. Please see [Compilation](#compilation).
 
-#### localhost:5000/\_renderer.html 404s?
+#### localhost:5000/\renderer.html 404s?
 
 - Check for build errors in your terminal.
 - Make sure you have html-webpack-plugin@4 installed, as well as [any other build dependency](#compilation).
@@ -606,10 +608,6 @@ This is a `.babelrc` example for Next.js:
 #### main.js file is cached?
 
 - [Set `includeHashInOutputFilename` to `true`](https://github.com/react-cosmos/react-cosmos/tree/main/docs#output-filename).
-
-#### Serving a static export from a nested path?
-
-- [Set `publicUrl` to a relative path, like `"./"`](https://github.com/react-cosmos/react-cosmos/issues/1149).
 
 #### Fixtures not detected?
 

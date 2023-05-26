@@ -13,7 +13,7 @@ import {
 } from 'react-cosmos-core';
 import { ReactTestRenderer, act, create } from 'react-test-renderer';
 import { ClientFixtureLoader } from '../fixtureLoaders/ClientFixtureLoader.js';
-import { RendererContext } from '../rendererConnect/RendererContext.js';
+import { StatefulRendererProvider } from '../rendererConnect/StatefulRendererProvider.js';
 import {
   RendererConnectTestApi,
   createRendererConnectTestApi,
@@ -22,9 +22,10 @@ import { createTestRendererConnect } from './createTestRendererConnect.js';
 
 export type RendererTestArgs = {
   rendererId: RendererId;
+  locked?: boolean;
+  selectedFixtureId?: FixtureId;
+  reloadRenderer?: () => void;
   fixtures: ByPath<ReactFixtureModule>;
-  selectedFixtureId?: null | FixtureId;
-  initialFixtureId?: FixtureId;
   decorators?: ByPath<ReactDecoratorModule>;
   lazy?: boolean;
   only?: boolean;
@@ -78,19 +79,32 @@ export async function mountTestRenderer(
 }
 
 function getElement(rendererConnect: RendererConnect, args: RendererTestArgs) {
-  const { rendererId, fixtures, decorators = {}, lazy = false } = args;
+  const {
+    rendererId,
+    locked = false,
+    selectedFixtureId = null,
+    reloadRenderer = () => {},
+    fixtures,
+    decorators = {},
+    lazy = false,
+  } = args;
+
   return (
-    <RendererContext.Provider value={{ rendererId, rendererConnect }}>
+    <StatefulRendererProvider
+      rendererId={rendererId}
+      rendererConnect={rendererConnect}
+      locked={locked}
+      selectedFixtureId={selectedFixtureId}
+      reloadRenderer={reloadRenderer}
+    >
       <ClientFixtureLoader
-        moduleWrappers={getModuleWrappers(fixtures, decorators, lazy)}
-        initialFixtureId={args.initialFixtureId}
-        selectedFixtureId={args.selectedFixtureId}
+        moduleWrappers={createModuleWrappers(fixtures, decorators, lazy)}
       />
-    </RendererContext.Provider>
+    </StatefulRendererProvider>
   );
 }
 
-function getModuleWrappers(
+function createModuleWrappers(
   fixtures: ByPath<ReactFixtureModule>,
   decorators: ByPath<ReactDecoratorModule>,
   lazy: boolean
@@ -117,7 +131,7 @@ function getModuleWrappers(
 function dynamicImportWrapper<T>(module: T) {
   return new Promise<T>(async resolve => {
     // Simulate module download time
-    await delay(Math.round(Math.random() * 50));
+    await delay(25 + Math.round(Math.random() * 25));
     await act(() => {
       resolve(module);
     });

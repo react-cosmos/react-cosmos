@@ -5,20 +5,18 @@ import { pkgUpSync } from 'pkg-up';
 import {
   CosmosPluginConfig,
   FixtureList,
+  pickRendererUrl,
   replaceKeys,
 } from 'react-cosmos-core';
-import { PlaygroundConfig, PlaygroundMountArgs } from 'react-cosmos-ui';
+import { PlaygroundMountArgs } from 'react-cosmos-ui';
 import { CosmosConfig } from '../cosmosConfig/types.js';
-import { PlatformType } from '../cosmosPlugin/types.js';
+import { CosmosPlatform } from '../cosmosPlugin/types.js';
 import { findUserModulePaths } from '../userModules/findUserModulePaths.js';
 import { importKeyPath } from '../userModules/shared.js';
-import { resolveRendererUrl } from './resolveRendererUrl.js';
 import { getStaticPath } from './staticPath.js';
 
-export const RENDERER_FILENAME = '_renderer.html';
-
 export async function getDevPlaygroundHtml(
-  platformType: PlatformType,
+  platform: CosmosPlatform,
   cosmosConfig: CosmosConfig,
   pluginConfigs: CosmosPluginConfig[]
 ) {
@@ -26,8 +24,14 @@ export async function getDevPlaygroundHtml(
   return getPlaygroundHtml({
     playgroundConfig: {
       ...ui,
-      core: await getDevCoreConfig(platformType, cosmosConfig),
-      rendererCore: { fixtures: getFixtureList(cosmosConfig) },
+      core: await getCoreConfig(cosmosConfig, true),
+      rendererCore: {
+        fixtures: getFixtureList(cosmosConfig),
+        rendererUrl:
+          platform === 'web'
+            ? pickRendererUrl(cosmosConfig.rendererUrl, 'dev')
+            : null,
+      },
     },
     pluginConfigs,
   });
@@ -41,56 +45,23 @@ export async function getExportPlaygroundHtml(
   return getPlaygroundHtml({
     playgroundConfig: {
       ...ui,
-      core: await getExportCoreConfig(cosmosConfig),
-      rendererCore: { fixtures: getFixtureList(cosmosConfig) },
+      core: await getCoreConfig(cosmosConfig, false),
+      rendererCore: {
+        fixtures: getFixtureList(cosmosConfig),
+        rendererUrl: pickRendererUrl(cosmosConfig.rendererUrl, 'export'),
+      },
     },
     pluginConfigs,
   });
 }
 
-async function getDevCoreConfig(
-  platformType: PlatformType,
-  cosmosConfig: CosmosConfig
-): Promise<PlaygroundConfig['core']> {
-  switch (platformType) {
-    case 'native':
-      return {
-        ...(await getSharedCoreConfig(cosmosConfig)),
-        devServerOn: true,
-        webRendererUrl: null,
-      };
-    case 'web':
-      return {
-        ...(await getSharedCoreConfig(cosmosConfig)),
-        devServerOn: true,
-        webRendererUrl:
-          cosmosConfig.rendererUrl ||
-          resolveRendererUrl(cosmosConfig.publicUrl, RENDERER_FILENAME),
-      };
-    default:
-      throw new Error(`Invalid platform type: ${platformType}`);
-  }
-}
-
-async function getExportCoreConfig(
-  cosmosConfig: CosmosConfig
-): Promise<PlaygroundConfig['core']> {
-  return {
-    ...(await getSharedCoreConfig(cosmosConfig)),
-    devServerOn: false,
-    webRendererUrl: resolveRendererUrl(
-      cosmosConfig.publicUrl,
-      RENDERER_FILENAME
-    ),
-  };
-}
-
-async function getSharedCoreConfig(cosmosConfig: CosmosConfig) {
+async function getCoreConfig(cosmosConfig: CosmosConfig, devServerOn: boolean) {
   const { rootDir, fixturesDir, fixtureFileSuffix } = cosmosConfig;
   return {
     projectId: await getProjectId(rootDir),
     fixturesDir,
     fixtureFileSuffix,
+    devServerOn,
   };
 }
 

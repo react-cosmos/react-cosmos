@@ -5,13 +5,10 @@ import {
   mockCwdModuleDefault,
   unmockCliArgs,
 } from 'react-cosmos/jest.js';
-import '../../testHelpers/mockEsmClientPath.js';
-import '../../testHelpers/mockEsmLoaderPath.js';
-import '../../testHelpers/mockEsmRequire.js';
-import '../../testHelpers/mockEsmResolve.js';
 
-import { createCosmosConfig, RENDERER_FILENAME } from 'react-cosmos';
+import { createCosmosConfig } from 'react-cosmos';
 import webpack from 'webpack';
+import { RENDERER_FILENAME } from '../constants.js';
 import { getDevWebpackConfig } from '../getDevWebpackConfig.js';
 import { HtmlWebpackPlugin } from '../htmlPlugin.js';
 
@@ -106,7 +103,7 @@ it('create output', async () => {
   expect(output).toEqual(
     expect.objectContaining({
       filename: '[name].js',
-      publicPath: '/',
+      publicPath: '',
     })
   );
 });

@@ -4,7 +4,6 @@ import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { register } from '..';
 import { RendererActionSlot } from '../../../slots/RendererActionSlot.js';
 import {
-  mockCore,
   mockRendererCore,
   mockStorage,
 } from '../../../testHelpers/pluginMocks.js';
@@ -39,7 +38,10 @@ function mockEnabledViewportStorage() {
 }
 
 function mockRendererUrl() {
-  mockCore({ getWebRendererUrl: () => `/_renderer.html` });
+  mockRendererCore({
+    getRendererUrl: () => `/_renderer.html`,
+    getFixtureState: () => ({}),
+  });
 }
 
 function mockViewportFixtureState() {
@@ -47,6 +49,7 @@ function mockViewportFixtureState() {
     fixtureState: {},
   };
   mockRendererCore({
+    getRendererUrl: () => `/_renderer.html`,
     getFixtureState: () => ({}),
     setFixtureState: (context, stateUpdater) => {
       mocks.fixtureState = stateUpdater(mocks.fixtureState);
@@ -81,9 +84,6 @@ async function selectViewport({ getByTestId }: RenderResult, value: string) {
 it('renders children of "rendererPreviewOuter" slot', async () => {
   mockStorage();
   mockRendererUrl();
-  mockRendererCore({
-    getFixtureState: () => ({}),
-  });
 
   const renderer = loadTestPlugins();
   await toggleResponsiveMode(renderer);
@@ -93,9 +93,6 @@ it('renders children of "rendererPreviewOuter" slot', async () => {
 it('renders responsive header', async () => {
   mockEnabledViewportStorage();
   mockRendererUrl();
-  mockRendererCore({
-    getFixtureState: () => ({}),
-  });
 
   const renderer = loadTestPlugins();
   renderer.getByTestId('responsiveHeader');
@@ -104,9 +101,6 @@ it('renders responsive header', async () => {
 it('renders responsive device labels', async () => {
   mockEnabledViewportStorage();
   mockRendererUrl();
-  mockRendererCore({
-    getFixtureState: () => ({}),
-  });
 
   const renderer = loadTestPlugins();
   for (const device of DEFAULT_DEVICES) {
@@ -116,38 +110,33 @@ it('renders responsive device labels', async () => {
 
 it('sets viewport in fixture state on device select', async () => {
   mockEnabledViewportStorage();
-  mockRendererUrl();
   const mocks = mockViewportFixtureState();
 
   const renderer = loadTestPlugins();
-  await selectViewport(renderer, '414x736');
+  await selectViewport(renderer, '428x926');
 
   expect(mocks.fixtureState.viewport).toEqual({
-    width: 414,
-    height: 736,
+    width: 428,
+    height: 926,
   });
 });
 
 it('saves viewport in storage on device select', async () => {
   const storageMock = mockEnabledViewportStorage();
   mockRendererUrl();
-  mockRendererCore({
-    getFixtureState: () => ({}),
-  });
 
   const renderer = loadTestPlugins();
-  await selectViewport(renderer, '414x736');
+  await selectViewport(renderer, '428x926');
 
   expect(storageMock[VIEWPORT_STORAGE_KEY]).toEqual({
     enabled: true,
     scaled: true,
-    viewport: { width: 414, height: 736 },
+    viewport: { width: 428, height: 926 },
   });
 });
 
 it('clears viewport in fixture state on untoggle', async () => {
   mockEnabledViewportStorage();
-  mockRendererUrl();
   const mocks = mockViewportFixtureState();
 
   const renderer = loadTestPlugins();
@@ -158,7 +147,6 @@ it('clears viewport in fixture state on untoggle', async () => {
 
 it('sets disabled viewport state on untoggle', async () => {
   const storageMock = mockEnabledViewportStorage();
-  mockRendererUrl();
   mockViewportFixtureState();
 
   const renderer = loadTestPlugins();

@@ -10,6 +10,7 @@ export type RendererCoreSpec = {
   name: 'rendererCore';
   config: {
     fixtures: FixtureList;
+    rendererUrl: null | string;
   };
   state: {
     connectedRendererIds: RendererId[];
@@ -18,11 +19,13 @@ export type RendererCoreSpec = {
     fixtureState: FixtureState;
   };
   methods: {
+    getRendererUrl(): null | string;
     getConnectedRendererIds(): RendererId[];
     getPrimaryRendererId(): null | RendererId;
     getFixtures(): FixtureList;
     getFixtureState(): FixtureState;
     isRendererConnected(): boolean;
+    reloadRenderer(): void;
     setFixtureState(stateUpdater: StateUpdater<FixtureState>): void;
     selectPrimaryRenderer(primaryRendererId: RendererId): void;
     receiveResponse(msg: MessageType): void;

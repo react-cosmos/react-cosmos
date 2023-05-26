@@ -7,6 +7,7 @@ import {
   mockCore,
   mockMessageHandler,
   mockNotifications,
+  mockRendererCore,
 } from '../../../testHelpers/pluginMocks.js';
 
 beforeEach(register);
@@ -21,7 +22,9 @@ function loadTestPlugins() {
 it(`doesn't render button when web renderer url is empty`, async () => {
   mockCore({
     isDevServerOn: () => true,
-    getWebRendererUrl: () => null,
+  });
+  mockRendererCore({
+    getRendererUrl: () => null,
   });
   mockMessageHandler();
   mockNotifications();
@@ -33,7 +36,9 @@ it(`doesn't render button when web renderer url is empty`, async () => {
 it(`doesn't render button when dev server is off`, async () => {
   mockCore({
     isDevServerOn: () => false,
-    getWebRendererUrl: () => 'mockWebUrl',
+  });
+  mockRendererCore({
+    getRendererUrl: () => '/mock-renderer.html',
   });
   mockMessageHandler();
   mockNotifications();
@@ -45,7 +50,9 @@ it(`doesn't render button when dev server is off`, async () => {
 it('renders button', async () => {
   mockCore({
     isDevServerOn: () => true,
-    getWebRendererUrl: () => 'mockWebUrl',
+  });
+  mockRendererCore({
+    getRendererUrl: () => '/mock-renderer.html',
   });
   mockMessageHandler();
   mockNotifications();
@@ -57,7 +64,9 @@ it('renders button', async () => {
 it('notifies copy error on button click', async () => {
   mockCore({
     isDevServerOn: () => true,
-    getWebRendererUrl: () => 'mockWebUrl',
+  });
+  mockRendererCore({
+    getRendererUrl: () => '/mock-renderer.html',
   });
   mockMessageHandler();
   const { pushTimedNotification } = mockNotifications();

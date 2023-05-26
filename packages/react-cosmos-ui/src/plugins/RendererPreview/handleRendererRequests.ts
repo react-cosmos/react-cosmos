@@ -53,7 +53,7 @@ export function createRendererRequestHandler() {
                 id: notificationId,
                 type: 'info',
                 title: 'Renderer iframe location changed',
-                info: `Reload or select another fixture to reset your preview.`,
+                info: `Select a fixture to reset your preview.`,
               });
             } else {
               notifications.removeStickyNotification(notificationId);
@@ -78,12 +78,13 @@ function iframeLocationChanged(iframeWindow: Window, iframeSrc: string) {
 
   try {
     const { href } = iframeWindow.location;
-    const locationWithoutHash = href.split('#')[0];
     return (
-      locationWithoutHash !== iframeSrc &&
-      // Some static servers strip .html extensions automatically
-      // https://github.com/zeit/serve-handler/tree/ce35fcd4e1c67356348f4735eed88fb084af9b43#cleanurls-booleanarray
-      locationWithoutHash !== iframeSrc.replace(/\.html$/, '')
+      // Don't register a location change when renderer searchParams change
+      !href.startsWith(
+        // Some static servers strip .html extensions automatically
+        // https://github.com/zeit/serve-handler/tree/ce35fcd4e1c67356348f4735eed88fb084af9b43#cleanurls-booleanarray
+        iframeSrc.replace(/\.html$/, '')
+      )
     );
   } catch (err) {
     // An exception is thrown when trying to access the location of a

@@ -6,6 +6,18 @@ import {
 } from 'react-cosmos-core';
 import { RendererCoreContext } from '../shared/index.js';
 
+export function postReloadRendererRequest(
+  context: RendererCoreContext,
+  rendererId: RendererId
+) {
+  postRendererRequest(context, {
+    type: 'reloadRenderer',
+    payload: {
+      rendererId,
+    },
+  });
+}
+
 export function postSelectFixtureRequest(
   context: RendererCoreContext,
   rendererId: RendererId,

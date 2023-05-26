@@ -2,9 +2,6 @@
 import { jestWorkerId } from '../../testHelpers/jestWorkerId.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
 import { mockCosmosPlugins } from '../../testHelpers/mockCosmosPlugins.js';
-import '../../testHelpers/mockEsmRequire.js';
-import '../../testHelpers/mockEsmResolve.js';
-import '../../testHelpers/mockEsmStaticPath.js';
 import { mockCosmosConfig, resetFsMock } from '../../testHelpers/mockFs.js';
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
@@ -25,6 +22,7 @@ beforeEach(() => {
     rootDir: __dirname,
     port,
     exportPath,
+    rendererUrl: '/_renderer.html',
   });
 });
 
@@ -54,9 +52,11 @@ it('generates playground HTML', async () => {
             fixturesDir: '__fixtures__',
             fixtureFileSuffix: 'fixture',
             devServerOn: false,
-            webRendererUrl: '/_renderer.html',
           },
-          rendererCore: { fixtures: {} },
+          rendererCore: {
+            fixtures: {},
+            rendererUrl: '/_renderer.html',
+          },
         },
         pluginConfigs: [],
       })

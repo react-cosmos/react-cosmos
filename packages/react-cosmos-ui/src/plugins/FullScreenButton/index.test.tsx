@@ -3,7 +3,7 @@ import React from 'react';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from '.';
 import { RendererActionSlot } from '../../slots/RendererActionSlot.js';
-import { mockCore } from '../../testHelpers/pluginMocks.js';
+import { mockCore, mockRendererCore } from '../../testHelpers/pluginMocks.js';
 import { mockWindowOpen } from '../../testHelpers/windowOpenMock.js';
 
 beforeEach(register);
@@ -20,7 +20,8 @@ function loadTestPlugins() {
 }
 
 it('renders fullscreen button', async () => {
-  mockCore({ getWebRendererUrl: () => `/_renderer.html` });
+  mockCore();
+  mockRendererCore({ getRendererUrl: () => `/_renderer.html` });
   const windowOpenMock = mockWindowOpen();
 
   const { getByTitle } = loadTestPlugins();
@@ -28,15 +29,17 @@ it('renders fullscreen button', async () => {
 
   const stringifiedFixtureId = encodeURIComponent(JSON.stringify(fixtureId));
   expect(windowOpenMock.value).toBeCalledWith(
-    `/_renderer.html?_fixtureId=${stringifiedFixtureId}`,
-    '_blank'
+    `/_renderer.html?fixtureId=${stringifiedFixtureId}&locked=true`,
+    '_blank',
+    'noopener=true'
   );
 
   windowOpenMock.unmock();
 });
 
 it('does not render fullscreen button without renderer URL', async () => {
-  mockCore({ getWebRendererUrl: () => null });
+  mockCore();
+  mockRendererCore({ getRendererUrl: () => null });
 
   const { queryByTitle } = loadTestPlugins();
   expect(queryByTitle(/go fullscreen/i)).toBeNull();

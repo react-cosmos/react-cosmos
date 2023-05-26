@@ -11,7 +11,11 @@ const fixtures = wrapDefaultExport({
 
 testRenderer(
   'renders initially selected named fixture',
-  { rendererId, fixtures, initialFixtureId: { path: 'first', name: 'one' } },
+  {
+    rendererId,
+    selectedFixtureId: { path: 'first', name: 'one' },
+    fixtures,
+  },
   async ({ renderer }) => {
     await retry(() => expect(renderer.toJSON()).toBe('First'));
   }
@@ -19,23 +23,27 @@ testRenderer(
 
 testRenderer(
   'renders initially selected unnamed fixture',
-  { rendererId, fixtures, initialFixtureId: { path: 'second' } },
+  {
+    rendererId,
+    selectedFixtureId: { path: 'second' },
+    fixtures,
+  },
   async ({ renderer }) => {
     await retry(() => expect(renderer.toJSON()).toBe('Second'));
   }
 );
 
 testRenderer(
-  'posts ready response on mount with initialFixtureId',
-  { rendererId, fixtures, initialFixtureId: { path: 'second' } },
+  'posts ready response on initially selected fixture',
+  {
+    rendererId,
+    selectedFixtureId: { path: 'second' },
+    fixtures,
+  },
   async ({ rendererReady }) => {
     await rendererReady({
       rendererId,
-      fixtures: {
-        first: { type: 'multi', fixtureNames: ['one'] },
-        second: { type: 'single' },
-      },
-      initialFixtureId: { path: 'second' },
+      selectedFixtureId: { path: 'second' },
     });
   }
 );

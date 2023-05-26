@@ -7,6 +7,7 @@ import {
   mockRouter,
 } from '../../../testHelpers/pluginMocks.js';
 import {
+  mockFixtureListUpdate,
   mockFixtureStateChange,
   mockRendererReady,
 } from '../testHelpers/index.js';
@@ -32,8 +33,10 @@ function registerTestPlugins() {
 
 function loadTestPlugins() {
   loadPlugins();
-  mockRendererReady('mockRendererId1', fixtures);
-  mockRendererReady('mockRendererId2', fixtures);
+  mockRendererReady('mockRendererId1');
+  mockFixtureListUpdate('mockRendererId1', fixtures);
+  mockRendererReady('mockRendererId2');
+  mockFixtureListUpdate('mockRendererId2', fixtures);
   getRendererCoreMethods().selectPrimaryRenderer('mockRendererId2');
   mockFixtureStateChange('mockRendererId2', fixtureId, fixtureState);
 }

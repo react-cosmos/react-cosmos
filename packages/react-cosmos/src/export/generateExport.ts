@@ -1,22 +1,17 @@
 import fs from 'fs/promises';
 import path from 'path';
-import {
-  CosmosPluginConfig,
-  removeLeadingSlash,
-  UiCosmosPluginConfig,
-} from 'react-cosmos-core';
-import { coreServerPlugins } from '../corePlugins/index.js';
+import { CosmosPluginConfig, UiCosmosPluginConfig } from 'react-cosmos-core';
 import { detectCosmosConfig } from '../cosmosConfig/detectCosmosConfig.js';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
-import { importServerPlugins } from '../shared/importServerPlugins.js';
+import { applyServerConfigPlugins } from '../shared/applyServerConfigPlugins.js';
+import { getServerPlugins } from '../shared/getServerPlugins.js';
 import { logPluginInfo } from '../shared/logPluginInfo.js';
 import { getExportPlaygroundHtml } from '../shared/playgroundHtml.js';
 import { getStaticPath } from '../shared/staticPath.js';
 import { resolve } from '../utils/resolve.js';
 
 export async function generateExport() {
-  const platformType = 'web';
   let cosmosConfig = await detectCosmosConfig();
 
   const pluginConfigs = await getPluginConfigs({
@@ -27,22 +22,17 @@ export async function generateExport() {
   });
   logPluginInfo(pluginConfigs);
 
-  const userPlugins = await importServerPlugins(
+  const serverPlugins = await getServerPlugins(
     pluginConfigs,
     cosmosConfig.rootDir
   );
-  const plugins = [...coreServerPlugins, ...userPlugins];
 
-  for (const plugin of plugins) {
-    if (plugin.config) {
-      try {
-        cosmosConfig = await plugin.config({ cosmosConfig, platformType });
-      } catch (err) {
-        console.log(`[Cosmos][plugin:${plugin.name}] Config hook failed`);
-        throw err;
-      }
-    }
-  }
+  cosmosConfig = await applyServerConfigPlugins({
+    cosmosConfig,
+    serverPlugins,
+    command: 'export',
+    platform: 'web',
+  });
 
   // Clear previous export (or other files at export path)
   const { exportPath } = cosmosConfig;
@@ -53,7 +43,7 @@ export async function generateExport() {
   // template file (in case the static assets are served from the root path)
   await copyStaticAssets(cosmosConfig);
 
-  for (const plugin of plugins) {
+  for (const plugin of serverPlugins) {
     if (!plugin.export) continue;
 
     try {
@@ -96,10 +86,7 @@ async function copyStaticAssets(cosmosConfig: CosmosConfig) {
   }
 
   const { publicUrl } = cosmosConfig;
-  const exportStaticPath = path.resolve(
-    exportPath,
-    removeLeadingSlash(publicUrl)
-  );
+  const exportStaticPath = path.join(exportPath, publicUrl);
   fs.cp(staticPath, exportStaticPath, { recursive: true });
 }
 
@@ -118,22 +105,22 @@ async function exportPlaygroundFiles(
 
   await fs.copyFile(
     resolve('react-cosmos-ui/dist/playground.bundle.js'),
-    path.resolve(exportPath, 'playground.bundle.js')
+    path.join(exportPath, 'playground.bundle.js')
   );
   await fs.copyFile(
     resolve('react-cosmos-ui/dist/playground.bundle.js.map'),
-    path.resolve(exportPath, 'playground.bundle.js.map')
+    path.join(exportPath, 'playground.bundle.js.map')
   );
   await fs.copyFile(
     getStaticPath('favicon.ico'),
-    path.resolve(exportPath, '_cosmos.ico')
+    path.join(exportPath, '_cosmos.ico')
   );
 
   const playgroundHtml = await getExportPlaygroundHtml(
     cosmosConfig,
     copiedUiPlugins
   );
-  await fs.writeFile(path.resolve(exportPath, 'index.html'), playgroundHtml);
+  await fs.writeFile(path.join(exportPath, 'index.html'), playgroundHtml);
 }
 
 async function exportUiPlugin(

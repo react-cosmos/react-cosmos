@@ -5,7 +5,6 @@ import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { register } from '..';
 import {
   getRendererCoreContext,
-  mockCore,
   mockNotifications,
   mockRendererCore,
 } from '../../../testHelpers/pluginMocks.js';
@@ -17,10 +16,9 @@ beforeEach(register);
 afterEach(resetPlugins);
 
 function registerTestPlugins() {
-  mockCore({
-    getWebRendererUrl: () => 'http://localhost:5000/_renderer.html',
+  mockRendererCore({
+    getRendererUrl: () => 'http://localhost:5000/_renderer.html',
   });
-  mockRendererCore();
 }
 
 function loadTestPlugins() {
@@ -65,7 +63,7 @@ it('shows notification when renderer iframe location changes', async () => {
     id: 'renderer-location-change',
     type: 'info',
     title: 'Renderer iframe location changed',
-    info: `Reload or select another fixture to reset your preview.`,
+    info: `Select a fixture to reset your preview.`,
   });
 });
 

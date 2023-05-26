@@ -1,16 +1,9 @@
 // NOTE: Mock files need to imported before modules that use the mocked APIs
 import { mockConsole, unmockCliArgs } from 'react-cosmos/jest.js';
-import '../../testHelpers/mockEsmClientPath.js';
-import '../../testHelpers/mockEsmLoaderPath.js';
-import '../../testHelpers/mockEsmRequire.js';
-import '../../testHelpers/mockEsmResolve.js';
 
-import {
-  createCosmosConfig,
-  getCwdPath,
-  RENDERER_FILENAME,
-} from 'react-cosmos';
+import { createCosmosConfig, getCwdPath } from 'react-cosmos';
 import webpack from 'webpack';
+import { RENDERER_FILENAME } from '../constants.js';
 import { getExportWebpackConfig } from '../getExportWebpackConfig.js';
 import { HtmlWebpackPlugin } from '../htmlPlugin.js';
 
@@ -55,7 +48,7 @@ it('create output', async () => {
     expect.objectContaining({
       filename: '[name].js',
       path: getCwdPath('cosmos-export/'),
-      publicPath: '/',
+      publicPath: '',
     })
   );
 });

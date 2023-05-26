@@ -1,8 +1,12 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { RendererConfig } from 'react-cosmos-core';
+import {
+  CosmosCommand,
+  RendererConfig,
+  pickRendererUrl,
+} from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
-import { CosmosServerPlugin, PlatformType } from '../cosmosPlugin/types.js';
+import { CosmosPlatform, CosmosServerPlugin } from '../cosmosPlugin/types.js';
 import { getPlaygroundUrl } from '../shared/playgroundUrl.js';
 import { startFixtureWatcher } from '../userModules/fixtureWatcher.js';
 import { generateUserImports } from '../userModules/generateUserImports.js';
@@ -11,28 +15,37 @@ import { moduleExists } from '../utils/fs.js';
 export const exposeImportsServerPlugin: CosmosServerPlugin = {
   name: 'exposeImports',
 
-  async devServer({ cosmosConfig, platformType }) {
-    if (!shouldExposeImports(platformType, cosmosConfig)) return;
+  async devServer({ cosmosConfig, platform }) {
+    if (!shouldExposeImports(platform, cosmosConfig)) return;
 
-    await generateImportsFile(cosmosConfig);
+    await generateImportsFile(cosmosConfig, 'dev');
     const watcher = await startFixtureWatcher(cosmosConfig, 'all', () => {
-      generateImportsFile(cosmosConfig);
+      generateImportsFile(cosmosConfig, 'dev');
     });
 
     return () => {
       watcher.close();
     };
   },
+
+  async export({ cosmosConfig }) {
+    if (shouldExposeImports('web', cosmosConfig)) {
+      await generateImportsFile(cosmosConfig, 'export');
+    }
+  },
 };
 
 function shouldExposeImports(
-  platformType: PlatformType,
+  platform: CosmosPlatform,
   cosmosConfig: CosmosConfig
 ) {
-  return platformType === 'native' || Boolean(cosmosConfig.exposeImports);
+  return platform === 'native' || Boolean(cosmosConfig.exposeImports);
 }
 
-async function generateImportsFile(cosmosConfig: CosmosConfig) {
+async function generateImportsFile(
+  cosmosConfig: CosmosConfig,
+  command: CosmosCommand
+) {
   const { exposeImports } = cosmosConfig;
 
   const filePath =
@@ -42,10 +55,11 @@ async function generateImportsFile(cosmosConfig: CosmosConfig) {
 
   const typeScript = /\.tsx?$/.test(filePath);
 
-  const rendererConfig: RendererConfig = {
+  const rendererConfig = {
     playgroundUrl: getPlaygroundUrl(cosmosConfig),
+    rendererUrl: pickRendererUrl(cosmosConfig.rendererUrl, command),
   };
-  const fileSource = generateUserImports({
+  const fileSource = generateUserImports<RendererConfig>({
     cosmosConfig,
     rendererConfig,
     relativeToDir: path.dirname(filePath),
@@ -59,5 +73,5 @@ async function generateImportsFile(cosmosConfig: CosmosConfig) {
 
 function getDefaultFilePath(rootDir: string) {
   const ext = moduleExists('typescript') ? 'ts' : 'js';
-  return path.resolve(rootDir, `cosmos.imports.${ext}`);
+  return path.join(rootDir, `cosmos.imports.${ext}`);
 }
