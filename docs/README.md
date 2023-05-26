@@ -498,16 +498,16 @@ Aside from the fixture information showcased above, each fixture object returned
 
 `getFixtures()` is tricky to work with.
 
-To create URLs for each fixture, fixture modules are imported to retrieve the fixture names of _multi fixtures_. Fixture modules are non-standard (JSX or TypeScript files) and often expect a DOM environment. Thus calling `getFixtures()` in a Node environment isn't straightforward, and Jest with "jsdom" [testEnvironment](https://jestjs.io/docs/configuration#testenvironment-string) is the de facto way of using this API.
+To create URLs for each fixture, fixture modules are imported to retrieve the fixture names of _multi fixtures_. Fixture modules are non-standard (JSX or TypeScript files) and often expect a DOM environment. Thus calling `getFixtures()` in a Node environment isn't straightforward and Jest with `"jsdom"` [testEnvironment](https://jestjs.io/docs/configuration#testenvironment-string) is the de facto way of using this API.
 
 Jest brings its own array of problems due to its limitations:
 
 1. Jest ESM support is [unfinished](https://github.com/jestjs/jest/issues/9430).
 2. There's no easy way to [create test cases asynchronously](https://github.com/jestjs/jest/issues/2235#issuecomment-584387443). You can [do it with `globalSetup`](https://github.com/jestjs/jest/issues/2235#issuecomment-584387443), but globalSetup _isn't_ transformed and we're back to square one.
 
-For the reasons above `getFixtures()` is a synchronous API, which also means it uses CommonJS `require()` instead of dynamic `async import()` to import user modules.
+For the reasons above `getFixtures()` is a synchronous API. It uses CommonJS `require()` to import user modules.
 
-Another limitation is the fact that server plugins aren't ran by `getFixtures()`. The lack of ESM support in Jest is the reason. The `config` hooks of server plugins (eg. Webpack or Vite plugin) usually populate the `rendererUrl` option in the user's Cosmos config. But with `getFixtures()` we pass the `rendererUrl` as a separate option after the Cosmos config.
+Another limitation is the fact that `getFixtures()` doesn't ran server plugins. The lack of ESM support in Jest is the reason. The `config` hooks of server plugins usually populate the `rendererUrl` option in the user's Cosmos config. The Vite and Webpack plugins do this. With `getFixtures()`, however, we pass the `rendererUrl` as a separate option after the Cosmos config.
 
 ## Create React App
 
