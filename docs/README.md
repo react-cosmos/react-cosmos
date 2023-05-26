@@ -473,7 +473,9 @@ Get all your fixtures programatically. A ton of information is provided for each
 ```js
 import { getFixtures } from 'react-cosmos';
 
-const fixtures = await getFixtures(cosmosConfig);
+const fixtures = getFixtures(cosmosConfig, {
+  rendererUrl: 'http://localhost:5000/renderer.html',
+});
 
 console.log(fixtures);
 // [
@@ -484,15 +486,28 @@ console.log(fixtures);
 //     "parents": ["pages", "Error"]
 //     "playgroundUrl": "http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2Fpages%2FError%2F__fixtures__%2Fnot-found.js%22%2C%22name%22%3Anull%7D",
 //     "relativeFilePath": "components/pages/Error/__fixtures__/not-found.js",
-//     "rendererUrl": "http://localhost:5000/static/renderer.html?fixtureId=%7B%22path%22%3A%22components%2Fpages%2FError%2F__fixtures__%2Fnot-found.js%22%2C%22name%22%3Anull%7D",
+//     "rendererUrl": "http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22components%2Fpages%2FError%2F__fixtures__%2Fnot-found.js%22%2C%22name%22%3Anull%7D",
 //     "treePath": ["pages", "Error", "not-found"]
 //   },
 //   ...
 ```
 
-> See a more complete output example [here](../examples/webpack/tests/fixtures.test.ts).
-
 Aside from the fixture information showcased above, each fixture object returned also contains a `getElement` function property, which takes no arguments. `getElement` allows you to render fixtures in your own time, in environments like jsdom. Just as in the React Cosmos UI, the fixture element will include any decorators you've defined for your fixtures. `getElement` can be used for Jest snapshot testing.
+
+#### Caveats
+
+`getFixtures()` is tricky to work with.
+
+To create URLs for each fixture, fixture modules are imported to retrieve the fixture names of _multi fixtures_. Fixture modules are non-standard (JSX or TypeScript files) and often expect a DOM environment. Thus calling `getFixtures()` in a Node environment isn't straightforward, and Jest with "jsdom" [testEnvironment](https://jestjs.io/docs/configuration#testenvironment-string) is the de facto way of using this API.
+
+Jest brings its own array of problems due to its limitations:
+
+1. Jest ESM support is [unfinished](https://github.com/jestjs/jest/issues/9430).
+2. There's no easy way to [create test cases asynchronously](https://github.com/jestjs/jest/issues/2235#issuecomment-584387443). You can [do it with `globalSetup`](https://github.com/jestjs/jest/issues/2235#issuecomment-584387443), but globalSetup _isn't_ transformed and we're back to square one.
+
+For the reasons above `getFixtures()` is a synchronous API, which also means it uses CommonJS `require()` instead of dynamic `async import()` to import user modules.
+
+Another limitation is the fact that server plugins aren't ran by `getFixtures()`. The lack of ESM support in Jest is the reason. The `config` hooks of server plugins (eg. Webpack or Vite plugin) usually populate the `rendererUrl` option in the user's Cosmos config. But with `getFixtures()` we pass the `rendererUrl` as a separate option after the Cosmos config.
 
 ## Create React App
 
