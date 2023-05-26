@@ -40,14 +40,14 @@ module.exports = {
     // Mock ESM code that can't run in Jest until ESM support is ready
     // https://github.com/jestjs/jest/issues/9430
     'requireModule.js$':
-      '<rootDir>/packages/react-cosmos/src/cjsMocks/requireModule.js',
-    'resolve.js$': '<rootDir>/packages/react-cosmos/src/cjsMocks/resolve.js',
+      '<rootDir>/packages/react-cosmos/src/esmMocks/requireModule.js',
+    'resolve.js$': '<rootDir>/packages/react-cosmos/src/esmMocks/resolve.js',
     'staticPath.js$':
-      '<rootDir>/packages/react-cosmos/src/cjsMocks/staticPath.js',
+      '<rootDir>/packages/react-cosmos/src/esmMocks/staticPath.js',
     'resolveWebpackClientPath.js$':
-      '<rootDir>/packages/react-cosmos-plugin-webpack/src/server/cjsMocks/resolveWebpackClientPath.js',
+      '<rootDir>/packages/react-cosmos-plugin-webpack/src/server/esmMocks/resolveWebpackClientPath.js',
     'resolveWebpackLoaderPath.js$':
-      '<rootDir>/packages/react-cosmos-plugin-webpack/src/server/cjsMocks/resolveWebpackLoaderPath.js',
+      '<rootDir>/packages/react-cosmos-plugin-webpack/src/server/esmMocks/resolveWebpackLoaderPath.js',
   },
   // https://kulshekhar.github.io/ts-jest/docs/getting-started/options/tsconfig
   transform: {
