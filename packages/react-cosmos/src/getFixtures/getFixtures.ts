@@ -4,7 +4,6 @@ import { ReactElement } from 'react';
 import {
   buildPlaygroundQueryString,
   ByPath,
-  CosmosCommand,
   createFixtureTree,
   createRendererUrl,
   FixtureId,
@@ -12,17 +11,12 @@ import {
   getFixtureFromExport,
   getFixtureListFromExports,
   getSortedDecoratorsForFixturePath,
-  pickRendererUrl,
   ReactDecorator,
   ReactFixture,
   ReactFixtureExport,
 } from 'react-cosmos-core';
 import { createFixtureNode, decorateFixture } from 'react-cosmos-renderer';
 import { CosmosConfig } from '../cosmosConfig/types.js';
-import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
-import { CosmosPlatform } from '../cosmosPlugin/types.js';
-import { applyServerConfigPlugins } from '../shared/applyServerConfigPlugins.js';
-import { getServerPlugins } from '../shared/getServerPlugins.js';
 import { getPlaygroundUrl } from '../shared/playgroundUrl.js';
 import { importUserModules } from './importUserModules.js';
 
@@ -39,34 +33,12 @@ export type FixtureApi = {
 };
 
 type Options = {
-  command?: CosmosCommand;
-  platform?: CosmosPlatform;
+  rendererUrl?: string;
 };
-export async function getFixtures(
-  cosmosConfig: CosmosConfig,
-  { command = 'dev', platform = 'web' }: Options = {}
-) {
-  const pluginConfigs = await getPluginConfigs({
-    cosmosConfig,
-    relativePaths: false,
-  });
-
-  const serverPlugins = await getServerPlugins(
-    pluginConfigs,
-    cosmosConfig.rootDir
-  );
-
-  cosmosConfig = await applyServerConfigPlugins({
-    cosmosConfig,
-    serverPlugins,
-    command,
-    platform,
-  });
-
-  const { fixtures, decorators } = await importUserModules(cosmosConfig);
+export function getFixtures(cosmosConfig: CosmosConfig, options: Options = {}) {
+  const { fixtures, decorators } = importUserModules(cosmosConfig);
   const fixtureExports = mapValues(fixtures, f => f.default);
   const decoratorExports = mapValues(decorators, f => f.default);
-  const rendererUrl = pickRendererUrl(cosmosConfig.rendererUrl, command);
   const result: FixtureApi[] = [];
 
   getFlatFixtureTree(cosmosConfig, fixtureExports).forEach(
@@ -93,7 +65,9 @@ export async function getFixtures(
         parents,
         playgroundUrl: getPlaygroundFixtureUrl(cosmosConfig, fixtureId),
         relativeFilePath: fixtureId.path,
-        rendererUrl: rendererUrl && createRendererUrl(rendererUrl, fixtureId),
+        rendererUrl: options.rendererUrl
+          ? createRendererUrl(options.rendererUrl, fixtureId)
+          : null,
         treePath,
       });
     }

@@ -13,12 +13,12 @@ type UserModules = {
   decorators: ByPath<ReactDecoratorModule>;
 };
 
-export async function importUserModules({
+export function importUserModules({
   rootDir,
   fixturesDir,
   fixtureFileSuffix,
   ignore,
-}: CosmosConfig): Promise<UserModules> {
+}: CosmosConfig): UserModules {
   const { fixturePaths, decoratorPaths } = findUserModulePaths({
     rootDir,
     fixturesDir,
@@ -26,21 +26,19 @@ export async function importUserModules({
     ignore,
   });
   return {
-    fixtures: await importModules(fixturePaths, rootDir),
-    decorators: await importModules(decoratorPaths, rootDir),
+    fixtures: importModules(fixturePaths, rootDir),
+    decorators: importModules(decoratorPaths, rootDir),
   };
 }
 
-async function importModules<T>(paths: string[], rootDir: string) {
-  const modules = await Promise.all(
-    paths.map(async p => {
-      // Converting to forward slashes on Windows is important because the
-      // slashes are used for generating a sorted list of fixtures and
-      // decorators.
-      const relPath = slash(path.relative(rootDir, p));
-      return { relPath, module: await import(p) };
-    })
-  );
+function importModules<T>(paths: string[], rootDir: string) {
+  const modules = paths.map(p => {
+    // Converting to forward slashes on Windows is important because the
+    // slashes are used for generating a sorted list of fixtures and
+    // decorators.
+    const relPath = slash(path.relative(rootDir, p));
+    return { relPath, module: require(p) };
+  });
 
   return modules.reduce(
     (acc: Record<string, T>, { relPath, module }) => ({

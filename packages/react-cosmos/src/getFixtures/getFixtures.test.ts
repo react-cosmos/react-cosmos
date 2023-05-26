@@ -33,7 +33,10 @@ beforeEach(() => {
 
 it('renders fixture elements', async () => {
   const cosmosConfig = createCosmosConfig(rootDir);
-  const fixures = await getFixtures(cosmosConfig);
+
+  const fixures = getFixtures(cosmosConfig, {
+    rendererUrl: 'http://localhost:5000/renderer.html',
+  });
 
   function testFixtureElement(relPath: string, name: string | null = null) {
     const match = fixures.find(
@@ -49,7 +52,11 @@ it('renders fixture elements', async () => {
 
 it('returns fixture info', async () => {
   const cosmosConfig = createCosmosConfig(rootDir);
-  const fixtures = await getFixtures(cosmosConfig);
+
+  const fixtures = getFixtures(cosmosConfig, {
+    rendererUrl: 'http://localhost:5000/renderer.html',
+  });
+
   expect(fixtures).toEqual([
     {
       absoluteFilePath: path.join(rootDir, 'src/__fixtures__/Controls.tsx'),
