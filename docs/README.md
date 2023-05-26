@@ -502,8 +502,8 @@ To create URLs for each fixture, fixture modules are imported in order to retrie
 
 Jest brings its own array of problems due to its limitations:
 
-1. [ESM support is unfinished](https://github.com/jestjs/jest/issues/9430).
-2. [You can't create test cases asynchronously](https://github.com/jestjs/jest/issues/2235#issuecomment-584387443). Using an async `globalSetup` [could work](https://github.com/jestjs/jest/issues/2235#issuecomment-584387443), but it can't import ESM and we're back to square one.
+1. [ESM support is unfinished.](https://github.com/jestjs/jest/issues/9430)
+2. [You can't create test cases asynchronously.](https://github.com/jestjs/jest/issues/2235#issuecomment-584387443) Using an async `globalSetup` [could work](https://github.com/jestjs/jest/issues/2235#issuecomment-584387443), but it can't import ESM and we're back to square one.
 
 For the reasons above `getFixtures()` is a synchronous API. It uses CommonJS `require()` to import user modules.
 
