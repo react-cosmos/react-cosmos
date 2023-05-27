@@ -48,6 +48,8 @@ Probably the most common scenario. Most of us end up with a hairy Webpack config
 }
 ```
 
+> **Note**: Cosmos picks up `webpack.config.js` automatically. The above config is only needed if the Webpack config has a different filename or it's not in the project root.
+
 > You can also point to a module inside a dependency, like in the [Create React App](create-react-app.md) example.
 
 ### Webpack config override
