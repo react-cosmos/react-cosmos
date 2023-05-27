@@ -148,47 +148,6 @@ You've taken the first step towards designing reusable components. You're ready 
 
 > Something wrong? Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) (make sure to include details) and to [join us on Discord](https://discord.gg/3X95VgfnW5).
 
-## Config
-
-The React Cosmos config is a **JSON** file, so it can only contain serializable values. This design decision is meant to discourage complex configuration, make it easy to embed config options into the React Cosmos UI, and enable visual config editing in the future.
-
-By default, Cosmos reads `cosmos.config.json` from your root directory. You can pass a `--config` CLI arg for a custom config path.
-
-### Available options
-
-The best way to learn about the available options in the Cosmos config is to use [config.schema.json](../packages/react-cosmos/config.schema.json).
-
-The schema is human readable, but you can also enhance your config with autocomplete in code editors like VS Code.
-
-```jsonc
-{
-  "$schema": "http://json.schemastore.org/cosmos-config"
-  // your options...
-}
-```
-
-And if you use VS Code you can map the Cosmos config schema globally by [extending your user settings](https://code.visualstudio.com/docs/languages/json#_mapping-in-the-user-settings).
-
-```json
-"json.schemas": [
-  {
-    "fileMatch": ["cosmos.config.json"],
-    "url": "http://json.schemastore.org/cosmos-config"
-  }
-]
-```
-
-Alternatively, you can reference the local Cosmos config schema in your workspace configuration.
-
-```json
-"json.schemas": [
-  {
-    "fileMatch": ["cosmos.config.json"],
-    "url": "./node_modules/react-cosmos/config.schema.json"
-  }
-]
-```
-
 ## Compilation
 
 How you compile your code is 100% your business. React Cosmos jumps through hoops to compile your code using your existing build pipeline, but it doesn't install any additional dependencies that your setup requires to compile your code.
