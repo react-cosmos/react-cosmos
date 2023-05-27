@@ -2,108 +2,25 @@
 
 > The current docs are for React Cosmos 6. Check out the [migration guide](getting-started/migration.md) to upgrade from v5.
 
-- Setup: [Getting started](#getting-started) · [Config](#config) · [Compilation](#compilation) · [Webpack](#webpack)
-- Usage: [Fixtures](#fixtures) · [Decorators](#decorators) · [Control panel](#control-panel) · [Static export](#static-export) · [React Native](reactNative.md) · [Server-side APIs](#server-side-apis)
-- FAQ: [Create React App](#create-react-app) · [Next.js](next.md) · [Troubleshooting](#troubleshooting)
+Getting started
+
+- [Vite](getting-started/vite.md)
+- [Webpack](getting-started/webpack.md)
+- [React Native](getting-started/react-native.md)
+- [Next.js](getting-started/next.md)
+- [Create React App](getting-started/create-react-app.md)
+- [Custom bundler setup](getting-started/custom-bundler.md)
+- [Troubleshooting](getting-started/troubleshooting.md)
+
+Usage
+
+- [Fixtures](usage/fixtures.md)
+- [Decorators](usage/decorators.md)
+- [Configuration](usage/configuration.md)
+- [Static export](usage/static-export.md)
+- [Node.js API](usage/node-api.md)
 
 ## Getting started
-
-> This is a web guide. See [this guide](reactNative.md) for React Native.
-
-1\. **Install React Cosmos**
-
-```bash
-npm i -D react-cosmos@next
-```
-
-Or if you’re using Yarn:
-
-```bash
-yarn add --dev react-cosmos@next
-```
-
-2\. **Set up bundler**
-
-<details>
-  <summary>Vite plugin</summary>
-
-```bash
-npm i -D react-cosmos-plugin-vite@next
-```
-
-Or if you’re using Yarn:
-
-```bash
-yarn add --dev react-cosmos-plugin-vite@next
-```
-
-Create `cosmos.config.json` and enable Vite plugin.
-
-```json
-{
-  "plugins": ["react-cosmos-plugin-vite"]
-}
-```
-
-</details>
-
-<details>
-  <summary>Webpack plugin</summary>
-
-```bash
-npm i -D react-cosmos-plugin-webpack@next
-```
-
-Or if you’re using Yarn:
-
-```bash
-yarn add --dev react-cosmos-plugin-webpack@next
-```
-
-Create `cosmos.config.json` and enable Webpack plugin.
-
-```json
-{
-  "plugins": ["react-cosmos-plugin-webpack"]
-}
-```
-
-</details>
-
-<details>
-  <summary>Next.js</summary>
-
-[Check out this guide](next.md).
-
-</details>
-
-<details>
-  <summary>Custom bundler setup</summary>
-
-[Check out this guide](customBundlerSetup.md).
-
-</details>
-
-3\. **Add package.json scripts**
-
-```diff
-"scripts": {
-+  "cosmos": "cosmos",
-+  "cosmos:export": "cosmos-export"
-}
-```
-
-4\. **Start React Cosmos**
-
-```bash
-npm run cosmos
-```
-
-Or if you’re using Yarn:
-
-```bash
-yarn cosmos
-```
 
 🚀 Open **[localhost:5000](http://localhost:5000)** in your browser.
 
@@ -138,15 +55,6 @@ The `Hello` fixture will show up in your React Cosmos UI and will render when yo
 **Congratulations 😎**
 
 You've taken the first step towards designing reusable components. You're ready to prototype, test and interate on components in isolation.
-
-### Next steps...
-
-- [Create a decorator](#decorators).
-- [Check out Vite and Webpack examples](../examples).
-- [Configure Cosmos config](#config).
-- [Configure Webpack config](#webpack).
-
-> Something wrong? Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) (make sure to include details) and to [join us on Discord](https://discord.gg/3X95VgfnW5).
 
 ---
 

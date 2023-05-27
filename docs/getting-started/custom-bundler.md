@@ -2,16 +2,10 @@
 
 React Cosmos is made out of three main parts: The Server, the Renderer and the UI. Setting up a custom bundler setup consists of serving the Renderer yourself, without having to do anything special to the Server or the UI. But don't worry, Cosmos provides easy-to-use Renderer primitives that make it easy to create a custom setup.
 
-First, install React Cosmos including the DOM package.
+First, install React Cosmos including the DOM package:
 
 ```bash
 npm i -D react-cosmos@next react-cosmos-dom@next
-```
-
-Or if you’re using Yarn:
-
-```bash
-yarn add --dev react-cosmos@next react-cosmos-dom@next
 ```
 
 Next, choose a port for the renderer other than the main Cosmos port, say `5050`. Set the renderer URL with the chosen port in your `cosmos.config.json`.

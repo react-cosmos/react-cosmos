@@ -10,12 +10,6 @@ This guide applies to React Native in general, including (but not limited to) Ex
 npm i -D react-cosmos@next react-cosmos-native@next
 ```
 
-Or if you’re using Yarn:
-
-```bash
-yarn add --dev react-cosmos@next react-cosmos-native@next
-```
-
 2\. **Create your first fixture**
 
 Choose a simple component to get started.
@@ -71,12 +65,6 @@ export default <Hello greeting="Aloha" name="Alexa" />;
 
 ```bash
 npm run cosmos
-```
-
-Or if you’re using Yarn:
-
-```bash
-yarn cosmos
 ```
 
 🚀 Open **[localhost:5000](http://localhost:5000)** in your browser.

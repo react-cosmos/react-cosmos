@@ -10,12 +10,6 @@
 npm i -D react-cosmos@next react-cosmos-plugin-webpack@next
 ```
 
-Or if you’re using Yarn:
-
-```
-yarn add --dev react-cosmos@next react-cosmos-plugin-webpack@next
-```
-
 Install `react-cosmos-plugin-vite` instead of `react-cosmos-plugin-webpack` to use React Cosmos with Vite.
 
 > Replace `next` with `canary` if you want to get the bleeding edge versions (latest commit from the main branch).
