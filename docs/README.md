@@ -148,12 +148,6 @@ You've taken the first step towards designing reusable components. You're ready 
 
 > Something wrong? Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) (make sure to include details) and to [join us on Discord](https://discord.gg/3X95VgfnW5).
 
-## Static export
-
-Run `cosmos-export` and get a nice component library that you can deploy to any static hosting service. The exported version won't have all the Cosmos features available in development (like opening the selected fixture in your code editor), but allows anybody with access to the static export URL to browse fixtures and play with component inputs.
-
-> Use [http-server](https://github.com/indexzero/http-server) or any static file server to load the export locally.
-
 ## Troubleshooting
 
 > **Warning**: Most React Cosmos issues are related to missing build dependencies. Please see [Compilation](#compilation).

@@ -14,7 +14,7 @@ Create `cosmos.config.json` and enable the Webpack plugin:
 
 Add `cosmos` script to package.json:
 
-```diff
+```json
 "scripts": {
   "cosmos": "cosmos"
 }

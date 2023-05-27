@@ -21,7 +21,7 @@ This is a `cosmos.config.json` example for Create React App:
 
 Add `cosmos` script to package.json:
 
-```diff
+```json
 "scripts": {
   "cosmos": "FAST_REFRESH=false cosmos"
 }
