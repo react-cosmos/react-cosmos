@@ -91,7 +91,7 @@ Jest brings an array of problems due to its limitations:
 
 For the reasons above `getFixtures()` is a synchronous API. It uses CommonJS `require()` to import user modules.
 
-Another limitation due to the lack of ESM support in Jest is the fact that `getFixtures()` doesn't run server plugins. The config hooks of server plugins usually auto-set the `rendererUrl` option in the user's Cosmos config. The Vite and Webpack plugins do this. With `getFixtures()`, however, we pass the renderer URL as a separate option after the Cosmos config.
+Another limitation due to the lack of ESM support in Jest is the fact that `getFixtures()` doesn't incorporate Cosmos server plugins. The config hooks of server plugins usually auto-set the `rendererUrl` option in the user's Cosmos config. The Vite and Webpack plugins do this. With `getFixtures()`, however, we pass the renderer URL as a separate option after the Cosmos config.
 
 ---
 
