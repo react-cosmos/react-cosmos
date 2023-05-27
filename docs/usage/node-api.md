@@ -84,7 +84,7 @@ The `getFixtures()` API is tricky to work with.
 
 To create renderer URLs for each fixture, all fixture modules are imported in order to retrieve the fixture names of _multi fixtures_. Fixture modules are non-standard (JSX or TypeScript) and often expect a DOM environment. Thus calling `getFixtures()` in a Node.js environment isn't straightforward and Jest with `"jsdom"` [testEnvironment](https://jestjs.io/docs/configuration#testenvironment-string) is the de facto way of using this API.
 
-Jest brings its own array of problems due to its limitations:
+Jest brings an array of problems due to its limitations:
 
 1. [ESM support is unfinished.](https://github.com/jestjs/jest/issues/9430)
 2. [You can't create test cases asynchronously.](https://github.com/jestjs/jest/issues/2235#issuecomment-584387443) Using an async `globalSetup` [could work](https://github.com/jestjs/jest/issues/2235#issuecomment-584387443), but it can't import ESM and we're back to square one.
