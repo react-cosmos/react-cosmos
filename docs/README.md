@@ -265,28 +265,6 @@ export default () => {
 
 > Heads up: `useValue` and `useSelect` (and Cosmos in general) work great with TypeScript.
 
-## UI plugins
-
-The React Cosmos UI is made up 100% from plugins. Documenting the plugin API is in progress. In the meantime you can use and customize built-in plugins.
-
-### Custom [responsive viewports](https://twitter.com/ReactCosmos/status/1158701342208208897)
-
-`responsivePreview` is a plugin included by default, and you can customize it through the Cosmos config.
-
-```json
-{
-  "ui": {
-    "responsivePreview": {
-      "devices": [
-        { "label": "iPhone SE", "width": 375, "height": 667 },
-        { "label": "iPad mini", "width": 744, "height": 1133 },
-        { "label": "1080p", "width": 1920, "height": 1080 }
-      ]
-    }
-  }
-}
-```
-
 ## Static export
 
 Run `cosmos-export` and get a nice component library that you can deploy to any static hosting service. The exported version won't have all the Cosmos features available in development (like opening the selected fixture in your code editor), but allows anybody with access to the static export URL to browse fixtures and play with component inputs.

@@ -39,6 +39,24 @@ Alternatively, you can reference the local Cosmos config schema in your workspac
 ]
 ```
 
+### Custom viewports
+
+`responsivePreview` is a plugin included by default and you can customize it through the Cosmos config.
+
+```json
+{
+  "ui": {
+    "responsivePreview": {
+      "devices": [
+        { "label": "iPhone SE", "width": 375, "height": 667 },
+        { "label": "iPad mini", "width": 744, "height": 1133 },
+        { "label": "1080p", "width": 1920, "height": 1080 }
+      ]
+    }
+  }
+}
+```
+
 ---
 
 [Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.
