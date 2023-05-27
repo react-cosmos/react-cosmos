@@ -264,23 +264,6 @@ Cosmos overwrites `output.filename` in the Webpack config to `[name].js` by defa
 }
 ```
 
-## Decorators
-
-Wrapping components inside fixtures is easy, but can become repetitive. _Decorators_ can be used to apply one or more component wrappers to a group of fixtures automatically.
-
-A `cosmos.decorator` file looks like this:
-
-```jsx
-// cosmos.decorator.js
-export default ({ children }) => <Provider store={store}>{children}</Provider>;
-```
-
-> A decorator only applies to fixture files contained in the decorator's directory. Decorators can be composed, in the order of their position in the file system hierarchy (from outer to inner).
-
-### Redux state mock
-
-Check out [react-cosmos-redux](https://github.com/skidding/react-cosmos-redux) to see what an advanced React Cosmos decorator looks like.
-
 ## Declarative mocks
 
 Coming up with dummy prop values is all that's required to create fixtures for many components. In other cases, however, components have _special needs_.
