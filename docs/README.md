@@ -1,4 +1,4 @@
-## Table of contents
+# React Cosmos documentation
 
 > The current docs are for React Cosmos 6. Check out the [migration guide](getting-started/migration.md) to upgrade from v5.
 
