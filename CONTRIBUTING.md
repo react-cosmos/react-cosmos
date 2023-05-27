@@ -2,7 +2,7 @@
 
 So you want to know more about React Cosmos... _Sweet!_
 
-> You're probably nice and don't need to hear this, but please follow our [Code of Conduct](CODE_OF_CONDUCT.md) and respect the people you interact with.
+> You're probably nice and don't need to hear this but please follow our [Code of Conduct](CODE_OF_CONDUCT.md) and respect the people you interact with.
 
 Jump to:
 
