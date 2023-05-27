@@ -30,9 +30,11 @@ npm run cosmos
 
 Cosmos generates a default Webpack config if a custom one isn't provided.
 
-> **Warning**: React Cosmos compiles your code using the dependencies already installed in your project. Install all the Webpack loaders you need yourself. Cosmos will auto include common loaders like `babal-loader`, `ts-loader`, `css-loader`, etc. in the default Webpack config. Use a [custom Webpack config](#custom-webpack-config) for more advanced use cases. You may also need to create a `.babelrc` in your project root.
+> **Warning**: Cosmos compiles your code using dependencies you already installed in your project. Cosmos will auto include common loaders like `babal-loader`, `ts-loader`, `css-loader`, etc. in the default Webpack config. Use a [custom Webpack config](#custom-webpack-config) for more advanced use cases.
 
-> **Wearning**: Make sure `html-webpack-plugin` is installed in your project.
+> **Warning**: Make sure `html-webpack-plugin` is installed in your project.
+
+> **Note**: You may also need to create a `.babelrc` in your project root.
 
 ### Custom Webpack config
 
