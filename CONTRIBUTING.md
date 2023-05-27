@@ -1,8 +1,8 @@
-## Hey there!
+## Hi there!
 
-So you want to know more about React Cosmos... _Sweet!_
+So you want to know more about React Cosmos... _Great._
 
-> You're probably a nice person and don't need to hear this. At the same time, however, you _could_ be one of the assholes roaming the world. So please follow our [Code of Conduct](CODE_OF_CONDUCT.md) and respect the people you interact with.
+> You're probably a nice person and don't need to hear this, but please follow our [Code of Conduct](CODE_OF_CONDUCT.md) and respect the people you interact with.
 
 Jump to:
 
