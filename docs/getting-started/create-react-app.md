@@ -49,7 +49,7 @@ module.exports = overrides.webpack(config, process.env.NODE_ENV);
 
 [CRACO](https://github.com/gsoft-inc/craco) is an alternative to react-app-rewired for overriding CRA's internal Webpack config. [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) recommends using CRACO to override CRA's PostCSS settings, which is why this guide targets CRACO and Tailwind CSS together.
 
-Create `webpack.config.js` in your root folder (if you haven't already) with the following contents:
+- Create `webpack.config.js` in your root folder (if you haven't already) with the following contents:
 
 ```js
 // webpack.config.js
@@ -60,7 +60,7 @@ const webpackConfig = createWebpackDevConfig(cracoConfig);
 module.exports = webpackConfig;
 ```
 
-If you're using Tailwind CSS or another similar CSS library, add your global CSS to `globalImports` in the Cosmos config. Create `cosmos.config.json` in your root folder (if you haven't already) with the following contents:
+- If you're using Tailwind CSS or another similar CSS library, add your global CSS to `globalImports` in the Cosmos config. Create `cosmos.config.json` in your root folder (if you haven't already) with the following contents:
 
 ```json
 {
