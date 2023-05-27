@@ -4,17 +4,17 @@
 
 ## Getting started
 
-Bundler integrations
+### Bundler integrations
 
 - [Vite](getting-started/vite.md)
 - [Webpack](getting-started/webpack.md)
 
-Framework integrations
+### Framework integrations
 
 - [Next.js](getting-started/next.md)
 - [Create React App](getting-started/create-react-app.md)
 
-Custom integrations
+### Custom integrations
 
 - [React Native](getting-started/react-native.md)
 - [Custom bundler setup](getting-started/custom-bundler.md)
