@@ -76,6 +76,7 @@ import { useValue } from 'react-cosmos/client';
 
 export default () => {
   const [count, setCount] = useValue('count', { defaultValue: 0 });
+
   return <CounterButton count={count} increment={() => setCount(count + 1)} />;
 };
 ```
