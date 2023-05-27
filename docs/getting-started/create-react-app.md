@@ -19,13 +19,18 @@ This is a `cosmos.config.json` example for Create React App:
 
 > **Note**: Fixture files must be placed in the `src` directory when using Create React App.
 
-Disable Fast Refresh in your `cosmos` commmand.
+Add `cosmos` commmand:
 
 ```diff
 "scripts": {
--  "cosmos": "cosmos",
-+  "cosmos": "FAST_REFRESH=false cosmos"
+  "cosmos": "FAST_REFRESH=false cosmos"
 }
+```
+
+Start React Cosmos:
+
+```bash
+npm run cosmos
 ```
 
 > Your mileage may vary, but using CRA's internal webpack config inside Cosmos has caused React Refresh [issues](https://github.com/react-cosmos/react-cosmos/issues/1272) in the past. You can disable it as shown above or you may also _not_ set `webpack.configPath` to `"react-scripts/config/webpack.config"` and have Cosmos run with a more minimalistic alternative to the [CRA webpack config](https://github.com/facebook/create-react-app/blob/d960b9e38c062584ff6cfb1a70e1512509a966e7/packages/react-scripts/config/webpack.config.js).
