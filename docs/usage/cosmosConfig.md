@@ -39,7 +39,7 @@ Alternatively, you can reference the local Cosmos config schema in your workspac
 ]
 ```
 
-### Custom viewports
+## Custom viewports
 
 `responsivePreview` is a plugin included by default and you can customize it through the Cosmos config.
 
