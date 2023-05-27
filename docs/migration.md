@@ -26,9 +26,6 @@ This major version accomplishes the following:
 - Webpack plugin extracted from core packages.
 - New Vite plugin.
 - In progress: Official APIs for both bundler and UI plugins.
-- Other project improvements mentioned in [Roadmap](https://github.com/react-cosmos/react-cosmos/blob/main/docs/roadmap/README.md).
-
-> The packages are published as alpha versions to allow for changes to the plugin APIs as feedback rolls in. That said the core functionality should work as reliably as before if not more.
 
 ## Breaking changes
 
@@ -70,7 +67,7 @@ There might be some other subtle breaking changes, especially if you're implemen
 
 A rough outline for this release:
 
-1. Get the alpha in the user's hands, make sure everything webpack-related works well with the new plugin.
+1. Get the beta in the user's hands, make sure everything webpack-related works well with the new plugin.
 1. Close long-standing issues that were already addressed in this version (eg. PnP support).
 1. Get feedback and add customization to the Vite plugin.
 1. Document, get feedback and and stabilize the plugin APIs.
