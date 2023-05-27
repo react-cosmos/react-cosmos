@@ -2,7 +2,7 @@
 
 > The current docs are for React Cosmos 6. Check out the [migration guide](getting-started/migration.md) to upgrade from v5.
 
-Getting started
+## Getting started
 
 - [Vite](getting-started/vite.md)
 - [Webpack](getting-started/webpack.md)
@@ -12,7 +12,7 @@ Getting started
 - [Custom bundler setup](getting-started/custom-bundler.md)
 - [Troubleshooting](getting-started/troubleshooting.md)
 
-Usage
+## Usage
 
 - [Fixtures](usage/fixtures.md)
 - [Decorators](usage/decorators.md)
@@ -20,7 +20,7 @@ Usage
 - [Static export](usage/static-export.md)
 - [Node.js API](usage/node-api.md)
 
-## Getting started
+---
 
 🚀 Open **[localhost:5000](http://localhost:5000)** in your browser.
 
