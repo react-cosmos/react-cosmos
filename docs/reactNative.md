@@ -20,7 +20,6 @@ yarn add --dev react-cosmos@next react-cosmos-native@next
 
 Choose a simple component to get started.
 
-<!-- prettier-ignore -->
 ```jsx
 // Hello.js
 import React from 'react';
