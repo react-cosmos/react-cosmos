@@ -34,7 +34,7 @@ Cosmos generates a default Webpack config if a custom one isn't provided.
 
 > **Warning**: Make sure `html-webpack-plugin` is installed in your project.
 
-> **Note**: You may also need to create a `.babelrc` in your project root.
+> **Warning**: You may also need to create a `.babelrc` in your project root.
 
 ### Custom Webpack config
 
@@ -48,7 +48,7 @@ Probably the most common scenario. Most of us end up with a hairy Webpack config
 }
 ```
 
-> You can also point to a module inside a dependency, like in the [Create React App](#create-react-app) example.
+> You can also point to a module inside a dependency, like in the [Create React App](create-react-app.md) example.
 
 ### Webpack config override
 
