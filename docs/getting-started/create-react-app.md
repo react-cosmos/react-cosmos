@@ -19,7 +19,7 @@ This is a `cosmos.config.json` example for Create React App:
 
 > **Note**: Fixture files must be placed in the `src` directory when using Create React App.
 
-Add `cosmos` commmand:
+Add `cosmos` script to package.json:
 
 ```diff
 "scripts": {
