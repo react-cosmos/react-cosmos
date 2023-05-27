@@ -122,4 +122,6 @@ In the meantime we can remove the `/cosmos` page from the _out_ dir when deployi
 
 > _If you or someone you know has Next.js expertise please don't be shy and reach out. Any help here is appreciated!_
 
+---
+
 [Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.

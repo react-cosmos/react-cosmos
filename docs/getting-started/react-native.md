@@ -177,4 +177,6 @@ You can get Cosmos to [mirror your fixtures on both DOM and Native renderers](ht
 2. Set up the react-cosmos-webpack-plugin as described [here](README.md#getting-started).
 3. Start Cosmos with the `cosmos --expose-imports` command.
 
+---
+
 [Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.

@@ -82,3 +82,7 @@ Cosmos overwrites `output.filename` in the Webpack config to `[name].js` by defa
   }
 }
 ```
+
+---
+
+[Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.

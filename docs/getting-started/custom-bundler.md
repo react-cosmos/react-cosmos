@@ -38,4 +38,6 @@ That's it, really. The Cosmos Server will automatically update `cosmos.imports.j
 
 To learn how turn your setup into a Cosmos plugin check out the [Vite plugin](../packages/react-cosmos-plugin-vite).
 
+---
+
 [Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.
