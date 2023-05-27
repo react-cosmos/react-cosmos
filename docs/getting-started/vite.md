@@ -44,8 +44,10 @@ Cosmos picks up `vite.config.js` from the project root automatically. Use the `v
 
 ## Vite settings
 
-- `vite.indexPath`: Path to the index module that's added as a script in `index.html`. In most cases it is auto detected.
-- `vite.port`: Customize Vite renderer port (default is 5050).
+Vite-related settings you can optionally customize in your Cosmos config:
+
+- `vite.indexPath` — Path to the index module that's added as a script in `index.html`. In most cases it's auto detected.
+- `vite.port` — Customize Vite renderer port (default is 5050).
 
 ---
 
