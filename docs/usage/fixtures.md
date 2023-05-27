@@ -62,6 +62,43 @@ Examples:
 
 The file paths of your fixture files (relative to your project root) are used to create a tree view explorer in the React Cosmos UI.
 
+## Fixture controls
+
+A props panel is created automatically for [Node fixtures](#node-fixtures) in the Cosmos UI. This enables you to tweek component props and see the result in real time, without any configuration.
+
+You can also get a custom control panel by manually defining the UI controls in your fixtures.
+
+### `useValue`
+
+```jsx
+// CounterButton.fixture.jsx
+import { useValue } from 'react-cosmos/client';
+
+export default () => {
+  const [count, setCount] = useValue('count', { defaultValue: 0 });
+  return <CounterButton count={count} increment={() => setCount(count + 1)} />;
+};
+```
+
+### `useSelect`
+
+```jsx
+// Button.fixture.jsx
+import { useSelect } from 'react-cosmos/client';
+
+export default () => {
+  // useSelect also returns a setter as the second value in the return tuple,
+  // like the useState hook, in case you want to change the value programatically.
+  const [buttonType] = useSelect('buttonType', {
+    options: ['primary', 'secondary', 'danger'],
+  });
+
+  return <Button type={buttonType}>Press me</Button>;
+};
+```
+
+> **Note**: `useValue` and `useSelect` (and Cosmos in general) work great with TypeScript.
+
 ---
 
 [Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.

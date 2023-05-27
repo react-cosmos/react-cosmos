@@ -148,40 +148,6 @@ You've taken the first step towards designing reusable components. You're ready 
 
 > Something wrong? Don't hesitate to [create a GitHub issue](https://github.com/react-cosmos/react-cosmos/issues/new/choose) (make sure to include details) and to [join us on Discord](https://discord.gg/3X95VgfnW5).
 
-## Control panel
-
-The [props panel](https://twitter.com/ReactCosmos/status/1139838627976843264) allows you to manipulate component props visually by default. But you can also get a custom control panel by manually defining the UI controls in your fixtures.
-
-### `useValue`
-
-```jsx
-// CounterButton.fixture.jsx
-import { useValue } from 'react-cosmos/client';
-
-export default () => {
-  const [count, setCount] = useValue('count', { defaultValue: 0 });
-  return <CounterButton count={count} increment={() => setCount(count + 1)} />;
-};
-```
-
-### `useSelect`
-
-```jsx
-// Button.fixture.jsx
-import { useSelect } from 'react-cosmos/client';
-
-export default () => {
-  // useSelect also returns a setter as the second value in the return tuple,
-  // like the useState hook, in case you want to change the value programatically.
-  const [buttonType] = useSelect('buttonType', {
-    options: ['primary', 'secondary', 'danger'],
-  });
-  return <Button type={buttonType}>Press me</Button>;
-};
-```
-
-> Heads up: `useValue` and `useSelect` (and Cosmos in general) work great with TypeScript.
-
 ## Static export
 
 Run `cosmos-export` and get a nice component library that you can deploy to any static hosting service. The exported version won't have all the Cosmos features available in development (like opening the selected fixture in your code editor), but allows anybody with access to the static export URL to browse fixtures and play with component inputs.
