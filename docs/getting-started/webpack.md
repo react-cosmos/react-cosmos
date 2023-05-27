@@ -38,17 +38,17 @@ Cosmos generates a default Webpack config if a custom one isn't provided.
 
 ### Custom Webpack config
 
-Probably the most common scenario. Most of us end up with a hairy Webpack config sooner or later. Use the `webpack.configPath` setting to point to an existing Webpack config.
+Probably the most common scenario. Most of us end up with a hairy Webpack config sooner or later.
+
+Cosmos picks up `webpack.config.js` from the project root automatically. Use the `webpack.configPath` setting to provide an existing Webpack config at a different path.
 
 ```json
 {
   "webpack": {
-    "configPath": "./webpack.config.js"
+    "configPath": "./tools/webpack.config.js"
   }
 }
 ```
-
-> **Note**: Cosmos picks up `webpack.config.js` automatically. The above config is only needed if the Webpack config has a different filename or it's not in the project root.
 
 > You can also point to a module inside a dependency, like in the [Create React App](create-react-app.md) example.
 
