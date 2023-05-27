@@ -3,7 +3,7 @@
 > The current docs are for React Cosmos 6. Check out the [migration guide](getting-started/migration.md) to upgrade from v5.
 
 - Setup: [Getting started](#getting-started) · [Config](#config) · [Compilation](#compilation) · [Webpack](#webpack)
-- Usage: [Fixtures](#fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [Control panel](#control-panel) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](reactNative.md) · [Server-side APIs](#server-side-apis)
+- Usage: [Fixtures](#fixtures) · [Decorators](#decorators) · [Control panel](#control-panel) · [Static export](#static-export) · [React Native](reactNative.md) · [Server-side APIs](#server-side-apis)
 - FAQ: [Create React App](#create-react-app) · [Next.js](next.md) · [Troubleshooting](#troubleshooting)
 
 ## Getting started
@@ -222,14 +222,6 @@ Cosmos overwrites `output.filename` in the Webpack config to `[name].js` by defa
   }
 }
 ```
-
-## Declarative mocks
-
-Coming up with dummy prop values is all that's required to create fixtures for many components. In other cases, however, components have _special needs_.
-
-Some components need to be wrapped in certain _contexts_, like a Router provider. Other components fire `fetch` requests willy-nilly. All these implicit dependencies are component inputs and understanding them goes a long way.
-
-The [react-mock](https://github.com/skidding/react-mock) project provides ways for mocking implicit component dependencies and helps you create fixtures for _stubborn_ components.
 
 ## Control panel
 
