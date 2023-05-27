@@ -20,6 +20,12 @@ Add `cosmos` script to package.json:
 }
 ```
 
+Start React Cosmos:
+
+```bash
+npm run cosmos
+```
+
 ## Webpack config
 
 Cosmos generates a default Webpack config if a custom one isn't provided.
