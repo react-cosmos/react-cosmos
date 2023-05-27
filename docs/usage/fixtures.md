@@ -98,7 +98,7 @@ export default () => {
 };
 ```
 
-> **Note**: `useValue` and `useSelect` (and Cosmos in general) work great with TypeScript.
+> **Note** `useValue` and `useSelect` (and Cosmos in general) work great with TypeScript.
 
 ---
 

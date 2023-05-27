@@ -4,7 +4,7 @@ This example is tied to the Cosmos [monorepo](../../CONTRIBUTING.md#monorepo), w
 
 Here are some external examples that didn't sit comfortably in this monorepo:
 
-> **Warning**: The external examples might use [Cosmos Classic](https://github.com/react-cosmos/react-cosmos-classic), a previous version that is no longer referenced in the monorepo.
+> **Warning** The external examples might use [Cosmos Classic](https://github.com/react-cosmos/react-cosmos-classic), a previous version that is no longer referenced in the monorepo.
 
 - [Cosmos with Create React App](https://github.com/react-cosmos/create-react-app-example)
 - [Cosmos with Create React Native App](https://github.com/react-cosmos/create-react-native-app-example)

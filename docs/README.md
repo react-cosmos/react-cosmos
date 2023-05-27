@@ -150,7 +150,7 @@ You've taken the first step towards designing reusable components. You're ready 
 
 ## Troubleshooting
 
-> **Warning**: Most React Cosmos issues are related to missing build dependencies. Please see [Compilation](#compilation).
+> **Warning** Most React Cosmos issues are related to missing build dependencies. Please see [Compilation](#compilation).
 
 #### localhost:5000/\renderer.html 404s?
 

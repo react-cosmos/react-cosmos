@@ -1,6 +1,6 @@
 # Node.js API
 
-> **Warning**: Do **NOT** use these APIs in your fixture files, or any of your client-side code, as they require access to the file system and may bundle unwanted Node.js code in your browser build.
+> **Warning** Do **NOT** use these APIs in your fixture files, or any of your client-side code, as they require access to the file system and may bundle unwanted Node.js code in your browser build.
 
 ## Cosmos config
 
