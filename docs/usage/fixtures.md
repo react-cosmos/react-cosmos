@@ -19,6 +19,7 @@ Component fixtures are just function components with no props. They enable using
 // CounterButton.fixture.jsx
 export default () => {
   const [count, setCount] = React.useState(0);
+
   return <CounterButton count={count} increment={() => setCount(count + 1)} />;
 };
 ```
