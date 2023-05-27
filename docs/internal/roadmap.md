@@ -12,7 +12,6 @@
 - [x] Research: ES6 modules (React Cosmos with no bundler and no compiler).
 - [x] Redesign codebase packages and APIs.
 - [x] Lazy mode [#1313](https://github.com/react-cosmos/react-cosmos/pull/1313) [#1443](https://github.com/react-cosmos/react-cosmos/pull/1443).
-- [ ] Isolated mode?
 
 ## Plugins
 
@@ -41,8 +40,8 @@
 
 ## Docs & website
 
+- [x] Add more [used by logos](https://github.com/react-cosmos/react-cosmos/issues/1207).
 - [ ] Improve getting started docs. This needs to be more prominent. Easy steps for getting started should be present in the website and the main docs.
 - [ ] Add docs to website.
   - [ ] MD-powered, auto-generated from docs/ directory.
   - [ ] Sticky side nav with table of contents.
-- [ ] Add more [used by logos](https://github.com/react-cosmos/react-cosmos/issues/1207).
