@@ -19,10 +19,10 @@ If applicable, add screenshots to help explain your problem.
 
 ### Useful data
 
-- Server terminal output.
-- Browser console output.
 - Cosmos version.
 - Cosmos config.
+- Server terminal output.
+- Browser console output.
 
 ### Additional context
 
