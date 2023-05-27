@@ -7,13 +7,13 @@
 ### Fixtures not detected?
 
 - Run `cosmos` with the `--expose-imports` flag. This should generate `cosmos.imports.js`. Check that file to see if your fixtures are being picked up by Cosmos.
-- Check your directory structure. If you are using a Cosmos config file, Cosmos will use the directory of the config file as the root of your project. If your Cosmos config file is nested in a directory that isn't an ancestor of your fixture files, Cosmos will not find your fixtures. To solve this add a `rootDir` entry to your Cosmos config pointing to your root directory.
+- Check your directory structure. If you are using a Cosmos config file, Cosmos will use the directory of the config file as the root of your project. If your Cosmos config file is nested in a directory that isn't an ancestor of your fixture files Cosmos won't find your fixtures. To solve this add a `rootDir` entry to your Cosmos config pointing to your root directory.
 
 ## Webpack-related
 
 > **Warning** Most React Cosmos Webpack issues are related to missing build dependencies. Please see [Webpack config](webpack.md#webpack-config).
 
-### localhost:5000/\renderer.html 404s?
+### _localhost:5000/renderer.html_ 404s?
 
 - Check for build errors in your terminal.
 - Make sure you have `html-webpack-plugin` installed, as well as [any other build dependency](webpack.md#webpack-config).
