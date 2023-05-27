@@ -1,4 +1,4 @@
-# Config
+# Configuration
 
 The React Cosmos config is a **JSON** file, so it can only contain serializable values. This design decision is meant to discourage complex configuration, make it easy to embed config options into the React Cosmos UI, and enable visual config editing.
 
