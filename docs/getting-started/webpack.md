@@ -36,11 +36,11 @@ Cosmos generates a default Webpack config if a custom one isn't provided.
 
 > **Warning**: You may also need to create a `.babelrc` in your project root.
 
-### Custom Webpack config
+### Custom config
 
 Probably the most common scenario. Most of us end up with a hairy Webpack config sooner or later.
 
-Cosmos picks up `webpack.config.js` from the project root automatically. Use the `webpack.configPath` setting to provide an existing Webpack config at a different path.
+Cosmos picks up `webpack.config.js` from the project root automatically. Use the `webpack.configPath` setting to provide an existing Webpack config at a different path:
 
 ```json
 {
@@ -52,7 +52,7 @@ Cosmos picks up `webpack.config.js` from the project root automatically. Use the
 
 > You can also point to a module inside a dependency, like in the [Create React App](create-react-app.md) example.
 
-### Webpack config override
+### Config override
 
 Overriding the Webpack config gives you complete control. Use the `webpack.overridePath` setting to point to a module that customizes the Webpack config used by Cosmos.
 
