@@ -19,13 +19,18 @@ Build React Cosmos export:
 npm run cosmos-export
 ```
 
-Server the static export:
+Serve the static export:
 
 ```bash
 npx http-server ./cosmos-export
 ```
 
-TODO:
+## Configuration
 
-- Related configuration like `exportPath`.
-- Mention plugin integration.
+- `exportPath` — Change the output directory (defaults to `./cosmos-export`).
+
+## Bundler integration
+
+The `cosmos-export` command creates a static export of the Cosmos UI shell, which expects a corresponding static Renderer to connect with. Without a Cosmos server plugin, the latter will be missing.
+
+The Vite or Webpack plugins take care of exporting automatically. Creating a static export with a [custom bundler setup](custom-bundler.md) will require additional steps. See the [Next.js guide](next.md#static-export) for such an example.
