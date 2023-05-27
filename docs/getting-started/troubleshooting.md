@@ -20,9 +20,9 @@
 
 ### Renderer not responding?
 
-- Try renaming `filename` in HtmlWebpackPlugin options to `index.html`, or alternatively remove the HtmlWebpackPlugin plugin from your Webpack config because Cosmos will automatically it with the proper options when it's not already added. For more details see [this issue](https://github.com/react-cosmos/react-cosmos/issues/1220).
+- Try renaming `filename` in HtmlWebpackPlugin options to `index.html`, or alternatively remove the HtmlWebpackPlugin plugin from your Webpack config and Cosmos will automatically it with the proper options. For more details see [this issue](https://github.com/react-cosmos/react-cosmos/issues/1220).
 
-### "localhost:3001/\_\_get-internal-source..." 404s?
+### _localhost:3001/\_\_get-internal-source..._ 404s?
 
 - [Try changing your Webpack `devtool` to something like `cheap-module-source-map`](https://github.com/react-cosmos/react-cosmos/issues/1045#issuecomment-535150617).
 
