@@ -32,8 +32,11 @@ A fixture file can also export multiple fixtures if the default export is an obj
 // Button.fixture.jsx
 export default {
   'primary': <PrimaryButton>Click me</PrimaryButton>,
+
   'primary disabled': <PrimaryButton disabled>Click me</PrimaryButton>,
+
   'secondary': <SecondaryButton>Click me</SecondaryButton>,
+
   'secondary disabled': <SecondaryButton disabled>Click me</SecondaryButton>,
 };
 ```
