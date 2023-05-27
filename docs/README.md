@@ -1,6 +1,6 @@
 ## Table of contents
 
-> The current docs are for React Cosmos 6. Check out the [migration guide](MIGRATION_V6.md) to upgrade from v5.
+> The current docs are for React Cosmos 6. Check out the [migration guide](getting-started/migration.md) to upgrade from v5.
 
 - Setup: [Getting started](#getting-started) · [Config](#config) · [Compilation](#compilation) · [Webpack](#webpack)
 - Usage: [Fixtures](#fixtures) · [Decorators](#decorators) · [Mocks](#declarative-mocks) · [Control panel](#control-panel) · [UI plugins](#ui-plugins) · [Static export](#static-export) · [React Native](reactNative.md) · [Server-side APIs](#server-side-apis)
