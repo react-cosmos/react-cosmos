@@ -6,20 +6,20 @@
 
 Bundler integrations
 
-- [Vite](getting-started/vite.md)
-- [Webpack](getting-started/webpack.md)
+- [React Cosmos with Vite](getting-started/vite.md)
+- [React Cosmos with Webpack](getting-started/webpack.md)
 
 Framework integrations
 
-- [Next.js](getting-started/next.md)
-- [Create React App](getting-started/create-react-app.md)
+- [React Cosmos with Next.js](getting-started/next.md)
+- [React Cosmos with Create React App](getting-started/create-react-app.md)
 
 Custom integrations
 
-- [React Native](getting-started/react-native.md)
-- [Custom bundler setup](getting-started/custom-bundler.md)
+- [React Cosmos with React Native](getting-started/react-native.md)
+- [React Cosmos custom bundler setup](getting-started/custom-bundler.md)
 
-> See [Troubleshooting](getting-started/troubleshooting.md) for common issues.
+> **Note** See [Troubleshooting](getting-started/troubleshooting.md) for common issues.
 
 ## Usage
 
