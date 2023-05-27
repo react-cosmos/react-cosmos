@@ -2,11 +2,7 @@
 
 Fixture files contain a default export, which can be a React Component or any React Node.
 
-> `React` must be imported in every fixture file.
-
-The file paths of your fixture files (relative to your project root) are used to create a tree view explorer in the React Cosmos UI.
-
-### Node fixtures
+## Node fixtures
 
 > Think of Node fixtures as the return value of a function component, or the first argument to `React.render`.
 
@@ -15,7 +11,7 @@ The file paths of your fixture files (relative to your project root) are used to
 export default <Button disabled>Click me</Button>;
 ```
 
-### Component fixtures
+## Component fixtures
 
 Component fixtures are just function components with no props. They enable using Hooks inside fixtures, which is powerful for simulating state with stateless components.
 
@@ -27,7 +23,7 @@ export default () => {
 };
 ```
 
-### Multi fixture files
+## Multi fixture files
 
 A fixture file can also export multiple fixtures if the default export is an object.
 
@@ -45,7 +41,9 @@ The object property names will show up as fixture names in the Cosmos UI.
 
 > [See this comment](https://github.com/react-cosmos/react-cosmos/issues/924#issuecomment-462082405) for the reasoning behind this solution (vs named exports).
 
-### How to create fixture files
+## File conventions
+
+The file paths of your fixture files (relative to your project root) are used to create a tree view explorer in the React Cosmos UI.
 
 Two options:
 
