@@ -4,7 +4,7 @@
 
 ## Getting started
 
-###Bundler integrations
+Bundler integrations
 
 - [Vite](getting-started/vite.md)
 - [Webpack](getting-started/webpack.md)
