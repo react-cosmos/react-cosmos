@@ -43,12 +43,10 @@ The object property names will show up as fixture names in the Cosmos UI.
 
 ## File conventions
 
-The file paths of your fixture files (relative to your project root) are used to create a tree view explorer in the React Cosmos UI.
-
 Two options:
 
-1. End fixture file names with `.fixture.{js,jsx,ts,tsx}`
-2. Put fixture files inside `__fixtures__`
+1. End fixture file names with `.fixture.{js,jsx,ts,tsx}`.
+2. Put fixture files inside `__fixtures__`.
 
 Examples:
 
@@ -56,6 +54,8 @@ Examples:
 2. `__fixtures__/blankState.jsx`
 
 > File name conventions can be configured using the `fixturesDir` and `fixtureFileSuffix` options.
+
+The file paths of your fixture files (relative to your project root) are used to create a tree view explorer in the React Cosmos UI.
 
 ---
 
