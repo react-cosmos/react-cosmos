@@ -1,4 +1,4 @@
-# React Cosmos v6
+# Roadmap
 
 ## Bundler
 

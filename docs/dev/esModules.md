@@ -1,4 +1,4 @@
-# React Cosmos and ES Modules
+# ESM support
 
 This document tracks the current status on ESM support in React Cosmos, which involves a number of parts with varying user impact and priority:
 
