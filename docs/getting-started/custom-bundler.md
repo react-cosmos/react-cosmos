@@ -30,7 +30,7 @@ mountDomRenderer(mountArgs);
 
 That's it, really. The Cosmos Server will automatically update `cosmos.imports.js` when fixture/decorator files are added, changed or removed.
 
-To learn how turn your setup into a Cosmos plugin check out the [Vite plugin](../packages/react-cosmos-plugin-vite).
+To learn how turn your setup into a Cosmos plugin check out the [Vite plugin](../../packages/react-cosmos-plugin-vite).
 
 ---
 
