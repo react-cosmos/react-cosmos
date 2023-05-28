@@ -17,7 +17,7 @@ A clear and concise description of what the bug is.
 
 If applicable, add screenshots to help explain your problem.
 
-### Useful data
+### Useful info
 
 - Cosmos version.
 - Cosmos config.
