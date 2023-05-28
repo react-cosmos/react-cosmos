@@ -27,7 +27,7 @@ Create a basic fixture:
 export default <h1>Hello World!</h1>;
 ```
 
-> If you have a `src` folder put the fixture file there.
+> If you have a `src` folder put the fixture file inside it.
 
 Start React Cosmos:
 
