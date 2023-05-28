@@ -31,14 +31,4 @@ Custom integrations
 
 ---
 
-🚀 Open **[localhost:5000](http://localhost:5000)** in your browser.
-
-The `Hello` fixture will show up in your React Cosmos UI and will render when you select it.
-
-**Congratulations 😎**
-
-You've taken the first step towards designing reusable components. You're ready to prototype, test and interate on components in isolation.
-
----
-
 [Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.
