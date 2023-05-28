@@ -10,7 +10,7 @@ Also check out [react-cosmos/nextjs-example](https://github.com/react-cosmos/nex
 
 Create a [new Next.js project](https://nextjs.org/docs/getting-started/installation) or open an existing one.
 
-Install React Cosmos:
+Install the required packages:
 
 ```bash
 npm i -D react-cosmos@next react-cosmos-next@next

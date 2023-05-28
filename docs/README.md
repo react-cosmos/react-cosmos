@@ -33,32 +33,6 @@ Custom integrations
 
 🚀 Open **[localhost:5000](http://localhost:5000)** in your browser.
 
-5\. **Create your first fixture**
-
-Choose a simple component to get started.
-
-<!-- prettier-ignore -->
-```jsx
-// Hello.jsx
-import React from 'react';
-
-export function Hello({ greeting, name }) {
-  return <h1>{greeting}, {name}!</h1>;
-}
-```
-
-Create a `.fixture` file.
-
-> Fixture files contain a default export, which can be a React Component or any React Node.
-
-```jsx
-// Hello.fixture.jsx
-import React from 'react';
-import { Hello } from './Hello';
-
-export default <Hello greeting="Aloha" name="Alexa" />;
-```
-
 The `Hello` fixture will show up in your React Cosmos UI and will render when you select it.
 
 **Congratulations 😎**

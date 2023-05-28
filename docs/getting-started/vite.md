@@ -1,5 +1,9 @@
 # Vite
 
+## Getting started
+
+Install the required packages:
+
 ```bash
 npm i -D react-cosmos@next react-cosmos-plugin-vite@next
 ```

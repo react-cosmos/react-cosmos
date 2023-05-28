@@ -4,30 +4,31 @@ This guide applies to React Native in general, including (but not limited to) Ex
 
 ## Getting started
 
-1\. **Install React Cosmos**
+Install the required packages:
 
 ```bash
 npm i -D react-cosmos@next react-cosmos-native@next
 ```
 
-2\. **Create your first fixture**
+Add `cosmos` script to package.json:
 
-Choose a simple component to get started.
+```json
+"scripts": {
+  "cosmos": "cosmos"
+}
+```
+
+Create a basic fixture at `Hello.fixture.js`:
 
 ```jsx
-// Hello.js
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export function Hello({ greeting, name }) {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>
-        {greeting}, {name}!
-      </Text>
-    </View>
-  );
-}
+export default () => (
+  <View style={styles.container}>
+    <Text style={styles.text}>Hello World!</Text>
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -41,27 +42,7 @@ const styles = StyleSheet.create({
 });
 ```
 
-Create a `.fixture` file.
-
-> Fixture files contain a default export, which can be a React Component or any React Node.
-
-```jsx
-// Hello.fixture.js
-import React from 'react';
-import { Hello } from './Hello';
-
-export default <Hello greeting="Aloha" name="Alexa" />;
-```
-
-3\. **Add package.json script**
-
-```diff
-"scripts": {
-+  "cosmos": "cosmos-native"
-}
-```
-
-4\. **Start React Cosmos**
+Start React Cosmos:
 
 ```bash
 npm run cosmos
