@@ -16,9 +16,10 @@ Install React Cosmos:
 npm i -D react-cosmos@next react-cosmos-next@next
 ```
 
-Create a basic fixture at `src/hello-world.fixture.jsx`:
+Create a basic fixture:
 
 ```jsx
+// src/Hello.fixture.jsx
 export default <h1>Hello World!</h1>;
 ```
 

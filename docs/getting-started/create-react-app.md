@@ -17,8 +17,6 @@ This is a `cosmos.config.json` example for Create React App:
 }
 ```
 
-> **Note** Fixture files must be placed in the `src` directory when using Create React App.
-
 Add `cosmos` script to package.json:
 
 ```json
@@ -26,6 +24,15 @@ Add `cosmos` script to package.json:
   "cosmos": "FAST_REFRESH=false cosmos"
 }
 ```
+
+Create a basic fixture:
+
+```jsx
+// src/Hello.fixture.jsx
+export default <h1>Hello World!</h1>;
+```
+
+> **Note** Fixture files must be placed in the `src` directory when using Create React App.
 
 Start React Cosmos:
 
