@@ -1,6 +1,6 @@
 # Next.js
 
-> _**Warning**: React Server Components and Next.js App Router are new technologies and their integration with React Cosmos is fresh from the oven. That said, get ready for something awesome!_
+> _**Warning** React Server Components and Next.js App Router are new technologies and their integration with React Cosmos is fresh from the oven. That said, get ready for something awesome!_
 
 This guide covers how to integrate React Cosmos with Next.js 13.4+. It includes support for **React Server Components**. The Cosmos Renderer switches seamlessly between Server and Client components in the same project.
 
@@ -10,13 +10,13 @@ Also check out [react-cosmos/nextjs-example](https://github.com/react-cosmos/nex
 
 Create a [new Next.js project](https://nextjs.org/docs/getting-started/installation) or open an existing one.
 
-Install React Cosmos:
+Install the required packages:
 
 ```bash
 npm i -D react-cosmos@next react-cosmos-next@next
 ```
 
-Create a basic fixture at `src/hello-world.fixture.jsx`:
+Create a basic fixture at `src/Hello.fixture.jsx`:
 
 ```jsx
 export default <h1>Hello World!</h1>;
@@ -81,7 +81,7 @@ You can import both Server and Client components in your fixtures, which run on 
 
 - Only single function fixtures can be exported from a fixture module with the `'use client'` descriptor. That's because Client fixture modules are passed _as is_ to the Server render tree and their exports are expected to be component types by design. While other fixture formats (React Node exports or multi fixture exports) cannot be used in Client fixtures, all Cosmos fixture formats as supported in Server fixtures.
 
-## Static exports
+## Static export
 
 The `cosmos-export` command creates a static export of the Cosmos UI shell, which expects a corresponding static Renderer to connect with. Generating the complete export requires stringing a few simple commands together:
 
@@ -121,5 +121,7 @@ Ideally we would call the `dev` and `build` Next.js commands programatically. Bu
 In the meantime we can remove the `/cosmos` page from the _out_ dir when deploying our app. Another option is a monorepo with a main Next.js app and a Cosmos Next.js app.
 
 > _If you or someone you know has Next.js expertise please don't be shy and reach out. Any help here is appreciated!_
+
+---
 
 [Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.

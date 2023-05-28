@@ -10,12 +10,6 @@
 npm i -D react-cosmos@next react-cosmos-plugin-webpack@next
 ```
 
-Or if you’re using Yarn:
-
-```
-yarn add --dev react-cosmos@next react-cosmos-plugin-webpack@next
-```
-
 Install `react-cosmos-plugin-vite` instead of `react-cosmos-plugin-webpack` to use React Cosmos with Vite.
 
 > Replace `next` with `canary` if you want to get the bleeding edge versions (latest commit from the main branch).
@@ -26,9 +20,6 @@ This major version accomplishes the following:
 - Webpack plugin extracted from core packages.
 - New Vite plugin.
 - In progress: Official APIs for both bundler and UI plugins.
-- Other project improvements mentioned in [Roadmap](https://github.com/react-cosmos/react-cosmos/blob/main/docs/roadmap/README.md).
-
-> The packages are published as alpha versions to allow for changes to the plugin APIs as feedback rolls in. That said the core functionality should work as reliably as before if not more.
 
 ## Breaking changes
 
@@ -54,8 +45,6 @@ React Cosmos 6 also comes with a brand new Vite plugin. To set up a Vite codebas
 "plugins": ["react-cosmos-plugin-vite"]
 ```
 
-> The Vite plugin is still in its infancy. It works great but it likely needs to allow more customization. Please send feedback on [Discord](https://discord.gg/3X95VgfnW5) and help us refine it.
-
 ### Other breaking changes
 
 - `react-cosmos/fixture` exports moved to `react-cosmos/client` (eg. `import { useValue } from 'react-cosmos/client'`).
@@ -70,7 +59,7 @@ There might be some other subtle breaking changes, especially if you're implemen
 
 A rough outline for this release:
 
-1. Get the alpha in the user's hands, make sure everything webpack-related works well with the new plugin.
+1. Get the beta in the user's hands, make sure everything webpack-related works well with the new plugin.
 1. Close long-standing issues that were already addressed in this version (eg. PnP support).
 1. Get feedback and add customization to the Vite plugin.
 1. Document, get feedback and and stabilize the plugin APIs.

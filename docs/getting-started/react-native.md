@@ -4,37 +4,31 @@ This guide applies to React Native in general, including (but not limited to) Ex
 
 ## Getting started
 
-1\. **Install React Cosmos**
+Install the required packages:
 
 ```bash
 npm i -D react-cosmos@next react-cosmos-native@next
 ```
 
-Or if you’re using Yarn:
+Add `cosmos` script to package.json:
 
-```bash
-yarn add --dev react-cosmos@next react-cosmos-native@next
+```json
+"scripts": {
+  "cosmos": "cosmos"
+}
 ```
 
-2\. **Create your first fixture**
+Create a basic fixture at `Hello.fixture.js`:
 
-Choose a simple component to get started.
-
-<!-- prettier-ignore -->
 ```jsx
-// Hello.js
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export function Hello({ greeting, name }) {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>
-        {greeting}, {name}!
-      </Text>
-    </View>
-  );
-}
+export default () => (
+  <View style={styles.container}>
+    <Text style={styles.text}>Hello World!</Text>
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -48,41 +42,15 @@ const styles = StyleSheet.create({
 });
 ```
 
-Create a `.fixture` file.
-
-> Fixture files contain a default export, which can be a React Component or any React Node.
-
-```jsx
-// Hello.fixture.js
-import React from 'react';
-import { Hello } from './Hello';
-
-export default <Hello greeting="Aloha" name="Alexa" />;
-```
-
-3\. **Add package.json script**
-
-```diff
-"scripts": {
-+  "cosmos": "cosmos-native"
-}
-```
-
-4\. **Start React Cosmos**
+Start React Cosmos:
 
 ```bash
 npm run cosmos
 ```
 
-Or if you’re using Yarn:
-
-```bash
-yarn cosmos
-```
-
 🚀 Open **[localhost:5000](http://localhost:5000)** in your browser.
 
-> You'll notice Cosmos generated a `cosmos.imports.js` module, which becomes relevant in step 5. You can add this file to .gitignore.
+> You'll notice Cosmos generated a `cosmos.imports.js` module, which becomes relevant next. You can add this file to .gitignore.
 
 The `Hello` fixture will show up in your React Cosmos UI.
 
@@ -90,7 +58,7 @@ The `Hello` fixture will show up in your React Cosmos UI.
 
 At this point Cosmos should successfully read your fixtures. One more step before you can render them.
 
-5\. **Set up the React Native renderer**
+### Set up the React Native renderer
 
 This is very similar to a [custom bundler setup](customBundlerSetup.md). Cosmos cannot plug itself automatically into React Native's build pipeline (Metro), but you can do it with minimal effort.
 
@@ -177,5 +145,7 @@ You can get Cosmos to [mirror your fixtures on both DOM and Native renderers](ht
 1. Set up Cosmos for Native using the steps above.
 2. Set up the react-cosmos-webpack-plugin as described [here](README.md#getting-started).
 3. Start Cosmos with the `cosmos --expose-imports` command.
+
+---
 
 [Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.

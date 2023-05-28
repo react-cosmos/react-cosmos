@@ -1,4 +1,4 @@
-Annoying aspects of the project that work but their solution leaves a lot to be desired. Usually high-hanging fruit, but can also reflect a blind spot of the author so new perspectives are welcome!
+# Tech debt
 
 ## Invariants and logging
 
