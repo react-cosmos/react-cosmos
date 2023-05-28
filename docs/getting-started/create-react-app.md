@@ -29,6 +29,8 @@ Add `cosmos` script to package.json:
 }
 ```
 
+> Your mileage may vary, but using CRA's internal webpack config inside Cosmos has caused React Refresh [issues](https://github.com/react-cosmos/react-cosmos/issues/1272) in the past. You can disable it as shown above or you may also _not_ set `webpack.configPath` to `"react-scripts/config/webpack.config"` and have Cosmos run with a more minimalistic alternative to the [CRA webpack config](https://github.com/facebook/create-react-app/blob/d960b9e38c062584ff6cfb1a70e1512509a966e7/packages/react-scripts/config/webpack.config.js).
+
 Create a basic fixture at `src/Hello.fixture.jsx`;
 
 ```jsx
@@ -50,8 +52,6 @@ The `Hello` fixture will show up in your Cosmos UI and will render when you sele
 **Congratulations 😎**
 
 You've taken the first step towards designing reusable components. You're ready to prototype, test and interate on components in isolation.
-
-> Your mileage may vary, but using CRA's internal webpack config inside Cosmos has caused React Refresh [issues](https://github.com/react-cosmos/react-cosmos/issues/1272) in the past. You can disable it as shown above or you may also _not_ set `webpack.configPath` to `"react-scripts/config/webpack.config"` and have Cosmos run with a more minimalistic alternative to the [CRA webpack config](https://github.com/facebook/create-react-app/blob/d960b9e38c062584ff6cfb1a70e1512509a966e7/packages/react-scripts/config/webpack.config.js).
 
 ## Using react-app-rewired
 
