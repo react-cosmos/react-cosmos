@@ -20,14 +20,11 @@ Add `cosmos` script to package.json:
 }
 ```
 
-Create a basic fixture:
+Create a basic fixture at `src/Hello.fixture.jsx`:
 
 ```jsx
-// Hello.fixture.jsx
 export default <h1>Hello World!</h1>;
 ```
-
-> If you have a `src` folder put the fixture file inside it.
 
 Start React Cosmos:
 

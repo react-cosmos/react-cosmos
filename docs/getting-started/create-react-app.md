@@ -25,10 +25,9 @@ Add `cosmos` script to package.json:
 }
 ```
 
-Create a basic fixture:
+Create a basic fixture at `src/Hello.fixture.jsx`;
 
 ```jsx
-// src/Hello.fixture.jsx
 export default <h1>Hello World!</h1>;
 ```
 
