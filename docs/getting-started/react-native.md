@@ -50,7 +50,7 @@ npm run cosmos
 
 🚀 Open **[localhost:5000](http://localhost:5000)** in your browser.
 
-> You'll notice Cosmos generated a `cosmos.imports.js` module, which becomes relevant in step 5. You can add this file to .gitignore.
+> You'll notice Cosmos generated a `cosmos.imports.js` module, which becomes relevant in the next step. You can add this file to .gitignore.
 
 The `Hello` fixture will show up in your React Cosmos UI.
 
@@ -58,7 +58,7 @@ The `Hello` fixture will show up in your React Cosmos UI.
 
 At this point Cosmos should successfully read your fixtures. One more step before you can render them.
 
-5\. **Set up the React Native renderer**
+### Set up the React Native renderer
 
 This is very similar to a [custom bundler setup](customBundlerSetup.md). Cosmos cannot plug itself automatically into React Native's build pipeline (Metro), but you can do it with minimal effort.
 
