@@ -1,5 +1,7 @@
 # Create React App
 
+This is a guide for setting up React Cosmos in a Create React App project.
+
 ## Getting started
 
 Install the required packages:

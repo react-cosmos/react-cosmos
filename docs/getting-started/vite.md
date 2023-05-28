@@ -1,5 +1,7 @@
 # Vite
 
+This is a guide for setting up React Cosmos in a Vite project.
+
 ## Getting started
 
 Install the required packages:

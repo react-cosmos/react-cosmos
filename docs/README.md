@@ -1,6 +1,8 @@
-# React Cosmos documentation
+# Documentation
 
 > The current docs are for React Cosmos 6. Check out the [migration guide](getting-started/migration.md) to upgrade from v5.
+
+Welcome to the React Cosmos documentation!
 
 ## Getting started
 

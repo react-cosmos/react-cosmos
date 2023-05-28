@@ -1,5 +1,7 @@
 # Webpack
 
+This is a guide for setting up React Cosmos in a Webpack project.
+
 ## Getting started
 
 Install the required packages:
