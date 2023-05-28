@@ -45,8 +45,6 @@ React Cosmos 6 also comes with a brand new Vite plugin. To set up a Vite codebas
 "plugins": ["react-cosmos-plugin-vite"]
 ```
 
-> The Vite plugin is still in its infancy. It works great but it likely needs to allow more customization. Please send feedback on [Discord](https://discord.gg/3X95VgfnW5) and help us refine it.
-
 ### Other breaking changes
 
 - `react-cosmos/fixture` exports moved to `react-cosmos/client` (eg. `import { useValue } from 'react-cosmos/client'`).
