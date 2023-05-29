@@ -58,7 +58,7 @@ Examples:
 1. `blankState.fixture.jsx`
 2. `__fixtures__/blankState.jsx`
 
-> File name conventions can be configured using the `fixturesDir` and `fixtureFileSuffix` options.
+> File name conventions can be configured using the `fixturesDir` and `fixtureFileSuffix` options. Certain file patterns can be omitted using the `ignore` option.
 
 The file paths of your fixture files (relative to your project root) are used to create a tree view explorer in the React Cosmos UI.
 
