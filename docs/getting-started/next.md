@@ -16,7 +16,7 @@ Install the required packages:
 npm i -D react-cosmos@next react-cosmos-next@next
 ```
 
-Create `cosmos.config.json` and point `rendererUrl` to your Next.js Cosmos Renderer:
+Create `cosmos.config.json` and point `rendererUrl` to your renderer (we'll get back to it in a moment):
 
 ```json
 {
@@ -53,7 +53,7 @@ export const generateStaticParams = nextCosmosStaticParams(cosmosImports);
 export default nextCosmosPage(cosmosImports);
 ```
 
-This is your Cosmos Renderer.
+This is your Next.js Cosmos renderer.
 
 > If you're using TypeScript replace `.jsx` file extensions with `.tsx`.
 
