@@ -16,27 +16,6 @@ Install the required packages:
 npm i -D react-cosmos@next react-cosmos-next@next
 ```
 
-Create a basic fixture at `src/Hello.fixture.jsx`:
-
-```jsx
-export default <h1>Hello World!</h1>;
-```
-
-> If you're using TypeScript replace `.jsx` file extensions with `.tsx`.
-
-Create a Next.js page at `src/app/cosmos/[fixture]/page.tsx`:
-
-```jsx
-import { nextCosmosPage, nextCosmosStaticParams } from 'react-cosmos-next';
-import * as cosmosImports from '../../../../cosmos.imports';
-
-export const generateStaticParams = nextCosmosStaticParams(cosmosImports);
-
-export default nextCosmosPage(cosmosImports);
-```
-
-This is your Cosmos Renderer. We'll get back to it in a minute.
-
 Create `cosmos.config.json` and point `rendererUrl` to your Next.js Cosmos Renderer:
 
 ```json
@@ -56,6 +35,27 @@ Add `cosmos` and `cosmos-export` scripts to package.json:
   "cosmos-export": "cosmos-export --expose-imports"
 }
 ```
+
+Create a basic fixture at `src/Hello.fixture.jsx`:
+
+```jsx
+export default <h1>Hello World!</h1>;
+```
+
+Create a Next.js page at `src/app/cosmos/[fixture]/page.tsx`:
+
+```jsx
+import { nextCosmosPage, nextCosmosStaticParams } from 'react-cosmos-next';
+import * as cosmosImports from '../../../../cosmos.imports';
+
+export const generateStaticParams = nextCosmosStaticParams(cosmosImports);
+
+export default nextCosmosPage(cosmosImports);
+```
+
+This is your Cosmos Renderer.
+
+> If you're using TypeScript replace `.jsx` file extensions with `.tsx`.
 
 Start Next.js:
 
