@@ -48,9 +48,9 @@ Start React Cosmos:
 npm run cosmos
 ```
 
-🚀 Open **[localhost:5000](http://localhost:5000)** in your browser.
-
 > You'll notice Cosmos generated a `cosmos.imports.js` module, which becomes relevant next. You can add this file to .gitignore.
+
+🚀 Open **[localhost:5000](http://localhost:5000)** in your browser.
 
 The `Hello` fixture will show up in your React Cosmos UI.
 
