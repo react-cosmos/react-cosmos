@@ -101,7 +101,7 @@ Add [ESLint](https://eslint.org/docs/user-guide/integrations#editors) to your ed
 When naming files:
 
 - Use _camel case_ for files: `fixtureState.js`. Capitalize components: `DragHandle.js`.
-- Use _kebab case_ for package names: `react-cosmos-playground2`.
+- Use _kebab case_ for package names: `react-cosmos-renderer`.
 
 When creating a module:
 

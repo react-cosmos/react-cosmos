@@ -16,7 +16,7 @@ Install the required packages:
 npm i -D react-cosmos@next react-cosmos-next@next
 ```
 
-Create `cosmos.config.json` and point `rendererUrl` to your renderer (we'll get back to it in a moment):
+Create `cosmos.config.json` and point `rendererUrl` to your renderer (we'll get to it in a moment):
 
 ```json
 {
