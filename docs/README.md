@@ -16,10 +16,10 @@ Framework integrations
 - [Next.js](getting-started/next.md)
 - [Create React App](getting-started/create-react-app.md)
 
-Custom integrations
+Other integrations
 
 - [React Native](getting-started/react-native.md)
-- [Custom bundler setup](getting-started/custom-bundler.md)
+- [Custom bundler](getting-started/custom-bundler.md)
 
 > See [Troubleshooting](getting-started/troubleshooting.md) for common issues.
 

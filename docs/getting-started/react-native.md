@@ -1,6 +1,6 @@
 # React Native
 
-This guide applies to React Native in general, including (but not limited to) Expo projects.
+This is a guide for setting up React Cosmos in a React Native project, with or without Expo.
 
 ## Getting started
 
