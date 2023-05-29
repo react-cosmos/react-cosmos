@@ -5,7 +5,7 @@ This document tracks the current status on ESM support in React Cosmos, which in
 - [Publish packages as ESM, including server code.](#esm-packages)
 - [Serve ESM fixtures and support bundlerless setups.](#esm-fixtures)
 - [Support unbundled ESM UI plugins.](#esm-ui-plugins)
-- [Serve Playground UI as ESM.](#esm-playground-ui)
+- [Serve Cosmos UI as ESM.](#esm-cosmos-ui)
 
 ## ESM packages
 
@@ -70,16 +70,16 @@ Here's a rough example of the renderer index.html for ESM fixtures.
 
 ## ESM UI plugins
 
-Authoring UI plugins as pure ESM is a cool prospect. It lowers the barries for plugin authors. It's also possible. ESM modules can be script-injected or dynamically imported from a CJS Playground. Here's what's needed to make this possible:
+Authoring UI plugins as pure ESM is a cool prospect. It lowers the barries for plugin authors. It's also possible. ESM modules can be script-injected or dynamically imported from a CJS Cosmos UI. Here's what's needed to make this possible:
 
-- Same as with ESM fixtures: Serve NPM dependencies from node_modules and make them accessible via import maps in the Playground index.html (eg. `styled-components` has 10 runtime dependencies that need mapping). Import maps for installed NPM modules should be automatically generated for this to work smoothly.
+- Same as with ESM fixtures: Serve NPM dependencies from node_modules and make them accessible via import maps in the Cosmos UI index.html (eg. `styled-components` has 10 runtime dependencies that need mapping). Import maps for installed NPM modules should be automatically generated for this to work smoothly.
 - Static exports need to employ a slightly different strategy where node_modules are also exported, with import maps pointing to their new location.
 
 This is doable with some work. But for now, building UI plugins with shared dependencies attached to the global window namespace is a decent compromise (eg. using Webpack `externals`). Bundled plugins will be easy to re-publish as ESM later on once we add support.
 
-## ESM Playground UI
+## ESM Cosmos UI
 
-Serving the Playground UI as ESM is mostly symbolic at this point. It doesn't help the user in any way and isn't required for supporting ESM UI plugins. In fact, serving the Playground UI and all its NPM dependencies as ESM will probably decrease run-time performance and complicate static exports. Still, we can track the progress here in case we ever decide to pursue this.
+Serving the Cosmos UI as ESM is mostly symbolic at this point. It doesn't help the user in any way and isn't required for supporting ESM UI plugins. In fact, serving the Cosmos UI and all its NPM dependencies as ESM will probably decrease run-time performance and complicate static exports. Still, we can track the progress here in case we ever decide to pursue this.
 
 ## Inspiration and further reading
 

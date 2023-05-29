@@ -1,6 +1,6 @@
 # React Native
 
-This guide applies to React Native in general, including (but not limited to) Expo projects.
+This is a guide for setting up React Cosmos in a React Native project, with or without Expo.
 
 ## Getting started
 
@@ -48,9 +48,9 @@ Start React Cosmos:
 npm run cosmos
 ```
 
-🚀 Open **[localhost:5000](http://localhost:5000)** in your browser.
-
 > You'll notice Cosmos generated a `cosmos.imports.js` module, which becomes relevant next. You can add this file to .gitignore.
+
+🚀 Open **[localhost:5000](http://localhost:5000)** in your browser.
 
 The `Hello` fixture will show up in your React Cosmos UI.
 
@@ -60,7 +60,7 @@ At this point Cosmos should successfully read your fixtures. One more step befor
 
 ### Set up the React Native renderer
 
-This is very similar to a [custom bundler setup](customBundlerSetup.md). Cosmos cannot plug itself automatically into React Native's build pipeline (Metro), but you can do it with minimal effort.
+This is very similar to a [custom bundler setup](./custom-bundler.md). Cosmos cannot plug itself automatically into React Native's build pipeline (Metro), but you can do it with minimal effort.
 
 Here's a basic file structure to get going. You can tweak this after everything's working.
 
