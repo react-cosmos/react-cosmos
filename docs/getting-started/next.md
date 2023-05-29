@@ -53,7 +53,7 @@ export const generateStaticParams = nextCosmosStaticParams(cosmosImports);
 export default nextCosmosPage(cosmosImports);
 ```
 
-This is your Next.js Cosmos renderer.
+This is your Cosmos Renderer.
 
 > If you're using TypeScript replace `.jsx` file extensions with `.tsx`.
 
