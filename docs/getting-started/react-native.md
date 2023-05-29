@@ -60,7 +60,7 @@ At this point Cosmos should successfully read your fixtures. One more step befor
 
 ### Set up the React Native renderer
 
-This is very similar to a [custom bundler setup](customBundlerSetup.md). Cosmos cannot plug itself automatically into React Native's build pipeline (Metro), but you can do it with minimal effort.
+This is very similar to a [custom bundler setup](./custom-bundler.md). Cosmos cannot plug itself automatically into React Native's build pipeline (Metro), but you can do it with minimal effort.
 
 Here's a basic file structure to get going. You can tweak this after everything's working.
 
