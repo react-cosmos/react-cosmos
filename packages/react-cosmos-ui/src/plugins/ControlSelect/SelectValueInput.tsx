@@ -6,6 +6,7 @@ import {
   ValueInputContainer,
 } from '../../components/ValueInputTree/ValueInput/shared.js';
 import { Select } from '../../components/inputs/Select.js';
+import { isGroupedOptions } from '../../shared/groupedOptions.js';
 import { lightBlue } from '../../style/colors.js';
 
 type Props = {
@@ -25,7 +26,17 @@ export function SelectValueInput({ name, control, onChange }: Props) {
       <ValueDataContainer>
         <Select
           id={id}
-          options={options.map(option => ({ value: option, label: option }))}
+          options={
+            isGroupedOptions(options)
+              ? options.map(option => ({
+                  group: option.group,
+                  options: option.options.map(optionOfGroup => ({
+                    value: optionOfGroup,
+                    label: optionOfGroup,
+                  })),
+                }))
+              : options.map(option => ({ value: option, label: option }))
+          }
           value={currentValue}
           color={lightBlue}
           height={24}

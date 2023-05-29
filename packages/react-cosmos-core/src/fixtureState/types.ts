@@ -66,7 +66,7 @@ export type FixtureStateStandardControl = {
 
 export type FixtureStateSelectControl = {
   type: 'select';
-  options: string[];
+  options: string[] | { group: string; options: string[] }[];
   defaultValue: string;
   currentValue: string;
 };
