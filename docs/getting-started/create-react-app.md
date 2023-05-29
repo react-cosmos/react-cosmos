@@ -23,11 +23,12 @@ This is a `cosmos.config.json` example for Create React App:
 }
 ```
 
-Add `cosmos` script to package.json:
+Add `cosmos` and `cosmos-export` scripts to package.json:
 
 ```json
 "scripts": {
-  "cosmos": "FAST_REFRESH=false cosmos"
+  "cosmos": "FAST_REFRESH=false cosmos",
+  "cosmos-export": "cosmos-export",
 }
 ```
 

@@ -18,11 +18,12 @@ Create `cosmos.config.json` and enable the Vite plugin:
 }
 ```
 
-Add `cosmos` script to package.json:
+Add `cosmos` and `cosmos-export` scripts to package.json:
 
 ```json
 "scripts": {
-  "cosmos": "cosmos"
+  "cosmos": "cosmos",
+  "cosmos-export": "cosmos-export",
 }
 ```
 

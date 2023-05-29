@@ -48,7 +48,7 @@ Create `cosmos.config.json` and point `rendererUrl` to your Next.js Cosmos Rende
 }
 ```
 
-Add `package.json` scripts:
+Add `cosmos` and `cosmos-export` scripts to package.json:
 
 ```json
 "scripts": {
