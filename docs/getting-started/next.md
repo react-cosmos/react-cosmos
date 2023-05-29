@@ -42,6 +42,8 @@ Create a basic fixture at `src/Hello.fixture.jsx`:
 export default <h1>Hello World!</h1>;
 ```
 
+> If you're using TypeScript replace `.jsx` file extensions with `.tsx`.
+
 Create a Next.js page at `src/app/cosmos/[fixture]/page.tsx`:
 
 ```jsx
@@ -54,8 +56,6 @@ export default nextCosmosPage(cosmosImports);
 ```
 
 This is your Cosmos Renderer.
-
-> If you're using TypeScript replace `.jsx` file extensions with `.tsx`.
 
 Start Next.js:
 
