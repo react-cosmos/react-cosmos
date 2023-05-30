@@ -1,6 +1,6 @@
 # Plugin config
 
-This is a guide for creating a Cosmos plugin.
+This is a guide for creating Cosmos plugins.
 
 Create a `cosmos.plugin.json` file:
 
