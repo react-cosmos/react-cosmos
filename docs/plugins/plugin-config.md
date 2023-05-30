@@ -6,7 +6,7 @@ Create a `cosmos.plugin.json` file:
 
 ```json
 {
-  "name": "My Plugin",
+  "name": "Magic plugin",
   "server": "serverPlugin.js",
   "ui": "uiPlugin.js"
 }
@@ -19,6 +19,14 @@ Aside from the name, a Cosmos plugin can have a server component and a UI compon
 To enable a Cosmos plugin, add the parent directory of the plugin config to the `plugins` option in the `cosmos.config.json` of the host project.
 
 If the Cosmos plugin is published as a NPM package, set the `main` field in `package.json` to `"cosmos.plugin.json"` (or a different path where the Cosmos plugin config is located).
+
+```json
+{
+  "name": "react-cosmos-plugin-magic",
+  "version": "1.0.0",
+  "main": "cosmos.plugin.json"
+}
+```
 
 See the individual guides for each plugin type:
 
