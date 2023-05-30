@@ -27,7 +27,9 @@ npx http-server ./cosmos-export
 
 ## Configuration
 
-- `exportPath` — Change the output directory (defaults to `./cosmos-export`).
+| Option       | Description                          | Default           |
+| ------------ | ------------------------------------ | ----------------- |
+| `exportPath` | Output directory for static exports. | `"cosmos-export"` |
 
 ## Bundler integration
 

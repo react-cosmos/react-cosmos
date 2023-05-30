@@ -11,7 +11,7 @@
       "minLength": 1
     },
     "exportPath": {
-      "description": "Where to generate static exports on disk. [default: \"cosmos-export\"]",
+      "description": "Output directory for static exports. [default: \"cosmos-export\"]",
       "type": "string",
       "minLength": 1
     },
