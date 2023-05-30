@@ -39,7 +39,7 @@
       "type": "string"
     },
     "fixturesDir": {
-      "description": "Name for directories that contain fixtures (eg. __fixtures__/example.jsx). [default: \"__fixtures__\"]",
+      "description": "Name for directories that contain fixture files (eg. __fixtures__/example.jsx). [default: \"__fixtures__\"]",
       "type": "string",
       "minLength": 1
     },
