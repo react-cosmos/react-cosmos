@@ -6,18 +6,12 @@ Welcome to the React Cosmos documentation!
 
 ## Getting started
 
-Bundler integrations
+Choose a guide for integrating with a specific bundler, framework, or a custom setup.
 
 - [Vite](getting-started/vite.md)
 - [Webpack](getting-started/webpack.md)
-
-Framework integrations
-
 - [Next.js](getting-started/next.md)
 - [Create React App](getting-started/create-react-app.md)
-
-Other integrations
-
 - [React Native](getting-started/react-native.md)
 - [Custom bundler](getting-started/custom-bundler.md)
 
