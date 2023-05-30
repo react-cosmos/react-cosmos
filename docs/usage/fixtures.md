@@ -106,6 +106,20 @@ export default () => {
 
 > **Note** `useValue` and `useSelect` (and Cosmos in general) work great with TypeScript.
 
+### `<Viewport />`
+
+By using the Viewport decorator a fixture can trigger the responsive preview in the Cosmos UI on a specific resolution.
+
+```jsx
+import { Viewport } from 'react-cosmos/client';
+
+export default (
+  <Viewport width={375} height={667}>
+    <MyComponent />
+  </Viewport>
+);
+```
+
 ---
 
 [Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.
