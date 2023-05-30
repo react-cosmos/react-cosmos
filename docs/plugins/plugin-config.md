@@ -1,6 +1,6 @@
 # Plugin config
 
-This is a guide for creating a new Cosmos plugin.
+This is a guide for creating a Cosmos plugin.
 
 Create a `cosmos.plugin.json` file:
 
@@ -12,13 +12,13 @@ Create a `cosmos.plugin.json` file:
 }
 ```
 
-Theis JSON config is the plugin's entry point.
+This JSON config is the plugin's entry point.
 
 Aside from the name, a Cosmos plugin can have a server component and a UI component. At least one is required. The `server` and `ui` paths are resolved relative to the config's parent directory.
 
-To enable a Cosmos plugin, the parent directory of the plugin config has to be added to the `plugins` option in the `cosmos.config.json` of the host project.
+To enable a Cosmos plugin, add the parent directory of the plugin config to the `plugins` option in the `cosmos.config.json` of the host project.
 
-If the Cosmos plugin is published as a NPM package, set the `main` field in `package.json` to `"cosmos.plugin.json"` (or a different path where the Cosmos plugin config is).
+If the Cosmos plugin is published as a NPM package, set the `main` field in `package.json` to `"cosmos.plugin.json"` (or a different path where the Cosmos plugin config is located).
 
 See the individual guides for each plugin type:
 
