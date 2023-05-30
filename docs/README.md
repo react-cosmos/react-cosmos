@@ -6,7 +6,7 @@ Welcome to the React Cosmos documentation!
 
 ## Getting started
 
-Choose a guide for integrating with a specific bundler, framework, or a custom setup.
+Choose a dedicated guide for integrating with a specific bundler, framework, or a custom setup:
 
 - [Vite](getting-started/vite.md)
 - [Webpack](getting-started/webpack.md)
