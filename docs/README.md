@@ -31,6 +31,12 @@ Other integrations
 - [Static export](usage/static-export.md)
 - [Node.js API](usage/node-api.md)
 
+## Plugins
+
+- [Plugin config](plugins/plugin-config.md)
+- [Server plugins](plugins/server-plugins.md)
+- [UI plugins](plugins/ui-plugins.md)
+
 ---
 
 [Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.
