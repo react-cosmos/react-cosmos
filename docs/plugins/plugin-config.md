@@ -42,8 +42,8 @@ If the Cosmos plugin is published as an NPM package, set the `main` field in `pa
 
 See the individual guides for each plugin type:
 
-- [Server plugins](plugins/server-plugins.md)
-- [UI plugins](plugins/ui-plugins.md)
+- [Server plugins](server-plugins.md)
+- [UI plugins](ui-plugins.md)
 
 ---
 
