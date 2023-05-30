@@ -63,12 +63,15 @@ Cosmos picks up `vite.config.js` from the project root automatically. Use the `v
 }
 ```
 
-## Vite settings
+## Configuration
 
 Vite-related settings you can optionally customize in your Cosmos config:
 
-- `vite.indexPath` — Path to the index module that's added as a script in `index.html`. In most cases it's auto detected.
-- `vite.port` — Customize Vite renderer port (default is 5050).
+| Option            | Description                                                                    | Default                                  |
+| ----------------- | ------------------------------------------------------------------------------ | ---------------------------------------- |
+| `vite.configPath` | Path to Vite config. Set to false to disable reading it from the default path. | `"vite.config.js"` or `"vite.config.ts"` |
+| `vite.indexPath`  | Path to index module (eg. `"src/my-index.tsx"`).                               | _detects common index/main module paths_ |
+| `vite.port`       | Vite renderer port.                                                            | `5050`                                   |
 
 ---
 
