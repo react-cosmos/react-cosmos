@@ -62,11 +62,11 @@ The file paths of your fixture files (relative to your project root) are used to
 
 ### Configuration
 
-| Option              | Description                                                                      | Default          |
-| ------------------- | -------------------------------------------------------------------------------- | ---------------- |
-| `fixturesDir`       | Name for directories that contain fixture files (eg. `__fixtures__/example.jsx`) | `"__fixtures__"` |
-| `fixtureFileSuffix` | Suffix for fixture files (eg. `example.fixture.jsx`) Cell                        | `"fixture"`      |
-| `ignore`            | Patterns for ignoring fixture and decorator files (eg. `["**/dist/**"]`)         |                  |
+| Option              | Description                                                                       | Default          |
+| ------------------- | --------------------------------------------------------------------------------- | ---------------- |
+| `fixturesDir`       | Name for directories that contain fixture files (eg. `__fixtures__/example.jsx`). | `"__fixtures__"` |
+| `fixtureFileSuffix` | Suffix for fixture files (eg. `example.fixture.jsx`).                             | `"fixture"`      |
+| `ignore`            | Patterns for ignoring fixture and decorator files (eg. `["**/dist/**"]`).         |                  |
 
 ## Fixture controls
 
