@@ -11,7 +11,7 @@
       "minLength": 1
     },
     "exportPath": {
-      "description": "Where to generate static exports on disk. [default: \"cosmos-export\"]",
+      "description": "Output directory for static exports. [default: \"cosmos-export\"]",
       "type": "string",
       "minLength": 1
     },
@@ -39,7 +39,7 @@
       "type": "string"
     },
     "fixturesDir": {
-      "description": "Name for directories that contain fixtures (eg. __fixtures__/example.jsx). [default: \"__fixtures__\"]",
+      "description": "Name for directories that contain fixture files (eg. __fixtures__/example.jsx). [default: \"__fixtures__\"]",
       "type": "string",
       "minLength": 1
     },
@@ -171,11 +171,11 @@
       "additionalProperties": false,
       "properties": {
         "configPath": {
-          "description": "Path to Vite config. Set to false to disable reading it from the default path. [default: \"vite.config.js\"]",
+          "description": "Path to Vite config. Set to false to disable reading it from the default path. [default: \"vite.config.js\" or \"vite.config.ts\"]",
           "anyOf": [{ "type": "string", "minLength": 1 }, { "enum": [false] }]
         },
         "indexPath": {
-          "description": "Path to index module (eg. \"src/my-index.tsx\"). [default: matches common index/main module paths]",
+          "description": "Path to index module (eg. \"src/my-index.tsx\"). [default: detects common index/main module paths]",
           "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
         },
         "port": {
