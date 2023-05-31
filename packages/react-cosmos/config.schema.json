@@ -76,7 +76,7 @@
       "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
     },
     "port": {
-      "description": "Dev server port. [default: 5000]",
+      "description": "Cosmos server port. [default: 5000]",
       "type": "number"
     },
     "portRetries": {
