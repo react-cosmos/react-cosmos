@@ -3,17 +3,18 @@
 ## CLI
 
 - The `cosmos` command starts the dev server.
+- The `cosmos-native` command starts the dev server for a React Native project.
 - The `cosmos-export` command generates a static export.
 
 Some things can be customized using CLI arguments:
 
-| Argument           | Description                                                                                          |
-| ------------------ | ---------------------------------------------------------------------------------------------------- |
-| `--config`         | Specify a custom config path. Cosmos reads `cosmos.config.json` from your root directory by default. |
-| `--root-dir`       | Specify a root dir for your projects. Current working directory (cwd) is default.                    |
-| `--lazy`           | ...                                                                                                  |
-| `--expose-imports` | ...                                                                                                  |
-| `--port`           | Convenient way to override the Cosmos port.                                                          |
+| Argument           | Description                                                                                                                                                                                               | Default                                                                                                                   |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `--config`         | Custom config path.                                                                                                                                                                                       | `cosmos.config.json` in the root directory, which is the current working directory or the `--root-dir` value when passed. |
+| `--root-dir`       | The root directory that all others paths in this config are relative to. Usually the root of your repo.                                                                                                   | The parent directory of the Cosmos config or the current working directory when you don't use a Cosmos config.            |
+| `--lazy`           | Dynamically import fixture and decorator modules as they are loaded. When false all fixture and decorator modules are imported statically and bundled together.                                           | `false`                                                                                                                   |
+| `--expose-imports` | Expose user imports and config required for the Cosmos renderer. Used with React Native and in custom integrations. When a path is specified it requires a file extension (eg. `"src/cosmos.imports.ts"`) | `cosmos.imports.ts` or `cosmos.imports.js` in React Native projects, otherwise `false`.                                   |
+| `--port`           | Cosmos server port.                                                                                                                                                                                       | `5000`                                                                                                                    |
 
 There rest of the things are customized using the large number of options in the Cosmos config.
 
