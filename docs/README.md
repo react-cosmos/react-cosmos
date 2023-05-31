@@ -30,6 +30,7 @@ Choose a dedicated guide for integrating with a specific bundler, framework, or 
 - [Plugin config](plugins/plugin-config.md)
 - [Server plugins](plugins/server-plugins.md)
 - [UI plugins](plugins/ui-plugins.md)
+- [Fixture plugins](plugins/fixture-plugins.md)
 
 ---
 
