@@ -1,10 +1,27 @@
 # Configuration
 
-The React Cosmos config is a **JSON** file, so it can only contain serializable values. This design decision is meant to discourage complex configuration, make it easy to embed config options into the React Cosmos UI, and enable visual config editing.
+### CLI
 
-By default, Cosmos reads `cosmos.config.json` from your root directory. You can pass a `--config` CLI arg for a custom config path.
+- The `cosmos` command starts the dev server.
+- The `cosmos-export` command generates a static export.
 
-## Config schema
+Some things can be customized using CLI arguments:
+
+| Argument           | Description                                                                                          |
+| ------------------ | ---------------------------------------------------------------------------------------------------- |
+| `--config`         | Specify a custom config path. Cosmos reads `cosmos.config.json` from your root directory by default. |
+| `--root-dir`       | Specify a root dir for your projects. Current working directory (cwd) is default.                    |
+| `--lazy`           | ...                                                                                                  |
+| `--expose-imports` | ...                                                                                                  |
+| `--port`           | Convenient way to override the Cosmos port.                                                          |
+
+There rest of the things are customized using the large number of options in the Cosmos config.
+
+## `cosmos.config.json`
+
+The Cosmos config is a **JSON** file, so it can only contain serializable values. This design decision is meant to discourage complex configuration, make it easy to embed config options into the Cosmos UI, and enable visual config editing.
+
+### Config schema
 
 The best way to learn about the available options in the Cosmos config is to use [config.schema.json](../../packages/react-cosmos/config.schema.json).
 
@@ -39,9 +56,9 @@ Alternatively, you can reference the local Cosmos config schema in your workspac
 ]
 ```
 
-## Custom viewports
+### Custom viewports
 
-`responsivePreview` is a plugin included by default and you can customize it through the Cosmos config.
+`responsivePreview` is a plugin included by default and you can customize it through the Cosmos config:
 
 ```json
 {
