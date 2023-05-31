@@ -7,7 +7,9 @@ The [Viewport](../usage/fixtures.md#viewport) decorator is a good example.
 ## `FixtureContext`
 
 ```jsx
-export function MagicDecorator({ children, width, height }) {
+import { FixtureContext } from 'react-cosmos/client';
+
+export function MagicDecorator({ children }) {
   const { fixtureState, setFixtureState } = React.useContext(FixtureContext);
 
   // Read or write the fixture state based on user events or other side effects.
@@ -16,8 +18,8 @@ export function MagicDecorator({ children, width, height }) {
 }
 ```
 
-- The fixture state object has `props`, `classState` and `controls` fields. They are used to construct the Props, Class State and Control panels in the Cosmos UI.
-- You can extend the fixture state with extra fields. Like [Viewport](../usage/fixtures.md#viewport) does with the `viewport` field, which is read by the responsive preview plugin in the Cosmos UI.
+- The standard fixture state object contains the `props`, `classState` and `controls` fields. They're used to construct the Props, Class State and Control panels in the Cosmos UI.
+- You can extend the fixture state with extra fields. For example the [Viewport](../usage/fixtures.md#viewport) decorator sets the `fixtureState.viewport` field used by the responsive preview plugin in the Cosmos UI.
 - Generally a fixture plugin will pair with a Cosmos UI plugin to syncronize data between the renderer, which runs inside the user's code, and the Cosmos UI.
 
 ---
