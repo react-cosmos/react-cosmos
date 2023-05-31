@@ -6,18 +6,12 @@ Welcome to the React Cosmos documentation!
 
 ## Getting started
 
-Bundler integrations
+Choose a dedicated guide for integrating with a specific bundler, framework, or a custom setup:
 
 - [Vite](getting-started/vite.md)
 - [Webpack](getting-started/webpack.md)
-
-Framework integrations
-
 - [Next.js](getting-started/next.md)
 - [Create React App](getting-started/create-react-app.md)
-
-Other integrations
-
 - [React Native](getting-started/react-native.md)
 - [Custom bundler](getting-started/custom-bundler.md)
 
@@ -30,6 +24,13 @@ Other integrations
 - [Configuration](usage/configuration.md)
 - [Static export](usage/static-export.md)
 - [Node.js API](usage/node-api.md)
+
+## Plugins
+
+- [Plugin config](plugins/plugin-config.md)
+- [Server plugins](plugins/server-plugins.md)
+- [UI plugins](plugins/ui-plugins.md)
+- [Fixture plugins](plugins/fixture-plugins.md)
 
 ---
 

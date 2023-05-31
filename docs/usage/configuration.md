@@ -1,12 +1,30 @@
 # Configuration
 
-The React Cosmos config is a **JSON** file, so it can only contain serializable values. This design decision is meant to discourage complex configuration, make it easy to embed config options into the React Cosmos UI, and enable visual config editing.
+## CLI
 
-By default, Cosmos reads `cosmos.config.json` from your root directory. You can pass a `--config` CLI arg for a custom config path.
+- The `cosmos` command starts the dev server.
+- The `cosmos-native` command starts the dev server for a React Native project.
+- The `cosmos-export` command generates a static export.
 
-## Config schema
+Some things can be customized using CLI arguments:
 
-The best way to learn about the available options in the Cosmos config is to use [config.schema.json](../../packages/react-cosmos/config.schema.json).
+| Argument           | Description                                                                                                                                                                                               |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--config`         | Specify a custom config path. By default Cosmos reads `cosmos.config.json` from your root directory.                                                                                                      |
+| `--root-dir`       | Specify a root directory for your project. By default the root directory is the parent directory of your Cosmos config or the current working directory in the absence of a Cosmos config.                |
+| `--lazy`           | Dynamically import user modules. By default all fixture and decorator modules are imported statically and bundled together.                                                                               |
+| `--expose-imports` | Expose user imports and config required for the Cosmos renderer. Use with React Native and in custom integrations. When a path is specified it requires a file extension (eg. `"src/cosmos.imports.ts"`). |
+| `--port`           | Convenient way to override the Cosmos dev server port.                                                                                                                                                    |
+
+There rest of the things are customized using the large number of options in the Cosmos config.
+
+## `cosmos.config.json`
+
+The Cosmos config is a **JSON** file, so it can only contain serializable values. This design decision is meant to discourage complex configuration, make it easy to embed config options into the Cosmos UI, and enable visual config editing.
+
+### Config schema
+
+**The best way to learn about the available options in the Cosmos config is to use [config.schema.json](../../packages/react-cosmos/config.schema.json).**
 
 The schema is human readable, but you can also enhance your config with autocomplete in code editors like VS Code.
 
@@ -39,9 +57,9 @@ Alternatively, you can reference the local Cosmos config schema in your workspac
 ]
 ```
 
-## Custom viewports
+### Custom viewports
 
-`responsivePreview` is a plugin included by default and you can customize it through the Cosmos config.
+`responsivePreview` is a plugin included by default and you can customize it through the Cosmos config:
 
 ```json
 {

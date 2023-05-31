@@ -70,6 +70,8 @@ async function getBaseWebpackConfig(
   const module = await importModule<{ default: WebpackConfig }>(configPath);
   const webpackConfig = module.default;
 
+  // The --env flag matches the webpack CLI convention
+  // https://webpack.js.org/api/cli/#env
   const cliArgs = getCliArgs();
   return typeof webpackConfig === 'function'
     ? await webpackConfig(cliArgs.env || getWebpackNodeEnv(), cliArgs)
