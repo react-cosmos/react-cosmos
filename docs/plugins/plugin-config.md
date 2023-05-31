@@ -24,19 +24,21 @@ To enable a Cosmos plugin add it to the `plugins` option in the `cosmos.config.j
 }
 ```
 
-If the Cosmos plugin is published as an NPM package, set the `main` field in `package.json` to `"cosmos.plugin.json"` (or a different path where the Cosmos plugin config is located) and the name of the package in the `cosmos.config.json` plugins list:
+If the Cosmos plugin is an NPM package, add the name of the package to `plugins` instead:
+
+```json
+{
+  "plugins": ["react-cosmos-plugin-magic"]
+}
+```
+
+To publish a Cosmos plugin as an NPM package, set the `main` field in its `package.json` to `"cosmos.plugin.json"` (or a different path where the Cosmos plugin config is located):
 
 ```json
 {
   "name": "react-cosmos-plugin-magic",
   "version": "1.0.0",
   "main": "cosmos.plugin.json"
-}
-```
-
-```json
-{
-  "plugins": ["react-cosmos-plugin-magic"]
 }
 ```
 
