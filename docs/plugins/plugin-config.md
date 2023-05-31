@@ -14,13 +14,13 @@ Create a `cosmos.plugin.json` file:
 
 This JSON config is the plugin's entry point.
 
-Aside from the name, a Cosmos plugin can have a server component and a UI component. At least one is required. The `server` and `ui` paths are resolved relative to the config's parent directory.
+A Cosmos plugin can contain a **server plugin** and a **UI plugin**. At least one is required, as well as a plugin name. The `server` and `ui` paths are resolved relative to the config's parent directory.
 
-To enable a Cosmos plugin, add the parent directory of the plugin config to the `plugins` option in the `cosmos.config.json` of the host project:
+To enable a Cosmos plugin add it to the `plugins` option in the `cosmos.config.json` of the host project:
 
 ```json
 {
-  "plugins": ["../packages/magic-plugin"]
+  "plugins": ["../packages/magic-plugin/cosmos.plugin.json"]
 }
 ```
 
