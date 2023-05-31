@@ -16,7 +16,7 @@
       "minLength": 1
     },
     "detectLocalPlugins": {
-      "description": "Automatically detect and load local plugins",
+      "description": "Automatically detect and load local plugins [default: true].",
       "type": "boolean"
     },
     "disablePlugins": {
