@@ -8,13 +8,13 @@
 
 Some things can be customized using CLI arguments:
 
-| <div width="180px">Argument</div> | Description                                                                                                                                                                                               |
-| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--config`                        | Specify a custom config path. By default Cosmos reads `cosmos.config.json` from your root directory.                                                                                                      |
-| `--root-dir`                      | Specify a root directory for your project. By default the root directory is the parent directory of your Cosmos config or the current working directory in the absence of a Cosmos config.                |
-| `--lazy`                          | Dynamically import user modules. By default all fixture and decorator modules are imported statically and bundled together.                                                                               |
-| `--expose-imports`                | Expose user imports and config required for the Cosmos renderer. Use with React Native and in custom integrations. When a path is specified it requires a file extension (eg. `"src/cosmos.imports.ts"`). |
-| `--port`                          | Convenient way to override the Cosmos dev server port.                                                                                                                                                    |
+| Argument                             | Description                                                                                                                                                                                               |
+| ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--config`                           | Specify a custom config path. By default Cosmos reads `cosmos.config.json` from your root directory.                                                                                                      |
+| `--root-dir`                         | Specify a root directory for your project. By default the root directory is the parent directory of your Cosmos config or the current working directory in the absence of a Cosmos config.                |
+| `--lazy`                             | Dynamically import user modules. By default all fixture and decorator modules are imported statically and bundled together.                                                                               |
+| <div nowrap>`--expose-imports`</div> | Expose user imports and config required for the Cosmos renderer. Use with React Native and in custom integrations. When a path is specified it requires a file extension (eg. `"src/cosmos.imports.ts"`). |
+| `--port`                             | Convenient way to override the Cosmos dev server port.                                                                                                                                                    |
 
 There rest of the things are customized using the large number of options in the Cosmos config.
 
