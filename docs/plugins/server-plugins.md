@@ -31,7 +31,7 @@ export default {
 | -------------- | ------------------------------------------------------ |
 | `cosmosConfig` | The user's [Cosmos config](../usage/configuration.md). |
 | `command`      | `"dev"` or `"export"`.                                 |
-| `platform`     | `"web"` or `"platform"`.                               |
+| `platform`     | `"web"` or `"native"`.                                 |
 
 The `config` hook is called before both `devServer` and `export` hooks. It allows overriding the user's Cosmos config. Setting the `rendererUrl` config option is a common use case.
 
@@ -40,7 +40,7 @@ The `config` hook is called before both `devServer` and `export` hooks. It allow
 | Argument       | Description                                                                                   |
 | -------------- | --------------------------------------------------------------------------------------------- |
 | `cosmosConfig` | The user's [Cosmos config](../usage/configuration.md).                                        |
-| `platform`     | `web` or `platform`.                                                                          |
+| `platform`     | `"web"` or `"native"`.                                                                        |
 | `httpServer`   | The [http.Server](https://nodejs.org/api/http.html#class-httpserver) instance used by Cosmos. |
 | `expressApp`   | The [Express App](https://expressjs.com/en/4x/api.html#app) instance used by Cosmos.          |
 | `sendMessage`  | Send a message to the Cosmos UI.                                                              |
