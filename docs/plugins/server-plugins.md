@@ -4,9 +4,11 @@ This is a guide for creating Cosmos server plugins.
 
 ## Boilerplate
 
+The `server` field in the [`cosmos.plugin.json`](./plugin-config.md) points to a module like this:
+
 ```js
 export default {
-  name: 'my-plugin',
+  name: 'magic-plugin',
 
   async config({ cosmosConfig }) {
     // An opportunity to alter the user's Cosmos config
@@ -31,6 +33,8 @@ export default {
 | `command`      | `"dev"` or `"export"`.                                 |
 | `platform`     | `"web"` or `"platform"`.                               |
 
+The `config` hook is called before both `devServer` and `export` hooks. It allows overriding the user's Cosmos config. Setting the `rendererUrl` option is a common use case.
+
 ### `devServer`
 
 | Argument       | Description                                                                                   |
@@ -41,11 +45,17 @@ export default {
 | `expressApp`   | The [Express App](https://expressjs.com/en/4x/api.html#app) instance used by Cosmos.          |
 | `sendMessage`  | Send a message to the Cosmos UI.                                                              |
 
+A hook for starting the renderer dev server alongside the Cosmos server.
+
+For example in the Webpack plugin the Webpack compiler is attached to Cosmos' internal Express app, having the renderer run on the same port as the Cosmos server. In contract, the Vite plugin starts the Vite dev server independently and in this case you end up using two ports—one for the Cosmos server and one for the Vite renderer.
+
 ### `export`
 
 | Argument       | Description                                            |
 | -------------- | ------------------------------------------------------ |
 | `cosmosConfig` | The user's [Cosmos config](../usage/configuration.md). |
+
+A hook for exporting the user's fixtures and decorators into a static Cosmos renderer that the static Cosmos UI connects to.
 
 ---
 
