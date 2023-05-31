@@ -33,7 +33,7 @@ export default {
 | `command`      | `"dev"` or `"export"`.                                 |
 | `platform`     | `"web"` or `"platform"`.                               |
 
-The `config` hook is called before both `devServer` and `export` hooks. It allows overriding the user's Cosmos config. Setting the `rendererUrl` option is a common use case.
+The `config` hook is called before both `devServer` and `export` hooks. It allows overriding the user's Cosmos config. Setting the `rendererUrl` config option is a common use case.
 
 ### `devServer`
 
