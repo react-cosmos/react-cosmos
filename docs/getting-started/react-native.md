@@ -14,7 +14,7 @@ Add `cosmos` script to package.json:
 
 ```json
 "scripts": {
-  "cosmos": "cosmos"
+  "cosmos": "cosmos-native"
 }
 ```
 
