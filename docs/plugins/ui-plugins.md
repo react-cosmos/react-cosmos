@@ -26,9 +26,9 @@ plugin.register();
 
 ## Plugin API
 
-### `createPlugin`
-
 Slots and plugs make up for the render composition but there's more to UI plugins. To function as standalone UI abstractions that can interact in meaningful ways, UI plugins can also have individual configuration, private states, public methods and event handlers.
+
+### `createPlugin`
 
 These are the arguments supported when creating a plugin:
 
