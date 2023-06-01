@@ -243,11 +243,11 @@ You can browse the complete list of built-in UI plugins at [packages/react-cosmo
 
 Here's a few examples of existing slots:
 
-| Type        | Slot name         | Description                          | Plug examples                                                   |
-| ----------- | ----------------- | ------------------------------------ | --------------------------------------------------------------- |
-| `ArraySlot` | `rendererAction`  | Renderer-related buttons.            | Edit fixture source. Go full screen. Toggle responsive preview. |
-| `ArraySlot` | `navRow`          | Left-hand nav panel widgets.         | Fixture search. Fixture bookmarks. Fixture tree view.           |
-| `Array`     | `rendererPreview` | Placeholder for the fixture preview. | Iframe renderer for web, status message for React Native.       |
+| Type        | Slot name         | Description                  | Plug examples                                                   |
+| ----------- | ----------------- | ---------------------------- | --------------------------------------------------------------- |
+| `ArraySlot` | `rendererAction`  | Renderer-related buttons.    | Edit fixture source. Go full screen. Toggle responsive preview. |
+| `ArraySlot` | `navRow`          | Left-hand nav panel widgets. | Fixture search. Fixture bookmarks. Fixture tree view.           |
+| `Array`     | `rendererPreview` | Fixture preview placeholder. | Iframe renderer for web, status message for React Native.       |
 
 ## TypeScript
 
