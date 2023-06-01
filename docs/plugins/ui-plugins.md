@@ -28,17 +28,16 @@ plugin.register();
 
 ### `createPlugin`
 
-Slots and plugs make up for the render composition but there more to UI plugins. To function as standalone UI abstractions that can interact in meaningful ways, UI plugins can also have individual configuration, private states, public methods and event handlers.
+Slots and plugs make up for the render composition but there's more to UI plugins. To function as standalone UI abstractions that can interact in meaningful ways, UI plugins can also have individual configuration, private states, public methods and event handlers.
 
 These are the arguments supported when creating a plugin:
 
-| Arguments | Description                                                                                                                        |
-| --------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `name`    | UI plugin identifier.                                                                                                              |
-| `config`  | Optional plain object config. Passed via Cosmos config under `ui.plugins.{name}` and read privately via `PluginContext.getConfig`. |
-| `state`   | Optional plain object state. Accessed privately via `PluginContext.getState` and `PluginContext.setState` .                        |
-| `methods` | Optional methods called by other plugins via `PluginContext.getMethodsOf`.                                                         |
-| `events`  | Optional events triggered via `PluginContext.emit` and listened to by other plugins via `Plugin.on` handlers.                      |
+| Argument        | Description                                                                                                                     |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `name`          | UI plugin identifier.                                                                                                           |
+| `defaultConfig` | Optional plain object config. Set via Cosmos config under `ui.plugins.{name}` and read privately via `PluginContext.getConfig`. |
+| `initialState`  | Optional plain object state. Accessed privately via `PluginContext.getState` and `PluginContext.setState`.                      |
+| `methods`       | Optional method handlers called by other plugins via `PluginContext.getMethodsOf`.                                              |
 
 Once created, a plugin inherits an API that allow it to access its own data and interact with other plugins. These are the available methods:
 
@@ -64,16 +63,57 @@ WIP.
 
 ### `PluginContext`
 
-WIP.
+The plugin context API allows you to interact with private plugin data (config, state) as well as other plugins (emit events, call methods). All plugin handlers receive the plugin context as the first argument.
 
-| Property       | Description |
-| -------------- | ----------- |
-| `pluginName`   |             |
-| `getMethodsOf` |             |
-| `getConfig`    |             |
-| `getState`     |             |
-| `setState`     |             |
-| `emit`         |             |
+#### `PluginContext.getConfig`
+
+Read own (private) plugin config.
+
+```js
+pluginContext.getConfig();
+```
+
+#### `PluginContext.getState`
+
+Read own (private) plugin state.
+
+```js
+pluginContext.getState();
+```
+
+#### `PluginContext.setState`
+
+Change own (private) plugin state.
+
+```js
+pluginContext.setState({ enabled: true });
+
+// Or using a state updater callback
+pluginContext.setState(prevState => ({
+  ...prevState,
+  enabled: !prevState.enabled,
+}));
+```
+
+#### `PluginContext.getMethodsOf`
+
+Get public methods of other plugins.
+
+```js
+const otherPlugin = pluginContext.getMethodsOf('otherPlugin');
+otherPlugin.doSomething('withThis');
+
+// It's also possible for methods to return something
+const value = otherPlugin.getSomething();
+```
+
+#### `PluginContext.emit`
+
+Emit event to listeners added by other plugins (via `Plugin.on`).
+
+```js
+pluginContext.emit('magicEvent', 'arg1', 'arg2');
+```
 
 ### `<Slot>`
 
