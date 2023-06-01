@@ -2,9 +2,9 @@
 
 The Cosmos UI plugin system consists of an intricate web of "slots" and "plugs" that weave together with minimal knowledge of each other.
 
-> The underlying `react-plugin` library isn't published yet due to time constraints but will be open sourced as a separate project in the future.
-
 Though it will take some time to get familiar with the subtleties of the Cosmos UI plugin architecture, its core principles are simple and so is creating your first “Hello World”.
+
+> **Note** The underlying `react-plugin` library isn't published yet due to time constraints but will be open sourced as a separate project in the future.
 
 ## Boilerplate
 
@@ -70,10 +70,10 @@ plugin.plug('slotName', ({ slotProps }) => {
 _Somewhere in another plugin..._
 
 ```jsx
-<Slot name="slotName" slotProps={{ name: 'Venus' }} />
+<Slot name="slotName" slotProps={{ name: 'Sara' }} />
 ```
 
-Plugs can receive `children` from their slot, which allows composition between multiple plugs in the same slot. The second plug can decorate the first:
+Plugs receive `children` from their slot. This allows composition between multiple plugs from the same slot. The second plug can decorate the first:
 
 ```jsx
 plugin.plug('slotName', ({ children }) => {
@@ -81,7 +81,7 @@ plugin.plug('slotName', ({ children }) => {
 });
 ```
 
-> You can also choose _not_ to render `children` in a plug, thereby ignoring the slot's children and replacing all previous plugs.
+You can also choose _not_ to render `children` in a plug, thereby ignoring the slot's children and replacing all previous plugs.
 
 #### `Plugin.namedPlug`
 
@@ -95,7 +95,7 @@ plugin.namedPlug('slotName', 'plugName', () => {
 
 Contrary to `Plugin.plug` where a plug decorates or replaces previous plugs, a named plug is appened to a list for the slot to render. Multiple named plugs are supported for the same slot and all will be rendered.
 
-> The plugs are rendered in the order they are registered, or based on the `plugOrder` prop when set on the `ArraySlot` component.
+> Named plugs are rendered in the order they are registered, or based on the optional `plugOrder` prop of the `ArraySlot` component.
 
 #### `Plugin.onLoad`
 
