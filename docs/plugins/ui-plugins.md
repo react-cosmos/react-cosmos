@@ -43,23 +43,82 @@ Once created, the plugin API allows registering UI plugs, as well as `onLoad` an
 
 #### `Plugin.plug`
 
-WIP.
+Plug a React component into an a [`<Slot>`](#slot):
+
+```jsx
+plugin.plug('slotName', () => {
+  return <MyComponent />;
+});
+```
+
+Plugs also get access to the [`PluginContext`](#plugincontext):
+
+```jsx
+plugin.plug('slotName', ({ pluginContext }) => {
+  return <MyComponent state={pluginContext.getState()} />;
+});
+```
+
+Plugs can also receive slot props, which allows slots to parameterize their plugs:
+
+```jsx
+plugin.plug('slotName', ({ slotProps }) => {
+  return <MyComponent name={slotProps.name} />;
+});
+```
+
+Plugs can also receive `children` from their slot, which allows composition between multiple plugs for the same slot. The second plug can decorate the first:
+
+```jsx
+plugin.plug('slotName', ({ children }) => {
+  // You can also choose NOT to render children, thereby ignoring the slot's
+  // children and replacing all previous plugs.
+  return <MyDecorator>{children}</MyDecorator>;
+});
+```
 
 #### `Plugin.namedPlug`
 
-WIP.
+Plug a React component into an a [`<ArraySlot>`](#arrayslot).
+
+```jsx
+plugin.namedPlug('slotName', 'plugName', () => {
+  return <MyComponent />;
+});
+```
+
+Contrary to `Plugin.plug` where a plug decorates or replaces previous plugs, a named plug is appened to a list for the slot to render. Multiple named plugs are supported for the same slot and all will be rendered.
+
+> The plugs are rendered in the order they are registered, or based on the `plugOrder` prop when set on the `ArraySlot` component.
 
 #### `Plugin.onLoad`
 
-WIP.
+Register a handler that gets called once when the Cosmos UI loads, or when the plugin is enabled. If the handler returns a callback it will be called when the plugin is disabled or uninstalled.
+
+```js
+plugin.onLoad(pluginContext => {
+  // Add DOM event or fetch external data
+  return () => {
+    // Optional: Clean up and unsubscribe from stuff
+  };
+});
+```
 
 #### `Plugin.on`
 
-WIP.
+Register handlers for events of other plugins.
+
+```js
+on('otherPlugin', {
+  eventName(pluginContext, arg1, arg2) {
+    // React to event from other plugin
+  },
+});
+```
 
 #### `Plugin.register`
 
-WIP.
+Register the plugin in the global store.
 
 ### `PluginContext`
 
