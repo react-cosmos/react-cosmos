@@ -194,9 +194,11 @@ Each plugin can define new slots by rendering `Slot` and `ArraySlot` components.
 <Slot name="magicSlot" />
 ```
 
-- name: string;
-- children?: ReactNode;
-- slotProps?: object;
+| Prop        | Description                            |
+| ----------- | -------------------------------------- |
+| `name`      | Unique slot name.                      |
+| `children`  | Optional `children` passed to plugs.   |
+| `slotProps` | Optional plain object passed to plugs. |
 
 #### `<ArraySlot>`
 
@@ -204,9 +206,11 @@ Each plugin can define new slots by rendering `Slot` and `ArraySlot` components.
 <ArraySlot name="magicSlot" />
 ```
 
-- name: string;
-- slotProps?: object;
-- plugOrder?: string[];
+| Prop        | Description                                          |
+| ----------- | ---------------------------------------------------- |
+| `name`      | Unique slot name.                                    |
+| `slotProps` | Optional plain object passed to plugs.               |
+| `plugOrder` | Optional list of plug names to enforce a sort order. |
 
 ## Built-in plugins
 
