@@ -218,12 +218,55 @@ Render a slot that accepts a list of React component plugs:
 
 ## Built-in plugins
 
-WIP:
+The Cosmos UI is built entirely using this plugin API. It literally starts like this:
 
-- Reiterate that all Cosmos UI is made from plugins.
-- Link to list of built-in UI plugins.
-  - Mention TS specs.
-- Table with list of popular slots, their descriptions and examples.
+```jsx
+const root = createRoot(container);
+root.render(<Slot name="root" />);
+```
+
+You can browse the complete list of built-in UI plugins at [packages/react-cosmos-ui/src/plugins](../../packages/react-cosmos-ui/src/plugins).
+
+Here's a few examples of existing slots from built-in plugins:
+
+| Type        | Slot name         | Description                                      | Plug examples                                                   |
+| ----------- | ----------------- | ------------------------------------------------ | --------------------------------------------------------------- |
+| `ArraySlot` | `rendererAction`  | List of buttons related to the renderer.         | Edit fixture source. Go full screen. Toggle responsive preview. |
+| `ArraySlot` | `fixtureAction`   | List of buttons related to the selected fixture. | Bookmark fixture.                                               |
+| `ArraySlot` | `navRow`          | List of widgets in the left-hand nav panel.      | Fixture search. Fixture bookmarks. Fixture tree view.           |
+| `ArraySlot` | `sidePanelRow`    | List of widgets in the right-hand side panel.    | The Props panel. The Class State panel. The Controls panel.     |
+| `Array`     | `rendererPreview` | Placeholder for the fixture preview.             | The iFrame renderer for web. A blank state for React Native.    |
+
+## TypeScript
+
+Like everything else in Cosmos, the UI plugin system is built with TypeScript. All the plugin APIs are type-safe and use generic types where needed.
+
+Moreover, the plugin system is built around something called a "spec"—a plugin interface. The spec allows plugins to interact with each other safely without having to be part of the same codebase.
+
+If you browse the [built-in plugins](../../packages/react-cosmos-ui/src/plugins) you'll find a `spec.ts` file inside each UI plugin. This is an example:
+
+```ts
+export type RouterSpec = {
+  name: 'router';
+  state: {
+    urlParams: PlaygroundParams;
+  };
+  methods: {
+    getSelectedFixtureId(): null | FixtureId;
+    selectFixture(fixtureId: FixtureId): void;
+    unselectFixture(): void;
+  };
+  events: {
+    fixtureSelect(fixtureId: FixtureId): void;
+    fixtureReselect(fixtureId: FixtureId): void;
+    fixtureUnselect(): void;
+  };
+};
+```
+
+## What will _you_ create?
+
+All this might seem intimidating, but I encourage you to try it out. Create a blank Cosmos plugin and start hacking. Add something you find useful. Make Cosmos your own.
 
 ---
 
