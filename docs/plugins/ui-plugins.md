@@ -251,11 +251,11 @@ Here's a few examples of existing slots:
 
 ## TypeScript
 
-Like everything else in Cosmos, the UI plugin system is built with TypeScript. All the plugin APIs are type-safe and use generic types where needed.
+Like everything else in Cosmos, the UI plugin system is built with TypeScript. All plugin APIs are type-safe and use generics where needed.
 
-Moreover, the plugin system is built around something called a "spec"—a plugin interface. The spec allows plugins to interact with each other safely without having to be part of the same codebase.
+The plugin system is built around something called a "spec". The spec is a static interface that allows plugins to interact with each other safely without having to be part of the same codebase.
 
-If you browse the [built-in plugins](../../packages/react-cosmos-ui/src/plugins) you'll find a `spec.ts` file inside each UI plugin. This is an example:
+If you browse the [built-in plugins](../../packages/react-cosmos-ui/src/plugins) you'll find a `spec.ts` file inside each plugin. This is an example:
 
 ```ts
 export type RouterSpec = {
@@ -278,7 +278,7 @@ export type RouterSpec = {
 
 ## What will _you_ create?
 
-All this might seem intimidating, but I encourage you to try it out. Create a blank Cosmos plugin and start hacking. Add something you find useful. Make Cosmos your own.
+All this might seem intimidating but I encourage you to try it out. Create a blank Cosmos plugin and start hacking. Add something you find useful. **Make Cosmos your own.**
 
 ---
 
