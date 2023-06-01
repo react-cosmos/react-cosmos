@@ -190,6 +190,12 @@ Each plugin can define new slots by rendering `Slot` and `ArraySlot` components.
 
 #### `<Slot>`
 
+| Prop        | Description                            |
+| ----------- | -------------------------------------- |
+| `name`      | Unique slot name.                      |
+| `children`  | Optional `children` passed to plugs.   |
+| `slotProps` | Optional plain object passed to plugs. |
+
 Render a slot that accepts a React component plug:
 
 ```jsx
@@ -204,25 +210,19 @@ Slots can pass `children` to plugs, as well as data through the `slotProps` prop
 </Slot>
 ```
 
-| Prop        | Description                            |
-| ----------- | -------------------------------------- |
-| `name`      | Unique slot name.                      |
-| `children`  | Optional `children` passed to plugs.   |
-| `slotProps` | Optional plain object passed to plugs. |
-
 #### `<ArraySlot>`
-
-Render a slot that accepts a list of React component plugs:
-
-```jsx
-<ArraySlot name="magicSlot" />
-```
 
 | Prop        | Description                                          |
 | ----------- | ---------------------------------------------------- |
 | `name`      | Unique slot name.                                    |
 | `slotProps` | Optional plain object passed to plugs.               |
 | `plugOrder` | Optional list of plug names to enforce a sort order. |
+
+Render a slot that accepts a list of React component plugs:
+
+```jsx
+<ArraySlot name="magicSlot" />
+```
 
 ## Built-in plugins
 
