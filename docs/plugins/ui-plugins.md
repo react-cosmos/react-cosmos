@@ -196,6 +196,14 @@ Render a slot that accepts a React component plug:
 <Slot name="magicSlot" />
 ```
 
+Slots can pass `children` to plugs, as well as data through the `slotProps` prop:
+
+```jsx
+<Slot name="magicSlot" slotProps={{ magic: true, magicLevel: 100 }}>
+  <p>This is magic.</p>
+</Slot>
+```
+
 | Prop        | Description                            |
 | ----------- | -------------------------------------- |
 | `name`      | Unique slot name.                      |
