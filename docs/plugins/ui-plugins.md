@@ -199,14 +199,14 @@ Each plugin can define new slots by rendering `Slot` and `ArraySlot` components.
 Render a slot that accepts a React component plug:
 
 ```jsx
-<Slot name="magicSlot" />
+<Slot name="coolSlot" />
 ```
 
 Slots can pass `children` to plugs, as well as data through the `slotProps` prop:
 
 ```jsx
-<Slot name="magicSlot" slotProps={{ magic: true, magicLevel: 100 }}>
-  <p>This is magic.</p>
+<Slot name="coolSlot" slotProps={{ cool: true, level: 100 }}>
+  <p>This is cool.</p>
 </Slot>
 ```
 
@@ -221,13 +221,13 @@ Slots can pass `children` to plugs, as well as data through the `slotProps` prop
 Render a slot that accepts a list of React component plugs:
 
 ```jsx
-<ArraySlot name="magicSlot" />
+<ArraySlot name="coolSlot" />
 ```
 
 The plug order can be enforced using the `plugOrder` prop:
 
 ```jsx
-<ArraySlot name="magicSlot" plugOrder={['plug1', 'plug2', 'plug3']} />
+<ArraySlot name="coolSlot" plugOrder={['plug1', 'plug2', 'plug3']} />
 ```
 
 ## Built-in plugins
