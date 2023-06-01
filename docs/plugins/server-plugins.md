@@ -25,6 +25,8 @@ export default {
 };
 ```
 
+## Plugin API
+
 ### `config`
 
 | Argument       | Description                                                             |
