@@ -39,7 +39,7 @@ These are the arguments supported when creating a plugin:
 | `initialState`  | Optional plain object state. Accessed privately via `PluginContext.getState` and `PluginContext.setState`.                      |
 | `methods`       | Optional method handlers called by other plugins via `PluginContext.getMethodsOf`.                                              |
 
-Once created, a plugin inherits an API that allow it to access its own data and interact with other plugins. These are the available methods:
+Once created, the plugin API allows registering UI plugs, as well as `onLoad` and event handlers.
 
 #### `Plugin.plug`
 
@@ -103,23 +103,43 @@ Get public methods of other plugins.
 const otherPlugin = pluginContext.getMethodsOf('otherPlugin');
 otherPlugin.doSomething('withThis');
 
-// It's also possible for methods to return something
+// It's also possible for plugin methods to return something
 const value = otherPlugin.getSomething();
 ```
 
 #### `PluginContext.emit`
 
-Emit event to listeners added by other plugins (via `Plugin.on`).
+Emit event to listeners registered by other plugins via `Plugin.on`.
 
 ```js
 pluginContext.emit('magicEvent', 'arg1', 'arg2');
 ```
 
-### `<Slot>`
+### Slots
+
+Slots and plugs are reminiscent of the _chicken or egg_ conundrum. In this case, however, the slot definitely came first. Without a root slot nothing gets rendered in the Cosmos UI.
+
+Each plugin can define new slots by rendering `Slot` and `ArraySlot` components.
+
+#### `<Slot>`
 
 ```jsx
 <Slot name="magicSlot" />
 ```
+
+- name: string;
+- children?: ReactNode;
+- slotProps?: object;
+
+#### `<ArraySlot>`
+
+```jsx
+<ArraySlot name="magicSlot" />
+```
+
+- name: string;
+- slotProps?: object;
+- plugOrder?: string[];
 
 ## Built-in plugins
 
