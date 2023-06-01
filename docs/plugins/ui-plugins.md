@@ -43,7 +43,7 @@ Once created, the plugin API allows registering UI plugs, as well as `onLoad` an
 
 #### `Plugin.plug`
 
-Plug a React component into an a [`<Slot>`](#slot):
+Plug a React component into a [`<Slot>`](#slot):
 
 ```jsx
 plugin.plug('slotName', () => {
@@ -87,7 +87,7 @@ You can also choose _not_ to render `children` in a plug, thereby ignoring the s
 
 #### `Plugin.namedPlug`
 
-Plug a React component into an a [`<ArraySlot>`](#arrayslot):
+Plug a React component into an [`<ArraySlot>`](#arrayslot):
 
 ```jsx
 plugin.namedPlug('slotName', 'plugName', () => {
@@ -190,13 +190,13 @@ Each plugin can define new slots by rendering `Slot` and `ArraySlot` components.
 
 #### `<Slot>`
 
+Render a slot that accepts a React component plug.
+
 | Prop        | Description                            |
 | ----------- | -------------------------------------- |
 | `name`      | Unique slot name.                      |
 | `children`  | Optional `children` passed to plugs.   |
 | `slotProps` | Optional plain object passed to plugs. |
-
-Render a slot that accepts a React component plug:
 
 ```jsx
 <Slot name="coolSlot" />
@@ -212,13 +212,13 @@ Slots can pass `children` to plugs, as well as data through the `slotProps` prop
 
 #### `<ArraySlot>`
 
+Render a slot that accepts a list of React component plugs.
+
 | Prop        | Description                                          |
 | ----------- | ---------------------------------------------------- |
 | `name`      | Unique slot name.                                    |
 | `slotProps` | Optional plain object passed to plugs.               |
 | `plugOrder` | Optional list of plug names to enforce a sort order. |
-
-Render a slot that accepts a list of React component plugs:
 
 ```jsx
 <ArraySlot name="coolSlot" />
