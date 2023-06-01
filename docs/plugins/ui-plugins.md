@@ -224,6 +224,12 @@ Render a slot that accepts a list of React component plugs:
 <ArraySlot name="magicSlot" />
 ```
 
+The plug order can be enforced using the `plugOrder` prop:
+
+```jsx
+<ArraySlot name="magicSlot" plugOrder={['plug1', 'plug2', 'plug3']} />
+```
+
 ## Built-in plugins
 
 The Cosmos UI is built entirely using this plugin API. It literally starts like this:
