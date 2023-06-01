@@ -73,7 +73,7 @@ _Somewhere in another plugin..._
 <Slot name="slotName" slotProps={{ name: 'Sara' }} />
 ```
 
-Plugs can receive `children` from their slot. This allows the plug to act as a decorator.
+Plugs can receive `children` from their slot. This allows the plug to act as a decorator:
 
 ```jsx
 plugin.plug('slotName', ({ children }) => {
@@ -81,13 +81,13 @@ plugin.plug('slotName', ({ children }) => {
 });
 ```
 
-Additionally, when multiple plugs are registered from the same slot they can compose each other. The first plug will be `children` for the second plug, the first plug wrapped in the second will be `children` for the third plug, and so on.
+Additionally, when multiple plugs are registered for the same slot they can compose each other. The first plug will be `children` for the second plug, the first plug wrapped in the second will be `children` for the third plug, and so on.
 
 You can also choose _not_ to render `children` in a plug, thereby ignoring the slot's children and replacing all previous plugs.
 
 #### `Plugin.namedPlug`
 
-Plug a React component into an a [`<ArraySlot>`](#arrayslot).
+Plug a React component into an a [`<ArraySlot>`](#arrayslot):
 
 ```jsx
 plugin.namedPlug('slotName', 'plugName', () => {
@@ -95,7 +95,7 @@ plugin.namedPlug('slotName', 'plugName', () => {
 });
 ```
 
-Contrary to `Plugin.plug` where a plug decorates or replaces previous plugs, a named plug is appened to a list for the slot to render. Multiple named plugs are supported for the same slot and all will be rendered.
+Contrary to `Plugin.plug` where a plug decorates or replaces previous plugs, a named plug is appended to a list for the slot to render. Multiple named plugs are allowed for the same slot and all will be rendered independently.
 
 > Named plugs are rendered in the order they are registered, or based on the optional `plugOrder` prop of the `ArraySlot` component.
 
