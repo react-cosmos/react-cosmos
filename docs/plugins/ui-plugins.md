@@ -241,15 +241,13 @@ root.render(<Slot name="root" />);
 
 You can browse the complete list of built-in UI plugins at [packages/react-cosmos-ui/src/plugins](../../packages/react-cosmos-ui/src/plugins).
 
-Here's a few examples of existing slots from built-in plugins:
+Here's a few examples of existing slots:
 
-| Type        | Slot name         | Description                                      | Plug examples                                                   |
-| ----------- | ----------------- | ------------------------------------------------ | --------------------------------------------------------------- |
-| `ArraySlot` | `rendererAction`  | List of buttons related to the renderer.         | Edit fixture source. Go full screen. Toggle responsive preview. |
-| `ArraySlot` | `fixtureAction`   | List of buttons related to the selected fixture. | Bookmark fixture.                                               |
-| `ArraySlot` | `navRow`          | List of widgets in the left-hand nav panel.      | Fixture search. Fixture bookmarks. Fixture tree view.           |
-| `ArraySlot` | `sidePanelRow`    | List of widgets in the right-hand side panel.    | The Props panel. The Class State panel. The Controls panel.     |
-| `Array`     | `rendererPreview` | Placeholder for the fixture preview.             | The iFrame renderer for web. A blank state for React Native.    |
+| Type        | Slot name         | Description                                 | Plug examples                                                   |
+| ----------- | ----------------- | ------------------------------------------- | --------------------------------------------------------------- |
+| `ArraySlot` | `rendererAction`  | List of buttons related to the renderer.    | Edit fixture source. Go full screen. Toggle responsive preview. |
+| `ArraySlot` | `navRow`          | List of widgets in the left-hand nav panel. | Fixture search. Fixture bookmarks. Fixture tree view.           |
+| `Array`     | `rendererPreview` | Placeholder for the fixture preview.        | Iframe renderer for web, status message for React Native.       |
 
 ## TypeScript
 
