@@ -190,6 +190,8 @@ Each plugin can define new slots by rendering `Slot` and `ArraySlot` components.
 
 #### `<Slot>`
 
+Render a slot that accepts a React component plug:
+
 ```jsx
 <Slot name="magicSlot" />
 ```
@@ -201,6 +203,8 @@ Each plugin can define new slots by rendering `Slot` and `ArraySlot` components.
 | `slotProps` | Optional plain object passed to plugs. |
 
 #### `<ArraySlot>`
+
+Render a slot that accepts a list of React component plugs:
 
 ```jsx
 <ArraySlot name="magicSlot" />
