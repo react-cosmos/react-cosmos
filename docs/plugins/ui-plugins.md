@@ -73,13 +73,15 @@ _Somewhere in another plugin..._
 <Slot name="slotName" slotProps={{ name: 'Sara' }} />
 ```
 
-Plugs receive `children` from their slot. This allows composition between multiple plugs from the same slot. The second plug can decorate the first:
+Plugs can receive `children` from their slot. This allows the plug to act as a decorator.
 
 ```jsx
 plugin.plug('slotName', ({ children }) => {
   return <MyDecorator>{children}</MyDecorator>;
 });
 ```
+
+Additionally, when multiple plugs are registered from the same slot they can compose each other. The first plug will be `children` for the second plug, the first plug wrapped in the second will be `children` for the third plug, and so on.
 
 You can also choose _not_ to render `children` in a plug, thereby ignoring the slot's children and replacing all previous plugs.
 
