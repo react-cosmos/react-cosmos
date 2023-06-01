@@ -51,7 +51,7 @@ plugin.plug('slotName', () => {
 });
 ```
 
-Plugs also get access to the [`PluginContext`](#plugincontext):
+Plugs get access to the [`PluginContext`](#plugincontext):
 
 ```jsx
 plugin.plug('slotName', ({ pluginContext }) => {
@@ -59,7 +59,7 @@ plugin.plug('slotName', ({ pluginContext }) => {
 });
 ```
 
-Plugs can also receive slot props, which allows slots to parameterize their plugs:
+Plugs can receive slot props, which allows slots to parameterize their plugs:
 
 ```jsx
 plugin.plug('slotName', ({ slotProps }) => {
@@ -67,15 +67,21 @@ plugin.plug('slotName', ({ slotProps }) => {
 });
 ```
 
-Plugs can also receive `children` from their slot, which allows composition between multiple plugs for the same slot. The second plug can decorate the first:
+_Somewhere in another plugin..._
+
+```jsx
+<Slot name="slotName" slotProps={{ name: 'Venus' }} />
+```
+
+Plugs can receive `children` from their slot, which allows composition between multiple plugs in the same slot. The second plug can decorate the first:
 
 ```jsx
 plugin.plug('slotName', ({ children }) => {
-  // You can also choose NOT to render children, thereby ignoring the slot's
-  // children and replacing all previous plugs.
   return <MyDecorator>{children}</MyDecorator>;
 });
 ```
+
+> You can also choose _not_ to render `children` in a plug, thereby ignoring the slot's children and replacing all previous plugs.
 
 #### `Plugin.namedPlug`
 
