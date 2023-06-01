@@ -73,7 +73,7 @@ _Somewhere in another plugin..._
 <Slot name="slotName" slotProps={{ name: 'Sara' }} />
 ```
 
-Plugs can receive `children` from their slot. This allows the plug to act as a decorator:
+Plugs can receive `children` from their slot. This allows plugs to act as decorators:
 
 ```jsx
 plugin.plug('slotName', ({ children }) => {
