@@ -282,16 +282,17 @@ When publishing your UI plugin, make sure it doesn't bundle `react` or `react-pl
 
 ```js
 externals: {
-  'react-dom': 'ReactDom',
-  'react-plugin': 'ReactPlugin',
   'react': 'React',
-  'styled-components': 'StyledComponents'
+  'react-dom': 'ReactDom',
+  'react-plugin': 'ReactPlugin'
 }
 ```
 
-See the [webpack config](https://github.com/react-cosmos/react-cosmos/blob/9b65416a2e8abd5ba3c960adf52ffad83de977fa/packages/react-cosmos-plugin-boolean-input/webpack.config.js) of the Boolean input plugin for a complete example. Other bundlers have equivalents, like [vite-plugin-externals](https://github.com/crcong/vite-plugin-externals) for Vite.
+See the [webpack config](https://github.com/react-cosmos/react-cosmos/blob/9b65416a2e8abd5ba3c960adf52ffad83de977fa/packages/react-cosmos-plugin-boolean-input/webpack.config.js) of the Boolean input plugin for a complete example.
 
-> In the future we might use [import maps](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap) and remove the need to use a bundler to author a UI plugins. ESM support in Cosmos is tracked [here](../dev/esm.md).
+> [vite-plugin-externals](https://github.com/crcong/vite-plugin-externals) seems the equivalent of Webpack `externals` for Vite.
+
+> In the future we might use [import maps](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap) and remove the need for a bundler to author a UI plugins. Cosmos ESM support is tracked [here](../dev/esm.md).
 
 ## What will _you_ create?
 
