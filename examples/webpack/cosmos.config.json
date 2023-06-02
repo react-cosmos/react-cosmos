@@ -1,6 +1,6 @@
 {
   "$schema": "../../packages/react-cosmos/config.schema.json",
-  "globalImports": ["src/global.css"],
+  "globalImports": ["src/global.css", "src/todomvc/index.css"],
   "staticPath": "static",
   "webpack": {
     "overridePath": "webpack.override.js"
