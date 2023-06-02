@@ -18,7 +18,14 @@ This JSON config is the plugin's entry point. A plugin name and at least one plu
 
 > The `server` and `ui` paths are resolved relative to the config's parent directory.
 
-To enable a Cosmos plugin add it to the `plugins` option in the `cosmos.config.json` of the host project:
+See the individual guides for each plugin type:
+
+- [Server plugins](server-plugins.md)
+- [UI plugins](ui-plugins.md)
+
+## Enabling a plugin
+
+Add it to the `plugins` option in the `cosmos.config.json` of the host project:
 
 ```json
 {
@@ -34,6 +41,8 @@ If the Cosmos plugin is an NPM package, add the name of the package to `plugins`
 }
 ```
 
+## Publishing a plugin
+
 To publish a Cosmos plugin as an NPM package, set the `main` field in its `package.json` to `"cosmos.plugin.json"` (or a different path where the Cosmos plugin config is located):
 
 ```json
@@ -43,11 +52,6 @@ To publish a Cosmos plugin as an NPM package, set the `main` field in its `packa
   "main": "cosmos.plugin.json"
 }
 ```
-
-See the individual guides for each plugin type:
-
-- [Server plugins](server-plugins.md)
-- [UI plugins](ui-plugins.md)
 
 ## Existing plugins
 
@@ -65,7 +69,7 @@ npm i -D react-cosmos-plugin-open-fixture
 }
 ```
 
-## Boolean input plugin
+### Boolean input plugin
 
 This is a [UI plugin](ui-plugins.md) that turns boolean inputs in the [control panel](https://github.com/react-cosmos/react-cosmos/blob/main/docs/usage/fixtures.md#fixture-controls) from a true/false button to a checkbox input.
 
