@@ -278,7 +278,7 @@ export type RouterSpec = {
 
 ## Publishing
 
-When publishing your UI plugin, make sure it doesn't bundle `react` or `react-plugin` inside it. The Cosmos UI plugin system only works when its plugins tap into the global React and ReactPlugin instances. The easiest way achive this is using Webpack `externals`:
+When publishing your UI plugin make sure it doesn't bundle `react` or `react-plugin` inside it. The Cosmos UI plugin system only works when its plugins tap into the global React and ReactPlugin instances. The easiest way achive this is by using Webpack `externals`:
 
 ```js
 externals: {
@@ -288,9 +288,9 @@ externals: {
 }
 ```
 
-See the [webpack config](https://github.com/react-cosmos/react-cosmos/blob/9b65416a2e8abd5ba3c960adf52ffad83de977fa/packages/react-cosmos-plugin-boolean-input/webpack.config.js) of the Boolean input plugin for a complete example.
+See the Boolean input plugin [webpack config](https://github.com/react-cosmos/react-cosmos/blob/9b65416a2e8abd5ba3c960adf52ffad83de977fa/packages/react-cosmos-plugin-boolean-input/webpack.config.js) for a complete example.
 
-> [vite-plugin-externals](https://github.com/crcong/vite-plugin-externals) seems the equivalent of Webpack `externals` for Vite.
+> [vite-plugin-externals](https://github.com/crcong/vite-plugin-externals) seems the be equivalent of Webpack `externals` for Vite.
 
 > In the future we might use [import maps](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap) and remove the need for a bundler to author a UI plugins. Cosmos ESM support is tracked [here](../dev/esm.md).
 
