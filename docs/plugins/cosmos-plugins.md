@@ -1,6 +1,6 @@
 # Cosmos plugins
 
-A Cosmos plugin is a wrapper for two types of plugins: **server plugins** and **UI plugins**. Each plugin type has a distinct API and runs in a different environment. Combining both into a single Cosmos plugin allows adding full-stack capabilities to React Cosmos with a single package.
+A Cosmos plugin is a wrapper for two plugin types: **server plugins** and **UI plugins**. Each plugin type has a distinct API and runs in a different environment. Combining both into a single Cosmos plugin adds full-stack capabilities to React Cosmos with a single package.
 
 ## Creating a plugin
 
@@ -16,7 +16,7 @@ Create a `cosmos.plugin.json` file:
 
 This JSON config is the plugin's entry point.
 
-A Cosmos plugin can contain a **server plugin** and a **UI plugin**. At least one is required, along with a plugin name. The `server` and `ui` paths are resolved relative to the config's parent directory.
+A plugin name and at least one plugin type is required. The `server` and `ui` paths are resolved relative to the config's parent directory.
 
 To enable a Cosmos plugin add it to the `plugins` option in the `cosmos.config.json` of the host project:
 
@@ -55,7 +55,7 @@ Here are some existing plugins you can install and add to `plugins` in your Cosm
 
 ### Open fixture plugin
 
-This combines a [server plugin](server-plugins.md) with a [UI plugin](ui-plugins.md). It adds a renderer action that open the selected fixture file in your default editor.
+This combines a [server plugin](server-plugins.md) with a [UI plugin](ui-plugins.md). It adds a renderer action that opens the selected fixture file in your default editor.
 
 ```bash
 npm i -D react-cosmos-plugin-open-fixture
