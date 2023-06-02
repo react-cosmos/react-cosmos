@@ -1,6 +1,8 @@
-# Plugin config
+# Cosmos plugins
 
-This is a guide for creating Cosmos plugins.
+A Cosmos plugin is a wrapper for two types of plugins: **server plugins** and **UI plugins**. Each plugin type has a distinct API and runs in a different environment. Combining both into a single Cosmos plugin allows adding full-stack capabilities to React Cosmos with a single package.
+
+## Creating a plugin
 
 Create a `cosmos.plugin.json` file:
 
@@ -46,6 +48,26 @@ See the individual guides for each plugin type:
 
 - [Server plugins](server-plugins.md)
 - [UI plugins](ui-plugins.md)
+
+## Existing plugins
+
+Here are some existing plugins you can install and add to `plugins` in your Cosmos config.
+
+### Open fixture plugin
+
+This combines a [server plugin](server-plugins.md) with a [UI plugin](ui-plugins.md). It adds a renderer action that open the selected fixture file in your default editor.
+
+```bash
+npm i -D react-cosmos-plugin-open-fixture
+```
+
+## Boolean input plugin
+
+This is a [UI plugin](ui-plugins.md) that turns boolean inputs in the [control panel](https://github.com/react-cosmos/react-cosmos/blob/main/docs/usage/fixtures.md#fixture-controls) from a true/false button to a checkbox input.
+
+```bash
+npm i -D react-cosmos-plugin-boolean-input
+```
 
 ---
 
