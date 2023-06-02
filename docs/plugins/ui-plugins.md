@@ -292,7 +292,9 @@ See the Boolean input plugin [webpack config](https://github.com/react-cosmos/re
 
 > [vite-plugin-externals](https://github.com/crcong/vite-plugin-externals) seems the be equivalent of Webpack `externals` for Vite.
 
-> In the future we might use [import maps](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap) and remove the need for a bundler to author a UI plugins. Cosmos ESM support is tracked [here](../dev/esm.md).
+> For a Vite equivalent for Webpack `externals` see [vite-plugin-externals](https://github.com/crcong/vite-plugin-externals).
+>
+> In the future we might use [import maps](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap) to remove the need for a bundler. ESM support in Cosmos is tracked [here](../dev/esm.md).
 
 ## What will _you_ create?
 
