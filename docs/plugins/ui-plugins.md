@@ -276,6 +276,24 @@ export type RouterSpec = {
 };
 ```
 
+## Publishing
+
+When building your UI plugin make sure it doesn't bundle `react` or `react-plugin` inside it. The Cosmos UI plugin system only works when plugins tap into the global React and ReactPlugin instances. The easiest way achive this is by using Webpack [`externals`](https://webpack.js.org/configuration/externals/):
+
+```js
+externals: {
+  'react': 'React',
+  'react-dom': 'ReactDom',
+  'react-plugin': 'ReactPlugin'
+}
+```
+
+See the Boolean input plugin [webpack config](https://github.com/react-cosmos/react-cosmos/blob/9b65416a2e8abd5ba3c960adf52ffad83de977fa/packages/react-cosmos-plugin-boolean-input/webpack.config.js) for a complete example.
+
+> For a Vite equivalent for Webpack `externals` see [vite-plugin-externals](https://github.com/crcong/vite-plugin-externals).
+>
+> In the future we might use [import maps](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap) to remove the need for a bundler to author UI plugins. ESM support is tracked [here](../dev/esm.md).
+
 ## What will _you_ create?
 
 All this might seem intimidating but I encourage you to try it out. Create a blank Cosmos plugin and start hacking. Add something you find useful. **Make Cosmos your own.**
