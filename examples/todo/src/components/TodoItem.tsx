@@ -34,7 +34,7 @@ export function TodoItem({ todo, onChange, onToggleDone, onDelete }: Props) {
     onDelete();
   }
 
-  const classNames = [];
+  const classNames = ['todo-item'];
   if (editing) classNames.push('editing');
   if (todo.done) classNames.push('completed');
 

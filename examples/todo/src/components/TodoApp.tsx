@@ -1,14 +1,11 @@
 import React from 'react';
-import { Todo, TodoFilter } from '../types.js';
+import { Footer } from './Footer.js';
+import { useTodoContext } from './TodoContext.js';
 import { TodoList } from './TodoList.js';
 
-type Props = {
-  todos: Todo[];
-  setTodos: (todos: Todo[]) => void;
-  filter: TodoFilter;
-  setFilter: (filter: TodoFilter) => void;
-};
-export function TodoApp({ todos, setTodos, filter, setFilter }: Props) {
+export function TodoApp() {
+  const { todos, setTodos } = useTodoContext();
+
   const [newValue, setNewValue] = React.useState('');
 
   function handleToggleAll() {
@@ -25,10 +22,6 @@ export function TodoApp({ todos, setTodos, filter, setFilter }: Props) {
     } else if (e.key === 'Escape') {
       setNewValue('');
     }
-  }
-
-  function handleClearCompleted() {
-    setTodos(todos.filter(i => !i.done));
   }
 
   return (
@@ -53,57 +46,10 @@ export function TodoApp({ todos, setTodos, filter, setFilter }: Props) {
           onChange={handleToggleAll}
         />
         <label htmlFor="toggle-all" />
-        <TodoList todos={todos} setTodos={setTodos} filter={filter} />
+        <TodoList />
       </section>
 
-      <footer className="footer">
-        <span className="todo-count">
-          <strong>{todos.filter(i => !i.done).length}</strong> items left
-        </span>
-        <ul className="filters">
-          <li>
-            <a
-              href="#"
-              className={filter === 'all' ? 'selected' : ''}
-              onClick={e => {
-                e.preventDefault();
-                setFilter('all');
-              }}
-            >
-              All
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className={filter === 'active' ? 'selected' : ''}
-              onClick={e => {
-                e.preventDefault();
-                setFilter('active');
-              }}
-            >
-              Active
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className={filter === 'completed' ? 'selected' : ''}
-              onClick={e => {
-                e.preventDefault();
-                setFilter('completed');
-              }}
-            >
-              Completed
-            </a>
-          </li>
-        </ul>
-        {todos.some(i => i.done) && (
-          <button className="clear-completed" onClick={handleClearCompleted}>
-            Clear completed
-          </button>
-        )}
-      </footer>
+      <Footer />
     </div>
   );
 }

@@ -1,13 +1,10 @@
 import React from 'react';
-import { Todo, TodoFilter } from '../types.js';
+import { useTodoContext } from './TodoContext.js';
 import { TodoItem } from './TodoItem.js';
 
-type Props = {
-  todos: Todo[];
-  setTodos: (todos: Todo[]) => void;
-  filter: TodoFilter;
-};
-export function TodoList({ todos, setTodos, filter }: Props) {
+export function TodoList() {
+  const { todos, setTodos, filter } = useTodoContext();
+
   const visibleTodos = todos.filter(i => {
     if (filter === 'active') {
       return !i.done;
