@@ -12,22 +12,27 @@ export function App() {
   }
 
   return (
-    <div className="todoapp">
-      <Header />
+    <>
+      <div className="todoapp">
+        <Header />
 
-      <section className="main">
-        <input
-          id="toggle-all"
-          type="checkbox"
-          className="toggle-all"
-          checked={todos.every(i => i.done)}
-          onChange={handleToggleAll}
-        />
-        <label htmlFor="toggle-all" />
-        <TodoList />
-      </section>
+        <section className="main">
+          <input
+            id="toggle-all"
+            type="checkbox"
+            className="toggle-all"
+            checked={todos.every(i => i.done)}
+            onChange={handleToggleAll}
+          />
+          <label htmlFor="toggle-all" />
+          <TodoList />
+        </section>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+      <footer className="info">
+        <p>Double-click to edit a todo</p>
+      </footer>
+    </>
   );
 }
