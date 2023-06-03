@@ -1,5 +1,5 @@
 import React from 'react';
-import { Todo } from './types.js';
+import { Todo } from '../types.js';
 
 type Props = {
   todo: Todo;

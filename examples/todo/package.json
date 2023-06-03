@@ -1,0 +1,25 @@
+{
+  "private": true,
+  "name": "example-todo",
+  "version": "6.0.0-beta.2",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/examples/todo",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "cosmos",
+    "export": "cosmos-export",
+    "serve": "http-server -p 5001 ./cosmos-export",
+    "native": "cosmos-native"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.0.0",
+    "examples-shared": "6.0.0-beta.2",
+    "react": "^18.2.0",
+    "react-cosmos": "6.0.0-beta.2",
+    "react-cosmos-plugin-boolean-input": "6.0.0-beta.2",
+    "react-cosmos-plugin-open-fixture": "6.0.0-beta.2",
+    "react-cosmos-plugin-vite": "6.0.0-beta.2",
+    "react-dom": "^18.2.0",
+    "vite": "^4.3.4"
+  }
+}

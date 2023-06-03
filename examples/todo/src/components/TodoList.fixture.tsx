@@ -1,11 +1,10 @@
 import React from 'react';
 import { useSelect, useValue } from 'react-cosmos/client';
-import { Footer } from './Footer.js';
-import { TodoApp } from './TodoApp.js';
-import { Todo, TodoFilter } from './types.js';
+import { Todo, TodoFilter } from '../types.js';
+import { TodoList } from './TodoList.js';
 
 export default () => {
-  const [filter, setFilter] = useSelect<TodoFilter>('filter', {
+  const [filter] = useSelect<TodoFilter>('filter', {
     defaultValue: 'all',
     options: ['all', 'active', 'completed'],
   });
@@ -34,14 +33,10 @@ export default () => {
   });
 
   return (
-    <>
-      <TodoApp
-        todos={todos}
-        setTodos={setTodos}
-        filter={filter}
-        setFilter={setFilter}
-      />
-      <Footer />
-    </>
+    <div className="todoapp">
+      <section className="main">
+        <TodoList todos={todos} setTodos={setTodos} filter={filter} />
+      </section>
+    </div>
   );
 };
