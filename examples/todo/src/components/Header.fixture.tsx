@@ -1,8 +1,8 @@
 import React from 'react';
-import { Footer } from './Footer.js';
+import { Header } from './Header.js';
 
 export default (
   <div className="todoapp">
-    <Footer />
+    <Header />
   </div>
 );

@@ -36,7 +36,7 @@ export function TodoProvider({ children }: ProviderProps) {
         {
           id: 3,
           label: 'Pay the bills',
-          done: true,
+          done: false,
         },
       ],
       []

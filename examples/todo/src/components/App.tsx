@@ -1,9 +1,9 @@
 import React from 'react';
 import { Footer } from './Footer.js';
 import { useTodoContext } from './TodoContext.js';
-import { TodoList } from './TodoList.js';
+import { TodoList } from './TodoList/TodoList.js';
 
-export function TodoApp() {
+export function App() {
   const { todos, setTodos } = useTodoContext();
 
   const [newValue, setNewValue] = React.useState('');
