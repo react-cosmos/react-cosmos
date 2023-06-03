@@ -22,4 +22,4 @@ Sandbox for developing and testing UI components in isolation.
 
 🚀 **[Get started](https://github.com/react-cosmos/react-cosmos/blob/main/docs/README.md#getting-started)** · [Live demo](https://reactcosmos.org/live-demo/) · [Documentation](docs) · [Sponsor](https://github.com/users/skidding/sponsorship)
 
-[![React Cosmos](next.png)](https://reactcosmos.org)
+[![React Cosmos](website/static/screenshot.png)](https://reactcosmos.org)

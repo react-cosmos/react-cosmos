@@ -1,0 +1,9 @@
+{
+  "$schema": "../../packages/react-cosmos/config.schema.json",
+  "globalImports": ["src/index.css"],
+  "plugins": [
+    "react-cosmos-plugin-boolean-input",
+    "react-cosmos-plugin-open-fixture",
+    "react-cosmos-plugin-vite"
+  ]
+}
