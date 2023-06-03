@@ -1,8 +1,11 @@
 import React from 'react';
 import { Header } from './Header.js';
+import { TodoProvider } from './TodoContext.js';
 
-export default (
-  <div className="todoapp">
-    <Header />
-  </div>
+export default () => (
+  <TodoProvider>
+    <div className="todoapp">
+      <Header />
+    </div>
+  </TodoProvider>
 );
