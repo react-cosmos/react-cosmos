@@ -1,8 +1,9 @@
 import React from 'react';
+import { TodoFilter } from '../types.js';
 import { useTodoContext } from './TodoContext.js';
 
 export function Footer() {
-  const { todos, setTodos, filter, setFilter } = useTodoContext();
+  const { todos, setTodos } = useTodoContext();
 
   function handleClearCompleted() {
     setTodos(todos.filter(i => !i.done));
@@ -14,42 +15,9 @@ export function Footer() {
         <strong>{todos.filter(i => !i.done).length}</strong> items left
       </span>
       <ul className="filters">
-        <li>
-          <a
-            href="#"
-            className={filter === 'all' ? 'selected' : ''}
-            onClick={e => {
-              e.preventDefault();
-              setFilter('all');
-            }}
-          >
-            All
-          </a>
-        </li>
-        <li>
-          <a
-            href="#"
-            className={filter === 'active' ? 'selected' : ''}
-            onClick={e => {
-              e.preventDefault();
-              setFilter('active');
-            }}
-          >
-            Active
-          </a>
-        </li>
-        <li>
-          <a
-            href="#"
-            className={filter === 'completed' ? 'selected' : ''}
-            onClick={e => {
-              e.preventDefault();
-              setFilter('completed');
-            }}
-          >
-            Completed
-          </a>
-        </li>
+        <Filter filter="all">All</Filter>
+        <Filter filter="active">Active</Filter>
+        <Filter filter="completed">Completed</Filter>
       </ul>
       {todos.some(i => i.done) && (
         <button className="clear-completed" onClick={handleClearCompleted}>
@@ -57,5 +25,28 @@ export function Footer() {
         </button>
       )}
     </footer>
+  );
+}
+
+type FilterProps = {
+  filter: TodoFilter;
+  children: React.ReactNode;
+};
+function Filter({ filter, children }: FilterProps) {
+  const { filter: currentFilter, setFilter } = useTodoContext();
+
+  return (
+    <li>
+      <a
+        href="#"
+        className={filter === currentFilter ? 'selected' : ''}
+        onClick={e => {
+          e.preventDefault();
+          setFilter(filter);
+        }}
+      >
+        {children}
+      </a>
+    </li>
   );
 }
