@@ -137,22 +137,6 @@ it('returns fixture info', async () => {
       treePath: ['HelloWorld'],
     },
     {
-      absoluteFilePath: path.join(
-        rootDir,
-        'src/NestedDecorators/NestedDecorators.fixture.tsx'
-      ),
-      fileName: 'NestedDecorators',
-      getElement: expect.any(Function),
-      name: null,
-      parents: [],
-      playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FNestedDecorators%2FNestedDecorators.fixture.tsx%22%7D',
-      relativeFilePath: 'src/NestedDecorators/NestedDecorators.fixture.tsx',
-      rendererUrl:
-        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2FNestedDecorators%2FNestedDecorators.fixture.tsx%22%7D',
-      treePath: ['NestedDecorators'],
-    },
-    {
       absoluteFilePath: path.join(rootDir, 'src/__fixtures__/Props.tsx'),
       fileName: 'Props',
       getElement: expect.any(Function),
