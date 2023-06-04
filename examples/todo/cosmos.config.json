@@ -5,5 +5,12 @@
     "react-cosmos-plugin-boolean-input",
     "react-cosmos-plugin-open-fixture",
     "react-cosmos-plugin-vite"
-  ]
+  ],
+  "ui": {
+    "router": {
+      "initialFixtureId": {
+        "path": "src/components/App.fixture.tsx"
+      }
+    }
+  }
 }
