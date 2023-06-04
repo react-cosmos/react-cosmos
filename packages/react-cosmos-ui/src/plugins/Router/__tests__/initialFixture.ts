@@ -19,7 +19,7 @@ afterEach(() => {
 
 const fixtureId = { path: 'zwei.js' };
 
-it('updates selected fixture ID', async () => {
+it('sets selected fixture ID', async () => {
   loadPlugins({
     config: {
       router: {
