@@ -44,7 +44,7 @@ Our [Code of Conduct](CODE_OF_CONDUCT.md) applies to all React Cosmos community 
 
 Please see our [Contributing Guide](CONTRIBUTING.md).
 
-Support the ongoing development of React Cosmos by becoming a [Sponsor](https://github.com/users/skidding/sponsorship).
+[Become a Sponsor](https://github.com/users/skidding/sponsorship) to support the ongoing development of React Cosmos.
 
 ## Live Demo
 
