@@ -1,1 +1,1 @@
-./packages/react-cosmos/README.md
+packages/react-cosmos/README.md
