@@ -2,7 +2,7 @@
 
 Welcome to the React Cosmos documentation!
 
-## What is React Cosmos?
+## What Is React Cosmos?
 
 React Cosmos is a powerful tool for developing and testing UI components in isolation. It allows you to focus on one component at a time, resulting in faster iteration and higher-quality components.
 
