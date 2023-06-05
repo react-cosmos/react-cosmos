@@ -8,7 +8,7 @@
 
 [![npm version](https://img.shields.io/npm/v/react-cosmos/next.svg?style=flat)](https://www.npmjs.com/package/react-cosmos) [![CI Status](https://github.com/react-cosmos/react-cosmos/actions/workflows/test.yml/badge.svg)](https://github.com/react-cosmos/react-cosmos/actions/workflows/test.yml) [![Codecov](https://img.shields.io/codecov/c/github/react-cosmos/react-cosmos)](https://app.codecov.io/gh/react-cosmos/react-cosmos) [![Twitter](https://img.shields.io/badge/twitter-follow-%2300acee)](https://twitter.com/ReactCosmos) [![Discord](https://img.shields.io/discord/620737684859781150?color=%236D74EF&label=discord)](https://discord.gg/3X95VgfnW5) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/react-cosmos/react-cosmos/blob/main/CONTRIBUTING.md#how-to-contribute)
 
-## Getting Started
+## Documentation
 
 Visit [docs/README.md](docs/README.md) to view the full documentation.
 
@@ -32,4 +32,4 @@ You can also support React Cosmos by becoming a [Sponsor](https://github.com/use
 
 Visit [reactcosmos.org/live-demo](https://reactcosmos.org/live-demo/) for a live demo.
 
-[![React Cosmos](website/static/screenshot.png)](https://reactcosmos.org)
+[![React Cosmos](website/static/screenshot.png)](https://reactcosmos.org/live-demo/)
