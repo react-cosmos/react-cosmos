@@ -4,31 +4,19 @@
 </p>
 
 <p align="center">
-  <a aria-label="npm version" href="https://www.npmjs.com/package/react-cosmos">
-    <img src="https://img.shields.io/npm/v/react-cosmos/next.svg?style=flat" alt="" />
-  </a>
-  <a aria-label="CI Status" href="https://github.com/react-cosmos/react-cosmos/actions/workflows/test.yml">
-    <img src="https://github.com/react-cosmos/react-cosmos/actions/workflows/test.yml/badge.svg" alt="" />
-  </a>
-  <a aria-label="Codecov" href="https://app.codecov.io/gh/react-cosmos/react-cosmos">
-    <img src="https://img.shields.io/codecov/c/github/react-cosmos/react-cosmos" alt="" />
-  </a>
-  <a aria-label="Twitter" href="https://twitter.com/ReactCosmos">
-    <img src="https://img.shields.io/badge/twitter-follow-%2300acee" alt="" />
-  </a>
-  <a aria-label="Discord" href="https://discord.gg/3X95VgfnW5">
-    <img src="https://img.shields.io/discord/620737684859781150?color=%236D74EF&label=discord" alt="" />
-  </a>
-  <a aria-label="PRs Welcome" href="https://github.com/react-cosmos/react-cosmos/blob/main/CONTRIBUTING.md#how-to-contribute">
-    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="" />
-  </a>
+  <a aria-label="npm version" href="https://www.npmjs.com/package/react-cosmos"><img src="https://img.shields.io/npm/v/react-cosmos/next.svg?style=flat" alt="" /></a>
+  <a aria-label="CI Status" href="https://github.com/react-cosmos/react-cosmos/actions/workflows/test.yml"><img src="https://github.com/react-cosmos/react-cosmos/actions/workflows/test.yml/badge.svg" alt="" /></a>
+  <a aria-label="Codecov" href="https://app.codecov.io/gh/react-cosmos/react-cosmos"><img src="https://img.shields.io/codecov/c/github/react-cosmos/react-cosmos" alt="" /></a>
+  <a aria-label="Twitter" href="https://twitter.com/ReactCosmos"><img src="https://img.shields.io/badge/twitter-follow-%2300acee" alt="" /></a>
+  <a aria-label="Discord" href="https://discord.gg/3X95VgfnW5"><img src="https://img.shields.io/discord/620737684859781150?color=%236D74EF&label=discord" alt="" /></a>
+  <a aria-label="PRs Welcome" href="https://github.com/react-cosmos/react-cosmos/blob/main/CONTRIBUTING.md#how-to-contribute"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="" /></a>
 </p>
 
 ## Getting Started
 
-> **Note** React Server Components are now supported! Check out the [Next.js integration](docs/getting-started/next.md) to get started.
-
 Choose one of the [Getting Started](docs/README.md#getting-started) guides to dive into React Cosmos.
+
+> Check out the [Next.js integration](docs/getting-started/next.md) to get started with React Server Components.
 
 Visit [docs/README.md](docs/README.md) to view the full documentation.
 
