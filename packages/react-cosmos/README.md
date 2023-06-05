@@ -36,6 +36,6 @@ Please see our [Contributing Guide](/CONTRIBUTING.md).
 
 ## Live Demo
 
-Visit [reactcosmos.org/live-demo](https://reactcosmos.org/live-demo/) for React Cosmos live demo.
+Visit [reactcosmos.org/live-demo](https://reactcosmos.org/live-demo/) for a React Cosmos live demo.
 
 [![React Cosmos](website/static/screenshot.png)](https://reactcosmos.org/live-demo/)
