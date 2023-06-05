@@ -12,7 +12,15 @@ React Cosmos revolutionizes component development, testing, and sharing. Its san
 
 ## Main features
 
-WIP.
+| Feature        | Description                                                                                                                                      |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Fixtures       | Define component states and input combinations effortlessly using a file-system-based module convention. Enhance fixtures with decorators.       |
+| Integration    | Compatible with Vite, Webpack, React Native, Next.js, and custom setups, enabling adoption into your preferred development environment.          |
+| Static export  | Generate a deployable component library ready for any static hosting service.                                                                    |
+| User interface | Browse, search, and bookmark fixtures, and preview components with responsive viewport capabilities.                                             |
+| Control panel  | Enjoy automatic UI input controls that adapt to component props and custom definitions, simplifying component manipulation during development.   |
+| Plugins        | Extend every aspect of React Cosmos with full-stack plugins to suit your specific needs.                                                         |
+| High quality   | Built in TypeScript with minimal dependencies, React Cosmos is meticulously designed and tested to ensure a high-quality development experience. |
 
 ## Getting started
 
