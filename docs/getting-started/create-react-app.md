@@ -2,7 +2,7 @@
 
 This is a guide for setting up React Cosmos in a Create React App project.
 
-## Getting started
+## Getting Started
 
 Install the required packages:
 
@@ -71,7 +71,7 @@ module.exports = overrides.webpack(config, process.env.NODE_ENV);
 
 > React Cosmos picks up `webpack.config.js` automatically. Use `webpack.configPath` to customize the Webpack config path.
 
-## Using CRACO with Tailwind CSS
+## Using CRACO With Tailwind CSS
 
 [CRACO](https://github.com/gsoft-inc/craco) is an alternative to react-app-rewired for overriding CRA's internal Webpack config. [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) recommends using CRACO to override CRA's PostCSS settings, which is why this guide targets CRACO and Tailwind CSS together.
 

@@ -2,11 +2,11 @@
 
 > **Warning** Do **NOT** use these APIs in your fixture files, or any of your client-side code, as they require access to the file system and may bundle unwanted Node.js code in your browser build.
 
-## Cosmos config
+## Cosmos Config
 
 Fetching a Cosmos config can be done in a number of ways, depending on whether or not you have a config file and, in case you do, if you prefer to specify the path manually or to rely on automatic detection.
 
-### Detect existing config from current working directory (cwd)
+### Detect Existing Config from Current Working Directory (CWD)
 
 `detectCosmosConfig` uses the same config detection strategy as the `cosmos` command.
 
@@ -16,7 +16,7 @@ import { detectCosmosConfig } from 'react-cosmos';
 const cosmosConfig = await detectCosmosConfig();
 ```
 
-### Read existing config at exact path
+### Read Existing Config at Exact Path
 
 `getCosmosConfigAtPath` is best when you don't want to care where you run a script from.
 
@@ -28,7 +28,7 @@ const cosmosConfig = await getCosmosConfigAtPath(
 );
 ```
 
-### Create default config
+### Create Default Config
 
 The minimum requirement to create a config is a root directory.
 
@@ -38,7 +38,7 @@ import { createCosmosConfig } from 'react-cosmos';
 const cosmosConfig = createCosmosConfig(__dirname);
 ```
 
-### Create custom config
+### Create Custom Config
 
 You can also customize your config programatically, without the need for an external config file.
 

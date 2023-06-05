@@ -2,7 +2,7 @@
 
 Fixture files contain a default export, which can be a React Component or any React Node.
 
-## Node fixtures
+## Node Fixtures
 
 > Think of Node fixtures as the return value of a function component, or the first argument to `React.render`.
 
@@ -11,7 +11,7 @@ Fixture files contain a default export, which can be a React Component or any Re
 export default <Button disabled>Click me</Button>;
 ```
 
-## Component fixtures
+## Component Fixtures
 
 Component fixtures are just function components with no props. They enable using Hooks inside fixtures, which is powerful for simulating state with stateless components.
 
@@ -24,7 +24,7 @@ export default () => {
 };
 ```
 
-## Multi fixture files
+## Multi Fixture Files
 
 A fixture file can also export multiple fixtures if the default export is an object.
 
@@ -46,7 +46,7 @@ The object property names will show up as fixture names in the Cosmos UI.
 
 > [See this comment](https://github.com/react-cosmos/react-cosmos/issues/924#issuecomment-462082405) for the reasoning behind this solution (vs named exports).
 
-## File conventions
+## File Conventions
 
 Two options:
 
@@ -68,7 +68,7 @@ The file paths of your fixture files (relative to your project root) are used to
 | `fixtureFileSuffix` | Suffix for fixture files (eg. `example.fixture.jsx`).                             | `"fixture"`      |
 | `ignore`            | Patterns for ignoring fixture and decorator files (eg. `["**/dist/**"]`).         |                  |
 
-## Fixture controls
+## Fixture Controls
 
 A props panel is created automatically for [Node fixtures](#node-fixtures) in the Cosmos UI. This enables you to tweek component props and see the result in real time, without any configuration.
 

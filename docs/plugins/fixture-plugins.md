@@ -1,4 +1,4 @@
-# Fixture plugins
+# Fixture Plugins
 
 While there's no formal way to package renderer plugins (like with server and UI plugins), you can tap into the fixture context to read and write fixture state that is synchronized between the renderer and the Cosmos UI.
 

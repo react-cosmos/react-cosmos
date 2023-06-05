@@ -22,7 +22,7 @@ There rest of the things are customized using the large number of options in the
 
 The Cosmos config is a **JSON** file, so it can only contain serializable values. This design decision is meant to discourage complex configuration, make it easy to embed config options into the Cosmos UI, and enable visual config editing.
 
-### Config schema
+### Config Schema
 
 **The best way to learn about the available options in the Cosmos config is to use [config.schema.json](../../packages/react-cosmos/config.schema.json).**
 
@@ -57,7 +57,7 @@ Alternatively, you can reference the local Cosmos config schema in your workspac
 ]
 ```
 
-### Custom viewports
+### Custom Viewports
 
 `responsivePreview` is a plugin included by default and you can customize it through the Cosmos config:
 

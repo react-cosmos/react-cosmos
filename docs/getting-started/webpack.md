@@ -2,7 +2,7 @@
 
 This is a guide for setting up React Cosmos in a Webpack project.
 
-## Getting started
+## Getting Started
 
 Install the required packages:
 
@@ -47,7 +47,7 @@ The `Hello` fixture will show up in your Cosmos UI and will render when you sele
 
 You've taken the first step towards designing reusable components. You're ready to prototype, test and interate on components in isolation.
 
-## Webpack config
+## Webpack Config
 
 Cosmos generates a default Webpack config if a custom one isn't provided.
 
@@ -57,7 +57,7 @@ Cosmos generates a default Webpack config if a custom one isn't provided.
 
 > **Warning** You may also need to create a `.babelrc` in your project root.
 
-### Custom config
+### Custom Webpack Config
 
 Probably the most common scenario. Most of us end up with a hairy Webpack config sooner or later.
 
@@ -73,7 +73,7 @@ Cosmos picks up `webpack.config.js` from the project root automatically. Use the
 
 > You can also point to a module inside a dependency, like in the [Create React App](create-react-app.md) example.
 
-### Config override
+### Webpack Config Override
 
 Overriding the Webpack config gives you complete control. Use the `webpack.overridePath` setting to point to a module that customizes the Webpack config used by Cosmos.
 
@@ -94,7 +94,7 @@ module.exports = (webpackConfig, env) => {
 };
 ```
 
-### Output filename
+### Output Filename
 
 Cosmos overwrites `output.filename` in the Webpack config to `[name].js` by default. Due to caching, this isn't ideal when generating static exports via `cosmos-export` command. Use the `webpack.includeHashInOutputFilename` setting to change the filename template to `[name].[contenthash].js`.
 
