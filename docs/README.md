@@ -15,12 +15,11 @@ React Cosmos revolutionizes component development, testing, and sharing. Its san
 | Feature        | Description                                                                                                                                      |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Fixtures       | Define component states and input combinations effortlessly using a file-system-based module convention. Enhance fixtures with decorators.       |
-| User Interface | User-friendly interface for browsing, searching, and bookmarking fixtures. Component preview with responsive viewports.                          |
-| Control Panel  | Automatic UI input controls based on component props and custom definitions. Simplifies component manipulation.                                  |
+| User Interface | User-friendly interface for browsing fixtures. Component preview with responsive viewports.                                                      |
 | Control Panel  | Component data manipulation through UI controls based on component props and custom definitions.                                                 |
-| Static Export  | Generate a deployable component library ready for any static hosting service.                                                                    |
+| Static Export  | Interactive component library deployable to any static hosting service.                                                                          |
 | Integration    | First-class integrations with Vite, Webpack, React Native, Next.js, and support for integrating with custom setups.                              |
-| Plugins        | Extend every aspect of React Cosmos with full-stack plugins to suit your specific needs.                                                         |
+| Plugins        | Full-stack plugin system for extending every aspect of React Cosmso to suit your needs.                                                          |
 | High Quality   | Built in TypeScript with minimal dependencies, React Cosmos is meticulously designed and tested to ensure a high-quality development experience. |
 
 ## Getting Started
