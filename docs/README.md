@@ -12,15 +12,15 @@ React Cosmos revolutionizes component development, testing, and sharing. Its san
 
 ## Key Features
 
-| Feature        | Description                                                                                                                                      |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Fixtures       | Define component states and input combinations effortlessly using a file-system-based module convention. Enhance fixtures with decorators.       |
-| User Interface | User-friendly interface for browsing fixtures. Component preview with responsive viewports.                                                      |
-| Control Panel  | Component data manipulation through UI controls based on component props and custom definitions.                                                 |
-| Static Export  | Interactive component library deployable to any static hosting service.                                                                          |
-| Integration    | First-class integrations with Vite, Webpack, React Native, Next.js, and support for integrating with custom setups.                              |
-| Plugins        | Full-stack plugin system for extending every aspect of React Cosmso to suit your needs.                                                          |
-| High Quality   | Built in TypeScript with minimal dependencies, React Cosmos is meticulously designed and tested to ensure a high-quality development experience. |
+| Feature        | Description                                                                                                         |
+| -------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Fixtures       | A file-system based module convention for defining component states effortlessly. Enhanced with decorators.         |
+| User Interface | User-friendly interface for browsing fixtures. Component preview with responsive viewports.                         |
+| Control Panel  | Component data manipulation through UI controls based on component props and custom definitions.                    |
+| Static Export  | An interactive component library deployable to any static hosting service.                                          |
+| Integration    | First-class integrations with Vite, Webpack, React Native, Next.js, and support for integrating with custom setups. |
+| Plugins        | Full-stack plugin system for extending every aspect of React Cosmso to suit your needs.                             |
+| High Quality   | 100% TypeScript. Minimal dependencies. Meticulously designed and tested to ensure the best developer experience.    |
 
 ## Getting Started
 
