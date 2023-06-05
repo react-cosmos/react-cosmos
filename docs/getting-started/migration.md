@@ -1,4 +1,4 @@
-# React Cosmos 6 migration guide
+# React Cosmos 6 Migration Guide
 
 > We're also migrating our community from Slack to Discord. [Join our brand new Discord Server](https://discord.gg/3X95VgfnW5) to interact with fellow Cosmonauts.
 

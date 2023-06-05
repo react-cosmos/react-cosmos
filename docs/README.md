@@ -24,7 +24,7 @@ React Cosmos revolutionizes component development, testing, and sharing. Its san
 
 ## Getting Started
 
-> The current docs are for React Cosmos 6. Check out the [migration guide](getting-started/migration.md) to upgrade from v5.
+> The current docs are for React Cosmos 6. Check out the [Migration Guide](getting-started/migration.md) to upgrade from v5.
 
 Choose a dedicated guide for integrating with a specific bundler, framework, or a custom setup:
 
