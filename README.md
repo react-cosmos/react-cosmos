@@ -24,13 +24,13 @@
   </a>
 </p>
 
-## Documentation
+## Getting Started
 
 > **Note** React Server Components are now supported! Check out the [Next.js integration](docs/getting-started/next.md) to get started.
 
-Visit [docs/README.md](docs/README.md) to view the full documentation.
-
 Choose one of the [Getting Started](docs/README.md#getting-started) guides to dive into React Cosmos.
+
+Visit [docs/README.md](docs/README.md) to view the full documentation.
 
 ## Community
 
@@ -44,7 +44,7 @@ Our [Code of Conduct](CODE_OF_CONDUCT.md) applies to all React Cosmos community 
 
 Please see our [Contributing Guide](CONTRIBUTING.md).
 
-You can also support React Cosmos by becoming a [Sponsor](https://github.com/users/skidding/sponsorship).
+Support the ongoing development of React Cosmos by becoming a [Sponsor](https://github.com/users/skidding/sponsorship).
 
 ## Live Demo
 
