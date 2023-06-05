@@ -14,11 +14,11 @@
 
 ## Getting Started
 
-Choose one of the [Getting Started](../../docs/README.md#getting-started) guides to dive into React Cosmos.
+Choose one of the [Getting Started](/docs/README.md#getting-started) guides to dive into React Cosmos.
 
-> Check out the [Next.js integration](../../docs/getting-started/next.md) to get started with React Server Components.
+> Check out the [Next.js integration](/docs/getting-started/next.md) to get started with React Server Components.
 
-Visit [docs/README.md](../../docs/README.md) to view the full documentation.
+Visit [docs/README.md](/docs/README.md) to view the full documentation.
 
 ## Community
 
@@ -26,11 +26,11 @@ To chat with other community members you can join the [React Cosmos Discord](htt
 
 You can also ask questions, voice ideas, and share your projects on [GitHub Discussions](https://github.com/react-cosmos/react-cosmos/discussions).
 
-Our [Code of Conduct](../../CODE_OF_CONDUCT.md) applies to all React Cosmos community channels.
+Our [Code of Conduct](/CODE_OF_CONDUCT.md) applies to all React Cosmos community channels.
 
 ## Contributing
 
-Please see our [Contributing Guide](../../CONTRIBUTING.md).
+Please see our [Contributing Guide](/CONTRIBUTING.md).
 
 [Become a Sponsor](https://github.com/users/skidding/sponsorship) to support the ongoing development of React Cosmos.
 
