@@ -19,7 +19,7 @@ React Cosmos revolutionizes component development, testing, and sharing. Its san
 | Control Panel  | Component data manipulation through UI controls based on component props and custom definitions.                    |
 | Static Export  | An interactive component library deployable to any static hosting service.                                          |
 | Integration    | First-class integrations with Vite, Webpack, React Native, Next.js, and support for integrating with custom setups. |
-| Plugins        | Full-stack plugin system for extending every aspect of React Cosmso to suit your needs.                             |
+| Plugins        | Full-stack plugin system for extending every aspect of React Cosmos to suit your needs.                             |
 | High Quality   | 100% TypeScript. Minimal dependencies. Meticulously designed and tested to ensure the best developer experience.    |
 
 ## Getting Started
