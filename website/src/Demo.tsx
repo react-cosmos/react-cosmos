@@ -24,9 +24,9 @@ export function Demo() {
           Expect more from your <NoWrap>dev environment</NoWrap>
         </Subtitle>
         <CtaContainer style={getSlideInStyle(entered, 1)}>
-          <CallToAction href="https://github.com/react-cosmos/react-cosmos/blob/main/docs/README.md#table-of-contents">
+          <CallToAction href="https://github.com/react-cosmos/react-cosmos/blob/main/docs/README.md#getting-started">
             <Play />
-            Get started
+            Get Started
           </CallToAction>
         </CtaContainer>
         <Links style={getSlideInStyle(entered, 1)}>

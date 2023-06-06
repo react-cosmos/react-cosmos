@@ -19,7 +19,7 @@ React Cosmos revolutionizes component development, testing, and sharing. Its san
 | Control Panel  | Component data manipulation through UI controls based on component props and custom definitions.                    |
 | Static Export  | An interactive component library deployable to any static hosting service.                                          |
 | Integration    | First-class integrations with Vite, Webpack, React Native, Next.js, and support for integrating with custom setups. |
-| Plugins        | Full-stack plugin system for extending every aspect of React Cosmso to suit your needs.                             |
+| Plugins        | Full-stack plugin system for extending every aspect of React Cosmos to suit your needs.                             |
 | High Quality   | 100% TypeScript. Minimal dependencies. Meticulously designed and tested to ensure the best developer experience.    |
 
 ## Getting Started
@@ -51,6 +51,14 @@ Choose a dedicated guide for integrating with a specific bundler, framework, or 
 - [Server Plugins](plugins/server-plugins.md)
 - [UI Plugins](plugins/ui-plugins.md)
 - [Fixture Plugins](plugins/fixture-plugins.md)
+
+## Why Is React Cosmos Architecturally Unique?
+
+React Cosmos aims to be lightweight and efficient by employing the following strategies:
+
+- **Library over framework approach**: Instead of replicating all the environments it operates in, React Cosmos functions as a modular library that can be seamlessly integrated into any environment. This enables compatibility with a wide range of bundlers while ensuring a compact and robust React Cosmos codebase.
+- **Comprehensive plugin system**: React Cosmos offers extensive extendability while maintaining a small surface area of powerful low-level plugin APIs. This means that all aspects of React Cosmos can be easily extended, and even the core functionality is built using the very same plugin system.
+- **Dedicated to React**: React Cosmos focuses solely on React. By doing so, it harnesses the full potential of the React component model and delivers an exceptional experience for React developers. We firmly believe that React is still just getting started and holds a bright future ahead.
 
 ---
 
