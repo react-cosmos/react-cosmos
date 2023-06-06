@@ -1,4 +1,6 @@
-## Hi there!
+# Contributing to React Cosmos
+
+Hi there!
 
 So you want to know more about React Cosmos... _Sweet!_
 

@@ -1,4 +1,4 @@
-# Static export
+# Static Export
 
 Get a nice component library that you can deploy to any static hosting service.
 
@@ -31,7 +31,7 @@ npx http-server ./cosmos-export
 | ------------ | ------------------------------------ | ----------------- |
 | `exportPath` | Output directory for static exports. | `"cosmos-export"` |
 
-## Bundler integration
+## Bundler Integration
 
 The `cosmos-export` command creates a static export of the Cosmos UI shell, which expects a corresponding static Renderer to connect with. Without a Cosmos bundler plugin, the latter will be missing.
 

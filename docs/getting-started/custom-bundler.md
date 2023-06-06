@@ -1,4 +1,4 @@
-# Custom bundler
+# Custom Bundler
 
 This is a guide for setting up React Cosmos with any bundler.
 

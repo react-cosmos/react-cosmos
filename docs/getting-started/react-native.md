@@ -2,7 +2,7 @@
 
 This is a guide for setting up React Cosmos in a React Native project, with or without Expo.
 
-## Getting started
+## Getting Started
 
 Install the required packages:
 
@@ -58,7 +58,7 @@ The `Hello` fixture will show up in your React Cosmos UI.
 
 At this point Cosmos should successfully read your fixtures. One more step before you can render them.
 
-### Set up the React Native renderer
+### Set Up React Native Renderer
 
 This is very similar to a [custom bundler setup](./custom-bundler.md). Cosmos cannot plug itself automatically into React Native's build pipeline (Metro), but you can do it with minimal effort.
 
@@ -109,7 +109,7 @@ Open your app in the simulator and the Cosmos renderer should say "No fixture se
 
 You've taken the first step towards designing reusable components. You're ready to prototype, test and interate on components in isolation.
 
-## App fixture
+## App Fixture
 
 You'll often want to load the entire app in development. The simplest way to do this without disconnecting the Cosmos entry point is to create an App fixture:
 
@@ -120,7 +120,7 @@ import App from './App.main';
 export default () => <App />;
 ```
 
-## Initial fixture
+## Initial Fixture
 
 You can configure the Cosmos Native renderer to auto load a fixture on init.
 

@@ -2,7 +2,7 @@
 
 This is a guide for setting up React Cosmos in a Vite project.
 
-## Getting started
+## Getting Started
 
 Install the required packages:
 
@@ -47,11 +47,11 @@ The `Hello` fixture will show up in your Cosmos UI and will render when you sele
 
 You've taken the first step towards designing reusable components. You're ready to prototype, test and interate on components in isolation.
 
-## Vite config
+## Vite Config
 
 Cosmos generates a default Vite config if a custom one isn't provided.
 
-### Custom config
+### Custom Vite Config
 
 Cosmos picks up `vite.config.js` from the project root automatically. Use the `vite.configPath` setting to provide an existing Vite config at a different path:
 

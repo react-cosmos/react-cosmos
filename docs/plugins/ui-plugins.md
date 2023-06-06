@@ -230,7 +230,7 @@ The plug order can be enforced using the `plugOrder` prop:
 <ArraySlot name="coolSlot" plugOrder={['plug1', 'plug2', 'plug3']} />
 ```
 
-## Built-in plugins
+## Built-in Plugins
 
 The Cosmos UI is built entirely using this plugin API. It literally starts like this:
 
@@ -294,7 +294,7 @@ See the Boolean input plugin [webpack config](https://github.com/react-cosmos/re
 >
 > In the future we might use [import maps](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap) to remove the need for a bundler to author UI plugins. ESM support is tracked [here](../dev/esm.md).
 
-## What will _you_ create?
+## What Will _You_ Create??
 
 All this might seem intimidating but I encourage you to try it out. Create a blank Cosmos plugin and start hacking. Add something you find useful. **Make Cosmos your own.**
 

@@ -53,7 +53,7 @@ process.env.NODE_ENV = 'production';
 
   // Export live demo instance
   execSync('yarn workspace example-todo export');
-  await fs.cp('./examples/todo/cosmos-export', './website/dist/live-demo', {
+  await fs.cp('./examples/todo/cosmos-export', './website/dist/demo', {
     recursive: true,
   });
 })();

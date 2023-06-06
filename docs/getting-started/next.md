@@ -6,7 +6,7 @@ This guide covers how to integrate React Cosmos with Next.js 13.4+. It includes 
 
 Also check out [react-cosmos/nextjs-example](https://github.com/react-cosmos/nextjs-example), which features both Server and Client fixtures of the glorious [react-tweet](https://github.com/vercel-labs/react-tweet) component.
 
-## Getting started
+## Getting Started
 
 Create a [new Next.js project](https://nextjs.org/docs/getting-started/installation) or open an existing one.
 
@@ -81,7 +81,7 @@ You can import both Server and Client components in your fixtures, which run on 
 
 - Only single function fixtures can be exported from a fixture module with the `'use client'` descriptor. That's because Client fixture modules are passed _as is_ to the Server render tree and their exports are expected to be component types by design. While other fixture formats (React Node exports or multi fixture exports) cannot be used in Client fixtures, all Cosmos fixture formats as supported in Server fixtures.
 
-## Static export
+## Static Export
 
 The `cosmos-export` command creates a static export of the Cosmos UI shell, which expects a corresponding static Renderer to connect with. Generating the complete export requires stringing a few simple commands together:
 
@@ -103,7 +103,7 @@ npx http-server ./cosmos-export
 
 👀 **[Live demo](https://cosmos-nextjs.vercel.app)**
 
-## Let's make this better
+## Let's Make This Better
 
 Running Server Components in Cosmos is awesome but a plugin could take this integration to the next level (no pun intended).
 

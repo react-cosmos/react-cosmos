@@ -1,4 +1,4 @@
-# React Cosmos 6 migration guide
+# React Cosmos 6 Migration Guide
 
 > We're also migrating our community from Slack to Discord. [Join our brand new Discord Server](https://discord.gg/3X95VgfnW5) to interact with fellow Cosmonauts.
 
@@ -21,7 +21,7 @@ This major version accomplishes the following:
 - New Vite plugin.
 - In progress: Official APIs for both bundler and UI plugins.
 
-## Breaking changes
+## Breaking Changes
 
 - Dropped Node <14 support.
 - Dropped IE support.
@@ -29,7 +29,7 @@ This major version accomplishes the following:
 
 Dropping backwards compatibility with older versions of Node, browsers or React might be unfortunate for some but it's the only way to move forward. It allowed us to get the codebase into a much better shape by minimizing 3rd party dependencies and publishing ESM modules.
 
-### Webpack plugin
+### Webpack Plugin
 
 Webpack support is no longer included in the core React Cosmos packages. To set up a webpack codebase you need to install `react-cosmos-plugin-webpack` and add it to the list of plugins in your Cosmos config.
 
@@ -37,7 +37,7 @@ Webpack support is no longer included in the core React Cosmos packages. To set 
 "plugins": ["react-cosmos-plugin-webpack"]
 ```
 
-### Vite plugin
+### Vite Plugin
 
 React Cosmos 6 also comes with a brand new Vite plugin. To set up a Vite codebase you need to install `react-cosmos-plugin-vite` and add it to the list of plugins in your Cosmos config.
 
@@ -45,7 +45,7 @@ React Cosmos 6 also comes with a brand new Vite plugin. To set up a Vite codebas
 "plugins": ["react-cosmos-plugin-vite"]
 ```
 
-### Other breaking changes
+### Other Breaking Changes
 
 - `react-cosmos/fixture` exports moved to `react-cosmos/client` (eg. `import { useValue } from 'react-cosmos/client'`).
 - `NativeFixtureLoader` component moved from `react-cosmos/native` to new `react-cosmos-native` package. Install `react-cosmos-native@next` as well for a React Native setup.
@@ -55,7 +55,7 @@ React Cosmos 6 also comes with a brand new Vite plugin. To set up a Vite codebas
 
 There might be some other subtle breaking changes, especially if you're implementing a custom Cosmos renderer or if you're integrated with a bundler other than webpack. Create an issue or send us a message on [Discord](https://discord.gg/3X95VgfnW5) if this is the case and we'll do our best to help you with the migration.
 
-### Next steps
+### Next Steps
 
 A rough outline for this release:
 

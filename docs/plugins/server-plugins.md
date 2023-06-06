@@ -1,4 +1,4 @@
-# Server plugins
+# Server Plugins
 
 This is a guide for creating Cosmos server plugins.
 
