@@ -52,12 +52,12 @@ Choose a dedicated guide for integrating with a specific bundler, framework, or 
 - [UI Plugins](plugins/ui-plugins.md)
 - [Fixture Plugins](plugins/fixture-plugins.md)
 
-## Why is React Cosmos architecturally unique?
+## Why Is React Cosmos Architecturally Unique?
 
 React Cosmos aims to be lightweight and efficient by employing the following strategies:
 
 - **Library over framework approach**: Instead of replicating all the environments it operates in, React Cosmos functions as a modular library that can be seamlessly integrated into any environment. This enables compatibility with a wide range of bundlers while ensuring a compact and robust React Cosmos codebase.
-- **Comprehensive plugin system**: React Cosmos offers extensive extendability while maintaining a small core API surface area. This means that all aspects of React Cosmos are pluggable, and even the core functionality is built using the same plugin APIs.
+- **Comprehensive plugin system**: React Cosmos offers extensive extendability while maintaining a small surface area of powerful low-level plugin APIs. This means that all aspects of React Cosmos can be easily extended, and even the core functionality is built using the very same plugin system.
 - **Dedicated to React**: React Cosmos focuses solely on React. By doing so, it harnesses the full potential of the React component model and delivers an exceptional experience for React developers. We firmly believe that React is still just getting started and holds a bright future ahead.
 
 ---
