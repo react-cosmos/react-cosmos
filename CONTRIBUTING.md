@@ -1,4 +1,4 @@
-## Contributing Guide
+# Contributing to React Cosmos
 
 Hi there!
 
