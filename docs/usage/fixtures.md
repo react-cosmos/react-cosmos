@@ -72,7 +72,7 @@ The file paths of your fixture files (relative to your project root) are used to
 
 Props controls are created automatically for [Node fixtures](#node-fixtures) in the Cosmos UI. This enables you to tweek component props and see the result in real time, without any configuration.
 
-You can also create custom controls in the [Control Panel](user-interface.md#control-panel) by manually defining the UI controls in your fixtures.
+You can also create custom controls in the [Control Panel](user-interface.md#control-panel) by manually defining them in your fixtures.
 
 ### `useValue`
 
