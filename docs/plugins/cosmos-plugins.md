@@ -71,7 +71,7 @@ npm i -D react-cosmos-plugin-open-fixture
 
 ### Boolean Input Plugin
 
-This is a [UI plugin](ui-plugins.md) that turns boolean inputs in the [control panel](https://github.com/react-cosmos/react-cosmos/blob/main/docs/usage/fixtures.md#fixture-controls) from a true/false button to a checkbox input.
+This is a [UI plugin](ui-plugins.md) that turns boolean inputs in the [Control Panel](/docs/usage/user-interface.md#control-panel) from a true/false button to a checkbox input.
 
 ```bash
 npm i -D react-cosmos-plugin-boolean-input

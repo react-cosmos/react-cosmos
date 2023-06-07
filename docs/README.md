@@ -41,6 +41,7 @@ Choose a dedicated guide for integrating with a specific bundler, framework, or 
 
 - [Fixtures](usage/fixtures.md)
 - [Decorators](usage/decorators.md)
+- [User Interface](usage/user-interface.md)
 - [Configuration](usage/configuration.md)
 - [Static Export](usage/static-export.md)
 - [Node.js API](usage/node-api.md)

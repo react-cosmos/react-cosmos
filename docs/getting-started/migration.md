@@ -19,7 +19,7 @@ This major version accomplishes the following:
 - Codebase brought up to date with standards and dependencies.
 - Webpack plugin extracted from core packages.
 - New Vite plugin.
-- In progress: Official APIs for both bundler and UI plugins.
+- Official APIs for both server and UI plugins.
 
 ## Breaking Changes
 
