@@ -2,9 +2,13 @@ import React from 'react';
 import { useSelect, useValue } from 'react-cosmos/client';
 
 export default () => {
-  const [name] = useValue('string', { defaultValue: 'Mark Normand' });
-  const [age] = useValue('number', { defaultValue: 39 });
+  const [name] = useValue('name', { defaultValue: 'Mark Normand' });
+  const [age] = useValue('age', { defaultValue: 39 });
   const [comedy] = useValue('comedy', { defaultValue: true });
+  const [special, setSpecial] = useSelect('special', {
+    options: ['Still Got It', "Don't Be Yourself", 'Out to Lunch'],
+    defaultValue: 'Out to Lunch',
+  });
   const [podcast] = useValue('podcast', {
     defaultValue: {
       name: 'Tuesdays with Stories',
@@ -13,10 +17,6 @@ export default () => {
       endDate: null,
       tagRegex: /itsallpipes/g,
     },
-  });
-  const [special, setSpecial] = useSelect('special', {
-    options: ['Still Got It', "Don't Be Yourself", 'Out to Lunch'],
-    defaultValue: 'Out to Lunch',
   });
 
   function renderButton(option: typeof special) {
