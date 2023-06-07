@@ -47,7 +47,7 @@ You can have multiple DOM remote renderers open simultaneously, allowing you to 
 
 You can open a remote renderer by using the "Copy remote renderer URL" button from the home screen, or by launching a [Full-Screen Preview](#full-screen-preview). In the former case the renderer will follow the selected fixture from the Cosmos UI, while in the latter case the selected fixture is locked for that renderer.
 
-Communication and state synchronization between the Cosmos UI and a renderer is accomplished through `WebSocket`. State synchronization between multiple renderers is supported, with one primary renderer controlling the state while the others mirror it.
+Communication and state synchronization between the Cosmos UI and a remote renderer is accomplished through `WebSocket`. State synchronization between multiple renderers is supported, with one primary renderer controlling the state while the others mirror it.
 
 ## Reload Renderer
 
