@@ -29,11 +29,11 @@ Communication and state synchronization between the Cosmos UI and the renderer i
 
 ## Responsive Preview
 
-Viewport controls that allow simulating any viewport size and orientation, with the option to chose from a predefined list of common devices.
+Viewport controls that allow simulation of screen size and orientation, with the option to choose from a predefined list of common devices.
 
 <img alt="" width="400" src="screenshots/responsive-preview.png" />
 
-A screen size can be embedded into a fixture using the [`<Viewport>`](../usage/fixtures.md#viewport) component.
+A screen size can be embedded into a fixture using the [`<Viewport>`](../usage/fixtures.md#viewport) decorator.
 
 ## Full-Screen Preview
 
@@ -59,7 +59,7 @@ Launches the source code of the current fixture in your default code editor.
 
 ## Control Panel
 
-The UI controls provide powerful component data manipulation.
+UI controls that provide powerful component data manipulation.
 
 <img alt="" width="400" src="screenshots/props-panel.png" />
 
@@ -93,7 +93,7 @@ The Cosmos UI supports a set of useful keyboard shortcuts for the most commonly 
 
 ## UI Plugins
 
-The Cosmos UI can be extended using the [UI Plugin API](../plugins/ui-plugins.md).
+The Cosmos UI can be extended using [UI Plugins](../plugins/ui-plugins.md).
 
 ---
 
