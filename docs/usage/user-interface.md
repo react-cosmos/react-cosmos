@@ -6,7 +6,7 @@ Inspiration: https://twitter.com/ReactCosmos/status/1189127279533793281
 
 File-system based. Persistent.
 
-![Fixture Tree View](screenshots/fixture-list.png)
+<img alt="Fixture Tree View" width="400" src="screenshots/fixture-list.png" />
 
 ### Lazy mode
 
@@ -14,7 +14,7 @@ File-system based. Persistent.
 
 Fuzzy. ⌘ + P from anywhere.
 
-![Fixture Search](screenshots/fixture-search.png)
+<img alt="Fixture Search" width="400" src="screenshots/fixture-search.png" />
 
 ## Fixture Bookmarks
 
@@ -22,7 +22,7 @@ Fuzzy. ⌘ + P from anywhere.
 
 `<Viewport>` component.
 
-![Responsive Viewport](screenshots/responsive-mode.png)
+<img alt="Responsive Viewport" width="400" src="screenshots/responsive-mode.png" />
 
 ## Full-screen Renderer
 
@@ -36,7 +36,7 @@ Multiple remote renderers (looking at multiple fixture previews).
 
 ## Control Panel
 
-![Props Panel](screenshots/props-panel.png)
+<img alt="Props Panel" width="400" src="screenshots/props-panel.png" />
 
 ## Keyboard Shortcuts
 
