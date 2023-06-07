@@ -63,11 +63,13 @@ UI controls that provide powerful component data manipulation.
 
 <img alt="" width="400" src="screenshots/props-panel.png" />
 
-Three types of panels are currently supported:
+Three types of controls are currently supported:
 
-1. Props Panel: Automatically generated based on React element props. Only works with [Node Fixtures](../usage/fixtures.md#node-fixtures).
-2. Class State Panel: Automatically generated based on React Class components, which are deprecated but supported indefinitely.
-3. Controls Panel: Generated using custom definition hooks that can be represented as text inputs or select dropdowns.
+| Control type | Description                                                                                                                |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------- |
+| Props        | Automatically generated based on React element props. Only works with [Node Fixtures](../usage/fixtures.md#node-fixtures). |
+| Class State  | Automatically generated based on React Class components, which are deprecated but supported indefinitely.                  |
+| Custom       | Generated using custom definition hooks that can be represented as text inputs or select dropdowns.                        |
 
 ## Adjustable Panels
 
