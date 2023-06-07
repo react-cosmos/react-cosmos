@@ -4,7 +4,7 @@ This section highlights the main functionality of the React Cosmos User Interfac
 
 ## Fixture Tree View
 
-An elegant file-system-based tree view navigation system. Folders can be collapsed, and their state persists between sessions.
+An elegant file-system based tree view navigation system. Folders can be collapsed, and their state persists between sessions.
 
 ## Fixture Search
 
@@ -16,31 +16,35 @@ A convenient way to keep certain fixtures readily accessible while actively work
 
 ## Fixture Preview
 
-The fixture preview is the heart of React Cosmos. It loads a Cosmos renderer in an `<iframe>` within the Cosmos UI. Communication between the Cosmos UI and the renderer is accomplished through `postMessage`.
+The fixture preview is the heart of React Cosmos. It loads a Cosmos renderer in an `iframe` within the Cosmos UI.
+
+Communication and state synchronization between the Cosmos UI and the renderer is accomplished through [`window.postMessage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage).
 
 ## Full-Screen Preview
 
 Launch the selected fixture into a full-screen preview, breaking away from the Cosmos UI shell.
 
-Note: A full-screen preview functions as a [Remote Renderer](#remote-renderer).
+> **Note** A full-screen preview functions as a [Remote Renderer](#remote-renderer).
 
 ## Remote Renderer
 
-You can have multiple remote renderers open simultaneously, allowing you to view the same fixture on different resolutions, browsers, or devices. It is also possible to preview different fixtures concurrently. State synchronization between multiple renderers is supported, with one primary renderer controlling the state while the others mirror it.
+You can have multiple remote renderers open simultaneously, allowing you to view the same fixture on different resolutions, browsers, or devices. It's also possible to preview different fixtures concurrently.
 
-Note: The React Native renderer operates as a remote renderer, synchronizing its state with the Cosmos UI via WebSocket.
+State synchronization between multiple renderers is supported, with one primary renderer controlling the state while the others mirror it.
 
-## Reload Renderer (With Native Support)
+> **Note** The React Native renderer operates as a remote renderer, synchronizing its state with the Cosmos UI via `WebSocket`.
+
+## Reload Renderer
 
 The reload renderer button triggers a full reload of the fixture preview.
 
-Note: The renderer reload button also works for React Native apps by calling DevSettings.reload.
+> **Note** The renderer reload button also works for React Native apps by calling `DevSettings.reload` inside the renderer.
 
 ## Open Fixture Source
 
 Launches the source code of the current fixture in your default code editor.
 
-Note: You need to install the Open Fixture Plugin to enable this capability.
+**Note** You need to install the [Open Fixture Plugin](../plugins/cosmos-plugins.md#open-fixture-plugin) to enable this capability.
 
 ## Control Panel
 
