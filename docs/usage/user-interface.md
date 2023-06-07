@@ -2,21 +2,22 @@
 
 This section highlights the main functionality of the React Cosmos UI.
 
-Visit [reactcosmos.org/demo/](https://reactcosmos.org/demo/) for a live demo of React Cosmos.
-
 [![React Cosmos](/website/static/screenshot.png)](https://reactcosmos.org/demo/)
+
+Visit [reactcosmos.org/demo/](https://reactcosmos.org/demo/) for a live demo of React Cosmos.
 
 ## Fixture Tree View
 
-<img alt="" width="400" src="screenshots/fixture-tree-view.png" />
+An elegant file-system based tree view navigation system. Folders can be collapsed,
+and their state persists between sessions.
 
-An elegant file-system based tree view navigation system. Folders can be collapsed, and their state persists between sessions.
+<img alt="" width="400" src="screenshots/fixture-tree-view.png" />
 
 ## Fixture Search
 
-<img alt="" width="400" src="screenshots/fixture-search.png" />
-
 A snappy fixture search feature with fuzzy matching. Use `⌘ + P` from anywhere to launch the search modal.
+
+<img alt="" width="400" src="screenshots/fixture-search.png" />
 
 ## Fixture Bookmarks
 
@@ -30,9 +31,9 @@ Communication and state synchronization between the Cosmos UI and the renderer i
 
 ## Responsive Preview
 
-<img alt="" width="400" src="screenshots/responsive-preview.png" />
-
 WIP.
+
+<img alt="" width="400" src="screenshots/responsive-preview.png" />
 
 ## Full-Screen Preview
 
@@ -60,9 +61,11 @@ Launches the source code of the current fixture in your default code editor.
 
 ## Control Panel
 
+The UI controls provide powerful component data manipulation capabilities.
+
 <img alt="" width="400" src="screenshots/props-panel.png" />
 
-The UI controls provide powerful component data manipulation capabilities. Three types of panels are currently supported:
+Three types of panels are currently supported:
 
 1. Props Panel: Automatically generated based on React element props. Only works with [Node Fixtures](../usage/fixtures.md#node-fixtures).
 2. Class State Panel: Automatically generated based on React Class components, which are deprecated but still supported indefinitely.
@@ -74,9 +77,9 @@ The Cosmos UI features two slick resizable and collapsible panels on each side. 
 
 ## Notifications
 
-<img alt="" width="400" src="screenshots/notifications.png" />
+A beautiful notifications interface used to communicate renderer and server connectivity. It can be utilized from anywhere in the Cosmos UI, including 3rd party plugins.
 
-A beautiful notifications API used to communicate renderer and server connectivity. It can be utilized from anywhere in the Cosmos UI, including 3rd party plugins.
+<img alt="" width="400" src="screenshots/notifications.png" />
 
 ## Keyboard Shortcuts
 
@@ -92,7 +95,7 @@ The Cosmos UI supports a set of useful keyboard shortcuts for the most commonly 
 
 ## UI Plugins
 
-The Cosmos UI can be extended in numerous ways using the [UI Plugin API](../plugins/ui-plugins.md).
+The Cosmos UI can be extended using the [UI Plugin API](../plugins/ui-plugins.md).
 
 ---
 
