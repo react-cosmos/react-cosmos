@@ -33,7 +33,7 @@ Viewport controls that allow simulation of screen size and orientation, with the
 
 <img alt="" width="400" src="screenshots/responsive-preview.png" />
 
-A screen size can be embedded into a fixture using the [`<Viewport>`](../usage/fixtures.md#viewport) decorator.
+A screen size can be embedded into a fixture using the [`<Viewport>`](fixtures.md#viewport) decorator.
 
 ## Full-Screen Preview
 
@@ -65,11 +65,11 @@ UI controls that provide powerful component data manipulation.
 
 Three types of controls are currently supported:
 
-| Control type | Description                                                                                                                |
-| ------------ | -------------------------------------------------------------------------------------------------------------------------- |
-| Props        | Automatically generated based on React element props. Only works with [Node Fixtures](../usage/fixtures.md#node-fixtures). |
-| Class State  | Automatically generated based on React Class components, which are deprecated but supported indefinitely.                  |
-| Custom       | Generated using custom definition hooks that can be represented as text inputs or select dropdowns.                        |
+| Control type | Description                                                                                                               |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| Props        | Automatically generated based on React element props. Only works with [Node Fixtures](fixtures.md#node-fixtures).         |
+| Class State  | Automatically generated based on React Class components, which are deprecated but supported indefinitely.                 |
+| Custom       | Defined using [custom fixture hooks](fixtures.md#ui-controls) that can be represented as text inputs or select dropdowns. |
 
 ## Adjustable Panels
 
