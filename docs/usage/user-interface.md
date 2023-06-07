@@ -2,8 +2,6 @@
 
 This section highlights the main functionality of the React Cosmos UI.
 
-[![React Cosmos](/website/static/screenshot.png)](https://reactcosmos.org/demo/)
-
 Visit [reactcosmos.org/demo/](https://reactcosmos.org/demo/) for a live demo of React Cosmos.
 
 ## Fixture Tree View
@@ -43,11 +41,13 @@ Launch the selected fixture into a full-screen preview, breaking away from the C
 
 ## Remote Renderer
 
-You can have multiple remote renderers open simultaneously, allowing you to view the same fixture on different resolutions, browsers, or devices. It's also possible to preview different fixtures concurrently.
+You can have multiple DOM remote renderers open simultaneously, allowing you to view the same fixture on different resolutions, browsers, or devices. It's also possible to preview different fixtures concurrently.
+
+The React Native renderer is another example of a remote renderer.
 
 State synchronization between multiple renderers is supported, with one primary renderer controlling the state while the others mirror it.
 
-> The React Native renderer operates as a remote renderer, synchronizing its state with the Cosmos UI via `WebSocket`.
+A remote renderer synchronizing its state with the Cosmos UI via `WebSocket`.
 
 ## Reload Renderer
 
@@ -61,14 +61,14 @@ Launches the source code of the current fixture in your default code editor.
 
 ## Control Panel
 
-The UI controls provide powerful component data manipulation capabilities.
+The UI controls provide powerful component data manipulation.
 
 <img alt="" width="400" src="screenshots/props-panel.png" />
 
 Three types of panels are currently supported:
 
 1. Props Panel: Automatically generated based on React element props. Only works with [Node Fixtures](../usage/fixtures.md#node-fixtures).
-2. Class State Panel: Automatically generated based on React Class components, which are deprecated but still supported indefinitely.
+2. Class State Panel: Automatically generated based on React Class components, which are deprecated but supported indefinitely.
 3. Controls Panel: Generated using custom definition hooks that can be represented as text inputs or select dropdowns.
 
 ## Adjustable Panels
@@ -77,7 +77,7 @@ The Cosmos UI features two slick resizable and collapsible panels on each side. 
 
 ## Notifications
 
-A beautiful notifications interface used to communicate renderer and server connectivity. It can be utilized from anywhere in the Cosmos UI, including 3rd party plugins.
+A beautiful notifications interface used to communicate renderer and server connectivity. It can be invoked from anywhere in the Cosmos UI, including 3rd party plugins.
 
 <img alt="" width="400" src="screenshots/notifications.png" />
 
