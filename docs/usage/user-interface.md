@@ -1,12 +1,20 @@
 # User Interface
 
-This section highlights the main functionality of the React Cosmos User Interface.
+This section highlights the main functionality of the React Cosmos UI.
+
+Visit [reactcosmos.org/demo/](https://reactcosmos.org/demo/) for a live demo of React Cosmos.
+
+[![React Cosmos](/website/static/screenshot.png)](https://reactcosmos.org/demo/)
 
 ## Fixture Tree View
+
+<img alt="" width="400" src="screenshots/fixture-tree-view.png" />
 
 An elegant file-system based tree view navigation system. Folders can be collapsed, and their state persists between sessions.
 
 ## Fixture Search
+
+<img alt="" width="400" src="screenshots/fixture-search.png" />
 
 A snappy fixture search feature with fuzzy matching. Use `⌘ + P` from anywhere to launch the search modal.
 
@@ -19,6 +27,12 @@ A convenient way to keep certain fixtures readily accessible while actively work
 The fixture preview is the heart of React Cosmos. It loads a Cosmos renderer in an `iframe` within the Cosmos UI.
 
 Communication and state synchronization between the Cosmos UI and the renderer is accomplished through [`window.postMessage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage).
+
+## Responsive Preview
+
+<img alt="" width="400" src="screenshots/responsive-preview.png" />
+
+WIP.
 
 ## Full-Screen Preview
 
@@ -42,19 +56,17 @@ The reload renderer button triggers a full reload of the fixture preview. It is 
 
 Launches the source code of the current fixture in your default code editor.
 
-**Note** You need to install the [Open Fixture Plugin](../plugins/cosmos-plugins.md#open-fixture-plugin) to enable this capability.
+> **Note** You need to install the [Open Fixture Plugin](../plugins/cosmos-plugins.md#open-fixture-plugin) to enable this capability.
 
 ## Control Panel
 
+<img alt="" width="400" src="screenshots/props-panel.png" />
+
 The UI controls provide powerful component data manipulation capabilities. Three types of panels are currently supported:
 
-1. Props Panel: Automatically generated based on React element props. Only works with Node Fixtures.
+1. Props Panel: Automatically generated based on React element props. Only works with [Node Fixtures](../usage/fixtures.md#node-fixtures).
 2. Class State Panel: Automatically generated based on React Class components, which are deprecated but still supported indefinitely.
 3. Controls Panel: Generated using custom definition hooks that can be represented as text inputs or select dropdowns.
-
-## Keyboard Shortcuts
-
-React Cosmos supports a set of useful keyboard shortcuts for the most commonly used actions.
 
 ## Adjustable Panels
 
@@ -62,8 +74,26 @@ The Cosmos UI features two slick resizable and collapsible panels on each side. 
 
 ## Notifications
 
-A beautiful notifications API is employed to communicate renderer and server connectivity. It can be utilized from anywhere in the Cosmos UI, including 3rd party plugins.
+<img alt="" width="400" src="screenshots/notifications.png" />
+
+A beautiful notifications API used to communicate renderer and server connectivity. It can be utilized from anywhere in the Cosmos UI, including 3rd party plugins.
+
+## Keyboard Shortcuts
+
+The Cosmos UI supports a set of useful keyboard shortcuts for the most commonly used actions:
+
+| Shortcut    | Action               |
+| ----------- | -------------------- |
+| `⌘ + P`     | Search fixtures      |
+| `⌘ + ⇧ + P` | Toggle fixture list  |
+| `⌘ + ⇧ + K` | Toggle control panel |
+| `⌘ + ⇧ + E` | Edit fixture         |
+| `⌘ + ⇧ + F` | Go full screen       |
 
 ## UI Plugins
 
-The Cosmos UI can be extended in numerous ways using the UI Plugin API.
+The Cosmos UI can be extended in numerous ways using the [UI Plugin API](../plugins/ui-plugins.md).
+
+---
+
+[Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.
