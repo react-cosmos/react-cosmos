@@ -59,17 +59,36 @@ it('returns fixture info', async () => {
 
   expect(fixtures).toEqual([
     {
-      absoluteFilePath: path.join(rootDir, 'src/__fixtures__/Controls.tsx'),
-      fileName: 'Controls',
+      absoluteFilePath: path.join(
+        rootDir,
+        'src/__fixtures__/controls/Custom Panel.tsx'
+      ),
+      fileName: 'Custom Panel',
       getElement: expect.any(Function),
       name: null,
-      parents: [],
-      relativeFilePath: 'src/__fixtures__/Controls.tsx',
+      parents: ['controls'],
+      relativeFilePath: 'src/__fixtures__/controls/Custom Panel.tsx',
       rendererUrl:
-        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2FControls.tsx%22%7D',
+        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2Fcontrols%2FCustom+Panel.tsx%22%7D',
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2FControls.tsx%22%7D',
-      treePath: ['Controls'],
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2Fcontrols%2FCustom+Panel.tsx%22%7D',
+      treePath: ['controls', 'Custom Panel'],
+    },
+    {
+      absoluteFilePath: path.join(
+        rootDir,
+        'src/__fixtures__/controls/Props Panel.tsx'
+      ),
+      fileName: 'Props Panel',
+      getElement: expect.any(Function),
+      name: null,
+      parents: ['controls'],
+      relativeFilePath: 'src/__fixtures__/controls/Props Panel.tsx',
+      rendererUrl:
+        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2Fcontrols%2FProps+Panel.tsx%22%7D',
+      playgroundUrl:
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2Fcontrols%2FProps+Panel.tsx%22%7D',
+      treePath: ['controls', 'Props Panel'],
     },
     {
       absoluteFilePath: path.join(rootDir, 'src/Counter.fixture.tsx'),
@@ -136,19 +155,7 @@ it('returns fixture info', async () => {
         'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2FHelloWorld.ts%22%7D',
       treePath: ['HelloWorld'],
     },
-    {
-      absoluteFilePath: path.join(rootDir, 'src/__fixtures__/Props.tsx'),
-      fileName: 'Props',
-      getElement: expect.any(Function),
-      name: null,
-      parents: [],
-      relativeFilePath: 'src/__fixtures__/Props.tsx',
-      rendererUrl:
-        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2FProps.tsx%22%7D',
-      playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2FProps.tsx%22%7D',
-      treePath: ['Props'],
-    },
+
     {
       absoluteFilePath: path.join(
         rootDir,
