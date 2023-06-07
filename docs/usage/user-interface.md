@@ -24,7 +24,7 @@ Communication and state synchronization between the Cosmos UI and the renderer i
 
 Launch the selected fixture into a full-screen preview, breaking away from the Cosmos UI shell.
 
-> **Note** A full-screen preview functions as a [Remote Renderer](#remote-renderer).
+> A full-screen preview functions as a [Remote Renderer](#remote-renderer).
 
 ## Remote Renderer
 
@@ -32,13 +32,11 @@ You can have multiple remote renderers open simultaneously, allowing you to view
 
 State synchronization between multiple renderers is supported, with one primary renderer controlling the state while the others mirror it.
 
-> **Note** The React Native renderer operates as a remote renderer, synchronizing its state with the Cosmos UI via `WebSocket`.
+> The React Native renderer operates as a remote renderer, synchronizing its state with the Cosmos UI via `WebSocket`.
 
 ## Reload Renderer
 
-The reload renderer button triggers a full reload of the fixture preview.
-
-> **Note** The renderer reload button also works for React Native apps by calling `DevSettings.reload` inside the renderer.
+The reload renderer button triggers a full reload of the fixture preview. It is particularly useful for React Native apps, as it invokes `DevSettings.reload` within the renderer.
 
 ## Open Fixture Source
 
