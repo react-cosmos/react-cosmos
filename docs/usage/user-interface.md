@@ -29,9 +29,11 @@ Communication and state synchronization between the Cosmos UI and the renderer i
 
 ## Responsive Preview
 
-WIP.
+Viewport controls that allow simulating any viewport size and orientation, with the option to chose from a predefined list of common devices.
 
 <img alt="" width="400" src="screenshots/responsive-preview.png" />
+
+A screen size can be embedded into a fixture using the [`<Viewport>`](../usage/fixtures.md#viewport) component.
 
 ## Full-Screen Preview
 
@@ -41,13 +43,9 @@ Launch the selected fixture into a full-screen preview, breaking away from the C
 
 ## Remote Renderer
 
-You can have multiple DOM remote renderers open simultaneously, allowing you to view the same fixture on different resolutions, browsers, or devices. It's also possible to preview different fixtures concurrently.
+You can have multiple DOM remote renderers open simultaneously, allowing you to view the same fixture on different resolutions, browsers, or devices. It's also possible to preview different fixtures concurrently. The React Native renderer is another example of a remote renderer.
 
-The React Native renderer is another example of a remote renderer.
-
-State synchronization between multiple renderers is supported, with one primary renderer controlling the state while the others mirror it.
-
-A remote renderer synchronizing its state with the Cosmos UI via `WebSocket`.
+Communication and state synchronization between the Cosmos UI and a renderer renderer is accomplished through `WebSocket`. State synchronization between multiple renderers is supported, with one primary renderer controlling the state while the others mirror it.
 
 ## Reload Renderer
 
