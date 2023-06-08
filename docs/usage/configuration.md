@@ -75,6 +75,17 @@ Alternatively, you can reference the local Cosmos config schema in your workspac
 }
 ```
 
+## Lazy Mode
+
+In lazy mode, Cosmos dynamically imports fixture and decorator modules only when they are needed, specifically when a fixture is selected in the Cosmos UI. This approach results in code splitting and enhances the isolation of the selected fixture. In this mode, fixture names of [Multi-Fixtures](fixtures.md#multi-fixtures) are only revealed upon selection.
+
+To enable lazy mode:
+
+- Set the `lazy` option to `true` in the Cosmos config.
+- Use the `--lazy` CLI argument when running a Cosmos command.
+
+Lazy mode is disabled by default.
+
 ---
 
 [Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.

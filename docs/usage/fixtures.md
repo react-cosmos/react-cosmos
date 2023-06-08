@@ -13,7 +13,7 @@ export default <Button disabled>Click me</Button>;
 
 ## Component Fixtures
 
-Component fixtures are just function components with no props. They enable using Hooks inside fixtures, which is powerful for simulating state with stateless components.
+Component fixtures are just React function components with no props. They enable using Hooks inside fixtures, which is powerful for simulating state with stateless components.
 
 ```jsx
 // CounterButton.fixture.jsx
@@ -24,9 +24,9 @@ export default () => {
 };
 ```
 
-## Multi Fixture Files
+## Multi-Fixtures
 
-A fixture file can also export multiple fixtures if the default export is an object.
+A fixture module can also export multiple fixtures if the default export is an object.
 
 <!-- prettier-ignore -->
 ```jsx
