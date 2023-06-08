@@ -79,7 +79,7 @@ You can import both Server and Client components in your fixtures, which run on 
 
 ### Limitations
 
-- Only [Component Fixtures](../usage/fixtures.md#component-fixtures) fixtures can be exported from a fixture module with the `'use client'` descriptor. That's because Client fixture modules are passed _as is_ to the Server render tree and their exports are expected to be components by design. While [Node Fixtures](../usage/fixtures.md#node-fixtures) and [Multi-Fixtures](../usage/fixtures.md#multi-fixtures) cannot be used in Client fixtures, all Cosmos fixture formats as supported in Server fixtures.
+- Only [Component Fixtures](../usage/fixtures.md#component-fixtures) fixtures can be exported from a fixture module with the `'use client'` descriptor. That's because Client fixture modules are passed _as is_ to the Server render tree and their exports are expected to be components by design. While [Node Fixtures](../usage/fixtures.md#node-fixtures) and [Multi-Fixtures](../usage/fixtures.md#multi-fixtures) cannot be used in Client fixtures, all Cosmos fixture formats are supported in Server fixtures.
 
 ## Static Export
 
