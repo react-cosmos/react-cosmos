@@ -56,7 +56,7 @@ function parseFixturePath(fixturePath: string) {
 }
 
 function removeFixtureNameExtension(fixtureName: string) {
-  return fixtureName.replace(/\.(j|t)sx?$/, '');
+  return fixtureName.replace(/\.(js|jsx|ts|tsx|mdx)$/, '');
 }
 
 function injectNode(

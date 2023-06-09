@@ -14,10 +14,10 @@ export type UserImportsTemplateArgs = {
 
 // NODE: These can be made configurable if a proper need arises
 const FIXTURE_PATTERNS = [
-  '**/<fixturesDir>/**/*.{js,jsx,ts,tsx}',
-  '**/*.<fixtureFileSuffix>.{js,jsx,ts,tsx}',
+  '**/<fixturesDir>/**/*.{js,jsx,ts,tsx,mdx}',
+  '**/*.<fixtureFileSuffix>.{js,jsx,ts,tsx,mdx}',
 ];
-const DECORATOR_PATTERNS = ['**/cosmos.decorator.{js,jsx,ts,tsx}'];
+const DECORATOR_PATTERNS = ['**/cosmos.decorator.{js,jsx,ts,tsx,mdx}'];
 
 export function getFixturePatterns(
   fixturesDir: string,
