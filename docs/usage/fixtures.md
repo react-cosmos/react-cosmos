@@ -120,6 +120,10 @@ export default (
 );
 ```
 
+## MDX
+
+WIP.
+
 ---
 
 [Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.
