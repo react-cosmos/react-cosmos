@@ -1,38 +1,14 @@
-// Import mocks first
-import { mockFile } from '../testHelpers/mockFs.js';
-
 import path from 'node:path';
 import { create } from 'react-test-renderer';
 import { createCosmosConfig } from '../cosmosConfig/createCosmosConfig.js';
-import { mockCosmosPlugins } from '../testHelpers/mockCosmosPlugins.js';
 import { getFixtures } from './getFixtures.js';
 
 const rootDir = path.join(__dirname, '../../../../examples/webpack');
 
-const testCosmosPlugin = {
-  name: 'Test Cosmos plugin',
-  rootDir: path.join(__dirname, 'mock-cosmos-plugin'),
-  server: path.join(__dirname, 'mock-cosmos-plugin/server.js'),
-};
-mockCosmosPlugins([testCosmosPlugin]);
-
-const testServerPlugin = {
-  name: 'testServerPlugin',
-
-  config: jest.fn(async ({ cosmosConfig }) => {
-    return {
-      ...cosmosConfig,
-      rendererUrl: 'http://localhost:5000/renderer.html',
-    };
-  }),
-};
-
-beforeEach(() => {
-  mockFile(testCosmosPlugin.server, { default: testServerPlugin });
-});
-
 it('renders fixture elements', async () => {
-  const cosmosConfig = createCosmosConfig(rootDir);
+  const cosmosConfig = createCosmosConfig(rootDir, {
+    ignore: ['**/*.mdx'],
+  });
 
   const fixures = getFixtures(cosmosConfig, {
     rendererUrl: 'http://localhost:5000/renderer.html',
@@ -51,7 +27,9 @@ it('renders fixture elements', async () => {
 });
 
 it('returns fixture info', async () => {
-  const cosmosConfig = createCosmosConfig(rootDir);
+  const cosmosConfig = createCosmosConfig(rootDir, {
+    ignore: ['**/*.mdx'],
+  });
 
   const fixtures = getFixtures(cosmosConfig, {
     rendererUrl: 'http://localhost:5000/renderer.html',
@@ -142,20 +120,6 @@ it('returns fixture info', async () => {
         'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2FCounterButton.fixture.tsx%22%7D',
       treePath: ['CounterButton'],
     },
-    {
-      absoluteFilePath: path.join(rootDir, 'src/__fixtures__/HelloWorld.ts'),
-      fileName: 'HelloWorld',
-      getElement: expect.any(Function),
-      name: null,
-      parents: [],
-      playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2FHelloWorld.ts%22%7D',
-      relativeFilePath: 'src/__fixtures__/HelloWorld.ts',
-      rendererUrl:
-        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2FHelloWorld.ts%22%7D',
-      treePath: ['HelloWorld'],
-    },
-
     {
       absoluteFilePath: path.join(
         rootDir,
