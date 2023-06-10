@@ -21,6 +21,8 @@ export function getDefaultWebpackConfig(
   const postcssLoaderPath = resolveFromSilent(rootDir, 'postcss-loader');
   // Note: Since webpack >= v2.0.0, importing of JSON files will work by default
   const jsonLoaderPath = resolveFromSilent(rootDir, 'json-loader');
+  const mdxLoaderPath = resolveFromSilent(rootDir, '@mdx-js/loader');
+
   const rules: webpack.RuleSetRule[] = [];
   const plugins: webpack.WebpackPluginInstance[] = [];
 
@@ -76,6 +78,14 @@ export function getDefaultWebpackConfig(
     rules.push({
       test: /\.json$/,
       loader: jsonLoaderPath,
+      exclude: /node_modules/,
+    });
+  }
+
+  if (mdxLoaderPath) {
+    rules.push({
+      test: /\.mdx$/,
+      loader: mdxLoaderPath,
       exclude: /node_modules/,
     });
   }

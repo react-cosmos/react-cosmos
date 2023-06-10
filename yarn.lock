@@ -1076,6 +1076,14 @@
     write-pkg "4.0.0"
     yargs "16.2.0"
 
+"@mdx-js/loader@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@mdx-js/loader/-/loader-2.3.0.tgz#56a6b07eb0027b6407e953a97c52bd8619601161"
+  integrity sha512-IqsscXh7Q3Rzb+f5DXYk0HU71PK+WuFsEhf+mSV3fOhpLcEpgsHvTQ2h0T6TlZ5gHOaBeFjkXwB52by7ypMyNg==
+  dependencies:
+    "@mdx-js/mdx" "^2.0.0"
+    source-map "^0.7.0"
+
 "@mdx-js/mdx@^2.0.0":
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@mdx-js/mdx/-/mdx-2.3.0.tgz#d65d8c3c28f3f46bb0e7cb3bf7613b39980671a9"
