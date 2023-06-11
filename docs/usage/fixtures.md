@@ -48,9 +48,9 @@ The object property names will show up as fixture names in the Cosmos UI.
 
 ## MDX Fixtures
 
-Creating MDX fixtures is as easy as [configuring MDX with your bundler](https://mdxjs.com/docs/getting-started/#bundler) and adding the `.mdx` (or `.md`) file extension to your fixture files.
+Creating MDX fixtures is as easy as [configuring MDX for your bundler](https://mdxjs.com/docs/getting-started/#bundler) and using the `.mdx` (or `.md`) file extension for your fixture files.
 
-> Both Vite and Webpack [examples](examples) feature MDX fixtures configured with `@mdx-js/rollup` and `@mdx-js/loader` respectively.
+> Both Vite and Webpack [examples](../../examples) feature MDX fixtures configured with `@mdx-js/rollup` and `@mdx-js/loader` respectively.
 
 ## File Conventions
 
