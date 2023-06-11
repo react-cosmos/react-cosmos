@@ -41,7 +41,7 @@ describe('Native', () => {
     });
 
     it('has fixture paths', () => {
-      containsImport('src/__fixtures__/HelloWorld');
+      containsImport('src/__fixtures__/HelloWorld.mdx');
       containsImport('src/Counter.fixture');
       containsImport('src/WelcomeMessage/WelcomeMessage.fixture');
     });

@@ -46,11 +46,17 @@ The object property names will show up as fixture names in the Cosmos UI.
 
 > [See this comment](https://github.com/react-cosmos/react-cosmos/issues/924#issuecomment-462082405) for the reasoning behind this solution (vs named exports).
 
+## MDX Fixtures
+
+Creating MDX fixtures is as easy as [configuring MDX for your bundler](https://mdxjs.com/docs/getting-started/#bundler) and using the `.mdx` (or `.md`) file extension for your fixture files.
+
+> Both Vite and Webpack [examples](../../examples) feature MDX fixtures configured with `@mdx-js/rollup` and `@mdx-js/loader` respectively.
+
 ## File Conventions
 
 Two options:
 
-1. End fixture file names with `.fixture.{js,jsx,ts,tsx}`.
+1. End fixture file names with `.fixture.{js,jsx,ts,tsx,md,mdx}`.
 2. Put fixture files inside `__fixtures__`.
 
 Examples:
