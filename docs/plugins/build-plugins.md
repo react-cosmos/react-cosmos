@@ -1,6 +1,6 @@
 # Build Plugins
 
-This is a guide for creating Cosmos build plugins.
+This is a guide for creating Cosmos build plugins, which enable integrating with bundlers like Vite or Webpack, as well as adding functionality to the Cosmos server.
 
 ## Boilerplate
 
