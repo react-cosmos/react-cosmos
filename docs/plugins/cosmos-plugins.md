@@ -20,8 +20,8 @@ This JSON config is the plugin's entry point. A plugin name and at least one plu
 
 See the individual guides for each plugin type:
 
-- [Server plugins](server-plugins.md)
-- [UI plugins](ui-plugins.md)
+- [Server Plugins](server-plugins.md)
+- [UI Plugins](ui-plugins.md)
 
 ## Enabling a Plugin
 

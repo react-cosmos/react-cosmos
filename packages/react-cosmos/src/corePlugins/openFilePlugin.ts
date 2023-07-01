@@ -7,7 +7,7 @@ import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
 
 type ReqQuery = { filePath: void | string; line: number; column: number };
 
-export const openFileServerPlugin: CosmosServerPlugin = {
+export const openFilePlugin: CosmosServerPlugin = {
   name: 'openFile',
 
   devServer({ cosmosConfig, expressApp }) {

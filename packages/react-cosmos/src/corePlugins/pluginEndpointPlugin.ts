@@ -3,7 +3,7 @@ import path from 'node:path';
 import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
 import { resolveSilent } from '../utils/resolveSilent.js';
 
-export const pluginEndpointServerPlugin: CosmosServerPlugin = {
+export const pluginEndpointPlugin: CosmosServerPlugin = {
   name: 'pluginEndpoint',
 
   devServer({ expressApp }) {
