@@ -1,6 +1,8 @@
 # Server Plugins
 
-This is a guide for creating Cosmos server plugins.
+This is a guide for creating Cosmos server plugins, which enable integrating with bundlers like Vite or Webpack, as well as adding functionality to the Cosmos server.
+
+You can browse a list of built-in server plugins [here](../../packages/react-cosmos/src/corePlugins/).
 
 ## Boilerplate
 

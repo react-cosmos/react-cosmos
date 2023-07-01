@@ -13,7 +13,7 @@ type HttpProxyConfig = {
       };
 };
 
-export const httpProxyServerPlugin: CosmosServerPlugin = {
+export const httpProxyPlugin: CosmosServerPlugin = {
   name: 'httpProxy',
 
   devServer({ cosmosConfig, platform, expressApp }) {

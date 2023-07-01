@@ -12,7 +12,7 @@ import { startFixtureWatcher } from '../userModules/fixtureWatcher.js';
 import { generateUserImports } from '../userModules/generateUserImports.js';
 import { moduleExists } from '../utils/fs.js';
 
-export const exposeImportsServerPlugin: CosmosServerPlugin = {
+export const exposeImportsPlugin: CosmosServerPlugin = {
   name: 'exposeImports',
 
   async devServer({ cosmosConfig, platform }) {
