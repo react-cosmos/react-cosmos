@@ -13,14 +13,18 @@ export async function createExpressApp(
 ): Promise<express.Express> {
   const app = express();
 
-  const playgroundHtml = await getDevPlaygroundHtml(
-    platform,
-    cosmosConfig,
-    pluginConfigs
-  );
-
-  app.get('/', (req: express.Request, res: express.Response) => {
-    res.send(playgroundHtml);
+  app.get('/', async (req: express.Request, res: express.Response) => {
+    // The HTML is not cached between requests because it contains a list of
+    // fixtures that get stale once the user adds/removes/renames fixture files
+    // after the server has started. If this proves to be inefficient we can:
+    //  - Cache the HTML and invalidate it when fixture files change by using
+    //    the fixture watcher at userModules/fixtureWatcher.ts. This requires
+    //    some work to implement cleanly and can create tech debt.
+    //  - Add an option to cache the HTML once and keep the embedded fixture
+    //    list state until the server restarts. This results in a minor glitch
+    //    when the renderer connects and sends the updated fixture list, and
+    //    could be a reasonable tradeoff for large projects.
+    res.send(await getDevPlaygroundHtml(platform, cosmosConfig, pluginConfigs));
   });
 
   app.get(
