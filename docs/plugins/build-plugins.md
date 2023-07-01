@@ -1,6 +1,6 @@
-# Server Plugins
+# Build Plugins
 
-This is a guide for creating Cosmos server plugins.
+This is a guide for creating Cosmos build plugins.
 
 ## Boilerplate
 

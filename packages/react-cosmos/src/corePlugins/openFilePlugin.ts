@@ -3,11 +3,11 @@ import express from 'express';
 import fs from 'fs';
 import open from 'open';
 import path from 'path';
-import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
+import { CosmosBuildPlugin } from '../cosmosPlugin/types.js';
 
 type ReqQuery = { filePath: void | string; line: number; column: number };
 
-export const openFileServerPlugin: CosmosServerPlugin = {
+export const openFilePlugin: CosmosBuildPlugin = {
   name: 'openFile',
 
   devServer({ cosmosConfig, expressApp }) {

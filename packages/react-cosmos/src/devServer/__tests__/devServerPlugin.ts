@@ -13,19 +13,23 @@ import retry from '@skidding/async-retry';
 import 'isomorphic-fetch';
 import * as http from 'node:http';
 import path from 'node:path';
-import { ServerMessage, SocketMessage } from 'react-cosmos-core';
+import {
+  CosmosPluginConfig,
+  ServerMessage,
+  SocketMessage,
+} from 'react-cosmos-core';
 import { DevServerPluginArgs } from '../../cosmosPlugin/types.js';
 import { startDevServer } from '../startDevServer.js';
 
-const testCosmosPlugin = {
+const testCosmosPlugin: CosmosPluginConfig = {
   name: 'Test Cosmos plugin',
   rootDir: path.join(__dirname, 'mock-cosmos-plugin'),
-  server: path.join(__dirname, 'mock-cosmos-plugin/server.js'),
+  build: path.join(__dirname, 'mock-cosmos-plugin/build.js'),
 };
 mockCosmosPlugins([testCosmosPlugin]);
 
 const devServerCleanup = jest.fn(() => Promise.resolve());
-const testServerPlugin = {
+const testBuildPlugin = {
   name: 'testServerPlugin',
 
   config: jest.fn(async ({ cosmosConfig }) => {
@@ -55,11 +59,11 @@ async function stopServer() {
 beforeEach(() => {
   mockCliArgs({});
   mockCosmosConfig('cosmos.config.json', { port });
-  mockFile(testCosmosPlugin.server, { default: testServerPlugin });
+  mockFile(testCosmosPlugin.build!, { default: testBuildPlugin });
 
   devServerCleanup.mockClear();
-  testServerPlugin.config.mockClear();
-  testServerPlugin.devServer.mockClear();
+  testBuildPlugin.config.mockClear();
+  testBuildPlugin.devServer.mockClear();
 });
 
 afterEach(async () => {
@@ -76,7 +80,7 @@ it('calls config hook', async () => {
 
     _stopServer = await startDevServer('web');
 
-    expect(testServerPlugin.config).toBeCalledWith({
+    expect(testBuildPlugin.config).toBeCalledWith({
       cosmosConfig: expect.objectContaining({ port }),
       command: 'dev',
       platform: 'web',
@@ -92,7 +96,7 @@ it('calls dev server hook (with updated config)', async () => {
 
     _stopServer = await startDevServer('web');
 
-    expect(testServerPlugin.devServer).toBeCalledWith({
+    expect(testBuildPlugin.devServer).toBeCalledWith({
       cosmosConfig: expect.objectContaining({
         port,
         ignore: ['**/ignored.fixture.js'],
@@ -130,7 +134,7 @@ it('calls dev server hook with send message API', async () => {
     client.addEventListener('open', () => {
       client.addEventListener('message', msg => onMessage(msg.data));
 
-      const [args] = testServerPlugin.devServer.mock
+      const [args] = testBuildPlugin.devServer.mock
         .calls[0] as DevServerPluginArgs[];
       args.sendMessage(message.message);
     });

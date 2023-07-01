@@ -42,7 +42,7 @@ export type ExportPluginArgs = {
 
 export type ExportPlugin = (args: ExportPluginArgs) => unknown;
 
-export type CosmosServerPlugin = {
+export type CosmosBuildPlugin = {
   name: string;
   config?: CosmosConfigPlugin;
   devServer?: DevServerPlugin;

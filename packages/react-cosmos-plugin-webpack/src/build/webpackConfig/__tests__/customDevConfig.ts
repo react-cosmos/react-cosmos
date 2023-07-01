@@ -79,14 +79,16 @@ it('includes plugin from user override', async () => {
   expect(plugins).toContain(MY_PLUGIN2);
 });
 
-it('includes client entry', async () => {
+it('includes renderer entry', async () => {
   const { entry } = await getCustomDevWebpackConfig();
-  expect(entry).toContain(require.resolve('../../../client'));
+  expect(entry).toContain(require.resolve('../../../renderer'));
 });
 
 it('includes DOM devtooks hook entry', async () => {
   const { entry } = await getCustomDevWebpackConfig();
-  expect(entry).toContain(require.resolve('../../../client/reactDevtoolsHook'));
+  expect(entry).toContain(
+    require.resolve('../../../renderer/reactDevtoolsHook')
+  );
 });
 
 it('includes webpack-hot-middleware entry', async () => {
@@ -112,7 +114,7 @@ it('includes user imports loader', async () => {
   const { module } = await getCustomDevWebpackConfig();
   expect(module!.rules).toContainEqual({
     loader: require.resolve('../userImportsLoader'),
-    include: require.resolve('../../../client/userImports'),
+    include: require.resolve('../../../renderer/userImports'),
     options: { cosmosConfig },
   });
 });

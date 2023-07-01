@@ -1,4 +1,4 @@
 {
   "name": "Vite",
-  "server": "dist/viteServerPlugin.js"
+  "build": "dist/plugin.js"
 }

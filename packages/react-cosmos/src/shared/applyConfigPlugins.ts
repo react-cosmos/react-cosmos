@@ -1,20 +1,20 @@
 import { CosmosCommand } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
-import { CosmosPlatform, CosmosServerPlugin } from '../cosmosPlugin/types.js';
+import { CosmosBuildPlugin, CosmosPlatform } from '../cosmosPlugin/types.js';
 
 type Args = {
   cosmosConfig: CosmosConfig;
-  serverPlugins: CosmosServerPlugin[];
+  buildPlugins: CosmosBuildPlugin[];
   command: CosmosCommand;
   platform: CosmosPlatform;
 };
-export async function applyServerConfigPlugins({
+export async function applyConfigPlugins({
   cosmosConfig,
-  serverPlugins,
+  buildPlugins,
   command,
   platform,
 }: Args) {
-  for (const plugin of serverPlugins) {
+  for (const plugin of buildPlugins) {
     if (plugin.config) {
       try {
         cosmosConfig = await plugin.config({ cosmosConfig, command, platform });

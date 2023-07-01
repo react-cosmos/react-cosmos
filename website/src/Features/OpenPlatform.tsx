@@ -20,7 +20,7 @@ export function OpenPlatform() {
         <FeatureDescription>
           Integrate with Webpack, Vite, or any other bundler. Add snapshot or
           visual regression testing. Create custom decorators, UI controls, or
-          server plugins.
+          build plugins.
         </FeatureDescription>
       </div>
     </Feature>

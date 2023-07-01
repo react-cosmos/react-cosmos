@@ -30,7 +30,7 @@ process.env.NODE_ENV = 'production';
   await createPage({
     pageName: 'open-platform',
     title: `Open Platform · React Cosmos`,
-    description: `Integrate with Webpack, Vite, or any other bundler. Add snapshot or visual regression testing. Create custom decorators, UI controls, or server plugins.`,
+    description: `Integrate with Webpack, Vite, or any other bundler. Add snapshot or visual regression testing. Create custom decorators, UI controls, or build plugins.`,
   });
   await createPage({
     pageName: 'benefits',

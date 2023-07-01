@@ -51,14 +51,16 @@ it('includes user plugin', async () => {
   expect(plugins).toContain(MY_PLUGIN);
 });
 
-it('includes client entry', async () => {
+it('includes renderer entry', async () => {
   const { entry } = await getCustomExportWebpackConfig();
-  expect(entry).toContain(require.resolve('../../../client'));
+  expect(entry).toContain(require.resolve('../../../renderer'));
 });
 
 it('includes DOM devtooks hook entry', async () => {
   const { entry } = await getCustomExportWebpackConfig();
-  expect(entry).toContain(require.resolve('../../../client/reactDevtoolsHook'));
+  expect(entry).toContain(
+    require.resolve('../../../renderer/reactDevtoolsHook')
+  );
 });
 
 it('does not include webpack-hot-middleware entry', async () => {
@@ -85,7 +87,7 @@ it('includes user imports loader', async () => {
   const { module } = await getCustomExportWebpackConfig();
   expect(module!.rules).toContainEqual({
     loader: require.resolve('../userImportsLoader'),
-    include: require.resolve('../../../client/userImports'),
+    include: require.resolve('../../../renderer/userImports'),
     options: { cosmosConfig },
   });
 });

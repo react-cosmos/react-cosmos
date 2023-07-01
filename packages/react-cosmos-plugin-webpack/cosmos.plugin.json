@@ -1,5 +1,5 @@
 {
   "name": "Webpack",
-  "ui": "dist/ui/build.js",
-  "server": "dist/server/webpackServerPlugin.js"
+  "build": "dist/build/plugin.js",
+  "ui": "dist/ui/plugin.js"
 }

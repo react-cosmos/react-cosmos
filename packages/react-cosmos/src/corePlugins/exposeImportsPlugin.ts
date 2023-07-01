@@ -6,13 +6,13 @@ import {
   pickRendererUrl,
 } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
-import { CosmosPlatform, CosmosServerPlugin } from '../cosmosPlugin/types.js';
+import { CosmosBuildPlugin, CosmosPlatform } from '../cosmosPlugin/types.js';
 import { getPlaygroundUrl } from '../shared/playgroundUrl.js';
 import { startFixtureWatcher } from '../userModules/fixtureWatcher.js';
 import { generateUserImports } from '../userModules/generateUserImports.js';
 import { moduleExists } from '../utils/fs.js';
 
-export const exposeImportsServerPlugin: CosmosServerPlugin = {
+export const exposeImportsPlugin: CosmosBuildPlugin = {
   name: 'exposeImports',
 
   async devServer({ cosmosConfig, platform }) {

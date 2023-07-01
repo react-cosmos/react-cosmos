@@ -1,16 +1,16 @@
 // TODO: Validate config schema on config import
-// TODO: Allow ui and devServer to be [true] for default paths?
+// Maybe: Allow `build` and `ui` values to be [true] for default paths?
 export type RawCosmosPluginConfig = {
   name: string;
+  build?: string;
   ui?: string;
-  server?: string;
 };
 
 export type CosmosPluginConfig = {
   name: string;
   rootDir: string;
+  build?: string;
   ui?: string;
-  server?: string;
 };
 
 export type UiCosmosPluginConfig = CosmosPluginConfig & {

@@ -1,6 +1,6 @@
 # Cosmos Plugins
 
-A Cosmos plugin is a wrapper for two plugin types: **server plugins** and **UI plugins**. Each plugin type has a distinct API and runs in a different environment. Combining both into a single Cosmos plugin adds full-stack capabilities to React Cosmos with a single package.
+A Cosmos plugin is a wrapper for two plugin types: **Build plugins** and **UI plugins**. Each plugin type has a distinct API and runs in a different environment. Combining both into a single Cosmos plugin adds full-stack capabilities to React Cosmos with a single package.
 
 ## Creating a Plugin
 
@@ -9,7 +9,7 @@ Create a `cosmos.plugin.json` file:
 ```json
 {
   "name": "Magic plugin",
-  "server": "serverPlugin.js",
+  "build": "buildPlugin.js",
   "ui": "uiPlugin.js"
 }
 ```
@@ -20,8 +20,8 @@ This JSON config is the plugin's entry point. A plugin name and at least one plu
 
 See the individual guides for each plugin type:
 
-- [Server plugins](server-plugins.md)
-- [UI plugins](ui-plugins.md)
+- [Build Plugins](build-plugins.md)
+- [UI Plugins](ui-plugins.md)
 
 ## Enabling a Plugin
 
@@ -57,7 +57,7 @@ To publish a Cosmos plugin as an NPM package, set the `main` field in its `packa
 
 ### Open Fixture Plugin
 
-This combines a [server plugin](server-plugins.md) with a [UI plugin](ui-plugins.md). It adds a renderer action that opens the selected fixture file in your default editor.
+This combines a [Build Plugin](build-plugins.md) with a [UI Plugin](ui-plugins.md). It adds a renderer action that opens the selected fixture file in your default editor.
 
 ```bash
 npm i -D react-cosmos-plugin-open-fixture
@@ -71,7 +71,7 @@ npm i -D react-cosmos-plugin-open-fixture
 
 ### Boolean Input Plugin
 
-This is a [UI plugin](ui-plugins.md) that turns boolean inputs in the [Control Panel](/docs/usage/user-interface.md#control-panel) from a true/false button to a checkbox input.
+This is a [UI Plugin](ui-plugins.md) that turns boolean inputs in the [Control Panel](/docs/usage/user-interface.md#control-panel) from a true/false button to a checkbox input.
 
 ```bash
 npm i -D react-cosmos-plugin-boolean-input

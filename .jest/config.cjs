@@ -44,10 +44,10 @@ module.exports = {
     'resolve.js$': '<rootDir>/packages/react-cosmos/src/cjsMocks/resolve.js',
     'staticPath.js$':
       '<rootDir>/packages/react-cosmos/src/cjsMocks/staticPath.js',
-    'resolveWebpackClientPath.js$':
-      '<rootDir>/packages/react-cosmos-plugin-webpack/src/server/cjsMocks/resolveWebpackClientPath.js',
+    'resolveWebpackRendererPath.js$':
+      '<rootDir>/packages/react-cosmos-plugin-webpack/src/build/cjsMocks/resolveWebpackRendererPath.js',
     'resolveWebpackLoaderPath.js$':
-      '<rootDir>/packages/react-cosmos-plugin-webpack/src/server/cjsMocks/resolveWebpackLoaderPath.js',
+      '<rootDir>/packages/react-cosmos-plugin-webpack/src/build/cjsMocks/resolveWebpackLoaderPath.js',
   },
   // https://kulshekhar.github.io/ts-jest/docs/getting-started/options/tsconfig
   transform: {
@@ -76,11 +76,11 @@ module.exports = {
     '!packages/react-cosmos/src/utils/requireModule.ts',
     '!packages/react-cosmos/src/utils/resolve.ts',
     '!packages/react-cosmos/src/shared/staticPath.ts',
-    '!packages/react-cosmos-plugin-webpack/src/client/index.ts',
-    '!packages/react-cosmos-plugin-webpack/src/client/errorOverlay/index.ts',
-    '!packages/react-cosmos-plugin-webpack/src/server/utils/requireModule.ts',
-    '!packages/react-cosmos-plugin-webpack/src/server/utils/resolve.ts',
-    '!packages/react-cosmos-plugin-webpack/src/server/webpackConfig/resolveWebpackClientPath.ts',
-    '!packages/react-cosmos-plugin-webpack/src/server/webpackConfig/resolveWebpackLoaderPath.ts',
+    '!packages/react-cosmos-plugin-webpack/src/renderer/index.ts',
+    '!packages/react-cosmos-plugin-webpack/src/renderer/errorOverlay/index.ts',
+    '!packages/react-cosmos-plugin-webpack/src/build/utils/requireModule.ts',
+    '!packages/react-cosmos-plugin-webpack/src/build/utils/resolve.ts',
+    '!packages/react-cosmos-plugin-webpack/src/build/webpackConfig/resolveWebpackRendererPath.ts',
+    '!packages/react-cosmos-plugin-webpack/src/build/webpackConfig/resolveWebpackLoaderPath.ts',
   ],
 };

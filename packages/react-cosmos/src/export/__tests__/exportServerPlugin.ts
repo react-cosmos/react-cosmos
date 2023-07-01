@@ -11,12 +11,13 @@ import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { CosmosPluginConfig } from 'react-cosmos-core';
 import { generateExport } from '../generateExport.js';
 
-const testCosmosPlugin = {
+const testCosmosPlugin: CosmosPluginConfig = {
   name: 'Test Cosmos plugin',
   rootDir: path.join(__dirname, 'mock-cosmos-plugin'),
-  server: path.join(__dirname, 'mock-cosmos-plugin/server.js'),
+  build: path.join(__dirname, 'mock-cosmos-plugin/server.js'),
 };
 mockCosmosPlugins([testCosmosPlugin]);
 
@@ -45,7 +46,7 @@ const exportPath = path.join(testFsPath, `export-${jestWorkerId()}`);
 beforeEach(() => {
   mockCliArgs({});
   mockCosmosConfig('cosmos.config.json', { port, exportPath });
-  mockFile(testCosmosPlugin.server, { default: testServerPlugin });
+  mockFile(testCosmosPlugin.build!, { default: testServerPlugin });
 
   asyncMock.mockClear();
   testServerPlugin.config.mockClear();

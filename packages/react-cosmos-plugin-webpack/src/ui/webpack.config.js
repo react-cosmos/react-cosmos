@@ -12,7 +12,7 @@ export default {
   entry: [path.join(dist, 'ui/WebpackRendererError')],
   output: {
     path: dist,
-    filename: 'ui/build.js',
+    filename: 'ui/plugin.js',
   },
   externals: {
     'react-dom': 'ReactDom',

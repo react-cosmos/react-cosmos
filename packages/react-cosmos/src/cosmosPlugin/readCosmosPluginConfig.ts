@@ -23,22 +23,22 @@ export async function readCosmosPluginConfig({
       : pluginRootDir,
   };
 
+  if (rawConfig.build) {
+    config.build = resolvePluginPath(
+      config.name,
+      rootDir,
+      pluginRootDir,
+      rawConfig.build,
+      relativePaths
+    );
+  }
+
   if (rawConfig.ui) {
     config.ui = resolvePluginPath(
       config.name,
       rootDir,
       pluginRootDir,
       rawConfig.ui,
-      relativePaths
-    );
-  }
-
-  if (rawConfig.server) {
-    config.server = resolvePluginPath(
-      config.name,
-      rootDir,
-      pluginRootDir,
-      rawConfig.server,
       relativePaths
     );
   }

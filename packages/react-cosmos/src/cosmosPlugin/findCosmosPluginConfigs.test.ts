@@ -30,21 +30,17 @@ it('loads mono repo plugins', async () => {
   expect(configs).toContainEqual({
     name: 'Vite',
     rootDir: 'react-cosmos-plugin-vite',
-    server: path.join(
-      'react-cosmos-plugin-vite',
-      'dist',
-      'viteServerPlugin.js'
-    ),
+    build: path.join('react-cosmos-plugin-vite', 'dist', 'plugin.js'),
   });
   expect(configs).toContainEqual({
     name: 'Webpack',
     rootDir: 'react-cosmos-plugin-webpack',
-    ui: path.join('react-cosmos-plugin-webpack', 'dist', 'ui', 'build.js'),
-    server: path.join(
+    build: path.join(
       'react-cosmos-plugin-webpack',
       'dist',
-      'server',
-      'webpackServerPlugin.js'
+      'build',
+      'plugin.js'
     ),
+    ui: path.join('react-cosmos-plugin-webpack', 'dist', 'ui', 'plugin.js'),
   });
 });

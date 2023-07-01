@@ -1,13 +1,13 @@
-import { CosmosServerPlugin } from 'react-cosmos';
+import { CosmosBuildPlugin } from 'react-cosmos';
 import { webpackConfigPlugin } from './webpackConfigPlugin.js';
 import { webpackDevServerPlugin } from './webpackDevServerPlugin.js';
 import { webpackExportPlugin } from './webpackExportPlugin.js';
 
-const webpackServerPlugin: CosmosServerPlugin = {
+const plugin: CosmosBuildPlugin = {
   name: 'webpack',
   config: webpackConfigPlugin,
   devServer: webpackDevServerPlugin,
   export: webpackExportPlugin,
 };
 
-export default webpackServerPlugin;
+export default plugin;

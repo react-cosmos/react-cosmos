@@ -49,7 +49,7 @@ Choose a dedicated guide for integrating with a specific bundler, framework, or 
 ## Plugins
 
 - [Cosmos Plugins](plugins/cosmos-plugins.md)
-- [Server Plugins](plugins/server-plugins.md)
+- [Build Plugins](plugins/build-plugins.md)
 - [UI Plugins](plugins/ui-plugins.md)
 - [Fixture Plugins](plugins/fixture-plugins.md)
 

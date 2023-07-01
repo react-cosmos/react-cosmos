@@ -8,7 +8,7 @@ import { getWebpackConfigModule } from './getWebpackConfigModule.js';
 import { getWebpackConfigResolve } from './getWebpackConfigResolve.js';
 import { ensureHtmlWebackPlugin } from './htmlPlugin.js';
 import { getGlobalsPlugin, hasPlugin } from './plugins.js';
-import { resolveWebpackClientPath } from './resolveWebpackClientPath.js';
+import { resolveWebpackRendererPath } from './resolveWebpackRendererPath.js';
 import { ensureWebpackConfigTopLevelAwait } from './webpackConfigTopLevelAwait.js';
 
 export async function getDevWebpackConfig(
@@ -52,8 +52,8 @@ function getEntry(cosmosConfig: CosmosConfig) {
   const { hotReload, reloadOnFail } = createWebpackCosmosConfig(cosmosConfig);
   // The React devtools hook needs to be imported before any other module that
   // might import React
-  const devtoolsHook = resolveWebpackClientPath('reactDevtoolsHook');
-  const clientIndex = resolveWebpackClientPath('index');
+  const devtoolsHook = resolveWebpackRendererPath('reactDevtoolsHook');
+  const clientIndex = resolveWebpackRendererPath('index');
 
   return hotReload
     ? [devtoolsHook, getHotMiddlewareEntry(reloadOnFail), clientIndex]

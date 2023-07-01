@@ -4,8 +4,8 @@ import { CosmosPluginConfig, UiCosmosPluginConfig } from 'react-cosmos-core';
 import { detectCosmosConfig } from '../cosmosConfig/detectCosmosConfig.js';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
-import { applyServerConfigPlugins } from '../shared/applyServerConfigPlugins.js';
-import { getServerPlugins } from '../shared/getServerPlugins.js';
+import { applyConfigPlugins } from '../shared/applyConfigPlugins.js';
+import { getBuildPlugins } from '../shared/getBuildPlugins.js';
 import { logPluginInfo } from '../shared/logPluginInfo.js';
 import { getExportPlaygroundHtml } from '../shared/playgroundHtml.js';
 import { getStaticPath } from '../shared/staticPath.js';
@@ -22,14 +22,14 @@ export async function generateExport() {
   });
   logPluginInfo(pluginConfigs);
 
-  const serverPlugins = await getServerPlugins(
+  const buildPlugins = await getBuildPlugins(
     pluginConfigs,
     cosmosConfig.rootDir
   );
 
-  cosmosConfig = await applyServerConfigPlugins({
+  cosmosConfig = await applyConfigPlugins({
     cosmosConfig,
-    serverPlugins,
+    buildPlugins,
     command: 'export',
     platform: 'web',
   });
@@ -43,7 +43,7 @@ export async function generateExport() {
   // template file (in case the static assets are served from the root path)
   await copyStaticAssets(cosmosConfig);
 
-  for (const plugin of serverPlugins) {
+  for (const plugin of buildPlugins) {
     if (!plugin.export) continue;
 
     try {

@@ -8,8 +8,8 @@ import {
   CosmosPlatform,
   DevServerPluginCleanupCallback,
 } from '../cosmosPlugin/types.js';
-import { applyServerConfigPlugins } from '../shared/applyServerConfigPlugins.js';
-import { getServerPlugins } from '../shared/getServerPlugins.js';
+import { applyConfigPlugins } from '../shared/applyConfigPlugins.js';
+import { getBuildPlugins } from '../shared/getBuildPlugins.js';
 import { logPluginInfo } from '../shared/logPluginInfo.js';
 import { serveStaticDir } from '../shared/staticServer.js';
 import { createExpressApp } from './expressApp.js';
@@ -29,14 +29,14 @@ export async function startDevServer(platform: CosmosPlatform) {
   });
   logPluginInfo(pluginConfigs);
 
-  const serverPlugins = await getServerPlugins(
+  const buildPlugins = await getBuildPlugins(
     pluginConfigs,
     cosmosConfig.rootDir
   );
 
-  cosmosConfig = await applyServerConfigPlugins({
+  cosmosConfig = await applyConfigPlugins({
     cosmosConfig,
-    serverPlugins,
+    buildPlugins,
     command: 'dev',
     platform,
   });
@@ -61,7 +61,7 @@ export async function startDevServer(platform: CosmosPlatform) {
     await httpServer.stop();
   }
 
-  for (const plugin of serverPlugins) {
+  for (const plugin of buildPlugins) {
     try {
       if (!plugin.devServer) continue;
 

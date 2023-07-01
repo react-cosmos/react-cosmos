@@ -1,7 +1,7 @@
 import { CosmosConfig } from 'react-cosmos';
 import webpack from 'webpack';
-import { resolveWebpackClientPath } from './resolveWebpackClientPath.js';
 import { resolveWebpackLoaderPath } from './resolveWebpackLoaderPath.js';
+import { resolveWebpackRendererPath } from './resolveWebpackRendererPath.js';
 
 export function getWebpackConfigModule(
   cosmosConfig: CosmosConfig,
@@ -26,7 +26,7 @@ function getUserImportsLoaderRule(
 ): webpack.RuleSetRule {
   return {
     loader: resolveWebpackLoaderPath(),
-    include: resolveWebpackClientPath('userImports'),
+    include: resolveWebpackRendererPath('userImports'),
     options: { cosmosConfig },
   };
 }

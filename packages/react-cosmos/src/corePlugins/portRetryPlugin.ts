@@ -1,7 +1,7 @@
-import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
+import { CosmosBuildPlugin } from '../cosmosPlugin/types.js';
 import { findNextAvailablePort } from '../shared/findNextAvailablePort.js';
 
-export const portRetryServerPlugin: CosmosServerPlugin = {
+export const portRetryPlugin: CosmosBuildPlugin = {
   name: 'portRetry',
 
   async config({ cosmosConfig, command }) {
