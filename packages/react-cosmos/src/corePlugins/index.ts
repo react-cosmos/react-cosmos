@@ -7,8 +7,12 @@ import { portRetryPlugin } from './portRetryPlugin.js';
 
 export const coreServerPlugins: CosmosServerPlugin[] = [
   portRetryPlugin,
-  fixtureWatcherPlugin,
   httpProxyPlugin,
   openFilePlugin,
   pluginEndpointPlugin,
 ];
+
+// Omit starting chokidar in Jest tests for performance reasons
+if (process.env.JEST_WORKER_ID === undefined) {
+  coreServerPlugins.push(fixtureWatcherPlugin);
+}
