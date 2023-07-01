@@ -1,6 +1,6 @@
 import { RendererConfig } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
-import { UserModulePaths } from './findUserModulePaths.js';
+import { UserModulePaths } from './shared.js';
 import { userImportsLazyTemplate } from './userImportsLazyTemplate.js';
 import { userImportsTemplate } from './userImportsTemplate.js';
 
@@ -13,7 +13,7 @@ type Args<T extends RendererConfig> = {
 };
 export function generateUserImports<T extends RendererConfig>({
   cosmosConfig,
-  modulePaths: { fixturePaths, decoratorPaths },
+  modulePaths,
   rendererConfig,
   relativeToDir,
   typeScript,
@@ -25,11 +25,10 @@ export function generateUserImports<T extends RendererConfig>({
     : userImportsTemplate;
 
   return template({
-    globalImports,
-    fixturePaths,
-    decoratorPaths,
-    rendererConfig,
     rootDir,
+    modulePaths,
+    globalImports,
+    rendererConfig,
     relativeToDir,
     typeScript,
   });

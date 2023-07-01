@@ -7,8 +7,7 @@ import {
 
 export function userImportsLazyTemplate({
   globalImports,
-  fixturePaths,
-  decoratorPaths,
+  modulePaths: { fixturePaths, decoratorPaths },
   rendererConfig,
   rootDir,
   relativeToDir,

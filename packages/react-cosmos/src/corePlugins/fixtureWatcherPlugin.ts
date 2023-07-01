@@ -9,12 +9,10 @@ import { CosmosConfig } from '../cosmosConfig/types.js';
 import { CosmosPlatform, CosmosServerPlugin } from '../cosmosPlugin/types.js';
 import { getPlaygroundUrl } from '../shared/playgroundUrl.js';
 import { updateFixtureListCache } from '../shared/serverFixtureList.js';
-import {
-  UserModulePaths,
-  findUserModulePaths,
-} from '../userModules/findUserModulePaths.js';
+import { findUserModulePaths } from '../userModules/findUserModulePaths.js';
 import { startFixtureWatcher } from '../userModules/fixtureWatcher.js';
 import { generateUserImports } from '../userModules/generateUserImports.js';
+import { UserModulePaths } from '../userModules/shared.js';
 import { moduleExists } from '../utils/fs.js';
 
 export const fixtureWatcherPlugin: CosmosServerPlugin = {
