@@ -9,7 +9,7 @@ type FindUserModulePathsArgs = {
   ignore: string[];
 };
 
-type UserModulePaths = {
+export type UserModulePaths = {
   fixturePaths: string[];
   decoratorPaths: string[];
 };

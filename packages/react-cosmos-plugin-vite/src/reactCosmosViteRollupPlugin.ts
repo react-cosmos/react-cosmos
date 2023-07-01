@@ -1,6 +1,7 @@
 import path from 'node:path';
 import {
   CosmosConfig,
+  findUserModulePaths,
   generateUserImports,
   getPlaygroundUrl,
 } from 'react-cosmos';
@@ -33,8 +34,10 @@ export function reactCosmosViteRollupPlugin(
 
     load(id: string) {
       if (id == userImportsResolvedModuleId) {
+        const modulePaths = findUserModulePaths(cosmosConfig);
         return generateUserImports<DomRendererConfig>({
           cosmosConfig,
+          modulePaths,
           rendererConfig: {
             playgroundUrl: getPlaygroundUrl(cosmosConfig),
             containerQuerySelector: cosmosConfig.dom.containerQuerySelector,
