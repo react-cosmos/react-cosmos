@@ -13,6 +13,8 @@ const fixturePaths = [
 
 const decoratorPaths = ['/Users/ovidiu/cosmos/src/cosmos.decorator.tsx'];
 
+const modulePaths = { fixturePaths, decoratorPaths };
+
 const rendererConfig: RendererConfig = {
   playgroundUrl: 'http://localhost:5002',
 };
@@ -20,11 +22,10 @@ const rendererConfig: RendererConfig = {
 it('should generate user imports with absolute paths', () => {
   expect(
     userImportsLazyTemplate({
-      globalImports,
-      fixturePaths,
-      decoratorPaths,
-      rendererConfig,
       rootDir: '/Users/ovidiu/cosmos',
+      modulePaths,
+      globalImports,
+      rendererConfig,
       relativeToDir: null,
       typeScript: false,
     })
@@ -34,11 +35,10 @@ it('should generate user imports with absolute paths', () => {
 it('should generate user imports with relative paths', () => {
   expect(
     userImportsLazyTemplate({
-      globalImports,
-      fixturePaths,
-      decoratorPaths,
-      rendererConfig,
       rootDir: '/Users/ovidiu/cosmos',
+      modulePaths,
+      globalImports,
+      rendererConfig,
       relativeToDir: '/Users/ovidiu/cosmos/src',
       typeScript: false,
     })
@@ -48,11 +48,10 @@ it('should generate user imports with relative paths', () => {
 it('should generate TypeScript user imports with absolute paths', () => {
   expect(
     userImportsLazyTemplate({
-      globalImports,
-      fixturePaths,
-      decoratorPaths,
-      rendererConfig,
       rootDir: '/Users/ovidiu/cosmos',
+      modulePaths,
+      globalImports,
+      rendererConfig,
       relativeToDir: null,
       typeScript: true,
     })
@@ -62,11 +61,10 @@ it('should generate TypeScript user imports with absolute paths', () => {
 it('should generate TypeScript user imports with relative paths', () => {
   expect(
     userImportsLazyTemplate({
-      globalImports,
-      fixturePaths,
-      decoratorPaths,
-      rendererConfig,
       rootDir: '/Users/ovidiu/cosmos',
+      modulePaths,
+      globalImports,
+      rendererConfig,
       relativeToDir: '/Users/ovidiu/cosmos/src',
       typeScript: true,
     })

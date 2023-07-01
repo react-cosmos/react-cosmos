@@ -8,19 +8,32 @@ import {
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { CosmosPlatform, CosmosServerPlugin } from '../cosmosPlugin/types.js';
 import { getPlaygroundUrl } from '../shared/playgroundUrl.js';
+import { updateFixtureListCache } from '../shared/serverFixtureList.js';
+import { findUserModulePaths } from '../userModules/findUserModulePaths.js';
 import { startFixtureWatcher } from '../userModules/fixtureWatcher.js';
 import { generateUserImports } from '../userModules/generateUserImports.js';
+import { UserModulePaths } from '../userModules/shared.js';
 import { moduleExists } from '../utils/fs.js';
 
-export const exposeImportsPlugin: CosmosServerPlugin = {
-  name: 'exposeImports',
+export const fixtureWatcherPlugin: CosmosServerPlugin = {
+  name: 'fixtureWatcher',
 
   async devServer({ cosmosConfig, platform }) {
-    if (!shouldExposeImports(platform, cosmosConfig)) return;
+    const exposeImports = shouldExposeImports(platform, cosmosConfig);
 
-    await generateImportsFile(cosmosConfig, 'dev');
+    if (exposeImports) {
+      const modulePaths = findUserModulePaths(cosmosConfig);
+      await generateImportsFile(cosmosConfig, 'dev', modulePaths);
+    }
+
     const watcher = await startFixtureWatcher(cosmosConfig, 'all', () => {
-      generateImportsFile(cosmosConfig, 'dev');
+      const modulePaths = findUserModulePaths(cosmosConfig);
+
+      updateFixtureListCache(cosmosConfig.rootDir, modulePaths.fixturePaths);
+
+      if (exposeImports) {
+        generateImportsFile(cosmosConfig, 'dev', modulePaths);
+      }
     });
 
     return () => {
@@ -30,7 +43,8 @@ export const exposeImportsPlugin: CosmosServerPlugin = {
 
   async export({ cosmosConfig }) {
     if (shouldExposeImports('web', cosmosConfig)) {
-      await generateImportsFile(cosmosConfig, 'export');
+      const modulePaths = findUserModulePaths(cosmosConfig);
+      await generateImportsFile(cosmosConfig, 'export', modulePaths);
     }
   },
 };
@@ -44,7 +58,8 @@ function shouldExposeImports(
 
 async function generateImportsFile(
   cosmosConfig: CosmosConfig,
-  command: CosmosCommand
+  command: CosmosCommand,
+  modulePaths: UserModulePaths
 ) {
   const { exposeImports } = cosmosConfig;
 
@@ -61,6 +76,7 @@ async function generateImportsFile(
   };
   const fileSource = generateUserImports<RendererConfig>({
     cosmosConfig,
+    modulePaths,
     rendererConfig,
     relativeToDir: path.dirname(filePath),
     typeScript,
