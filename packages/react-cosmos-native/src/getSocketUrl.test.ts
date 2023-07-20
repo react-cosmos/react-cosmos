@@ -13,6 +13,10 @@ jest.mock(
   { virtual: true }
 );
 
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
 it('should create socket URL', () => {
   expect(getSocketUrl('http://localhost:5050')).toBe(
     'ws://192.168.100.65:5050'

@@ -12,6 +12,10 @@ jest.mock('react-cosmos-renderer')
 
 const mockIsInsideWindowIframe = jest.mocked(isInsideWindowIframe)
 
+afterEach(() => {
+  jest.clearAllMocks()
+})
+
 it('uses "ws" websocket protocol when not on HTTPS', () => {
   mockIsInsideWindowIframe.mockReturnValue(false)
   renderHook(() => useDomRendererConnect('http://example.com/playground'))
