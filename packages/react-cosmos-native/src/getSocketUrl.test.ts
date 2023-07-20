@@ -18,3 +18,15 @@ it('should create socket URL', () => {
     'ws://192.168.100.65:5050'
   );
 });
+
+it('should create a secure socket URL', () => {
+  expect(getSocketUrl('https://localhost:5050')).toBe(
+    'wss://192.168.100.65:5050'
+  );
+});
+
+it('works without a defined port', () => {
+  expect(getSocketUrl('https://example.com')).toBe(
+    'wss://192.168.100.65:80'
+  );
+});
