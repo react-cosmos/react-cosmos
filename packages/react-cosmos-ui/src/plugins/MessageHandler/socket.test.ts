@@ -1,6 +1,5 @@
-/* eslint-disable import/extensions */
 import { MessageHandlerContext } from './shared.js';
-import { initSocket } from './socket';
+import { initSocket } from './socket.js';
 
 jest.mock('react-cosmos-core');
 jest.mock('react-cosmos-renderer');

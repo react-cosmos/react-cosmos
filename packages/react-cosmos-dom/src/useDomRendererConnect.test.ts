@@ -1,8 +1,7 @@
-/* eslint-disable import/extensions */
 import { renderHook } from '@testing-library/react';
 import { isInsideWindowIframe } from 'react-cosmos-core';
 import { createWebSocketsConnect } from 'react-cosmos-renderer';
-import { useDomRendererConnect } from './useDomRendererConnect';
+import { useDomRendererConnect } from './useDomRendererConnect.js';
 
 jest.mock('react-cosmos-core');
 jest.mock('react-cosmos-renderer');
