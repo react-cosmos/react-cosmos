@@ -1,68 +1,69 @@
-/* eslint-disable import/extensions */
-import { MessageHandlerContext } from './shared.js';
-import { initSocket } from './socket'
+import { loadPlugins } from 'react-plugin';
+import { register } from '.';
+import { mockCore } from '../../testHelpers/pluginMocks.js';
 
-jest.mock('react-cosmos-core')
-jest.mock('react-cosmos-renderer')
-jest.mock('./shared.js')
+const originalWindowLocation = window.location;
 
-const createMockContext = () => ({
-  getMethodsOf: () => {
-    return {
-      isDevServerOn: () => true,
-    }
-  },
-  messageHandler: () => {},
-  pluginName: () => {}
-})
-
-const createMockWebSocket = () => (() => ({
-    addEventListener: jest.fn(),
-    close: jest.fn(),
-    removeEventListener: jest.fn()
-  }) as unknown as WebSocket)
-
-const originalWindowLocation = window.location
-
-beforeEach(() => {
+beforeAll(() => {
   Object.defineProperty(window, 'location', {
     configurable: true,
     enumerable: true,
     value: {
-      origin: 'http://example.com'
+      origin: 'http://example.com',
     },
-  })
-})
+  });
+});
 
-afterEach(() => {
+afterAll(() => {
   Object.defineProperty(window, 'location', {
     configurable: true,
     enumerable: true,
     value: originalWindowLocation,
-  })
+  });
+});
 
-  jest.clearAllMocks()
-})
+beforeEach(() => {
+  register();
+  mockCore({
+    isDevServerOn: () => true,
+  });
+});
+
+afterEach(() => {
+  jest.clearAllMocks();
+});
 
 it('initializes a websocket using "ws" protocol when not on HTTPS', () => {
-  Object.defineProperty(window.location, 'origin', {
-    value: 'http://example.com'
-  })
+  mockLocation('http://example.com');
+  const webSocketMock = mockWebSocket();
 
-  const websocketMock = jest.spyOn(global, 'WebSocket')
-    .mockImplementation(createMockWebSocket())
-  const context = createMockContext() as unknown as MessageHandlerContext
-  initSocket(context)
-  expect(websocketMock).toHaveBeenCalledWith('ws://example.com')
-})
+  loadPlugins();
+  expect(webSocketMock).toHaveBeenCalledWith('ws://example.com');
+});
 
 it('initializes a websocket using "wss" protocol when on HTTPS', () => {
-  Object.defineProperty(window.location, 'origin', {
-    value: 'https://example.com'
-  })
-  const websocketMock = jest.spyOn(global, 'WebSocket')
-    .mockImplementation(createMockWebSocket())
-  const context = createMockContext() as unknown as MessageHandlerContext
-  initSocket(context)
-  expect(websocketMock).toHaveBeenCalledWith('wss://example.com')
-})
+  mockLocation('https://example.com');
+  const webSocketMock = mockWebSocket();
+
+  loadPlugins();
+  expect(webSocketMock).toHaveBeenCalledWith('wss://example.com');
+});
+
+function mockLocation(url: string) {
+  Object.defineProperty(window.location, 'origin', { value: url });
+}
+
+function mockWebSocket() {
+  return jest
+    .spyOn(global, 'WebSocket')
+    .mockImplementation(createMockWebSocket());
+}
+
+function createMockWebSocket() {
+  return () =>
+    ({
+      addEventListener: jest.fn(),
+      close: jest.fn(),
+      removeEventListener: jest.fn(),
+    } as unknown as WebSocket);
+}
