@@ -15,7 +15,9 @@ export function initSocket(context: MessageHandlerContext) {
     return;
   }
 
-  socket = new WebSocket(location.origin.replace(/^https:/, 'wss:').replace(/^http:/, 'ws:'));
+  socket = new WebSocket(
+    location.origin.replace(/^https:/, 'wss:').replace(/^http:/, 'ws:')
+  );
   socket.addEventListener('open', () => {
     if (socket && pendingMessages.length > 0) {
       for (const msg of pendingMessages) socket.send(JSON.stringify(msg));

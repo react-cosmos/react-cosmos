@@ -30,7 +30,5 @@ it('should create a secure socket URL', () => {
 });
 
 it('works without a defined port', () => {
-  expect(getSocketUrl('https://example.com')).toBe(
-    'wss://192.168.100.65:80'
-  );
+  expect(getSocketUrl('https://example.com')).toBe('wss://192.168.100.65:80');
 });

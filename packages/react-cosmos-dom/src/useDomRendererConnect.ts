@@ -26,5 +26,5 @@ function createDomRendererConnect(playgroundUrl: string) {
 }
 
 function getWebSocketsUrl(playgroundUrl: string) {
-  return playgroundUrl.replace(/^https:/, 'wss:').replace(/^http:/, 'ws:')
+  return playgroundUrl.replace(/^https:/, 'wss:').replace(/^http:/, 'ws:');
 }
