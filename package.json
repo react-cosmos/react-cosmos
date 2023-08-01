@@ -3,7 +3,8 @@
   "workspaces": [
     "packages/*",
     "examples/*",
-    "website"
+    "website",
+    "docs-next"
   ],
   "repository": "https://github.com/react-cosmos/react-cosmos",
   "license": "MIT",

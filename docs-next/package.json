@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "name": "docs-next",
+  "version": "6.0.0-beta.6",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/docs-next",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {},
+  "dependencies": {
+    "next": "^13.4.12",
+    "nextra": "^2.10.0",
+    "nextra-theme-docs": "^2.10.0"
+  }
+}
