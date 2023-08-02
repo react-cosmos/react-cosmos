@@ -1,0 +1,64 @@
+import { Callout } from 'nextra/components';
+
+# Fixtures
+
+Fixture files contain a default export, which can be a React Component or any React Node.
+
+## Node Fixtures
+
+<Callout type="info">
+  Think of Node fixtures as the return value of a function component, or the
+  first argument to `React.render`.
+</Callout>
+
+```jsx filename="Button.fixture.jsx"
+export default <Button disabled>Click me</Button>;
+```
+
+## Component Fixtures
+
+Component fixtures are just React function components with no props. They enable using Hooks inside fixtures, which is powerful for simulating state with stateless components.
+
+```jsx filename="CounterButton.fixture.jsx"
+export default () => {
+  const [count, setCount] = React.useState(0);
+
+  return <CounterButton count={count} increment={() => setCount(count + 1)} />;
+};
+```
+
+## Multi-Fixtures
+
+A fixture module can also export multiple fixtures if the default export is an object.
+
+{/* prettier-ignore */}
+```jsx filename="Button.fixture.jsx"
+export default {
+  'Primary': <PrimaryButton>Click me</PrimaryButton>,
+
+  'Primary Disabled': <PrimaryButton disabled>Click me</PrimaryButton>,
+
+  'Secondary': <SecondaryButton>Click me</SecondaryButton>,
+
+  'Secondary Disabled': <SecondaryButton disabled>Click me</SecondaryButton>,
+};
+```
+
+The object property names will show up as fixture names in the Cosmos UI.
+
+> [See this comment](https://github.com/react-cosmos/react-cosmos/issues/924#issuecomment-462082405) for the reasoning behind this solution (vs named exports).
+
+## MDX Fixtures
+
+Creating MDX fixtures is as easy as [configuring MDX for your bundler](https://mdxjs.com/docs/getting-started/#bundler) and using the `.mdx` (or `.md`) file extension for your fixture files.
+
+<Callout type="info">
+  Both Vite and Webpack
+  [examples](https://github.com/react-cosmos/react-cosmos/tree/main/examples)
+  feature MDX fixtures configured with `@mdx-js/rollup` and `@mdx-js/loader`
+  respectively.
+</Callout>
+
+---
+
+[Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.

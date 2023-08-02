@@ -1,0 +1,58 @@
+import { Callout } from 'nextra/components';
+
+# UI Controls
+
+Props controls are created automatically for [Node fixtures](/docs/fixtures.md#node-fixtures) in the Cosmos UI. This enables you to tweek component props and see the result in real time, without any configuration.
+
+You can also create custom controls in the [Control Panel](/docs/user-interface.md#control-panel) by manually defining them in your fixtures.
+
+## `useValue`
+
+```jsx filename="CounterButton.fixture.jsx"
+import { useValue } from 'react-cosmos/client';
+
+export default () => {
+  const [count, setCount] = useValue('count', { defaultValue: 0 });
+
+  return <CounterButton count={count} increment={() => setCount(count + 1)} />;
+};
+```
+
+## `useSelect`
+
+```jsx filename="Button.fixture.jsx"
+import { useSelect } from 'react-cosmos/client';
+
+export default () => {
+  // useSelect also returns a setter as the second value in the return tuple,
+  // like the useState hook, in case you want to change the value programatically.
+  const [buttonType] = useSelect('buttonType', {
+    options: ['primary', 'secondary', 'danger'],
+  });
+
+  return <Button type={buttonType}>Press me</Button>;
+};
+```
+
+<Callout type="info">
+  **Note** `useValue` and `useSelect` (and Cosmos in general) work great with
+  TypeScript.
+</Callout>
+
+## `<Viewport>`
+
+By using the Viewport decorator a fixture can trigger the responsive preview in the Cosmos UI on a specific resolution.
+
+```jsx
+import { Viewport } from 'react-cosmos/client';
+
+export default (
+  <Viewport width={375} height={667}>
+    <MyComponent />
+  </Viewport>
+);
+```
+
+---
+
+[Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.
