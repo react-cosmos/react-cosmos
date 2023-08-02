@@ -1,8 +1,16 @@
+import { Callout } from 'nextra/components';
+
 # Custom Bundler
 
 This is a guide for setting up React Cosmos with any bundler.
 
-_A bit of context: React Cosmos is made out of three main parts: The Server, the Renderer and the UI. Setting up a custom bundler integration consists of serving the Renderer yourself, without having to do anything special to the Server or the UI. But don't worry, Cosmos provides easy-to-use Renderer primitives that make it easy to create a custom setup._
+<Callout type="info">
+  A bit of context: React Cosmos is made out of three main parts: The Server,
+  the Renderer and the UI. Setting up a custom bundler integration consists of
+  serving the Renderer yourself, without having to do anything special to the
+  Server or the UI. But don't worry, Cosmos provides easy-to-use Renderer
+  primitives that make it easy to create a custom setup.
+</Callout>
 
 Install the required packages:
 
@@ -27,7 +35,11 @@ Add `cosmos` script to package.json:
 }
 ```
 
-> The `--expose-imports` flag will generate a `cosmos.imports.js` module that contains maps of user module imports (fixtures and decorators) as well the renderer config. Feel free to add this file to .gitignore.
+<Callout type="info">
+  The `--expose-imports` flag will generate a `cosmos.imports.js` module that
+  contains maps of user module imports (fixtures and decorators) as well the
+  renderer config. Feel free to add this file to .gitignore.
+</Callout>
 
 Create a basic fixture at `src/Hello.fixture.jsx`:
 
