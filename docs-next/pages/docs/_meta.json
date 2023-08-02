@@ -11,8 +11,8 @@
   "user-interface": "",
   "configuration": "",
   "static-export": "",
-  "node-api": "",
   "plugins": "",
+  "node-api": "Node.js API",
   "-- more": {
     "type": "separator",
     "title": "More"
