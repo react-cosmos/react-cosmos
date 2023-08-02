@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 # User Interface
 
 This section highlights the main functionality of the React Cosmos UI.
@@ -9,13 +11,20 @@ Visit [reactcosmos.org/demo/](https://reactcosmos.org/demo/) for a live demo of 
 An elegant file-system based tree view navigation system. Folders can be collapsed,
 and their state persists between sessions.
 
-<img alt="" width="400" src="screenshots/fixture-tree-view.png" />
+<br />
+<Image
+  alt=""
+  width={400}
+  height={400}
+  src="/screenshots/fixture-tree-view.png"
+/>
 
 ## Fixture Search
 
 A snappy fixture search feature with fuzzy matching. Use `⌘ + P` from anywhere to launch the search modal.
 
-<img alt="" width="400" src="screenshots/fixture-search.png" />
+<br />
+<Image alt="" width={400} height={400} src="/screenshots/fixture-search.png" />
 
 ## Fixture Bookmarks
 
@@ -31,7 +40,13 @@ Communication and state synchronization between the Cosmos UI and the renderer i
 
 Viewport controls that allow simulation of screen size and orientation, with the option to choose from a predefined list of common devices.
 
-<img alt="" width="400" src="screenshots/responsive-preview.png" />
+<br />
+<Image
+  alt=""
+  width={400}
+  height={400}
+  src="/screenshots/responsive-preview.png"
+/>
 
 A screen size can be embedded into a fixture using the [`<Viewport>`](fixtures.md#viewport) decorator.
 
@@ -63,7 +78,7 @@ Launches the source code of the current fixture in your default code editor.
 
 UI controls that provide powerful component data manipulation.
 
-<img alt="" width="400" src="screenshots/props-panel.png" />
+<Image alt="" width={400} height={400} src="/screenshots/props-panel.png" />
 
 Three types of controls are currently supported:
 
@@ -81,7 +96,8 @@ The Cosmos UI features two slick resizable and collapsible panels on each side. 
 
 A beautiful notifications interface used to communicate renderer and server connectivity, and other useful information. It can be invoked from anywhere in the Cosmos UI, including 3rd party plugins.
 
-<img alt="" width="400" src="screenshots/notifications.png" />
+<br />
+<Image alt="" width={400} height={400} src="/screenshots/notifications.png" />
 
 ## Keyboard Shortcuts
 

@@ -6,7 +6,7 @@ This is a guide for setting up React Cosmos in a Vite project.
 
 Install the required packages:
 
-```bash
+```bash npm2yarn
 npm i -D react-cosmos@next react-cosmos-plugin-vite@next
 ```
 

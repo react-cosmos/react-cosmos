@@ -4,8 +4,7 @@ Wrapping components in fixtures can become repetitive. Decorators can be used to
 
 A `cosmos.decorator` file looks like this:
 
-```jsx
-// cosmos.decorator.js
+```jsx filename="cosmos.decorator.js"
 export default ({ children }) => <Provider store={store}>{children}</Provider>;
 ```
 

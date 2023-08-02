@@ -24,7 +24,7 @@ The Cosmos config is a **JSON** file, so it can only contain serializable values
 
 ### Config Schema
 
-**The best way to learn about the available options in the Cosmos config is to use [config.schema.json](../../packages/react-cosmos/config.schema.json).**
+**The best way to learn about the available options in the Cosmos config is to use [config.schema.json](https://github.com/react-cosmos/react-cosmos/blob/main/packages/react-cosmos/config.schema.json).**
 
 The schema is human readable, but you can also enhance your config with autocomplete in code editors like VS Code.
 

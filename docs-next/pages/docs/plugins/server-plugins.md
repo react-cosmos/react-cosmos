@@ -2,11 +2,11 @@
 
 This is a guide for creating Cosmos server plugins, which enable integrating with bundlers like Vite or Webpack, as well as adding functionality to the Cosmos server.
 
-You can browse a list of built-in server plugins [here](../../packages/react-cosmos/src/corePlugins/).
+You can browse a list of built-in server plugins [here](https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos/src/corePlugins).
 
 ## Boilerplate
 
-The `server` field in [`cosmos.plugin.json`](./plugin-config.md) points to a module like this:
+The `server` field in [`cosmos.plugin.json`](../plugins.md) points to a module like this:
 
 ```js
 export default {

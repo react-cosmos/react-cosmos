@@ -6,8 +6,7 @@ Fixture files contain a default export, which can be a React Component or any Re
 
 > Think of Node fixtures as the return value of a function component, or the first argument to `React.render`.
 
-```jsx
-// Button.fixture.jsx
+```jsx filename="Button.fixture.jsx"
 export default <Button disabled>Click me</Button>;
 ```
 
@@ -15,8 +14,7 @@ export default <Button disabled>Click me</Button>;
 
 Component fixtures are just React function components with no props. They enable using Hooks inside fixtures, which is powerful for simulating state with stateless components.
 
-```jsx
-// CounterButton.fixture.jsx
+```jsx filename="CounterButton.fixture.jsx"
 export default () => {
   const [count, setCount] = React.useState(0);
 
@@ -29,8 +27,7 @@ export default () => {
 A fixture module can also export multiple fixtures if the default export is an object.
 
 <!-- prettier-ignore -->
-```jsx
-// Button.fixture.jsx
+```jsx filename="Button.fixture.jsx"
 export default {
   'primary': <PrimaryButton>Click me</PrimaryButton>,
 
@@ -82,8 +79,7 @@ You can also create custom controls in the [Control Panel](user-interface.md#con
 
 ### `useValue`
 
-```jsx
-// CounterButton.fixture.jsx
+```jsx filename="CounterButton.fixture.jsx"
 import { useValue } from 'react-cosmos/client';
 
 export default () => {
@@ -95,8 +91,7 @@ export default () => {
 
 ### `useSelect`
 
-```jsx
-// Button.fixture.jsx
+```jsx filename="Button.fixture.jsx"
 import { useSelect } from 'react-cosmos/client';
 
 export default () => {

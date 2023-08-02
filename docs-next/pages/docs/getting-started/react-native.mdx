@@ -1,3 +1,5 @@
+import { Callout, FileTree } from 'nextra/components';
+
 # React Native
 
 This is a guide for setting up React Cosmos in a React Native project, with or without Expo.
@@ -6,7 +8,7 @@ This is a guide for setting up React Cosmos in a React Native project, with or w
 
 Install the required packages:
 
-```bash
+```bash npm2yarn
 npm i -D react-cosmos@next react-cosmos-native@next
 ```
 
@@ -48,7 +50,10 @@ Start React Cosmos:
 npm run cosmos
 ```
 
-> You'll notice Cosmos generated a `cosmos.imports.js` module, which becomes relevant next. You can add this file to .gitignore.
+<Callout type="info">
+  You'll notice Cosmos generated a `cosmos.imports.js` module, which becomes
+  relevant next. You can add this file to .gitignore.
+</Callout>
 
 🚀 Open **[localhost:5000](http://localhost:5000)** in your browser.
 
@@ -64,18 +69,27 @@ This is very similar to a [custom bundler setup](./custom-bundler.md). Cosmos ca
 
 Here's a basic file structure to get going. You can tweak this after everything's working.
 
+<FileTree>
+  <FileTree.Folder name="project" defaultOpen>
+    <FileTree.File name="App.cosmos.js" />
+    <FileTree.File name="App.main.js" />
+    <FileTree.File name="App.js" />
+  </FileTree.Folder>
+</FileTree>
+
 1. Your production app entry point: `App.main.js`.
 2. Your Cosmos renderer entry point: `App.cosmos.js`.
 3. The root entry point that decides which to load: `App.js`.
 
-> If you're using TypeScript replace `.js` file extensions with `.tsx`.
+<Callout type="info">
+  If you're using TypeScript replace `.js` file extensions with `.tsx`.
+</Callout>
 
 First, rename your existing `App.js` to `App.main.js`.
 
 Then add the Cosmos renderer under `App.cosmos.js`:
 
-```jsx
-// App.cosmos.js
+```jsx filename="App.cosmos.js"
 import React, { Component } from 'react';
 import { NativeFixtureLoader } from 'react-cosmos-native';
 import { rendererConfig, moduleWrappers } from './cosmos.imports';
@@ -94,8 +108,7 @@ export default class CosmosApp extends Component {
 
 Finally, create a new `App.js` that routes between your main and Cosmos entry points based on enviromnent:
 
-```js
-// App.js
+```js filename="App.js"
 module.exports = global.__DEV__
   ? require('./App.cosmos')
   : require('./App.main');
@@ -113,8 +126,7 @@ You've taken the first step towards designing reusable components. You're ready 
 
 You'll often want to load the entire app in development. The simplest way to do this without disconnecting the Cosmos entry point is to create an App fixture:
 
-```jsx
-// App.fixture.js
+```jsx filename="App.fixture.js"
 import App from './App.main';
 
 export default () => <App />;
@@ -124,11 +136,11 @@ export default () => <App />;
 
 You can configure the Cosmos Native renderer to auto load a fixture on init.
 
-```diff
+```jsx {4}
 <NativeFixtureLoader
   rendererConfig={rendererConfig}
   moduleWrappers={moduleWrappers}
-+ initialFixtureId={{ path: 'src/__fixtures__/HelloWorld.ts' }}
+  initialFixtureId={{ path: 'src/__fixtures__/HelloWorld.ts' }}
 />
 ```
 

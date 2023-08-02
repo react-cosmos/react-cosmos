@@ -6,7 +6,7 @@ _A bit of context: React Cosmos is made out of three main parts: The Server, the
 
 Install the required packages:
 
-```bash
+```bash npm2yarn
 npm i -D react-cosmos@next react-cosmos-dom@next
 ```
 
@@ -54,7 +54,7 @@ That's it, really.
 
 The Cosmos Server will automatically update `cosmos.imports.js` when fixture/decorator files are added, changed or removed.
 
-To learn how turn your setup into a Cosmos plugin check out the [Vite plugin](../../packages/react-cosmos-plugin-vite).
+To learn how turn your setup into a Cosmos plugin check out the [Vite plugin](https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-plugin-vite).
 
 ---
 

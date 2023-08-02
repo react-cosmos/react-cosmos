@@ -1,3 +1,5 @@
+import { Callout, Cards, Card } from 'nextra/components';
+
 # Cosmos Plugins
 
 A Cosmos plugin is a wrapper for two plugin types: **server plugins** and **UI plugins**. Each plugin type has a distinct API and runs in a different environment. Combining both into a single Cosmos plugin adds full-stack capabilities to React Cosmos with a single package.
@@ -16,12 +18,17 @@ Create a `cosmos.plugin.json` file:
 
 This JSON config is the plugin's entry point. A plugin name and at least one plugin type is required.
 
-> The `server` and `ui` paths are resolved relative to the config's parent directory.
+<Callout type="info">
+  The `server` and `ui` paths are resolved relative to the config's parent
+  directory.
+</Callout>
 
 See the individual guides for each plugin type:
 
-- [Server Plugins](server-plugins.md)
-- [UI Plugins](ui-plugins.md)
+<Cards>
+  <Card title="Server Plugins" href="plugins/server-plugins" />
+  <Card title="UI Plugins" href="plugins/ui-plugins" />
+</Cards>
 
 ## Enabling a Plugin
 
@@ -59,7 +66,7 @@ To publish a Cosmos plugin as an NPM package, set the `main` field in its `packa
 
 This combines a [server plugin](server-plugins.md) with a [UI plugin](ui-plugins.md). It adds a renderer action that opens the selected fixture file in your default editor.
 
-```bash
+```bash npm2yarn
 npm i -D react-cosmos-plugin-open-fixture
 ```
 
@@ -73,7 +80,7 @@ npm i -D react-cosmos-plugin-open-fixture
 
 This is a [UI plugin](ui-plugins.md) that turns boolean inputs in the [Control Panel](/docs/usage/user-interface.md#control-panel) from a true/false button to a checkbox input.
 
-```bash
+```bash npm2yarn
 npm i -D react-cosmos-plugin-boolean-input
 ```
 

@@ -6,7 +6,7 @@ This is a guide for setting up React Cosmos in a Create React App project.
 
 Install the required packages:
 
-```bash
+```bash npm2yarn
 npm i -D react-cosmos@next react-cosmos-plugin-webpack@next
 ```
 
@@ -60,8 +60,7 @@ You've taken the first step towards designing reusable components. You're ready 
 
 In a standard Create React App setup you config React Cosmos to use CRA's internal Webpack config (see above). With react-app-rewired, however, create the following Webpack config in your project root instead.
 
-```js
-// webpack.config.js
+```js filename="webpack.config.js"
 const { paths } = require('react-app-rewired');
 const overrides = require('react-app-rewired/config-overrides');
 const config = require(paths.scriptVersion + '/config/webpack.config.dev');
@@ -77,8 +76,7 @@ module.exports = overrides.webpack(config, process.env.NODE_ENV);
 
 - Create `webpack.config.js` in your root folder (if you haven't already) with the following contents:
 
-```js
-// webpack.config.js
+```js filename="webpack.config.js"
 const { createWebpackDevConfig } = require('@craco/craco');
 const cracoConfig = require('./craco.config.js');
 const webpackConfig = createWebpackDevConfig(cracoConfig);
