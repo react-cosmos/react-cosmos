@@ -31,11 +31,11 @@ export default {
 
 ### `config`
 
-| Argument       | Description                                                             |
-| -------------- | ----------------------------------------------------------------------- |
-| `cosmosConfig` | The user's [Cosmos config](../usage/configuration.md#cosmosconfigjson). |
-| `command`      | `"dev"` or `"export"`.                                                  |
-| `platform`     | `"web"` or `"native"`.                                                  |
+| Argument       | Description                                                          |
+| -------------- | -------------------------------------------------------------------- |
+| `cosmosConfig` | The user's [Cosmos config](/docs/configuration.md#cosmosconfigjson). |
+| `command`      | `"dev"` or `"export"`.                                               |
+| `platform`     | `"web"` or `"native"`.                                               |
 
 The `config` hook is called before both `devServer` and `export` hooks. It allows overriding the user's Cosmos config. Setting the `rendererUrl` config option is a common use case.
 
@@ -43,7 +43,7 @@ The `config` hook is called before both `devServer` and `export` hooks. It allow
 
 | Argument       | Description                                                                                   |
 | -------------- | --------------------------------------------------------------------------------------------- |
-| `cosmosConfig` | The user's [Cosmos config](../usage/configuration.md#cosmosconfigjson).                       |
+| `cosmosConfig` | The user's [Cosmos config](/docs/configuration.md#cosmosconfigjson).                          |
 | `platform`     | `"web"` or `"native"`.                                                                        |
 | `httpServer`   | The [http.Server](https://nodejs.org/api/http.html#class-httpserver) instance used by Cosmos. |
 | `expressApp`   | The [Express App](https://expressjs.com/en/4x/api.html#app) instance used by Cosmos.          |
@@ -55,9 +55,9 @@ For example in the Webpack plugin the Webpack compiler is attached to Cosmos' in
 
 ### `export`
 
-| Argument       | Description                                                             |
-| -------------- | ----------------------------------------------------------------------- |
-| `cosmosConfig` | The user's [Cosmos config](../usage/configuration.md#cosmosconfigjson). |
+| Argument       | Description                                                          |
+| -------------- | -------------------------------------------------------------------- |
+| `cosmosConfig` | The user's [Cosmos config](/docs/configuration.md#cosmosconfigjson). |
 
 A hook for exporting the user's fixtures and decorators into a static Cosmos renderer that the static Cosmos UI connects to.
 

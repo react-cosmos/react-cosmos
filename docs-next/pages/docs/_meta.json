@@ -2,12 +2,12 @@
   "index": "Introduction",
   "getting-started": "",
   "migration-guide": "",
+  "user-interface": "",
   "-- usage": {
     "type": "separator",
     "title": "Usage"
   },
   "fixtures": "",
-  "user-interface": "",
   "configuration": "",
   "static-export": "",
   "plugins": "",
