@@ -1,6 +1,17 @@
+import { Cards, Card } from 'nextra/components';
+import StarIcon from '../../components/icons/stars.svg';
+
 # Introduction
 
 Welcome to the React Cosmos documentation!
+
+<Cards>
+  <Card
+    title="Getting Started"
+    href="/docs/getting-started"
+    icon={<StarIcon />}
+  />
+</Cards>
 
 ## What Is React Cosmos?
 
@@ -21,22 +32,6 @@ React Cosmos revolutionizes component development, testing, and sharing. Its san
 | Integration    | First-class integrations with Vite, Webpack, React Native, Next.js, and support for integrating with custom setups. |
 | Plugins        | Full-stack plugin system for extending every aspect of React Cosmos to suit your needs.                             |
 | High Quality   | 100% TypeScript. Minimal dependencies. Meticulously designed and tested to ensure the best developer experience.    |
-
-## Usage
-
-- [Fixtures](usage/fixtures.md)
-- [Decorators](usage/decorators.md)
-- [User Interface](usage/user-interface.md)
-- [Configuration](usage/configuration.md)
-- [Static Export](usage/static-export.md)
-- [Node.js API](usage/node-api.md)
-
-## Plugins
-
-- [Cosmos Plugins](plugins/cosmos-plugins.md)
-- [Server Plugins](plugins/server-plugins.md)
-- [UI Plugins](plugins/ui-plugins.md)
-- [Fixture Plugins](plugins/fixture-plugins.md)
 
 ## Why Is React Cosmos Architecturally Unique?
 
