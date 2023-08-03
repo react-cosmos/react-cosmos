@@ -5,6 +5,7 @@ export default {
   docsRepositoryBase:
     'https://github.com/react-cosmos/react-cosmos/blob/main/docs',
   logo: <span>React Cosmos</span>,
+  feedback: { content: null },
   project: {
     link: 'https://github.com/react-cosmos/react-cosmos',
   },
