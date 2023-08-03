@@ -37,12 +37,12 @@ Slots and plugs make up for the render composition but there's more to UI plugin
 
 These are the arguments supported when creating a plugin:
 
-| Argument        | Description                                                                                                                     |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| `name`          | UI plugin identifier.                                                                                                           |
-| `defaultConfig` | Optional plain object config. Set via Cosmos config under `ui.plugins.{name}` and read privately via `PluginContext.getConfig`. |
-| `initialState`  | Optional plain object state. Accessed privately via `PluginContext.getState` and `PluginContext.setState`.                      |
-| `methods`       | Optional method handlers called by other plugins via `PluginContext.getMethodsOf`.                                              |
+| Argument        | Description                                                                                                                   |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `name`          | UI plugin identifier.                                                                                                         |
+| `defaultConfig` | Optional plain object config. Set via Cosmos config under `ui.{pluginName}` and read privately via `PluginContext.getConfig`. |
+| `initialState`  | Optional plain object state. Accessed privately via `PluginContext.getState` and `PluginContext.setState`.                    |
+| `methods`       | Optional method handlers called by other plugins via `PluginContext.getMethodsOf`.                                            |
 
 Once created, the plugin API allows registering UI plugs, as well as `onLoad` and event handlers.
 
