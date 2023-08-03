@@ -7,8 +7,9 @@
     "type": "separator",
     "title": "Usage"
   },
+  "cli": "React Cosmos CLI",
   "fixtures": "",
-  "configuration": "",
+  "configuration": "Configuration",
   "static-export": "",
   "plugins": "",
   "node-api": "Node.js API",
