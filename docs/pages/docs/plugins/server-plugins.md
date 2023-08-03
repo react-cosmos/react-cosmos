@@ -6,7 +6,7 @@ You can browse a list of built-in server plugins [here](https://github.com/react
 
 ## Boilerplate
 
-The `server` field in [`cosmos.plugin.json`](../plugins.md) points to a module like this:
+The `server` field in [`cosmos.plugin.json`](/docs/plugins.md) points to a module like this:
 
 ```js
 export default {
@@ -31,11 +31,11 @@ export default {
 
 ### `config`
 
-| Argument       | Description                                                          |
-| -------------- | -------------------------------------------------------------------- |
-| `cosmosConfig` | The user's [Cosmos config](/docs/configuration.md#cosmosconfigjson). |
-| `command`      | `"dev"` or `"export"`.                                               |
-| `platform`     | `"web"` or `"native"`.                                               |
+| Argument       | Description                                                       |
+| -------------- | ----------------------------------------------------------------- |
+| `cosmosConfig` | The user's [Cosmos config](/docs/configuration/cosmos-config.md). |
+| `command`      | `"dev"` or `"export"`.                                            |
+| `platform`     | `"web"` or `"native"`.                                            |
 
 The `config` hook is called before both `devServer` and `export` hooks. It allows overriding the user's Cosmos config. Setting the `rendererUrl` config option is a common use case.
 
@@ -43,7 +43,7 @@ The `config` hook is called before both `devServer` and `export` hooks. It allow
 
 | Argument       | Description                                                                                   |
 | -------------- | --------------------------------------------------------------------------------------------- |
-| `cosmosConfig` | The user's [Cosmos config](/docs/configuration.md#cosmosconfigjson).                          |
+| `cosmosConfig` | The user's [Cosmos config](/docs/configuration/cosmos-config.md).                             |
 | `platform`     | `"web"` or `"native"`.                                                                        |
 | `httpServer`   | The [http.Server](https://nodejs.org/api/http.html#class-httpserver) instance used by Cosmos. |
 | `expressApp`   | The [Express App](https://expressjs.com/en/4x/api.html#app) instance used by Cosmos.          |
@@ -55,8 +55,8 @@ For example in the Webpack plugin the Webpack compiler is attached to Cosmos' in
 
 ### `export`
 
-| Argument       | Description                                                          |
-| -------------- | -------------------------------------------------------------------- |
-| `cosmosConfig` | The user's [Cosmos config](/docs/configuration.md#cosmosconfigjson). |
+| Argument       | Description                                                       |
+| -------------- | ----------------------------------------------------------------- |
+| `cosmosConfig` | The user's [Cosmos config](/docs/configuration/cosmos-config.md). |
 
 A hook for exporting the user's fixtures and decorators into a static Cosmos renderer that the static Cosmos UI connects to.

@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components';
+
 # Webpack
 
 This is a guide for setting up React Cosmos in a Webpack project.
@@ -51,11 +53,20 @@ You've taken the first step towards designing reusable components. You're ready 
 
 Cosmos generates a default Webpack config if a custom one isn't provided.
 
-> **Warning** Cosmos compiles your code using dependencies you already installed in your project. Cosmos will auto include common loaders like `babal-loader`, `ts-loader`, `css-loader`, etc. in the default Webpack config. Use a [custom Webpack config](#custom-webpack-config) for more advanced use cases.
+<Callout type="warning">
+  Cosmos compiles your code using dependencies you already installed in your
+  project. Cosmos will auto include common loaders like `babal-loader`,
+  `ts-loader`, `css-loader`, etc. in the default Webpack config. Use a [custom
+  Webpack config](#custom-webpack-config) for more advanced use cases.
+</Callout>
 
-> **Warning** Make sure `html-webpack-plugin` is installed in your project.
+<Callout type="warning">
+  Make sure `html-webpack-plugin` is installed in your project.
+</Callout>
 
-> **Warning** You may also need to create a `.babelrc` in your project root.
+<Callout>
+  You may also need to create a `.babelrc` in your project root.
+</Callout>
 
 ### Custom Webpack Config
 
@@ -71,7 +82,10 @@ Cosmos picks up `webpack.config.js` from the project root automatically. Use the
 }
 ```
 
-> You can also point to a module inside a dependency, like in the [Create React App](create-react-app.md) example.
+<Callout type="info">
+  You can also point to a module inside a dependency, like in the [Create React
+  App](create-react-app.md) example.
+</Callout>
 
 ### Webpack Config Override
 
