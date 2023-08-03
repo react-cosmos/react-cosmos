@@ -1,4 +1,4 @@
-# ESM support
+# ESM Support
 
 This document tracks the current status on ESM support in React Cosmos, which involves a number of parts with varying user impact and priority:
 
@@ -7,7 +7,7 @@ This document tracks the current status on ESM support in React Cosmos, which in
 - [Support unbundled ESM UI plugins.](#esm-ui-plugins)
 - [Serve Cosmos UI as ESM.](#esm-cosmos-ui)
 
-## ESM packages
+## ESM Packages
 
 This is already done. No more Babel runtime. Installed React Cosmos packages are now easy to inspect and debug by anyone — they're essentially source code stripped of TypeScript annotations.
 
@@ -15,7 +15,7 @@ Converting the server runtime to ESM was the trickier part. We replaced `require
 
 The new codebase is nimble, future-proof and restricts React Cosmos to modern browsers and Node 16+.
 
-## ESM fixtures
+## ESM Fixtures
 
 Loading pure ESM fixtures without a bundler is almost possible. Here's what's required:
 
@@ -68,7 +68,7 @@ Here's a rough example of the renderer index.html for ESM fixtures.
 </body>
 ```
 
-## ESM UI plugins
+## ESM UI Plugins
 
 Authoring UI plugins as pure ESM is a cool prospect. It lowers the barries for plugin authors. It's also possible. ESM modules can be script-injected or dynamically imported from a CJS Cosmos UI. Here's what's needed to make this possible:
 

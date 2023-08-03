@@ -16,6 +16,7 @@
     "type": "separator",
     "title": "More"
   },
+  "dev": "Development",
   "github_link": {
     "title": "GitHub ↗",
     "href": "https://github.com/react-cosmos/react-cosmos",
