@@ -1,8 +1,8 @@
 {
   "private": true,
-  "name": "docs-next",
+  "name": "docs",
   "version": "6.0.0-beta.6",
-  "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/docs-next",
+  "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/docs",
   "license": "MIT",
   "type": "module",
   "scripts": {},
