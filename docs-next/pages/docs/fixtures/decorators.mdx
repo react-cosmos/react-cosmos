@@ -2,7 +2,7 @@ import { Callout } from 'nextra/components';
 
 # Decorators
 
-Wrapping components in fixtures can become repetitive. Decorators can be used to apply one or more context providers to a group of fixtures automatically.
+Wrapping components in fixtures can become repetitive. Decorators can be used to apply context providers (or any other wrapper) to a subset of fixtures.
 
 A `cosmos.decorator` file looks like this:
 
@@ -10,10 +10,19 @@ A `cosmos.decorator` file looks like this:
 export default ({ children }) => <Provider store={store}>{children}</Provider>;
 ```
 
-<Callout type="info">
-  A decorator only applies to fixture files contained in the decorator's
-  directory. Decorators can be composed, in the order of their position in the
+The rules for decorators are:
+
+- A decorator must be placed in a file named `cosmos.decorator.{jsx,tsx}`.
+- A decorator must be a default export.
+- A decorator is a React component that receives a `children` prop.
+- A decorator only applies to fixture files contained in the decorator's
+  directory.
+- Decorators can be composed, in the order of their position in the
   file system hierarchy (from outer to inner).
+
+<Callout type="info">
+  A `cosmos.decorator` file placed in the root source directory applies to all
+  fixtures.
 </Callout>
 
 ---
