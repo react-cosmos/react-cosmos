@@ -20,7 +20,7 @@ npm i -D react-cosmos@next react-cosmos-dom@next
 
 Choose a port for the renderer other than the main Cosmos port, say `5050`. Set the renderer URL with the chosen port in your `cosmos.config.json`:
 
-```json
+```json filename="cosmos.config.json"
 {
   "port": 5000,
   "rendererUrl": "http://localhost:5050"
@@ -29,7 +29,7 @@ Choose a port for the renderer other than the main Cosmos port, say `5050`. Set 
 
 Add `cosmos` script to package.json:
 
-```json
+```json filename="package.json"
 "scripts": {
   "cosmos": "cosmos --expose-imports"
 }
@@ -43,7 +43,7 @@ Add `cosmos` script to package.json:
 
 Create a basic fixture at `src/Hello.fixture.jsx`:
 
-```jsx
+```jsx filename="src/Hello.fixture.jsx"
 export default <h1>Hello World!</h1>;
 ```
 
@@ -58,7 +58,7 @@ mountDomRenderer(mountArgs);
 
 Start React Cosmos:
 
-```bash
+```bash npm2yarn
 npm run cosmos
 ```
 

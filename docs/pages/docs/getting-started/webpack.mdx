@@ -12,7 +12,7 @@ npm i -D react-cosmos@next react-cosmos-plugin-webpack@next
 
 Create `cosmos.config.json` and enable the Webpack plugin:
 
-```json
+```json filename="cosmos.config.json"
 {
   "plugins": ["react-cosmos-plugin-webpack"]
 }
@@ -20,7 +20,7 @@ Create `cosmos.config.json` and enable the Webpack plugin:
 
 Add `cosmos` and `cosmos-export` scripts to package.json:
 
-```json
+```json filename="package.json"
 "scripts": {
   "cosmos": "cosmos",
   "cosmos-export": "cosmos-export",
@@ -29,13 +29,13 @@ Add `cosmos` and `cosmos-export` scripts to package.json:
 
 Create a basic fixture at `src/Hello.fixture.jsx`:
 
-```jsx
+```jsx filename="src/Hello.fixture.jsx"
 export default <h1>Hello World!</h1>;
 ```
 
 Start React Cosmos:
 
-```bash
+```bash npm2yarn
 npm run cosmos
 ```
 
@@ -63,7 +63,7 @@ Probably the most common scenario. Most of us end up with a hairy Webpack config
 
 Cosmos picks up `webpack.config.js` from the project root automatically. Use the `webpack.configPath` setting to provide an existing Webpack config at a different path:
 
-```json
+```json filename="cosmos.config.json"
 {
   "webpack": {
     "configPath": "./tools/webpack.config.js"
@@ -77,7 +77,7 @@ Cosmos picks up `webpack.config.js` from the project root automatically. Use the
 
 Overriding the Webpack config gives you complete control. Use the `webpack.overridePath` setting to point to a module that customizes the Webpack config used by Cosmos.
 
-```json
+```json filename="cosmos.config.json"
 {
   "webpack": {
     "overridePath": "./webpack.override.js"
@@ -97,7 +97,7 @@ module.exports = (webpackConfig, env) => {
 
 Cosmos overwrites `output.filename` in the Webpack config to `[name].js` by default. Due to caching, this isn't ideal when generating static exports via `cosmos-export` command. Use the `webpack.includeHashInOutputFilename` setting to change the filename template to `[name].[contenthash].js`.
 
-```json
+```json filename="cosmos.config.json"
 {
   "webpack": {
     "includeHashInOutputFilename": true

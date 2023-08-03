@@ -14,7 +14,7 @@ npm i -D react-cosmos@next react-cosmos-native@next
 
 Add `cosmos` script to package.json:
 
-```json
+```json filename="package.json"
 "scripts": {
   "cosmos": "cosmos-native"
 }
@@ -22,7 +22,7 @@ Add `cosmos` script to package.json:
 
 Create a basic fixture at `Hello.fixture.js`:
 
-```jsx
+```jsx filename="Hello.fixture.js"
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
 
 Start React Cosmos:
 
-```bash
+```bash npm2yarn
 npm run cosmos
 ```
 

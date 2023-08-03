@@ -24,7 +24,7 @@ npm i -D react-cosmos@next react-cosmos-next@next
 
 Create `cosmos.config.json` and point `rendererUrl` to your renderer (we'll get to it in a moment):
 
-```json
+```json filename="cosmos.config.json"
 {
   "rendererUrl": {
     "dev": "http://localhost:3000/cosmos/<fixture>",
@@ -35,7 +35,7 @@ Create `cosmos.config.json` and point `rendererUrl` to your renderer (we'll get 
 
 Add `cosmos` and `cosmos-export` scripts to package.json:
 
-```json
+```json filename="package.json"
 "scripts": {
   "cosmos": "cosmos --expose-imports",
   "cosmos-export": "cosmos-export --expose-imports"
@@ -67,13 +67,13 @@ This is your Cosmos Renderer.
 
 Start Next.js:
 
-```bash
+```bash npm2yarn
 npm run dev
 ```
 
 Start React Cosmos (in a 2nd terminal):
 
-```bash
+```bash npm2yarn
 npm run cosmos
 ```
 
