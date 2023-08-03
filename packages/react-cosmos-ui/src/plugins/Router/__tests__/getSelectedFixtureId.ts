@@ -1,11 +1,11 @@
 import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { register } from '..';
 import { getRouterMethods } from '../../../testHelpers/pluginMocks.js';
 import {
   pushUrlParams,
   resetUrlParams,
 } from '../../../testHelpers/urlParams.js';
+import { register } from '../index.js';
 
 beforeEach(register);
 

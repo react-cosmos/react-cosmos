@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button32, IconButton32, IconButton8 } from '.';
 import { grey32, grey8 } from '../../style/colors.js';
 import { CopyIcon, RefreshCwIcon } from '../icons/index.js';
+import { Button32, IconButton32, IconButton8 } from './index.js';
 
 const Row = styled.div`
   display: flex;

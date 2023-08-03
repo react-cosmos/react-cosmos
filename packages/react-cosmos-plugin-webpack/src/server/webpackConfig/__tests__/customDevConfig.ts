@@ -118,9 +118,9 @@ it('includes user imports loader', async () => {
 });
 
 it('includes HtmlWebpackPlugin', async () => {
-  const { plugins } = await getCustomDevWebpackConfig();
-  const htmlWebpackPlugin = plugins!.find(
-    p => p.constructor.name === 'HtmlWebpackPlugin'
+  const { plugins = [] } = await getCustomDevWebpackConfig();
+  const htmlWebpackPlugin = plugins.find(
+    p => p && p.constructor.name === 'HtmlWebpackPlugin'
   ) as HtmlWebpackPlugin;
   expect(htmlWebpackPlugin).toBeDefined();
   expect(htmlWebpackPlugin.userOptions).toEqual(
@@ -129,9 +129,9 @@ it('includes HtmlWebpackPlugin', async () => {
 });
 
 it('includes HotModuleReplacementPlugin', async () => {
-  const { plugins } = await getCustomDevWebpackConfig();
-  const hotModuleReplacementPlugin = plugins!.find(
-    p => p.constructor.name === 'HotModuleReplacementPlugin'
+  const { plugins = [] } = await getCustomDevWebpackConfig();
+  const hotModuleReplacementPlugin = plugins.find(
+    p => p && p.constructor.name === 'HotModuleReplacementPlugin'
   );
   expect(hotModuleReplacementPlugin).toBeDefined();
 });

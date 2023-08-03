@@ -9,7 +9,7 @@ import {
 } from 'react-cosmos-ui';
 import { mockFetch } from 'react-cosmos/jest.js';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { register } from '.';
+import { register } from './index.js';
 
 beforeEach(register);
 

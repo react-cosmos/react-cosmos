@@ -3,10 +3,10 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { FixtureState, FixtureStateValues } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { register } from '.';
 import { SidePanelRowSlot } from '../../slots/SidePanelRowSlot.js';
 import { mockStorage } from '../../testHelpers/pluginMocks.js';
 import { getParentButton } from '../../testHelpers/selectors.js';
+import { register } from './index.js';
 import { PROPS_TREE_EXPANSION_STORAGE_KEY } from './shared.js';
 
 beforeEach(register);
