@@ -1,8 +1,12 @@
 # Plugin Settings
 
-The Cosmos config can be extended with plugin settings. For example the Vite plugin reads settings from the `vite` config key. Additionally, settings under `ui.{pluginName}` keys are passed as configs to [UI plugins](/docs/plugins/ui-plugins.md).
+The [Cosmos config](cosmos-config.md) can be extended with plugin settings. For example the Vite plugin reads settings from the `vite` config key, and the Webpack plugin from the `webpack` config key.
 
-## Custom Viewports
+## UI Plugin Configuration
+
+Settings under `ui.{pluginName}` keys are passed as configs to [UI plugins](/docs/plugins/ui-plugins.md). Example below.
+
+### Custom Viewports
 
 `responsivePreview` is a plugin included by default. You customize the device list through the Cosmos config:
 
