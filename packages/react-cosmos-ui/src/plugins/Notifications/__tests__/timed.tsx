@@ -6,8 +6,8 @@ import {
   loadPlugins,
   resetPlugins,
 } from 'react-plugin';
-import { register } from '..';
 import { getNotificationsMethods } from '../../../testHelpers/pluginMocks.js';
+import { register } from '../index.js';
 
 beforeEach(register);
 
