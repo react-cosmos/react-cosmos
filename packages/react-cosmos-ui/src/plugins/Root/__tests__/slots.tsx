@@ -1,7 +1,6 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
-import { register } from '..';
 import { mockPlug } from '../../../testHelpers/pluginHelpers.js';
 import {
   mockCore,
@@ -9,6 +8,7 @@ import {
   mockRouter,
   mockStorage,
 } from '../../../testHelpers/pluginMocks.js';
+import { register } from '../index.js';
 
 beforeEach(register);
 

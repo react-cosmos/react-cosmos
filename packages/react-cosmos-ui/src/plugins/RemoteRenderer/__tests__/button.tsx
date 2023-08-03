@@ -2,13 +2,13 @@ import { waitFor } from '@testing-library/dom';
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { ArraySlot, loadPlugins, resetPlugins } from 'react-plugin';
-import { register } from '..';
 import {
   mockCore,
   mockMessageHandler,
   mockNotifications,
   mockRendererCore,
 } from '../../../testHelpers/pluginMocks.js';
+import { register } from '../index.js';
 
 beforeEach(register);
 

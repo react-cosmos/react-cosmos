@@ -6,7 +6,7 @@ import { getUserWebpackConfig } from './getUserWebpackConfig.js';
 import { getWebpackConfigModule } from './getWebpackConfigModule.js';
 import { getWebpackConfigResolve } from './getWebpackConfigResolve.js';
 import { ensureHtmlWebackPlugin } from './htmlPlugin.js';
-import { getGlobalsPlugin } from './plugins.js';
+import { getGlobalsPlugin, ignoreEmptyWebpackPlugins } from './plugins.js';
 import { resolveWebpackClientPath } from './resolveWebpackClientPath.js';
 import { ensureWebpackConfigTopLevelAwait } from './webpackConfigTopLevelAwait.js';
 
@@ -56,7 +56,7 @@ function getPlugins(
   baseWebpackConfig: webpack.Configuration,
   userWebpack: typeof webpack
 ) {
-  const existingPlugins = baseWebpackConfig.plugins || [];
+  const existingPlugins = ignoreEmptyWebpackPlugins(baseWebpackConfig.plugins);
   const globalsPlugin = getGlobalsPlugin(cosmosConfig, userWebpack, false);
   const noEmitErrorsPlugin = new userWebpack.NoEmitOnErrorsPlugin();
 

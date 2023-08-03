@@ -1,11 +1,11 @@
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { register } from '..';
 import { onRouter } from '../../../testHelpers/pluginMocks.js';
 import {
   popUrlParams,
   pushUrlParams,
   resetUrlParams,
 } from '../../../testHelpers/urlParams.js';
+import { register } from '../index.js';
 
 beforeEach(register);
 

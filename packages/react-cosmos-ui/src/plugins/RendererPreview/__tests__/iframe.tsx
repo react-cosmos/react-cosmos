@@ -2,12 +2,12 @@ import { waitFor } from '@testing-library/dom';
 import { act, fireEvent, render, RenderResult } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
-import { register } from '..';
 import {
   getRendererCoreContext,
   mockNotifications,
   mockRendererCore,
 } from '../../../testHelpers/pluginMocks.js';
+import { register } from '../index.js';
 import { getIframe } from '../testHelpers/iframe.js';
 import { rendererReadyMsg, selectFixtureMsg } from '../testHelpers/messages.js';
 

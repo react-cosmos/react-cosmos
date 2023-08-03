@@ -1,6 +1,6 @@
 import { loadPlugins } from 'react-plugin';
-import { register } from '.';
 import { mockCore } from '../../testHelpers/pluginMocks.js';
+import { register } from './index.js';
 
 const originalWindowLocation = window.location;
 

@@ -7,12 +7,12 @@ import {
 } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { WebSocketServer } from 'ws';
-import { register } from '.';
 import {
   getMessageHandlerMethods,
   mockCore,
   onMessageHandler,
 } from '../../testHelpers/pluginMocks.js';
+import { register } from './index.js';
 
 beforeAll(() => {
   const jestWindow = window as any;

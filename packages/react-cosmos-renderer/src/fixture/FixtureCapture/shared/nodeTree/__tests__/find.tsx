@@ -1,7 +1,7 @@
 import { get } from 'lodash-es';
 import React, { ReactElement, ReactNode } from 'react';
 import { isElement } from 'react-is';
-import { findElementPaths } from '..';
+import { findElementPaths } from '../index.js';
 
 it('finds no paths on empty node', () => {
   const noChildrenNodes: ReactNode[] = [null, true, false, 'Hello', 7];
