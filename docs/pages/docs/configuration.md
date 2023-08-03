@@ -85,7 +85,3 @@ To enable lazy mode:
 - Use the `--lazy` CLI argument when running a Cosmos command.
 
 Lazy mode is disabled by default.
-
----
-
-[Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.

@@ -60,7 +60,3 @@ For example in the Webpack plugin the Webpack compiler is attached to Cosmos' in
 | `cosmosConfig` | The user's [Cosmos config](/docs/configuration.md#cosmosconfigjson). |
 
 A hook for exporting the user's fixtures and decorators into a static Cosmos renderer that the static Cosmos UI connects to.
-
----
-
-[Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.

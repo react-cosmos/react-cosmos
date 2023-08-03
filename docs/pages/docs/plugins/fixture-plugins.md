@@ -21,7 +21,3 @@ export function MagicDecorator({ children }) {
 - The standard fixture state object contains the `props`, `classState` and `controls` fields. They're used to construct the control panels in the Cosmos UI.
 - You can extend the fixture state with extra fields. For example the [Viewport](/docs/fixtures.md#viewport) decorator sets the `fixtureState.viewport` field used by the responsive preview plugin in the Cosmos UI.
 - Generally a fixture plugin will pair with a Cosmos UI plugin to syncronize data between the renderer, which runs inside the user's code, and the Cosmos UI.
-
----
-
-[Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.

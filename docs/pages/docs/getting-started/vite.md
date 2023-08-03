@@ -72,7 +72,3 @@ Vite-related settings you can optionally customize in your Cosmos config:
 | `vite.configPath` | Path to Vite config. Set to false to disable reading it from the default path. | `"vite.config.js"` or `"vite.config.ts"` |
 | `vite.indexPath`  | Path to index module (eg. `"src/my-index.tsx"`).                               | Detects common index/main module paths.  |
 | `vite.port`       | Vite renderer port.                                                            | `5050`                                   |
-
----
-
-[Join us on Discord](https://discord.gg/3X95VgfnW5) for feedback, questions and ideas.
