@@ -8,6 +8,8 @@ const withNextra = nextra({
 });
 
 export default withNextra({
+  output: 'export',
+  images: { unoptimized: true },
   webpack(config) {
     const allowedSvgRegex = /components\/icons\/.+\.svg$/;
 
