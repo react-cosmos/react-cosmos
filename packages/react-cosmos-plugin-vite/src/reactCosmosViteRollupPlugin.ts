@@ -1,6 +1,7 @@
 import path from 'node:path';
 import {
   CosmosConfig,
+  findUserModulePaths,
   generateUserImports,
   getPlaygroundUrl,
 } from 'react-cosmos';
@@ -33,8 +34,10 @@ export function reactCosmosViteRollupPlugin(
 
     load(id: string) {
       if (id == userImportsResolvedModuleId) {
+        const modulePaths = findUserModulePaths(cosmosConfig);
         return generateUserImports<DomRendererConfig>({
           cosmosConfig,
+          modulePaths,
           rendererConfig: {
             playgroundUrl: getPlaygroundUrl(cosmosConfig),
             containerQuerySelector: cosmosConfig.dom.containerQuerySelector,
@@ -48,8 +51,12 @@ export function reactCosmosViteRollupPlugin(
     },
 
     transform(src, id) {
-      const isRendererIndex = cosmosViteConfig.indexPath
-        ? cosmosViteConfig.indexPath === id
+      const absPath =
+        cosmosViteConfig.indexPath &&
+        absoluteIndexPath(cosmosViteConfig.indexPath, cosmosConfig.rootDir);
+
+      const isRendererIndex = absPath
+        ? absPath === id
         : path.relative(cosmosConfig.rootDir, id).match(defaultIndexPattern);
 
       if (isRendererIndex) {
@@ -65,4 +72,10 @@ export function reactCosmosViteRollupPlugin(
       }
     },
   };
+}
+
+function absoluteIndexPath(indexPath: string, rootDir: string) {
+  return indexPath.startsWith(rootDir)
+    ? indexPath
+    : path.join(rootDir, indexPath);
 }

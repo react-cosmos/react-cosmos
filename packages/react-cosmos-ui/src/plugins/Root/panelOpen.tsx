@@ -2,7 +2,8 @@ import { StorageSpec } from '../Storage/spec.js';
 import { RootContext } from './shared.js';
 
 export const PANEL_OPEN_STORAGE_KEY = 'sidePanelOpen';
-const PANEL_OPEN_DEFAULT = true;
+
+const PANEL_OPEN_DEFAULT = window.innerWidth >= 960;
 
 export function isPanelOpen(context: RootContext) {
   const storage = context.getMethodsOf<StorageSpec>('storage');

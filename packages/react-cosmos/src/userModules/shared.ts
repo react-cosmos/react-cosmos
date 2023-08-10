@@ -2,20 +2,24 @@ import path from 'path';
 import { RendererConfig, replaceKeys } from 'react-cosmos-core';
 import { slash } from '../utils/slash.js';
 
-export type UserImportsTemplateArgs = {
-  globalImports: string[];
+export type UserModulePaths = {
   fixturePaths: string[];
   decoratorPaths: string[];
-  rendererConfig: RendererConfig;
+};
+
+export type UserImportsTemplateArgs = {
   rootDir: string;
+  modulePaths: UserModulePaths;
+  globalImports: string[];
+  rendererConfig: RendererConfig;
   relativeToDir: string | null;
   typeScript: boolean;
 };
 
 // NODE: These can be made configurable if a proper need arises
 const FIXTURE_PATTERNS = [
-  '**/<fixturesDir>/**/*.{js,jsx,ts,tsx}',
-  '**/*.<fixtureFileSuffix>.{js,jsx,ts,tsx}',
+  '**/<fixturesDir>/**/*.{js,jsx,ts,tsx,md,mdx}',
+  '**/*.<fixtureFileSuffix>.{js,jsx,ts,tsx,md,mdx}',
 ];
 const DECORATOR_PATTERNS = ['**/cosmos.decorator.{js,jsx,ts,tsx}'];
 

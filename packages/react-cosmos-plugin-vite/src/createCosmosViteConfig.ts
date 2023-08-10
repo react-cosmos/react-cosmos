@@ -2,7 +2,7 @@ import path from 'node:path';
 import {
   CosmosConfig,
   fileExists,
-  moduleExists,
+  resolveFromSilent,
   resolveLoose,
 } from 'react-cosmos';
 
@@ -50,8 +50,11 @@ function getViteConfigPath(
   }
 
   if (typeof configPath == 'undefined') {
-    const defaultAbsPath = resolveLoose(rootDir, 'vite.config.js');
-    return moduleExists(defaultAbsPath) ? defaultAbsPath : false;
+    return (
+      resolveFromSilent(rootDir, './vite.config.ts') ||
+      resolveFromSilent(rootDir, './vite.config.js') ||
+      false
+    );
   }
 
   const absPath = resolveLoose(rootDir, configPath);

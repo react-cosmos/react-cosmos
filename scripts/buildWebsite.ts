@@ -52,7 +52,10 @@ process.env.NODE_ENV = 'production';
   await buildWebpack();
 
   // Export live demo instance
-  execSync('yarn workspace website export');
+  execSync('yarn workspace example-todo export');
+  await fs.cp('./examples/todo/cosmos-export', './website/dist/demo', {
+    recursive: true,
+  });
 })();
 
 type PageParams = {

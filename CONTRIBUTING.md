@@ -1,8 +1,10 @@
-## Hey there!
+# Contributing to React Cosmos
+
+Hi there!
 
 So you want to know more about React Cosmos... _Sweet!_
 
-> You're probably a nice person and don't need to hear this. At the same time, however, you _could_ be one of the assholes roaming the world. So please follow our [Code of Conduct](CODE_OF_CONDUCT.md) and respect the people you interact with.
+> You're probably nice and don't need to hear this but please follow our [Code of Conduct](CODE_OF_CONDUCT.md) and respect the people you interact with.
 
 Jump to:
 
@@ -34,7 +36,7 @@ Here's a list of things you can do to help React Cosmos, sorted by project expri
 2. Provide user feedback.
 3. Propose ideas to improve onboarding and user experience – not just features :).
 4. Respond to issues you know how to solve.
-5. Engage with the community.
+5. Engage with the [community](https://discord.gg/3X95VgfnW5).
 6. Engage in roadmap & design discussions.
 7. Fix known bugs.
 8. Implement agreed upon changes.
@@ -45,7 +47,7 @@ We're all short on time, so be realistic and don't expect special treatment. The
 
 ### Ask for review
 
-👉 **[Use the RFCs process for substantial changes](https://github.com/react-cosmos/rfcs)**
+> 👉 Use [Discussions](https://github.com/react-cosmos/react-cosmos/discussions) to propose ideas.
 
 **Please propose an idea before coding it.** Otherwise your work might get rejected, which is never fun. Save everybody's time by asking for feedback _before_ implementing something.
 
@@ -55,11 +57,11 @@ Open the CI build page. See what went wrong and learn to run the checks locally.
 
 ## Repo
 
-> Working on Cosmos requires Node 10 or newer
+> Working on Cosmos requires Node 16 or newer
 
 [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) and [Lerna](https://github.com/lerna/lerna) make it possible to publish independent packages and still test the project end-to-end.
 
-Tools are installed globally in the root node_modules. This includes Jest, TypeScript, Webpack, and their corresponding plugins. ESLint is also applied globally. Creating a new package has less overhead because of this. React and Webpack deps are also installed once in the root node_modules to avoid version conflicts or bundling multiple copies of React.
+Tools are installed globally in the root node_modules. This includes Jest, TypeScript, Webpack, and their corresponding plugins. ESLint is also applied globally. Creating a new package has less overhead because of this.
 
 ```bash
 git clone git@github.com:react-cosmos/react-cosmos.git
@@ -73,20 +75,19 @@ yarn build
 yarn test:unit
 yarn check-types
 
-# Run example and test React Cosmos end to end
-yarn start
+# Run Vite example
+yarn workspace example-vite start
 
-# Cosmos #inception
-yarn playground
+# Cosmos UI #inception
+yarn workspace react-cosmos-ui playground
 
-# Build single package in watch mode
-yarn build react-cosmos-playground2 --watch
+# Build single package once or in watch mode
+yarn build react-cosmos-core
+yarn build react-cosmos-core --watch
 
-# Test watch mode
+# Test watch all or specific tests
 yarn test:watch
-
-# Single test watch mode
-yarn test:watch path/to/my/testfile
+yarn test:watch path/to/my/file.test.ts
 ```
 
 ### Test your work
@@ -102,7 +103,7 @@ Add [ESLint](https://eslint.org/docs/user-guide/integrations#editors) to your ed
 When naming files:
 
 - Use _camel case_ for files: `fixtureState.js`. Capitalize components: `DragHandle.js`.
-- Use _kebab case_ for package names: `react-cosmos-playground2`.
+- Use _kebab case_ for package names: `react-cosmos-renderer`.
 
 When creating a module:
 

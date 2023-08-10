@@ -4,15 +4,13 @@ import path from 'path';
 import { pkgUpSync } from 'pkg-up';
 import {
   CosmosPluginConfig,
-  FixtureList,
   pickRendererUrl,
   replaceKeys,
 } from 'react-cosmos-core';
 import { PlaygroundMountArgs } from 'react-cosmos-ui';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { CosmosPlatform } from '../cosmosPlugin/types.js';
-import { findUserModulePaths } from '../userModules/findUserModulePaths.js';
-import { importKeyPath } from '../userModules/shared.js';
+import { getServerFixtureList } from './serverFixtureList.js';
 import { getStaticPath } from './staticPath.js';
 
 export async function getDevPlaygroundHtml(
@@ -26,7 +24,7 @@ export async function getDevPlaygroundHtml(
       ...ui,
       core: await getCoreConfig(cosmosConfig, true),
       rendererCore: {
-        fixtures: getFixtureList(cosmosConfig),
+        fixtures: getServerFixtureList(cosmosConfig),
         rendererUrl:
           platform === 'web'
             ? pickRendererUrl(cosmosConfig.rendererUrl, 'dev')
@@ -47,7 +45,7 @@ export async function getExportPlaygroundHtml(
       ...ui,
       core: await getCoreConfig(cosmosConfig, false),
       rendererCore: {
-        fixtures: getFixtureList(cosmosConfig),
+        fixtures: getServerFixtureList(cosmosConfig),
         rendererUrl: pickRendererUrl(cosmosConfig.rendererUrl, 'export'),
       },
     },
@@ -89,15 +87,4 @@ function getPlaygroundHtml(playgroundArgs: PlaygroundMountArgs) {
 
 function getPlaygroundHtmlTemplate() {
   return fs.readFileSync(getStaticPath('index.html'), 'utf8');
-}
-
-function getFixtureList(cosmosConfig: CosmosConfig) {
-  const { fixturePaths } = findUserModulePaths(cosmosConfig);
-  return fixturePaths.reduce<FixtureList>(
-    (acc, fixturePath) => ({
-      ...acc,
-      [importKeyPath(fixturePath, cosmosConfig.rootDir)]: { type: 'single' },
-    }),
-    {}
-  );
 }

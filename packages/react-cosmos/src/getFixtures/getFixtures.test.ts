@@ -1,38 +1,14 @@
-// Import mocks first
-import { mockFile } from '../testHelpers/mockFs.js';
-
 import path from 'node:path';
 import { create } from 'react-test-renderer';
 import { createCosmosConfig } from '../cosmosConfig/createCosmosConfig.js';
-import { mockCosmosPlugins } from '../testHelpers/mockCosmosPlugins.js';
 import { getFixtures } from './getFixtures.js';
 
 const rootDir = path.join(__dirname, '../../../../examples/webpack');
 
-const testCosmosPlugin = {
-  name: 'Test Cosmos plugin',
-  rootDir: path.join(__dirname, 'mock-cosmos-plugin'),
-  server: path.join(__dirname, 'mock-cosmos-plugin/server.js'),
-};
-mockCosmosPlugins([testCosmosPlugin]);
-
-const testServerPlugin = {
-  name: 'testServerPlugin',
-
-  config: jest.fn(async ({ cosmosConfig }) => {
-    return {
-      ...cosmosConfig,
-      rendererUrl: 'http://localhost:5000/renderer.html',
-    };
-  }),
-};
-
-beforeEach(() => {
-  mockFile(testCosmosPlugin.server, { default: testServerPlugin });
-});
-
 it('renders fixture elements', async () => {
-  const cosmosConfig = createCosmosConfig(rootDir);
+  const cosmosConfig = createCosmosConfig(rootDir, {
+    ignore: ['**/*.mdx'],
+  });
 
   const fixures = getFixtures(cosmosConfig, {
     rendererUrl: 'http://localhost:5000/renderer.html',
@@ -51,7 +27,9 @@ it('renders fixture elements', async () => {
 });
 
 it('returns fixture info', async () => {
-  const cosmosConfig = createCosmosConfig(rootDir);
+  const cosmosConfig = createCosmosConfig(rootDir, {
+    ignore: ['**/*.mdx'],
+  });
 
   const fixtures = getFixtures(cosmosConfig, {
     rendererUrl: 'http://localhost:5000/renderer.html',
@@ -59,17 +37,36 @@ it('returns fixture info', async () => {
 
   expect(fixtures).toEqual([
     {
-      absoluteFilePath: path.join(rootDir, 'src/__fixtures__/Controls.tsx'),
-      fileName: 'Controls',
+      absoluteFilePath: path.join(
+        rootDir,
+        'src/__fixtures__/controls/Custom Panel.tsx'
+      ),
+      fileName: 'Custom Panel',
       getElement: expect.any(Function),
       name: null,
-      parents: [],
-      relativeFilePath: 'src/__fixtures__/Controls.tsx',
+      parents: ['controls'],
+      relativeFilePath: 'src/__fixtures__/controls/Custom Panel.tsx',
       rendererUrl:
-        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2FControls.tsx%22%7D',
+        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2Fcontrols%2FCustom+Panel.tsx%22%7D',
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2FControls.tsx%22%7D',
-      treePath: ['Controls'],
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2Fcontrols%2FCustom+Panel.tsx%22%7D',
+      treePath: ['controls', 'Custom Panel'],
+    },
+    {
+      absoluteFilePath: path.join(
+        rootDir,
+        'src/__fixtures__/controls/Props Panel.tsx'
+      ),
+      fileName: 'Props Panel',
+      getElement: expect.any(Function),
+      name: null,
+      parents: ['controls'],
+      relativeFilePath: 'src/__fixtures__/controls/Props Panel.tsx',
+      rendererUrl:
+        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2Fcontrols%2FProps+Panel.tsx%22%7D',
+      playgroundUrl:
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2Fcontrols%2FProps+Panel.tsx%22%7D',
+      treePath: ['controls', 'Props Panel'],
     },
     {
       absoluteFilePath: path.join(rootDir, 'src/Counter.fixture.tsx'),
@@ -122,48 +119,6 @@ it('returns fixture info', async () => {
       rendererUrl:
         'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2FCounterButton.fixture.tsx%22%7D',
       treePath: ['CounterButton'],
-    },
-    {
-      absoluteFilePath: path.join(rootDir, 'src/__fixtures__/HelloWorld.ts'),
-      fileName: 'HelloWorld',
-      getElement: expect.any(Function),
-      name: null,
-      parents: [],
-      playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2FHelloWorld.ts%22%7D',
-      relativeFilePath: 'src/__fixtures__/HelloWorld.ts',
-      rendererUrl:
-        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2FHelloWorld.ts%22%7D',
-      treePath: ['HelloWorld'],
-    },
-    {
-      absoluteFilePath: path.join(
-        rootDir,
-        'src/NestedDecorators/NestedDecorators.fixture.tsx'
-      ),
-      fileName: 'NestedDecorators',
-      getElement: expect.any(Function),
-      name: null,
-      parents: [],
-      playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2FNestedDecorators%2FNestedDecorators.fixture.tsx%22%7D',
-      relativeFilePath: 'src/NestedDecorators/NestedDecorators.fixture.tsx',
-      rendererUrl:
-        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2FNestedDecorators%2FNestedDecorators.fixture.tsx%22%7D',
-      treePath: ['NestedDecorators'],
-    },
-    {
-      absoluteFilePath: path.join(rootDir, 'src/__fixtures__/Props.tsx'),
-      fileName: 'Props',
-      getElement: expect.any(Function),
-      name: null,
-      parents: [],
-      relativeFilePath: 'src/__fixtures__/Props.tsx',
-      rendererUrl:
-        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2FProps.tsx%22%7D',
-      playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2FProps.tsx%22%7D',
-      treePath: ['Props'],
     },
     {
       absoluteFilePath: path.join(
