@@ -103,16 +103,17 @@ npx http-server ./cosmos-export
 
 👀 **[Live demo](https://cosmos-nextjs.vercel.app)**
 
-## Run and Build React-Cosmos independently in a sub-folder (separate your app from cosmos)
+## Further Integration
 
-To establish autonomy for the "cosmos" module, consider housing it as a separate project within a dedicated`cosmos` subfolder. This separation grants the module access to the main app `parent folder` while ensuring it imports only necessary components, promoting efficiency. This approach allows you to build the `cosmos` module independently, separate from the main app, without unnecessary overhead.
+### Separate React Cosmos from Next.js app
 
-You can even take it a step further and deploy your app and cosmos separately to two different vercel projects from the same codebase.
+One approach for building Cosmos independently in a Next.js app is to organize the Cosmos component library as a separate project within a dedicated `cosmos` subfolder. Cosmos files will have access to the main app through the parent folder and it will only import necessary components.
 
-Check this repo for further information.
-https://github.com/scorado-ltd/scorado-examples-nextjs-cosmos/tree/main
+You can take it a step further and deploy your app and Cosmos separately to two different vercel projects from the same codebase.
 
-## Let's Make This Better
+Check this repo for more information and an example of this setup: https://github.com/scorado-ltd/scorado-examples-nextjs-cosmos/tree/main
+
+### On making a plugin (Next.js insider help needed)
 
 Running Server Components in Cosmos is awesome but a plugin could take this integration to the next level (no pun intended).
 
