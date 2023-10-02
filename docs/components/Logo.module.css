@@ -1,0 +1,20 @@
+.root {
+  display: flex;
+  align-items: center;
+}
+
+.img {
+  display: block;
+  height: 32px;
+}
+
+.separator {
+  flex-shrink: 0;
+  width: 8px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.25px;
+}
