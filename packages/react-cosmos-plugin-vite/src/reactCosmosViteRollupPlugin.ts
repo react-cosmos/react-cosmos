@@ -4,6 +4,7 @@ import {
   findUserModulePaths,
   generateUserImports,
   getPlaygroundUrl,
+  slash,
 } from 'react-cosmos';
 import { DomRendererConfig } from 'react-cosmos-dom';
 import { Plugin } from 'rollup';
@@ -77,5 +78,5 @@ export function reactCosmosViteRollupPlugin(
 function absoluteIndexPath(indexPath: string, rootDir: string) {
   return indexPath.startsWith(rootDir)
     ? indexPath
-    : path.join(rootDir, indexPath);
+    : slash(path.join(rootDir, indexPath));
 }
