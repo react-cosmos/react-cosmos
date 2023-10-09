@@ -19,3 +19,4 @@ export * from './utils/requireSilent.js';
 export * from './utils/resolve.js';
 export * from './utils/resolveLoose.js';
 export * from './utils/resolveSilent.js';
+export * from './utils/slash.js';
