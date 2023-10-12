@@ -13,9 +13,9 @@ export default withNextra({
   webpack(config) {
     const allowedSvgRegex = /components\/icons\/.+\.svg$/;
 
-    const fileLoaderRule = config.module.rules.find(rule =>
-      rule.test?.test('.svg')
-    );
+    const fileLoaderRule = config.module.rules.find(rule => {
+      return rule.test instanceof RegExp && rule.test.test('.svg');
+    });
     fileLoaderRule.exclude = allowedSvgRegex;
 
     config.module.rules.push({

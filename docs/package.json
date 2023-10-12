@@ -8,8 +8,8 @@
   "scripts": {},
   "dependencies": {
     "@svgr/webpack": "^8.0.1",
-    "next": "^13.4.12",
-    "nextra": "^2.10.0",
-    "nextra-theme-docs": "^2.10.0"
+    "next": "^13.5.4",
+    "nextra": "^2.13.2",
+    "nextra-theme-docs": "^2.13.2"
   }
 }

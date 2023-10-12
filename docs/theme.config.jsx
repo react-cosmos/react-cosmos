@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import React from 'react';
 import { Logo } from './components/Logo.tsx';
 
 export default {
