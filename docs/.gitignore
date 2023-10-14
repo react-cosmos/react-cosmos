@@ -1,3 +1,4 @@
 .next
 .vercel
 out
+tsconfig.tsbuildinfo
