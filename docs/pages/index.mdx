@@ -1,0 +1,18 @@
+import { useData } from 'nextra/data';
+import { getStargazersCount } from '../utils/stargazers';
+import { Homepage } from '../components/Homepage';
+
+export async function getStaticProps() {
+  const { version } = require('../../lerna.json');
+  const stars = await getStargazersCount();
+  return {
+    props: {
+      ssg: {
+        version,
+        stars,
+      },
+    },
+  };
+}
+
+<Homepage />

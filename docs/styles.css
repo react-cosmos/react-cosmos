@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .contains-task-list {
   margin-top: 1.5rem;
   margin-left: 0.6rem;

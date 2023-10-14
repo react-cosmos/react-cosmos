@@ -2,7 +2,10 @@
   "index": {
     "type": "page",
     "title": "React Cosmos",
-    "display": "hidden"
+    "display": "hidden",
+    "theme": {
+      "layout": "raw"
+    }
   },
   "docs": {
     "type": "page",
