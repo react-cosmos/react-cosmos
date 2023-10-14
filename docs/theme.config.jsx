@@ -24,6 +24,7 @@ export default {
   sidebar: {
     defaultMenuCollapseLevel: 1,
   },
+  gitTimestamp: null,
   footer: {
     text: (
       <span>
