@@ -34,7 +34,7 @@ export const ValueInputTree = React.memo(function ValueInputTree({
         renderNode={({ node, name, parents, expanded, onToggle }) => {
           const { data, children } = node;
 
-          if (data.type === 'item')
+          if (data.type === 'item') {
             return (
               <ValueInput
                 value={data.value}
@@ -52,18 +52,23 @@ export const ValueInputTree = React.memo(function ValueInputTree({
                 }
               />
             );
+          }
 
-          return (
-            children && (
+          if (children) {
+            const childKeys = Object.keys(children);
+            return (
               <ValueInputDir
                 name={name}
-                childNames={Object.keys(children)}
+                childrenText={getChildrenText(childKeys, data.isArray)}
+                disabled={childKeys.length === 0}
                 expanded={expanded}
                 indentLevel={parents.length}
                 onToggle={onToggle}
               />
-            )
-          );
+            );
+          } else {
+            return null;
+          }
         }}
       />
     </Container>
@@ -85,6 +90,14 @@ function setValueAtPath(
 ) {
   // Inspired by https://github.com/lodash/lodash/issues/1696#issuecomment-328335502
   return setWith(clone(values), valuePath, newValue, clone);
+}
+
+function getChildrenText(childKeys: string[], isArray: boolean) {
+  if (childKeys.length > 0) {
+    return isArray ? `[ ${childKeys.length} ]` : `{ ${childKeys.join(', ')} }`;
+  } else {
+    return isArray ? `[]` : `{}`;
+  }
 }
 
 const Container = styled.div`
