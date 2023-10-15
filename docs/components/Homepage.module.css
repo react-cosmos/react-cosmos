@@ -70,7 +70,7 @@
   font-size: min(1.3rem, max(3.5vw, 1.2rem));
   font-feature-settings: initial;
   margin-top: 1.5em;
-  line-height: 1.75em;
+  line-height: 1.6;
 }
 
 .subtitleBlock {
