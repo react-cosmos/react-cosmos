@@ -1,23 +1,44 @@
-.homeContent p {
-  margin-top: 1.5em;
-  line-height: 1.75em;
+.hero {
+  position: relative;
 }
 
-.homeContent a {
-  --tw-ring-color: hsl(
-    var(--nextra-primary-hue) var(--nextra-primary-saturation) 50%/0.3
+.heroBg {
+  position: absolute;
+  background-image: linear-gradient(
+    180deg,
+    rgba(229, 231, 235, 0.1),
+    rgba(229, 231, 235, 0.7)
   );
-  --tw-text-opacity: 1;
-  text-underline-position: under;
-  text-decoration-line: underline;
-  text-decoration-thickness: from-font;
-  color: hsl(
-    var(--nextra-primary-hue) var(--nextra-primary-saturation) 50% /
-      var(--tw-text-opacity)
-  );
+  width: 100%;
+  height: 100%;
+
+  :global(.dark) & {
+    background-image: linear-gradient(
+      180deg,
+      rgba(38, 38, 38, 0.1),
+      rgba(38, 38, 38, 0.7)
+    );
+  }
 }
 
-.contentContainer {
+.heroTiles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-image: url('./heroTile.svg');
+  background-position: bottom -1px left -1px;
+  background-repeat: repeat;
+  background-size: 142px 71px;
+
+  :global(.dark) & {
+    background-image: url('./heroTileDark.svg');
+  }
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
   max-width: 90rem;
   padding-left: max(env(safe-area-inset-left), 1.5rem);
   padding-right: max(env(safe-area-inset-right), 1.5rem);
@@ -38,16 +59,18 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-:global(.dark) .headline {
-  background-image: linear-gradient(146deg, #fff, #757a7d);
+
+  :global(.dark) & {
+    background-image: linear-gradient(146deg, #fff, #757a7d);
+  }
 }
 
 .subtitle {
   font-size: 1.3rem;
   font-size: min(1.3rem, max(3.5vw, 1.2rem));
   font-feature-settings: initial;
-  line-height: 1.6;
+  margin-top: 1.5em;
+  line-height: 1.75em;
 }
 
 a.cta {
@@ -64,30 +87,55 @@ a.cta {
   -webkit-user-drag: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  margin-right: 0.75rem;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  span {
+    display: inline-block;
+    transition: all 0.2s ease;
+  }
+
+  &:hover {
+    box-shadow: 0 5px 30px -10px #0078ffab;
+    filter: brightness(1.05);
+
+    span {
+      transform: translateX(3px);
+    }
+  }
+
+  &:active {
+    box-shadow: 0 1px 3px #00295738;
+    filter: brightness(0.95);
+
+    span {
+      transform: translateX(5px);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid
+      hsl(var(--nextra-primary-hue) var(--nextra-primary-saturation) 77%);
+    outline-offset: 2px;
+
+    span {
+      transform: translateX(3px);
+    }
+  }
 }
-a.cta span {
-  display: inline-block;
-  transition: all 0.2s ease;
-}
-a.cta:hover span {
-  transform: translateX(3px);
-}
-a.cta:hover {
-  box-shadow: 0 5px 30px -10px #0078ffab;
-  filter: brightness(1.05);
-}
-a.cta:active {
-  box-shadow: 0 1px 3px #00295738;
-  filter: brightness(0.95);
-}
-a.cta:active span {
-  transform: translateX(5px);
-}
-a.cta:focus-visible {
-  outline: 2px solid
-    hsl(var(--nextra-primary-hue) var(--nextra-primary-saturation) 77%);
-  outline-offset: 2px;
-}
-a.cta:focus-visible span {
-  transform: translateX(3px);
+
+.features {
+  padding: 4rem 0;
+  background-color: #f3f4f6;
+  border-top: 1px solid rgb(229, 231, 235);
+  border-bottom: 1px solid rgb(229, 231, 235);
+
+  :global(.dark) & {
+    background-color: #000;
+    border-top: 1px solid rgb(38, 38, 38);
+    border-bottom: 1px solid rgb(38, 38, 38);
+  }
 }
