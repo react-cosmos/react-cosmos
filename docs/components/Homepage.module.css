@@ -6,7 +6,7 @@
   position: absolute;
   background-image: linear-gradient(
     180deg,
-    rgba(229, 231, 235, 0.1),
+    rgba(229, 231, 235, 0),
     rgba(229, 231, 235, 0.7)
   );
   width: 100%;
@@ -55,13 +55,13 @@
   margin-left: -0.2rem;
   margin-top: 3.4rem;
   line-height: 1.1;
-  background-image: linear-gradient(146deg, #000, #757a7d);
+  background-image: linear-gradient(146deg, #000, #5e6265);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 
   :global(.dark) & {
-    background-image: linear-gradient(146deg, #fff, #757a7d);
+    background-image: linear-gradient(146deg, #fff, #81878b);
   }
 }
 
@@ -71,6 +71,14 @@
   font-feature-settings: initial;
   margin-top: 1.5em;
   line-height: 1.75em;
+}
+
+.subtitleBlock {
+  display: none;
+
+  @media (min-width: 850px) {
+    display: block;
+  }
 }
 
 a.cta {
