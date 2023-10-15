@@ -4,7 +4,7 @@ import { Header } from './Header.js';
 import { useTodoContext } from './TodoContext.js';
 import { TodoList } from './TodoList/TodoList.js';
 
-export function App() {
+export function TodoApp() {
   const { todos, setTodos } = useTodoContext();
 
   function handleToggleAll() {
