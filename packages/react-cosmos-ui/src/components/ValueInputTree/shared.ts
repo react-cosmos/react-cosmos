@@ -11,7 +11,7 @@ export type LeafValue =
   | FixtureStateUnserializableValue;
 
 export type ValueNodeData =
-  | { type: 'collection' }
+  | { type: 'collection'; isArray: boolean }
   | { type: 'item'; value: LeafValue };
 
 export type ValueNode = TreeNode<ValueNodeData>;
