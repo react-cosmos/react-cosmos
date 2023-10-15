@@ -9,7 +9,7 @@
   "ui": {
     "router": {
       "initialFixtureId": {
-        "path": "src/components/App.fixture.tsx"
+        "path": "src/components/TodoApp.fixture.tsx"
       }
     }
   }
