@@ -32,7 +32,7 @@ export function Homepage() {
                 Get started <span>→</span>
               </Link>
               <a
-                className={styles.cta}
+                className={styles.secondaryButton}
                 href="https://reactcosmos.org/demo/"
                 target="_blank"
                 rel="noopener noreferrer"

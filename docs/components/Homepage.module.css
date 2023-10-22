@@ -90,12 +90,13 @@
 
 .headerActions {
   margin-top: 1.5em;
-  height: 70px;
-  margin-bottom: 72px;
+  margin-bottom: 2.5em;
   display: flex;
+  align-items: flex-end;
   align-items: center;
   justify-content: space-between;
   font-size: min(1.3rem, max(3.5vw, 1.2rem));
+  font-weight: 500;
 }
 
 a.cta {
@@ -108,9 +109,7 @@ a.cta {
   text-shadow: 0 1px 1px #00387838;
   box-shadow: 0 1px 2px #00295738;
   transition: all 0.2s ease;
-  -webkit-user-drag: none;
   user-select: none;
-  -webkit-tap-highlight-color: transparent;
   margin-right: 0.75rem;
 
   &:last-child {
@@ -151,6 +150,52 @@ a.cta {
   }
 }
 
+a.secondaryButton {
+  display: inline-block;
+  text-decoration: none;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.5);
+  color: rgba(0, 0, 0, 0.8);
+  box-shadow: rgba(0, 0, 0, 0.35) 0 0 0 1px inset;
+  padding: 0.75rem 1.5rem;
+  margin-right: 0.75rem;
+  transition: all 0.2s ease;
+  user-select: none;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  span {
+    display: inline-block;
+    transition: all 0.2s ease;
+  }
+
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.8) 0 0 0 2px inset;
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgb(0, 0, 0, 0.1);
+    outline-offset: 2px;
+  }
+
+  :global(.dark) & {
+    background: rgba(17, 17, 17, 0.5);
+    color: rgba(243, 244, 246, 0.85);
+    box-shadow: rgba(243, 244, 246, 0.35) 0 0 0 1px inset;
+
+    &:hover {
+      box-shadow: rgba(243, 244, 246, 0.85) 0 0 0 2px inset;
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgb(255, 255, 255, 0.15);
+      outline-offset: 2px;
+    }
+  }
+}
+
 .content {
   padding: 0 0 0 0;
   background-color: #f3f4f6;
@@ -163,14 +208,17 @@ a.cta {
 }
 
 a.demoLink {
+  margin: 0 auto;
+  display: block;
   position: relative;
   z-index: 2;
   top: -142px;
+  width: 100%;
+  max-width: 1064px;
+  margin-bottom: -142px;
 }
 
 img.demo {
-  margin: 0 auto;
-  margin-bottom: -142px;
   width: 100%;
   max-width: 1064px;
   height: 50%;
