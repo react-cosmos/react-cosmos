@@ -66,6 +66,7 @@ export function Homepage() {
           href="https://reactcosmos.org/demo/"
           target="_blank"
           rel="noopener noreferrer"
+          className={styles.demoLink}
         >
           <img src="/demo.png" className={styles.demo} />
         </a>

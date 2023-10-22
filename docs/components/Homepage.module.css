@@ -163,10 +163,13 @@ a.cta {
   }
 }
 
-img.demo {
+a.demoLink {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   top: -142px;
+}
+
+img.demo {
   margin: 0 auto;
   margin-bottom: -142px;
   width: 100%;
