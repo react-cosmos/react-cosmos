@@ -26,39 +26,50 @@ export function Homepage() {
             in isolation. <br className={styles.subtitleBlock} />
             It&apos;s fast, extendable and easy to install. Our users love it.
           </p>
-          <p className={styles.subtitle}>
-            <Link className={styles.cta} href="/docs">
-              Get started <span>→</span>
-            </Link>
-            <a
-              className={styles.cta}
-              href="https://reactcosmos.org/demo/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Live demo
-            </a>
-            <a
-              className={styles.cta}
-              href="https://github.com/react-cosmos/react-cosmos"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub {stars}
-            </a>
-            <a
-              className={styles.cta}
-              href="https://github.com/react-cosmos/react-cosmos/releases"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              v{version}
-            </a>
-          </p>
-          <div style={{ height: '3.4rem' }}></div>
+          <div className={styles.headerActions}>
+            <div>
+              <Link className={styles.cta} href="/docs">
+                Get started <span>→</span>
+              </Link>
+              <a
+                className={styles.cta}
+                href="https://reactcosmos.org/demo/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Live demo
+              </a>
+            </div>
+            {/* <div>
+              <a
+                className={styles.cta}
+                href="https://github.com/react-cosmos/react-cosmos"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub {stars}
+              </a>
+              <a
+                className={styles.cta}
+                href="https://github.com/react-cosmos/react-cosmos/releases"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                v{version}
+              </a>
+            </div> */}
+          </div>
         </div>
       </div>
-      <div className={styles.features}></div>
+      <div className={styles.content}>
+        <a
+          href="https://reactcosmos.org/demo/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src="/demo.png" className={styles.demo} />
+        </a>
+      </div>
     </div>
   );
 }

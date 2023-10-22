@@ -27,7 +27,7 @@
   height: 100%;
   z-index: 1;
   background-image: url('./heroTile.svg');
-  background-position: bottom -1px left -1px;
+  background-position: calc(50% - 35.5px) bottom;
   background-repeat: repeat;
   background-size: 142px 71px;
 
@@ -40,9 +40,16 @@
   position: relative;
   z-index: 2;
   max-width: 90rem;
+  max-width: calc(1064px);
+  margin: 0 auto;
+  padding-bottom: 142px;
   padding-left: max(env(safe-area-inset-left), 1.5rem);
   padding-right: max(env(safe-area-inset-right), 1.5rem);
-  margin: 0 auto;
+
+  @media (min-width: 1135px) {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 .headline {
@@ -81,14 +88,23 @@
   }
 }
 
+.headerActions {
+  margin-top: 1.5em;
+  height: 70px;
+  margin-bottom: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: min(1.3rem, max(3.5vw, 1.2rem));
+}
+
 a.cta {
   display: inline-block;
   background: linear-gradient(to bottom, #238aff, #0077ff);
   text-decoration: none;
-  border-radius: 9999px;
+  border-radius: 6px;
   color: white;
   padding: 0.75rem 1.5rem;
-  margin-top: 0.5rem;
   text-shadow: 0 1px 1px #00387838;
   box-shadow: 0 1px 2px #00295738;
   transition: all 0.2s ease;
@@ -135,15 +151,25 @@ a.cta {
   }
 }
 
-.features {
-  padding: 4rem 0;
+.content {
+  padding: 0 0 0 0;
   background-color: #f3f4f6;
-  border-top: 1px solid rgb(229, 231, 235);
+  background: #fff;
   border-bottom: 1px solid rgb(229, 231, 235);
 
   :global(.dark) & {
     background-color: #000;
-    border-top: 1px solid rgb(38, 38, 38);
     border-bottom: 1px solid rgb(38, 38, 38);
   }
+}
+
+img.demo {
+  position: relative;
+  z-index: 1;
+  top: -142px;
+  margin: 0 auto;
+  margin-bottom: -142px;
+  width: 100%;
+  max-width: 1064px;
+  height: 50%;
 }

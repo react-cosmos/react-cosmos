@@ -6,8 +6,8 @@
   xmlns="http://www.w3.org/2000/svg"
 >
   <g clip-path="url(#clip0)">
-    <rect x="0.5" y="0.5" width="70" height="70" fill="#fff" />
-    <rect x="71.5" y="0.5" width="70" height="70" fill="#fff" />
+    <rect x="0.5" y="0" width="70" height="70" fill="#fff" />
+    <rect x="71.5" y="0" width="70" height="70" fill="#fff" />
   </g>
   <defs>
     <clipPath id="clip0">
