@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { Logo } from './components/Logo.tsx';
+import { NavbarWrapper } from './components/NavbarWrapper.tsx';
 
 export default {
   docsRepositoryBase:
@@ -25,6 +26,9 @@ export default {
     defaultMenuCollapseLevel: 1,
   },
   gitTimestamp: null,
+  navbar: {
+    component: NavbarWrapper,
+  },
   footer: {
     text: (
       <span>
