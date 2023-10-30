@@ -3,9 +3,28 @@
   align-items: center;
 }
 
-.img {
+.logoSvg {
   display: block;
-  height: 32px;
+  width: 24px;
+  color: black;
+
+  :global(.dark) & {
+    color: white;
+  }
+}
+
+.logoImg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-image: url('/logo/cosmonaut-black.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  :global(.dark) & {
+    background-image: url('/logo/cosmonaut-white.png');
+  }
 }
 
 .separator {
@@ -14,7 +33,7 @@
 }
 
 .title {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
-  letter-spacing: -0.25px;
+  letter-spacing: -0.28px;
 }

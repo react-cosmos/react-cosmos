@@ -1,14 +1,10 @@
-import React from 'react';
 import styles from './Logo.module.css';
+import Cosmonaut from './icons/logo/cosmonaut.svg';
 
 export function Logo() {
   return (
     <div className={styles.root}>
-      <img
-        src="/helmet/helmet-cropped-white.png"
-        alt=""
-        className={styles.img}
-      />
+      <Cosmonaut className={styles.logoSvg} />
       <div className={styles.separator} />
       <span className={styles.title}>React Cosmos</span>
     </div>
