@@ -212,14 +212,16 @@ a.demoLink {
   display: block;
   position: relative;
   z-index: 2;
-  top: -142px;
+  top: -143px;
   width: 100%;
-  max-width: 1064px;
+  max-width: 1208px;
   margin-bottom: -142px;
 }
 
 img.demo {
+  display: block;
   width: 100%;
-  max-width: 1064px;
-  height: 50%;
+  box-sizing: content-box;
+  max-width: 1206px;
+  border: 1px solid rgba(55, 55, 55, 1);
 }

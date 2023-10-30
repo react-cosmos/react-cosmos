@@ -70,6 +70,7 @@ export function Homepage() {
         >
           <img src="/demo.png" className={styles.demo} />
         </a>
+        <div style={{ height: 142 }} />
       </div>
     </div>
   );
