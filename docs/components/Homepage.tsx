@@ -18,29 +18,30 @@ export function Homepage() {
         <div className={styles.heroTiles}></div>
         <div className={styles.heroContent}>
           <h1 className={styles.headline}>
-            A better way to build <br className="hidden sm:block" />
-            React user interfaces.
+            A better way to <br className="sm:hidden" />
+            build <br className="hidden sm:block" />
+            React user <br className="sm:hidden" />
+            interfaces.
           </h1>
           <p className={styles.subtitle}>
             React Cosmos is a sandbox for developing and testing UI components
-            in isolation. <br className={styles.subtitleBlock} />
+            in isolation. <br className={styles.subtitleBreak} />
             It&apos;s fast, extendable and easy to install. Our users love it.
           </p>
           <div className={styles.headerActions}>
-            <div>
-              <Link className={styles.cta} href="/docs">
-                Get started <span>→</span>
-              </Link>
-              <a
-                className={styles.secondaryButton}
-                href="https://reactcosmos.org/demo/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Live demo
-              </a>
-            </div>
-            {/* <div>
+            <Link className={styles.cta} href="/docs">
+              Get started <span>→</span>
+            </Link>
+            <a
+              className={styles.secondaryButton}
+              href="https://reactcosmos.org/demo/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Live demo
+            </a>
+          </div>
+          {/* <div>
               <a
                 className={styles.cta}
                 href="https://github.com/react-cosmos/react-cosmos"
@@ -58,7 +59,6 @@ export function Homepage() {
                 v{version}
               </a>
             </div> */}
-          </div>
         </div>
       </div>
       <div className={styles.content}>
