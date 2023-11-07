@@ -25,8 +25,9 @@ export function Homepage() {
           </h1>
           <p className={styles.subtitle}>
             React Cosmos is a sandbox for developing and testing UI components
-            in isolation. <br className={styles.subtitleBreak} />
-            It&apos;s fast, extendable and easy to install. Our users love it.
+            in isolation. <br className="hidden lg:block" />
+            It&apos;s fast, extendable and easy to install.{' '}
+            <span className="whitespace-nowrap">Our users love it.</span>
           </p>
           <div className={styles.headerActions}>
             <Link className={styles.cta} href="/docs">

@@ -4,13 +4,13 @@
 
 .heroBg {
   position: absolute;
+  width: 100%;
+  height: 100%;
   background-image: linear-gradient(
     180deg,
     rgba(229, 231, 235, 0),
     rgba(229, 231, 235, 0.7)
   );
-  width: 100%;
-  height: 100%;
 
   :global(.dark) & {
     background-image: linear-gradient(
@@ -37,30 +37,29 @@
 }
 
 .heroContent {
+  margin: 0 auto;
   position: relative;
   z-index: 2;
-  max-width: 90rem;
-  margin: 0 auto;
   padding-bottom: 142px;
   padding-left: max(env(safe-area-inset-left), 1.5rem);
   padding-right: max(env(safe-area-inset-right), 1.5rem);
+  max-width: 90rem;
   text-align: center;
 }
 
 .headline {
-  display: inline-flex;
-  font-size: 3.125rem;
-  font-size: min(4rem, max(8vw, 2.8rem));
-  font-weight: 700;
-  font-feature-settings: initial;
-  letter-spacing: -0.12rem;
-  margin-left: -0.2rem;
   margin-top: 4rem;
-  line-height: 1.05;
+  display: inline-flex;
   background-image: linear-gradient(146deg, #000, #5e6265);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  font-size: 3.125rem;
+  font-size: min(4rem, max(8vw, 2.8rem));
+  font-weight: 700;
+  font-feature-settings: initial;
+  line-height: 1.05;
+  letter-spacing: -0.12rem;
 
   :global(.dark) & {
     background-image: linear-gradient(146deg, #fff, #81878b);
@@ -68,24 +67,16 @@
 }
 
 .subtitle {
-  font-size: 1.3rem;
-  font-size: min(1.3rem, max(3.5vw, 1.2rem));
-  font-feature-settings: initial;
   margin-top: 1.25em;
-  line-height: 1.6;
+  color: #566271;
+  font-size: 1.3rem;
+  font-size: min(1.3rem, max(3.5vw, 1.1rem));
+  font-feature-settings: initial;
   font-weight: 500;
-  color: #434c58;
+  line-height: 1.6;
 
   :global(.dark) & {
     color: #6c7685;
-  }
-}
-
-.subtitleBreak {
-  display: none;
-
-  @media (min-width: 850px) {
-    display: block;
   }
 }
 
@@ -95,23 +86,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: min(1.3rem, max(3.5vw, 1.2rem));
+  font-size: 1.3rem;
+  font-size: min(1.3rem, max(3.5vw, 1.1rem));
   font-weight: 500;
 }
 
 a.cta {
-  display: inline-block;
-  background: linear-gradient(to bottom, #238aff, #0077ff);
-  text-decoration: none;
-  border-radius: 6px;
-  color: white;
-  padding: 0.75rem 1.5rem;
-  text-shadow: 0 1px 1px #00387838;
-  box-shadow: 0 1px 2px #00295738;
-  transition: all 0.2s ease;
-  user-select: none;
   margin-right: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px #00295738;
+  background: linear-gradient(to bottom, #238aff, #0077ff);
+  color: white;
+  text-shadow: 0 1px 1px #00387838;
+  text-decoration: none;
   white-space: nowrap;
+  user-select: none;
+  transition: all 0.2s ease;
 
   &:last-child {
     margin-right: 0;
@@ -152,29 +143,23 @@ a.cta {
 }
 
 a.secondaryButton {
-  display: inline-block;
-  text-decoration: none;
+  margin-right: 0.75rem;
+  padding: 0.75rem 1.5rem;
   border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0 0 0 1px inset;
   background: rgba(255, 255, 255, 0.5);
   color: rgba(0, 0, 0, 0.8);
-  box-shadow: rgba(0, 0, 0, 0.35) 0 0 0 1px inset;
-  padding: 0.75rem 1.5rem;
-  margin-right: 0.75rem;
-  transition: all 0.2s ease;
-  user-select: none;
+  text-decoration: none;
   white-space: nowrap;
+  user-select: none;
+  transition: all 0.2s ease;
 
   &:last-child {
     margin-right: 0;
   }
 
-  span {
-    display: inline-block;
-    transition: all 0.2s ease;
-  }
-
   &:hover {
-    box-shadow: rgba(0, 0, 0, 0.8) 0 0 0 2px inset;
+    box-shadow: rgba(0, 0, 0, 0.7) 0 0 0 2px inset;
   }
 
   &:focus-visible {
@@ -184,11 +169,11 @@ a.secondaryButton {
 
   :global(.dark) & {
     background: rgba(17, 17, 17, 0.5);
-    color: rgba(243, 244, 246, 0.85);
+    color: rgba(243, 244, 246, 0.8);
     box-shadow: rgba(243, 244, 246, 0.35) 0 0 0 1px inset;
 
     &:hover {
-      box-shadow: rgba(243, 244, 246, 0.85) 0 0 0 2px inset;
+      box-shadow: rgba(243, 244, 246, 0.7) 0 0 0 2px inset;
     }
 
     &:focus-visible {
@@ -199,25 +184,24 @@ a.secondaryButton {
 }
 
 .content {
-  padding: 0 0 0 0;
-  background-color: #f3f4f6;
   border-bottom: 1px solid rgb(229, 231, 235);
+  background-color: #f3f4f6;
 
   :global(.dark) & {
-    background-color: #000;
     border-bottom: 1px solid rgb(38, 38, 38);
+    background-color: #000;
   }
 }
 
 a.demoLink {
   margin: 0 auto;
+  margin-bottom: -143px;
   display: block;
   position: relative;
   z-index: 2;
   top: -143px;
   width: 100%;
   max-width: 1208px;
-  margin-bottom: -142px;
 }
 
 img.demo {
