@@ -72,7 +72,7 @@
   font-size: 1.3rem;
   font-size: min(1.3rem, max(3.5vw, 1.1rem));
   font-feature-settings: initial;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.6;
 
   :global(.dark) & {
@@ -223,17 +223,24 @@ a.link {
   color: hsl(204 20% 50%);
   font-size: 1.2rem;
   font-size: min(1.2rem, max(3.5vw, 1rem));
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.5em;
   white-space: nowrap;
 
   strong {
     color: hsl(204 20% 30%);
-    font-weight: 500;
+    font-weight: 400;
+    transition: all 0.2s ease;
   }
 
   &:last-child {
     margin-right: 0;
+  }
+
+  &:hover {
+    strong {
+      color: hsl(204 20% 20%);
+    }
   }
 
   :global(.dark) & {
@@ -241,6 +248,12 @@ a.link {
 
     strong {
       color: hsl(204, 12%, 52%);
+    }
+
+    &:hover {
+      strong {
+        color: hsl(204, 12%, 62%);
+      }
     }
   }
 }
