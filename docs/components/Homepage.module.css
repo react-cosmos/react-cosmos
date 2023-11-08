@@ -68,7 +68,7 @@
 
 .subtitle {
   margin-top: 1.25em;
-  color: #566271;
+  color: hsl(204 20% 40%);
   font-size: 1.3rem;
   font-size: min(1.3rem, max(3.5vw, 1.1rem));
   font-feature-settings: initial;
@@ -76,7 +76,7 @@
   line-height: 1.6;
 
   :global(.dark) & {
-    color: #6c7685;
+    color: hsl(204, 12%, 42%);
   }
 }
 
