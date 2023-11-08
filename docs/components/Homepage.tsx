@@ -34,7 +34,7 @@ export function Homepage() {
               Get started <span>→</span>
             </Link>
             <a
-              className={styles.secondaryButton}
+              className={styles.secondaryAction}
               href="https://reactcosmos.org/demo/"
               target="_blank"
               rel="noopener noreferrer"
