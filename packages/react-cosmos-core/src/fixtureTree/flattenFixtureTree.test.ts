@@ -9,6 +9,7 @@ const fixtures: FixtureList = {
     type: 'multi',
     fixtureNames: ['overview', 'stats'],
   },
+  'src/admin/404/fixture.ts': { type: 'single' },
 };
 
 const fixtureTree = createFixtureTree({
@@ -19,6 +20,14 @@ const fixtureTree = createFixtureTree({
 
 it('flattens fixture tree', () => {
   expect(flattenFixtureTree(fixtureTree)).toEqual([
+    {
+      fileName: '404',
+      fixtureId: {
+        path: 'src/admin/404/fixture.ts',
+      },
+      name: null,
+      parents: ['admin'],
+    },
     {
       fileName: 'Dashboard',
       fixtureId: {
