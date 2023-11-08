@@ -1,11 +1,16 @@
 import React from 'react';
 
+const repoUrl = 'https://api.github.com/repos/react-cosmos/react-cosmos';
+const starsFallback = 7905;
+
 export async function getStargazersCount() {
-  const res = await fetch(
-    `https://api.github.com/repos/react-cosmos/react-cosmos`
-  );
-  const repo = await res.json();
-  return repo.stargazers_count ?? 0;
+  try {
+    const res = await fetch(repoUrl);
+    const repo = await res.json();
+    return repo.stargazers_count ?? 0;
+  } catch (err) {
+    return starsFallback;
+  }
 }
 
 const animationDuration = 1000; // ms
