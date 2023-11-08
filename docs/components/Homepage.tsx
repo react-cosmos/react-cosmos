@@ -42,24 +42,24 @@ export function Homepage() {
               Live demo
             </a>
           </div>
-          {/* <div>
-              <a
-                className={styles.cta}
-                href="https://github.com/react-cosmos/react-cosmos"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                GitHub {stars}
-              </a>
-              <a
-                className={styles.cta}
-                href="https://github.com/react-cosmos/react-cosmos/releases"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                v{version}
-              </a>
-            </div> */}
+          <div className={styles.links}>
+            <a
+              className={styles.link}
+              href="https://github.com/react-cosmos/react-cosmos"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub <strong>☆{stars}</strong>
+            </a>
+            <a
+              className={styles.link}
+              href="https://github.com/react-cosmos/react-cosmos/releases"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Version <strong>{version}</strong>
+            </a>
+          </div>
         </div>
       </div>
       <div className={styles.content}>

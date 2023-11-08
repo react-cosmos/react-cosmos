@@ -82,7 +82,7 @@
 
 .actions {
   margin-top: 1.6em;
-  margin-bottom: 3em;
+  margin-bottom: 1.4em;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -103,10 +103,6 @@ a.cta {
   white-space: nowrap;
   user-select: none;
   transition: all 0.2s ease;
-
-  &:last-child {
-    margin-right: 0;
-  }
 
   span {
     display: inline-block;
@@ -143,7 +139,6 @@ a.cta {
 }
 
 a.secondaryAction {
-  margin-right: 0.75rem;
   padding: 0.75rem 1.5rem;
   border-radius: 6px;
   box-shadow: hsl(204 10% 75%) 0 0 0 1px inset;
@@ -153,10 +148,6 @@ a.secondaryAction {
   white-space: nowrap;
   user-select: none;
   transition: all 0.2s ease;
-
-  &:last-child {
-    margin-right: 0;
-  }
 
   &:hover {
     box-shadow: 0 5px 22px -10px hsl(204 45% 20%);
@@ -217,4 +208,39 @@ img.demo {
   box-sizing: content-box;
   max-width: 1206px;
   border: 1px solid rgba(55, 55, 55, 1);
+}
+
+.links {
+  margin-bottom: 3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+a.link {
+  margin-right: 0.25em;
+  padding: 0 0.5em;
+  color: hsl(204 20% 50%);
+  font-size: 1.2rem;
+  font-size: min(1.2rem, max(3.5vw, 1rem));
+  font-weight: 500;
+  line-height: 1.5em;
+  white-space: nowrap;
+
+  strong {
+    color: hsl(204 20% 30%);
+    font-weight: 500;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  :global(.dark) & {
+    color: hsl(204, 12%, 32%);
+
+    strong {
+      color: hsl(204, 12%, 52%);
+    }
+  }
 }
