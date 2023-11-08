@@ -80,7 +80,7 @@
   }
 }
 
-.headerActions {
+.actions {
   margin-top: 1.6em;
   margin-bottom: 3em;
   display: flex;
@@ -146,9 +146,9 @@ a.secondaryButton {
   margin-right: 0.75rem;
   padding: 0.75rem 1.5rem;
   border-radius: 6px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0 0 0 1px inset;
-  background: rgba(255, 255, 255, 0.5);
-  color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 5px 30px -10px hsl(204 15% 50%);
+  background: rgba(255, 255, 255, 0.7);
+  color: hsl(204 20% 30%);
   text-decoration: none;
   white-space: nowrap;
   user-select: none;
@@ -159,26 +159,31 @@ a.secondaryButton {
   }
 
   &:hover {
-    box-shadow: rgba(0, 0, 0, 0.7) 0 0 0 2px inset;
+    box-shadow: 0 5px 30px -10px hsl(204 45% 20%);
+  }
+
+  &:active {
+    box-shadow: 0 5px 30px -10px hsl(204 15% 50%);
   }
 
   &:focus-visible {
-    outline: 2px solid rgb(0, 0, 0, 0.1);
+    outline: 2px solid hsl(var(--nextra-primary-hue) 10% 77%);
     outline-offset: 2px;
   }
 
   :global(.dark) & {
-    background: rgba(17, 17, 17, 0.5);
-    color: rgba(243, 244, 246, 0.8);
-    box-shadow: rgba(243, 244, 246, 0.35) 0 0 0 1px inset;
+    background: rgba(17, 17, 17, 0.7);
+    color: hsl(204 10% 70%);
+    box-shadow: 0 5px 30px -10px hsl(204 15% 50%);
+    text-shadow: 0 1px 1px #000;
 
     &:hover {
-      box-shadow: rgba(243, 244, 246, 0.7) 0 0 0 2px inset;
+      background: rgba(17, 17, 17, 1);
+      box-shadow: 0 5px 30px -10px hsl(204 40% 75%);
     }
 
-    &:focus-visible {
-      outline: 2px solid rgb(255, 255, 255, 0.15);
-      outline-offset: 2px;
+    &:active {
+      box-shadow: 0 5px 30px -10px hsl(204 15% 50%);
     }
   }
 }

@@ -29,7 +29,7 @@ export function Homepage() {
             It&apos;s fast, extendable and easy to install.{' '}
             <span className="whitespace-nowrap">Our users love it.</span>
           </p>
-          <div className={styles.headerActions}>
+          <div className={styles.actions}>
             <Link className={styles.cta} href="/docs">
               Get started <span>→</span>
             </Link>
