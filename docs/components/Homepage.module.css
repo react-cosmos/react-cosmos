@@ -198,15 +198,14 @@ a.demoLink {
   position: relative;
   z-index: 2;
   top: -143px;
-  width: 100%;
   max-width: 1208px;
 }
 
 img.demo {
   display: block;
   width: 100%;
-  box-sizing: content-box;
-  max-width: 1206px;
+  box-sizing: border-box;
+  max-width: 1208px;
   border: 1px solid rgba(55, 55, 55, 1);
 }
 
