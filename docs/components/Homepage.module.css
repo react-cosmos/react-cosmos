@@ -76,7 +76,7 @@
   line-height: 1.6;
 
   :global(.dark) & {
-    color: hsl(204, 12%, 42%);
+    color: hsl(204, 12%, 50%);
   }
 }
 
@@ -243,15 +243,15 @@ a.link {
   }
 
   :global(.dark) & {
-    color: hsl(204, 12%, 32%);
+    color: hsl(204, 12%, 40%);
 
     strong {
-      color: hsl(204, 12%, 52%);
+      color: hsl(204, 12%, 60%);
     }
 
     &:hover {
       strong {
-        color: hsl(204, 12%, 62%);
+        color: hsl(204, 12%, 70%);
       }
     }
   }
