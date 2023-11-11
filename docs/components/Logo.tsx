@@ -1,5 +1,5 @@
 import styles from './Logo.module.css';
-import Cosmonaut from './icons/logo/cosmonaut.svg';
+import Cosmonaut from './svg/logo/cosmonaut.svg';
 
 export function Logo() {
   return (

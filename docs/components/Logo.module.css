@@ -17,13 +17,13 @@
   display: block;
   width: 24px;
   height: 24px;
-  background-image: url('/logo/cosmonaut-black.png');
+  background-image: url('../images/logo/cosmonaut-black.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
 
   :global(.dark) & {
-    background-image: url('/logo/cosmonaut-white.png');
+    background-image: url('../images/logo/cosmonaut-white.png');
   }
 }
 

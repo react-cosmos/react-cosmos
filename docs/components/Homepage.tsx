@@ -1,7 +1,6 @@
-import Link from 'next/link';
 import { useData } from 'nextra/data';
-import { useStargazersCount } from '../utils/stargazers';
 import styles from './Homepage.module.css';
+import { HomepageHero } from './HomepageHero';
 
 type StaticProps = {
   version: string;
@@ -9,67 +8,18 @@ type StaticProps = {
 };
 
 export function Homepage() {
-  const { version, stars: initialStars } = useData() as StaticProps;
-  const stars = useStargazersCount(initialStars);
+  const { version, stars } = useData() as StaticProps;
   return (
-    <div className={styles.root}>
-      <div className={styles.hero}>
-        <div className={styles.heroBg}></div>
-        <div className={styles.heroTiles}></div>
-        <div className={styles.heroContent}>
-          <h1 className={styles.headline}>
-            A better way to <br className="sm:hidden" />
-            build <br className="hidden sm:block" />
-            React user <br className="sm:hidden" />
-            interfaces.
-          </h1>
-          <p className={styles.subtitle}>
-            React Cosmos is a sandbox for developing and testing UI components
-            in isolation. <br className="hidden lg:block" />
-            It&apos;s fast, extendable and easy to install.{' '}
-            <span className="whitespace-nowrap">Our users love it.</span>
-          </p>
-          <div className={styles.actions}>
-            <Link className={styles.cta} href="/docs/getting-started">
-              Get started <span>→</span>
-            </Link>
-            <a
-              className={styles.secondaryAction}
-              href="https://reactcosmos.org/demo/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Live demo
-            </a>
-          </div>
-          <div className={styles.links}>
-            <a
-              className={styles.link}
-              href="https://github.com/react-cosmos/react-cosmos"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub <strong>☆{stars}</strong>
-            </a>
-            <a
-              className={styles.link}
-              href="https://github.com/react-cosmos/react-cosmos/releases"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Version <strong>{version}</strong>
-            </a>
-          </div>
-        </div>
-      </div>
+    <div>
+      <HomepageHero version={version} stars={stars} />
       <div className={styles.content}>
         <a
           href="https://reactcosmos.org/demo/"
           target="_blank"
           rel="noopener noreferrer"
-          className={styles.demoLink}
+          className={styles.demoPreview}
         >
-          <img src="/demo.png" className={styles.demo} />
+          <img src="/demo.png" />
         </a>
         <div style={{ height: 142 }} />
       </div>
