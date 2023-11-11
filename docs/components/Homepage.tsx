@@ -1,6 +1,7 @@
 import { useData } from 'nextra/data';
 import styles from './Homepage.module.css';
 import { HomepageHero } from './HomepageHero';
+import { HomepageLogos } from './HomepageLogos';
 
 type StaticProps = {
   version: string;
@@ -21,7 +22,7 @@ export function Homepage() {
         >
           <img src="/demo.png" />
         </a>
-        <div style={{ height: 142 }} />
+        <HomepageLogos />
       </div>
     </div>
   );

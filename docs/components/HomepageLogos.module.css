@@ -1,0 +1,26 @@
+.root {
+  padding: 4em 0;
+  padding-left: max(env(safe-area-inset-left), 1.5rem);
+  padding-right: max(env(safe-area-inset-right), 1.5rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: hsl(204, 10%, 30%);
+  opacity: 0.6;
+
+  :global(.dark) & {
+    opacity: 1;
+  }
+
+  svg,
+  img {
+    margin: 0 min(1.1vw, 1em);
+    flex: 1;
+    max-width: 160px;
+  }
+
+  img {
+    min-width: 0; /* https://stackoverflow.com/a/41775258 */
+    user-select: none;
+  }
+}
