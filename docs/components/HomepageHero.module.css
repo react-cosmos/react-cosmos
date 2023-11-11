@@ -190,6 +190,7 @@ a.secondaryAction {
   a {
     margin-right: 0.25em;
     padding: 0 0.5em;
+    background: rgba(255, 255, 255, 0.5);
     color: hsl(204 20% 50%);
     font-size: 1.2rem;
     font-size: min(1.2rem, max(3.5vw, 1rem));
@@ -214,6 +215,7 @@ a.secondaryAction {
     }
 
     :global(.dark) & {
+      background: rgba(17, 17, 17, 0.5);
       color: hsl(204, 12%, 40%);
 
       strong {
