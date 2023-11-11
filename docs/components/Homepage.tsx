@@ -30,7 +30,7 @@ export function Homepage() {
             <span className="whitespace-nowrap">Our users love it.</span>
           </p>
           <div className={styles.actions}>
-            <Link className={styles.cta} href="/docs">
+            <Link className={styles.cta} href="/docs/getting-started">
               Get started <span>→</span>
             </Link>
             <a
