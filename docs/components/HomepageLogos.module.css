@@ -1,5 +1,5 @@
 .root {
-  padding: 4em 0;
+  padding: min(8vw, 4rem) 0;
   padding-left: max(env(safe-area-inset-left), 1.5rem);
   padding-right: max(env(safe-area-inset-right), 1.5rem);
   display: flex;
