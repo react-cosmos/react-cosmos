@@ -15,3 +15,7 @@
 td > code:only-child {
   white-space: nowrap;
 }
+
+.dark img.screenshot {
+  border: 1px solid rgb(55, 55, 55);
+}
