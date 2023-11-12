@@ -10,13 +10,14 @@
 
   :global(.dark) & {
     opacity: 1;
+    filter: grayscale(0.8);
   }
 
   svg,
   img {
-    margin: 0 min(1.1vw, 1em);
     flex: 1;
-    max-width: 160px;
+    margin: 0 min(1.1vw, 1.5rem);
+    max-width: 150px;
   }
 
   img {
