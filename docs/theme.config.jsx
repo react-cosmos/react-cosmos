@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { Footer } from './components/Footer.tsx';
 import { Logo } from './components/Logo.tsx';
 import { NavbarWrapper } from './components/NavbarWrapper.tsx';
 
@@ -30,15 +31,7 @@ export default {
     component: NavbarWrapper,
   },
   footer: {
-    text: (
-      <span>
-        MIT {new Date().getFullYear()} ©{' '}
-        <a href="https://reactcosmos.org" target="_blank" rel="noreferrer">
-          React Cosmos
-        </a>
-        .
-      </span>
-    ),
+    text: <Footer />,
   },
   useNextSeoProps() {
     const { asPath } = useRouter();
