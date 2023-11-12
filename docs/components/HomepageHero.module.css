@@ -26,13 +26,15 @@
   width: 100%;
   height: 100%;
   z-index: 1;
-  background-image: url('../images/hero/heroTile.svg');
+  /* background-image: url('../images/hero/heroTile.svg'); */
+  background-image: url('data:image/svg+xml;base64,PHN2ZwogIHdpZHRoPSIxNDIiCiAgaGVpZ2h0PSI3MSIKICB2aWV3Qm94PSIwIDAgMTQyIDcxIgogIGZpbGw9Im5vbmUiCiAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgo+CiAgPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwKSI+CiAgICA8cmVjdCB4PSIwLjUiIHk9IjAiIHdpZHRoPSI3MCIgaGVpZ2h0PSI3MCIgZmlsbD0iI2ZmZiIgLz4KICAgIDxyZWN0IHg9IjcxLjUiIHk9IjAiIHdpZHRoPSI3MCIgaGVpZ2h0PSI3MCIgZmlsbD0iI2ZmZiIgLz4KICA8L2c+CiAgPGRlZnM+CiAgICA8Y2xpcFBhdGggaWQ9ImNsaXAwIj4KICAgICAgPHJlY3Qgd2lkdGg9IjE0MiIgaGVpZ2h0PSI3MSIgZmlsbD0id2hpdGUiIC8+CiAgICA8L2NsaXBQYXRoPgogIDwvZGVmcz4KPC9zdmc+');
   background-position: calc(50% - 35.5px) bottom;
   background-repeat: repeat;
   background-size: 142px 71px;
 
   :global(.dark) & {
-    background-image: url('../images/hero/heroTileDark.svg');
+    /* background-image: url('../images/hero/heroTileDark.svg'); */
+    background-image: url('data:image/svg+xml;base64,PHN2ZwogIHdpZHRoPSIxNDIiCiAgaGVpZ2h0PSI3MSIKICB2aWV3Qm94PSIwIDAgMTQyIDcxIgogIGZpbGw9Im5vbmUiCiAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgo+CiAgPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwKSI+CiAgICA8cmVjdCB4PSIwLjUiIHk9IjAiIHdpZHRoPSI3MCIgaGVpZ2h0PSI3MCIgZmlsbD0iIzExMSIgLz4KICAgIDxyZWN0IHg9IjcxLjUiIHk9IjAiIHdpZHRoPSI3MCIgaGVpZ2h0PSI3MCIgZmlsbD0iIzExMSIgLz4KICA8L2c+CiAgPGRlZnM+CiAgICA8Y2xpcFBhdGggaWQ9ImNsaXAwIj4KICAgICAgPHJlY3Qgd2lkdGg9IjE0MiIgaGVpZ2h0PSI3MSIgZmlsbD0id2hpdGUiIC8+CiAgICA8L2NsaXBQYXRoPgogIDwvZGVmcz4KPC9zdmc+');
   }
 }
 
