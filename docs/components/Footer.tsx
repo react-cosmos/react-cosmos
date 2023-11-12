@@ -21,7 +21,9 @@ export function Footer() {
                 Architecture
               </Link>
             </li>
-            {/* <li>About</li> */}
+            <li>
+              <Link href="/about">About</Link>
+            </li>
           </ul>
         </section>
         <section>
