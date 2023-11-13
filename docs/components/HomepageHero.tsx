@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useStargazersCount } from '../utils/stargazers';
+import { useStargazersCount } from '../utils/useStargazersCount';
 import styles from './HomepageHero.module.css';
 
 type Props = {
