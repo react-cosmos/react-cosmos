@@ -1,13 +1,13 @@
 {
   "name": "react-cosmos-native",
-  "version": "6.0.0-beta.2",
+  "version": "6.0.0-beta.6",
   "description": "React Cosmos Native",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-native",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
   "dependencies": {
-    "react-cosmos-core": "6.0.0-beta.2",
-    "react-cosmos-renderer": "6.0.0-beta.2"
+    "react-cosmos-core": "6.0.0-beta.5",
+    "react-cosmos-renderer": "6.0.0-beta.5"
   }
 }

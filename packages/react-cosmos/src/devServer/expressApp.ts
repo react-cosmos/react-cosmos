@@ -13,14 +13,8 @@ export async function createExpressApp(
 ): Promise<express.Express> {
   const app = express();
 
-  const playgroundHtml = await getDevPlaygroundHtml(
-    platform,
-    cosmosConfig,
-    pluginConfigs
-  );
-
-  app.get('/', (req: express.Request, res: express.Response) => {
-    res.send(playgroundHtml);
+  app.get('/', async (req: express.Request, res: express.Response) => {
+    res.send(await getDevPlaygroundHtml(platform, cosmosConfig, pluginConfigs));
   });
 
   app.get(

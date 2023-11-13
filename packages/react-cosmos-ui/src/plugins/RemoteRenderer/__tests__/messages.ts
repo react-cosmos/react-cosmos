@@ -1,7 +1,6 @@
 import { waitFor } from '@testing-library/dom';
 import { RendererReadyResponse, SelectFixtureRequest } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { register } from '..';
 import {
   getMessageHandlerContext,
   getRendererCoreContext,
@@ -9,6 +8,7 @@ import {
   mockMessageHandler,
   mockRendererCore,
 } from '../../../testHelpers/pluginMocks.js';
+import { register } from '../index.js';
 
 beforeEach(register);
 

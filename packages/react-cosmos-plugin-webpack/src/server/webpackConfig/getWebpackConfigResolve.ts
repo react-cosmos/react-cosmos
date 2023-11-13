@@ -20,7 +20,7 @@ function removeModuleScopePlugin(
   return {
     ...resolve,
     plugins: plugins.filter(
-      p => !isInstanceOfResolvePlugin(p, 'ModuleScopePlugin')
+      p => p && !isInstanceOfResolvePlugin(p, 'ModuleScopePlugin')
     ),
   };
 }

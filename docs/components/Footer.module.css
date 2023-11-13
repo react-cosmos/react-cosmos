@@ -1,0 +1,49 @@
+.root {
+  flex: 1;
+  font-size: 14px;
+  color: rgb(107, 114, 128);
+
+  :global(.dark) & {
+    color: rgb(163, 163, 163);
+  }
+
+  a {
+    color: rgb(107, 114, 128);
+    text-decoration: none;
+
+    :global(.dark) & {
+      color: rgb(163, 163, 163);
+    }
+
+    &:hover {
+      color: rgb(17, 24, 39);
+
+      :global(.dark) & {
+        color: rgb(249, 250, 251);
+      }
+    }
+  }
+}
+
+.columns {
+  margin-bottom: 2rem;
+  display: grid;
+  gap: 32px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+
+  h3 {
+    margin-bottom: 20px;
+    color: rgb(17, 24, 39);
+    font-weight: 500;
+    line-height: 20px;
+
+    :global(.dark) & {
+      color: rgb(243, 244, 246);
+    }
+  }
+
+  li {
+    line-height: 21px;
+    margin-bottom: 12px;
+  }
+}

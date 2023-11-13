@@ -6,6 +6,7 @@ import {
   createPostMessageConnect,
   createWebSocketsConnect,
 } from 'react-cosmos-renderer';
+import { createWebSocketsUrl } from './createWebSocketsUrl.js';
 
 export function useDomRendererConnect(playgroundUrl: string) {
   return React.useMemo(
@@ -21,10 +22,6 @@ function createDomRendererConnect(playgroundUrl: string) {
   } else {
     return isInsideWindowIframe()
       ? createPostMessageConnect()
-      : createWebSocketsConnect(getWebSocketsUrl(playgroundUrl));
+      : createWebSocketsConnect(createWebSocketsUrl(playgroundUrl));
   }
-}
-
-function getWebSocketsUrl(playgroundUrl: string) {
-  return playgroundUrl.replace(/^https?:/, 'ws:');
 }

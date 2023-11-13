@@ -2,6 +2,9 @@ import { FixtureId, PlaygroundParams } from 'react-cosmos-core';
 
 export type RouterSpec = {
   name: 'router';
+  config: {
+    initialFixtureId: null | FixtureId;
+  };
   state: {
     urlParams: PlaygroundParams;
   };

@@ -46,7 +46,7 @@ testRenderer(
       fixtureId,
       fixtureState: {},
     });
-    await until(() => counterRef);
+    await until(() => counterRef, { timeout: 1000 });
     counterRef!.setState({ count: 7 });
     await retry(async () => expect(await getCount()).toBe(7));
 

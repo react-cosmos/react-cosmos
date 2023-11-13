@@ -1,12 +1,12 @@
 import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { register } from '..';
 import {
   getRendererCoreMethods,
   getRouterContext,
   mockNotifications,
   mockRouter,
 } from '../../../testHelpers/pluginMocks.js';
+import { register } from '../index.js';
 import {
   mockFixtureStateChange,
   mockRendererReady,

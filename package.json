@@ -3,7 +3,8 @@
   "workspaces": [
     "packages/*",
     "examples/*",
-    "website"
+    "website",
+    "docs"
   ],
   "repository": "https://github.com/react-cosmos/react-cosmos",
   "license": "MIT",
@@ -11,6 +12,7 @@
   "scripts": {
     "prettify": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
     "check-types": "tsc",
+    "check-types:docs": "yarn tsc -p docs/tsconfig.json",
     "check-types:cypress": "yarn tsc -p cypress/tsconfig.json",
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "test:unit": "jest --config .jest/config.cjs",
@@ -22,6 +24,7 @@
     "dist": "yarn link-entries dist",
     "build:clear": "ts-node --esm ./scripts/clearBuild.ts",
     "build": "ts-node --esm ./scripts/build.ts",
+    "demo:build": "ts-node --esm ./scripts/buildDemo.ts",
     "website:build": "ts-node --esm ./scripts/buildWebsite.ts",
     "website:serve": "http-server -p 5001 ./website/dist",
     "release:check": "yarn build:clear && yarn build && yarn src && yarn lint && yarn dist && yarn test:unit",

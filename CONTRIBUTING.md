@@ -1,4 +1,6 @@
-## Hi there!
+# Contributing to React Cosmos
+
+Hi there!
 
 So you want to know more about React Cosmos... _Sweet!_
 
@@ -101,7 +103,7 @@ Add [ESLint](https://eslint.org/docs/user-guide/integrations#editors) to your ed
 When naming files:
 
 - Use _camel case_ for files: `fixtureState.js`. Capitalize components: `DragHandle.js`.
-- Use _kebab case_ for package names: `react-cosmos-playground2`.
+- Use _kebab case_ for package names: `react-cosmos-renderer`.
 
 When creating a module:
 

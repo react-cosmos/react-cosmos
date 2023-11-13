@@ -1,14 +1,18 @@
 import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
-import { exposeImportsServerPlugin } from './exposeImports.js';
-import { httpProxyServerPlugin } from './httpProxy.js';
-import { openFileServerPlugin } from './openFile.js';
-import { pluginEndpointServerPlugin } from './pluginEndpoint.js';
-import { portRetryServerPlugin } from './portRetry.js';
+import { fixtureWatcherPlugin } from './fixtureWatcherPlugin.js';
+import { httpProxyPlugin } from './httpProxyPlugin.js';
+import { openFilePlugin } from './openFilePlugin.js';
+import { pluginEndpointPlugin } from './pluginEndpointPlugin.js';
+import { portRetryPlugin } from './portRetryPlugin.js';
 
 export const coreServerPlugins: CosmosServerPlugin[] = [
-  portRetryServerPlugin,
-  exposeImportsServerPlugin,
-  httpProxyServerPlugin,
-  openFileServerPlugin,
-  pluginEndpointServerPlugin,
+  portRetryPlugin,
+  httpProxyPlugin,
+  openFilePlugin,
+  pluginEndpointPlugin,
 ];
+
+// Omit starting chokidar in Jest tests for performance reasons
+if (process.env.JEST_WORKER_ID === undefined) {
+  coreServerPlugins.push(fixtureWatcherPlugin);
+}

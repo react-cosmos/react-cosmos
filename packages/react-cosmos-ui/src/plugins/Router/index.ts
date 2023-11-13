@@ -12,6 +12,9 @@ type RouterContext = PluginContext<RouterSpec>;
 
 const { onLoad, register } = createPlugin<RouterSpec>({
   name: 'router',
+  defaultConfig: {
+    initialFixtureId: null,
+  },
   initialState: {
     urlParams: {},
   },
@@ -23,8 +26,13 @@ const { onLoad, register } = createPlugin<RouterSpec>({
 });
 
 onLoad(context => {
-  const { setState } = context;
+  const { getConfig, setState } = context;
   setState({ urlParams: getUrlParams() });
+
+  const { initialFixtureId } = getConfig();
+  if (initialFixtureId) {
+    selectFixture(context, initialFixtureId);
+  }
 
   return subscribeToLocationChanges((urlParams: PlaygroundParams) => {
     const { fixtureId } = context.getState().urlParams;

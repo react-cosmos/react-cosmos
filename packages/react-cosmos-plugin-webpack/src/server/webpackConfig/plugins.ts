@@ -33,6 +33,12 @@ export function isInstanceOfWebpackPlugin(
   return plugin.constructor && plugin.constructor.name === constructorName;
 }
 
+export function ignoreEmptyWebpackPlugins(
+  plugins: webpack.Configuration['plugins'] = []
+) {
+  return plugins.filter(Boolean) as webpack.WebpackPluginInstance[];
+}
+
 function removeTrailingSlash(url: string) {
   return url.replace(/\/$/, '');
 }

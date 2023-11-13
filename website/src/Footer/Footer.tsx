@@ -61,7 +61,7 @@ export function Footer() {
             <ExternalLink href="https://www.producthunt.com/posts/react-cosmos-5">
               <ExternalLabel>Product Hunt</ExternalLabel>
             </ExternalLink>
-            <ExternalLink href="https://github.com/react-cosmos/react-cosmos/blob/main/README.md#-why-react-cosmos">
+            <ExternalLink href="https://github.com/react-cosmos/react-cosmos/blob/main/docs/README.md#why-is-react-cosmos-architecturally-unique">
               <ExternalLabel>Why React Cosmos?</ExternalLabel>
             </ExternalLink>
           </Column>
