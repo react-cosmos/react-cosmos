@@ -58,7 +58,7 @@ export function Footer() {
               <Link href="/docs/user-interface">User Interface</Link>
             </li>
             <li>
-              <Link href="/docs/fixtures">Fixtures & Decorators</Link>
+              <Link href="/docs/fixtures">Fixtures &amp; Decorators</Link>
             </li>
             <li>
               <Link href="/docs/configuration/cosmos-config">
