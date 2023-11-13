@@ -1,9 +1,9 @@
 {
   "vite": "",
   "webpack": "",
+  "react-native": "",
   "next": "Next.js",
   "create-react-app": "",
-  "react-native": "",
   "custom-bundler": "",
   "troubleshooting": ""
 }
