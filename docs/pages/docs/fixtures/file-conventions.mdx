@@ -1,0 +1,23 @@
+# File Conventions
+
+Two options:
+
+1. End fixture file names with `.fixture.{js,jsx,ts,tsx,md,mdx}`.
+2. Put fixture files inside `__fixtures__` directories.
+
+Examples:
+
+1. `blankState.fixture.jsx`
+2. `__fixtures__/blankState.jsx`
+
+The file paths of your fixture files (relative to your project root) are used to create a tree view explorer in the React Cosmos UI.
+
+## Configuration
+
+You can customize these file conventions in your [Cosmos config](/docs/configuration/cosmos-config.md):
+
+| Option              | Description                                                                       | Default          |
+| ------------------- | --------------------------------------------------------------------------------- | ---------------- |
+| `fixturesDir`       | Name for directories that contain fixture files (eg. `__fixtures__/example.jsx`). | `"__fixtures__"` |
+| `fixtureFileSuffix` | Suffix for fixture files (eg. `example.fixture.jsx`).                             | `"fixture"`      |
+| `ignore`            | Patterns for ignoring fixture and decorator files (eg. `["**/dist/**"]`).         |                  |

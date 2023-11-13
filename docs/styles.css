@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.contains-task-list {
+  margin-top: 1.5rem;
+  margin-left: 0.6rem;
+}
+
+.task-list-item {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+td > code:only-child {
+  white-space: nowrap;
+}
+
+.dark img.screenshot {
+  border: 1px solid rgb(55, 55, 55);
+}

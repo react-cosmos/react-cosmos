@@ -1,0 +1,27 @@
+.content {
+  border-bottom: 1px solid rgb(229, 231, 235);
+  background-color: #f3f4f6;
+
+  :global(.dark) & {
+    border-bottom: 1px solid rgb(38, 38, 38);
+    background-color: #000;
+  }
+}
+
+a.demoPreview {
+  margin: 0 auto;
+  margin-bottom: -143px;
+  display: block;
+  position: relative;
+  z-index: 2;
+  top: -143px;
+  max-width: 1208px;
+
+  img {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 1208px;
+    border: 1px solid rgba(55, 55, 55, 1);
+  }
+}
