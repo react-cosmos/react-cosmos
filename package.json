@@ -24,6 +24,7 @@
     "dist": "yarn link-entries dist",
     "build:clear": "ts-node --esm ./scripts/clearBuild.ts",
     "build": "ts-node --esm ./scripts/build.ts",
+    "demo:build": "ts-node --esm ./scripts/buildDemo.ts",
     "website:build": "ts-node --esm ./scripts/buildWebsite.ts",
     "website:serve": "http-server -p 5001 ./website/dist",
     "release:check": "yarn build:clear && yarn build && yarn src && yarn lint && yarn dist && yarn test:unit",
