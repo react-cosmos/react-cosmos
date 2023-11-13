@@ -14,11 +14,11 @@
 
 ## Getting Started
 
-Choose one of the [Getting Started](/docs/README.md#getting-started) guides to dive into React Cosmos.
+Choose one of the [Getting Started](https://reactcosmos.org/docs/getting-started) guides to dive into React Cosmos.
 
-> Check out the [Next.js integration](/docs/getting-started/next.md) to get started with React Server Components.
+> Check out the [Next.js integration](https://reactcosmos.org/docs/getting-started/next) to get started with React Server Components.
 
-Visit [docs/README.md](/docs/README.md) to view the full documentation.
+Visit [reactcosmos.org/docs](https://reactcosmos.org/docs) to view the full documentation.
 
 ## Community
 
