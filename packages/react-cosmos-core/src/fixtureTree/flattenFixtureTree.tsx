@@ -22,10 +22,7 @@ export function flattenFixtureTree(
       const childNode = children[childName];
       const { data: childData } = childNode;
 
-      if (
-        childData.type === 'fileDir' ||
-        (childData.type === 'fixture' && childName === 'fixture')
-      )
+      if (childData.type === 'fileDir')
         flatFixtureTree.push(
           ...flattenFixtureTree(childNode, [...parents, childName])
         );
