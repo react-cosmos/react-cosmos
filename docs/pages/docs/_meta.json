@@ -1,0 +1,31 @@
+{
+  "index": "Introduction",
+  "getting-started": "",
+  "migration-guide": "",
+  "user-interface": "",
+  "-- usage": {
+    "type": "separator",
+    "title": "Usage"
+  },
+  "cli": "React Cosmos CLI",
+  "fixtures": "",
+  "configuration": "Configuration",
+  "static-export": "",
+  "plugins": "",
+  "node-api": "Node.js API",
+  "-- more": {
+    "type": "separator",
+    "title": "More"
+  },
+  "dev": "Development",
+  "github_link": {
+    "title": "GitHub ↗",
+    "href": "https://github.com/react-cosmos/react-cosmos",
+    "newWindow": true
+  },
+  "discord_link": {
+    "title": "Discord ↗",
+    "href": "https://discord.gg/3X95VgfnW5",
+    "newWindow": true
+  }
+}

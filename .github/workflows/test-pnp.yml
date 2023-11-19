@@ -22,16 +22,18 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'yarn'
           cache-dependency-path: |
             react-cosmos/yarn.lock
             pnp-example/yarn.lock
+        env:
+          SKIP_YARN_COREPACK_CHECK: true
 
       - name: Build react-cosmos packages
         run: |
           cd react-cosmos
-          yarn install --frozen-lockfile
+          yarn install --frozen-lockfile --network-timeout 600000
           yarn build
 
       - name: Run PnP example with linked react-cosmos packages
@@ -44,7 +46,7 @@ jobs:
           yarn link ../react-cosmos/packages/react-cosmos-ui
           yarn link ../react-cosmos/packages/react-cosmos
           yarn link ../react-cosmos/packages/react-cosmos-plugin-webpack
-          yarn install --immutable
+          yarn install --immutable --network-timeout 600000
           yarn cosmos &
 
       - name: Wait until Cosmos is live

@@ -53,7 +53,7 @@ const values: FixtureStateValues = {
 };
 
 const rootNode: ValueNode = {
-  data: { type: 'collection' },
+  data: { type: 'collection', isArray: false },
   children: {
     str1: {
       data: {
@@ -62,7 +62,7 @@ const rootNode: ValueNode = {
       },
     },
     object1: {
-      data: { type: 'collection' },
+      data: { type: 'collection', isArray: false },
       children: {
         str2: {
           data: {
@@ -83,7 +83,7 @@ const rootNode: ValueNode = {
           },
         },
         object2: {
-          data: { type: 'collection' },
+          data: { type: 'collection', isArray: false },
           children: {
             str3: {
               data: {
@@ -100,7 +100,7 @@ const rootNode: ValueNode = {
           },
         },
         array1: {
-          data: { type: 'collection' },
+          data: { type: 'collection', isArray: true },
           children: {
             0: {
               data: {

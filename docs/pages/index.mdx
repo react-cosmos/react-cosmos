@@ -1,0 +1,17 @@
+import { Homepage } from '../components/Homepage';
+import { getStargazersCount } from '../utils/getStargazersCount';
+
+export async function getStaticProps() {
+  const { version } = require('../../lerna.json');
+  const stars = await getStargazersCount();
+  return {
+    props: {
+      ssg: {
+        version,
+        stars,
+      },
+    },
+  };
+}
+
+<Homepage />

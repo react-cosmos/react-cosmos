@@ -12,7 +12,8 @@ import { ValueTreeItem } from './shared.js';
 
 type Props = {
   name: string;
-  childNames: string[];
+  childrenText: string;
+  disabled: boolean;
   expanded: boolean;
   indentLevel: number;
   onToggle: () => unknown;
@@ -20,12 +21,12 @@ type Props = {
 
 export function ValueInputDir({
   name,
-  childNames,
+  childrenText,
+  disabled,
   expanded,
   indentLevel,
   onToggle,
 }: Props) {
-  const disabled = childNames.length === 0;
   return (
     <ValueTreeItem indentLevel={indentLevel}>
       <ButtonContainer>
@@ -38,17 +39,13 @@ export function ValueInputDir({
             )}
             <Text>
               <DirName disabled={disabled}>{name}</DirName>
-              <ChildrenInfo>{getChildInfo(childNames)}</ChildrenInfo>
+              <ChildrenInfo>{childrenText}</ChildrenInfo>
             </Text>
           </>
         </Button>
       </ButtonContainer>
     </ValueTreeItem>
   );
-}
-
-function getChildInfo(childNames: string[]): string {
-  return childNames.length > 0 ? `{ ${childNames.join(', ')} }` : `{}`;
 }
 
 const ButtonContainer = styled.div`

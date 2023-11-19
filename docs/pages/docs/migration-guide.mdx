@@ -1,0 +1,79 @@
+import { Callout } from 'nextra/components';
+
+# React Cosmos 6 Migration Guide
+
+<Callout>
+  We've also migrated our community from Slack to the [React Cosmos Discord
+  Server](https://discord.gg/3X95VgfnW5).
+</Callout>
+
+## Installation
+
+[![npm version](https://img.shields.io/npm/v/react-cosmos/next.svg?style=flat)](https://www.npmjs.com/package/react-cosmos)
+
+```bash npm2yarn
+npm i -D react-cosmos@next react-cosmos-plugin-webpack@next
+```
+
+Install `react-cosmos-plugin-vite` instead of `react-cosmos-plugin-webpack` to use React Cosmos with Vite.
+
+<Callout type="info">
+  Replace `next` with `canary` to get the bleeding edge versions (latest commit
+  from the main branch). Make sure to install [exact
+  versions](https://stackoverflow.com/a/30659125) when using the canary channel.
+</Callout>
+
+This major version accomplishes the following:
+
+- Codebase upgraded to latest standards and dependencies.
+- Webpack plugin extracted from core packages.
+- New Vite plugin.
+- Official APIs for both server and UI plugins.
+
+## Breaking Changes
+
+- Dropped Node \<14 support.
+- Dropped IE support.
+- Migrated to React 18.
+
+Dropping backwards compatibility with older versions of Node, browsers or React might be unfortunate for some but it's the only way to move forward. It allowed us to get the codebase into a much better shape by minimizing 3rd party dependencies and publishing ESM modules.
+
+### Webpack Plugin
+
+Webpack support is no longer included in the core React Cosmos packages. To set up a webpack codebase you need to install `react-cosmos-plugin-webpack` and add it to the list of plugins in your Cosmos config.
+
+```json
+"plugins": ["react-cosmos-plugin-webpack"]
+```
+
+### Vite Plugin
+
+React Cosmos 6 also comes with a brand new Vite plugin. To set up a Vite codebase you need to install `react-cosmos-plugin-vite` and add it to the list of plugins in your Cosmos config.
+
+```json
+"plugins": ["react-cosmos-plugin-vite"]
+```
+
+### Other Breaking Changes
+
+- `react-cosmos/fixture` exports moved to `react-cosmos/client` (eg. `import { useValue } from 'react-cosmos/client'`).
+- `NativeFixtureLoader` component moved from `react-cosmos/native` to new `react-cosmos-native` package. Install `react-cosmos-native@next` as well for a React Native setup.
+- `getFixtures2()` renamed to `getFixtures()`.
+- `getCosmosConfigAtPath()` is now async. To replicate the old sync behavior, require() the config module manually and pass it to `createCosmosConfig()`.
+- For visual regression testing you may need to make Jest transpile Cosmos modules by adding `"/node_modules/react-cosmos"` to `transformIgnorePatterns` in your Jest config.
+
+There might be some other subtle breaking changes, especially if you're implementing a custom Cosmos renderer or if you're integrated with a bundler other than webpack. Create an [issue](https://github.com/react-cosmos/react-cosmos/issues) or send us a message on [Discord](https://discord.gg/3X95VgfnW5) if this is the case and we'll do our best to help you with the migration.
+
+## Next Steps
+
+A rough outline for this release:
+
+- [x] Get the beta in the user's hands, make sure everything webpack-related works well with the new plugin.
+- [x] Close long-standing issues that were already addressed in this version (eg. PnP support).
+- [x] Get feedback and add customization to the Vite plugin.
+- [x] Document and stabilize the plugin APIs.
+- [x] Revamp the docs.
+- [x] Redesign the website.
+- [ ] Make v6 official and start rolling out new features.
+
+Please [join us on Discord](https://discord.gg/3X95VgfnW5) on this journey to take React Cosmos to the next level!
