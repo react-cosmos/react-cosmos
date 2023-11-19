@@ -17,6 +17,6 @@
     "nextra": "^2.13.2",
     "nextra-theme-docs": "^2.13.2",
     "postcss": "^8.4.31",
-    "tailwindcss": "^3.3.3"
+    "tailwindcss": "^3.3.5"
   }
 }
