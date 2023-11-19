@@ -74,9 +74,9 @@ export async function startDevServer(platform: CosmosPlatform) {
       });
 
       if (typeof pluginReturn === 'function') {
-        pluginCleanupCallbacks.push(() => {
+        pluginCleanupCallbacks.push(async () => {
           try {
-            pluginReturn();
+            await pluginReturn();
           } catch (err) {
             // Log when a plugin fails to clean up, but continue to attempt
             // to clean up the remaining plugins
