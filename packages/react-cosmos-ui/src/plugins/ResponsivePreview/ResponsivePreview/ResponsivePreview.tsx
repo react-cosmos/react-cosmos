@@ -8,7 +8,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import styled, { css } from 'styled-components';
+import styled, { DataAttributes, css } from 'styled-components';
 import { useDrag } from '../../../hooks/useDrag.js';
 import { grey64, grey8 } from '../../../style/colors.js';
 import { ResponsiveDevice, ResponsiveViewport } from '../spec.js';
@@ -166,7 +166,9 @@ function getContainerSize(containerEl: null | HTMLElement) {
   return { width, height };
 }
 
-const Container = styled.div.attrs({ 'data-testid': 'responsivePreview' })`
+const Container = styled.div.attrs<DataAttributes>({
+  'data-testid': 'responsivePreview',
+})`
   flex: 1;
   display: flex;
   flex-direction: column;
