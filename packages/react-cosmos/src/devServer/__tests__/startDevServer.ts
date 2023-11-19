@@ -1,5 +1,8 @@
 // Import mocks first
-import { jestWorkerId } from '../../testHelpers/jestWorkerId.js';
+import {
+  jestNodeVersion,
+  jestWorkerId,
+} from '../../testHelpers/jestProcessUtils.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
 import { mockCosmosPlugins } from '../../testHelpers/mockCosmosPlugins.js';
 import { mockCosmosConfig, resetFsMock } from '../../testHelpers/mockFs.js';
@@ -152,7 +155,9 @@ it('stops server', async () => {
     await stopServer();
 
     await expect(fetch(`http://localhost:${port}`)).rejects.toThrow(
-      'ECONNREFUSED'
+      jestNodeVersion() >= 20
+        ? `request to http://localhost:${port}/ failed`
+        : 'ECONNREFUSED'
     );
   });
 });

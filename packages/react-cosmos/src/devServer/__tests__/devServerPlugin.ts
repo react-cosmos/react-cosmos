@@ -1,5 +1,5 @@
 // Import mocks first
-import { jestWorkerId } from '../../testHelpers/jestWorkerId.js';
+import { jestWorkerId } from '../../testHelpers/jestProcessUtils.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
 import { mockCosmosPlugins } from '../../testHelpers/mockCosmosPlugins.js';
 import {
