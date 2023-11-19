@@ -11,8 +11,8 @@
     "./client": "./client.js"
   },
   "dependencies": {
-    "lodash-es": "^4.17.21",
+    "lodash-es": "4.17.21",
     "react-cosmos-core": "6.0.0-beta.5",
-    "react-is": "^18.2.0"
+    "react-is": "18.2.0"
   }
 }

@@ -1,8 +1,4 @@
 // Import mocks first
-import {
-  jestNodeVersion,
-  jestWorkerId,
-} from '../../testHelpers/jestProcessUtils.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
 import { mockCosmosPlugins } from '../../testHelpers/mockCosmosPlugins.js';
 import { mockCosmosConfig, resetFsMock } from '../../testHelpers/mockFs.js';
@@ -13,6 +9,10 @@ import 'isomorphic-fetch';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { ServerMessage, SocketMessage } from 'react-cosmos-core';
+import {
+  jestNodeVersion,
+  jestWorkerId,
+} from '../../testHelpers/jestProcessUtils.js';
 import { startDevServer } from '../startDevServer.js';
 
 mockCosmosPlugins([]);
