@@ -11,7 +11,7 @@
     "serve": "http-server -p 3001 ./out"
   },
   "dependencies": {
-    "@svgr/webpack": "^8.0.1",
+    "@svgr/webpack": "^8.1.0",
     "autoprefixer": "^10.4.16",
     "next": "^13.5.4",
     "nextra": "^2.13.2",

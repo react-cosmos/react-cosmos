@@ -12,8 +12,8 @@
     "native": "cosmos-native"
   },
   "dependencies": {
-    "@mdx-js/rollup": "^2.3.0",
-    "@vitejs/plugin-react": "^4.0.0",
+    "@mdx-js/rollup": "^3.0.0",
+    "@vitejs/plugin-react": "^4.2.0",
     "examples-shared": "6.0.0-beta.3",
     "react": "^18.2.0",
     "react-cosmos": "6.0.0-beta.6",
