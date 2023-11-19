@@ -2691,10 +2691,10 @@
     "@types/range-parser" "*"
     "@types/send" "*"
 
-"@types/express@^4.17.17":
-  version "4.17.17"
-  resolved "https://registry.yarnpkg.com/@types/express/-/express-4.17.17.tgz#01d5437f6ef9cfa8668e616e13c2f2ac9a491ae4"
-  integrity sha512-Q4FmmuLGBG58btUnfS1c1r/NQdlp3DMfGDGig8WhfpA2YRUtEkxAjkZb0yvplJGYdF1fsQ81iMDcH24sSCNC/Q==
+"@types/express@^4.17.21":
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/@types/express/-/express-4.17.21.tgz#c26d4a151e60efe0084b23dc3369ebc631ed192d"
+  integrity sha512-ejlPM315qwLpaQlQDTjPdsUFSc6ZsP4AN6AlWnogPjQ7CVi7PYF3YVz+CY3jE2pwYf7E/7HlDAN0rV2GxTG0HQ==
   dependencies:
     "@types/body-parser" "*"
     "@types/express-serve-static-core" "^4.17.33"
@@ -2776,10 +2776,18 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@*", "@types/jest@^29.5.1":
+"@types/jest@*":
   version "29.5.3"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-29.5.3.tgz#7a35dc0044ffb8b56325c6802a4781a626b05777"
   integrity sha512-1Nq7YrO/vJE/FYnqYyw0FS8LdrjExSgIiHyKg7xPpn+yi8Q4huZryKnkJatN1ZRH89Kw2v33/8ZMB7DuZeSLlA==
+  dependencies:
+    expect "^29.0.0"
+    pretty-format "^29.0.0"
+
+"@types/jest@^29.5.8":
+  version "29.5.8"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-29.5.8.tgz#ed5c256fe2bc7c38b1915ee5ef1ff24a3427e120"
+  integrity sha512-fXEFTxMV2Co8ZF5aYFJv+YeA08RTYJfhtN5c9JSv/mFEMe+xxjufCb+PHL+bJcMs/ebPUsBu+UNTEz+ydXrR6g==
   dependencies:
     expect "^29.0.0"
     pretty-format "^29.0.0"
@@ -2813,10 +2821,10 @@
   resolved "https://registry.yarnpkg.com/@types/katex/-/katex-0.16.2.tgz#aa56983b722ccbc4aa81d11d117aa9c687b69b73"
   integrity sha512-dHsSjSlU/EWEEbeNADr3FtZZOAXPkFPUO457QCnoNqcZQXNqNEu/svQd0Nritvd3wNff4vvC/f4e6xgX3Llt8A==
 
-"@types/lodash-es@^4.17.7":
-  version "4.17.8"
-  resolved "https://registry.yarnpkg.com/@types/lodash-es/-/lodash-es-4.17.8.tgz#cfffd0969507830c22da18dbb20d2ca126fdaa8b"
-  integrity sha512-euY3XQcZmIzSy7YH5+Unb3b2X12Wtk54YWINBvvGQ5SmMvwb11JQskGsfkH/5HXK77Kr8GF0wkVDIxzAisWtog==
+"@types/lodash-es@^4.17.11":
+  version "4.17.11"
+  resolved "https://registry.yarnpkg.com/@types/lodash-es/-/lodash-es-4.17.11.tgz#6ff7878f90371256a6fed0b7b4707d5d940d945b"
+  integrity sha512-eCw8FYAWHt2DDl77s+AMLLzPn310LKohruumpucZI4oOFJkIgnlaJcy23OKMJxx4r9PeTF13Gv6w+jqjWQaYUg==
   dependencies:
     "@types/lodash" "*"
 
@@ -2844,10 +2852,10 @@
   resolved "https://registry.yarnpkg.com/@types/mdx/-/mdx-2.0.5.tgz#9a85a8f70c7c4d9e695a21d5ae5c93645eda64b1"
   integrity sha512-76CqzuD6Q7LC+AtbPqrvD9AqsN0k8bsYo2bM2J8pmNldP1aIPAbzUQ7QbobyXL4eLr1wK5x8FZFe8eF/ubRuBg==
 
-"@types/micromatch@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@types/micromatch/-/micromatch-4.0.2.tgz#ce29c8b166a73bf980a5727b1e4a4d099965151d"
-  integrity sha512-oqXqVb0ci19GtH0vOA/U2TmHTcRY9kuZl4mqUxe0QmJAlIW13kzhuK5pi1i9+ngav8FjpSb9FVS/GE00GLX1VA==
+"@types/micromatch@^4.0.5":
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/@types/micromatch/-/micromatch-4.0.5.tgz#a88fb878f7f7e7e1909c1db50f97acfede6b4d85"
+  integrity sha512-B1o0zVdb9GsbKT4Fucy3oeG9G1qy/TOHrYM+NsEPazT+ktsGXOJSb1+Bg9hP7BH14Bv4dd5m7r+FohwXkY/39A==
   dependencies:
     "@types/braces" "*"
 
@@ -2901,10 +2909,10 @@
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
 
-"@types/pem@^1.9.6":
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/@types/pem/-/pem-1.14.0.tgz#33239f60196206c49a9a47c810fad03d2e5cc43f"
-  integrity sha512-Jaq0lQWgz2jVmQ+smGDbPnLye6DOLojykwmnGgveoYb3sjZfrxO+2ssbccbekKKCTFxoLSEGCP/48z9FPjAbJg==
+"@types/pem@^1.14.4":
+  version "1.14.4"
+  resolved "https://registry.yarnpkg.com/@types/pem/-/pem-1.14.4.tgz#020740e26383289c04361b4894bc4d7e8e41a982"
+  integrity sha512-Xt6qY6kX1RD4UmYNhWCCf3OSJrRcwbQIaJ/mQSjjAHxIjXMHx/vHNPOgEU3HdVKS1k/U5CZ6ClQlRo8egkl8xg==
   dependencies:
     "@types/node" "*"
 
@@ -3042,10 +3050,10 @@
     tapable "^2.2.0"
     webpack "^5"
 
-"@types/ws@^8.5.4":
-  version "8.5.5"
-  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-8.5.5.tgz#af587964aa06682702ee6dcbc7be41a80e4b28eb"
-  integrity sha512-lwhs8hktwxSjf9UaZ9tG5M03PGogvFaH8gUgLNbN9HKIg0dvv6q+gkSuJ8HN4/VbyxkuLzCjlN7GquQ0gUJfIg==
+"@types/ws@^8.5.9":
+  version "8.5.9"
+  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-8.5.9.tgz#384c489f99c83225a53f01ebc3eddf3b8e202a8c"
+  integrity sha512-jbdrY0a8lxfdTp/+r7Z4CkycbOFN8WX+IOchLJr3juT/xzbJ8URyTVSJ/hvNdadTgM1mnedb47n+Y31GsFnQlg==
   dependencies:
     "@types/node" "*"
 
