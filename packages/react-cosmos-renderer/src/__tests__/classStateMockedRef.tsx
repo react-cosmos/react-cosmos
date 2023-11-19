@@ -1,6 +1,6 @@
 import retry from '@skidding/async-retry';
 import until from 'async-until';
-import delay from 'delay';
+import { setTimeout } from 'node:timers/promises';
 import React from 'react';
 import {
   ClassStateMock,
@@ -51,7 +51,7 @@ testRenderer(
     await retry(async () => expect(await getCount()).toBe(7));
 
     // Simulate a small pause between updates
-    await delay(500);
+    await setTimeout(500);
 
     counterRef!.setState({ count: 13 });
     await retry(async () => expect(await getCount()).toBe(13));
