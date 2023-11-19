@@ -6,7 +6,7 @@ import {
   StateUpdater,
 } from 'react-cosmos-core';
 import { ArraySlot, Slot } from 'react-plugin';
-import styled, { DataAttributes } from 'styled-components';
+import styled from 'styled-components';
 import { useDrag } from '../../hooks/useDrag.js';
 import { NavRowSlot } from '../../slots/NavRowSlot.js';
 import { grey32, grey8, white10 } from '../../style/colors.js';
@@ -154,9 +154,7 @@ type ContainerProps = {
   dragging?: boolean;
 };
 
-const Container = styled.div.attrs<DataAttributes>({
-  'data-testid': 'root',
-})<ContainerProps>`
+const Container = styled.div.attrs({ 'data-testid': 'root' })<ContainerProps>`
   position: absolute;
   top: 0;
   bottom: 0;
