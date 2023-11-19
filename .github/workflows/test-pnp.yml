@@ -27,8 +27,6 @@ jobs:
           cache-dependency-path: |
             react-cosmos/yarn.lock
             pnp-example/yarn.lock
-        env:
-          SKIP_YARN_COREPACK_CHECK: true
 
       - name: Build react-cosmos packages
         run: |
@@ -48,6 +46,8 @@ jobs:
           yarn link ../react-cosmos/packages/react-cosmos-plugin-webpack
           yarn install --immutable --network-timeout 600000
           yarn cosmos &
+        env:
+          SKIP_YARN_COREPACK_CHECK: true
 
       - name: Wait until Cosmos is live
         run: npx wait-on -t 10000 http://localhost:5000
