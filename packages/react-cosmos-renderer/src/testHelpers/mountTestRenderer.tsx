@@ -1,5 +1,5 @@
-import delay from 'delay';
 import { mapValues } from 'lodash-es';
+import { setTimeout } from 'node:timers/promises';
 import React from 'react';
 import {
   ByPath,
@@ -131,7 +131,7 @@ function createModuleWrappers(
 function dynamicImportWrapper<T>(module: T) {
   return new Promise<T>(async resolve => {
     // Simulate module download time
-    await delay(25 + Math.round(Math.random() * 25));
+    await setTimeout(25 + Math.round(Math.random() * 25));
     await act(() => {
       resolve(module);
     });

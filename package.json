@@ -58,7 +58,6 @@
     "create-react-class": "^15.7.0",
     "css-loader": "^6.7.3",
     "cypress": "12.11.0",
-    "delay": "^5.0.0",
     "eslint": "^8.39.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-react": "^7.32.2",
