@@ -4,10 +4,7 @@ import {
   detectCosmosConfigPath,
 } from '../cosmosConfig/detectCosmosConfig.js';
 import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
-import {
-  CosmosPlatform,
-  DevServerPluginCleanupCallback,
-} from '../cosmosPlugin/types.js';
+import { CosmosPlatform } from '../cosmosPlugin/types.js';
 import { applyServerConfigPlugins } from '../shared/applyServerConfigPlugins.js';
 import { getServerPlugins } from '../shared/getServerPlugins.js';
 import { logPluginInfo } from '../shared/logPluginInfo.js';
@@ -53,7 +50,7 @@ export async function startDevServer(platform: CosmosPlatform) {
   // while plugins are initializing
   await httpServer.start();
 
-  const pluginCleanupCallbacks: DevServerPluginCleanupCallback[] = [];
+  const pluginCleanupCallbacks: (() => Promise<void>)[] = [];
 
   async function cleanUp() {
     await Promise.all(pluginCleanupCallbacks.map(cleanup => cleanup()));
