@@ -1,9 +1,5 @@
-// Import mocks first
-import {
-  jestNodeVersion,
-  jestWorkerId,
-} from '../../testHelpers/jestProcessUtils.js';
-import { mockConsole } from '../../testHelpers/mockConsole.js';
+// Module mocks need to be imported before the mocked module is imported,
+// even if the module is not used in the test. Otherwise the mocks won't apply.
 import { mockCosmosPlugins } from '../../testHelpers/mockCosmosPlugins.js';
 import { mockCosmosConfig, resetFsMock } from '../../testHelpers/mockFs.js';
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
@@ -13,6 +9,11 @@ import 'isomorphic-fetch';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { ServerMessage, SocketMessage } from 'react-cosmos-core';
+import {
+  jestNodeVersion,
+  jestWorkerId,
+} from '../../testHelpers/jestProcessUtils.js';
+import { mockConsole } from '../../testHelpers/mockConsole.js';
 import { startDevServer } from '../startDevServer.js';
 
 mockCosmosPlugins([]);

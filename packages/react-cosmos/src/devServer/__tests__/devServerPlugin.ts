@@ -1,4 +1,5 @@
-// Import packages/module mocks first
+// Module mocks need to be imported before the mocked module is imported,
+// even if the module is not used in the test. Otherwise the mocks won't apply.
 import { mockCosmosPlugins } from '../../testHelpers/mockCosmosPlugins.js';
 import { mockCosmosConfig, mockFile } from '../../testHelpers/mockFs.js';
 import { mockCliArgs } from '../../testHelpers/mockYargs.js';

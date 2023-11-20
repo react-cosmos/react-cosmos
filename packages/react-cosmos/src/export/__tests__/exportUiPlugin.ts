@@ -1,12 +1,13 @@
-// Import mocks first
-import { jestWorkerId } from '../../testHelpers/jestProcessUtils.js';
-import { mockConsole } from '../../testHelpers/mockConsole.js';
+// Module mocks need to be imported before the mocked module is imported,
+// even if the module is not used in the test. Otherwise the mocks won't apply.
 import { mockCosmosPlugins } from '../../testHelpers/mockCosmosPlugins.js';
 import { mockCosmosConfig, resetFsMock } from '../../testHelpers/mockFs.js';
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { jestWorkerId } from '../../testHelpers/jestProcessUtils.js';
+import { mockConsole } from '../../testHelpers/mockConsole.js';
 import { generateExport } from '../generateExport.js';
 
 const port = 5000 + jestWorkerId();

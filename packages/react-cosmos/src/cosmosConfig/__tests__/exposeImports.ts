@@ -1,4 +1,5 @@
-// Import mocks first
+// Module mocks need to be imported before the mocked module is imported,
+// even if the module is not used in the test. Otherwise the mocks won't apply.
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
 import { getCwdPath } from '../../testHelpers/cwd.js';
