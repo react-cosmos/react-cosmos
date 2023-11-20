@@ -4,6 +4,8 @@ cosmos-export
 cosmos.imports.js
 cosmos.imports.ts
 coverage
+docs/.vercel
+docs/out
 lerna.json
 package.json
 packages/*/dist
