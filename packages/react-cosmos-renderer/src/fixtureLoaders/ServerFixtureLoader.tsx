@@ -1,3 +1,6 @@
+// https://github.com/DefinitelyTyped/DefinitelyTyped/pull/65220
+/// <reference types="react/experimental" />
+
 import React, { Suspense } from 'react';
 import { ReactDecorator, UserModuleWrappers } from 'react-cosmos-core';
 import { FixtureModule } from '../fixtureModule/FixtureModule.js';
@@ -37,7 +40,6 @@ export function ServerFixtureLoader({
         // The suspense boundary allows the rendererReady response to be sent
         // before loading the fixture modules.
         <Suspense>
-          {/* @ts-expect-error Async Server Component */}
           <AsyncModuleLoader
             moduleWrappers={moduleWrappers}
             fixturePath={selected.fixtureId.path}
