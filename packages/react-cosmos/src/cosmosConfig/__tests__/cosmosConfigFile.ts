@@ -1,5 +1,7 @@
-// Module mocks need to be imported before the mocked module is imported,
-// even if the module is not used in the test. Otherwise the mocks won't apply.
+// WARNING: Module mocks need to be imported before the mocked modules are
+// imported, which are sometimes imported indirectly by the modules being
+// tested. Otherwise the mocks will be applied too late and the tests will run
+// against the unmocked original modules instead.
 import { mockCosmosConfig, resetFsMock } from '../../testHelpers/mockFs.js';
 import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
