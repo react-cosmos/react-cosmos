@@ -3,8 +3,8 @@
 // tested. Otherwise the mocks will be applied too late and the tests will run
 // against the unmocked original modules instead.
 import { mockCosmosPlugins } from '../../testHelpers/mockCosmosPlugins.js';
-import { mockCosmosConfig, resetFsMock } from '../../testHelpers/mockFs.js';
-import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
+import { mockCosmosConfig } from '../../testHelpers/mockFs.js';
+import { mockCliArgs } from '../../testHelpers/mockYargs.js';
 
 import retry from '@skidding/async-retry';
 import 'isomorphic-fetch';
@@ -38,11 +38,6 @@ beforeAll(async () => {
 
     _stopServer = await startDevServer('web');
   });
-});
-
-afterAll(async () => {
-  unmockCliArgs();
-  resetFsMock();
 });
 
 it('serves playground HTML', async () => {
