@@ -21,163 +21,112 @@ const port = 5000 + jestWorkerId();
 
 let _stopServer: (() => Promise<unknown>) | undefined;
 
-async function stopServer() {
-  if (_stopServer) {
-    await _stopServer();
-    _stopServer = undefined;
-  }
-}
-
-beforeEach(() => {
+beforeAll(async () => {
   mockCliArgs({});
   mockCosmosConfig('cosmos.config.json', {
     rootDir: __dirname,
     port,
     rendererUrl: '/_renderer.html',
   });
+
+  await mockConsole(async ({ expectLog }) => {
+    expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
+    expectLog(`[Cosmos] See you at http://localhost:${port}`);
+
+    _stopServer = await startDevServer('web');
+  });
 });
 
-afterEach(async () => {
-  await stopServer();
+afterAll(async () => {
+  _stopServer = undefined;
   unmockCliArgs();
   resetFsMock();
 });
 
 it('serves playground HTML', async () => {
-  return mockConsole(async ({ expectLog }) => {
-    expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
-    expectLog(`[Cosmos] See you at http://localhost:${port}`);
+  const res = await fetch(`http://localhost:${port}`);
+  expect(res.status).toBe(200);
 
-    _stopServer = await startDevServer('web');
+  const html = await res.text();
+  expect(html).toContain('<title>React Cosmos</title>');
+  expect(html).toContain('<script src="playground.bundle.js"></script>');
 
-    const res = await fetch(`http://localhost:${port}`);
-    expect(res.status).toBe(200);
-
-    const html = await res.text();
-    expect(html).toContain('<title>React Cosmos</title>');
-    expect(html).toContain('<script src="playground.bundle.js"></script>');
-
-    expect(html).toContain(
-      JSON.stringify({
-        playgroundConfig: {
-          core: {
-            projectId: 'react-cosmos',
-            fixturesDir: '__fixtures__',
-            fixtureFileSuffix: 'fixture',
-            devServerOn: true,
-          },
-          rendererCore: {
-            fixtures: {},
-            rendererUrl: '/_renderer.html',
-          },
+  expect(html).toContain(
+    JSON.stringify({
+      playgroundConfig: {
+        core: {
+          projectId: 'react-cosmos',
+          fixturesDir: '__fixtures__',
+          fixtureFileSuffix: 'fixture',
+          devServerOn: true,
         },
-        pluginConfigs: [],
-      })
-    );
-  });
+        rendererCore: {
+          fixtures: {},
+          rendererUrl: '/_renderer.html',
+        },
+      },
+      pluginConfigs: [],
+    })
+  );
 });
 
 it('serves playground JS', async () => {
-  return mockConsole(async ({ expectLog }) => {
-    expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
-    expectLog(`[Cosmos] See you at http://localhost:${port}`);
+  const res1 = await fetch(`http://localhost:${port}/playground.bundle.js`);
+  expect(res1.status).toBe(200);
+  expect((await res1.text()).trim()).toBe('__mock_bundle__');
 
-    _stopServer = await startDevServer('web');
-
-    const res1 = await fetch(`http://localhost:${port}/playground.bundle.js`);
-    expect(res1.status).toBe(200);
-    expect((await res1.text()).trim()).toBe('__mock_bundle__');
-
-    const res2 = await fetch(
-      `http://localhost:${port}/playground.bundle.js.map`
-    );
-    expect(res2.status).toBe(200);
-    expect((await res2.text()).trim()).toBe('__mock_map__');
-  });
+  const res2 = await fetch(`http://localhost:${port}/playground.bundle.js.map`);
+  expect(res2.status).toBe(200);
+  expect((await res2.text()).trim()).toBe('__mock_map__');
 });
 
 it('serves favicon', async () => {
-  return mockConsole(async ({ expectLog }) => {
-    expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
-    expectLog(`[Cosmos] See you at http://localhost:${port}`);
+  const res = await fetch(`http://localhost:${port}/_cosmos.ico`);
+  expect(res.status).toBe(200);
 
-    _stopServer = await startDevServer('web');
-
-    const res = await fetch(`http://localhost:${port}/_cosmos.ico`);
-    expect(res.status).toBe(200);
-
-    expect(await res.text()).toEqual(
-      await fs.readFile(
-        path.join(__dirname, '../../static/favicon.ico'),
-        'utf8'
-      )
-    );
-  });
+  expect(await res.text()).toEqual(
+    await fs.readFile(path.join(__dirname, '../../static/favicon.ico'), 'utf8')
+  );
 });
 
 it('creates message handler', async () => {
-  return mockConsole(async ({ expectLog }) => {
-    expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
-    expectLog(`[Cosmos] See you at http://localhost:${port}`);
+  const client1 = new WebSocket(`ws://localhost:${port}`);
+  const client2 = new WebSocket(`ws://localhost:${port}`);
 
-    _stopServer = await startDevServer('web');
+  const message: SocketMessage<ServerMessage> = {
+    channel: 'server',
+    message: {
+      type: 'buildStart',
+    },
+  };
 
-    const client1 = new WebSocket(`ws://localhost:${port}`);
-    const client2 = new WebSocket(`ws://localhost:${port}`);
-
-    const message: SocketMessage<ServerMessage> = {
-      channel: 'server',
-      message: {
-        type: 'buildStart',
-      },
-    };
-
-    const onMessage = jest.fn();
-    client1.addEventListener('open', () => {
-      client1.addEventListener('message', msg => onMessage(msg.data));
-      client2.addEventListener('open', () => {
-        client2.send(JSON.stringify(message));
-      });
+  const onMessage = jest.fn();
+  client1.addEventListener('open', () => {
+    client1.addEventListener('message', msg => onMessage(msg.data));
+    client2.addEventListener('open', () => {
+      client2.send(JSON.stringify(message));
     });
-
-    await retry(() =>
-      expect(onMessage).toBeCalledWith(JSON.stringify(message))
-    );
   });
+
+  await retry(() => expect(onMessage).toBeCalledWith(JSON.stringify(message)));
 });
 
-it('stops server', async () => {
-  return mockConsole(async ({ expectLog }) => {
-    expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
-    expectLog(`[Cosmos] See you at http://localhost:${port}`);
+it('stops server and closes message handler clients', async () => {
+  const client1 = new WebSocket(`ws://localhost:${port}`);
 
-    _stopServer = await startDevServer('web');
-    await stopServer();
+  const onOpen = jest.fn();
+  client1.addEventListener('open', onOpen);
+  await retry(() => expect(onOpen).toBeCalled());
 
-    await expect(fetch(`http://localhost:${port}`)).rejects.toThrow(
-      jestNodeVersion() >= 20
-        ? `request to http://localhost:${port}/ failed`
-        : 'ECONNREFUSED'
-    );
-  });
-});
+  const onClose = jest.fn();
+  client1.addEventListener('close', onClose);
 
-it('closes message handler clients', async () => {
-  return mockConsole(async ({ expectLog }) => {
-    expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
-    expectLog(`[Cosmos] See you at http://localhost:${port}`);
+  await _stopServer!();
+  await retry(() => expect(onClose).toBeCalled());
 
-    _stopServer = await startDevServer('web');
-
-    const onOpen = jest.fn();
-    const onClose = jest.fn();
-
-    const client1 = new WebSocket(`ws://localhost:${port}`);
-    client1.addEventListener('open', onOpen);
-    client1.addEventListener('close', onClose);
-
-    await retry(() => expect(onOpen).toBeCalled());
-    await stopServer();
-    await retry(() => expect(onClose).toBeCalled());
-  });
+  await expect(fetch(`http://localhost:${port}`)).rejects.toThrow(
+    jestNodeVersion() >= 20
+      ? `request to http://localhost:${port}/ failed`
+      : 'ECONNREFUSED'
+  );
 });
