@@ -116,7 +116,7 @@ it('embeds plugin in playground HTML', async () => {
   expect(html).toContain(JSON.stringify([testCosmosPlugin]));
 });
 
-it('calls dev server cleanup', async () => {
+it('calls dev server cleanup hook', async () => {
   await _stopServer!();
   expect(devServerCleanup).toBeCalled();
 });
