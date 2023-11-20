@@ -36,8 +36,8 @@ export const fixtureWatcherPlugin: CosmosServerPlugin = {
       }
     });
 
-    return () => {
-      watcher.close();
+    return async () => {
+      await watcher.close();
     };
   },
 
