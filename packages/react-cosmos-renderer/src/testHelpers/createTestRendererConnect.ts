@@ -1,4 +1,4 @@
-import delay from 'delay';
+import { setTimeout } from 'node:timers/promises';
 import {
   RendererConnect,
   RendererRequest,
@@ -29,7 +29,7 @@ export function createTestRendererConnect({ onRendererResponse }: Args) {
 
   async function postRendererRequest(rendererRequest: RendererRequest) {
     // Simulate async communication between renderer and parent
-    await delay(Math.round(Math.random() * 50));
+    await setTimeout(Math.round(Math.random() * 50));
     act(() => {
       messageHandlers.forEach(handler => {
         handler(rendererRequest);
