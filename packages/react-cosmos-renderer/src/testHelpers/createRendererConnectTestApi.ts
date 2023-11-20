@@ -108,9 +108,10 @@ export function createRendererConnectTestApi(args: {
   }
 
   async function getLastFixtureState() {
-    const msg = await getLastResponseOfType<FixtureStateChangeResponse>(
-      'fixtureStateChange'
-    );
+    const msg =
+      await getLastResponseOfType<FixtureStateChangeResponse>(
+        'fixtureStateChange'
+      );
     return msg.payload.fixtureState;
   }
 
