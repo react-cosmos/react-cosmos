@@ -61,10 +61,6 @@ beforeAll(async () => {
   });
 });
 
-afterAll(async () => {
-  _stopServer = undefined;
-});
-
 it('calls config hook', async () => {
   expect(testServerPlugin.config).toBeCalledWith({
     cosmosConfig: expect.objectContaining({ port }),

@@ -41,7 +41,6 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  _stopServer = undefined;
   unmockCliArgs();
   resetFsMock();
 });

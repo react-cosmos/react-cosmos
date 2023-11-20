@@ -48,7 +48,6 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await _stopServer!();
-  _stopServer = undefined;
   await fs.rm(pluginPath, { recursive: true, force: true });
 });
 
