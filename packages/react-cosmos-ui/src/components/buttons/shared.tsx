@@ -25,7 +25,10 @@ export const StyledButton = styled.button<StyledButtonProps>`
   white-space: nowrap;
   user-select: none;
   outline: none;
-  transition: background ${quick}s, color ${quick}s, opacity ${quick}s;
+  transition:
+    background ${quick}s,
+    color ${quick}s,
+    opacity ${quick}s;
 
   :hover {
     background: ${props => (props.selected ? props.bgSelect : props.bgHover)};
