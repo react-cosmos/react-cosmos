@@ -23,15 +23,16 @@ export function collapseNamedIndexes(
 
       const [firstGrandchildName] = grandchildNames;
       const firstGrandchildNode = grandchildren[firstGrandchildName];
+      const isUnnamed = firstGrandchildName === 'fixture';
 
       if (
         (firstGrandchildNode.data.type !== 'fileDir' &&
           noCaseEqual(childName, firstGrandchildName)) ||
-        firstGrandchildName === 'fixture'
+        isUnnamed
       )
         return {
           ...newChildren,
-          [toCapitalCase(childName)]: firstGrandchildNode,
+          [isUnnamed ? childName : firstGrandchildName]: firstGrandchildNode,
         };
 
       return next();
@@ -41,8 +42,4 @@ export function collapseNamedIndexes(
 
 function noCaseEqual(a: string, b: string) {
   return a.toUpperCase() === b.toUpperCase();
-}
-
-function toCapitalCase(a: string) {
-  return a.replace(/^./, a[0].toUpperCase());
 }
