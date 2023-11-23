@@ -41,5 +41,12 @@ function stringifyUnserializableData(data: unknown) {
   // NOTE: We used to use the react-element-to-jsx-string package but it added
   // bloat and complicated ESM support. We might go back to something similar
   // in the future. Or expose a plugin API for custom stringifiers.
+
+  // TODO: Temporary fix to get consistent stringified functions in Vitest
+  // Potential solution: Remove extra indentation on all lines after stringifying
+  if (typeof data === 'function') {
+    return String(data).replace(/^\(\) => \{.+\}$/s, '() => {}');
+  }
+
   return isElement(data) ? '<React.Element />' : String(data);
 }
