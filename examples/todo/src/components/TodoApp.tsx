@@ -1,6 +1,6 @@
 import React from 'react';
-import { Footer } from './Footer/index.js';
-import { Header } from './Header/index.js';
+import { Footer } from './Footer.js';
+import { Header } from './Header.js';
 import { useTodoContext } from './TodoContext.js';
 import { TodoList } from './TodoList/TodoList.js';
 

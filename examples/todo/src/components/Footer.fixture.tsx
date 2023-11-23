@@ -1,6 +1,6 @@
 import React from 'react';
-import { TodoProvider } from '../TodoContext.js';
-import { Footer } from './index.js';
+import { Footer } from './Footer.js';
+import { TodoProvider } from './TodoContext.js';
 
 export default () => (
   <TodoProvider>

@@ -1,6 +1,6 @@
 import React from 'react';
-import { TodoProvider } from '../TodoContext.js';
-import { Header } from './index.js';
+import { Header } from './Header.js';
+import { TodoProvider } from './TodoContext.js';
 
 export default () => (
   <TodoProvider>
