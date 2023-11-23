@@ -16,6 +16,7 @@
     "check-types:cypress": "yarn tsc -p cypress/tsconfig.json",
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "test:unit": "jest --config .jest/config.cjs",
+    "test:vi": "vitest",
     "test:watch": "yarn test:unit --watch",
     "test:coverage": "yarn test:unit --coverage",
     "test:cypress": "cypress run --config-file cypress/cypress.config.ts --record false",
@@ -85,7 +86,8 @@
     "ts-loader": "^9.4.2",
     "ts-node": "^10.9.1",
     "typescript": "5.2.2",
-    "vite": "^4.3.4",
+    "vite": "^5.0.2",
+    "vitest": "^0.34.6",
     "webpack": "^5.82.0",
     "webpack-cli": "^5.0.2",
     "yargs": "^17.7.2"
