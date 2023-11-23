@@ -6,6 +6,7 @@ import {
   loadPlugins,
   resetPlugins,
 } from 'react-plugin';
+import { vi } from 'vitest';
 import { getNotificationsMethods } from '../../../testHelpers/pluginMocks.js';
 import { register } from '../index.js';
 
@@ -17,7 +18,7 @@ afterEach(() => {
   });
 });
 
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 function loadTestPlugins() {
   loadPlugins();
@@ -47,7 +48,7 @@ it('clears timed notification after timeout expires', async () => {
 
   pushTimedNotification();
   act(() => {
-    jest.runAllTimers();
+    vi.runAllTimers();
   });
 
   expect(queryByText('Renderer connected')).toBeNull();
@@ -59,6 +60,6 @@ it('behaves peacefully when timeout expires after plugin unloads', async () => {
   pushTimedNotification();
   act(() => {
     enablePlugin('notifications', false);
-    jest.runAllTimers();
+    vi.runAllTimers();
   });
 });

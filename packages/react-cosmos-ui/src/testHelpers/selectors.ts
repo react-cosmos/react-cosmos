@@ -1,4 +1,5 @@
 export function getParentButton(el: HTMLElement) {
+  // TODO: Update this?
   // FYI HTMLElement.prototype.closest was added to jsdom@11.12
   // https://github.com/jsdom/jsdom/pull/1951
   // But (as of this writing) Jest is still rocking jsdom@11.5

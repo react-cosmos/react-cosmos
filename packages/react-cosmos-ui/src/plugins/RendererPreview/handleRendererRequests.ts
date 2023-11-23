@@ -74,7 +74,12 @@ function iframeLocationChanged(iframeWindow: Window, iframeSrc: string) {
   // We cannot read the iframe location when the iframe doesn't have the same
   // origin as the main frame, due to cross-origin browser security. In this
   // case we return false to avoid entering an infinite loop.
-  if (iframeSrc.indexOf('http') === 0 && !iframeSrc.match(origin)) return false;
+  if (
+    iframeSrc.indexOf('http') === 0 &&
+    !iframeSrc.match(window.location.origin)
+  ) {
+    return false;
+  }
 
   try {
     const { href } = iframeWindow.location;

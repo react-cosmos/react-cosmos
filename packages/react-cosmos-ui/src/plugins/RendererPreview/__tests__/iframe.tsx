@@ -2,6 +2,7 @@ import { waitFor } from '@testing-library/dom';
 import { act, fireEvent, render, RenderResult } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
+import { vi } from 'vitest';
 import {
   getRendererCoreContext,
   mockNotifications,
@@ -29,9 +30,17 @@ function loadTestPlugins() {
 }
 
 async function mockRendererLocation(renderer: RenderResult, newPath: string) {
+  Object.defineProperty(window, 'location', {
+    value: { href: 'http://localhost:5000' },
+    writable: true,
+  });
+
   const iframe = getIframe(renderer);
   Object.defineProperty(iframe.contentWindow, 'location', {
-    value: { href: `http://localhost:5000${newPath}`, replace: jest.fn() },
+    value: {
+      href: `http://localhost:5000${newPath}`,
+      replace: vi.fn(),
+    },
     writable: true,
   });
   await fireIframeLoadEvent(iframe);

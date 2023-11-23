@@ -2,6 +2,7 @@ import { waitFor } from '@testing-library/dom';
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { FixtureList, createFixtureTree } from 'react-cosmos-core';
+import { vi } from 'vitest';
 import { FixtureTree } from './FixtureTree.js';
 
 const fixtures: FixtureList = {
@@ -27,8 +28,8 @@ it('hides fixture under non-expanded dir', async () => {
       selectedFixtureId={null}
       selectedRef={{ current: null }}
       expansion={{}}
-      onSelect={jest.fn()}
-      setExpansion={jest.fn()}
+      onSelect={vi.fn()}
+      setExpansion={vi.fn()}
     />
   );
   await waitFor(() => expect(queryByText('drei')).toBeNull());
@@ -41,22 +42,22 @@ it('shows fixture under expanded dir', async () => {
       selectedFixtureId={null}
       selectedRef={{ current: null }}
       expansion={{ nested: true }}
-      onSelect={jest.fn()}
-      setExpansion={jest.fn()}
+      onSelect={vi.fn()}
+      setExpansion={vi.fn()}
     />
   );
   await findByText('drei');
 });
 
 it('expands hidden dir on click', async () => {
-  const setExpansion = jest.fn();
+  const setExpansion = vi.fn();
   const { getByText } = render(
     <FixtureTree
       rootNode={rootNode}
       selectedFixtureId={null}
       selectedRef={{ current: null }}
       expansion={{}}
-      onSelect={jest.fn()}
+      onSelect={vi.fn()}
       setExpansion={setExpansion}
     />
   );
@@ -65,14 +66,14 @@ it('expands hidden dir on click', async () => {
 });
 
 it('collapses expanded dir on click', async () => {
-  const setExpansion = jest.fn();
+  const setExpansion = vi.fn();
   const { getByText } = render(
     <FixtureTree
       rootNode={rootNode}
       selectedFixtureId={null}
       selectedRef={{ current: null }}
       expansion={{ nested: true }}
-      onSelect={jest.fn()}
+      onSelect={vi.fn()}
       setExpansion={setExpansion}
     />
   );
@@ -87,8 +88,8 @@ it('shows named fixture when multi fixture is selected', async () => {
       selectedFixtureId={{ path: 'fuenf.js', name: 'fuenfB' }}
       selectedRef={{ current: null }}
       expansion={{}}
-      onSelect={jest.fn()}
-      setExpansion={jest.fn()}
+      onSelect={vi.fn()}
+      setExpansion={vi.fn()}
     />
   );
   await findByText('fuenfB');
@@ -101,8 +102,8 @@ it('shows first named fixture when multi fixture path is selected', async () => 
       selectedFixtureId={{ path: 'fuenf.js' }}
       selectedRef={{ current: null }}
       expansion={{}}
-      onSelect={jest.fn()}
-      setExpansion={jest.fn()}
+      onSelect={vi.fn()}
+      setExpansion={vi.fn()}
     />
   );
   await findByText('fuenfA');
