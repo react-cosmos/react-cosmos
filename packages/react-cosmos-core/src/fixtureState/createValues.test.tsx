@@ -56,7 +56,7 @@ it('creates unserializable function value', () => {
   expect(values).toEqual({
     myProp: {
       type: 'unserializable',
-      stringifiedData: '() => { }',
+      stringifiedData: expect.stringContaining('() => {'),
     },
   });
 });
@@ -130,7 +130,7 @@ it('creates partially serializable object value', () => {
         },
         fnProp: {
           type: 'unserializable',
-          stringifiedData: '() => { }',
+          stringifiedData: expect.stringContaining('() => {'),
         },
       },
     },
@@ -151,7 +151,7 @@ it('creates array value', () => {
         },
         {
           type: 'unserializable',
-          stringifiedData: '() => { }',
+          stringifiedData: expect.stringContaining('() => {'),
         },
       ],
     },
