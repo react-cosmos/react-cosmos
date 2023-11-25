@@ -7,17 +7,18 @@ import {
 } from 'react-cosmos/jest.js';
 
 import { createCosmosConfig } from 'react-cosmos';
+import { vi } from 'vitest';
 import webpack from 'webpack';
 import { RENDERER_FILENAME } from '../constants.js';
 import { getDevWebpackConfig } from '../getDevWebpackConfig.js';
 import { HtmlWebpackPlugin } from '../htmlPlugin.js';
 
-const mockWebpackConfig = jest.fn(() => ({
+const mockWebpackConfig = vi.fn(() => ({
   module: { rules: [MY_RULE] },
   plugins: [MY_PLUGIN],
 }));
 
-const mockWebpackOverride = jest.fn((webpackConfig: webpack.Configuration) => ({
+const mockWebpackOverride = vi.fn((webpackConfig: webpack.Configuration) => ({
   ...webpackConfig,
   plugins: [...(webpackConfig.plugins || []), MY_PLUGIN2],
 }));
