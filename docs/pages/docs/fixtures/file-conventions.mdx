@@ -1,18 +1,39 @@
+import { FileTree } from 'nextra/components';
+
 # File Conventions
 
 Three options:
 
 1. End fixture file names with `.fixture.{js,jsx,ts,tsx,md,mdx}`.
 2. Put fixture files inside `__fixtures__` directories.
-3. Use `fixture.{js,jsx,ts,tsx,md,mdx}` as the name
-
-Examples:
-
-1. `blankState.fixture.jsx`
-2. `__fixtures__/blankState.jsx`
-3. `blankState/fixture.jsx`
+3. Use `fixture.{js,jsx,ts,tsx,md,mdx}` as the name.
 
 The file paths of your fixture files (relative to your project root) are used to create a tree view explorer in the React Cosmos UI.
+
+#### Examples (one fixture file per component)
+
+1. `MyComponent.fixture.jsx`
+2. `__fixtures__/MyComponent.jsx`
+3. `MyComponent/fixture.jsx`
+
+<FileTree>
+  <FileTree.Folder name="fixtures" defaultOpen>
+    <FileTree.File name="MyComponent" />
+  </FileTree.Folder>
+</FileTree>
+
+#### Examples (multiple fixture files per component)
+
+1. `MyComponent/blankState.fixture.jsx`
+2. `MyComponent/__fixtures__/blankState.jsx` or `__fixtures__/MyComponent/blankState.jsx`
+
+<FileTree>
+  <FileTree.Folder name="fixtures" defaultOpen>
+    <FileTree.Folder name="MyComponent" defaultOpen>
+      <FileTree.File name="blankState" />
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
 
 ## Configuration
 
