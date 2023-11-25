@@ -1,6 +1,7 @@
 import { CosmosPluginConfig } from 'react-cosmos-core';
+import { vi } from 'vitest';
 
-jest.mock('../cosmosPlugin/findCosmosPluginConfigs.js', () => {
+vi.mock('../cosmosPlugin/findCosmosPluginConfigs.js', () => {
   let pluginConfigs: CosmosPluginConfig[] = [];
 
   return {
@@ -14,10 +15,11 @@ jest.mock('../cosmosPlugin/findCosmosPluginConfigs.js', () => {
   };
 });
 
-export function mockCosmosPlugins(configs: CosmosPluginConfig[]) {
-  requireMocked().__mockCosmosPluginConfigs(configs);
+export async function mockCosmosPlugins(configs: CosmosPluginConfig[]) {
+  // @ts-ignore FIXME
+  (await importMocked()).__mockCosmosPluginConfigs(configs);
 }
 
-function requireMocked() {
-  return require('../cosmosPlugin/findCosmosPluginConfigs.js');
+async function importMocked() {
+  return import('../cosmosPlugin/findCosmosPluginConfigs.js');
 }

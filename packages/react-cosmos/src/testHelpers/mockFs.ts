@@ -1,9 +1,10 @@
 import path from 'node:path';
+import { vi } from 'vitest';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { getCwdPath } from './cwd.js';
 
-jest.mock('../utils/fs', () => {
-  const actual = jest.requireActual('../utils/fs');
+vi.mock('../utils/fs', async () => {
+  const actual = (await vi.importActual('../utils/fs')) as any; // TODO: FIXME
   let mocked = false;
 
   let fileMocks: { [path: string]: {} } = {};
@@ -82,28 +83,31 @@ jest.mock('../utils/fs', () => {
   };
 });
 
-export function mockFile(filePath: string, fileMock: {}) {
-  requireMocked().__mockFile(filePath, fileMock);
-  requireMocked().__mockDir(path.dirname(filePath));
+export async function mockFile(filePath: string, fileMock: {}) {
+  // @ts-ignore FIXME
+  (await importMocked()).__mockFile(filePath, fileMock);
+  // @ts-ignore FIXME
+  (await importMocked()).__mockDir(path.dirname(filePath));
 }
 
-export function mockCosmosConfig(
+export async function mockCosmosConfig(
   cosmosConfigPath: string,
   cosmosConfig: Partial<CosmosConfig>
 ) {
   const absPath = getCwdPath(cosmosConfigPath);
-  mockFile(absPath, cosmosConfig);
+  await mockFile(absPath, cosmosConfig);
 }
 
-export function mockCwdModuleDefault(filePath: string, fileMock: {}) {
+export async function mockCwdModuleDefault(filePath: string, fileMock: {}) {
   const absPath = getCwdPath(filePath);
-  mockFile(absPath, { default: fileMock });
+  await mockFile(absPath, { default: fileMock });
 }
 
-export function resetFsMock() {
-  requireMocked().__resetMock();
+export async function resetFsMock() {
+  // @ts-ignore FIXME
+  (await importMocked()).__resetMock();
 }
 
-function requireMocked() {
-  return require('../utils/fs.js');
+async function importMocked() {
+  return import('../utils/fs.js');
 }

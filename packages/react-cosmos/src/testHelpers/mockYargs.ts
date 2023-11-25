@@ -1,6 +1,8 @@
+import { vi } from 'vitest';
+
 // Secondary role of mocking yargs: Prevent Cosmos from intercepting the
 // --config arg passed to Jest
-jest.mock('yargs/yargs', () => {
+vi.mock('yargs/yargs', () => {
   let argv = {};
 
   const yargs = () => ({
@@ -12,17 +14,17 @@ jest.mock('yargs/yargs', () => {
     argv = newArgv;
   };
 
-  return yargs;
+  return { default: yargs };
 });
 
-export function mockCliArgs(cliArgs: {}) {
-  requireMocked().__mockArgsv(cliArgs);
+export async function mockCliArgs(cliArgs: {}) {
+  (await importMocked()).default.__mockArgsv(cliArgs);
 }
 
-export function unmockCliArgs() {
-  requireMocked().__mockArgsv({});
+export async function unmockCliArgs() {
+  (await importMocked()).default.__mockArgsv({});
 }
 
-function requireMocked() {
-  return require('yargs/yargs');
+async function importMocked() {
+  return import('yargs/yargs');
 }

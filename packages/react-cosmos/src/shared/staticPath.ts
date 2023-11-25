@@ -1,5 +1,7 @@
-import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 export function getStaticPath(relPath: string) {
-  return fileURLToPath(new URL(`../static/${relPath}`, import.meta.url));
+  const currentDir = dirname(fileURLToPath(new URL(import.meta.url)));
+  return resolve(currentDir, '../static', relPath);
 }

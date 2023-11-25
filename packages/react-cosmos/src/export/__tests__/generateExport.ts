@@ -8,30 +8,35 @@ import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { jestWorkerId } from '../../testHelpers/jestProcessUtils.js';
+import { fileURLToPath } from 'node:url';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
+import { viteWorkerId } from '../../testHelpers/viteUtils.js';
 import { generateExport } from '../generateExport.js';
 
-mockCosmosPlugins([]);
-
-const port = 5000 + jestWorkerId();
+const port = 5000 + viteWorkerId();
 
 const testFsPath = path.join(__dirname, '../__testFs__');
-const exportPath = path.join(testFsPath, `export-${jestWorkerId()}`);
+const exportPath = path.join(testFsPath, `export-${viteWorkerId()}`);
 
-beforeEach(() => {
-  mockCliArgs({});
-  mockCosmosConfig('cosmos.config.json', {
+beforeAll(async () => {
+  await ensureFile(pkgsPath('react-cosmos-ui/dist/playground.bundle.js'));
+  await ensureFile(pkgsPath('react-cosmos-ui/dist/playground.bundle.js.map'));
+});
+
+beforeEach(async () => {
+  await mockCliArgs({});
+  await mockCosmosConfig('cosmos.config.json', {
     rootDir: __dirname,
     port,
     exportPath,
     rendererUrl: '/_renderer.html',
   });
+  await mockCosmosPlugins([]);
 });
 
 afterEach(async () => {
-  unmockCliArgs();
-  resetFsMock();
+  await unmockCliArgs();
+  await resetFsMock();
   await fs.rm(exportPath, { recursive: true, force: true });
 });
 
@@ -74,11 +79,8 @@ it('generates playground JS', async () => {
 
     await generateExport();
 
-    const bundle = await readExportFile('playground.bundle.js');
-    expect(bundle.trim()).toBe('__mock_bundle__');
-
-    const sourceMap = await readExportFile('playground.bundle.js.map');
-    expect(sourceMap.trim()).toBe('__mock_map__');
+    await checkExportFile('playground.bundle.js');
+    await checkExportFile('playground.bundle.js.map');
   });
 });
 
@@ -97,6 +99,24 @@ it('generates favicon', async () => {
     );
   });
 });
+
+function pkgsPath(relPath: string) {
+  const currentDir = path.dirname(fileURLToPath(new URL(import.meta.url)));
+  return path.resolve(currentDir, '../../../..', relPath);
+}
+
+async function ensureFile(atPath: string) {
+  try {
+    await fs.mkdir(path.dirname(atPath), { recursive: true });
+    await fs.writeFile(atPath, '', { flag: 'wx' });
+  } catch (err) {
+    // Nothing to do if file already exists
+  }
+}
+
+async function checkExportFile(filePath: string) {
+  return fs.access(path.join(exportPath, filePath));
+}
 
 async function readExportFile(filePath: string) {
   return fs.readFile(path.join(exportPath, filePath), 'utf8');

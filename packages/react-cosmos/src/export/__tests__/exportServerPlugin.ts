@@ -12,8 +12,9 @@ import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { jestWorkerId } from '../../testHelpers/jestProcessUtils.js';
+import { vi } from 'vitest';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
+import { viteWorkerId } from '../../testHelpers/viteUtils.js';
 import { generateExport } from '../generateExport.js';
 
 const testCosmosPlugin = {
@@ -21,34 +22,34 @@ const testCosmosPlugin = {
   rootDir: path.join(__dirname, 'mock-cosmos-plugin'),
   server: path.join(__dirname, 'mock-cosmos-plugin/server.js'),
 };
-mockCosmosPlugins([testCosmosPlugin]);
 
-const asyncMock = jest.fn();
+const asyncMock = vi.fn();
 const testServerPlugin = {
   name: 'testServerPlugin',
 
-  config: jest.fn(async ({ cosmosConfig }) => {
+  config: vi.fn(async ({ cosmosConfig }) => {
     return {
       ...cosmosConfig,
       ignore: ['**/ignored.fixture.js'],
     };
   }),
 
-  export: jest.fn(async () => {
+  export: vi.fn(async () => {
     await new Promise(resolve => setTimeout(resolve, 50));
     asyncMock();
   }),
 };
 
-const port = 5000 + jestWorkerId();
+const port = 5000 + viteWorkerId();
 
 const testFsPath = path.join(__dirname, '../__testFs__');
-const exportPath = path.join(testFsPath, `export-${jestWorkerId()}`);
+const exportPath = path.join(testFsPath, `export-${viteWorkerId()}`);
 
-beforeEach(() => {
-  mockCliArgs({});
-  mockCosmosConfig('cosmos.config.json', { port, exportPath });
-  mockFile(testCosmosPlugin.server, { default: testServerPlugin });
+beforeEach(async () => {
+  await mockCliArgs({});
+  await mockCosmosConfig('cosmos.config.json', { port, exportPath });
+  await mockFile(testCosmosPlugin.server, { default: testServerPlugin });
+  await mockCosmosPlugins([testCosmosPlugin]);
 
   asyncMock.mockClear();
   testServerPlugin.config.mockClear();
@@ -56,8 +57,8 @@ beforeEach(() => {
 });
 
 afterEach(async () => {
-  unmockCliArgs();
-  resetFsMock();
+  await unmockCliArgs();
+  await resetFsMock();
   await fs.rm(exportPath, { recursive: true, force: true });
 });
 
