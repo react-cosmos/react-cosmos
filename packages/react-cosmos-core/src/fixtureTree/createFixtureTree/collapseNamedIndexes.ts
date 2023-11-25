@@ -26,9 +26,8 @@ export function collapseNamedIndexes(
       const isUnnamed = firstGrandchildName === 'fixture';
 
       if (
-        (firstGrandchildNode.data.type !== 'fileDir' &&
-          noCaseEqual(childName, firstGrandchildName)) ||
-        isUnnamed
+        firstGrandchildNode.data.type !== 'fileDir' &&
+        (noCaseEqual(childName, firstGrandchildName) || isUnnamed)
       )
         return {
           ...newChildren,
