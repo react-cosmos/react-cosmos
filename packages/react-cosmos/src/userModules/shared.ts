@@ -16,10 +16,10 @@ export type UserImportsTemplateArgs = {
   typeScript: boolean;
 };
 
-// NODE: These can be made configurable if a proper need arises
+// NOTE: These can be made configurable if a proper need arises
 const FIXTURE_PATTERNS = [
   '**/<fixturesDir>/**/*.{js,jsx,ts,tsx,md,mdx}',
-  '**/*.<fixtureFileSuffix>.{js,jsx,ts,tsx,md,mdx}',
+  '**/{*.,}<fixtureFileSuffix>.{js,jsx,ts,tsx,md,mdx}',
 ];
 const DECORATOR_PATTERNS = ['**/cosmos.decorator.{js,jsx,ts,tsx}'];
 
