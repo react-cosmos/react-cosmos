@@ -32,4 +32,3 @@ export * from './slots/SidePanelRowSlot.js';
 export * from './slots/ValueInputSlot.js';
 export * from './style/colors.js';
 export * from './style/vars.js';
-export * from './testHelpers/pluginMocks.js';
