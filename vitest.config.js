@@ -4,7 +4,11 @@ export default defineConfig({
   test: {
     // TODO: Try to disable this after migration from Jest to Vitest is complete
     globals: true,
-    environment: 'jsdom',
+    environment: 'node',
+    environmentMatchGlobs: [
+      ['packages/react-cosmos-renderer/src/**/*', 'jsdom'],
+      ['packages/react-cosmos-ui/src/**/*', 'jsdom'],
+    ],
     // Default value: ['**/*.{test,spec}.?(c|m)[jt]s?(x)'],
     include: ['**/__tests__/**/*.{ts,tsx}', '**/?(*.)test.{ts,tsx}'],
   },
