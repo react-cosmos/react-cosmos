@@ -7,8 +7,8 @@ import { RENDERER_FILENAME } from '../constants.js';
 import { getDevWebpackConfig } from '../getDevWebpackConfig.js';
 import { HtmlWebpackPlugin } from '../htmlPlugin.js';
 
-afterAll(() => {
-  unmockCliArgs();
+afterAll(async () => {
+  await unmockCliArgs();
 });
 
 const cosmosConfig = createCosmosConfig(process.cwd());

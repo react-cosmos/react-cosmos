@@ -11,15 +11,15 @@ import { RENDERER_FILENAME } from '../constants.js';
 import { getExportWebpackConfig } from '../getExportWebpackConfig.js';
 import { HtmlWebpackPlugin } from '../htmlPlugin.js';
 
-beforeAll(() => {
-  mockCwdModuleDefault('mywebpack.config.js', {
+beforeAll(async () => {
+  await mockCwdModuleDefault('mywebpack.config.js', {
     module: { rules: [MY_RULE] },
     plugins: [MY_PLUGIN],
   });
 });
 
-afterAll(() => {
-  unmockCliArgs();
+afterAll(async () => {
+  await unmockCliArgs();
 });
 
 const MY_RULE = {};

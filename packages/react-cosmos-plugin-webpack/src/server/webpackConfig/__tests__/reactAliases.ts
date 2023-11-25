@@ -25,7 +25,7 @@ async function getCustomDevWebpackConfig(expectAliasLog: boolean) {
 }
 
 it('preserves React aliases', async () => {
-  mockCwdModuleDefault('mywebpack.config.js', () => ({
+  await mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       alias: {
         react: 'preact/compat',
@@ -44,7 +44,7 @@ it('preserves React aliases', async () => {
 });
 
 it('preserves React aliases with exact matches', async () => {
-  mockCwdModuleDefault('mywebpack.config.js', () => ({
+  await mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       alias: {
         react$: 'preact/compat',
@@ -65,7 +65,7 @@ it('preserves React aliases with exact matches', async () => {
 });
 
 it('preserves React aliases using array form', async () => {
-  mockCwdModuleDefault('mywebpack.config.js', () => ({
+  await mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       alias: [
         { name: 'react', alias: 'preact/compat' },
@@ -90,7 +90,7 @@ it('preserves React aliases using array form', async () => {
 });
 
 it('adds missing React aliases', async () => {
-  mockCwdModuleDefault('mywebpack.config.js', () => ({
+  await mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       alias: {
         xyz: 'abc',
@@ -113,7 +113,7 @@ it('adds missing React aliases', async () => {
 });
 
 it('adds missing React aliases using array form', async () => {
-  mockCwdModuleDefault('mywebpack.config.js', () => ({
+  await mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       alias: [{ name: 'xyz', alias: 'abc' }],
     },
