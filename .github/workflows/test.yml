@@ -27,7 +27,7 @@ jobs:
       - run: yarn check-types:docs
       - run: yarn check-types:cypress
       - run: yarn lint
-      - run: yarn test:coverage --maxWorkers=2
+      - run: yarn test:coverage
       - uses: codecov/codecov-action@v3
         # Only report coverage once
         if: matrix.os == 'ubuntu'
