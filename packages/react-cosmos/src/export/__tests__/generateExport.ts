@@ -9,6 +9,7 @@ import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { getStaticPath } from '../../shared/staticPath.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
 import { viteWorkerId } from '../../testHelpers/viteUtils.js';
 import { generateExport } from '../generateExport.js';
@@ -19,8 +20,8 @@ const testFsPath = path.join(__dirname, '../__testFs__');
 const exportPath = path.join(testFsPath, `export-${viteWorkerId()}`);
 
 beforeAll(async () => {
-  await ensureFile(pkgsPath('react-cosmos-ui/dist/playground.bundle.js'));
-  await ensureFile(pkgsPath('react-cosmos-ui/dist/playground.bundle.js.map'));
+  await ensureFile(pkgPath('react-cosmos-ui/dist/playground.bundle.js'));
+  await ensureFile(pkgPath('react-cosmos-ui/dist/playground.bundle.js.map'));
 });
 
 beforeEach(async () => {
@@ -92,16 +93,13 @@ it('generates favicon', async () => {
     await generateExport();
 
     expect(await readExportFile('_cosmos.ico')).toBe(
-      await fs.readFile(
-        path.join(__dirname, '../../static/favicon.ico'),
-        'utf8'
-      )
+      await fs.readFile(getStaticPath('favicon.ico'), 'utf8')
     );
   });
 });
 
-function pkgsPath(relPath: string) {
-  const currentDir = path.dirname(fileURLToPath(new URL(import.meta.url)));
+function pkgPath(relPath: string) {
+  const currentDir = fileURLToPath(new URL('.', import.meta.url));
   return path.resolve(currentDir, '../../../..', relPath);
 }
 
