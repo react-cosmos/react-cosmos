@@ -38,15 +38,23 @@ export function createValue(data: unknown): FixtureStateValue {
 }
 
 function stringifyUnserializableData(data: unknown) {
+  if (typeof data === 'function') {
+    return stringifyFunction(data);
+  }
+
   // NOTE: We used to use the react-element-to-jsx-string package but it added
   // bloat and complicated ESM support. We might go back to something similar
   // in the future. Or expose a plugin API for custom stringifiers.
-
-  // TODO: Temporary fix to get consistent stringified functions in Vitest
-  // Potential solution: Remove extra indentation on all lines after stringifying
-  if (typeof data === 'function') {
-    return String(data).replace(/^\(\) => \{.+\}$/s, '() => {}');
-  }
-
   return isElement(data) ? '<React.Element />' : String(data);
+}
+
+const emplyFnRegex = /^\(\) => \{.+\}$/s;
+
+function stringifyFunction(data: unknown) {
+  // This clears space from empty function bodies. It originates as a fix for
+  // Vitest tests that needed to create deterministic fixture state values, but
+  // it cleans up how stringified functions look in the Cosmos UI as well.
+  // Potential improvement: Remove all extra indentation from function bodies
+  // to match the root-level function header indentation.
+  return String(data).replace(emplyFnRegex, '() => {}');
 }
