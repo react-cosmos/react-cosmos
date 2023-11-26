@@ -48,7 +48,7 @@ function stringifyUnserializableData(data: unknown) {
   return isElement(data) ? '<React.Element />' : String(data);
 }
 
-const emplyFnRegex = /^\(\) => \{.+\}$/s;
+const emptyFnRegex = /^\(\) => \{.+\}$/s;
 
 function stringifyFunction(data: Function) {
   // This clears space from empty function bodies. It originates as a fix for
@@ -56,5 +56,5 @@ function stringifyFunction(data: Function) {
   // it cleans up how stringified functions look in the Cosmos UI as well.
   // Potential improvement: Remove all extra indentation from function bodies
   // to match the root-level function header indentation.
-  return String(data).replace(emplyFnRegex, '() => {}');
+  return String(data).replace(emptyFnRegex, '() => {}');
 }
