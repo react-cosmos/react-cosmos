@@ -50,7 +50,7 @@ function stringifyUnserializableData(data: unknown) {
 
 const emplyFnRegex = /^\(\) => \{.+\}$/s;
 
-function stringifyFunction(data: unknown) {
+function stringifyFunction(data: Function) {
   // This clears space from empty function bodies. It originates as a fix for
   // Vitest tests that needed to create deterministic fixture state values, but
   // it cleans up how stringified functions look in the Cosmos UI as well.
