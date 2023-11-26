@@ -39,7 +39,7 @@ it('preserves React aliases', async () => {
     expect(resolve.alias.react).toEqual('preact/compat');
     expect(resolve.alias['react-dom']).toEqual('preact/compat');
   } else {
-    fail('Invalid resolve.alias');
+    throw new Error('Invalid resolve.alias');
   }
 });
 
@@ -60,7 +60,7 @@ it('preserves React aliases with exact matches', async () => {
     expect(resolve.alias['react-dom$']).toEqual('preact/compat');
     expect(resolve.alias['react-dom']).toBeUndefined();
   } else {
-    fail('Invalid resolve.alias');
+    throw new Error('Invalid resolve.alias');
   }
 });
 
@@ -85,7 +85,7 @@ it('preserves React aliases using array form', async () => {
       alias: 'preact/compat',
     });
   } else {
-    fail('Invalid resolve.alias');
+    throw new Error('Invalid resolve.alias');
   }
 });
 
@@ -108,7 +108,7 @@ it('adds missing React aliases', async () => {
       new RegExp(`node_modules\\${path.sep}react-dom$`)
     );
   } else {
-    fail('Invalid resolve.alias');
+    throw new Error('Invalid resolve.alias');
   }
 });
 
@@ -138,6 +138,6 @@ it('adds missing React aliases using array form', async () => {
       ),
     });
   } else {
-    fail('Invalid resolve.alias');
+    throw new Error('Invalid resolve.alias');
   }
 });

@@ -9,6 +9,7 @@ import {
 import { createCosmosConfig } from 'react-cosmos';
 import { vi } from 'vitest';
 import webpack from 'webpack';
+import { pkgPath } from '../../../testHelpers/pkgPath.js';
 import { RENDERER_FILENAME } from '../constants.js';
 import { getDevWebpackConfig } from '../getDevWebpackConfig.js';
 import { HtmlWebpackPlugin } from '../htmlPlugin.js';
@@ -82,12 +83,12 @@ it('includes plugin from user override', async () => {
 
 it('includes client entry', async () => {
   const { entry } = await getCustomDevWebpackConfig();
-  expect(entry).toContain(require.resolve('../../../client'));
+  expect(entry).toContain(pkgPath('client/index.js'));
 });
 
 it('includes DOM devtooks hook entry', async () => {
   const { entry } = await getCustomDevWebpackConfig();
-  expect(entry).toContain(require.resolve('../../../client/reactDevtoolsHook'));
+  expect(entry).toContain(pkgPath('client/reactDevtoolsHook.js'));
 });
 
 it('includes webpack-hot-middleware entry', async () => {
@@ -112,8 +113,8 @@ it('create output', async () => {
 it('includes user imports loader', async () => {
   const { module } = await getCustomDevWebpackConfig();
   expect(module!.rules).toContainEqual({
-    loader: require.resolve('../userImportsLoader'),
-    include: require.resolve('../../../client/userImports'),
+    loader: pkgPath('server/webpackConfig/userImportsLoader.cjs'),
+    include: pkgPath('client/userImports.js'),
     options: { cosmosConfig },
   });
 });
