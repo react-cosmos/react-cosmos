@@ -12,6 +12,7 @@ import retry from '@skidding/async-retry';
 import 'isomorphic-fetch';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { ServerMessage, SocketMessage } from 'react-cosmos-core';
 import { vi } from 'vitest';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
@@ -21,6 +22,11 @@ import { startDevServer } from '../startDevServer.js';
 const port = 5000 + viteWorkerId();
 
 let _stopServer: (() => Promise<unknown>) | undefined;
+
+beforeAll(async () => {
+  await ensureFile(pkgPath('react-cosmos-ui/dist/playground.bundle.js'));
+  await ensureFile(pkgPath('react-cosmos-ui/dist/playground.bundle.js.map'));
+});
 
 beforeAll(async () => {
   await mockCliArgs({});
@@ -127,3 +133,17 @@ it('stops server and closes message handler clients', async () => {
     'fetch failed'
   );
 });
+
+function pkgPath(relPath: string) {
+  const currentDir = path.dirname(fileURLToPath(import.meta.url));
+  return path.resolve(currentDir, '../../../..', relPath);
+}
+
+async function ensureFile(atPath: string) {
+  try {
+    await fs.mkdir(path.dirname(atPath), { recursive: true });
+    await fs.writeFile(atPath, '', { flag: 'wx' });
+  } catch (err) {
+    // Nothing to do if file already exists
+  }
+}
