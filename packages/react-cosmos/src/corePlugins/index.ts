@@ -12,7 +12,7 @@ export const coreServerPlugins: CosmosServerPlugin[] = [
   pluginEndpointPlugin,
 ];
 
-// Omit starting chokidar in Jest tests for performance reasons
-if (process.env.JEST_WORKER_ID === undefined) {
+// Omit starting chokidar in unit tests for performance reasons
+if (process.env.VITEST_WORKER_ID === undefined) {
   coreServerPlugins.push(fixtureWatcherPlugin);
 }
