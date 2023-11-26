@@ -61,7 +61,7 @@ Open the CI build page. See what went wrong and learn to run the checks locally.
 
 [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) and [Lerna](https://github.com/lerna/lerna) make it possible to publish independent packages and still test the project end-to-end.
 
-Tools are installed globally in the root node_modules. This includes Jest, TypeScript, Webpack, and their corresponding plugins. ESLint is also applied globally. Creating a new package has less overhead because of this.
+Tools are installed globally in the root node_modules. This includes TypeScript, Vitest, Webpack, and their corresponding plugins. ESLint is also applied globally. Creating a new package has less overhead because of this.
 
 ```bash
 git clone git@github.com:react-cosmos/react-cosmos.git
