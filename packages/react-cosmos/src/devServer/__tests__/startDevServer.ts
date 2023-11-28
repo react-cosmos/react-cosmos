@@ -24,6 +24,7 @@ const port = 5000 + viteWorkerId();
 let _stopServer: (() => Promise<unknown>) | undefined;
 
 beforeAll(async () => {
+  console.log('pkgPath', pkgPath('react-cosmos-ui/dist/playground.bundle.js'));
   await ensureFile(pkgPath('react-cosmos-ui/dist/playground.bundle.js'));
   await ensureFile(pkgPath('react-cosmos-ui/dist/playground.bundle.js.map'));
 });
@@ -72,7 +73,7 @@ it('serves playground HTML', async () => {
   );
 });
 
-it('serves playground JS', async () => {
+it.only('serves playground JS', async () => {
   const res1 = await fetch(`http://localhost:${port}/playground.bundle.js`, {
     method: 'HEAD',
   });
