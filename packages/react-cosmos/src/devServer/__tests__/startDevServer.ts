@@ -73,7 +73,7 @@ it('serves playground HTML', async () => {
   );
 });
 
-it.only('serves playground JS', async () => {
+it('serves playground JS', async () => {
   const res1 = await fetch(`http://localhost:${port}/playground.bundle.js`, {
     method: 'HEAD',
   });
