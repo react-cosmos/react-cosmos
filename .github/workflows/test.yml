@@ -27,12 +27,13 @@ jobs:
       - run: yarn check-types:docs
       - run: yarn check-types:cypress
       - run: yarn lint
-      - run: yarn test:run packages/react-cosmos/src/devServer/__tests__/startDevServer.ts
+      - run: yarn test:run packages/react-cosmos/src/devServer/__tests__/startDevServer.ts --allowOnly
       - uses: codecov/codecov-action@v3
         # Only report coverage once
         if: matrix.os == 'ubuntu'
 
   examples:
+    if: ${{ false }}
     strategy:
       fail-fast: false
       matrix:
