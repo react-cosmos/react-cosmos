@@ -84,7 +84,7 @@
     "ts-jest-resolver": "2.0.1",
     "ts-loader": "9.5.1",
     "ts-node": "10.9.1",
-    "typescript": "5.2.2",
+    "typescript": "5.3.2",
     "vite": "5.0.4",
     "webpack": "5.89.0",
     "webpack-cli": "5.1.4",
