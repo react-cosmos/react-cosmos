@@ -6,4 +6,3 @@ website/dist
 
 **/__testFs__/**
 coverage
-!.jest

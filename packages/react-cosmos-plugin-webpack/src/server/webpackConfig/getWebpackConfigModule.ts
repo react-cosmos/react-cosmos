@@ -26,7 +26,7 @@ function getUserImportsLoaderRule(
 ): webpack.RuleSetRule {
   return {
     loader: resolveWebpackLoaderPath(),
-    include: resolveWebpackClientPath('userImports'),
+    include: resolveWebpackClientPath('userImports.js'),
     options: { cosmosConfig },
   };
 }

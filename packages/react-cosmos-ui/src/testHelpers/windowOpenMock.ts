@@ -1,6 +1,8 @@
+import { vi } from 'vitest';
+
 export function mockWindowOpen() {
   const windowOpen = window.open;
-  const mock = jest.fn();
+  const mock = vi.fn();
   window.open = mock;
   return {
     value: mock,

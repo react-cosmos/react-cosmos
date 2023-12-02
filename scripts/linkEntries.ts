@@ -65,7 +65,13 @@ async function linkFileRequiresToDir(filePath: string, targetDir: TargetDir) {
   // For now this is JustFine™
   const prevContents = await fs.readFile(filePath, 'utf8');
   const regExp = new RegExp(`'(\\.{1,2})/(${SRC_DIR}|${DIST_DIR})`, 'g');
-  const nextContents = prevContents.replace(regExp, `'$1/${targetDir}`);
+  let nextContents = prevContents.replace(regExp, `'$1/${targetDir}`);
+
+  if (targetDir === 'src') {
+    nextContents = nextContents.replace(/\.js';/, ".ts';");
+  } else {
+    nextContents = nextContents.replace(/\.ts';/, ".js';");
+  }
 
   await fs.writeFile(filePath, nextContents, 'utf8');
 }

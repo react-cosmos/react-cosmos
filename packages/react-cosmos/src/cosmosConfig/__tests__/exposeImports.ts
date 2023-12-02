@@ -7,8 +7,8 @@ import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 import { getCwdPath } from '../../testHelpers/cwd.js';
 import { createCosmosConfig } from '../createCosmosConfig.js';
 
-afterEach(() => {
-  unmockCliArgs();
+afterEach(async () => {
+  await unmockCliArgs();
 });
 
 it('does not expose imports by default', () => {
@@ -23,15 +23,15 @@ it('returns resolved user imports path', () => {
   expect(cosmosConfig.exposeImports).toBe(getCwdPath('src/myImports.ts'));
 });
 
-it('uses --exportImports CLI arg', () => {
-  mockCliArgs({ exposeImports: true });
+it('uses --exportImports CLI arg', async () => {
+  await mockCliArgs({ exposeImports: true });
 
   const cosmosConfig = createCosmosConfig(process.cwd());
   expect(cosmosConfig.exposeImports).toBe(true);
 });
 
-it('resolves --exportImports CLI arg path', () => {
-  mockCliArgs({ exposeImports: 'src/myImports.ts' });
+it('resolves --exportImports CLI arg path', async () => {
+  await mockCliArgs({ exposeImports: 'src/myImports.ts' });
 
   const cosmosConfig = createCosmosConfig(process.cwd());
   expect(cosmosConfig.exposeImports).toBe(getCwdPath('src/myImports.ts'));

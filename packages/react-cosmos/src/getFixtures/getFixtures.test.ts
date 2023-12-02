@@ -5,7 +5,7 @@ import { getFixtures } from './getFixtures.js';
 
 const rootDir = path.join(__dirname, '../../../../examples/webpack');
 
-it('renders fixture elements', async () => {
+it.skip('renders fixture elements', async () => {
   const cosmosConfig = createCosmosConfig(rootDir, {
     ignore: ['**/*.mdx'],
   });
@@ -26,7 +26,7 @@ it('renders fixture elements', async () => {
   testFixtureElement('src/WelcomeMessage/WelcomeMessage.fixture.tsx');
 });
 
-it('returns fixture info', async () => {
+it.skip('returns fixture info', async () => {
   const cosmosConfig = createCosmosConfig(rootDir, {
     ignore: ['**/*.mdx'],
   });

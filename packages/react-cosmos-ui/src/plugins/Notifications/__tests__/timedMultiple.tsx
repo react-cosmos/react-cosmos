@@ -1,6 +1,7 @@
 import { act, render } from '@testing-library/react';
 import React from 'react';
 import { ArraySlot, loadPlugins, resetPlugins } from 'react-plugin';
+import { vi } from 'vitest';
 import { getNotificationsMethods } from '../../../testHelpers/pluginMocks.js';
 import { register } from '../index.js';
 
@@ -12,7 +13,7 @@ afterEach(() => {
   });
 });
 
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 function loadTestPlugins() {
   loadPlugins();
@@ -50,7 +51,7 @@ it('clears all timed notifications after timeout expires', async () => {
 
   pushTimedNotifications();
   act(() => {
-    jest.runAllTimers();
+    vi.runAllTimers();
   });
 
   expect(queryByText('Check this out')).toBeNull();

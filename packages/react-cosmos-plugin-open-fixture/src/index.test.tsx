@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 import { waitFor } from '@testing-library/dom';
 import { fireEvent, render, RenderResult } from '@testing-library/react';
 import React from 'react';

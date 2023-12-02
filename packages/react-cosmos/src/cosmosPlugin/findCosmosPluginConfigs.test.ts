@@ -1,9 +1,10 @@
 import path from 'path';
+import { vi } from 'vitest';
 import { findCosmosPluginConfigs } from './findCosmosPluginConfigs.js';
 
 // Allow plugin configs to be read without having to actually build
 // the plugin packages
-jest.mock('../utils/resolveSilent.js', () => {
+vi.mock('../utils/resolveSilent.js', () => {
   return {
     resolveSilent: (moduleId: string) =>
       moduleId.endsWith('.js') ? moduleId : `${moduleId}.js`,

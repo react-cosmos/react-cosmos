@@ -1,3 +1,5 @@
+// @vitest-environment jsdom
+
 // WARNING: Module mocks need to be imported before the mocked modules are
 // imported, which are sometimes imported indirectly by the modules being
 // tested. Otherwise the mocks will be applied too late and the tests will run
@@ -12,9 +14,10 @@ import * as http from 'node:http';
 import path from 'node:path';
 import { setTimeout } from 'node:timers/promises';
 import { ServerMessage, SocketMessage } from 'react-cosmos-core';
+import { vi } from 'vitest';
 import { DevServerPluginArgs } from '../../cosmosPlugin/types.js';
-import { jestWorkerId } from '../../testHelpers/jestProcessUtils.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
+import { viteWorkerId } from '../../testHelpers/viteUtils.js';
 import { startDevServer } from '../startDevServer.js';
 
 const testCosmosPlugin = {
@@ -22,20 +25,19 @@ const testCosmosPlugin = {
   rootDir: path.join(__dirname, 'mock-cosmos-plugin'),
   server: path.join(__dirname, 'mock-cosmos-plugin/server.js'),
 };
-mockCosmosPlugins([testCosmosPlugin]);
 
-const devServerCleanup = jest.fn(() => Promise.resolve());
+const devServerCleanup = vi.fn(() => Promise.resolve());
 const testServerPlugin = {
   name: 'testServerPlugin',
 
-  config: jest.fn(async ({ cosmosConfig }) => {
+  config: vi.fn(async ({ cosmosConfig }) => {
     return {
       ...cosmosConfig,
       ignore: ['**/ignored.fixture.js'],
     };
   }),
 
-  devServer: jest.fn(async () => {
+  devServer: vi.fn(async () => {
     await setTimeout(50);
     return async () => {
       await setTimeout(50);
@@ -44,14 +46,15 @@ const testServerPlugin = {
   }),
 };
 
-const port = 5000 + jestWorkerId();
+const port = 5000 + viteWorkerId();
 
 let _stopServer: (() => Promise<unknown>) | undefined;
 
 beforeAll(async () => {
-  mockCliArgs({});
-  mockCosmosConfig('cosmos.config.json', { port });
-  mockFile(testCosmosPlugin.server, { default: testServerPlugin });
+  await mockCliArgs({});
+  await mockCosmosConfig('cosmos.config.json', { port });
+  await mockFile(testCosmosPlugin.server, { default: testServerPlugin });
+  await mockCosmosPlugins([testCosmosPlugin]);
 
   await mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
@@ -92,7 +95,7 @@ it('calls dev server hook with send message API', async () => {
     },
   };
 
-  const onMessage = jest.fn();
+  const onMessage = vi.fn();
   client.addEventListener('open', () => {
     client.addEventListener('message', msg => onMessage(msg.data));
 

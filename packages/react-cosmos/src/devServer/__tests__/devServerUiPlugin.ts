@@ -9,30 +9,30 @@ import { mockCliArgs } from '../../testHelpers/mockYargs.js';
 import 'isomorphic-fetch';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { jestWorkerId } from '../../testHelpers/jestProcessUtils.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
+import { viteWorkerId } from '../../testHelpers/viteUtils.js';
 import { startDevServer } from '../startDevServer.js';
 
-const port = 5000 + jestWorkerId();
+const port = 5000 + viteWorkerId();
 
 const testFsPath = path.join(__dirname, '../__testFs__');
-const pluginPath = path.join(testFsPath, `plugin-${jestWorkerId()}`);
+const pluginPath = path.join(testFsPath, `plugin-${viteWorkerId()}`);
 
 const testCosmosPlugin = {
   name: 'Test Cosmos plugin',
   rootDir: pluginPath,
   ui: path.join(pluginPath, 'ui.js'),
 };
-mockCosmosPlugins([testCosmosPlugin]);
 
 let _stopServer: (() => Promise<unknown>) | undefined;
 
 beforeAll(async () => {
-  mockCliArgs({});
-  mockCosmosConfig('cosmos.config.json', {
+  await mockCliArgs({});
+  await mockCosmosConfig('cosmos.config.json', {
     rootDir: testFsPath,
     port,
   });
+  await mockCosmosPlugins([testCosmosPlugin]);
 
   await fs.mkdir(testCosmosPlugin.rootDir, { recursive: true });
   await fs.writeFile(testCosmosPlugin.ui, 'export {}', 'utf8');

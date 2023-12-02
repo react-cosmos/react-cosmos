@@ -1,10 +1,11 @@
 import retry from '@skidding/async-retry';
 import { uuid } from 'react-cosmos-core';
+import { vi } from 'vitest';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 const rendererId = uuid();
-const onReloadRenderer = jest.fn();
+const onReloadRenderer = vi.fn();
 const fixtures = wrapDefaultExport({
   first: { one: 'First' },
   second: 'Second',

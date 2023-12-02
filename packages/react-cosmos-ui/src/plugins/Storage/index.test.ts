@@ -1,20 +1,23 @@
 import retry from '@skidding/async-retry';
 import { loadPlugins, resetPlugins } from 'react-plugin';
+import { vi } from 'vitest';
 import { getMethodsOf } from '../../testHelpers/pluginHelpers.js';
 import { register } from './index.js';
 import { StorageSpec } from './spec.js';
 
-const mockSetItem = jest.fn();
+const mockSetItem = vi.fn();
 
-jest.mock('localforage', () => {
+vi.mock('localforage', () => {
   const storageMock: { [key: string]: object } = {
     'cosmos-fooProjectId': { fooKey: 'fooValue' },
   };
   return {
-    getItem: (projectId: string) => Promise.resolve(storageMock[projectId]),
-    setItem: async (projectId: string, value: unknown) => {
-      await Promise.resolve();
-      mockSetItem(projectId, value);
+    default: {
+      getItem: (projectId: string) => Promise.resolve(storageMock[projectId]),
+      setItem: async (projectId: string, value: unknown) => {
+        await Promise.resolve();
+        mockSetItem(projectId, value);
+      },
     },
   };
 });
