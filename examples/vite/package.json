@@ -12,15 +12,15 @@
     "native": "cosmos-native"
   },
   "dependencies": {
-    "@mdx-js/rollup": "^2.3.0",
-    "@vitejs/plugin-react": "^4.0.0",
+    "@mdx-js/rollup": "3.0.0",
+    "@vitejs/plugin-react": "4.2.0",
     "examples-shared": "6.0.0-beta.7",
-    "react": "^18.2.0",
+    "react": "18.2.0",
     "react-cosmos": "6.0.0-beta.7",
     "react-cosmos-plugin-boolean-input": "6.0.0-beta.7",
     "react-cosmos-plugin-open-fixture": "6.0.0-beta.7",
     "react-cosmos-plugin-vite": "6.0.0-beta.7",
-    "react-dom": "^18.2.0",
-    "vite": "^4.3.4"
+    "react-dom": "18.2.0",
+    "vite": "5.0.4"
   }
 }

@@ -14,13 +14,13 @@
     "playground": "cosmos"
   },
   "dependencies": {
-    "lodash-es": "^4.17.21",
+    "lodash-es": "4.17.21",
     "react-cosmos-core": "6.0.0-beta.7"
   },
   "devDependencies": {
-    "fuzzaldrin-plus": "^0.6.0",
-    "localforage": "^1.10.0",
-    "react-plugin": "^3.0.0-alpha.4",
-    "styled-components": "^5.3.10"
+    "fuzzaldrin-plus": "0.6.0",
+    "localforage": "1.10.0",
+    "react-plugin": "3.0.0-alpha.4",
+    "styled-components": "5.3.11"
   }
 }

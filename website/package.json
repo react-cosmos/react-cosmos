@@ -10,9 +10,9 @@
     "export": "cosmos-export"
   },
   "dependencies": {
-    "isomorphic-fetch": "^3.0.0",
-    "react": "^18.2.0",
+    "isomorphic-fetch": "3.0.0",
+    "react": "18.2.0",
     "react-cosmos": "6.0.0-beta.7",
-    "react-dom": "^18.2.0"
+    "react-dom": "18.2.0"
   }
 }
