@@ -6,6 +6,8 @@ on:
 jobs:
   pnp-install-and-run:
     runs-on: ubuntu-latest
+    env:
+      SKIP_YARN_COREPACK_CHECK: true
     steps:
       - run: git config --global core.autocrlf false
 
@@ -22,7 +24,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'yarn'
           cache-dependency-path: |
             react-cosmos/yarn.lock

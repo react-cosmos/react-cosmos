@@ -104,7 +104,7 @@ export type RendererResponse =
 
 export type RendererConnect<
   Request = RendererRequest,
-  Response = RendererResponse
+  Response = RendererResponse,
 > = {
   postMessage: (msg: Response) => unknown;
   onMessage(handler: (msg: Request) => unknown): () => void;

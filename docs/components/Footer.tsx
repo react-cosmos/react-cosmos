@@ -90,7 +90,9 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="https://github.com/sponsors/skidding">Sponsor ↗</Link>
+              <Link href="https://github.com/sponsors/skidding">
+                Sponsor ↗
+              </Link>
             </li>
           </ul>
         </section>

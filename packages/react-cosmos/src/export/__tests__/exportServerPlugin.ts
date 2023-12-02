@@ -1,6 +1,7 @@
-// Import mocks first
-import { jestWorkerId } from '../../testHelpers/jestWorkerId.js';
-import { mockConsole } from '../../testHelpers/mockConsole.js';
+// WARNING: Module mocks need to be imported before the mocked modules are
+// imported, which are sometimes imported indirectly by the modules being
+// tested. Otherwise the mocks will be applied too late and the tests will run
+// against the unmocked original modules instead.
 import { mockCosmosPlugins } from '../../testHelpers/mockCosmosPlugins.js';
 import {
   mockCosmosConfig,
@@ -11,6 +12,8 @@ import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { jestWorkerId } from '../../testHelpers/jestProcessUtils.js';
+import { mockConsole } from '../../testHelpers/mockConsole.js';
 import { generateExport } from '../generateExport.js';
 
 const testCosmosPlugin = {

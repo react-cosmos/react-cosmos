@@ -65,5 +65,5 @@ function createMockWebSocket() {
       addEventListener: jest.fn(),
       close: jest.fn(),
       removeEventListener: jest.fn(),
-    } as unknown as WebSocket);
+    }) as unknown as WebSocket;
 }

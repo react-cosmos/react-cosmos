@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'yarn'
       - run: yarn install --frozen-lockfile --network-timeout 600000
 
@@ -38,24 +38,24 @@ jobs:
       matrix:
         example: [webpack, vite]
         os: [ubuntu, windows]
-        node-version: [18]
+        node-version: [20]
         lazy: [false]
         include:
           - example: webpack
             os: ubuntu
-            node-version: 16
+            node-version: 18
             lazy: false
           - example: webpack
             os: windows
-            node-version: 16
+            node-version: 18
             lazy: false
           - example: webpack
             os: ubuntu
-            node-version: 18
+            node-version: 20
             lazy: true
           - example: vite
             os: ubuntu
-            node-version: 18
+            node-version: 20
             lazy: true
     runs-on: ${{ matrix.os }}-latest
     steps:
