@@ -73,6 +73,47 @@ it('collapses nested named index fixture', () => {
   expect(collapseNamedIndexes(tree)).toEqual(collapsedTree);
 });
 
+it('collapses unnamed fixture', () => {
+  const tree: FixtureTreeNode = {
+    data: { type: 'fileDir' },
+    children: {
+      ui: {
+        data: { type: 'fileDir' },
+        children: {
+          Dashboard: {
+            data: { type: 'fileDir' },
+            children: {
+              fixture: {
+                data: {
+                  type: 'fixture',
+                  path: 'ui/Dashboard/fixture.js',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  };
+  const collapsedTree: FixtureTreeNode = {
+    data: { type: 'fileDir' },
+    children: {
+      ui: {
+        data: { type: 'fileDir' },
+        children: {
+          Dashboard: {
+            data: {
+              type: 'fixture',
+              path: 'ui/Dashboard/fixture.js',
+            },
+          },
+        },
+      },
+    },
+  };
+  expect(collapseNamedIndexes(tree)).toEqual(collapsedTree);
+});
+
 it('collapses named index fixture (case insensitive)', () => {
   const tree: FixtureTreeNode = {
     data: { type: 'fileDir' },

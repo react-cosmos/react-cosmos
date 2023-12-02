@@ -48,7 +48,10 @@ const StyledRocketSvg = styled.svg`
   height: 50%;
   fill: currentColor;
   animation: hover 0.5s infinite ease;
-  transition: left, 0.4s ease-out, bottom 0.4s ease-out;
+  transition:
+    left,
+    0.4s ease-out,
+    bottom 0.4s ease-out;
   transition-delay: 0.4s;
 
   @keyframes hover {

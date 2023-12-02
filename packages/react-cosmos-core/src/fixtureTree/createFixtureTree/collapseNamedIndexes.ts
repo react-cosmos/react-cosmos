@@ -23,11 +23,16 @@ export function collapseNamedIndexes(
 
       const [firstGrandchildName] = grandchildNames;
       const firstGrandchildNode = grandchildren[firstGrandchildName];
+      const isUnnamed = firstGrandchildName === 'fixture';
+
       if (
         firstGrandchildNode.data.type !== 'fileDir' &&
-        noCaseEqual(childName, firstGrandchildName)
+        (noCaseEqual(childName, firstGrandchildName) || isUnnamed)
       )
-        return { ...newChildren, [firstGrandchildName]: firstGrandchildNode };
+        return {
+          ...newChildren,
+          [isUnnamed ? childName : firstGrandchildName]: firstGrandchildNode,
+        };
 
       return next();
     }, {}),

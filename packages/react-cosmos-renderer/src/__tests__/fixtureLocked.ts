@@ -1,4 +1,4 @@
-import delay from 'delay';
+import { setTimeout } from 'node:timers/promises';
 import { uuid } from 'react-cosmos-core';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
@@ -23,7 +23,7 @@ testRenderer(
       fixtureId: { path: 'second' },
       fixtureState: {},
     });
-    await delay(50);
+    await setTimeout(50);
     expect(renderer.toJSON()).toBe('First');
   }
 );
@@ -38,7 +38,7 @@ testRenderer(
   },
   async ({ renderer, unselectFixture }) => {
     unselectFixture({ rendererId });
-    await delay(50);
+    await setTimeout(50);
     expect(renderer.toJSON()).toBe('First');
   }
 );

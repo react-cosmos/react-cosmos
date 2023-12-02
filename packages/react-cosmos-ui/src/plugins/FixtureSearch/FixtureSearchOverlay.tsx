@@ -355,8 +355,10 @@ const Content = styled.div`
   max-width: 640px;
   border-radius: 3px;
   background: ${grey248};
-  box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px,
-    rgba(15, 15, 15, 0.1) 0px 5px 10px, rgba(15, 15, 15, 0.2) 0px 15px 40px;
+  box-shadow:
+    rgba(15, 15, 15, 0.05) 0px 0px 0px 1px,
+    rgba(15, 15, 15, 0.1) 0px 5px 10px,
+    rgba(15, 15, 15, 0.2) 0px 15px 40px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -406,7 +408,9 @@ const HelpButton = styled.div<{ selected: boolean }>`
   background: ${props => (props.selected ? grey224 : 'transparent')};
   color: ${props => (props.selected ? grey128 : grey176)};
   cursor: pointer;
-  transition: background ${quick}s, color ${quick}s;
+  transition:
+    background ${quick}s,
+    color ${quick}s;
 
   :hover {
     color: ${grey128};
@@ -417,7 +421,9 @@ const ShortcutsContainer = styled.div<{ visible: boolean }>`
   height: ${props => (props.visible ? 72 : 0)}px;
   overflow: hidden;
   opacity: ${props => (props.visible ? 1 : 0)};
-  transition: height ${quick}s, opacity ${quick}s;
+  transition:
+    height ${quick}s,
+    opacity ${quick}s;
   user-select: none;
 `;
 
