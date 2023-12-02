@@ -24,8 +24,6 @@ const port = 5000 + viteWorkerId();
 let _stopServer: (() => Promise<unknown>) | undefined;
 
 beforeAll(async () => {
-  console.log('currentDir', path.dirname(fileURLToPath(import.meta.url)));
-  console.log('pkgPath', pkgPath('react-cosmos-ui/dist/playground.bundle.js'));
   await ensureFile(pkgPath('react-cosmos-ui/dist/playground.bundle.js'));
   await ensureFile(pkgPath('react-cosmos-ui/dist/playground.bundle.js.map'));
 });
