@@ -1,4 +1,4 @@
-import { FixtureId } from 'react-cosmos-core';
+import { FixtureId, FixtureState } from 'react-cosmos-core';
 import { RendererCoreContext } from './shared/index.js';
 import { postSelectFixtureRequest } from './shared/postRequest.js';
 
@@ -9,9 +9,21 @@ export function onRouterFixtureSelect(
   context.setState(
     prevState => ({ ...prevState, fixtureState: {} }),
     () => {
-      const { connectedRendererIds } = context.getState();
+      const {
+        connectedRendererIds,
+        initialFixtureStateUpdaters: initialFixtureStateUpdaters,
+      } = context.getState();
       connectedRendererIds.forEach(rendererId => {
-        postSelectFixtureRequest(context, rendererId, fixtureId, {});
+        let initialFixtureState: FixtureState = {};
+        initialFixtureStateUpdaters.forEach(initialFixtureStateUpdater => {
+          initialFixtureState = initialFixtureStateUpdater(initialFixtureState);
+        });
+        postSelectFixtureRequest(
+          context,
+          rendererId,
+          fixtureId,
+          initialFixtureState
+        );
       });
     }
   );
