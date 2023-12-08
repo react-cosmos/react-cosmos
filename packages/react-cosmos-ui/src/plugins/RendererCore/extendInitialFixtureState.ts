@@ -7,7 +7,7 @@ export function extendInitialFixtureState(
 ) {
   context.setState(prevState => ({
     ...prevState,
-    initFixtureStateUpdaters: [
+    initialFixtureStateUpdaters: [
       ...prevState.initialFixtureStateUpdaters,
       stateUpdater,
     ],
@@ -15,7 +15,7 @@ export function extendInitialFixtureState(
   return () =>
     context.setState(prevState => ({
       ...prevState,
-      initFixtureStateUpdaters: prevState.initialFixtureStateUpdaters.filter(
+      initialFixtureStateUpdaters: prevState.initialFixtureStateUpdaters.filter(
         updater => updater !== stateUpdater
       ),
     }));
