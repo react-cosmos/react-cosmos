@@ -1,6 +1,6 @@
 import { FixtureId } from 'react-cosmos-core';
+import { createInitialFixtureState } from './shared/createInitialFixtureState.js';
 import { RendererCoreContext } from './shared/index.js';
-import { getInitialFixtureState } from './shared/initialFixtureState.js';
 import { postSelectFixtureRequest } from './shared/postRequest.js';
 
 export function onRouterFixtureReselect(
@@ -13,7 +13,7 @@ export function onRouterFixtureReselect(
       context,
       rendererId,
       fixtureId,
-      getInitialFixtureState(context)
+      createInitialFixtureState(context)
     );
   });
 }
