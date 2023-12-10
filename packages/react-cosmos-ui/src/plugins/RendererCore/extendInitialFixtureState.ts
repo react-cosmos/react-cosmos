@@ -12,11 +12,12 @@ export function extendInitialFixtureState(
       stateUpdater,
     ],
   }));
-  return () =>
+  return () => {
     context.setState(prevState => ({
       ...prevState,
       initialFixtureStateUpdaters: prevState.initialFixtureStateUpdaters.filter(
         updater => updater !== stateUpdater
       ),
     }));
+  };
 }
