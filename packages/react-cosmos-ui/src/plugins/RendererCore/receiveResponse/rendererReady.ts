@@ -2,6 +2,7 @@ import { isEqual } from 'lodash-es';
 import { RendererId, RendererReadyResponse } from 'react-cosmos-core';
 import { NotificationsSpec } from '../../Notifications/spec.js';
 import { RouterSpec } from '../../Router/spec.js';
+import { createInitialFixtureState } from '../shared/createInitialFixtureState.js';
 import { RendererCoreContext, State } from '../shared/index.js';
 import { postSelectFixtureRequest } from '../shared/postRequest.js';
 
@@ -23,7 +24,10 @@ export function receiveRendererReadyResponse(
       ...prevState,
       connectedRendererIds: addToSet(connectedRendererIds, rendererId),
       primaryRendererId,
-      fixtureState: rendererId === primaryRendererId ? {} : fixtureState,
+      fixtureState:
+        rendererId === primaryRendererId
+          ? createInitialFixtureState(context)
+          : fixtureState,
     };
   }
 

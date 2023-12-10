@@ -14,15 +14,11 @@ beforeEach(register);
 
 afterEach(resetPlugins);
 
-it('posts "selectFixture" renderer request with extended fixture state', async () => {
+it('extends initial fixture state on renderer ready', async () => {
   mockRouter({
-    // This fails, this needs to be covered, too
-    // getSelectedFixtureId: () => ({ path: 'zwei.js' }),
-    getSelectedFixtureId: () => null,
+    getSelectedFixtureId: () => ({ path: 'zwei.js' }),
   });
   mockNotifications();
-
-  const { request } = onRendererCore();
 
   loadPlugins();
 
@@ -32,6 +28,52 @@ it('posts "selectFixture" renderer request with extended fixture state', async (
     foo: 'bar',
   }));
 
+  const { request } = onRendererCore();
+  mockRendererReady('mockRendererId');
+
+  await waitFor(() =>
+    expect(request).toBeCalledWith(expect.any(Object), {
+      type: 'selectFixture',
+      payload: {
+        rendererId: 'mockRendererId',
+        fixtureId: { path: 'zwei.js' },
+        fixtureState: {
+          foo: 'bar',
+        },
+      },
+    })
+  );
+
+  cleanUp();
+  mockRendererReady('mockRendererId');
+
+  await waitFor(() =>
+    expect(request).toBeCalledWith(expect.any(Object), {
+      type: 'selectFixture',
+      payload: {
+        rendererId: 'mockRendererId',
+        fixtureId: { path: 'zwei.js' },
+        fixtureState: {},
+      },
+    })
+  );
+});
+
+it('extends initial fixture state on fixture select', async () => {
+  mockRouter({
+    getSelectedFixtureId: () => null,
+  });
+  mockNotifications();
+
+  loadPlugins();
+
+  const methods = getRendererCoreMethods();
+  const cleanUp = methods.extendInitialFixtureState(prevState => ({
+    ...prevState,
+    foo: 'bar',
+  }));
+
+  const { request } = onRendererCore();
   mockRendererReady('mockRendererId');
   getRouterContext().emit('fixtureSelect', { path: 'zwei.js' });
 
@@ -49,7 +91,6 @@ it('posts "selectFixture" renderer request with extended fixture state', async (
   );
 
   cleanUp();
-  // mockRendererReady('mockRendererId');
   getRouterContext().emit('fixtureSelect', { path: 'zwei.js' });
 
   await waitFor(() =>
@@ -64,11 +105,9 @@ it('posts "selectFixture" renderer request with extended fixture state', async (
   );
 });
 
-it('posts "selectFixture" renderer request with extended fixture state on reselect', async () => {
+it('extends initial fixture state on fixture reselect', async () => {
   mockRouter({
-    // This fails, this needs to be covered, too
     getSelectedFixtureId: () => ({ path: 'zwei.js' }),
-    // getSelectedFixtureId: () => null,
   });
   mockNotifications();
 
@@ -99,7 +138,6 @@ it('posts "selectFixture" renderer request with extended fixture state on resele
   );
 
   cleanUp();
-  // mockRendererReady('mockRendererId');
   getRouterContext().emit('fixtureReselect', { path: 'zwei.js' });
 
   await waitFor(() =>
