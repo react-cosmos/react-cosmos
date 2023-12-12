@@ -4,7 +4,10 @@ import { NotificationsSpec } from '../../Notifications/spec.js';
 import { RouterSpec } from '../../Router/spec.js';
 import { createInitialFixtureState } from '../shared/createInitialFixtureState.js';
 import { RendererCoreContext, State } from '../shared/index.js';
-import { postSelectFixtureRequest } from '../shared/postRequest.js';
+import {
+  postSelectFixtureRequest,
+  postSetFixtureStateRequest,
+} from '../shared/postRequest.js';
 
 export function receiveRendererReadyResponse(
   context: RendererCoreContext,
@@ -45,6 +48,16 @@ export function receiveRendererReadyResponse(
         routerFixtureId,
         fixtureState
       );
+    } else if (rendererFixtureId) {
+      const initialFixtureState = createInitialFixtureState(context);
+      if (Object.keys(initialFixtureState).length > 0) {
+        postSetFixtureStateRequest(
+          context,
+          rendererId,
+          rendererFixtureId,
+          initialFixtureState
+        );
+      }
     }
 
     // Notify about connected renderers that weren't connected before
