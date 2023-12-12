@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-ui",
-  "version": "6.0.0-beta.7",
+  "version": "6.0.0-beta.8",
   "description": "React Cosmos UI",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-ui",
   "license": "MIT",
@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "lodash-es": "4.17.21",
-    "react-cosmos-core": "6.0.0-beta.7"
+    "react-cosmos-core": "6.0.0-beta.8"
   },
   "devDependencies": {
     "fuzzaldrin-plus": "0.6.0",
