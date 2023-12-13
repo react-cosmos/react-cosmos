@@ -17,6 +17,7 @@ export type RendererCoreSpec = {
     primaryRendererId: null | RendererId;
     fixtures: FixtureList;
     fixtureState: FixtureState;
+    initialFixtureStateUpdaters: StateUpdater<FixtureState>[];
   };
   methods: {
     getRendererUrl(): null | string;
@@ -27,6 +28,9 @@ export type RendererCoreSpec = {
     isRendererConnected(): boolean;
     reloadRenderer(): void;
     setFixtureState(stateUpdater: StateUpdater<FixtureState>): void;
+    extendInitialFixtureState(
+      stateUpdater: StateUpdater<FixtureState>
+    ): () => void;
     selectPrimaryRenderer(primaryRendererId: RendererId): void;
     receiveResponse(msg: MessageType): void;
   };
