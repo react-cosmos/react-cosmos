@@ -9,13 +9,13 @@ The [Viewport](/docs/fixtures/ui-controls.md#viewport) decorator is a good examp
 ```jsx
 import { FixtureContext } from 'react-cosmos/client';
 
-export default ({ children }) => {
+export function MagicDecorator({ children }) {
   const { fixtureState, setFixtureState } = React.useContext(FixtureContext);
 
   // Read or write the fixture state based on user events or other side effects.
 
   return children;
-};
+}
 ```
 
 - The standard fixture state object contains the `props`, `classState` and `controls` fields. They're used to construct the control panels in the Cosmos UI.
@@ -24,18 +24,18 @@ export default ({ children }) => {
 
 ### `useFixtureState`
 
-You can extend the TypeScript type of the fixture state in a [decorator](/docs/fixtures/decorators) using `useFixtureState`:
+You can extend the TypeScript type of the fixture state using `useFixtureState`:
 
 ```tsx
 import { useFixtureState } from 'react-cosmos/client';
 
-type MyFixtureState = {
-  mySetting: boolean;
+type MagicFixtureState = {
+  magicSetting: boolean;
 };
 
-export default ({ children }: DecoratorProps) => {
-  const { mySetting } = useFixtureState<MyFixtureState>(FixtureContext);
+export function MagicDecorator({ children }: DecoratorProps) {
+  const { magicSetting } = useFixtureState<MagicFixtureState>(FixtureContext);
 
   // Apply custom setting and render children...
-};
+}
 ```
