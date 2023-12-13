@@ -24,11 +24,11 @@ export type RendererCoreSpec = {
     getConnectedRendererIds(): RendererId[];
     getPrimaryRendererId(): null | RendererId;
     getFixtures(): FixtureList;
-    getFixtureState(): FixtureState;
+    getFixtureState<T extends object = {}>(): FixtureState & T;
     isRendererConnected(): boolean;
     reloadRenderer(): void;
     setFixtureState(stateUpdater: StateUpdater<FixtureState>): void;
-    setGlobalFixtureState(fixtureState: FixtureState): void;
+    setGlobalFixtureState(newState: FixtureState): void;
     selectPrimaryRenderer(primaryRendererId: RendererId): void;
     receiveResponse(msg: MessageType): void;
   };

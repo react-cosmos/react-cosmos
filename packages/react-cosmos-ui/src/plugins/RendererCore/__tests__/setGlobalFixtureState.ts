@@ -14,6 +14,61 @@ beforeEach(register);
 
 afterEach(resetPlugins);
 
+it('sets fixture state when setting global fixture state', async () => {
+  mockRouter({
+    getSelectedFixtureId: () => ({ path: 'zwei.js' }),
+  });
+  mockNotifications();
+
+  loadPlugins();
+
+  const { request } = onRendererCore();
+  mockRendererReady('mockRendererId');
+
+  await waitFor(() =>
+    expect(request).toBeCalledWith(expect.any(Object), {
+      type: 'selectFixture',
+      payload: {
+        rendererId: 'mockRendererId',
+        fixtureId: { path: 'zwei.js' },
+        fixtureState: {},
+      },
+    })
+  );
+
+  const methods = getRendererCoreMethods();
+  methods.setGlobalFixtureState({ foo: 'bar' });
+
+  await waitFor(() =>
+    expect(request).toBeCalledWith(expect.any(Object), {
+      type: 'setFixtureState',
+      payload: {
+        rendererId: 'mockRendererId',
+        fixtureId: { path: 'zwei.js' },
+        fixtureState: {
+          foo: 'bar',
+        },
+      },
+    })
+  );
+
+  methods.setGlobalFixtureState({ baz: 'qux' });
+
+  await waitFor(() =>
+    expect(request).toBeCalledWith(expect.any(Object), {
+      type: 'setFixtureState',
+      payload: {
+        rendererId: 'mockRendererId',
+        fixtureId: { path: 'zwei.js' },
+        fixtureState: {
+          foo: 'bar',
+          baz: 'qux',
+        },
+      },
+    })
+  );
+});
+
 it('uses global fixture state when renderer connects', async () => {
   mockRouter({
     getSelectedFixtureId: () => ({ path: 'zwei.js' }),
