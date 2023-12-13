@@ -14,7 +14,7 @@ beforeEach(register);
 
 afterEach(resetPlugins);
 
-it('extends initial fixture state when renderer connects', async () => {
+it('uses global fixture state when renderer connects', async () => {
   mockRouter({
     getSelectedFixtureId: () => ({ path: 'zwei.js' }),
   });
@@ -23,10 +23,7 @@ it('extends initial fixture state when renderer connects', async () => {
   loadPlugins();
 
   const methods = getRendererCoreMethods();
-  const cleanUp = methods.extendInitialFixtureState(prevState => ({
-    ...prevState,
-    foo: 'bar',
-  }));
+  methods.setGlobalFixtureState({ foo: 'bar' });
 
   const { request } = onRendererCore();
   mockRendererReady('mockRendererId');
@@ -43,23 +40,9 @@ it('extends initial fixture state when renderer connects', async () => {
       },
     })
   );
-
-  cleanUp();
-  mockRendererReady('mockRendererId');
-
-  await waitFor(() =>
-    expect(request).toBeCalledWith(expect.any(Object), {
-      type: 'selectFixture',
-      payload: {
-        rendererId: 'mockRendererId',
-        fixtureId: { path: 'zwei.js' },
-        fixtureState: {},
-      },
-    })
-  );
 });
 
-it('sets extended initial fixture state when renderer connects with fixture selected', async () => {
+it('uses global fixture state when renderer connects with fixture selected', async () => {
   mockRouter({
     getSelectedFixtureId: () => ({ path: 'zwei.js' }),
   });
@@ -68,10 +51,7 @@ it('sets extended initial fixture state when renderer connects with fixture sele
   loadPlugins();
 
   const methods = getRendererCoreMethods();
-  methods.extendInitialFixtureState(prevState => ({
-    ...prevState,
-    foo: 'bar',
-  }));
+  methods.setGlobalFixtureState({ foo: 'bar' });
 
   const { request } = onRendererCore();
   mockRendererReady('mockRendererId', { path: 'zwei.js' });
@@ -90,7 +70,7 @@ it('sets extended initial fixture state when renderer connects with fixture sele
   );
 });
 
-it('extends initial fixture state on fixture select', async () => {
+it('uses global fixture state on fixture select', async () => {
   mockRouter({
     getSelectedFixtureId: () => null,
   });
@@ -99,10 +79,7 @@ it('extends initial fixture state on fixture select', async () => {
   loadPlugins();
 
   const methods = getRendererCoreMethods();
-  const cleanUp = methods.extendInitialFixtureState(prevState => ({
-    ...prevState,
-    foo: 'bar',
-  }));
+  methods.setGlobalFixtureState({ foo: 'bar' });
 
   const { request } = onRendererCore();
   mockRendererReady('mockRendererId');
@@ -120,23 +97,9 @@ it('extends initial fixture state on fixture select', async () => {
       },
     })
   );
-
-  cleanUp();
-  getRouterContext().emit('fixtureSelect', { path: 'zwei.js' });
-
-  await waitFor(() =>
-    expect(request).toBeCalledWith(expect.any(Object), {
-      type: 'selectFixture',
-      payload: {
-        rendererId: 'mockRendererId',
-        fixtureId: { path: 'zwei.js' },
-        fixtureState: {},
-      },
-    })
-  );
 });
 
-it('extends initial fixture state on fixture reselect', async () => {
+it('uses global fixture state on fixture reselect', async () => {
   mockRouter({
     getSelectedFixtureId: () => ({ path: 'zwei.js' }),
   });
@@ -147,10 +110,7 @@ it('extends initial fixture state on fixture reselect', async () => {
   loadPlugins();
 
   const methods = getRendererCoreMethods();
-  const cleanUp = methods.extendInitialFixtureState(prevState => ({
-    ...prevState,
-    foo: 'bar',
-  }));
+  methods.setGlobalFixtureState({ foo: 'bar' });
 
   mockRendererReady('mockRendererId');
   getRouterContext().emit('fixtureReselect', { path: 'zwei.js' });
@@ -164,20 +124,6 @@ it('extends initial fixture state on fixture reselect', async () => {
         fixtureState: {
           foo: 'bar',
         },
-      },
-    })
-  );
-
-  cleanUp();
-  getRouterContext().emit('fixtureReselect', { path: 'zwei.js' });
-
-  await waitFor(() =>
-    expect(request).toBeCalledWith(expect.any(Object), {
-      type: 'selectFixture',
-      payload: {
-        rendererId: 'mockRendererId',
-        fixtureId: { path: 'zwei.js' },
-        fixtureState: {},
       },
     })
   );

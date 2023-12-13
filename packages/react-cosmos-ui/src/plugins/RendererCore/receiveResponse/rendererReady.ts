@@ -2,7 +2,6 @@ import { isEqual } from 'lodash-es';
 import { RendererId, RendererReadyResponse } from 'react-cosmos-core';
 import { NotificationsSpec } from '../../Notifications/spec.js';
 import { RouterSpec } from '../../Router/spec.js';
-import { createInitialFixtureState } from '../shared/createInitialFixtureState.js';
 import { RendererCoreContext, State } from '../shared/index.js';
 import {
   postSelectFixtureRequest,
@@ -14,7 +13,8 @@ export function receiveRendererReadyResponse(
   { payload }: RendererReadyResponse
 ) {
   const { rendererId } = payload;
-  const { connectedRendererIds: prevRendererIds } = context.getState();
+  const { connectedRendererIds: prevRendererIds, globalFixtureState } =
+    context.getState();
 
   context.setState(stateUpdater, afterStateChanged);
 
@@ -28,9 +28,7 @@ export function receiveRendererReadyResponse(
       connectedRendererIds: addToSet(connectedRendererIds, rendererId),
       primaryRendererId,
       fixtureState:
-        rendererId === primaryRendererId
-          ? createInitialFixtureState(context)
-          : fixtureState,
+        rendererId === primaryRendererId ? globalFixtureState : fixtureState,
     };
   }
 
@@ -49,13 +47,12 @@ export function receiveRendererReadyResponse(
         fixtureState
       );
     } else if (rendererFixtureId) {
-      const initialFixtureState = createInitialFixtureState(context);
-      if (Object.keys(initialFixtureState).length > 0) {
+      if (Object.keys(globalFixtureState).length > 0) {
         postSetFixtureStateRequest(
           context,
           rendererId,
           rendererFixtureId,
-          initialFixtureState
+          globalFixtureState
         );
       }
     }
