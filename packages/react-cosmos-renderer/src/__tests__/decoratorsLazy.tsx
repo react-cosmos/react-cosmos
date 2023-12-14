@@ -12,7 +12,6 @@ const rendererId = uuid();
 const fixtures = wrapDefaultExport({
   'src/foo/__fixtures__/default.js': 'Hello!',
 });
-// https://github.com/DefinitelyTyped/DefinitelyTyped/issues/18051
 const decorators = wrapDefaultExport({
   'src/decorator.js': ({ children }: Props) => <>Decorated at src{children}</>,
   'src/foo/decorator.js': ({ children }: Props) => (

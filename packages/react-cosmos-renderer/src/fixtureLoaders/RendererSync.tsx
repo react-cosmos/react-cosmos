@@ -94,5 +94,5 @@ export function RendererSync({ children, fixtures }: Props) {
     [locked, rendererConnect, rendererId, selectFixture, unselectFixture]
   );
 
-  return <>{children}</>;
+  return children;
 }

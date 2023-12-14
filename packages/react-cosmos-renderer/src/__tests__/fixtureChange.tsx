@@ -7,12 +7,12 @@ import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 function FirstFixture() {
   const { fixtureState } = React.useContext(FixtureContext);
-  return <>{fixtureState.custom ? 'FirstCustom' : 'First'}</>;
+  return fixtureState.custom ? 'FirstCustom' : 'First';
 }
 
 function SecondFixture() {
   const { fixtureState } = React.useContext(FixtureContext);
-  return <>{fixtureState.custom ? 'SecondCustom' : 'Second'}</>;
+  return fixtureState.custom ? 'SecondCustom' : 'Second';
 }
 
 const rendererId = uuid();
