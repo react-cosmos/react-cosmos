@@ -1,11 +1,6 @@
 import { isEqual } from 'lodash-es';
 import React from 'react';
-import {
-  FixtureState,
-  FixtureStateControl,
-  FixtureStateControls,
-  StateUpdater,
-} from 'react-cosmos-core';
+import { FixtureStateControl, FixtureStateControls } from 'react-cosmos-core';
 import {
   SidePanelActions,
   SidePanelBody,
@@ -17,11 +12,12 @@ import { IconButton32 } from '../../components/buttons/index.js';
 import { RotateCcwIcon } from '../../components/icons/index.js';
 import { ControlActionSlot } from '../../slots/ControlActionSlot.js';
 import { ControlSlot } from '../../slots/ControlSlot.js';
+import { SetFixtureStateControls } from './shared.js';
 
 type Props = {
-  fixtureState: FixtureState;
+  fixtureState: FixtureStateControls | undefined;
   controlActionOrder: string[];
-  onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
+  onFixtureStateChange: SetFixtureStateControls;
 };
 
 export function ControlPanel({
@@ -34,7 +30,7 @@ export function ControlPanel({
     [onFixtureStateChange]
   );
 
-  const controls = fixtureState.controls || {};
+  const controls = fixtureState || {};
   if (Object.keys(controls).length === 0) return null;
 
   return (
@@ -79,12 +75,12 @@ function areControlsUnchanged(controls: FixtureStateControls) {
   );
 }
 
-function resetControls(fixtureState: FixtureState) {
-  const controls = fixtureState.controls ? { ...fixtureState.controls } : {};
+function resetControls(fixtureState: FixtureStateControls | undefined) {
+  const controls = fixtureState ? { ...fixtureState } : {};
   Object.keys(controls).forEach(controlName => {
     controls[controlName] = resetControl(controls[controlName]);
   });
-  return { ...fixtureState, controls };
+  return controls;
 }
 
 function resetControl<TControl extends FixtureStateControl>(control: TControl) {

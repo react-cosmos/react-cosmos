@@ -1,25 +1,25 @@
 import { isEqual } from 'lodash-es';
 import React from 'react';
 import {
+  FixtureStateControls,
   FixtureStateData,
   FixtureStateValue,
   createValue,
   extendWithValue,
-  findFixtureStateControl,
 } from 'react-cosmos-core';
-import { FixtureContext } from '../FixtureContext.js';
+import { useFixtureState } from '../useFixtureState.js';
 
 export function useCreateFixtureState(
   inputName: string,
   defaultValue: FixtureStateData
 ) {
-  const { setFixtureState } = React.useContext(FixtureContext);
+  const [, setFixtureState] = useFixtureState<FixtureStateControls>('controls');
   React.useEffect(() => {
     // The fixture state for this value is (re)created in two situations:
     // 1. Initially: No corresponding fixture state value is found
     // 2: Default value change: Current value is reset to new default value
     setFixtureState(prevFs => {
-      const fsControl = findFixtureStateControl(prevFs, inputName);
+      const fsControl = prevFs && prevFs[inputName];
       if (
         fsControl &&
         fsControl.type === 'standard' &&
@@ -29,13 +29,10 @@ export function useCreateFixtureState(
 
       return {
         ...prevFs,
-        controls: {
-          ...prevFs.controls,
-          [inputName]: {
-            type: 'standard',
-            defaultValue: createValue(defaultValue),
-            currentValue: createValue(defaultValue),
-          },
+        [inputName]: {
+          type: 'standard',
+          defaultValue: createValue(defaultValue),
+          currentValue: createValue(defaultValue),
         },
       };
     });

@@ -51,8 +51,11 @@ function mockViewportFixtureState() {
   mockRendererCore({
     getRendererUrl: () => `/_renderer.html`,
     getFixtureState: () => ({}),
-    setFixtureState: (context, stateUpdater) => {
-      mocks.fixtureState = stateUpdater(mocks.fixtureState);
+    setFixtureState: (context, name, update) => {
+      mocks.fixtureState = {
+        ...mocks.fixtureState,
+        [name]: update(mocks.fixtureState[name]),
+      };
     },
   });
   return mocks;

@@ -1,16 +1,16 @@
-import { useCallback, useContext } from 'react';
-import { findFixtureStateControl } from 'react-cosmos-core';
-import { FixtureContext } from '../FixtureContext.js';
+import { useCallback } from 'react';
+import { FixtureStateControls } from 'react-cosmos-core';
+import { useFixtureState } from '../useFixtureState.js';
 import { SetSelectValue } from './shared.js';
 
 export function useSetValue<Option extends string>(
   selectName: string
 ): SetSelectValue<Option> {
-  const { setFixtureState } = useContext(FixtureContext);
+  const [, setFixtureState] = useFixtureState<FixtureStateControls>('controls');
   return useCallback(
     value => {
       setFixtureState(prevFs => {
-        const fsControl = findFixtureStateControl(prevFs, selectName);
+        const fsControl = prevFs && prevFs[selectName];
         if (!fsControl || fsControl.type !== 'select') {
           console.warn(`Invalid fixture state for select: ${selectName}`);
           return prevFs;
@@ -18,12 +18,9 @@ export function useSetValue<Option extends string>(
 
         return {
           ...prevFs,
-          controls: {
-            ...prevFs.controls,
-            [selectName]: {
-              ...fsControl,
-              currentValue: value,
-            },
+          [selectName]: {
+            ...fsControl,
+            currentValue: value,
           },
         };
       });

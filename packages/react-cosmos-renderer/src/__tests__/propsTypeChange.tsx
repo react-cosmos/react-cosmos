@@ -31,13 +31,14 @@ testRenderer(
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await retry(() => expect(renderer.toJSON()).toBe('Hello Theo'));
     const fixtureState = await getLastFixtureState();
-    const [{ elementId }] = getProps(fixtureState);
+    const propsFs = getProps(fixtureState);
+    const [{ elementId }] = propsFs;
     setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
         props: updateFixtureStateProps({
-          fixtureState,
+          propsFs,
           elementId,
           values: createValues({ name: 'Theo Von' }),
         }),

@@ -16,12 +16,9 @@ plug<SelectControlSlotProps>('control-select', ({ slotProps }) => {
 
   const handleChange = useCallback(
     (selectName: string, updatedControl: FixtureStateSelectControl) => {
-      onFixtureStateChange(fixtureState => ({
-        ...fixtureState,
-        controls: {
-          ...fixtureState.controls,
-          [selectName]: updatedControl,
-        },
+      onFixtureStateChange(prevFs => ({
+        ...prevFs,
+        [selectName]: updatedControl,
       }));
     },
     [onFixtureStateChange]

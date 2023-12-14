@@ -2,6 +2,7 @@ import {
   FixtureDecoratorId,
   FixtureState,
   FixtureStateClassState,
+  FixtureStateControls,
   FixtureStateProps,
   FixtureStateValues,
 } from 'react-cosmos-core';
@@ -51,7 +52,7 @@ export function getProps(
   fixtureState: FixtureState,
   expectedCount: number = 1
 ) {
-  const { props } = fixtureState;
+  const props = fixtureStateByName<FixtureStateProps[]>(fixtureState, 'props');
   if (!props || props.length < expectedCount) {
     throw new Error(`Props missing in fixture state`);
   }
@@ -62,9 +63,20 @@ export function getClassState(
   fixtureState: FixtureState,
   expectedCount: number = 1
 ) {
-  const { classState } = fixtureState;
+  const classState = fixtureStateByName<FixtureStateClassState[]>(
+    fixtureState,
+    'classState'
+  );
   if (!classState || classState.length < expectedCount) {
     throw new Error(`Class state missing in fixture state`);
   }
   return classState;
+}
+
+export function getControls(fixtureState: FixtureState) {
+  return fixtureStateByName<FixtureStateControls>(fixtureState, 'controls');
+}
+
+function fixtureStateByName<T>(fixtureState: FixtureState, name: string) {
+  return fixtureState[name] as T | undefined;
 }

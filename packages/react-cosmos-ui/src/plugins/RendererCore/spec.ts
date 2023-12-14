@@ -6,6 +6,15 @@ import {
   StateUpdater,
 } from 'react-cosmos-core';
 
+export type GetFixtureState = <T>(name: string) => T | undefined;
+
+// The type name is verbose to avoid confusion with SetFixtureState
+// from react-cosmos-core package
+export type SetFixtureStateByName = <T>(
+  name: string,
+  update: StateUpdater<T>
+) => void;
+
 export type RendererCoreSpec = {
   name: 'rendererCore';
   config: {
@@ -24,14 +33,16 @@ export type RendererCoreSpec = {
     getConnectedRendererIds(): RendererId[];
     getPrimaryRendererId(): null | RendererId;
     getFixtures(): FixtureList;
-    getFixtureState(): FixtureState;
-    getFixtureStateByName<T>(name: string): T | undefined;
     isRendererConnected(): boolean;
     reloadRenderer(): void;
-    setFixtureState(stateUpdater: StateUpdater<FixtureState>): void;
-    setGlobalFixtureState<T>(name: string, state: T): void;
     selectPrimaryRenderer(primaryRendererId: RendererId): void;
     receiveResponse(msg: MessageType): void;
+    // TODO: Remove getFixtureState and in favor of getFixtureStateByName, or
+    // use it only where necessary, possibly rename it to getEntireFixtureState
+    getFixtureState(): FixtureState;
+    getFixtureStateByName: GetFixtureState;
+    setFixtureState: SetFixtureStateByName;
+    setGlobalFixtureState<T>(name: string, state: T): void;
   };
   events: {
     request(msg: MessageType): void;

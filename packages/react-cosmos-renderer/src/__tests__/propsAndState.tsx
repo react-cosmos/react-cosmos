@@ -10,6 +10,7 @@ import { SuffixCounter } from '../testHelpers/components.js';
 import {
   anyClassState,
   anyProps,
+  getClassState,
   getProps,
 } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
@@ -35,11 +36,13 @@ testRenderer(
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     let fixtureState = await getLastFixtureState();
-    const [{ elementId }] = getProps(fixtureState);
+    const propsFs = getProps(fixtureState);
+    const classStateFs = getClassState(fixtureState);
+    const [{ elementId }] = propsFs;
     fixtureState = {
       ...fixtureState,
       classState: updateFixtureStateClassState({
-        fixtureState,
+        classStateFs,
         elementId,
         values: createValues({ count: 5 }),
       }),
@@ -52,7 +55,7 @@ testRenderer(
       fixtureState: {
         ...fixtureState,
         props: updateFixtureStateProps({
-          fixtureState,
+          propsFs,
           elementId,
           values: createValues({ suffix: 'timez' }),
         }),
@@ -68,11 +71,13 @@ testRenderer(
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     let fixtureState = await getLastFixtureState();
-    const [{ elementId }] = getProps(fixtureState);
+    const propsFs = getProps(fixtureState);
+    const classStateFs = getClassState(fixtureState);
+    const [{ elementId }] = propsFs;
     fixtureState = {
       ...fixtureState,
       classState: updateFixtureStateClassState({
-        fixtureState,
+        classStateFs,
         elementId,
         values: createValues({ count: 5 }),
       }),
@@ -85,7 +90,7 @@ testRenderer(
       fixtureState: {
         ...fixtureState,
         props: updateFixtureStateProps({
-          fixtureState,
+          propsFs,
           elementId,
           values: createValues({ suffix: 'timez' }),
         }),
@@ -101,11 +106,13 @@ testRenderer(
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     let fixtureState = await getLastFixtureState();
-    const [{ elementId }] = getProps(fixtureState);
+    const propsFs = getProps(fixtureState);
+    const classStateFs = getClassState(fixtureState);
+    const [{ elementId }] = propsFs;
     fixtureState = {
       ...fixtureState,
       props: updateFixtureStateProps({
-        fixtureState,
+        propsFs,
         elementId,
         values: createValues({ suffix: 'timez' }),
       }),
@@ -118,7 +125,7 @@ testRenderer(
       fixtureState: {
         ...fixtureState,
         classState: updateFixtureStateClassState({
-          fixtureState,
+          classStateFs,
           elementId,
           values: createValues({ count: 5 }),
         }),

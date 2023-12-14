@@ -49,13 +49,14 @@ testRenderer(
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
-    const [{ elementId }] = getClassState(fixtureState);
+    const classStateFs = getClassState(fixtureState);
+    const [{ elementId }] = classStateFs;
     setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
         classState: updateFixtureStateClassState({
-          fixtureState,
+          classStateFs,
           elementId,
           values: createValues({ count: 5 }),
         }),
@@ -71,13 +72,14 @@ testRenderer(
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
-    const [{ elementId }] = getClassState(fixtureState);
+    const classStateFs = getClassState(fixtureState);
+    const [{ elementId }] = classStateFs;
     setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
         classState: updateFixtureStateClassState({
-          fixtureState,
+          classStateFs,
           elementId,
           values: {},
         }),
@@ -93,13 +95,14 @@ testRenderer(
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
-    const [{ elementId }] = getClassState(fixtureState);
+    const classStateFs = getClassState(fixtureState);
+    const [{ elementId }] = classStateFs;
     setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
         classState: updateFixtureStateClassState({
-          fixtureState,
+          classStateFs,
           elementId,
           values: createValues({ count: 5 }),
         }),
@@ -110,7 +113,7 @@ testRenderer(
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: removeFixtureStateClassState(fixtureState, elementId),
+        classState: removeFixtureStateClassState(classStateFs, elementId),
       },
     });
     await retry(() => expect(renderer.toJSON()).toBe('0 times'));

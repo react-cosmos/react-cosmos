@@ -1,5 +1,4 @@
 import { waitFor } from '@testing-library/dom';
-import { FixtureState } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
@@ -44,10 +43,7 @@ function loadTestPlugins() {
 
 function mockSetFixtureStateCall() {
   const methods = getRendererCoreMethods();
-  methods.setFixtureState((prevState: FixtureState) => ({
-    ...prevState,
-    viewport: { width: 640, height: 480 },
-  }));
+  methods.setFixtureState('viewport', () => ({ width: 640, height: 480 }));
 }
 
 it('sets fixture state in plugin state', async () => {

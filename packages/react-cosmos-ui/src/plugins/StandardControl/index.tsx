@@ -33,12 +33,9 @@ plug<StandardControlSlotProps>(
       (updatedValues: FixtureStateValues) => {
         onFixtureStateChange(fixtureState => ({
           ...fixtureState,
-          controls: {
-            ...fixtureState.controls,
-            [controlName]: {
-              ...control,
-              currentValue: updatedValues[controlName],
-            },
+          [controlName]: {
+            ...control,
+            currentValue: updatedValues[controlName],
           },
         }));
       },

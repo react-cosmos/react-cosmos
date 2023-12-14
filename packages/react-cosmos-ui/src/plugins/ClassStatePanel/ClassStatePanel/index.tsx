@@ -1,5 +1,5 @@
 import React from 'react';
-import { FixtureState, StateUpdater } from 'react-cosmos-core';
+import { FixtureStateClassState } from 'react-cosmos-core';
 import {
   FixtureExpansion,
   OnElementExpansionChange,
@@ -7,12 +7,13 @@ import {
   sortFsValueGroups,
   stringifyElementId,
 } from '../../../components/ValueInputTree/index.js';
+import { SetFixtureStateClassState } from '../shared.js';
 import { ComponentClassState } from './ComponentClassState.js';
 
 type Props = {
-  fixtureState: FixtureState;
+  fixtureState: FixtureStateClassState[] | undefined;
   fixtureExpansion: FixtureExpansion;
-  onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
+  onFixtureStateChange: SetFixtureStateClassState;
   onElementExpansionChange: OnElementExpansionChange;
 };
 
@@ -22,11 +23,11 @@ export const ClassStatePanel = React.memo(function ClassStatePanel({
   onFixtureStateChange,
   onElementExpansionChange,
 }: Props) {
-  if (!fixtureState.classState) {
+  if (!fixtureState) {
     return null;
   }
 
-  const classStateWithValues = fixtureState.classState.filter(hasFsValues);
+  const classStateWithValues = fixtureState.filter(hasFsValues);
   return (
     <>
       {sortFsValueGroups(classStateWithValues).map(fsClassState => {

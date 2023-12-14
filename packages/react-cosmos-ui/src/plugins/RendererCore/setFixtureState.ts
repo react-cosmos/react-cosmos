@@ -1,11 +1,12 @@
-import { FixtureId, FixtureState, StateUpdater } from 'react-cosmos-core';
+import { FixtureId, StateUpdater } from 'react-cosmos-core';
 import { RendererCoreContext, State } from './shared/index.js';
 import { postSetFixtureStateRequest } from './shared/postRequest.js';
 import { getSelectedFixtureId } from './shared/router.js';
 
 export function setFixtureState(
   context: RendererCoreContext,
-  stateUpdater: StateUpdater<FixtureState>
+  name: string,
+  update: StateUpdater<unknown>
 ) {
   const fixtureId = getSelectedFixtureId(context);
 
@@ -23,7 +24,10 @@ export function setFixtureState(
   function change(prevState: State) {
     return {
       ...prevState,
-      fixtureState: stateUpdater(prevState.fixtureState),
+      fixtureState: {
+        ...prevState.fixtureState,
+        [name]: update(prevState.fixtureState[name]),
+      },
     };
   }
 

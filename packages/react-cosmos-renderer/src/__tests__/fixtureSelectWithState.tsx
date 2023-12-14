@@ -20,7 +20,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: createFixtureStateProps({
-          fixtureState: {},
+          propsFs: undefined,
           elementId: { decoratorId: 'root', elPath: '' },
           values: createValues({ name: 'B' }),
           componentName: 'HelloMessage',

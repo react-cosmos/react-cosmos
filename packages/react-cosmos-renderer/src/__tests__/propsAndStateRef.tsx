@@ -47,14 +47,15 @@ testRenderer(
   }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
-    const [{ elementId }] = getProps(fixtureState);
+    const propsFs = getProps(fixtureState);
+    const [{ elementId }] = propsFs;
     setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
         ...fixtureState,
         props: updateFixtureStateProps({
-          fixtureState,
+          propsFs,
           elementId,
           values: createValues({ suffix: 'timez' }),
         }),

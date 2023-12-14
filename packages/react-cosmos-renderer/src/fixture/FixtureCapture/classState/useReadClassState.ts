@@ -1,11 +1,5 @@
 import { isEqual } from 'lodash-es';
-import {
-  MutableRefObject,
-  ReactNode,
-  useContext,
-  useEffect,
-  useRef,
-} from 'react';
+import { MutableRefObject, ReactNode, useEffect, useRef } from 'react';
 import {
   FixtureDecoratorId,
   FixtureStateClassState,
@@ -14,7 +8,7 @@ import {
   findFixtureStateClassState,
   updateFixtureStateClassState,
 } from 'react-cosmos-core';
-import { FixtureContext } from '../../FixtureContext.js';
+import { useFixtureState } from '../../useFixtureState.js';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
 import { ElRefs } from './shared.js';
 
@@ -28,7 +22,8 @@ export function useReadClassState(
   elRefs: MutableRefObject<ElRefs>
 ) {
   const elPaths = findRelevantElementPaths(fixture);
-  const { fixtureState, setFixtureState } = useContext(FixtureContext);
+  const [classStateFs, setClassStateFs] =
+    useFixtureState<FixtureStateClassState[]>('classState');
   const timeoutId = useRef<null | number>(null);
 
   useEffect(() => {
@@ -59,21 +54,20 @@ export function useReadClassState(
 
       const { state } = elRefs.current[elPath];
       const elementId = { decoratorId, elPath };
-      const fsClassState = findFixtureStateClassState(fixtureState, elementId);
+      const fsClassState = findFixtureStateClassState(classStateFs, elementId);
       if (
         fsClassState &&
         state &&
         !doesFixtureStateMatchClassState(fsClassState, state)
       ) {
         fixtureStateChangeScheduled = true;
-        setFixtureState(prevFs => ({
-          ...prevFs,
-          classState: updateFixtureStateClassState({
-            fixtureState: prevFs,
+        setClassStateFs(prevFs =>
+          updateFixtureStateClassState({
+            classStateFs: prevFs,
             elementId,
             values: createValues(state),
-          }),
-        }));
+          })
+        );
       }
     });
 

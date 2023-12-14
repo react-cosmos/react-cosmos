@@ -60,13 +60,14 @@ testRenderer(
       fixtureState: {},
     });
     const fixtureState = await getLastFixtureState();
-    const [, { elementId }] = getProps(fixtureState, 2);
+    const propsFs = getProps(fixtureState, 2);
+    const [, { elementId }] = propsFs;
     setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
         props: updateFixtureStateProps({
-          fixtureState,
+          propsFs,
           elementId,
           values: createValues({ name: 'Benjamin' }),
         }),

@@ -8,7 +8,6 @@ import {
   FixtureDecoratorId,
   FixtureElementId,
   FixtureRenderKey,
-  FixtureState,
   FixtureStateProps,
   FixtureStateValues,
 } from './types.js';
@@ -16,37 +15,34 @@ import {
 export const DEFAULT_RENDER_KEY: FixtureRenderKey = 0;
 
 export function getFixtureStateProps(
-  fixtureState: FixtureState,
+  propsFs: FixtureStateProps[] | undefined,
   decoratorId: FixtureDecoratorId
 ): FixtureStateProps[] {
-  const { props } = fixtureState;
-  return props
-    ? props.filter(p => p.elementId.decoratorId === decoratorId)
+  return propsFs
+    ? propsFs.filter(p => p.elementId.decoratorId === decoratorId)
     : [];
 }
 
 export function findFixtureStateProps(
-  fixtureState: FixtureState,
+  propsFs: FixtureStateProps[] | undefined,
   elementId: FixtureElementId
 ): void | FixtureStateProps {
-  const { props } = fixtureState;
-  return props && find(props, p => isEqual(p.elementId, elementId));
+  return propsFs && find(propsFs, p => isEqual(p.elementId, elementId));
 }
 
 type CreateFixtureStatePropsArgs = {
-  fixtureState: FixtureState;
+  propsFs: FixtureStateProps[] | undefined;
   elementId: FixtureElementId;
   values: FixtureStateValues;
   componentName: string;
 };
 export function createFixtureStateProps({
-  fixtureState,
+  propsFs,
   elementId,
   values,
   componentName,
 }: CreateFixtureStatePropsArgs) {
-  const { props = [] } = fixtureState;
-  return replaceOrAddItem(props, createPropsMatcher(elementId), {
+  return replaceOrAddItem(propsFs ?? [], createPropsMatcher(elementId), {
     elementId,
     values,
     renderKey: DEFAULT_RENDER_KEY,
@@ -55,46 +51,43 @@ export function createFixtureStateProps({
 }
 
 type ResetFixtureStatePropsArgs = {
-  fixtureState: FixtureState;
+  propsFs: FixtureStateProps[] | undefined;
   elementId: FixtureElementId;
   values: FixtureStateValues;
 };
 export function resetFixtureStateProps({
-  fixtureState,
+  propsFs,
   elementId,
   values,
 }: ResetFixtureStatePropsArgs) {
-  const propsItem = expectFixtureStateProps(fixtureState, elementId);
-  return updateItem(fixtureState.props!, propsItem, {
+  const propsItem = expectFixtureStateProps(propsFs, elementId);
+  return updateItem(propsFs!, propsItem, {
     values,
     renderKey: propsItem.renderKey + 1,
   });
 }
 
 type UpdateFixtureStatePropsArgs = {
-  fixtureState: FixtureState;
+  propsFs: FixtureStateProps[] | undefined;
   elementId: FixtureElementId;
   values: FixtureStateValues;
 };
 export function updateFixtureStateProps({
-  fixtureState,
+  propsFs,
   elementId,
   values,
 }: UpdateFixtureStatePropsArgs) {
-  const propsItem = expectFixtureStateProps(fixtureState, elementId);
-  return updateItem(fixtureState.props!, propsItem, {
+  const propsItem = expectFixtureStateProps(propsFs, elementId);
+  return updateItem(propsFs!, propsItem, {
     values,
   });
 }
 
 export function removeFixtureStateProps(
-  fixtureState: FixtureState,
+  propsFs: FixtureStateProps[] | undefined,
   elementId: FixtureElementId
 ) {
-  return removeItemMatch(
-    fixtureState.props || [],
-    createPropsMatcher(elementId)
-  );
+  return removeItemMatch(propsFs ?? [], createPropsMatcher(elementId));
 }
 
 function createPropsMatcher(elementId: FixtureElementId) {
@@ -102,10 +95,10 @@ function createPropsMatcher(elementId: FixtureElementId) {
 }
 
 function expectFixtureStateProps(
-  fixtureState: FixtureState,
+  propsFs: FixtureStateProps[] | undefined,
   elementId: FixtureElementId
 ): FixtureStateProps {
-  const propsItem = findFixtureStateProps(fixtureState, elementId);
+  const propsItem = findFixtureStateProps(propsFs, elementId);
   if (!propsItem) {
     const elId = JSON.stringify(elementId);
     throw new Error(`Fixture state props missing for element "${elId}"`);

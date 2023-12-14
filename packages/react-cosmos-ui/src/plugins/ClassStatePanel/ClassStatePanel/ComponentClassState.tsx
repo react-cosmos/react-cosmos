@@ -1,10 +1,8 @@
 import { isEqual } from 'lodash-es';
 import React, { useCallback } from 'react';
 import {
-  FixtureState,
   FixtureStateClassState,
   FixtureStateValues,
-  StateUpdater,
   updateFixtureStateClassState,
 } from 'react-cosmos-core';
 import {
@@ -24,12 +22,13 @@ import {
 import { IconButton32 } from '../../../components/buttons/index.js';
 import { RotateCcwIcon } from '../../../components/icons/index.js';
 import { TreeExpansion } from '../../../shared/treeExpansion.js';
+import { SetFixtureStateClassState } from '../shared.js';
 import { createClassStateFsUpdater } from './shared.js';
 
 type Props = {
   fsClassState: FixtureStateClassState;
   fixtureExpansion: FixtureExpansion;
-  onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
+  onFixtureStateChange: SetFixtureStateClassState;
   onElementExpansionChange: OnElementExpansionChange;
 };
 
@@ -47,7 +46,7 @@ export function ComponentClassState({
       onFixtureStateChange(
         createClassStateFsUpdater(elementId, prevFs =>
           updateFixtureStateClassState({
-            fixtureState: prevFs,
+            classStateFs: prevFs,
             elementId,
             values: initialValues,
           })
@@ -61,7 +60,7 @@ export function ComponentClassState({
       onFixtureStateChange(
         createClassStateFsUpdater(elementId, prevFs =>
           updateFixtureStateClassState({
-            fixtureState: prevFs,
+            classStateFs: prevFs,
             elementId,
             values: newValues,
           })

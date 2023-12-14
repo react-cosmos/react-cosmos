@@ -1,16 +1,11 @@
-import {
-  findFixtureStateProps,
-  FixtureElementId,
-  FixtureState,
-  FixtureStateProps,
-  StateUpdater,
-} from 'react-cosmos-core';
+import { findFixtureStateProps, FixtureElementId } from 'react-cosmos-core';
 import { stringifyElementId } from '../../../components/ValueInputTree/index.js';
+import { FixtureStatePropsUpdater } from '../shared.js';
 
 export function createPropsFsUpdater(
   elementId: FixtureElementId,
-  cb: (prevFs: FixtureState) => FixtureStateProps[]
-): StateUpdater<FixtureState> {
+  cb: FixtureStatePropsUpdater
+): FixtureStatePropsUpdater {
   return prevFs => {
     const fsProps = findFixtureStateProps(prevFs, elementId);
     if (!fsProps) {
@@ -19,9 +14,6 @@ export function createPropsFsUpdater(
       return prevFs;
     }
 
-    return {
-      ...prevFs,
-      props: cb(prevFs),
-    };
+    return cb(prevFs);
   };
 }

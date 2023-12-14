@@ -7,71 +7,73 @@ import {
 import {
   FixtureDecoratorId,
   FixtureElementId,
-  FixtureState,
   FixtureStateClassState,
   FixtureStateValues,
 } from './types.js';
 
 export function getFixtureStateClassState(
-  fixtureState: FixtureState,
+  classStateFs: FixtureStateClassState[] | undefined,
   decoratorId: FixtureDecoratorId
 ): FixtureStateClassState[] {
-  const { classState } = fixtureState;
-  return classState
-    ? classState.filter(s => s.elementId.decoratorId === decoratorId)
+  return classStateFs
+    ? classStateFs.filter(s => s.elementId.decoratorId === decoratorId)
     : [];
 }
 
 export function findFixtureStateClassState(
-  fixtureState: FixtureState,
+  classStateFs: FixtureStateClassState[] | undefined,
   elementId: FixtureElementId
 ): void | FixtureStateClassState {
-  const { classState } = fixtureState;
-  return classState && find(classState, s => isEqual(s.elementId, elementId));
+  return (
+    classStateFs && find(classStateFs, s => isEqual(s.elementId, elementId))
+  );
 }
 
 type CreateFixtureStateClassStateArgs = {
-  fixtureState: FixtureState;
+  classStateFs: FixtureStateClassState[] | undefined;
   elementId: FixtureElementId;
   values: FixtureStateValues;
   componentName: string;
 };
 export function createFixtureStateClassState({
-  fixtureState,
+  classStateFs,
   elementId,
   values,
   componentName,
 }: CreateFixtureStateClassStateArgs) {
-  const { classState = [] } = fixtureState;
-  return replaceOrAddItem(classState, createClassStateMatcher(elementId), {
-    elementId,
-    values,
-    componentName,
-  });
+  return replaceOrAddItem(
+    classStateFs ?? [],
+    createClassStateMatcher(elementId),
+    {
+      elementId,
+      values,
+      componentName,
+    }
+  );
 }
 
 type UpdateFixtureStateClassStateArgs = {
-  fixtureState: FixtureState;
+  classStateFs: FixtureStateClassState[] | undefined;
   elementId: FixtureElementId;
   values: FixtureStateValues;
 };
 export function updateFixtureStateClassState({
-  fixtureState,
+  classStateFs,
   elementId,
   values,
 }: UpdateFixtureStateClassStateArgs) {
-  const classStateItem = expectFixtureStateClassState(fixtureState, elementId);
-  return updateItem(fixtureState.classState!, classStateItem, {
+  const classStateItem = expectFixtureStateClassState(classStateFs, elementId);
+  return updateItem(classStateFs!, classStateItem, {
     values,
   });
 }
 
 export function removeFixtureStateClassState(
-  fixtureState: FixtureState,
+  classStateFs: FixtureStateClassState[] | undefined,
   elementId: FixtureElementId
 ) {
   return removeItemMatch(
-    fixtureState.classState || [],
+    classStateFs ?? [],
     createClassStateMatcher(elementId)
   );
 }
@@ -81,10 +83,10 @@ function createClassStateMatcher(elementId: FixtureElementId) {
 }
 
 function expectFixtureStateClassState(
-  fixtureState: FixtureState,
+  classStateFs: FixtureStateClassState[] | undefined,
   elementId: FixtureElementId
 ): FixtureStateClassState {
-  const classStateItem = findFixtureStateClassState(fixtureState, elementId);
+  const classStateItem = findFixtureStateClassState(classStateFs, elementId);
   if (!classStateItem) {
     const elId = JSON.stringify(elementId);
     throw new Error(`Fixture state class state missing for element "${elId}"`);

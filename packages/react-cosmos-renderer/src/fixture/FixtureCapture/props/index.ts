@@ -1,6 +1,7 @@
-import { ReactNode, useContext, useEffect, useRef } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 import {
   FixtureDecoratorId,
+  FixtureStateProps,
   areNodesEqual,
   createFixtureStateProps,
   createValues,
@@ -10,7 +11,7 @@ import {
   removeFixtureStateProps,
   updateFixtureStateProps,
 } from 'react-cosmos-core';
-import { FixtureContext } from '../../FixtureContext.js';
+import { useFixtureState } from '../../useFixtureState.js';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
 import {
   getElementAtPath,
@@ -22,28 +23,25 @@ export function usePropsCapture(
   fixture: ReactNode,
   decoratorId: FixtureDecoratorId
 ) {
-  const { fixtureState, setFixtureState } = useContext(FixtureContext);
+  const [propsFs, setPropsFs] = useFixtureState<FixtureStateProps[]>('props');
   const prevFixtureRef = useRef(fixture);
   const elPaths = findRelevantElementPaths(fixture);
 
   useEffect(() => {
     // Create empty fixture state
-    if (!fixtureState.props && elPaths.length === 0) {
+    if (!propsFs && elPaths.length === 0) {
       // Make sure not to override any (currently pending) fixture state props
-      setFixtureState(prevFs => ({ ...prevFs, props: prevFs.props || [] }));
+      setPropsFs(prevFs => prevFs || []);
       return;
     }
 
     // Remove fixture state for removed child elements (likely via HMR)
     // FIXME: Also invalidate fixture state at this element path if the
     // component type of the corresponding element changed
-    const fsProps = getFixtureStateProps(fixtureState, decoratorId);
+    const fsProps = getFixtureStateProps(propsFs, decoratorId);
     fsProps.forEach(({ elementId }) => {
       if (elPaths.indexOf(elementId.elPath) === -1) {
-        setFixtureState(prevFs => ({
-          ...prevFs,
-          props: removeFixtureStateProps(fixtureState, elementId),
-        }));
+        setPropsFs(prevFs => removeFixtureStateProps(prevFs, elementId));
       }
     });
 
@@ -53,43 +51,34 @@ export function usePropsCapture(
       // Component fixture state can be provided before the fixture mounts (eg.
       // a previous snapshot of a fixture state or the current fixture state
       // from another renderer)
-      if (!findFixtureStateProps(fixtureState, elementId)) {
+      if (!findFixtureStateProps(propsFs, elementId)) {
         const componentName = getComponentName(childEl.type);
-        setFixtureState(prevFs => ({
-          ...prevFs,
-          props: createFixtureStateProps({
-            fixtureState: prevFs,
+        setPropsFs(prevFs =>
+          createFixtureStateProps({
+            propsFs: prevFs,
             elementId,
             values: createValues(childEl.props),
             componentName,
-          }),
-        }));
+          })
+        );
       } else {
         const prevChildEl = getElementAtPath(prevFixtureRef.current, elPath);
         if (!areNodesEqual(prevChildEl, childEl, false)) {
-          setFixtureState(prevFs => ({
-            ...prevFs,
-            props: updateFixtureStateProps({
-              fixtureState,
+          setPropsFs(prevFs =>
+            updateFixtureStateProps({
+              propsFs: prevFs,
               elementId,
               values: createValues(childEl.props),
-            }),
-          }));
+            })
+          );
         }
       }
     });
-  }, [
-    fixture,
-    decoratorId,
-    elPaths,
-    fixtureState,
-    fixtureState.props,
-    setFixtureState,
-  ]);
+  }, [decoratorId, elPaths, fixture, propsFs, setPropsFs]);
 
   useEffect(() => {
     prevFixtureRef.current = fixture;
   });
 
-  return useFixtureProps(fixture, fixtureState, decoratorId);
+  return useFixtureProps(fixture, propsFs, decoratorId);
 }

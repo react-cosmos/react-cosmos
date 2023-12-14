@@ -1,15 +1,11 @@
 import { isEqual } from 'lodash-es';
 import React, { useCallback } from 'react';
 import {
-  FixtureState,
   FixtureStateProps,
   FixtureStateValues,
   resetFixtureStateProps,
-  StateUpdater,
   updateFixtureStateProps,
 } from 'react-cosmos-core';
-import { IconButton32 } from '../../../components/buttons/index.js';
-import { CopyIcon, RotateCcwIcon } from '../../../components/icons/index.js';
 import {
   SidePanelActions,
   SidePanelBody,
@@ -21,16 +17,19 @@ import { ExpandCollapseValues } from '../../../components/ValueInputTree/ExpandC
 import {
   FixtureExpansion,
   OnElementExpansionChange,
-  stringifyElementId,
   ValueInputTree,
+  stringifyElementId,
 } from '../../../components/ValueInputTree/index.js';
+import { IconButton32 } from '../../../components/buttons/index.js';
+import { CopyIcon, RotateCcwIcon } from '../../../components/icons/index.js';
 import { TreeExpansion } from '../../../shared/treeExpansion.js';
+import { SetFixtureStateProps } from '../shared.js';
 import { createPropsFsUpdater } from './shared.js';
 
 type Props = {
   fsProps: FixtureStateProps;
   fixtureExpansion: FixtureExpansion;
-  onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
+  onFixtureStateChange: SetFixtureStateProps;
   onElementExpansionChange: OnElementExpansionChange;
 };
 
@@ -51,7 +50,7 @@ export function ComponentProps({
       onFixtureStateChange(
         createPropsFsUpdater(elementId, prevFs =>
           resetFixtureStateProps({
-            fixtureState: prevFs,
+            propsFs: prevFs,
             elementId,
             values: initialValues,
           })
@@ -66,7 +65,7 @@ export function ComponentProps({
       onFixtureStateChange(
         createPropsFsUpdater(elementId, prevFs =>
           changeFn({
-            fixtureState: prevFs,
+            propsFs: prevFs,
             elementId,
             values: newValues,
           })

@@ -1,5 +1,4 @@
 export * from './fixtureState/classState.js';
-export * from './fixtureState/controls.js';
 export * from './fixtureState/createValues.js';
 export * from './fixtureState/extendWithValues.js';
 export * from './fixtureState/props.js';

@@ -77,10 +77,6 @@ export type FixtureStateControl =
 
 export type FixtureStateControls = Record<string, FixtureStateControl>;
 
-export type FixtureState = {
-  props?: FixtureStateProps[];
-  classState?: FixtureStateClassState[];
-  controls?: FixtureStateControls;
-} & Record<string, unknown>;
+export type FixtureState = Record<string, unknown>;
 
 export type SetFixtureState = (update: StateUpdater<FixtureState>) => unknown;

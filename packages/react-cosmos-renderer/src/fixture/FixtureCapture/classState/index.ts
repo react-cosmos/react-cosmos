@@ -1,7 +1,7 @@
 import React from 'react';
 import { FixtureDecoratorId } from 'react-cosmos-core';
 import { ElRefs } from './shared.js';
-import { useFixtureState } from './useFixtureState.js';
+import { useFixtureClassState } from './useFixtureClassState.js';
 import { useReadClassState } from './useReadClassState.js';
 
 export function useClassStateCapture(
@@ -16,5 +16,5 @@ export function useClassStateCapture(
   }, []);
 
   useReadClassState(fixture, decoratorId, elRefs);
-  return useFixtureState(fixture, decoratorId, elRefs);
+  return useFixtureClassState(fixture, decoratorId, elRefs);
 }

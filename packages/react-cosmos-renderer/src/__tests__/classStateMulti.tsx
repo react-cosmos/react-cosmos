@@ -61,13 +61,14 @@ testRenderer(
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
-    const [, { elementId }] = getClassState(fixtureState, 2);
+    const classStateFs = getClassState(fixtureState, 2);
+    const [, { elementId }] = classStateFs;
     setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
         classState: updateFixtureStateClassState({
-          fixtureState,
+          classStateFs,
           elementId,
           values: createValues({ count: 100 }),
         }),

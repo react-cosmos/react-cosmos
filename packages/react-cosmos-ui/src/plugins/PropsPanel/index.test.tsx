@@ -21,9 +21,11 @@ function loadTestPlugins(fixtureState: FixtureState) {
     <SidePanelRowSlot
       slotProps={{
         fixtureId,
-        fixtureState,
-        onFixtureStateChange: stateUpdater => {
-          fixtureState.props = stateUpdater(fixtureState).props;
+        // @ts-ignore FIXME
+        getFixtureState: name => fixtureState[name],
+        setFixtureState: (name, update) => {
+          // @ts-ignore FIXME
+          fixtureState[name] = update(fixtureState[name]);
         },
       }}
       plugOrder={[]}
