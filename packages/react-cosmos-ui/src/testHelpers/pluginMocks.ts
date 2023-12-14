@@ -109,6 +109,7 @@ export function mockRendererCore(methods: MethodsOf<RendererCoreSpec> = {}) {
     getPrimaryRendererId: jest.fn(),
     getFixtures: jest.fn(),
     getFixtureState: jest.fn(),
+    getFixtureStateByName: jest.fn(),
     isRendererConnected: jest.fn(),
     reloadRenderer: jest.fn(),
     setFixtureState: jest.fn(),

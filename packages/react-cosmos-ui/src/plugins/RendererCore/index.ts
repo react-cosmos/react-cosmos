@@ -30,6 +30,7 @@ const { on, register, onLoad } = createPlugin<RendererCoreSpec>({
     getPrimaryRendererId,
     getFixtures,
     getFixtureState,
+    getFixtureStateByName,
     isRendererConnected,
     reloadRenderer,
     setFixtureState,
@@ -72,6 +73,14 @@ function getFixtures({ getState }: RendererCoreContext) {
 
 function getFixtureState({ getState }: RendererCoreContext) {
   return getState().fixtureState;
+}
+
+// TODO: Add tests for this method
+function getFixtureStateByName<T>(
+  { getState }: RendererCoreContext,
+  name: string
+) {
+  return getState().fixtureState[name] as T | undefined;
 }
 
 function isRendererConnected({ getState }: RendererCoreContext) {
