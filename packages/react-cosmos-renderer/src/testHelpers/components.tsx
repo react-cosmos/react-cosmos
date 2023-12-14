@@ -5,7 +5,7 @@ export function HelloMessage({ name }: { name?: string }) {
 }
 
 export function Wrapper({ children }: { children?: React.ReactNode }) {
-  return <>children</>;
+  return children;
 }
 
 // This one is meant for attaching refs
