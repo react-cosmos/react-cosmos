@@ -28,7 +28,7 @@ export type RendererCoreSpec = {
     isRendererConnected(): boolean;
     reloadRenderer(): void;
     setFixtureState(stateUpdater: StateUpdater<FixtureState>): void;
-    setGlobalFixtureState(newState: FixtureState): void;
+    setGlobalFixtureState(name: string, state: unknown): void;
     selectPrimaryRenderer(primaryRendererId: RendererId): void;
     receiveResponse(msg: MessageType): void;
   };

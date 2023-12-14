@@ -37,7 +37,7 @@ it('sets fixture state when setting global fixture state', async () => {
   );
 
   const methods = getRendererCoreMethods();
-  methods.setGlobalFixtureState({ foo: 'bar' });
+  methods.setGlobalFixtureState('foo', 'bar');
 
   await waitFor(() =>
     expect(request).toBeCalledWith(expect.any(Object), {
@@ -52,7 +52,7 @@ it('sets fixture state when setting global fixture state', async () => {
     })
   );
 
-  methods.setGlobalFixtureState({ baz: 'qux' });
+  methods.setGlobalFixtureState('baz', 'qux');
 
   await waitFor(() =>
     expect(request).toBeCalledWith(expect.any(Object), {
@@ -78,7 +78,7 @@ it('uses global fixture state when renderer connects', async () => {
   loadPlugins();
 
   const methods = getRendererCoreMethods();
-  methods.setGlobalFixtureState({ foo: 'bar' });
+  methods.setGlobalFixtureState('foo', 'bar');
 
   const { request } = onRendererCore();
   mockRendererReady('mockRendererId');
@@ -106,7 +106,7 @@ it('uses global fixture state when renderer connects with fixture selected', asy
   loadPlugins();
 
   const methods = getRendererCoreMethods();
-  methods.setGlobalFixtureState({ foo: 'bar' });
+  methods.setGlobalFixtureState('foo', 'bar');
 
   const { request } = onRendererCore();
   mockRendererReady('mockRendererId', { path: 'zwei.js' });
@@ -134,7 +134,7 @@ it('uses global fixture state on fixture select', async () => {
   loadPlugins();
 
   const methods = getRendererCoreMethods();
-  methods.setGlobalFixtureState({ foo: 'bar' });
+  methods.setGlobalFixtureState('foo', 'bar');
 
   const { request } = onRendererCore();
   mockRendererReady('mockRendererId');
@@ -165,7 +165,7 @@ it('uses global fixture state on fixture reselect', async () => {
   loadPlugins();
 
   const methods = getRendererCoreMethods();
-  methods.setGlobalFixtureState({ foo: 'bar' });
+  methods.setGlobalFixtureState('foo', 'bar');
 
   mockRendererReady('mockRendererId');
   getRouterContext().emit('fixtureReselect', { path: 'zwei.js' });

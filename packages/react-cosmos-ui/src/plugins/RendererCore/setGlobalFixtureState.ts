@@ -1,17 +1,17 @@
-import { FixtureState } from 'react-cosmos-core';
 import { setFixtureState } from './setFixtureState.js';
 import { RendererCoreContext } from './shared/index.js';
 import { getSelectedFixtureId } from './shared/router.js';
 
 export function setGlobalFixtureState(
   context: RendererCoreContext,
-  newState: FixtureState
+  name: string,
+  state: unknown
 ) {
   context.setState(prevState => ({
     ...prevState,
     globalFixtureState: {
       ...prevState.globalFixtureState,
-      ...newState,
+      [name]: state,
     },
   }));
 
@@ -19,7 +19,7 @@ export function setGlobalFixtureState(
   if (fixtureId) {
     setFixtureState(context, prevFixtureState => ({
       ...prevFixtureState,
-      ...newState,
+      [name]: state,
     }));
   }
 }
