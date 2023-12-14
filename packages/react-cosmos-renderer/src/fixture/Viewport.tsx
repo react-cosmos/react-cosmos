@@ -1,6 +1,11 @@
 'use client';
 import React from 'react';
-import { FixtureContext } from './FixtureContext.js';
+import { useFixtureState } from './useFixtureState.js';
+
+type Viewport = {
+  width: number;
+  height: number;
+};
 
 type Props = {
   children: React.ReactNode;
@@ -9,14 +14,11 @@ type Props = {
 };
 
 export function Viewport({ children, width, height }: Props) {
-  const { setFixtureState } = React.useContext(FixtureContext);
+  const [, setViewport] = useFixtureState<Viewport>('viewport');
 
   React.useEffect(() => {
-    setFixtureState(fixtureState => ({
-      ...fixtureState,
-      viewport: { width, height },
-    }));
-  }, [setFixtureState, width, height]);
+    setViewport(() => ({ width, height }));
+  }, [setViewport, width, height]);
 
   return children;
 }

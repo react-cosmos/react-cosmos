@@ -7,7 +7,6 @@ import { ToggleButton } from './ToggleButton/index.js';
 import {
   DEFAULT_DEVICES,
   DEFAULT_VIEWPORT_STATE,
-  FixtureStateWithViewport,
   ResponsivePreviewContext,
   VIEWPORT_STORAGE_KEY,
   ViewportState,
@@ -102,11 +101,11 @@ function getViewportState(context: ResponsivePreviewContext): ViewportState {
     DEFAULT_VIEWPORT_STATE;
 
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
-  const fixtureState =
-    rendererCore.getFixtureState() as FixtureStateWithViewport;
+  const viewport =
+    rendererCore.getFixtureStateByName<ResponsiveViewport>('viewport');
 
-  return fixtureState.viewport
-    ? { ...viewportState, enabled: true, viewport: fixtureState.viewport }
+  return viewport
+    ? { ...viewportState, enabled: true, viewport }
     : viewportState;
 }
 
