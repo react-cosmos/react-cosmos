@@ -22,7 +22,7 @@ import { defaultRenderMessage } from './defaultRenderMessage.js';
 type Props = {
   moduleWrappers: UserModuleWrappers;
   globalDecorators?: ReactDecorator[];
-  renderMessage?: (msg: string) => React.ReactElement;
+  renderMessage?: (msg: string) => React.ReactNode;
   selectedFixture: SelectedFixture | null;
 };
 export function ServerFixtureLoader({

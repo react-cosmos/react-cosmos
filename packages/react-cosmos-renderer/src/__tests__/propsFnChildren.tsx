@@ -8,7 +8,7 @@ import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 function Wrap({ children }: { children: () => React.ReactNode }) {
-  return <>{children()}</>;
+  return children();
 }
 Wrap.cosmosCapture = false;
 

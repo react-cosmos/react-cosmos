@@ -11,7 +11,7 @@ const fixtureId = { path: 'first' };
 
 function createFixtures() {
   function HelloMessage({ name }: { name: string }) {
-    return <>{`Hello ${name}`}</>;
+    return `Hello ${name}`;
   }
   return wrapDefaultExport({
     first: <HelloMessage name="Theo" />,
