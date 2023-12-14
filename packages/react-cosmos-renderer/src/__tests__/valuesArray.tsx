@@ -16,7 +16,7 @@ type Profile = {
 function createFixtures({ defaultValue }: { defaultValue: Profile[] }) {
   const MyComponent = () => {
     const [profiles] = useValue('profiles', { defaultValue });
-    return <>{JSON.stringify(profiles, null, 2)}</>;
+    return JSON.stringify(profiles, null, 2);
   };
   return wrapDefaultExport({
     first: <MyComponent />,

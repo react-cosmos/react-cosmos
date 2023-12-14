@@ -18,8 +18,7 @@ export function Viewport({ children, width, height }: Props) {
     }));
   }, [setFixtureState, width, height]);
 
-  // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/18051
-  return <>{children}</>;
+  return children;
 }
 
 Viewport.cosmosCapture = false;
