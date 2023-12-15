@@ -43,7 +43,7 @@ namedPlug<SidePanelRowSlotProps>(
 
     const fixtureState = getFixtureState<PropsFixtureState>('props');
     const onFixtureStateChange = useCallback<SetFixtureStateProps>(
-      update => setFixtureState('props', update),
+      change => setFixtureState<PropsFixtureState>('props', change),
       [setFixtureState]
     );
 

@@ -1,5 +1,8 @@
-import { HybridStateChange, applyStateChange } from '../utils/state.js';
 import { FixtureState } from './types.js';
+
+export type FixtureStateUpdater<T> = (prevState: T | undefined) => T;
+
+export type FixtureStateChange<T> = T | FixtureStateUpdater<T>;
 
 export function fixtureStateByName<T>(
   fixtureState: FixtureState,
@@ -8,13 +11,29 @@ export function fixtureStateByName<T>(
   return fixtureState[name] as T | undefined;
 }
 
-export function applyFixtureStateChange<T>(
+export function updateFixtureState<T>(
   fixtureState: FixtureState,
   name: string,
-  change: HybridStateChange<T | undefined>
-) {
+  change: FixtureStateChange<T>
+): FixtureState {
   return {
     ...fixtureState,
-    [name]: applyStateChange(fixtureStateByName<T>(fixtureState, name), change),
+    [name]: applyFixtureStateChange<T>(
+      fixtureStateByName<T>(fixtureState, name),
+      change
+    ),
   };
+}
+
+export function applyFixtureStateChange<T>(
+  prevState: T | undefined,
+  change: FixtureStateChange<T>
+): T {
+  return isStateUpdater(change) ? change(prevState) : change;
+}
+
+function isStateUpdater<T>(
+  change: FixtureStateChange<T>
+): change is FixtureStateUpdater<T> {
+  return typeof change === 'function';
 }

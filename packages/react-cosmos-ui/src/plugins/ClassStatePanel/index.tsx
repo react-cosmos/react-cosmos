@@ -38,7 +38,7 @@ namedPlug<SidePanelRowSlotProps>(
 
     const fixtureState = getFixtureState<ClassStateFixtureState>('classState');
     const onFixtureStateChange = useCallback<SetFixtureStateClassState>(
-      update => setFixtureState('classState', update),
+      update => setFixtureState<ClassStateFixtureState>('classState', update),
       [setFixtureState]
     );
 

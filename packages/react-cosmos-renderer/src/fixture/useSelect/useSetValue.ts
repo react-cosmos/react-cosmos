@@ -13,7 +13,7 @@ export function useSetValue<Option extends string>(
         const fsControl = prevFs && prevFs[selectName];
         if (!fsControl || fsControl.type !== 'select') {
           console.warn(`Invalid fixture state for select: ${selectName}`);
-          return prevFs;
+          return prevFs ?? {};
         }
 
         return {

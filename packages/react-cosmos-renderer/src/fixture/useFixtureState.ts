@@ -1,8 +1,8 @@
 import { useCallback, useContext } from 'react';
 import {
-  HybridStateChange,
-  applyFixtureStateChange,
+  FixtureStateChange,
   fixtureStateByName,
+  updateFixtureState,
 } from 'react-cosmos-core';
 import { FixtureContext } from './FixtureContext.js';
 
@@ -13,10 +13,8 @@ export function useFixtureState<T>(name: string) {
     fixtureStateByName<T>(fixtureState, name),
 
     useCallback(
-      (change: HybridStateChange<T | undefined>) => {
-        setFixtureState(prevFs =>
-          applyFixtureStateChange(prevFs, name, change)
-        );
+      (change: FixtureStateChange<T>) => {
+        setFixtureState(prevFs => updateFixtureState(prevFs, name, change));
       },
       [name, setFixtureState]
     ),

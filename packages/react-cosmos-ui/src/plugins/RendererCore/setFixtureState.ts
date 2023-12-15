@@ -1,7 +1,7 @@
 import {
   FixtureId,
-  HybridStateChange,
-  applyFixtureStateChange,
+  FixtureStateChange,
+  updateFixtureState,
 } from 'react-cosmos-core';
 import { RendererCoreContext, State } from './shared/index.js';
 import { postSetFixtureStateRequest } from './shared/postRequest.js';
@@ -10,7 +10,7 @@ import { getSelectedFixtureId } from './shared/router.js';
 export function setFixtureState(
   context: RendererCoreContext,
   name: string,
-  change: HybridStateChange<unknown>
+  change: FixtureStateChange<unknown>
 ) {
   const fixtureId = getSelectedFixtureId(context);
 
@@ -28,11 +28,7 @@ export function setFixtureState(
   function stateUpdater(prevState: State) {
     return {
       ...prevState,
-      fixtureState: applyFixtureStateChange(
-        prevState.fixtureState,
-        name,
-        change
-      ),
+      fixtureState: updateFixtureState(prevState.fixtureState, name, change),
     };
   }
 

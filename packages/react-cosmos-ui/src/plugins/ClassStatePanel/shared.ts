@@ -1,11 +1,7 @@
-import { ClassStateFixtureState, StateUpdater } from 'react-cosmos-core';
-
-export type FixtureStateClassStateUpdater = StateUpdater<
-  ClassStateFixtureState | undefined
->;
+import { ClassStateFixtureState, FixtureStateUpdater } from 'react-cosmos-core';
 
 export type SetFixtureStateClassState = (
-  update: FixtureStateClassStateUpdater
+  updater: FixtureStateUpdater<ClassStateFixtureState>
 ) => void;
 
 export const CLASS_STATE_TREE_EXPANSION_STORAGE_KEY = 'classStateTreeExpansion';

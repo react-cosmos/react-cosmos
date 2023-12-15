@@ -4,7 +4,7 @@ import React from 'react';
 import {
   FixtureState,
   FixtureStateValues,
-  applyStateChange,
+  applyFixtureStateChange,
   fixtureStateByName,
 } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
@@ -27,10 +27,10 @@ function loadTestPlugins(fixtureState: FixtureState) {
       slotProps={{
         fixtureId,
         getFixtureState: name => fixtureStateByName(fixtureState, name),
-        setFixtureState: (name, update) => {
-          fixtureState[name] = applyStateChange(
+        setFixtureState: (name, change) => {
+          fixtureState[name] = applyFixtureStateChange(
             fixtureStateByName(fixtureState, name),
-            update
+            change
           );
         },
       }}

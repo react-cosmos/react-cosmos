@@ -2,7 +2,7 @@ import React from 'react';
 import {
   ControlFixtureState,
   ControlsFixtureState,
-  StateUpdater,
+  FixtureStateUpdater,
 } from 'react-cosmos-core';
 import { Slot } from 'react-plugin';
 
@@ -10,7 +10,7 @@ export type ControlSlotProps<TControl extends ControlFixtureState> = {
   controlName: string;
   control: TControl;
   onFixtureStateChange: (
-    stateUpdater: StateUpdater<ControlsFixtureState | undefined>
+    updater: FixtureStateUpdater<ControlsFixtureState>
   ) => void;
 };
 
