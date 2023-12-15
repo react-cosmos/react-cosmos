@@ -3,6 +3,7 @@ export * from './fixtureState/classStateTypes.js';
 export * from './fixtureState/controlsTypes.js';
 export * from './fixtureState/createValues.js';
 export * from './fixtureState/extendWithValues.js';
+export * from './fixtureState/fixtureState.js';
 export * from './fixtureState/props.js';
 export * from './fixtureState/propsTypes.js';
 export * from './fixtureState/types.js';

@@ -7,6 +7,7 @@ import {
   FixtureStateValues,
   PropsFixtureState,
   PropsFixtureStateItem,
+  fixtureStateByName,
 } from 'react-cosmos-core';
 
 export function anyProps(
@@ -77,8 +78,4 @@ export function getClassState(
 
 export function getControls(fixtureState: FixtureState) {
   return fixtureStateByName<ControlsFixtureState>(fixtureState, 'controls');
-}
-
-function fixtureStateByName<T>(fixtureState: FixtureState, name: string) {
-  return fixtureState[name] as T | undefined;
 }

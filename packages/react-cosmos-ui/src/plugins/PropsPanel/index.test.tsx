@@ -1,7 +1,11 @@
 import { waitFor } from '@testing-library/dom';
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { FixtureStateValues } from 'react-cosmos-core';
+import {
+  FixtureState,
+  FixtureStateValues,
+  fixtureStateByName,
+} from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { SidePanelRowSlot } from '../../slots/SidePanelRowSlot.js';
 import { mockStorage } from '../../testHelpers/pluginMocks.js';
@@ -15,15 +19,15 @@ afterEach(resetPlugins);
 
 const fixtureId = { path: 'foo.js' };
 
-function loadTestPlugins(fixtureState: Record<string, any>) {
+function loadTestPlugins(fixtureState: FixtureState) {
   loadPlugins();
   return render(
     <SidePanelRowSlot
       slotProps={{
         fixtureId,
-        getFixtureState: name => fixtureState[name],
+        getFixtureState: name => fixtureStateByName(fixtureState, name),
         setFixtureState: (name, update) => {
-          fixtureState[name] = update(fixtureState[name]);
+          fixtureState[name] = update(fixtureStateByName(fixtureState, name));
         },
       }}
       plugOrder={[]}

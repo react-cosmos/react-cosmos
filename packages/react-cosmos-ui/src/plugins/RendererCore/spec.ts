@@ -12,7 +12,7 @@ export type GetFixtureState = <T>(name: string) => T | undefined;
 // from react-cosmos-core package
 export type SetFixtureStateByName = <T>(
   name: string,
-  update: StateUpdater<T>
+  update: StateUpdater<T | undefined>
 ) => void;
 
 export type RendererCoreSpec = {

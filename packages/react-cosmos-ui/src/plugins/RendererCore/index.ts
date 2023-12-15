@@ -1,4 +1,4 @@
-import { RendererId } from 'react-cosmos-core';
+import { RendererId, fixtureStateByName } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
 import { RouterSpec } from '../Router/spec.js';
 import { onRouterFixtureReselect } from './onRouterFixtureReselect.js';
@@ -80,7 +80,7 @@ function getFixtureStateByName<T>(
   { getState }: RendererCoreContext,
   name: string
 ) {
-  return getState().fixtureState[name] as T | undefined;
+  return fixtureStateByName<T>(getState().fixtureState, name);
 }
 
 function isRendererConnected({ getState }: RendererCoreContext) {

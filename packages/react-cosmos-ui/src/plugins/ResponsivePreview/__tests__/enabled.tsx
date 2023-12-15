@@ -1,5 +1,6 @@
 import { fireEvent, render, RenderResult } from '@testing-library/react';
 import React from 'react';
+import { FixtureState } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { RendererActionSlot } from '../../../slots/RendererActionSlot.js';
 import {
@@ -42,8 +43,8 @@ function mockRendererUrl() {
   });
 }
 
-function mockViewportFixtureState() {
-  const mocks: Record<string, unknown> = {};
+function mockFixtureState() {
+  const mocks: FixtureState = {};
 
   mockRendererCore({
     getRendererUrl: () => `/_renderer.html`,
@@ -107,12 +108,12 @@ it('renders responsive device labels', async () => {
 
 it('sets viewport in fixture state on device select', async () => {
   mockEnabledViewportStorage();
-  const mocks = mockViewportFixtureState();
+  const fsMock = mockFixtureState();
 
   const renderer = loadTestPlugins();
   await selectViewport(renderer, '428x926');
 
-  expect(mocks.viewport).toEqual({
+  expect(fsMock.viewport).toEqual({
     width: 428,
     height: 926,
   });
@@ -134,17 +135,17 @@ it('saves viewport in storage on device select', async () => {
 
 it('clears viewport in fixture state on untoggle', async () => {
   mockEnabledViewportStorage();
-  const mocks = mockViewportFixtureState();
+  const fsMock = mockFixtureState();
 
   const renderer = loadTestPlugins();
   await toggleResponsiveMode(renderer);
 
-  expect(mocks.viewport).toEqual(null);
+  expect(fsMock.viewport).toEqual(null);
 });
 
 it('sets disabled viewport state on untoggle', async () => {
   const storageMock = mockEnabledViewportStorage();
-  mockViewportFixtureState();
+  mockFixtureState();
 
   const renderer = loadTestPlugins();
   await toggleResponsiveMode(renderer);
