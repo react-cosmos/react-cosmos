@@ -47,11 +47,7 @@ export function createFixtureStateClassState({
   return replaceOrAddItem(
     classStateFs ?? [],
     createClassStateMatcher(elementId),
-    {
-      elementId,
-      values,
-      componentName,
-    }
+    { elementId, values, componentName }
   );
 }
 
