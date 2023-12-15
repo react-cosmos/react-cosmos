@@ -15,6 +15,6 @@ export function applyFixtureStateChange<T>(
 ) {
   return {
     ...fixtureState,
-    [name]: applyStateChange(fixtureState[name], change),
+    [name]: applyStateChange(fixtureStateByName<T>(fixtureState, name), change),
   };
 }
