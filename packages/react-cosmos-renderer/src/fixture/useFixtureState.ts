@@ -1,5 +1,9 @@
 import { useCallback, useContext } from 'react';
-import { StateUpdater, fixtureStateByName } from 'react-cosmos-core';
+import {
+  HybridStateUpdater,
+  fixtureStateByName,
+  fixtureStateUpdater,
+} from 'react-cosmos-core';
 import { FixtureContext } from './FixtureContext.js';
 
 export function useFixtureState<T>(name: string) {
@@ -9,11 +13,8 @@ export function useFixtureState<T>(name: string) {
     fixtureStateByName<T>(fixtureState, name),
 
     useCallback(
-      (value: StateUpdater<T | undefined>) => {
-        setFixtureState(prevFs => ({
-          ...prevFs,
-          [name]: value(fixtureStateByName<T>(prevFs, name)),
-        }));
+      (value: HybridStateUpdater<T | undefined>) => {
+        setFixtureState(prevFs => fixtureStateUpdater(prevFs, name, value));
       },
       [name, setFixtureState]
     ),

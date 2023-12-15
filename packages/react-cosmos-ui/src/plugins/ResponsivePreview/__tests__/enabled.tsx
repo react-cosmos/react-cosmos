@@ -1,6 +1,6 @@
 import { fireEvent, render, RenderResult } from '@testing-library/react';
 import React from 'react';
-import { FixtureState } from 'react-cosmos-core';
+import { FixtureState, hybridStateUpdater } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { RendererActionSlot } from '../../../slots/RendererActionSlot.js';
 import {
@@ -49,7 +49,7 @@ function mockFixtureState() {
   mockRendererCore({
     getRendererUrl: () => `/_renderer.html`,
     setFixtureState: (context, name, update) => {
-      mocks[name] = update(mocks[name]);
+      mocks[name] = hybridStateUpdater(mocks[name], update);
     },
   });
 
