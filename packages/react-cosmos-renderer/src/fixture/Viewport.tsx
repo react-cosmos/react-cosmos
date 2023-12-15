@@ -17,7 +17,7 @@ export function Viewport({ children, width, height }: Props) {
   const [, setViewport] = useFixtureState<Viewport>('viewport');
 
   React.useEffect(() => {
-    setViewport(() => ({ width, height }));
+    setViewport({ width, height });
   }, [setViewport, width, height]);
 
   return children;

@@ -9,6 +9,7 @@ import {
   DEFAULT_VIEWPORT_STATE,
   ResponsivePreviewContext,
   VIEWPORT_STORAGE_KEY,
+  ViewportFixtureState,
   ViewportState,
 } from './shared.js';
 import { ResponsivePreviewSpec, ResponsiveViewport } from './spec.js';
@@ -55,10 +56,10 @@ namedPlug('rendererAction', 'responsivePreview', ({ pluginContext }) => {
       onToggle={() => {
         if (enabled) {
           setViewportState(pluginContext, { ...viewportState, enabled: false });
-          setFixtureStateViewport(pluginContext, null);
+          setViewportFixtureState(pluginContext, null);
         } else {
           setViewportState(pluginContext, { ...viewportState, enabled: true });
-          setFixtureStateViewport(pluginContext, viewport);
+          setViewportFixtureState(pluginContext, viewport);
         }
       }}
     />
@@ -78,7 +79,7 @@ function useViewportChange(context: ResponsivePreviewContext) {
           ? viewportChange(viewportState.viewport)
           : viewportChange;
       setViewportState(context, { ...viewportState, enabled: true, viewport });
-      setFixtureStateViewport(context, viewport);
+      setViewportFixtureState(context, viewport);
     },
     [context, viewportState]
   );
@@ -102,7 +103,7 @@ function getViewportState(context: ResponsivePreviewContext): ViewportState {
 
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const viewport =
-    rendererCore.getFixtureStateByName<ResponsiveViewport>('viewport');
+    rendererCore.getFixtureStateByName<ViewportFixtureState>('viewport');
 
   return viewport
     ? { ...viewportState, enabled: true, viewport }
@@ -118,11 +119,11 @@ function setViewportState(
   storage.setItem(VIEWPORT_STORAGE_KEY, viewportState);
 }
 
-function setFixtureStateViewport(
+function setViewportFixtureState(
   context: ResponsivePreviewContext,
-  viewport: null | ResponsiveViewport
+  viewport: ViewportFixtureState
 ) {
   const { getMethodsOf } = context;
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
-  rendererCore.setFixtureState('viewport', () => viewport);
+  rendererCore.setFixtureState<ViewportFixtureState>('viewport', viewport);
 }

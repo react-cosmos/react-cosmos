@@ -2,6 +2,8 @@ import { PluginContext } from 'react-plugin';
 import { StorageSpec } from '../Storage/spec.js';
 import { ResponsivePreviewSpec, ResponsiveViewport } from './spec.js';
 
+export type ViewportFixtureState = ResponsiveViewport | null;
+
 export type ResponsivePreviewContext = PluginContext<ResponsivePreviewSpec>;
 
 export type StorageMethods = StorageSpec['methods'];

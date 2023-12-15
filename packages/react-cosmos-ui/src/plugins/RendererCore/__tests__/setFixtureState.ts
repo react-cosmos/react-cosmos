@@ -43,7 +43,7 @@ function loadTestPlugins() {
 
 function mockSetFixtureStateCall() {
   const methods = getRendererCoreMethods();
-  methods.setFixtureState('viewport', () => ({ width: 640, height: 480 }));
+  methods.setFixtureState('viewport', { width: 640, height: 480 });
 }
 
 it('sets fixture state in plugin state', async () => {
