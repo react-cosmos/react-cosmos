@@ -1,7 +1,7 @@
 import {
   FixtureList,
   FixtureState,
-  HybridStateUpdater,
+  HybridStateChange,
   MessageType,
   RendererId,
 } from 'react-cosmos-core';
@@ -12,7 +12,7 @@ export type GetFixtureState = <T>(name: string) => T | undefined;
 // from react-cosmos-core package
 export type SetFixtureStateByName = <T>(
   name: string,
-  update: HybridStateUpdater<T | undefined>
+  change: HybridStateChange<T | undefined>
 ) => void;
 
 export type RendererCoreSpec = {

@@ -4,8 +4,8 @@ import React from 'react';
 import {
   FixtureState,
   FixtureStateValues,
+  applyStateChange,
   fixtureStateByName,
-  hybridStateUpdater,
 } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { SidePanelRowSlot } from '../../slots/SidePanelRowSlot.js';
@@ -28,7 +28,7 @@ function loadTestPlugins(fixtureState: FixtureState) {
         fixtureId,
         getFixtureState: name => fixtureStateByName(fixtureState, name),
         setFixtureState: (name, update) => {
-          fixtureState[name] = hybridStateUpdater(
+          fixtureState[name] = applyStateChange(
             fixtureStateByName(fixtureState, name),
             update
           );
