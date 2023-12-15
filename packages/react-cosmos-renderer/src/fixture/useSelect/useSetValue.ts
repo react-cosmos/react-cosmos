@@ -1,12 +1,12 @@
 import { useCallback } from 'react';
-import { FixtureStateControls } from 'react-cosmos-core';
+import { ControlsFixtureState } from 'react-cosmos-core';
 import { useFixtureState } from '../useFixtureState.js';
 import { SetSelectValue } from './shared.js';
 
 export function useSetValue<Option extends string>(
   selectName: string
 ): SetSelectValue<Option> {
-  const [, setFixtureState] = useFixtureState<FixtureStateControls>('controls');
+  const [, setFixtureState] = useFixtureState<ControlsFixtureState>('controls');
   return useCallback(
     value => {
       setFixtureState(prevFs => {

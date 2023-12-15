@@ -1,11 +1,11 @@
 import React from 'react';
-import { FixtureStateClassState } from 'react-cosmos-core';
+import { ClassStateFixtureState } from 'react-cosmos-core';
 import { stringifyElementId } from '../../../components/ValueInputTree/index.js';
 import { ClassStatePanel } from './index.js';
 
 export default () => {
   const [fixtureState, setFixtureState] = React.useState<
-    FixtureStateClassState[] | undefined
+    ClassStateFixtureState | undefined
   >([
     {
       componentName: 'FooComponent',

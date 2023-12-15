@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { FixtureStateControls } from 'react-cosmos-core';
+import { ControlsFixtureState } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
 import { SidePanelRowSlotProps } from '../../slots/SidePanelRowSlot.js';
 import { ControlPanel } from './ControlPanel.js';
@@ -20,7 +20,7 @@ namedPlug<SidePanelRowSlotProps>(
     const { controlActionOrder } = pluginContext.getConfig();
     const { getFixtureState, setFixtureState } = slotProps;
 
-    const fixtureState = getFixtureState<FixtureStateControls>('controls');
+    const fixtureState = getFixtureState<ControlsFixtureState>('controls');
     const onFixtureStateChange = useCallback<SetFixtureStateControls>(
       update => setFixtureState('controls', update),
       [setFixtureState]

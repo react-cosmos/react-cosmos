@@ -1,7 +1,7 @@
-import { FixtureStateControls, StateUpdater } from 'react-cosmos-core';
+import { ControlsFixtureState, StateUpdater } from 'react-cosmos-core';
 
 export type FixtureStateControlsUpdater = StateUpdater<
-  FixtureStateControls | undefined
+  ControlsFixtureState | undefined
 >;
 
 export type SetFixtureStateControls = (

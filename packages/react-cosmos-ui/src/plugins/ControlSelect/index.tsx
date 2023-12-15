@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { FixtureStateSelectControl } from 'react-cosmos-core';
+import { SelectControlFixtureState } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
 import { ControlSlotProps } from '../../slots/ControlSlot.js';
 import { SelectValueInput } from './SelectValueInput.js';
@@ -9,13 +9,13 @@ const { plug, register } = createPlugin<ControlSelectSpec>({
   name: 'controlSelect',
 });
 
-type SelectControlSlotProps = ControlSlotProps<FixtureStateSelectControl>;
+type SelectControlSlotProps = ControlSlotProps<SelectControlFixtureState>;
 
 plug<SelectControlSlotProps>('control-select', ({ slotProps }) => {
   const { controlName, control, onFixtureStateChange } = slotProps;
 
   const handleChange = useCallback(
-    (selectName: string, updatedControl: FixtureStateSelectControl) => {
+    (selectName: string, updatedControl: SelectControlFixtureState) => {
       onFixtureStateChange(prevFs => ({
         ...prevFs,
         [selectName]: updatedControl,

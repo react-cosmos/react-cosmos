@@ -1,6 +1,6 @@
 import { isEqual } from 'lodash-es';
 import React from 'react';
-import { FixtureStateControl, FixtureStateControls } from 'react-cosmos-core';
+import { ControlFixtureState, ControlsFixtureState } from 'react-cosmos-core';
 import {
   SidePanelActions,
   SidePanelBody,
@@ -15,7 +15,7 @@ import { ControlSlot } from '../../slots/ControlSlot.js';
 import { SetFixtureStateControls } from './shared.js';
 
 type Props = {
-  fixtureState: FixtureStateControls | undefined;
+  fixtureState: ControlsFixtureState | undefined;
   controlActionOrder: string[];
   onFixtureStateChange: SetFixtureStateControls;
 };
@@ -66,7 +66,7 @@ export function ControlPanel({
   );
 }
 
-function areControlsUnchanged(controls: FixtureStateControls) {
+function areControlsUnchanged(controls: ControlsFixtureState) {
   return Object.keys(controls).every(controlName =>
     isEqual(
       controls[controlName].currentValue,
@@ -75,7 +75,7 @@ function areControlsUnchanged(controls: FixtureStateControls) {
   );
 }
 
-function resetControls(fixtureState: FixtureStateControls | undefined) {
+function resetControls(fixtureState: ControlsFixtureState | undefined) {
   const controls = fixtureState ? { ...fixtureState } : {};
   Object.keys(controls).forEach(controlName => {
     controls[controlName] = resetControl(controls[controlName]);
@@ -83,6 +83,6 @@ function resetControls(fixtureState: FixtureStateControls | undefined) {
   return controls;
 }
 
-function resetControl<TControl extends FixtureStateControl>(control: TControl) {
+function resetControl<TControl extends ControlFixtureState>(control: TControl) {
   return { ...control, currentValue: control.defaultValue };
 }

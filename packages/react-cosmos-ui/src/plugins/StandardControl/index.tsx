@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo } from 'react';
 import {
-  FixtureStateControls,
-  FixtureStateStandardControl,
+  ControlsFixtureState,
   FixtureStateValues,
+  StandardControlFixtureState,
 } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
 import { ExpandCollapseValues } from '../../components/ValueInputTree/ExpandCollapseValues.js';
@@ -16,7 +16,7 @@ const { namedPlug, plug, register } = createPlugin<StandardControlSpec>({
   name: 'standardControl',
 });
 
-type StandardControlSlotProps = ControlSlotProps<FixtureStateStandardControl>;
+type StandardControlSlotProps = ControlSlotProps<StandardControlFixtureState>;
 
 plug<StandardControlSlotProps>(
   'control-standard',
@@ -70,7 +70,7 @@ namedPlug<ControlActionSlotProps>(
 );
 
 function extractValuesFromStandardControls(
-  controls: FixtureStateControls
+  controls: ControlsFixtureState
 ): FixtureStateValues {
   const values: FixtureStateValues = {};
   Object.keys(controls).forEach(controlName => {

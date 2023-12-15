@@ -1,7 +1,7 @@
 import { isEqual } from 'lodash-es';
 import React, { useCallback } from 'react';
 import {
-  FixtureStateClassState,
+  ClassStateFixtureStateItem,
   FixtureStateValues,
   updateFixtureStateClassState,
 } from 'react-cosmos-core';
@@ -23,28 +23,28 @@ import { IconButton32 } from '../../../components/buttons/index.js';
 import { RotateCcwIcon } from '../../../components/icons/index.js';
 import { TreeExpansion } from '../../../shared/treeExpansion.js';
 import { SetFixtureStateClassState } from '../shared.js';
-import { createClassStateFsUpdater } from './shared.js';
+import { classStateFsItemUpdater } from './shared.js';
 
 type Props = {
-  fsClassState: FixtureStateClassState;
+  classStateFsItem: ClassStateFixtureStateItem;
   fixtureExpansion: FixtureExpansion;
   onFixtureStateChange: SetFixtureStateClassState;
   onElementExpansionChange: OnElementExpansionChange;
 };
 
 export function ComponentClassState({
-  fsClassState,
+  classStateFsItem,
   fixtureExpansion,
   onFixtureStateChange,
   onElementExpansionChange,
 }: Props) {
-  const { componentName, elementId, values } = fsClassState;
+  const { componentName, elementId, values } = classStateFsItem;
 
   const [initialValues] = React.useState(() => values);
   const handleValuesReset = React.useCallback(
     () =>
       onFixtureStateChange(
-        createClassStateFsUpdater(elementId, prevFs =>
+        classStateFsItemUpdater(elementId, prevFs =>
           updateFixtureStateClassState({
             classStateFs: prevFs,
             elementId,
@@ -58,7 +58,7 @@ export function ComponentClassState({
   const handleValueChange = React.useCallback(
     (newValues: FixtureStateValues) => {
       onFixtureStateChange(
-        createClassStateFsUpdater(elementId, prevFs =>
+        classStateFsItemUpdater(elementId, prevFs =>
           updateFixtureStateClassState({
             classStateFs: prevFs,
             elementId,

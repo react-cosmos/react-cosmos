@@ -1,7 +1,7 @@
-import { FixtureStateProps, StateUpdater } from 'react-cosmos-core';
+import { PropsFixtureState, StateUpdater } from 'react-cosmos-core';
 
 export type FixtureStatePropsUpdater = StateUpdater<
-  FixtureStateProps[] | undefined
+  PropsFixtureState | undefined
 >;
 
 export type SetFixtureStateProps = (update: FixtureStatePropsUpdater) => void;

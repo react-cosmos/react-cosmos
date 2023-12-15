@@ -5,13 +5,13 @@ import {
 import { stringifyElementId } from '../../../components/ValueInputTree/index.js';
 import { FixtureStateClassStateUpdater } from '../shared.js';
 
-export function createClassStateFsUpdater(
+export function classStateFsItemUpdater(
   elementId: FixtureElementId,
   cb: FixtureStateClassStateUpdater
 ): FixtureStateClassStateUpdater {
   return prevFs => {
-    const fsClassState = findFixtureStateClassState(prevFs, elementId);
-    if (!fsClassState) {
+    const fsItem = findFixtureStateClassState(prevFs, elementId);
+    if (!fsItem) {
       const elId = stringifyElementId(elementId);
       console.warn(`Trying to update missing element with ID: ${elId}`);
       return prevFs;

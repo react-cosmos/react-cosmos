@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  FixtureStateControls,
+  ControlsFixtureState,
   FixtureStateData,
   createValue,
   extendWithValue,
@@ -12,7 +12,7 @@ export function useSetValue<T extends FixtureStateData>(
   inputName: string,
   defaultValue: T
 ): SetValue<T> {
-  const [, setFixtureState] = useFixtureState<FixtureStateControls>('controls');
+  const [, setFixtureState] = useFixtureState<ControlsFixtureState>('controls');
   return React.useCallback(
     stateChange => {
       setFixtureState(prevFs => {
@@ -45,7 +45,7 @@ export function useSetValue<T extends FixtureStateData>(
 }
 
 function getCurrentValueFromFixtureState(
-  fixtureState: FixtureStateControls | undefined,
+  fixtureState: ControlsFixtureState | undefined,
   inputName: string,
   defaultValue: FixtureStateData
 ) {

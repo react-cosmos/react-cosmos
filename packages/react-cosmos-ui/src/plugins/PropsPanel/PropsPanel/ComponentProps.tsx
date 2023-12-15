@@ -1,8 +1,8 @@
 import { isEqual } from 'lodash-es';
 import React, { useCallback } from 'react';
 import {
-  FixtureStateProps,
   FixtureStateValues,
+  PropsFixtureStateItem,
   resetFixtureStateProps,
   updateFixtureStateProps,
 } from 'react-cosmos-core';
@@ -24,22 +24,22 @@ import { IconButton32 } from '../../../components/buttons/index.js';
 import { CopyIcon, RotateCcwIcon } from '../../../components/icons/index.js';
 import { TreeExpansion } from '../../../shared/treeExpansion.js';
 import { SetFixtureStateProps } from '../shared.js';
-import { createPropsFsUpdater } from './shared.js';
+import { propsFsItemUpdater } from './shared.js';
 
 type Props = {
-  fsProps: FixtureStateProps;
+  propsFsItem: PropsFixtureStateItem;
   fixtureExpansion: FixtureExpansion;
   onFixtureStateChange: SetFixtureStateProps;
   onElementExpansionChange: OnElementExpansionChange;
 };
 
 export function ComponentProps({
-  fsProps,
+  propsFsItem,
   fixtureExpansion,
   onFixtureStateChange,
   onElementExpansionChange,
 }: Props) {
-  const { componentName, elementId, values } = fsProps;
+  const { componentName, elementId, values } = propsFsItem;
 
   const [reset, setReset] = React.useState(true);
   const handleResetToggle = React.useCallback(() => setReset(!reset), [reset]);
@@ -48,7 +48,7 @@ export function ComponentProps({
   const handleValuesReset = React.useCallback(
     () =>
       onFixtureStateChange(
-        createPropsFsUpdater(elementId, prevFs =>
+        propsFsItemUpdater(elementId, prevFs =>
           resetFixtureStateProps({
             propsFs: prevFs,
             elementId,
@@ -63,7 +63,7 @@ export function ComponentProps({
     (newValues: FixtureStateValues) => {
       const changeFn = reset ? resetFixtureStateProps : updateFixtureStateProps;
       onFixtureStateChange(
-        createPropsFsUpdater(elementId, prevFs =>
+        propsFsItemUpdater(elementId, prevFs =>
           changeFn({
             propsFs: prevFs,
             elementId,

@@ -3,7 +3,7 @@ import React from 'react';
 import {
   DEFAULT_RENDER_KEY,
   FixtureDecoratorId,
-  FixtureStateProps,
+  PropsFixtureState,
   extendWithValues,
   findFixtureStateProps,
   getComponentName,
@@ -13,7 +13,7 @@ import { getChildrenPath, setElementAtPath } from '../shared/nodeTree/index.js';
 
 export function useFixtureProps(
   fixture: React.ReactNode,
-  propsFs: FixtureStateProps[] | undefined,
+  propsFs: PropsFixtureState | undefined,
   decoratorId: FixtureDecoratorId
 ): React.ReactNode {
   const propCache: Record<string, unknown> = React.useMemo(

@@ -1,7 +1,7 @@
 import { isEqual } from 'lodash-es';
 import React from 'react';
 import {
-  FixtureStateControls,
+  ControlsFixtureState,
   FixtureStateData,
   FixtureStateValue,
   createValue,
@@ -13,7 +13,7 @@ export function useCreateFixtureState(
   inputName: string,
   defaultValue: FixtureStateData
 ) {
-  const [, setFixtureState] = useFixtureState<FixtureStateControls>('controls');
+  const [, setFixtureState] = useFixtureState<ControlsFixtureState>('controls');
   React.useEffect(() => {
     // The fixture state for this value is (re)created in two situations:
     // 1. Initially: No corresponding fixture state value is found

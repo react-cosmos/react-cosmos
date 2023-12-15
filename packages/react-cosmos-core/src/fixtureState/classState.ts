@@ -5,32 +5,35 @@ import {
   updateItem,
 } from '../utils/array.js';
 import {
+  ClassStateFixtureState,
+  ClassStateFixtureStateItem,
+} from './classStateTypes.js';
+import {
   FixtureDecoratorId,
   FixtureElementId,
-  FixtureStateClassState,
   FixtureStateValues,
 } from './types.js';
 
 export function getFixtureStateClassState(
-  classStateFs: FixtureStateClassState[] | undefined,
+  classStateFs: ClassStateFixtureState | undefined,
   decoratorId: FixtureDecoratorId
-): FixtureStateClassState[] {
+): ClassStateFixtureState {
   return classStateFs
     ? classStateFs.filter(s => s.elementId.decoratorId === decoratorId)
     : [];
 }
 
 export function findFixtureStateClassState(
-  classStateFs: FixtureStateClassState[] | undefined,
+  classStateFs: ClassStateFixtureState | undefined,
   elementId: FixtureElementId
-): void | FixtureStateClassState {
+): void | ClassStateFixtureStateItem {
   return (
     classStateFs && find(classStateFs, s => isEqual(s.elementId, elementId))
   );
 }
 
 type CreateFixtureStateClassStateArgs = {
-  classStateFs: FixtureStateClassState[] | undefined;
+  classStateFs: ClassStateFixtureState | undefined;
   elementId: FixtureElementId;
   values: FixtureStateValues;
   componentName: string;
@@ -53,7 +56,7 @@ export function createFixtureStateClassState({
 }
 
 type UpdateFixtureStateClassStateArgs = {
-  classStateFs: FixtureStateClassState[] | undefined;
+  classStateFs: ClassStateFixtureState | undefined;
   elementId: FixtureElementId;
   values: FixtureStateValues;
 };
@@ -69,7 +72,7 @@ export function updateFixtureStateClassState({
 }
 
 export function removeFixtureStateClassState(
-  classStateFs: FixtureStateClassState[] | undefined,
+  classStateFs: ClassStateFixtureState | undefined,
   elementId: FixtureElementId
 ) {
   return removeItemMatch(
@@ -79,13 +82,13 @@ export function removeFixtureStateClassState(
 }
 
 function createClassStateMatcher(elementId: FixtureElementId) {
-  return (p: FixtureStateClassState) => isEqual(p.elementId, elementId);
+  return (p: ClassStateFixtureStateItem) => isEqual(p.elementId, elementId);
 }
 
 function expectFixtureStateClassState(
-  classStateFs: FixtureStateClassState[] | undefined,
+  classStateFs: ClassStateFixtureState | undefined,
   elementId: FixtureElementId
-): FixtureStateClassState {
+): ClassStateFixtureStateItem {
   const classStateItem = findFixtureStateClassState(classStateFs, elementId);
   if (!classStateItem) {
     const elId = JSON.stringify(elementId);

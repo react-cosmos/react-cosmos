@@ -1,16 +1,16 @@
 import React from 'react';
 import {
-  FixtureStateControl,
-  FixtureStateControls,
+  ControlFixtureState,
+  ControlsFixtureState,
   StateUpdater,
 } from 'react-cosmos-core';
 import { Slot } from 'react-plugin';
 
-export type ControlSlotProps<TControl extends FixtureStateControl> = {
+export type ControlSlotProps<TControl extends ControlFixtureState> = {
   controlName: string;
   control: TControl;
   onFixtureStateChange: (
-    stateUpdater: StateUpdater<FixtureStateControls | undefined>
+    stateUpdater: StateUpdater<ControlsFixtureState | undefined>
   ) => void;
 };
 

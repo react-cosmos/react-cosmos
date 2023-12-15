@@ -1,11 +1,11 @@
 import React from 'react';
-import { FixtureStateProps } from 'react-cosmos-core';
+import { PropsFixtureState } from 'react-cosmos-core';
 import { stringifyElementId } from '../../../components/ValueInputTree/index.js';
 import { PropsPanel } from './index.js';
 
 export default () => {
   const [fixtureState, setFixtureState] = React.useState<
-    FixtureStateProps[] | undefined
+    PropsFixtureState | undefined
   >([
     {
       componentName: 'FooComponent',

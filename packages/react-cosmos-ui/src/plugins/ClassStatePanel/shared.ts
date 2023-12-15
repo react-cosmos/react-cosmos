@@ -1,7 +1,7 @@
-import { FixtureStateClassState, StateUpdater } from 'react-cosmos-core';
+import { ClassStateFixtureState, StateUpdater } from 'react-cosmos-core';
 
 export type FixtureStateClassStateUpdater = StateUpdater<
-  FixtureStateClassState[] | undefined
+  ClassStateFixtureState | undefined
 >;
 
 export type SetFixtureStateClassState = (

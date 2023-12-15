@@ -1,5 +1,5 @@
 import {
-  FixtureStateControls,
+  ControlsFixtureState,
   FixtureStateData,
   extendWithValue,
 } from 'react-cosmos-core';
@@ -9,7 +9,7 @@ export function useCurrentValue<T extends FixtureStateData>(
   inputName: string,
   defaultValue: T
 ): T {
-  const [fixtureState] = useFixtureState<FixtureStateControls>('controls');
+  const [fixtureState] = useFixtureState<ControlsFixtureState>('controls');
   const fsControl = fixtureState && fixtureState[inputName];
   return fsControl && fsControl.type === 'standard'
     ? // Types of fixture state values cannot be guaranteed at read time, which

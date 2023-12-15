@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import {
+  ClassStateFixtureState,
   FixtureElementId,
   FixtureId,
-  FixtureStateClassState,
 } from 'react-cosmos-core';
 import { PluginContext, createPlugin } from 'react-plugin';
 import {
@@ -36,8 +36,7 @@ namedPlug<SidePanelRowSlotProps>(
       fixtureId
     );
 
-    const fixtureState =
-      getFixtureState<FixtureStateClassState[]>('classState');
+    const fixtureState = getFixtureState<ClassStateFixtureState>('classState');
     const onFixtureStateChange = useCallback<SetFixtureStateClassState>(
       update => setFixtureState('classState', update),
       [setFixtureState]

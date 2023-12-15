@@ -1,10 +1,12 @@
 import {
+  ClassStateFixtureState,
+  ClassStateFixtureStateItem,
+  ControlsFixtureState,
   FixtureDecoratorId,
   FixtureState,
-  FixtureStateClassState,
-  FixtureStateControls,
-  FixtureStateProps,
   FixtureStateValues,
+  PropsFixtureState,
+  PropsFixtureStateItem,
 } from 'react-cosmos-core';
 
 export function anyProps(
@@ -14,7 +16,7 @@ export function anyProps(
     componentName?: string;
     values?: FixtureStateValues;
   } = {}
-): FixtureStateProps {
+): PropsFixtureStateItem {
   const {
     decoratorId = expect.any(String),
     elPath = expect.any(String),
@@ -34,7 +36,7 @@ export function anyClassState(args: {
   elPath?: string;
   componentName?: string;
   values: FixtureStateValues;
-}): FixtureStateClassState {
+}): ClassStateFixtureStateItem {
   const {
     decoratorId = expect.any(String),
     componentName = expect.any(String),
@@ -52,7 +54,7 @@ export function getProps(
   fixtureState: FixtureState,
   expectedCount: number = 1
 ) {
-  const props = fixtureStateByName<FixtureStateProps[]>(fixtureState, 'props');
+  const props = fixtureStateByName<PropsFixtureState>(fixtureState, 'props');
   if (!props || props.length < expectedCount) {
     throw new Error(`Props missing in fixture state`);
   }
@@ -63,7 +65,7 @@ export function getClassState(
   fixtureState: FixtureState,
   expectedCount: number = 1
 ) {
-  const classState = fixtureStateByName<FixtureStateClassState[]>(
+  const classState = fixtureStateByName<ClassStateFixtureState>(
     fixtureState,
     'classState'
   );
@@ -74,7 +76,7 @@ export function getClassState(
 }
 
 export function getControls(fixtureState: FixtureState) {
-  return fixtureStateByName<FixtureStateControls>(fixtureState, 'controls');
+  return fixtureStateByName<ControlsFixtureState>(fixtureState, 'controls');
 }
 
 function fixtureStateByName<T>(fixtureState: FixtureState, name: string) {

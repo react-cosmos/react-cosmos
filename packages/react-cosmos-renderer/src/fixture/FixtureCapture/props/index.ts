@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useRef } from 'react';
 import {
   FixtureDecoratorId,
-  FixtureStateProps,
+  PropsFixtureState,
   areNodesEqual,
   createFixtureStateProps,
   createValues,
@@ -23,7 +23,7 @@ export function usePropsCapture(
   fixture: ReactNode,
   decoratorId: FixtureDecoratorId
 ) {
-  const [propsFs, setPropsFs] = useFixtureState<FixtureStateProps[]>('props');
+  const [propsFs, setPropsFs] = useFixtureState<PropsFixtureState>('props');
   const prevFixtureRef = useRef(fixture);
   const elPaths = findRelevantElementPaths(fixture);
 

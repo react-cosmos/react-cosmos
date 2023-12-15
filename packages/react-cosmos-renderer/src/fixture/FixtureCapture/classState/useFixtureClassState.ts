@@ -9,8 +9,8 @@ import {
   useRef,
 } from 'react';
 import {
+  ClassStateFixtureState,
   FixtureDecoratorId,
-  FixtureStateClassState,
   createFixtureStateClassState,
   createValues,
   extendWithValues,
@@ -36,7 +36,7 @@ export function useFixtureClassState(
 ) {
   const elPaths = findRelevantElementPaths(fixture);
   const [classStateFs, setClassStateFs] =
-    useFixtureState<FixtureStateClassState[]>('classState');
+    useFixtureState<ClassStateFixtureState>('classState');
   const lastFsRef = useFixtureStateRef(classStateFs);
   // Keep a copy of the previous fixture state to observe changes
   const prevFsRef = useRef(classStateFs);
@@ -176,9 +176,7 @@ export function useFixtureClassState(
 }
 
 // Make latest fixture state accessible in ref callback
-function useFixtureStateRef(
-  classStateFs: FixtureStateClassState[] | undefined
-) {
+function useFixtureStateRef(classStateFs: ClassStateFixtureState | undefined) {
   const ref = useRef(classStateFs);
   useEffect(() => {
     ref.current = classStateFs;

@@ -1,9 +1,10 @@
 import React, { useCallback } from 'react';
 import {
+  ClassStateFixtureState,
+  ControlsFixtureState,
   FixtureElementId,
   FixtureId,
-  FixtureStateControls,
-  FixtureStateProps,
+  PropsFixtureState,
 } from 'react-cosmos-core';
 import { PluginContext, createPlugin } from 'react-plugin';
 import {
@@ -40,7 +41,7 @@ namedPlug<SidePanelRowSlotProps>(
       fixtureId
     );
 
-    const fixtureState = getFixtureState<FixtureStateProps[]>('props');
+    const fixtureState = getFixtureState<PropsFixtureState>('props');
     const onFixtureStateChange = useCallback<SetFixtureStateProps>(
       update => setFixtureState('props', update),
       [setFixtureState]
@@ -107,15 +108,15 @@ function useFixtureExpansion(context: PropsPanelContext, fixtureId: FixtureId) {
 }
 
 function shouldShowBlankState(getFixtureState: GetFixtureState) {
-  const props = getFixtureState<FixtureStateProps[]>('props');
+  const props = getFixtureState<PropsFixtureState>('props');
   const hasProps = props && props.some(hasFsValues);
   if (hasProps) return false;
 
-  const classState = getFixtureState<FixtureStateProps[]>('classState');
+  const classState = getFixtureState<ClassStateFixtureState>('classState');
   const hasClassState = classState && classState.some(hasFsValues);
   if (hasClassState) return false;
 
-  const controls = getFixtureState<FixtureStateControls>('controls');
+  const controls = getFixtureState<ControlsFixtureState>('controls');
   const hasControls = controls && Object.keys(controls).length > 0;
   if (hasControls) return false;
 

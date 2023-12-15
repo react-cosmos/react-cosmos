@@ -1,8 +1,9 @@
 import { isEqual } from 'lodash-es';
 import { MutableRefObject, ReactNode, useEffect, useRef } from 'react';
 import {
+  ClassStateFixtureState,
+  ClassStateFixtureStateItem,
   FixtureDecoratorId,
-  FixtureStateClassState,
   createValues,
   extendWithValues,
   findFixtureStateClassState,
@@ -23,7 +24,7 @@ export function useReadClassState(
 ) {
   const elPaths = findRelevantElementPaths(fixture);
   const [classStateFs, setClassStateFs] =
-    useFixtureState<FixtureStateClassState[]>('classState');
+    useFixtureState<ClassStateFixtureState>('classState');
   const timeoutId = useRef<null | number>(null);
 
   useEffect(() => {
@@ -78,7 +79,7 @@ export function useReadClassState(
 }
 
 function doesFixtureStateMatchClassState(
-  fsClassState: FixtureStateClassState,
+  fsClassState: ClassStateFixtureStateItem,
   state: {}
 ) {
   return isEqual(state, extendWithValues(state, fsClassState.values));
