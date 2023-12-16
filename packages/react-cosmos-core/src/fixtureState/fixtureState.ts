@@ -16,12 +16,17 @@ export function updateFixtureState<T>(
   name: string,
   change: FixtureStateChange<T>
 ): FixtureState {
+  const prevFs = fixtureStateByName<T>(fixtureState, name);
+  const nextFs = applyFixtureStateChange<T>(prevFs, change);
+
+  // Avoid unnecessary state updates
+  if (nextFs === prevFs) {
+    return fixtureState;
+  }
+
   return {
     ...fixtureState,
-    [name]: applyFixtureStateChange<T>(
-      fixtureStateByName<T>(fixtureState, name),
-      change
-    ),
+    [name]: nextFs,
   };
 }
 
