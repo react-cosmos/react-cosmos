@@ -17,6 +17,6 @@ export function setGlobalFixtureState(
 
   const fixtureId = getSelectedFixtureId(context);
   if (fixtureId) {
-    setFixtureState(context, name, () => state);
+    setFixtureState(context, name, state);
   }
 }
