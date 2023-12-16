@@ -31,7 +31,7 @@ export function usePropsCapture(
     // Create empty fixture state
     if (!propsFs && elPaths.length === 0) {
       // Make sure not to override any (currently pending) fixture state props
-      setPropsFs(prevFs => prevFs || []);
+      setPropsFs(prevFs => prevFs ?? []);
       return;
     }
 
