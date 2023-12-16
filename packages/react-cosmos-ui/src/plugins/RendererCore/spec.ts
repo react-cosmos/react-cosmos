@@ -37,8 +37,6 @@ export type RendererCoreSpec = {
     reloadRenderer(): void;
     selectPrimaryRenderer(primaryRendererId: RendererId): void;
     receiveResponse(msg: MessageType): void;
-    // TODO: Remove getFixtureState and in favor of getFixtureStateByName, or
-    // use it only where necessary, possibly rename it to getEntireFixtureState
     getFixtureState(): FixtureState;
     getFixtureStateByName: GetFixtureState;
     setFixtureState: SetFixtureStateByName;
