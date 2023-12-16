@@ -1,6 +1,6 @@
 import { ClassStateFixtureState, FixtureStateUpdater } from 'react-cosmos-core';
 
-export type SetFixtureStateClassState = (
+export type SetClassStateFixtureState = (
   updater: FixtureStateUpdater<ClassStateFixtureState>
 ) => void;
 

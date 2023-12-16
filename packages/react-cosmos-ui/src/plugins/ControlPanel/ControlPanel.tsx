@@ -12,12 +12,12 @@ import { IconButton32 } from '../../components/buttons/index.js';
 import { RotateCcwIcon } from '../../components/icons/index.js';
 import { ControlActionSlot } from '../../slots/ControlActionSlot.js';
 import { ControlSlot } from '../../slots/ControlSlot.js';
-import { SetFixtureStateControls } from './shared.js';
+import { SetControlsFixtureState } from './shared.js';
 
 type Props = {
   fixtureState: ControlsFixtureState | undefined;
   controlActionOrder: string[];
-  onFixtureStateChange: SetFixtureStateControls;
+  onFixtureStateChange: SetControlsFixtureState;
 };
 
 export function ControlPanel({

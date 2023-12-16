@@ -22,13 +22,13 @@ import {
 import { IconButton32 } from '../../../components/buttons/index.js';
 import { RotateCcwIcon } from '../../../components/icons/index.js';
 import { TreeExpansion } from '../../../shared/treeExpansion.js';
-import { SetFixtureStateClassState } from '../shared.js';
+import { SetClassStateFixtureState } from '../shared.js';
 import { classStateFsItemUpdater } from './shared.js';
 
 type Props = {
   classStateFsItem: ClassStateFixtureStateItem;
   fixtureExpansion: FixtureExpansion;
-  onFixtureStateChange: SetFixtureStateClassState;
+  onFixtureStateChange: SetClassStateFixtureState;
   onElementExpansionChange: OnElementExpansionChange;
 };
 

@@ -7,13 +7,13 @@ import {
   sortFsValueGroups,
   stringifyElementId,
 } from '../../../components/ValueInputTree/index.js';
-import { SetFixtureStateClassState } from '../shared.js';
+import { SetClassStateFixtureState } from '../shared.js';
 import { ComponentClassState } from './ComponentClassState.js';
 
 type Props = {
   fixtureState: ClassStateFixtureState | undefined;
   fixtureExpansion: FixtureExpansion;
-  onFixtureStateChange: SetFixtureStateClassState;
+  onFixtureStateChange: SetClassStateFixtureState;
   onElementExpansionChange: OnElementExpansionChange;
 };
 

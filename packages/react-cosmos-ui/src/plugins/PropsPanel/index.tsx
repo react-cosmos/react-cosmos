@@ -21,7 +21,7 @@ import { BlankState } from './BlankState.js';
 import { PropsPanel } from './PropsPanel/index.js';
 import {
   PROPS_TREE_EXPANSION_STORAGE_KEY,
-  SetFixtureStateProps,
+  SetPropsFixtureState,
 } from './shared.js';
 import { PropsPanelSpec } from './spec.js';
 
@@ -42,7 +42,7 @@ namedPlug<SidePanelRowSlotProps>(
     );
 
     const fixtureState = getFixtureState<PropsFixtureState>('props');
-    const onFixtureStateChange = useCallback<SetFixtureStateProps>(
+    const onFixtureStateChange = useCallback<SetPropsFixtureState>(
       change => setFixtureState<PropsFixtureState>('props', change),
       [setFixtureState]
     );

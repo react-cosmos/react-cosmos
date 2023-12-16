@@ -3,7 +3,7 @@ import { ControlsFixtureState } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
 import { SidePanelRowSlotProps } from '../../slots/SidePanelRowSlot.js';
 import { ControlPanel } from './ControlPanel.js';
-import { SetFixtureStateControls } from './shared.js';
+import { SetControlsFixtureState } from './shared.js';
 import { ControlPanelSpec } from './spec.js';
 
 const { namedPlug, register } = createPlugin<ControlPanelSpec>({
@@ -21,7 +21,7 @@ namedPlug<SidePanelRowSlotProps>(
     const { getFixtureState, setFixtureState } = slotProps;
 
     const fixtureState = getFixtureState<ControlsFixtureState>('controls');
-    const onFixtureStateChange = useCallback<SetFixtureStateControls>(
+    const onFixtureStateChange = useCallback<SetControlsFixtureState>(
       update => setFixtureState<ControlsFixtureState>('controls', update),
       [setFixtureState]
     );

@@ -16,7 +16,7 @@ import { StorageSpec } from '../Storage/spec.js';
 import { ClassStatePanel } from './ClassStatePanel/index.js';
 import {
   CLASS_STATE_TREE_EXPANSION_STORAGE_KEY,
-  SetFixtureStateClassState,
+  SetClassStateFixtureState,
 } from './shared.js';
 import { ClassStatePanelSpec } from './spec.js';
 
@@ -37,7 +37,7 @@ namedPlug<SidePanelRowSlotProps>(
     );
 
     const fixtureState = getFixtureState<ClassStateFixtureState>('classState');
-    const onFixtureStateChange = useCallback<SetFixtureStateClassState>(
+    const onFixtureStateChange = useCallback<SetClassStateFixtureState>(
       update => setFixtureState<ClassStateFixtureState>('classState', update),
       [setFixtureState]
     );
