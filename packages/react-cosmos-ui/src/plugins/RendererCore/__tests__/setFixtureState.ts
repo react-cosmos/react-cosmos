@@ -52,7 +52,7 @@ it('sets fixture state in plugin state', async () => {
   mockSetFixtureStateCall();
 
   await waitFor(() =>
-    expect(getRendererCoreMethods().getFixtureState()).toEqual(
+    expect(getRendererCoreMethods().getAllFixtureState()).toEqual(
       expectedFixtureState
     )
   );

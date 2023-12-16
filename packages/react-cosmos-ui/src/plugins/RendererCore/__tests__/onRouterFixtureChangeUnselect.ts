@@ -38,7 +38,7 @@ it('resets fixture state', async () => {
   emitRouterFixtureUnselect();
 
   await waitFor(() =>
-    expect(getRendererCoreMethods().getFixtureState()).toEqual({})
+    expect(getRendererCoreMethods().getAllFixtureState()).toEqual({})
   );
 });
 

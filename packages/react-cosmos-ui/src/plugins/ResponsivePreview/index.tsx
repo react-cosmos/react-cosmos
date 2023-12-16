@@ -101,7 +101,7 @@ function getViewportState(context: ResponsivePreviewContext): ViewportState {
 
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
   const viewport =
-    rendererCore.getFixtureStateByName<ViewportFixtureState>('viewport');
+    rendererCore.getFixtureState<ViewportFixtureState>('viewport');
 
   return viewport
     ? { ...viewportState, enabled: true, viewport }

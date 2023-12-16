@@ -14,7 +14,7 @@ afterEach(resetPlugins);
 function registerTestPlugins() {
   mockStorage();
   mockRendererCore({
-    getFixtureStateByName: (context, name) => {
+    getFixtureState: (context, name) => {
       return name === 'viewport' ? { width: 420, height: 420 } : undefined;
     },
   });

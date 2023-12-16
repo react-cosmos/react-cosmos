@@ -37,8 +37,8 @@ export type RendererCoreSpec = {
     reloadRenderer(): void;
     selectPrimaryRenderer(primaryRendererId: RendererId): void;
     receiveResponse(msg: MessageType): void;
-    getFixtureState(): FixtureState;
-    getFixtureStateByName: GetFixtureState;
+    getAllFixtureState(): FixtureState;
+    getFixtureState: GetFixtureState;
     setFixtureState: SetFixtureStateByName;
     setGlobalFixtureState<T>(name: string, state: T): void;
   };

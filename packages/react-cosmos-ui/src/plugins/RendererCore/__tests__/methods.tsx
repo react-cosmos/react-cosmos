@@ -71,7 +71,7 @@ it('returns fixtures', () => {
 it('returns fixture state', () => {
   registerTestPlugins();
   loadTestPlugins();
-  expect(getRendererCoreMethods().getFixtureState()).toEqual({
+  expect(getRendererCoreMethods().getAllFixtureState()).toEqual({
     props: [],
   });
 });
