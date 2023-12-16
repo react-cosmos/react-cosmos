@@ -30,7 +30,7 @@ export function ControlPanel({
     [onFixtureStateChange]
   );
 
-  const controls = fixtureState || {};
+  const controls = fixtureState ?? {};
   if (Object.keys(controls).length === 0) return null;
 
   return (
