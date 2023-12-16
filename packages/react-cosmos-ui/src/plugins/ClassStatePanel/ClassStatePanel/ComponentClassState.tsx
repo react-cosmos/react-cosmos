@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import {
   ClassStateFixtureStateItem,
   FixtureStateValues,
-  updateFixtureStateClassState,
+  updateClassStateFixtureStateItem,
 } from 'react-cosmos-core';
 import {
   SidePanelActions,
@@ -45,7 +45,7 @@ export function ComponentClassState({
     () =>
       onFixtureStateChange(
         classStateFsItemUpdater(elementId, prevFs =>
-          updateFixtureStateClassState({
+          updateClassStateFixtureStateItem({
             classStateFs: prevFs,
             elementId,
             values: initialValues,
@@ -59,7 +59,7 @@ export function ComponentClassState({
     (newValues: FixtureStateValues) => {
       onFixtureStateChange(
         classStateFsItemUpdater(elementId, prevFs =>
-          updateFixtureStateClassState({
+          updateClassStateFixtureStateItem({
             classStateFs: prevFs,
             elementId,
             values: newValues,

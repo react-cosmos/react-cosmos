@@ -5,7 +5,7 @@ import {
   FixtureDecoratorId,
   PropsFixtureState,
   extendWithValues,
-  findFixtureStateProps,
+  findPropsFixtureStateItem,
   getComponentName,
 } from 'react-cosmos-core';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
@@ -27,10 +27,10 @@ export function useFixtureProps(
 
   return elPaths.reduce((extendedFixture, elPath): React.ReactNode => {
     const elementId = { decoratorId, elPath };
-    const fsProps = findFixtureStateProps(propsFs, elementId);
+    const fsItem = findPropsFixtureStateItem(propsFs, elementId);
 
     return setElementAtPath(extendedFixture, elPath, element => {
-      if (!fsProps || componentTypeChanged(fsProps.componentName)) {
+      if (!fsItem || componentTypeChanged(fsItem.componentName)) {
         return {
           ...element,
           key: getElRenderKey(elPath, DEFAULT_RENDER_KEY),
@@ -41,7 +41,7 @@ export function useFixtureProps(
       // stored in fixture state
       // See https://github.com/react-cosmos/react-cosmos/pull/920 for context
       const originalProps = element.props;
-      const extendedProps = extendWithValues(originalProps, fsProps.values);
+      const extendedProps = extendWithValues(originalProps, fsItem.values);
 
       // Preserve identity between renders for indentical non-primitive props
       const cachedProps = mapValues(extendedProps, (value, propName) => {
@@ -70,7 +70,7 @@ export function useFixtureProps(
         props: hasChildElPaths(elPaths, elPath)
           ? { ...cachedProps, children: originalProps.children }
           : cachedProps,
-        key: getElRenderKey(elPath, fsProps.renderKey),
+        key: getElRenderKey(elPath, fsItem.renderKey),
       };
 
       function componentTypeChanged(componentName: string) {

@@ -6,8 +6,8 @@ import {
   FixtureDecoratorId,
   createValues,
   extendWithValues,
-  findFixtureStateClassState,
-  updateFixtureStateClassState,
+  findClassStateFixtureStateItem,
+  updateClassStateFixtureStateItem,
 } from 'react-cosmos-core';
 import { useFixtureState } from '../../useFixtureState.js';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
@@ -55,15 +55,11 @@ export function useReadClassState(
 
       const { state } = elRefs.current[elPath];
       const elementId = { decoratorId, elPath };
-      const fsClassState = findFixtureStateClassState(classStateFs, elementId);
-      if (
-        fsClassState &&
-        state &&
-        !doesFixtureStateMatchClassState(fsClassState, state)
-      ) {
+      const fsItem = findClassStateFixtureStateItem(classStateFs, elementId);
+      if (fsItem && state && !doesFixtureStateMatchClassState(fsItem, state)) {
         fixtureStateChangeScheduled = true;
         setClassStateFs(prevFs =>
-          updateFixtureStateClassState({
+          updateClassStateFixtureStateItem({
             classStateFs: prevFs,
             elementId,
             values: createValues(state),

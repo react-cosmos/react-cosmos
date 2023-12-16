@@ -2,8 +2,8 @@ import retry from '@skidding/async-retry';
 import React from 'react';
 import {
   createValues,
-  removeFixtureStateProps,
-  updateFixtureStateProps,
+  removePropsFixtureStateItem,
+  updatePropsFixtureStateItem,
   uuid,
 } from 'react-cosmos-core';
 import { HelloMessage } from '../testHelpers/components.js';
@@ -50,7 +50,7 @@ testRenderer(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: updateFixtureStateProps({
+        props: updatePropsFixtureStateItem({
           propsFs,
           elementId,
           values: createValues({ name: 'B' }),
@@ -73,7 +73,7 @@ testRenderer(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: updateFixtureStateProps({
+        props: updatePropsFixtureStateItem({
           propsFs,
           elementId,
           values: {},
@@ -102,7 +102,7 @@ testRenderer(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: updateFixtureStateProps({
+        props: updatePropsFixtureStateItem({
           propsFs,
           elementId,
           values: createValues({ name: 'B' }),
@@ -114,7 +114,7 @@ testRenderer(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: removeFixtureStateProps(propsFs, elementId),
+        props: removePropsFixtureStateItem(propsFs, elementId),
       },
     });
     await retry(() => expect(renderer.toJSON()).toBe('Hello Blanca'));
@@ -154,7 +154,7 @@ testRenderer(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: updateFixtureStateProps({
+        props: updatePropsFixtureStateItem({
           propsFs,
           elementId,
           values: createValues({ name: 'B' }),

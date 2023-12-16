@@ -1,6 +1,6 @@
 import {
   ClassStateFixtureState,
-  findFixtureStateClassState,
+  findClassStateFixtureStateItem,
   FixtureElementId,
   FixtureStateUpdater,
 } from 'react-cosmos-core';
@@ -11,7 +11,7 @@ export function classStateFsItemUpdater(
   cb: FixtureStateUpdater<ClassStateFixtureState>
 ): FixtureStateUpdater<ClassStateFixtureState> {
   return prevFs => {
-    const fsItem = findFixtureStateClassState(prevFs, elementId);
+    const fsItem = findClassStateFixtureStateItem(prevFs, elementId);
     if (!fsItem) {
       const elId = stringifyElementId(elementId);
       console.warn(`Trying to update missing element with ID: ${elId}`);

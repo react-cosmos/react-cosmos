@@ -3,8 +3,8 @@ import React from 'react';
 import {
   ClassStateMock,
   createValues,
-  removeFixtureStateClassState,
-  updateFixtureStateClassState,
+  removeClassStateFixtureStateItem,
+  updateClassStateFixtureStateItem,
   uuid,
 } from 'react-cosmos-core';
 import { CoolCounter, Counter } from '../testHelpers/components.js';
@@ -63,7 +63,7 @@ testRenderer(
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: updateFixtureStateClassState({
+        classState: updateClassStateFixtureStateItem({
           classStateFs,
           elementId,
           values: createValues({ count: 100 }),
@@ -77,7 +77,7 @@ testRenderer(
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: updateFixtureStateClassState({
+        classState: updateClassStateFixtureStateItem({
           classStateFs,
           elementId,
           values: createValues({ count: 200 }),
@@ -100,7 +100,7 @@ testRenderer(
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: updateFixtureStateClassState({
+        classState: updateClassStateFixtureStateItem({
           classStateFs,
           elementId,
           values: {},
@@ -129,7 +129,7 @@ testRenderer(
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: updateFixtureStateClassState({
+        classState: updateClassStateFixtureStateItem({
           classStateFs,
           elementId,
           values: createValues({ count: 10 }),
@@ -141,7 +141,7 @@ testRenderer(
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: removeFixtureStateClassState(classStateFs, elementId),
+        classState: removeClassStateFixtureStateItem(classStateFs, elementId),
       },
     });
     await retry(() => expect(renderer.toJSON()).toBe('5 times'));
@@ -181,7 +181,7 @@ testRenderer(
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: updateFixtureStateClassState({
+        classState: updateClassStateFixtureStateItem({
           classStateFs,
           elementId,
           values: createValues({ count: 50 }),
@@ -222,7 +222,7 @@ testRenderer(
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: updateFixtureStateClassState({
+        classState: updateClassStateFixtureStateItem({
           classStateFs,
           elementId,
           values: createValues({ count: 6 }),

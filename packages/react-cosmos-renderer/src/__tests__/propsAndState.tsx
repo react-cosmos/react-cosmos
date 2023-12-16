@@ -2,8 +2,8 @@ import retry from '@skidding/async-retry';
 import React from 'react';
 import {
   createValues,
-  updateFixtureStateClassState,
-  updateFixtureStateProps,
+  updateClassStateFixtureStateItem,
+  updatePropsFixtureStateItem,
   uuid,
 } from 'react-cosmos-core';
 import { SuffixCounter } from '../testHelpers/components.js';
@@ -41,7 +41,7 @@ testRenderer(
     const [{ elementId }] = propsFs;
     fixtureState = {
       ...fixtureState,
-      classState: updateFixtureStateClassState({
+      classState: updateClassStateFixtureStateItem({
         classStateFs,
         elementId,
         values: createValues({ count: 5 }),
@@ -54,7 +54,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         ...fixtureState,
-        props: updateFixtureStateProps({
+        props: updatePropsFixtureStateItem({
           propsFs,
           elementId,
           values: createValues({ suffix: 'timez' }),
@@ -76,7 +76,7 @@ testRenderer(
     const [{ elementId }] = propsFs;
     fixtureState = {
       ...fixtureState,
-      classState: updateFixtureStateClassState({
+      classState: updateClassStateFixtureStateItem({
         classStateFs,
         elementId,
         values: createValues({ count: 5 }),
@@ -89,7 +89,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         ...fixtureState,
-        props: updateFixtureStateProps({
+        props: updatePropsFixtureStateItem({
           propsFs,
           elementId,
           values: createValues({ suffix: 'timez' }),
@@ -111,7 +111,7 @@ testRenderer(
     const [{ elementId }] = propsFs;
     fixtureState = {
       ...fixtureState,
-      props: updateFixtureStateProps({
+      props: updatePropsFixtureStateItem({
         propsFs,
         elementId,
         values: createValues({ suffix: 'timez' }),
@@ -124,7 +124,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         ...fixtureState,
-        classState: updateFixtureStateClassState({
+        classState: updateClassStateFixtureStateItem({
           classStateFs,
           elementId,
           values: createValues({ count: 5 }),

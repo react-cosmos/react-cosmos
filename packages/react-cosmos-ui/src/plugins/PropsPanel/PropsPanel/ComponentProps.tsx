@@ -3,8 +3,8 @@ import React, { useCallback } from 'react';
 import {
   FixtureStateValues,
   PropsFixtureStateItem,
-  resetFixtureStateProps,
-  updateFixtureStateProps,
+  resetPropsFixtureStateItem,
+  updatePropsFixtureStateItem,
 } from 'react-cosmos-core';
 import {
   SidePanelActions,
@@ -49,7 +49,7 @@ export function ComponentProps({
     () =>
       onFixtureStateChange(
         propsFsItemUpdater(elementId, prevFs =>
-          resetFixtureStateProps({
+          resetPropsFixtureStateItem({
             propsFs: prevFs,
             elementId,
             values: initialValues,
@@ -61,7 +61,9 @@ export function ComponentProps({
 
   const handleValueChange = React.useCallback(
     (newValues: FixtureStateValues) => {
-      const changeFn = reset ? resetFixtureStateProps : updateFixtureStateProps;
+      const changeFn = reset
+        ? resetPropsFixtureStateItem
+        : updatePropsFixtureStateItem;
       onFixtureStateChange(
         propsFsItemUpdater(elementId, prevFs =>
           changeFn({

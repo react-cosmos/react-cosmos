@@ -3,7 +3,7 @@ import React from 'react';
 import {
   ClassStateMock,
   createValues,
-  updateFixtureStateClassState,
+  updateClassStateFixtureStateItem,
   uuid,
 } from 'react-cosmos-core';
 import { Counter } from '../testHelpers/components.js';
@@ -67,7 +67,7 @@ testRenderer(
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: updateFixtureStateClassState({
+        classState: updateClassStateFixtureStateItem({
           classStateFs,
           elementId,
           values: createValues({ count: 100 }),

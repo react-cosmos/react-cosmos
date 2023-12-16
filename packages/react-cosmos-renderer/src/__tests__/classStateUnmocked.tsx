@@ -2,8 +2,8 @@ import retry from '@skidding/async-retry';
 import React from 'react';
 import {
   createValues,
-  removeFixtureStateClassState,
-  updateFixtureStateClassState,
+  removeClassStateFixtureStateItem,
+  updateClassStateFixtureStateItem,
   uuid,
 } from 'react-cosmos-core';
 import { Counter } from '../testHelpers/components.js';
@@ -55,7 +55,7 @@ testRenderer(
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: updateFixtureStateClassState({
+        classState: updateClassStateFixtureStateItem({
           classStateFs,
           elementId,
           values: createValues({ count: 5 }),
@@ -78,7 +78,7 @@ testRenderer(
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: updateFixtureStateClassState({
+        classState: updateClassStateFixtureStateItem({
           classStateFs,
           elementId,
           values: {},
@@ -101,7 +101,7 @@ testRenderer(
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: updateFixtureStateClassState({
+        classState: updateClassStateFixtureStateItem({
           classStateFs,
           elementId,
           values: createValues({ count: 5 }),
@@ -113,7 +113,7 @@ testRenderer(
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: removeFixtureStateClassState(classStateFs, elementId),
+        classState: removeClassStateFixtureStateItem(classStateFs, elementId),
       },
     });
     await retry(() => expect(renderer.toJSON()).toBe('0 times'));

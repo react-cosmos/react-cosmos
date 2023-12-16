@@ -14,7 +14,7 @@ import {
   FixtureStateValues,
 } from './types.js';
 
-export function getFixtureStateClassState(
+export function filterClassStateFixtureState(
   classStateFs: ClassStateFixtureState | undefined,
   decoratorId: FixtureDecoratorId
 ): ClassStateFixtureState {
@@ -23,7 +23,7 @@ export function getFixtureStateClassState(
     : [];
 }
 
-export function findFixtureStateClassState(
+export function findClassStateFixtureStateItem(
   classStateFs: ClassStateFixtureState | undefined,
   elementId: FixtureElementId
 ): void | ClassStateFixtureStateItem {
@@ -32,18 +32,18 @@ export function findFixtureStateClassState(
   );
 }
 
-type CreateFixtureStateClassStateArgs = {
+type CreateClassStateFixtureStateArgs = {
   classStateFs: ClassStateFixtureState | undefined;
   elementId: FixtureElementId;
   values: FixtureStateValues;
   componentName: string;
 };
-export function createFixtureStateClassState({
+export function createClassStateFixtureStateItem({
   classStateFs,
   elementId,
   values,
   componentName,
-}: CreateFixtureStateClassStateArgs) {
+}: CreateClassStateFixtureStateArgs) {
   return replaceOrAddItem(
     classStateFs ?? [],
     createClassStateMatcher(elementId),
@@ -51,23 +51,21 @@ export function createFixtureStateClassState({
   );
 }
 
-type UpdateFixtureStateClassStateArgs = {
+type UpdateClassStateFixtureStateArgs = {
   classStateFs: ClassStateFixtureState | undefined;
   elementId: FixtureElementId;
   values: FixtureStateValues;
 };
-export function updateFixtureStateClassState({
+export function updateClassStateFixtureStateItem({
   classStateFs,
   elementId,
   values,
-}: UpdateFixtureStateClassStateArgs) {
-  const classStateItem = expectFixtureStateClassState(classStateFs, elementId);
-  return updateItem(classStateFs!, classStateItem, {
-    values,
-  });
+}: UpdateClassStateFixtureStateArgs) {
+  const item = expectClassStateItem(classStateFs, elementId);
+  return updateItem(classStateFs!, item, { values });
 }
 
-export function removeFixtureStateClassState(
+export function removeClassStateFixtureStateItem(
   classStateFs: ClassStateFixtureState | undefined,
   elementId: FixtureElementId
 ) {
@@ -81,14 +79,14 @@ function createClassStateMatcher(elementId: FixtureElementId) {
   return (p: ClassStateFixtureStateItem) => isEqual(p.elementId, elementId);
 }
 
-function expectFixtureStateClassState(
+function expectClassStateItem(
   classStateFs: ClassStateFixtureState | undefined,
   elementId: FixtureElementId
 ): ClassStateFixtureStateItem {
-  const classStateItem = findFixtureStateClassState(classStateFs, elementId);
-  if (!classStateItem) {
+  const item = findClassStateFixtureStateItem(classStateFs, elementId);
+  if (!item) {
     const elId = JSON.stringify(elementId);
     throw new Error(`Fixture state class state missing for element "${elId}"`);
   }
-  return classStateItem;
+  return item;
 }

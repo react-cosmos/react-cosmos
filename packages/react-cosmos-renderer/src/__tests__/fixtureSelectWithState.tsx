@@ -1,6 +1,10 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
-import { createFixtureStateProps, createValues, uuid } from 'react-cosmos-core';
+import {
+  createPropsFixtureStateItem,
+  createValues,
+  uuid,
+} from 'react-cosmos-core';
 import { HelloMessage } from '../testHelpers/components.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
@@ -19,7 +23,7 @@ testRenderer(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: createFixtureStateProps({
+        props: createPropsFixtureStateItem({
           propsFs: undefined,
           elementId: { decoratorId: 'root', elPath: '' },
           values: createValues({ name: 'B' }),

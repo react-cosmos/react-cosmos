@@ -1,5 +1,5 @@
 import {
-  findFixtureStateProps,
+  findPropsFixtureStateItem,
   FixtureElementId,
   FixtureStateUpdater,
   PropsFixtureState,
@@ -11,7 +11,7 @@ export function propsFsItemUpdater(
   cb: FixtureStateUpdater<PropsFixtureState>
 ): FixtureStateUpdater<PropsFixtureState> {
   return prevFs => {
-    const fsItem = findFixtureStateProps(prevFs, elementId);
+    const fsItem = findPropsFixtureStateItem(prevFs, elementId);
     if (!fsItem) {
       const elId = stringifyElementId(elementId);
       console.warn(`Trying to update missing element with ID: ${elId}`);

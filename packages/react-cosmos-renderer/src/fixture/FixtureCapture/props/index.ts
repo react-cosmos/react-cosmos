@@ -3,13 +3,13 @@ import {
   FixtureDecoratorId,
   PropsFixtureState,
   areNodesEqual,
-  createFixtureStateProps,
+  createPropsFixtureStateItem,
   createValues,
-  findFixtureStateProps,
+  filterPropsFixtureState,
+  findPropsFixtureStateItem,
   getComponentName,
-  getFixtureStateProps,
-  removeFixtureStateProps,
-  updateFixtureStateProps,
+  removePropsFixtureStateItem,
+  updatePropsFixtureStateItem,
 } from 'react-cosmos-core';
 import { useFixtureState } from '../../useFixtureState.js';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
@@ -38,10 +38,10 @@ export function usePropsCapture(
     // Remove fixture state for removed child elements (likely via HMR)
     // FIXME: Also invalidate fixture state at this element path if the
     // component type of the corresponding element changed
-    const fsProps = getFixtureStateProps(propsFs, decoratorId);
-    fsProps.forEach(({ elementId }) => {
+    const decoratorFs = filterPropsFixtureState(propsFs, decoratorId);
+    decoratorFs.forEach(({ elementId }) => {
       if (elPaths.indexOf(elementId.elPath) === -1) {
-        setPropsFs(prevFs => removeFixtureStateProps(prevFs, elementId));
+        setPropsFs(prevFs => removePropsFixtureStateItem(prevFs, elementId));
       }
     });
 
@@ -51,10 +51,10 @@ export function usePropsCapture(
       // Component fixture state can be provided before the fixture mounts (eg.
       // a previous snapshot of a fixture state or the current fixture state
       // from another renderer)
-      if (!findFixtureStateProps(propsFs, elementId)) {
+      if (!findPropsFixtureStateItem(propsFs, elementId)) {
         const componentName = getComponentName(childEl.type);
         setPropsFs(prevFs =>
-          createFixtureStateProps({
+          createPropsFixtureStateItem({
             propsFs: prevFs,
             elementId,
             values: createValues(childEl.props),
@@ -65,7 +65,7 @@ export function usePropsCapture(
         const prevChildEl = getElementAtPath(prevFixtureRef.current, elPath);
         if (!areNodesEqual(prevChildEl, childEl, false)) {
           setPropsFs(prevFs =>
-            updateFixtureStateProps({
+            updatePropsFixtureStateItem({
               propsFs: prevFs,
               elementId,
               values: createValues(childEl.props),

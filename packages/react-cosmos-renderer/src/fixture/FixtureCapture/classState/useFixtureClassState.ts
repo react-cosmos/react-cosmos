@@ -11,13 +11,13 @@ import {
 import {
   ClassStateFixtureState,
   FixtureDecoratorId,
-  createFixtureStateClassState,
+  createClassStateFixtureStateItem,
   createValues,
   extendWithValues,
-  findFixtureStateClassState,
+  filterClassStateFixtureState,
+  findClassStateFixtureStateItem,
   getComponentName,
-  getFixtureStateClassState,
-  removeFixtureStateClassState,
+  removeClassStateFixtureStateItem,
 } from 'react-cosmos-core';
 import { useFixtureState } from '../../useFixtureState.js';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
@@ -60,12 +60,12 @@ export function useFixtureClassState(
     // Remove fixture state for removed child elements (likely via HMR)
     // FIXME: Also invalidate fixture state at this element path if the
     // component type of the corresponding element changed
-    const fsProps = getFixtureStateClassState(classStateFs, decoratorId);
-    fsProps.forEach(({ elementId }) => {
+    const decoratorFs = filterClassStateFixtureState(classStateFs, decoratorId);
+    decoratorFs.forEach(({ elementId }) => {
       const { elPath } = elementId;
       if (elPaths.indexOf(elementId.elPath) === -1) {
         setClassStateFs(prevFs =>
-          removeFixtureStateClassState(prevFs, elementId)
+          removeClassStateFixtureStateItem(prevFs, elementId)
         );
         if (elRefs.current[elPath]) {
           delete elRefs.current[elPath];
@@ -80,8 +80,8 @@ export function useFixtureClassState(
       // Component fixture state can be provided before the fixture mounts (eg.
       // a previous snapshot of a fixture state or the current fixture state
       // from another renderer)
-      const fsClassState = findFixtureStateClassState(classStateFs, elementId);
-      if (!fsClassState) {
+      const fsItem = findClassStateFixtureStateItem(classStateFs, elementId);
+      if (!fsItem) {
         if (initialStates.current[elPath]) {
           const { state } = initialStates.current[elPath];
           const elRef = elRefs.current[elPath];
@@ -91,7 +91,7 @@ export function useFixtureClassState(
           }
 
           setClassStateFs(prevFs =>
-            createFixtureStateClassState({
+            createClassStateFixtureStateItem({
               classStateFs: prevFs,
               elementId,
               values: createValues(state),
@@ -119,14 +119,14 @@ export function useFixtureClassState(
         //   2. The fixture state changed
         // Here we're interested in the second scenario. In the first scenario
         // we want to let the component state override the fixture state.
-        const prevFsClassState = findFixtureStateClassState(
+        const prevFsItem = findClassStateFixtureStateItem(
           prevFsRef.current,
           elementId
         );
-        if (prevFsClassState && !isEqual(prevFsClassState, fsClassState)) {
+        if (prevFsItem && !isEqual(prevFsItem, fsItem)) {
           return replaceState(
             elRef,
-            extendWithValues(elRef.state, fsClassState.values)
+            extendWithValues(elRef.state, fsItem.values)
           );
         }
       }
@@ -156,13 +156,13 @@ export function useFixtureClassState(
     setInitialState(initialStates.current, elPath, elRef);
 
     const elementId = { decoratorId, elPath };
-    const fsClassState = findFixtureStateClassState(
+    const fsClassState = findClassStateFixtureStateItem(
       lastFsRef.current,
       elementId
     );
     if (!fsClassState) {
       setClassStateFs(prevFs =>
-        createFixtureStateClassState({
+        createClassStateFixtureStateItem({
           classStateFs: prevFs,
           elementId,
           values: createValues(state),
