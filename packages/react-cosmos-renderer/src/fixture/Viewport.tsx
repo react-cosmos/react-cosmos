@@ -1,11 +1,7 @@
 'use client';
 import React from 'react';
+import { ViewportFixtureState } from 'react-cosmos-core';
 import { useFixtureState } from './useFixtureState.js';
-
-type Viewport = {
-  width: number;
-  height: number;
-};
 
 type Props = {
   children: React.ReactNode;
@@ -14,7 +10,7 @@ type Props = {
 };
 
 export function Viewport({ children, width, height }: Props) {
-  const [, setViewport] = useFixtureState<Viewport>('viewport');
+  const [, setViewport] = useFixtureState<ViewportFixtureState>('viewport');
 
   React.useEffect(() => {
     setViewport({ width, height });

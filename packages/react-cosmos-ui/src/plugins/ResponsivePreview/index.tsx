@@ -1,4 +1,5 @@
 import React, { SetStateAction } from 'react';
+import { Viewport, ViewportFixtureState } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
 import { RendererCoreSpec } from '../RendererCore/spec.js';
 import { StorageSpec } from '../Storage/spec.js';
@@ -9,10 +10,9 @@ import {
   DEFAULT_VIEWPORT_STATE,
   ResponsivePreviewContext,
   VIEWPORT_STORAGE_KEY,
-  ViewportFixtureState,
   ViewportState,
 } from './shared.js';
-import { ResponsivePreviewSpec, ResponsiveViewport } from './spec.js';
+import { ResponsivePreviewSpec } from './spec.js';
 
 const { plug, namedPlug, register } = createPlugin<ResponsivePreviewSpec>({
   name: 'responsivePreview',
@@ -73,11 +73,9 @@ if (process.env.NODE_ENV !== 'test') register();
 function useViewportChange(context: ResponsivePreviewContext) {
   const viewportState = getViewportState(context);
   return React.useCallback(
-    (viewportChange: SetStateAction<ResponsiveViewport>) => {
+    (change: SetStateAction<Viewport>) => {
       const viewport =
-        typeof viewportChange === 'function'
-          ? viewportChange(viewportState.viewport)
-          : viewportChange;
+        typeof change === 'function' ? change(viewportState.viewport) : change;
       setViewportState(context, { ...viewportState, enabled: true, viewport });
       setViewportFixtureState(context, viewport);
     },

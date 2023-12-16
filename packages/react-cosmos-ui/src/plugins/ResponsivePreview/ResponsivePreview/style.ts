@@ -1,5 +1,5 @@
+import { Viewport } from 'react-cosmos-core';
 import { white20 } from '../../../style/colors.js';
-import { ResponsiveViewport } from '../spec.js';
 
 export const responsivePreviewPadding = {
   top: 8,
@@ -16,8 +16,8 @@ export function getStyles({
   viewport,
   scaled,
 }: {
-  container: ResponsiveViewport;
-  viewport: ResponsiveViewport;
+  container: Viewport;
+  viewport: Viewport;
   scaled: boolean;
 }) {
   const width = Math.max(16, viewport.width);
@@ -39,8 +39,8 @@ export function getStyles({
 }
 
 export function getViewportScaleFactor(
-  viewport: ResponsiveViewport,
-  container: ResponsiveViewport
+  viewport: Viewport,
+  container: Viewport
 ) {
   const containerViewport = getAvailableViewport(container);
   return Math.min(
@@ -49,7 +49,7 @@ export function getViewportScaleFactor(
   );
 }
 
-function getAvailableViewport(container: ResponsiveViewport) {
+function getAvailableViewport(container: Viewport) {
   return {
     width: container.width - getHorPadding(),
     height: container.height - getVerPadding(),
