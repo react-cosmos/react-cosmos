@@ -19,11 +19,11 @@ export function useCreateFixtureState(
     // 1. Initially: No corresponding fixture state value is found
     // 2: Default value change: Current value is reset to new default value
     setFixtureState(prevFs => {
-      const fsControl = prevFs && prevFs[inputName];
+      const controlFs = prevFs && prevFs[inputName];
       if (
-        fsControl &&
-        fsControl.type === 'standard' &&
-        fsValueExtendsBaseValue(fsControl.defaultValue, defaultValue)
+        controlFs &&
+        controlFs.type === 'standard' &&
+        fsValueExtendsBaseValue(controlFs.defaultValue, defaultValue)
       )
         return prevFs;
 

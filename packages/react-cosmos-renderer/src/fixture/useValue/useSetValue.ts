@@ -49,8 +49,8 @@ function getCurrentValueFromFixtureState(
   inputName: string,
   defaultValue: FixtureStateData
 ) {
-  const fsControl = fixtureState && fixtureState[inputName];
-  return fsControl && fsControl.type === 'standard'
-    ? extendWithValue(defaultValue, fsControl.currentValue)
+  const controlFs = fixtureState && fixtureState[inputName];
+  return controlFs && controlFs.type === 'standard'
+    ? extendWithValue(defaultValue, controlFs.currentValue)
     : defaultValue;
 }
