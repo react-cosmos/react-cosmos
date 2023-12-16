@@ -1,37 +1,34 @@
-import React, { useEffect } from 'react';
-import { findFixtureStateControl } from 'react-cosmos-core';
-import { FixtureContext } from '../FixtureContext.js';
+import { useEffect } from 'react';
+import { ControlsFixtureState } from 'react-cosmos-core';
+import { useFixtureState } from '../useFixtureState.js';
 import { getDefaultSelectValue, UseSelectArgs } from './shared.js';
 
 export function useCreateFixtureState<Option extends string>(
   selectName: string,
   args: UseSelectArgs<Option>
 ) {
-  const { setFixtureState } = React.useContext(FixtureContext);
+  const [, setFixtureState] = useFixtureState<ControlsFixtureState>('controls');
   const defaultValue = getDefaultSelectValue(args);
   useEffect(() => {
     // The fixture state for this select is (re)created in two situations:
     // 1. Initially: No corresponding fixture state select is found
     // 2: Default value change: Current value is reset to new default value
     setFixtureState(prevFs => {
-      const fsControl = findFixtureStateControl(prevFs, selectName);
+      const controlFs = prevFs && prevFs[selectName];
       if (
-        fsControl &&
-        fsControl.type === 'select' &&
-        fsControl.defaultValue === defaultValue
+        controlFs &&
+        controlFs.type === 'select' &&
+        controlFs.defaultValue === defaultValue
       )
         return prevFs;
 
       return {
         ...prevFs,
-        controls: {
-          ...prevFs.controls,
-          [selectName]: {
-            type: 'select',
-            options: args.options,
-            defaultValue,
-            currentValue: defaultValue,
-          },
+        [selectName]: {
+          type: 'select',
+          options: args.options,
+          defaultValue,
+          currentValue: defaultValue,
         },
       };
     });

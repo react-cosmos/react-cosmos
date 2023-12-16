@@ -3,7 +3,7 @@ import React from 'react';
 import {
   ClassStateMock,
   createValues,
-  updateFixtureStateClassState,
+  updateClassStateFixtureStateItem,
   uuid,
 } from 'react-cosmos-core';
 import { Counter } from '../testHelpers/components.js';
@@ -61,13 +61,14 @@ testRenderer(
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
-    const [, { elementId }] = getClassState(fixtureState, 2);
+    const classStateFs = getClassState(fixtureState, 2);
+    const [, { elementId }] = classStateFs;
     setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: updateFixtureStateClassState({
-          fixtureState,
+        classState: updateClassStateFixtureStateItem({
+          classStateFs,
           elementId,
           values: createValues({ count: 100 }),
         }),

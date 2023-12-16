@@ -1,4 +1,5 @@
 import React, { SetStateAction } from 'react';
+import { Viewport, ViewportFixtureState } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
 import { RendererCoreSpec } from '../RendererCore/spec.js';
 import { StorageSpec } from '../Storage/spec.js';
@@ -7,12 +8,11 @@ import { ToggleButton } from './ToggleButton/index.js';
 import {
   DEFAULT_DEVICES,
   DEFAULT_VIEWPORT_STATE,
-  FixtureStateWithViewport,
   ResponsivePreviewContext,
   VIEWPORT_STORAGE_KEY,
   ViewportState,
 } from './shared.js';
-import { ResponsivePreviewSpec, ResponsiveViewport } from './spec.js';
+import { ResponsivePreviewSpec } from './spec.js';
 
 const { plug, namedPlug, register } = createPlugin<ResponsivePreviewSpec>({
   name: 'responsivePreview',
@@ -56,10 +56,10 @@ namedPlug('rendererAction', 'responsivePreview', ({ pluginContext }) => {
       onToggle={() => {
         if (enabled) {
           setViewportState(pluginContext, { ...viewportState, enabled: false });
-          setFixtureStateViewport(pluginContext, null);
+          setViewportFixtureState(pluginContext, null);
         } else {
           setViewportState(pluginContext, { ...viewportState, enabled: true });
-          setFixtureStateViewport(pluginContext, viewport);
+          setViewportFixtureState(pluginContext, viewport);
         }
       }}
     />
@@ -73,13 +73,11 @@ if (process.env.NODE_ENV !== 'test') register();
 function useViewportChange(context: ResponsivePreviewContext) {
   const viewportState = getViewportState(context);
   return React.useCallback(
-    (viewportChange: SetStateAction<ResponsiveViewport>) => {
+    (change: SetStateAction<Viewport>) => {
       const viewport =
-        typeof viewportChange === 'function'
-          ? viewportChange(viewportState.viewport)
-          : viewportChange;
+        typeof change === 'function' ? change(viewportState.viewport) : change;
       setViewportState(context, { ...viewportState, enabled: true, viewport });
-      setFixtureStateViewport(context, viewport);
+      setViewportFixtureState(context, viewport);
     },
     [context, viewportState]
   );
@@ -102,11 +100,11 @@ function getViewportState(context: ResponsivePreviewContext): ViewportState {
     DEFAULT_VIEWPORT_STATE;
 
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
-  const fixtureState =
-    rendererCore.getFixtureState() as FixtureStateWithViewport;
+  const viewport =
+    rendererCore.getFixtureState<ViewportFixtureState>('viewport');
 
-  return fixtureState.viewport
-    ? { ...viewportState, enabled: true, viewport: fixtureState.viewport }
+  return viewport
+    ? { ...viewportState, enabled: true, viewport }
     : viewportState;
 }
 
@@ -119,14 +117,11 @@ function setViewportState(
   storage.setItem(VIEWPORT_STORAGE_KEY, viewportState);
 }
 
-function setFixtureStateViewport(
+function setViewportFixtureState(
   context: ResponsivePreviewContext,
-  viewport: null | ResponsiveViewport
+  viewport: ViewportFixtureState
 ) {
   const { getMethodsOf } = context;
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
-  rendererCore.setFixtureState(fixtureState => ({
-    ...fixtureState,
-    viewport,
-  }));
+  rendererCore.setFixtureState<ViewportFixtureState>('viewport', viewport);
 }

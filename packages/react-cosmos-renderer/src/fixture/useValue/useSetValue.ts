@@ -1,19 +1,18 @@
 import React from 'react';
 import {
-  FixtureState,
+  ControlsFixtureState,
   FixtureStateData,
   createValue,
   extendWithValue,
-  findFixtureStateControl,
 } from 'react-cosmos-core';
-import { FixtureContext } from '../FixtureContext.js';
+import { useFixtureState } from '../useFixtureState.js';
 import { SetValue } from './shared.js';
 
 export function useSetValue<T extends FixtureStateData>(
   inputName: string,
   defaultValue: T
 ): SetValue<T> {
-  const { setFixtureState } = React.useContext(FixtureContext);
+  const [, setFixtureState] = useFixtureState<ControlsFixtureState>('controls');
   return React.useCallback(
     stateChange => {
       setFixtureState(prevFs => {
@@ -33,13 +32,10 @@ export function useSetValue<T extends FixtureStateData>(
 
         return {
           ...prevFs,
-          controls: {
-            ...prevFs.controls,
-            [inputName]: {
-              type: 'standard',
-              defaultValue: createValue(defaultValue),
-              currentValue: createValue(currentValue),
-            },
+          [inputName]: {
+            type: 'standard',
+            defaultValue: createValue(defaultValue),
+            currentValue: createValue(currentValue),
           },
         };
       });
@@ -49,12 +45,12 @@ export function useSetValue<T extends FixtureStateData>(
 }
 
 function getCurrentValueFromFixtureState(
-  fixtureState: FixtureState,
+  fixtureState: ControlsFixtureState | undefined,
   inputName: string,
   defaultValue: FixtureStateData
-): unknown {
-  const fsControl = findFixtureStateControl(fixtureState, inputName);
-  return fsControl && fsControl.type === 'standard'
-    ? extendWithValue(defaultValue, fsControl.currentValue)
+) {
+  const controlFs = fixtureState && fixtureState[inputName];
+  return controlFs && controlFs.type === 'standard'
+    ? extendWithValue(defaultValue, controlFs.currentValue)
     : defaultValue;
 }

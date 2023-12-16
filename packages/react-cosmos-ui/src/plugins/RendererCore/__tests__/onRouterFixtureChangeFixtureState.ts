@@ -40,7 +40,7 @@ function emitRouterFixtureReselect() {
 }
 
 function getFixtureState() {
-  return getRendererCoreMethods().getFixtureState();
+  return getRendererCoreMethods().getAllFixtureState();
 }
 
 it('resets fixture state on select', async () => {

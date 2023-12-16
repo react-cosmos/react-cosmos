@@ -1,5 +1,11 @@
-import React from 'react';
-import { FixtureElementId, FixtureId, FixtureState } from 'react-cosmos-core';
+import React, { useCallback } from 'react';
+import {
+  ClassStateFixtureState,
+  ControlsFixtureState,
+  FixtureElementId,
+  FixtureId,
+  PropsFixtureState,
+} from 'react-cosmos-core';
 import { PluginContext, createPlugin } from 'react-plugin';
 import {
   FixtureExpansionGroup,
@@ -9,10 +15,14 @@ import {
 } from '../../components/ValueInputTree/index.js';
 import { TreeExpansion } from '../../shared/treeExpansion.js';
 import { SidePanelRowSlotProps } from '../../slots/SidePanelRowSlot.js';
+import { GetFixtureState } from '../RendererCore/spec.js';
 import { StorageSpec } from '../Storage/spec.js';
 import { BlankState } from './BlankState.js';
 import { PropsPanel } from './PropsPanel/index.js';
-import { PROPS_TREE_EXPANSION_STORAGE_KEY } from './shared.js';
+import {
+  PROPS_TREE_EXPANSION_STORAGE_KEY,
+  SetPropsFixtureState,
+} from './shared.js';
 import { PropsPanelSpec } from './spec.js';
 
 type PropsPanelContext = PluginContext<PropsPanelSpec>;
@@ -25,10 +35,16 @@ namedPlug<SidePanelRowSlotProps>(
   'sidePanelRow',
   'props',
   ({ pluginContext, slotProps }) => {
-    const { fixtureId, fixtureState, onFixtureStateChange } = slotProps;
+    const { fixtureId, getFixtureState, setFixtureState } = slotProps;
     const { fixtureExpansion, onElementExpansionChange } = useFixtureExpansion(
       pluginContext,
       fixtureId
+    );
+
+    const fixtureState = getFixtureState<PropsFixtureState>('props');
+    const onFixtureStateChange = useCallback<SetPropsFixtureState>(
+      change => setFixtureState<PropsFixtureState>('props', change),
+      [setFixtureState]
     );
 
     return (
@@ -50,8 +66,8 @@ namedPlug<SidePanelRowSlotProps>(
   'sidePanelRow',
   'blankState',
   ({ slotProps }) => {
-    const { fixtureState } = slotProps;
-    return shouldShowBlankState(fixtureState) ? <BlankState /> : null;
+    const { getFixtureState } = slotProps;
+    return shouldShowBlankState(getFixtureState) ? <BlankState /> : null;
   }
 );
 
@@ -91,16 +107,17 @@ function useFixtureExpansion(context: PropsPanelContext, fixtureId: FixtureId) {
   };
 }
 
-function shouldShowBlankState(fixtureState: FixtureState) {
-  const hasProps = fixtureState.props && fixtureState.props.some(hasFsValues);
+function shouldShowBlankState(getFixtureState: GetFixtureState) {
+  const props = getFixtureState<PropsFixtureState>('props');
+  const hasProps = props && props.some(hasFsValues);
   if (hasProps) return false;
 
-  const hasClassState =
-    fixtureState.classState && fixtureState.classState.some(hasFsValues);
+  const classState = getFixtureState<ClassStateFixtureState>('classState');
+  const hasClassState = classState && classState.some(hasFsValues);
   if (hasClassState) return false;
 
-  const hasControls =
-    fixtureState.controls && Object.keys(fixtureState.controls).length > 0;
+  const controls = getFixtureState<ControlsFixtureState>('controls');
+  const hasControls = controls && Object.keys(controls).length > 0;
   if (hasControls) return false;
 
   return true;

@@ -1,11 +1,9 @@
 import { isEqual } from 'lodash-es';
 import React, { useCallback } from 'react';
 import {
-  FixtureState,
-  FixtureStateClassState,
+  ClassStateFixtureStateItem,
   FixtureStateValues,
-  StateUpdater,
-  updateFixtureStateClassState,
+  updateClassStateFixtureStateItem,
 } from 'react-cosmos-core';
 import {
   SidePanelActions,
@@ -24,30 +22,31 @@ import {
 import { IconButton32 } from '../../../components/buttons/index.js';
 import { RotateCcwIcon } from '../../../components/icons/index.js';
 import { TreeExpansion } from '../../../shared/treeExpansion.js';
-import { createClassStateFsUpdater } from './shared.js';
+import { SetClassStateFixtureState } from '../shared.js';
+import { classStateFsItemUpdater } from './shared.js';
 
 type Props = {
-  fsClassState: FixtureStateClassState;
+  classStateFsItem: ClassStateFixtureStateItem;
   fixtureExpansion: FixtureExpansion;
-  onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
+  onFixtureStateChange: SetClassStateFixtureState;
   onElementExpansionChange: OnElementExpansionChange;
 };
 
 export function ComponentClassState({
-  fsClassState,
+  classStateFsItem,
   fixtureExpansion,
   onFixtureStateChange,
   onElementExpansionChange,
 }: Props) {
-  const { componentName, elementId, values } = fsClassState;
+  const { componentName, elementId, values } = classStateFsItem;
 
   const [initialValues] = React.useState(() => values);
   const handleValuesReset = React.useCallback(
     () =>
       onFixtureStateChange(
-        createClassStateFsUpdater(elementId, prevFs =>
-          updateFixtureStateClassState({
-            fixtureState: prevFs,
+        classStateFsItemUpdater(elementId, prevFs =>
+          updateClassStateFixtureStateItem({
+            classStateFs: prevFs,
             elementId,
             values: initialValues,
           })
@@ -59,9 +58,9 @@ export function ComponentClassState({
   const handleValueChange = React.useCallback(
     (newValues: FixtureStateValues) => {
       onFixtureStateChange(
-        createClassStateFsUpdater(elementId, prevFs =>
-          updateFixtureStateClassState({
-            fixtureState: prevFs,
+        classStateFsItemUpdater(elementId, prevFs =>
+          updateClassStateFixtureStateItem({
+            classStateFs: prevFs,
             elementId,
             values: newValues,
           })

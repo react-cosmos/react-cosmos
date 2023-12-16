@@ -1,13 +1,13 @@
-import { RendererId } from 'react-cosmos-core';
+import { RendererId, fixtureStateByName } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
 import { RouterSpec } from '../Router/spec.js';
-import { extendInitialFixtureState } from './extendInitialFixtureState.js';
 import { onRouterFixtureReselect } from './onRouterFixtureReselect.js';
 import { onRouterFixtureSelect } from './onRouterFixtureSelect.js';
 import { onRouterFixtureUnselect } from './onRouterFixtureUnselect.js';
 import { receiveResponse } from './receiveResponse/index.js';
 import { reloadRenderer } from './reloadRenderer.js';
 import { setFixtureState } from './setFixtureState.js';
+import { setGlobalFixtureState } from './setGlobalFixtureState.js';
 import { RendererCoreContext } from './shared/index.js';
 import { RendererCoreSpec } from './spec.js';
 
@@ -22,20 +22,21 @@ const { on, register, onLoad } = createPlugin<RendererCoreSpec>({
     primaryRendererId: null,
     fixtures: {},
     fixtureState: {},
-    initialFixtureStateUpdaters: [],
+    globalFixtureState: {},
   },
   methods: {
     getRendererUrl,
     getConnectedRendererIds,
     getPrimaryRendererId,
     getFixtures,
-    getFixtureState,
     isRendererConnected,
     reloadRenderer,
-    setFixtureState,
-    extendInitialFixtureState,
     selectPrimaryRenderer,
     receiveResponse,
+    getAllFixtureState,
+    getFixtureState,
+    setFixtureState,
+    setGlobalFixtureState,
   },
 });
 
@@ -70,8 +71,12 @@ function getFixtures({ getState }: RendererCoreContext) {
   return getState().fixtures;
 }
 
-function getFixtureState({ getState }: RendererCoreContext) {
+function getAllFixtureState({ getState }: RendererCoreContext) {
   return getState().fixtureState;
+}
+
+function getFixtureState<T>({ getState }: RendererCoreContext, name: string) {
+  return fixtureStateByName<T>(getState().fixtureState, name);
 }
 
 function isRendererConnected({ getState }: RendererCoreContext) {

@@ -11,14 +11,12 @@ beforeEach(register);
 
 afterEach(resetPlugins);
 
-const fixtureState = {
-  viewport: { width: 420, height: 420 },
-};
-
 function registerTestPlugins() {
   mockStorage();
   mockRendererCore({
-    getFixtureState: () => fixtureState,
+    getFixtureState: (context, name) => {
+      return name === 'viewport' ? { width: 420, height: 420 } : undefined;
+    },
   });
 }
 

@@ -46,7 +46,7 @@ it('sets fixtureState in renderer state', async () => {
   mockFixtureStateChangeResponse('mockRendererId1');
 
   await waitFor(() =>
-    expect(getRendererCoreMethods().getFixtureState()).toEqual(fixtureState)
+    expect(getRendererCoreMethods().getAllFixtureState()).toEqual(fixtureState)
   );
 });
 
@@ -56,7 +56,7 @@ it('ignores update from secondary renderer', async () => {
   mockFixtureStateChangeResponse('mockRendererId2');
 
   await waitFor(() =>
-    expect(getRendererCoreMethods().getFixtureState()).toEqual({})
+    expect(getRendererCoreMethods().getAllFixtureState()).toEqual({})
   );
 });
 

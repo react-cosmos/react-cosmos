@@ -5,22 +5,21 @@ import {
   ComponentType,
   MutableRefObject,
   ReactNode,
-  useContext,
   useEffect,
   useRef,
 } from 'react';
 import {
+  ClassStateFixtureState,
   FixtureDecoratorId,
-  FixtureState,
-  createFixtureStateClassState,
+  createClassStateFixtureStateItem,
   createValues,
   extendWithValues,
-  findFixtureStateClassState,
+  filterClassStateFixtureState,
+  findClassStateFixtureStateItem,
   getComponentName,
-  getFixtureStateClassState,
-  removeFixtureStateClassState,
+  removeClassStateFixtureStateItem,
 } from 'react-cosmos-core';
-import { FixtureContext } from '../../FixtureContext.js';
+import { useFixtureState } from '../../useFixtureState.js';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
 import { decorateFixtureRefs } from './decorateFixtureRefs/index.js';
 import {
@@ -30,16 +29,17 @@ import {
   replaceState,
 } from './shared.js';
 
-export function useFixtureState(
+export function useFixtureClassState(
   fixture: ReactNode,
   decoratorId: FixtureDecoratorId,
   elRefs: MutableRefObject<ElRefs>
 ) {
   const elPaths = findRelevantElementPaths(fixture);
-  const { fixtureState, setFixtureState } = useContext(FixtureContext);
-  const lastFixtureState = useFixtureStateRef(fixtureState);
+  const [classStateFs, setClassStateFs] =
+    useFixtureState<ClassStateFixtureState>('classState');
+  const lastFsRef = useFixtureStateRef(classStateFs);
   // Keep a copy of the previous fixture state to observe changes
-  const prevFixtureState = useRef(fixtureState);
+  const prevFsRef = useRef(classStateFs);
   // Remember initial state of child components to use as a default when
   // resetting fixture state
   const initialStates = useRef<InitialStates>({});
@@ -60,14 +60,13 @@ export function useFixtureState(
     // Remove fixture state for removed child elements (likely via HMR)
     // FIXME: Also invalidate fixture state at this element path if the
     // component type of the corresponding element changed
-    const fsProps = getFixtureStateClassState(fixtureState, decoratorId);
-    fsProps.forEach(({ elementId }) => {
+    const decoratorFs = filterClassStateFixtureState(classStateFs, decoratorId);
+    decoratorFs.forEach(({ elementId }) => {
       const { elPath } = elementId;
       if (elPaths.indexOf(elementId.elPath) === -1) {
-        setFixtureState(prevFs => ({
-          ...prevFs,
-          classState: removeFixtureStateClassState(fixtureState, elementId),
-        }));
+        setClassStateFs(prevFs =>
+          removeClassStateFixtureStateItem(prevFs, elementId)
+        );
         if (elRefs.current[elPath]) {
           delete elRefs.current[elPath];
           delete initialStates.current[elPath];
@@ -81,8 +80,8 @@ export function useFixtureState(
       // Component fixture state can be provided before the fixture mounts (eg.
       // a previous snapshot of a fixture state or the current fixture state
       // from another renderer)
-      const fsClassState = findFixtureStateClassState(fixtureState, elementId);
-      if (!fsClassState) {
+      const fsItem = findClassStateFixtureStateItem(classStateFs, elementId);
+      if (!fsItem) {
         if (initialStates.current[elPath]) {
           const { state } = initialStates.current[elPath];
           const elRef = elRefs.current[elPath];
@@ -91,17 +90,16 @@ export function useFixtureState(
             replaceState(elRef, state);
           }
 
-          setFixtureState(prevFs => ({
-            ...prevFs,
-            classState: createFixtureStateClassState({
-              fixtureState: prevFs,
+          setClassStateFs(prevFs =>
+            createClassStateFixtureStateItem({
+              classStateFs: prevFs,
               elementId,
               values: createValues(state),
               componentName: getComponentName(
                 elRef.constructor as ComponentType
               ),
-            }),
-          }));
+            })
+          );
         }
       } else {
         const elRef = elRefs.current[elPath];
@@ -121,30 +119,23 @@ export function useFixtureState(
         //   2. The fixture state changed
         // Here we're interested in the second scenario. In the first scenario
         // we want to let the component state override the fixture state.
-        const prevFsClassState = findFixtureStateClassState(
-          prevFixtureState.current,
+        const prevFsItem = findClassStateFixtureStateItem(
+          prevFsRef.current,
           elementId
         );
-        if (prevFsClassState && !isEqual(prevFsClassState, fsClassState)) {
+        if (prevFsItem && !isEqual(prevFsItem, fsItem)) {
           return replaceState(
             elRef,
-            extendWithValues(elRef.state, fsClassState.values)
+            extendWithValues(elRef.state, fsItem.values)
           );
         }
       }
     });
-  }, [
-    decoratorId,
-    elPaths,
-    elRefs,
-    fixtureState,
-    fixtureState.classState,
-    setFixtureState,
-  ]);
+  }, [classStateFs, decoratorId, elPaths, elRefs, setClassStateFs]);
 
   // Update prev fixture state ref *after* running effects that reference it
   useEffect(() => {
-    prevFixtureState.current = fixtureState;
+    prevFsRef.current = classStateFs;
   });
 
   return decorateFixtureRefs(fixture, handleRef, cachedRefHandlers.current);
@@ -165,20 +156,19 @@ export function useFixtureState(
     setInitialState(initialStates.current, elPath, elRef);
 
     const elementId = { decoratorId, elPath };
-    const fsClassState = findFixtureStateClassState(
-      lastFixtureState.current,
+    const fsClassState = findClassStateFixtureStateItem(
+      lastFsRef.current,
       elementId
     );
     if (!fsClassState) {
-      setFixtureState(prevFs => ({
-        ...prevFs,
-        classState: createFixtureStateClassState({
-          fixtureState: prevFs,
+      setClassStateFs(prevFs =>
+        createClassStateFixtureStateItem({
+          classStateFs: prevFs,
           elementId,
           values: createValues(state),
           componentName: getComponentName(elRef.constructor as ComponentType),
-        }),
-      }));
+        })
+      );
     } else {
       replaceState(elRef, extendWithValues(state, fsClassState.values));
     }
@@ -186,10 +176,10 @@ export function useFixtureState(
 }
 
 // Make latest fixture state accessible in ref callback
-function useFixtureStateRef(fixtureState: FixtureState) {
-  const ref = useRef(fixtureState);
+function useFixtureStateRef(classStateFs: ClassStateFixtureState | undefined) {
+  const ref = useRef(classStateFs);
   useEffect(() => {
-    ref.current = fixtureState;
+    ref.current = classStateFs;
   });
   return ref;
 }

@@ -54,7 +54,7 @@ it('returns empty fixture state', async () => {
   registerTestPlugins();
   loadTestPlugins();
   await waitFor(() =>
-    expect(getRendererCoreMethods().getFixtureState()).toEqual({})
+    expect(getRendererCoreMethods().getAllFixtureState()).toEqual({})
   );
 });
 
@@ -65,6 +65,6 @@ it('keeps fixtures state when secondary renderer connects', async () => {
   mockRendererReady('mockRendererId2');
 
   await waitFor(() =>
-    expect(getRendererCoreMethods().getFixtureState()).toEqual(fixtureState)
+    expect(getRendererCoreMethods().getAllFixtureState()).toEqual(fixtureState)
   );
 });

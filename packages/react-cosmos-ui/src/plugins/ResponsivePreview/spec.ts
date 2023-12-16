@@ -1,6 +1,6 @@
-export type ResponsiveViewport = { width: number; height: number };
+import { Viewport } from 'react-cosmos-core';
 
-export type ResponsiveDevice = ResponsiveViewport & {
+export type ResponsiveDevice = Viewport & {
   label: string;
 };
 

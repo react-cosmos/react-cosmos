@@ -1,4 +1,4 @@
-import { StateUpdater } from '../utils/types.js';
+import { StateUpdater } from '../utils/state.js';
 
 export type FixtureDecoratorId = string;
 
@@ -43,44 +43,6 @@ export type FixtureStateValue =
 
 export type FixtureStateValues = Record<string, FixtureStateValue>;
 
-export type FixtureRenderKey = number;
-
-export type FixtureStateProps = {
-  elementId: FixtureElementId;
-  values: FixtureStateValues;
-  renderKey: FixtureRenderKey;
-  componentName: string;
-};
-
-export type FixtureStateClassState = {
-  elementId: FixtureElementId;
-  values: FixtureStateValues;
-  componentName: string;
-};
-
-export type FixtureStateStandardControl = {
-  type: 'standard';
-  defaultValue: FixtureStateValue;
-  currentValue: FixtureStateValue;
-};
-
-export type FixtureStateSelectControl = {
-  type: 'select';
-  options: string[];
-  defaultValue: string;
-  currentValue: string;
-};
-
-export type FixtureStateControl =
-  | FixtureStateStandardControl
-  | FixtureStateSelectControl;
-
-export type FixtureStateControls = Record<string, FixtureStateControl>;
-
-export type FixtureState = {
-  props?: FixtureStateProps[];
-  classState?: FixtureStateClassState[];
-  controls?: FixtureStateControls;
-} & Record<string, unknown>;
+export type FixtureState = Record<string, unknown>;
 
 export type SetFixtureState = (update: StateUpdater<FixtureState>) => unknown;

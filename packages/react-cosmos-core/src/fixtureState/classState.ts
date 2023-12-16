@@ -5,89 +5,88 @@ import {
   updateItem,
 } from '../utils/array.js';
 import {
+  ClassStateFixtureState,
+  ClassStateFixtureStateItem,
+} from './classStateTypes.js';
+import {
   FixtureDecoratorId,
   FixtureElementId,
-  FixtureState,
-  FixtureStateClassState,
   FixtureStateValues,
 } from './types.js';
 
-export function getFixtureStateClassState(
-  fixtureState: FixtureState,
+export function filterClassStateFixtureState(
+  classStateFs: ClassStateFixtureState | undefined,
   decoratorId: FixtureDecoratorId
-): FixtureStateClassState[] {
-  const { classState } = fixtureState;
-  return classState
-    ? classState.filter(s => s.elementId.decoratorId === decoratorId)
+): ClassStateFixtureState {
+  return classStateFs
+    ? classStateFs.filter(s => s.elementId.decoratorId === decoratorId)
     : [];
 }
 
-export function findFixtureStateClassState(
-  fixtureState: FixtureState,
+export function findClassStateFixtureStateItem(
+  classStateFs: ClassStateFixtureState | undefined,
   elementId: FixtureElementId
-): void | FixtureStateClassState {
-  const { classState } = fixtureState;
-  return classState && find(classState, s => isEqual(s.elementId, elementId));
+): void | ClassStateFixtureStateItem {
+  return (
+    classStateFs && find(classStateFs, s => isEqual(s.elementId, elementId))
+  );
 }
 
-type CreateFixtureStateClassStateArgs = {
-  fixtureState: FixtureState;
+type CreateClassStateFixtureStateArgs = {
+  classStateFs: ClassStateFixtureState | undefined;
   elementId: FixtureElementId;
   values: FixtureStateValues;
   componentName: string;
 };
-export function createFixtureStateClassState({
-  fixtureState,
+export function createClassStateFixtureStateItem({
+  classStateFs,
   elementId,
   values,
   componentName,
-}: CreateFixtureStateClassStateArgs) {
-  const { classState = [] } = fixtureState;
-  return replaceOrAddItem(classState, createClassStateMatcher(elementId), {
-    elementId,
-    values,
-    componentName,
-  });
+}: CreateClassStateFixtureStateArgs) {
+  return replaceOrAddItem(
+    classStateFs ?? [],
+    createClassStateMatcher(elementId),
+    { elementId, values, componentName }
+  );
 }
 
-type UpdateFixtureStateClassStateArgs = {
-  fixtureState: FixtureState;
+type UpdateClassStateFixtureStateArgs = {
+  classStateFs: ClassStateFixtureState | undefined;
   elementId: FixtureElementId;
   values: FixtureStateValues;
 };
-export function updateFixtureStateClassState({
-  fixtureState,
+export function updateClassStateFixtureStateItem({
+  classStateFs,
   elementId,
   values,
-}: UpdateFixtureStateClassStateArgs) {
-  const classStateItem = expectFixtureStateClassState(fixtureState, elementId);
-  return updateItem(fixtureState.classState!, classStateItem, {
-    values,
-  });
+}: UpdateClassStateFixtureStateArgs) {
+  const item = expectClassStateItem(classStateFs, elementId);
+  return updateItem(classStateFs!, item, { values });
 }
 
-export function removeFixtureStateClassState(
-  fixtureState: FixtureState,
+export function removeClassStateFixtureStateItem(
+  classStateFs: ClassStateFixtureState | undefined,
   elementId: FixtureElementId
 ) {
   return removeItemMatch(
-    fixtureState.classState || [],
+    classStateFs ?? [],
     createClassStateMatcher(elementId)
   );
 }
 
 function createClassStateMatcher(elementId: FixtureElementId) {
-  return (p: FixtureStateClassState) => isEqual(p.elementId, elementId);
+  return (p: ClassStateFixtureStateItem) => isEqual(p.elementId, elementId);
 }
 
-function expectFixtureStateClassState(
-  fixtureState: FixtureState,
+function expectClassStateItem(
+  classStateFs: ClassStateFixtureState | undefined,
   elementId: FixtureElementId
-): FixtureStateClassState {
-  const classStateItem = findFixtureStateClassState(fixtureState, elementId);
-  if (!classStateItem) {
+): ClassStateFixtureStateItem {
+  const item = findClassStateFixtureStateItem(classStateFs, elementId);
+  if (!item) {
     const elId = JSON.stringify(elementId);
     throw new Error(`Fixture state class state missing for element "${elId}"`);
   }
-  return classStateItem;
+  return item;
 }
