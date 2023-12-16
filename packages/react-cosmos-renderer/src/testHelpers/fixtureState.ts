@@ -76,6 +76,16 @@ export function getClassState(
   return classState;
 }
 
-export function getControls(fixtureState: FixtureState) {
-  return fixtureStateByName<ControlsFixtureState>(fixtureState, 'controls');
+export function getControls(
+  fixtureState: FixtureState,
+  expectedCount: number = 1
+) {
+  const controls = fixtureStateByName<ControlsFixtureState>(
+    fixtureState,
+    'controls'
+  );
+  if (!controls || Object.keys(controls).length < expectedCount) {
+    throw new Error(`Controls missing in fixture state`);
+  }
+  return controls;
 }
