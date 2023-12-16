@@ -75,7 +75,6 @@ function getFixtureState({ getState }: RendererCoreContext) {
   return getState().fixtureState;
 }
 
-// TODO: Add tests for this method
 function getFixtureStateByName<T>(
   { getState }: RendererCoreContext,
   name: string
