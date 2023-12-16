@@ -29,14 +29,14 @@ const { on, register, onLoad } = createPlugin<RendererCoreSpec>({
     getConnectedRendererIds,
     getPrimaryRendererId,
     getFixtures,
-    getAllFixtureState,
-    getFixtureState,
     isRendererConnected,
     reloadRenderer,
-    setFixtureState,
-    setGlobalFixtureState,
     selectPrimaryRenderer,
     receiveResponse,
+    getAllFixtureState,
+    getFixtureState,
+    setFixtureState,
+    setGlobalFixtureState,
   },
 });
 

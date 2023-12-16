@@ -108,14 +108,14 @@ export function mockRendererCore(methods: MethodsOf<RendererCoreSpec> = {}) {
     getConnectedRendererIds: jest.fn(),
     getPrimaryRendererId: jest.fn(),
     getFixtures: jest.fn(),
-    getAllFixtureState: jest.fn(),
-    getFixtureState: jest.fn(),
     isRendererConnected: jest.fn(),
     reloadRenderer: jest.fn(),
-    setFixtureState: jest.fn(),
-    setGlobalFixtureState: jest.fn(),
     selectPrimaryRenderer: jest.fn(),
     receiveResponse: jest.fn(),
+    getAllFixtureState: jest.fn(),
+    getFixtureState: jest.fn(),
+    setFixtureState: jest.fn(),
+    setGlobalFixtureState: jest.fn(),
     ...methods,
   };
   mockMethodsOf<RendererCoreSpec>('rendererCore', allMethods);
