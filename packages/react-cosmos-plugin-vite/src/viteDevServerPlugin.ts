@@ -31,6 +31,9 @@ export async function viteDevServerPlugin({
       // https://vitejs.dev/config/server-options.html#server-host
       host: '0.0.0.0',
       port: parseInt(new URL(rendererUrl).port, 10),
+      // Prevent auto opening Cosmos renderer in browser when user has this
+      // option enabled in their Vite config
+      open: false,
     },
     plugins: [reactCosmosViteRollupPlugin(cosmosConfig, cosmosViteConfig)],
   });
