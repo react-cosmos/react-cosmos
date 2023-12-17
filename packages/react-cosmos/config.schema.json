@@ -16,7 +16,7 @@
       "minLength": 1
     },
     "detectLocalPlugins": {
-      "description": "Automatically detect and load local plugins [default: true].",
+      "description": "Automatically detect and load local plugins. [default: true]",
       "type": "boolean"
     },
     "disablePlugins": {
@@ -49,7 +49,7 @@
       "minLength": 1
     },
     "ignore": {
-      "description": "Patterns for ignoring fixture and decorator files (eg. [\"**/dist/**\"]]).",
+      "description": "Patterns for ignoring fixture and decorator files (eg. [\"**/dist/**\"]).",
       "type": "array",
       "items": { "type": "string", "minLength": 1 },
       "uniqueItems": true
