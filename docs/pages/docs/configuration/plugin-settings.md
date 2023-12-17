@@ -26,7 +26,7 @@ Settings under `ui.{pluginName}` keys are passed as configs to [UI plugins](/doc
 
 ### Custom Viewports
 
-`responsivePreview` is a plugin included by default. You customize the device list through the Cosmos config:
+`responsivePreview` is a plugin included by default. You customize the device list through the Cosmos config.
 
 ```json filename="cosmos.config.json"
 {
