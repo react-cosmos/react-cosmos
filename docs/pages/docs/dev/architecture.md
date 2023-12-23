@@ -52,6 +52,6 @@ The Cosmos Renderer is a versatile React wrapper that can run in the browser (if
 
 ### Renderer Messages
 
-Messages to and from the Renderer are split into Requests and Responses. The complete list messages is found [here](https://github.com/react-cosmos/react-cosmos/blob/main/packages/react-cosmos-core/src/renderer/rendererConnect.ts).
+Messages to and from the Renderer are split into Requests and Responses. The complete list messages can be found [here](https://github.com/react-cosmos/react-cosmos/blob/main/packages/react-cosmos-core/src/renderer/rendererConnect.ts).
 
 > While some requests might be organically followed by a corresponding response, they are asynchronous one-way messages and don't have a direct response as an HTTP call would.
