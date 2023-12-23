@@ -25,7 +25,7 @@ The Cosmos Server is a Node.js app that enables CLI commands for starting the de
 
 Server Plugins are responsible for:
 
-- Wire up the Cosmos Renderer using the user's toolkit (Vite, Webpack, Metro, etc.)
+- Wiring up the Cosmos Renderer within the user's toolkit (Vite, Webpack, Metro, etc.)
 - Any other functionality that requires a Node.js environment, like accessing the file system and exchanging messages with the Cosmos UI.
 
 ## Cosmos UI
@@ -52,6 +52,6 @@ The Cosmos Renderer is a versatile React wrapper that can run in the browser (if
 
 ### Renderer Messages
 
-Messages to and from the Renderer are split into Requests and Responses. The complete list messages can be found [here](https://github.com/react-cosmos/react-cosmos/blob/main/packages/react-cosmos-core/src/renderer/rendererConnect.ts).
+Messages to and from the Renderer are split into Requests and Responses. The complete list of supported messages can be found [here](https://github.com/react-cosmos/react-cosmos/blob/main/packages/react-cosmos-core/src/renderer/rendererConnect.ts).
 
 > While some requests might be organically followed by a corresponding response, they are asynchronous one-way messages and don't have a direct response as an HTTP call would.
