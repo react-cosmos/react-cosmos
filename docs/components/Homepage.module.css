@@ -25,3 +25,17 @@ a.demoPreview {
     border: 1px solid rgba(55, 55, 55, 1);
   }
 }
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  place-items: start center;
+  row-gap: 36px;
+  max-width: 1208px;
+  margin: 0 auto;
+  padding: 100px 0 32px 0;
+
+  li {
+    max-width: 256px;
+  }
+}

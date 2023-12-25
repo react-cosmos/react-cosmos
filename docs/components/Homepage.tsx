@@ -22,6 +22,36 @@ export function Homepage() {
         >
           <img src="/demo.png" />
         </a>
+        <ul className={styles.features}>
+          <li>
+            <strong>Fixtures.</strong> File-system based module convention for
+            defining component states effortlessly.
+          </li>
+          <li>
+            <strong>User Interface.</strong> User-friendly interface for
+            browsing fixtures with responsive viewports.
+          </li>
+          <li>
+            <strong>Control Panel.</strong> Component data manipulation through
+            UI controls for props and state.
+          </li>
+          <li>
+            <strong>Static Export.</strong> Interactive component library
+            deployable to any static hosting service.
+          </li>
+          <li>
+            <strong>Integration.</strong> Vite, Webpack, React Native, Next.js,
+            and support for integrating custom setups.
+          </li>
+          <li>
+            <strong>Plugins.</strong> Full-stack plugin system for extending
+            every aspect of React Cosmos.
+          </li>
+          <li>
+            <strong>High Quality.</strong> TypeScript. Minimal deps.
+            Meticulously designed and tested for the best DX.
+          </li>
+        </ul>
         <HomepageLogos />
       </div>
     </div>
