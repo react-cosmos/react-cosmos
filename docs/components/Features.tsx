@@ -3,7 +3,7 @@ import styles from './Features.module.css';
 import BoxSvg from './svg/icons/box.svg';
 import CodeSvg from './svg/icons/code.svg';
 import MonitorSvg from './svg/icons/monitor.svg';
-import SlidersSvg from './svg/icons/sliders.svg';
+import SettingsSvg from './svg/icons/settings.svg';
 import UploadCloudSvg from './svg/icons/upload-cloud.svg';
 import ZapSvg from './svg/icons/zap.svg';
 
@@ -17,18 +17,18 @@ export function Features() {
       />
       <Feature
         title="User Interface"
-        description="User-friendly interface for browsing fixtures with responsive viewports."
+        description="Beautiful interface for browsing fixtures and manipulating component inputs."
         icon={<MonitorSvg />}
-      />
-      <Feature
-        title="Control Panel"
-        description="Component data manipulation through UI controls for props and state."
-        icon={<SlidersSvg />}
       />
       <Feature
         title="Static Export"
         description="Interactive component library deployable to any static hosting service."
         icon={<UploadCloudSvg />}
+      />
+      <Feature
+        title="Integration"
+        description="Vite, Webpack, React Native, Next.js, and support for custom setups."
+        icon={<SettingsSvg />}
       />
       <Feature
         title="Plugins"
@@ -40,11 +40,6 @@ export function Features() {
         description="100% TypeScript. Minimal deps. Meticulously designed and tested."
         icon={<ZapSvg />}
       />
-      {/* <Feature
-        title="Integration."
-        description="Vite, Webpack, React Native, Next.js, and support for integrating custom setups."
-        icon={<SlidersSvg />}
-      /> */}
     </ul>
   );
 }
