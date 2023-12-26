@@ -24,7 +24,6 @@
 
   li {
     max-width: 300px;
-    font-weight: 400;
     color: hsl(204 12% 45%);
 
     :global(.dark) & {
@@ -44,7 +43,7 @@
     strong {
       display: block;
       font-weight: 400;
-      color: hsl(204 12% 10%);
+      color: hsl(204 12% 5%);
 
       @media (min-width: 640px) {
         display: inline;
