@@ -1,0 +1,42 @@
+.features {
+  margin: 0 auto;
+  max-width: 1208px;
+  border-top: 1px solid rgb(229, 231, 235);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  place-items: start center;
+  row-gap: 36px;
+  padding: 80px 0;
+
+  :global(.dark) & {
+    border-top: 1px solid rgb(31, 31, 31);
+  }
+
+  li {
+    max-width: 256px;
+    font-weight: 400;
+    /* color: hsl(204 20% 40%); */
+    color: rgb(107, 114, 128);
+
+    :global(.dark) & {
+      color: rgb(163, 163, 163);
+    }
+
+    svg {
+      display: inline;
+      margin-right: 2px;
+      transform: translate(0, -1px);
+    }
+
+    strong {
+      font-weight: 500;
+      /* color: hsl(204 20% 20%); */
+      color: rgb(17, 24, 39);
+
+      :global(.dark) & {
+        color: rgb(243, 244, 246);
+        opacity: 0.9;
+      }
+    }
+  }
+}
