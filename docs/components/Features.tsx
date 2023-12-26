@@ -11,33 +11,33 @@ export function Features() {
   return (
     <ul className={styles.features}>
       <Feature
-        title="Fixtures."
-        description="File-system based module convention for defining component inputs effortlessly."
+        title="Fixtures"
+        description="File-system based module convention for defining component states effortlessly."
         icon={<CodeSvg />}
       />
       <Feature
-        title="User Interface."
+        title="User Interface"
         description="User-friendly interface for browsing fixtures with responsive viewports."
         icon={<MonitorSvg />}
       />
       <Feature
-        title="Control Panel."
+        title="Control Panel"
         description="Component data manipulation through UI controls for props and state."
         icon={<SlidersSvg />}
       />
       <Feature
-        title="Static Export."
+        title="Static Export"
         description="Interactive component library deployable to any static hosting service."
         icon={<UploadCloudSvg />}
       />
       <Feature
-        title="Plugins."
+        title="Plugins"
         description="Full-stack plugin system for extending every aspect of React Cosmos."
         icon={<BoxSvg />}
       />
       <Feature
-        title="High Quality."
-        description="TypeScript. Minimal deps. Meticulously designed and tested for best DX."
+        title="High Quality"
+        description="100% TypeScript. Minimal deps. Meticulously designed and tested."
         icon={<ZapSvg />}
       />
       {/* <Feature
