@@ -33,8 +33,6 @@ The `useValue` hook can be used to control any type of serializable data, like s
 import { useSelect } from 'react-cosmos/client';
 
 export default () => {
-  // useSelect also returns a setter as the second value in the return tuple,
-  // like the useState hook, in case you want to change the value programatically.
   const [buttonType] = useSelect('buttonType', {
     options: ['primary', 'secondary', 'danger'],
   });
@@ -42,6 +40,8 @@ export default () => {
   return <Button type={buttonType}>Press me</Button>;
 };
 ```
+
+`useSelect` also returns a setter as the second value in the return tuple, like the `useState` hook, in case you want to change the value programatically.
 
 <Callout type="info">
   `useValue` and `useSelect` (and Cosmos in general) work great with TypeScript.
