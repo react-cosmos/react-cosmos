@@ -1,4 +1,5 @@
 import { useData } from 'nextra/data';
+import { Benefits } from './Benefits';
 import { Features } from './Features';
 import styles from './Homepage.module.css';
 import { HomepageHero } from './HomepageHero';
@@ -24,6 +25,7 @@ export function Homepage() {
           <img src="/demo.png" />
         </a>
         <HomepageLogos />
+        <Benefits />
         <Features />
       </div>
     </div>

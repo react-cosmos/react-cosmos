@@ -1,0 +1,34 @@
+.root {
+  margin: 0 auto;
+  max-width: 1208px;
+  padding: min(12vw, 6rem) 0;
+  padding-left: max(env(safe-area-inset-left), 1.5rem);
+  padding-right: max(env(safe-area-inset-right), 1.5rem);
+  border-top: 1px solid rgb(229, 231, 235);
+
+  :global(.dark) & {
+    border-top: 1px solid rgb(31, 31, 31);
+  }
+}
+
+.benefits {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  place-items: start center;
+  row-gap: 40px;
+
+  @media (min-width: 960px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  li {
+    max-width: 320px;
+    color: hsl(204 12% 5%);
+    font-size: 22px;
+    font-weight: 400;
+
+    :global(.dark) & {
+      color: hsl(204, 8%, 90%);
+    }
+  }
+}

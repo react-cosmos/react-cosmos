@@ -9,38 +9,41 @@ import ZapSvg from './svg/icons/zap.svg';
 
 export function Features() {
   return (
-    <ul className={styles.features}>
-      <Feature
-        title="Fixtures"
-        description="File-system based module convention for defining component states effortlessly."
-        icon={<CodeSvg />}
-      />
-      <Feature
-        title="User Interface"
-        description="Beautiful interface for browsing fixtures and manipulating component inputs."
-        icon={<MonitorSvg />}
-      />
-      <Feature
-        title="Static Export"
-        description="Interactive component library deployable to any static hosting service."
-        icon={<UploadCloudSvg />}
-      />
-      <Feature
-        title="Integration"
-        description="Vite, Webpack, React Native, Next.js, and support for custom setups."
-        icon={<SettingsSvg />}
-      />
-      <Feature
-        title="Plugins"
-        description="Full-stack plugin system for extending every aspect of React Cosmos."
-        icon={<BoxSvg />}
-      />
-      <Feature
-        title="High Quality"
-        description="100% TypeScript. Minimal deps. Meticulously designed and tested."
-        icon={<ZapSvg />}
-      />
-    </ul>
+    <div className={styles.root}>
+      <h3>Key Features</h3>
+      <ul className={styles.features}>
+        <Feature
+          title="Fixtures"
+          description="File-system based module convention for defining component states effortlessly."
+          icon={<CodeSvg />}
+        />
+        <Feature
+          title="User Interface"
+          description="Beautiful interface for browsing fixtures and manipulating component inputs."
+          icon={<MonitorSvg />}
+        />
+        <Feature
+          title="Static Export"
+          description="Interactive component library deployable to any static hosting service."
+          icon={<UploadCloudSvg />}
+        />
+        <Feature
+          title="Integration"
+          description="Vite, Webpack, React Native, Next.js, and support for custom setups."
+          icon={<SettingsSvg />}
+        />
+        <Feature
+          title="Plugins"
+          description="Full-stack plugin system for extending every aspect of React Cosmos."
+          icon={<BoxSvg />}
+        />
+        <Feature
+          title="High Quality"
+          description="100% TypeScript. Minimal deps. Meticulously designed and tested."
+          icon={<ZapSvg />}
+        />
+      </ul>
+    </div>
   );
 }
 
