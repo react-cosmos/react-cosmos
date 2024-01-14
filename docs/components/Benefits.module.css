@@ -22,8 +22,14 @@
     color: hsl(204, 8%, 90%);
   }
 
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
   @media (min-width: 960px) {
     flex-direction: row;
+    justify-content: center;
   }
 
   li {
@@ -44,6 +50,10 @@
 
   li.icon {
     padding: 2em 0;
+
+    @media (min-width: 768px) {
+      padding: 0;
+    }
 
     @media (min-width: 960px) {
       padding: 0 min(5vw, 6em);
