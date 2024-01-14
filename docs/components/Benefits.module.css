@@ -12,23 +12,36 @@
 }
 
 .benefits {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  place-items: start center;
-  row-gap: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: hsl(204 12% 5%);
+
+  :global(.dark) & {
+    color: hsl(204, 8%, 90%);
+  }
 
   @media (min-width: 960px) {
-    grid-template-columns: repeat(2, 1fr);
+    flex-direction: row;
   }
 
   li {
-    max-width: 320px;
-    color: hsl(204 12% 5%);
+    flex-shrink: 0;
+  }
+
+  li.text {
     font-size: 22px;
     font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+  }
 
-    :global(.dark) & {
-      color: hsl(204, 8%, 90%);
+  li.icon {
+    padding: 2em 0;
+
+    @media (min-width: 960px) {
+      padding: 0 min(5vw, 6em);
     }
   }
 }
