@@ -2,7 +2,7 @@ import { useViewportEnter } from '../utils/useViewportEnter';
 import styles from './Rocket.module.css';
 
 export function Rocket() {
-  const [ref, entered] = useViewportEnter(0.9);
+  const [ref, entered] = useViewportEnter();
   const offset = entered ? 0 : 75;
   return (
     <div className={styles.root} ref={ref} style={{ opacity: entered ? 1 : 0 }}>
