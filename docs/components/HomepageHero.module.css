@@ -77,6 +77,14 @@
   font-weight: 400;
   line-height: 1.6;
 
+  br {
+    display: none;
+
+    @media (min-width: 810px) {
+      display: block;
+    }
+  }
+
   :global(.dark) & {
     color: hsl(204, 12%, 50%);
   }
