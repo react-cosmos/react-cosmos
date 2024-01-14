@@ -31,10 +31,15 @@
   }
 
   li.text {
-    font-size: 22px;
+    font-size: 20px;
+    line-height: 1.4;
     font-weight: 400;
     text-align: center;
     white-space: nowrap;
+
+    @media (min-width: 960px) {
+      font-size: 22px;
+    }
   }
 
   li.icon {
