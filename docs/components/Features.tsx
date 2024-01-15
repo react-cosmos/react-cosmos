@@ -22,8 +22,8 @@ export function Features() {
           title="User Interface"
           description={
             <>
-              Playground for browsing fixtures and manipulating inputs.{' '}
-              <Link href="/docs/user-interface">Browse features.</Link>
+              Playground for browsing fixtures and manipulating components.{' '}
+              <Link href="/docs/user-interface">Learn more →</Link>
             </>
           }
           icon={<MonitorSvg />}
