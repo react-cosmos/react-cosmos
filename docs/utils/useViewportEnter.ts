@@ -5,14 +5,11 @@ export function useViewportEnter() {
   const [entered, setEntered] = React.useState(false);
 
   React.useEffect(() => {
-    if (el === null) return () => {};
+    if (el === null || entered) return;
 
     function updateEntered() {
-      const newEntered = hasEnteredViewport(el.offsetTop, el.offsetHeight);
-      if (newEntered && !entered) {
+      if (hasEnteredViewport(el.offsetTop, el.offsetHeight)) {
         setEntered(true);
-      } else if (entered && !newEntered && scrolledToTop()) {
-        setEntered(false);
       }
     }
 
@@ -31,8 +28,4 @@ export function useViewportEnter() {
 
 function hasEnteredViewport(elTop: number, elHeight: number) {
   return window.scrollY > elTop - window.innerHeight + elHeight;
-}
-
-function scrolledToTop() {
-  return window.scrollY === 0;
 }
