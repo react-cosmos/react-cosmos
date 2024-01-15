@@ -1,3 +1,4 @@
+import { Link } from 'nextra-theme-docs';
 import { ReactNode } from 'react';
 import styles from './Features.module.css';
 import BoxSvg from './svg/icons/box.svg';
@@ -19,7 +20,12 @@ export function Features() {
         />
         <Feature
           title="User Interface"
-          description="Beautiful interface for browsing fixtures and manipulating component inputs."
+          description={
+            <>
+              Playground for browsing fixtures and manipulating components.{' '}
+              <Link href="/docs/user-interface">Learn more →</Link>
+            </>
+          }
           icon={<MonitorSvg />}
         />
         <Feature
@@ -49,7 +55,7 @@ export function Features() {
 
 type FeatureProps = {
   title: string;
-  description: string;
+  description: ReactNode;
   icon: ReactNode;
 };
 function Feature({ title, description, icon }: FeatureProps) {
