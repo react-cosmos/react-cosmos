@@ -23,7 +23,6 @@
   position: relative;
   width: 50%;
   height: 50%;
-  fill: currentColor;
   animation: hover 0.5s infinite ease;
   transition:
     left,
@@ -47,5 +46,21 @@
     100% {
       transform: translateY(-1px) translateX(-1px);
     }
+  }
+}
+
+.iconStop1 {
+  stop-color: hsl(204 12% 45%);
+
+  :global(.dark) & {
+    stop-color: hsl(204, 8%, 100%);
+  }
+}
+
+.iconStop2 {
+  stop-color: hsl(204 12% 0%);
+
+  :global(.dark) & {
+    stop-color: hsl(204, 8%, 50%);
   }
 }
