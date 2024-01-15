@@ -21,6 +21,7 @@
     font-weight: 400;
     font-weight: 500;
     color: hsl(204 12% 45%);
+    white-space: nowrap;
 
     :global(.dark) & {
       background-color: #000;
