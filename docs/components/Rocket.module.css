@@ -24,11 +24,10 @@
   width: 50%;
   height: 50%;
   animation: hover 0.5s infinite ease;
-  transition:
-    left,
-    0.4s ease-out,
-    bottom 0.4s ease-out;
+  transition-property: left, top;
+  transition-duration: 0.4s;
   transition-delay: 0.4s;
+  transition-timing-function: ease-out;
 
   @keyframes hover {
     0% {
@@ -61,6 +60,6 @@
   stop-color: hsl(204 12% 0%);
 
   :global(.dark) & {
-    stop-color: hsl(204, 8%, 50%);
+    stop-color: hsl(204, 8%, 45%);
   }
 }
