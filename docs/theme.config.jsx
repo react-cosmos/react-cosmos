@@ -19,7 +19,7 @@ export default {
     return (
       <>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" href="/cosmonaut-circle.png" />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="48x48" />
       </>
     );
   },
