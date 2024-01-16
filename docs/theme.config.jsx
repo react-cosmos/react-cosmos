@@ -16,10 +16,12 @@ export default {
   },
   head: () => {
     // https://nextra.site/docs/docs-theme/theme-configuration#dynamic-tags-based-on-page
+    // prettier-ignore
     return (
       <>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" href="/cosmonaut-circle.png" />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="48x48" />
+        <link rel="apple-touch-icon"  href="/apple-touch-icon.png" sizes="180x180" />
       </>
     );
   },
