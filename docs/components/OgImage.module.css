@@ -2,9 +2,29 @@
   margin: 154px auto -50px auto;
   width: 140px;
   height: 140px;
-  background-color: rgb(17, 17, 17);
+  background-color: rgb(255, 255, 255);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  :global(.dark) & {
+    background-color: rgb(17, 17, 17);
+  }
+}
+
+.iconStop1 {
+  stop-color: #000;
+
+  :global(.dark) & {
+    stop-color: #fff;
+  }
+}
+
+.iconStop2 {
+  stop-color: #5e6265;
+
+  :global(.dark) & {
+    stop-color: #81878b;
+  }
 }
