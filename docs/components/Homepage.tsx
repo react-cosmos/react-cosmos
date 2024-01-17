@@ -13,7 +13,7 @@ type StaticProps = {
 export function Homepage() {
   const { version, stars } = useData() as StaticProps;
   return (
-    <div>
+    <>
       <HomepageHero version={version} stars={stars} />
       <div className={styles.content}>
         <a
@@ -28,6 +28,6 @@ export function Homepage() {
         <Benefits />
         <Features />
       </div>
-    </div>
+    </>
   );
 }
