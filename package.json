@@ -3,7 +3,6 @@
   "workspaces": [
     "packages/*",
     "examples/*",
-    "website",
     "docs"
   ],
   "repository": "https://github.com/react-cosmos/react-cosmos",
@@ -25,8 +24,6 @@
     "build:clear": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./scripts/clearBuild.ts",
     "build": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./scripts/build.ts",
     "demo:build": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./scripts/buildDemo.ts",
-    "website:build": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./scripts/buildWebsite.ts",
-    "website:serve": "http-server -p 5001 ./website/dist",
     "release:check": "yarn build:clear && yarn build && yarn src && yarn lint && yarn dist && yarn test:unit",
     "release": "yarn release:check && yarn lerna publish -m \"[skip ci] %s\"",
     "release:next": "yarn release:check && yarn lerna publish --dist-tag=next --exact -m \"[skip ci] %s\""

@@ -38,4 +38,4 @@ Please see our [CONTRIBUTING.md](/CONTRIBUTING.md).
 
 Visit [reactcosmos.org/demo/](https://reactcosmos.org/demo/) for a live demo of React Cosmos.
 
-[![React Cosmos](/website/static/screenshot.png)](https://reactcosmos.org/demo/)
+[![React Cosmos](/docs/public/demo.png)](https://reactcosmos.org/demo/)

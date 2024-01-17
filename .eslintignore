@@ -2,7 +2,6 @@ node_modules
 
 packages/*/dist
 examples/*/cosmos-export
-website/dist
 
 **/__testFs__/**
 coverage
