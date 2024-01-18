@@ -26,6 +26,8 @@ export function registerPlaygroundShortcuts(
       run(e, 'goFullScreen');
     } else if (keyChar === 'E' && metaKey && e.shiftKey) {
       run(e, 'editFixture');
+    } else if (keyChar === 'R' && e.altKey) {
+      run(e, 'reloadRenderer');
     }
   }
 

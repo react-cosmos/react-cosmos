@@ -1,5 +1,6 @@
 import { RendererId, fixtureStateByName } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
+import { CoreSpec } from '../Core/spec.js';
 import { RouterSpec } from '../Router/spec.js';
 import { onRouterFixtureReselect } from './onRouterFixtureReselect.js';
 import { onRouterFixtureSelect } from './onRouterFixtureSelect.js';
@@ -43,6 +44,13 @@ const { on, register, onLoad } = createPlugin<RendererCoreSpec>({
 onLoad(({ getConfig, setState }) => {
   const { fixtures } = getConfig();
   setState(prevState => ({ ...prevState, fixtures }));
+});
+
+onLoad(context => {
+  const core = context.getMethodsOf<CoreSpec>('core');
+  return core.registerCommands({
+    reloadRenderer: () => reloadRenderer(context),
+  });
 });
 
 on<RouterSpec>('router', {
