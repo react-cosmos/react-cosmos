@@ -20,13 +20,13 @@ export function NoFixtureSelected({ onShowWelcome }: Props) {
     <OverlayContainer data-testid="blank">
       <OverlayBody>
         <TextContainer>
-          <KeyShortcut keys={['⌘', 'P']} label="Search fixtures" />
+          <KeyShortcut keys={['⌘', 'K']} label="Search fixtures" />
           <Subtitle>FIXTURE SELECTED</Subtitle>
-          <KeyShortcut keys={['⌘', '⇧', 'L']} label="Toggle fixture list" />
-          <KeyShortcut keys={['⌘', '⇧', 'K']} label="Toggle control panel" />
-          <KeyShortcut keys={['⌘', '⇧', 'E']} label="Edit fixture" />
-          <KeyShortcut keys={['⌘', '⇧', 'F']} label="Go full screen" />
-          <KeyShortcut keys={['⎇', 'R']} label="Reload renderer" />
+          <KeyShortcut keys={['L']} label="Toggle fixture list" />
+          <KeyShortcut keys={['P']} label="Toggle control panel" />
+          <KeyShortcut keys={['E']} label="Edit fixture" />
+          <KeyShortcut keys={['F']} label="Go full screen" />
+          <KeyShortcut keys={['R']} label="Reload renderer" />
         </TextContainer>
         <IllustrationContainer>
           <BlankCanvasIllustration title="blank state" />
