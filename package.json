@@ -25,7 +25,7 @@
     "build": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./scripts/build.ts",
     "demo:build": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./scripts/buildDemo.ts",
     "release:check": "yarn build:clear && yarn build && yarn src && yarn lint && yarn dist && yarn test:unit",
-    "release": "yarn release:check && yarn lerna publish -m \"[skip ci] %s\"",
+    "release": "yarn release:check && yarn lerna publish -m \"[release] %s\"",
     "release:next": "yarn release:check && yarn lerna publish --dist-tag=next --exact -m \"[skip ci] %s\""
   },
   "devDependencies": {
