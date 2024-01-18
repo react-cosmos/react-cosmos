@@ -2,6 +2,7 @@ import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
+  mockCore,
   mockNotifications,
   mockRouter,
 } from '../../../../testHelpers/pluginMocks.js';
@@ -19,6 +20,7 @@ const fixtureId = { path: 'zwei.js' };
 const fixtureState = { props: [] };
 
 function registerTestPlugins() {
+  mockCore();
   mockRouter({
     getSelectedFixtureId: () => fixtureId,
   });

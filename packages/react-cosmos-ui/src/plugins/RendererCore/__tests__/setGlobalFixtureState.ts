@@ -3,6 +3,7 @@ import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
   getRouterContext,
+  mockCore,
   mockNotifications,
   mockRouter,
   onRendererCore,
@@ -15,6 +16,7 @@ beforeEach(register);
 afterEach(resetPlugins);
 
 it('sets fixture state when setting global fixture state', async () => {
+  mockCore();
   mockRouter({
     getSelectedFixtureId: () => ({ path: 'zwei.js' }),
   });
@@ -70,6 +72,7 @@ it('sets fixture state when setting global fixture state', async () => {
 });
 
 it('uses global fixture state when renderer connects', async () => {
+  mockCore();
   mockRouter({
     getSelectedFixtureId: () => ({ path: 'zwei.js' }),
   });
@@ -98,6 +101,7 @@ it('uses global fixture state when renderer connects', async () => {
 });
 
 it('uses global fixture state when renderer connects with fixture selected', async () => {
+  mockCore();
   mockRouter({
     getSelectedFixtureId: () => ({ path: 'zwei.js' }),
   });
@@ -126,6 +130,7 @@ it('uses global fixture state when renderer connects with fixture selected', asy
 });
 
 it('uses global fixture state on fixture select', async () => {
+  mockCore();
   mockRouter({
     getSelectedFixtureId: () => null,
   });
@@ -155,6 +160,7 @@ it('uses global fixture state on fixture select', async () => {
 });
 
 it('uses global fixture state on fixture reselect', async () => {
+  mockCore();
   mockRouter({
     getSelectedFixtureId: () => ({ path: 'zwei.js' }),
   });
