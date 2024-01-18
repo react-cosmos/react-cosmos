@@ -1,6 +1,7 @@
 import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
+  mockCore,
   mockNotifications,
   mockRouter,
   onRendererCore,
@@ -19,6 +20,7 @@ const fixtureId = { path: 'ein.js' };
 const fixtureState = { props: [] };
 
 function registerTestPlugins() {
+  mockCore();
   mockRouter({
     getSelectedFixtureId: () => fixtureId,
   });

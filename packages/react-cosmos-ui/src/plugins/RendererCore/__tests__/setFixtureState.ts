@@ -2,6 +2,7 @@ import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
+  mockCore,
   mockNotifications,
   mockRouter,
   onRendererCore,
@@ -24,6 +25,7 @@ const expectedFixtureState = {
 };
 
 function registerTestPlugins() {
+  mockCore();
   mockSelectedFixture();
   mockNotifications();
 }

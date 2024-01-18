@@ -2,6 +2,7 @@ import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
+  mockCore,
   mockNotifications,
   mockRouter,
 } from '../../../testHelpers/pluginMocks.js';
@@ -13,6 +14,7 @@ beforeEach(register);
 afterEach(resetPlugins);
 
 function registerTestPlugins() {
+  mockCore();
   mockRouter({
     getSelectedFixtureId: () => null,
   });
