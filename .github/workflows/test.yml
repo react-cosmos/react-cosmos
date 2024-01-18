@@ -5,6 +5,7 @@ on:
     branches: main
 jobs:
   source:
+    if: ${{ !contains(github.event.head_commit.message, '[release]') }}
     strategy:
       fail-fast: false
       matrix:
@@ -33,6 +34,7 @@ jobs:
         if: matrix.os == 'ubuntu'
 
   examples:
+    if: ${{ !contains(github.event.head_commit.message, '[release]') }}
     strategy:
       fail-fast: false
       matrix:

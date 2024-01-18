@@ -5,6 +5,7 @@ on:
     branches: main
 jobs:
   pnp-install-and-run:
+    if: ${{ !contains(github.event.head_commit.message, '[release]') }}
     runs-on: ubuntu-latest
     env:
       SKIP_YARN_COREPACK_CHECK: true
