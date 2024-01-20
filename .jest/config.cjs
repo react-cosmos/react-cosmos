@@ -3,15 +3,7 @@ const { join } = require('path');
 // These 3rd party deps are pure ESM and need to be transformed for Jest.
 // Once Jest ESM is safe to use, we can remove this.
 // https://jestjs.io/docs/ecmascript-modules
-const esDependencies = [
-  '@skidding/async-retry',
-  'async-until',
-  'locate-path',
-  'p-limit',
-  'p-locate',
-  'path-exists',
-  'yocto-queue',
-];
+const esDependencies = ['@skidding/async-retry', 'async-until'];
 
 module.exports = {
   preset: 'ts-jest',
