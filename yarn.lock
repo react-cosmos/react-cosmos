@@ -6441,7 +6441,7 @@ find-up@^5.0.0:
     locate-path "^6.0.0"
     path-exists "^4.0.0"
 
-find-up@^6.2.0, find-up@^6.3.0:
+find-up@^6.3.0:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/find-up/-/find-up-6.3.0.tgz#2abab3d3280b2dc7ac10199ef324c4e002c8c790"
   integrity sha512-v2ZsoEuVHYy8ZIlYqwPe/39Cy+cFDzp4dXPaxNvkEuouymu+2Jbz0PxpKarJHYJTmv2HWT3O382qY8l4jMWthw==
@@ -11339,13 +11339,6 @@ pkg-dir@^7.0.0:
   integrity sha512-Ie9z/WINcxxLp27BKOCHGde4ITq9UklYKDzVo1nhk5sqGEXU3FpkwP5GM2voTGJkGd9B3Otl+Q4uwSOeSUtOBA==
   dependencies:
     find-up "^6.3.0"
-
-pkg-up@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/pkg-up/-/pkg-up-4.0.0.tgz#b2ca5e845979e31497d81520b621f4cdac2dcd75"
-  integrity sha512-N4zdA4sfOe6yCv+ulPCmpnIBQ5I60xfhDr1otdBBhKte9QtEf3bhfrfkW7dTb+IQ0iEx4ZDzas0kc1o5rdWpYg==
-  dependencies:
-    find-up "^6.2.0"
 
 portfinder@^1.0.28:
   version "1.0.32"

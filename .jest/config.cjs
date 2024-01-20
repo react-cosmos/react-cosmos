@@ -6,12 +6,10 @@ const { join } = require('path');
 const esDependencies = [
   '@skidding/async-retry',
   'async-until',
-  'find-up',
   'locate-path',
   'p-limit',
   'p-locate',
   'path-exists',
-  'pkg-up',
   'yocto-queue',
 ];
 
