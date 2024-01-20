@@ -43,7 +43,7 @@
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
     "@types/react-is": "18.2.4",
-    "@types/react-native": "0.73.0",
+    "@types/react-native": "0.72.8",
     "@types/react-test-renderer": "18.0.7",
     "@types/styled-components": "5.1.34",
     "@types/webpack-hot-middleware": "2.25.9",
