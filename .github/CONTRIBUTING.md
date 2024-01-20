@@ -72,7 +72,7 @@ yarn
 
 # Basic commands
 yarn build
-yarn test:unit
+yarn test
 yarn check-types
 
 # Run Vite example
