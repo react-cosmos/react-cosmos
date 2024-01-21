@@ -58,6 +58,11 @@ const cosmosConfig = createCosmosConfig(__dirname, {
 
 ## Fixtures
 
+<Callout type="warning">
+  The `getFixtures` API is experimental and may change in a future minor
+  release.
+</Callout>
+
 Get all your fixtures programatically. A ton of information is provided for each fixture, enabling you to hack away on top of React Cosmos. To generate visual snapshots from your fixtures, you load `rendererUrl` in a headless browser like [Puppeteer](https://github.com/puppeteer/puppeteer) and take a screenshot on page load. You can compare visual snapshots between deploys to catch sneaky UI regressions.
 
 ```js
