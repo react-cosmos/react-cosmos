@@ -12,7 +12,7 @@ import { Callout } from 'nextra/components';
 [![npm version](https://img.shields.io/npm/v/react-cosmos/next.svg?style=flat)](https://www.npmjs.com/package/react-cosmos)
 
 ```bash npm2yarn
-npm i -D react-cosmos@next react-cosmos-plugin-webpack@next
+npm i -D react-cosmos react-cosmos-plugin-webpack
 ```
 
 Install `react-cosmos-plugin-vite` instead of `react-cosmos-plugin-webpack` to use React Cosmos with Vite.
@@ -57,7 +57,7 @@ React Cosmos 6 also comes with a brand new Vite plugin. To set up a Vite codebas
 ### Other Breaking Changes
 
 - `react-cosmos/fixture` exports moved to `react-cosmos/client` (eg. `import { useValue } from 'react-cosmos/client'`).
-- `NativeFixtureLoader` component moved from `react-cosmos/native` to new `react-cosmos-native` package. Install `react-cosmos-native@next` as well for a React Native setup.
+- `NativeFixtureLoader` component moved from `react-cosmos/native` to new `react-cosmos-native` package. Install `react-cosmos-native` as well for a React Native setup.
 - `getFixtures2()` renamed to `getFixtures()`.
 - `getCosmosConfigAtPath()` is now async. To replicate the old sync behavior, require() the config module manually and pass it to `createCosmosConfig()`.
 - For visual regression testing you may need to make Jest transpile Cosmos modules by adding `"/node_modules/react-cosmos"` to `transformIgnorePatterns` in your Jest config.
