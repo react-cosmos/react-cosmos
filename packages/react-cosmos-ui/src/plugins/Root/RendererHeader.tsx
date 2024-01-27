@@ -47,7 +47,7 @@ export const RendererHeader = React.memo(function RendererHeader({
           <>
             <IconButton32
               icon={<MenuIcon />}
-              title="Show fixture list"
+              title="Show fixture list (L)"
               selected={false}
               onClick={onOpenNav}
             />

@@ -29,7 +29,7 @@ export function FixtureSearchHeader({
       <NavButtonContainer>
         <IconButton32
           icon={<ChevronLeftIcon />}
-          title="Hide fixture list"
+          title="Hide fixture list (L)"
           disabled={!fixtureSelected}
           selected={false}
           onClick={onCloseNav}
