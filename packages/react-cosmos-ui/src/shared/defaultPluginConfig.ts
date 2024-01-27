@@ -5,7 +5,7 @@ export const DEFAULT_PLUGIN_CONFIG = {
     globalOrder: ['fixtureSearch', 'notifications'],
     navRowOrder: ['fixtureSearch', 'fixtureBookmarks', 'fixtureTree'],
     fixtureActionOrder: ['bookmarkFixture'],
-    rendererActionOrder: ['editFixture', 'fullScreen', 'responsivePreview'],
+    rendererActionOrder: ['openFixture', 'fullScreen', 'responsivePreview'],
   },
   controlPanel: {
     controlActionOrder: ['expandCollapse'],
