@@ -15,8 +15,8 @@ jobs:
     runs-on: ${{ matrix.os }}-latest
     steps:
       - run: git config --global core.autocrlf false
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'yarn'
@@ -61,8 +61,8 @@ jobs:
             lazy: true
     runs-on: ${{ matrix.os }}-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
@@ -88,12 +88,12 @@ jobs:
           CYPRESS_EXAMPLE_NAME: ${{ matrix.example }}
           CYPRESS_LAZY: ${{ matrix.lazy }}
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-screenshots-${{ matrix.example }}-${{ matrix.os }}-node${{ matrix.node-version }}
           path: cypress/screenshots
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: cypress-videos-${{ matrix.example }}-${{ matrix.os }}-node${{ matrix.node-version }}
