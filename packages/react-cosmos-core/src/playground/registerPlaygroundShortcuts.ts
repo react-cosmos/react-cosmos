@@ -26,6 +26,10 @@ export function registerPlaygroundShortcuts(
     } else if (keyChar === 'F') {
       run(e, 'goFullScreen');
     } else if (keyChar === 'S') {
+      // FIXME: This core code is coupled with the open-fixture-source plugin
+      // We can decouple it by adding support for registering shortcuts from
+      // within plugins. This would require a way to serialize shortcuts, which
+      // isn't trivial but is on the roadmap.
       run(e, 'openFixture');
     } else if (keyChar === 'R') {
       run(e, 'reloadRenderer');
