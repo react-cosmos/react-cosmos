@@ -70,7 +70,7 @@ jobs:
       - run: yarn build
 
       # Generate static export for domExport test
-      - run: yarn workspace example-${{ matrix.example }} export --lazy=${{ matrix.lazy == true }}
+      - run: yarn workspace example-${{ matrix.example }} export --lazy=${{ matrix.lazy }}
 
       - uses: BerniWittmann/background-server-action@v1
         with:
@@ -80,9 +80,9 @@ jobs:
           # - DOM export
           # - Native dev server
           start: |
-            yarn workspace example-${{ matrix.example }} start --lazy=${{ matrix.lazy == true }},
+            yarn workspace example-${{ matrix.example }} start --lazy=${{ matrix.lazy }},
             yarn workspace example-${{ matrix.example }} serve,
-            yarn workspace example-${{ matrix.example }} native --lazy=${{ matrix.lazy == true }} --port 5002
+            yarn workspace example-${{ matrix.example }} native --lazy=${{ matrix.lazy }} --port 5002
           wait-on: 'http://localhost:5000,http://localhost:5001,http://localhost:5002'
         env:
           CYPRESS_EXAMPLE_NAME: ${{ matrix.example }}
@@ -91,10 +91,10 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: cypress-screenshots-${{ matrix.example }}-${{ matrix.os }}-node${{ matrix.node-version }}
+          name: cypress-screenshots-${{ matrix.example }}-${{ matrix.os }}-node${{ matrix.node-version }}${{ matrix.lazy == true && '-lazy' }}
           path: cypress/screenshots
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: cypress-videos-${{ matrix.example }}-${{ matrix.os }}-node${{ matrix.node-version }}
+          name: cypress-videos-${{ matrix.example }}-${{ matrix.os }}-node${{ matrix.node-version }}${{ matrix.lazy == true && '-lazy' }}
           path: cypress/videos
