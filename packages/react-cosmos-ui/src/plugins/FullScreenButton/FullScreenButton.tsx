@@ -10,7 +10,7 @@ export function FullScreenButton({ onClick }: Props) {
   return (
     <IconButton32
       icon={<ExternalIcon />}
-      title="Go fullscreen"
+      title="Go fullscreen (F)"
       onClick={onClick}
     />
   );

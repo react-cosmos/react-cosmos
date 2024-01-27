@@ -25,8 +25,8 @@ export function registerPlaygroundShortcuts(
       run(e, 'toggleControlPanel');
     } else if (keyChar === 'F') {
       run(e, 'goFullScreen');
-    } else if (keyChar === 'E') {
-      run(e, 'editFixture');
+    } else if (keyChar === 'S') {
+      run(e, 'openFixture');
     } else if (keyChar === 'R') {
       run(e, 'reloadRenderer');
     }

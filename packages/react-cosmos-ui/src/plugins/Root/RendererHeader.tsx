@@ -61,7 +61,7 @@ export const RendererHeader = React.memo(function RendererHeader({
         />
         <IconButton32
           icon={<RotateCcwIcon />}
-          title="Reload fixture"
+          title="Reload fixture (R)"
           onClick={onReloadRenderer}
         />
         {fixtureItem && (
@@ -79,7 +79,7 @@ export const RendererHeader = React.memo(function RendererHeader({
         />
         <IconButton32
           icon={<SlidersIcon />}
-          title="Toggle control panel"
+          title="Toggle control panel (P)"
           selected={panelOpen}
           onClick={onTogglePanel}
         />

@@ -56,7 +56,7 @@ function getReqQuery(req: express.Request): ReqQuery {
 function resolveFilePath(rootDir: string, filePath: string) {
   // This heuristic is needed because the open file endpoint is used for
   // multiple applications, which provide different file path types:
-  // 1. Edit fixture button: Sends path relative to Cosmos rootDir
+  // 1. Open fixture source button: Sends path relative to Cosmos rootDir
   // 2. react-error-overlay runtime error: Sends absolute path
   // 3. react-error-overlay compile error: Sends path relative to CWD
   if (path.isAbsolute(filePath)) {

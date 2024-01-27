@@ -7,7 +7,6 @@ const initialPlugins: SimplePlugin[] = [
   { name: 'classStatePanel', enabled: true },
   { name: 'controlPanel', enabled: true },
   { name: 'core', enabled: true },
-  { name: 'editFixtureButton', enabled: true },
   { name: 'fixtureBookmark', enabled: true },
   { name: 'fixtureSearch', enabled: true },
   { name: 'fixtureTree', enabled: true },
