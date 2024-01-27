@@ -17,22 +17,26 @@ export function registerPlaygroundShortcuts(
     const keyChar = String.fromCharCode(e.keyCode);
     const metaKey = e.metaKey || e.ctrlKey;
 
-    if (keyChar === 'K' && metaKey) {
-      run(e, 'searchFixtures');
-    } else if (keyChar === 'L') {
-      run(e, 'toggleFixtureList');
-    } else if (keyChar === 'P') {
-      run(e, 'toggleControlPanel');
-    } else if (keyChar === 'F') {
-      run(e, 'goFullScreen');
-    } else if (keyChar === 'S') {
-      // FIXME: This core code is coupled with the open-fixture-source plugin
-      // We can decouple it by adding support for registering shortcuts from
-      // within plugins. This would require a way to serialize shortcuts, which
-      // isn't trivial but is on the roadmap.
-      run(e, 'openFixture');
-    } else if (keyChar === 'R') {
-      run(e, 'reloadRenderer');
+    if (metaKey) {
+      if (keyChar === 'K') {
+        run(e, 'searchFixtures');
+      }
+    } else {
+      if (keyChar === 'L') {
+        run(e, 'toggleFixtureList');
+      } else if (keyChar === 'P') {
+        run(e, 'toggleControlPanel');
+      } else if (keyChar === 'F') {
+        run(e, 'goFullScreen');
+      } else if (keyChar === 'S') {
+        // FIXME: This core code is coupled with the open-fixture-source plugin
+        // We can decouple it by adding support for registering shortcuts from
+        // within plugins. This would require a way to serialize shortcuts, which
+        // isn't trivial but is on the roadmap.
+        run(e, 'openFixture');
+      } else if (keyChar === 'R') {
+        run(e, 'reloadRenderer');
+      }
     }
   }
 
