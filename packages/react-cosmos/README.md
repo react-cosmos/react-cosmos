@@ -32,7 +32,7 @@ Our [Code of Conduct](/CODE_OF_CONDUCT.md) applies to all React Cosmos community
 
 Please see our [CONTRIBUTING.md](/CONTRIBUTING.md).
 
-[Become a Sponsor](https://github.com/users/skidding/sponsorship) to support the ongoing development of React Cosmos.
+[Become a Sponsor](https://github.com/sponsors/ovidiuch) to support the ongoing development of React Cosmos.
 
 ## Live Demo
 
