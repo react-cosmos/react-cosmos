@@ -66,7 +66,7 @@ export function WelcomeCosmos({ onDismissWelcome }: Props) {
               <Bullet />
               <span>
                 <Link
-                  href="https://github.com/users/skidding/sponsorship"
+                  href="https://github.com/sponsors/ovidiuch"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
