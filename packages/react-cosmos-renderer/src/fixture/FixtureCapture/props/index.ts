@@ -24,7 +24,7 @@ export function usePropsCapture(
   decoratorId: FixtureDecoratorId
 ) {
   const [propsFs, setPropsFs] = useFixtureState<PropsFixtureState>('props');
-  const prevFixtureRef = useRef(fixture);
+  const prevFixtureRef = useRef<ReactNode>(null);
   const elPaths = findRelevantElementPaths(fixture);
 
   useEffect(() => {
