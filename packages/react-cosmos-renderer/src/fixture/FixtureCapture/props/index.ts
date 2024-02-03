@@ -69,8 +69,8 @@ export function usePropsCapture(
         // - Override new fixture element props with fixture state props values
         // - Override fixture state props with new fixture element props values
         // We chose the latter because it makes HMR more reliable by allowing
-        // users to update props in Node fixtures source code (when HMR isn't
-        // working optimally, which might be common.)
+        // users to update props in Node fixtures via source code (when HMR
+        // isn't working optimally, which might be common.)
         // The downside is that a renderer that loads a fixture with fixture
         // state will ignore that fixture state initially. This is more of an
         // edge case that probably few people will run into.
