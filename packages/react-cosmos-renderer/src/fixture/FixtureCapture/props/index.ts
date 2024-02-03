@@ -24,7 +24,7 @@ export function usePropsCapture(
   decoratorId: FixtureDecoratorId
 ) {
   const [propsFs, setPropsFs] = useFixtureState<PropsFixtureState>('props');
-  const prevFixtureRef = useRef(fixture);
+  const prevFixtureRef = useRef<ReactNode>(null);
   const elPaths = findRelevantElementPaths(fixture);
 
   useEffect(() => {
@@ -62,6 +62,20 @@ export function usePropsCapture(
           })
         );
       } else {
+        // This code path is problematic because we can't tell whether:
+        // a) This is the first time the fixture renders
+        // b) A (suboptimal) HMR update blew up the FixtureCapture instance
+        // For this reason we have a tradeoff:
+        // - Override new fixture element props with fixture state props values
+        // - Override fixture state props with new fixture element props values
+        // We chose the latter because it makes HMR more reliable by allowing
+        // users to update props in Node fixtures via source code (when HMR
+        // isn't working optimally, which might be common.)
+        // The downside with this approach is that a renderer that loads a
+        // fixture with fixture state will ignore props from the fixture state
+        // initially. This is more of an edge case that probably few people will
+        // run into. For more context, see:
+        // https://github.com/react-cosmos/react-cosmos/pull/1614
         const prevChildEl = getElementAtPath(prevFixtureRef.current, elPath);
         if (!areNodesEqual(prevChildEl, childEl, false)) {
           setPropsFs(prevFs =>

@@ -11,7 +11,9 @@ export function testRenderer(
 ) {
   const test = () => mountTestRenderer(args, cb);
 
-  if (args.only) {
+  if (args.skip) {
+    it.skip(testName, test);
+  } else if (args.only) {
     it.only(testName, test);
   } else {
     it(testName, test);
