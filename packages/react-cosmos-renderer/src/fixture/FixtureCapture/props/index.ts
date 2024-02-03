@@ -71,9 +71,10 @@ export function usePropsCapture(
         // We chose the latter because it makes HMR more reliable by allowing
         // users to update props in Node fixtures via source code (when HMR
         // isn't working optimally, which might be common.)
-        // The downside is that a renderer that loads a fixture with fixture
-        // state will ignore that fixture state initially. This is more of an
-        // edge case that probably few people will run into.
+        // The downside with this approach is that a renderer that loads a
+        // fixture with fixture state will ignore props from the fixture state
+        // initially. This is more of an edge case that probably few people will
+        // run into. For more context, see:
         // https://github.com/react-cosmos/react-cosmos/pull/1614
         const prevChildEl = getElementAtPath(prevFixtureRef.current, elPath);
         if (!areNodesEqual(prevChildEl, childEl, false)) {
