@@ -75,8 +75,8 @@ it('selects URL fixture param over initial fixture config', async () => {
       },
     },
   });
-  const router = getRouterMethods();
 
+  const router = getRouterMethods();
   await waitFor(() =>
     expect(router.getSelectedFixtureId()).toEqual(urlFixtureId)
   );
