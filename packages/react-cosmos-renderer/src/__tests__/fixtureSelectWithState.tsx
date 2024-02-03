@@ -15,9 +15,10 @@ const fixtures = wrapDefaultExport({
 });
 const fixtureId = { path: 'first' };
 
+// Skipped because of https://github.com/react-cosmos/react-cosmos/pull/1614
 testRenderer(
   'renders selected fixture with fixture state',
-  { rendererId, fixtures },
+  { rendererId, fixtures, skip: true },
   async ({ renderer, selectFixture }) => {
     selectFixture({
       rendererId,
