@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-next",
-  "version": "6.0.1",
+  "version": "6.0.3",
   "description": "Next.js API for React Cosmos",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-next",
   "license": "MIT",
@@ -9,8 +9,8 @@
   "dependencies": {
     "lodash-es": "4.17.21",
     "react-cosmos-core": "^6.0.1",
-    "react-cosmos-dom": "^6.0.1",
-    "react-cosmos-renderer": "^6.0.1",
+    "react-cosmos-dom": "^6.0.3",
+    "react-cosmos-renderer": "^6.0.3",
     "react-is": "18.2.0"
   }
 }
