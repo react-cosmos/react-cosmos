@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useMemo } from 'react';
+import React, { ChangeEvent, useCallback } from 'react';
 import styled from 'styled-components';
 import { useFocus } from '../../hooks/useFocus.js';
 import {
@@ -35,58 +35,22 @@ export function Select<Option extends BaseOption>({
 }: Props<Option>) {
   const { focused, onFocus, onBlur } = useFocus();
 
-  const findOption = useMemo(() => {
-    return (list: Option[], targetValue: string) =>
-      list.find(o => o.value === targetValue);
-  }, []);
-
   const onInputChange = useCallback(
     (e: ChangeEvent<HTMLSelectElement>) => {
-      let option = !isGroupedOptions(options)
-        ? findOption(options, e.target.value)
-        : undefined;
-
-      if (isGroupedOptions(options)) {
-        options.find(group => {
-          const foundOption = findOption(group.options, e.target.value);
-          if (foundOption) option = foundOption;
-        });
-      }
-
-      if (!option) {
-        throw new Error(`Select value doesn't match any option`);
-      }
-
-      console.log({ option });
-
+      const option = findOption(options, e.target.value);
+      if (!option) throw new Error(`Select value doesn't match any option`);
       onChange(option);
     },
-    [findOption, onChange, options]
+    [onChange, options]
   );
 
-  const mapOption = useMemo(
-    () =>
-      (option: Option, idx: number): JSX.Element => {
-        return (
-          <option key={idx} value={option.value}>
-            {option.label}
-          </option>
-        );
-      },
-    []
+  const renderOption = (option: Option) => (
+    <option key={option.value} value={option.value}>
+      {option.label}
+    </option>
   );
 
-  let selectedOption = !isGroupedOptions(options)
-    ? findOption(options, value)
-    : undefined;
-
-  if (isGroupedOptions(options)) {
-    options.find(group => {
-      const foundOption = findOption(group.options, value);
-      if (foundOption) selectedOption = foundOption;
-    });
-  }
-
+  const selectedOption = findOption(options, value);
   const selectedLabel = selectedOption ? selectedOption.label : CUSTOM_LABEL;
 
   return (
@@ -116,14 +80,23 @@ export function Select<Option extends BaseOption>({
           ? options.map((current, groupIdx) => {
               return (
                 <optgroup label={current.group} key={groupIdx}>
-                  {current.options.map(mapOption)}
+                  {current.options.map(renderOption)}
                 </optgroup>
               );
             })
-          : options.map(mapOption)}
+          : options.map(renderOption)}
       </SelectInput>
     </Container>
   );
+}
+
+function findOption<Option extends BaseOption>(
+  options: Option[] | GroupedOptions<Option>[],
+  targetValue: string
+) {
+  return (
+    isGroupedOptions(options) ? options.flatMap(o => o.options) : options
+  ).find(o => o.value === targetValue);
 }
 
 type StyledSelectProps = {
@@ -174,6 +147,7 @@ const SelectInput = styled.select`
   width: 100%;
   height: 100%;
   -webkit-appearance: none;
+  appearance: none;
   outline: none;
   opacity: 0;
 `;

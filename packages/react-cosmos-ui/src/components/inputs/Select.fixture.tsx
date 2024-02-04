@@ -36,8 +36,7 @@ const Container = styled.div`
 `;
 
 export default {
-  flat: () => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+  flat: function Flat() {
     const [planet, setPlanet] = React.useState('Earth');
     return (
       <Container>
@@ -52,8 +51,7 @@ export default {
       </Container>
     );
   },
-  groups: () => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+  groups: function Groups() {
     const [planet, setPlanet] = React.useState('Earth');
     return (
       <Container>
