@@ -7,6 +7,7 @@ import {
   ReactTestRendererJSON,
 } from 'react-test-renderer';
 import { useSelect } from '../fixture/useSelect/index.js';
+import { getControls } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
@@ -82,7 +83,7 @@ testRenderer(
       fixtureState: {
         ...setFixtureState,
         controls: {
-          ...fixtureState.controls,
+          ...getControls(fixtureState),
           selectName: {
             type: 'select',
             options: ['first', 'second', 'third'],

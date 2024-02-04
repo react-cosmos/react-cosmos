@@ -2,6 +2,7 @@ import { FixtureList } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
+  mockCore,
   mockNotifications,
   mockRouter,
 } from '../../../testHelpers/pluginMocks.js';
@@ -25,6 +26,7 @@ const fixtureId = { path: 'foo.js' };
 const fixtureState = { props: [] };
 
 function registerTestPlugins() {
+  mockCore();
   mockRouter({
     getSelectedFixtureId: () => fixtureId,
   });
@@ -71,7 +73,7 @@ it('returns fixtures', () => {
 it('returns fixture state', () => {
   registerTestPlugins();
   loadTestPlugins();
-  expect(getRendererCoreMethods().getFixtureState()).toEqual({
+  expect(getRendererCoreMethods().getAllFixtureState()).toEqual({
     props: [],
   });
 });

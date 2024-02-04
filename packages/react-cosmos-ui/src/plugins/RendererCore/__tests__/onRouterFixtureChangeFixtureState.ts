@@ -3,6 +3,7 @@ import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
   getRouterContext,
+  mockCore,
   mockNotifications,
   mockRouter,
 } from '../../../testHelpers/pluginMocks.js';
@@ -19,6 +20,7 @@ afterEach(resetPlugins);
 const fixtureId = { path: 'zwei.js' };
 
 function registerTestPlugins() {
+  mockCore();
   mockRouter({
     getSelectedFixtureId: () => fixtureId,
   });
@@ -40,7 +42,7 @@ function emitRouterFixtureReselect() {
 }
 
 function getFixtureState() {
-  return getRendererCoreMethods().getFixtureState();
+  return getRendererCoreMethods().getAllFixtureState();
 }
 
 it('resets fixture state on select', async () => {

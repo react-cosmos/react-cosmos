@@ -7,6 +7,7 @@ import {
   act,
 } from 'react-test-renderer';
 import { useValue } from '../fixture/useValue/index.js';
+import { getControls } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
@@ -104,7 +105,7 @@ testRenderer(
       fixtureState: {
         ...setFixtureState,
         controls: {
-          ...fixtureState.controls,
+          ...getControls(fixtureState),
           count: {
             type: 'standard',
             defaultValue: createValue(0),

@@ -1,6 +1,6 @@
 import { Callout } from 'nextra/components';
 
-# UI plugins
+# UI Plugins
 
 The Cosmos UI plugin system consists of an intricate web of "slots" and "plugs" that weave together with minimal knowledge of each other.
 
@@ -253,7 +253,7 @@ Here's a few examples of existing slots:
 
 | Type        | Slot name         | Description                  | Plug examples                                                   |
 | ----------- | ----------------- | ---------------------------- | --------------------------------------------------------------- |
-| `ArraySlot` | `rendererAction`  | Renderer-related buttons.    | Edit fixture source. Go full screen. Toggle responsive preview. |
+| `ArraySlot` | `rendererAction`  | Renderer-related buttons.    | Open fixture source. Go full screen. Toggle responsive preview. |
 | `ArraySlot` | `navRow`          | Left-hand nav panel widgets. | Fixture search. Fixture bookmarks. Fixture tree view.           |
 | `Array`     | `rendererPreview` | Fixture preview placeholder. | Iframe renderer for web, status message for React Native.       |
 
@@ -284,7 +284,9 @@ export type RouterSpec = {
 };
 ```
 
-## Publishing
+## Bundling
+
+Because UI plugins are injected at run-time into the pre-bundled Cosmos UI, they must be bundled separately. This means you'll need to use a bundler like Webpack or Rollup to create a single JS file that Cosmos can load directly in the browser. For the same reason, you need to compile your JSX and TypeScript code to plain JS.
 
 When building your UI plugin make sure it doesn't bundle `react` or `react-plugin` inside it. The Cosmos UI plugin system only works when plugins tap into the global React and ReactPlugin instances. The easiest way achive this is by using Webpack [`externals`](https://webpack.js.org/configuration/externals/):
 
@@ -307,7 +309,7 @@ See the Boolean input plugin [webpack config](https://github.com/react-cosmos/re
   In the future we might use [import
   maps](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap)
   to remove the need for a bundler to author UI plugins. ESM support is tracked
-  [here](/docs/dev/esm.md).
+  [here](/docs/dev/esm.md#esm-ui-plugins).
 </Callout>
 
 ## What Will _You_ Create?

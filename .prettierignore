@@ -10,4 +10,3 @@ lerna.json
 package.json
 packages/*/dist
 testMocks
-website/dist

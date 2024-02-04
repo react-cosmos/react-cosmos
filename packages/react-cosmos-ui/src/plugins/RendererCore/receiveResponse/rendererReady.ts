@@ -3,14 +3,18 @@ import { RendererId, RendererReadyResponse } from 'react-cosmos-core';
 import { NotificationsSpec } from '../../Notifications/spec.js';
 import { RouterSpec } from '../../Router/spec.js';
 import { RendererCoreContext, State } from '../shared/index.js';
-import { postSelectFixtureRequest } from '../shared/postRequest.js';
+import {
+  postSelectFixtureRequest,
+  postSetFixtureStateRequest,
+} from '../shared/postRequest.js';
 
 export function receiveRendererReadyResponse(
   context: RendererCoreContext,
   { payload }: RendererReadyResponse
 ) {
   const { rendererId } = payload;
-  const { connectedRendererIds: prevRendererIds } = context.getState();
+  const { connectedRendererIds: prevRendererIds, globalFixtureState } =
+    context.getState();
 
   context.setState(stateUpdater, afterStateChanged);
 
@@ -23,7 +27,8 @@ export function receiveRendererReadyResponse(
       ...prevState,
       connectedRendererIds: addToSet(connectedRendererIds, rendererId),
       primaryRendererId,
-      fixtureState: rendererId === primaryRendererId ? {} : fixtureState,
+      fixtureState:
+        rendererId === primaryRendererId ? globalFixtureState : fixtureState,
     };
   }
 
@@ -41,6 +46,15 @@ export function receiveRendererReadyResponse(
         routerFixtureId,
         fixtureState
       );
+    } else if (rendererFixtureId) {
+      if (Object.keys(globalFixtureState).length > 0) {
+        postSetFixtureStateRequest(
+          context,
+          rendererId,
+          rendererFixtureId,
+          globalFixtureState
+        );
+      }
     }
 
     // Notify about connected renderers that weren't connected before

@@ -4,7 +4,7 @@ import {
   RendererId,
   RendererRequest,
 } from 'react-cosmos-core';
-import { RendererCoreContext } from '../shared/index.js';
+import { RendererCoreContext } from './index.js';
 
 export function postReloadRendererRequest(
   context: RendererCoreContext,

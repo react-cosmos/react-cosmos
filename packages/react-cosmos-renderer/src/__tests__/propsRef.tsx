@@ -3,8 +3,8 @@ import { uniq } from 'lodash-es';
 import React from 'react';
 import {
   createValues,
-  resetFixtureStateProps,
-  updateFixtureStateProps,
+  resetPropsFixtureStateItem,
+  updatePropsFixtureStateItem,
   uuid,
 } from 'react-cosmos-core';
 import { HelloMessageCls } from '../testHelpers/components.js';
@@ -48,13 +48,14 @@ testRenderer(
   }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
-    const [{ elementId }] = getProps(fixtureState);
+    const propsFs = getProps(fixtureState);
+    const [{ elementId }] = propsFs;
     setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
-        props: updateFixtureStateProps({
-          fixtureState,
+        props: updatePropsFixtureStateItem({
+          propsFs,
           elementId,
           values: createValues({ name: 'B' }),
         }),
@@ -81,13 +82,14 @@ testRenderer(
   }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
-    const [{ elementId }] = getProps(fixtureState);
+    const propsFs = getProps(fixtureState);
+    const [{ elementId }] = propsFs;
     setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
-        props: resetFixtureStateProps({
-          fixtureState,
+        props: resetPropsFixtureStateItem({
+          propsFs,
           elementId,
           values: createValues({ name: 'B' }),
         }),

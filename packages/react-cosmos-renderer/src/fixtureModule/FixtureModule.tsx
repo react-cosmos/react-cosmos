@@ -20,7 +20,7 @@ type Props = {
   initialFixtureState?: FixtureState;
   renderKey: number;
   lazy: boolean;
-  renderMessage: (msg: string) => React.ReactElement;
+  renderMessage: (msg: string) => React.ReactNode;
 };
 export function FixtureModule({
   fixtureModule,

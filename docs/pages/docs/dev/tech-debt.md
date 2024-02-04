@@ -13,4 +13,7 @@ In general we keep dependencies up to date. The following packages, however, nee
 Some Node packages are pinned to their last CommonJS version until [ESM is fully supported in Jest](https://jestjs.io/docs/ecmascript-modules) or until we [migrate to Vitest](https://github.com/react-cosmos/react-cosmos/pull/1574) or another ESM compatible test runner:
 
 - `open@4.x`.
-- `pkg-up@4.x`.
+
+## Code improvements
+
+- Enabling `noUncheckedIndexedAccess` in TypeScript would improve the overall quality of all Cosmos packages. Some research is required to learn common ways of handling mapping and reducing arrays, where TypeScript can't infer that a mapped key isn't undefined. I don't want to add unnecessary checks either because it decreases code conciseness.

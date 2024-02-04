@@ -24,12 +24,12 @@ export function FixtureSearchHeader({
         </SearchIconContainer>
         <SearchLabel>Search fixtures</SearchLabel>
         <KeyBox value={'⌘'} bgColor={white10} textColor={grey160} size={20} />
-        <KeyBox value={'P'} bgColor={white10} textColor={grey160} size={20} />
+        <KeyBox value={'K'} bgColor={white10} textColor={grey160} size={20} />
       </SearchButton>
       <NavButtonContainer>
         <IconButton32
           icon={<ChevronLeftIcon />}
-          title="Hide fixture list"
+          title="Hide fixture list (L)"
           disabled={!fixtureSelected}
           selected={false}
           onClick={onCloseNav}

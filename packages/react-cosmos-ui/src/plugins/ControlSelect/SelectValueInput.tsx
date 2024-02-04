@@ -1,5 +1,5 @@
 import React from 'react';
-import { FixtureStateSelectControl } from 'react-cosmos-core';
+import { SelectControlFixtureState } from 'react-cosmos-core';
 import {
   Label,
   ValueDataContainer,
@@ -11,8 +11,8 @@ import { lightBlue } from '../../style/colors.js';
 
 type Props = {
   name: string;
-  control: FixtureStateSelectControl;
-  onChange: (name: string, select: FixtureStateSelectControl) => unknown;
+  control: SelectControlFixtureState;
+  onChange: (name: string, select: SelectControlFixtureState) => unknown;
 };
 
 export function SelectValueInput({ name, control, onChange }: Props) {

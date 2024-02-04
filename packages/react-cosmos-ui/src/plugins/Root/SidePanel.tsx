@@ -1,25 +1,29 @@
 import React from 'react';
-import { FixtureId, FixtureState, StateUpdater } from 'react-cosmos-core';
+import { FixtureId } from 'react-cosmos-core';
 import styled from 'styled-components';
 import { SidePanelRowSlot } from '../../slots/SidePanelRowSlot.js';
 import { grey32 } from '../../style/colors.js';
+import {
+  GetFixtureState,
+  SetFixtureStateByName,
+} from '../RendererCore/spec.js';
 
 type Props = {
   fixtureId: FixtureId;
-  fixtureState: FixtureState;
-  onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
+  getFixtureState: GetFixtureState;
+  setFixtureState: SetFixtureStateByName;
   sidePanelRowOrder: string[];
 };
 
 export const SidePanel = React.memo(function SidePanel({
   fixtureId,
-  fixtureState,
-  onFixtureStateChange,
+  getFixtureState,
+  setFixtureState,
   sidePanelRowOrder,
 }: Props) {
   const slotProps = React.useMemo(
-    () => ({ fixtureId, fixtureState, onFixtureStateChange }),
-    [fixtureId, fixtureState, onFixtureStateChange]
+    () => ({ fixtureId, getFixtureState, setFixtureState }),
+    [fixtureId, getFixtureState, setFixtureState]
   );
   return (
     <Container>

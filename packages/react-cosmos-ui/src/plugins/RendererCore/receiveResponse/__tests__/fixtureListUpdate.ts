@@ -3,6 +3,7 @@ import { FixtureList } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
+  mockCore,
   mockNotifications,
   mockRouter,
 } from '../../../../testHelpers/pluginMocks.js';
@@ -23,6 +24,7 @@ const fixtures: FixtureList = {
 };
 
 function registerTestPlugins() {
+  mockCore();
   mockRouter({
     getSelectedFixtureId: () => null,
   });

@@ -1,15 +1,11 @@
 import { isEqual } from 'lodash-es';
 import React, { useCallback } from 'react';
 import {
-  FixtureState,
-  FixtureStateProps,
   FixtureStateValues,
-  resetFixtureStateProps,
-  StateUpdater,
-  updateFixtureStateProps,
+  PropsFixtureStateItem,
+  resetPropsFixtureStateItem,
+  updatePropsFixtureStateItem,
 } from 'react-cosmos-core';
-import { IconButton32 } from '../../../components/buttons/index.js';
-import { CopyIcon, RotateCcwIcon } from '../../../components/icons/index.js';
 import {
   SidePanelActions,
   SidePanelBody,
@@ -21,26 +17,29 @@ import { ExpandCollapseValues } from '../../../components/ValueInputTree/ExpandC
 import {
   FixtureExpansion,
   OnElementExpansionChange,
-  stringifyElementId,
   ValueInputTree,
+  stringifyElementId,
 } from '../../../components/ValueInputTree/index.js';
+import { IconButton32 } from '../../../components/buttons/index.js';
+import { CopyIcon, RotateCcwIcon } from '../../../components/icons/index.js';
 import { TreeExpansion } from '../../../shared/treeExpansion.js';
-import { createPropsFsUpdater } from './shared.js';
+import { SetPropsFixtureState } from '../shared.js';
+import { propsFsItemUpdater } from './shared.js';
 
 type Props = {
-  fsProps: FixtureStateProps;
+  propsFsItem: PropsFixtureStateItem;
   fixtureExpansion: FixtureExpansion;
-  onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
+  onFixtureStateChange: SetPropsFixtureState;
   onElementExpansionChange: OnElementExpansionChange;
 };
 
 export function ComponentProps({
-  fsProps,
+  propsFsItem,
   fixtureExpansion,
   onFixtureStateChange,
   onElementExpansionChange,
 }: Props) {
-  const { componentName, elementId, values } = fsProps;
+  const { componentName, elementId, values } = propsFsItem;
 
   const [reset, setReset] = React.useState(true);
   const handleResetToggle = React.useCallback(() => setReset(!reset), [reset]);
@@ -49,9 +48,9 @@ export function ComponentProps({
   const handleValuesReset = React.useCallback(
     () =>
       onFixtureStateChange(
-        createPropsFsUpdater(elementId, prevFs =>
-          resetFixtureStateProps({
-            fixtureState: prevFs,
+        propsFsItemUpdater(elementId, prevFs =>
+          resetPropsFixtureStateItem({
+            propsFs: prevFs,
             elementId,
             values: initialValues,
           })
@@ -62,11 +61,13 @@ export function ComponentProps({
 
   const handleValueChange = React.useCallback(
     (newValues: FixtureStateValues) => {
-      const changeFn = reset ? resetFixtureStateProps : updateFixtureStateProps;
+      const changeFn = reset
+        ? resetPropsFixtureStateItem
+        : updatePropsFixtureStateItem;
       onFixtureStateChange(
-        createPropsFsUpdater(elementId, prevFs =>
+        propsFsItemUpdater(elementId, prevFs =>
           changeFn({
-            fixtureState: prevFs,
+            propsFs: prevFs,
             elementId,
             values: newValues,
           })

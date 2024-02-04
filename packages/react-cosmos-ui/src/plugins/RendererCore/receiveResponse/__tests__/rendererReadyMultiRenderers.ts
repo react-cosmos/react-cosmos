@@ -2,6 +2,7 @@ import { waitFor } from '@testing-library/dom';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
+  mockCore,
   mockNotifications,
   mockRouter,
 } from '../../../../testHelpers/pluginMocks.js';
@@ -19,6 +20,7 @@ const fixtureId = { path: 'zwei.js' };
 const fixtureState = { props: [] };
 
 function registerTestPlugins() {
+  mockCore();
   mockRouter({
     getSelectedFixtureId: () => fixtureId,
   });
@@ -57,7 +59,7 @@ it('returns fixture state', async () => {
   registerTestPlugins();
   loadTestPlugins();
   await waitFor(() =>
-    expect(getRendererCoreMethods().getFixtureState()).toEqual(fixtureState)
+    expect(getRendererCoreMethods().getAllFixtureState()).toEqual(fixtureState)
   );
 });
 
@@ -66,6 +68,6 @@ it('resets fixtures state when primary renderer re-connects', async () => {
   loadTestPlugins();
   mockRendererReady('mockRendererId1');
   await waitFor(() =>
-    expect(getRendererCoreMethods().getFixtureState()).toEqual({})
+    expect(getRendererCoreMethods().getAllFixtureState()).toEqual({})
   );
 });

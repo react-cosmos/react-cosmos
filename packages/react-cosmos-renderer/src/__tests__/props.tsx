@@ -2,8 +2,8 @@ import retry from '@skidding/async-retry';
 import React from 'react';
 import {
   createValues,
-  removeFixtureStateProps,
-  updateFixtureStateProps,
+  removePropsFixtureStateItem,
+  updatePropsFixtureStateItem,
   uuid,
 } from 'react-cosmos-core';
 import { HelloMessage } from '../testHelpers/components.js';
@@ -44,13 +44,14 @@ testRenderer(
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
-    const [{ elementId }] = getProps(fixtureState);
+    const propsFs = getProps(fixtureState);
+    const [{ elementId }] = propsFs;
     setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
-        props: updateFixtureStateProps({
-          fixtureState,
+        props: updatePropsFixtureStateItem({
+          propsFs,
           elementId,
           values: createValues({ name: 'B' }),
         }),
@@ -66,13 +67,14 @@ testRenderer(
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
-    const [{ elementId }] = getProps(fixtureState);
+    const propsFs = getProps(fixtureState);
+    const [{ elementId }] = propsFs;
     setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
-        props: updateFixtureStateProps({
-          fixtureState,
+        props: updatePropsFixtureStateItem({
+          propsFs,
           elementId,
           values: {},
         }),
@@ -94,13 +96,14 @@ testRenderer(
   }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
-    const [{ elementId }] = getProps(fixtureState);
+    const propsFs = getProps(fixtureState);
+    const [{ elementId }] = propsFs;
     setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
-        props: updateFixtureStateProps({
-          fixtureState,
+        props: updatePropsFixtureStateItem({
+          propsFs,
           elementId,
           values: createValues({ name: 'B' }),
         }),
@@ -111,7 +114,7 @@ testRenderer(
       rendererId,
       fixtureId,
       fixtureState: {
-        props: removeFixtureStateProps(fixtureState, elementId),
+        props: removePropsFixtureStateItem(propsFs, elementId),
       },
     });
     await retry(() => expect(renderer.toJSON()).toBe('Hello Blanca'));
@@ -145,13 +148,14 @@ testRenderer(
   }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
-    const [{ elementId }] = getProps(fixtureState);
+    const propsFs = getProps(fixtureState);
+    const [{ elementId }] = propsFs;
     setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
-        props: updateFixtureStateProps({
-          fixtureState,
+        props: updatePropsFixtureStateItem({
+          propsFs,
           elementId,
           values: createValues({ name: 'B' }),
         }),

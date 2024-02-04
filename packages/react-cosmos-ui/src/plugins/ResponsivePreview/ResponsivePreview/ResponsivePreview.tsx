@@ -8,10 +8,11 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { Viewport } from 'react-cosmos-core';
 import styled, { css } from 'styled-components';
 import { useDrag } from '../../../hooks/useDrag.js';
 import { grey64, grey8 } from '../../../style/colors.js';
-import { ResponsiveDevice, ResponsiveViewport } from '../spec.js';
+import { ResponsiveDevice } from '../spec.js';
 import { ResponsiveHeader } from './ResponsiveHeader.js';
 import {
   getStyles,
@@ -25,9 +26,9 @@ type Props = {
   children?: ReactNode;
   devices: ResponsiveDevice[];
   enabled: boolean;
-  viewport: ResponsiveViewport;
+  viewport: Viewport;
   scaled: boolean;
-  setViewport: Dispatch<SetStateAction<ResponsiveViewport>>;
+  setViewport: Dispatch<SetStateAction<Viewport>>;
   setScaled: (scaled: boolean) => unknown;
 };
 
@@ -40,7 +41,7 @@ export function ResponsivePreview({
   setViewport,
   setScaled,
 }: Props) {
-  const [container, setContainer] = useState<null | ResponsiveViewport>(null);
+  const [container, setContainer] = useState<null | Viewport>(null);
 
   const onWidthChange = useCallback(
     (width: number) =>

@@ -10,6 +10,10 @@ export function createPostMessageConnect(): RendererConnect {
     parent.postMessage(msg, '*');
   }
 
+  registerPlaygroundShortcuts(command => {
+    postMessage({ type: 'playgroundCommand', payload: { command } });
+  });
+
   return {
     postMessage,
 
@@ -18,14 +22,8 @@ export function createPostMessageConnect(): RendererConnect {
         onMessage(msg.data);
       }
       window.addEventListener('message', handleMessage, false);
-
-      const removeShortcuts = registerPlaygroundShortcuts(command => {
-        postMessage({ type: 'playgroundCommand', payload: { command } });
-      });
-
       return () => {
         window.removeEventListener('message', handleMessage);
-        removeShortcuts();
       };
     },
   };

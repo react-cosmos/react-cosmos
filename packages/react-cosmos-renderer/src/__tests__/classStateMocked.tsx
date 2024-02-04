@@ -3,8 +3,8 @@ import React from 'react';
 import {
   ClassStateMock,
   createValues,
-  removeFixtureStateClassState,
-  updateFixtureStateClassState,
+  removeClassStateFixtureStateItem,
+  updateClassStateFixtureStateItem,
   uuid,
 } from 'react-cosmos-core';
 import { CoolCounter, Counter } from '../testHelpers/components.js';
@@ -57,13 +57,14 @@ testRenderer(
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
-    const [{ elementId }] = getClassState(fixtureState);
+    const classStateFs = getClassState(fixtureState);
+    const [{ elementId }] = classStateFs;
     setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: updateFixtureStateClassState({
-          fixtureState,
+        classState: updateClassStateFixtureStateItem({
+          classStateFs,
           elementId,
           values: createValues({ count: 100 }),
         }),
@@ -76,8 +77,8 @@ testRenderer(
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: updateFixtureStateClassState({
-          fixtureState,
+        classState: updateClassStateFixtureStateItem({
+          classStateFs,
           elementId,
           values: createValues({ count: 200 }),
         }),
@@ -93,13 +94,14 @@ testRenderer(
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
-    const [{ elementId }] = getClassState(fixtureState);
+    const classStateFs = getClassState(fixtureState);
+    const [{ elementId }] = classStateFs;
     setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: updateFixtureStateClassState({
-          fixtureState,
+        classState: updateClassStateFixtureStateItem({
+          classStateFs,
           elementId,
           values: {},
         }),
@@ -121,13 +123,14 @@ testRenderer(
   }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
-    const [{ elementId }] = getClassState(fixtureState);
+    const classStateFs = getClassState(fixtureState);
+    const [{ elementId }] = classStateFs;
     setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: updateFixtureStateClassState({
-          fixtureState,
+        classState: updateClassStateFixtureStateItem({
+          classStateFs,
           elementId,
           values: createValues({ count: 10 }),
         }),
@@ -138,7 +141,7 @@ testRenderer(
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: removeFixtureStateClassState(fixtureState, elementId),
+        classState: removeClassStateFixtureStateItem(classStateFs, elementId),
       },
     });
     await retry(() => expect(renderer.toJSON()).toBe('5 times'));
@@ -172,13 +175,14 @@ testRenderer(
   }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
-    const [{ elementId }] = getClassState(fixtureState);
+    const classStateFs = getClassState(fixtureState);
+    const [{ elementId }] = classStateFs;
     setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: updateFixtureStateClassState({
-          fixtureState,
+        classState: updateClassStateFixtureStateItem({
+          classStateFs,
           elementId,
           values: createValues({ count: 50 }),
         }),
@@ -212,13 +216,14 @@ testRenderer(
   }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
-    const [{ elementId }] = getClassState(fixtureState);
+    const classStateFs = getClassState(fixtureState);
+    const [{ elementId }] = classStateFs;
     setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
-        classState: updateFixtureStateClassState({
-          fixtureState,
+        classState: updateClassStateFixtureStateItem({
+          classStateFs,
           elementId,
           values: createValues({ count: 6 }),
         }),

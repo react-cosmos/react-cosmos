@@ -1,0 +1,65 @@
+.root {
+  margin: 0 auto;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-image: linear-gradient(0deg, hsl(204 12% 90%), hsl(204 12% 94%));
+  transition: opacity 0.8s;
+  overflow: hidden;
+  /* https://stackoverflow.com/a/58283449/128816 */
+  transform: translateZ(0);
+
+  @media (min-width: 960px) {
+    width: 140px;
+    height: 140px;
+  }
+
+  :global(.dark) & {
+    background-image: linear-gradient(0deg, hsl(204, 8%, 8%), hsl(204, 8%, 4%));
+  }
+}
+
+.icon {
+  position: relative;
+  width: 50%;
+  height: 50%;
+  animation: hover 0.5s infinite ease;
+  transition-property: left, top;
+  transition-duration: 0.4s;
+  transition-delay: 0.4s;
+  transition-timing-function: ease-out;
+
+  @keyframes hover {
+    0% {
+      transform: translateY(-1px) translateX(-1px);
+    }
+    25% {
+      transform: translateX(1px) translateY(1px);
+    }
+    50% {
+      transform: translateX(-1px) translateY(1px);
+    }
+    75% {
+      transform: translateX(1px) translateY(-1px);
+    }
+    100% {
+      transform: translateY(-1px) translateX(-1px);
+    }
+  }
+}
+
+.iconStop1 {
+  stop-color: hsl(204 12% 45%);
+
+  :global(.dark) & {
+    stop-color: hsl(204, 8%, 100%);
+  }
+}
+
+.iconStop2 {
+  stop-color: hsl(204 12% 0%);
+
+  :global(.dark) & {
+    stop-color: hsl(204, 8%, 45%);
+  }
+}
