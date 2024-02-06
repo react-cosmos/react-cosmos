@@ -10,6 +10,11 @@ export function useSelect<Option extends string>(
   if (!args || !args.options || !args.options.length)
     throw new Error('No options provided to useSelect');
 
+  if (typeof args.options[0] === 'object') {
+    if (!args.options[0].options.length)
+      throw new Error('No options provided to useSelect');
+  }
+
   useCreateFixtureState(selectName, args);
   const currentValue = useCurrentValue(selectName, args);
   const setValue = useSetValue<Option>(selectName);

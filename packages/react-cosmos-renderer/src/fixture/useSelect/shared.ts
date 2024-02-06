@@ -1,5 +1,10 @@
-export type UseSelectArgs<Option extends string> = {
+type GroupedOptions<Option extends string> = {
+  group: string;
   options: Option[];
+};
+
+export type UseSelectArgs<Option extends string> = {
+  options: Option[] | GroupedOptions<Option>[];
   defaultValue?: Option;
 };
 
@@ -9,5 +14,15 @@ export function getDefaultSelectValue<Option extends string>({
   options,
   defaultValue,
 }: UseSelectArgs<Option>): Option {
-  return typeof defaultValue === 'string' ? defaultValue : options[0];
+  if (typeof defaultValue === 'string') {
+    return defaultValue;
+  }
+
+  const [firstOption] = options;
+
+  if (typeof firstOption === 'object') {
+    return firstOption.options[0];
+  }
+
+  return firstOption;
 }

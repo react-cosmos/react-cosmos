@@ -8,7 +8,7 @@ export type StandardControlFixtureState = {
 
 export type SelectControlFixtureState = {
   type: 'select';
-  options: string[];
+  options: string[] | { group: string; options: string[] }[];
   defaultValue: string;
   currentValue: string;
 };

@@ -6,6 +6,7 @@ import {
   ValueInputContainer,
 } from '../../components/ValueInputTree/ValueInput/shared.js';
 import { Select } from '../../components/inputs/Select.js';
+import { isGroupedOptions } from '../../shared/groupedOptions.js';
 import { lightBlue } from '../../style/colors.js';
 
 type Props = {
@@ -25,7 +26,7 @@ export function SelectValueInput({ name, control, onChange }: Props) {
       <ValueDataContainer>
         <Select
           id={id}
-          options={options.map(option => ({ value: option, label: option }))}
+          options={createSelectOptions(options)}
           value={currentValue}
           color={lightBlue}
           height={24}
@@ -40,4 +41,18 @@ export function SelectValueInput({ name, control, onChange }: Props) {
       </ValueDataContainer>
     </ValueInputContainer>
   );
+}
+
+function createSelectOptions(options: SelectControlFixtureState['options']) {
+  if (isGroupedOptions(options)) {
+    return options.map(group => ({
+      group: group.group,
+      options: group.options.map(option => ({
+        value: option,
+        label: option,
+      })),
+    }));
+  }
+
+  return options.map(option => ({ value: option, label: option }));
 }

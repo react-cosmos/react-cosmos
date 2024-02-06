@@ -33,5 +33,5 @@ export function useCreateFixtureState<Option extends string>(
       };
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [String(args.options), defaultValue, selectName, setFixtureState]);
+  }, [JSON.stringify(args.options), defaultValue, selectName, setFixtureState]);
 }
