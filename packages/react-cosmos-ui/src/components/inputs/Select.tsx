@@ -38,7 +38,9 @@ export function Select<Option extends BaseOption>({
   const onInputChange = useCallback(
     (e: ChangeEvent<HTMLSelectElement>) => {
       const option = findOption(options, e.target.value);
-      if (!option) throw new Error(`Select value doesn't match any option`);
+      if (!option) {
+        throw new Error(`Select value doesn't match any option`);
+      }
       onChange(option);
     },
     [onChange, options]
