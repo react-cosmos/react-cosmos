@@ -134,11 +134,13 @@ export function Root({
             )}
           </RendererBody>
           {!selectedFixtureId && (
-            <HomeOverlay
-              welcomeDismissed={welcomeDismissed}
-              onDismissWelcome={onDismissWelcome}
-              onShowWelcome={onShowWelcome}
-            />
+            <Slot name="homeOverlay">
+              <HomeOverlay
+                welcomeDismissed={welcomeDismissed}
+                onDismissWelcome={onDismissWelcome}
+                onShowWelcome={onShowWelcome}
+              />
+            </Slot>
           )}
         </RendererContainer>
       </MainContainer>
