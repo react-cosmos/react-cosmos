@@ -14,7 +14,7 @@ export function useSetValue<T>(
   return React.useCallback(
     stateChange => {
       setFixtureState(prevFs => {
-        // Types of fixture state values cannot be guaranteed at read
+        // Types of fixture state values cannot be guaranteed at run
         // time, which means that tampering with the fixture state can
         // cause runtime errors
         function getNewState() {
