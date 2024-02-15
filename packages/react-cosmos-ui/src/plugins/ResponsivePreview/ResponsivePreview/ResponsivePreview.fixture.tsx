@@ -10,7 +10,7 @@ export default () => {
   const [viewport, setViewport] = useValue('viewport', {
     defaultValue: initialViewport,
   });
-  const [scaled, setScaled] = useValue<boolean>('scaled', {
+  const [scaled, setScaled] = useValue('scaled', {
     defaultValue: false,
   });
   return (

@@ -18,8 +18,6 @@ export type ObjectData = Record<string, unknown>;
 
 export type ArrayData = unknown[];
 
-export type FixtureStateData = PrimitiveData | ObjectData | ArrayData;
-
 export type FixtureStatePrimitiveValue = {
   type: 'primitive';
   data: PrimitiveData;
