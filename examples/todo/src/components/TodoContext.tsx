@@ -20,7 +20,7 @@ type ProviderProps = {
   children: React.ReactNode;
 };
 export function TodoProvider({ children }: ProviderProps) {
-  const [todos, setTodos] = useValue<Todo[]>('todos', {
+  const [todos, setTodos] = useValue('todos', {
     defaultValue: React.useMemo(
       () => [
         {

@@ -2,7 +2,6 @@ import { isEqual } from 'lodash-es';
 import React from 'react';
 import {
   ControlsFixtureState,
-  FixtureStateData,
   FixtureStateValue,
   createValue,
   extendWithValue,
@@ -11,7 +10,7 @@ import { useFixtureState } from '../useFixtureState.js';
 
 export function useCreateFixtureState(
   inputName: string,
-  defaultValue: FixtureStateData
+  defaultValue: unknown
 ) {
   const [, setFixtureState] = useFixtureState<ControlsFixtureState>('controls');
   React.useEffect(() => {

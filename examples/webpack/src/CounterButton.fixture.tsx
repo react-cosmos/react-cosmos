@@ -3,7 +3,7 @@ import React from 'react';
 import { useValue } from 'react-cosmos/client';
 
 export default () => {
-  const [count, setCount] = useValue<number>('count', { defaultValue: 0 });
+  const [count, setCount] = useValue('count', { defaultValue: 0 });
   return (
     <CounterButton
       suffix="times"

@@ -1,14 +1,7 @@
-import {
-  ControlsFixtureState,
-  FixtureStateData,
-  extendWithValue,
-} from 'react-cosmos-core';
+import { ControlsFixtureState, extendWithValue } from 'react-cosmos-core';
 import { useFixtureState } from '../useFixtureState.js';
 
-export function useCurrentValue<T extends FixtureStateData>(
-  inputName: string,
-  defaultValue: T
-): T {
+export function useCurrentValue<T>(inputName: string, defaultValue: T): T {
   const [fixtureState] = useFixtureState<ControlsFixtureState>('controls');
   const controlFs = fixtureState && fixtureState[inputName];
   return controlFs && controlFs.type === 'standard'

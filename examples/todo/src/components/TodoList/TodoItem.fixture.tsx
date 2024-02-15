@@ -3,11 +3,11 @@ import { useValue } from 'react-cosmos/client';
 import { TodoItem } from './TodoItem.js';
 
 export default () => {
-  const [label, setLabel] = useValue<string>('label', {
+  const [label, setLabel] = useValue('label', {
     defaultValue: 'Eat the homework',
   });
 
-  const [done, setDone] = useValue<boolean>('done', {
+  const [done, setDone] = useValue('done', {
     defaultValue: false,
   });
 
