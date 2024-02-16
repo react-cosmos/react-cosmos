@@ -36,7 +36,7 @@ const Container = styled.div`
 `;
 
 export default {
-  flat: function Flat() {
+  flat: () => {
     const [planet, setPlanet] = React.useState('Earth');
     return (
       <Container>
@@ -51,7 +51,7 @@ export default {
       </Container>
     );
   },
-  groups: function Groups() {
+  groups: () => {
     const [planet, setPlanet] = React.useState('Earth');
     return (
       <Container>
