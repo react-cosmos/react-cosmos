@@ -53,7 +53,7 @@ export default {
 
 ### Component Multi-Fixtures
 
-Multi-Fixtures can also contain Component Fixtures.
+Multi-Fixtures can also contain components.
 
 ```jsx filename="CounterButton.fixture.jsx"
 export default {
@@ -76,7 +76,7 @@ export default {
 Using arrow functions in Multi-Fixtures will cause [eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks) to complain about using hooks inside unnamed components. To avoid having to suppress these warnings in every fixture can do one of the following:
 
 1. Name your component functions, like this: `'my fixture': function MyFixture() {`.
-2. Use eslint `overrides` to disable this rule inside Cosmos fixtures. [Here is an example.](https://github.com/react-cosmos/react-cosmos/blob/bcc09106ef7a010e1c305119385c739773571574/.eslintrc.cjs#L31-L36)
+2. Use ESLint `overrides` to disable this rule inside Cosmos fixtures. [Here is an example.](https://github.com/react-cosmos/react-cosmos/blob/bcc09106ef7a010e1c305119385c739773571574/.eslintrc.cjs#L31-L36)
 
 ### Dynamic Multi-Fixtures
 
