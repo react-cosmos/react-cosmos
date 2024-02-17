@@ -8,10 +8,7 @@ import {
 } from 'react-cosmos-core';
 import { useFixtureState } from '../useFixtureState.js';
 
-export function useCreateFixtureState(
-  inputName: string,
-  defaultValue: unknown
-) {
+export function useValueFixtureState(inputName: string, defaultValue: unknown) {
   const [, setFixtureState] = useFixtureState<ControlsFixtureState>('controls');
   React.useEffect(() => {
     // The fixture state for this value is (re)created in two situations:
