@@ -1,15 +1,11 @@
 import React from 'react';
-import { useValue } from 'react-cosmos/client';
+import { useCosmosState } from 'react-cosmos/client';
 import { TodoItem } from './TodoItem.js';
 
 export default () => {
-  const [label, setLabel] = useValue('label', {
-    defaultValue: 'Eat the homework',
-  });
+  const [label, setLabel] = useCosmosState('label', 'Eat the homework');
 
-  const [done, setDone] = useValue('done', {
-    defaultValue: false,
-  });
+  const [done, setDone] = useCosmosState('done', false);
 
   return (
     <div className="todoapp">

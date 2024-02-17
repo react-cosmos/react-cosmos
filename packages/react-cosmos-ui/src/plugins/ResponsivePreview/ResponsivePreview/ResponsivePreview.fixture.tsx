@@ -1,5 +1,5 @@
 import React from 'react';
-import { useValue } from 'react-cosmos/client';
+import { useCosmosState } from 'react-cosmos/client';
 import styled from 'styled-components';
 import { DEFAULT_DEVICES, DEFAULT_VIEWPORT_STATE } from '../shared.js';
 import { ResponsivePreview } from './ResponsivePreview.js';
@@ -7,12 +7,8 @@ import { ResponsivePreview } from './ResponsivePreview.js';
 const initialViewport = DEFAULT_VIEWPORT_STATE.viewport;
 
 export default () => {
-  const [viewport, setViewport] = useValue('viewport', {
-    defaultValue: initialViewport,
-  });
-  const [scaled, setScaled] = useValue('scaled', {
-    defaultValue: false,
-  });
+  const [viewport, setViewport] = useCosmosState('viewport', initialViewport);
+  const [scaled, setScaled] = useCosmosState('scaled', false);
   return (
     <Container>
       <ResponsivePreview

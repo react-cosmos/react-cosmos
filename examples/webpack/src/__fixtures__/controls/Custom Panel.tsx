@@ -1,22 +1,20 @@
 import React from 'react';
-import { useSelect, useValue } from 'react-cosmos/client';
+import { useCosmosState, useSelect } from 'react-cosmos/client';
 
 export default () => {
-  const [name] = useValue('name', { defaultValue: 'Mark Normand' });
-  const [age] = useValue('age', { defaultValue: 39 });
-  const [comedy] = useValue('comedy', { defaultValue: true });
+  const [name] = useCosmosState('name', 'Mark Normand');
+  const [age] = useCosmosState('age', 39);
+  const [comedy] = useCosmosState('comedy', true);
   const [special, setSpecial] = useSelect('special', {
     options: ['Still Got It', "Don't Be Yourself", 'Out to Lunch'],
     defaultValue: 'Out to Lunch',
   });
-  const [podcast] = useValue('podcast', {
-    defaultValue: {
-      name: 'Tuesdays with Stories',
-      cohost: 'Joe List',
-      episodes: 300,
-      endDate: null,
-      tagRegex: /itsallpipes/g,
-    },
+  const [podcast] = useCosmosState('podcast', {
+    name: 'Tuesdays with Stories',
+    cohost: 'Joe List',
+    episodes: 300,
+    endDate: null,
+    tagRegex: /itsallpipes/g,
   });
 
   function renderButton(option: typeof special) {

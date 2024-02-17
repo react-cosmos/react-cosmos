@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelect, useValue } from 'react-cosmos/client';
+import { useCosmosState, useSelect } from 'react-cosmos/client';
 import { Todo, TodoFilter } from '../types.js';
 
 type ContextValue = {
@@ -20,8 +20,9 @@ type ProviderProps = {
   children: React.ReactNode;
 };
 export function TodoProvider({ children }: ProviderProps) {
-  const [todos, setTodos] = useValue('todos', {
-    defaultValue: React.useMemo(
+  const [todos, setTodos] = useCosmosState(
+    'todos',
+    React.useMemo(
       () => [
         {
           id: 1,
@@ -40,8 +41,8 @@ export function TodoProvider({ children }: ProviderProps) {
         },
       ],
       []
-    ),
-  });
+    )
+  );
 
   const [filter, setFilter] = useSelect<TodoFilter>('filter', {
     defaultValue: 'all',

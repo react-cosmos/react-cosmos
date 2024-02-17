@@ -1,5 +1,5 @@
 import React from 'react';
-import { useValue } from 'react-cosmos/client';
+import { useCosmosState } from 'react-cosmos/client';
 import { PluginList, SimplePlugin } from './PluginList.js';
 
 const initialPlugins: SimplePlugin[] = [
@@ -28,9 +28,7 @@ const initialPlugins: SimplePlugin[] = [
 ];
 
 export default () => {
-  const [plugins, setPlugins] = useValue('plugins', {
-    defaultValue: initialPlugins,
-  });
+  const [plugins, setPlugins] = useCosmosState('plugins', initialPlugins);
   return (
     <PluginList
       plugins={plugins}

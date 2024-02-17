@@ -6,7 +6,7 @@ import {
   ReactTestRendererJSON,
   act,
 } from 'react-test-renderer';
-import { useValue } from '../fixture/useValue/useValue.js';
+import { useCosmosState } from '../fixture/useCosmosState/useCosmosState.js';
 import { getControls } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
@@ -25,12 +25,8 @@ function createFixtures({
   defaultToggled = false,
 }: CreateFixtureArgs = {}) {
   const MyComponent = () => {
-    const [count, setCount] = useValue(countName, {
-      defaultValue: defaultCount,
-    });
-    const [toggled, setToggled] = useValue(toggledName, {
-      defaultValue: defaultToggled,
-    });
+    const [count, setCount] = useCosmosState(countName, defaultCount);
+    const [toggled, setToggled] = useCosmosState(toggledName, defaultToggled);
     return (
       <>
         <button onClick={() => setCount(prevCount => prevCount + 1)}>

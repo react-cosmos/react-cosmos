@@ -17,7 +17,7 @@ The following fixture APIs enable creating custom UI controls in the [Control Pa
 import { useValue } from 'react-cosmos/client';
 
 export default () => {
-  const [count, setCount] = useValue('count', { defaultValue: 0 });
+  const [count, setCount] = useCosmosState('count', 0);
 
   return <CounterButton count={count} increment={() => setCount(count + 1)} />;
 };
