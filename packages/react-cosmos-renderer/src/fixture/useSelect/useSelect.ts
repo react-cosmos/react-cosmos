@@ -1,7 +1,7 @@
 import { SetSelectValue, UseSelectArgs } from './shared.js';
-import { useCreateFixtureState } from './useCreateFixtureState.js';
-import { useCurrentValue } from './useCurrentValue.js';
-import { useSetValue } from './useSetValue.js';
+import { useCurrentSelectValue } from './useCurrentSelectValue.js';
+import { useSelectFixtureState } from './useSelectFixtureState.js';
+import { useSetSelectValue } from './useSetSelectValue.js';
 
 export function useSelect<Option extends string>(
   selectName: string,
@@ -15,9 +15,9 @@ export function useSelect<Option extends string>(
       throw new Error('No options provided to useSelect');
   }
 
-  useCreateFixtureState(selectName, args);
-  const currentValue = useCurrentValue(selectName, args);
-  const setValue = useSetValue<Option>(selectName);
+  useSelectFixtureState(selectName, args);
+  const currentValue = useCurrentSelectValue(selectName, args);
+  const setValue = useSetSelectValue<Option>(selectName);
 
   return [currentValue, setValue];
 }

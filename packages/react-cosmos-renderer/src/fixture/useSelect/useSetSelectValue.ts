@@ -3,7 +3,7 @@ import { ControlsFixtureState } from 'react-cosmos-core';
 import { useFixtureState } from '../useFixtureState.js';
 import { SetSelectValue } from './shared.js';
 
-export function useSetValue<Option extends string>(
+export function useSetSelectValue<Option extends string>(
   selectName: string
 ): SetSelectValue<Option> {
   const [, setFixtureState] = useFixtureState<ControlsFixtureState>('controls');

@@ -3,7 +3,7 @@ import { ControlsFixtureState } from 'react-cosmos-core';
 import { useFixtureState } from '../useFixtureState.js';
 import { getDefaultSelectValue, UseSelectArgs } from './shared.js';
 
-export function useCreateFixtureState<Option extends string>(
+export function useSelectFixtureState<Option extends string>(
   selectName: string,
   args: UseSelectArgs<Option>
 ) {

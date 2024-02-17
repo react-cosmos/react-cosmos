@@ -6,7 +6,7 @@ import {
   ReactTestRenderer,
   ReactTestRendererJSON,
 } from 'react-test-renderer';
-import { useSelect } from '../fixture/useSelect/index.js';
+import { useSelect } from '../fixture/useSelect/useSelect.js';
 import { getControls } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
