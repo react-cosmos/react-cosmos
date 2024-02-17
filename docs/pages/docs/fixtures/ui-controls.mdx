@@ -14,7 +14,7 @@ The following fixture APIs enable creating custom UI controls in the [Control Pa
 ## `useValue`
 
 ```jsx filename="CounterButton.fixture.jsx"
-import { useValue } from 'react-cosmos/client';
+import { useCosmosState } from 'react-cosmos/client';
 
 export default () => {
   const [count, setCount] = useCosmosState('count', 0);
