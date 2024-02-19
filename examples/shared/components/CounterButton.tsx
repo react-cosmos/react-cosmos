@@ -8,7 +8,7 @@ type Props = {
 
 export function CounterButton({ suffix, count, increment }: Props) {
   return (
-    <button onClick={increment}>
+    <button title="Click to increment" onClick={increment}>
       {count} {suffix}
     </button>
   );
