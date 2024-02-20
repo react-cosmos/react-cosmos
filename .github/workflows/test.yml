@@ -91,12 +91,7 @@ jobs:
           CYPRESS_LAZY: ${{ matrix.lazy }}
 
       - uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: cypress-screenshots-${{ matrix.example }}-${{ matrix.os }}-node${{ matrix.node-version }}${{ matrix.lazy == true && '-lazy' || '' }}
-          path: cypress/screenshots
-      - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: cypress-videos-${{ matrix.example }}-${{ matrix.os }}-node${{ matrix.node-version }}${{ matrix.lazy == true && '-lazy' || '' }}
-          path: cypress/videos
+          name: playwright-report-${{ matrix.example }}-${{ matrix.os }}-node${{ matrix.node-version }}${{ matrix.lazy == true && '-lazy' || '' }}
+          path: tests/playwright-report/
