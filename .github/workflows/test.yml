@@ -74,7 +74,7 @@ jobs:
 
       - uses: BerniWittmann/background-server-action@v1
         with:
-          command: yarn test:cypress
+          command: yarn playwright test
           # Start web servers for each test type:
           # - DOM dev server
           # - DOM export
