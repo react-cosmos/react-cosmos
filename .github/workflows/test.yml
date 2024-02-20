@@ -60,6 +60,8 @@ jobs:
             node-version: 20
             lazy: true
     runs-on: ${{ matrix.os }}-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.41.1-jammy
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
