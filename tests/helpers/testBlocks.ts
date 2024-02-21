@@ -65,9 +65,7 @@ export function selectFixtureTests(url: string) {
     test('renders searched fixture', async ({ page }) => {
       await page.goto(url);
 
-      // TODO: How to make it cross compatible with Windows?
-      // Need to use Ctrl instead of Meta on Windows
-      await page.keyboard.press('Meta+K');
+      await page.keyboard.press('Control+K');
       await page.getByPlaceholder('Fixture search').fill('Hello');
       await page.keyboard.press('Enter');
 
