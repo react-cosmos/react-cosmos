@@ -62,7 +62,7 @@ async function readImportsFile() {
 
 async function containsImport(importPath: string) {
   const imports = await readImportsFile();
-  if (lazy()) {
+  if (lazy() === 'true') {
     expect(imports).toMatch(new RegExp(`import\\('./${importPath}'\\)`));
   } else {
     expect(imports).toMatch(
