@@ -65,6 +65,7 @@ export function selectFixtureTests(url: string) {
     test('renders searched fixture', async ({ page }) => {
       await page.goto(url);
 
+      await page.getByText('Search fixtures').waitFor();
       await page.keyboard.press('Control+K');
       await page.getByPlaceholder('Fixture search').fill('Hello');
       await page.keyboard.press('Enter');
