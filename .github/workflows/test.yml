@@ -69,11 +69,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
 
-      # https://playwright.dev/docs/browsers#install-system-dependencies
-      - run: npx playwright install --with-deps chromium
-
       - run: yarn install --frozen-lockfile --network-timeout 600000
       - run: yarn build
+
+      # https://playwright.dev/docs/browsers#install-system-dependencies
+      - run: npx playwright install --with-deps chromium
 
       # Generate static export for domExport test
       - run: yarn workspace example-${{ matrix.example }} export --lazy=${{ matrix.lazy }}
