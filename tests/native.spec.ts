@@ -5,8 +5,6 @@ import { exampleName, lazy } from './helpers/envVars.js';
 const url = 'http://localhost:5002';
 
 test.describe('Native', () => {
-  // cy.clearStorage();
-
   test.describe('homepage', () => {
     test('has document title', async ({ page }) => {
       await page.goto(url);

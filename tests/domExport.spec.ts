@@ -9,7 +9,6 @@ import {
 const url = 'http://localhost:5001';
 
 test.describe('DOM export', () => {
-  // cy.clearStorage();
   homepageTests(url);
   navTests(url);
   selectFixtureTests(url);

@@ -9,7 +9,6 @@ import {
 const url = 'http://localhost:5000';
 
 test.describe('DOM dev', () => {
-  // cy.clearStorage();
   homepageTests(url);
   navTests(url);
   selectFixtureTests(url);
