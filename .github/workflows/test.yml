@@ -80,7 +80,7 @@ jobs:
 
       - uses: BerniWittmann/background-server-action@v1
         with:
-          command: yarn playwright test --workers=1
+          command: yarn playwright test
           # Start web servers for each test type:
           # - DOM dev server
           # - DOM export
