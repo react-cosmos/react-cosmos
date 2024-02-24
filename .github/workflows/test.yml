@@ -26,10 +26,9 @@ jobs:
       - run: yarn src
       - run: yarn check-types
       - run: yarn check-types:docs
-      - run: yarn check-types:cypress
       - run: yarn lint
       - run: yarn test:coverage --maxWorkers=2
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v4
         # Only report coverage once
         if: matrix.os == 'ubuntu'
 
@@ -66,15 +65,19 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
+
       - run: yarn install --frozen-lockfile --network-timeout 600000
       - run: yarn build
+
+      # https://playwright.dev/docs/browsers#install-system-dependencies
+      - run: npx playwright install --with-deps chromium
 
       # Generate static export for domExport test
       - run: yarn workspace example-${{ matrix.example }} export --lazy=${{ matrix.lazy }}
 
       - uses: BerniWittmann/background-server-action@v1
         with:
-          command: yarn test:cypress
+          command: yarn test:e2e
           # Start web servers for each test type:
           # - DOM dev server
           # - DOM export
@@ -85,16 +88,11 @@ jobs:
             yarn workspace example-${{ matrix.example }} native --lazy=${{ matrix.lazy }} --port 5002
           wait-on: 'http://localhost:5000,http://localhost:5001,http://localhost:5002'
         env:
-          CYPRESS_EXAMPLE_NAME: ${{ matrix.example }}
-          CYPRESS_LAZY: ${{ matrix.lazy }}
+          TEST_EXAMPLE_NAME: ${{ matrix.example }}
+          TEST_LAZY: ${{ matrix.lazy }}
 
-      - uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: cypress-screenshots-${{ matrix.example }}-${{ matrix.os }}-node${{ matrix.node-version }}${{ matrix.lazy == true && '-lazy' || '' }}
-          path: cypress/screenshots
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: cypress-videos-${{ matrix.example }}-${{ matrix.os }}-node${{ matrix.node-version }}${{ matrix.lazy == true && '-lazy' || '' }}
-          path: cypress/videos
+          name: playwright-report-${{ matrix.example }}-${{ matrix.os }}-node${{ matrix.node-version }}${{ matrix.lazy == true && '-lazy' || '' }}
+          path: tests/playwright-report
