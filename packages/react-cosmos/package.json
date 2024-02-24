@@ -8,7 +8,7 @@
   "main": "./index.js",
   "dependencies": {
     "@skidding/launch-editor": "2.2.3",
-    "chokidar": "3.6.0",
+    "chokidar": "3.5.3",
     "express": "4.18.2",
     "glob": "10.3.10",
     "http-proxy-middleware": "2.0.6",

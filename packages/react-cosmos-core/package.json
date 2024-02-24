@@ -8,7 +8,7 @@
   "sideEffects": false,
   "main": "./dist/index.js",
   "dependencies": {
-    "js-base64": "3.7.7",
+    "js-base64": "3.7.6",
     "lodash-es": "4.17.21",
     "react-is": "18.2.0"
   }
