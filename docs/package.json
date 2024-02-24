@@ -15,9 +15,9 @@
     "@types/json-schema": "^7.0.15",
     "autoprefixer": "10.4.17",
     "next": "14.1.0",
-    "nextra": "2.13.2",
-    "nextra-theme-docs": "2.13.2",
-    "postcss": "8.4.33",
+    "nextra": "2.13.3",
+    "nextra-theme-docs": "2.13.3",
+    "postcss": "8.4.35",
     "tailwindcss": "3.4.1"
   }
 }
