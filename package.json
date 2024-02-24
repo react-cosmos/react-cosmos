@@ -86,5 +86,8 @@
     "webpack": "5.90.3",
     "webpack-cli": "5.1.4",
     "yargs": "17.7.2"
+  },
+  "resolutions": {
+    "string-width": "4.2.3"
   }
 }
