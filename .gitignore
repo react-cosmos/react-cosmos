@@ -6,5 +6,3 @@ packages/*/dist
 __testFs__
 
 coverage
-cypress/screenshots
-cypress/videos
