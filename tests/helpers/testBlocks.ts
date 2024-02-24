@@ -1,7 +1,7 @@
 import { Page, expect, test } from '@playwright/test';
 import { exampleName } from './envVars.js';
 
-export function homepageTests(url: string) {
+export function webTests(url: string) {
   test.describe('homepage', () => {
     test('has document title', async ({ page }) => {
       await page.goto(url);
@@ -18,9 +18,7 @@ export function homepageTests(url: string) {
       await expect(page.getByText('Renderer connected')).toBeVisible();
     });
   });
-}
 
-export function navTests(url: string) {
   test.describe('nav', () => {
     test('renders tree view root items', async ({ page }) => {
       await page.goto(url);
@@ -38,9 +36,7 @@ export function navTests(url: string) {
       await expect(page.getByText('large number')).toBeVisible();
     });
   });
-}
 
-export function selectFixtureTests(url: string) {
   test.describe('select fixture', () => {
     test('renders selected fixtures', async ({ page }) => {
       await page.goto(url);
@@ -73,9 +69,7 @@ export function selectFixtureTests(url: string) {
       await expect(await getRendererRoot(page)).toContainText('Hello World!');
     });
   });
-}
 
-export function staticTests(url: string) {
   test.describe('static path', () => {
     test('serves static asset', async ({ request }) => {
       const response = await request.get(`${url}/cookie.txt`);
