@@ -41,8 +41,7 @@ export function webTests(url: string) {
     test('renders selected fixtures', async ({ page }) => {
       await page.goto(url);
       await page.click('text=HelloWorld');
-      const rendererRoot = await getRendererRoot(page);
-      await expect(rendererRoot.getByText('Hello World!')).toBeVisible();
+      await expect(rendererRoot(page).getByText('Hello World!')).toBeVisible();
     });
 
     test('renders updated fixture', async ({ page }) => {
@@ -50,8 +49,7 @@ export function webTests(url: string) {
       await page.click('text=Counter');
       await page.click('text=large number');
 
-      const rendererRoot = await getRendererRoot(page);
-      const button = rendererRoot.getByTitle('Click to increment');
+      const button = rendererRoot(page).getByTitle('Click to increment');
       await expect(button).toContainText('555555555 times');
 
       await button.dblclick();
@@ -66,7 +64,18 @@ export function webTests(url: string) {
       await page.getByPlaceholder('Fixture search').fill('Hello');
       await page.keyboard.press('Enter');
 
-      await expect(await getRendererRoot(page)).toContainText('Hello World!');
+      await expect(rendererRoot(page)).toContainText('Hello World!');
+    });
+
+    test('uses search key shortcut in renderer iframe', async ({ page }) => {
+      await page.goto(url);
+      await page.click('text=HelloWorld');
+
+      // Clicking on the fixture content focuses the iframe
+      await rendererRoot(page).getByText('Hello World!').click();
+
+      await page.keyboard.press('Control+K');
+      await page.getByPlaceholder('Fixture search').waitFor();
     });
   });
 
@@ -78,6 +87,6 @@ export function webTests(url: string) {
   });
 }
 
-async function getRendererRoot(page: Page) {
+function rendererRoot(page: Page) {
   return page.frameLocator('iframe').locator('#root');
 }
