@@ -27,9 +27,14 @@ jobs:
       - run: npm run check-types:docs
       - run: npm run lint
       - run: npm run test:coverage --maxWorkers=2
+
       - uses: codecov/codecov-action@v4
         # Only report coverage once
         if: matrix.os == 'ubuntu'
+        with:
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
 
   examples:
     if: ${{ !contains(github.event.head_commit.message, '[release]') }}
