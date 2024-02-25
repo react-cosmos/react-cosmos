@@ -10,7 +10,7 @@
     "lodash-es": "4.17.21",
     "react-cosmos-core": "^6.0.1",
     "react-cosmos-dom": "^6.0.3",
-    "react-error-overlay": "6.0.11",
+    "react-error-overlay": "6.0.9",
     "webpack-dev-middleware": "6.1.1",
     "webpack-hot-middleware": "2.26.1"
   },
