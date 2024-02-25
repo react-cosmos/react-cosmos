@@ -32,8 +32,9 @@ jobs:
         # Only report coverage once
         if: matrix.os == 'ubuntu'
         with:
-          fail_ci_if_error: true
+          directory: coverage
           token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
           verbose: true
 
   examples:
