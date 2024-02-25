@@ -81,9 +81,9 @@ jobs:
           # - DOM export
           # - Native dev server
           start: |
-            npm ---workspace example-${{ matrix.example }} run start --lazy=${{ matrix.lazy }},
-            npm ---workspace example-${{ matrix.example }} run serve,
-            npm ---workspace example-${{ matrix.example }} run native --lazy=${{ matrix.lazy }} --port 5002
+            npm --workspace example-${{ matrix.example }} run start --lazy=${{ matrix.lazy }},
+            npm --workspace example-${{ matrix.example }} run serve,
+            npm --workspace example-${{ matrix.example }} run native --lazy=${{ matrix.lazy }} --port 5002
           wait-on: 'http://localhost:5000,http://localhost:5001,http://localhost:5002'
         env:
           TEST_EXAMPLE_NAME: ${{ matrix.example }}
