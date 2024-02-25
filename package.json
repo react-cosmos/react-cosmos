@@ -11,22 +11,22 @@
   "scripts": {
     "prettify": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
     "check-types": "tsc",
-    "check-types:docs": "yarn tsc -p docs/tsconfig.json",
+    "check-types:docs": "tsc -p docs/tsconfig.json",
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "test": "jest --config .jest/config.cjs",
-    "test:watch": "yarn test --watch",
-    "test:coverage": "yarn test --coverage",
+    "test:watch": "npm run test --watch",
+    "test:coverage": "npm run test --coverage",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "link-entries": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./scripts/linkEntries.ts",
-    "src": "yarn link-entries src",
-    "dist": "yarn link-entries dist",
+    "src": "npm run link-entries src",
+    "dist": "npm run link-entries dist",
     "build:clear": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./scripts/clearBuild.ts",
     "build": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./scripts/build.ts",
     "demo:build": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./scripts/buildDemo.ts",
-    "release:check": "yarn build:clear && yarn build && yarn src && yarn lint && yarn dist && yarn test",
-    "release": "yarn release:check && yarn lerna publish -m \"[release] %s\"",
-    "release:next": "yarn release:check && yarn lerna publish --dist-tag=next --exact -m \"[release] %s\""
+    "release:check": "npm run build:clear && npm run build && npm run src && npm run lint && npm run dist && npm run test",
+    "release": "npm run release:check && npm run lerna publish -m \"[release] %s\"",
+    "release:next": "npm run release:check && npm run lerna publish --dist-tag=next --exact -m \"[release] %s\""
   },
   "devDependencies": {
     "@playwright/test": "^1.41.2",
@@ -86,8 +86,5 @@
     "webpack": "5.89.0",
     "webpack-cli": "5.1.4",
     "yargs": "17.7.2"
-  },
-  "resolutions": {
-    "string-width": "4.2.3"
   }
 }

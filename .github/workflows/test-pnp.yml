@@ -26,16 +26,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'yarn'
-          cache-dependency-path: |
-            react-cosmos/yarn.lock
-            pnp-example/yarn.lock
 
       - name: Build react-cosmos packages
         run: |
           cd react-cosmos
-          yarn install --frozen-lockfile --network-timeout 600000
-          yarn build
+          npm install
+          npm run build
 
       - name: Run PnP example with linked react-cosmos packages
         run: |

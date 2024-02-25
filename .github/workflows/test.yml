@@ -19,15 +19,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile --network-timeout 600000
+      - run: npm install
 
       # Test source (with cross-package coverage)
-      - run: yarn src
-      - run: yarn check-types
-      - run: yarn check-types:docs
-      - run: yarn lint
-      - run: yarn test:coverage --maxWorkers=2
+      - run: npm run src
+      - run: npm run check-types
+      - run: npm run check-types:docs
+      - run: npm run lint
+      - run: npm run test:coverage --maxWorkers=2
       - uses: codecov/codecov-action@v4
         # Only report coverage once
         if: matrix.os == 'ubuntu'
@@ -64,28 +63,27 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
 
-      - run: yarn install --frozen-lockfile --network-timeout 600000
-      - run: yarn build
+      - run: npm install
+      - run: npm run build
 
       # https://playwright.dev/docs/browsers#install-system-dependencies
       - run: npx playwright install --with-deps chromium
 
       # Generate static export for domExport test
-      - run: yarn workspace example-${{ matrix.example }} export --lazy=${{ matrix.lazy }}
+      - run: npm --workspace example-${{ matrix.example }} run export --lazy=${{ matrix.lazy }}
 
       - uses: BerniWittmann/background-server-action@v1
         with:
-          command: yarn test:e2e
+          command: npm run test:e2e
           # Start web servers for each test type:
           # - DOM dev server
           # - DOM export
           # - Native dev server
           start: |
-            yarn workspace example-${{ matrix.example }} start --lazy=${{ matrix.lazy }},
-            yarn workspace example-${{ matrix.example }} serve,
-            yarn workspace example-${{ matrix.example }} native --lazy=${{ matrix.lazy }} --port 5002
+            npm ---workspace example-${{ matrix.example }} run start --lazy=${{ matrix.lazy }},
+            npm ---workspace example-${{ matrix.example }} run serve,
+            npm ---workspace example-${{ matrix.example }} run native --lazy=${{ matrix.lazy }} --port 5002
           wait-on: 'http://localhost:5000,http://localhost:5001,http://localhost:5002'
         env:
           TEST_EXAMPLE_NAME: ${{ matrix.example }}
