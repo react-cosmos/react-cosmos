@@ -30,7 +30,7 @@ jobs:
       - name: Build react-cosmos packages
         run: |
           cd react-cosmos
-          npm install
+          npm ci
           npm run build
 
       - name: Run PnP example with linked react-cosmos packages
