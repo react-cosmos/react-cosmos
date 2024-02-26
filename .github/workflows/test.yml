@@ -20,7 +20,13 @@ jobs:
         with:
           node-version: '20'
 
-      - run: npm ci
+      - uses: actions/cache@v4
+        id: npm-cache
+        with:
+          path: .npm-cache
+          key: '${{ runner.os }}-npm'
+
+      - run: npm ci --cache .npm
 
       # Test source (with cross-package coverage)
       - run: npm run src
@@ -71,7 +77,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - run: npm ci
+      - uses: actions/cache@v4
+        id: npm-cache
+        with:
+          path: .npm-cache
+          key: '${{ runner.os }}-npm'
+
+      - run: npm ci --cache .npm-cache
       - run: npm run build
 
       # Cache Playwright binaries
