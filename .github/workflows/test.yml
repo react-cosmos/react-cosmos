@@ -19,6 +19,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+
       - run: npm ci
 
       # Test source (with cross-package coverage)
@@ -73,8 +74,16 @@ jobs:
       - run: npm ci
       - run: npm run build
 
+      # Cache Playwright binaries
+      - uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: '~/.cache/ms-playwright'
+          key: '${{ runner.os }}-playwright-1.41.2'
+
       # https://playwright.dev/docs/browsers#install-system-dependencies
-      - run: npx playwright install --with-deps chromium
+      - if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium
 
       # Generate static export for domExport test
       - run: npm --workspace example-${{ matrix.example }} run export -- --lazy=${{ matrix.lazy }}
