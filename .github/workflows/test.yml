@@ -97,7 +97,7 @@ jobs:
       - if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps chromium
 
-      # Generate static export for domExport test
+      # Generate static export for DOM export test
       - run: npm --workspace example-${{ matrix.example }} run export -- --lazy=${{ matrix.lazy }}
 
       - uses: BerniWittmann/background-server-action@v1
