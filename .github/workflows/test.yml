@@ -26,7 +26,7 @@ jobs:
           path: .npm-cache
           key: '${{ runner.os }}-npm'
 
-      - run: npm ci --cache .npm
+      - run: npm ci --cache .npm-cache
 
       # Test source (with cross-package coverage)
       - run: npm run src
