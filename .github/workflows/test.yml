@@ -104,9 +104,10 @@ jobs:
       # - DOM dev server
       # - DOM export
       # - Native dev server
-      - run: |
+      - name: Start servers and run tests
+        run: |
           npm --workspace example-${{ matrix.example }} run start -- --lazy=${{ matrix.lazy }} &
-          npm --workspace example-${{ matrix.example }} run serve &
+          npm --workspace example-${{ matrix.example }} run serve -- -s &
           npm --workspace example-${{ matrix.example }} run native -- --lazy=${{ matrix.lazy }} --port 5002 &
           npm run test:e2e
         env:
