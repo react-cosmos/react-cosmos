@@ -1,6 +1,8 @@
 import { Page, expect, test } from '@playwright/test';
 import { exampleName } from './envVars.js';
 
+const initialLoadTimeout = 30000;
+
 export function webTests(url: string) {
   test.describe('homepage', () => {
     test('has document title', async ({ page }) => {
@@ -10,12 +12,18 @@ export function webTests(url: string) {
 
     test('displays welcome message', async ({ page }) => {
       await page.goto(url);
-      await expect(page.getByText('Welcome to React Cosmos')).toBeVisible();
+      // It seems that the webpack plugin can sometimes slow the Cosmos server
+      // while it's compiling
+      await expect(page.getByText('Welcome to React Cosmos')).toBeVisible({
+        timeout: initialLoadTimeout,
+      });
     });
 
     test('shows renderer connected notification', async ({ page }) => {
       await page.goto(url);
-      await expect(page.getByText('Renderer connected')).toBeVisible();
+      await expect(page.getByText('Renderer connected')).toBeVisible({
+        timeout: initialLoadTimeout,
+      });
     });
   });
 
