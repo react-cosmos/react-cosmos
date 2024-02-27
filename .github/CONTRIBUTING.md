@@ -59,7 +59,7 @@ Open the CI build page. See what went wrong and learn to run the checks locally.
 
 > Working on Cosmos requires Node 16 or newer
 
-[Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) and [Lerna](https://github.com/lerna/lerna) make it possible to publish independent packages and still test the project end-to-end.
+[NPM Workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces) and [Lerna](https://github.com/lerna/lerna) make it possible to publish independent packages and still test the project end-to-end.
 
 Tools are installed globally in the root node_modules. This includes Jest, TypeScript, Webpack, and their corresponding plugins. ESLint is also applied globally. Creating a new package has less overhead because of this.
 
@@ -68,26 +68,26 @@ git clone git@github.com:react-cosmos/react-cosmos.git
 cd react-cosmos
 
 # Install deps and link packages
-yarn
+npm install
 
 # Basic commands
-yarn build
-yarn test
-yarn check-types
+npm run build
+npm run test
+npm run check-types
 
 # Run Vite example
-yarn workspace example-vite start
+npm --workspace example-vite start
 
 # Cosmos UI #inception
-yarn workspace react-cosmos-ui playground
+npm --workspace react-cosmos-ui run playground
 
 # Build single package once or in watch mode
-yarn build react-cosmos-core
-yarn build react-cosmos-core --watch
+npm run build react-cosmos-core
+npm run build react-cosmos-core --watch
 
 # Test watch all or specific tests
-yarn test:watch
-yarn test:watch path/to/my/file.test.ts
+npm run test:watch
+npm run test:watch path/to/my/file.test.ts
 ```
 
 ### Test your work
