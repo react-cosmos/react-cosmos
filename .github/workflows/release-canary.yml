@@ -29,7 +29,7 @@ jobs:
       # https://github.com/lerna/lerna/issues/3554
       # https://github.com/lerna/lerna/issues/2060#issuecomment-658182391
       - run: |
-          npm run lerna publish \
+          npx lerna publish \
             --canary \
             --preid canary.$(git rev-parse --short HEAD) \
             --dist-tag=canary \
