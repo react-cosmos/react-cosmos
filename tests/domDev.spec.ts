@@ -6,7 +6,7 @@ const rendererUrl = 'http://localhost:5000/renderer.html';
 const initialLoadTimeout = 30000;
 
 test.describe('DOM dev', () => {
-  test.beforeAll(async ({ page }) => {
+  test.beforeEach(async ({ page }) => {
     // NOTE: It seems that the webpack plugin can sometimes slow the Cosmos
     // server while it's compiling
     await page.waitForURL(url, { timeout: initialLoadTimeout });
