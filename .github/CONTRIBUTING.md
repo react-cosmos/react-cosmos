@@ -59,7 +59,7 @@ Open the CI build page. See what went wrong and learn to run the checks locally.
 
 > Working on Cosmos requires Node 16 or newer
 
-[NPM Workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces) and [Lerna](https://github.com/lerna/lerna) make it possible to publish independent packages and still test the project end-to-end.
+[NPM workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces) and [Lerna](https://github.com/lerna/lerna) make it possible to publish independent packages and still test the project end-to-end.
 
 Tools are installed globally in the root node_modules. This includes Jest, TypeScript, Webpack, and their corresponding plugins. ESLint is also applied globally. Creating a new package has less overhead because of this.
 
