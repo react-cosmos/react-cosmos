@@ -83,6 +83,7 @@
     "ts-node": "10.9.2",
     "typescript": "5.3.3",
     "vite": "5.1.4",
+    "wait-on": "^7.2.0",
     "webpack": "5.89.0",
     "webpack-cli": "5.1.4",
     "yargs": "17.7.2"
