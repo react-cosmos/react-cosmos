@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import { webTests } from './helpers/testBlocks.js';
+import { webTests } from './helpers/webTests.js';
 
 const url = 'http://localhost:5001';
 
