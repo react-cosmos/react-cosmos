@@ -23,7 +23,7 @@ export default () => {
 };
 ```
 
-The `useValue` hook can be used to control any type of serializable data, like strings, numbers and booleans, including objects and arrays.
+The `useCosmosInput` hook can be used with any type of serializable data, like strings, numbers and booleans, including objects and arrays.
 
 ### Number inputs
 
@@ -33,13 +33,13 @@ While focused on number inputs you can use the up and down arrow keys to increme
 
 The [Boolean Input Plugin](/docs/plugins#boolean-input-plugin) can be installed to turn boolean controls into checkboxes.
 
-## `useSelect`
+## `useCosmosSelect`
 
 ```jsx filename="Button.fixture.jsx"
-import { useSelect } from 'react-cosmos/client';
+import { useCosmosSelect } from 'react-cosmos/client';
 
 export default () => {
-  const [buttonType] = useSelect('buttonType', {
+  const [buttonType] = useCosmosSelect('buttonType', {
     options: ['primary', 'secondary', 'danger'],
   });
 
@@ -47,10 +47,11 @@ export default () => {
 };
 ```
 
-`useSelect` also returns a setter as the second value in the return tuple, like the `useState` hook, in case you want to change the value programatically.
+`useCosmosSelect` also returns a setter as the second value in the return tuple, like the `useState` hook, in case you want to change the value programatically.
 
 <Callout type="info">
-  `useValue` and `useSelect` (and Cosmos in general) work great with TypeScript.
+  `useCosmosInput` and `useCosmosSelect` (and Cosmos in general) work great with
+  TypeScript.
 </Callout>
 
 ## `<Viewport>`

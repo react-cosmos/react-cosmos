@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCosmosInput, useSelect } from 'react-cosmos/client';
+import { useCosmosInput, useCosmosSelect } from 'react-cosmos/client';
 import { Todo, TodoFilter } from '../types.js';
 
 type ContextValue = {
@@ -40,7 +40,7 @@ type ProviderProps = {
 export function TodoProvider({ children }: ProviderProps) {
   const [todos, setTodos] = useCosmosInput('todos', defaultTodos);
 
-  const [filter, setFilter] = useSelect<TodoFilter>('filter', {
+  const [filter, setFilter] = useCosmosSelect<TodoFilter>('filter', {
     defaultValue: 'all',
     options: ['all', 'active', 'completed'],
   });

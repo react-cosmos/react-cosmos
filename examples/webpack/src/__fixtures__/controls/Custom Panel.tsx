@@ -1,11 +1,11 @@
 import React from 'react';
-import { useCosmosInput, useSelect } from 'react-cosmos/client';
+import { useCosmosInput, useCosmosSelect } from 'react-cosmos/client';
 
 export default () => {
   const [name] = useCosmosInput('name', 'Mark Normand');
   const [age] = useCosmosInput('age', 39);
   const [comedy] = useCosmosInput('comedy', true);
-  const [special, setSpecial] = useSelect('special', {
+  const [special, setSpecial] = useCosmosSelect('special', {
     options: ['Still Got It', "Don't Be Yourself", 'Out to Lunch'],
     defaultValue: 'Out to Lunch',
   });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelect } from 'react-cosmos/client';
+import { useCosmosSelect } from 'react-cosmos/client';
 import { Notifications } from './Notifications.js';
 import { NotificationItem, NotificationType } from './spec.js';
 
@@ -20,7 +20,7 @@ const infos: Record<NotificationType, string> = {
 };
 
 function NotificationFixture() {
-  const [type] = useSelect<NotificationType>('notification type', {
+  const [type] = useCosmosSelect<NotificationType>('notification type', {
     options: ['error', 'info', 'loading', 'success'],
   });
   return (
