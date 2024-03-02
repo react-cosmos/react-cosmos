@@ -10,7 +10,7 @@ export function registerPlaygroundShortcuts(
 
   function handleWindowKeyDown(e: KeyboardEvent) {
     // Allow meta key shortcuts to work when focused on input fields
-    if (isEditing() && !e.metaKey) {
+    if (isEditing(e) && !e.metaKey) {
       return;
     }
 
@@ -45,7 +45,11 @@ export function registerPlaygroundShortcuts(
   };
 }
 
-function isEditing() {
+function isEditing(e: KeyboardEvent) {
+  if (e.target instanceof HTMLElement && e.target.isContentEditable) {
+    return true;
+  }
+
   const activeElement = document.activeElement;
   return activeElement && isInputTag(activeElement.tagName);
 }

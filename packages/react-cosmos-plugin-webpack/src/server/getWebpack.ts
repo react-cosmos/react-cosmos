@@ -6,7 +6,7 @@ export function getWebpack(rootDir: string) {
   if (!userWebpack) {
     console.warn('[Cosmos] webpack dependency missing!');
     console.log(
-      'Install using "yarn add --dev webpack" or "npm install --save-dev webpack"'
+      'Install using "npm install --save-dev webpack" or "yarn add --dev webpack"'
     );
     return;
   }

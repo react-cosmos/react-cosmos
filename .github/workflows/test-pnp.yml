@@ -7,8 +7,6 @@ jobs:
   pnp-install-and-run:
     if: ${{ !contains(github.event.head_commit.message, '[release]') }}
     runs-on: ubuntu-latest
-    env:
-      SKIP_YARN_COREPACK_CHECK: true
     steps:
       - run: git config --global core.autocrlf false
 
@@ -23,19 +21,24 @@ jobs:
           repository: react-cosmos/pnp-example
           path: pnp-example
 
+      # https://github.com/actions/setup-node/issues/531#issuecomment-1872977503
+      - run: corepack enable
+
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'yarn'
-          cache-dependency-path: |
-            react-cosmos/yarn.lock
-            pnp-example/yarn.lock
+
+      - uses: actions/cache@v4
+        id: npm-cache
+        with:
+          path: .npm-cache
+          key: '${{ runner.os }}-npm'
 
       - name: Build react-cosmos packages
         run: |
           cd react-cosmos
-          yarn install --frozen-lockfile --network-timeout 600000
-          yarn build
+          npm ci --cache .npm-cache
+          npm run build
 
       - name: Run PnP example with linked react-cosmos packages
         run: |
