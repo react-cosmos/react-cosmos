@@ -1,5 +1,5 @@
 import React from 'react';
-import { SelectControlFixtureState } from 'react-cosmos-core';
+import { SelectInputFixtureState } from 'react-cosmos-core';
 import {
   Label,
   ValueDataContainer,
@@ -11,12 +11,12 @@ import { lightBlue } from '../../style/colors.js';
 
 type Props = {
   name: string;
-  control: SelectControlFixtureState;
-  onChange: (name: string, select: SelectControlFixtureState) => unknown;
+  input: SelectInputFixtureState;
+  onChange: (name: string, select: SelectInputFixtureState) => unknown;
 };
 
-export function SelectValueInput({ name, control, onChange }: Props) {
-  const { options, currentValue } = control;
+export function SelectValueInput({ name, input, onChange }: Props) {
+  const { options, currentValue } = input;
   const id = `select-${name}`;
   return (
     <ValueInputContainer key={name}>
@@ -33,7 +33,7 @@ export function SelectValueInput({ name, control, onChange }: Props) {
           padding={5}
           onChange={newValue =>
             onChange(name, {
-              ...control,
+              ...input,
               currentValue: newValue.value,
             })
           }
@@ -43,7 +43,7 @@ export function SelectValueInput({ name, control, onChange }: Props) {
   );
 }
 
-function createSelectOptions(options: SelectControlFixtureState['options']) {
+function createSelectOptions(options: SelectInputFixtureState['options']) {
   if (isGroupedOptions(options)) {
     return options.map(group => ({
       group: group.group,

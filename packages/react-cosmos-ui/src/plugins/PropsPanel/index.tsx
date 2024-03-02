@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import {
   ClassStateFixtureState,
-  ControlsFixtureState,
   FixtureElementId,
   FixtureId,
+  InputsFixtureState,
   PropsFixtureState,
 } from 'react-cosmos-core';
 import { PluginContext, createPlugin } from 'react-plugin';
@@ -58,10 +58,8 @@ namedPlug<SidePanelRowSlotProps>(
   }
 );
 
-// WARNING: This plug has to be aware of all control types and only show up
+// WARNING: This plug has to be aware of all input categories and only show up
 // when none is available
-// TODO: Replace this with a more generic blank state (controls in general not
-// just props)
 namedPlug<SidePanelRowSlotProps>(
   'sidePanelRow',
   'blankState',
@@ -116,9 +114,9 @@ function shouldShowBlankState(getFixtureState: GetFixtureState) {
   const hasClassState = classState && classState.some(hasFsValues);
   if (hasClassState) return false;
 
-  const controls = getFixtureState<ControlsFixtureState>('controls');
-  const hasControls = controls && Object.keys(controls).length > 0;
-  if (hasControls) return false;
+  const inputs = getFixtureState<InputsFixtureState>('inputs');
+  const hasInputs = inputs && Object.keys(inputs).length > 0;
+  if (hasInputs) return false;
 
   return true;
 }

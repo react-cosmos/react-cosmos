@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { SlidersIcon } from '../../components/icons/index.js';
 import { grey160, grey224, grey32, grey64 } from '../../style/colors.js';
 
+// TODO: Replace this with a more generic blank state (inputs in general not
+// just props)
 export function BlankState() {
   return (
     <DelayRender delay={500}>

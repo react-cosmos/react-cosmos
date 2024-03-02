@@ -2,14 +2,14 @@ import React from 'react';
 import { PluginContext } from 'react-plugin';
 import { TreeExpansion } from '../../shared/treeExpansion.js';
 import { StorageSpec } from '../Storage/spec.js';
-import { StandardControlSpec } from './spec.js';
+import { StandardInputSpec } from './spec.js';
 
-const storageKey = 'standardControlTreeExpansion';
+const storageKey = 'standardInputTreeExpansion';
 const emptyTreeExpansion = {};
 
 // TODO: Persist tree expansion state per fixture ID?
 export function useTreeExpansionStorage(
-  pluginContext: PluginContext<StandardControlSpec>
+  pluginContext: PluginContext<StandardInputSpec>
 ) {
   const storage = pluginContext.getMethodsOf<StorageSpec>('storage');
 
