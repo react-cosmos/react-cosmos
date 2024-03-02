@@ -47,7 +47,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           selectName: {
             type: 'select',
             options: ['first', 'second', 'third'],

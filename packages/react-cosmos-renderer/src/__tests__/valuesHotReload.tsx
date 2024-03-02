@@ -7,7 +7,7 @@ import {
   act,
 } from 'react-test-renderer';
 import { useCosmosInput } from '../fixture/useValue/useCosmosInput.js';
-import { getControls } from '../testHelpers/fixtureState.js';
+import { getInputs } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
@@ -63,7 +63,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           // `count` was reset, `toggled` was preserved
           count: {
             type: 'standard',
@@ -100,8 +100,8 @@ testRenderer(
       fixtureId,
       fixtureState: {
         ...setFixtureState,
-        controls: {
-          ...getControls(fixtureState),
+        inputs: {
+          ...getInputs(fixtureState),
           count: {
             type: 'standard',
             defaultValue: createValue(0),
@@ -120,7 +120,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           // `count` was preserved, `toggled` was reset
           count: {
             type: 'standard',
@@ -150,7 +150,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           count: {
             type: 'standard',
             defaultValue: createValue(0),
@@ -177,7 +177,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           count: {
             type: 'standard',
             defaultValue: createValue(0),

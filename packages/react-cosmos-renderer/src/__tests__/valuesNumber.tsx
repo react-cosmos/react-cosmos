@@ -47,7 +47,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           count: {
             type: 'standard',
             defaultValue: createValue(0),
@@ -72,7 +72,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           count: {
             type: 'standard',
             defaultValue: createValue(0),
@@ -99,7 +99,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           count: {
             type: 'standard',
             defaultValue: createValue(5),

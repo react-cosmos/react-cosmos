@@ -61,7 +61,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           profile: {
             type: 'standard',
             defaultValue: createValue({
@@ -95,7 +95,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           profile: {
             type: 'standard',
             defaultValue: createValue({
@@ -139,7 +139,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           profile: {
             type: 'standard',
             defaultValue: createValue({

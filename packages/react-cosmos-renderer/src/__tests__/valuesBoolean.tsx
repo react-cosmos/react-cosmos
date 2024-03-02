@@ -45,7 +45,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           toggled: {
             type: 'standard',
             defaultValue: createValue(false),
@@ -69,7 +69,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           toggled: {
             type: 'standard',
             defaultValue: createValue(false),
@@ -96,7 +96,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           toggled: {
             type: 'standard',
             defaultValue: createValue(true),
