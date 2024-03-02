@@ -4,8 +4,6 @@ import styled from 'styled-components';
 import { SlidersIcon } from '../../components/icons/index.js';
 import { grey160, grey224, grey32, grey64 } from '../../style/colors.js';
 
-// TODO: Replace this with a more generic blank state (inputs in general not
-// just props)
 export function BlankState() {
   return (
     <DelayRender delay={500}>
@@ -14,10 +12,10 @@ export function BlankState() {
           <SlidersIcon />
         </IconContainer>
         <Title>
-          No visible props in <NoWrap>selected fixture</NoWrap>
+          No inputs in <NoWrap>selected fixture</NoWrap>
         </Title>
         <Description>
-          Props of exported JSX <NoWrap>elements from</NoWrap> your fixtures{' '}
+          Props from Node fixtures and custom fixture inputs{' '}
           <NoWrap>will appear here.</NoWrap>
         </Description>
       </Container>
