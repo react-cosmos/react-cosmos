@@ -15,7 +15,7 @@ const { namedPlug, register } = createPlugin<InputsPanelSpec>({
 
 namedPlug<SidePanelRowSlotProps>(
   'sidePanelRow',
-  'values',
+  'inputs',
   ({ pluginContext, slotProps }) => {
     const { actionOrder } = pluginContext.getConfig();
     const { getFixtureState, setFixtureState } = slotProps;
