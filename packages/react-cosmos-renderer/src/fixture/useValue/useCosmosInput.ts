@@ -1,5 +1,6 @@
-import { useValue } from '../useValue/useValue.js';
+import { useValue } from './useValue.js';
 
+// TODO: Make this the primary implementation and deprecate useValue
 export function useCosmosInput<T>(
   inputName: string,
   defaultValue: T

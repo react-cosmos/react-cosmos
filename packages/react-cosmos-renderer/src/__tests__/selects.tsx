@@ -6,7 +6,7 @@ import {
   ReactTestRenderer,
   ReactTestRendererJSON,
 } from 'react-test-renderer';
-import { useCosmosSelect } from '../fixture/useCosmosSelect/useCosmosSelect.js';
+import { useCosmosSelect } from '../fixture/useSelect/useCosmosSelect.js';
 import { getControls } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
