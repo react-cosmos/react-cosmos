@@ -1,7 +1,7 @@
 export {
   FixtureContext,
   Viewport,
-  useCosmosState,
+  useCosmosInput,
   useFixtureState,
   useSelect,
   useValue,

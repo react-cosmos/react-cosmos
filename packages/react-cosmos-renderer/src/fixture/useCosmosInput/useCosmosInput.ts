@@ -2,7 +2,7 @@ import { useCurrentValue } from '../useValue/useCurrentValue.js';
 import { useSetValue } from '../useValue/useSetValue.js';
 import { useValueFixtureState } from '../useValue/useValueFixtureState.js';
 
-export function useCosmosState<T>(
+export function useCosmosInput<T>(
   inputName: string,
   defaultValue: T
 ): [T, React.Dispatch<React.SetStateAction<T>>] {

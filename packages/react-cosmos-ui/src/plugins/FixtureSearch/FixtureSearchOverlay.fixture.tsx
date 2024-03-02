@@ -1,6 +1,6 @@
 import React from 'react';
 import { FixtureId } from 'react-cosmos-core';
-import { useCosmosState } from 'react-cosmos/client';
+import { useCosmosInput } from 'react-cosmos/client';
 import { fixtures } from '../../testHelpers/dataMocks.js';
 import { FixtureSearchOverlay } from './FixtureSearchOverlay.js';
 
@@ -15,7 +15,7 @@ export default {
 
 function createFixture(fixtureId: null | FixtureId = null) {
   return () => {
-    const [searchText, setSearchText] = useCosmosState('searchText', '');
+    const [searchText, setSearchText] = useCosmosInput('searchText', '');
     return (
       <FixtureSearchOverlay
         searchText={searchText}

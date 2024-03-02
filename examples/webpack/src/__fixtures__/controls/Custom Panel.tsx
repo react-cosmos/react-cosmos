@@ -1,15 +1,15 @@
 import React from 'react';
-import { useCosmosState, useSelect } from 'react-cosmos/client';
+import { useCosmosInput, useSelect } from 'react-cosmos/client';
 
 export default () => {
-  const [name] = useCosmosState('name', 'Mark Normand');
-  const [age] = useCosmosState('age', 39);
-  const [comedy] = useCosmosState('comedy', true);
+  const [name] = useCosmosInput('name', 'Mark Normand');
+  const [age] = useCosmosInput('age', 39);
+  const [comedy] = useCosmosInput('comedy', true);
   const [special, setSpecial] = useSelect('special', {
     options: ['Still Got It', "Don't Be Yourself", 'Out to Lunch'],
     defaultValue: 'Out to Lunch',
   });
-  const [podcast] = useCosmosState('podcast', {
+  const [podcast] = useCosmosInput('podcast', {
     name: 'Tuesdays with Stories',
     cohost: 'Joe List',
     episodes: 300,

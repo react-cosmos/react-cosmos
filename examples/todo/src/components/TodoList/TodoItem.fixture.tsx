@@ -1,12 +1,10 @@
 import React from 'react';
-import { useCosmosState } from 'react-cosmos/client';
+import { useCosmosInput } from 'react-cosmos/client';
 import { TodoItem } from './TodoItem.js';
 
 export default () => {
-  const [label, setLabel] = useCosmosState('label', 'Eat the homework');
-
-  const [done, setDone] = useCosmosState('done', false);
-
+  const [label, setLabel] = useCosmosInput('label', 'Eat the homework');
+  const [done, setDone] = useCosmosInput('done', false);
   return (
     <div className="todoapp">
       <section className="main">

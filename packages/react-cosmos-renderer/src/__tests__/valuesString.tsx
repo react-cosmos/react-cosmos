@@ -6,13 +6,13 @@ import {
   ReactTestRendererJSON,
   act,
 } from 'react-test-renderer';
-import { useCosmosState } from '../fixture/useCosmosState/useCosmosState.js';
+import { useCosmosInput } from '../fixture/useCosmosInput/useCosmosInput.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 function createFixtures({ defaultValue }: { defaultValue: string }) {
   const MyComponent = () => {
-    const [value, setValue] = useCosmosState('name', defaultValue);
+    const [value, setValue] = useCosmosInput('name', defaultValue);
     return (
       <input
         type="text"

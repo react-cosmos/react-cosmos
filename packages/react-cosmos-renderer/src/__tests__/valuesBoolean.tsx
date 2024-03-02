@@ -6,13 +6,13 @@ import {
   ReactTestRendererJSON,
   act,
 } from 'react-test-renderer';
-import { useCosmosState } from '../client.js';
+import { useCosmosInput } from '../client.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 function createFixtures({ defaultValue }: { defaultValue: boolean }) {
   const MyComponent = () => {
-    const [toggled, setToggled] = useCosmosState('toggled', defaultValue);
+    const [toggled, setToggled] = useCosmosInput('toggled', defaultValue);
     return (
       <button onClick={() => setToggled(!toggled)}>{String(toggled)}</button>
     );
