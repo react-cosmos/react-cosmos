@@ -6,18 +6,20 @@ import {
 } from 'react-cosmos-core';
 import { Slot } from 'react-plugin';
 
-export type InputSlotProps<TInput extends InputFixtureState> = {
+export type InputSlotProps<T extends InputFixtureState> = {
   inputName: string;
-  input: TInput;
+  input: T;
   onFixtureStateChange: (
     updater: FixtureStateUpdater<InputsFixtureState>
   ) => void;
 };
 
-type Props = {
-  slotProps: InputSlotProps<any>;
+type Props<T extends InputFixtureState> = {
+  slotProps: InputSlotProps<T>;
 };
 
-export function InputSlot({ slotProps }: Props) {
+export function InputSlot<T extends InputFixtureState>({
+  slotProps,
+}: Props<T>) {
   return <Slot name={`input-${slotProps.input.type}`} slotProps={slotProps} />;
 }
