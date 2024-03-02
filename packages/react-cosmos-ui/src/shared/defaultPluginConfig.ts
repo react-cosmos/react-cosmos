@@ -8,6 +8,6 @@ export const DEFAULT_PLUGIN_CONFIG = {
     rendererActionOrder: ['openFixture', 'fullScreen', 'responsivePreview'],
   },
   inputsPanel: {
-    inputsActionOrder: ['expandCollapse'],
+    actionOrder: ['expandCollapse'],
   },
 };

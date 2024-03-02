@@ -16,13 +16,13 @@ import { SetInputsFixtureState } from './shared.js';
 
 type Props = {
   fixtureState: InputsFixtureState | undefined;
-  inputsActionOrder: string[];
+  actionOrder: string[];
   onFixtureStateChange: SetInputsFixtureState;
 };
 
 export function InputsPanel({
   fixtureState,
-  inputsActionOrder,
+  actionOrder,
   onFixtureStateChange,
 }: Props) {
   const handleInputsReset = React.useCallback(
@@ -44,10 +44,7 @@ export function InputsPanel({
             disabled={areInputsUnchanged(inputs)}
             onClick={handleInputsReset}
           />
-          <InputsActionSlot
-            slotProps={{ inputs }}
-            plugOrder={inputsActionOrder}
-          />
+          <InputsActionSlot slotProps={{ inputs }} plugOrder={actionOrder} />
         </SidePanelActions>
       </SidePanelHeader>
       <SidePanelBody>

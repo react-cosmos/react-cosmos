@@ -9,7 +9,7 @@ import { InputsPanelSpec } from './spec.js';
 const { namedPlug, register } = createPlugin<InputsPanelSpec>({
   name: 'inputsPanel',
   defaultConfig: {
-    inputsActionOrder: [],
+    actionOrder: [],
   },
 });
 
@@ -17,7 +17,7 @@ namedPlug<SidePanelRowSlotProps>(
   'sidePanelRow',
   'values',
   ({ pluginContext, slotProps }) => {
-    const { inputsActionOrder } = pluginContext.getConfig();
+    const { actionOrder } = pluginContext.getConfig();
     const { getFixtureState, setFixtureState } = slotProps;
 
     const fixtureState = getFixtureState<InputsFixtureState>('inputs');
@@ -29,7 +29,7 @@ namedPlug<SidePanelRowSlotProps>(
     return (
       <InputsPanel
         fixtureState={fixtureState}
-        inputsActionOrder={inputsActionOrder}
+        actionOrder={actionOrder}
         onFixtureStateChange={onFixtureStateChange}
       />
     );
