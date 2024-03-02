@@ -10,19 +10,19 @@ import {
 } from '../../components/SidePanel.js';
 import { IconButton32 } from '../../components/buttons/index.js';
 import { RotateCcwIcon } from '../../components/icons/index.js';
-import { InputActionSlot } from '../../slots/InputActionSlot.js';
 import { InputSlot } from '../../slots/InputSlot.js';
+import { InputsActionSlot } from '../../slots/InputsActionSlot.js';
 import { SetInputsFixtureState } from './shared.js';
 
 type Props = {
   fixtureState: InputsFixtureState | undefined;
-  inputActionOrder: string[];
+  inputsActionOrder: string[];
   onFixtureStateChange: SetInputsFixtureState;
 };
 
 export function InputsPanel({
   fixtureState,
-  inputActionOrder,
+  inputsActionOrder,
   onFixtureStateChange,
 }: Props) {
   const handleInputsReset = React.useCallback(
@@ -44,9 +44,9 @@ export function InputsPanel({
             disabled={areInputsUnchanged(inputs)}
             onClick={handleInputsReset}
           />
-          <InputActionSlot
+          <InputsActionSlot
             slotProps={{ inputs }}
-            plugOrder={inputActionOrder}
+            plugOrder={inputsActionOrder}
           />
         </SidePanelActions>
       </SidePanelHeader>

@@ -7,7 +7,7 @@ export const DEFAULT_PLUGIN_CONFIG = {
     fixtureActionOrder: ['bookmarkFixture'],
     rendererActionOrder: ['openFixture', 'fullScreen', 'responsivePreview'],
   },
-  inputPanel: {
-    inputActionOrder: ['expandCollapse'],
+  inputsPanel: {
+    inputsActionOrder: ['expandCollapse'],
   },
 };

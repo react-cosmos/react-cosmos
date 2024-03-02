@@ -7,8 +7,8 @@ import {
 import { createPlugin } from 'react-plugin';
 import { ExpandCollapseValues } from '../../components/ValueInputTree/ExpandCollapseValues.js';
 import { ValueInputTree } from '../../components/ValueInputTree/index.js';
-import { InputActionSlotProps } from '../../slots/InputActionSlot.js';
 import { InputSlotProps } from '../../slots/InputSlot.js';
+import { InputsActionSlotProps } from '../../slots/InputsActionSlot.js';
 import { StandardInputSpec } from './spec.js';
 import { useTreeExpansionStorage } from './storage.js';
 
@@ -53,8 +53,8 @@ plug<StandardInputSlotProps>(
   }
 );
 
-namedPlug<InputActionSlotProps>(
-  'inputAction',
+namedPlug<InputsActionSlotProps>(
+  'inputsAction',
   'expandCollapse',
   ({ pluginContext, slotProps }) => {
     const { inputs } = slotProps;
