@@ -1,6 +1,6 @@
 import { Callout } from 'nextra/components';
 
-# Inputs
+# Fixture Inputs
 
 <Callout type="info">
   Prop inputs are created automatically for [Node
@@ -11,19 +11,19 @@ import { Callout } from 'nextra/components';
 
 The following fixture APIs allow you to define component inputs in the [Control Panel](/docs/user-interface.md#control-panel).
 
-## `useInput`
+## `useFixtureInput`
 
 ```jsx filename="CounterButton.fixture.jsx"
-import { useInput } from 'react-cosmos/client';
+import { useFixtureInput } from 'react-cosmos/client';
 
 export default () => {
-  const [count, setCount] = useInput('count', 0);
+  const [count, setCount] = useFixtureInput('count', 0);
 
   return <CounterButton count={count} increment={() => setCount(count + 1)} />;
 };
 ```
 
-The `useInput` hook can be used with any type of serializable data, like strings, numbers and booleans, including objects and arrays.
+The `useFixtureInput` hook can be used with any type of serializable data, like strings, numbers and booleans, including objects and arrays.
 
 ### Number inputs
 
@@ -33,13 +33,13 @@ While focused on number inputs you can use the up and down arrow keys to increme
 
 The [Boolean Input Plugin](/docs/plugins#boolean-input-plugin) can be installed to turn boolean inputs into checkboxes.
 
-## `useSelect`
+## `useFixtureSelect`
 
 ```jsx filename="Button.fixture.jsx"
-import { useSelect } from 'react-cosmos/client';
+import { useFixtureSelect } from 'react-cosmos/client';
 
 export default () => {
-  const [buttonType] = useSelect('buttonType', {
+  const [buttonType] = useFixtureSelect('buttonType', {
     options: ['primary', 'secondary', 'danger'],
   });
 
@@ -47,14 +47,14 @@ export default () => {
 };
 ```
 
-`useSelect` also returns a setter as the second value in the return tuple, like the `useState` hook, in case you want to change the value programatically.
+`useFixtureSelect` also returns a setter as the second value in the return tuple, like the `useState` hook, in case you want to change the value programatically.
 
 ### Option groups
 
 You can group options by passing an array of objects with `group` and `options` properties.
 
 ```jsx
-const [color] = useSelect('color', {
+const [color] = useFixtureSelect('color', {
   options: [
     { group: 'warm', options: ['red', 'orange', 'yellow'] },
     { group: 'cold', options: ['blue', 'green', 'purple'] },
@@ -63,5 +63,6 @@ const [color] = useSelect('color', {
 ```
 
 <Callout type="info">
-  `useInput` and `useSelect` (and Cosmos in general) work great with TypeScript.
+  `useFixtureInput` and `useFixtureSelect` (and Cosmos in general) work great
+  with TypeScript.
 </Callout>
