@@ -1,6 +1,6 @@
 import { useCurrentInputValue } from './useCurrentInputValue.js';
+import { useInputFixtureState } from './useInputFixtureState.js';
 import { useSetInputValue } from './useSetInputValue.js';
-import { useInputFixtureState } from './useValueFixtureState.js';
 
 export function useInput<T>(
   inputName: string,
