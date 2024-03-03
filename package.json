@@ -9,7 +9,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "prettify": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
+    "prettify": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md,mdx}\"",
     "check-types": "tsc",
     "check-types:docs": "tsc -p docs/tsconfig.json",
     "lint": "eslint \"**/*.{ts,tsx}\"",
