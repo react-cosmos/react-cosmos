@@ -1,10 +1,10 @@
 import {
   ClassStateFixtureState,
   ClassStateFixtureStateItem,
-  ControlsFixtureState,
   FixtureDecoratorId,
   FixtureState,
   FixtureStateValues,
+  InputsFixtureState,
   PropsFixtureState,
   PropsFixtureStateItem,
   fixtureStateByName,
@@ -76,16 +76,13 @@ export function getClassState(
   return classState;
 }
 
-export function getControls(
+export function getInputs(
   fixtureState: FixtureState,
   expectedCount: number = 1
 ) {
-  const controls = fixtureStateByName<ControlsFixtureState>(
-    fixtureState,
-    'controls'
-  );
-  if (!controls || Object.keys(controls).length < expectedCount) {
-    throw new Error(`Controls missing in fixture state`);
+  const inputs = fixtureStateByName<InputsFixtureState>(fixtureState, 'inputs');
+  if (!inputs || Object.keys(inputs).length < expectedCount) {
+    throw new Error(`Inputs missing in fixture state`);
   }
-  return controls;
+  return inputs;
 }

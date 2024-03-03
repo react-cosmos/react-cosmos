@@ -12,10 +12,10 @@ export function BlankState() {
           <SlidersIcon />
         </IconContainer>
         <Title>
-          No visible props in <NoWrap>selected fixture</NoWrap>
+          No inputs in <NoWrap>selected fixture</NoWrap>
         </Title>
         <Description>
-          Props of exported JSX <NoWrap>elements from</NoWrap> your fixtures{' '}
+          Props from Node fixtures and custom fixture inputs{' '}
           <NoWrap>will appear here.</NoWrap>
         </Description>
       </Container>

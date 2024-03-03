@@ -36,7 +36,7 @@ export function FixtureTreeHeader({
 
   return (
     <Container>
-      <Title>All fixtures</Title>
+      <Title>Fixtures</Title>
       {!hasExpandableNodes(rootNode) ? (
         <IconButton32
           title="Collapse all fixture tree folders"

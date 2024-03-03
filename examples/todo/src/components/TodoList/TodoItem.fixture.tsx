@@ -1,16 +1,10 @@
 import React from 'react';
-import { useValue } from 'react-cosmos/client';
+import { useInput } from 'react-cosmos/client';
 import { TodoItem } from './TodoItem.js';
 
 export default () => {
-  const [label, setLabel] = useValue('label', {
-    defaultValue: 'Eat the homework',
-  });
-
-  const [done, setDone] = useValue('done', {
-    defaultValue: false,
-  });
-
+  const [label, setLabel] = useInput('label', 'Eat the homework');
+  const [done, setDone] = useInput('done', false);
   return (
     <div className="todoapp">
       <section className="main">

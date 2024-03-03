@@ -6,8 +6,8 @@ import {
   ReactTestRendererJSON,
   act,
 } from 'react-test-renderer';
-import { useValue } from '../fixture/useValue/index.js';
-import { getControls } from '../testHelpers/fixtureState.js';
+import { useInput } from '../fixture/useInput/useInput.js';
+import { getInputs } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
@@ -25,12 +25,8 @@ function createFixtures({
   defaultToggled = false,
 }: CreateFixtureArgs = {}) {
   const MyComponent = () => {
-    const [count, setCount] = useValue(countName, {
-      defaultValue: defaultCount,
-    });
-    const [toggled, setToggled] = useValue(toggledName, {
-      defaultValue: defaultToggled,
-    });
+    const [count, setCount] = useInput(countName, defaultCount);
+    const [toggled, setToggled] = useInput(toggledName, defaultToggled);
     return (
       <>
         <button onClick={() => setCount(prevCount => prevCount + 1)}>
@@ -67,7 +63,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           // `count` was reset, `toggled` was preserved
           count: {
             type: 'standard',
@@ -104,8 +100,8 @@ testRenderer(
       fixtureId,
       fixtureState: {
         ...setFixtureState,
-        controls: {
-          ...getControls(fixtureState),
+        inputs: {
+          ...getInputs(fixtureState),
           count: {
             type: 'standard',
             defaultValue: createValue(0),
@@ -124,7 +120,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           // `count` was preserved, `toggled` was reset
           count: {
             type: 'standard',
@@ -154,7 +150,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           count: {
             type: 'standard',
             defaultValue: createValue(0),
@@ -181,7 +177,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           count: {
             type: 'standard',
             defaultValue: createValue(0),

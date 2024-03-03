@@ -44,7 +44,7 @@ it('renders blank state', async () => {
 
   const fixtureState = createFsState({});
   const { findByText } = loadTestPlugins(fixtureState);
-  await findByText(/no visible props/i);
+  await findByText(/no inputs/i);
 });
 
 it('renders component name', async () => {

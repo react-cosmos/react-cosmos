@@ -39,18 +39,18 @@ it('returns fixture info', async () => {
     {
       absoluteFilePath: path.join(
         rootDir,
-        'src/__fixtures__/controls/Custom Panel.tsx'
+        'src/__fixtures__/controls/Inputs Panel.tsx'
       ),
-      fileName: 'Custom Panel',
+      fileName: 'Inputs Panel',
       getElement: expect.any(Function),
       name: null,
       parents: ['controls'],
-      relativeFilePath: 'src/__fixtures__/controls/Custom Panel.tsx',
+      relativeFilePath: 'src/__fixtures__/controls/Inputs Panel.tsx',
       rendererUrl:
-        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2Fcontrols%2FCustom+Panel.tsx%22%7D',
+        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2Fcontrols%2FInputs+Panel.tsx%22%7D',
       playgroundUrl:
-        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2Fcontrols%2FCustom+Panel.tsx%22%7D',
-      treePath: ['controls', 'Custom Panel'],
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2Fcontrols%2FInputs+Panel.tsx%22%7D',
+      treePath: ['controls', 'Inputs Panel'],
     },
     {
       absoluteFilePath: path.join(

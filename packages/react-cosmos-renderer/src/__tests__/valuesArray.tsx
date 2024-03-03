@@ -2,7 +2,7 @@ import retry from '@skidding/async-retry';
 import React from 'react';
 import { createValue, uuid } from 'react-cosmos-core';
 import { ReactTestRenderer } from 'react-test-renderer';
-import { useValue } from '../fixture/useValue/index.js';
+import { useInput } from '../fixture/useInput/useInput.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
@@ -15,7 +15,7 @@ type Profile = {
 
 function createFixtures({ defaultValue }: { defaultValue: Profile[] }) {
   const MyComponent = () => {
-    const [profiles] = useValue('profiles', { defaultValue });
+    const [profiles] = useInput('profiles', defaultValue);
     return JSON.stringify(profiles, null, 2);
   };
   return wrapDefaultExport({
@@ -48,7 +48,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           profiles: {
             type: 'standard',
             defaultValue: createValue([
@@ -83,7 +83,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           profiles: {
             type: 'standard',
             defaultValue: createValue([

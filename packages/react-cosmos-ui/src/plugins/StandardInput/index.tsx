@@ -1,50 +1,50 @@
 import React, { useCallback, useMemo } from 'react';
 import {
-  ControlsFixtureState,
   FixtureStateValues,
-  StandardControlFixtureState,
+  InputsFixtureState,
+  StandardInputFixtureState,
 } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
 import { ExpandCollapseValues } from '../../components/ValueInputTree/ExpandCollapseValues.js';
 import { ValueInputTree } from '../../components/ValueInputTree/index.js';
-import { ControlActionSlotProps } from '../../slots/ControlActionSlot.js';
-import { ControlSlotProps } from '../../slots/ControlSlot.js';
-import { StandardControlSpec } from './spec.js';
+import { InputSlotProps } from '../../slots/InputSlot.js';
+import { InputsActionSlotProps } from '../../slots/InputsActionSlot.js';
+import { StandardInputSpec } from './spec.js';
 import { useTreeExpansionStorage } from './storage.js';
 
-const { namedPlug, plug, register } = createPlugin<StandardControlSpec>({
-  name: 'standardControl',
+const { namedPlug, plug, register } = createPlugin<StandardInputSpec>({
+  name: 'standardInput',
 });
 
-type StandardControlSlotProps = ControlSlotProps<StandardControlFixtureState>;
+type StandardInputSlotProps = InputSlotProps<StandardInputFixtureState>;
 
-plug<StandardControlSlotProps>(
-  'control-standard',
+plug<StandardInputSlotProps>(
+  'input-standard',
   ({ pluginContext, slotProps }) => {
-    const { controlName, control, onFixtureStateChange } = slotProps;
+    const { inputName, input, onFixtureStateChange } = slotProps;
     const treeExpansionApi = useTreeExpansionStorage(pluginContext);
 
     const values = useMemo(
-      () => ({ [controlName]: control.currentValue }),
-      [control.currentValue, controlName]
+      () => ({ [inputName]: input.currentValue }),
+      [input.currentValue, inputName]
     );
 
     const handleValueChange = useCallback(
       (updatedValues: FixtureStateValues) => {
         onFixtureStateChange(fixtureState => ({
           ...fixtureState,
-          [controlName]: {
-            ...control,
-            currentValue: updatedValues[controlName],
+          [inputName]: {
+            ...input,
+            currentValue: updatedValues[inputName],
           },
         }));
       },
-      [control, controlName, onFixtureStateChange]
+      [input, inputName, onFixtureStateChange]
     );
 
     return (
       <ValueInputTree
-        id={`control-${controlName}`}
+        id={`input-${inputName}`}
         values={values}
         onValueChange={handleValueChange}
         {...treeExpansionApi}
@@ -53,29 +53,29 @@ plug<StandardControlSlotProps>(
   }
 );
 
-namedPlug<ControlActionSlotProps>(
-  'controlAction',
+namedPlug<InputsActionSlotProps>(
+  'inputsAction',
   'expandCollapse',
   ({ pluginContext, slotProps }) => {
-    const { controls } = slotProps;
+    const { inputs } = slotProps;
     const treeExpansionApi = useTreeExpansionStorage(pluginContext);
 
     return (
       <ExpandCollapseValues
-        values={extractValuesFromStandardControls(controls)}
+        values={extractValuesFromStandardInputs(inputs)}
         {...treeExpansionApi}
       />
     );
   }
 );
 
-function extractValuesFromStandardControls(
-  controls: ControlsFixtureState
+function extractValuesFromStandardInputs(
+  inputs: InputsFixtureState
 ): FixtureStateValues {
   const values: FixtureStateValues = {};
-  Object.keys(controls).forEach(controlName => {
-    const control = controls[controlName];
-    if (control.type === 'standard') values[controlName] = control.currentValue;
+  Object.keys(inputs).forEach(inputName => {
+    const input = inputs[inputName];
+    if (input.type === 'standard') values[inputName] = input.currentValue;
   });
   return values;
 }

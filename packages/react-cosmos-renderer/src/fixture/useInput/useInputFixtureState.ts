@@ -1,28 +1,25 @@
 import { isEqual } from 'lodash-es';
 import React from 'react';
 import {
-  ControlsFixtureState,
   FixtureStateValue,
+  InputsFixtureState,
   createValue,
   extendWithValue,
 } from 'react-cosmos-core';
 import { useFixtureState } from '../useFixtureState.js';
 
-export function useCreateFixtureState(
-  inputName: string,
-  defaultValue: unknown
-) {
-  const [, setFixtureState] = useFixtureState<ControlsFixtureState>('controls');
+export function useInputFixtureState(inputName: string, defaultValue: unknown) {
+  const [, setFixtureState] = useFixtureState<InputsFixtureState>('inputs');
   React.useEffect(() => {
     // The fixture state for this value is (re)created in two situations:
     // 1. Initially: No corresponding fixture state value is found
     // 2: Default value change: Current value is reset to new default value
     setFixtureState(prevFs => {
-      const controlFs = prevFs && prevFs[inputName];
+      const inputFs = prevFs && prevFs[inputName];
       if (
-        controlFs &&
-        controlFs.type === 'standard' &&
-        fsValueExtendsBaseValue(controlFs.defaultValue, defaultValue)
+        inputFs &&
+        inputFs.type === 'standard' &&
+        fsValueExtendsBaseValue(inputFs.defaultValue, defaultValue)
       )
         return prevFs;
 

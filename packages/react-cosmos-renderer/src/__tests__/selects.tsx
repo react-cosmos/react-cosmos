@@ -6,8 +6,8 @@ import {
   ReactTestRenderer,
   ReactTestRendererJSON,
 } from 'react-test-renderer';
-import { useSelect } from '../fixture/useSelect/index.js';
-import { getControls } from '../testHelpers/fixtureState.js';
+import { useSelect } from '../fixture/useSelect/useSelect.js';
+import { getInputs } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
@@ -57,7 +57,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           selectName: {
             type: 'select',
             options: ['first', 'second', 'third'],
@@ -82,8 +82,8 @@ testRenderer(
       fixtureId,
       fixtureState: {
         ...setFixtureState,
-        controls: {
-          ...getControls(fixtureState),
+        inputs: {
+          ...getInputs(fixtureState),
           selectName: {
             type: 'select',
             options: ['first', 'second', 'third'],
@@ -110,7 +110,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           selectName: {
             type: 'select',
             options: ['first', 'second', 'third'],
@@ -139,7 +139,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           selectName: {
             type: 'select',
             options: ['first', 'second', 'third'],

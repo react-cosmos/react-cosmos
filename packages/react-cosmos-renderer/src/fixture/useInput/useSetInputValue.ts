@@ -1,16 +1,16 @@
 import React from 'react';
 import {
-  ControlsFixtureState,
+  InputsFixtureState,
   createValue,
   extendWithValue,
 } from 'react-cosmos-core';
 import { useFixtureState } from '../useFixtureState.js';
 
-export function useSetValue<T>(
+export function useSetInputValue<T>(
   inputName: string,
   defaultValue: T
 ): React.Dispatch<React.SetStateAction<T>> {
-  const [, setFixtureState] = useFixtureState<ControlsFixtureState>('controls');
+  const [, setFixtureState] = useFixtureState<InputsFixtureState>('inputs');
   return React.useCallback(
     stateChange => {
       setFixtureState(prevFs => {
@@ -41,12 +41,12 @@ export function useSetValue<T>(
 }
 
 function getCurrentValueFromFixtureState(
-  fixtureState: ControlsFixtureState | undefined,
+  fixtureState: InputsFixtureState | undefined,
   inputName: string,
   defaultValue: unknown
 ) {
-  const controlFs = fixtureState && fixtureState[inputName];
-  return controlFs && controlFs.type === 'standard'
-    ? extendWithValue(defaultValue, controlFs.currentValue)
+  const inputFs = fixtureState && fixtureState[inputName];
+  return inputFs && inputFs.type === 'standard'
+    ? extendWithValue(defaultValue, inputFs.currentValue)
     : defaultValue;
 }

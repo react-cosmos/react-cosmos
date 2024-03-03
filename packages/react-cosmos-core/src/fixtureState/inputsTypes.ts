@@ -1,20 +1,20 @@
 import { FixtureStateValue } from './types.js';
 
-export type StandardControlFixtureState = {
+export type StandardInputFixtureState = {
   type: 'standard';
   defaultValue: FixtureStateValue;
   currentValue: FixtureStateValue;
 };
 
-export type SelectControlFixtureState = {
+export type SelectInputFixtureState = {
   type: 'select';
   options: string[] | { group: string; options: string[] }[];
   defaultValue: string;
   currentValue: string;
 };
 
-export type ControlFixtureState =
-  | StandardControlFixtureState
-  | SelectControlFixtureState;
+export type InputFixtureState =
+  | StandardInputFixtureState
+  | SelectInputFixtureState;
 
-export type ControlsFixtureState = Record<string, ControlFixtureState>;
+export type InputsFixtureState = Record<string, InputFixtureState>;

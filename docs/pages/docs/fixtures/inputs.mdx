@@ -1,29 +1,29 @@
 import { Callout } from 'nextra/components';
 
-# UI Controls
+# Inputs
 
 <Callout type="info">
-  Props controls are created automatically for [Node
+  Prop inputs are created automatically for [Node
   fixtures](/docs/fixtures/fixture-modules.md#node-fixtures) in the Cosmos UI.
   This enables you to tweek component props and see the result in real time
   without any configuration.
 </Callout>
 
-The following fixture APIs enable creating custom UI controls in the [Control Panel](/docs/user-interface.md#control-panel).
+The following fixture APIs allow you to define component inputs in the [Control Panel](/docs/user-interface.md#control-panel).
 
-## `useValue`
+## `useInput`
 
 ```jsx filename="CounterButton.fixture.jsx"
-import { useValue } from 'react-cosmos/client';
+import { useInput } from 'react-cosmos/client';
 
 export default () => {
-  const [count, setCount] = useValue('count', { defaultValue: 0 });
+  const [count, setCount] = useInput('count', 0);
 
   return <CounterButton count={count} increment={() => setCount(count + 1)} />;
 };
 ```
 
-The `useValue` hook can be used to control any type of serializable data, like strings, numbers and booleans, including objects and arrays.
+The `useInput` hook can be used with any type of serializable data, like strings, numbers and booleans, including objects and arrays.
 
 ### Number inputs
 
@@ -31,7 +31,7 @@ While focused on number inputs you can use the up and down arrow keys to increme
 
 ### Boolean inputs
 
-The [Boolean Input Plugin](/docs/plugins#boolean-input-plugin) can be installed to turn boolean controls into checkboxes.
+The [Boolean Input Plugin](/docs/plugins#boolean-input-plugin) can be installed to turn boolean inputs into checkboxes.
 
 ## `useSelect`
 
@@ -49,20 +49,19 @@ export default () => {
 
 `useSelect` also returns a setter as the second value in the return tuple, like the `useState` hook, in case you want to change the value programatically.
 
-<Callout type="info">
-  `useValue` and `useSelect` (and Cosmos in general) work great with TypeScript.
-</Callout>
+### Option groups
 
-## `<Viewport>`
-
-By using the Viewport decorator a fixture can trigger the responsive preview in the Cosmos UI on a specific resolution.
+You can group options by passing an array of objects with `group` and `options` properties.
 
 ```jsx
-import { Viewport } from 'react-cosmos/client';
-
-export default (
-  <Viewport width={375} height={667}>
-    <MyComponent />
-  </Viewport>
-);
+const [color] = useSelect('color', {
+  options: [
+    { group: 'warm', options: ['red', 'orange', 'yellow'] },
+    { group: 'cold', options: ['blue', 'green', 'purple'] },
+  ],
+});
 ```
+
+<Callout type="info">
+  `useInput` and `useSelect` (and Cosmos in general) work great with TypeScript.
+</Callout>
