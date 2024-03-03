@@ -1,7 +1,7 @@
 import { InputsFixtureState, extendWithValue } from 'react-cosmos-core';
 import { useFixtureState } from '../useFixtureState.js';
 
-export function useCurrentValue<T>(inputName: string, defaultValue: T): T {
+export function useCurrentInputValue<T>(inputName: string, defaultValue: T): T {
   const [fixtureState] = useFixtureState<InputsFixtureState>('inputs');
   const inputFs = fixtureState && fixtureState[inputName];
   return inputFs && inputFs.type === 'standard'

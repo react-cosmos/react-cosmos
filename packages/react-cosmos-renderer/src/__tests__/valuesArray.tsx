@@ -2,7 +2,7 @@ import retry from '@skidding/async-retry';
 import React from 'react';
 import { createValue, uuid } from 'react-cosmos-core';
 import { ReactTestRenderer } from 'react-test-renderer';
-import { useInput } from '../fixture/useValue/useInput.js';
+import { useInput } from '../fixture/useInput/useInput.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 

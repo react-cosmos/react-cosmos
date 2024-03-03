@@ -6,7 +6,7 @@ import {
 } from 'react-cosmos-core';
 import { useFixtureState } from '../useFixtureState.js';
 
-export function useSetValue<T>(
+export function useSetInputValue<T>(
   inputName: string,
   defaultValue: T
 ): React.Dispatch<React.SetStateAction<T>> {
