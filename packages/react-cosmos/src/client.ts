@@ -1,9 +1,8 @@
 export {
   FixtureContext,
   Viewport,
-  useCosmosInput,
   useFixtureState,
+  useInput,
   useSelect,
-  useCosmosSelect,
   useValue,
 } from 'react-cosmos-renderer/client';

@@ -2,7 +2,7 @@ import retry from '@skidding/async-retry';
 import React from 'react';
 import { createValue, uuid } from 'react-cosmos-core';
 import { ReactTestRenderer } from 'react-test-renderer';
-import { useCosmosInput } from '../fixture/useValue/useCosmosInput.js';
+import { useInput } from '../fixture/useValue/useInput.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
@@ -15,7 +15,7 @@ type Profile = {
 
 function createFixtures({ defaultValue }: { defaultValue: Profile[] }) {
   const MyComponent = () => {
-    const [profiles] = useCosmosInput('profiles', defaultValue);
+    const [profiles] = useInput('profiles', defaultValue);
     return JSON.stringify(profiles, null, 2);
   };
   return wrapDefaultExport({

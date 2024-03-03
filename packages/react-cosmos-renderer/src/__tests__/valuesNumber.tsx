@@ -6,13 +6,13 @@ import {
   ReactTestRendererJSON,
   act,
 } from 'react-test-renderer';
-import { useCosmosInput } from '../fixture/useValue/useCosmosInput.js';
+import { useInput } from '../fixture/useValue/useInput.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 function createFixtures({ defaultValue }: { defaultValue: number }) {
   const MyComponent = () => {
-    const [count, setCount] = useCosmosInput('count', defaultValue);
+    const [count, setCount] = useInput('count', defaultValue);
     return (
       <button onClick={() => setCount(prevCount => prevCount + 1)}>
         {count} clicks

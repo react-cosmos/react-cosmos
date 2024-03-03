@@ -6,7 +6,7 @@ import {
   ReactTestRendererJSON,
   act,
 } from 'react-test-renderer';
-import { useCosmosInput } from '../fixture/useValue/useCosmosInput.js';
+import { useInput } from '../fixture/useValue/useInput.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
@@ -19,7 +19,7 @@ type Profile = {
 
 function createFixtures({ defaultValue }: { defaultValue: Profile }) {
   const MyComponent = () => {
-    const [profile, setProfile] = useCosmosInput('profile', defaultValue);
+    const [profile, setProfile] = useInput('profile', defaultValue);
     return (
       <>
         <p>{JSON.stringify(profile, null, 2)}</p>

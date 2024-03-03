@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCosmosInput } from 'react-cosmos/client';
+import { useInput } from 'react-cosmos/client';
 import { PluginList, SimplePlugin } from './PluginList.js';
 
 const initialPlugins: SimplePlugin[] = [
@@ -28,7 +28,7 @@ const initialPlugins: SimplePlugin[] = [
 ];
 
 export default () => {
-  const [plugins, setPlugins] = useCosmosInput('plugins', initialPlugins);
+  const [plugins, setPlugins] = useInput('plugins', initialPlugins);
   return (
     <PluginList
       plugins={plugins}
