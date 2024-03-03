@@ -49,6 +49,19 @@ export default () => {
 
 `useCosmosSelect` also returns a setter as the second value in the return tuple, like the `useState` hook, in case you want to change the value programatically.
 
+### Option groups
+
+You can group options by passing an array of objects with `group` and `options` properties.
+
+```jsx filename="Button.fixture.jsx"
+const [color] = useCosmosSelect('color', {
+  options: [
+    { group: 'warm', options: ['red', 'orange', 'yellow'] },
+    { group: 'cold', options: ['blue', 'green', 'purple'] },
+  ],
+});
+```
+
 <Callout type="info">
   `useCosmosInput` and `useCosmosSelect` (and Cosmos in general) work great with
   TypeScript.
