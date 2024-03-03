@@ -8,7 +8,7 @@ type Opts<T> = {
 // Cosmos versions older than 6.1
 export function useValue<T>(
   inputName: string,
-  { defaultValue }: Opts<T>
+  opts: Opts<T>
 ): [T, React.Dispatch<React.SetStateAction<T>>] {
-  return useInput(inputName, defaultValue);
+  return useInput(inputName, opts.defaultValue);
 }
