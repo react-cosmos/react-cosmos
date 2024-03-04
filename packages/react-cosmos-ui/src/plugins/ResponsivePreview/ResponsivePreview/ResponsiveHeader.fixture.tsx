@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFixtureInput } from 'react-cosmos-renderer/client.js';
+import { useFixtureInput } from 'react-cosmos/client';
 import { DEFAULT_DEVICES, DEFAULT_VIEWPORT_STATE } from '../shared.js';
 import { ResponsiveHeader } from './ResponsiveHeader.js';
 import { getViewportScaleFactor } from './style.js';
