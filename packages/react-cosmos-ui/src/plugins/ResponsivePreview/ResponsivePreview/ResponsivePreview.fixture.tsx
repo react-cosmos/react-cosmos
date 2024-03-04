@@ -1,5 +1,5 @@
 import React from 'react';
-import { useInput } from 'react-cosmos/client';
+import { useFixtureInput } from 'react-cosmos-renderer/client.js';
 import styled from 'styled-components';
 import { DEFAULT_DEVICES, DEFAULT_VIEWPORT_STATE } from '../shared.js';
 import { ResponsivePreview } from './ResponsivePreview.js';
@@ -7,8 +7,8 @@ import { ResponsivePreview } from './ResponsivePreview.js';
 const initialViewport = DEFAULT_VIEWPORT_STATE.viewport;
 
 export default () => {
-  const [viewport, setViewport] = useInput('viewport', initialViewport);
-  const [scaled, setScaled] = useInput('scaled', false);
+  const [viewport, setViewport] = useFixtureInput('viewport', initialViewport);
+  const [scaled, setScaled] = useFixtureInput('scaled', false);
   return (
     <Container>
       <ResponsivePreview

@@ -6,7 +6,7 @@ import {
   ReactTestRendererJSON,
   act,
 } from 'react-test-renderer';
-import { useInput } from '../fixture/useInput/useInput.js';
+import { useFixtureInput } from '../fixture/useFixtureInput/useFixtureInput.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
@@ -19,7 +19,7 @@ type Profile = {
 
 function createFixtures({ defaultValue }: { defaultValue: Profile }) {
   const MyComponent = () => {
-    const [profile, setProfile] = useInput('profile', defaultValue);
+    const [profile, setProfile] = useFixtureInput('profile', defaultValue);
     return (
       <>
         <p>{JSON.stringify(profile, null, 2)}</p>

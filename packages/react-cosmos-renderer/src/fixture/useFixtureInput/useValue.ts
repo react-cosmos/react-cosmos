@@ -1,4 +1,4 @@
-import { useInput } from './useInput.js';
+import { useFixtureInput } from './useFixtureInput.js';
 
 type Opts<T> = {
   defaultValue: T;
@@ -10,5 +10,5 @@ export function useValue<T>(
   inputName: string,
   opts: Opts<T>
 ): [T, React.Dispatch<React.SetStateAction<T>>] {
-  return useInput(inputName, opts.defaultValue);
+  return useFixtureInput(inputName, opts.defaultValue);
 }

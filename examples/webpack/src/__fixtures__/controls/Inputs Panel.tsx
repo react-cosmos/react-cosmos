@@ -1,15 +1,15 @@
 import React from 'react';
-import { useInput, useSelect } from 'react-cosmos/client';
+import { useFixtureInput, useFixtureSelect } from 'react-cosmos/client';
 
 export default () => {
-  const [name] = useInput('name', 'Mark Normand');
-  const [age] = useInput('age', 39);
-  const [comedy] = useInput('comedy', true);
-  const [special, setSpecial] = useSelect('special', {
+  const [name] = useFixtureInput('name', 'Mark Normand');
+  const [age] = useFixtureInput('age', 39);
+  const [comedy] = useFixtureInput('comedy', true);
+  const [special, setSpecial] = useFixtureSelect('special', {
     options: ['Still Got It', "Don't Be Yourself", 'Out to Lunch'],
     defaultValue: 'Out to Lunch',
   });
-  const [podcast] = useInput('podcast', {
+  const [podcast] = useFixtureInput('podcast', {
     name: 'Tuesdays with Stories',
     cohost: 'Joe List',
     episodes: 300,

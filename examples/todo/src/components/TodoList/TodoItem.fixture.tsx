@@ -1,10 +1,10 @@
 import React from 'react';
-import { useInput } from 'react-cosmos/client';
+import { useFixtureInput } from 'react-cosmos/client';
 import { TodoItem } from './TodoItem.js';
 
 export default () => {
-  const [label, setLabel] = useInput('label', 'Eat the homework');
-  const [done, setDone] = useInput('done', false);
+  const [label, setLabel] = useFixtureInput('label', 'Eat the homework');
+  const [done, setDone] = useFixtureInput('done', false);
   return (
     <div className="todoapp">
       <section className="main">

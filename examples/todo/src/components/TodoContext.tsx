@@ -1,5 +1,5 @@
 import React from 'react';
-import { useInput, useSelect } from 'react-cosmos/client';
+import { useFixtureInput, useFixtureSelect } from 'react-cosmos/client';
 import { Todo, TodoFilter } from '../types.js';
 
 type ContextValue = {
@@ -38,9 +38,9 @@ type ProviderProps = {
   children: React.ReactNode;
 };
 export function TodoProvider({ children }: ProviderProps) {
-  const [todos, setTodos] = useInput('todos', defaultTodos);
+  const [todos, setTodos] = useFixtureInput('todos', defaultTodos);
 
-  const [filter, setFilter] = useSelect<TodoFilter>('filter', {
+  const [filter, setFilter] = useFixtureSelect<TodoFilter>('filter', {
     defaultValue: 'all',
     options: ['all', 'active', 'completed'],
   });

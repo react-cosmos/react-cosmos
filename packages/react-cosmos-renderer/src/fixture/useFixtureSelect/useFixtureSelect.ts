@@ -3,7 +3,7 @@ import { useCurrentSelectValue } from './useCurrentSelectValue.js';
 import { useSelectFixtureState } from './useSelectFixtureState.js';
 import { useSetSelectValue } from './useSetSelectValue.js';
 
-export function useSelect<Option extends string>(
+export function useFixtureSelect<Option extends string>(
   selectName: string,
   args: UseSelectArgs<Option>
 ): [Option, SetSelectValue<Option>] {

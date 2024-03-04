@@ -6,13 +6,13 @@ import {
   ReactTestRendererJSON,
   act,
 } from 'react-test-renderer';
-import { useInput } from '../fixture/useInput/useInput.js';
+import { useFixtureInput } from '../fixture/useFixtureInput/useFixtureInput.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 function createFixtures({ defaultValue }: { defaultValue: number }) {
   const MyComponent = () => {
-    const [count, setCount] = useInput('count', defaultValue);
+    const [count, setCount] = useFixtureInput('count', defaultValue);
     return (
       <button onClick={() => setCount(prevCount => prevCount + 1)}>
         {count} clicks

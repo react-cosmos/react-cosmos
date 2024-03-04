@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelect } from 'react-cosmos/client';
+import { useFixtureSelect } from 'react-cosmos/client';
 
 const planets = [
   'Mercury',
@@ -15,7 +15,7 @@ const planets = [
 const exoplanets = ['Kepler-51 b', 'Kepler-51 c', 'Kepler-51 d'];
 
 export default () => {
-  const [planet] = useSelect('planet', {
+  const [planet] = useFixtureSelect('planet', {
     options: [
       { group: 'Solar System', options: planets },
       { group: 'Exoplanets', options: exoplanets },
