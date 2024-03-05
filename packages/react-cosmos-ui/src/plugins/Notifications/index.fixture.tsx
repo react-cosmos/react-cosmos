@@ -20,7 +20,7 @@ const infos: Record<NotificationType, string> = {
 };
 
 function NotificationFixture() {
-  const [type] = useFixtureSelect<NotificationType>('notification type', {
+  const [type] = useFixtureSelect('notification type', {
     options: ['error', 'info', 'loading', 'success'],
   });
   return (

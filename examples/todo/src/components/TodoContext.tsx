@@ -40,7 +40,7 @@ type ProviderProps = {
 export function TodoProvider({ children }: ProviderProps) {
   const [todos, setTodos] = useFixtureInput('todos', defaultTodos);
 
-  const [filter, setFilter] = useFixtureSelect<TodoFilter>('filter', {
+  const [filter, setFilter] = useFixtureSelect('filter', {
     defaultValue: 'all',
     options: ['all', 'active', 'completed'],
   });
