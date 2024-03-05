@@ -1,9 +1,9 @@
 import { CounterButton } from 'examples-shared/components/CounterButton.js';
 import React from 'react';
-import { useInput } from 'react-cosmos/client';
+import { useFixtureInput } from 'react-cosmos/client';
 
 export default () => {
-  const [count, setCount] = useInput('count', 0);
+  const [count, setCount] = useFixtureInput('count', 0);
   return (
     <CounterButton
       suffix="times"

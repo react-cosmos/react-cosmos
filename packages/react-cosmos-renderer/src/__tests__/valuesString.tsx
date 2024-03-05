@@ -6,13 +6,13 @@ import {
   ReactTestRendererJSON,
   act,
 } from 'react-test-renderer';
-import { useInput } from '../fixture/useInput/useInput.js';
+import { useFixtureInput } from '../fixture/useFixtureInput/useFixtureInput.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 function createFixtures({ defaultValue }: { defaultValue: string }) {
   const MyComponent = () => {
-    const [value, setValue] = useInput('name', defaultValue);
+    const [value, setValue] = useFixtureInput('name', defaultValue);
     return (
       <input
         type="text"

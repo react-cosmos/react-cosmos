@@ -6,13 +6,13 @@ import {
   ReactTestRendererJSON,
   act,
 } from 'react-test-renderer';
-import { useInput } from '../fixture/useInput/useInput.js';
+import { useFixtureInput } from '../fixture/useFixtureInput/useFixtureInput.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 function createFixtures({ defaultValue }: { defaultValue: boolean }) {
   const MyComponent = () => {
-    const [toggled, setToggled] = useInput('toggled', defaultValue);
+    const [toggled, setToggled] = useFixtureInput('toggled', defaultValue);
     return (
       <button onClick={() => setToggled(!toggled)}>{String(toggled)}</button>
     );

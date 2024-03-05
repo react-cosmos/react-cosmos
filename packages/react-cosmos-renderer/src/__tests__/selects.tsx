@@ -6,7 +6,7 @@ import {
   ReactTestRenderer,
   ReactTestRendererJSON,
 } from 'react-test-renderer';
-import { useSelect } from '../fixture/useSelect/useSelect.js';
+import { useFixtureSelect } from '../fixture/useFixtureSelect/useFixtureSelect.js';
 import { getInputs } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
@@ -17,7 +17,7 @@ const options: Option[] = ['first', 'second', 'third'];
 
 function createFixtures({ defaultValue }: { defaultValue: Option }) {
   const MyComponent = () => {
-    const [value, setValue] = useSelect('selectName', {
+    const [value, setValue] = useFixtureSelect('selectName', {
       defaultValue,
       options,
     });

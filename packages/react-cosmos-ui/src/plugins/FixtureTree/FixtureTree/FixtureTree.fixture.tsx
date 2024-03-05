@@ -1,6 +1,6 @@
 import React from 'react';
 import { FixtureId, FixtureList, createFixtureTree } from 'react-cosmos-core';
-import { useInput } from 'react-cosmos/client';
+import { useFixtureInput } from 'react-cosmos/client';
 import { TreeExpansion } from '../../../shared/treeExpansion.js';
 import { FixtureTree } from './FixtureTree.js';
 
@@ -33,11 +33,11 @@ function createTreeFixture(
   fixtureId: null | FixtureId = null
 ) {
   return () => {
-    const [selectedFixtureId, setSelectedFixtureId] = useInput(
+    const [selectedFixtureId, setSelectedFixtureId] = useFixtureInput(
       'selectedFixtureId',
       fixtureId
     );
-    const [expansion, setExpansion] = useInput(
+    const [expansion, setExpansion] = useFixtureInput(
       'treeExpansion',
       initialTreeExpansion
     );

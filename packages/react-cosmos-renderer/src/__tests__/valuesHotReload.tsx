@@ -6,7 +6,7 @@ import {
   ReactTestRendererJSON,
   act,
 } from 'react-test-renderer';
-import { useInput } from '../fixture/useInput/useInput.js';
+import { useFixtureInput } from '../fixture/useFixtureInput/useFixtureInput.js';
 import { getInputs } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
@@ -25,8 +25,8 @@ function createFixtures({
   defaultToggled = false,
 }: CreateFixtureArgs = {}) {
   const MyComponent = () => {
-    const [count, setCount] = useInput(countName, defaultCount);
-    const [toggled, setToggled] = useInput(toggledName, defaultToggled);
+    const [count, setCount] = useFixtureInput(countName, defaultCount);
+    const [toggled, setToggled] = useFixtureInput(toggledName, defaultToggled);
     return (
       <>
         <button onClick={() => setCount(prevCount => prevCount + 1)}>
