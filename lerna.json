@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/lerna/schemas/lerna-schema.json",
-  "version": "6.0.3",
+  "version": "6.1.0",
   "command": {
     "publish": {
       "registry": "https://registry.npmjs.org",
