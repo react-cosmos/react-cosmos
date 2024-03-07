@@ -36,6 +36,7 @@ function importModules<T>(paths: string[], rootDir: string) {
     // Converting to forward slashes on Windows is important because the
     // slashes are used for generating a sorted list of fixtures and
     // decorators.
+    // TODO: Reuse importKeyPath?
     const relPath = slash(path.relative(rootDir, p));
     return { relPath, module: require(p) };
   });
