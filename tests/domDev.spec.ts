@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
-import { createRendererUrl } from 'react-cosmos-core';
+import { Page, expect, test } from '@playwright/test';
+import { FixtureId, createRendererUrl } from 'react-cosmos-core';
 import { webTests } from './helpers/webTests.js';
 
 const url = 'http://localhost:5000';
@@ -39,35 +39,49 @@ test.describe('DOM dev', () => {
         f.filePath.endsWith('Counter.fixture.tsx')
       );
 
-      let fixtureNames: null | string[] = null;
+      // TODO: Import Cosmos type instead of any
+      let _fixtureItem: any;
       page.exposeFunction('fixtureLoaded', (fixtureItem: any) => {
-        fixtureNames = fixtureItem.fixtureNames;
+        _fixtureItem = fixtureItem;
       });
 
       await page.goto(fixture.rendererUrl);
 
       // TODO: How to get fixture IDs instead of fixture names?
-      await expect.poll(() => fixtureNames).not.toBe(null);
+      await expect.poll(() => _fixtureItem).not.toBe(undefined);
+
+      const fixtureNames = _fixtureItem.fixtureNames as string[];
+      const breadcrumbs = [...fixture.parents, fixture.fileName];
+
       expect(fixtureNames).toEqual(['default', 'small number', 'large number']);
 
       // TODO: How to get the renderer URL?
       const rendererUrl = 'localhost:5050';
-      const fixtureId1 = { path: fixture.filePath, name: 'default' };
-      const fixtureUrl1 = createRendererUrl(rendererUrl, fixtureId1, true);
-      await page.goto(fixtureUrl1);
-      await expect(page.getByText('0 times')).toBeVisible();
 
-      const fixtureId2 = { path: fixture.filePath, name: 'small number' };
-      const fixtureUrl2 = createRendererUrl(rendererUrl, fixtureId2, true);
-      await page.goto(fixtureUrl2);
-      await expect(page.getByText('5 times')).toBeVisible();
-
-      const fixtureId3 = { path: fixture.filePath, name: 'large number' };
-      const fixtureUrl3 = createRendererUrl(rendererUrl, fixtureId3, true);
-      await page.goto(fixtureUrl3);
-      await expect(page.getByText('555555555 times')).toBeVisible();
-
-      // await expect(page).toHaveScreenshot();
+      if (fixtureNames) {
+        for (const fixtureName of fixtureNames) {
+          const fixtureId: FixtureId = {
+            path: fixture.filePath,
+            name: fixtureName,
+          };
+          const cleanPath = [...breadcrumbs, fixtureName];
+          await takeFixtureSnapshot(page, rendererUrl, fixtureId, cleanPath);
+        }
+      } else {
+        const fixtureId: FixtureId = { path: fixture.filePath };
+        await takeFixtureSnapshot(page, rendererUrl, fixtureId, breadcrumbs);
+      }
     });
   });
 });
+
+async function takeFixtureSnapshot(
+  page: Page,
+  rendererUrl: string,
+  fixtureId: FixtureId,
+  cleanPath: string[]
+) {
+  const fixtureUrl = createRendererUrl(rendererUrl, fixtureId, true);
+  await page.goto(fixtureUrl);
+  await expect(page).toHaveScreenshot(`${cleanPath.join('-')}.png`);
+}
