@@ -47,6 +47,7 @@ export function FixtureProvider(props: Props) {
   }, [props.fixtureId.path, props.fixtureItem, props.lazy, setLazyItems]);
 
   // TOOD: Emit fixture module loaded to know when lazy discovery was finished?
+  // TODO: Make this a renderer response
   React.useEffect(() => {
     // @ts-ignore
     if (window.fixtureLoaded) {

@@ -51,7 +51,6 @@ test.describe('DOM dev', () => {
       await expect.poll(() => _fixtureItem).not.toBe(undefined);
 
       const fixtureNames = _fixtureItem.fixtureNames as string[];
-      const breadcrumbs = [...fixture.parents, fixture.fileName];
 
       expect(fixtureNames).toEqual(['default', 'small number', 'large number']);
 
@@ -64,12 +63,13 @@ test.describe('DOM dev', () => {
             path: fixture.filePath,
             name: fixtureName,
           };
-          const cleanPath = [...breadcrumbs, fixtureName];
+          const cleanPath = [...fixture.parents, fixture.fileName, fixtureName];
           await takeFixtureSnapshot(page, rendererUrl, fixtureId, cleanPath);
         }
       } else {
         const fixtureId: FixtureId = { path: fixture.filePath };
-        await takeFixtureSnapshot(page, rendererUrl, fixtureId, breadcrumbs);
+        const cleanPath = [...fixture.parents, fixture.fileName];
+        await takeFixtureSnapshot(page, rendererUrl, fixtureId, cleanPath);
       }
     });
   });
