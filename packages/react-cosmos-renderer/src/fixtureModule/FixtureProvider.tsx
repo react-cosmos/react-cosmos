@@ -16,6 +16,7 @@ type Props = {
   initialFixtureState?: FixtureState;
   fixtureItem: FixtureListItem;
   lazy: boolean;
+  fixtureListItem: FixtureListItem;
 };
 
 type State = {
@@ -44,6 +45,15 @@ export function FixtureProvider(props: Props) {
       );
     }
   }, [props.fixtureId.path, props.fixtureItem, props.lazy, setLazyItems]);
+
+  // TOOD: Emit fixture module loaded to know when lazy discovery was finished?
+  React.useEffect(() => {
+    // @ts-ignore
+    if (window.fixtureLoaded) {
+      // @ts-ignore
+      window.fixtureLoaded(props.fixtureItem);
+    }
+  }, [props.fixtureItem]);
 
   React.useEffect(() => {
     if (!isEqual(state.fixtureState, state.syncedFixtureState)) {

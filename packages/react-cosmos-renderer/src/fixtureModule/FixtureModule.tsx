@@ -37,8 +37,6 @@ export function FixtureModule({
     [fixtureModule.default]
   );
 
-  // TOOD: Emit fixture module loaded to know when lazy discovery was finished?
-
   const fixtureKey = React.useMemo(
     () => `${stringifyFixtureId(fixtureId)}-${renderKey}`,
     [fixtureId, renderKey]
@@ -57,6 +55,7 @@ export function FixtureModule({
       initialFixtureState={initialFixtureState}
       fixtureItem={fixtureItem}
       lazy={lazy}
+      fixtureListItem={fixtureItem}
     >
       <DecoratedFixture
         fixture={fixture}
