@@ -1,6 +1,11 @@
 import { APIRequestContext, Page, expect, test } from '@playwright/test';
 import { CosmosFixtureJson, CosmosFixturesJson } from 'react-cosmos';
-import { FixtureId, createRendererUrl } from 'react-cosmos-core';
+import {
+  FixtureId,
+  FixtureListItem,
+  RendererResponse,
+  createRendererUrl,
+} from 'react-cosmos-core';
 import { exampleName } from './envVars.js';
 
 export function webTests(url: string) {
@@ -115,41 +120,28 @@ export function webTests(url: string) {
 
   test('reads renderer responses', async ({ request, page }) => {
     const { rendererUrl, fixtures } = await getFixturesJson(request, url);
-    const fixture = await expectFixture(fixtures, 'Counter.fixture.tsx');
+    const fixture = expectFixture(fixtures, 'Counter.fixture.tsx');
 
     if (!rendererUrl) {
       throw new Error('Renderer URL not found');
     }
 
-    let _fixtureItem: any;
-    page.exposeFunction('fixtureLoaded', (fixtureItem: any) => {
-      _fixtureItem = fixtureItem;
-    });
-
-    await page.goto(fixture.rendererUrl);
-
-    // TODO: How to get fixture IDs instead of fixture names?
-    await expect.poll(() => _fixtureItem).not.toBe(undefined);
-
-    const fixtureNames = _fixtureItem.fixtureNames as string[];
-
-    expect(fixtureNames).toEqual(['default', 'small number', 'large number']);
-
-    if (fixtureNames) {
-      console.log({ fixtureNames });
+    const fixtureItem = await loadFixture(page, fixture);
+    if (fixtureItem.type === 'multi') {
+      const { fixtureNames } = fixtureItem;
       for (const fixtureName of fixtureNames) {
-        await takeFixtureSnapshot(
-          page,
-          rendererUrl,
-          { path: fixture.filePath, name: fixtureName },
-          [...fixture.cleanPath, fixtureName]
-        );
+        const fixtureId = { path: fixture.filePath, name: fixtureName };
+        await takeFixtureSnapshot(page, rendererUrl, fixtureId, [
+          ...fixture.cleanPath,
+          fixtureName,
+        ]);
       }
     } else {
+      const fixtureId = { path: fixture.filePath };
       await takeFixtureSnapshot(
         page,
         rendererUrl,
-        { path: fixture.filePath },
+        fixtureId,
         fixture.cleanPath
       );
     }
@@ -177,6 +169,20 @@ function resolveRendererUrl(url: string, rendererUrl: string) {
   } catch (err) {
     return new URL(rendererUrl, url).href;
   }
+}
+
+async function loadFixture(page: Page, fixture: CosmosFixtureJson) {
+  let fixtureItem = null as FixtureListItem | null;
+  page.exposeFunction('cosmosRendererResponse', (msg: RendererResponse) => {
+    if (msg.type === 'fixtureLoaded') {
+      fixtureItem = msg.payload.fixture;
+    }
+  });
+
+  await page.goto(fixture.rendererUrl);
+  await expect.poll(() => fixtureItem).not.toBe(null);
+
+  return fixtureItem!;
 }
 
 async function takeFixtureSnapshot(

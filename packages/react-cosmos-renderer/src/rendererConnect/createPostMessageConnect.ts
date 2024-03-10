@@ -7,7 +7,6 @@ import {
 
 export function createPostMessageConnect(): RendererConnect {
   function postMessage(msg: RendererResponse) {
-    // TODO: Forward this to parent window.cosmosRendererResponse when available
     parent.postMessage(msg, '*');
   }
 
