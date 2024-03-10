@@ -1,6 +1,8 @@
 import React from 'react';
 import {
+  Dispatch,
   InputsFixtureState,
+  SetStateAction,
   createValue,
   extendWithValue,
 } from 'react-cosmos-core';
@@ -9,7 +11,7 @@ import { useFixtureState } from '../useFixtureState.js';
 export function useSetInputValue<T>(
   inputName: string,
   defaultValue: T
-): React.Dispatch<React.SetStateAction<T>> {
+): Dispatch<SetStateAction<T>> {
   const [, setFixtureState] = useFixtureState<InputsFixtureState>('inputs');
   return React.useCallback(
     stateChange => {

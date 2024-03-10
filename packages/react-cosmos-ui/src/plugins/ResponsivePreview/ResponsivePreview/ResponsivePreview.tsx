@@ -1,14 +1,12 @@
 import { isEqual } from 'lodash-es';
 import React, {
-  Dispatch,
   ReactNode,
-  SetStateAction,
   useCallback,
   useEffect,
   useRef,
   useState,
 } from 'react';
-import { Viewport } from 'react-cosmos-core';
+import { Dispatch, SetStateAction, Viewport } from 'react-cosmos-core';
 import styled, { css } from 'styled-components';
 import { useDrag } from '../../../hooks/useDrag.js';
 import { grey64, grey8 } from '../../../style/colors.js';

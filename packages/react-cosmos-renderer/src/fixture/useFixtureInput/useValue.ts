@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react-cosmos-core';
 import { useFixtureInput } from './useFixtureInput.js';
 
 type Opts<T> = {
@@ -9,6 +10,6 @@ type Opts<T> = {
 export function useValue<T>(
   inputName: string,
   opts: Opts<T>
-): [T, React.Dispatch<React.SetStateAction<T>>] {
+): [T, Dispatch<SetStateAction<T>>] {
   return useFixtureInput(inputName, opts.defaultValue);
 }

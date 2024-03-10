@@ -1,5 +1,9 @@
-import React, { SetStateAction } from 'react';
-import { Viewport, ViewportFixtureState } from 'react-cosmos-core';
+import React from 'react';
+import {
+  SetStateAction,
+  Viewport,
+  ViewportFixtureState,
+} from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
 import { RendererCoreSpec } from '../RendererCore/spec.js';
 import { StorageSpec } from '../Storage/spec.js';
