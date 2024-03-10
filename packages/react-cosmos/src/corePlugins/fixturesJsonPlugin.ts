@@ -25,7 +25,7 @@ export type CosmosFixturesJson = {
 };
 
 export const fixturesJsonPlugin: CosmosServerPlugin = {
-  name: 'fixturesJsonPlugin',
+  name: 'fixturesJson',
 
   devServer({ cosmosConfig, expressApp }) {
     expressApp.get(
