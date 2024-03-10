@@ -1,5 +1,6 @@
 import { APIRequestContext, Page, expect, test } from '@playwright/test';
 import { CosmosFixtureJson, CosmosFixturesJson } from 'react-cosmos';
+import { FixtureId, createRendererUrl } from 'react-cosmos-core';
 import { exampleName } from './envVars.js';
 
 export function webTests(url: string) {
@@ -111,6 +112,48 @@ export function webTests(url: string) {
       await expect(page.getByText('Hello World!')).toBeVisible();
     });
   });
+
+  test('reads renderer responses', async ({ request, page }) => {
+    const { rendererUrl, fixtures } = await getFixturesJson(request, url);
+    const fixture = await expectFixture(fixtures, 'Counter.fixture.tsx');
+
+    if (!rendererUrl) {
+      throw new Error('Renderer URL not found');
+    }
+
+    let _fixtureItem: any;
+    page.exposeFunction('fixtureLoaded', (fixtureItem: any) => {
+      _fixtureItem = fixtureItem;
+    });
+
+    await page.goto(fixture.rendererUrl);
+
+    // TODO: How to get fixture IDs instead of fixture names?
+    await expect.poll(() => _fixtureItem).not.toBe(undefined);
+
+    const fixtureNames = _fixtureItem.fixtureNames as string[];
+
+    expect(fixtureNames).toEqual(['default', 'small number', 'large number']);
+
+    if (fixtureNames) {
+      console.log({ fixtureNames });
+      for (const fixtureName of fixtureNames) {
+        await takeFixtureSnapshot(
+          page,
+          rendererUrl,
+          { path: fixture.filePath, name: fixtureName },
+          [...fixture.cleanPath, fixtureName]
+        );
+      }
+    } else {
+      await takeFixtureSnapshot(
+        page,
+        rendererUrl,
+        { path: fixture.filePath },
+        fixture.cleanPath
+      );
+    }
+  });
 }
 
 function rendererRoot(page: Page) {
@@ -134,4 +177,15 @@ function resolveRendererUrl(url: string, rendererUrl: string) {
   } catch (err) {
     return new URL(rendererUrl, url).href;
   }
+}
+
+async function takeFixtureSnapshot(
+  page: Page,
+  rendererUrl: string,
+  fixtureId: FixtureId,
+  cleanPath: string[]
+) {
+  const fixtureUrl = createRendererUrl(rendererUrl, fixtureId, true);
+  await page.goto(fixtureUrl);
+  await expect(page).toHaveScreenshot(`${cleanPath.join('-')}.png`);
 }
