@@ -106,7 +106,7 @@ export function webTests(url: string) {
 
     test('contains fixture renderer URL', async ({ request, page }) => {
       const { fixtures } = await getFixturesJson(request, url);
-      const fixture = await expectFixture(fixtures, 'HelloWorld.mdx');
+      const fixture = expectFixture(fixtures, 'HelloWorld.mdx');
       await page.goto(resolveRendererUrl(url, fixture.rendererUrl));
       await expect(page.getByText('Hello World!')).toBeVisible();
     });
@@ -122,7 +122,7 @@ async function getFixturesJson(request: APIRequestContext, url: string) {
   return (await response.json()) as CosmosFixturesJson;
 }
 
-async function expectFixture(fixtures: CosmosFixtureJson[], fileName: string) {
+function expectFixture(fixtures: CosmosFixtureJson[], fileName: string) {
   const fixture = fixtures.find(f => f.filePath.endsWith(fileName));
   expect(fixture).toBeTruthy();
   return fixture!;
