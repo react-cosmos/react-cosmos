@@ -1,4 +1,6 @@
 import express from 'express';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import {
   CosmosCommand,
   createRendererUrl,
@@ -23,7 +25,7 @@ export type CosmosFixturesJson = {
 };
 
 export const fixturesJsonPlugin: CosmosServerPlugin = {
-  name: 'fixturesJsonPlugin',
+  name: 'fixturesJson',
 
   devServer({ cosmosConfig, expressApp }) {
     expressApp.get(
@@ -34,8 +36,13 @@ export const fixturesJsonPlugin: CosmosServerPlugin = {
     );
   },
 
-  export({ cosmosConfig }) {
-    // TODO: Export fixtures JSON file
+  async export({ cosmosConfig }) {
+    const { exportPath } = cosmosConfig;
+    const json = createFixtureItems(cosmosConfig, 'export');
+    await fs.writeFile(
+      path.join(exportPath, 'cosmos.fixtures.json'),
+      JSON.stringify(json, null, 2)
+    );
   },
 };
 
@@ -58,10 +65,11 @@ function createFixtureItems(
     rendererUrl,
     fixtures: fixturePaths.map(filePath => {
       const relPath = importKeyPath(filePath, cosmosConfig.rootDir);
+      const fixtureId = { path: relPath };
       return {
         filePath: relPath,
         cleanPath: cleanFixturePath(relPath, fixturesDir, fixtureFileSuffix),
-        rendererUrl: createRendererUrl(rendererUrl, { path: relPath }, true),
+        rendererUrl: createRendererUrl(rendererUrl, fixtureId, true),
       };
     }),
   };
@@ -72,7 +80,7 @@ function cleanFixturePath(
   fixturesDir: string,
   fixtureSuffix: string
 ) {
-  const paths = filePath.split('/').filter(path => path !== fixturesDir);
+  const paths = filePath.split('/').filter(p => p !== fixturesDir);
   return [
     ...paths.slice(0, -1),
     removeFixtureNameSuffix(
