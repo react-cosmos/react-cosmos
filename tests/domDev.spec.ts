@@ -1,4 +1,5 @@
-import { Page, expect, test } from '@playwright/test';
+import { APIRequestContext, Page, expect, test } from '@playwright/test';
+import { CosmosFixtureJson, CosmosFixturesJson } from 'react-cosmos';
 import { FixtureId, createRendererUrl } from 'react-cosmos-core';
 import { webTests } from './helpers/webTests.js';
 
@@ -9,37 +10,36 @@ test.describe('DOM dev', () => {
 
   // TODO: Put in webTests to include in export tests
   test.describe('cosmos.fixture.json', () => {
-    test('contains fixture item', async ({ request }) => {
-      const response = await request.get(url + '/cosmos.fixtures.json');
-      expect(await response.json()).toContainEqual({
+    test('contains renderer URL', async ({ request }) => {
+      const { rendererUrl } = await getFixturesJson(request);
+      expect(rendererUrl).toBe('http://localhost:5050');
+    });
+
+    test('contains fixture data', async ({ request }) => {
+      const { fixtures } = await getFixturesJson(request);
+      expect(fixtures).toContainEqual({
         filePath: 'src/WelcomeMessage/WelcomeMessage.fixture.tsx',
-        fileName: 'WelcomeMessage',
-        parents: [],
+        cleanPath: ['src', 'WelcomeMessage', 'WelcomeMessage'],
         rendererUrl:
           'http://localhost:5050/?fixtureId=%7B%22path%22%3A%22src%2FWelcomeMessage%2FWelcomeMessage.fixture.tsx%22%7D&locked=true',
       });
     });
 
-    test('renders fixture by renderer URL', async ({ request, page }) => {
-      const response = await request.get(url + '/cosmos.fixtures.json');
-      const fixtures = await response.json();
-      // TODO: Import Cosmos type instead of any
-      const fixture = fixtures.find((f: any) =>
-        f.filePath.endsWith('HelloWorld.mdx')
-      );
+    test('contains fixture renderer URL', async ({ request, page }) => {
+      const { fixtures } = await getFixturesJson(request);
+      const fixture = await expectFixture(fixtures, 'HelloWorld.mdx');
       await page.goto(fixture.rendererUrl);
       await expect(page.getByText('Hello World!')).toBeVisible();
     });
 
     test('reads renderer responses', async ({ request, page }) => {
-      const response = await request.get(url + '/cosmos.fixtures.json');
-      const fixtures = await response.json();
-      // TODO: Import Cosmos type instead of any
-      const fixture = fixtures.find((f: any) =>
-        f.filePath.endsWith('Counter.fixture.tsx')
-      );
+      const { rendererUrl, fixtures } = await getFixturesJson(request);
+      const fixture = await expectFixture(fixtures, 'Counter.fixture.tsx');
 
-      // TODO: Import Cosmos type instead of any
+      if (!rendererUrl) {
+        throw new Error('Renderer URL not found');
+      }
+
       let _fixtureItem: any;
       page.exposeFunction('fixtureLoaded', (fixtureItem: any) => {
         _fixtureItem = fixtureItem;
@@ -54,26 +54,38 @@ test.describe('DOM dev', () => {
 
       expect(fixtureNames).toEqual(['default', 'small number', 'large number']);
 
-      // TODO: How to get the renderer URL?
-      const rendererUrl = 'localhost:5050';
-
       if (fixtureNames) {
+        console.log({ fixtureNames });
         for (const fixtureName of fixtureNames) {
-          const fixtureId: FixtureId = {
-            path: fixture.filePath,
-            name: fixtureName,
-          };
-          const cleanPath = [...fixture.parents, fixture.fileName, fixtureName];
-          await takeFixtureSnapshot(page, rendererUrl, fixtureId, cleanPath);
+          await takeFixtureSnapshot(
+            page,
+            rendererUrl,
+            { path: fixture.filePath, name: fixtureName },
+            [...fixture.cleanPath, fixtureName]
+          );
         }
       } else {
-        const fixtureId: FixtureId = { path: fixture.filePath };
-        const cleanPath = [...fixture.parents, fixture.fileName];
-        await takeFixtureSnapshot(page, rendererUrl, fixtureId, cleanPath);
+        await takeFixtureSnapshot(
+          page,
+          rendererUrl,
+          { path: fixture.filePath },
+          fixture.cleanPath
+        );
       }
     });
   });
 });
+
+async function getFixturesJson(request: APIRequestContext) {
+  const response = await request.get(url + '/cosmos.fixtures.json');
+  return (await response.json()) as CosmosFixturesJson;
+}
+
+async function expectFixture(fixtures: CosmosFixtureJson[], fileName: string) {
+  const fixture = fixtures.find(f => f.filePath.endsWith(fileName));
+  expect(fixture).toBeTruthy();
+  return fixture!;
+}
 
 async function takeFixtureSnapshot(
   page: Page,

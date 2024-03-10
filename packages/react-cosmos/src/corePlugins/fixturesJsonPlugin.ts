@@ -1,18 +1,26 @@
 import express from 'express';
 import {
   CosmosCommand,
-  FixtureList,
-  createFixtureTree,
   createRendererUrl,
-  flattenFixtureTree,
   pickRendererUrl,
+  removeFixtureNameExtension,
+  removeFixtureNameSuffix,
 } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
 import { findUserModulePaths } from '../userModules/findUserModulePaths.js';
 import { importKeyPath } from '../userModules/shared.js';
 
-// TODO: Create Playwright test
+export type CosmosFixtureJson = {
+  filePath: string;
+  cleanPath: string[];
+  rendererUrl: string;
+};
+
+export type CosmosFixturesJson = {
+  rendererUrl: string | null;
+  fixtures: CosmosFixtureJson[];
+};
 
 export const fixturesJsonPlugin: CosmosServerPlugin = {
   name: 'fixturesJsonPlugin',
@@ -21,7 +29,7 @@ export const fixturesJsonPlugin: CosmosServerPlugin = {
     expressApp.get(
       '/cosmos.fixtures.json',
       (req: express.Request, res: express.Response) => {
-        res.json(getFixtureItems(cosmosConfig, 'dev'));
+        res.json(createFixtureItems(cosmosConfig, 'dev'));
       }
     );
   },
@@ -31,39 +39,45 @@ export const fixturesJsonPlugin: CosmosServerPlugin = {
   },
 };
 
-type FixtureItem = {
-  filePath: string;
-  fileName: string;
-  parents: string[];
-  rendererUrl: string;
-};
-
-function getFixtureItems(
+function createFixtureItems(
   cosmosConfig: CosmosConfig,
   command: CosmosCommand
-): FixtureItem[] {
+): CosmosFixturesJson {
   const rendererUrl = pickRendererUrl(cosmosConfig.rendererUrl, command);
   if (!rendererUrl) {
-    throw new Error('No renderer URL available');
+    return {
+      rendererUrl: null,
+      fixtures: [],
+    };
   }
 
   const { fixturesDir, fixtureFileSuffix } = cosmosConfig;
   const { fixturePaths } = findUserModulePaths(cosmosConfig);
 
-  const fixtures = fixturePaths.reduce<FixtureList>((acc, p) => {
-    const relPath = importKeyPath(p, cosmosConfig.rootDir);
-    return { ...acc, [relPath]: { type: 'single' } };
-  }, {});
+  return {
+    rendererUrl,
+    fixtures: fixturePaths.map(filePath => {
+      const relPath = importKeyPath(filePath, cosmosConfig.rootDir);
+      return {
+        filePath: relPath,
+        cleanPath: cleanFixturePath(relPath, fixturesDir, fixtureFileSuffix),
+        rendererUrl: createRendererUrl(rendererUrl, { path: relPath }, true),
+      };
+    }),
+  };
+}
 
-  return flattenFixtureTree(
-    createFixtureTree({ fixtures, fixturesDir, fixtureFileSuffix })
-  ).map(item => {
-    return {
-      filePath: item.fixtureId.path,
-      fileName: item.fileName,
-      parents: item.parents,
-      // TODO: Make this absolute with webpack? What about exports?
-      rendererUrl: createRendererUrl(rendererUrl, item.fixtureId, true),
-    };
-  }, {});
+function cleanFixturePath(
+  filePath: string,
+  fixturesDir: string,
+  fixtureSuffix: string
+) {
+  const paths = filePath.split('/').filter(path => path !== fixturesDir);
+  return [
+    ...paths.slice(0, -1),
+    removeFixtureNameSuffix(
+      removeFixtureNameExtension(paths[paths.length - 1]),
+      fixtureSuffix
+    ),
+  ];
 }
