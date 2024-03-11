@@ -55,7 +55,6 @@ export function FixtureModule({
       initialFixtureState={initialFixtureState}
       fixtureItem={fixtureItem}
       lazy={lazy}
-      fixtureListItem={fixtureItem}
     >
       <DecoratedFixture
         fixture={fixture}

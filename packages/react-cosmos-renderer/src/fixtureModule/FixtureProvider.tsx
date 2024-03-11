@@ -16,7 +16,6 @@ type Props = {
   initialFixtureState?: FixtureState;
   fixtureItem: FixtureListItem;
   lazy: boolean;
-  fixtureListItem: FixtureListItem;
 };
 
 type State = {
