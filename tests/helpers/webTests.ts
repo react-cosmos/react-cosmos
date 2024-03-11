@@ -1,4 +1,5 @@
-import { Page, expect, test } from '@playwright/test';
+import { APIRequestContext, Page, expect, test } from '@playwright/test';
+import { CosmosFixtureJson, CosmosFixturesJson } from 'react-cosmos';
 import { exampleName } from './envVars.js';
 
 export function webTests(url: string) {
@@ -85,8 +86,52 @@ export function webTests(url: string) {
       expect(await response.text()).toContain('nom nom nom');
     });
   });
+
+  test.describe('cosmos.fixture.json', () => {
+    test('contains renderer URL', async ({ request }) => {
+      const { rendererUrl } = await getFixturesJson(request, url);
+      expect(typeof rendererUrl).toBe('string');
+    });
+
+    test('contains fixture data', async ({ request }) => {
+      const { fixtures } = await getFixturesJson(request, url);
+      expect(fixtures).toContainEqual({
+        filePath: 'src/WelcomeMessage/WelcomeMessage.fixture.tsx',
+        cleanPath: ['src', 'WelcomeMessage', 'WelcomeMessage'],
+        rendererUrl: expect.stringContaining(
+          '?fixtureId=%7B%22path%22%3A%22src%2FWelcomeMessage%2FWelcomeMessage.fixture.tsx%22%7D&locked=true'
+        ),
+      });
+    });
+
+    test('contains fixture renderer URL', async ({ request, page }) => {
+      const { fixtures } = await getFixturesJson(request, url);
+      const fixture = expectFixture(fixtures, 'HelloWorld.mdx');
+      await page.goto(resolveRendererUrl(url, fixture.rendererUrl));
+      await expect(page.getByText('Hello World!')).toBeVisible();
+    });
+  });
 }
 
 function rendererRoot(page: Page) {
   return page.frameLocator('iframe').locator('#root');
+}
+
+async function getFixturesJson(request: APIRequestContext, url: string) {
+  const response = await request.get(url + '/cosmos.fixtures.json');
+  return (await response.json()) as CosmosFixturesJson;
+}
+
+function expectFixture(fixtures: CosmosFixtureJson[], fileName: string) {
+  const fixture = fixtures.find(f => f.filePath.endsWith(fileName));
+  expect(fixture).toBeTruthy();
+  return fixture!;
+}
+
+function resolveRendererUrl(url: string, rendererUrl: string) {
+  try {
+    return new URL(rendererUrl).href;
+  } catch (err) {
+    return new URL(rendererUrl, url).href;
+  }
 }

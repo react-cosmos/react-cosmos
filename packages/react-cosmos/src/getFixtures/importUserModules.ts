@@ -1,4 +1,3 @@
-import path from 'path';
 import {
   ByPath,
   ReactDecoratorModule,
@@ -6,7 +5,7 @@ import {
 } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { findUserModulePaths } from '../userModules/findUserModulePaths.js';
-import { slash } from '../utils/slash.js';
+import { importKeyPath } from '../userModules/shared.js';
 
 type UserModules = {
   fixtures: ByPath<ReactFixtureModule>;
@@ -33,10 +32,7 @@ export function importUserModules({
 
 function importModules<T>(paths: string[], rootDir: string) {
   const modules = paths.map(p => {
-    // Converting to forward slashes on Windows is important because the
-    // slashes are used for generating a sorted list of fixtures and
-    // decorators.
-    const relPath = slash(path.relative(rootDir, p));
+    const relPath = importKeyPath(p, rootDir);
     return { relPath, module: require(p) };
   });
 

@@ -9,6 +9,7 @@ export * from './fixtureState/propsTypes.js';
 export * from './fixtureState/types.js';
 export * from './fixtureState/viewport.js';
 export * from './fixtureTree/createFixtureTree/index.js';
+export * from './fixtureTree/fixtureUtils.js';
 export * from './fixtureTree/flattenFixtureTree.js';
 export * from './fixtureTree/types.js';
 export * from './message/serverMessage.js';
