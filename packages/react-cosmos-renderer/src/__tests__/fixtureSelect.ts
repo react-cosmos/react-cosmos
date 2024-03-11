@@ -112,3 +112,35 @@ testRenderer(
     );
   }
 );
+
+testRenderer(
+  'returns fixtureLoaded response for single fixture',
+  { rendererId, fixtures },
+  async ({ selectFixture, fixtureLoaded }) => {
+    selectFixture({
+      rendererId,
+      fixtureId: { path: 'second' },
+      fixtureState: {},
+    });
+    await fixtureLoaded({
+      rendererId,
+      fixture: { type: 'single' },
+    });
+  }
+);
+
+testRenderer(
+  'returns fixtureLoaded response for multi fixture',
+  { rendererId, fixtures },
+  async ({ selectFixture, fixtureLoaded }) => {
+    selectFixture({
+      rendererId,
+      fixtureId: { path: 'first', name: 'one' },
+      fixtureState: {},
+    });
+    await fixtureLoaded({
+      rendererId,
+      fixture: { type: 'multi', fixtureNames: ['one'] },
+    });
+  }
+);

@@ -54,6 +54,9 @@ export function createImportMap(
 }
 
 export function importKeyPath(filePath: string, rootDir: string) {
+  // Converting to forward slashes on Windows is important because the
+  // slashes are used for generating a sorted list of fixtures and
+  // decorators.
   return slash(path.relative(rootDir, filePath));
 }
 

@@ -4,6 +4,7 @@ import {
   FixtureListItem,
 } from '../../userModules/fixtureTypes.js';
 import { addTreeNodeChild } from '../../utils/tree.js';
+import { removeFixtureNameExtension } from '../fixtureUtils.js';
 import { FixtureTreeNode } from '../types.js';
 
 export function createRawFixtureTree(fixtures: FixtureList): FixtureTreeNode {
@@ -53,10 +54,6 @@ function parseFixturePath(fixturePath: string) {
     parents,
     fileName: removeFixtureNameExtension(rawFixtureName),
   };
-}
-
-function removeFixtureNameExtension(fixtureName: string) {
-  return fixtureName.replace(/\.(js|jsx|ts|tsx|md|mdx)$/, '');
 }
 
 function injectNode(
