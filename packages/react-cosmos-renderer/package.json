@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-renderer",
-  "version": "6.1.0",
+  "version": "6.1.1",
   "description": "React Cosmos Renderer",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-renderer",
   "license": "MIT",
@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "lodash-es": "4.17.21",
-    "react-cosmos-core": "^6.1.0",
+    "react-cosmos-core": "^6.1.1",
     "react-is": "18.2.0"
   }
 }

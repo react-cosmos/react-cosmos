@@ -3,6 +3,8 @@ import { CosmosCommand } from '../server/serverTypes.js';
 import { FixtureId } from '../userModules/fixtureTypes.js';
 import { buildRendererQueryString } from './rendererQueryString.js';
 
+export type CosmosRendererUrl = null | string | { dev: string; export: string };
+
 export function createRendererUrl(
   rendererUrl: string,
   fixtureId?: FixtureId,
@@ -24,7 +26,7 @@ export function createRendererUrl(
 }
 
 export function pickRendererUrl(
-  rendererUrl: undefined | null | string | { dev: string; export: string },
+  rendererUrl: undefined | CosmosRendererUrl,
   command: CosmosCommand
 ): null | string {
   return rendererUrl && typeof rendererUrl === 'object'

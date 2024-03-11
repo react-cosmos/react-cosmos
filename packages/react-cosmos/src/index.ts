@@ -1,3 +1,7 @@
+export {
+  CosmosFixtureJson,
+  CosmosFixturesJson,
+} from './corePlugins/fixturesJsonPlugin.js';
 export * from './cosmosConfig/createCosmosConfig.js';
 export * from './cosmosConfig/detectCosmosConfig.js';
 export * from './cosmosConfig/getCosmosConfigAtPath.js';
