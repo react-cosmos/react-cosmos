@@ -172,17 +172,12 @@ function resolveRendererUrl(url: string, rendererUrl: string) {
 }
 
 async function loadFixture(page: Page, fixture: CosmosFixtureJson) {
-  let fixtureItem = null as FixtureListItem | null;
-  page.exposeFunction('cosmosRendererResponse', (msg: RendererResponse) => {
-    if (msg.type === 'fixtureLoaded') {
-      fixtureItem = msg.payload.fixture;
-    }
+  return new Promise<FixtureListItem>((resolve, reject) => {
+    page.exposeFunction('cosmosRendererResponse', (msg: RendererResponse) => {
+      if (msg.type === 'fixtureLoaded') resolve(msg.payload.fixture);
+    });
+    page.goto(fixture.rendererUrl).catch(reject);
   });
-
-  await page.goto(fixture.rendererUrl);
-  await expect.poll(() => fixtureItem).not.toBe(null);
-
-  return fixtureItem!;
 }
 
 async function takeFixtureSnapshot(
