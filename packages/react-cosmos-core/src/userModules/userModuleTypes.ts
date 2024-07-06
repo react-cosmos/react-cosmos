@@ -1,4 +1,4 @@
-import { ComponentType, FunctionComponent, ReactNode } from 'react';
+import { ComponentType, ReactNode } from 'react';
 
 type FixtureMap<FixtureType> = { [fixtureName: string]: FixtureType };
 type FixtureExport<FixtureType> = FixtureType | FixtureMap<FixtureType>;
@@ -7,7 +7,7 @@ type FixtureModule<FixtureType> = { default: FixtureExport<FixtureType> };
 type ModuleWrapper<ModuleType> = { module: ModuleType };
 type LazyModuleWrapper<ModuleType> = { getModule: () => Promise<ModuleType> };
 
-export type ReactFixture = ReactNode | FunctionComponent;
+export type ReactFixture = ReactNode | ComponentType;
 export type ReactFixtureMap = FixtureMap<ReactFixture>;
 export type ReactFixtureExport = FixtureExport<ReactFixture>;
 export type ReactFixtureModule = FixtureModule<ReactFixture>;
