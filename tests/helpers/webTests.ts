@@ -1,5 +1,11 @@
 import { APIRequestContext, Page, expect, test } from '@playwright/test';
 import { CosmosFixtureJson, CosmosFixturesJson } from 'react-cosmos';
+import {
+  FixtureId,
+  FixtureListItem,
+  RendererResponse,
+  createRendererUrl,
+} from 'react-cosmos-core';
 import { exampleName } from './envVars.js';
 
 export function webTests(url: string) {
@@ -111,6 +117,35 @@ export function webTests(url: string) {
       await expect(page.getByText('Hello World!')).toBeVisible();
     });
   });
+
+  test.skip('takes fixture screenshots', async ({ request, page }) => {
+    const { rendererUrl, fixtures } = await getFixturesJson(request, url);
+    const fixture = expectFixture(fixtures, 'Counter.fixture.tsx');
+
+    if (!rendererUrl) {
+      throw new Error('Renderer URL not found');
+    }
+
+    const fixtureItem = await loadFixture(page, fixture);
+    if (fixtureItem.type === 'multi') {
+      const { fixtureNames } = fixtureItem;
+      for (const fixtureName of fixtureNames) {
+        const fixtureId = { path: fixture.filePath, name: fixtureName };
+        await takeFixtureSnapshot(page, rendererUrl, fixtureId, [
+          ...fixture.cleanPath,
+          fixtureName,
+        ]);
+      }
+    } else {
+      const fixtureId = { path: fixture.filePath };
+      await takeFixtureSnapshot(
+        page,
+        rendererUrl,
+        fixtureId,
+        fixture.cleanPath
+      );
+    }
+  });
 }
 
 function rendererRoot(page: Page) {
@@ -134,4 +169,24 @@ function resolveRendererUrl(url: string, rendererUrl: string) {
   } catch (err) {
     return new URL(rendererUrl, url).href;
   }
+}
+
+async function loadFixture(page: Page, fixture: CosmosFixtureJson) {
+  return new Promise<FixtureListItem>((resolve, reject) => {
+    page.exposeFunction('cosmosRendererResponse', (msg: RendererResponse) => {
+      if (msg.type === 'fixtureLoaded') resolve(msg.payload.fixture);
+    });
+    page.goto(fixture.rendererUrl).catch(reject);
+  });
+}
+
+async function takeFixtureSnapshot(
+  page: Page,
+  rendererUrl: string,
+  fixtureId: FixtureId,
+  cleanPath: string[]
+) {
+  const fixtureUrl = createRendererUrl(rendererUrl, fixtureId, true);
+  await page.goto(fixtureUrl);
+  await expect(page).toHaveScreenshot(`${cleanPath.join('-')}.png`);
 }
