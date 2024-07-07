@@ -1,4 +1,5 @@
 import express from 'express';
+import { sortBy } from 'lodash-es';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {
@@ -61,17 +62,19 @@ function createFixtureItems(
   const { fixturesDir, fixtureFileSuffix } = cosmosConfig;
   const { fixturePaths } = findUserModulePaths(cosmosConfig);
 
+  const fixtures = fixturePaths.map(filePath => {
+    const relPath = importKeyPath(filePath, cosmosConfig.rootDir);
+    const fixtureId = { path: relPath };
+    return {
+      filePath: relPath,
+      cleanPath: cleanFixturePath(relPath, fixturesDir, fixtureFileSuffix),
+      rendererUrl: createRendererUrl(rendererUrl, fixtureId, true),
+    };
+  });
+
   return {
     rendererUrl,
-    fixtures: fixturePaths.map(filePath => {
-      const relPath = importKeyPath(filePath, cosmosConfig.rootDir);
-      const fixtureId = { path: relPath };
-      return {
-        filePath: relPath,
-        cleanPath: cleanFixturePath(relPath, fixturesDir, fixtureFileSuffix),
-        rendererUrl: createRendererUrl(rendererUrl, fixtureId, true),
-      };
-    }),
+    fixtures: sortBy(fixtures, f => f.cleanPath.join('-')),
   };
 }
 
