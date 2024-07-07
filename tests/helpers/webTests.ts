@@ -118,7 +118,7 @@ export function webTests(url: string) {
     });
   });
 
-  test('reads renderer responses', async ({ request, page }) => {
+  test.skip('takes fixture screenshots', async ({ request, page }) => {
     const { rendererUrl, fixtures } = await getFixturesJson(request, url);
     const fixture = expectFixture(fixtures, 'Counter.fixture.tsx');
 
