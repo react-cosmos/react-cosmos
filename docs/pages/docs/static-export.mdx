@@ -43,3 +43,11 @@ npx http-server ./cosmos-export
 The `cosmos-export` command creates a static export of the Cosmos UI shell, which expects a corresponding static Renderer to connect with. Without a Cosmos bundler plugin, the latter will be missing.
 
 The Vite or Webpack plugins take care of exporting automatically. Creating a static export in a [custom bundler setup](/docs/getting-started/custom-bundler.md) will require additional steps. See the [Next.js guide](/docs/getting-started/next.md#static-export) for such an example.
+
+## Github Pages and Jekyll
+
+You can publish a Cosmos static export using Github Pages. Commit the exported files to a `/docs/` folder in the root of your project and you should be good to go.
+
+When you deploy to Github Pages, it defaults to using [Jekyll](https://jekyllrb.com/) and this can cause problems for Cosmos because Jekyll [filters out files that start with an underscore](https://help.github.com/articles/files-that-start-with-an-underscore-are-missing/) and for example Vite bundles like `_virtual_cosmos-imports-DSXvW1uh.js` won't be available when the renderer HTML needs them.
+
+The solution is to put an empty `.nojekyll` file in the export folder. This will turn off Jekyll rendering and Cosmos should work just fine.
