@@ -109,12 +109,14 @@ export function mockRendererCore(methods: MethodsOf<RendererCoreSpec> = {}) {
     getConnectedRendererIds: vi.fn(),
     getPrimaryRendererId: vi.fn(),
     getFixtures: vi.fn(),
-    getFixtureState: vi.fn(),
     isRendererConnected: vi.fn(),
     reloadRenderer: vi.fn(),
-    setFixtureState: vi.fn(),
     selectPrimaryRenderer: vi.fn(),
     receiveResponse: vi.fn(),
+    getAllFixtureState: vi.fn(),
+    getFixtureState: vi.fn(),
+    setFixtureState: vi.fn(),
+    setGlobalFixtureState: vi.fn(),
     ...methods,
   };
   mockMethodsOf<RendererCoreSpec>('rendererCore', allMethods);

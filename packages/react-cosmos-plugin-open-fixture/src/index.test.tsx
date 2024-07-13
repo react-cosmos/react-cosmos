@@ -48,7 +48,7 @@ it(`shows error notification when dev server is off`, async () => {
   const { pushTimedNotification } = mockNotifications();
 
   await loadTestPlugins();
-  registeredCommands.editFixture();
+  registeredCommands.openFixture();
 
   await waitFor(() =>
     expect(pushTimedNotification).toBeCalledWith(expect.any(Object), {

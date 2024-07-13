@@ -1,13 +1,13 @@
 export const DEFAULT_PLUGIN_CONFIG = {
   root: {
-    sidePanelRowOrder: ['values', 'props', 'classState'],
+    sidePanelRowOrder: ['inputs', 'props', 'classState'],
     globalActionOrder: ['remoteRenderer'],
     globalOrder: ['fixtureSearch', 'notifications'],
     navRowOrder: ['fixtureSearch', 'fixtureBookmarks', 'fixtureTree'],
     fixtureActionOrder: ['bookmarkFixture'],
-    rendererActionOrder: ['editFixture', 'fullScreen', 'responsivePreview'],
+    rendererActionOrder: ['openFixture', 'fullScreen', 'responsivePreview'],
   },
-  controlPanel: {
-    controlActionOrder: ['expandCollapse'],
+  inputsPanel: {
+    actionOrder: ['expandCollapse'],
   },
 };

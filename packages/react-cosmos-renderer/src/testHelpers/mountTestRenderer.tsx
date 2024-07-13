@@ -29,6 +29,7 @@ export type RendererTestArgs = {
   decorators?: ByPath<ReactDecoratorModule>;
   lazy?: boolean;
   only?: boolean;
+  skip?: boolean;
 };
 
 type RendererTestApi = RendererConnectTestApi & {

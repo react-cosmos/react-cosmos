@@ -28,5 +28,11 @@ module.exports = {
         'import/extensions': 'off',
       },
     },
+    {
+      files: ['*.fixture.{ts,tsx}', '**/__fixtures__/**'],
+      rules: {
+        'react-hooks/rules-of-hooks': 'off',
+      },
+    },
   ],
 };

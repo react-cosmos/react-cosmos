@@ -1,4 +1,5 @@
 import React from 'react';
+import { Viewport } from 'react-cosmos-core';
 import styled from 'styled-components';
 import { Space } from '../../../components/Space.js';
 import { Button8 } from '../../../components/buttons/index.js';
@@ -17,14 +18,14 @@ import {
   grey8,
 } from '../../../style/colors.js';
 import { quick } from '../../../style/vars.js';
-import { ResponsiveDevice, ResponsiveViewport } from '../spec.js';
+import { ResponsiveDevice } from '../spec.js';
 
 type Props = {
   devices: ResponsiveDevice[];
-  selectedViewport: ResponsiveViewport;
+  selectedViewport: Viewport;
   scaleFactor: number;
   scaled: boolean;
-  selectViewport: (viewport: ResponsiveViewport) => unknown;
+  selectViewport: (viewport: Viewport) => unknown;
   toggleScale: () => unknown;
 };
 
@@ -121,7 +122,7 @@ export const ResponsiveHeader = React.memo(function ResponsiveHeader({
   );
 });
 
-function stringifyViewport({ width, height }: ResponsiveViewport) {
+function stringifyViewport({ width, height }: Viewport) {
   return `${width}x${height}`;
 }
 

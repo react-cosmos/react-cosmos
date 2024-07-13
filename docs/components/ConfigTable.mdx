@@ -1,0 +1,28 @@
+import { flattenConfigSchema } from '../utils/flattenConfigSchema';
+
+export function ConfigTable() {
+  const jsonSchema = require('../../packages/react-cosmos/config.schema.json');
+  const configItems = flattenConfigSchema(jsonSchema.properties);
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+        {configItems.map(item => (
+          <tr key={item.name}>
+            <td>
+              <code>{item.name}</code>
+            </td>
+            <td>{item.description}</td>
+            <td>{item.default && <code>{item.default}</code>}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}

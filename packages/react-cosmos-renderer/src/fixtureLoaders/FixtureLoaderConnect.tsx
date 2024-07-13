@@ -13,8 +13,8 @@ type Props = {
   // RendererContext enables using this component on the server, in which case
   // the selected fixture is read from server-side URL params.
   selectedFixture: SelectedFixture | null;
-  renderMessage: (msg: string) => React.ReactElement;
-  renderFixture: (selected: SelectedFixture) => React.ReactElement;
+  renderMessage: (msg: string) => React.ReactNode;
+  renderFixture: (selected: SelectedFixture) => React.ReactNode;
 };
 export function FixtureLoaderConnect({
   moduleWrappers,

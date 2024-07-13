@@ -5,24 +5,31 @@ on:
       - main
 jobs:
   release:
+    if: ${{ !contains(github.event.head_commit.message, '[release]') }}
     runs-on: ubuntu-latest
     steps:
       - run: git config --global core.autocrlf false
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile --network-timeout 600000
+
+      - uses: actions/cache@v4
+        id: npm-cache
+        with:
+          path: .npm-cache
+          key: '${{ runner.os }}-npm'
+
+      - run: npm ci --cache .npm-cache
 
       - run: npm set "//registry.npmjs.org/:_authToken" ${{ secrets.NPM_TOKEN }}
-      - run: yarn release:check
+      - run: npm run release:check
 
       # https://github.com/lerna/lerna/issues/2622
       # https://github.com/lerna/lerna/issues/3554
       # https://github.com/lerna/lerna/issues/2060#issuecomment-658182391
       - run: |
-          yarn lerna publish \
+          npx lerna publish \
             --canary \
             --preid canary.$(git rev-parse --short HEAD) \
             --dist-tag=canary \

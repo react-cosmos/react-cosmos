@@ -1,4 +1,3 @@
-import path from 'path';
 import {
   ByPath,
   ReactDecoratorModule,
@@ -6,39 +5,38 @@ import {
 } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { findUserModulePaths } from '../userModules/findUserModulePaths.js';
-import { slash } from '../utils/slash.js';
+import { importKeyPath } from '../userModules/shared.js';
 
 type UserModules = {
   fixtures: ByPath<ReactFixtureModule>;
   decorators: ByPath<ReactDecoratorModule>;
 };
 
-export function importUserModules({
+export async function importUserModules({
   rootDir,
   fixturesDir,
   fixtureFileSuffix,
   ignore,
-}: CosmosConfig): UserModules {
-  const { fixturePaths, decoratorPaths } = findUserModulePaths({
+}: CosmosConfig): Promise<UserModules> {
+  const { fixturePaths, decoratorPaths } = await findUserModulePaths({
     rootDir,
     fixturesDir,
     fixtureFileSuffix,
     ignore,
   });
   return {
-    fixtures: importModules(fixturePaths, rootDir),
-    decorators: importModules(decoratorPaths, rootDir),
+    fixtures: await importModules(fixturePaths, rootDir),
+    decorators: await importModules(decoratorPaths, rootDir),
   };
 }
 
-function importModules<T>(paths: string[], rootDir: string) {
-  const modules = paths.map(p => {
-    // Converting to forward slashes on Windows is important because the
-    // slashes are used for generating a sorted list of fixtures and
-    // decorators.
-    const relPath = slash(path.relative(rootDir, p));
-    return { relPath, module: require(p) };
-  });
+async function importModules<T>(paths: string[], rootDir: string) {
+  const modules = await Promise.all(
+    paths.map(async p => {
+      const relPath = importKeyPath(p, rootDir);
+      return { relPath, module: await import(p) };
+    })
+  );
 
   return modules.reduce(
     (acc: Record<string, T>, { relPath, module }) => ({

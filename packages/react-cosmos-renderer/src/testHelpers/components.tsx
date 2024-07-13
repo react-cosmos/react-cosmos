@@ -1,11 +1,11 @@
 import React from 'react';
 
 export function HelloMessage({ name }: { name?: string }) {
-  return <>{`Hello ${name || 'Stranger'}`}</>;
+  return `Hello ${name || 'Stranger'}`;
 }
 
 export function Wrapper({ children }: { children?: React.ReactNode }) {
-  return <>children</>;
+  return children;
 }
 
 // This one is meant for attaching refs

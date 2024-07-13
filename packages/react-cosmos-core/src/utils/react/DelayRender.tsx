@@ -16,5 +16,5 @@ export function DelayRender({ children, delay }: Props) {
     return () => clearTimeout(timeoutId);
   }, [delay]);
 
-  return <>{render && children}</>;
+  return render && children;
 }

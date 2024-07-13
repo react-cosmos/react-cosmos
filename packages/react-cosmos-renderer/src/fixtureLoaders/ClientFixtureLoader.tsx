@@ -1,5 +1,5 @@
 'use client';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import {
   FixtureModules,
   ReactDecorator,
@@ -15,7 +15,7 @@ import { defaultRenderMessage } from './defaultRenderMessage.js';
 type Props = {
   moduleWrappers: UserModuleWrappers;
   globalDecorators?: ReactDecorator[];
-  renderMessage?: (msg: string) => ReactElement;
+  renderMessage?: (msg: string) => React.ReactNode;
 };
 export function ClientFixtureLoader({
   moduleWrappers,

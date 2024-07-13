@@ -58,12 +58,17 @@ const cosmosConfig = createCosmosConfig(__dirname, {
 
 ## Fixtures
 
+<Callout type="warning">
+  The `getFixtures` API is experimental and may change in a future minor
+  release.
+</Callout>
+
 Get all your fixtures programatically. A ton of information is provided for each fixture, enabling you to hack away on top of React Cosmos. To generate visual snapshots from your fixtures, you load `rendererUrl` in a headless browser like [Puppeteer](https://github.com/puppeteer/puppeteer) and take a screenshot on page load. You can compare visual snapshots between deploys to catch sneaky UI regressions.
 
 ```js
 import { getFixtures } from 'react-cosmos';
 
-const fixtures = getFixtures(cosmosConfig, {
+const fixtures = await getFixtures(cosmosConfig, {
   rendererUrl: 'http://localhost:5000/renderer.html',
 });
 
@@ -94,7 +99,5 @@ Jest brings an array of problems due to its limitations:
 
 1. [ESM support is unfinished.](https://github.com/jestjs/jest/issues/9430)
 2. [You can't create test cases asynchronously.](https://github.com/jestjs/jest/issues/2235#issuecomment-584387443) Using an async `globalSetup` [could work](https://github.com/jestjs/jest/issues/2235#issuecomment-584387443), but it can't import ESM and we're back to square one.
-
-For the reasons above `getFixtures()` is a synchronous API. It uses CommonJS `require()` to import user modules.
 
 Another limitation due to the lack of ESM support in Jest is the fact that `getFixtures()` doesn't incorporate Cosmos server plugins. The config hooks of server plugins usually auto-set the `rendererUrl` option in the user's Cosmos config. The Vite and Webpack plugins do this. With `getFixtures()`, however, we pass the renderer URL as a separate option after the Cosmos config.

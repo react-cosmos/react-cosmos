@@ -25,7 +25,6 @@ it('renders responsive preview button', async () => {
   mockStorage();
   mockRendererCore({
     getRendererUrl: () => `/_renderer.html`,
-    getFixtureState: () => ({}),
   });
 
   const { getByTitle } = loadTestPlugins();
@@ -36,7 +35,6 @@ it('does not render responsive preview button without renderer URL', async () =>
   mockStorage();
   mockRendererCore({
     getRendererUrl: () => null,
-    getFixtureState: () => ({}),
   });
 
   const { queryByTitle } = loadTestPlugins();

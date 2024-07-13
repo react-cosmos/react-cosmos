@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
-import { FixtureContext } from './FixtureContext.js';
+import { ViewportFixtureState } from 'react-cosmos-core';
+import { useFixtureState } from './useFixtureState.js';
 
 type Props = {
   children: React.ReactNode;
@@ -9,17 +10,13 @@ type Props = {
 };
 
 export function Viewport({ children, width, height }: Props) {
-  const { setFixtureState } = React.useContext(FixtureContext);
+  const [, setViewport] = useFixtureState<ViewportFixtureState>('viewport');
 
   React.useEffect(() => {
-    setFixtureState(fixtureState => ({
-      ...fixtureState,
-      viewport: { width, height },
-    }));
-  }, [setFixtureState, width, height]);
+    setViewport({ width, height });
+  }, [setViewport, width, height]);
 
-  // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/18051
-  return <>{children}</>;
+  return children;
 }
 
 Viewport.cosmosCapture = false;

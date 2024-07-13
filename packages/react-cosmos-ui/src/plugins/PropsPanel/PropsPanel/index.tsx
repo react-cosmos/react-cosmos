@@ -1,5 +1,5 @@
 import React from 'react';
-import { FixtureState, StateUpdater } from 'react-cosmos-core';
+import { PropsFixtureState } from 'react-cosmos-core';
 import {
   FixtureExpansion,
   OnElementExpansionChange,
@@ -7,12 +7,13 @@ import {
   sortFsValueGroups,
   stringifyElementId,
 } from '../../../components/ValueInputTree/index.js';
+import { SetPropsFixtureState } from '../shared.js';
 import { ComponentProps } from './ComponentProps.js';
 
 type Props = {
-  fixtureState: FixtureState;
+  fixtureState: PropsFixtureState | undefined;
   fixtureExpansion: FixtureExpansion;
-  onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
+  onFixtureStateChange: SetPropsFixtureState;
   onElementExpansionChange: OnElementExpansionChange;
 };
 
@@ -22,19 +23,19 @@ export const PropsPanel = React.memo(function PropsPanel({
   onFixtureStateChange,
   onElementExpansionChange,
 }: Props) {
-  if (!fixtureState.props) {
+  if (!fixtureState) {
     return null;
   }
 
-  const propsWithValues = fixtureState.props.filter(hasFsValues);
+  const propsWithValues = fixtureState.filter(hasFsValues);
   return (
     <>
-      {sortFsValueGroups(propsWithValues).map(fsProps => {
-        const strElementId = stringifyElementId(fsProps.elementId);
+      {sortFsValueGroups(propsWithValues).map(fsItem => {
+        const strElementId = stringifyElementId(fsItem.elementId);
         return (
           <ComponentProps
             key={strElementId}
-            fsProps={fsProps}
+            propsFsItem={fsItem}
             fixtureExpansion={fixtureExpansion}
             onFixtureStateChange={onFixtureStateChange}
             onElementExpansionChange={onElementExpansionChange}

@@ -9,7 +9,7 @@ export function OpenFixtureButton({ onClick }: Props) {
   return (
     <IconButton32
       icon={<EditIcon />}
-      title="Open fixture source"
+      title="Open fixture source (S)"
       onClick={onClick}
     />
   );

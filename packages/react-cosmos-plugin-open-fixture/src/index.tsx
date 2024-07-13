@@ -17,7 +17,7 @@ const { namedPlug, register } = createPlugin<OpenFixtureSpec>({
 
 namedPlug<RendererActionSlotProps>(
   'rendererAction',
-  'editFixture',
+  'openFixture',
   ({ pluginContext, slotProps }) => {
     const { getMethodsOf } = pluginContext;
     const core = getMethodsOf<CoreSpec>('core');
@@ -25,7 +25,7 @@ namedPlug<RendererActionSlotProps>(
     const onOpen = useOpen(pluginContext, slotProps.fixtureId, devServerOn);
 
     useEffect(() => {
-      return core.registerCommands({ editFixture: onOpen });
+      return core.registerCommands({ openFixture: onOpen });
     }, [core, onOpen]);
 
     if (!devServerOn) {

@@ -1,7 +1,12 @@
 import { waitFor } from '@testing-library/dom';
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { FixtureState, FixtureStateValues } from 'react-cosmos-core';
+import {
+  FixtureState,
+  FixtureStateValues,
+  applyFixtureStateChange,
+  fixtureStateByName,
+} from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { SidePanelRowSlot } from '../../slots/SidePanelRowSlot.js';
 import { mockStorage } from '../../testHelpers/pluginMocks.js';
@@ -21,9 +26,12 @@ function loadTestPlugins(fixtureState: FixtureState) {
     <SidePanelRowSlot
       slotProps={{
         fixtureId,
-        fixtureState,
-        onFixtureStateChange: stateUpdater => {
-          fixtureState.props = stateUpdater(fixtureState).props;
+        getFixtureState: name => fixtureStateByName(fixtureState, name),
+        setFixtureState: (name, change) => {
+          fixtureState[name] = applyFixtureStateChange(
+            fixtureStateByName(fixtureState, name),
+            change
+          );
         },
       }}
       plugOrder={[]}
@@ -36,7 +44,7 @@ it('renders blank state', async () => {
 
   const fixtureState = createFsState({});
   const { findByText } = loadTestPlugins(fixtureState);
-  await findByText(/no visible props/i);
+  await findByText(/no inputs/i);
 });
 
 it('renders component name', async () => {

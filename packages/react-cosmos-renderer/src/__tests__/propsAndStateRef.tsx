@@ -1,7 +1,11 @@
 import retry from '@skidding/async-retry';
 import until from 'async-until';
 import React from 'react';
-import { createValues, updateFixtureStateProps, uuid } from 'react-cosmos-core';
+import {
+  createValues,
+  updatePropsFixtureStateItem,
+  uuid,
+} from 'react-cosmos-core';
 import { SuffixCounter } from '../testHelpers/components.js';
 import {
   anyClassState,
@@ -47,14 +51,15 @@ testRenderer(
   }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
-    const [{ elementId }] = getProps(fixtureState);
+    const propsFs = getProps(fixtureState);
+    const [{ elementId }] = propsFs;
     setFixtureState({
       rendererId,
       fixtureId,
       fixtureState: {
         ...fixtureState,
-        props: updateFixtureStateProps({
-          fixtureState,
+        props: updatePropsFixtureStateItem({
+          propsFs,
           elementId,
           values: createValues({ suffix: 'timez' }),
         }),

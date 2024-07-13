@@ -3,6 +3,7 @@ import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
   getRouterContext,
+  mockCore,
   mockNotifications,
   mockRouter,
   onRendererCore,
@@ -15,6 +16,7 @@ beforeEach(register);
 afterEach(resetPlugins);
 
 function registerTestPlugins() {
+  mockCore();
   mockRouter({
     getSelectedFixtureId: () => null,
   });
@@ -38,7 +40,7 @@ it('resets fixture state', async () => {
   emitRouterFixtureUnselect();
 
   await waitFor(() =>
-    expect(getRendererCoreMethods().getFixtureState()).toEqual({})
+    expect(getRendererCoreMethods().getAllFixtureState()).toEqual({})
   );
 });
 
