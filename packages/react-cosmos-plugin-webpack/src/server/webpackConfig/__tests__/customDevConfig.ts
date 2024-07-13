@@ -26,7 +26,7 @@ const mockWebpackOverride = vi.fn((webpackConfig: webpack.Configuration) => ({
 
 beforeAll(async () => {
   mockWebpackConfig.mockClear();
-  mockCliArgs({ env: { prod: true }, fooEnvVar: true });
+  await mockCliArgs({ env: { prod: true }, fooEnvVar: true });
   await mockCwdModuleDefault('mywebpack.config.js', mockWebpackConfig);
   await mockCwdModuleDefault('mywebpack.override.js', mockWebpackOverride);
 });
