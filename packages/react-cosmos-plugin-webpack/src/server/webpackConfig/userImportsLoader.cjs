@@ -17,7 +17,7 @@ module.exports = async function injectUserImports() {
   watchDirs.forEach(watchDir => this.addContextDependency(watchDir));
 
   const { containerQuerySelector } = cosmosConfig.dom;
-  const modulePaths = cosmos.findUserModulePaths(cosmosConfig);
+  const modulePaths = await cosmos.findUserModulePaths(cosmosConfig);
   const rendererConfig = {
     playgroundUrl: cosmos.getPlaygroundUrl(cosmosConfig),
     containerQuerySelector,
