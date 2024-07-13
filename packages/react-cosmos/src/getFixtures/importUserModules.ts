@@ -12,29 +12,31 @@ type UserModules = {
   decorators: ByPath<ReactDecoratorModule>;
 };
 
-export function importUserModules({
+export async function importUserModules({
   rootDir,
   fixturesDir,
   fixtureFileSuffix,
   ignore,
-}: CosmosConfig): UserModules {
-  const { fixturePaths, decoratorPaths } = findUserModulePaths({
+}: CosmosConfig): Promise<UserModules> {
+  const { fixturePaths, decoratorPaths } = await findUserModulePaths({
     rootDir,
     fixturesDir,
     fixtureFileSuffix,
     ignore,
   });
   return {
-    fixtures: importModules(fixturePaths, rootDir),
-    decorators: importModules(decoratorPaths, rootDir),
+    fixtures: await importModules(fixturePaths, rootDir),
+    decorators: await importModules(decoratorPaths, rootDir),
   };
 }
 
-function importModules<T>(paths: string[], rootDir: string) {
-  const modules = paths.map(p => {
-    const relPath = importKeyPath(p, rootDir);
-    return { relPath, module: require(p) };
-  });
+async function importModules<T>(paths: string[], rootDir: string) {
+  const modules = await Promise.all(
+    paths.map(async p => {
+      const relPath = importKeyPath(p, rootDir);
+      return { relPath, module: await import(p) };
+    })
+  );
 
   return modules.reduce(
     (acc: Record<string, T>, { relPath, module }) => ({
