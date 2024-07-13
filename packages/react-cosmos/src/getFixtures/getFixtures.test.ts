@@ -31,7 +31,7 @@ it('returns fixture info', async () => {
     ignore: ['**/*.mdx'],
   });
 
-  const fixtures = getFixtures(cosmosConfig, {
+  const fixtures = await getFixtures(cosmosConfig, {
     rendererUrl: 'http://localhost:5000/renderer.html',
   });
 
