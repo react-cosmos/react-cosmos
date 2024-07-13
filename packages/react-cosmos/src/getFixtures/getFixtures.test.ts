@@ -10,7 +10,7 @@ it('renders fixture elements', async () => {
     ignore: ['**/*.mdx'],
   });
 
-  const fixures = getFixtures(cosmosConfig, {
+  const fixures = await getFixtures(cosmosConfig, {
     rendererUrl: 'http://localhost:5000/renderer.html',
   });
 
@@ -31,7 +31,7 @@ it('returns fixture info', async () => {
     ignore: ['**/*.mdx'],
   });
 
-  const fixtures = getFixtures(cosmosConfig, {
+  const fixtures = await getFixtures(cosmosConfig, {
     rendererUrl: 'http://localhost:5000/renderer.html',
   });
 

@@ -31,15 +31,15 @@ export const fixturesJsonPlugin: CosmosServerPlugin = {
   devServer({ cosmosConfig, expressApp }) {
     expressApp.get(
       '/cosmos.fixtures.json',
-      (req: express.Request, res: express.Response) => {
-        res.json(createFixtureItems(cosmosConfig, 'dev'));
+      async (req: express.Request, res: express.Response) => {
+        res.json(await createFixtureItems(cosmosConfig, 'dev'));
       }
     );
   },
 
   async export({ cosmosConfig }) {
     const { exportPath } = cosmosConfig;
-    const json = createFixtureItems(cosmosConfig, 'export');
+    const json = await createFixtureItems(cosmosConfig, 'export');
     await fs.writeFile(
       path.join(exportPath, 'cosmos.fixtures.json'),
       JSON.stringify(json, null, 2)
@@ -47,10 +47,10 @@ export const fixturesJsonPlugin: CosmosServerPlugin = {
   },
 };
 
-function createFixtureItems(
+async function createFixtureItems(
   cosmosConfig: CosmosConfig,
   command: CosmosCommand
-): CosmosFixturesJson {
+): Promise<CosmosFixturesJson> {
   const rendererUrl = pickRendererUrl(cosmosConfig.rendererUrl, command);
   if (!rendererUrl) {
     return {
@@ -60,7 +60,7 @@ function createFixtureItems(
   }
 
   const { fixturesDir, fixtureFileSuffix } = cosmosConfig;
-  const { fixturePaths } = findUserModulePaths(cosmosConfig);
+  const { fixturePaths } = await findUserModulePaths(cosmosConfig);
 
   const fixtures = fixturePaths.map(filePath => {
     const relPath = importKeyPath(filePath, cosmosConfig.rootDir);

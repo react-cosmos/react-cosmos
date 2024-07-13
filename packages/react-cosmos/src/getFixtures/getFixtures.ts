@@ -35,8 +35,11 @@ export type FixtureApi = {
 type Options = {
   rendererUrl?: string;
 };
-export function getFixtures(cosmosConfig: CosmosConfig, options: Options = {}) {
-  const { fixtures, decorators } = importUserModules(cosmosConfig);
+export async function getFixtures(
+  cosmosConfig: CosmosConfig,
+  options: Options = {}
+) {
+  const { fixtures, decorators } = await importUserModules(cosmosConfig);
   const fixtureExports = mapValues(fixtures, f => f.default);
   const decoratorExports = mapValues(decorators, f => f.default);
   const result: FixtureApi[] = [];
