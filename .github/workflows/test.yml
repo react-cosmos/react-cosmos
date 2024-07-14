@@ -36,7 +36,7 @@ jobs:
       # - run: npm run test:coverage --maxWorkers=2
       - run: yarn test:run --coverage
         env:
-          VITEST_MAX_THREADS: 1
+          VITEST_MAX_THREADS: 2
 
       - uses: codecov/codecov-action@v4
         # Only report coverage once
