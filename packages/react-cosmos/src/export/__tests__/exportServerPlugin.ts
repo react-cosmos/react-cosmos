@@ -47,7 +47,11 @@ const exportPath = path.join(testFsPath, `export-${viteWorkerId()}`);
 
 beforeEach(async () => {
   await mockCliArgs({});
-  await mockCosmosConfig('cosmos.config.json', { port, exportPath });
+  await mockCosmosConfig('cosmos.config.json', {
+    rootDir: __dirname,
+    port,
+    exportPath,
+  });
   await mockFile(testCosmosPlugin.server, { default: testServerPlugin });
   await mockCosmosPlugins([testCosmosPlugin]);
 

@@ -52,7 +52,10 @@ let _stopServer: (() => Promise<unknown>) | undefined;
 
 beforeAll(async () => {
   await mockCliArgs({});
-  await mockCosmosConfig('cosmos.config.json', { port });
+  await mockCosmosConfig('cosmos.config.json', {
+    rootDir: __dirname,
+    port,
+  });
   await mockFile(testCosmosPlugin.server, { default: testServerPlugin });
   await mockCosmosPlugins([testCosmosPlugin]);
 
