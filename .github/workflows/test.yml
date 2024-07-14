@@ -36,6 +36,7 @@ jobs:
       # - run: npm run test:coverage --maxWorkers=2
       - run: yarn test:run --coverage
         env:
+          VITEST_MIN_FORKS: 1
           VITEST_MAX_FORKS: 1
 
       - uses: codecov/codecov-action@v4
