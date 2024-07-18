@@ -77,7 +77,7 @@ Using arrow functions in Multi-Fixtures will cause [eslint-plugin-react-hooks](h
 
 1. Use ESLint `overrides` to disable this rule inside Cosmos fixtures. [Here is an example.](https://github.com/react-cosmos/react-cosmos/blob/bcc09106ef7a010e1c305119385c739773571574/.eslintrc.cjs#L31-L36)
 2. Name your component functions, like this: `'my fixture': function MyFixture() {`.
-3. Create fixtures as regular components and export them as properties of the default export (see below).
+3. Create regular component functions and attach them to the default fixture export (see below).
 
 ```jsx filename="CounterButton.fixture.jsx"
 function CounterX1() {
