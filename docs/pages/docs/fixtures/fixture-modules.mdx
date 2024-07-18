@@ -73,10 +73,25 @@ export default {
 };
 ```
 
-Using arrow functions in Multi-Fixtures will cause [eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks) to complain about using hooks inside unnamed components. To avoid having to suppress these warnings in every fixture can do one of the following:
+Using arrow functions in Multi-Fixtures will cause [eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks) to complain about using hooks inside unnamed components. To avoid having to suppress these warnings in every fixture you can do one of the following:
 
-1. Name your component functions, like this: `'my fixture': function MyFixture() {`.
-2. Use ESLint `overrides` to disable this rule inside Cosmos fixtures. [Here is an example.](https://github.com/react-cosmos/react-cosmos/blob/bcc09106ef7a010e1c305119385c739773571574/.eslintrc.cjs#L31-L36)
+1. Use ESLint `overrides` to disable this rule inside Cosmos fixtures. [Here is an example.](https://github.com/react-cosmos/react-cosmos/blob/bcc09106ef7a010e1c305119385c739773571574/.eslintrc.cjs#L31-L36)
+2. Name your component functions, like this: `'my fixture': function MyFixture() {`.
+3. Create fixtures as regular components and export them as properties of the default export (see below).
+
+```jsx filename="CounterButton.fixture.jsx"
+function CounterX1() {
+  const [count, setCount] = useState(0);
+  return <CounterButton count={count} increment={() => setCount(count + 1)} />;
+}
+
+function CounterX2() {
+  const [count, setCount] = useState(0);
+  return <CounterButton count={count} increment={() => setCount(count + 2)} />;
+}
+
+export default { CounterX1, CounterX2 };
+```
 
 ### Dynamic Multi-Fixtures
 
