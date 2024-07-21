@@ -3,7 +3,7 @@ import {
   mockConsole,
   mockCwdModuleDefault,
   unmockCliArgs,
-} from 'react-cosmos/jest.js';
+} from 'react-cosmos/vitest.js';
 
 import { createCosmosConfig, getCwdPath } from 'react-cosmos';
 import webpack from 'webpack';

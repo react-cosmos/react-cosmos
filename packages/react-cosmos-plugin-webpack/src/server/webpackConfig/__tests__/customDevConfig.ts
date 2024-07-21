@@ -4,7 +4,7 @@ import {
   mockConsole,
   mockCwdModuleDefault,
   unmockCliArgs,
-} from 'react-cosmos/jest.js';
+} from 'react-cosmos/vitest.js';
 
 import { createCosmosConfig } from 'react-cosmos';
 import { vi } from 'vitest';
