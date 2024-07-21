@@ -2,7 +2,7 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
-    // TODO: Try to disable this after migration from Jest to Vitest is complete
+    // Globals were enabled to make it easier to migrate from Jest to Vitest
     globals: true,
     environment: 'node',
     environmentMatchGlobs: [
@@ -24,16 +24,6 @@ export default defineConfig({
         // Ignore coverage from dark launched plugins
         '!packages/react-cosmos-ui/src/plugins/PluginList/**',
         '!packages/react-cosmos-ui/src/plugins/RendererSelect/**',
-        // Ignore coverage from unsupported ES modules
-        '!packages/react-cosmos/src/utils/requireModule.ts',
-        '!packages/react-cosmos/src/utils/resolve.ts',
-        '!packages/react-cosmos/src/shared/staticPath.ts',
-        '!packages/react-cosmos-plugin-webpack/src/client/index.ts',
-        '!packages/react-cosmos-plugin-webpack/src/client/errorOverlay/index.ts',
-        '!packages/react-cosmos-plugin-webpack/src/server/utils/requireModule.ts',
-        '!packages/react-cosmos-plugin-webpack/src/server/utils/resolve.ts',
-        '!packages/react-cosmos-plugin-webpack/src/server/webpackConfig/resolveWebpackClientPath.ts',
-        '!packages/react-cosmos-plugin-webpack/src/server/webpackConfig/resolveWebpackLoaderPath.ts',
       ],
     },
   },
