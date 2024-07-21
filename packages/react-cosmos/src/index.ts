@@ -19,7 +19,6 @@ export * from './userModules/fixtureWatcher.js';
 export * from './userModules/generateUserImports.js';
 export * from './utils/cli.js';
 export * from './utils/fs.js';
-export * from './utils/requireSilent.js';
 export * from './utils/resolve.js';
 export * from './utils/resolveLoose.js';
 export * from './utils/resolveSilent.js';
