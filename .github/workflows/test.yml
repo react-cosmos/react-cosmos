@@ -33,7 +33,6 @@ jobs:
       - run: npm run check-types
       - run: npm run check-types:docs
       - run: npm run lint
-      # - run: npm run test:coverage --maxWorkers=2
       - run: yarn test:run --coverage
         env:
           VITEST_MIN_FORKS: 2
@@ -49,8 +48,7 @@ jobs:
           verbose: true
 
   examples:
-    if: ${{ false }}
-    # if: ${{ !contains(github.event.head_commit.message, '[release]') }}
+    if: ${{ !contains(github.event.head_commit.message, '[release]') }}
     strategy:
       fail-fast: false
       matrix:
