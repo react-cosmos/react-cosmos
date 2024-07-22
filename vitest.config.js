@@ -11,7 +11,7 @@ export default defineConfig({
     ],
     // Default value: ['**/*.{test,spec}.?(c|m)[jt]s?(x)'],
     include: ['**/__tests__/**/*.{ts,tsx}', '**/?(*.)test.{ts,tsx}'],
-    pool: 'forks',
+    pool: 'threads',
     coverage: {
       include: [
         'packages/*/src/**/*.{ts,tsx}',
