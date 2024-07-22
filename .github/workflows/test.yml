@@ -34,9 +34,6 @@ jobs:
       - run: npm run check-types:docs
       - run: npm run lint
       - run: yarn test:run --coverage
-        env:
-          VITEST_MIN_FORKS: 2
-          VITEST_MAX_FORKS: 2
 
       - uses: codecov/codecov-action@v4
         # Only report coverage once
