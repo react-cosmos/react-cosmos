@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@svgr/webpack": "8.1.0",
-    "@types/json-schema": "^7.0.15",
+    "@types/json-schema": "7.0.15",
     "autoprefixer": "10.4.17",
     "next": "14.1.0",
     "nextra": "2.13.3",
