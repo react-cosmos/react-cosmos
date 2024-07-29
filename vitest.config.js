@@ -27,10 +27,4 @@ export default defineConfig({
       ],
     },
   },
-  plugins: [
-    // Allow testing React Native code without installing react-native
-    // https://github.com/vitest-dev/vitest/issues/4326#issuecomment-1766697671
-    // Q:This is not needed anymore?
-    // { resolveId: id => (id === 'react-native' ? 'virtual:' + id : undefined) },
-  ],
 });
