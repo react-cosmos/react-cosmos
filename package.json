@@ -35,7 +35,7 @@
     "@types/fuzzaldrin-plus": "0.6.5",
     "@types/isomorphic-fetch": "0.0.39",
     "@types/lodash-es": "4.17.12",
-    "@types/micromatch": "4.0.6",
+    "@types/micromatch": "4.0.9",
     "@types/node": "20.11.20",
     "@types/pem": "1.14.4",
     "@types/react": "18.2.58",

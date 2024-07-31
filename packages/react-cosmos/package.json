@@ -13,7 +13,7 @@
     "glob": "10.3.10",
     "http-proxy-middleware": "2.0.6",
     "lodash-es": "4.17.21",
-    "micromatch": "4.0.5",
+    "micromatch": "4.0.7",
     "open": "10.1.0",
     "pem": "1.14.8",
     "react-cosmos-core": "^6.1.1",
