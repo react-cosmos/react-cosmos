@@ -1,6 +1,6 @@
 import { waitFor } from '@testing-library/dom';
-import { act, fireEvent, render, RenderResult } from '@testing-library/react';
-import React from 'react';
+import { fireEvent, render, RenderResult } from '@testing-library/react';
+import React, { act } from 'react';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { vi } from 'vitest';
 import {

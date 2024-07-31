@@ -14,12 +14,12 @@
   "dependencies": {
     "@vitejs/plugin-react": "4.3.1",
     "examples-shared": "^6.1.0",
-    "react": "18.2.0",
+    "react": "18.3.1",
     "react-cosmos": "^6.1.1",
     "react-cosmos-plugin-boolean-input": "^6.1.1",
     "react-cosmos-plugin-open-fixture": "^6.1.1",
     "react-cosmos-plugin-vite": "^6.1.1",
-    "react-dom": "18.2.0",
+    "react-dom": "18.3.1",
     "vite": "5.3.5"
   }
 }

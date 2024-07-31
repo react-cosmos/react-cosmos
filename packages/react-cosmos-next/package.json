@@ -11,6 +11,6 @@
     "react-cosmos-core": "^6.1.1",
     "react-cosmos-dom": "^6.1.1",
     "react-cosmos-renderer": "^6.1.1",
-    "react-is": "18.2.0"
+    "react-is": "18.3.1"
   }
 }

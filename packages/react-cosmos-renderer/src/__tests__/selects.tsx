@@ -1,11 +1,7 @@
 import retry from '@skidding/async-retry';
-import React from 'react';
+import React, { act } from 'react';
 import { uuid } from 'react-cosmos-core';
-import {
-  act,
-  ReactTestRenderer,
-  ReactTestRendererJSON,
-} from 'react-test-renderer';
+import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
 import { useFixtureSelect } from '../fixture/useFixtureSelect/useFixtureSelect.js';
 import { getInputs } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';

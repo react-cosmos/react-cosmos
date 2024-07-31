@@ -1,4 +1,4 @@
-import { act } from 'react-test-renderer';
+import { act } from 'react';
 
 export function wrapActSetTimeout() {
   const { setTimeout } = window;
