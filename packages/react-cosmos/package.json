@@ -19,7 +19,7 @@
     "react-cosmos-core": "^6.1.1",
     "react-cosmos-renderer": "^6.1.1",
     "react-cosmos-ui": "^6.1.1",
-    "ws": "8.16.0",
+    "ws": "8.18.0",
     "yargs": "17.7.2"
   },
   "bin": {
