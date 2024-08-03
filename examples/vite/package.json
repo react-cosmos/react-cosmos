@@ -22,5 +22,9 @@
     "react-cosmos-plugin-vite": "^6.1.1",
     "react-dom": "18.3.1",
     "vite": "5.3.5"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "4.19.1",
+    "@rollup/rollup-win32-x64-msvc": "4.19.1"
   }
 }
