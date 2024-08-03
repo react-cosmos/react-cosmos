@@ -9,8 +9,8 @@
   "dependencies": {
     "@skidding/launch-editor": "2.2.3",
     "chokidar": "3.5.3",
-    "express": "4.18.2",
-    "glob": "10.3.10",
+    "express": "4.18.3",
+    "glob": "10.3.16",
     "http-proxy-middleware": "2.0.6",
     "lodash-es": "4.17.21",
     "micromatch": "4.0.7",
