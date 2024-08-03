@@ -12,6 +12,15 @@ export default defineConfig({
     // Default value: ['**/*.{test,spec}.?(c|m)[jt]s?(x)'],
     include: ['**/__tests__/**/*.{ts,tsx}', '**/?(*.)test.{ts,tsx}'],
     pool: 'threads',
+    poolOptions: {
+      threads: {
+        // Disabling isolation makes tests faster but breaks tests in some packages.
+        // react-cosmos-core and react-cosmos-renderer tests pass without isolation,
+        // but react-cosmos-ui and react-cosmos tests fail due to mocking issues.
+        // Potentially relevant: https://github.com/vitest-dev/vitest/issues/4894
+        isolate: true,
+      },
+    },
     coverage: {
       include: [
         'packages/*/src/**/*.{ts,tsx}',
