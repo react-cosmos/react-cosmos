@@ -135,7 +135,11 @@ it('stops server and closes message handler clients', async () => {
 });
 
 function pkgPath(relPath: string) {
-  return fileURLToPath(new URL(`../../../../${relPath}`, import.meta.url));
+  // baseUrl is stored in a variable to bypass Vite's regex-based replacement
+  // of `import.meta.url` with self.location in jsdom environments.
+  // https://github.com/vitest-dev/vitest/issues/3988#issuecomment-1686450535
+  const baseUrl = import.meta.url;
+  return fileURLToPath(new URL(`../../../../${relPath}`, baseUrl));
 }
 
 async function ensureFile(atPath: string) {
