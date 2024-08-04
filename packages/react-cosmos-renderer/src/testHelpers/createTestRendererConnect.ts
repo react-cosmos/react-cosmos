@@ -1,10 +1,10 @@
 import { setTimeout } from 'node:timers/promises';
+import { act } from 'react';
 import {
   RendererConnect,
   RendererRequest,
   RendererResponse,
 } from 'react-cosmos-core';
-import { act } from 'react-test-renderer';
 
 type Args = {
   onRendererResponse: (msg: RendererResponse) => unknown;

@@ -1,3 +1,5 @@
+// @vitest-environment jsdom
+
 // WARNING: Module mocks need to be imported before the mocked modules are
 // imported, which are sometimes imported indirectly by the modules being
 // tested. Otherwise the mocks will be applied too late and the tests will run
@@ -11,26 +13,30 @@ import 'isomorphic-fetch';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { ServerMessage, SocketMessage } from 'react-cosmos-core';
-import {
-  jestNodeVersion,
-  jestWorkerId,
-} from '../../testHelpers/jestProcessUtils.js';
+import { vi } from 'vitest';
+import { ensureFile } from '../../testHelpers/ensureFile.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
+import { rootPath } from '../../testHelpers/rootPath.js';
+import { viteWorkerId } from '../../testHelpers/viteUtils.js';
 import { startDevServer } from '../startDevServer.js';
 
-mockCosmosPlugins([]);
-
-const port = 5000 + jestWorkerId();
+const port = 5000 + viteWorkerId();
 
 let _stopServer: (() => Promise<unknown>) | undefined;
 
 beforeAll(async () => {
-  mockCliArgs({});
-  mockCosmosConfig('cosmos.config.json', {
+  await ensureFile(rootPath('react-cosmos-ui/dist/playground.bundle.js'));
+  await ensureFile(rootPath('react-cosmos-ui/dist/playground.bundle.js.map'));
+});
+
+beforeAll(async () => {
+  await mockCliArgs({});
+  await mockCosmosConfig('cosmos.config.json', {
     rootDir: __dirname,
     port,
     rendererUrl: '/_renderer.html',
   });
+  await mockCosmosPlugins([]);
 
   await mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
@@ -68,13 +74,16 @@ it('serves playground HTML', async () => {
 });
 
 it('serves playground JS', async () => {
-  const res1 = await fetch(`http://localhost:${port}/playground.bundle.js`);
+  const res1 = await fetch(`http://localhost:${port}/playground.bundle.js`, {
+    method: 'HEAD',
+  });
   expect(res1.status).toBe(200);
-  expect((await res1.text()).trim()).toBe('__mock_bundle__');
 
-  const res2 = await fetch(`http://localhost:${port}/playground.bundle.js.map`);
+  const res2 = await fetch(
+    `http://localhost:${port}/playground.bundle.js.map`,
+    { method: 'HEAD' }
+  );
   expect(res2.status).toBe(200);
-  expect((await res2.text()).trim()).toBe('__mock_map__');
 });
 
 it('serves favicon', async () => {
@@ -97,7 +106,7 @@ it('creates message handler', async () => {
     },
   };
 
-  const onMessage = jest.fn();
+  const onMessage = vi.fn();
   client1.addEventListener('open', () => {
     client1.addEventListener('message', msg => onMessage(msg.data));
     client2.addEventListener('open', () => {
@@ -111,19 +120,17 @@ it('creates message handler', async () => {
 it('stops server and closes message handler clients', async () => {
   const client1 = new WebSocket(`ws://localhost:${port}`);
 
-  const onOpen = jest.fn();
+  const onOpen = vi.fn();
   client1.addEventListener('open', onOpen);
   await retry(() => expect(onOpen).toBeCalled());
 
-  const onClose = jest.fn();
+  const onClose = vi.fn();
   client1.addEventListener('close', onClose);
-
   await _stopServer!();
+
   await retry(() => expect(onClose).toBeCalled());
 
   await expect(fetch(`http://localhost:${port}`)).rejects.toThrow(
-    jestNodeVersion() >= 20
-      ? `request to http://localhost:${port}/ failed`
-      : 'ECONNREFUSED'
+    'fetch failed'
   );
 });

@@ -32,8 +32,8 @@ export async function getExportWebpackConfig(
 function getEntry() {
   // The React devtools hook needs to be imported before any other module that
   // might import React
-  const devtoolsHook = resolveWebpackClientPath('reactDevtoolsHook');
-  const clientIndex = resolveWebpackClientPath('index');
+  const devtoolsHook = resolveWebpackClientPath('reactDevtoolsHook.js');
+  const clientIndex = resolveWebpackClientPath('index.js');
   return [devtoolsHook, clientIndex];
 }
 

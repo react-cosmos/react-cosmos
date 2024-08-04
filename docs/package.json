@@ -12,13 +12,13 @@
   },
   "dependencies": {
     "@svgr/webpack": "8.1.0",
-    "@types/json-schema": "^7.0.15",
-    "autoprefixer": "10.4.17",
-    "next": "14.1.0",
-    "nextra": "2.13.3",
-    "nextra-theme-docs": "2.13.3",
-    "postcss": "8.4.35",
-    "tailwindcss": "3.4.1"
+    "@types/json-schema": "7.0.15",
+    "autoprefixer": "10.4.20",
+    "next": "14.2.5",
+    "nextra": "2.13.4",
+    "nextra-theme-docs": "2.13.4",
+    "postcss": "8.4.40",
+    "tailwindcss": "3.4.7"
   },
   "optionalDependencies": {
     "@napi-rs/simple-git-linux-x64-gnu": "0.1.9"

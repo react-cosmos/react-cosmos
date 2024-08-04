@@ -5,4 +5,3 @@ examples/*/cosmos-export
 
 **/__testFs__/**
 coverage
-!.jest

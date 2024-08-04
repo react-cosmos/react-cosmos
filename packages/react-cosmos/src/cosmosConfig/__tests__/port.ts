@@ -6,8 +6,8 @@ import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
 import { createCosmosConfig } from '../createCosmosConfig.js';
 
-afterEach(() => {
-  unmockCliArgs();
+afterEach(async () => {
+  await unmockCliArgs();
 });
 
 it('returns default port', () => {
@@ -20,8 +20,8 @@ it('returns custom port', () => {
   expect(port).toBe(8989);
 });
 
-it('returns port from --port arg', () => {
-  mockCliArgs({ port: 1337 });
+it('returns port from --port arg', async () => {
+  await mockCliArgs({ port: 1337 });
   const { port } = createCosmosConfig(process.cwd());
   expect(port).toBe(1337);
 });

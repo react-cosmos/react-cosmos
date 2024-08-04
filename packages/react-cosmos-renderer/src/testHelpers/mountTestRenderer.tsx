@@ -1,6 +1,6 @@
 import { mapValues } from 'lodash-es';
 import { setTimeout } from 'node:timers/promises';
-import React from 'react';
+import React, { act } from 'react';
 import {
   ByPath,
   FixtureId,
@@ -11,7 +11,7 @@ import {
   RendererResponse,
   UserModuleWrappers,
 } from 'react-cosmos-core';
-import { ReactTestRenderer, act, create } from 'react-test-renderer';
+import { ReactTestRenderer, create } from 'react-test-renderer';
 import { ClientFixtureLoader } from '../fixtureLoaders/ClientFixtureLoader.js';
 import { StatefulRendererProvider } from '../rendererConnect/StatefulRendererProvider.js';
 import {
@@ -133,7 +133,7 @@ function dynamicImportWrapper<T>(module: T) {
   return new Promise<T>(async resolve => {
     // Simulate module download time
     await setTimeout(25 + Math.round(Math.random() * 25));
-    await act(() => {
+    act(() => {
       resolve(module);
     });
   });

@@ -1,15 +1,16 @@
 import { RenderResult } from '@testing-library/react';
+import { Mock, vi } from 'vitest';
 
 export async function mockIframeMessage(
   iframe: HTMLIFrameElement,
-  children: (args: { onMessage: jest.Mock }) => Promise<unknown>
+  children: (args: { onMessage: Mock }) => Promise<unknown>
 ) {
   const { contentWindow } = iframe;
   if (!contentWindow) {
     throw new Error('iframe contentWindow missing');
   }
 
-  const onMessage = jest.fn();
+  const onMessage = vi.fn();
   try {
     contentWindow.addEventListener('message', onMessage, false);
     await children({ onMessage });

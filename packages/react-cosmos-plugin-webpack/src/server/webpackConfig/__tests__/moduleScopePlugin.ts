@@ -1,5 +1,5 @@
 // NOTE: Mock files need to imported before modules that use the mocked APIs
-import { mockConsole, mockCwdModuleDefault } from 'react-cosmos/jest.js';
+import { mockConsole, mockCwdModuleDefault } from 'react-cosmos/vitest.js';
 
 import { createCosmosConfig } from 'react-cosmos';
 import webpack from 'webpack';
@@ -25,7 +25,7 @@ class BarResolvePlugin {}
 class ModuleScopePlugin {}
 
 it('removes ModuleScopePlugin resolve plugin', async () => {
-  mockCwdModuleDefault('mywebpack.config.js', () => ({
+  await mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       plugins: [new ModuleScopePlugin()],
     },
@@ -36,7 +36,7 @@ it('removes ModuleScopePlugin resolve plugin', async () => {
 });
 
 it('keeps other resolve plugins', async () => {
-  mockCwdModuleDefault('mywebpack.config.js', () => ({
+  await mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       plugins: [
         new ModuleScopePlugin(),

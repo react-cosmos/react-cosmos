@@ -5,6 +5,7 @@ import {
   updatePropsFixtureStateItem,
   uuid,
 } from 'react-cosmos-core';
+import { Mock, vi } from 'vitest';
 import { getProps } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
@@ -33,7 +34,7 @@ testRenderer(
   { rendererId, fixtures: {} },
   async ({ update, selectFixture }) => {
     const obj = {};
-    const cb = jest.fn();
+    const cb = vi.fn();
     update({ rendererId, fixtures: createFixtures(obj, cb) });
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await retry(() => expect(getLastMockCall(cb)[0]).toBe(obj));
@@ -45,7 +46,7 @@ testRenderer(
   { rendererId, fixtures: {} },
   async ({ update, selectFixture, getLastFixtureState, setFixtureState }) => {
     const obj = {};
-    const cb = jest.fn();
+    const cb = vi.fn();
     update({ rendererId, fixtures: createFixtures(obj, cb) });
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
@@ -69,7 +70,7 @@ testRenderer(
   }
 );
 
-function getLastMockCall(mockFn: jest.Mock) {
+function getLastMockCall(mockFn: Mock) {
   // This helper is required because mockFn.lastCalledWith checks deep equality
   // instead of reference equality, which we need in this test
   const { calls } = mockFn.mock;

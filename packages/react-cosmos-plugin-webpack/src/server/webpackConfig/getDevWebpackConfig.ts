@@ -56,8 +56,8 @@ function getEntry(cosmosConfig: CosmosConfig) {
   const { hotReload, reloadOnFail } = createWebpackCosmosConfig(cosmosConfig);
   // The React devtools hook needs to be imported before any other module that
   // might import React
-  const devtoolsHook = resolveWebpackClientPath('reactDevtoolsHook');
-  const clientIndex = resolveWebpackClientPath('index');
+  const devtoolsHook = resolveWebpackClientPath('reactDevtoolsHook.js');
+  const clientIndex = resolveWebpackClientPath('index.js');
 
   return hotReload
     ? [devtoolsHook, getHotMiddlewareEntry(reloadOnFail), clientIndex]

@@ -8,30 +8,37 @@ import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { jestWorkerId } from '../../testHelpers/jestProcessUtils.js';
+import { getStaticPath } from '../../shared/staticPath.js';
+import { ensureFile } from '../../testHelpers/ensureFile.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
+import { rootPath } from '../../testHelpers/rootPath.js';
+import { viteWorkerId } from '../../testHelpers/viteUtils.js';
 import { generateExport } from '../generateExport.js';
 
-mockCosmosPlugins([]);
-
-const port = 5000 + jestWorkerId();
+const port = 5000 + viteWorkerId();
 
 const testFsPath = path.join(__dirname, '../__testFs__');
-const exportPath = path.join(testFsPath, `export-${jestWorkerId()}`);
+const exportPath = path.join(testFsPath, `export-${viteWorkerId()}`);
 
-beforeEach(() => {
-  mockCliArgs({});
-  mockCosmosConfig('cosmos.config.json', {
+beforeAll(async () => {
+  await ensureFile(rootPath('react-cosmos-ui/dist/playground.bundle.js'));
+  await ensureFile(rootPath('react-cosmos-ui/dist/playground.bundle.js.map'));
+});
+
+beforeEach(async () => {
+  await mockCliArgs({});
+  await mockCosmosConfig('cosmos.config.json', {
     rootDir: __dirname,
     port,
     exportPath,
     rendererUrl: '/_renderer.html',
   });
+  await mockCosmosPlugins([]);
 });
 
 afterEach(async () => {
-  unmockCliArgs();
-  resetFsMock();
+  await unmockCliArgs();
+  await resetFsMock();
   await fs.rm(exportPath, { recursive: true, force: true });
 });
 
@@ -74,11 +81,8 @@ it('generates playground JS', async () => {
 
     await generateExport();
 
-    const bundle = await readExportFile('playground.bundle.js');
-    expect(bundle.trim()).toBe('__mock_bundle__');
-
-    const sourceMap = await readExportFile('playground.bundle.js.map');
-    expect(sourceMap.trim()).toBe('__mock_map__');
+    await checkExportFile('playground.bundle.js');
+    await checkExportFile('playground.bundle.js.map');
   });
 });
 
@@ -90,13 +94,14 @@ it('generates favicon', async () => {
     await generateExport();
 
     expect(await readExportFile('_cosmos.ico')).toBe(
-      await fs.readFile(
-        path.join(__dirname, '../../static/favicon.ico'),
-        'utf8'
-      )
+      await fs.readFile(getStaticPath('favicon.ico'), 'utf8')
     );
   });
 });
+
+async function checkExportFile(filePath: string) {
+  return fs.access(path.join(exportPath, filePath));
+}
 
 async function readExportFile(filePath: string) {
   return fs.readFile(path.join(exportPath, filePath), 'utf8');
