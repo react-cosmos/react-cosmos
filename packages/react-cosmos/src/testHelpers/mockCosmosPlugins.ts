@@ -1,6 +1,12 @@
 import { CosmosPluginConfig } from 'react-cosmos-core';
 import { vi } from 'vitest';
 
+type ActualApi = typeof import('../cosmosPlugin/findCosmosPluginConfigs.js');
+
+type MockApi = ActualApi & {
+  __mockCosmosPluginConfigs: (configs: CosmosPluginConfig[]) => void;
+};
+
 vi.mock('../cosmosPlugin/findCosmosPluginConfigs.js', () => {
   let pluginConfigs: CosmosPluginConfig[] = [];
 
@@ -16,10 +22,11 @@ vi.mock('../cosmosPlugin/findCosmosPluginConfigs.js', () => {
 });
 
 export async function mockCosmosPlugins(configs: CosmosPluginConfig[]) {
-  // @ts-ignore FIXME
   (await importMocked()).__mockCosmosPluginConfigs(configs);
 }
 
 async function importMocked() {
-  return import('../cosmosPlugin/findCosmosPluginConfigs.js');
+  return import(
+    '../cosmosPlugin/findCosmosPluginConfigs.js'
+  ) as Promise<MockApi>;
 }

@@ -3,8 +3,17 @@ import { vi } from 'vitest';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { getCwdPath } from './cwd.js';
 
+type ActualApi = typeof import('../utils/fs');
+
+type MockApi = ActualApi & {
+  __mockFile: (filePath: string, fileMock: {}) => void;
+  __mockJson: (filePath: string, jsonMock: {}) => void;
+  __mockDir: (dirPath: string) => void;
+  __resetMock: () => void;
+};
+
 vi.mock('../utils/fs', async () => {
-  const actual = (await vi.importActual('../utils/fs')) as any; // TODO: FIXME
+  const actual = (await vi.importActual('../utils/fs')) as ActualApi;
   let mocked = false;
 
   let fileMocks: { [path: string]: {} } = {};
@@ -84,9 +93,7 @@ vi.mock('../utils/fs', async () => {
 });
 
 export async function mockFile(filePath: string, fileMock: {}) {
-  // @ts-ignore FIXME
   (await importMocked()).__mockFile(filePath, fileMock);
-  // @ts-ignore FIXME
   (await importMocked()).__mockDir(path.dirname(filePath));
 }
 
@@ -104,10 +111,9 @@ export async function mockCwdModuleDefault(filePath: string, fileMock: {}) {
 }
 
 export async function resetFsMock() {
-  // @ts-ignore FIXME
   (await importMocked()).__resetMock();
 }
 
 async function importMocked() {
-  return import('../utils/fs.js');
+  return import('../utils/fs.js') as Promise<MockApi>;
 }
