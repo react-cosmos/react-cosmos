@@ -135,8 +135,7 @@ it('stops server and closes message handler clients', async () => {
 });
 
 function pkgPath(relPath: string) {
-  const currentDir = path.dirname(fileURLToPath(import.meta.url));
-  return path.resolve(currentDir, '../../../..', relPath);
+  return fileURLToPath(new URL(`../../../../${relPath}`, import.meta.url));
 }
 
 async function ensureFile(atPath: string) {

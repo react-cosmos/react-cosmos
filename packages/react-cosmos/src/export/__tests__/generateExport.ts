@@ -99,8 +99,7 @@ it('generates favicon', async () => {
 });
 
 function pkgPath(relPath: string) {
-  const currentDir = fileURLToPath(new URL('.', import.meta.url));
-  return path.resolve(currentDir, '../../../..', relPath);
+  return fileURLToPath(new URL(`../../../../${relPath}`, import.meta.url));
 }
 
 async function ensureFile(atPath: string) {
