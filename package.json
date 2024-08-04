@@ -82,5 +82,9 @@
     "webpack": "5.93.0",
     "webpack-cli": "5.1.4",
     "yargs": "17.7.2"
+  },
+  "optionalDependencies": {
+    "@nx/nx-linux-x64-gnu": "18.3.5",
+    "@nx/nx-win32-x64-msvc": "18.3.5"
   }
 }
