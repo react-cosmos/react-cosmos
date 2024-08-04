@@ -1,12 +1,9 @@
 import retry from '@skidding/async-retry';
-import React from 'react';
+import React, { act } from 'react';
 import { uuid } from 'react-cosmos-core';
-import {
-  act,
-  ReactTestRenderer,
-  ReactTestRendererJSON,
-} from 'react-test-renderer';
-import { useSelect } from '../fixture/useSelect/index.js';
+import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
+import { useFixtureSelect } from '../fixture/useFixtureSelect/useFixtureSelect.js';
+import { getInputs } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
@@ -16,7 +13,7 @@ const options: Option[] = ['first', 'second', 'third'];
 
 function createFixtures({ defaultValue }: { defaultValue: Option }) {
   const MyComponent = () => {
-    const [value, setValue] = useSelect('selectName', {
+    const [value, setValue] = useFixtureSelect('selectName', {
       defaultValue,
       options,
     });
@@ -56,7 +53,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           selectName: {
             type: 'select',
             options: ['first', 'second', 'third'],
@@ -81,8 +78,8 @@ testRenderer(
       fixtureId,
       fixtureState: {
         ...setFixtureState,
-        controls: {
-          ...fixtureState.controls,
+        inputs: {
+          ...getInputs(fixtureState),
           selectName: {
             type: 'select',
             options: ['first', 'second', 'third'],
@@ -109,7 +106,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           selectName: {
             type: 'select',
             options: ['first', 'second', 'third'],
@@ -138,7 +135,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           selectName: {
             type: 'select',
             options: ['first', 'second', 'third'],

@@ -1,4 +1,5 @@
 import { loadPlugins } from 'react-plugin';
+import { vi } from 'vitest';
 import { mockCore } from '../../testHelpers/pluginMocks.js';
 import { register } from './index.js';
 
@@ -30,7 +31,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 
 it('initializes a websocket using "ws" protocol when not on HTTPS', () => {
@@ -54,7 +55,7 @@ function mockLocation(url: string) {
 }
 
 function mockWebSocket() {
-  return jest
+  return vi
     .spyOn(global, 'WebSocket')
     .mockImplementation(createMockWebSocket());
 }
@@ -62,8 +63,8 @@ function mockWebSocket() {
 function createMockWebSocket() {
   return () =>
     ({
-      addEventListener: jest.fn(),
-      close: jest.fn(),
-      removeEventListener: jest.fn(),
+      addEventListener: vi.fn(),
+      close: vi.fn(),
+      removeEventListener: vi.fn(),
     }) as unknown as WebSocket;
 }

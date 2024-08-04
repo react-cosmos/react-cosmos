@@ -9,7 +9,7 @@ This is a guide for setting up React Cosmos in a Webpack project.
 Install the required packages:
 
 ```bash npm2yarn
-npm i -D react-cosmos@next react-cosmos-plugin-webpack@next
+npm i -D react-cosmos react-cosmos-plugin-webpack
 ```
 
 Create `cosmos.config.json` and enable the Webpack plugin:
@@ -55,7 +55,7 @@ Cosmos generates a default Webpack config if a custom one isn't provided.
 
 <Callout type="warning">
   Cosmos compiles your code using dependencies you already installed in your
-  project. Cosmos will auto include common loaders like `babal-loader`,
+  project. Cosmos will auto include common loaders like `babel-loader`,
   `ts-loader`, `css-loader`, etc. in the default Webpack config. Use a [custom
   Webpack config](#custom-webpack-config) for more advanced use cases.
 </Callout>

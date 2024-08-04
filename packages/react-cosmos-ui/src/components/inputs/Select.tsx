@@ -1,6 +1,10 @@
 import React, { ChangeEvent, useCallback } from 'react';
 import styled from 'styled-components';
 import { useFocus } from '../../hooks/useFocus.js';
+import {
+  GroupedOptions,
+  isGroupedOptions,
+} from '../../shared/groupedOptions.js';
 import { blue, grey32 } from '../../style/colors.js';
 import { ChevronDownIcon } from '../icons/index.js';
 
@@ -9,7 +13,7 @@ type BaseOption = { value: string; label: string };
 type Props<Option extends BaseOption> = {
   id?: string;
   testId?: string;
-  options: Option[];
+  options: Option[] | GroupedOptions<Option>[];
   value: string;
   color: string;
   height: number;
@@ -33,7 +37,7 @@ export function Select<Option extends BaseOption>({
 
   const onInputChange = useCallback(
     (e: ChangeEvent<HTMLSelectElement>) => {
-      const option = options.find(o => o.value === e.target.value);
+      const option = findOption(options, e.target.value);
       if (!option) {
         throw new Error(`Select value doesn't match any option`);
       }
@@ -42,8 +46,15 @@ export function Select<Option extends BaseOption>({
     [onChange, options]
   );
 
-  const selectedOption = options.find(o => o.value === value);
+  const renderOption = (option: Option) => (
+    <option key={option.value} value={option.value}>
+      {option.label}
+    </option>
+  );
+
+  const selectedOption = findOption(options, value);
   const selectedLabel = selectedOption ? selectedOption.label : CUSTOM_LABEL;
+
   return (
     <Container focused={focused} bg={grey32}>
       <VisibleButton height={height} padding={padding}>
@@ -67,16 +78,27 @@ export function Select<Option extends BaseOption>({
             {CUSTOM_LABEL}
           </option>
         )}
-        {options.map((option, idx) => {
-          return (
-            <option key={idx} value={option.value}>
-              {option.label}
-            </option>
-          );
-        })}
+        {isGroupedOptions(options)
+          ? options.map((current, groupIdx) => {
+              return (
+                <optgroup label={current.group} key={groupIdx}>
+                  {current.options.map(renderOption)}
+                </optgroup>
+              );
+            })
+          : options.map(renderOption)}
       </SelectInput>
     </Container>
   );
+}
+
+function findOption<Option extends BaseOption>(
+  options: Option[] | GroupedOptions<Option>[],
+  targetValue: string
+) {
+  return (
+    isGroupedOptions(options) ? options.flatMap(o => o.options) : options
+  ).find(o => o.value === targetValue);
 }
 
 type StyledSelectProps = {
@@ -127,6 +149,7 @@ const SelectInput = styled.select`
   width: 100%;
   height: 100%;
   -webkit-appearance: none;
+  appearance: none;
   outline: none;
   opacity: 0;
 `;

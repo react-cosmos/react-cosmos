@@ -1,11 +1,15 @@
 import React from 'react';
-import { FixtureId, FixtureState, StateUpdater } from 'react-cosmos-core';
+import { FixtureId } from 'react-cosmos-core';
 import { ArraySlot } from 'react-plugin';
+import {
+  GetFixtureState,
+  SetFixtureStateByName,
+} from '../plugins/RendererCore/spec.js';
 
 export type SidePanelRowSlotProps = {
   fixtureId: FixtureId;
-  fixtureState: FixtureState;
-  onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
+  getFixtureState: GetFixtureState;
+  setFixtureState: SetFixtureStateByName;
 };
 
 type Props = {

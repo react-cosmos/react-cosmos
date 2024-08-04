@@ -6,8 +6,13 @@ export function onRouterFixtureReselect(
   context: RendererCoreContext,
   fixtureId: FixtureId
 ) {
-  const { connectedRendererIds } = context.getState();
+  const { connectedRendererIds, globalFixtureState } = context.getState();
   connectedRendererIds.forEach(rendererId => {
-    postSelectFixtureRequest(context, rendererId, fixtureId, {});
+    postSelectFixtureRequest(
+      context,
+      rendererId,
+      fixtureId,
+      globalFixtureState
+    );
   });
 }

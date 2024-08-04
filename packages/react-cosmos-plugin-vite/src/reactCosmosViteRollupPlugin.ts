@@ -33,9 +33,9 @@ export function reactCosmosViteRollupPlugin(
       }
     },
 
-    load(id: string) {
+    async load(id: string) {
       if (id == userImportsResolvedModuleId) {
-        const modulePaths = findUserModulePaths(cosmosConfig);
+        const modulePaths = await findUserModulePaths(cosmosConfig);
         return generateUserImports<DomRendererConfig>({
           cosmosConfig,
           modulePaths,

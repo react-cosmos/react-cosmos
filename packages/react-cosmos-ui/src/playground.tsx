@@ -29,9 +29,6 @@ export default async function mount({
 }: PlaygroundMountArgs) {
   const { loadPlugins, Slot } = ReactPlugin;
 
-  const config = { ...DEFAULT_PLUGIN_CONFIG, ...playgroundConfig };
-  loadPlugins({ config });
-
   // We can make plugin loading unblocking if react-plugin exports the
   // reloadPlugins method.
   await Promise.all(
@@ -39,6 +36,9 @@ export default async function mount({
       if (pluginConfig.ui) await loadPluginScript(pluginConfig.ui);
     })
   );
+
+  const config = { ...DEFAULT_PLUGIN_CONFIG, ...playgroundConfig };
+  loadPlugins({ config });
 
   const root = ReactDom.createRoot(document.getElementById('root')!);
   root.render(

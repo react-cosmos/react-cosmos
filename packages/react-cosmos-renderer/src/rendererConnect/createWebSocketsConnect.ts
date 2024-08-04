@@ -1,9 +1,16 @@
 import {
   RendererConnect,
   RendererRequest,
+  RendererResponse,
   SocketMessage,
   rendererSocketMessage,
 } from 'react-cosmos-core';
+
+declare global {
+  interface Window {
+    cosmosRendererResponse?: (msg: RendererResponse) => void;
+  }
+}
 
 export function createWebSocketsConnect(url: string): RendererConnect {
   let pendingMessages: SocketMessage[] = [];
@@ -23,6 +30,11 @@ export function createWebSocketsConnect(url: string): RendererConnect {
         socket.send(JSON.stringify(socketMessage));
       } else {
         pendingMessages.push(socketMessage);
+      }
+
+      // Allow headless browsers to capture renderer responses
+      if (window.cosmosRendererResponse) {
+        window.cosmosRendererResponse(rendererResponse);
       }
     },
 

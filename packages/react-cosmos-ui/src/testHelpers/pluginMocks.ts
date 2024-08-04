@@ -5,6 +5,7 @@ import {
   PluginWithEvents,
   PluginWithMethods,
 } from 'react-plugin';
+import { vi } from 'vitest';
 import { CoreSpec } from '../plugins/Core/spec.js';
 import { FixtureTreeSpec } from '../plugins/FixtureTree/spec.js';
 import { MessageHandlerSpec } from '../plugins/MessageHandler/spec.js';
@@ -58,9 +59,9 @@ export function getRendererPreviewMethods() {
 
 export function mockStorage(methods: MethodsOf<StorageSpec> = {}) {
   const allMethods = {
-    loadCache: jest.fn(),
-    getItem: jest.fn(),
-    setItem: jest.fn(),
+    loadCache: vi.fn(),
+    getItem: vi.fn(),
+    setItem: vi.fn(),
     ...methods,
   };
   mockMethodsOf<StorageSpec>('storage', allMethods);
@@ -69,9 +70,9 @@ export function mockStorage(methods: MethodsOf<StorageSpec> = {}) {
 
 export function mockRouter(methods: MethodsOf<RouterSpec> = {}) {
   const allMethods = {
-    getSelectedFixtureId: jest.fn(),
-    selectFixture: jest.fn(),
-    unselectFixture: jest.fn(),
+    getSelectedFixtureId: vi.fn(),
+    selectFixture: vi.fn(),
+    unselectFixture: vi.fn(),
     ...methods,
   };
   mockMethodsOf<RouterSpec>('router', allMethods);
@@ -80,11 +81,11 @@ export function mockRouter(methods: MethodsOf<RouterSpec> = {}) {
 
 export function mockCore(methods: MethodsOf<CoreSpec> = {}) {
   const allMethods = {
-    registerCommands: () => jest.fn(),
-    runCommand: () => jest.fn(),
-    getProjectId: jest.fn(),
-    getFixtureFileVars: jest.fn(),
-    isDevServerOn: jest.fn(),
+    registerCommands: () => vi.fn(),
+    runCommand: () => vi.fn(),
+    getProjectId: vi.fn(),
+    getFixtureFileVars: vi.fn(),
+    isDevServerOn: vi.fn(),
     ...methods,
   };
   mockMethodsOf<CoreSpec>('core', allMethods);
@@ -95,7 +96,7 @@ export function mockMessageHandler(
   methods: MethodsOf<MessageHandlerSpec> = {}
 ) {
   const allMethods = {
-    postRendererRequest: jest.fn(),
+    postRendererRequest: vi.fn(),
     ...methods,
   };
   mockMethodsOf<MessageHandlerSpec>('messageHandler', allMethods);
@@ -104,16 +105,18 @@ export function mockMessageHandler(
 
 export function mockRendererCore(methods: MethodsOf<RendererCoreSpec> = {}) {
   const allMethods = {
-    getRendererUrl: jest.fn(),
-    getConnectedRendererIds: jest.fn(),
-    getPrimaryRendererId: jest.fn(),
-    getFixtures: jest.fn(),
-    getFixtureState: jest.fn(),
-    isRendererConnected: jest.fn(),
-    reloadRenderer: jest.fn(),
-    setFixtureState: jest.fn(),
-    selectPrimaryRenderer: jest.fn(),
-    receiveResponse: jest.fn(),
+    getRendererUrl: vi.fn(),
+    getConnectedRendererIds: vi.fn(),
+    getPrimaryRendererId: vi.fn(),
+    getFixtures: vi.fn(),
+    isRendererConnected: vi.fn(),
+    reloadRenderer: vi.fn(),
+    selectPrimaryRenderer: vi.fn(),
+    receiveResponse: vi.fn(),
+    getAllFixtureState: vi.fn(),
+    getFixtureState: vi.fn(),
+    setFixtureState: vi.fn(),
+    setGlobalFixtureState: vi.fn(),
     ...methods,
   };
   mockMethodsOf<RendererCoreSpec>('rendererCore', allMethods);
@@ -124,8 +127,8 @@ export function mockRendererPreview(
   methods: MethodsOf<RendererPreviewSpec> = {}
 ) {
   const allMethods = {
-    getUrlStatus: jest.fn(),
-    getRuntimeStatus: jest.fn(),
+    getUrlStatus: vi.fn(),
+    getRuntimeStatus: vi.fn(),
     ...methods,
   };
   mockMethodsOf<RendererPreviewSpec>('rendererPreview', allMethods);
@@ -134,9 +137,9 @@ export function mockRendererPreview(
 
 export function mockNotifications(methods: MethodsOf<NotificationsSpec> = {}) {
   const allMethods = {
-    pushStickyNotification: jest.fn(),
-    removeStickyNotification: jest.fn(),
-    pushTimedNotification: jest.fn(),
+    pushStickyNotification: vi.fn(),
+    removeStickyNotification: vi.fn(),
+    pushTimedNotification: vi.fn(),
     ...methods,
   };
   mockMethodsOf<NotificationsSpec>('notifications', allMethods);
@@ -145,7 +148,7 @@ export function mockNotifications(methods: MethodsOf<NotificationsSpec> = {}) {
 
 export function mockFixtureTree(methods: MethodsOf<FixtureTreeSpec> = {}) {
   const allMethods = {
-    revealFixture: jest.fn(),
+    revealFixture: vi.fn(),
     ...methods,
   };
   mockMethodsOf<FixtureTreeSpec>('fixtureTree', allMethods);
@@ -154,9 +157,9 @@ export function mockFixtureTree(methods: MethodsOf<FixtureTreeSpec> = {}) {
 
 export function onRouter(events: EventsOf<RouterSpec> = {}) {
   const allEvents = {
-    fixtureSelect: jest.fn(),
-    fixtureReselect: jest.fn(),
-    fixtureUnselect: jest.fn(),
+    fixtureSelect: vi.fn(),
+    fixtureReselect: vi.fn(),
+    fixtureUnselect: vi.fn(),
     ...events,
   };
   on<RouterSpec>('router', allEvents);
@@ -165,8 +168,8 @@ export function onRouter(events: EventsOf<RouterSpec> = {}) {
 
 export function onMessageHandler(events: EventsOf<MessageHandlerSpec> = {}) {
   const allEvents = {
-    serverMessage: jest.fn(),
-    rendererResponse: jest.fn(),
+    serverMessage: vi.fn(),
+    rendererResponse: vi.fn(),
     ...events,
   };
   on<MessageHandlerSpec>('messageHandler', allEvents);
@@ -175,8 +178,8 @@ export function onMessageHandler(events: EventsOf<MessageHandlerSpec> = {}) {
 
 export function onRendererCore(events: EventsOf<RendererCoreSpec> = {}) {
   const allEvents = {
-    request: jest.fn(),
-    response: jest.fn(),
+    request: vi.fn(),
+    response: vi.fn(),
     ...events,
   };
   on<RendererCoreSpec>('rendererCore', allEvents);

@@ -1,4 +1,4 @@
-import { globSync } from 'glob';
+import { glob } from 'glob';
 import micromatch from 'micromatch';
 import {
   UserModulePaths,
@@ -12,13 +12,13 @@ type FindUserModulePathsArgs = {
   fixtureFileSuffix: string;
   ignore: string[];
 };
-export function findUserModulePaths({
+export async function findUserModulePaths({
   rootDir,
   fixturesDir,
   fixtureFileSuffix,
   ignore,
-}: FindUserModulePathsArgs): UserModulePaths {
-  const paths = globSync('**/*', {
+}: FindUserModulePathsArgs): Promise<UserModulePaths> {
+  const paths = await glob('**/*', {
     cwd: rootDir,
     absolute: true,
     ignore,

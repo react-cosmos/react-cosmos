@@ -46,6 +46,16 @@ export function FixtureProvider(props: Props) {
   }, [props.fixtureId.path, props.fixtureItem, props.lazy, setLazyItems]);
 
   React.useEffect(() => {
+    rendererConnect.postMessage({
+      type: 'fixtureLoaded',
+      payload: {
+        rendererId,
+        fixture: props.fixtureItem,
+      },
+    });
+  }, [props.fixtureItem, rendererConnect, rendererId]);
+
+  React.useEffect(() => {
     if (!isEqual(state.fixtureState, state.syncedFixtureState)) {
       rendererConnect.postMessage({
         type: 'fixtureStateChange',

@@ -3,6 +3,7 @@ import { RendererId } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,
+  mockCore,
   mockNotifications,
   mockRouter,
   onRendererCore,
@@ -21,6 +22,7 @@ const fixtureId = { path: 'zwei.js' };
 const fixtureState = { props: [] };
 
 function registerTestPlugins() {
+  mockCore();
   mockRouter({
     getSelectedFixtureId: () => fixtureId,
   });
@@ -46,7 +48,7 @@ it('sets fixtureState in renderer state', async () => {
   mockFixtureStateChangeResponse('mockRendererId1');
 
   await waitFor(() =>
-    expect(getRendererCoreMethods().getFixtureState()).toEqual(fixtureState)
+    expect(getRendererCoreMethods().getAllFixtureState()).toEqual(fixtureState)
   );
 });
 
@@ -56,7 +58,7 @@ it('ignores update from secondary renderer', async () => {
   mockFixtureStateChangeResponse('mockRendererId2');
 
   await waitFor(() =>
-    expect(getRendererCoreMethods().getFixtureState()).toEqual({})
+    expect(getRendererCoreMethods().getAllFixtureState()).toEqual({})
   );
 });
 

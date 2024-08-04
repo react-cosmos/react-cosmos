@@ -1,5 +1,5 @@
 import React from 'react';
-import { useValue } from 'react-cosmos/client';
+import { useFixtureInput } from 'react-cosmos/client';
 import styled from 'styled-components';
 import { blue, grey248, grey8 } from '../../style/colors.js';
 import { Space } from '../Space.js';
@@ -16,9 +16,9 @@ const Container = styled.div`
 `;
 
 export default () => {
-  const [nr1, setNr1] = useValue<number>('number1', { defaultValue: 0.93 });
-  const [nr2, setNr2] = useValue<number>('number2', { defaultValue: 1337 });
-  const [nr3, setNr3] = useValue<number>('number3', { defaultValue: 0 });
+  const [nr1, setNr1] = useFixtureInput('number1', 0.93);
+  const [nr2, setNr2] = useFixtureInput('number2', 1337);
+  const [nr3, setNr3] = useFixtureInput('number3', 0);
   return (
     <Container>
       <NumberInput

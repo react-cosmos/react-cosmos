@@ -1,20 +1,16 @@
-import { FixtureState } from 'react-cosmos-core';
+import { Viewport } from 'react-cosmos-core';
 import { PluginContext } from 'react-plugin';
 import { StorageSpec } from '../Storage/spec.js';
-import { ResponsivePreviewSpec, ResponsiveViewport } from './spec.js';
+import { ResponsivePreviewSpec } from './spec.js';
 
 export type ResponsivePreviewContext = PluginContext<ResponsivePreviewSpec>;
 
 export type StorageMethods = StorageSpec['methods'];
 
-export type FixtureStateWithViewport = FixtureState & {
-  viewport?: ResponsiveViewport;
-};
-
 export type ViewportState = {
   enabled: boolean;
   scaled: boolean;
-  viewport: ResponsiveViewport;
+  viewport: Viewport;
 };
 
 export const DEFAULT_DEVICES = [

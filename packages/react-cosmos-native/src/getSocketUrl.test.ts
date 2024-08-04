@@ -1,20 +1,17 @@
+import { vi } from 'vitest';
 import { getSocketUrl } from './getSocketUrl.js';
 
-jest.mock(
-  'react-native',
-  () => ({
-    NativeModules: {
-      SourceCode: {
-        scriptURL:
-          'http://192.168.100.65:8081/index.bundle?platform=ios&dev=true&hot=false',
-      },
+vi.mock('react-native', () => ({
+  NativeModules: {
+    SourceCode: {
+      scriptURL:
+        'http://192.168.100.65:8081/index.bundle?platform=ios&dev=true&hot=false',
     },
-  }),
-  { virtual: true }
-);
+  },
+}));
 
 afterEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 
 it('should create socket URL', () => {

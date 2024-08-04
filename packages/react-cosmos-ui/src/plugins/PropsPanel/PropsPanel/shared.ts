@@ -1,27 +1,23 @@
 import {
-  findFixtureStateProps,
+  findPropsFixtureStateItem,
   FixtureElementId,
-  FixtureState,
-  FixtureStateProps,
-  StateUpdater,
+  FixtureStateUpdater,
+  PropsFixtureState,
 } from 'react-cosmos-core';
 import { stringifyElementId } from '../../../components/ValueInputTree/index.js';
 
-export function createPropsFsUpdater(
+export function propsFsItemUpdater(
   elementId: FixtureElementId,
-  cb: (prevFs: FixtureState) => FixtureStateProps[]
-): StateUpdater<FixtureState> {
+  cb: FixtureStateUpdater<PropsFixtureState>
+): FixtureStateUpdater<PropsFixtureState> {
   return prevFs => {
-    const fsProps = findFixtureStateProps(prevFs, elementId);
-    if (!fsProps) {
+    const fsItem = findPropsFixtureStateItem(prevFs, elementId);
+    if (!fsItem) {
       const elId = stringifyElementId(elementId);
       console.warn(`Trying to update missing element with ID: ${elId}`);
-      return prevFs;
+      return prevFs ?? [];
     }
 
-    return {
-      ...prevFs,
-      props: cb(prevFs),
-    };
+    return cb(prevFs);
   };
 }

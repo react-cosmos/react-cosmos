@@ -1,9 +1,10 @@
+// @vitest-environment jsdom
 import { waitFor } from '@testing-library/dom';
 import { fireEvent, render, RenderResult } from '@testing-library/react';
 import React from 'react';
 import { Commands, RendererActionSlot } from 'react-cosmos-ui';
 import { mockCore, mockNotifications } from 'react-cosmos-ui/pluginMocks.js';
-import { mockFetch } from 'react-cosmos/jest.js';
+import { mockFetch } from 'react-cosmos/vitest.js';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { register } from './index.js';
 
@@ -47,7 +48,7 @@ it(`shows error notification when dev server is off`, async () => {
   const { pushTimedNotification } = mockNotifications();
 
   await loadTestPlugins();
-  registeredCommands.editFixture();
+  registeredCommands.openFixture();
 
   await waitFor(() =>
     expect(pushTimedNotification).toBeCalledWith(expect.any(Object), {

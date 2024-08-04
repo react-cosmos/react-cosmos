@@ -1,9 +1,13 @@
 import {
+  ClassStateFixtureState,
+  ClassStateFixtureStateItem,
   FixtureDecoratorId,
   FixtureState,
-  FixtureStateClassState,
-  FixtureStateProps,
   FixtureStateValues,
+  InputsFixtureState,
+  PropsFixtureState,
+  PropsFixtureStateItem,
+  fixtureStateByName,
 } from 'react-cosmos-core';
 
 export function anyProps(
@@ -13,7 +17,7 @@ export function anyProps(
     componentName?: string;
     values?: FixtureStateValues;
   } = {}
-): FixtureStateProps {
+): PropsFixtureStateItem {
   const {
     decoratorId = expect.any(String),
     elPath = expect.any(String),
@@ -33,7 +37,7 @@ export function anyClassState(args: {
   elPath?: string;
   componentName?: string;
   values: FixtureStateValues;
-}): FixtureStateClassState {
+}): ClassStateFixtureStateItem {
   const {
     decoratorId = expect.any(String),
     componentName = expect.any(String),
@@ -51,7 +55,7 @@ export function getProps(
   fixtureState: FixtureState,
   expectedCount: number = 1
 ) {
-  const { props } = fixtureState;
+  const props = fixtureStateByName<PropsFixtureState>(fixtureState, 'props');
   if (!props || props.length < expectedCount) {
     throw new Error(`Props missing in fixture state`);
   }
@@ -62,9 +66,23 @@ export function getClassState(
   fixtureState: FixtureState,
   expectedCount: number = 1
 ) {
-  const { classState } = fixtureState;
+  const classState = fixtureStateByName<ClassStateFixtureState>(
+    fixtureState,
+    'classState'
+  );
   if (!classState || classState.length < expectedCount) {
     throw new Error(`Class state missing in fixture state`);
   }
   return classState;
+}
+
+export function getInputs(
+  fixtureState: FixtureState,
+  expectedCount: number = 1
+) {
+  const inputs = fixtureStateByName<InputsFixtureState>(fixtureState, 'inputs');
+  if (!inputs || Object.keys(inputs).length < expectedCount) {
+    throw new Error(`Inputs missing in fixture state`);
+  }
+  return inputs;
 }

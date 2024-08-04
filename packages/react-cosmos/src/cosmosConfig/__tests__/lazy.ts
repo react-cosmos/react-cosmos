@@ -6,8 +6,8 @@ import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
 import { createCosmosConfig } from '../createCosmosConfig.js';
 
-afterEach(() => {
-  unmockCliArgs();
+afterEach(async () => {
+  await unmockCliArgs();
 });
 
 it('defaults lazy to false', () => {
@@ -15,8 +15,8 @@ it('defaults lazy to false', () => {
   expect(cosmosConfig.lazy).toBe(false);
 });
 
-it('uses --lazy CLI arg', () => {
-  mockCliArgs({ lazy: true });
+it('uses --lazy CLI arg', async () => {
+  await mockCliArgs({ lazy: true });
 
   const cosmosConfig = createCosmosConfig(process.cwd());
   expect(cosmosConfig.lazy).toBe(true);

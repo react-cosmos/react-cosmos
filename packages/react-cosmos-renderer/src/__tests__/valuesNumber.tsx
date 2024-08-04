@@ -1,18 +1,14 @@
 import retry from '@skidding/async-retry';
-import React from 'react';
+import React, { act } from 'react';
 import { createValue, uuid } from 'react-cosmos-core';
-import {
-  ReactTestRenderer,
-  ReactTestRendererJSON,
-  act,
-} from 'react-test-renderer';
-import { useValue } from '../fixture/useValue/index.js';
+import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
+import { useFixtureInput } from '../fixture/useFixtureInput/useFixtureInput.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 function createFixtures({ defaultValue }: { defaultValue: number }) {
   const MyComponent = () => {
-    const [count, setCount] = useValue('count', { defaultValue });
+    const [count, setCount] = useFixtureInput('count', defaultValue);
     return (
       <button onClick={() => setCount(prevCount => prevCount + 1)}>
         {count} clicks
@@ -47,7 +43,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           count: {
             type: 'standard',
             defaultValue: createValue(0),
@@ -72,7 +68,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           count: {
             type: 'standard',
             defaultValue: createValue(0),
@@ -99,7 +95,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           count: {
             type: 'standard',
             defaultValue: createValue(5),

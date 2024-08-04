@@ -1,3 +1,4 @@
+import { removeFixtureNameSuffix } from '../fixtureUtils.js';
 import { FixtureTreeNode } from '../types.js';
 
 export function hideFixtureSuffix(
@@ -24,11 +25,4 @@ export function hideFixtureSuffix(
       };
     }, {}),
   };
-}
-
-function removeFixtureNameSuffix(
-  fixtureNameWithoutExtension: string,
-  suffix: string
-) {
-  return fixtureNameWithoutExtension.replace(new RegExp(`\\.${suffix}$`), '');
 }

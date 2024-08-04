@@ -17,5 +17,12 @@
     "theme": {
       "typesetting": "article"
     }
+  },
+  "og-image": {
+    "type": "page",
+    "display": "hidden",
+    "theme": {
+      "layout": "raw"
+    }
   }
 }

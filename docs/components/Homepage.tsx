@@ -1,4 +1,6 @@
 import { useData } from 'nextra/data';
+import { Benefits } from './Benefits';
+import { Features } from './Features';
 import styles from './Homepage.module.css';
 import { HomepageHero } from './HomepageHero';
 import { HomepageLogos } from './HomepageLogos';
@@ -11,7 +13,7 @@ type StaticProps = {
 export function Homepage() {
   const { version, stars } = useData() as StaticProps;
   return (
-    <div>
+    <>
       <HomepageHero version={version} stars={stars} />
       <div className={styles.content}>
         <a
@@ -23,7 +25,9 @@ export function Homepage() {
           <img src="/demo.png" />
         </a>
         <HomepageLogos />
+        <Benefits />
+        <Features />
       </div>
-    </div>
+    </>
   );
 }

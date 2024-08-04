@@ -2,5 +2,6 @@
   "fixture-modules": "",
   "file-conventions": "",
   "decorators": "",
-  "ui-controls": ""
+  "fixture-inputs": "",
+  "viewport": ""
 }

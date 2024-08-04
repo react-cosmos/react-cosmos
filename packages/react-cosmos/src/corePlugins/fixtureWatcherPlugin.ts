@@ -22,12 +22,12 @@ export const fixtureWatcherPlugin: CosmosServerPlugin = {
     const exposeImports = shouldExposeImports(platform, cosmosConfig);
 
     if (exposeImports) {
-      const modulePaths = findUserModulePaths(cosmosConfig);
+      const modulePaths = await findUserModulePaths(cosmosConfig);
       await generateImportsFile(cosmosConfig, 'dev', modulePaths);
     }
 
-    const watcher = await startFixtureWatcher(cosmosConfig, 'all', () => {
-      const modulePaths = findUserModulePaths(cosmosConfig);
+    const watcher = await startFixtureWatcher(cosmosConfig, 'all', async () => {
+      const modulePaths = await findUserModulePaths(cosmosConfig);
 
       updateFixtureListCache(cosmosConfig.rootDir, modulePaths.fixturePaths);
 
@@ -43,7 +43,7 @@ export const fixtureWatcherPlugin: CosmosServerPlugin = {
 
   async export({ cosmosConfig }) {
     if (shouldExposeImports('web', cosmosConfig)) {
-      const modulePaths = findUserModulePaths(cosmosConfig);
+      const modulePaths = await findUserModulePaths(cosmosConfig);
       await generateImportsFile(cosmosConfig, 'export', modulePaths);
     }
   },

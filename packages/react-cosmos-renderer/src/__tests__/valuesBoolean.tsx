@@ -1,18 +1,14 @@
 import retry from '@skidding/async-retry';
-import React from 'react';
+import React, { act } from 'react';
 import { createValue, uuid } from 'react-cosmos-core';
-import {
-  ReactTestRenderer,
-  ReactTestRendererJSON,
-  act,
-} from 'react-test-renderer';
-import { useValue } from '../fixture/useValue/index.js';
+import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
+import { useFixtureInput } from '../fixture/useFixtureInput/useFixtureInput.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 function createFixtures({ defaultValue }: { defaultValue: boolean }) {
   const MyComponent = () => {
-    const [toggled, setToggled] = useValue('toggled', { defaultValue });
+    const [toggled, setToggled] = useFixtureInput('toggled', defaultValue);
     return (
       <button onClick={() => setToggled(!toggled)}>{String(toggled)}</button>
     );
@@ -45,7 +41,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           toggled: {
             type: 'standard',
             defaultValue: createValue(false),
@@ -69,7 +65,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           toggled: {
             type: 'standard',
             defaultValue: createValue(false),
@@ -96,7 +92,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           toggled: {
             type: 'standard',
             defaultValue: createValue(true),

@@ -1,3 +1,5 @@
+import { vi } from 'vitest';
+
 type ConsoleMockApi = {
   expectLog: (msg: string) => void;
 };
@@ -8,7 +10,7 @@ export async function mockConsole<R>(
   const expectedLogs: string[] = [];
 
   const origConsoleLog = console.log;
-  console.log = jest.fn((...args: unknown[]) => {
+  console.log = vi.fn((...args: unknown[]) => {
     if (typeof args[0] !== 'string' || !expectedLogs.includes(args[0])) {
       origConsoleLog(...args);
     }

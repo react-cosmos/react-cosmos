@@ -10,27 +10,27 @@ import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 // files instantiate a CosmosConfig class by hand to minimize boilerplate.
 import { detectCosmosConfig } from '../detectCosmosConfig.js';
 
-afterEach(() => {
-  unmockCliArgs();
-  resetFsMock();
+afterEach(async () => {
+  await unmockCliArgs();
+  await resetFsMock();
 });
 
 it('returns cosmos config at --config path', async () => {
   const uniqOpt = {};
-  mockCosmosConfig('subdir/cosmos.config.json', { uniqOpt });
-  mockCliArgs({ config: 'subdir/cosmos.config.json' });
+  await mockCosmosConfig('subdir/cosmos.config.json', { uniqOpt });
+  await mockCliArgs({ config: 'subdir/cosmos.config.json' });
   expect((await detectCosmosConfig()).uniqOpt).toBe(uniqOpt);
 });
 
 it('throws on invalid --config path', async () => {
-  mockCliArgs({ config: 'subdir/cosmos.config.json' });
+  await mockCliArgs({ config: 'subdir/cosmos.config.json' });
   await expect(detectCosmosConfig()).rejects.toThrow(
     '[Cosmos] Config not found at path: subdir/cosmos.config.json'
   );
 });
 
 it('throws on invalid --config file extension', async () => {
-  mockCliArgs({ config: 'subdir/cosmos.config.js' });
+  await mockCliArgs({ config: 'subdir/cosmos.config.js' });
   await expect(detectCosmosConfig()).rejects.toThrow(
     '[Cosmos] Invalid config file type: subdir/cosmos.config.js (must be .json)'
   );
@@ -38,13 +38,13 @@ it('throws on invalid --config file extension', async () => {
 
 it('returns cosmos config at --root-dir path', async () => {
   const uniqOpt = {};
-  mockCosmosConfig('subdir/cosmos.config.json', { uniqOpt });
-  mockCliArgs({ rootDir: 'subdir' });
+  await mockCosmosConfig('subdir/cosmos.config.json', { uniqOpt });
+  await mockCliArgs({ rootDir: 'subdir' });
   expect((await detectCosmosConfig()).uniqOpt).toBe(uniqOpt);
 });
 
 it('throws on invalid --root-dir path', async () => {
-  mockCliArgs({ rootDir: 'subdir' });
+  await mockCliArgs({ rootDir: 'subdir' });
   await expect(detectCosmosConfig()).rejects.toThrow(
     '[Cosmos] Dir not found at path: subdir'
   );
@@ -52,7 +52,7 @@ it('throws on invalid --root-dir path', async () => {
 
 it('returns cosmos config at cwd', async () => {
   const uniqOpt = {};
-  mockCosmosConfig('cosmos.config.json', { uniqOpt });
-  mockCliArgs({});
+  await mockCosmosConfig('cosmos.config.json', { uniqOpt });
+  await mockCliArgs({});
   expect((await detectCosmosConfig()).uniqOpt).toBe(uniqOpt);
 });

@@ -1,0 +1,13 @@
+# `<Viewport>`
+
+Using the Viewport decorator in a fixture triggers the responsive preview on a specific resolution in the Cosmos UI.
+
+```jsx filename="MyComponent.fixture.jsx"
+import { Viewport } from 'react-cosmos/client';
+
+export default (
+  <Viewport width={375} height={667}>
+    <MyComponent />
+  </Viewport>
+);
+```

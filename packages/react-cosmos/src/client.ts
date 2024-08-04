@@ -1,1 +1,9 @@
-export { Viewport, useSelect, useValue } from 'react-cosmos-renderer/client';
+export {
+  FixtureContext,
+  Viewport,
+  useFixtureInput,
+  useFixtureSelect,
+  useFixtureState,
+  useSelect,
+  useValue,
+} from 'react-cosmos-renderer/client';

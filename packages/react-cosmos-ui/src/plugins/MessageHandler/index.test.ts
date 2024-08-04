@@ -6,6 +6,7 @@ import {
   serverSocketMessage,
 } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
+import { vi } from 'vitest';
 import { WebSocketServer } from 'ws';
 import {
   getMessageHandlerMethods,
@@ -15,9 +16,9 @@ import {
 import { register } from './index.js';
 
 beforeAll(() => {
-  const jestWindow = window as any;
-  delete jestWindow.location;
-  jestWindow.location = { origin: 'http://localhost:8080' };
+  const testWindow = window as any;
+  delete testWindow.location;
+  testWindow.location = { origin: 'http://localhost:8080' };
 });
 
 beforeEach(register);
@@ -30,7 +31,7 @@ async function withWebSocketServer(
     onMessage: () => unknown;
   }) => Promise<void>
 ) {
-  const onMessage = jest.fn();
+  const onMessage = vi.fn();
 
   const wss = new WebSocketServer({ port: 8080 });
   wss.on('connection', ws => {

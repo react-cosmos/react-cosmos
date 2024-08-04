@@ -1,4 +1,4 @@
-import { Cards, Card, Callout } from 'nextra/components';
+import { Callout, Card, Cards } from 'nextra/components';
 
 # Fixture Modules
 
@@ -28,7 +28,7 @@ Component fixtures are just React function components with no props. They enable
 
 ```jsx filename="CounterButton.fixture.jsx"
 export default () => {
-  const [count, setCount] = React.useState(0);
+  const [count, setCount] = useState(0);
 
   return <CounterButton count={count} increment={() => setCount(count + 1)} />;
 };
@@ -36,7 +36,7 @@ export default () => {
 
 ## Multi-Fixtures
 
-A fixture module can also export multiple fixtures if the default export is an object.
+A fixture module can also export multiple fixtures if the default export is an object. The object's property names will show up as fixture names in the Cosmos UI.
 
 {/* prettier-ignore */}
 ```jsx filename="Button.fixture.jsx"
@@ -51,9 +51,61 @@ export default {
 };
 ```
 
-The object property names will show up as fixture names in the Cosmos UI.
+### Component Multi-Fixtures
 
-> [See this comment](https://github.com/react-cosmos/react-cosmos/issues/924#issuecomment-462082405) for the reasoning behind this solution (vs named exports).
+Multi-Fixtures can also contain components.
+
+```jsx filename="CounterButton.fixture.jsx"
+export default {
+  'Counter x1': () => {
+    const [count, setCount] = useState(0);
+    return (
+      <CounterButton count={count} increment={() => setCount(count + 1)} />
+    );
+  },
+
+  'Counter x2': () => {
+    const [count, setCount] = useState(0);
+    return (
+      <CounterButton count={count} increment={() => setCount(count + 2)} />
+    );
+  },
+};
+```
+
+Using arrow functions in Multi-Fixtures will cause [eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks) to complain about using hooks inside unnamed components. To avoid having to suppress these warnings in every fixture you can do one of the following:
+
+1. Use ESLint `overrides` to disable this rule inside Cosmos fixtures. [Here is an example.](https://github.com/react-cosmos/react-cosmos/blob/bcc09106ef7a010e1c305119385c739773571574/.eslintrc.cjs#L31-L36)
+2. Name your component functions, like this: `'my fixture': function MyFixture() {`.
+3. Create regular component functions and attach them to the default fixture export (see below).
+
+```jsx filename="CounterButton.fixture.jsx"
+function CounterX1() {
+  const [count, setCount] = useState(0);
+  return <CounterButton count={count} increment={() => setCount(count + 1)} />;
+}
+
+function CounterX2() {
+  const [count, setCount] = useState(0);
+  return <CounterButton count={count} increment={() => setCount(count + 2)} />;
+}
+
+export default { CounterX1, CounterX2 };
+```
+
+### Dynamic Multi-Fixtures
+
+Multi-Fixtures can be created dynamically. This is useful for generating fixtures from data.
+
+```jsx filename="Button.fixture.jsx"
+const fixtures = {};
+
+for (let color of ['red', 'green', 'blue']) {
+  fixtures[color] = <Button color={color}>Click me</Button>;
+}
+
+export default fixtures;
+```
 
 ## MDX Fixtures
 

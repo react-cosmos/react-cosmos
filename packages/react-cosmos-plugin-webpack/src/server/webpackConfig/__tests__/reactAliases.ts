@@ -1,5 +1,5 @@
 // NOTE: Mock files need to imported before modules that use the mocked APIs
-import { mockConsole, mockCwdModuleDefault } from 'react-cosmos/jest.js';
+import { mockConsole, mockCwdModuleDefault } from 'react-cosmos/vitest.js';
 
 import path from 'path';
 import { createCosmosConfig } from 'react-cosmos';
@@ -10,7 +10,7 @@ async function getCustomDevWebpackConfig(expectAliasLog: boolean) {
   return mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using webpack config found at mywebpack.config.js');
     expectLog(
-      '[Cosmos] Learn how to override webpack config for cosmos: https://github.com/react-cosmos/react-cosmos/tree/main/docs#webpack-config-override'
+      '[Cosmos] Learn how to override webpack config for cosmos: https://reactcosmos.org/docs/getting-started/webpack#webpack-config-override'
     );
     if (expectAliasLog) {
       expectLog('[Cosmos] React and React DOM aliases found in webpack config');
@@ -25,7 +25,7 @@ async function getCustomDevWebpackConfig(expectAliasLog: boolean) {
 }
 
 it('preserves React aliases', async () => {
-  mockCwdModuleDefault('mywebpack.config.js', () => ({
+  await mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       alias: {
         react: 'preact/compat',
@@ -39,12 +39,12 @@ it('preserves React aliases', async () => {
     expect(resolve.alias.react).toEqual('preact/compat');
     expect(resolve.alias['react-dom']).toEqual('preact/compat');
   } else {
-    fail('Invalid resolve.alias');
+    throw new Error('Invalid resolve.alias');
   }
 });
 
 it('preserves React aliases with exact matches', async () => {
-  mockCwdModuleDefault('mywebpack.config.js', () => ({
+  await mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       alias: {
         react$: 'preact/compat',
@@ -60,12 +60,12 @@ it('preserves React aliases with exact matches', async () => {
     expect(resolve.alias['react-dom$']).toEqual('preact/compat');
     expect(resolve.alias['react-dom']).toBeUndefined();
   } else {
-    fail('Invalid resolve.alias');
+    throw new Error('Invalid resolve.alias');
   }
 });
 
 it('preserves React aliases using array form', async () => {
-  mockCwdModuleDefault('mywebpack.config.js', () => ({
+  await mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       alias: [
         { name: 'react', alias: 'preact/compat' },
@@ -85,12 +85,12 @@ it('preserves React aliases using array form', async () => {
       alias: 'preact/compat',
     });
   } else {
-    fail('Invalid resolve.alias');
+    throw new Error('Invalid resolve.alias');
   }
 });
 
 it('adds missing React aliases', async () => {
-  mockCwdModuleDefault('mywebpack.config.js', () => ({
+  await mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       alias: {
         xyz: 'abc',
@@ -108,12 +108,12 @@ it('adds missing React aliases', async () => {
       new RegExp(`node_modules\\${path.sep}react-dom$`)
     );
   } else {
-    fail('Invalid resolve.alias');
+    throw new Error('Invalid resolve.alias');
   }
 });
 
 it('adds missing React aliases using array form', async () => {
-  mockCwdModuleDefault('mywebpack.config.js', () => ({
+  await mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       alias: [{ name: 'xyz', alias: 'abc' }],
     },
@@ -138,6 +138,6 @@ it('adds missing React aliases using array form', async () => {
       ),
     });
   } else {
-    fail('Invalid resolve.alias');
+    throw new Error('Invalid resolve.alias');
   }
 });

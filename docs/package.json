@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "docs",
-  "version": "6.0.0-beta.7",
+  "version": "6.1.0",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/docs",
   "license": "MIT",
   "type": "module",
@@ -12,11 +12,15 @@
   },
   "dependencies": {
     "@svgr/webpack": "8.1.0",
-    "autoprefixer": "10.4.16",
-    "next": "14.0.3",
-    "nextra": "2.13.2",
-    "nextra-theme-docs": "2.13.2",
-    "postcss": "8.4.32",
-    "tailwindcss": "3.3.5"
+    "@types/json-schema": "7.0.15",
+    "autoprefixer": "10.4.20",
+    "next": "14.2.5",
+    "nextra": "2.13.4",
+    "nextra-theme-docs": "2.13.4",
+    "postcss": "8.4.40",
+    "tailwindcss": "3.4.7"
+  },
+  "optionalDependencies": {
+    "@napi-rs/simple-git-linux-x64-gnu": "0.1.9"
   }
 }

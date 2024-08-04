@@ -1,12 +1,8 @@
 import retry from '@skidding/async-retry';
-import React from 'react';
+import React, { act } from 'react';
 import { createValue, uuid } from 'react-cosmos-core';
-import {
-  ReactTestRenderer,
-  ReactTestRendererJSON,
-  act,
-} from 'react-test-renderer';
-import { useValue } from '../fixture/useValue/index.js';
+import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
+import { useFixtureInput } from '../fixture/useFixtureInput/useFixtureInput.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
@@ -19,7 +15,7 @@ type Profile = {
 
 function createFixtures({ defaultValue }: { defaultValue: Profile }) {
   const MyComponent = () => {
-    const [profile, setProfile] = useValue('profile', { defaultValue });
+    const [profile, setProfile] = useFixtureInput('profile', defaultValue);
     return (
       <>
         <p>{JSON.stringify(profile, null, 2)}</p>
@@ -61,7 +57,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           profile: {
             type: 'standard',
             defaultValue: createValue({
@@ -95,7 +91,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           profile: {
             type: 'standard',
             defaultValue: createValue({
@@ -139,7 +135,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           profile: {
             type: 'standard',
             defaultValue: createValue({

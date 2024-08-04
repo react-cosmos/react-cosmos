@@ -1,15 +1,14 @@
 import React from 'react';
-import {
-  FixtureId,
-  FixtureState,
-  FlatFixtureTreeItem,
-  StateUpdater,
-} from 'react-cosmos-core';
+import { FixtureId, FlatFixtureTreeItem } from 'react-cosmos-core';
 import { ArraySlot, Slot } from 'react-plugin';
 import styled from 'styled-components';
 import { useDrag } from '../../hooks/useDrag.js';
 import { NavRowSlot } from '../../slots/NavRowSlot.js';
 import { grey32, grey8, white10 } from '../../style/colors.js';
+import {
+  GetFixtureState,
+  SetFixtureStateByName,
+} from '../RendererCore/spec.js';
 import { GlobalHeader } from './GlobalHeader.js';
 import { HomeOverlay } from './HomeOverlay/HomeOverlay.js';
 import { RendererHeader } from './RendererHeader.js';
@@ -19,7 +18,8 @@ type Props = {
   fixtureItems: FlatFixtureTreeItem[];
   selectedFixtureId: FixtureId | null;
   rendererConnected: boolean;
-  fixtureState: FixtureState;
+  getFixtureState: GetFixtureState;
+  setFixtureState: SetFixtureStateByName;
   navOpen: boolean;
   panelOpen: boolean;
   navWidth: number;
@@ -34,7 +34,6 @@ type Props = {
   onTogglePanel: () => unknown;
   onReloadRenderer: () => unknown;
   onCloseFixture: () => unknown;
-  onFixtureStateChange: (stateUpdater: StateUpdater<FixtureState>) => void;
   setNavWidth: (width: number) => unknown;
   setPanelWidth: (width: number) => unknown;
   welcomeDismissed: boolean;
@@ -46,7 +45,8 @@ export function Root({
   fixtureItems,
   selectedFixtureId,
   rendererConnected,
-  fixtureState,
+  getFixtureState,
+  setFixtureState,
   navOpen,
   panelOpen,
   navWidth,
@@ -61,7 +61,6 @@ export function Root({
   onTogglePanel,
   onReloadRenderer,
   onCloseFixture,
-  onFixtureStateChange,
   setNavWidth,
   setPanelWidth,
   welcomeDismissed,
@@ -125,9 +124,9 @@ export function Root({
               <ControlPanelContainer style={{ width: panelWidth, zIndex: 3 }}>
                 <SidePanel
                   fixtureId={selectedFixtureId}
-                  fixtureState={fixtureState}
+                  getFixtureState={getFixtureState}
+                  setFixtureState={setFixtureState}
                   sidePanelRowOrder={sidePanelRowOrder}
-                  onFixtureStateChange={onFixtureStateChange}
                 />
                 {panelDrag.dragging && <DragOverlay />}
                 <PanelDragHandle ref={panelDrag.dragElRef} />
@@ -135,11 +134,13 @@ export function Root({
             )}
           </RendererBody>
           {!selectedFixtureId && (
-            <HomeOverlay
-              welcomeDismissed={welcomeDismissed}
-              onDismissWelcome={onDismissWelcome}
-              onShowWelcome={onShowWelcome}
-            />
+            <Slot name="homeOverlay">
+              <HomeOverlay
+                welcomeDismissed={welcomeDismissed}
+                onDismissWelcome={onDismissWelcome}
+                onShowWelcome={onShowWelcome}
+              />
+            </Slot>
           )}
         </RendererContainer>
       </MainContainer>

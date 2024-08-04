@@ -1,6 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { createFixtureTree, flattenFixtureTree } from 'react-cosmos-core';
+import { vi } from 'vitest';
 import { fixtures } from '../../testHelpers/dataMocks.js';
 import { RendererHeader } from './RendererHeader.js';
 
@@ -28,7 +29,7 @@ const propDefaults = {
 };
 
 it('renders toggle nav button', async () => {
-  const onOpenNav = jest.fn();
+  const onOpenNav = vi.fn();
   const { getByTitle } = render(
     <RendererHeader {...propDefaults} onOpenNav={onOpenNav} />
   );
@@ -38,7 +39,7 @@ it('renders toggle nav button', async () => {
 });
 
 it('renders toggle panel button', async () => {
-  const onTogglePanel = jest.fn();
+  const onTogglePanel = vi.fn();
   const { getByTitle } = render(
     <RendererHeader {...propDefaults} onTogglePanel={onTogglePanel} />
   );
@@ -48,7 +49,7 @@ it('renders toggle panel button', async () => {
 });
 
 it('renders close button', async () => {
-  const onClose = jest.fn();
+  const onClose = vi.fn();
   const { getByTitle } = render(
     <RendererHeader {...propDefaults} onClose={onClose} />
   );
@@ -58,7 +59,7 @@ it('renders close button', async () => {
 });
 
 it('renders reload button', async () => {
-  const onReloadRenderer = jest.fn();
+  const onReloadRenderer = vi.fn();
   const { getByTitle } = render(
     <RendererHeader {...propDefaults} onReloadRenderer={onReloadRenderer} />
   );

@@ -22,7 +22,7 @@ and their state persists between sessions.
 
 ## Fixture Search
 
-A snappy fixture search feature with fuzzy matching. Use `⌘ + P` from anywhere to launch the search modal.
+A snappy fixture search feature with fuzzy matching. Use `⌘ + K` from anywhere to launch the search modal.
 
 <br />
 <Image
@@ -56,7 +56,7 @@ Viewport controls that allow simulation of screen size and orientation, with the
   src="/screenshots/responsive-preview.png"
 />
 
-A screen size can be embedded into a fixture using the [`<Viewport>`](/docs/fixtures/ui-controls.md#viewport) decorator.
+A screen size can be embedded into a fixture using the [`<Viewport>`](/docs/fixtures/viewport.md) decorator.
 
 ## Full-Screen Preview
 
@@ -84,7 +84,7 @@ Launches the source code of the current fixture in your default code editor.
 
 ## Control Panel
 
-UI controls that provide powerful component data manipulation.
+Inputs that provide powerful component data manipulation.
 
 <br />
 <Image
@@ -95,13 +95,13 @@ UI controls that provide powerful component data manipulation.
   src="/screenshots/props-panel.png"
 />
 
-Three types of controls are currently supported:
+Three categories of fixture inputs are currently supported:
 
-| Control type | Description                                                                                                                             |
-| ------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
-| Props        | Automatically generated based on React element props. Only works with [Node Fixtures](/docs/fixtures/fixture-modules.md#node-fixtures). |
-| Class State  | Automatically generated based on React Class components, which are deprecated but supported indefinitely.                               |
-| Custom       | Defined using [custom fixture hooks](/docs/fixtures/ui-controls.md) that can be represented as text inputs or select dropdowns.         |
+| Inputs      | Description                                                                                                                             |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Props       | Automatically generated based on React element props. Only works with [Node Fixtures](/docs/fixtures/fixture-modules.md#node-fixtures). |
+| Class State | Automatically generated based on React Class components, which are deprecated but supported indefinitely.                               |
+| Custom      | Defined using [fixture hooks](/docs/fixtures/fixture-inputs.md) that can be represented as text inputs or select dropdowns.             |
 
 ## Adjustable Panels
 
@@ -124,13 +124,13 @@ A beautiful notifications interface used to communicate renderer and server conn
 
 The Cosmos UI supports a set of useful keyboard shortcuts for the most commonly used actions:
 
-| Shortcut    | Action               |
-| ----------- | -------------------- |
-| `⌘ + P`     | Search fixtures      |
-| `⌘ + ⇧ + P` | Toggle fixture list  |
-| `⌘ + ⇧ + K` | Toggle control panel |
-| `⌘ + ⇧ + E` | Edit fixture         |
-| `⌘ + ⇧ + F` | Go full screen       |
+| Shortcut | Action               |
+| -------: | -------------------- |
+|  `⌘` `K` | Search fixtures      |
+|      `L` | Toggle fixture list  |
+|      `P` | Toggle control panel |
+|      `F` | Go full screen       |
+|      `R` | Reload renderer      |
 
 ## UI Plugins
 

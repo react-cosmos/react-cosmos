@@ -1,5 +1,5 @@
 // NOTE: Mock files need to imported before modules that use the mocked APIs
-import { mockConsole, mockCwdModuleDefault } from 'react-cosmos/jest.js';
+import { mockConsole, mockCwdModuleDefault } from 'react-cosmos/vitest.js';
 
 import { createCosmosConfig } from 'react-cosmos';
 import webpack from 'webpack';
@@ -9,7 +9,7 @@ async function getCustomDevWebpackConfig() {
   return mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using webpack config found at mywebpack.config.js');
     expectLog(
-      '[Cosmos] Learn how to override webpack config for cosmos: https://github.com/react-cosmos/react-cosmos/tree/main/docs#webpack-config-override'
+      '[Cosmos] Learn how to override webpack config for cosmos: https://reactcosmos.org/docs/getting-started/webpack#webpack-config-override'
     );
     const cosmosConfig = createCosmosConfig(process.cwd(), {
       webpack: {
@@ -25,7 +25,7 @@ class BarResolvePlugin {}
 class ModuleScopePlugin {}
 
 it('removes ModuleScopePlugin resolve plugin', async () => {
-  mockCwdModuleDefault('mywebpack.config.js', () => ({
+  await mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       plugins: [new ModuleScopePlugin()],
     },
@@ -36,7 +36,7 @@ it('removes ModuleScopePlugin resolve plugin', async () => {
 });
 
 it('keeps other resolve plugins', async () => {
-  mockCwdModuleDefault('mywebpack.config.js', () => ({
+  await mockCwdModuleDefault('mywebpack.config.js', () => ({
     resolve: {
       plugins: [
         new ModuleScopePlugin(),

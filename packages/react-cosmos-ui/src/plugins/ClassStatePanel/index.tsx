@@ -1,5 +1,9 @@
-import React from 'react';
-import { FixtureElementId, FixtureId } from 'react-cosmos-core';
+import React, { useCallback } from 'react';
+import {
+  ClassStateFixtureState,
+  FixtureElementId,
+  FixtureId,
+} from 'react-cosmos-core';
 import { PluginContext, createPlugin } from 'react-plugin';
 import {
   FixtureExpansionGroup,
@@ -10,7 +14,10 @@ import { TreeExpansion } from '../../shared/treeExpansion.js';
 import { SidePanelRowSlotProps } from '../../slots/SidePanelRowSlot.js';
 import { StorageSpec } from '../Storage/spec.js';
 import { ClassStatePanel } from './ClassStatePanel/index.js';
-import { CLASS_STATE_TREE_EXPANSION_STORAGE_KEY } from './shared.js';
+import {
+  CLASS_STATE_TREE_EXPANSION_STORAGE_KEY,
+  SetClassStateFixtureState,
+} from './shared.js';
 import { ClassStatePanelSpec } from './spec.js';
 
 type ClassStatePanelContext = PluginContext<ClassStatePanelSpec>;
@@ -23,10 +30,16 @@ namedPlug<SidePanelRowSlotProps>(
   'sidePanelRow',
   'classState',
   ({ pluginContext, slotProps }) => {
-    const { fixtureId, fixtureState, onFixtureStateChange } = slotProps;
+    const { fixtureId, getFixtureState, setFixtureState } = slotProps;
     const { fixtureExpansion, onElementExpansionChange } = useFixtureExpansion(
       pluginContext,
       fixtureId
+    );
+
+    const fixtureState = getFixtureState<ClassStateFixtureState>('classState');
+    const onFixtureStateChange = useCallback<SetClassStateFixtureState>(
+      update => setFixtureState<ClassStateFixtureState>('classState', update),
+      [setFixtureState]
     );
 
     return (

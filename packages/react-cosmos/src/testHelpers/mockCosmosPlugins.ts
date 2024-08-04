@@ -1,6 +1,13 @@
 import { CosmosPluginConfig } from 'react-cosmos-core';
+import { vi } from 'vitest';
 
-jest.mock('../cosmosPlugin/findCosmosPluginConfigs.js', () => {
+type ActualApi = typeof import('../cosmosPlugin/findCosmosPluginConfigs.js');
+
+type MockApi = ActualApi & {
+  __mockCosmosPluginConfigs: (configs: CosmosPluginConfig[]) => void;
+};
+
+vi.mock('../cosmosPlugin/findCosmosPluginConfigs.js', () => {
   let pluginConfigs: CosmosPluginConfig[] = [];
 
   return {
@@ -14,10 +21,12 @@ jest.mock('../cosmosPlugin/findCosmosPluginConfigs.js', () => {
   };
 });
 
-export function mockCosmosPlugins(configs: CosmosPluginConfig[]) {
-  requireMocked().__mockCosmosPluginConfigs(configs);
+export async function mockCosmosPlugins(configs: CosmosPluginConfig[]) {
+  (await importMocked()).__mockCosmosPluginConfigs(configs);
 }
 
-function requireMocked() {
-  return require('../cosmosPlugin/findCosmosPluginConfigs.js');
+async function importMocked() {
+  return import(
+    '../cosmosPlugin/findCosmosPluginConfigs.js'
+  ) as Promise<MockApi>;
 }

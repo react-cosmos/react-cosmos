@@ -1,8 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`renders fixture elements 1`] = `
 <button
   onClick={[Function]}
+  title="Click to increment"
 >
   0
    
@@ -13,6 +14,7 @@ exports[`renders fixture elements 1`] = `
 exports[`renders fixture elements 2`] = `
 <button
   onClick={[Function]}
+  title="Click to increment"
 >
   555555555
    

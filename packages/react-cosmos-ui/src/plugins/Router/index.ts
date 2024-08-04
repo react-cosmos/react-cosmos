@@ -27,18 +27,20 @@ const { onLoad, register } = createPlugin<RouterSpec>({
 
 onLoad(context => {
   const { getConfig, setState } = context;
-  setState({ urlParams: getUrlParams() });
+
+  const urlParams = getUrlParams();
+  setState({ urlParams });
 
   const { initialFixtureId } = getConfig();
-  if (initialFixtureId) {
+  if (initialFixtureId && !urlParams.fixtureId) {
     selectFixture(context, initialFixtureId);
   }
 
-  return subscribeToLocationChanges((urlParams: PlaygroundParams) => {
+  return subscribeToLocationChanges((nextUrlParams: PlaygroundParams) => {
     const { fixtureId } = context.getState().urlParams;
-    const fixtureChanged = !isEqual(urlParams.fixtureId, fixtureId);
+    const fixtureChanged = !isEqual(nextUrlParams.fixtureId, fixtureId);
 
-    setState({ urlParams }, () => {
+    setState({ urlParams: nextUrlParams }, () => {
       if (fixtureChanged) {
         emitFixtureChangeEvent(context, true);
       }

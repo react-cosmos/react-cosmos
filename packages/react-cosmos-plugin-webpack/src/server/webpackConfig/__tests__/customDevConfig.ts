@@ -4,33 +4,35 @@ import {
   mockConsole,
   mockCwdModuleDefault,
   unmockCliArgs,
-} from 'react-cosmos/jest.js';
+} from 'react-cosmos/vitest.js';
 
 import { createCosmosConfig } from 'react-cosmos';
+import { vi } from 'vitest';
 import webpack from 'webpack';
+import { pkgPath } from '../../../testHelpers/pkgPath.js';
 import { RENDERER_FILENAME } from '../constants.js';
 import { getDevWebpackConfig } from '../getDevWebpackConfig.js';
 import { HtmlWebpackPlugin } from '../htmlPlugin.js';
 
-const mockWebpackConfig = jest.fn(() => ({
+const mockWebpackConfig = vi.fn(() => ({
   module: { rules: [MY_RULE] },
   plugins: [MY_PLUGIN],
 }));
 
-const mockWebpackOverride = jest.fn((webpackConfig: webpack.Configuration) => ({
+const mockWebpackOverride = vi.fn((webpackConfig: webpack.Configuration) => ({
   ...webpackConfig,
   plugins: [...(webpackConfig.plugins || []), MY_PLUGIN2],
 }));
 
-beforeAll(() => {
+beforeAll(async () => {
   mockWebpackConfig.mockClear();
-  mockCliArgs({ env: { prod: true }, fooEnvVar: true });
-  mockCwdModuleDefault('mywebpack.config.js', mockWebpackConfig);
-  mockCwdModuleDefault('mywebpack.override.js', mockWebpackOverride);
+  await mockCliArgs({ env: { prod: true }, fooEnvVar: true });
+  await mockCwdModuleDefault('mywebpack.config.js', mockWebpackConfig);
+  await mockCwdModuleDefault('mywebpack.override.js', mockWebpackOverride);
 });
 
-afterAll(() => {
-  unmockCliArgs();
+afterAll(async () => {
+  await unmockCliArgs();
 });
 
 const MY_RULE = {};
@@ -81,12 +83,12 @@ it('includes plugin from user override', async () => {
 
 it('includes client entry', async () => {
   const { entry } = await getCustomDevWebpackConfig();
-  expect(entry).toContain(require.resolve('../../../client'));
+  expect(entry).toContain(pkgPath('client/index.js'));
 });
 
 it('includes DOM devtooks hook entry', async () => {
   const { entry } = await getCustomDevWebpackConfig();
-  expect(entry).toContain(require.resolve('../../../client/reactDevtoolsHook'));
+  expect(entry).toContain(pkgPath('client/reactDevtoolsHook.js'));
 });
 
 it('includes webpack-hot-middleware entry', async () => {
@@ -111,8 +113,8 @@ it('create output', async () => {
 it('includes user imports loader', async () => {
   const { module } = await getCustomDevWebpackConfig();
   expect(module!.rules).toContainEqual({
-    loader: require.resolve('../userImportsLoader'),
-    include: require.resolve('../../../client/userImports'),
+    loader: pkgPath('server/webpackConfig/userImportsLoader.cjs'),
+    include: pkgPath('client/userImports.js'),
     options: { cosmosConfig },
   });
 });

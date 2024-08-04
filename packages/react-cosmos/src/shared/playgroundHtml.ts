@@ -1,7 +1,6 @@
 import fs from 'fs';
 import { readFile } from 'fs/promises';
 import path from 'path';
-import { pkgUpSync } from 'pkg-up';
 import {
   CosmosPluginConfig,
   pickRendererUrl,
@@ -10,6 +9,7 @@ import {
 import { PlaygroundMountArgs } from 'react-cosmos-ui';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { CosmosPlatform } from '../cosmosPlugin/types.js';
+import { findUp } from '../utils/findUp.js';
 import { getServerFixtureList } from './serverFixtureList.js';
 import { getStaticPath } from './staticPath.js';
 
@@ -24,7 +24,7 @@ export async function getDevPlaygroundHtml(
       ...ui,
       core: await getCoreConfig(cosmosConfig, true),
       rendererCore: {
-        fixtures: getServerFixtureList(cosmosConfig),
+        fixtures: await getServerFixtureList(cosmosConfig),
         rendererUrl:
           platform === 'web'
             ? pickRendererUrl(cosmosConfig.rendererUrl, 'dev')
@@ -45,7 +45,7 @@ export async function getExportPlaygroundHtml(
       ...ui,
       core: await getCoreConfig(cosmosConfig, false),
       rendererCore: {
-        fixtures: getServerFixtureList(cosmosConfig),
+        fixtures: await getServerFixtureList(cosmosConfig),
         rendererUrl: pickRendererUrl(cosmosConfig.rendererUrl, 'export'),
       },
     },
@@ -64,7 +64,7 @@ async function getCoreConfig(cosmosConfig: CosmosConfig, devServerOn: boolean) {
 }
 
 async function getProjectId(rootDir: string) {
-  const pkgPath = pkgUpSync({ cwd: rootDir });
+  const pkgPath = await findUp('package.json', rootDir);
   if (!pkgPath) {
     return rootDir.split(path.sep).pop();
   }

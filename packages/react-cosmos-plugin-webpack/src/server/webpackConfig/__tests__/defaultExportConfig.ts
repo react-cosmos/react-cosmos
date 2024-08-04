@@ -1,14 +1,15 @@
 // NOTE: Mock files need to imported before modules that use the mocked APIs
-import { mockConsole, unmockCliArgs } from 'react-cosmos/jest.js';
+import { mockConsole, unmockCliArgs } from 'react-cosmos/vitest.js';
 
 import { createCosmosConfig, getCwdPath } from 'react-cosmos';
 import webpack from 'webpack';
+import { pkgPath } from '../../../testHelpers/pkgPath.js';
 import { RENDERER_FILENAME } from '../constants.js';
 import { getExportWebpackConfig } from '../getExportWebpackConfig.js';
 import { HtmlWebpackPlugin } from '../htmlPlugin.js';
 
-afterAll(() => {
-  unmockCliArgs();
+afterAll(async () => {
+  await unmockCliArgs();
 });
 
 const cosmosConfig = createCosmosConfig(process.cwd());
@@ -17,7 +18,7 @@ async function getDefaultExportWebpackConfig() {
   return mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using default webpack config');
     expectLog(
-      '[Cosmos] Learn how to override webpack config for cosmos: https://github.com/react-cosmos/react-cosmos/tree/main/docs#webpack-config-override'
+      '[Cosmos] Learn how to override webpack config for cosmos: https://reactcosmos.org/docs/getting-started/webpack#webpack-config-override'
     );
     return await getExportWebpackConfig(cosmosConfig, webpack);
   });
@@ -25,12 +26,12 @@ async function getDefaultExportWebpackConfig() {
 
 it('includes client entry', async () => {
   const { entry } = await getDefaultExportWebpackConfig();
-  expect(entry).toContain(require.resolve('../../../client'));
+  expect(entry).toContain(pkgPath('client/index.js'));
 });
 
 it('includes DOM devtooks hook entry', async () => {
   const { entry } = await getDefaultExportWebpackConfig();
-  expect(entry).toContain(require.resolve('../../../client/reactDevtoolsHook'));
+  expect(entry).toContain(pkgPath('client/reactDevtoolsHook.js'));
 });
 
 it('does not include webpack-hot-middleware entry', async () => {
@@ -56,8 +57,8 @@ it('create output', async () => {
 it('includes user imports loader', async () => {
   const { module } = await getDefaultExportWebpackConfig();
   expect(module!.rules).toContainEqual({
-    loader: require.resolve('../userImportsLoader'),
-    include: require.resolve('../../../client/userImports'),
+    loader: pkgPath('server/webpackConfig/userImportsLoader.cjs'),
+    include: pkgPath('client/userImports.js'),
     options: { cosmosConfig },
   });
 });

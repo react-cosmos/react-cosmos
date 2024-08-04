@@ -1,3 +1,5 @@
+import { CosmosRendererUrl } from 'react-cosmos-core';
+
 interface HttpsOptions {
   keyPath: string;
   certPath: string;
@@ -34,7 +36,7 @@ export type CosmosConfig = {
   portRetries: number;
   plugins: string[];
   publicUrl: string;
-  rendererUrl: null | string | { dev: string; export: string };
+  rendererUrl: CosmosRendererUrl;
   rootDir: string;
   staticPath: null | string;
   watchDirs: string[];

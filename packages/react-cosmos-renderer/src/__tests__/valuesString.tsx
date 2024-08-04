@@ -1,18 +1,14 @@
 import retry from '@skidding/async-retry';
-import React from 'react';
+import React, { act } from 'react';
 import { createValue, uuid } from 'react-cosmos-core';
-import {
-  ReactTestRenderer,
-  ReactTestRendererJSON,
-  act,
-} from 'react-test-renderer';
-import { useValue } from '../fixture/useValue/index.js';
+import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
+import { useFixtureInput } from '../fixture/useFixtureInput/useFixtureInput.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 function createFixtures({ defaultValue }: { defaultValue: string }) {
   const MyComponent = () => {
-    const [value, setValue] = useValue('name', { defaultValue });
+    const [value, setValue] = useFixtureInput('name', defaultValue);
     return (
       <input
         type="text"
@@ -49,7 +45,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           name: {
             type: 'standard',
             defaultValue: createValue('Fu Barr'),
@@ -73,7 +69,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           name: {
             type: 'standard',
             defaultValue: createValue('Fu Barr'),
@@ -100,7 +96,7 @@ testRenderer(
       fixtureId,
       fixtureState: {
         props: expect.any(Array),
-        controls: {
+        inputs: {
           name: {
             type: 'standard',
             defaultValue: createValue('Fu Barr Bhaz'),
