@@ -11,7 +11,7 @@ import path from 'node:path';
 import { getStaticPath } from '../../shared/staticPath.js';
 import { ensureFile } from '../../testHelpers/ensureFile.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
-import { pkgPath } from '../../testHelpers/pkgPath.js';
+import { rootPath } from '../../testHelpers/rootPath.js';
 import { viteWorkerId } from '../../testHelpers/viteUtils.js';
 import { generateExport } from '../generateExport.js';
 
@@ -21,8 +21,8 @@ const testFsPath = path.join(__dirname, '../__testFs__');
 const exportPath = path.join(testFsPath, `export-${viteWorkerId()}`);
 
 beforeAll(async () => {
-  await ensureFile(pkgPath('react-cosmos-ui/dist/playground.bundle.js'));
-  await ensureFile(pkgPath('react-cosmos-ui/dist/playground.bundle.js.map'));
+  await ensureFile(rootPath('react-cosmos-ui/dist/playground.bundle.js'));
+  await ensureFile(rootPath('react-cosmos-ui/dist/playground.bundle.js.map'));
 });
 
 beforeEach(async () => {

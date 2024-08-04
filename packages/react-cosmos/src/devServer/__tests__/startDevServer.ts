@@ -16,7 +16,7 @@ import { ServerMessage, SocketMessage } from 'react-cosmos-core';
 import { vi } from 'vitest';
 import { ensureFile } from '../../testHelpers/ensureFile.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
-import { pkgPath } from '../../testHelpers/pkgPath.js';
+import { rootPath } from '../../testHelpers/rootPath.js';
 import { viteWorkerId } from '../../testHelpers/viteUtils.js';
 import { startDevServer } from '../startDevServer.js';
 
@@ -25,8 +25,8 @@ const port = 5000 + viteWorkerId();
 let _stopServer: (() => Promise<unknown>) | undefined;
 
 beforeAll(async () => {
-  await ensureFile(pkgPath('react-cosmos-ui/dist/playground.bundle.js'));
-  await ensureFile(pkgPath('react-cosmos-ui/dist/playground.bundle.js.map'));
+  await ensureFile(rootPath('react-cosmos-ui/dist/playground.bundle.js'));
+  await ensureFile(rootPath('react-cosmos-ui/dist/playground.bundle.js.map'));
 });
 
 beforeAll(async () => {
