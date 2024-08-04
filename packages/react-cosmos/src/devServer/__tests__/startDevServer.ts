@@ -12,10 +12,11 @@ import retry from '@skidding/async-retry';
 import 'isomorphic-fetch';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { ServerMessage, SocketMessage } from 'react-cosmos-core';
 import { vi } from 'vitest';
+import { ensureFile } from '../../testHelpers/ensureFile.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
+import { pkgPath } from '../../testHelpers/pkgPath.js';
 import { viteWorkerId } from '../../testHelpers/viteUtils.js';
 import { startDevServer } from '../startDevServer.js';
 
@@ -133,21 +134,3 @@ it('stops server and closes message handler clients', async () => {
     'fetch failed'
   );
 });
-
-function pkgPath(relPath: string) {
-  // baseUrl is stored in a variable to bypass Vite's regex-based replacement
-  // of `import.meta.url` with self.location in jsdom environments.
-  // https://github.com/vitest-dev/vitest/issues/3988#issuecomment-1686450535
-  const baseUrl = import.meta.url;
-  return fileURLToPath(new URL(`../../../../${relPath}`, baseUrl));
-}
-
-async function ensureFile(atPath: string) {
-  try {
-    await fs.mkdir(path.dirname(atPath), { recursive: true });
-    await fs.writeFile(atPath, '', { flag: 'wx' });
-  } catch (err: any) {
-    // Nothing to do if file already exists
-    if (err.code !== 'EEXIST') throw err;
-  }
-}

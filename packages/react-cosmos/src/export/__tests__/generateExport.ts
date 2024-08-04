@@ -8,9 +8,10 @@ import { mockCliArgs, unmockCliArgs } from '../../testHelpers/mockYargs.js';
 
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { getStaticPath } from '../../shared/staticPath.js';
+import { ensureFile } from '../../testHelpers/ensureFile.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
+import { pkgPath } from '../../testHelpers/pkgPath.js';
 import { viteWorkerId } from '../../testHelpers/viteUtils.js';
 import { generateExport } from '../generateExport.js';
 
@@ -97,20 +98,6 @@ it('generates favicon', async () => {
     );
   });
 });
-
-function pkgPath(relPath: string) {
-  return fileURLToPath(new URL(`../../../../${relPath}`, import.meta.url));
-}
-
-async function ensureFile(atPath: string) {
-  try {
-    await fs.mkdir(path.dirname(atPath), { recursive: true });
-    await fs.writeFile(atPath, '', { flag: 'wx' });
-  } catch (err: any) {
-    // Nothing to do if file already exists
-    if (err.code !== 'EEXIST') throw err;
-  }
-}
 
 async function checkExportFile(filePath: string) {
   return fs.access(path.join(exportPath, filePath));
