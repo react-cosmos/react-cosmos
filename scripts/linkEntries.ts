@@ -37,7 +37,7 @@ class InvalidTargetPackage extends Error {
     const targetPackages = getTargetPackages();
 
     const { modules, configs } = await getPackageEntryPoints(targetPackages);
-    await Promise.all(modules.map(f => linkFileRequiresToDir(f, targetDir)));
+    await Promise.all(modules.map(f => linkFileImportsToDir(f, targetDir)));
     await Promise.all(configs.map(f => linkConfigPathsToDir(f, targetDir)));
 
     console.log(done(`Linked entry points to ${chalk.bold(targetDir)}.`));
@@ -60,7 +60,7 @@ class InvalidTargetPackage extends Error {
   }
 })();
 
-async function linkFileRequiresToDir(filePath: string, targetDir: TargetDir) {
+async function linkFileImportsToDir(filePath: string, targetDir: TargetDir) {
   // NOTE: Use static transform + pretty format if future requires it.
   // For now this is JustFine™
   const prevContents = await fs.readFile(filePath, 'utf8');
