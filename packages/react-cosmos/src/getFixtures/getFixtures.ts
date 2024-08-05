@@ -47,6 +47,7 @@ export async function getFixtures(
   getFlatFixtureTree(cosmosConfig, fixtureExports).forEach(
     ({ fileName, fixtureId, name, parents }) => {
       const fixtureExport = fixtures[fixtureId.path].default;
+      const fixtureOptions = fixtures[fixtureId.path].options;
       const fixture = getFixtureFromExport(fixtureExport, fixtureId.name);
 
       if (!fixture) {
@@ -61,6 +62,7 @@ export async function getFixtures(
         fileName,
         getElement: createFixtureElementGetter(
           fixture,
+          fixtureOptions ?? {},
           fixtureId.path,
           decoratorExports
         ),
@@ -104,6 +106,7 @@ function getPlaygroundFixtureUrl(
 
 function createFixtureElementGetter(
   fixture: ReactFixture,
+  fixtureOptions: {},
   fixturePath: string,
   decoratorsByPath: ByPath<ReactDecorator>
 ): () => ReactElement {
@@ -111,5 +114,6 @@ function createFixtureElementGetter(
     fixturePath,
     decoratorsByPath
   );
-  return () => decorateFixture(createFixtureNode(fixture), decorators);
+  return () =>
+    decorateFixture(createFixtureNode(fixture), fixtureOptions, decorators);
 }
