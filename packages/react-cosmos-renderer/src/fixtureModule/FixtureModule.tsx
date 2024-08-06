@@ -58,6 +58,7 @@ export function FixtureModule({
     >
       <DecoratedFixture
         fixture={fixture}
+        fixtureOptions={fixtureModule.options ?? {}}
         userDecoratorModules={decoratorModules}
         globalDecorators={globalDecorators}
       />
