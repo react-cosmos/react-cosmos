@@ -17,6 +17,12 @@ export type ReactFixtureModule = FixtureModule<ReactFixture>;
 export type ReactFixtureWrapper = ModuleWrapper<ReactFixtureModule>;
 export type LazyReactFixtureWrapper = LazyModuleWrapper<ReactFixtureModule>;
 
+// Should this be the same type as used in user decorator modules?
+// Or should we have a different CosmosDecoratorProps type?
+// export type ReactDecoratorProps<FixtureOptions = {}> = {
+//   children: ReactNode;
+//   options: FixtureOptions;
+// };
 export type ReactDecoratorProps = {
   children: ReactNode;
   options?: {};
