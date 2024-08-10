@@ -2,11 +2,8 @@ import retry from '@skidding/async-retry';
 import until from 'async-until';
 import { setTimeout } from 'node:timers/promises';
 import React from 'react';
-import {
-  ClassStateMock,
-  FixtureStatePrimitiveValue,
-  uuid,
-} from 'react-cosmos-core';
+import { FixtureStatePrimitiveValue, uuid } from 'react-cosmos-core';
+import { ClassStateMock } from '../fixture/ClassStateMock.js';
 import { Counter } from '../testHelpers/components.js';
 import { getClassState } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';

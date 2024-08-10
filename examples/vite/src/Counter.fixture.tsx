@@ -1,6 +1,6 @@
 import { Counter } from 'examples-shared/components/Counter.js';
 import React from 'react';
-import { ClassStateMock } from 'react-cosmos-core';
+import { ClassStateMock } from 'react-cosmos/client';
 
 export default {
   default: <Counter suffix="times" />,

@@ -1,12 +1,12 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
 import {
-  ClassStateMock,
   createValues,
   removeClassStateFixtureStateItem,
   updateClassStateFixtureStateItem,
   uuid,
 } from 'react-cosmos-core';
+import { ClassStateMock } from '../fixture/ClassStateMock.js';
 import { CoolCounter, Counter } from '../testHelpers/components.js';
 import {
   anyClassState,

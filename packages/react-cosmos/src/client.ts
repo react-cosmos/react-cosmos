@@ -1,4 +1,6 @@
+export { CosmosDecoratorProps } from 'react-cosmos-core';
 export {
+  ClassStateMock,
   FixtureContext,
   Viewport,
   useFixtureInput,
