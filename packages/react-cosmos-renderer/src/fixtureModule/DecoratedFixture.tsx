@@ -10,7 +10,7 @@ import { decorateFixture } from './decorateFixture.js';
 
 type Props = {
   fixture: ReactFixture;
-  fixtureOptions: {};
+  fixtureOptions?: {};
   userDecoratorModules: ReactDecoratorModule[];
   globalDecorators?: ReactDecorator[];
 };

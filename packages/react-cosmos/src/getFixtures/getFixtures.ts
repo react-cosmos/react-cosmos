@@ -62,7 +62,7 @@ export async function getFixtures(
         fileName,
         getElement: createFixtureElementGetter(
           fixture,
-          fixtureOptions ?? {},
+          fixtureOptions,
           fixtureId.path,
           decoratorExports
         ),
@@ -106,7 +106,7 @@ function getPlaygroundFixtureUrl(
 
 function createFixtureElementGetter(
   fixture: ReactFixture,
-  fixtureOptions: {},
+  fixtureOptions: {} | undefined,
   fixturePath: string,
   decoratorsByPath: ByPath<ReactDecorator>
 ): () => ReactElement {
