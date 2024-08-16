@@ -54,6 +54,8 @@ export function FixtureModule({
       fixtureId={fixtureId}
       initialFixtureState={initialFixtureState}
       fixtureItem={fixtureItem}
+      // TODO: Pick serializable fixture options
+      fixtureOptions={fixtureModule.options}
       lazy={lazy}
     >
       <DecoratedFixture

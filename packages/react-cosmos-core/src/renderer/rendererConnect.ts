@@ -82,6 +82,7 @@ export type FixtureLoadedResponse = {
   payload: {
     rendererId: RendererId;
     fixture: FixtureListItem;
+    fixtureOptions?: {};
   };
 };
 

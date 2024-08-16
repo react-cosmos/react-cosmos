@@ -21,8 +21,10 @@ export type CosmosDecoratorProps<FixtureOptions = {}> = {
   children: ReactNode;
   options?: FixtureOptions;
 };
-export type ReactDecorator = ComponentType<CosmosDecoratorProps>;
-export type ReactDecoratorModule = { default: ReactDecorator };
+export type ReactDecorator<FixtureOptions = {}> = ComponentType<
+  CosmosDecoratorProps<FixtureOptions>
+>;
+export type ReactDecoratorModule = { default: ReactDecorator<any> };
 export type ReactDecoratorWrapper = ModuleWrapper<ReactDecoratorModule>;
 export type LazyReactDecoratorWrapper = LazyModuleWrapper<ReactDecoratorModule>;
 
