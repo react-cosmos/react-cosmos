@@ -1,13 +1,10 @@
 import retry from '@skidding/async-retry';
 import { uuid } from 'react-cosmos-core';
 import { testRenderer } from '../testHelpers/testRenderer.js';
-import { wrapActSetTimeout } from '../testHelpers/wrapActSetTimeout.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 const rendererId = uuid();
 const fixtures = wrapDefaultExport({ first: null, second: null });
-
-beforeAll(wrapActSetTimeout);
 
 testRenderer(
   'renders blank state message',

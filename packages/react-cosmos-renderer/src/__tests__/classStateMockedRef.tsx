@@ -7,10 +7,7 @@ import { ClassStateMock } from '../fixture/ClassStateMock.js';
 import { Counter } from '../testHelpers/components.js';
 import { getClassState } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
-import { wrapActSetTimeout } from '../testHelpers/wrapActSetTimeout.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
-
-beforeAll(wrapActSetTimeout);
 
 let counterRef: null | Counter = null;
 beforeEach(() => {

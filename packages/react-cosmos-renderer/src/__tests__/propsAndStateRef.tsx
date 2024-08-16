@@ -13,10 +13,7 @@ import {
   getProps,
 } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
-import { wrapActSetTimeout } from '../testHelpers/wrapActSetTimeout.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
-
-beforeAll(wrapActSetTimeout);
 
 let counterRef: null | SuffixCounter = null;
 beforeEach(() => {
