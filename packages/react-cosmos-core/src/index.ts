@@ -36,6 +36,7 @@ export * from './utils/react/areNodesEqual.js';
 export * from './utils/react/DelayRender.js';
 export * from './utils/react/getComponentName.js';
 export * from './utils/react/isReactElement.js';
+export * from './utils/serializable.js';
 export * from './utils/state.js';
 export * from './utils/string.js';
 export * from './utils/tree.js';

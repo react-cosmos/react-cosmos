@@ -6,6 +6,7 @@ import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
 type FixtureOptions = {
   viewport: { width: number; height: number };
+  notSerializable: () => void;
 };
 
 const rendererId = uuid();
@@ -14,6 +15,7 @@ const fixtures = {
     default: 'Hello World',
     options: {
       viewport: { width: 320, height: 240 },
+      notSerializable: () => {},
     },
   },
 };

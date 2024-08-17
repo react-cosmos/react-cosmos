@@ -7,6 +7,7 @@ import {
   ReactFixtureModule,
   getFixtureFromExport,
   getFixtureItemFromExport,
+  pickSerializableValues,
   stringifyFixtureId,
 } from 'react-cosmos-core';
 import { DecoratedFixture } from './DecoratedFixture.js';
@@ -56,8 +57,7 @@ export function FixtureModule({
       fixtureId={fixtureId}
       initialFixtureState={initialFixtureState}
       fixtureItem={fixtureItem}
-      // TODO: Pick serializable fixture options
-      fixtureOptions={options}
+      fixtureOptions={pickSerializableValues(options)}
       lazy={lazy}
     >
       <DecoratedFixture

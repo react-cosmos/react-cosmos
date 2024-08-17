@@ -1,5 +1,5 @@
 import { isElement } from 'react-is';
-import { isArray, isObject, isPrimitiveData } from './shared.js';
+import { isArray, isObject, isPrimitiveData } from '../utils/data.js';
 import { FixtureStateValue, FixtureStateValues, ObjectData } from './types.js';
 
 export function createValues(obj: ObjectData): FixtureStateValues {
