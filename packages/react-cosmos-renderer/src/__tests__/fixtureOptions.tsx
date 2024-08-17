@@ -54,7 +54,7 @@ testRenderer(
 );
 
 testRenderer(
-  'returns fixture options in fixtureLoaded response',
+  'returns serializable fixture options in fixtureLoaded response',
   { rendererId, fixtures },
   async ({ selectFixture, fixtureLoaded }) => {
     selectFixture({
@@ -66,6 +66,7 @@ testRenderer(
       rendererId,
       fixture: { type: 'single' },
       fixtureOptions: {
+        // Notice that the notSerializable option is missing
         viewport: { width: 320, height: 240 },
       },
     });
