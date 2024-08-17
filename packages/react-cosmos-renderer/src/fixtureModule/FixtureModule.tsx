@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import {
   FixtureId,
   FixtureState,
@@ -46,7 +46,7 @@ export function FixtureModule({
   const fixture = getFixtureFromExport(fixtureModule.default, fixtureId.name);
 
   const { options = {} } = fixtureModule;
-  const serializableOptions = useMemo(
+  const serializableOptions = React.useMemo(
     () => pickSerializableValues(options),
     [options]
   );
