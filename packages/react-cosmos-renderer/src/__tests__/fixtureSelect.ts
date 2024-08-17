@@ -1,10 +1,7 @@
 import retry from '@skidding/async-retry';
 import { uuid } from 'react-cosmos-core';
 import { testRenderer } from '../testHelpers/testRenderer.js';
-import { wrapActSetTimeout } from '../testHelpers/wrapActSetTimeout.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
-
-beforeAll(wrapActSetTimeout);
 
 const rendererId = uuid();
 const fixtures = wrapDefaultExport({
@@ -125,6 +122,7 @@ testRenderer(
     await fixtureLoaded({
       rendererId,
       fixture: { type: 'single' },
+      fixtureOptions: {},
     });
   }
 );
@@ -141,6 +139,7 @@ testRenderer(
     await fixtureLoaded({
       rendererId,
       fixture: { type: 'multi', fixtureNames: ['one'] },
+      fixtureOptions: {},
     });
   }
 );

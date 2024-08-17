@@ -2,18 +2,12 @@ import retry from '@skidding/async-retry';
 import until from 'async-until';
 import { setTimeout } from 'node:timers/promises';
 import React from 'react';
-import {
-  ClassStateMock,
-  FixtureStatePrimitiveValue,
-  uuid,
-} from 'react-cosmos-core';
+import { FixtureStatePrimitiveValue, uuid } from 'react-cosmos-core';
+import { ClassStateMock } from '../fixture/ClassStateMock.js';
 import { Counter } from '../testHelpers/components.js';
 import { getClassState } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
-import { wrapActSetTimeout } from '../testHelpers/wrapActSetTimeout.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
-
-beforeAll(wrapActSetTimeout);
 
 let counterRef: null | Counter = null;
 beforeEach(() => {

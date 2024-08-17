@@ -1,12 +1,12 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
 import {
-  ClassStateMock,
   createValues,
   removeClassStateFixtureStateItem,
   updateClassStateFixtureStateItem,
   uuid,
 } from 'react-cosmos-core';
+import { ClassStateMock } from '../fixture/ClassStateMock.js';
 import { CoolCounter, Counter } from '../testHelpers/components.js';
 import {
   anyClassState,
@@ -14,10 +14,7 @@ import {
   getClassState,
 } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
-import { wrapActSetTimeout } from '../testHelpers/wrapActSetTimeout.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
-
-beforeAll(wrapActSetTimeout);
 
 const rendererId = uuid();
 const fixtures = wrapDefaultExport({

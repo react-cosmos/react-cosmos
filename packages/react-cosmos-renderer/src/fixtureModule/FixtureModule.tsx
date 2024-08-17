@@ -7,6 +7,7 @@ import {
   ReactFixtureModule,
   getFixtureFromExport,
   getFixtureItemFromExport,
+  pickSerializableValues,
   stringifyFixtureId,
 } from 'react-cosmos-core';
 import { DecoratedFixture } from './DecoratedFixture.js';
@@ -44,6 +45,12 @@ export function FixtureModule({
 
   const fixture = getFixtureFromExport(fixtureModule.default, fixtureId.name);
 
+  const { options = {} } = fixtureModule;
+  const serializableOptions = React.useMemo(
+    () => pickSerializableValues(options),
+    [options]
+  );
+
   if (typeof fixture === 'undefined') {
     return renderMessage(`Invalid fixture name: ${fixtureId.name}`);
   }
@@ -54,10 +61,12 @@ export function FixtureModule({
       fixtureId={fixtureId}
       initialFixtureState={initialFixtureState}
       fixtureItem={fixtureItem}
+      fixtureOptions={serializableOptions}
       lazy={lazy}
     >
       <DecoratedFixture
         fixture={fixture}
+        fixtureOptions={options}
         userDecoratorModules={decoratorModules}
         globalDecorators={globalDecorators}
       />

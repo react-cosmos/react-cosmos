@@ -1,5 +1,6 @@
 import React from 'react';
-import { ClassStateMock, createValues, uuid } from 'react-cosmos-core';
+import { createValues, uuid } from 'react-cosmos-core';
+import { ClassStateMock } from '../fixture/ClassStateMock.js';
 import { Counter } from '../testHelpers/components.js';
 import { anyClassState, anyProps } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';

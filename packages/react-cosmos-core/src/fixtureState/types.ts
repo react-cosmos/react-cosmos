@@ -1,3 +1,4 @@
+import { PrimitiveData } from '../utils/data.js';
 import { StateUpdater } from '../utils/state.js';
 
 export type FixtureDecoratorId = string;
@@ -11,12 +12,6 @@ export type FixtureStateUnserializableValue = {
   type: 'unserializable';
   stringifiedData: string;
 };
-
-export type PrimitiveData = string | number | boolean | null | undefined;
-
-export type ObjectData = Record<string, unknown>;
-
-export type ArrayData = unknown[];
 
 export type FixtureStatePrimitiveValue = {
   type: 'primitive';
