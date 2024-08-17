@@ -30,6 +30,7 @@ export * from './userModules/getSortedDecoratorsForFixturePath.js';
 export * from './userModules/stringifyFixtureId.js';
 export * from './userModules/userModuleTypes.js';
 export * from './utils/array.js';
+export * from './utils/data.js';
 export * from './utils/keys.js';
 export * from './utils/queryString.js';
 export * from './utils/react/areNodesEqual.js';
