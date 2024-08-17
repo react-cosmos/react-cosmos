@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   FixtureId,
   FixtureState,
@@ -45,11 +45,15 @@ export function FixtureModule({
 
   const fixture = getFixtureFromExport(fixtureModule.default, fixtureId.name);
 
+  const { options = {} } = fixtureModule;
+  const serializableOptions = useMemo(
+    () => pickSerializableValues(options),
+    [options]
+  );
+
   if (typeof fixture === 'undefined') {
     return renderMessage(`Invalid fixture name: ${fixtureId.name}`);
   }
-
-  const { options = {} } = fixtureModule;
 
   return (
     <FixtureProvider
@@ -57,7 +61,7 @@ export function FixtureModule({
       fixtureId={fixtureId}
       initialFixtureState={initialFixtureState}
       fixtureItem={fixtureItem}
-      fixtureOptions={pickSerializableValues(options)}
+      fixtureOptions={serializableOptions}
       lazy={lazy}
     >
       <DecoratedFixture
