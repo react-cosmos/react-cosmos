@@ -17,10 +17,7 @@ export type ReactFixtureModule = FixtureModule<ReactFixture>;
 export type ReactFixtureWrapper = ModuleWrapper<ReactFixtureModule>;
 export type LazyReactFixtureWrapper = LazyModuleWrapper<ReactFixtureModule>;
 
-export type DecoratorProps<T = {}> = {
-  children: ReactNode;
-  options: T;
-};
+export type DecoratorProps<T = {}> = { children: ReactNode; options: T };
 export type ReactDecorator<T = {}> = ComponentType<DecoratorProps<T>>;
 export type ReactDecoratorModule = { default: ReactDecorator<any> };
 export type ReactDecoratorWrapper = ModuleWrapper<ReactDecoratorModule>;
