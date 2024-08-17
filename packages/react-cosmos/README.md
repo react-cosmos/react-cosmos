@@ -9,7 +9,7 @@
   <a aria-label="Codecov" href="https://app.codecov.io/gh/react-cosmos/react-cosmos"><img src="https://img.shields.io/codecov/c/github/react-cosmos/react-cosmos?colorA=000000&colorB=000000" alt="" /></a>
   <a aria-label="Twitter" href="https://twitter.com/ReactCosmos"><img src="https://img.shields.io/badge/twitter-follow-%2300acee?colorA=000000&colorB=000000" alt="" /></a>
   <a aria-label="Discord" href="https://discord.gg/3X95VgfnW5"><img src="https://img.shields.io/discord/620737684859781150?label=discord&logo=discord&logoColor=ffffff&colorA=000000&colorB=000000" alt="" /></a>
-  <a aria-label="PRs Welcome" href="https://github.com/react-cosmos/react-cosmos/blob/main/CONTRIBUTING.md#how-to-contribute"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?colorA=000000&colorB=000000" alt="" /></a>
+  <a aria-label="PRs Welcome" href="https://github.com/react-cosmos/react-cosmos/blob/main/.github/CONTRIBUTING.md#how-to-contribute"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?colorA=000000&colorB=000000" alt="" /></a>
 </p>
 
 ## Getting Started
