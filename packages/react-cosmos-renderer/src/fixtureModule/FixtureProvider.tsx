@@ -15,7 +15,7 @@ type Props = {
   fixtureId: FixtureId;
   initialFixtureState?: FixtureState;
   fixtureItem: FixtureListItem;
-  fixtureOptions?: {};
+  fixtureOptions: {};
   lazy: boolean;
 };
 

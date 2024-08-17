@@ -3,7 +3,7 @@ import { ReactDecorator } from 'react-cosmos-core';
 
 export function decorateFixture(
   fixtureNode: React.ReactNode,
-  fixtureOptions: {} | undefined,
+  fixtureOptions: {},
   decorators: ReactDecorator[]
 ): React.ReactElement {
   return (

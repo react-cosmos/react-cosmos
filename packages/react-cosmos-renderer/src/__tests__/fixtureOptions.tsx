@@ -1,6 +1,6 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
-import { CosmosDecoratorProps, uuid } from 'react-cosmos-core';
+import { DecoratorProps, uuid } from 'react-cosmos-core';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
@@ -18,9 +18,7 @@ const fixtures = {
   },
 };
 const decorators = wrapDefaultExport({
-  'cosmos.decorator.js': ({
-    options,
-  }: CosmosDecoratorProps<FixtureOptions>) => (
+  'cosmos.decorator.js': ({ options }: DecoratorProps<FixtureOptions>) => (
     <>{JSON.stringify(options?.viewport)}</>
   ),
 });

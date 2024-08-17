@@ -20,6 +20,7 @@ testRenderer(
     await fixtureLoaded({
       rendererId,
       fixture: { type: 'single' },
+      fixtureOptions: {},
     });
   }
 );
@@ -36,6 +37,7 @@ testRenderer(
     await fixtureLoaded({
       rendererId,
       fixture: { type: 'multi', fixtureNames: ['one'] },
+      fixtureOptions: {},
     });
   }
 );

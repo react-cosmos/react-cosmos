@@ -48,6 +48,8 @@ export function FixtureModule({
     return renderMessage(`Invalid fixture name: ${fixtureId.name}`);
   }
 
+  const { options = {} } = fixtureModule;
+
   return (
     <FixtureProvider
       key={fixtureKey}
@@ -55,12 +57,12 @@ export function FixtureModule({
       initialFixtureState={initialFixtureState}
       fixtureItem={fixtureItem}
       // TODO: Pick serializable fixture options
-      fixtureOptions={fixtureModule.options}
+      fixtureOptions={options}
       lazy={lazy}
     >
       <DecoratedFixture
         fixture={fixture}
-        fixtureOptions={fixtureModule.options}
+        fixtureOptions={options}
         userDecoratorModules={decoratorModules}
         globalDecorators={globalDecorators}
       />

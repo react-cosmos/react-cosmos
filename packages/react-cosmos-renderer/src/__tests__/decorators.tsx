@@ -1,6 +1,6 @@
 import retry from '@skidding/async-retry';
 import React from 'react';
-import { CosmosDecoratorProps, uuid } from 'react-cosmos-core';
+import { DecoratorProps, uuid } from 'react-cosmos-core';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 
@@ -9,13 +9,13 @@ const fixtures = wrapDefaultExport({
   'src/foo/__fixtures__/default.js': 'Hello!',
 });
 const decorators = wrapDefaultExport({
-  'src/decorator.js': ({ children }: CosmosDecoratorProps) => (
+  'src/decorator.js': ({ children }: DecoratorProps) => (
     <>Decorated at src{children}</>
   ),
-  'src/foo/decorator.js': ({ children }: CosmosDecoratorProps) => (
+  'src/foo/decorator.js': ({ children }: DecoratorProps) => (
     <>Decorated at src/foo{children}</>
   ),
-  'src/bar/decorator.js': ({ children }: CosmosDecoratorProps) => (
+  'src/bar/decorator.js': ({ children }: DecoratorProps) => (
     <>Decorated at src/bar{children}</>
   ),
 });
