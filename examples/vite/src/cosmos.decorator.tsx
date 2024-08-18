@@ -5,10 +5,14 @@ type FixtureOptions = {
   viewport?: { width: number; height: number };
 };
 
-export default ({ children, options }: DecoratorProps<FixtureOptions>) => {
-  if (options.viewport) {
+function ViewportDecorator({
+  children,
+  options,
+}: DecoratorProps<FixtureOptions>) {
+  if (options.viewport)
     return <Viewport {...options.viewport}>{children}</Viewport>;
-  }
 
   return children;
-};
+}
+
+export default [ViewportDecorator];
