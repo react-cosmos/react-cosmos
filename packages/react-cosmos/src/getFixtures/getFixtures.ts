@@ -108,12 +108,16 @@ function createFixtureElementGetter(
   fixture: ReactFixture,
   fixtureOptions: {},
   fixturePath: string,
-  decoratorsByPath: ByPath<ReactDecorator>
+  decoratorsByPath: ByPath<ReactDecorator | ReactDecorator[]>
 ): () => ReactElement {
-  const decorators: ReactDecorator[] = getSortedDecoratorsForFixturePath(
+  const decorators = getSortedDecoratorsForFixturePath(
     fixturePath,
     decoratorsByPath
   );
   return () =>
-    decorateFixture(createFixtureNode(fixture), fixtureOptions, decorators);
+    decorateFixture(
+      createFixtureNode(fixture),
+      fixtureOptions,
+      decorators.flat()
+    );
 }

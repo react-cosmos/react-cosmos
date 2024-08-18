@@ -23,7 +23,7 @@ export function DecoratedFixture({
   return useMemo(() => {
     const decorators = [
       ...globalDecorators,
-      ...userDecoratorModules.map(m => m.default),
+      ...userDecoratorModules.map(m => m.default).flat(),
     ];
     return decorateFixture(
       <FixtureCapture decoratorId="root">
