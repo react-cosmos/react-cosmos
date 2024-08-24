@@ -1,0 +1,28 @@
+import { Callout } from 'nextra/components';
+
+# Fixture Options
+
+The `options` export in a fixture module is passed as a [Decorator](./decorators.mdx) prop, allowing you to make decorators dynamic and more powerful.
+
+Here's an example of using a viewport fixture option that is applied globally using the [Viewport](./viewport.mdx) decorator:
+
+```jsx filename="Hello.fixture.jsx"
+export const options = {
+  viewport: { width: 375, height: 667 },
+};
+
+export default <Hello greeting="Hi" name="Maggie" />;
+```
+
+```jsx filename="cosmos.decorator.jsx"
+function ViewportDecorator({ children, options }) {
+  if (options.viewport)
+    return <Viewport {...options.viewport}>{children}</Viewport>;
+
+  return children;
+}
+
+export default [ViewportDecorator];
+```
+
+Other use cases for fixture options include setting the theme, global state, and anything else that can be mocked inside a decorator.

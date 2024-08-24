@@ -24,3 +24,9 @@ The rules for decorators are:
   A `cosmos.decorator` file placed in the root source directory applies to all
   fixtures.
 </Callout>
+
+A decorator file can also export an array of decorators:
+
+```jsx filename="cosmos.decorator.js"
+export default [Decorator1, Decorator2, Decorator3];
+```
