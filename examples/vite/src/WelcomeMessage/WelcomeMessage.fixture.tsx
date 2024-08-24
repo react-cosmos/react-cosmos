@@ -1,5 +1,5 @@
 import React from 'react';
-import { Hello } from './WelcomeMessage.js';
+import { WelcomeMessage } from './WelcomeMessage.js';
 
 export const options = {
   viewport: {
@@ -8,4 +8,4 @@ export const options = {
   },
 };
 
-export default <Hello greeting="Hi" name="Maggie" />;
+export default <WelcomeMessage greeting="Hi" name="Maggie" />;
