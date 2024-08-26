@@ -23,7 +23,7 @@
     "build:clear": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./scripts/clearBuild.ts",
     "build": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./scripts/build.ts",
     "demo:build": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./scripts/buildDemo.ts",
-    "release:check": "npm run build:clear && npm run build && npm run src && npm run lint && npm run dist && npm run test",
+    "release:check": "npm run build:clear && npm run build && npm run src && npm run lint && npm run dist && npm run test:run",
     "release": "npm run release:check && lerna publish -m \"[release] %s\"",
     "release:next": "npm run release:check && lerna publish --dist-tag=next --exact -m \"[release] %s\""
   },
