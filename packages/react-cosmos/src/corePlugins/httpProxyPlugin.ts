@@ -25,10 +25,13 @@ export const httpProxyPlugin: CosmosServerPlugin = {
       if (typeof config === 'string') {
         expressApp.use(
           context,
-          createProxyMiddleware(context, { target: config })
+          createProxyMiddleware({ target: config, pathFilter: context })
         );
       } else if (typeof config === 'object') {
-        expressApp.use(context, createProxyMiddleware(context, config));
+        expressApp.use(
+          context,
+          createProxyMiddleware({ ...config, pathFilter: context })
+        );
       }
     });
   },
