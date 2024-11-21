@@ -11,7 +11,7 @@
     "chokidar": "3.6.0",
     "express": "4.19.2",
     "glob": "10.4.5",
-    "http-proxy-middleware": "2.0.6",
+    "http-proxy-middleware": "3.0.3",
     "lodash-es": "4.17.21",
     "micromatch": "4.0.7",
     "open": "10.1.0",
