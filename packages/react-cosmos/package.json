@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos",
-  "version": "6.2.0",
+  "version": "6.2.1",
   "description": "Sandbox for developing and testing UI components in isolation",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos",
   "license": "MIT",
