@@ -69,11 +69,7 @@ export function webTests(url: string) {
       await page.getByText('Search fixtures').waitFor();
       await page.keyboard.press('Control+K');
       await page.getByPlaceholder('Fixture search').fill('Hello');
-
-      // Wait for search results to update
-      const activeSearchResult = page.getByTestId('activeFixtureSearchResult');
-      await expect(activeSearchResult).toContainText('HelloWorld');
-
+      await waitForActiveSearchResult(page, 'HelloWorld');
       await page.keyboard.press('Enter');
       await expect(rendererRoot(page)).toContainText('Hello World!');
     });
@@ -150,6 +146,11 @@ export function webTests(url: string) {
       );
     }
   });
+}
+
+async function waitForActiveSearchResult(page: Page, fixtureName: string) {
+  const activeSearchResult = page.getByTestId('activeFixtureSearchResult');
+  await expect(activeSearchResult).toContainText(fixtureName);
 }
 
 function rendererRoot(page: Page) {
