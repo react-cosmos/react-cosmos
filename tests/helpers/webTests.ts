@@ -69,8 +69,12 @@ export function webTests(url: string) {
       await page.getByText('Search fixtures').waitFor();
       await page.keyboard.press('Control+K');
       await page.getByPlaceholder('Fixture search').fill('Hello');
-      await page.keyboard.press('Enter');
 
+      // Wait for search results to update
+      const activeSearchResult = page.getByTestId('activeFixtureSearchResult');
+      await expect(activeSearchResult).toContainText('HelloWorld');
+
+      await page.keyboard.press('Enter');
       await expect(rendererRoot(page)).toContainText('Hello World!');
     });
 
