@@ -20,6 +20,6 @@
     "react-cosmos-plugin-open-fixture": "^6.2.0",
     "react-cosmos-plugin-vite": "^6.2.0",
     "react-dom": "18.3.1",
-    "vite": "5.3.6"
+    "vite": "5.4.11"
   }
 }
