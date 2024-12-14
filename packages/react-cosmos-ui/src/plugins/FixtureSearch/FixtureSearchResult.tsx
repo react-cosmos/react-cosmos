@@ -30,7 +30,12 @@ export function FixtureSearchResult({
   );
 
   return (
-    <Container ref={containerRef} selected={active} onClick={onClick}>
+    <Container
+      ref={containerRef}
+      selected={active}
+      data-testid={active ? 'activeFixtureSearchResult' : undefined}
+      onClick={onClick}
+    >
       <Text>
         <Name selected={active}>{name ? `${fileName} ${name}` : fileName}</Name>
         {parents.length > 0 && <Parents>{parents.join('/')}</Parents>}
