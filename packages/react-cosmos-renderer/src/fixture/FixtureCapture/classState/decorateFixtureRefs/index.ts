@@ -30,6 +30,7 @@ export function decorateFixtureRefs(
       }
 
       return cloneElement(element, {
+        // @ts-ignore FIXME
         ref: getDecoratedRef(
           (element as ElementWithRef).ref,
           spyRef,
@@ -82,6 +83,7 @@ function callOriginalRef(ref: Ref<any>, elRef: null | Component) {
     return;
   }
 
+  // TODO: Replace deprecated MutableRefObject type
   const refObj = ref as MutableRefObject<any>;
   refObj.current = elRef;
 }

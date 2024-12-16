@@ -1,3 +1,4 @@
+// @ts-ignore FIXME Need to install react-native in the monorepo?
 import { TurboModuleRegistry } from 'react-native';
 
 export function getSocketUrl(playgroundUrl: string) {

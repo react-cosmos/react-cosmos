@@ -36,6 +36,7 @@ function cloneNodeItem(value: ReactNode) {
 }
 
 function cloneReactElement(value: ReactElement): ReactElement {
+  // @ts-ignore FIXME, can props be non-objects?
   const { children, ...otherProps } = value.props;
   return {
     ...value,

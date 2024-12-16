@@ -32,6 +32,7 @@ function areElementsEqual(
     // @ts-ignore
     element1.ref === element2.ref &&
     // Children (and props in general) can contain Elements and other Nodes
+    // @ts-ignore FIXME, can props be non-objects?
     arePropsEqual(element1.props, element2.props)
   );
 }

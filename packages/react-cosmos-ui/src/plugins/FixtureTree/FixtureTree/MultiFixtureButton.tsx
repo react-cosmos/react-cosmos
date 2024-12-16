@@ -13,7 +13,7 @@ type Props = {
   indentLevel: number;
   selected: boolean;
   selectedFixtureId: null | FixtureId;
-  selectedRef: RefObject<HTMLElement>;
+  selectedRef: RefObject<HTMLElement | null>;
   onSelect: (fixtureId: FixtureId) => unknown;
 };
 
