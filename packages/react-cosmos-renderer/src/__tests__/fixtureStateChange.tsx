@@ -1,7 +1,6 @@
-import retry from '@skidding/async-retry';
-import React, { act } from 'react';
+import { fireEvent, waitFor } from '@testing-library/react';
+import React from 'react';
 import { uuid } from 'react-cosmos-core';
-import { ReactTestRenderer } from 'react-test-renderer';
 import { FixtureContext } from '../fixture/FixtureContext.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
@@ -40,8 +39,8 @@ testRenderer(
       fixtureState: { props: [] },
     });
 
-    // Retry until button is rendered
-    await retry(() => clickButtonByLabel(renderer, 'Set custom state'));
+    await waitFor(() => expect(renderer.getByText('Set custom state')));
+    fireEvent.click(renderer.getByText('Set custom state'));
     await fixtureStateChange({
       rendererId,
       fixtureId: { path: 'first' },
@@ -50,7 +49,7 @@ testRenderer(
 
     // Catches regression where changed state wouldn't be properly handled
     // Fixed in https://github.com/react-cosmos/react-cosmos/pull/1008
-    clickButtonByLabel(renderer, 'Clear custom state');
+    fireEvent.click(renderer.getByText('Clear custom state'));
     await fixtureStateChange({
       rendererId,
       fixtureId: { path: 'first' },
@@ -58,9 +57,3 @@ testRenderer(
     });
   }
 );
-
-function clickButtonByLabel(renderer: ReactTestRenderer, label: string) {
-  act(() => {
-    renderer.root.findByProps({ children: label }).props.onClick();
-  });
-}

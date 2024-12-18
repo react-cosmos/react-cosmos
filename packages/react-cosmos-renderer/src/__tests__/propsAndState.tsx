@@ -1,4 +1,4 @@
-import retry from '@skidding/async-retry';
+import { waitFor } from '@testing-library/react';
 import React from 'react';
 import {
   createValues,
@@ -33,7 +33,7 @@ const fixtureId = { path: 'first' };
 testRenderer(
   'keeps state when resetting props',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
+  async ({ rootText, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     let fixtureState = await getLastFixtureState();
     const propsFs = getProps(fixtureState);
@@ -48,7 +48,7 @@ testRenderer(
       }),
     };
     setFixtureState({ rendererId, fixtureId, fixtureState });
-    await retry(() => expect(renderer.toJSON()).toBe('5 times'));
+    await waitFor(() => expect(rootText()).toBe('5 times'));
     setFixtureState({
       rendererId,
       fixtureId,
@@ -61,14 +61,14 @@ testRenderer(
         }),
       },
     });
-    await retry(() => expect(renderer.toJSON()).toBe('5 timez'));
+    await waitFor(() => expect(rootText()).toBe('5 timez'));
   }
 );
 
 testRenderer(
   'keeps state when transitioning props',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
+  async ({ rootText, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     let fixtureState = await getLastFixtureState();
     const propsFs = getProps(fixtureState);
@@ -83,7 +83,7 @@ testRenderer(
       }),
     };
     setFixtureState({ rendererId, fixtureId, fixtureState });
-    await retry(() => expect(renderer.toJSON()).toBe('5 times'));
+    await waitFor(() => expect(rootText()).toBe('5 times'));
     setFixtureState({
       rendererId,
       fixtureId,
@@ -96,14 +96,14 @@ testRenderer(
         }),
       },
     });
-    await retry(() => expect(renderer.toJSON()).toBe('5 timez'));
+    await waitFor(() => expect(rootText()).toBe('5 timez'));
   }
 );
 
 testRenderer(
   'keeps props when changing state',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
+  async ({ rootText, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     let fixtureState = await getLastFixtureState();
     const propsFs = getProps(fixtureState);
@@ -118,7 +118,7 @@ testRenderer(
       }),
     };
     setFixtureState({ rendererId, fixtureId, fixtureState });
-    await retry(() => expect(renderer.toJSON()).toBe('0 timez'));
+    await waitFor(() => expect(rootText()).toBe('0 timez'));
     setFixtureState({
       rendererId,
       fixtureId,
@@ -131,14 +131,14 @@ testRenderer(
         }),
       },
     });
-    await retry(() => expect(renderer.toJSON()).toBe('5 timez'));
+    await waitFor(() => expect(rootText()).toBe('5 timez'));
   }
 );
 
 testRenderer(
   'updates props on fixture change',
   { rendererId, fixtures },
-  async ({ renderer, update, selectFixture, fixtureStateChange }) => {
+  async ({ rootText, update, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     update({
       rendererId,
@@ -146,7 +146,7 @@ testRenderer(
         first: <SuffixCounter suffix="timez" />,
       }),
     });
-    await retry(() => expect(renderer.toJSON()).toBe('0 timez'));
+    await waitFor(() => expect(rootText()).toBe('0 timez'));
     await fixtureStateChange({
       rendererId,
       fixtureId,

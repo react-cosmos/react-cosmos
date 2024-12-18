@@ -1,4 +1,4 @@
-import retry from '@skidding/async-retry';
+import { waitFor } from '@testing-library/react';
 import React from 'react';
 import {
   createValues,
@@ -26,14 +26,14 @@ testRenderer(
   'persists props after type changes reference but keeps name (hmr simulation)',
   { rendererId, fixtures },
   async ({
-    renderer,
+    rootText,
     update,
     selectFixture,
     getLastFixtureState,
     setFixtureState,
   }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await retry(() => expect(renderer.toJSON()).toBe('Hello Theo'));
+    await waitFor(() => expect(rootText()).toBe('Hello Theo'));
     const fixtureState = await getLastFixtureState();
     const propsFs = getProps(fixtureState);
     const [{ elementId }] = propsFs;
@@ -48,8 +48,8 @@ testRenderer(
         }),
       },
     });
-    await retry(() => expect(renderer.toJSON()).toBe('Hello Theo Von'));
+    await waitFor(() => expect(rootText()).toBe('Hello Theo Von'));
     update({ rendererId, fixtures: createFixtures() });
-    await retry(() => expect(renderer.toJSON()).toBe('Hello Theo Von'));
+    await waitFor(() => expect(rootText()).toBe('Hello Theo Von'));
   }
 );

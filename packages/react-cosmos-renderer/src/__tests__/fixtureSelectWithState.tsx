@@ -1,4 +1,4 @@
-import retry from '@skidding/async-retry';
+import { waitFor } from '@testing-library/react';
 import React from 'react';
 import {
   createPropsFixtureStateItem,
@@ -19,7 +19,7 @@ const fixtureId = { path: 'first' };
 testRenderer(
   'renders selected fixture with fixture state',
   { rendererId, fixtures, skip: true },
-  async ({ renderer, selectFixture }) => {
+  async ({ rootText, selectFixture }) => {
     selectFixture({
       rendererId,
       fixtureId,
@@ -32,6 +32,6 @@ testRenderer(
         }),
       },
     });
-    await retry(() => expect(renderer.toJSON()).toBe('Hello B'));
+    await waitFor(() => expect(rootText()).toBe('Hello B'));
   }
 );

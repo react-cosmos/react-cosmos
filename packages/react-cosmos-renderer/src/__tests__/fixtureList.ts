@@ -1,4 +1,4 @@
-import retry from '@skidding/async-retry';
+import { waitFor } from '@testing-library/react';
 import { uuid } from 'react-cosmos-core';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
@@ -9,10 +9,8 @@ const fixtures = wrapDefaultExport({ first: null, second: null });
 testRenderer(
   'renders blank state message',
   { rendererId, fixtures },
-  async ({ renderer }) => {
-    await retry(() =>
-      expect(renderer.toJSON()).toEqual('No fixture selected.')
-    );
+  async ({ rootText }) => {
+    await waitFor(() => expect(rootText()).toEqual('No fixture selected.'));
   }
 );
 

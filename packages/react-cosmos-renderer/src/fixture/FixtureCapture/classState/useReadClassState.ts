@@ -1,5 +1,5 @@
 import { isEqual } from 'lodash-es';
-import { MutableRefObject, ReactNode, useEffect, useRef } from 'react';
+import { ReactNode, RefObject, useEffect, useRef } from 'react';
 import {
   ClassStateFixtureState,
   ClassStateFixtureStateItem,
@@ -20,7 +20,7 @@ const REFRESH_INTERVAL = 200;
 export function useReadClassState(
   fixture: ReactNode,
   decoratorId: FixtureDecoratorId,
-  elRefs: MutableRefObject<ElRefs>
+  elRefs: RefObject<ElRefs>
 ) {
   const elPaths = findRelevantElementPaths(fixture);
   const [classStateFs, setClassStateFs] =

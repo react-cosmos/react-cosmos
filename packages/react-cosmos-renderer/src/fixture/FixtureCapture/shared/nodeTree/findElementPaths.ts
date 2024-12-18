@@ -19,6 +19,7 @@ export function findElementPaths(
     return [];
   }
 
+  // @ts-ignore FIXME, can props be non-objects?
   const { children } = node.props;
   const childElPaths =
     // Props of elements returned by render functions can't be read here

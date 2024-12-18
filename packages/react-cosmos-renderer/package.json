@@ -13,6 +13,6 @@
   "dependencies": {
     "lodash-es": "4.17.21",
     "react-cosmos-core": "^6.2.0",
-    "react-is": "18.3.1"
+    "react-is": "19.0.0"
   }
 }

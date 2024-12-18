@@ -1,7 +1,6 @@
-import retry from '@skidding/async-retry';
-import React, { act } from 'react';
+import { fireEvent, waitFor } from '@testing-library/react';
+import React from 'react';
 import { createValue, uuid } from 'react-cosmos-core';
-import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
 import { useFixtureInput } from '../fixture/useFixtureInput/useFixtureInput.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
@@ -31,7 +30,9 @@ testRenderer(
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, 'Fu Barr');
+    await waitFor(() =>
+      expect(renderer.getByRole('textbox')).toHaveValue('Fu Barr')
+    );
   }
 );
 
@@ -62,8 +63,12 @@ testRenderer(
   { rendererId, fixtures },
   async ({ renderer, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, 'Fu Barr');
-    changeInput(renderer, 'Fu Barr Bhaz');
+    await waitFor(() =>
+      expect(renderer.getByRole('textbox')).toHaveValue('Fu Barr')
+    );
+    fireEvent.change(renderer.getByRole('textbox'), {
+      target: { value: 'Fu Barr Bhaz' },
+    });
     await fixtureStateChange({
       rendererId,
       fixtureId,
@@ -86,7 +91,9 @@ testRenderer(
   { rendererId, fixtures },
   async ({ renderer, update, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, 'Fu Barr');
+    await waitFor(() =>
+      expect(renderer.getByRole('textbox')).toHaveValue('Fu Barr')
+    );
     update({
       rendererId,
       fixtures: createFixtures({ defaultValue: 'Fu Barr Bhaz' }),
@@ -107,21 +114,3 @@ testRenderer(
     });
   }
 );
-
-function getInputValue(renderer: ReactTestRenderer) {
-  return getSingleRendererElement(renderer).props.value;
-}
-
-async function rendered(renderer: ReactTestRenderer, text: string) {
-  await retry(() => expect(getInputValue(renderer)).toEqual(text));
-}
-
-function changeInput(renderer: ReactTestRenderer, value: string) {
-  act(() => {
-    getSingleRendererElement(renderer).props.onChange({ target: { value } });
-  });
-}
-
-function getSingleRendererElement(renderer: ReactTestRenderer) {
-  return renderer.toJSON() as ReactTestRendererJSON;
-}

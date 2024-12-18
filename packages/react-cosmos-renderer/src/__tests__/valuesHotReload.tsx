@@ -1,7 +1,6 @@
-import retry from '@skidding/async-retry';
-import React, { act } from 'react';
+import { fireEvent, waitFor } from '@testing-library/react';
+import React from 'react';
 import { createValue, uuid } from 'react-cosmos-core';
-import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
 import { useFixtureInput } from '../fixture/useFixtureInput/useFixtureInput.js';
 import { getInputs } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
@@ -46,10 +45,16 @@ testRenderer(
   { rendererId, fixtures },
   async ({ renderer, update, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, { countText: '0', toggledText: 'false' });
-    clickCountButton(renderer);
-    clickToggledButton(renderer);
-    await rendered(renderer, { countText: '1', toggledText: 'true' });
+    await waitFor(() => {
+      expect(renderer.getAllByRole('button')[0]).toHaveTextContent('0');
+      expect(renderer.getAllByRole('button')[1]).toHaveTextContent('false');
+    });
+    fireEvent.click(renderer.getAllByRole('button')[0]);
+    fireEvent.click(renderer.getAllByRole('button')[1]);
+    await waitFor(() => {
+      expect(renderer.getAllByRole('button')[0]).toHaveTextContent('1');
+      expect(renderer.getAllByRole('button')[1]).toHaveTextContent('true');
+    });
     update({
       rendererId,
       fixtures: createFixtures({ defaultCount: 2, defaultToggled: false }),
@@ -89,7 +94,10 @@ testRenderer(
     fixtureStateChange,
   }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, { countText: '0', toggledText: 'false' });
+    await waitFor(() => {
+      expect(renderer.getAllByRole('button')[0]).toHaveTextContent('0');
+      expect(renderer.getAllByRole('button')[1]).toHaveTextContent('false');
+    });
     const fixtureState = await getLastFixtureState();
     setFixtureState({
       rendererId,
@@ -106,7 +114,10 @@ testRenderer(
         },
       },
     });
-    await rendered(renderer, { countText: '1', toggledText: 'false' });
+    await waitFor(() => {
+      expect(renderer.getAllByRole('button')[0]).toHaveTextContent('1');
+      expect(renderer.getAllByRole('button')[1]).toHaveTextContent('false');
+    });
     update({
       rendererId,
       fixtures: createFixtures({ defaultCount: 0, defaultToggled: true }),
@@ -139,8 +150,11 @@ testRenderer(
   { rendererId, fixtures },
   async ({ renderer, update, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, { countText: '0', toggledText: 'false' });
-    clickCountButton(renderer);
+    await waitFor(() => {
+      expect(renderer.getAllByRole('button')[0]).toHaveTextContent('0');
+      expect(renderer.getAllByRole('button')[1]).toHaveTextContent('false');
+    });
+    fireEvent.click(renderer.getAllByRole('button')[0]);
     await fixtureStateChange({
       rendererId,
       fixtureId,
@@ -167,7 +181,10 @@ testRenderer(
         defaultToggled: true,
       }),
     });
-    await rendered(renderer, { countText: '1', toggledText: 'true' });
+    await waitFor(() => {
+      expect(renderer.getAllByRole('button')[0]).toHaveTextContent('1');
+      expect(renderer.getAllByRole('button')[1]).toHaveTextContent('true');
+    });
     await fixtureStateChange({
       rendererId,
       fixtureId,
@@ -196,41 +213,3 @@ testRenderer(
     });
   }
 );
-
-async function rendered(
-  renderer: ReactTestRenderer,
-  { countText, toggledText }: { countText: string; toggledText: string }
-) {
-  await retry(() =>
-    expect(getButtonText(getCountButton(renderer))).toEqual(countText)
-  );
-  await retry(() =>
-    expect(getButtonText(getToggledButton(renderer))).toEqual(toggledText)
-  );
-}
-
-function clickCountButton(renderer: ReactTestRenderer) {
-  toggleButton(getCountButton(renderer));
-}
-
-function clickToggledButton(renderer: ReactTestRenderer) {
-  toggleButton(getToggledButton(renderer));
-}
-
-function getCountButton(renderer: ReactTestRenderer) {
-  return (renderer.toJSON() as any)[0] as ReactTestRendererJSON;
-}
-
-function getToggledButton(renderer: ReactTestRenderer) {
-  return (renderer.toJSON() as any)[1] as ReactTestRendererJSON;
-}
-
-function getButtonText(rendererNode: ReactTestRendererJSON) {
-  return rendererNode.children!.join('');
-}
-
-function toggleButton(rendererNode: ReactTestRendererJSON) {
-  act(() => {
-    rendererNode.props.onClick();
-  });
-}

@@ -10,7 +10,7 @@ type Props = {
   fixturePath: string;
   indentLevel: number;
   selected: boolean;
-  selectedRef: RefObject<HTMLElement>;
+  selectedRef: RefObject<HTMLElement | null>;
   onSelect: (fixtureId: FixtureId) => unknown;
 };
 

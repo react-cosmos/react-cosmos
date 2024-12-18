@@ -1,7 +1,6 @@
-import retry from '@skidding/async-retry';
-import React, { act } from 'react';
+import { fireEvent, waitFor } from '@testing-library/react';
+import React from 'react';
 import { createValue, uuid } from 'react-cosmos-core';
-import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
 import { useFixtureInput } from '../fixture/useFixtureInput/useFixtureInput.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
@@ -27,9 +26,9 @@ const fixtureId = { path: 'first' };
 testRenderer(
   'renders fixture',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture }) => {
+  async ({ rootText, selectFixture }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, '0 clicks');
+    await waitFor(() => expect(rootText()).toBe('0 clicks'));
   }
 );
 
@@ -58,11 +57,11 @@ testRenderer(
 testRenderer(
   'updates fixture state via setter',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture, fixtureStateChange }) => {
+  async ({ renderer, rootText, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, '0 clicks');
-    clickButton(renderer);
-    clickButton(renderer);
+    await waitFor(() => expect(rootText()).toBe('0 clicks'));
+    fireEvent.click(renderer.getByRole('button'));
+    fireEvent.click(renderer.getByRole('button'));
     await fixtureStateChange({
       rendererId,
       fixtureId,
@@ -83,9 +82,9 @@ testRenderer(
 testRenderer(
   'resets fixture state on default value change',
   { rendererId, fixtures },
-  async ({ renderer, update, selectFixture, fixtureStateChange }) => {
+  async ({ rootText, update, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, '0 clicks');
+    await waitFor(() => expect(rootText()).toBe('0 clicks'));
     update({
       rendererId,
       fixtures: createFixtures({ defaultValue: 5 }),
@@ -106,21 +105,3 @@ testRenderer(
     });
   }
 );
-
-function getButtonText(renderer: ReactTestRenderer) {
-  return getSingleRendererElement(renderer).children!.join('');
-}
-
-async function rendered(renderer: ReactTestRenderer, text: string) {
-  await retry(() => expect(getButtonText(renderer)).toEqual(text));
-}
-
-function clickButton(renderer: ReactTestRenderer) {
-  act(() => {
-    getSingleRendererElement(renderer).props.onClick();
-  });
-}
-
-function getSingleRendererElement(renderer: ReactTestRenderer) {
-  return renderer.toJSON() as ReactTestRendererJSON;
-}

@@ -12,7 +12,7 @@ import { MultiFixtureButton } from './MultiFixtureButton.js';
 type Props = {
   rootNode: FixtureTreeNode;
   selectedFixtureId: null | FixtureId;
-  selectedRef: RefObject<HTMLElement>;
+  selectedRef: RefObject<HTMLElement | null>;
   expansion: TreeExpansion;
   setExpansion: (expansion: TreeExpansion) => unknown;
   onSelect: (fixtureId: FixtureId) => unknown;

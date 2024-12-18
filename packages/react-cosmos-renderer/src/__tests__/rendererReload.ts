@@ -1,4 +1,4 @@
-import retry from '@skidding/async-retry';
+import { waitFor } from '@testing-library/react';
 import { uuid } from 'react-cosmos-core';
 import { vi } from 'vitest';
 import { testRenderer } from '../testHelpers/testRenderer.js';
@@ -18,6 +18,6 @@ testRenderer(
   { rendererId, fixtures, reloadRenderer: onReloadRenderer },
   async ({ reloadRenderer }) => {
     reloadRenderer({ rendererId });
-    await retry(() => expect(onReloadRenderer).toBeCalled());
+    await waitFor(() => expect(onReloadRenderer).toBeCalled());
   }
 );

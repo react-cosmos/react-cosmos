@@ -1,19 +1,12 @@
-import {
-  cloneElement,
-  Component,
-  MutableRefObject,
-  ReactElement,
-  ReactNode,
-  Ref,
-} from 'react';
+import { cloneElement, Component, ReactNode, Ref, RefObject } from 'react';
 import { findRelevantElementPaths } from '../../shared/findRelevantElementPaths.js';
 import { setElementAtPath } from '../../shared/nodeTree/index.js';
 import { CachedRefHandlers } from '../shared.js';
 import { isRefSupported } from './isRefSupported.js';
 
-type ElementWithRef = ReactElement & {
-  ref: null | Ref<any>;
-};
+// type ElementWithRef = ReactElement & {
+//   ref: null | Ref<any>;
+// };
 
 type SpyRef = (elPath: string, elRef: null | Component) => unknown;
 
@@ -30,8 +23,10 @@ export function decorateFixtureRefs(
       }
 
       return cloneElement(element, {
+        // @ts-ignore FIXME
         ref: getDecoratedRef(
-          (element as ElementWithRef).ref,
+          // @ts-ignore FIXME
+          element.props.ref,
           spyRef,
           elPath,
           cachedRefHandlers
@@ -59,7 +54,7 @@ function getDecoratedRef(
 }
 
 function decorateRefWithSpy(
-  origRef: null | Ref<any>,
+  origRef: Ref<any> | void,
   spyRef: SpyRef,
   elPath: string
 ) {
@@ -68,6 +63,7 @@ function decorateRefWithSpy(
       callOriginalRef(origRef, elRef);
     }
     spyRef(elPath, elRef);
+    // TODO: Ref cleanup?
   };
 }
 
@@ -82,6 +78,6 @@ function callOriginalRef(ref: Ref<any>, elRef: null | Component) {
     return;
   }
 
-  const refObj = ref as MutableRefObject<any>;
+  const refObj = ref as RefObject<any>;
   refObj.current = elRef;
 }

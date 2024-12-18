@@ -8,9 +8,11 @@ export default defineConfig({
     environmentMatchGlobs: [
       ['packages/react-cosmos-renderer/src/**/*', 'jsdom'],
       ['packages/react-cosmos-ui/src/**/*', 'jsdom'],
+      ['packages/react-cosmos/src/getFixtures/getFixtures.test.ts', 'jsdom'],
     ],
     // Default value: ['**/*.{test,spec}.?(c|m)[jt]s?(x)'],
     include: ['**/__tests__/**/*.{ts,tsx}', '**/?(*.)test.{ts,tsx}'],
+    setupFiles: ['./vitest-setup.js'],
     pool: 'threads',
     poolOptions: {
       threads: {

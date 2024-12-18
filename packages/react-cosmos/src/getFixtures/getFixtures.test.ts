@@ -1,5 +1,5 @@
+import { render } from '@testing-library/react';
 import path from 'node:path';
-import { create } from 'react-test-renderer';
 import { createCosmosConfig } from '../cosmosConfig/createCosmosConfig.js';
 import { getFixtures } from './getFixtures.js';
 
@@ -18,7 +18,8 @@ it('renders fixture elements', async () => {
     const match = fixures.find(
       f => f.relativeFilePath === relPath && f.name === name
     );
-    expect(create(match!.getElement())).toMatchSnapshot();
+    const renderer = render(match!.getElement());
+    expect(renderer.container).toMatchSnapshot();
   }
 
   testFixtureElement('src/CounterButton.fixture.tsx');
