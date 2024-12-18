@@ -1,4 +1,4 @@
-import retry from '@skidding/async-retry';
+import { waitFor } from '@testing-library/react';
 import React from 'react';
 import { createValues, uuid } from 'react-cosmos-core';
 import { FixtureCapture } from '../fixture/FixtureCapture/FixtureCapture.js';
@@ -32,10 +32,10 @@ const fixtureId = { path: 'first' };
 testRenderer(
   'captures props from render callback',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture, fixtureStateChange }) => {
+  async ({ containerText, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await retry(() =>
-      expect(renderer.toJSON()).toEqual(['Hello Blanca', 'Hello B'])
+    await waitFor(() =>
+      expect(containerText()).toEqual(['Hello Blanca', 'Hello B'].join(''))
     );
     await fixtureStateChange({
       rendererId,

@@ -39,7 +39,8 @@ export class ClassStateMock extends React.Component<Props> {
   }
 
   handleRef = (childRef: React.Component | null) => {
-    const prevRef = this.props.children.ref;
+    // @ts-ignore FIXME
+    const prevRef = this.props.children.props.ref;
 
     this.childRef = childRef;
 
@@ -86,7 +87,7 @@ function resetOriginalKeys(original: {}, current: {}) {
 }
 
 function manuallyCallRef(
-  ref: React.LegacyRef<unknown> | undefined,
+  ref: React.Ref<unknown> | undefined,
   elRef: React.Component | null
 ) {
   if (typeof ref === 'string') {
@@ -97,7 +98,7 @@ function manuallyCallRef(
   if (typeof ref === 'function') {
     ref(elRef);
   } else if (ref && typeof ref === 'object') {
-    // @ts-ignore
+    // @ts-ignore FIXME?
     ref.current = elRef;
   }
 }

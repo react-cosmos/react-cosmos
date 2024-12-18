@@ -1,6 +1,7 @@
+import { act, render, RenderResult } from '@testing-library/react';
 import { mapValues } from 'lodash-es';
 import { setTimeout } from 'node:timers/promises';
-import React, { act } from 'react';
+import React from 'react';
 import {
   ByPath,
   FixtureId,
@@ -11,12 +12,11 @@ import {
   RendererResponse,
   UserModuleWrappers,
 } from 'react-cosmos-core';
-import { ReactTestRenderer, create } from 'react-test-renderer';
 import { ClientFixtureLoader } from '../fixtureLoaders/ClientFixtureLoader.js';
 import { StatefulRendererProvider } from '../rendererConnect/StatefulRendererProvider.js';
 import {
-  RendererConnectTestApi,
   createRendererConnectTestApi,
+  RendererConnectTestApi,
 } from './createRendererConnectTestApi.js';
 import { createTestRendererConnect } from './createTestRendererConnect.js';
 
@@ -33,7 +33,8 @@ export type RendererTestArgs = {
 };
 
 type RendererTestApi = RendererConnectTestApi & {
-  renderer: ReactTestRenderer;
+  renderer: RenderResult;
+  containerText: () => string | null;
   update: (args: RendererTestArgs) => Promise<void>;
 };
 
@@ -52,19 +53,13 @@ export async function mountTestRenderer(
     },
   });
 
-  // This act() call ensures the component is subscribed to renderer requests
-  // before the test is executed.
-  let renderer = undefined as any as ReactTestRenderer;
-  act(() => {
-    renderer = create(getElement(rendererConnect, args));
-  });
+  const renderer = render(getElement(rendererConnect, args));
   try {
     await cb({
       renderer,
+      containerText: () => renderer.container.textContent,
       update: async newArgs => {
-        act(() => {
-          renderer.update(getElement(rendererConnect, newArgs));
-        });
+        renderer.rerender(getElement(rendererConnect, newArgs));
       },
       ...createRendererConnectTestApi({
         getResponses: () => responses,
@@ -133,7 +128,7 @@ function dynamicImportWrapper<T>(module: T) {
   return new Promise<T>(async resolve => {
     // Simulate module download time
     await setTimeout(25 + Math.round(Math.random() * 25));
-    act(() => {
+    await act(async () => {
       resolve(module);
     });
   });

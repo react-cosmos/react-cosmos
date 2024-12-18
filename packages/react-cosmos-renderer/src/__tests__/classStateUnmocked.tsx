@@ -1,4 +1,4 @@
-import retry from '@skidding/async-retry';
+import { waitFor } from '@testing-library/react';
 import React from 'react';
 import {
   createValues,
@@ -24,9 +24,9 @@ const fixtureId = { path: 'first' };
 testRenderer(
   'captures initial state',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture, fixtureStateChange }) => {
+  async ({ containerText, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await retry(() => expect(renderer.toJSON()).toBe('0 times'));
+    await waitFor(() => expect(containerText()).toBe('0 times'));
     await fixtureStateChange({
       rendererId,
       fixtureId,
@@ -46,7 +46,12 @@ testRenderer(
 testRenderer(
   'overwrites initial state',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
+  async ({
+    containerText,
+    selectFixture,
+    setFixtureState,
+    getLastFixtureState,
+  }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const classStateFs = getClassState(fixtureState);
@@ -62,14 +67,19 @@ testRenderer(
         }),
       },
     });
-    await retry(() => expect(renderer.toJSON()).toBe('5 times'));
+    await waitFor(() => expect(containerText()).toBe('5 times'));
   }
 );
 
 testRenderer(
   'removes initial state property',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
+  async ({
+    containerText,
+    selectFixture,
+    setFixtureState,
+    getLastFixtureState,
+  }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const classStateFs = getClassState(fixtureState);
@@ -85,14 +95,19 @@ testRenderer(
         }),
       },
     });
-    await retry(() => expect(renderer.toJSON()).toBe('Missing count'));
+    await waitFor(() => expect(containerText()).toBe('Missing count'));
   }
 );
 
 testRenderer(
   'reverts to initial state',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
+  async ({
+    containerText,
+    selectFixture,
+    setFixtureState,
+    getLastFixtureState,
+  }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const classStateFs = getClassState(fixtureState);
@@ -108,7 +123,7 @@ testRenderer(
         }),
       },
     });
-    await retry(() => expect(renderer.toJSON()).toBe('5 times'));
+    await waitFor(() => expect(containerText()).toBe('5 times'));
     setFixtureState({
       rendererId,
       fixtureId,
@@ -116,6 +131,6 @@ testRenderer(
         classState: removeClassStateFixtureStateItem(classStateFs, elementId),
       },
     });
-    await retry(() => expect(renderer.toJSON()).toBe('0 times'));
+    await waitFor(() => expect(containerText()).toBe('0 times'));
   }
 );

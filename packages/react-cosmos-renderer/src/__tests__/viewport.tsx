@@ -1,4 +1,4 @@
-import retry from '@skidding/async-retry';
+import { waitFor } from '@testing-library/react';
 import React from 'react';
 import { uuid } from 'react-cosmos-core';
 import { Viewport } from '../fixture/Viewport.js';
@@ -18,13 +18,13 @@ const fixtureId = { path: 'first' };
 testRenderer(
   'renders children',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture }) => {
+  async ({ containerText, selectFixture }) => {
     selectFixture({
       rendererId,
       fixtureId,
       fixtureState: {},
     });
-    await retry(() => expect(renderer.toJSON()).toBe('yo'));
+    await waitFor(() => expect(containerText()).toBe('yo'));
   }
 );
 

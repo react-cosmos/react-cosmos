@@ -1,4 +1,4 @@
-import retry from '@skidding/async-retry';
+import { act, waitFor } from '@testing-library/react';
 import until from 'async-until';
 import React from 'react';
 import {
@@ -40,7 +40,7 @@ testRenderer(
   'keeps props when state changes',
   { rendererId, fixtures: getFixtures() },
   async ({
-    renderer,
+    containerText,
     selectFixture,
     setFixtureState,
     fixtureStateChange,
@@ -62,12 +62,14 @@ testRenderer(
         }),
       },
     });
-    await retry(() => expect(renderer.toJSON()).toBe('0 timez'));
+    await waitFor(() => expect(containerText()).toBe('0 timez'));
 
     await until(() => counterRef, { timeout: 1000 });
-    counterRef!.setState({ count: 7 });
+    await act(async () => {
+      counterRef!.setState({ count: 7 });
+    });
 
-    await retry(() => expect(renderer.toJSON()).toBe('7 timez'));
+    await waitFor(() => expect(containerText()).toBe('7 timez'));
     await fixtureStateChange({
       rendererId,
       fixtureId,

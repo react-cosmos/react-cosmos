@@ -1,4 +1,4 @@
-import retry from '@skidding/async-retry';
+import { waitFor } from '@testing-library/react';
 import React from 'react';
 import {
   createValues,
@@ -58,7 +58,12 @@ testRenderer(
 testRenderer(
   'overwrites mocked state in second instances',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
+  async ({
+    containerText,
+    selectFixture,
+    setFixtureState,
+    getLastFixtureState,
+  }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const classStateFs = getClassState(fixtureState, 2);
@@ -74,8 +79,8 @@ testRenderer(
         }),
       },
     });
-    await retry(() =>
-      expect(renderer.toJSON()).toEqual(['5 times', '100 times'])
+    await waitFor(() =>
+      expect(containerText()).toEqual(['5 times', '100 times'].join(''))
     );
   }
 );

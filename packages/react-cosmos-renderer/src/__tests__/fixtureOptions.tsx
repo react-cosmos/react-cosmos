@@ -1,4 +1,4 @@
-import retry from '@skidding/async-retry';
+import { waitFor } from '@testing-library/react';
 import React from 'react';
 import { DecoratorProps, uuid } from 'react-cosmos-core';
 import { testRenderer } from '../testHelpers/testRenderer.js';
@@ -28,27 +28,27 @@ const decorators = wrapDefaultExport({
 testRenderer(
   'renders selected fixture',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture }) => {
+  async ({ containerText, selectFixture }) => {
     selectFixture({
       rendererId,
       fixtureId: { path: 'fixture1.js' },
       fixtureState: {},
     });
-    await retry(() => expect(renderer.toJSON()).toBe('Hello World'));
+    await waitFor(() => expect(containerText()).toBe('Hello World'));
   }
 );
 
 testRenderer(
   'passes fixture options to decorator',
   { rendererId, fixtures, decorators },
-  async ({ renderer, selectFixture }) => {
+  async ({ containerText, selectFixture }) => {
     selectFixture({
       rendererId,
       fixtureId: { path: 'fixture1.js' },
       fixtureState: {},
     });
-    await retry(() =>
-      expect(renderer.toJSON()).toBe('{"width":320,"height":240}')
+    await waitFor(() =>
+      expect(containerText()).toBe('{"width":320,"height":240}')
     );
   }
 );

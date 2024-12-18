@@ -1,4 +1,4 @@
-import retry from '@skidding/async-retry';
+import { waitFor } from '@testing-library/react';
 import React from 'react';
 import { uuid } from 'react-cosmos-core';
 import { testRenderer } from '../testHelpers/testRenderer.js';
@@ -25,7 +25,7 @@ const decorators = wrapDefaultExport({
 testRenderer(
   'renders lazy selected fixture inside decorator',
   { rendererId, fixtures, decorators, lazy: true },
-  async ({ renderer, selectFixture }) => {
+  async ({ containerText, selectFixture }) => {
     const [path] = Object.keys(fixtures);
     selectFixture({
       rendererId,
@@ -34,12 +34,10 @@ testRenderer(
     });
     // "src/bar/decorator" should be omitted because it's not a placed in
     // a parent directory of the selected fixture
-    await retry(() =>
-      expect(renderer.toJSON()).toEqual([
-        'Decorated at src',
-        'Decorated at src/foo',
-        'Hello!',
-      ])
+    await waitFor(() =>
+      expect(containerText()).toEqual(
+        ['Decorated at src', 'Decorated at src/foo', 'Hello!'].join('')
+      )
     );
   }
 );

@@ -1,4 +1,4 @@
-import retry from '@skidding/async-retry';
+import { waitFor } from '@testing-library/react';
 import React from 'react';
 import {
   createValues,
@@ -20,9 +20,9 @@ const fixtureId = { path: 'first' };
 testRenderer(
   'captures props',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture, fixtureStateChange }) => {
+  async ({ containerText, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await retry(() => expect(renderer.toJSON()).toBe('Hello Blanca'));
+    await waitFor(() => expect(containerText()).toBe('Hello Blanca'));
     await fixtureStateChange({
       rendererId,
       fixtureId,
@@ -41,7 +41,12 @@ testRenderer(
 testRenderer(
   'overwrites prop',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
+  async ({
+    containerText,
+    selectFixture,
+    setFixtureState,
+    getLastFixtureState,
+  }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const propsFs = getProps(fixtureState);
@@ -57,14 +62,19 @@ testRenderer(
         }),
       },
     });
-    await retry(() => expect(renderer.toJSON()).toBe('Hello B'));
+    await waitFor(() => expect(containerText()).toBe('Hello B'));
   }
 );
 
 testRenderer(
   'removes prop',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
+  async ({
+    containerText,
+    selectFixture,
+    setFixtureState,
+    getLastFixtureState,
+  }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const propsFs = getProps(fixtureState);
@@ -80,7 +90,7 @@ testRenderer(
         }),
       },
     });
-    await retry(() => expect(renderer.toJSON()).toBe('Hello Stranger'));
+    await waitFor(() => expect(containerText()).toBe('Hello Stranger'));
   }
 );
 
@@ -88,7 +98,7 @@ testRenderer(
   'clears props',
   { rendererId, fixtures },
   async ({
-    renderer,
+    containerText,
     selectFixture,
     setFixtureState,
     fixtureStateChange,
@@ -109,7 +119,7 @@ testRenderer(
         }),
       },
     });
-    await retry(() => expect(renderer.toJSON()).toBe('Hello B'));
+    await waitFor(() => expect(containerText()).toBe('Hello B'));
     setFixtureState({
       rendererId,
       fixtureId,
@@ -117,7 +127,7 @@ testRenderer(
         props: removePropsFixtureStateItem(propsFs, elementId),
       },
     });
-    await retry(() => expect(renderer.toJSON()).toBe('Hello Blanca'));
+    await waitFor(() => expect(containerText()).toBe('Hello Blanca'));
     // After the props are removed from the fixture state, the original
     // props are added back through a fixtureStateChange message
     await fixtureStateChange({
@@ -139,7 +149,7 @@ testRenderer(
   'overwrites fixture state on fixture change',
   { rendererId, fixtures },
   async ({
-    renderer,
+    containerText,
     update,
     selectFixture,
     setFixtureState,
@@ -161,7 +171,7 @@ testRenderer(
         }),
       },
     });
-    await retry(() => expect(renderer.toJSON()).toBe('Hello B'));
+    await waitFor(() => expect(containerText()).toBe('Hello B'));
     update({
       rendererId,
       fixtures: wrapDefaultExport({
@@ -180,14 +190,14 @@ testRenderer(
         ],
       },
     });
-    await retry(() => expect(renderer.toJSON()).toBe('Hello Benjamin'));
+    await waitFor(() => expect(containerText()).toBe('Hello Benjamin'));
   }
 );
 
 testRenderer(
   'clears fixture state for removed fixture element',
   { rendererId, fixtures },
-  async ({ renderer, update, selectFixture, fixtureStateChange }) => {
+  async ({ containerText, update, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await fixtureStateChange({
       rendererId,
@@ -209,7 +219,7 @@ testRenderer(
         first: 'Hello all',
       }),
     });
-    await retry(() => expect(renderer.toJSON()).toBe('Hello all'));
+    await waitFor(() => expect(containerText()).toBe('Hello all'));
     await fixtureStateChange({
       rendererId,
       fixtureId,

@@ -1,4 +1,4 @@
-import retry from '@skidding/async-retry';
+import { waitFor } from '@testing-library/react';
 import { uniq } from 'lodash-es';
 import React from 'react';
 import {
@@ -40,7 +40,7 @@ testRenderer(
   'transitions props (reuses component instance)',
   { rendererId, fixtures: getFixtures() },
   async ({
-    renderer,
+    containerText,
     update,
     selectFixture,
     setFixtureState,
@@ -61,10 +61,10 @@ testRenderer(
         }),
       },
     });
-    await retry(() => expect(renderer.toJSON()).toEqual('Hello B'));
+    await waitFor(() => expect(containerText()).toEqual('Hello B'));
     update({ rendererId, fixtures: getFixtures() });
-    await retry(() => {
-      expect(renderer.toJSON()).toEqual('Hello Blanca');
+    await waitFor(() => {
+      expect(containerText()).toEqual('Hello Blanca');
       expect(uniq(refs).length).toBe(1);
     });
   }
@@ -74,7 +74,7 @@ testRenderer(
   'resets props (creates new component instance)',
   { rendererId, fixtures: getFixtures() },
   async ({
-    renderer,
+    containerText,
     update,
     selectFixture,
     setFixtureState,
@@ -95,10 +95,10 @@ testRenderer(
         }),
       },
     });
-    await retry(() => expect(renderer.toJSON()).toEqual('Hello B'));
+    await waitFor(() => expect(containerText()).toEqual('Hello B'));
     update({ rendererId, fixtures: getFixtures() });
-    await retry(() => {
-      expect(renderer.toJSON()).toEqual('Hello Blanca');
+    await waitFor(() => {
+      expect(containerText()).toEqual('Hello Blanca');
       expect(uniq(refs).length).toBe(2);
     });
   }

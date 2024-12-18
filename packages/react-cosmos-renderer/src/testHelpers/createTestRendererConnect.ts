@@ -1,5 +1,5 @@
+import { act } from '@testing-library/react';
 import { setTimeout } from 'node:timers/promises';
-import { act } from 'react';
 import {
   RendererConnect,
   RendererRequest,
@@ -30,7 +30,7 @@ export function createTestRendererConnect({ onRendererResponse }: Args) {
   async function postRendererRequest(rendererRequest: RendererRequest) {
     // Simulate async communication between renderer and parent
     await setTimeout(Math.round(Math.random() * 50));
-    act(() => {
+    await act(async () => {
       messageHandlers.forEach(handler => {
         handler(rendererRequest);
       });

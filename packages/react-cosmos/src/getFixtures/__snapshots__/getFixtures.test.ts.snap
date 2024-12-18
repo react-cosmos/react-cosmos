@@ -1,44 +1,42 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`renders fixture elements 1`] = `
-<button
-  onClick={[Function]}
-  title="Click to increment"
->
-  0
-   
-  times
-</button>
+<div>
+  <button
+    title="Click to increment"
+  >
+    0
+     
+    times
+  </button>
+</div>
 `;
 
 exports[`renders fixture elements 2`] = `
-<button
-  onClick={[Function]}
-  title="Click to increment"
->
-  555555555
-   
-  times
-</button>
+<div>
+  <button
+    title="Click to increment"
+  >
+    555555555
+     
+    times
+  </button>
+</div>
 `;
 
 exports[`renders fixture elements 3`] = `
-<div
-  style={
-    {
-      "border": "2px dashed #AAA",
-      "borderRadius": 8,
-      "padding": "0 16px",
-    }
-  }
->
-  <h1>
-    Hi
-     
-    <strong>
-      Maggie
-    </strong>
-    !
-  </h1>
+<div>
+  <div
+    style="border: 2px dashed #aaa; padding: 0px 16px; border-radius: 8px;"
+  >
+    <h1>
+      Hi
+       
+      <strong>
+        Maggie
+      </strong>
+      !
+    </h1>
+  </div>
 </div>
 `;
