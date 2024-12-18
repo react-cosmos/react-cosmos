@@ -1,10 +1,10 @@
 import {
   cloneElement,
   Component,
-  MutableRefObject,
   ReactElement,
   ReactNode,
   Ref,
+  RefObject,
 } from 'react';
 import { findRelevantElementPaths } from '../../shared/findRelevantElementPaths.js';
 import { setElementAtPath } from '../../shared/nodeTree/index.js';
@@ -83,7 +83,6 @@ function callOriginalRef(ref: Ref<any>, elRef: null | Component) {
     return;
   }
 
-  // TODO: Replace deprecated MutableRefObject type
-  const refObj = ref as MutableRefObject<any>;
+  const refObj = ref as RefObject<any>;
   refObj.current = elRef;
 }

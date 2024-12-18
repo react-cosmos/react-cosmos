@@ -3,8 +3,8 @@ import {
   Component,
   ComponentClass,
   ComponentType,
-  MutableRefObject,
   ReactNode,
+  RefObject,
   useEffect,
   useRef,
 } from 'react';
@@ -32,7 +32,7 @@ import {
 export function useFixtureClassState(
   fixture: ReactNode,
   decoratorId: FixtureDecoratorId,
-  elRefs: MutableRefObject<ElRefs>
+  elRefs: RefObject<ElRefs>
 ) {
   const elPaths = findRelevantElementPaths(fixture);
   const [classStateFs, setClassStateFs] =
