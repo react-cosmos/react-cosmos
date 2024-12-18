@@ -5,7 +5,6 @@ import {
   UserModuleWrappers,
 } from 'react-cosmos-core';
 import { ClientFixtureLoader } from 'react-cosmos-renderer/client';
-// @ts-ignore FIXME Need to install react-native in the monorepo?
 import * as ReactNative from 'react-native';
 import { NativeRendererProvider } from './NativeRendererProvider.js';
 
