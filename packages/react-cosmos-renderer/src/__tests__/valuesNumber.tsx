@@ -26,9 +26,9 @@ const fixtureId = { path: 'first' };
 testRenderer(
   'renders fixture',
   { rendererId, fixtures },
-  async ({ containerText, selectFixture }) => {
+  async ({ rootText, selectFixture }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await waitFor(() => expect(containerText()).toBe('0 clicks'));
+    await waitFor(() => expect(rootText()).toBe('0 clicks'));
   }
 );
 
@@ -57,9 +57,9 @@ testRenderer(
 testRenderer(
   'updates fixture state via setter',
   { rendererId, fixtures },
-  async ({ renderer, containerText, selectFixture, fixtureStateChange }) => {
+  async ({ renderer, rootText, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await waitFor(() => expect(containerText()).toBe('0 clicks'));
+    await waitFor(() => expect(rootText()).toBe('0 clicks'));
     fireEvent.click(renderer.getByRole('button'));
     fireEvent.click(renderer.getByRole('button'));
     await fixtureStateChange({
@@ -82,9 +82,9 @@ testRenderer(
 testRenderer(
   'resets fixture state on default value change',
   { rendererId, fixtures },
-  async ({ containerText, update, selectFixture, fixtureStateChange }) => {
+  async ({ rootText, update, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await waitFor(() => expect(containerText()).toBe('0 clicks'));
+    await waitFor(() => expect(rootText()).toBe('0 clicks'));
     update({
       rendererId,
       fixtures: createFixtures({ defaultValue: 5 }),

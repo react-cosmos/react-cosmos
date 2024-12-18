@@ -29,9 +29,9 @@ const fixtureId = { path: 'first' };
 testRenderer(
   'captures mocked state',
   { rendererId, fixtures },
-  async ({ containerText, selectFixture, fixtureStateChange }) => {
+  async ({ rootText, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await waitFor(() => expect(containerText()).toBe('5 times'));
+    await waitFor(() => expect(rootText()).toBe('5 times'));
     await fixtureStateChange({
       rendererId,
       fixtureId,
@@ -51,12 +51,7 @@ testRenderer(
 testRenderer(
   'overwrites mocked state',
   { rendererId, fixtures },
-  async ({
-    containerText,
-    selectFixture,
-    setFixtureState,
-    getLastFixtureState,
-  }) => {
+  async ({ rootText, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const classStateFs = getClassState(fixtureState);
@@ -72,7 +67,7 @@ testRenderer(
         }),
       },
     });
-    await waitFor(() => expect(containerText()).toBe('100 times'));
+    await waitFor(() => expect(rootText()).toBe('100 times'));
     // A second update will provide code coverage for a different branch:
     // the transition between fixture state values
     setFixtureState({
@@ -86,19 +81,14 @@ testRenderer(
         }),
       },
     });
-    await waitFor(() => expect(containerText()).toBe('200 times'));
+    await waitFor(() => expect(rootText()).toBe('200 times'));
   }
 );
 
 testRenderer(
   'removes mocked state property',
   { rendererId, fixtures },
-  async ({
-    containerText,
-    selectFixture,
-    setFixtureState,
-    getLastFixtureState,
-  }) => {
+  async ({ rootText, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const classStateFs = getClassState(fixtureState);
@@ -114,7 +104,7 @@ testRenderer(
         }),
       },
     });
-    await waitFor(() => expect(containerText()).toBe('Missing count'));
+    await waitFor(() => expect(rootText()).toBe('Missing count'));
   }
 );
 
@@ -122,7 +112,7 @@ testRenderer(
   'reverts to mocked state',
   { rendererId, fixtures },
   async ({
-    containerText,
+    rootText,
     selectFixture,
     setFixtureState,
     fixtureStateChange,
@@ -143,7 +133,7 @@ testRenderer(
         }),
       },
     });
-    await waitFor(() => expect(containerText()).toBe('10 times'));
+    await waitFor(() => expect(rootText()).toBe('10 times'));
     setFixtureState({
       rendererId,
       fixtureId,
@@ -151,7 +141,7 @@ testRenderer(
         classState: removeClassStateFixtureStateItem(classStateFs, elementId),
       },
     });
-    await waitFor(() => expect(containerText()).toBe('5 times'));
+    await waitFor(() => expect(rootText()).toBe('5 times'));
     // After the state is removed from the fixture state, the original
     // state is added back through a fixtureStateChange message
     await fixtureStateChange({
@@ -174,7 +164,7 @@ testRenderer(
   'applies fixture state to replaced component type',
   { rendererId, fixtures },
   async ({
-    containerText,
+    rootText,
     update,
     selectFixture,
     setFixtureState,
@@ -195,7 +185,7 @@ testRenderer(
         }),
       },
     });
-    await waitFor(() => expect(containerText()).toBe('50 times'));
+    await waitFor(() => expect(rootText()).toBe('50 times'));
     update({
       rendererId,
       fixtures: wrapDefaultExport({
@@ -206,7 +196,7 @@ testRenderer(
         ),
       }),
     });
-    await waitFor(() => expect(containerText()).toBe('50 timez'));
+    await waitFor(() => expect(rootText()).toBe('50 timez'));
   }
 );
 
@@ -214,7 +204,7 @@ testRenderer(
   'overwrites fixture state on fixture change',
   { rendererId, fixtures },
   async ({
-    containerText,
+    rootText,
     update,
     selectFixture,
     setFixtureState,
@@ -236,7 +226,7 @@ testRenderer(
         }),
       },
     });
-    await waitFor(() => expect(containerText()).toBe('6 times'));
+    await waitFor(() => expect(rootText()).toBe('6 times'));
     // When the fixture changes the fixture state follows along
     update({
       rendererId,
@@ -261,14 +251,14 @@ testRenderer(
         ],
       },
     });
-    expect(containerText()).toBe('50 times');
+    expect(rootText()).toBe('50 times');
   }
 );
 
 testRenderer(
   'clears fixture state for removed fixture element',
   { rendererId, fixtures },
-  async ({ containerText, update, selectFixture, fixtureStateChange }) => {
+  async ({ rootText, update, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await fixtureStateChange({
       rendererId,
@@ -291,7 +281,7 @@ testRenderer(
         first: 'No counts for you.',
       }),
     });
-    await waitFor(() => expect(containerText()).toBe('No counts for you.'));
+    await waitFor(() => expect(rootText()).toBe('No counts for you.'));
     await fixtureStateChange({
       rendererId,
       fixtureId,

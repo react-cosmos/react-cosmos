@@ -28,28 +28,26 @@ const decorators = wrapDefaultExport({
 testRenderer(
   'renders selected fixture',
   { rendererId, fixtures },
-  async ({ containerText, selectFixture }) => {
+  async ({ rootText, selectFixture }) => {
     selectFixture({
       rendererId,
       fixtureId: { path: 'fixture1.js' },
       fixtureState: {},
     });
-    await waitFor(() => expect(containerText()).toBe('Hello World'));
+    await waitFor(() => expect(rootText()).toBe('Hello World'));
   }
 );
 
 testRenderer(
   'passes fixture options to decorator',
   { rendererId, fixtures, decorators },
-  async ({ containerText, selectFixture }) => {
+  async ({ rootText, selectFixture }) => {
     selectFixture({
       rendererId,
       fixtureId: { path: 'fixture1.js' },
       fixtureState: {},
     });
-    await waitFor(() =>
-      expect(containerText()).toBe('{"width":320,"height":240}')
-    );
+    await waitFor(() => expect(rootText()).toBe('{"width":320,"height":240}'));
   }
 );
 

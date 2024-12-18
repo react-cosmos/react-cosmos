@@ -32,10 +32,10 @@ const fixtureId = { path: 'first' };
 testRenderer(
   'captures props from render callback',
   { rendererId, fixtures },
-  async ({ containerText, selectFixture, fixtureStateChange }) => {
+  async ({ rootText, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await waitFor(() =>
-      expect(containerText()).toEqual(['Hello Blanca', 'Hello B'].join(''))
+      expect(rootText()).toEqual(['Hello Blanca', 'Hello B'].join(''))
     );
     await fixtureStateChange({
       rendererId,

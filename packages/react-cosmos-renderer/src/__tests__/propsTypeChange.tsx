@@ -26,14 +26,14 @@ testRenderer(
   'persists props after type changes reference but keeps name (hmr simulation)',
   { rendererId, fixtures },
   async ({
-    containerText,
+    rootText,
     update,
     selectFixture,
     getLastFixtureState,
     setFixtureState,
   }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await waitFor(() => expect(containerText()).toBe('Hello Theo'));
+    await waitFor(() => expect(rootText()).toBe('Hello Theo'));
     const fixtureState = await getLastFixtureState();
     const propsFs = getProps(fixtureState);
     const [{ elementId }] = propsFs;
@@ -48,8 +48,8 @@ testRenderer(
         }),
       },
     });
-    await waitFor(() => expect(containerText()).toBe('Hello Theo Von'));
+    await waitFor(() => expect(rootText()).toBe('Hello Theo Von'));
     update({ rendererId, fixtures: createFixtures() });
-    await waitFor(() => expect(containerText()).toBe('Hello Theo Von'));
+    await waitFor(() => expect(rootText()).toBe('Hello Theo Von'));
   }
 );

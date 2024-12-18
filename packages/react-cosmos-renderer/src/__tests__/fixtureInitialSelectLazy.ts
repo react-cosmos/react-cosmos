@@ -17,8 +17,8 @@ testRenderer(
     fixtures,
     lazy: true,
   },
-  async ({ containerText }) => {
-    await waitFor(() => expect(containerText()).toBe('First'));
+  async ({ rootText }) => {
+    await waitFor(() => expect(rootText()).toBe('First'));
   }
 );
 
@@ -30,8 +30,8 @@ testRenderer(
     fixtures,
     lazy: true,
   },
-  async ({ containerText }) => {
-    await waitFor(() => expect(containerText()).toBe('Second'));
+  async ({ rootText }) => {
+    await waitFor(() => expect(rootText()).toBe('Second'));
   }
 );
 

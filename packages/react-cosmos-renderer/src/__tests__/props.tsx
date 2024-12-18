@@ -20,9 +20,9 @@ const fixtureId = { path: 'first' };
 testRenderer(
   'captures props',
   { rendererId, fixtures },
-  async ({ containerText, selectFixture, fixtureStateChange }) => {
+  async ({ rootText, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await waitFor(() => expect(containerText()).toBe('Hello Blanca'));
+    await waitFor(() => expect(rootText()).toBe('Hello Blanca'));
     await fixtureStateChange({
       rendererId,
       fixtureId,
@@ -41,12 +41,7 @@ testRenderer(
 testRenderer(
   'overwrites prop',
   { rendererId, fixtures },
-  async ({
-    containerText,
-    selectFixture,
-    setFixtureState,
-    getLastFixtureState,
-  }) => {
+  async ({ rootText, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const propsFs = getProps(fixtureState);
@@ -62,19 +57,14 @@ testRenderer(
         }),
       },
     });
-    await waitFor(() => expect(containerText()).toBe('Hello B'));
+    await waitFor(() => expect(rootText()).toBe('Hello B'));
   }
 );
 
 testRenderer(
   'removes prop',
   { rendererId, fixtures },
-  async ({
-    containerText,
-    selectFixture,
-    setFixtureState,
-    getLastFixtureState,
-  }) => {
+  async ({ rootText, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const propsFs = getProps(fixtureState);
@@ -90,7 +80,7 @@ testRenderer(
         }),
       },
     });
-    await waitFor(() => expect(containerText()).toBe('Hello Stranger'));
+    await waitFor(() => expect(rootText()).toBe('Hello Stranger'));
   }
 );
 
@@ -98,7 +88,7 @@ testRenderer(
   'clears props',
   { rendererId, fixtures },
   async ({
-    containerText,
+    rootText,
     selectFixture,
     setFixtureState,
     fixtureStateChange,
@@ -119,7 +109,7 @@ testRenderer(
         }),
       },
     });
-    await waitFor(() => expect(containerText()).toBe('Hello B'));
+    await waitFor(() => expect(rootText()).toBe('Hello B'));
     setFixtureState({
       rendererId,
       fixtureId,
@@ -127,7 +117,7 @@ testRenderer(
         props: removePropsFixtureStateItem(propsFs, elementId),
       },
     });
-    await waitFor(() => expect(containerText()).toBe('Hello Blanca'));
+    await waitFor(() => expect(rootText()).toBe('Hello Blanca'));
     // After the props are removed from the fixture state, the original
     // props are added back through a fixtureStateChange message
     await fixtureStateChange({
@@ -149,7 +139,7 @@ testRenderer(
   'overwrites fixture state on fixture change',
   { rendererId, fixtures },
   async ({
-    containerText,
+    rootText,
     update,
     selectFixture,
     setFixtureState,
@@ -171,7 +161,7 @@ testRenderer(
         }),
       },
     });
-    await waitFor(() => expect(containerText()).toBe('Hello B'));
+    await waitFor(() => expect(rootText()).toBe('Hello B'));
     update({
       rendererId,
       fixtures: wrapDefaultExport({
@@ -190,14 +180,14 @@ testRenderer(
         ],
       },
     });
-    await waitFor(() => expect(containerText()).toBe('Hello Benjamin'));
+    await waitFor(() => expect(rootText()).toBe('Hello Benjamin'));
   }
 );
 
 testRenderer(
   'clears fixture state for removed fixture element',
   { rendererId, fixtures },
-  async ({ containerText, update, selectFixture, fixtureStateChange }) => {
+  async ({ rootText, update, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await fixtureStateChange({
       rendererId,
@@ -219,7 +209,7 @@ testRenderer(
         first: 'Hello all',
       }),
     });
-    await waitFor(() => expect(containerText()).toBe('Hello all'));
+    await waitFor(() => expect(rootText()).toBe('Hello all'));
     await fixtureStateChange({
       rendererId,
       fixtureId,

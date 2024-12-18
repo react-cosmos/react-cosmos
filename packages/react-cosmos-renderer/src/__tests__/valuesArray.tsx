@@ -31,10 +31,10 @@ const fixtureId = { path: 'first' };
 testRenderer(
   'renders fixture',
   { rendererId, fixtures },
-  async ({ containerText, selectFixture }) => {
+  async ({ rootText, selectFixture }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     await waitFor(() => {
-      expect(containerText()).toBe(
+      expect(rootText()).toBe(
         JSON.stringify([{ isAdmin: true, name: 'Pat D', age: 45 }])
       );
     });

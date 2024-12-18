@@ -9,10 +9,8 @@ const fixtures = wrapDefaultExport({ first: null, second: null });
 testRenderer(
   'renders blank state message',
   { rendererId, fixtures },
-  async ({ containerText }) => {
-    await waitFor(() =>
-      expect(containerText()).toEqual('No fixture selected.')
-    );
+  async ({ rootText }) => {
+    await waitFor(() => expect(rootText()).toEqual('No fixture selected.'));
   }
 );
 

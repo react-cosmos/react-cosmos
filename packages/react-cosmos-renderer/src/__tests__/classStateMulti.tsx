@@ -58,12 +58,7 @@ testRenderer(
 testRenderer(
   'overwrites mocked state in second instances',
   { rendererId, fixtures },
-  async ({
-    containerText,
-    selectFixture,
-    setFixtureState,
-    getLastFixtureState,
-  }) => {
+  async ({ rootText, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const classStateFs = getClassState(fixtureState, 2);
@@ -80,7 +75,7 @@ testRenderer(
       },
     });
     await waitFor(() =>
-      expect(containerText()).toEqual(['5 times', '100 times'].join(''))
+      expect(rootText()).toEqual(['5 times', '100 times'].join(''))
     );
   }
 );

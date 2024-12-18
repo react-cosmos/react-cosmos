@@ -24,14 +24,14 @@ const fixtureId = { path: 'first' };
 testRenderer(
   'captures multiple props instances',
   { rendererId, fixtures },
-  async ({ containerText, selectFixture, fixtureStateChange }) => {
+  async ({ rootText, selectFixture, fixtureStateChange }) => {
     selectFixture({
       rendererId,
       fixtureId,
       fixtureState: {},
     });
     await waitFor(() =>
-      expect(containerText()).toEqual(['Hello Blanca', 'Hello B'].join(''))
+      expect(rootText()).toEqual(['Hello Blanca', 'Hello B'].join(''))
     );
     await fixtureStateChange({
       rendererId,
@@ -57,12 +57,7 @@ testRenderer(
 testRenderer(
   'overwrites prop in second instance',
   { rendererId, fixtures },
-  async ({
-    containerText,
-    selectFixture,
-    setFixtureState,
-    getLastFixtureState,
-  }) => {
+  async ({ rootText, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({
       rendererId,
       fixtureId,
@@ -83,9 +78,7 @@ testRenderer(
       },
     });
     await waitFor(() =>
-      expect(containerText()).toEqual(
-        ['Hello Blanca', 'Hello Benjamin'].join('')
-      )
+      expect(rootText()).toEqual(['Hello Blanca', 'Hello Benjamin'].join(''))
     );
   }
 );

@@ -25,7 +25,7 @@ const decorators = wrapDefaultExport({
 testRenderer(
   'renders lazy selected fixture inside decorator',
   { rendererId, fixtures, decorators, lazy: true },
-  async ({ containerText, selectFixture }) => {
+  async ({ rootText, selectFixture }) => {
     const [path] = Object.keys(fixtures);
     selectFixture({
       rendererId,
@@ -35,7 +35,7 @@ testRenderer(
     // "src/bar/decorator" should be omitted because it's not a placed in
     // a parent directory of the selected fixture
     await waitFor(() =>
-      expect(containerText()).toEqual(
+      expect(rootText()).toEqual(
         ['Decorated at src', 'Decorated at src/foo', 'Hello!'].join('')
       )
     );

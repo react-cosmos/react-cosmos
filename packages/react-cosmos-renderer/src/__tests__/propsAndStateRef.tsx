@@ -40,7 +40,7 @@ testRenderer(
   'keeps props when state changes',
   { rendererId, fixtures: getFixtures() },
   async ({
-    containerText,
+    rootText,
     selectFixture,
     setFixtureState,
     fixtureStateChange,
@@ -62,14 +62,14 @@ testRenderer(
         }),
       },
     });
-    await waitFor(() => expect(containerText()).toBe('0 timez'));
+    await waitFor(() => expect(rootText()).toBe('0 timez'));
 
     await until(() => counterRef, { timeout: 1000 });
     await act(async () => {
       counterRef!.setState({ count: 7 });
     });
 
-    await waitFor(() => expect(containerText()).toBe('7 timez'));
+    await waitFor(() => expect(rootText()).toBe('7 timez'));
     await fixtureStateChange({
       rendererId,
       fixtureId,

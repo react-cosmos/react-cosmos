@@ -18,13 +18,13 @@ const fixtureId = { path: 'first' };
 testRenderer(
   'renders children',
   { rendererId, fixtures },
-  async ({ containerText, selectFixture }) => {
+  async ({ rootText, selectFixture }) => {
     selectFixture({
       rendererId,
       fixtureId,
       fixtureState: {},
     });
-    await waitFor(() => expect(containerText()).toBe('yo'));
+    await waitFor(() => expect(rootText()).toBe('yo'));
   }
 );
 

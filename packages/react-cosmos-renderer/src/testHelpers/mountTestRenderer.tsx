@@ -34,7 +34,7 @@ export type RendererTestArgs = {
 
 type RendererTestApi = RendererConnectTestApi & {
   renderer: RenderResult;
-  containerText: () => string | null;
+  rootText: () => string | null;
   update: (args: RendererTestArgs) => Promise<void>;
 };
 
@@ -57,7 +57,7 @@ export async function mountTestRenderer(
   try {
     await cb({
       renderer,
-      containerText: () => renderer.container.textContent,
+      rootText: () => renderer.container.textContent,
       update: async newArgs => {
         renderer.rerender(getElement(rendererConnect, newArgs));
       },

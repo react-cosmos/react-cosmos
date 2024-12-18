@@ -40,7 +40,7 @@ testRenderer(
   'transitions props (reuses component instance)',
   { rendererId, fixtures: getFixtures() },
   async ({
-    containerText,
+    rootText,
     update,
     selectFixture,
     setFixtureState,
@@ -61,10 +61,10 @@ testRenderer(
         }),
       },
     });
-    await waitFor(() => expect(containerText()).toEqual('Hello B'));
+    await waitFor(() => expect(rootText()).toEqual('Hello B'));
     update({ rendererId, fixtures: getFixtures() });
     await waitFor(() => {
-      expect(containerText()).toEqual('Hello Blanca');
+      expect(rootText()).toEqual('Hello Blanca');
       expect(uniq(refs).length).toBe(1);
     });
   }
@@ -74,7 +74,7 @@ testRenderer(
   'resets props (creates new component instance)',
   { rendererId, fixtures: getFixtures() },
   async ({
-    containerText,
+    rootText,
     update,
     selectFixture,
     setFixtureState,
@@ -95,10 +95,10 @@ testRenderer(
         }),
       },
     });
-    await waitFor(() => expect(containerText()).toEqual('Hello B'));
+    await waitFor(() => expect(rootText()).toEqual('Hello B'));
     update({ rendererId, fixtures: getFixtures() });
     await waitFor(() => {
-      expect(containerText()).toEqual('Hello Blanca');
+      expect(rootText()).toEqual('Hello Blanca');
       expect(uniq(refs).length).toBe(2);
     });
   }

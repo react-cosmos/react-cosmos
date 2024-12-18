@@ -24,9 +24,9 @@ const fixtureId = { path: 'first' };
 testRenderer(
   'captures initial state',
   { rendererId, fixtures },
-  async ({ containerText, selectFixture, fixtureStateChange }) => {
+  async ({ rootText, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await waitFor(() => expect(containerText()).toBe('0 times'));
+    await waitFor(() => expect(rootText()).toBe('0 times'));
     await fixtureStateChange({
       rendererId,
       fixtureId,
@@ -46,12 +46,7 @@ testRenderer(
 testRenderer(
   'overwrites initial state',
   { rendererId, fixtures },
-  async ({
-    containerText,
-    selectFixture,
-    setFixtureState,
-    getLastFixtureState,
-  }) => {
+  async ({ rootText, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const classStateFs = getClassState(fixtureState);
@@ -67,19 +62,14 @@ testRenderer(
         }),
       },
     });
-    await waitFor(() => expect(containerText()).toBe('5 times'));
+    await waitFor(() => expect(rootText()).toBe('5 times'));
   }
 );
 
 testRenderer(
   'removes initial state property',
   { rendererId, fixtures },
-  async ({
-    containerText,
-    selectFixture,
-    setFixtureState,
-    getLastFixtureState,
-  }) => {
+  async ({ rootText, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const classStateFs = getClassState(fixtureState);
@@ -95,19 +85,14 @@ testRenderer(
         }),
       },
     });
-    await waitFor(() => expect(containerText()).toBe('Missing count'));
+    await waitFor(() => expect(rootText()).toBe('Missing count'));
   }
 );
 
 testRenderer(
   'reverts to initial state',
   { rendererId, fixtures },
-  async ({
-    containerText,
-    selectFixture,
-    setFixtureState,
-    getLastFixtureState,
-  }) => {
+  async ({ rootText, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
     const fixtureState = await getLastFixtureState();
     const classStateFs = getClassState(fixtureState);
@@ -123,7 +108,7 @@ testRenderer(
         }),
       },
     });
-    await waitFor(() => expect(containerText()).toBe('5 times'));
+    await waitFor(() => expect(rootText()).toBe('5 times'));
     setFixtureState({
       rendererId,
       fixtureId,
@@ -131,6 +116,6 @@ testRenderer(
         classState: removeClassStateFixtureStateItem(classStateFs, elementId),
       },
     });
-    await waitFor(() => expect(containerText()).toBe('0 times'));
+    await waitFor(() => expect(rootText()).toBe('0 times'));
   }
 );
