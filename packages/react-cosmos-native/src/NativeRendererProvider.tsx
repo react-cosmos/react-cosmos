@@ -2,7 +2,6 @@ import React from 'react';
 import { FixtureId, RendererConfig } from 'react-cosmos-core';
 import { createWebSocketsConnect } from 'react-cosmos-renderer';
 import { StatefulRendererProvider } from 'react-cosmos-renderer/client';
-// @ts-ignore FIXME Need to install react-native in the monorepo?
 import { DevSettings } from 'react-native';
 import { getSocketUrl } from './getSocketUrl.js';
 
