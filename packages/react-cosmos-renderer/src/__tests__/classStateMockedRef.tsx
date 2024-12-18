@@ -1,4 +1,4 @@
-import { waitFor } from '@testing-library/react';
+import { act, waitFor } from '@testing-library/react';
 import until from 'async-until';
 import { setTimeout } from 'node:timers/promises';
 import React from 'react';
@@ -41,13 +41,13 @@ testRenderer(
       fixtureState: {},
     });
     await until(() => counterRef, { timeout: 1000 });
-    counterRef!.setState({ count: 7 });
+    await act(async () => counterRef!.setState({ count: 7 }));
     await waitFor(async () => expect(await getCount()).toBe(7));
 
     // Simulate a small pause between updates
     await setTimeout(500);
 
-    counterRef!.setState({ count: 13 });
+    await act(async () => counterRef!.setState({ count: 13 }));
     await waitFor(async () => expect(await getCount()).toBe(13));
 
     async function getCount(): Promise<null | number> {
