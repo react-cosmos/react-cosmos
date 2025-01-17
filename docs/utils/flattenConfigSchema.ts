@@ -42,6 +42,8 @@ const descRegex = /^(.+?)( \[default: (.+?)\])?$/;
 function parseDesc(description: string = '') {
   const match = description.match(descRegex);
 
+  if (!match) return { description: '' };
+
   return {
     description: match[1],
     defaultValue: match[3],

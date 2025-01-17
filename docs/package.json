@@ -6,6 +6,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
+    "check-types": "tsc",
     "start": "next dev",
     "build": "next build",
     "serve": "http-server -p 3001 ./out"

@@ -10,7 +10,6 @@
   "scripts": {
     "prettify": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md,mdx}\"",
     "check-types": "tsc",
-    "check-types:docs": "tsc -p docs/tsconfig.json",
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "test": "vitest -c vitest.config.js",
     "test:run": "vitest run -c vitest.config.js",
