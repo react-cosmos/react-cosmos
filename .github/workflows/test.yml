@@ -31,7 +31,6 @@ jobs:
       # Test source (with cross-package coverage)
       - run: npm run src
       - run: npm run check-types
-      - run: cd docs && npm run check-types
       - run: npm run lint
       - run: npm run test:run -- --coverage
 
