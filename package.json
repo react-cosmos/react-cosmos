@@ -2,8 +2,7 @@
   "private": true,
   "workspaces": [
     "packages/*",
-    "examples/*",
-    "docs"
+    "examples/*"
   ],
   "repository": "https://github.com/react-cosmos/react-cosmos",
   "license": "MIT",

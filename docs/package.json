@@ -18,6 +18,8 @@
     "nextra": "2.13.4",
     "nextra-theme-docs": "2.13.4",
     "postcss": "8.4.49",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "tailwindcss": "3.4.16"
   },
   "optionalDependencies": {
