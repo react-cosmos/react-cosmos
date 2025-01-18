@@ -27,6 +27,7 @@ jobs:
           name: demo-cosmos-export
           path: ./examples/todo/cosmos-export
 
+  # publish-website: (rename job, too?)
   publish-docs:
     runs-on: ubuntu-latest
     needs: build-demo
@@ -53,16 +54,12 @@ jobs:
           name: demo-cosmos-export
           path: ./docs/out/demo
 
-      # - uses: actions/upload-artifact@v4
-      #   with:
-      #     name: cosmos-docs
-      #     path: ./docs/out
       - uses: cloudflare/wrangler-action@v3
         with:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          # command: pages project list
-          command: pages deploy ./docs/out --project-name=react-cosmos-website
+          workingDirectory: ./docs
+          command: pages deploy ./out --project-name=react-cosmos-website
 
       - uses: actions/upload-artifact@v4
         if: always()
