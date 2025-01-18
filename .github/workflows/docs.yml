@@ -53,7 +53,13 @@ jobs:
           name: demo-cosmos-export
           path: ./docs/out/demo
 
-      - uses: actions/upload-artifact@v4
+      # - uses: actions/upload-artifact@v4
+      #   with:
+      #     name: cosmos-docs
+      #     path: ./docs/out
+      - uses: cloudflare/wrangler-action@v3
         with:
-          name: cosmos-docs
-          path: ./docs/out
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: |
+            pages project list
+            pages deploy ./docs/out --project-name=react-cosmos-docs
