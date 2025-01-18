@@ -16,7 +16,7 @@
     "@types/json-schema": "7.0.15",
     "@types/node": "20.17.10",
     "autoprefixer": "10.4.20",
-    "next": "14.2.20",
+    "next": "14.2.23",
     "nextra": "2.13.4",
     "nextra-theme-docs": "2.13.4",
     "postcss": "8.4.49",
