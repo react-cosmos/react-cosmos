@@ -1,0 +1,28 @@
+name: docs
+on:
+  pull_request:
+  push:
+    branches: main
+jobs:
+  build-demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - uses: actions/cache@v4
+        id: npm-cache
+        with:
+          path: .npm-cache
+          key: '${{ runner.os }}-npm'
+
+      - run: npm ci --cache .npm-cache
+      - run: npm run build
+      - run: npm --workspace example-todo run export
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: demo-cosmos-export
+          path: ./examples/todo/cosmos-export
