@@ -61,7 +61,10 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           workingDirectory: ./docs
-          command: pages deploy ./out --project-name=react-cosmos-website --branch=${{ github.head_ref || github.ref_name }}
+          command: |
+            pages deploy ./out \
+              --project-name=react-cosmos-website \
+              --branch=${{ github.head_ref || github.ref_name }}
 
       - uses: actions/upload-artifact@v4
         if: always()
