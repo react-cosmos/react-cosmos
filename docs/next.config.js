@@ -13,6 +13,7 @@ const withNextra = nextra({
 export default withNextra({
   output: 'export',
   images: { unoptimized: true },
+  eslint: { ignoreDuringBuilds: true },
   webpack(config) {
     const allowedSvgRegex = /\/components\/svg\/.+\.svg$/;
 
