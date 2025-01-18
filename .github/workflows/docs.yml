@@ -34,6 +34,8 @@ jobs:
     defaults:
       run:
         working-directory: docs
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -53,6 +55,8 @@ jobs:
         with:
           name: demo-cosmos-export
           path: ./docs/out/demo
+
+      - run: git status
 
       - uses: cloudflare/wrangler-action@v3
         with:
