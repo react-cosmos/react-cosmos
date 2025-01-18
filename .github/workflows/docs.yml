@@ -62,4 +62,4 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           # command: pages project list
-          command: pages deploy ./docs/out --project-name=react-cosmos-docs
+          command: pages deploy ./docs/out --project-name=react-cosmos-website
