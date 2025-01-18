@@ -47,7 +47,11 @@ jobs:
 
       - run: npm ci --cache .npm-cache
       - run: npm run build
-      # TODO: Copy demo-cosmos-export artifact to ./docs/out/demo
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: demo-cosmos-export
+          path: ./docs/out/demo
 
       - uses: actions/upload-artifact@v4
         with:
