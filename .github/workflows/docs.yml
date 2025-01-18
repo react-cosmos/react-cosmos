@@ -49,4 +49,10 @@ jobs:
           key: '${{ runner.os }}-npm-docs'
 
       - run: npm ci --cache .npm-cache
-      - run: ls -la
+      - run: npm run build
+      # TODO: Copy demo-cosmos-export artifact to ./docs/out/demo
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cosmos-docs
+          path: ./docs/out
