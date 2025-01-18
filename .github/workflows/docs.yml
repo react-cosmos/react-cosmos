@@ -57,6 +57,7 @@ jobs:
           path: ./docs/out/demo
 
       - run: git status
+      - run: cat next-env.d.ts
 
       - uses: cloudflare/wrangler-action@v3
         with:
