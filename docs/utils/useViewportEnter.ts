@@ -7,11 +7,11 @@ export function useViewportEnter() {
   React.useEffect(() => {
     if (el === null || entered) return;
 
-    function updateEntered() {
+    const updateEntered = () => {
       if (hasEnteredViewport(el.offsetTop, el.offsetHeight)) {
         setEntered(true);
       }
-    }
+    };
 
     updateEntered();
     window.addEventListener('scroll', updateEntered);
