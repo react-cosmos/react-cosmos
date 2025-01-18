@@ -47,3 +47,4 @@ jobs:
 
       # - run: npm ci --cache .npm-cache
       - run: ls -la
+        working-directory: docs
