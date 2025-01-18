@@ -35,6 +35,7 @@ jobs:
         working-directory: docs
     permissions:
       contents: read
+      deployments: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -60,4 +61,4 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           workingDirectory: ./docs
-          command: pages deploy ./out --project-name=react-cosmos-docs --branch=main
+          command: pages deploy ./out --project-name=react-cosmos-docs --branch=${{ github.head_ref || github.ref_name }}
