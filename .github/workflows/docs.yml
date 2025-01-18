@@ -56,15 +56,12 @@ jobs:
           name: demo-cosmos-export
           path: ./docs/out/demo
 
-      - run: git status
-      - run: cat next-env.d.ts
-
       - uses: cloudflare/wrangler-action@v3
         with:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           workingDirectory: ./docs
-          command: pages deploy ./out --project-name=react-cosmos-website
+          command: pages deploy ./out --project-name=react-cosmos-website --branch=${{ github.head_ref || github.ref_name }}
 
       - uses: actions/upload-artifact@v4
         if: always()
