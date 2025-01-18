@@ -27,7 +27,6 @@ jobs:
           name: demo-cosmos-export
           path: ./examples/todo/cosmos-export
 
-  # publish-website: (rename job, too?)
   publish-docs:
     runs-on: ubuntu-latest
     needs: build-demo
@@ -61,10 +60,4 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           workingDirectory: ./docs
-          command: pages deploy ./out --project-name=react-cosmos-website --branch=${{ github.head_ref || github.ref_name }}
-
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: wranger-logs
-          path: /home/runner/.config/.wrangler/logs/
+          command: pages deploy ./out --project-name=react-cosmos-docs --branch=${{ github.head_ref || github.ref_name }}
