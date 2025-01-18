@@ -35,9 +35,6 @@ jobs:
         working-directory: docs
     steps:
       - uses: actions/checkout@v4
-        with:
-          sparse-checkout: docs
-
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
