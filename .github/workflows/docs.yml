@@ -63,3 +63,9 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           # command: pages project list
           command: pages deploy ./docs/out --project-name=react-cosmos-website
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: wranger-logs
+          path: /home/runner/.config/.wrangler/logs/
