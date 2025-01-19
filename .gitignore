@@ -1,5 +1,6 @@
 node_modules
 npm-debug.log
+.npm-cache
 
 packages/*/dist
 __testFs__

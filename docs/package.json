@@ -6,6 +6,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
+    "check-types": "tsc",
     "start": "next dev",
     "build": "next build",
     "serve": "http-server -p 3001 ./out"
@@ -13,12 +14,17 @@
   "dependencies": {
     "@svgr/webpack": "8.1.0",
     "@types/json-schema": "7.0.15",
+    "@types/node": "20.17.10",
     "autoprefixer": "10.4.20",
-    "next": "14.2.20",
+    "next": "14.2.23",
     "nextra": "2.13.4",
     "nextra-theme-docs": "2.13.4",
     "postcss": "8.4.49",
-    "tailwindcss": "3.4.16"
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "tailwindcss": "3.4.16",
+    "typescript": "5.7.2",
+    "wrangler": "3.103.2"
   },
   "optionalDependencies": {
     "@napi-rs/simple-git-linux-x64-gnu": "0.1.19"
