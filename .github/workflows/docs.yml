@@ -52,8 +52,6 @@ jobs:
       # TODO: Add linting step once docs linting is decoupled from main package
       # Revisit linting configs when upgrading Next & Nextra.
       - run: npm run build
-      - run: git status
-      - run: cat next-env.d.ts
 
       - uses: actions/download-artifact@v4
         with:
