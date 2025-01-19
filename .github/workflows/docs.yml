@@ -35,7 +35,6 @@ jobs:
         working-directory: docs
     permissions:
       contents: read
-      deployments: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -50,6 +49,8 @@ jobs:
 
       - run: npm ci --cache .npm-cache
       - run: npm run check-types
+      # TODO: Add linting step once docs linting is decoupled from main package
+      # Revisit linting configs when upgrading Next & Nextra.
       - run: npm run build
 
       - uses: actions/download-artifact@v4
