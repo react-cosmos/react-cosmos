@@ -57,7 +57,6 @@ export function usePropsCapture(
           createPropsFixtureStateItem({
             propsFs: prevFs,
             elementId,
-            // @ts-ignore FIXME, can props be non-objects?
             values: createValues(childEl.props),
             componentName,
           })
@@ -83,7 +82,6 @@ export function usePropsCapture(
             updatePropsFixtureStateItem({
               propsFs: prevFs,
               elementId,
-              // @ts-ignore FIXME, can props be non-objects?
               values: createValues(childEl.props),
             })
           );

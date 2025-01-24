@@ -1,7 +1,7 @@
 import { isEqual, isEqualWith } from 'lodash-es';
-import { ComponentType, ReactElement, ReactNode } from 'react';
+import { ComponentType, ReactNode } from 'react';
 import { getComponentName } from './getComponentName.js';
-import { isReactElement } from './isReactElement.js';
+import { isReactElement, ReactElementWithChildren } from './isReactElement.js';
 
 export function areNodesEqual(
   node1: ReactNode,
@@ -18,8 +18,8 @@ export function areNodesEqual(
 }
 
 function areElementsEqual(
-  element1: ReactElement,
-  element2: ReactElement,
+  element1: ReactElementWithChildren,
+  element2: ReactElementWithChildren,
   strictTypeCheck: boolean
 ) {
   if (!areElementTypesEqual(element1.type, element2.type, strictTypeCheck))
@@ -32,7 +32,6 @@ function areElementsEqual(
     // @ts-ignore FIXME?
     element1.props.ref === element2.props.ref &&
     // Children (and props in general) can contain Elements and other Nodes
-    // @ts-ignore FIXME, can props be non-objects?
     arePropsEqual(element1.props, element2.props)
   );
 }

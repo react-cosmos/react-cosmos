@@ -41,14 +41,12 @@ export function useFixtureProps(
       // stored in fixture state
       // See https://github.com/react-cosmos/react-cosmos/pull/920 for context
       const originalProps = element.props;
-      // @ts-ignore FIXME, can props be non-objects?
       const extendedProps = extendWithValues(originalProps, fsItem.values);
 
       // Preserve identity between renders for indentical non-primitive props
       const cachedProps = mapValues(extendedProps, (value, propName) => {
         const key = getPropCacheKey(elPath, propName);
         if (!propCache.hasOwnProperty(key))
-          // @ts-ignore FIXME, can props be non-objects?
           propCache[key] = originalProps[propName];
 
         if (isEqual(propCache[key], value)) return propCache[key];
@@ -70,8 +68,7 @@ export function useFixtureProps(
       return {
         ...element,
         props: hasChildElPaths(elPaths, elPath)
-          ? // @ts-ignore FIXME, can props be non-objects?
-            { ...cachedProps, children: originalProps.children }
+          ? { ...cachedProps, children: originalProps.children }
           : cachedProps,
         key: getElRenderKey(elPath, fsItem.renderKey),
       };
