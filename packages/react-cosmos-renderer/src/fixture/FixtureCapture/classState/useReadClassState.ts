@@ -25,7 +25,7 @@ export function useReadClassState(
   const elPaths = findRelevantElementPaths(fixture);
   const [classStateFs, setClassStateFs] =
     useFixtureState<ClassStateFixtureState>('classState');
-  const timeoutId = useRef<null | number>(null);
+  const timeoutId = useRef<number | null>(null);
 
   useEffect(() => {
     // The check should run even if no element paths are found at mount, because
