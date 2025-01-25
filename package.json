@@ -66,7 +66,7 @@
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-is": "19.0.0",
-    "react-native": "^0.78.0-nightly-20241218-f8119fc52",
+    "react-native": "0.78.0-rc.1",
     "source-map-loader": "4.0.2",
     "style-loader": "3.3.4",
     "styled-components": "5.3.11",
