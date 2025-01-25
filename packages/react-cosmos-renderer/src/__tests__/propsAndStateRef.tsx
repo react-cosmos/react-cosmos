@@ -14,6 +14,10 @@ import {
 } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
+import { clearSetTimeoutAct, wrapSetTimeoutAct } from '../wrapSetTimeoutAct.js';
+
+beforeEach(wrapSetTimeoutAct);
+afterEach(clearSetTimeoutAct);
 
 let counterRef: null | SuffixCounter = null;
 beforeEach(() => {
@@ -65,7 +69,7 @@ testRenderer(
     await waitFor(() => expect(rootText()).toBe('0 timez'));
 
     await until(() => counterRef, { timeout: 1000 });
-    await act(async () => counterRef!.setState({ count: 7 }));
+    act(() => counterRef!.setState({ count: 7 }));
 
     await waitFor(() => expect(rootText()).toBe('7 timez'));
     await fixtureStateChange({

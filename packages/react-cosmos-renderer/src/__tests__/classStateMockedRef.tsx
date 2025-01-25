@@ -8,6 +8,10 @@ import { Counter } from '../testHelpers/components.js';
 import { getClassState } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
+import { clearSetTimeoutAct, wrapSetTimeoutAct } from '../wrapSetTimeoutAct.js';
+
+beforeEach(wrapSetTimeoutAct);
+afterEach(clearSetTimeoutAct);
 
 let counterRef: null | Counter = null;
 beforeEach(() => {
@@ -41,13 +45,13 @@ testRenderer(
       fixtureState: {},
     });
     await until(() => counterRef, { timeout: 1000 });
-    await act(async () => counterRef!.setState({ count: 7 }));
+    act(() => counterRef!.setState({ count: 7 }));
     await waitFor(async () => expect(await getCount()).toBe(7));
 
     // Simulate a small pause between updates
     await setTimeout(500);
 
-    await act(async () => counterRef!.setState({ count: 13 }));
+    act(() => counterRef!.setState({ count: 13 }));
     await waitFor(async () => expect(await getCount()).toBe(13));
 
     async function getCount(): Promise<null | number> {

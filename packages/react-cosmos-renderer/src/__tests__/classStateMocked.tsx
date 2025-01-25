@@ -15,6 +15,10 @@ import {
 } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
+import { clearSetTimeoutAct, wrapSetTimeoutAct } from '../wrapSetTimeoutAct.js';
+
+beforeEach(wrapSetTimeoutAct);
+afterEach(clearSetTimeoutAct);
 
 const rendererId = uuid();
 const fixtures = wrapDefaultExport({
