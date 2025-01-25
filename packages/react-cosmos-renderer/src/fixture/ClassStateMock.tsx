@@ -9,7 +9,7 @@ type Props = {
   state?: {};
 };
 
-// Compied from https://github.com/skidding/react-mock/blob/c33dfa1d6f0c9ce7b3eaba073618d61731a0e82e/packages/state/src/index.js
+// Copied from https://github.com/skidding/react-mock/blob/c33dfa1d6f0c9ce7b3eaba073618d61731a0e82e/packages/state/src/index.js
 export class ClassStateMock extends React.Component<Props> {
   static cosmosCapture = false;
 
