@@ -29,7 +29,6 @@ function areElementsEqual(
   // internal details and have auto increment-type attrs
   return (
     element1.key === element2.key &&
-    // @ts-ignore FIXME?
     element1.props.ref === element2.props.ref &&
     // Children (and props in general) can contain Elements and other Nodes
     arePropsEqual(element1.props, element2.props)

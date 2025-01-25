@@ -1,12 +1,15 @@
-import { cloneElement, Component, ReactNode, Ref, RefObject } from 'react';
+import {
+  cloneElement,
+  Component,
+  ReactNode,
+  Ref,
+  RefCallback,
+  RefObject,
+} from 'react';
 import { findRelevantElementPaths } from '../../shared/findRelevantElementPaths.js';
 import { setElementAtPath } from '../../shared/nodeTree/index.js';
 import { CachedRefHandlers } from '../shared.js';
 import { isRefSupported } from './isRefSupported.js';
-
-// type ElementWithRef = ReactElement & {
-//   ref: null | Ref<any>;
-// };
 
 type SpyRef = (elPath: string, elRef: null | Component) => unknown;
 
@@ -22,26 +25,20 @@ export function decorateFixtureRefs(
         return element;
       }
 
+      const origRef = element.props.ref as undefined | Ref<unknown>;
       return cloneElement(element, {
-        // @ts-ignore FIXME
-        ref: getDecoratedRef(
-          // @ts-ignore FIXME
-          element.props.ref,
-          spyRef,
-          elPath,
-          cachedRefHandlers
-        ),
+        ref: getDecoratedRef(origRef, spyRef, elPath, cachedRefHandlers),
       });
     });
   }, fixture);
 }
 
 function getDecoratedRef(
-  origRef: null | Ref<any>,
+  origRef: undefined | Ref<unknown>,
   spyRef: SpyRef,
   elPath: string,
   cachedRefHandlers: CachedRefHandlers
-) {
+): RefCallback<unknown> {
   const found = cachedRefHandlers[elPath];
   if (found && found.origRef === origRef) {
     return found.handler;
@@ -54,30 +51,27 @@ function getDecoratedRef(
 }
 
 function decorateRefWithSpy(
-  origRef: Ref<any> | void,
+  origRef: Ref<unknown> | undefined,
   spyRef: SpyRef,
   elPath: string
-) {
+): RefCallback<unknown> {
   return (elRef: null | Component) => {
-    if (origRef) {
-      callOriginalRef(origRef, elRef);
-    }
+    const callback = origRef ? callOriginalRef(origRef, elRef) : undefined;
     spyRef(elPath, elRef);
-    // TODO: Ref cleanup?
+    return callback;
   };
 }
 
-function callOriginalRef(ref: Ref<any>, elRef: null | Component) {
+function callOriginalRef(ref: Ref<unknown>, elRef: null | Component) {
   if (typeof ref === 'string') {
     console.warn('[decorateFixtureRefs] String refs are not supported');
     return;
   }
 
   if (typeof ref === 'function') {
-    ref(elRef);
-    return;
+    return ref(elRef);
   }
 
-  const refObj = ref as RefObject<any>;
+  const refObj = ref as RefObject<unknown>;
   refObj.current = elRef;
 }
