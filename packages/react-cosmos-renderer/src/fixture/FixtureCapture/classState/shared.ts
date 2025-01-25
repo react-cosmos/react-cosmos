@@ -1,5 +1,5 @@
 import { isEqual } from 'lodash-es';
-import React from 'react';
+import React, { RefCallback } from 'react';
 
 export type ElRefs = { [elPath: string]: React.Component };
 
@@ -13,8 +13,8 @@ export type InitialStates = {
 };
 
 export type CachedRefHandler = {
-  origRef: null | React.Ref<any>;
-  handler: (elRef: null | React.Component) => unknown;
+  origRef: undefined | React.Ref<unknown>;
+  handler: RefCallback<unknown>;
 };
 
 export type CachedRefHandlers = {

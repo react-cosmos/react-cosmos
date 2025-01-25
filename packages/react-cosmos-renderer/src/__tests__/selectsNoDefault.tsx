@@ -1,7 +1,6 @@
-import retry from '@skidding/async-retry';
+import { waitFor } from '@testing-library/react';
 import React from 'react';
 import { uuid } from 'react-cosmos-core';
-import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
 import { useFixtureSelect } from '../fixture/useFixtureSelect/useFixtureSelect.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
@@ -33,7 +32,9 @@ testRenderer(
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, 'first');
+    await waitFor(() =>
+      expect(renderer.getByRole('textbox')).toHaveValue('first')
+    );
   }
 );
 
@@ -59,13 +60,3 @@ testRenderer(
     });
   }
 );
-
-async function rendered(renderer: ReactTestRenderer, text: string) {
-  await retry(() =>
-    expect(getSingleRendererElement(renderer).props.value).toEqual(text)
-  );
-}
-
-function getSingleRendererElement(renderer: ReactTestRenderer) {
-  return renderer.toJSON() as ReactTestRendererJSON;
-}

@@ -1,4 +1,4 @@
-import retry from '@skidding/async-retry';
+import { waitFor } from '@testing-library/react';
 import React from 'react';
 import {
   createValues,
@@ -37,7 +37,7 @@ testRenderer(
     const cb = vi.fn();
     update({ rendererId, fixtures: createFixtures(obj, cb) });
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await retry(() => expect(getLastMockCall(cb)[0]).toBe(obj));
+    await waitFor(() => expect(getLastMockCall(cb)[0]).toBe(obj));
   }
 );
 
@@ -63,10 +63,10 @@ testRenderer(
         }),
       },
     });
-    await retry(() => expect(cb).lastCalledWith({ name: 'Tim' }));
+    await waitFor(() => expect(cb).lastCalledWith({ name: 'Tim' }));
     const updatedObj: {} = getLastMockCall(cb)[0];
     update({ rendererId, fixtures: createFixtures(obj, cb) });
-    await retry(() => expect(getLastMockCall(cb)[0]).toBe(updatedObj));
+    await waitFor(() => expect(getLastMockCall(cb)[0]).toBe(updatedObj));
   }
 );
 

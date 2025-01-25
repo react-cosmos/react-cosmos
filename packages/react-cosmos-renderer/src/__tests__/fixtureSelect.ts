@@ -1,4 +1,4 @@
-import retry from '@skidding/async-retry';
+import { waitFor } from '@testing-library/react';
 import { uuid } from 'react-cosmos-core';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
@@ -12,39 +12,39 @@ const fixtures = wrapDefaultExport({
 testRenderer(
   'renders selected fixture',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture }) => {
+  async ({ rootText, selectFixture }) => {
     selectFixture({
       rendererId,
       fixtureId: { path: 'second' },
       fixtureState: {},
     });
-    await retry(() => expect(renderer.toJSON()).toBe('Second'));
+    await waitFor(() => expect(rootText()).toBe('Second'));
   }
 );
 
 testRenderer(
   'renders selected named fixture',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture }) => {
+  async ({ rootText, selectFixture }) => {
     selectFixture({
       rendererId,
       fixtureId: { path: 'first', name: 'one' },
       fixtureState: {},
     });
-    await retry(() => expect(renderer.toJSON()).toBe('First'));
+    await waitFor(() => expect(rootText()).toBe('First'));
   }
 );
 
 testRenderer(
   'renders first named fixture',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture }) => {
+  async ({ rootText, selectFixture }) => {
     selectFixture({
       rendererId,
       fixtureId: { path: 'first' },
       fixtureState: {},
     });
-    await retry(() => expect(renderer.toJSON()).toBe('First'));
+    await waitFor(() => expect(rootText()).toBe('First'));
   }
 );
 
@@ -70,42 +70,42 @@ testRenderer(
 testRenderer(
   'renders blank state after unselecting fixture',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture, unselectFixture }) => {
+  async ({ rootText, selectFixture, unselectFixture }) => {
     selectFixture({
       rendererId,
       fixtureId: { path: 'first', name: 'one' },
       fixtureState: {},
     });
-    await retry(() => expect(renderer.toJSON()).toBe('First'));
+    await waitFor(() => expect(rootText()).toBe('First'));
     unselectFixture({ rendererId });
-    await retry(() => expect(renderer.toJSON()).toBe('No fixture selected.'));
+    await waitFor(() => expect(rootText()).toBe('No fixture selected.'));
   }
 );
 
 testRenderer(
   'ignores "selectFixture" message for different renderer',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture }) => {
+  async ({ rootText, selectFixture }) => {
     selectFixture({
       rendererId: 'foobar',
       fixtureId: { path: 'second' },
       fixtureState: {},
     });
-    await retry(() => expect(renderer.toJSON()).toBe('No fixture selected.'));
+    await waitFor(() => expect(rootText()).toBe('No fixture selected.'));
   }
 );
 
 testRenderer(
   'renders missing state on unknown fixture path',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture }) => {
+  async ({ rootText, selectFixture }) => {
     selectFixture({
       rendererId,
       fixtureId: { path: 'third' },
       fixtureState: {},
     });
-    await retry(() =>
-      expect(renderer.toJSON()).toBe('Fixture path not found: third')
+    await waitFor(() =>
+      expect(rootText()).toBe('Fixture path not found: third')
     );
   }
 );

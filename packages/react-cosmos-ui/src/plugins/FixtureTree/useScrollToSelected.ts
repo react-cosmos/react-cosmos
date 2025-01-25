@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react';
 import { FixtureId } from 'react-cosmos-core';
 
 export function useScrollToSelected(selectedFixtureId: FixtureId | null) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const selectedRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const selectedRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const { current: selectedEl } = selectedRef;

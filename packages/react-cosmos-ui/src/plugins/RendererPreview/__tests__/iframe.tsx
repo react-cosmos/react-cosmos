@@ -1,6 +1,6 @@
 import { waitFor } from '@testing-library/dom';
-import { fireEvent, render, RenderResult } from '@testing-library/react';
-import React, { act } from 'react';
+import { act, fireEvent, render, RenderResult } from '@testing-library/react';
+import React from 'react';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { vi } from 'vitest';
 import {
@@ -47,7 +47,7 @@ async function mockRendererLocation(renderer: RenderResult, newPath: string) {
 }
 
 async function fireIframeLoadEvent(iframe: HTMLIFrameElement) {
-  await act(async () => {
+  act(() => {
     fireEvent.load(iframe);
   });
 }

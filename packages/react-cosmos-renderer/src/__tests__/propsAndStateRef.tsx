@@ -1,4 +1,4 @@
-import retry from '@skidding/async-retry';
+import { act, waitFor } from '@testing-library/react';
 import until from 'async-until';
 import React from 'react';
 import {
@@ -14,6 +14,10 @@ import {
 } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
+import { clearSetTimeoutAct, wrapSetTimeoutAct } from '../wrapSetTimeoutAct.js';
+
+beforeEach(wrapSetTimeoutAct);
+afterEach(clearSetTimeoutAct);
 
 let counterRef: null | SuffixCounter = null;
 beforeEach(() => {
@@ -40,7 +44,7 @@ testRenderer(
   'keeps props when state changes',
   { rendererId, fixtures: getFixtures() },
   async ({
-    renderer,
+    rootText,
     selectFixture,
     setFixtureState,
     fixtureStateChange,
@@ -62,12 +66,12 @@ testRenderer(
         }),
       },
     });
-    await retry(() => expect(renderer.toJSON()).toBe('0 timez'));
+    await waitFor(() => expect(rootText()).toBe('0 timez'));
 
     await until(() => counterRef, { timeout: 1000 });
-    counterRef!.setState({ count: 7 });
+    act(() => counterRef!.setState({ count: 7 }));
 
-    await retry(() => expect(renderer.toJSON()).toBe('7 timez'));
+    await waitFor(() => expect(rootText()).toBe('7 timez'));
     await fixtureStateChange({
       rendererId,
       fixtureId,

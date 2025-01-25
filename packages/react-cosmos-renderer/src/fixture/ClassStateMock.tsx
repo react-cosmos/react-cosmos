@@ -2,14 +2,14 @@ import { isEqual } from 'lodash-es';
 import React from 'react';
 
 type Props = {
-  children: React.ClassicElement<unknown>;
+  children: React.ReactElement<{ ref?: React.Ref<unknown> }>;
   // `state` prop must be an object, as does React component state.
   // "The state is user-defined, and it should be a plain JavaScript object."
   // https://reactjs.org/docs/react-component.html#state
   state?: {};
 };
 
-// Compied from https://github.com/skidding/react-mock/blob/c33dfa1d6f0c9ce7b3eaba073618d61731a0e82e/packages/state/src/index.js
+// Copied from https://github.com/skidding/react-mock/blob/c33dfa1d6f0c9ce7b3eaba073618d61731a0e82e/packages/state/src/index.js
 export class ClassStateMock extends React.Component<Props> {
   static cosmosCapture = false;
 
@@ -39,7 +39,7 @@ export class ClassStateMock extends React.Component<Props> {
   }
 
   handleRef = (childRef: React.Component | null) => {
-    const prevRef = this.props.children.ref;
+    const prevRef = this.props.children.props.ref;
 
     this.childRef = childRef;
 
@@ -86,7 +86,7 @@ function resetOriginalKeys(original: {}, current: {}) {
 }
 
 function manuallyCallRef(
-  ref: React.LegacyRef<unknown> | undefined,
+  ref: React.Ref<unknown> | undefined,
   elRef: React.Component | null
 ) {
   if (typeof ref === 'string') {
@@ -97,7 +97,6 @@ function manuallyCallRef(
   if (typeof ref === 'function') {
     ref(elRef);
   } else if (ref && typeof ref === 'object') {
-    // @ts-ignore
     ref.current = elRef;
   }
 }

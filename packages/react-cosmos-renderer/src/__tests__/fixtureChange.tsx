@@ -1,4 +1,4 @@
-import retry from '@skidding/async-retry';
+import { waitFor } from '@testing-library/react';
 import React from 'react';
 import { uuid } from 'react-cosmos-core';
 import { FixtureContext } from '../fixture/FixtureContext.js';
@@ -24,33 +24,33 @@ const fixtures = wrapDefaultExport({
 testRenderer(
   'changes fixture',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture }) => {
+  async ({ rootText, selectFixture }) => {
     selectFixture({
       rendererId,
       fixtureId: { path: 'first' },
       fixtureState: {},
     });
-    await retry(() => expect(renderer.toJSON()).toBe('First'));
+    await waitFor(() => expect(rootText()).toBe('First'));
 
     selectFixture({
       rendererId,
       fixtureId: { path: 'second' },
       fixtureState: {},
     });
-    await retry(() => expect(renderer.toJSON()).toBe('Second'));
+    await waitFor(() => expect(rootText()).toBe('Second'));
   }
 );
 
 testRenderer(
   'does not leak fixture state when resetting fixture',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture, setFixtureState }) => {
+  async ({ rootText, selectFixture, setFixtureState }) => {
     selectFixture({
       rendererId,
       fixtureId: { path: 'first' },
       fixtureState: {},
     });
-    await retry(() => expect(renderer.toJSON()).toBe('First'));
+    await waitFor(() => expect(rootText()).toBe('First'));
 
     setFixtureState({
       rendererId,
@@ -60,27 +60,27 @@ testRenderer(
         custom: true,
       },
     });
-    await retry(() => expect(renderer.toJSON()).toBe('FirstCustom'));
+    await waitFor(() => expect(rootText()).toBe('FirstCustom'));
 
     selectFixture({
       rendererId,
       fixtureId: { path: 'first' },
       fixtureState: {},
     });
-    await retry(() => expect(renderer.toJSON()).toBe('First'));
+    await waitFor(() => expect(rootText()).toBe('First'));
   }
 );
 
 testRenderer(
   'does not leak fixture state from one fixture to another',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture, setFixtureState }) => {
+  async ({ rootText, selectFixture, setFixtureState }) => {
     selectFixture({
       rendererId,
       fixtureId: { path: 'first' },
       fixtureState: {},
     });
-    await retry(() => expect(renderer.toJSON()).toBe('First'));
+    await waitFor(() => expect(rootText()).toBe('First'));
 
     setFixtureState({
       rendererId,
@@ -90,13 +90,13 @@ testRenderer(
         custom: true,
       },
     });
-    await retry(() => expect(renderer.toJSON()).toBe('FirstCustom'));
+    await waitFor(() => expect(rootText()).toBe('FirstCustom'));
 
     selectFixture({
       rendererId,
       fixtureId: { path: 'second' },
       fixtureState: {},
     });
-    await retry(() => expect(renderer.toJSON()).toBe('Second'));
+    await waitFor(() => expect(rootText()).toBe('Second'));
   }
 );

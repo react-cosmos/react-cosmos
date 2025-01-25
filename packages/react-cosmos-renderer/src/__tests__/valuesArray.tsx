@@ -1,7 +1,6 @@
-import retry from '@skidding/async-retry';
+import { waitFor } from '@testing-library/react';
 import React from 'react';
 import { createValue, uuid } from 'react-cosmos-core';
-import { ReactTestRenderer } from 'react-test-renderer';
 import { useFixtureInput } from '../fixture/useFixtureInput/useFixtureInput.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
@@ -16,7 +15,7 @@ type Profile = {
 function createFixtures({ defaultValue }: { defaultValue: Profile[] }) {
   const MyComponent = () => {
     const [profiles] = useFixtureInput('profiles', defaultValue);
-    return JSON.stringify(profiles, null, 2);
+    return JSON.stringify(profiles);
   };
   return wrapDefaultExport({
     first: <MyComponent />,
@@ -32,9 +31,13 @@ const fixtureId = { path: 'first' };
 testRenderer(
   'renders fixture',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture }) => {
+  async ({ rootText, selectFixture }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, [{ isAdmin: true, name: 'Pat D', age: 45 }]);
+    await waitFor(() => {
+      expect(rootText()).toBe(
+        JSON.stringify([{ isAdmin: true, name: 'Pat D', age: 45 }])
+      );
+    });
   }
 );
 
@@ -100,21 +103,3 @@ testRenderer(
     });
   }
 );
-
-async function rendered(
-  renderer: ReactTestRenderer,
-  profiles: Array<Pick<Profile, 'isAdmin' | 'name' | 'age'>>
-) {
-  await retry(() => {
-    const renderedText = getRenderedText(renderer);
-    profiles.forEach(profile => {
-      expect(renderedText).toMatch(`"isAdmin": ${profile.isAdmin}`);
-      expect(renderedText).toMatch(`"name": "${profile.name}"`);
-      expect(renderedText).toMatch(`"age": ${profile.age}`);
-    });
-  });
-}
-
-function getRenderedText(renderer: ReactTestRenderer) {
-  return renderer.toJSON();
-}

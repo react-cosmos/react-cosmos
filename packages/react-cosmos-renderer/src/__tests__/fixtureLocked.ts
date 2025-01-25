@@ -17,14 +17,14 @@ testRenderer(
     selectedFixtureId: { path: 'first', name: 'one' },
     fixtures,
   },
-  async ({ renderer, selectFixture }) => {
+  async ({ rootText, selectFixture }) => {
     selectFixture({
       rendererId,
       fixtureId: { path: 'second' },
       fixtureState: {},
     });
     await setTimeout(50);
-    expect(renderer.toJSON()).toBe('First');
+    expect(rootText()).toBe('First');
   }
 );
 
@@ -36,9 +36,9 @@ testRenderer(
     selectedFixtureId: { path: 'first', name: 'one' },
     fixtures,
   },
-  async ({ renderer, unselectFixture }) => {
+  async ({ rootText, unselectFixture }) => {
     unselectFixture({ rendererId });
     await setTimeout(50);
-    expect(renderer.toJSON()).toBe('First');
+    expect(rootText()).toBe('First');
   }
 );
