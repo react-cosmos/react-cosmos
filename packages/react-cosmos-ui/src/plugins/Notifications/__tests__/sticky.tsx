@@ -1,5 +1,5 @@
-import { render } from '@testing-library/react';
-import React, { act } from 'react';
+import { act, render } from '@testing-library/react';
+import React from 'react';
 import { ArraySlot, loadPlugins, resetPlugins } from 'react-plugin';
 import { getNotificationsMethods } from '../../../testHelpers/pluginMocks.js';
 import { register } from '../index.js';

@@ -30,7 +30,7 @@ export function createTestRendererConnect({ onRendererResponse }: Args) {
   async function postRendererRequest(rendererRequest: RendererRequest) {
     // Simulate async communication between renderer and parent
     await setTimeout(Math.round(Math.random() * 50));
-    await act(async () => {
+    act(() => {
       messageHandlers.forEach(handler => {
         handler(rendererRequest);
       });
