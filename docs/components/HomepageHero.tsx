@@ -14,14 +14,9 @@ export function HomepageHero({ version, stars: initialStars }: Props) {
       <div className={styles.tiles}></div>
       <div className={styles.content}>
         <div className={styles.badgeContainer}>
-          <a
-            className={styles.badge}
-            href="https://twitter.com/ReactCosmos/status/1750257520243888429"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Cosmos 6 is here 🎉
-          </a>
+          <Link className={styles.badge} href="/docs/getting-started">
+            Ready for React 19 and Next 15 🐣
+          </Link>
         </div>
         <h1 className={styles.headline}>
           A better way to <br className="sm:hidden" />
