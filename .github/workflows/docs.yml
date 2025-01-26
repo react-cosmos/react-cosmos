@@ -63,4 +63,4 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           workingDirectory: ./docs
-          command: pages deploy ./out --project-name=react-cosmos-docs
+          command: pages deploy ./out --project-name=react-cosmos-docs --branch=${{ github.head_ref || github.ref_name }} --commit-message=${{ github.event.head_commit.message }}
