@@ -35,6 +35,8 @@ jobs:
         working-directory: docs
     permissions:
       contents: read
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -59,8 +61,18 @@ jobs:
           path: ./docs/out/demo
 
       - uses: cloudflare/wrangler-action@v3
+        if: env.CLOUDFLARE_API_TOKEN == ''
         with:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           workingDirectory: ./docs
           command: pages deploy ./out --project-name=react-cosmos-docs --branch=${{ github.head_ref || github.ref_name }}
+
+      # Forks don't have access to secrets and can't deploy to Cloudflare.
+      # Instead we upload the docs build to an artifact, which can be downloaded
+      # and reviewed by maintainers locally.
+      - uses: actions/upload-artifact@v4
+        if: env.CLOUDFLARE_API_TOKEN != ''
+        with:
+          name: react-cosmos-docs
+          path: ./docs/out
