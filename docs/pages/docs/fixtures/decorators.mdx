@@ -30,3 +30,22 @@ A decorator file can also export an array of decorators:
 ```jsx filename="cosmos.decorator.js"
 export default [Decorator1, Decorator2, Decorator3];
 ```
+
+## Importing Global CSS
+
+For styles that need to be applied globally—such as `normalize.css`, global variables, or other design system styles—it is recommended **not** to import them inside a decorator. Importing CSS files in a decorator may result in their styles being appended after your fixture styles, which can lead to unexpected styling issues.
+
+Instead, add these CSS files to the `globalImports` array in your [cosmos.config.json](https://reactcosmos.org/docs/configuration/cosmos-config). For example:
+
+```json
+{
+  "plugins": ["…"],
+  "globalImports": [
+    "normalize.css",
+    "./src/design-system/global-variables.css",
+    "./src/design-system/global.css"
+  ]
+}
+```
+
+This ensures that your global CSS is loaded before any fixture-specific styles, maintaining the intended cascade.
