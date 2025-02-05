@@ -69,7 +69,7 @@ jobs:
           command: pages deploy ./out --project-name=react-cosmos-docs --branch=${{ github.head_ref || github.ref_name }}
 
       # Forks don't have access to secrets and can't deploy to Cloudflare.
-      # Instead we upload the docs build to an artifact, which can be downloaded
+      # Instead, we upload the docs build as an artifact, which can be downloaded
       # and reviewed by maintainers locally.
       - uses: actions/upload-artifact@v4
         if: env.CLOUDFLARE_API_TOKEN == ''
