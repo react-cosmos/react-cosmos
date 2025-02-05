@@ -61,7 +61,7 @@ jobs:
           path: ./docs/out/demo
 
       - uses: cloudflare/wrangler-action@v3
-        if: env.CLOUDFLARE_API_TOKEN == ''
+        if: env.CLOUDFLARE_API_TOKEN != ''
         with:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -72,7 +72,7 @@ jobs:
       # Instead we upload the docs build to an artifact, which can be downloaded
       # and reviewed by maintainers locally.
       - uses: actions/upload-artifact@v4
-        if: env.CLOUDFLARE_API_TOKEN != ''
+        if: env.CLOUDFLARE_API_TOKEN == ''
         with:
           name: react-cosmos-docs
           path: ./docs/out
