@@ -1,6 +1,6 @@
 import { get } from 'lodash-es';
-import { ReactElement, ReactNode } from 'react';
-import { isReactElement } from 'react-cosmos-core';
+import { ReactNode } from 'react';
+import { isReactElement, ReactElementWithChildren } from 'react-cosmos-core';
 import { isRootPath } from './shared.js';
 
 // Why be silent about trying to fetch a node that isn't an element?
@@ -11,12 +11,12 @@ import { isRootPath } from './shared.js';
 export function getElementAtPath(
   node: ReactNode,
   elPath: string
-): null | ReactElement {
+): null | ReactElementWithChildren {
   if (!isReactElement(node) && !Array.isArray(node)) {
     return null;
   }
 
-  const rootNode = node as ReactElement | ReactNode[];
+  const rootNode = node as ReactElementWithChildren | ReactNode[];
   const childNode = isRootPath(elPath) ? rootNode : get(rootNode, elPath);
 
   if (!isReactElement(childNode)) {
@@ -29,7 +29,7 @@ export function getElementAtPath(
 export function getExpectedElementAtPath(
   node: ReactNode,
   elPath: string
-): ReactElement {
+): ReactElementWithChildren {
   const el = getElementAtPath(node, elPath);
 
   if (!el) {

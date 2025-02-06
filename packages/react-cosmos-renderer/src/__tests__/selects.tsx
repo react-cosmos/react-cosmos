@@ -1,7 +1,6 @@
-import retry from '@skidding/async-retry';
-import React, { act } from 'react';
+import { fireEvent, waitFor } from '@testing-library/react';
+import React from 'react';
 import { uuid } from 'react-cosmos-core';
-import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
 import { useFixtureSelect } from '../fixture/useFixtureSelect/useFixtureSelect.js';
 import { getInputs } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
@@ -39,7 +38,9 @@ testRenderer(
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, 'first');
+    await waitFor(() =>
+      expect(renderer.getByRole('textbox')).toHaveValue('first')
+    );
   }
 );
 
@@ -71,7 +72,9 @@ testRenderer(
   { rendererId, fixtures },
   async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, 'first');
+    await waitFor(() =>
+      expect(renderer.getByRole('textbox')).toHaveValue('first')
+    );
     const fixtureState = await getLastFixtureState();
     setFixtureState({
       rendererId,
@@ -89,7 +92,9 @@ testRenderer(
         },
       },
     });
-    await rendered(renderer, 'second');
+    await waitFor(() =>
+      expect(renderer.getByRole('textbox')).toHaveValue('second')
+    );
   }
 );
 
@@ -98,9 +103,15 @@ testRenderer(
   { rendererId, fixtures },
   async ({ renderer, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, 'first');
-    changeValue(renderer, 'second');
-    await rendered(renderer, 'second');
+    await waitFor(() =>
+      expect(renderer.getByRole('textbox')).toHaveValue('first')
+    );
+    fireEvent.change(renderer.getByRole('textbox'), {
+      target: { value: 'second' },
+    });
+    await waitFor(() =>
+      expect(renderer.getByRole('textbox')).toHaveValue('second')
+    );
     await fixtureStateChange({
       rendererId,
       fixtureId,
@@ -124,12 +135,16 @@ testRenderer(
   { rendererId, fixtures },
   async ({ renderer, update, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, 'first');
+    await waitFor(() =>
+      expect(renderer.getByRole('textbox')).toHaveValue('first')
+    );
     update({
       rendererId,
       fixtures: createFixtures({ defaultValue: 'third' }),
     });
-    await rendered(renderer, 'third');
+    await waitFor(() =>
+      expect(renderer.getByRole('textbox')).toHaveValue('third')
+    );
     await fixtureStateChange({
       rendererId,
       fixtureId,
@@ -147,19 +162,3 @@ testRenderer(
     });
   }
 );
-
-async function rendered(renderer: ReactTestRenderer, text: string) {
-  await retry(() =>
-    expect(getSingleRendererElement(renderer).props.value).toEqual(text)
-  );
-}
-
-function changeValue(renderer: ReactTestRenderer, value: Option) {
-  act(() => {
-    getSingleRendererElement(renderer).props.onChange({ target: { value } });
-  });
-}
-
-function getSingleRendererElement(renderer: ReactTestRenderer) {
-  return renderer.toJSON() as ReactTestRendererJSON;
-}

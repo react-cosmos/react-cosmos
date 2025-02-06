@@ -10,24 +10,27 @@ import { decorateFixture } from './decorateFixture.js';
 
 type Props = {
   fixture: ReactFixture;
+  fixtureOptions: {};
   userDecoratorModules: ReactDecoratorModule[];
   globalDecorators?: ReactDecorator[];
 };
 export function DecoratedFixture({
   fixture,
+  fixtureOptions,
   userDecoratorModules,
   globalDecorators = [],
 }: Props) {
   return useMemo(() => {
     const decorators = [
       ...globalDecorators,
-      ...userDecoratorModules.map(m => m.default),
+      ...userDecoratorModules.map(m => m.default).flat(),
     ];
     return decorateFixture(
       <FixtureCapture decoratorId="root">
         {createFixtureNode(fixture)}
       </FixtureCapture>,
+      fixtureOptions,
       decorators
     );
-  }, [fixture, globalDecorators, userDecoratorModules]);
+  }, [fixture, fixtureOptions, globalDecorators, userDecoratorModules]);
 }

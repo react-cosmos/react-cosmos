@@ -1,4 +1,4 @@
-import retry from '@skidding/async-retry';
+import { waitFor } from '@testing-library/react';
 import { uuid } from 'react-cosmos-core';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
@@ -17,8 +17,8 @@ testRenderer(
     fixtures,
     lazy: true,
   },
-  async ({ renderer }) => {
-    await retry(() => expect(renderer.toJSON()).toBe('First'));
+  async ({ rootText }) => {
+    await waitFor(() => expect(rootText()).toBe('First'));
   }
 );
 
@@ -30,8 +30,8 @@ testRenderer(
     fixtures,
     lazy: true,
   },
-  async ({ renderer }) => {
-    await retry(() => expect(renderer.toJSON()).toBe('Second'));
+  async ({ rootText }) => {
+    await waitFor(() => expect(rootText()).toBe('Second'));
   }
 );
 

@@ -1,11 +1,11 @@
-import * as ReactNative from 'react-native';
-
-const { NativeModules } = ReactNative;
+import { TurboModuleRegistry } from 'react-native';
 
 export function getSocketUrl(playgroundUrl: string) {
   // The URL module isn't implemented fully in React Native and I don't want to
   // bring in another dependency just for this.
-  const scriptURL = NativeModules.SourceCode.scriptURL as string;
+  const sourceCode = TurboModuleRegistry.getEnforcing('SourceCode');
+  const constants = sourceCode.getConstants?.() as any;
+  const scriptURL = constants.scriptURL as string;
 
   // https://stackoverflow.com/a/27755/1332513
   const urlRegex = /^(.*:)\/\/([A-Za-z0-9\-\.]+)(:[0-9]+)?(.*)$/;

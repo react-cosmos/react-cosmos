@@ -1,19 +1,17 @@
-import retry from '@skidding/async-retry';
+import { act, waitFor } from '@testing-library/react';
 import until from 'async-until';
 import { setTimeout } from 'node:timers/promises';
 import React from 'react';
-import {
-  ClassStateMock,
-  FixtureStatePrimitiveValue,
-  uuid,
-} from 'react-cosmos-core';
+import { FixtureStatePrimitiveValue, uuid } from 'react-cosmos-core';
+import { ClassStateMock } from '../fixture/ClassStateMock.js';
 import { Counter } from '../testHelpers/components.js';
 import { getClassState } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
-import { wrapActSetTimeout } from '../testHelpers/wrapActSetTimeout.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
+import { clearSetTimeoutAct, wrapSetTimeoutAct } from '../wrapSetTimeoutAct.js';
 
-beforeAll(wrapActSetTimeout);
+beforeEach(wrapSetTimeoutAct);
+afterEach(clearSetTimeoutAct);
 
 let counterRef: null | Counter = null;
 beforeEach(() => {
@@ -47,14 +45,14 @@ testRenderer(
       fixtureState: {},
     });
     await until(() => counterRef, { timeout: 1000 });
-    counterRef!.setState({ count: 7 });
-    await retry(async () => expect(await getCount()).toBe(7));
+    act(() => counterRef!.setState({ count: 7 }));
+    await waitFor(async () => expect(await getCount()).toBe(7));
 
     // Simulate a small pause between updates
     await setTimeout(500);
 
-    counterRef!.setState({ count: 13 });
-    await retry(async () => expect(await getCount()).toBe(13));
+    act(() => counterRef!.setState({ count: 13 }));
+    await waitFor(async () => expect(await getCount()).toBe(13));
 
     async function getCount(): Promise<null | number> {
       const fixtureState = await getLastFixtureState();

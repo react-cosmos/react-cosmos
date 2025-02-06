@@ -218,7 +218,7 @@ export function FixtureSearchOverlay({
     matchingFixturePaths,
   ]);
 
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   // Auto focus when search input is created
   useEffect(() => {

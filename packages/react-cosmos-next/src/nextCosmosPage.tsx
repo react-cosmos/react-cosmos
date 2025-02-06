@@ -3,17 +3,18 @@ import { RendererConfig, UserModuleWrappers } from 'react-cosmos-core';
 import { NextFixtureLoader } from './NextFixtureLoader.js';
 import { NextCosmosParams } from './nextTypes.js';
 
-type Args = {
+export function nextCosmosPage(args: {
   rendererConfig: RendererConfig;
   moduleWrappers: UserModuleWrappers;
-};
-export function nextCosmosPage({ rendererConfig, moduleWrappers }: Args) {
-  return function NextCosmosPage({ params }: { params: NextCosmosParams }) {
+}) {
+  return async function NextCosmosPage(props: {
+    params: Promise<NextCosmosParams>;
+  }) {
     return (
       <NextFixtureLoader
-        rendererConfig={rendererConfig}
-        moduleWrappers={moduleWrappers}
-        params={params}
+        rendererConfig={args.rendererConfig}
+        moduleWrappers={args.moduleWrappers}
+        params={await props.params}
       />
     );
   };

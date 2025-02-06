@@ -6,6 +6,7 @@ cosmos.imports.ts
 coverage
 docs/.vercel
 docs/out
+docs/tsconfig.json
 lerna.json
 package.json
 packages/*/dist

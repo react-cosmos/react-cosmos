@@ -72,7 +72,7 @@ npm install
 
 # Basic commands
 npm run build
-npm run test
+npm run test:run
 npm run check-types
 
 # Run Vite example
@@ -86,8 +86,8 @@ npm run build react-cosmos-core
 npm run build react-cosmos-core --watch
 
 # Test watch all or specific tests
-npm run test:watch
-npm run test:watch path/to/my/file.test.ts
+npm run test
+npm run test path/to/my/file.test.ts
 ```
 
 ### Test your work

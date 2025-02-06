@@ -31,7 +31,7 @@ export function pickRendererUrl(
 ): null | string {
   return rendererUrl && typeof rendererUrl === 'object'
     ? rendererUrl[command]
-    : rendererUrl ?? null;
+    : (rendererUrl ?? null);
 }
 
 export function encodeRendererUrlFixture(fixtureId: FixtureId) {

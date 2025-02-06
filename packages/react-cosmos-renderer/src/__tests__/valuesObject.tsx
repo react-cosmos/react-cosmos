@@ -1,7 +1,6 @@
-import retry from '@skidding/async-retry';
-import React, { act } from 'react';
+import { fireEvent, waitFor } from '@testing-library/react';
+import React from 'react';
 import { createValue, uuid } from 'react-cosmos-core';
-import { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
 import { useFixtureInput } from '../fixture/useFixtureInput/useFixtureInput.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
@@ -18,7 +17,7 @@ function createFixtures({ defaultValue }: { defaultValue: Profile }) {
     const [profile, setProfile] = useFixtureInput('profile', defaultValue);
     return (
       <>
-        <p>{JSON.stringify(profile, null, 2)}</p>
+        <p>{JSON.stringify(profile)}</p>
         <button
           onClick={() => setProfile({ ...profile, isAdmin: !profile.isAdmin })}
         >
@@ -43,7 +42,13 @@ testRenderer(
   { rendererId, fixtures },
   async ({ renderer, selectFixture }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, { isAdmin: true, name: 'Pat D', age: 45 });
+    await waitFor(() =>
+      expect(
+        renderer.getByText(
+          JSON.stringify({ isAdmin: true, name: 'Pat D', age: 45 })
+        )
+      )
+    );
   }
 );
 
@@ -84,8 +89,14 @@ testRenderer(
   { rendererId, fixtures },
   async ({ renderer, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, { isAdmin: true, name: 'Pat D', age: 45 });
-    toggleAdminButton(renderer);
+    await waitFor(() =>
+      expect(
+        renderer.getByText(
+          JSON.stringify({ isAdmin: true, name: 'Pat D', age: 45 })
+        )
+      )
+    );
+    fireEvent.click(renderer.getByText('Toggle admin'));
     await fixtureStateChange({
       rendererId,
       fixtureId,
@@ -118,7 +129,13 @@ testRenderer(
   { rendererId, fixtures },
   async ({ renderer, update, selectFixture, fixtureStateChange }) => {
     selectFixture({ rendererId, fixtureId, fixtureState: {} });
-    await rendered(renderer, { isAdmin: true, name: 'Pat D', age: 45 });
+    await waitFor(() =>
+      expect(
+        renderer.getByText(
+          JSON.stringify({ isAdmin: true, name: 'Pat D', age: 45 })
+        )
+      )
+    );
     update({
       rendererId,
       fixtures: createFixtures({
@@ -156,33 +173,3 @@ testRenderer(
     });
   }
 );
-
-async function rendered(
-  renderer: ReactTestRenderer,
-  profile: Pick<Profile, 'isAdmin' | 'name' | 'age'>
-) {
-  await retry(() => {
-    const profileText = getProfileText(getProfileNode(renderer));
-    expect(profileText).toMatch(`"isAdmin": ${profile.isAdmin}`);
-    expect(profileText).toMatch(`"name": "${profile.name}"`);
-    expect(profileText).toMatch(`"age": ${profile.age}`);
-  });
-}
-
-function toggleAdminButton(renderer: ReactTestRenderer) {
-  act(() => {
-    getButtonNode(renderer).props.onClick();
-  });
-}
-
-function getProfileNode(renderer: ReactTestRenderer) {
-  return (renderer.toJSON() as any)[0] as ReactTestRendererJSON;
-}
-
-function getButtonNode(renderer: ReactTestRenderer) {
-  return (renderer.toJSON() as any)[1] as ReactTestRendererJSON;
-}
-
-function getProfileText(rendererNode: ReactTestRendererJSON) {
-  return rendererNode.children!.join('');
-}

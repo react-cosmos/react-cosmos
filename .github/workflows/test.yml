@@ -31,9 +31,8 @@ jobs:
       # Test source (with cross-package coverage)
       - run: npm run src
       - run: npm run check-types
-      - run: npm run check-types:docs
       - run: npm run lint
-      - run: yarn test:run --coverage
+      - run: npm run test:run -- --coverage
 
       - uses: codecov/codecov-action@v4
         # Only report coverage once
@@ -91,7 +90,7 @@ jobs:
         id: playwright-cache
         with:
           path: ${{ matrix.os == 'windows' && 'C:\Users\runneradmin\AppData\Local\ms-playwright' || '~/.cache/ms-playwright' }}
-          key: '${{ runner.os }}-playwright-1.45.3'
+          key: '${{ runner.os }}-playwright-1.49.1'
 
       # https://playwright.dev/docs/browsers#install-system-dependencies
       - if: steps.playwright-cache.outputs.cache-hit != 'true'

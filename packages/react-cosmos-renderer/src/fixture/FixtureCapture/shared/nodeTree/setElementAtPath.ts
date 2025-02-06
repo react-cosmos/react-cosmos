@@ -1,13 +1,13 @@
 import { set } from 'lodash-es';
-import { ReactElement, ReactNode } from 'react';
-import { isReactElement } from 'react-cosmos-core';
+import { ReactNode } from 'react';
+import { isReactElement, ReactElementWithChildren } from 'react-cosmos-core';
 import { getExpectedElementAtPath } from './getElementAtPath.js';
 import { isRootPath } from './shared.js';
 
 export function setElementAtPath(
   node: ReactNode,
   elPath: string,
-  updater: (el: ReactElement) => ReactElement
+  updater: (el: ReactElementWithChildren) => ReactElementWithChildren
 ): ReactNode {
   const childEl = getExpectedElementAtPath(node, elPath);
   const newEl = updater(childEl);
@@ -18,7 +18,7 @@ export function setElementAtPath(
 
   // If the root is a non-Array non-Element Node we should be at the root path
   // and returned already
-  const clonedRoot = cloneNode(node) as ReactElement | ReactNode[];
+  const clonedRoot = cloneNode(node) as ReactElementWithChildren | ReactNode[];
 
   // _.set also accepts arrays
   // https://github.com/lodash/lodash/blob/6018350ac10d5ce6a5b7db625140b82aeab804df/isObject.js#L15-L16
@@ -35,7 +35,9 @@ function cloneNodeItem(value: ReactNode) {
   return isReactElement(value) ? cloneReactElement(value) : value;
 }
 
-function cloneReactElement(value: ReactElement): ReactElement {
+function cloneReactElement(
+  value: ReactElementWithChildren
+): ReactElementWithChildren {
   const { children, ...otherProps } = value.props;
   return {
     ...value,

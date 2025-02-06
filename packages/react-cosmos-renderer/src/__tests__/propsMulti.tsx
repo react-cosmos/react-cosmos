@@ -1,4 +1,4 @@
-import retry from '@skidding/async-retry';
+import { waitFor } from '@testing-library/react';
 import React from 'react';
 import {
   createValues,
@@ -24,14 +24,14 @@ const fixtureId = { path: 'first' };
 testRenderer(
   'captures multiple props instances',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture, fixtureStateChange }) => {
+  async ({ rootText, selectFixture, fixtureStateChange }) => {
     selectFixture({
       rendererId,
       fixtureId,
       fixtureState: {},
     });
-    await retry(() =>
-      expect(renderer.toJSON()).toEqual(['Hello Blanca', 'Hello B'])
+    await waitFor(() =>
+      expect(rootText()).toEqual(['Hello Blanca', 'Hello B'].join(''))
     );
     await fixtureStateChange({
       rendererId,
@@ -57,7 +57,7 @@ testRenderer(
 testRenderer(
   'overwrites prop in second instance',
   { rendererId, fixtures },
-  async ({ renderer, selectFixture, setFixtureState, getLastFixtureState }) => {
+  async ({ rootText, selectFixture, setFixtureState, getLastFixtureState }) => {
     selectFixture({
       rendererId,
       fixtureId,
@@ -77,8 +77,8 @@ testRenderer(
         }),
       },
     });
-    await retry(() =>
-      expect(renderer.toJSON()).toEqual(['Hello Blanca', 'Hello Benjamin'])
+    await waitFor(() =>
+      expect(rootText()).toEqual(['Hello Blanca', 'Hello Benjamin'].join(''))
     );
   }
 );

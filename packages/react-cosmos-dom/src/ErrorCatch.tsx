@@ -1,20 +1,16 @@
 import { isEqual } from 'lodash-es';
 import React from 'react';
-import { areNodesEqual } from 'react-cosmos-core';
+import { areNodesEqual, DecoratorProps } from 'react-cosmos-core';
 import {
   FixtureContext,
   FixtureContextValue,
 } from 'react-cosmos-renderer/client';
 
-type Props = {
-  children: React.ReactNode;
-};
-
 type State = {
   error: null | string;
 };
 
-export class ErrorCatch extends React.Component<Props, State> {
+export class ErrorCatch extends React.Component<DecoratorProps, State> {
   declare context: FixtureContextValue;
   static contextType = FixtureContext;
 
@@ -35,7 +31,7 @@ export class ErrorCatch extends React.Component<Props, State> {
     this.prevContext = this.context;
   }
 
-  componentDidUpdate(prevProps: Props) {
+  componentDidUpdate(prevProps: DecoratorProps) {
     // A change in fixture (children) or fixture state signifies that the
     // problem that caused the current error might've been solved. If the error
     // persists, it will organically trigger the error state again in the next

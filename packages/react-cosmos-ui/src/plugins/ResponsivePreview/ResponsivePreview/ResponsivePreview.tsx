@@ -39,7 +39,7 @@ export function ResponsivePreview({
   setViewport,
   setScaled,
 }: Props) {
-  const [container, setContainer] = useState<null | Viewport>(null);
+  const [container, setContainer] = useState<Viewport | null>(null);
 
   const onWidthChange = useCallback(
     (width: number) =>

@@ -15,6 +15,7 @@ type Props = {
   fixtureId: FixtureId;
   initialFixtureState?: FixtureState;
   fixtureItem: FixtureListItem;
+  fixtureOptions: {};
   lazy: boolean;
 };
 
@@ -51,9 +52,10 @@ export function FixtureProvider(props: Props) {
       payload: {
         rendererId,
         fixture: props.fixtureItem,
+        fixtureOptions: props.fixtureOptions,
       },
     });
-  }, [props.fixtureItem, rendererConnect, rendererId]);
+  }, [props.fixtureItem, props.fixtureOptions, rendererConnect, rendererId]);
 
   React.useEffect(() => {
     if (!isEqual(state.fixtureState, state.syncedFixtureState)) {
