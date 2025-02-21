@@ -61,7 +61,7 @@ export function FixtureBookmarks({
         return (
           <ListItem key={itemKey} selected={selected}>
             <FixtureLink
-              href={createRelativePlaygroundUrl({ fixtureId })}
+              href={createRelativePlaygroundUrl({ fixture: fixtureId })}
               selected={selected}
               onClick={handleClick}
             >

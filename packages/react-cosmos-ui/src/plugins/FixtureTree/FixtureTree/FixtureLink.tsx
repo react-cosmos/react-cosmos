@@ -13,7 +13,7 @@ type Props = {
 export function FixtureLink({ children, fixtureId, onSelect }: Props) {
   return (
     <Link
-      href={createRelativePlaygroundUrl({ fixtureId })}
+      href={createRelativePlaygroundUrl({ fixture: fixtureId })}
       onClick={e => {
         e.preventDefault();
         if (e.metaKey) openAnchorInNewTab(e.currentTarget);
