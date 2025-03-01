@@ -17,7 +17,7 @@ afterEach(() => {
 const fixtureId = { path: 'zwei.js' };
 
 it('returns fixtureId', async () => {
-  pushUrlParams({ fixtureId: JSON.stringify(fixtureId) });
+  pushUrlParams({ fixture: JSON.stringify(fixtureId) });
   loadPlugins();
 
   await waitFor(() =>

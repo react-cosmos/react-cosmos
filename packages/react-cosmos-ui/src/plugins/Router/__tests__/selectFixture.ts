@@ -32,7 +32,7 @@ it('sets URL params', async () => {
   getRouterMethods().selectFixture(fixtureId);
 
   await waitFor(() =>
-    expect(getUrlParams()).toEqual({ fixtureId: JSON.stringify(fixtureId) })
+    expect(getUrlParams()).toEqual({ fixture: JSON.stringify(fixtureId) })
   );
 });
 

@@ -43,7 +43,7 @@ it('sets URL params from initial fixture config', async () => {
   });
 
   await waitFor(() =>
-    expect(getUrlParams()).toEqual({ fixtureId: JSON.stringify(fixtureId) })
+    expect(getUrlParams()).toEqual({ fixture: JSON.stringify(fixtureId) })
   );
 });
 
@@ -67,7 +67,7 @@ it('selects URL fixture param over initial fixture config', async () => {
   const urlFixtureId = { path: 'ein.js' };
   const configFixtureId = { path: 'zwei.js' };
 
-  pushUrlParams({ fixtureId: JSON.stringify(urlFixtureId) });
+  pushUrlParams({ fixture: JSON.stringify(urlFixtureId) });
   loadPlugins({
     config: {
       router: {

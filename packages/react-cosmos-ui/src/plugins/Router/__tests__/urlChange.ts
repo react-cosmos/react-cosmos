@@ -20,7 +20,7 @@ it('emits "fixtureSelect" event on "fixtureId" URL param change', () => {
   const { fixtureSelect } = onRouter();
 
   loadPlugins();
-  popUrlParams({ fixtureId: JSON.stringify(fixtureId) });
+  popUrlParams({ fixture: JSON.stringify(fixtureId) });
 
   expect(fixtureSelect).toBeCalledWith(expect.any(Object), fixtureId);
 });
@@ -28,7 +28,7 @@ it('emits "fixtureSelect" event on "fixtureId" URL param change', () => {
 it('emits "fixtureUnselect" event on removed "fixtureId" URL param', async () => {
   const { fixtureUnselect } = onRouter();
 
-  pushUrlParams({ fixtureId: JSON.stringify(fixtureId) });
+  pushUrlParams({ fixture: JSON.stringify(fixtureId) });
   loadPlugins();
 
   // This simulation is akin to going back home after selecting a fixture
