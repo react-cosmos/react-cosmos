@@ -1,5 +1,6 @@
 import React, { RefObject } from 'react';
 import { FixtureId } from 'react-cosmos-core';
+import { usePlugContext } from 'react-plugin';
 import styled from 'styled-components';
 import {
   grey144,
@@ -9,6 +10,8 @@ import {
   selectedColors,
 } from '../../../style/colors.js';
 import { quick } from '../../../style/vars.js';
+import { CoreSpec } from '../../Core/spec.js';
+import { FixtureTreeSpec } from '../spec.js';
 import { FixtureLink } from './FixtureLink.js';
 import { FixtureTreeItem } from './FixtureTreeItem.js';
 
@@ -29,8 +32,17 @@ export function MultiFixtureChildButton({
   selectedRef,
   onSelect,
 }: Props) {
+  const { pluginContext } = usePlugContext<FixtureTreeSpec>();
+  const core = pluginContext.getMethodsOf<CoreSpec>('core');
+  const floatingPanes = true;
+
+  function handleSelect() {
+    onSelect(fixtureId);
+    if (floatingPanes) core.runCommand('toggleFixtureList');
+  }
+
   return (
-    <FixtureLink fixtureId={fixtureId} onSelect={onSelect}>
+    <FixtureLink fixtureId={fixtureId} onSelect={handleSelect}>
       <TreeItem
         ref={selected ? selectedRef : undefined}
         indentLevel={indentLevel}

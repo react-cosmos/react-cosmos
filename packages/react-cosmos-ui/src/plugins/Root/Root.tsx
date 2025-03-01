@@ -78,13 +78,17 @@ export function Root({
   });
 
   const showNav = navOpen || !selectedFixtureId;
+  const floatingPanes = true;
   const dragging = navDrag.dragging || panelDrag.dragging;
 
   // z-indexes are set here on purpose to show the layer hierarchy at a glance
   return (
     <Container dragging={dragging}>
       {showNav && (
-        <ResizablePane style={{ width: navWidth, zIndex: 2 }}>
+        <ResizablePane
+          floating={floatingPanes}
+          style={{ width: navWidth, zIndex: 2 }}
+        >
           <Nav>
             <NavRowSlot
               slotProps={{ onCloseNav: onToggleNav }}
@@ -121,7 +125,10 @@ export function Root({
             <Slot name="rendererPreview" />
             {dragging && <DragOverlay />}
             {selectedFixtureId && panelOpen && (
-              <ResizablePane style={{ width: panelWidth, zIndex: 3 }}>
+              <ResizablePane
+                floating={floatingPanes}
+                style={{ width: panelWidth, zIndex: 3 }}
+              >
                 <SidePanel
                   fixtureId={selectedFixtureId}
                   getFixtureState={getFixtureState}
@@ -166,10 +173,11 @@ const Container = styled.div.attrs({ 'data-testid': 'root' })<ContainerProps>`
   cursor: ${props => (props.dragging ? 'col-resize' : 'default')};
 `;
 
-const ResizablePane = styled.div`
+const ResizablePane = styled.div<{ floating: boolean }>`
   flex-shrink: 0;
   max-width: 100%;
-  position: relative;
+  height: 100%;
+  position: ${props => (props.floating ? 'absolute' : 'relative')};
 `;
 
 const Nav = styled.div`

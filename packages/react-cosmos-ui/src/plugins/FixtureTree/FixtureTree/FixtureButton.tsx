@@ -1,7 +1,10 @@
 import React, { RefObject } from 'react';
 import { FixtureId } from 'react-cosmos-core';
+import { usePlugContext } from 'react-plugin';
 import styled from 'styled-components';
 import { quick } from '../../../style/vars.js';
+import { CoreSpec } from '../../Core/spec.js';
+import { FixtureTreeSpec } from '../spec.js';
 import { FixtureLink } from './FixtureLink.js';
 import { FixtureTreeItem } from './FixtureTreeItem.js';
 
@@ -22,8 +25,17 @@ export function FixtureButton({
   selectedRef,
   onSelect,
 }: Props) {
+  const { pluginContext } = usePlugContext<FixtureTreeSpec>();
+  const core = pluginContext.getMethodsOf<CoreSpec>('core');
+  const floatingPanes = true;
+
+  function handleSelect(fixtureId: FixtureId) {
+    onSelect(fixtureId);
+    if (floatingPanes) core.runCommand('toggleFixtureList');
+  }
+
   return (
-    <FixtureLink fixtureId={{ path: fixturePath }} onSelect={onSelect}>
+    <FixtureLink fixtureId={{ path: fixturePath }} onSelect={handleSelect}>
       <FixtureTreeItem
         ref={selected ? selectedRef : undefined}
         indentLevel={indentLevel}

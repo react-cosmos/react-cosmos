@@ -39,21 +39,20 @@ export const RendererHeader = React.memo(function RendererHeader({
 }: Props) {
   const fixtureItem = findFixtureItemById(fixtureItems, fixtureId);
   const slotProps = React.useMemo(() => ({ fixtureId }), [fixtureId]);
+  const floatingPanes = true;
 
   return (
     <Container>
       <Left>
-        {!navOpen && (
-          <>
-            <IconButton32
-              icon={<MenuIcon />}
-              title="Show fixture list (L)"
-              selected={false}
-              onClick={onOpenNav}
-            />
-            <ButtonSeparator />
-          </>
+        {(floatingPanes || !navOpen) && (
+          <IconButton32
+            icon={<MenuIcon />}
+            title="Show fixture list (L)"
+            selected={false}
+            onClick={onOpenNav}
+          />
         )}
+        <ButtonSeparator />
         <IconButton32
           icon={<XCircleIcon />}
           title="Close fixture"
