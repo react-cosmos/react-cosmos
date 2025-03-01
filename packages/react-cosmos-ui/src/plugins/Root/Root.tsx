@@ -4,7 +4,7 @@ import { ArraySlot, Slot } from 'react-plugin';
 import styled from 'styled-components';
 import { useDrag } from '../../hooks/useDrag.js';
 import { NavRowSlot } from '../../slots/NavRowSlot.js';
-import { grey32, grey8, white10 } from '../../style/colors.js';
+import { grey32, white10 } from '../../style/colors.js';
 import {
   GetFixtureState,
   SetFixtureStateByName,
@@ -106,25 +106,22 @@ export function Root({
             globalActionOrder={globalActionOrder}
           />
         )}
+        {selectedFixtureId && (
+          <RendererHeader
+            fixtureItems={fixtureItems}
+            fixtureId={selectedFixtureId}
+            navOpen={navOpen}
+            panelOpen={panelOpen}
+            fixtureActionOrder={fixtureActionOrder}
+            rendererActionOrder={rendererActionOrder}
+            onOpenNav={onToggleNav}
+            onTogglePanel={onTogglePanel}
+            onReloadRenderer={onReloadRenderer}
+            onClose={onCloseFixture}
+          />
+        )}
         <RendererContainer key="rendererContainer">
-          {selectedFixtureId && (
-            <RendererHeader
-              fixtureItems={fixtureItems}
-              fixtureId={selectedFixtureId}
-              navOpen={navOpen}
-              panelOpen={panelOpen}
-              fixtureActionOrder={fixtureActionOrder}
-              rendererActionOrder={rendererActionOrder}
-              onOpenNav={onToggleNav}
-              onTogglePanel={onTogglePanel}
-              onReloadRenderer={onReloadRenderer}
-              onClose={onCloseFixture}
-            />
-          )}
-          <RendererBody key="rendererBody">
-            <Slot name="rendererPreview" />
-            {dragging && <DragOverlay />}
-          </RendererBody>
+          <Slot name="rendererPreview" />
           {!selectedFixtureId && (
             <Slot name="homeOverlay">
               <HomeOverlay
@@ -134,24 +131,25 @@ export function Root({
               />
             </Slot>
           )}
-          {selectedFixtureId && panelOpen && (
-            <ResizablePane
-              floating={floatingPanes}
-              style={{ width: panelWidth, right: 0, zIndex: 3 }}
-            >
-              <SidePanel
-                fixtureId={selectedFixtureId}
-                getFixtureState={getFixtureState}
-                setFixtureState={setFixtureState}
-                sidePanelRowOrder={sidePanelRowOrder}
-                onClosePanel={onTogglePanel}
-              />
-              {panelDrag.dragging && <DragOverlay />}
-              <PanelDragHandle ref={panelDrag.dragElRef} />
-            </ResizablePane>
-          )}
         </RendererContainer>
+        {dragging && <DragOverlay />}
       </MainContainer>
+      {selectedFixtureId && panelOpen && (
+        <ResizablePane
+          floating={floatingPanes}
+          style={{ width: panelWidth, right: 0, zIndex: 3 }}
+        >
+          <SidePanel
+            fixtureId={selectedFixtureId}
+            getFixtureState={getFixtureState}
+            setFixtureState={setFixtureState}
+            sidePanelRowOrder={sidePanelRowOrder}
+            onClosePanel={onTogglePanel}
+          />
+          {panelDrag.dragging && <DragOverlay />}
+          <PanelDragHandle ref={panelDrag.dragElRef} />
+        </ResizablePane>
+      )}
       <div style={{ zIndex: 4 }}>
         <ArraySlot name="global" plugOrder={globalOrder} />
       </div>
@@ -215,17 +213,6 @@ const RendererContainer = styled.div`
   overflow: hidden;
 `;
 
-// TODO: Can we get rid of one div since the panel is no longer grouped with
-// the renderer body?
-const RendererBody = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  background: ${grey8};
-  overflow: hidden;
-`;
-
 const DragHandle = styled.div`
   position: absolute;
   top: 0;
@@ -249,7 +236,6 @@ const PanelDragHandle = styled(DragHandle)`
 // because otherwise the iframe steals the mousemove events and stops the drag.
 const DragOverlay = styled.div`
   position: absolute;
-  background-color: rgba(255, 0, 0, 0.1);
   top: 0;
   bottom: 0;
   left: 0;
