@@ -87,7 +87,7 @@ export function Root({
       {showNav && (
         <ResizablePane
           floating={floatingPanes && selectedFixtureId !== null}
-          style={{ width: navWidth, left: 0, zIndex: 2 }}
+          style={{ width: navWidth, left: 0, zIndex: 3 }}
         >
           <Nav>
             <NavRowSlot
@@ -137,7 +137,7 @@ export function Root({
       {selectedFixtureId && panelOpen && (
         <ResizablePane
           floating={floatingPanes}
-          style={{ width: panelWidth, right: 0, zIndex: 3 }}
+          style={{ width: panelWidth, right: 0, zIndex: 2 }}
         >
           <SidePanel
             fixtureId={selectedFixtureId}
