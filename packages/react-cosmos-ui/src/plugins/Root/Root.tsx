@@ -175,7 +175,6 @@ const ResizablePane = styled.div`
 const Nav = styled.div`
   width: 100%;
   height: 100%;
-  box-sizing: border-box;
   background: ${grey32};
   display: flex;
   flex-direction: column;
