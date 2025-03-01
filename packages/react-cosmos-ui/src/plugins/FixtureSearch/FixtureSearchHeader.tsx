@@ -40,6 +40,7 @@ export function FixtureSearchHeader({
 }
 
 const Container = styled.div`
+  flex-shrink: 0;
   display: flex;
   flex-direction: row;
   align-items: center;

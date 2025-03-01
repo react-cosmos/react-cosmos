@@ -2,7 +2,7 @@ import React from 'react';
 import { FixtureId } from 'react-cosmos-core';
 import styled from 'styled-components';
 import { SidePanelRowSlot } from '../../slots/SidePanelRowSlot.js';
-import { grey32 } from '../../style/colors.js';
+import { grey32, white10 } from '../../style/colors.js';
 import {
   GetFixtureState,
   SetFixtureStateByName,
@@ -36,10 +36,10 @@ export const SidePanel = React.memo(function SidePanel({
 
 const Container = styled.div`
   height: 100%;
-  padding: 0 0 0 1px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  border-left: 1px solid ${white10};
   background: ${grey32};
 `;
 
