@@ -84,7 +84,7 @@ export function Root({
   return (
     <Container dragging={dragging}>
       {showNav && (
-        <Draggable style={{ width: navWidth, zIndex: 2 }}>
+        <ResizablePane style={{ width: navWidth, zIndex: 2 }}>
           <Nav>
             <NavRowSlot
               slotProps={{ onCloseNav: onToggleNav }}
@@ -93,7 +93,7 @@ export function Root({
           </Nav>
           {navDrag.dragging && <DragOverlay />}
           <NavDragHandle ref={navDrag.dragElRef} />
-        </Draggable>
+        </ResizablePane>
       )}
       <MainContainer key="main" style={{ zIndex: 1 }}>
         {!selectedFixtureId && (
@@ -121,7 +121,7 @@ export function Root({
             <Slot name="rendererPreview" />
             {dragging && <DragOverlay />}
             {selectedFixtureId && panelOpen && (
-              <ControlPanelContainer style={{ width: panelWidth, zIndex: 3 }}>
+              <ResizablePane style={{ width: panelWidth, zIndex: 3 }}>
                 <SidePanel
                   fixtureId={selectedFixtureId}
                   getFixtureState={getFixtureState}
@@ -130,7 +130,7 @@ export function Root({
                 />
                 {panelDrag.dragging && <DragOverlay />}
                 <PanelDragHandle ref={panelDrag.dragElRef} />
-              </ControlPanelContainer>
+              </ResizablePane>
             )}
           </RendererBody>
           {!selectedFixtureId && (
@@ -166,8 +166,9 @@ const Container = styled.div.attrs({ 'data-testid': 'root' })<ContainerProps>`
   cursor: ${props => (props.dragging ? 'col-resize' : 'default')};
 `;
 
-const Draggable = styled.div`
+const ResizablePane = styled.div`
   flex-shrink: 0;
+  max-width: 100%;
   position: relative;
 `;
 
@@ -204,10 +205,6 @@ const RendererBody = styled.div`
   justify-content: flex-end;
   background: ${grey8};
   overflow: hidden;
-`;
-
-const ControlPanelContainer = styled(Draggable)`
-  max-width: 100%;
 `;
 
 const DragHandle = styled.div`
