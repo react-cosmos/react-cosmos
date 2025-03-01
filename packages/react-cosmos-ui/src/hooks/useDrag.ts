@@ -27,13 +27,14 @@ export function useDrag({
   const [dragState, setDragState] = useState<null | DragState>(null);
 
   const handleDrag = useCallback(
-    (e: MouseEvent) => {
+    (e: MouseEvent | TouchEvent) => {
       if (dragState) {
         const { startValue, startOffset } = dragState;
+        const coords = getEventCoords(e);
         let diff =
           direction === 'horizontal'
-            ? e.clientX - startOffset
-            : e.clientY - startOffset;
+            ? coords.x - startOffset
+            : coords.y - startOffset;
         if (reverse) diff *= -1;
         if (double) diff *= 2;
         const curValue = Math.min(max, Math.max(min, startValue + diff));
@@ -48,10 +49,11 @@ export function useDrag({
   }, []);
 
   const handleDragStart = useCallback(
-    (e: MouseEvent) => {
+    (e: MouseEvent | TouchEvent) => {
+      const coords = getEventCoords(e);
       setDragState({
         startValue: value,
-        startOffset: direction === 'horizontal' ? e.clientX : e.clientY,
+        startOffset: direction === 'horizontal' ? coords.x : coords.y,
       });
     },
     [direction, value]
@@ -60,10 +62,14 @@ export function useDrag({
   useEffect((): void | (() => void) => {
     if (dragState) {
       document.addEventListener('mousemove', handleDrag);
+      document.addEventListener('touchmove', handleDrag);
       document.addEventListener('mouseup', handleDragEnd);
+      document.addEventListener('touchend', handleDragEnd);
       return () => {
         document.removeEventListener('mousemove', handleDrag);
+        document.removeEventListener('touchmove', handleDrag);
         document.removeEventListener('mouseup', handleDragEnd);
+        document.removeEventListener('touchend', handleDragEnd);
       };
     }
   }, [dragState, handleDrag, handleDragEnd]);
@@ -82,8 +88,11 @@ export function useDrag({
     (elRef: HTMLElement | null) => {
       if (elRef) {
         elRef.addEventListener('mousedown', handleDragStart);
-        onUnmount.current = () =>
+        elRef.addEventListener('touchstart', handleDragStart);
+        onUnmount.current = () => {
           elRef.removeEventListener('mousedown', handleDragStart);
+          elRef.removeEventListener('touchstart', handleDragStart);
+        };
       } else if (onUnmount.current) {
         onUnmount.current();
         onUnmount.current = null;
@@ -93,4 +102,11 @@ export function useDrag({
   );
 
   return { dragElRef, dragging: dragState !== null };
+}
+
+function getEventCoords(e: MouseEvent | TouchEvent) {
+  if ('touches' in e)
+    return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+
+  return { x: e.clientX, y: e.clientY };
 }

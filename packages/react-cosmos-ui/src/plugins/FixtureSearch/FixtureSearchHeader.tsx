@@ -40,11 +40,11 @@ export function FixtureSearchHeader({
 }
 
 const Container = styled.div`
+  flex-shrink: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
   height: 40px;
-  margin: 0 1px 0 0;
   background: ${grey32};
 `;
 

@@ -174,6 +174,8 @@ const Draggable = styled.div`
 const Nav = styled.div`
   width: 100%;
   height: 100%;
+  box-sizing: border-box;
+  border-right: 1px solid ${white10};
   background: ${grey32};
   display: flex;
   flex-direction: column;
@@ -206,29 +208,25 @@ const RendererBody = styled.div`
 
 const ControlPanelContainer = styled(Draggable)`
   max-width: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
 `;
 
 const DragHandle = styled.div`
   position: absolute;
   top: 0;
-  width: 1px;
+  width: 10px;
   height: 100%;
-  background-color: ${white10};
   background-clip: content-box;
   cursor: col-resize;
   user-select: none;
+  touch-action: none;
 `;
 
 const NavDragHandle = styled(DragHandle)`
   right: -2px;
-  padding: 0 2px;
 `;
 
 const PanelDragHandle = styled(DragHandle)`
   left: -2px;
-  padding: 0 1px 0 2px;
 `;
 
 // The purpose of DragOverlay is to cover the renderer iframe while dragging,
