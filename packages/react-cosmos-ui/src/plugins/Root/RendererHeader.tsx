@@ -52,7 +52,6 @@ export const RendererHeader = React.memo(function RendererHeader({
             onClick={onOpenNav}
           />
         )}
-        <ButtonSeparator />
         <IconButton32
           icon={<XCircleIcon />}
           title="Close fixture"
@@ -156,14 +155,6 @@ const Right = styled(Actions)`
   display: flex;
   flex-direction: row;
   align-items: center;
-`;
-
-const ButtonSeparator = styled.div`
-  flex-shrink: 0;
-  background: ${white10};
-  width: 1px;
-  height: 40px;
-  margin-left: 4px;
 `;
 
 const FixtureName = styled.div`

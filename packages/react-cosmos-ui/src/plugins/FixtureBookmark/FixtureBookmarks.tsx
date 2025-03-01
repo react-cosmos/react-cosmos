@@ -19,7 +19,6 @@ import {
   grey32,
   grey8,
   selectedColors,
-  white10,
 } from '../../style/colors.js';
 import { quick } from '../../style/vars.js';
 import { CoreSpec } from '../Core/spec.js';
@@ -47,7 +46,6 @@ export function FixtureBookmarks({
 
   return (
     <Container>
-      <Separator />
       <Header>
         <HeaderTitle>Bookmarks</HeaderTitle>
       </Header>
@@ -111,13 +109,6 @@ function getFixtureName({ name, fileName }: FlatFixtureTreeItem) {
 const Container = styled.div`
   padding: 0 0 8px 0;
   background: ${grey32};
-`;
-
-// Add 1px right gap to avoid overlapping with the nav pane right-side border
-const Separator = styled.div`
-  margin-right: 1px;
-  height: 1px;
-  background: ${white10};
 `;
 
 const Header = styled.div`

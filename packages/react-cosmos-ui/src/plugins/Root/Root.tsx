@@ -86,8 +86,8 @@ export function Root({
     <Container dragging={dragging}>
       {showNav && (
         <ResizablePane
-          floating={floatingPanes}
-          style={{ width: navWidth, zIndex: 2 }}
+          floating={floatingPanes && selectedFixtureId !== null}
+          style={{ width: navWidth, left: 0, zIndex: 2 }}
         >
           <Nav>
             <NavRowSlot
@@ -124,21 +124,6 @@ export function Root({
           <RendererBody key="rendererBody">
             <Slot name="rendererPreview" />
             {dragging && <DragOverlay />}
-            {selectedFixtureId && panelOpen && (
-              <ResizablePane
-                floating={floatingPanes}
-                style={{ width: panelWidth, zIndex: 3 }}
-              >
-                <SidePanel
-                  fixtureId={selectedFixtureId}
-                  getFixtureState={getFixtureState}
-                  setFixtureState={setFixtureState}
-                  sidePanelRowOrder={sidePanelRowOrder}
-                />
-                {panelDrag.dragging && <DragOverlay />}
-                <PanelDragHandle ref={panelDrag.dragElRef} />
-              </ResizablePane>
-            )}
           </RendererBody>
           {!selectedFixtureId && (
             <Slot name="homeOverlay">
@@ -148,6 +133,22 @@ export function Root({
                 onShowWelcome={onShowWelcome}
               />
             </Slot>
+          )}
+          {selectedFixtureId && panelOpen && (
+            <ResizablePane
+              floating={floatingPanes}
+              style={{ width: panelWidth, right: 0, zIndex: 3 }}
+            >
+              <SidePanel
+                fixtureId={selectedFixtureId}
+                getFixtureState={getFixtureState}
+                setFixtureState={setFixtureState}
+                sidePanelRowOrder={sidePanelRowOrder}
+                onClosePanel={onTogglePanel}
+              />
+              {panelDrag.dragging && <DragOverlay />}
+              <PanelDragHandle ref={panelDrag.dragElRef} />
+            </ResizablePane>
           )}
         </RendererContainer>
       </MainContainer>
@@ -214,6 +215,8 @@ const RendererContainer = styled.div`
   overflow: hidden;
 `;
 
+// TODO: Can we get rid of one div since the panel is no longer grouped with
+// the renderer body?
 const RendererBody = styled.div`
   flex: 1;
   display: flex;
@@ -243,9 +246,10 @@ const PanelDragHandle = styled(DragHandle)`
 `;
 
 // The purpose of DragOverlay is to cover the renderer iframe while dragging,
-// because otherwise the iframe steaps the mousemove events and stops the drag.
+// because otherwise the iframe steals the mousemove events and stops the drag.
 const DragOverlay = styled.div`
   position: absolute;
+  background-color: rgba(255, 0, 0, 0.1);
   top: 0;
   bottom: 0;
   left: 0;

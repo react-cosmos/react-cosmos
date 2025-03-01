@@ -31,6 +31,10 @@ export function FixtureButton({
 
   function handleSelect(fixtureId: FixtureId) {
     onSelect(fixtureId);
+    // TODO: Explicitly closeFixtureList instead of toggling it. At the moment
+    // the behavior is inconsistent because the nav is shown when no fixture is
+    // selected even though the navOpen state is false. Toggling it in this case
+    // will set it to true after opening the fixture.
     if (floatingPanes) core.runCommand('toggleFixtureList');
   }
 
