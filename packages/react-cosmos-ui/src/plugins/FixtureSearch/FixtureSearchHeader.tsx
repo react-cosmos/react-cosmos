@@ -45,6 +45,7 @@ const Container = styled.div`
   flex-direction: row;
   align-items: center;
   height: 40px;
+  margin: 0 1px 0 0;
   background: ${grey32};
 `;
 

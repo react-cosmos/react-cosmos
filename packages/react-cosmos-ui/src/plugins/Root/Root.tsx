@@ -176,10 +176,19 @@ const Nav = styled.div`
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  border-right: 1px solid ${white10};
   background: ${grey32};
   display: flex;
   flex-direction: column;
+
+  ::after {
+    content: '';
+    position: absolute;
+    top: 1px;
+    right: 0;
+    bottom: 0;
+    width: 1px;
+    background: ${white10};
+  }
 `;
 
 const MainContainer = styled.div`

@@ -41,6 +41,7 @@ export function FixtureBookmarks({
 
   return (
     <Container>
+      <Separator />
       <Header>
         <HeaderTitle>Bookmarks</HeaderTitle>
       </Header>
@@ -105,11 +106,17 @@ const Container = styled.div`
   background: ${grey32};
 `;
 
+// Add 1px right gap to avoid overlapping with the nav pane right-side border
+const Separator = styled.div`
+  margin-right: 1px;
+  height: 1px;
+  background: ${white10};
+`;
+
 const Header = styled.div`
   flex-shrink: 0;
   height: 40px;
   padding: 0 4px;
-  border-top: 1px solid ${white10};
   background: ${grey32};
   display: flex;
   flex-direction: row;

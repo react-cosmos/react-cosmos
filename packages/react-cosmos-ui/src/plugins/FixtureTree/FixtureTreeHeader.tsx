@@ -12,7 +12,7 @@ import {
   isTreeFullyCollapsed,
   TreeExpansion,
 } from '../../shared/treeExpansion.js';
-import { grey128, grey32, white10 } from '../../style/colors.js';
+import { grey128, grey32 } from '../../style/colors.js';
 
 type Props = {
   fixturesDir: string;
@@ -65,7 +65,6 @@ const Container = styled.div`
   flex-shrink: 0;
   height: 40px;
   padding: 0 4px;
-  border-top: 1px solid ${white10};
   background: ${grey32};
   display: flex;
   flex-direction: row;
