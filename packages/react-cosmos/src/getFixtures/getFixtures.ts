@@ -100,7 +100,7 @@ function getPlaygroundFixtureUrl(
   fixtureId: FixtureId
 ) {
   const baseUrl = getPlaygroundUrl(cosmosConfig);
-  const query = buildPlaygroundQueryString({ fixtureId });
+  const query = buildPlaygroundQueryString({ fixture: fixtureId });
   return `${baseUrl}/${query}`;
 }
 
