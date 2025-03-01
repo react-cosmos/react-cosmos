@@ -179,6 +179,7 @@ const commonDragHandleStyles = css`
   display: flex;
   justify-content: center;
   align-items: center;
+  touch-action: none;
 `;
 
 const LeftDragHandle = styled.div`
