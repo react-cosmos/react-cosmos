@@ -75,12 +75,14 @@ export const RendererHeader = React.memo(function RendererHeader({
           slotProps={slotProps}
           plugOrder={rendererActionOrder}
         />
-        <IconButton32
-          icon={<SlidersIcon />}
-          title="Toggle control panel (P)"
-          selected={panelOpen}
-          onClick={onTogglePanel}
-        />
+        {(floatingPanes || !panelOpen) && (
+          <IconButton32
+            icon={<SlidersIcon />}
+            title="Toggle control panel (P)"
+            selected={panelOpen}
+            onClick={onTogglePanel}
+          />
+        )}
       </Right>
     </Container>
   );
