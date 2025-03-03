@@ -1,6 +1,7 @@
 import { isEqual } from 'lodash-es';
 import React from 'react';
 import { FixtureId, FlatFixtureTreeItem } from 'react-cosmos-core';
+import { usePlugContext } from 'react-plugin';
 import styled from 'styled-components';
 import { IconButton32 } from '../../components/buttons/index.js';
 import {
@@ -12,6 +13,8 @@ import {
 import { FixtureActionSlot } from '../../slots/FixtureActionSlot.js';
 import { RendererActionSlot } from '../../slots/RendererActionSlot.js';
 import { grey176, grey32, white10 } from '../../style/colors.js';
+import { getFloatingPanes } from './floatingPanes.js';
+import { RootSpec } from './spec.js';
 
 type Props = {
   fixtureItems: FlatFixtureTreeItem[];
@@ -39,7 +42,8 @@ export const RendererHeader = React.memo(function RendererHeader({
 }: Props) {
   const fixtureItem = findFixtureItemById(fixtureItems, fixtureId);
   const slotProps = React.useMemo(() => ({ fixtureId }), [fixtureId]);
-  const floatingPanes = true;
+  const { pluginContext } = usePlugContext<RootSpec>();
+  const floatingPanes = getFloatingPanes(pluginContext);
 
   return (
     <Container>

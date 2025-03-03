@@ -34,11 +34,10 @@ export function MultiFixtureChildButton({
 }: Props) {
   const { pluginContext } = usePlugContext<FixtureTreeSpec>();
   const root = pluginContext.getMethodsOf<RootSpec>('root');
-  const floatingPanes = true;
 
   function handleSelect() {
     onSelect(fixtureId);
-    if (floatingPanes) root.closeFixtureList();
+    if (root.getFloatingPanes()) root.closeFixtureList();
   }
 
   return (

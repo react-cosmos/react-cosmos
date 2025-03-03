@@ -13,5 +13,6 @@ export type RootSpec = {
   };
   methods: {
     closeFixtureList: () => void;
+    getFloatingPanes: () => boolean;
   };
 };

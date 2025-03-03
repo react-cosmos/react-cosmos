@@ -1,7 +1,9 @@
 import React from 'react';
 import { FixtureId, FlatFixtureTreeItem } from 'react-cosmos-core';
-import { ArraySlot, Slot } from 'react-plugin';
+import { ArraySlot, Slot, usePlugContext } from 'react-plugin';
 import styled from 'styled-components';
+import { IconButton32 } from '../../components/buttons/IconButton32.js';
+import { MenuIcon } from '../../components/icons/index.js';
 import { useDrag } from '../../hooks/useDrag.js';
 import { NavRowSlot } from '../../slots/NavRowSlot.js';
 import { grey32, white10 } from '../../style/colors.js';
@@ -10,10 +12,12 @@ import {
   GetFixtureState,
   SetFixtureStateByName,
 } from '../RendererCore/spec.js';
+import { getFloatingPanes, setFloatingPanes } from './floatingPanes.js';
 import { GlobalHeader } from './GlobalHeader.js';
 import { HomeOverlay } from './HomeOverlay/HomeOverlay.js';
 import { RendererHeader } from './RendererHeader.js';
 import { SidePanel } from './SidePanel.js';
+import { RootSpec } from './spec.js';
 
 type Props = {
   fixtureItems: FlatFixtureTreeItem[];
@@ -78,8 +82,9 @@ export function Root({
     onChange: setPanelWidth,
   });
 
+  const { pluginContext } = usePlugContext<RootSpec>();
   const showNav = navOpen || !selectedFixtureId;
-  const floatingPanes = true;
+  const floatingPanes = getFloatingPanes(pluginContext);
   const dragging = navDrag.dragging || panelDrag.dragging;
 
   // z-indexes are set here on purpose to show the layer hierarchy at a glance
@@ -96,10 +101,20 @@ export function Root({
           }}
         >
           <Nav>
-            <NavRowSlot
-              slotProps={{ onCloseNav: onToggleNav }}
-              plugOrder={navRowOrder}
-            />
+            <NavSlots>
+              <NavRowSlot
+                slotProps={{ onCloseNav: onToggleNav }}
+                plugOrder={navRowOrder}
+              />
+            </NavSlots>
+            <NavFooter>
+              <IconButton32
+                icon={<MenuIcon />}
+                title="Toggle floating panes"
+                selected={floatingPanes}
+                onClick={() => setFloatingPanes(pluginContext, !floatingPanes)}
+              />
+            </NavFooter>
           </Nav>
           {navDrag.dragging && <DragOverlay />}
           <NavDragHandle ref={navDrag.dragElRef} />
@@ -209,6 +224,22 @@ const Nav = styled.div`
     width: 1px;
     background: ${white10};
   }
+`;
+
+const NavSlots = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
+const NavFooter = styled.div`
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 40px;
+  padding: 0 4px;
+  background: ${grey32};
 `;
 
 const MainContainer = styled.div`

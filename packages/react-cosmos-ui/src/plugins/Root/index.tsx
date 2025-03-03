@@ -7,6 +7,7 @@ import { RouterSpec } from '../Router/spec.js';
 import { StorageSpec } from '../Storage/spec.js';
 import { useWelcomeDismiss } from './HomeOverlay/welcomeDismiss.js';
 import { Root } from './Root.js';
+import { getFloatingPanes } from './floatingPanes.js';
 import { isNavOpen, openNav } from './navOpen.js';
 import { getNavWidthApi } from './navWidth.js';
 import { isPanelOpen, openPanel } from './panelOpen.js';
@@ -29,6 +30,7 @@ const { onLoad, plug, register } = createPlugin<RootSpec>({
   },
   methods: {
     closeFixtureList,
+    getFloatingPanes,
   },
 });
 

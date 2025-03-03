@@ -40,7 +40,6 @@ export function FixtureBookmarks({
   const sortedBookmarks = useSortedBookmarks(bookmarks);
   const { pluginContext } = usePlugContext<FixtureTreeSpec>();
   const root = pluginContext.getMethodsOf<RootSpec>('root');
-  const floatingPanes = true;
 
   if (!sortedBookmarks.length) return null;
 
@@ -60,7 +59,7 @@ export function FixtureBookmarks({
             openAnchorInNewTab(e.currentTarget);
           } else {
             onFixtureSelect(fixtureId);
-            if (floatingPanes) root.closeFixtureList();
+            if (root.getFloatingPanes()) root.closeFixtureList();
           }
         }
 
