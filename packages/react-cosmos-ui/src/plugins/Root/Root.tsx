@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useDrag } from '../../hooks/useDrag.js';
 import { NavRowSlot } from '../../slots/NavRowSlot.js';
 import { grey32, white10 } from '../../style/colors.js';
+import { quick } from '../../style/vars.js';
 import {
   GetFixtureState,
   SetFixtureStateByName,
@@ -84,10 +85,15 @@ export function Root({
   // z-indexes are set here on purpose to show the layer hierarchy at a glance
   return (
     <Container dragging={dragging}>
-      {showNav && (
+      {(showNav || floatingPanes) && (
         <ResizablePane
           floating={floatingPanes && selectedFixtureId !== null}
-          style={{ width: navWidth, left: 0, zIndex: 3 }}
+          inert={floatingPanes && !showNav}
+          style={{
+            width: navWidth,
+            left: floatingPanes && !showNav ? -navWidth : 0,
+            zIndex: 3,
+          }}
         >
           <Nav>
             <NavRowSlot
@@ -134,10 +140,15 @@ export function Root({
         </RendererContainer>
         {dragging && <DragOverlay />}
       </MainContainer>
-      {selectedFixtureId && panelOpen && (
+      {selectedFixtureId && (panelOpen || floatingPanes) && (
         <ResizablePane
           floating={floatingPanes}
-          style={{ width: panelWidth, right: 0, zIndex: 2 }}
+          inert={floatingPanes && !panelOpen}
+          style={{
+            width: panelWidth,
+            right: floatingPanes && !panelOpen ? -panelWidth : 0,
+            zIndex: 2,
+          }}
         >
           <SidePanel
             fixtureId={selectedFixtureId}
@@ -177,6 +188,9 @@ const ResizablePane = styled.div<{ floating: boolean }>`
   max-width: 100%;
   height: 100%;
   position: ${props => (props.floating ? 'absolute' : 'relative')};
+  transition:
+    left ${quick}s,
+    right ${quick}s;
 `;
 
 const Nav = styled.div`
