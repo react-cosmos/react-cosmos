@@ -3,7 +3,7 @@ import { FixtureId } from 'react-cosmos-core';
 import { usePlugContext } from 'react-plugin';
 import styled from 'styled-components';
 import { quick } from '../../../style/vars.js';
-import { CoreSpec } from '../../Core/spec.js';
+import { RootSpec } from '../../Root/spec.js';
 import { FixtureTreeSpec } from '../spec.js';
 import { FixtureLink } from './FixtureLink.js';
 import { FixtureTreeItem } from './FixtureTreeItem.js';
@@ -26,16 +26,12 @@ export function FixtureButton({
   onSelect,
 }: Props) {
   const { pluginContext } = usePlugContext<FixtureTreeSpec>();
-  const core = pluginContext.getMethodsOf<CoreSpec>('core');
+  const root = pluginContext.getMethodsOf<RootSpec>('root');
   const floatingPanes = true;
 
   function handleSelect(fixtureId: FixtureId) {
     onSelect(fixtureId);
-    // TODO: Explicitly closeFixtureList instead of toggling it. At the moment
-    // the behavior is inconsistent because the nav is shown when no fixture is
-    // selected even though the navOpen state is false. Toggling it in this case
-    // will set it to true after opening the fixture.
-    if (floatingPanes) core.runCommand('toggleFixtureList');
+    if (floatingPanes) root.closeFixtureList();
   }
 
   return (

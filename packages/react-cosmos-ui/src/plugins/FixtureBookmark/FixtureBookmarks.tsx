@@ -21,8 +21,8 @@ import {
   selectedColors,
 } from '../../style/colors.js';
 import { quick } from '../../style/vars.js';
-import { CoreSpec } from '../Core/spec.js';
 import { FixtureTreeSpec } from '../FixtureTree/spec.js';
+import { RootSpec } from '../Root/spec.js';
 
 type Props = {
   bookmarks: FlatFixtureTree;
@@ -39,7 +39,7 @@ export function FixtureBookmarks({
 }: Props) {
   const sortedBookmarks = useSortedBookmarks(bookmarks);
   const { pluginContext } = usePlugContext<FixtureTreeSpec>();
-  const core = pluginContext.getMethodsOf<CoreSpec>('core');
+  const root = pluginContext.getMethodsOf<RootSpec>('root');
   const floatingPanes = true;
 
   if (!sortedBookmarks.length) return null;
@@ -60,7 +60,7 @@ export function FixtureBookmarks({
             openAnchorInNewTab(e.currentTarget);
           } else {
             onFixtureSelect(fixtureId);
-            if (floatingPanes) core.runCommand('toggleFixtureList');
+            if (floatingPanes) root.closeFixtureList();
           }
         }
 

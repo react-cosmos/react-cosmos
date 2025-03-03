@@ -11,4 +11,7 @@ export type RootSpec = {
   state: {
     storageCacheReady: boolean;
   };
+  methods: {
+    closeFixtureList: () => void;
+  };
 };

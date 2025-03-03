@@ -27,7 +27,14 @@ const { onLoad, plug, register } = createPlugin<RootSpec>({
   initialState: {
     storageCacheReady: false,
   },
+  methods: {
+    closeFixtureList,
+  },
 });
+
+function closeFixtureList(context: RootContext) {
+  openNav(context, false);
+}
 
 onLoad(context => {
   const storage = context.getMethodsOf<StorageSpec>('storage');

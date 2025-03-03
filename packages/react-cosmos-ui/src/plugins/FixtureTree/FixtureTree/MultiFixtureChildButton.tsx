@@ -10,7 +10,7 @@ import {
   selectedColors,
 } from '../../../style/colors.js';
 import { quick } from '../../../style/vars.js';
-import { CoreSpec } from '../../Core/spec.js';
+import { RootSpec } from '../../Root/spec.js';
 import { FixtureTreeSpec } from '../spec.js';
 import { FixtureLink } from './FixtureLink.js';
 import { FixtureTreeItem } from './FixtureTreeItem.js';
@@ -33,12 +33,12 @@ export function MultiFixtureChildButton({
   onSelect,
 }: Props) {
   const { pluginContext } = usePlugContext<FixtureTreeSpec>();
-  const core = pluginContext.getMethodsOf<CoreSpec>('core');
+  const root = pluginContext.getMethodsOf<RootSpec>('root');
   const floatingPanes = true;
 
   function handleSelect() {
     onSelect(fixtureId);
-    if (floatingPanes) core.runCommand('toggleFixtureList');
+    if (floatingPanes) root.closeFixtureList();
   }
 
   return (
