@@ -87,7 +87,7 @@ export function Root({
     <Container dragging={dragging}>
       {(showNav || floatingPanes) && (
         <ResizablePane
-          floating={floatingPanes && selectedFixtureId !== null}
+          floating={floatingPanes}
           inert={floatingPanes && !showNav}
           style={{
             width: navWidth,
