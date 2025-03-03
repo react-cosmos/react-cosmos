@@ -43,6 +43,7 @@ export const RendererHeader = React.memo(function RendererHeader({
   const fixtureItem = findFixtureItemById(fixtureItems, fixtureId);
   const slotProps = React.useMemo(() => ({ fixtureId }), [fixtureId]);
   const { pluginContext } = usePlugContext<RootSpec>();
+  // FIXME: This isn't reactive
   const floatingPanes = getFloatingPanes(pluginContext);
 
   return (
