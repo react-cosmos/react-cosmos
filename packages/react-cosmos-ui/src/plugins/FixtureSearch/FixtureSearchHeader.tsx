@@ -8,13 +8,13 @@ import { blue, grey160, grey32, white10 } from '../../style/colors.js';
 type Props = {
   fixtureSelected: boolean;
   onOpen: () => unknown;
-  onCloseNav: () => unknown;
+  onCloseNavPanel: () => unknown;
 };
 
 export function FixtureSearchHeader({
   fixtureSelected,
   onOpen,
-  onCloseNav,
+  onCloseNavPanel,
 }: Props) {
   return (
     <Container>
@@ -31,7 +31,7 @@ export function FixtureSearchHeader({
           icon={<ChevronLeftIcon />}
           title="Hide nav panel (L)"
           disabled={!fixtureSelected}
-          onClick={onCloseNav}
+          onClick={onCloseNavPanel}
         />
       </NavButtonContainer>
     </Container>

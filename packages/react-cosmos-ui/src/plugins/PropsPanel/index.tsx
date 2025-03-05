@@ -14,7 +14,7 @@ import {
   updateElementExpansion,
 } from '../../components/ValueInputTree/index.js';
 import { TreeExpansion } from '../../shared/treeExpansion.js';
-import { SidePanelRowSlotProps } from '../../slots/SidePanelRowSlot.js';
+import { ControlPanelRowSlotProps } from '../../slots/ControlPanelRowSlot.js';
 import { GetFixtureState } from '../RendererCore/spec.js';
 import { StorageSpec } from '../Storage/spec.js';
 import { BlankState } from './BlankState.js';
@@ -31,8 +31,8 @@ const { namedPlug, register } = createPlugin<PropsPanelSpec>({
   name: 'propsPanel',
 });
 
-namedPlug<SidePanelRowSlotProps>(
-  'sidePanelRow',
+namedPlug<ControlPanelRowSlotProps>(
+  'controlPanelRow',
   'props',
   ({ pluginContext, slotProps }) => {
     const { fixtureId, getFixtureState, setFixtureState } = slotProps;
@@ -60,8 +60,8 @@ namedPlug<SidePanelRowSlotProps>(
 
 // WARNING: This plug has to be aware of all input categories and only show up
 // when none is available
-namedPlug<SidePanelRowSlotProps>(
-  'sidePanelRow',
+namedPlug<ControlPanelRowSlotProps>(
+  'controlPanelRow',
   'blankState',
   ({ slotProps }) => {
     const { getFixtureState } = slotProps;

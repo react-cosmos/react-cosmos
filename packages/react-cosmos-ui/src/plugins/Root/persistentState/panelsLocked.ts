@@ -10,7 +10,7 @@ export function arePanelsLocked(context: RootContext) {
   return typeof open === 'boolean' ? open : DEFAULT_VALUE;
 }
 
-export function setPanelsLocked(context: RootContext, open: boolean) {
+export function setPanelsLocked(context: RootContext, locked: boolean) {
   const storage = context.getMethodsOf<StorageSpec>('storage');
-  storage.setItem(STORAGE_KEY, open);
+  storage.setItem(STORAGE_KEY, locked);
 }

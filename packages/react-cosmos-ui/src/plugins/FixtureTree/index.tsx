@@ -20,7 +20,7 @@ const { namedPlug, register } = createPlugin<FixtureTreeSpec>({
   },
 });
 
-namedPlug('navRow', 'fixtureTree', ({ pluginContext }) => {
+namedPlug('navPanelRow', 'fixtureTree', ({ pluginContext }) => {
   const { getMethodsOf } = pluginContext;
   const storage = pluginContext.getMethodsOf<StorageSpec>('storage');
   const router = getMethodsOf<RouterSpec>('router');

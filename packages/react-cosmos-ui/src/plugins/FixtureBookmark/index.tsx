@@ -42,7 +42,7 @@ namedPlug<FixtureActionSlotProps>(
 );
 
 namedPlug<FixtureActionSlotProps>(
-  'navRow',
+  'navPanelRow',
   'fixtureBookmarks',
   ({ pluginContext }) => {
     const router = pluginContext.getMethodsOf<RouterSpec>('router');

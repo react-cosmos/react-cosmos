@@ -2,7 +2,7 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { FixtureList } from 'react-cosmos-core';
 import { Slot, loadPlugins, resetPlugins } from 'react-plugin';
-import { NavRowSlot } from '../../slots/NavRowSlot.js';
+import { NavPanelRowSlot } from '../../slots/NavPanelRowSlot.js';
 import {
   mockCore,
   mockFixtureTree,
@@ -41,7 +41,10 @@ function loadTestPlugins() {
   loadPlugins();
   return render(
     <>
-      <NavRowSlot slotProps={{ onCloseNav: () => {} }} plugOrder={[]} />
+      <NavPanelRowSlot
+        slotProps={{ onCloseNavPanel: () => {} }}
+        plugOrder={[]}
+      />
       <Slot name="global" />
     </>
   );

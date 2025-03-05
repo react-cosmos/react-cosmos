@@ -2,20 +2,17 @@ import React from 'react';
 import { FixtureId, FlatFixtureTreeItem } from 'react-cosmos-core';
 import { ArraySlot, Slot } from 'react-plugin';
 import styled from 'styled-components';
-import { IconButton32 } from '../../components/buttons/IconButton32.js';
-import { LockIcon, UnlockIcon } from '../../components/icons/index.js';
 import { useDrag } from '../../hooks/useDrag.js';
-import { NavRowSlot } from '../../slots/NavRowSlot.js';
-import { grey32, white10 } from '../../style/colors.js';
+import { grey32 } from '../../style/colors.js';
 import { quick } from '../../style/vars.js';
 import {
   GetFixtureState,
   SetFixtureStateByName,
 } from '../RendererCore/spec.js';
-import { GlobalHeader } from './GlobalHeader.js';
+import { ControlPanel } from './ControlPanel.js';
 import { HomeOverlay } from './HomeOverlay/HomeOverlay.js';
+import { NavPanel } from './NavPanel.js';
 import { RendererHeader } from './RendererHeader.js';
-import { SidePanel } from './SidePanel.js';
 
 type Props = {
   fixtureItems: FlatFixtureTreeItem[];
@@ -28,10 +25,10 @@ type Props = {
   navPanelWidth: number;
   controlPanelWidth: number;
   panelsLocked: boolean;
-  sidePanelRowOrder: string[];
   globalActionOrder: string[];
   globalOrder: string[];
-  navRowOrder: string[];
+  navPanelRowOrder: string[];
+  controlPanelRowOrder: string[];
   fixtureActionOrder: string[];
   rendererActionOrder: string[];
   onToggleNavPanel: () => unknown;
@@ -40,7 +37,7 @@ type Props = {
   onCloseFixture: () => unknown;
   setNavPanelWidth: (width: number) => unknown;
   setControlPanelWidth: (width: number) => unknown;
-  setPanelsLocked: (lock: boolean) => unknown;
+  setPanelsLocked: (locked: boolean) => unknown;
   welcomeDismissed: boolean;
   onDismissWelcome: () => unknown;
   onShowWelcome: () => unknown;
@@ -57,10 +54,10 @@ export function Root({
   navPanelWidth,
   controlPanelWidth,
   panelsLocked,
-  sidePanelRowOrder,
   globalActionOrder,
   globalOrder,
-  navRowOrder,
+  navPanelRowOrder,
+  controlPanelRowOrder,
   fixtureActionOrder,
   rendererActionOrder,
   onToggleNavPanel,
@@ -100,33 +97,19 @@ export function Root({
             zIndex: 3,
           }}
         >
-          <Nav>
-            <NavSlots>
-              <NavRowSlot
-                slotProps={{ onCloseNav: onToggleNavPanel }}
-                plugOrder={navRowOrder}
-              />
-            </NavSlots>
-            <NavFooter>
-              <IconButton32
-                icon={panelsLocked ? <LockIcon /> : <UnlockIcon />}
-                title={panelsLocked ? 'Unlock panels' : 'Lock panels'}
-                selected={panelsLocked}
-                onClick={() => setPanelsLocked(!panelsLocked)}
-              />
-            </NavFooter>
-          </Nav>
+          <NavPanel
+            rendererConnected={rendererConnected}
+            panelsLocked={panelsLocked}
+            setPanelsLocked={setPanelsLocked}
+            navPanelRowOrder={navPanelRowOrder}
+            globalActionOrder={globalActionOrder}
+            onClose={onToggleNavPanel}
+          />
           {navDrag.dragging && <DragOverlay />}
           <NavDragHandle ref={navDrag.dragElRef} />
         </ResizablePane>
       )}
       <MainContainer key="main" style={{ zIndex: 1 }}>
-        {!selectedFixtureId && (
-          <GlobalHeader
-            rendererConnected={rendererConnected}
-            globalActionOrder={globalActionOrder}
-          />
-        )}
         {selectedFixtureId && (
           <RendererHeader
             fixtureItems={fixtureItems}
@@ -166,12 +149,12 @@ export function Root({
             zIndex: 2,
           }}
         >
-          <SidePanel
+          <ControlPanel
             fixtureId={selectedFixtureId}
             getFixtureState={getFixtureState}
             setFixtureState={setFixtureState}
-            sidePanelRowOrder={sidePanelRowOrder}
-            onClosePanel={onToggleControlPanel}
+            rowOrder={controlPanelRowOrder}
+            onClose={onToggleControlPanel}
           />
           {panelDrag.dragging && <DragOverlay />}
           <PanelDragHandle ref={panelDrag.dragElRef} />
@@ -207,40 +190,6 @@ const ResizablePane = styled.div<{ floating: boolean }>`
   transition:
     left ${quick}s,
     right ${quick}s;
-`;
-
-const Nav = styled.div`
-  width: 100%;
-  height: 100%;
-  background: ${grey32};
-  display: flex;
-  flex-direction: column;
-
-  ::after {
-    content: '';
-    position: absolute;
-    top: 1px;
-    right: 0;
-    bottom: 0;
-    width: 1px;
-    background: ${white10};
-  }
-`;
-
-const NavSlots = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-`;
-
-const NavFooter = styled.div`
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  height: 40px;
-  padding: 0 4px;
-  background: ${grey32};
 `;
 
 const MainContainer = styled.div`

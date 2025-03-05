@@ -3,7 +3,7 @@ import { FixtureId } from 'react-cosmos-core';
 import styled from 'styled-components';
 import { IconButton32 } from '../../components/buttons/IconButton32.js';
 import { ChevronRightIcon } from '../../components/icons/index.js';
-import { SidePanelRowSlot } from '../../slots/SidePanelRowSlot.js';
+import { ControlPanelRowSlot } from '../../slots/ControlPanelRowSlot.js';
 import { grey32, white10 } from '../../style/colors.js';
 import {
   GetFixtureState,
@@ -14,16 +14,16 @@ type Props = {
   fixtureId: FixtureId;
   getFixtureState: GetFixtureState;
   setFixtureState: SetFixtureStateByName;
-  sidePanelRowOrder: string[];
-  onClosePanel: () => unknown;
+  rowOrder: string[];
+  onClose: () => unknown;
 };
 
-export const SidePanel = React.memo(function SidePanel({
+export const ControlPanel = React.memo(function ControlPanel({
   fixtureId,
   getFixtureState,
   setFixtureState,
-  sidePanelRowOrder,
-  onClosePanel,
+  rowOrder,
+  onClose,
 }: Props) {
   const slotProps = React.useMemo(
     () => ({ fixtureId, getFixtureState, setFixtureState }),
@@ -36,11 +36,11 @@ export const SidePanel = React.memo(function SidePanel({
         <IconButton32
           icon={<ChevronRightIcon />}
           title="Hide control panel (P)"
-          onClick={onClosePanel}
+          onClick={onClose}
         />
       </Header>
       <Content>
-        <SidePanelRowSlot slotProps={slotProps} plugOrder={sidePanelRowOrder} />
+        <ControlPanelRowSlot slotProps={slotProps} plugOrder={rowOrder} />
       </Content>
     </Container>
   );

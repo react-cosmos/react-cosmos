@@ -33,10 +33,10 @@ import { RootSpec } from './spec.js';
 const { onLoad, plug, register } = createPlugin<RootSpec>({
   name: 'root',
   defaultConfig: {
-    sidePanelRowOrder: [],
     globalActionOrder: [],
     globalOrder: [],
-    navRowOrder: [],
+    navPanelRowOrder: [],
+    controlPanelRowOrder: [],
     fixtureActionOrder: [],
     rendererActionOrder: [],
   },
@@ -84,10 +84,10 @@ plug('root', ({ pluginContext }) => {
   if (!storageCacheReady) return null;
 
   const {
-    sidePanelRowOrder,
     globalActionOrder,
     globalOrder,
-    navRowOrder,
+    navPanelRowOrder,
+    controlPanelRowOrder,
     fixtureActionOrder,
     rendererActionOrder,
   } = getConfig();
@@ -103,10 +103,10 @@ plug('root', ({ pluginContext }) => {
       navPanelWidth={getNavPanelWidth(pluginContext)}
       controlPanelWidth={getControlPanelWidth(pluginContext)}
       panelsLocked={arePanelsLocked(pluginContext)}
-      sidePanelRowOrder={sidePanelRowOrder}
       globalActionOrder={globalActionOrder}
       globalOrder={globalOrder}
-      navRowOrder={navRowOrder}
+      navPanelRowOrder={navPanelRowOrder}
+      controlPanelRowOrder={controlPanelRowOrder}
       fixtureActionOrder={fixtureActionOrder}
       rendererActionOrder={rendererActionOrder}
       onToggleNavPanel={onToggleNavPanel}
