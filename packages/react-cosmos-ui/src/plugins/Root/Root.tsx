@@ -110,7 +110,7 @@ export function Root({
             <NavFooter>
               <IconButton32
                 icon={panelsLocked ? <LockIcon /> : <UnlockIcon />}
-                title="Toggle floating panes"
+                title={panelsLocked ? 'Unlock panels' : 'Lock panels'}
                 selected={panelsLocked}
                 onClick={() => setPanelsLocked(!panelsLocked)}
               />
