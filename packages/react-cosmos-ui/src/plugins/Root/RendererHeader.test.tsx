@@ -39,7 +39,7 @@ it('renders show nav panel button', async () => {
   expect(onToggleNavPanel).toBeCalled();
 });
 
-it('renders show panel panel button', async () => {
+it('renders show control panel button', async () => {
   const onToggleControlPanel = vi.fn();
   const { getByTitle } = render(
     <RendererHeader
