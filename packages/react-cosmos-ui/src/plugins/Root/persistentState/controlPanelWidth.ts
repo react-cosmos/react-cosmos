@@ -9,7 +9,7 @@ const MAX_WIDTH = 512;
 
 export function getControlPanelWidth(context: RootContext) {
   const storage = context.getMethodsOf<StorageSpec>('storage');
-  const width = storage.getItem<boolean>(STORAGE_KEY);
+  const width = storage.getItem(STORAGE_KEY);
   return typeof width === 'number' ? restrictWidth(width) : DEFAULT_VALUE;
 }
 

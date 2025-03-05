@@ -6,7 +6,7 @@ const DEFAULT_VALUE = window.innerWidth >= 640;
 
 export function arePanelsLocked(context: RootContext) {
   const storage = context.getMethodsOf<StorageSpec>('storage');
-  const open = storage.getItem<boolean>(STORAGE_KEY);
+  const open = storage.getItem(STORAGE_KEY);
   return typeof open === 'boolean' ? open : DEFAULT_VALUE;
 }
 
