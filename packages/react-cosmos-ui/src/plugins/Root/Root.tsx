@@ -133,6 +133,7 @@ export function Root({
             fixtureId={selectedFixtureId}
             navOpen={navOpen}
             panelOpen={panelOpen}
+            lockedPanels={!floatingPanes}
             fixtureActionOrder={fixtureActionOrder}
             rendererActionOrder={rendererActionOrder}
             onOpenNav={onToggleNav}

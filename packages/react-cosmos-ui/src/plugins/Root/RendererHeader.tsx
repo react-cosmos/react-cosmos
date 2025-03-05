@@ -1,7 +1,6 @@
 import { isEqual } from 'lodash-es';
 import React from 'react';
 import { FixtureId, FlatFixtureTreeItem } from 'react-cosmos-core';
-import { usePlugContext } from 'react-plugin';
 import styled from 'styled-components';
 import { IconButton32 } from '../../components/buttons/index.js';
 import {
@@ -13,14 +12,13 @@ import {
 import { FixtureActionSlot } from '../../slots/FixtureActionSlot.js';
 import { RendererActionSlot } from '../../slots/RendererActionSlot.js';
 import { grey176, grey32, white10 } from '../../style/colors.js';
-import { getFloatingPanes } from './floatingPanes.js';
-import { RootSpec } from './spec.js';
 
 type Props = {
   fixtureItems: FlatFixtureTreeItem[];
   fixtureId: FixtureId;
   navOpen: boolean;
   panelOpen: boolean;
+  lockedPanels: boolean;
   fixtureActionOrder: string[];
   rendererActionOrder: string[];
   onOpenNav: () => unknown;
@@ -33,6 +31,7 @@ export const RendererHeader = React.memo(function RendererHeader({
   fixtureId,
   navOpen,
   panelOpen,
+  lockedPanels,
   fixtureActionOrder,
   rendererActionOrder,
   onOpenNav,
@@ -42,18 +41,15 @@ export const RendererHeader = React.memo(function RendererHeader({
 }: Props) {
   const fixtureItem = findFixtureItemById(fixtureItems, fixtureId);
   const slotProps = React.useMemo(() => ({ fixtureId }), [fixtureId]);
-  const { pluginContext } = usePlugContext<RootSpec>();
-  // FIXME: This isn't reactive
-  const floatingPanes = getFloatingPanes(pluginContext);
 
   return (
     <Container>
       <Left>
-        {(floatingPanes || !navOpen) && (
+        {(!lockedPanels || !navOpen) && (
           <IconButton32
             icon={<MenuIcon />}
             title="Show fixture list (L)"
-            selected={false}
+            selected={navOpen}
             onClick={onOpenNav}
           />
         )}
@@ -80,7 +76,7 @@ export const RendererHeader = React.memo(function RendererHeader({
           slotProps={slotProps}
           plugOrder={rendererActionOrder}
         />
-        {(floatingPanes || !panelOpen) && (
+        {(!lockedPanels || !panelOpen) && (
           <IconButton32
             icon={<SlidersIcon />}
             title="Toggle control panel (P)"
