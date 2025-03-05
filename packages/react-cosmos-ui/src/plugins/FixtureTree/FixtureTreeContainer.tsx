@@ -14,7 +14,6 @@ type Props = {
   selectedFixtureId: null | FixtureId;
   fixtures: FixtureList;
   expansion: TreeExpansion;
-  selectFixture: (fixtureId: FixtureId) => void;
   setExpansion: (expansion: TreeExpansion) => unknown;
 };
 
@@ -24,7 +23,6 @@ export function FixtureTreeContainer({
   selectedFixtureId,
   fixtures,
   expansion,
-  selectFixture,
   setExpansion,
 }: Props) {
   const rootNode = useMemo(
@@ -60,7 +58,6 @@ export function FixtureTreeContainer({
           expansion={expansion}
           selectedRef={selectedRef}
           setExpansion={setExpansion}
-          onSelect={selectFixture}
         />
       </TreeContainer>
     </>

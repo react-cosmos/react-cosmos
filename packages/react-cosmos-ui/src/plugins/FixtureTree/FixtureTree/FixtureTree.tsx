@@ -15,7 +15,6 @@ type Props = {
   selectedRef: RefObject<HTMLElement | null>;
   expansion: TreeExpansion;
   setExpansion: (expansion: TreeExpansion) => unknown;
-  onSelect: (fixtureId: FixtureId) => unknown;
 };
 
 export const FixtureTree = React.memo(function FixtureTree({
@@ -24,7 +23,6 @@ export const FixtureTree = React.memo(function FixtureTree({
   selectedRef,
   expansion,
   setExpansion,
-  onSelect,
 }: Props) {
   return (
     <Container>
@@ -44,7 +42,6 @@ export const FixtureTree = React.memo(function FixtureTree({
                 indentLevel={parents.length}
                 selected={selected}
                 selectedRef={selectedRef}
-                onSelect={onSelect}
               />
             );
           }
@@ -60,7 +57,6 @@ export const FixtureTree = React.memo(function FixtureTree({
                 selected={selected}
                 selectedFixtureId={selectedFixtureId}
                 selectedRef={selectedRef}
-                onSelect={onSelect}
               />
             );
           }

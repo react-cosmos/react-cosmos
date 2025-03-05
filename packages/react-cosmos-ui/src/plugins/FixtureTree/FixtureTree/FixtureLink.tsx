@@ -3,21 +3,22 @@ import { FixtureId } from 'react-cosmos-core';
 import styled from 'styled-components';
 import { createRelativePlaygroundUrl } from '../../../shared/url.js';
 import { blue } from '../../../style/colors.js';
+import { useFixtureSelect } from '../FixtureSelectContext.js';
 
 type Props = {
   children: ReactNode;
   fixtureId: FixtureId;
-  onSelect: (fixtureId: FixtureId) => unknown;
 };
 
-export function FixtureLink({ children, fixtureId, onSelect }: Props) {
+export function FixtureLink({ children, fixtureId }: Props) {
+  const { selectFixture } = useFixtureSelect();
   return (
     <Link
       href={createRelativePlaygroundUrl({ fixture: fixtureId })}
       onClick={e => {
         e.preventDefault();
         if (e.metaKey) openAnchorInNewTab(e.currentTarget);
-        else onSelect(fixtureId);
+        else selectFixture(fixtureId);
       }}
     >
       {children}
