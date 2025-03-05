@@ -1,9 +1,9 @@
 import React from 'react';
 import { FixtureId, FlatFixtureTreeItem } from 'react-cosmos-core';
-import { ArraySlot, Slot, usePlugContext } from 'react-plugin';
+import { ArraySlot, Slot } from 'react-plugin';
 import styled from 'styled-components';
 import { IconButton32 } from '../../components/buttons/IconButton32.js';
-import { MenuIcon } from '../../components/icons/index.js';
+import { LockIcon, UnlockIcon } from '../../components/icons/index.js';
 import { useDrag } from '../../hooks/useDrag.js';
 import { NavRowSlot } from '../../slots/NavRowSlot.js';
 import { grey32, white10 } from '../../style/colors.js';
@@ -12,12 +12,10 @@ import {
   GetFixtureState,
   SetFixtureStateByName,
 } from '../RendererCore/spec.js';
-import { getFloatingPanes, setFloatingPanes } from './floatingPanes.js';
 import { GlobalHeader } from './GlobalHeader.js';
 import { HomeOverlay } from './HomeOverlay/HomeOverlay.js';
 import { RendererHeader } from './RendererHeader.js';
 import { SidePanel } from './SidePanel.js';
-import { RootSpec } from './spec.js';
 
 type Props = {
   fixtureItems: FlatFixtureTreeItem[];
@@ -29,6 +27,7 @@ type Props = {
   panelOpen: boolean;
   navWidth: number;
   panelWidth: number;
+  panelsLocked: boolean;
   sidePanelRowOrder: string[];
   globalActionOrder: string[];
   globalOrder: string[];
@@ -41,6 +40,7 @@ type Props = {
   onCloseFixture: () => unknown;
   setNavWidth: (width: number) => unknown;
   setPanelWidth: (width: number) => unknown;
+  setPanelsLocked: (lock: boolean) => unknown;
   welcomeDismissed: boolean;
   onDismissWelcome: () => unknown;
   onShowWelcome: () => unknown;
@@ -56,6 +56,7 @@ export function Root({
   panelOpen,
   navWidth,
   panelWidth,
+  panelsLocked,
   sidePanelRowOrder,
   globalActionOrder,
   globalOrder,
@@ -68,6 +69,7 @@ export function Root({
   onCloseFixture,
   setNavWidth,
   setPanelWidth,
+  setPanelsLocked,
   welcomeDismissed,
   onDismissWelcome,
   onShowWelcome,
@@ -82,21 +84,19 @@ export function Root({
     onChange: setPanelWidth,
   });
 
-  const { pluginContext } = usePlugContext<RootSpec>();
   const showNav = navOpen || !selectedFixtureId;
-  const floatingPanes = getFloatingPanes(pluginContext);
   const dragging = navDrag.dragging || panelDrag.dragging;
 
   // z-indexes are set here on purpose to show the layer hierarchy at a glance
   return (
     <Container dragging={dragging}>
-      {(showNav || floatingPanes) && (
+      {(showNav || !panelsLocked) && (
         <ResizablePane
-          floating={floatingPanes}
-          inert={floatingPanes && !showNav}
+          floating={!panelsLocked}
+          inert={!panelsLocked && !showNav}
           style={{
             width: navWidth,
-            left: floatingPanes && !showNav ? -navWidth : 0,
+            left: !panelsLocked && !showNav ? -navWidth : 0,
             zIndex: 3,
           }}
         >
@@ -109,10 +109,10 @@ export function Root({
             </NavSlots>
             <NavFooter>
               <IconButton32
-                icon={<MenuIcon />}
+                icon={panelsLocked ? <LockIcon /> : <UnlockIcon />}
                 title="Toggle floating panes"
-                selected={floatingPanes}
-                onClick={() => setFloatingPanes(pluginContext, !floatingPanes)}
+                selected={panelsLocked}
+                onClick={() => setPanelsLocked(!panelsLocked)}
               />
             </NavFooter>
           </Nav>
@@ -133,7 +133,7 @@ export function Root({
             fixtureId={selectedFixtureId}
             navOpen={navOpen}
             panelOpen={panelOpen}
-            lockedPanels={!floatingPanes}
+            panelsLocked={panelsLocked}
             fixtureActionOrder={fixtureActionOrder}
             rendererActionOrder={rendererActionOrder}
             onOpenNav={onToggleNav}
@@ -156,13 +156,13 @@ export function Root({
         </RendererContainer>
         {dragging && <DragOverlay />}
       </MainContainer>
-      {selectedFixtureId && (panelOpen || floatingPanes) && (
+      {selectedFixtureId && (panelOpen || !panelsLocked) && (
         <ResizablePane
-          floating={floatingPanes}
-          inert={floatingPanes && !panelOpen}
+          floating={!panelsLocked}
+          inert={!panelsLocked && !panelOpen}
           style={{
             width: panelWidth,
-            right: floatingPanes && !panelOpen ? -panelWidth : 0,
+            right: !panelsLocked && !panelOpen ? -panelWidth : 0,
             zIndex: 2,
           }}
         >

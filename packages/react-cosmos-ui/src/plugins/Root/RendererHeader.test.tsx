@@ -20,6 +20,7 @@ const propDefaults = {
   },
   panelOpen: false,
   navOpen: false,
+  panelsLocked: true,
   fixtureActionOrder: [],
   rendererActionOrder: [],
   onOpenNav: () => {},

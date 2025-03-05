@@ -7,11 +7,11 @@ import { RouterSpec } from '../Router/spec.js';
 import { StorageSpec } from '../Storage/spec.js';
 import { useWelcomeDismiss } from './HomeOverlay/welcomeDismiss.js';
 import { Root } from './Root.js';
-import { getFloatingPanes } from './floatingPanes.js';
 import { isNavOpen, openNav } from './navOpen.js';
 import { getNavWidthApi } from './navWidth.js';
 import { isPanelOpen, openPanel } from './panelOpen.js';
 import { getPanelWidthApi } from './panelWidth.js';
+import { arePanelsLocked, setPanelsLocked } from './panelsLocked.js';
 import { RootContext } from './shared.js';
 import { RootSpec } from './spec.js';
 
@@ -29,8 +29,8 @@ const { onLoad, plug, register } = createPlugin<RootSpec>({
     storageCacheReady: false,
   },
   methods: {
+    arePanelsLocked,
     closeFixtureList,
-    getFloatingPanes,
   },
 });
 
@@ -88,6 +88,7 @@ plug('root', ({ pluginContext }) => {
       panelOpen={isPanelOpen(pluginContext)}
       navWidth={navWidth}
       panelWidth={panelWidth}
+      panelsLocked={arePanelsLocked(pluginContext)}
       sidePanelRowOrder={sidePanelRowOrder}
       globalActionOrder={globalActionOrder}
       globalOrder={globalOrder}
@@ -100,6 +101,7 @@ plug('root', ({ pluginContext }) => {
       onCloseFixture={router.unselectFixture}
       setNavWidth={setNavWidth}
       setPanelWidth={setPanelWidth}
+      setPanelsLocked={locked => setPanelsLocked(pluginContext, locked)}
       welcomeDismissed={welcomeDismiss.isWelcomeDismissed()}
       onDismissWelcome={welcomeDismiss.onDismissWelcome}
       onShowWelcome={welcomeDismiss.onShowWelcome}

@@ -12,7 +12,7 @@ export type RootSpec = {
     storageCacheReady: boolean;
   };
   methods: {
+    arePanelsLocked: () => boolean;
     closeFixtureList: () => void;
-    getFloatingPanes: () => boolean;
   };
 };
