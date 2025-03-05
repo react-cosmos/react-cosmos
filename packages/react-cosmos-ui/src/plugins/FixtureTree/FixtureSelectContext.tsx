@@ -2,7 +2,7 @@ import React, { useContext, useMemo } from 'react';
 import { FixtureId } from 'react-cosmos-core';
 
 type ContextValue = {
-  selectFixture: (fixtureId: FixtureId) => unknown;
+  selectFixture: (fixtureId: FixtureId, multiFixtureOpen: boolean) => unknown;
 };
 
 const FixtureSelectContext = React.createContext<ContextValue>({
@@ -11,7 +11,7 @@ const FixtureSelectContext = React.createContext<ContextValue>({
 
 export function FixtureSelectProvider(props: {
   children: React.ReactNode;
-  onSelect: (fixtureId: FixtureId) => unknown;
+  onSelect: ContextValue['selectFixture'];
 }) {
   const value = useMemo(
     () => ({ selectFixture: props.onSelect }),
