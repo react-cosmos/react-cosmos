@@ -88,14 +88,16 @@ export function Root({
   return (
     <Container dragging={dragging}>
       {(showNavPanel || !panelsLocked) && (
-        <ResizablePane
-          inert={!panelsLocked && !showNavPanel}
+        <ResizablePanel
+          inert={!showNavPanel}
           style={{
             position: panelsLocked ? 'relative' : 'absolute',
             left: 0,
             zIndex: 3,
             width: navPanelWidth,
-            transform: `translateX(${!panelsLocked && !showNavPanel ? -navPanelWidth : 0}px)`,
+            transform: panelsLocked
+              ? undefined
+              : `translateX(${showNavPanel ? 0 : -navPanelWidth}px)`,
           }}
         >
           <NavPanel
@@ -108,7 +110,7 @@ export function Root({
           />
           {navDrag.dragging && <DragOverlay />}
           <NavDragHandle ref={navDrag.dragElRef} />
-        </ResizablePane>
+        </ResizablePanel>
       )}
       <MainContainer key="main" style={{ zIndex: 1 }}>
         {selectedFixtureId && (
@@ -141,14 +143,16 @@ export function Root({
         {dragging && <DragOverlay />}
       </MainContainer>
       {selectedFixtureId && (controlPanelOpen || !panelsLocked) && (
-        <ResizablePane
-          inert={!panelsLocked && !controlPanelOpen}
+        <ResizablePanel
+          inert={!controlPanelOpen}
           style={{
             position: panelsLocked ? 'relative' : 'absolute',
             right: 0,
             zIndex: 2,
             width: controlPanelWidth,
-            transform: `translateX(${!panelsLocked && !controlPanelOpen ? controlPanelWidth : 0}px)`,
+            transform: panelsLocked
+              ? undefined
+              : `translateX(${controlPanelOpen ? 0 : controlPanelWidth}px)`,
           }}
         >
           <ControlPanel
@@ -160,7 +164,7 @@ export function Root({
           />
           {panelDrag.dragging && <DragOverlay />}
           <PanelDragHandle ref={panelDrag.dragElRef} />
-        </ResizablePane>
+        </ResizablePanel>
       )}
       <div style={{ zIndex: 4 }}>
         <ArraySlot name="global" plugOrder={globalOrder} />
@@ -185,7 +189,7 @@ const Container = styled.div.attrs({ 'data-testid': 'root' })<ContainerProps>`
   cursor: ${props => (props.dragging ? 'col-resize' : 'default')};
 `;
 
-const ResizablePane = styled.div`
+const ResizablePanel = styled.div`
   flex-shrink: 0;
   max-width: 100%;
   height: 100%;
