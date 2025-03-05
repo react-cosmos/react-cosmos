@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { createFixtureTree, FixtureId, FixtureList } from 'react-cosmos-core';
 import styled from 'styled-components';
 import { TreeExpansion } from '../../shared/treeExpansion.js';
-import { grey32, white10 } from '../../style/colors.js';
+import { grey32 } from '../../style/colors.js';
 import { BlankState } from './BlankState.js';
 import { FixtureTree } from './FixtureTree/FixtureTree.js';
 import { FixtureTreeHeader } from './FixtureTreeHeader.js';
@@ -14,7 +14,6 @@ type Props = {
   selectedFixtureId: null | FixtureId;
   fixtures: FixtureList;
   expansion: TreeExpansion;
-  selectFixture: (fixtureId: FixtureId) => void;
   setExpansion: (expansion: TreeExpansion) => unknown;
 };
 
@@ -24,7 +23,6 @@ export function FixtureTreeContainer({
   selectedFixtureId,
   fixtures,
   expansion,
-  selectFixture,
   setExpansion,
 }: Props) {
   const rootNode = useMemo(
@@ -46,7 +44,6 @@ export function FixtureTreeContainer({
 
   return (
     <>
-      <Separator />
       <FixtureTreeHeader
         fixturesDir={fixturesDir}
         fixtureFileSuffix={fixtureFileSuffix}
@@ -61,7 +58,6 @@ export function FixtureTreeContainer({
           expansion={expansion}
           selectedRef={selectedRef}
           setExpansion={setExpansion}
-          onSelect={selectFixture}
         />
       </TreeContainer>
     </>
@@ -73,11 +69,4 @@ const TreeContainer = styled.div`
   flex: 1;
   background: ${grey32};
   overflow: auto;
-`;
-
-// Add 1px right gap to avoid overlapping with the nav pane right-side border
-const Separator = styled.div`
-  margin-right: 1px;
-  height: 1px;
-  background: ${white10};
 `;

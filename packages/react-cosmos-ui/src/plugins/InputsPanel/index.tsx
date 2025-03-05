@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { InputsFixtureState } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
-import { SidePanelRowSlotProps } from '../../slots/SidePanelRowSlot.js';
+import { ControlPanelRowSlotProps } from '../../slots/ControlPanelRowSlot.js';
 import { InputsPanel } from './InputsPanel.js';
 import { SetInputsFixtureState } from './shared.js';
 import { InputsPanelSpec } from './spec.js';
@@ -13,8 +13,8 @@ const { namedPlug, register } = createPlugin<InputsPanelSpec>({
   },
 });
 
-namedPlug<SidePanelRowSlotProps>(
-  'sidePanelRow',
+namedPlug<ControlPanelRowSlotProps>(
+  'controlPanelRow',
   'inputs',
   ({ pluginContext, slotProps }) => {
     const { actionOrder } = pluginContext.getConfig();

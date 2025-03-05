@@ -4,6 +4,7 @@ import { fontFamily } from './vars.js';
 
 export const GlobalStyle = createGlobalStyle`
   html {
+    background: rgb(24, 24, 24);
     font-family: ${fontFamily};
     font-size: 14px;
     -webkit-font-smoothing: antialiased;

@@ -253,7 +253,7 @@ export function FixtureSearchOverlay({
           <SearchInput
             ref={inputRef}
             type="text"
-            placeholder="Fixture search"
+            placeholder="Search your fixtures..."
             value={searchText}
             onChange={onInputChange}
             onKeyDown={onInputKeyDown}

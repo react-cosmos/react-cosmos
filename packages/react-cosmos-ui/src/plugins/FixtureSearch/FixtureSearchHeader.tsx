@@ -8,13 +8,13 @@ import { blue, grey160, grey32, white10 } from '../../style/colors.js';
 type Props = {
   fixtureSelected: boolean;
   onOpen: () => unknown;
-  onCloseNav: () => unknown;
+  onCloseNavPanel: () => unknown;
 };
 
 export function FixtureSearchHeader({
   fixtureSelected,
   onOpen,
-  onCloseNav,
+  onCloseNavPanel,
 }: Props) {
   return (
     <Container>
@@ -22,17 +22,16 @@ export function FixtureSearchHeader({
         <SearchIconContainer>
           <SearchIcon />
         </SearchIconContainer>
-        <SearchLabel>Search fixtures</SearchLabel>
+        <SearchLabel>Search</SearchLabel>
         <KeyBox value={'⌘'} bgColor={white10} textColor={grey160} size={20} />
         <KeyBox value={'K'} bgColor={white10} textColor={grey160} size={20} />
       </SearchButton>
       <NavButtonContainer>
         <IconButton32
           icon={<ChevronLeftIcon />}
-          title="Hide fixture list (L)"
+          title="Hide nav panel (L)"
           disabled={!fixtureSelected}
-          selected={false}
-          onClick={onCloseNav}
+          onClick={onCloseNavPanel}
         />
       </NavButtonContainer>
     </Container>

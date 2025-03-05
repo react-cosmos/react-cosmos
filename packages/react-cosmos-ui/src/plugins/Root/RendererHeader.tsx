@@ -16,24 +16,26 @@ import { grey176, grey32, white10 } from '../../style/colors.js';
 type Props = {
   fixtureItems: FlatFixtureTreeItem[];
   fixtureId: FixtureId;
-  navOpen: boolean;
-  panelOpen: boolean;
+  navPanelOpen: boolean;
+  controlPanelOpen: boolean;
+  panelsLocked: boolean;
   fixtureActionOrder: string[];
   rendererActionOrder: string[];
-  onOpenNav: () => unknown;
-  onTogglePanel: () => unknown;
+  onToggleNavPanel: () => unknown;
+  onToggleControlPanel: () => unknown;
   onReloadRenderer: () => unknown;
   onClose: () => unknown;
 };
 export const RendererHeader = React.memo(function RendererHeader({
   fixtureItems,
   fixtureId,
-  navOpen,
-  panelOpen,
+  navPanelOpen,
+  controlPanelOpen,
+  panelsLocked,
   fixtureActionOrder,
   rendererActionOrder,
-  onOpenNav,
-  onTogglePanel,
+  onToggleNavPanel,
+  onToggleControlPanel,
   onReloadRenderer,
   onClose,
 }: Props) {
@@ -43,16 +45,13 @@ export const RendererHeader = React.memo(function RendererHeader({
   return (
     <Container>
       <Left>
-        {!navOpen && (
-          <>
-            <IconButton32
-              icon={<MenuIcon />}
-              title="Show fixture list (L)"
-              selected={false}
-              onClick={onOpenNav}
-            />
-            <ButtonSeparator />
-          </>
+        {(!panelsLocked || !navPanelOpen) && (
+          <IconButton32
+            icon={<MenuIcon />}
+            title="Show nav panel (L)"
+            selected={navPanelOpen}
+            onClick={onToggleNavPanel}
+          />
         )}
         <IconButton32
           icon={<XCircleIcon />}
@@ -77,12 +76,14 @@ export const RendererHeader = React.memo(function RendererHeader({
           slotProps={slotProps}
           plugOrder={rendererActionOrder}
         />
-        <IconButton32
-          icon={<SlidersIcon />}
-          title="Toggle control panel (P)"
-          selected={panelOpen}
-          onClick={onTogglePanel}
-        />
+        {(!panelsLocked || !controlPanelOpen) && (
+          <IconButton32
+            icon={<SlidersIcon />}
+            title="Show control panel (P)"
+            selected={controlPanelOpen}
+            onClick={onToggleControlPanel}
+          />
+        )}
       </Right>
     </Container>
   );
@@ -157,14 +158,6 @@ const Right = styled(Actions)`
   display: flex;
   flex-direction: row;
   align-items: center;
-`;
-
-const ButtonSeparator = styled.div`
-  flex-shrink: 0;
-  background: ${white10};
-  width: 1px;
-  height: 40px;
-  margin-left: 4px;
 `;
 
 const FixtureName = styled.div`

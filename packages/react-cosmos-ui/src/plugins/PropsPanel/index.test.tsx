@@ -8,7 +8,7 @@ import {
   fixtureStateByName,
 } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
-import { SidePanelRowSlot } from '../../slots/SidePanelRowSlot.js';
+import { ControlPanelRowSlot } from '../../slots/ControlPanelRowSlot.js';
 import { mockStorage } from '../../testHelpers/pluginMocks.js';
 import { register } from './index.js';
 import { PROPS_TREE_EXPANSION_STORAGE_KEY } from './shared.js';
@@ -22,7 +22,7 @@ const fixtureId = { path: 'foo.js' };
 function loadTestPlugins(fixtureState: FixtureState) {
   loadPlugins();
   return render(
-    <SidePanelRowSlot
+    <ControlPanelRowSlot
       slotProps={{
         fixtureId,
         getFixtureState: name => fixtureStateByName(fixtureState, name),

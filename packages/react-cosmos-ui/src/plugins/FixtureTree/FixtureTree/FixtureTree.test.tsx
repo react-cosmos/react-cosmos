@@ -28,7 +28,6 @@ it('hides fixture under non-expanded dir', async () => {
       selectedFixtureId={null}
       selectedRef={{ current: null }}
       expansion={{}}
-      onSelect={vi.fn()}
       setExpansion={vi.fn()}
     />
   );
@@ -42,7 +41,6 @@ it('shows fixture under expanded dir', async () => {
       selectedFixtureId={null}
       selectedRef={{ current: null }}
       expansion={{ nested: true }}
-      onSelect={vi.fn()}
       setExpansion={vi.fn()}
     />
   );
@@ -57,7 +55,6 @@ it('expands hidden dir on click', async () => {
       selectedFixtureId={null}
       selectedRef={{ current: null }}
       expansion={{}}
-      onSelect={vi.fn()}
       setExpansion={setExpansion}
     />
   );
@@ -73,7 +70,6 @@ it('collapses expanded dir on click', async () => {
       selectedFixtureId={null}
       selectedRef={{ current: null }}
       expansion={{ nested: true }}
-      onSelect={vi.fn()}
       setExpansion={setExpansion}
     />
   );
@@ -88,7 +84,6 @@ it('shows named fixture when multi fixture is selected', async () => {
       selectedFixtureId={{ path: 'fuenf.js', name: 'fuenfB' }}
       selectedRef={{ current: null }}
       expansion={{}}
-      onSelect={vi.fn()}
       setExpansion={vi.fn()}
     />
   );
@@ -102,7 +97,6 @@ it('shows first named fixture when multi fixture path is selected', async () => 
       selectedFixtureId={{ path: 'fuenf.js' }}
       selectedRef={{ current: null }}
       expansion={{}}
-      onSelect={vi.fn()}
       setExpansion={vi.fn()}
     />
   );

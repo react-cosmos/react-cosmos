@@ -2,6 +2,7 @@ import React from 'react';
 import { FixtureId, FixtureList, createFixtureTree } from 'react-cosmos-core';
 import { useFixtureInput } from 'react-cosmos/client';
 import { TreeExpansion } from '../../../shared/treeExpansion.js';
+import { FixtureSelectProvider } from '../FixtureSelectContext.js';
 import { FixtureTree } from './FixtureTree.js';
 
 const fixtures: FixtureList = {
@@ -42,14 +43,15 @@ function createTreeFixture(
       initialTreeExpansion
     );
     return (
-      <FixtureTree
-        rootNode={rootNode}
-        selectedFixtureId={selectedFixtureId}
-        selectedRef={{ current: null }}
-        expansion={expansion}
-        onSelect={setSelectedFixtureId}
-        setExpansion={setExpansion}
-      />
+      <FixtureSelectProvider onSelect={setSelectedFixtureId}>
+        <FixtureTree
+          rootNode={rootNode}
+          selectedFixtureId={selectedFixtureId}
+          selectedRef={{ current: null }}
+          expansion={expansion}
+          setExpansion={setExpansion}
+        />
+      </FixtureSelectProvider>
     );
   };
 }

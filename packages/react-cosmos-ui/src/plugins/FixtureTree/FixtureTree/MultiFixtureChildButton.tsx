@@ -18,7 +18,6 @@ type Props = {
   indentLevel: number;
   selected: boolean;
   selectedRef: RefObject<HTMLElement | null>;
-  onSelect: (fixtureId: FixtureId) => unknown;
 };
 
 export function MultiFixtureChildButton({
@@ -27,10 +26,9 @@ export function MultiFixtureChildButton({
   indentLevel,
   selected,
   selectedRef,
-  onSelect,
 }: Props) {
   return (
-    <FixtureLink fixtureId={fixtureId} onSelect={onSelect}>
+    <FixtureLink fixtureId={fixtureId}>
       <TreeItem
         ref={selected ? selectedRef : undefined}
         indentLevel={indentLevel}

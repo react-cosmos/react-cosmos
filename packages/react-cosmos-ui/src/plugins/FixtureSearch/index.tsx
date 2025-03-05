@@ -1,7 +1,7 @@
 import React from 'react';
 import { FixtureId } from 'react-cosmos-core';
 import { createPlugin, PluginContext } from 'react-plugin';
-import { NavRowSlotProps } from '../../slots/NavRowSlot.js';
+import { NavPanelRowSlotProps } from '../../slots/NavPanelRowSlot.js';
 import { CoreSpec } from '../Core/spec.js';
 import { FixtureTreeSpec } from '../FixtureTree/spec.js';
 import { RendererCoreSpec } from '../RendererCore/spec.js';
@@ -29,8 +29,8 @@ onLoad(pluginContext => {
   });
 });
 
-namedPlug<NavRowSlotProps>(
-  'navRow',
+namedPlug<NavPanelRowSlotProps>(
+  'navPanelRow',
   'fixtureSearch',
   ({ pluginContext, slotProps }) => {
     const { getMethodsOf } = pluginContext;
@@ -38,7 +38,7 @@ namedPlug<NavRowSlotProps>(
     const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
     const fixtures = rendererCore.getFixtures();
     const onOpen = useOnOpen(pluginContext);
-    const { onCloseNav } = slotProps;
+    const { onCloseNavPanel } = slotProps;
 
     // No point in showing fixture search button unless user has fixtures
     if (Object.keys(fixtures).length === 0) {
@@ -49,7 +49,7 @@ namedPlug<NavRowSlotProps>(
       <FixtureSearchHeader
         fixtureSelected={router.getSelectedFixtureId() !== null}
         onOpen={onOpen}
-        onCloseNav={onCloseNav}
+        onCloseNavPanel={onCloseNavPanel}
       />
     );
   }

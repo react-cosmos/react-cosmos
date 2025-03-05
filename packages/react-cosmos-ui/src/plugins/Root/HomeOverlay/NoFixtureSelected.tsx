@@ -25,7 +25,7 @@ export function NoFixtureSelected({ onShowWelcome }: Props) {
             <div style={{ flex: 1 }} />
             <Subtitle>ON SELECTED FIXTURE</Subtitle>
           </SubtitleContainer>
-          <KeyShortcut keys={['L']} label="Toggle fixture list" />
+          <KeyShortcut keys={['L']} label="Toggle nav panel" />
           <KeyShortcut keys={['P']} label="Toggle control panel" />
           <KeyShortcut keys={['F']} label="Go full screen" />
           <KeyShortcut keys={['R']} label="Reload renderer" />

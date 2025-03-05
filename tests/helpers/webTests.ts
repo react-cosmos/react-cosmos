@@ -66,9 +66,9 @@ export function webTests(url: string) {
     test('renders searched fixture', async ({ page }) => {
       await page.goto(url);
 
-      await page.getByText('Search fixtures').waitFor();
+      await page.getByText('Search').waitFor();
       await page.keyboard.press('Control+K');
-      await page.getByPlaceholder('Fixture search').fill('Hello');
+      await page.getByPlaceholder('Search your fixtures...').fill('Hello');
       await waitForActiveSearchResult(page, 'HelloWorld');
       await page.keyboard.press('Enter');
       await expect(rendererRoot(page)).toContainText('Hello World!');
@@ -82,7 +82,7 @@ export function webTests(url: string) {
       await rendererRoot(page).getByText('Hello World!').click();
 
       await page.keyboard.press('Control+K');
-      await page.getByPlaceholder('Fixture search').waitFor();
+      await page.getByPlaceholder('Search your fixtures...').waitFor();
     });
   });
 

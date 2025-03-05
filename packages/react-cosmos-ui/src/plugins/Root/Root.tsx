@@ -3,16 +3,16 @@ import { FixtureId, FlatFixtureTreeItem } from 'react-cosmos-core';
 import { ArraySlot, Slot } from 'react-plugin';
 import styled from 'styled-components';
 import { useDrag } from '../../hooks/useDrag.js';
-import { NavRowSlot } from '../../slots/NavRowSlot.js';
-import { grey32, grey8, white10 } from '../../style/colors.js';
+import { grey32 } from '../../style/colors.js';
+import { quick } from '../../style/vars.js';
 import {
   GetFixtureState,
   SetFixtureStateByName,
 } from '../RendererCore/spec.js';
-import { GlobalHeader } from './GlobalHeader.js';
+import { ControlPanel } from './ControlPanel.js';
 import { HomeOverlay } from './HomeOverlay/HomeOverlay.js';
+import { NavPanel } from './NavPanel.js';
 import { RendererHeader } from './RendererHeader.js';
-import { SidePanel } from './SidePanel.js';
 
 type Props = {
   fixtureItems: FlatFixtureTreeItem[];
@@ -20,22 +20,24 @@ type Props = {
   rendererConnected: boolean;
   getFixtureState: GetFixtureState;
   setFixtureState: SetFixtureStateByName;
-  navOpen: boolean;
-  panelOpen: boolean;
-  navWidth: number;
-  panelWidth: number;
-  sidePanelRowOrder: string[];
+  navPanelOpen: boolean;
+  controlPanelOpen: boolean;
+  navPanelWidth: number;
+  controlPanelWidth: number;
+  panelsLocked: boolean;
   globalActionOrder: string[];
   globalOrder: string[];
-  navRowOrder: string[];
+  navPanelRowOrder: string[];
+  controlPanelRowOrder: string[];
   fixtureActionOrder: string[];
   rendererActionOrder: string[];
-  onToggleNav: () => unknown;
-  onTogglePanel: () => unknown;
+  onToggleNavPanel: () => unknown;
+  onToggleControlPanel: () => unknown;
   onReloadRenderer: () => unknown;
   onCloseFixture: () => unknown;
-  setNavWidth: (width: number) => unknown;
-  setPanelWidth: (width: number) => unknown;
+  setNavPanelWidth: (width: number) => unknown;
+  setControlPanelWidth: (width: number) => unknown;
+  setPanelsLocked: (locked: boolean) => unknown;
   welcomeDismissed: boolean;
   onDismissWelcome: () => unknown;
   onShowWelcome: () => unknown;
@@ -47,92 +49,87 @@ export function Root({
   rendererConnected,
   getFixtureState,
   setFixtureState,
-  navOpen,
-  panelOpen,
-  navWidth,
-  panelWidth,
-  sidePanelRowOrder,
+  navPanelOpen,
+  controlPanelOpen,
+  navPanelWidth,
+  controlPanelWidth,
+  panelsLocked,
   globalActionOrder,
   globalOrder,
-  navRowOrder,
+  navPanelRowOrder,
+  controlPanelRowOrder,
   fixtureActionOrder,
   rendererActionOrder,
-  onToggleNav,
-  onTogglePanel,
+  onToggleNavPanel,
+  onToggleControlPanel,
   onReloadRenderer,
   onCloseFixture,
-  setNavWidth,
-  setPanelWidth,
+  setNavPanelWidth,
+  setControlPanelWidth,
+  setPanelsLocked,
   welcomeDismissed,
   onDismissWelcome,
   onShowWelcome,
 }: Props) {
   const navDrag = useDrag({
-    value: navWidth,
-    onChange: setNavWidth,
+    value: navPanelWidth,
+    onChange: setNavPanelWidth,
   });
   const panelDrag = useDrag({
-    value: panelWidth,
+    value: controlPanelWidth,
     reverse: true,
-    onChange: setPanelWidth,
+    onChange: setControlPanelWidth,
   });
 
-  const showNav = navOpen || !selectedFixtureId;
+  const showNavPanel = navPanelOpen || !selectedFixtureId;
   const dragging = navDrag.dragging || panelDrag.dragging;
 
   // z-indexes are set here on purpose to show the layer hierarchy at a glance
   return (
     <Container dragging={dragging}>
-      {showNav && (
-        <ResizablePane style={{ width: navWidth, zIndex: 2 }}>
-          <Nav>
-            <NavRowSlot
-              slotProps={{ onCloseNav: onToggleNav }}
-              plugOrder={navRowOrder}
-            />
-          </Nav>
+      {(showNavPanel || !panelsLocked) && (
+        <ResizablePanel
+          inert={!showNavPanel}
+          style={{
+            position: panelsLocked ? 'relative' : 'absolute',
+            left: 0,
+            zIndex: 3,
+            width: navPanelWidth,
+            transform: panelsLocked
+              ? undefined
+              : `translateX(${showNavPanel ? 0 : -navPanelWidth}px)`,
+          }}
+        >
+          <NavPanel
+            rendererConnected={rendererConnected}
+            panelsLocked={panelsLocked}
+            setPanelsLocked={setPanelsLocked}
+            navPanelRowOrder={navPanelRowOrder}
+            globalActionOrder={globalActionOrder}
+            onClose={onToggleNavPanel}
+          />
           {navDrag.dragging && <DragOverlay />}
           <NavDragHandle ref={navDrag.dragElRef} />
-        </ResizablePane>
+        </ResizablePanel>
       )}
       <MainContainer key="main" style={{ zIndex: 1 }}>
-        {!selectedFixtureId && (
-          <GlobalHeader
-            rendererConnected={rendererConnected}
-            globalActionOrder={globalActionOrder}
+        {selectedFixtureId && (
+          <RendererHeader
+            fixtureItems={fixtureItems}
+            fixtureId={selectedFixtureId}
+            navPanelOpen={navPanelOpen}
+            controlPanelOpen={controlPanelOpen}
+            panelsLocked={panelsLocked}
+            fixtureActionOrder={fixtureActionOrder}
+            rendererActionOrder={rendererActionOrder}
+            onToggleNavPanel={onToggleNavPanel}
+            onToggleControlPanel={onToggleControlPanel}
+            onReloadRenderer={onReloadRenderer}
+            onClose={onCloseFixture}
           />
         )}
         <RendererContainer key="rendererContainer">
-          {selectedFixtureId && (
-            <RendererHeader
-              fixtureItems={fixtureItems}
-              fixtureId={selectedFixtureId}
-              navOpen={navOpen}
-              panelOpen={panelOpen}
-              fixtureActionOrder={fixtureActionOrder}
-              rendererActionOrder={rendererActionOrder}
-              onOpenNav={onToggleNav}
-              onTogglePanel={onTogglePanel}
-              onReloadRenderer={onReloadRenderer}
-              onClose={onCloseFixture}
-            />
-          )}
-          <RendererBody key="rendererBody">
-            <Slot name="rendererPreview" />
-            {dragging && <DragOverlay />}
-            {selectedFixtureId && panelOpen && (
-              <ResizablePane style={{ width: panelWidth, zIndex: 3 }}>
-                <SidePanel
-                  fixtureId={selectedFixtureId}
-                  getFixtureState={getFixtureState}
-                  setFixtureState={setFixtureState}
-                  sidePanelRowOrder={sidePanelRowOrder}
-                />
-                {panelDrag.dragging && <DragOverlay />}
-                <PanelDragHandle ref={panelDrag.dragElRef} />
-              </ResizablePane>
-            )}
-          </RendererBody>
+          <Slot name="rendererPreview" />
           {!selectedFixtureId && (
             <Slot name="homeOverlay">
               <HomeOverlay
@@ -143,7 +140,32 @@ export function Root({
             </Slot>
           )}
         </RendererContainer>
+        {dragging && <DragOverlay />}
       </MainContainer>
+      {selectedFixtureId && (controlPanelOpen || !panelsLocked) && (
+        <ResizablePanel
+          inert={!controlPanelOpen}
+          style={{
+            position: panelsLocked ? 'relative' : 'absolute',
+            right: 0,
+            zIndex: 2,
+            width: controlPanelWidth,
+            transform: panelsLocked
+              ? undefined
+              : `translateX(${controlPanelOpen ? 0 : controlPanelWidth}px)`,
+          }}
+        >
+          <ControlPanel
+            fixtureId={selectedFixtureId}
+            getFixtureState={getFixtureState}
+            setFixtureState={setFixtureState}
+            rowOrder={controlPanelRowOrder}
+            onClose={onToggleControlPanel}
+          />
+          {panelDrag.dragging && <DragOverlay />}
+          <PanelDragHandle ref={panelDrag.dragElRef} />
+        </ResizablePanel>
+      )}
       <div style={{ zIndex: 4 }}>
         <ArraySlot name="global" plugOrder={globalOrder} />
       </div>
@@ -161,33 +183,17 @@ const Container = styled.div.attrs({ 'data-testid': 'root' })<ContainerProps>`
   bottom: 0;
   left: 0;
   right: 0;
+  overflow: hidden;
   display: flex;
   background: ${grey32};
   cursor: ${props => (props.dragging ? 'col-resize' : 'default')};
 `;
 
-const ResizablePane = styled.div`
+const ResizablePanel = styled.div`
   flex-shrink: 0;
   max-width: 100%;
-  position: relative;
-`;
-
-const Nav = styled.div`
-  width: 100%;
   height: 100%;
-  background: ${grey32};
-  display: flex;
-  flex-direction: column;
-
-  ::after {
-    content: '';
-    position: absolute;
-    top: 1px;
-    right: 0;
-    bottom: 0;
-    width: 1px;
-    background: ${white10};
-  }
+  transition: transform ${quick}s;
 `;
 
 const MainContainer = styled.div`
@@ -203,15 +209,6 @@ const RendererContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: hidden;
-`;
-
-const RendererBody = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  background: ${grey8};
   overflow: hidden;
 `;
 
@@ -235,7 +232,7 @@ const PanelDragHandle = styled(DragHandle)`
 `;
 
 // The purpose of DragOverlay is to cover the renderer iframe while dragging,
-// because otherwise the iframe steaps the mousemove events and stops the drag.
+// because otherwise the iframe steals the mousemove events and stops the drag.
 const DragOverlay = styled.div`
   position: absolute;
   top: 0;
