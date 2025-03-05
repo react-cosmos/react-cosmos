@@ -2,7 +2,7 @@ import { StorageSpec } from '../../Storage/spec.js';
 import { RootContext } from '../shared.js';
 
 const STORAGE_KEY = 'panelsLocked';
-const DEFAULT_VALUE = true;
+const DEFAULT_VALUE = false;
 
 export function arePanelsLocked(context: RootContext) {
   const storage = context.getMethodsOf<StorageSpec>('storage');

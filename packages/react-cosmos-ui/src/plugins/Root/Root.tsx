@@ -89,12 +89,13 @@ export function Root({
     <Container dragging={dragging}>
       {(showNavPanel || !panelsLocked) && (
         <ResizablePane
-          floating={!panelsLocked}
           inert={!panelsLocked && !showNavPanel}
           style={{
-            width: navPanelWidth,
-            left: !panelsLocked && !showNavPanel ? -navPanelWidth : 0,
+            position: panelsLocked ? 'relative' : 'absolute',
+            left: 0,
             zIndex: 3,
+            width: navPanelWidth,
+            transform: `translateX(${!panelsLocked && !showNavPanel ? -navPanelWidth : 0}px)`,
           }}
         >
           <NavPanel
@@ -141,12 +142,13 @@ export function Root({
       </MainContainer>
       {selectedFixtureId && (controlPanelOpen || !panelsLocked) && (
         <ResizablePane
-          floating={!panelsLocked}
           inert={!panelsLocked && !controlPanelOpen}
           style={{
-            width: controlPanelWidth,
-            right: !panelsLocked && !controlPanelOpen ? -controlPanelWidth : 0,
+            position: panelsLocked ? 'relative' : 'absolute',
+            right: 0,
             zIndex: 2,
+            width: controlPanelWidth,
+            transform: `translateX(${!panelsLocked && !controlPanelOpen ? controlPanelWidth : 0}px)`,
           }}
         >
           <ControlPanel
@@ -177,19 +179,17 @@ const Container = styled.div.attrs({ 'data-testid': 'root' })<ContainerProps>`
   bottom: 0;
   left: 0;
   right: 0;
+  overflow: hidden;
   display: flex;
   background: ${grey32};
   cursor: ${props => (props.dragging ? 'col-resize' : 'default')};
 `;
 
-const ResizablePane = styled.div<{ floating: boolean }>`
+const ResizablePane = styled.div`
   flex-shrink: 0;
   max-width: 100%;
   height: 100%;
-  position: ${props => (props.floating ? 'absolute' : 'relative')};
-  transition:
-    left ${quick}s,
-    right ${quick}s;
+  transition: transform ${quick}s;
 `;
 
 const MainContainer = styled.div`
