@@ -6,6 +6,7 @@ import { NavRowSlot } from '../../slots/NavRowSlot.js';
 import {
   mockCore,
   mockRendererCore,
+  mockRoot,
   mockRouter,
   mockStorage,
 } from '../../testHelpers/pluginMocks.js';
@@ -29,6 +30,7 @@ function registerTestPlugins() {
       fixtureFileSuffix: 'fixture',
     }),
   });
+  mockRoot();
 }
 
 async function loadTestPlugins() {

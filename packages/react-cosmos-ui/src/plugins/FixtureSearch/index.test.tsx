@@ -53,7 +53,7 @@ it('open fixture list and selects fixture', async () => {
   const { getByText, getByTestId, queryByTestId } = loadTestPlugins();
 
   // Opens fixture search overlay
-  fireEvent.click(getByText(/search fixtures/i));
+  fireEvent.click(getByText(/search/i));
 
   // Shows (cleaned up) fixture list
   getByTestId('fixtureSearchContent');
@@ -80,7 +80,7 @@ it('closes fixture list on outside click', async () => {
   const { getByText, getByTestId, queryByTestId } = loadTestPlugins();
 
   // Opens fixture search overlay
-  fireEvent.click(getByText(/search fixtures/i));
+  fireEvent.click(getByText(/search/i));
   getByTestId('fixtureSearchContent');
 
   // Closes fixture search overlay
@@ -94,10 +94,10 @@ it('filters fixture list', async () => {
   const { getByText, queryByText, getByPlaceholderText } = loadTestPlugins();
 
   // Opens fixture search overlay
-  fireEvent.click(getByText(/search fixtures/i));
+  fireEvent.click(getByText(/search/i));
 
   // Filter fixtures
-  fireEvent.change(getByPlaceholderText('Fixture search'), {
+  fireEvent.change(getByPlaceholderText('Search your fixtures...'), {
     target: { value: 'foobar' },
   });
 
