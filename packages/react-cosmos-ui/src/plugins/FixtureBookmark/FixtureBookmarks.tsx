@@ -6,7 +6,6 @@ import {
   FlatFixtureTreeItem,
   stringifyFixtureId,
 } from 'react-cosmos-core';
-import { usePlugContext } from 'react-plugin';
 import styled from 'styled-components';
 import { XIcon } from '../../components/icons/index.js';
 import { createRelativePlaygroundUrl } from '../../shared/url.js';
@@ -21,8 +20,6 @@ import {
   selectedColors,
 } from '../../style/colors.js';
 import { quick } from '../../style/vars.js';
-import { FixtureTreeSpec } from '../FixtureTree/spec.js';
-import { RootSpec } from '../Root/spec.js';
 
 type Props = {
   bookmarks: FlatFixtureTree;
@@ -38,8 +35,6 @@ export function FixtureBookmarks({
   onBookmarkDelete,
 }: Props) {
   const sortedBookmarks = useSortedBookmarks(bookmarks);
-  const { pluginContext } = usePlugContext<FixtureTreeSpec>();
-  const root = pluginContext.getMethodsOf<RootSpec>('root');
 
   if (!sortedBookmarks.length) return null;
 
@@ -59,7 +54,6 @@ export function FixtureBookmarks({
             openAnchorInNewTab(e.currentTarget);
           } else {
             onFixtureSelect(fixtureId);
-            if (root.getFloatingPanes()) root.closeFixtureList();
           }
         }
 

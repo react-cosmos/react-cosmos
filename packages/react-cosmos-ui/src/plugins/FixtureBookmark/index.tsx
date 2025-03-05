@@ -3,6 +3,7 @@ import React from 'react';
 import { FlatFixtureTree } from 'react-cosmos-core';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { FixtureActionSlotProps } from '../../slots/FixtureActionSlot.js';
+import { RootSpec } from '../Root/spec.js';
 import { RouterSpec } from '../Router/spec.js';
 import { StorageSpec } from '../Storage/spec.js';
 import { BookmarkFixtureButton } from './BookmarkFixtureButton.js';
@@ -45,6 +46,7 @@ namedPlug<FixtureActionSlotProps>(
   'fixtureBookmarks',
   ({ pluginContext }) => {
     const router = pluginContext.getMethodsOf<RouterSpec>('router');
+    const root = pluginContext.getMethodsOf<RootSpec>('root');
     const { getBookmarks, setBookmarks } = getStorageApi(pluginContext);
     const bookmarks = getBookmarks();
 
@@ -52,7 +54,10 @@ namedPlug<FixtureActionSlotProps>(
       <FixtureBookmarks
         bookmarks={bookmarks}
         selectedFixtureId={router.getSelectedFixtureId()}
-        onFixtureSelect={router.selectFixture}
+        onFixtureSelect={fixtureId => {
+          router.selectFixture(fixtureId);
+          if (root.getFloatingPanes()) root.closeFixtureList();
+        }}
         onBookmarkDelete={fixtureItem =>
           setBookmarks(bookmarks.filter(b => !isEqual(b, fixtureItem)))
         }
