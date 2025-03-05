@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { ReactNode, useContext, useMemo } from 'react';
 import { FixtureId } from 'react-cosmos-core';
 
 type ContextValue = {
@@ -10,7 +10,7 @@ const FixtureSelectContext = React.createContext<ContextValue>({
 });
 
 export function FixtureSelectProvider(props: {
-  children: React.ReactNode;
+  children: ReactNode;
   onSelect: ContextValue['selectFixture'];
 }) {
   const value = useMemo(
