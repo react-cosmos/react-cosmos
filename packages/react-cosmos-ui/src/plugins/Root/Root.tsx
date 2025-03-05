@@ -23,10 +23,10 @@ type Props = {
   rendererConnected: boolean;
   getFixtureState: GetFixtureState;
   setFixtureState: SetFixtureStateByName;
-  navOpen: boolean;
-  panelOpen: boolean;
-  navWidth: number;
-  panelWidth: number;
+  navPanelOpen: boolean;
+  controlPanelOpen: boolean;
+  navPanelWidth: number;
+  controlPanelWidth: number;
   panelsLocked: boolean;
   sidePanelRowOrder: string[];
   globalActionOrder: string[];
@@ -34,12 +34,12 @@ type Props = {
   navRowOrder: string[];
   fixtureActionOrder: string[];
   rendererActionOrder: string[];
-  onToggleNav: () => unknown;
-  onTogglePanel: () => unknown;
+  onToggleNavPanel: () => unknown;
+  onToggleControlPanel: () => unknown;
   onReloadRenderer: () => unknown;
   onCloseFixture: () => unknown;
-  setNavWidth: (width: number) => unknown;
-  setPanelWidth: (width: number) => unknown;
+  setNavPanelWidth: (width: number) => unknown;
+  setControlPanelWidth: (width: number) => unknown;
   setPanelsLocked: (lock: boolean) => unknown;
   welcomeDismissed: boolean;
   onDismissWelcome: () => unknown;
@@ -52,10 +52,10 @@ export function Root({
   rendererConnected,
   getFixtureState,
   setFixtureState,
-  navOpen,
-  panelOpen,
-  navWidth,
-  panelWidth,
+  navPanelOpen,
+  controlPanelOpen,
+  navPanelWidth,
+  controlPanelWidth,
   panelsLocked,
   sidePanelRowOrder,
   globalActionOrder,
@@ -63,47 +63,47 @@ export function Root({
   navRowOrder,
   fixtureActionOrder,
   rendererActionOrder,
-  onToggleNav,
-  onTogglePanel,
+  onToggleNavPanel,
+  onToggleControlPanel,
   onReloadRenderer,
   onCloseFixture,
-  setNavWidth,
-  setPanelWidth,
+  setNavPanelWidth,
+  setControlPanelWidth,
   setPanelsLocked,
   welcomeDismissed,
   onDismissWelcome,
   onShowWelcome,
 }: Props) {
   const navDrag = useDrag({
-    value: navWidth,
-    onChange: setNavWidth,
+    value: navPanelWidth,
+    onChange: setNavPanelWidth,
   });
   const panelDrag = useDrag({
-    value: panelWidth,
+    value: controlPanelWidth,
     reverse: true,
-    onChange: setPanelWidth,
+    onChange: setControlPanelWidth,
   });
 
-  const showNav = navOpen || !selectedFixtureId;
+  const showNavPanel = navPanelOpen || !selectedFixtureId;
   const dragging = navDrag.dragging || panelDrag.dragging;
 
   // z-indexes are set here on purpose to show the layer hierarchy at a glance
   return (
     <Container dragging={dragging}>
-      {(showNav || !panelsLocked) && (
+      {(showNavPanel || !panelsLocked) && (
         <ResizablePane
           floating={!panelsLocked}
-          inert={!panelsLocked && !showNav}
+          inert={!panelsLocked && !showNavPanel}
           style={{
-            width: navWidth,
-            left: !panelsLocked && !showNav ? -navWidth : 0,
+            width: navPanelWidth,
+            left: !panelsLocked && !showNavPanel ? -navPanelWidth : 0,
             zIndex: 3,
           }}
         >
           <Nav>
             <NavSlots>
               <NavRowSlot
-                slotProps={{ onCloseNav: onToggleNav }}
+                slotProps={{ onCloseNav: onToggleNavPanel }}
                 plugOrder={navRowOrder}
               />
             </NavSlots>
@@ -131,13 +131,13 @@ export function Root({
           <RendererHeader
             fixtureItems={fixtureItems}
             fixtureId={selectedFixtureId}
-            navOpen={navOpen}
-            panelOpen={panelOpen}
+            navPanelOpen={navPanelOpen}
+            controlPanelOpen={controlPanelOpen}
             panelsLocked={panelsLocked}
             fixtureActionOrder={fixtureActionOrder}
             rendererActionOrder={rendererActionOrder}
-            onOpenNav={onToggleNav}
-            onTogglePanel={onTogglePanel}
+            onToggleNavPanel={onToggleNavPanel}
+            onToggleControlPanel={onToggleControlPanel}
             onReloadRenderer={onReloadRenderer}
             onClose={onCloseFixture}
           />
@@ -156,13 +156,13 @@ export function Root({
         </RendererContainer>
         {dragging && <DragOverlay />}
       </MainContainer>
-      {selectedFixtureId && (panelOpen || !panelsLocked) && (
+      {selectedFixtureId && (controlPanelOpen || !panelsLocked) && (
         <ResizablePane
           floating={!panelsLocked}
-          inert={!panelsLocked && !panelOpen}
+          inert={!panelsLocked && !controlPanelOpen}
           style={{
-            width: panelWidth,
-            right: !panelsLocked && !panelOpen ? -panelWidth : 0,
+            width: controlPanelWidth,
+            right: !panelsLocked && !controlPanelOpen ? -controlPanelWidth : 0,
             zIndex: 2,
           }}
         >
@@ -171,7 +171,7 @@ export function Root({
             getFixtureState={getFixtureState}
             setFixtureState={setFixtureState}
             sidePanelRowOrder={sidePanelRowOrder}
-            onClosePanel={onTogglePanel}
+            onClosePanel={onToggleControlPanel}
           />
           {panelDrag.dragging && <DragOverlay />}
           <PanelDragHandle ref={panelDrag.dragElRef} />

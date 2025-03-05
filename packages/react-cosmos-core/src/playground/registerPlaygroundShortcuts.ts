@@ -23,7 +23,7 @@ export function registerPlaygroundShortcuts(
       }
     } else {
       if (keyChar === 'L') {
-        run(e, 'toggleFixtureList');
+        run(e, 'toggleNavPanel');
       } else if (keyChar === 'P') {
         run(e, 'toggleControlPanel');
       } else if (keyChar === 'F') {

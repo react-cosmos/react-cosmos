@@ -13,6 +13,6 @@ export type RootSpec = {
   };
   methods: {
     arePanelsLocked: () => boolean;
-    closeFixtureList: () => void;
+    closeNavPanel: () => void;
   };
 };

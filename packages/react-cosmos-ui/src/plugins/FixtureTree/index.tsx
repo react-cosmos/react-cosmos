@@ -38,7 +38,7 @@ namedPlug('navRow', 'fixtureTree', ({ pluginContext }) => {
   const handleFixtureSelect = useCallback(
     (fixtureId: FixtureId, multiFixtureOpen: boolean) => {
       router.selectFixture(fixtureId);
-      if (!multiFixtureOpen && !root.arePanelsLocked()) root.closeFixtureList();
+      if (!multiFixtureOpen && !root.arePanelsLocked()) root.closeNavPanel();
     },
     [root, router]
   );

@@ -7,11 +7,26 @@ import { RouterSpec } from '../Router/spec.js';
 import { StorageSpec } from '../Storage/spec.js';
 import { useWelcomeDismiss } from './HomeOverlay/welcomeDismiss.js';
 import { Root } from './Root.js';
-import { isNavOpen, openNav } from './navOpen.js';
-import { getNavWidthApi } from './navWidth.js';
-import { isPanelOpen, openPanel } from './panelOpen.js';
-import { getPanelWidthApi } from './panelWidth.js';
-import { arePanelsLocked, setPanelsLocked } from './panelsLocked.js';
+import {
+  isControlPanelOpen,
+  openControlPanel,
+} from './persistentState/controlPanelOpen.js';
+import {
+  getControlPanelWidth,
+  setControlPanelWidth,
+} from './persistentState/controlPanelWidth.js';
+import {
+  isNavPanelOpen,
+  openNavPanel,
+} from './persistentState/navPanelOpen.js';
+import {
+  getNavPanelWidth,
+  setNavPanelWidth,
+} from './persistentState/navPanelWidth.js';
+import {
+  arePanelsLocked,
+  setPanelsLocked,
+} from './persistentState/panelsLocked.js';
 import { RootContext } from './shared.js';
 import { RootSpec } from './spec.js';
 
@@ -30,12 +45,12 @@ const { onLoad, plug, register } = createPlugin<RootSpec>({
   },
   methods: {
     arePanelsLocked,
-    closeFixtureList,
+    closeNavPanel,
   },
 });
 
-function closeFixtureList(context: RootContext) {
-  openNav(context, false);
+function closeNavPanel(context: RootContext) {
+  openNavPanel(context, false);
 }
 
 onLoad(context => {
@@ -49,8 +64,9 @@ onLoad(context => {
 onLoad(context => {
   const core = context.getMethodsOf<CoreSpec>('core');
   return core.registerCommands({
-    toggleFixtureList: () => openNav(context, !isNavOpen(context)),
-    toggleControlPanel: () => openPanel(context, !isPanelOpen(context)),
+    toggleNavPanel: () => openNavPanel(context, !isNavPanelOpen(context)),
+    toggleControlPanel: () =>
+      openControlPanel(context, !isControlPanelOpen(context)),
   });
 });
 
@@ -60,15 +76,13 @@ plug('root', ({ pluginContext }) => {
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
 
   const fixtureItems = useFixtureItems(pluginContext);
-  const onToggleNav = useOpenNav(pluginContext);
-  const onTogglePanel = useOpenPanel(pluginContext);
+  const onToggleNavPanel = useToggleNavPanel(pluginContext);
+  const onToggleControlPanel = useToggleControlPanel(pluginContext);
   const welcomeDismiss = useWelcomeDismiss(pluginContext);
 
   const { storageCacheReady } = getState();
   if (!storageCacheReady) return null;
 
-  const { navWidth, setNavWidth } = getNavWidthApi(pluginContext);
-  const { panelWidth, setPanelWidth } = getPanelWidthApi(pluginContext);
   const {
     sidePanelRowOrder,
     globalActionOrder,
@@ -84,10 +98,10 @@ plug('root', ({ pluginContext }) => {
       rendererConnected={rendererCore.isRendererConnected()}
       getFixtureState={rendererCore.getFixtureState}
       setFixtureState={rendererCore.setFixtureState}
-      navOpen={isNavOpen(pluginContext)}
-      panelOpen={isPanelOpen(pluginContext)}
-      navWidth={navWidth}
-      panelWidth={panelWidth}
+      navPanelOpen={isNavPanelOpen(pluginContext)}
+      controlPanelOpen={isControlPanelOpen(pluginContext)}
+      navPanelWidth={getNavPanelWidth(pluginContext)}
+      controlPanelWidth={getControlPanelWidth(pluginContext)}
       panelsLocked={arePanelsLocked(pluginContext)}
       sidePanelRowOrder={sidePanelRowOrder}
       globalActionOrder={globalActionOrder}
@@ -95,12 +109,12 @@ plug('root', ({ pluginContext }) => {
       navRowOrder={navRowOrder}
       fixtureActionOrder={fixtureActionOrder}
       rendererActionOrder={rendererActionOrder}
-      onToggleNav={onToggleNav}
-      onTogglePanel={onTogglePanel}
+      onToggleNavPanel={onToggleNavPanel}
+      onToggleControlPanel={onToggleControlPanel}
       onReloadRenderer={rendererCore.reloadRenderer}
       onCloseFixture={router.unselectFixture}
-      setNavWidth={setNavWidth}
-      setPanelWidth={setPanelWidth}
+      setNavPanelWidth={width => setNavPanelWidth(pluginContext, width)}
+      setControlPanelWidth={width => setControlPanelWidth(pluginContext, width)}
       setPanelsLocked={locked => setPanelsLocked(pluginContext, locked)}
       welcomeDismissed={welcomeDismiss.isWelcomeDismissed()}
       onDismissWelcome={welcomeDismiss.onDismissWelcome}
@@ -131,14 +145,14 @@ function useFixtureItems(context: RootContext) {
   );
 }
 
-function useOpenNav(context: RootContext) {
+function useToggleNavPanel(context: RootContext) {
   return React.useCallback(() => {
-    openNav(context, !isNavOpen(context));
+    openNavPanel(context, !isNavPanelOpen(context));
   }, [context]);
 }
 
-function useOpenPanel(context: RootContext) {
+function useToggleControlPanel(context: RootContext) {
   return React.useCallback(() => {
-    openPanel(context, !isPanelOpen(context));
+    openControlPanel(context, !isControlPanelOpen(context));
   }, [context]);
 }

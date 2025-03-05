@@ -35,7 +35,7 @@ export const SidePanel = React.memo(function SidePanel({
       <Header>
         <IconButton32
           icon={<ChevronRightIcon />}
-          title="Close control panel (P)"
+          title="Hide control panel (P)"
           onClick={onClosePanel}
         />
       </Header>

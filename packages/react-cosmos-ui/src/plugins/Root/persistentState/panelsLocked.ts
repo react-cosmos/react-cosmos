@@ -1,5 +1,5 @@
-import { StorageSpec } from '../Storage/spec.js';
-import { RootContext } from './shared.js';
+import { StorageSpec } from '../../Storage/spec.js';
+import { RootContext } from '../shared.js';
 
 const STORAGE_KEY = 'panelsLocked';
 const DEFAULT_VALUE = true;
