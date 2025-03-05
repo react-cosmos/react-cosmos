@@ -25,9 +25,10 @@ namedPlug('navRow', 'fixtureTree', ({ pluginContext }) => {
   const storage = pluginContext.getMethodsOf<StorageSpec>('storage');
   const router = getMethodsOf<RouterSpec>('router');
   const core = getMethodsOf<CoreSpec>('core');
-  const root = getMethodsOf<RootSpec>('root');
-  const { fixturesDir, fixtureFileSuffix } = core.getFixtureFileVars();
   const rendererCore = getMethodsOf<RendererCoreSpec>('rendererCore');
+  const root = getMethodsOf<RootSpec>('root');
+
+  const { fixturesDir, fixtureFileSuffix } = core.getFixtureFileVars();
   const expansion = getTreeExpansion(storage);
   const setExpansionMemo = useCallback(
     (newExpansion: TreeExpansion) => setTreeExpansion(storage, newExpansion),
