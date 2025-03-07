@@ -24,7 +24,7 @@ type Props = {
   controlPanelOpen: boolean;
   navPanelWidth: number;
   controlPanelWidth: number;
-  panelsLocked: boolean;
+  drawerPanels: boolean;
   globalActionOrder: string[];
   globalOrder: string[];
   navPanelRowOrder: string[];
@@ -37,7 +37,7 @@ type Props = {
   onCloseFixture: () => unknown;
   setNavPanelWidth: (width: number) => unknown;
   setControlPanelWidth: (width: number) => unknown;
-  setPanelsLocked: (locked: boolean) => unknown;
+  setDrawerPanels: (enabled: boolean) => unknown;
   welcomeDismissed: boolean;
   onDismissWelcome: () => unknown;
   onShowWelcome: () => unknown;
@@ -53,7 +53,7 @@ export function Root({
   controlPanelOpen,
   navPanelWidth,
   controlPanelWidth,
-  panelsLocked,
+  drawerPanels,
   globalActionOrder,
   globalOrder,
   navPanelRowOrder,
@@ -66,7 +66,7 @@ export function Root({
   onCloseFixture,
   setNavPanelWidth,
   setControlPanelWidth,
-  setPanelsLocked,
+  setDrawerPanels,
   welcomeDismissed,
   onDismissWelcome,
   onShowWelcome,
@@ -87,23 +87,23 @@ export function Root({
   // z-indexes are set here on purpose to show the layer hierarchy at a glance
   return (
     <Container dragging={dragging}>
-      {(showNavPanel || !panelsLocked) && (
+      {(showNavPanel || drawerPanels) && (
         <ResizablePanel
           inert={!showNavPanel}
           style={{
-            position: panelsLocked ? 'relative' : 'absolute',
+            position: drawerPanels ? 'absolute' : 'relative',
             left: 0,
             zIndex: 3,
             width: navPanelWidth,
-            transform: panelsLocked
-              ? undefined
-              : `translateX(${showNavPanel ? 0 : -navPanelWidth}px)`,
+            transform: drawerPanels
+              ? `translateX(${showNavPanel ? 0 : -navPanelWidth}px)`
+              : undefined,
           }}
         >
           <NavPanel
             rendererConnected={rendererConnected}
-            panelsLocked={panelsLocked}
-            setPanelsLocked={setPanelsLocked}
+            drawerPanels={drawerPanels}
+            setDrawerPanels={setDrawerPanels}
             navPanelRowOrder={navPanelRowOrder}
             globalActionOrder={globalActionOrder}
             onClose={onToggleNavPanel}
@@ -112,14 +112,22 @@ export function Root({
           <NavDragHandle ref={navDrag.dragElRef} />
         </ResizablePanel>
       )}
-      <MainContainer key="main" style={{ zIndex: 1 }}>
+      <MainContainer
+        key="main"
+        style={{
+          zIndex: 1,
+          filter: drawerPanels
+            ? `brightness(${navPanelOpen || controlPanelOpen ? 0.3 : 1})`
+            : undefined,
+        }}
+      >
         {selectedFixtureId && (
           <RendererHeader
             fixtureItems={fixtureItems}
             fixtureId={selectedFixtureId}
             navPanelOpen={navPanelOpen}
             controlPanelOpen={controlPanelOpen}
-            panelsLocked={panelsLocked}
+            drawerPanels={drawerPanels}
             fixtureActionOrder={fixtureActionOrder}
             rendererActionOrder={rendererActionOrder}
             onToggleNavPanel={onToggleNavPanel}
@@ -141,18 +149,26 @@ export function Root({
           )}
         </RendererContainer>
         {dragging && <DragOverlay />}
+        {drawerPanels && (navPanelOpen || controlPanelOpen) && (
+          <PanelBgOverlay
+            onClick={() => {
+              if (navPanelOpen) onToggleNavPanel();
+              if (controlPanelOpen) onToggleControlPanel();
+            }}
+          />
+        )}
       </MainContainer>
-      {selectedFixtureId && (controlPanelOpen || !panelsLocked) && (
+      {selectedFixtureId && (controlPanelOpen || drawerPanels) && (
         <ResizablePanel
           inert={!controlPanelOpen}
           style={{
-            position: panelsLocked ? 'relative' : 'absolute',
+            position: drawerPanels ? 'absolute' : 'relative',
             right: 0,
             zIndex: 2,
             width: controlPanelWidth,
-            transform: panelsLocked
-              ? undefined
-              : `translateX(${controlPanelOpen ? 0 : controlPanelWidth}px)`,
+            transform: drawerPanels
+              ? `translateX(${controlPanelOpen ? 0 : controlPanelWidth}px)`
+              : undefined,
           }}
         >
           <ControlPanel
@@ -202,6 +218,7 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  transition: filter ${quick}s;
 `;
 
 const RendererContainer = styled.div`
@@ -234,6 +251,14 @@ const PanelDragHandle = styled(DragHandle)`
 // The purpose of DragOverlay is to cover the renderer iframe while dragging,
 // because otherwise the iframe steals the mousemove events and stops the drag.
 const DragOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+`;
+
+const PanelBgOverlay = styled.div`
   position: absolute;
   top: 0;
   bottom: 0;

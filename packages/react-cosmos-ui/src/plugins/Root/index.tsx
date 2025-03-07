@@ -16,6 +16,10 @@ import {
   setControlPanelWidth,
 } from './persistentState/controlPanelWidth.js';
 import {
+  drawerPanelsEnabled,
+  setDrawerPanels,
+} from './persistentState/drawerPanels.js';
+import {
   isNavPanelOpen,
   openNavPanel,
 } from './persistentState/navPanelOpen.js';
@@ -23,10 +27,6 @@ import {
   getNavPanelWidth,
   setNavPanelWidth,
 } from './persistentState/navPanelWidth.js';
-import {
-  arePanelsLocked,
-  setPanelsLocked,
-} from './persistentState/panelsLocked.js';
 import { RootContext } from './shared.js';
 import { RootSpec } from './spec.js';
 
@@ -44,7 +44,7 @@ const { onLoad, plug, register } = createPlugin<RootSpec>({
     storageCacheReady: false,
   },
   methods: {
-    arePanelsLocked,
+    drawerPanelsEnabled,
     closeNavPanel,
   },
 });
@@ -102,7 +102,7 @@ plug('root', ({ pluginContext }) => {
       controlPanelOpen={isControlPanelOpen(pluginContext)}
       navPanelWidth={getNavPanelWidth(pluginContext)}
       controlPanelWidth={getControlPanelWidth(pluginContext)}
-      panelsLocked={arePanelsLocked(pluginContext)}
+      drawerPanels={drawerPanelsEnabled(pluginContext)}
       globalActionOrder={globalActionOrder}
       globalOrder={globalOrder}
       navPanelRowOrder={navPanelRowOrder}
@@ -115,7 +115,7 @@ plug('root', ({ pluginContext }) => {
       onCloseFixture={router.unselectFixture}
       setNavPanelWidth={width => setNavPanelWidth(pluginContext, width)}
       setControlPanelWidth={width => setControlPanelWidth(pluginContext, width)}
-      setPanelsLocked={locked => setPanelsLocked(pluginContext, locked)}
+      setDrawerPanels={enabled => setDrawerPanels(pluginContext, enabled)}
       welcomeDismissed={welcomeDismiss.isWelcomeDismissed()}
       onDismissWelcome={welcomeDismiss.onDismissWelcome}
       onShowWelcome={welcomeDismiss.onShowWelcome}

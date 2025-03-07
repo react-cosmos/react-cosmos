@@ -95,7 +95,7 @@ export function mockCore(methods: MethodsOf<CoreSpec> = {}) {
 
 export function mockRoot(methods: MethodsOf<RootSpec> = {}) {
   const allMethods = {
-    arePanelsLocked: vi.fn(),
+    drawerPanelsEnabled: vi.fn(),
     closeNavPanel: vi.fn(),
     ...methods,
   };

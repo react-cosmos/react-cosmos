@@ -2,14 +2,14 @@ import React from 'react';
 import { ArraySlot } from 'react-plugin';
 import styled from 'styled-components';
 import { IconButton32 } from '../../components/buttons/IconButton32.js';
-import { LockIcon, UnlockIcon } from '../../components/icons/index.js';
+import { LayersIcon } from '../../components/icons/index.js';
 import { NavPanelRowSlot } from '../../slots/NavPanelRowSlot.js';
 import { grey32, white10 } from '../../style/colors.js';
 
 type Props = {
   rendererConnected: boolean;
-  panelsLocked: boolean;
-  setPanelsLocked: (locked: boolean) => unknown;
+  drawerPanels: boolean;
+  setDrawerPanels: (enabled: boolean) => unknown;
   navPanelRowOrder: string[];
   globalActionOrder: string[];
   onClose: () => unknown;
@@ -17,8 +17,8 @@ type Props = {
 
 export const NavPanel = React.memo(function NavPanel({
   rendererConnected,
-  panelsLocked,
-  setPanelsLocked,
+  drawerPanels,
+  setDrawerPanels,
   navPanelRowOrder,
   globalActionOrder,
   onClose,
@@ -39,10 +39,10 @@ export const NavPanel = React.memo(function NavPanel({
           <ArraySlot name="globalAction" plugOrder={globalActionOrder} />
         )}
         <IconButton32
-          icon={panelsLocked ? <LockIcon /> : <UnlockIcon />}
-          title={panelsLocked ? 'Unlock panels' : 'Lock panels'}
-          selected={panelsLocked}
-          onClick={() => setPanelsLocked(!panelsLocked)}
+          icon={<LayersIcon />}
+          title={'Toggle drawer panels'}
+          selected={drawerPanels}
+          onClick={() => setDrawerPanels(!drawerPanels)}
         />
       </Footer>
     </Container>

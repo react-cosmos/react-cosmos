@@ -20,7 +20,7 @@ const propDefaults = {
   },
   navPanelOpen: false,
   controlPanelOpen: false,
-  panelsLocked: true,
+  drawerPanels: false,
   fixtureActionOrder: [],
   rendererActionOrder: [],
   onToggleNavPanel: () => {},
