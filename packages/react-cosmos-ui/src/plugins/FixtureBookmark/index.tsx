@@ -56,7 +56,7 @@ namedPlug<FixtureActionSlotProps>(
         selectedFixtureId={router.getSelectedFixtureId()}
         onFixtureSelect={fixtureId => {
           router.selectFixture(fixtureId);
-          if (!root.arePanelsLocked()) root.closeNavPanel();
+          if (root.drawerPanelsEnabled()) root.closeNavPanel();
         }}
         onBookmarkDelete={fixtureItem =>
           setBookmarks(bookmarks.filter(b => !isEqual(b, fixtureItem)))

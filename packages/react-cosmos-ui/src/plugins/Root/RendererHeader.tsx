@@ -18,7 +18,7 @@ type Props = {
   fixtureId: FixtureId;
   navPanelOpen: boolean;
   controlPanelOpen: boolean;
-  panelsLocked: boolean;
+  drawerPanels: boolean;
   fixtureActionOrder: string[];
   rendererActionOrder: string[];
   onToggleNavPanel: () => unknown;
@@ -31,7 +31,7 @@ export const RendererHeader = React.memo(function RendererHeader({
   fixtureId,
   navPanelOpen,
   controlPanelOpen,
-  panelsLocked,
+  drawerPanels,
   fixtureActionOrder,
   rendererActionOrder,
   onToggleNavPanel,
@@ -45,7 +45,7 @@ export const RendererHeader = React.memo(function RendererHeader({
   return (
     <Container>
       <Left>
-        {(!panelsLocked || !navPanelOpen) && (
+        {(drawerPanels || !navPanelOpen) && (
           <IconButton32
             icon={<MenuIcon />}
             title="Show nav panel (L)"
@@ -76,7 +76,7 @@ export const RendererHeader = React.memo(function RendererHeader({
           slotProps={slotProps}
           plugOrder={rendererActionOrder}
         />
-        {(!panelsLocked || !controlPanelOpen) && (
+        {(drawerPanels || !controlPanelOpen) && (
           <IconButton32
             icon={<SlidersIcon />}
             title="Show control panel (P)"
