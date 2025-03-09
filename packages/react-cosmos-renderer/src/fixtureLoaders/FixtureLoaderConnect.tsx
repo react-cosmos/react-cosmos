@@ -38,7 +38,7 @@ export function FixtureLoaderConnect({
 
     const { fixtureId } = selectedFixture;
     if (!fixtures[fixtureId.path]) {
-      return renderMessage(`Fixture path not found: ${fixtureId.path}`);
+      return renderMessage(`Fixture not found: ${fixtureId.path}`);
     }
 
     return renderFixture(selectedFixture);
