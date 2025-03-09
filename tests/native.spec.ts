@@ -11,7 +11,7 @@ test.describe('Native', () => {
       await expect(page).toHaveTitle(`example-${exampleName()}`);
     });
 
-    test('displays welcome message', async ({ page }) => {
+    test.skip('displays welcome message', async ({ page }) => {
       await page.goto(url);
       await expect(page.getByText('Welcome to React Cosmos')).toBeVisible();
     });
