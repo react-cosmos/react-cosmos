@@ -5,6 +5,7 @@ import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { RendererActionSlot } from '../../../slots/RendererActionSlot.js';
 import {
   mockRendererCore,
+  mockRouter,
   mockStorage,
 } from '../../../testHelpers/pluginMocks.js';
 import { register } from '../index.js';
@@ -16,7 +17,10 @@ import {
 } from '../shared.js';
 import { StorageMock } from '../testHelpers/index.js';
 
-beforeEach(register);
+beforeEach(() => {
+  register();
+  mockRouter();
+});
 
 afterEach(resetPlugins);
 
