@@ -36,7 +36,6 @@ export const RendererPreview = React.memo(function RendererPreview({
           data-testid="previewIframe"
           ref={onIframeRef}
           src={createRendererUrl(rendererUrl)}
-          frameBorder={0}
           allow="clipboard-write *; fullscreen *;"
         />
         <RendererOverlay runtimeStatus={runtimeStatus} />
@@ -59,5 +58,5 @@ const Iframe = styled.iframe`
   height: 100%;
   margin: 0;
   padding: 0;
-  border: none;
+  border: 0;
 `;
