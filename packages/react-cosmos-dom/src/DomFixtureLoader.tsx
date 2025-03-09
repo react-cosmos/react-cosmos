@@ -41,7 +41,7 @@ const containerStyle: React.CSSProperties = {
 };
 
 function renderMessage(msg: string) {
-  // XXX: This is a hack to prevent the "No fixture selected" message from
+  // XXX: This is a hack to prevent the "No fixture selected." message from
   // showing up when the renderer is loaded inside the Cosmos UI iframe.
   if (msg === 'No fixture selected.' && isInsideWindowIframe()) return null;
 
