@@ -10,7 +10,6 @@ import {
   SetFixtureStateByName,
 } from '../RendererCore/spec.js';
 import { ControlPanel } from './ControlPanel.js';
-import { HomeOverlay } from './HomeOverlay/HomeOverlay.js';
 import { NavPanel } from './NavPanel.js';
 import { RendererHeader } from './RendererHeader.js';
 
@@ -38,9 +37,6 @@ type Props = {
   setNavPanelWidth: (width: number) => unknown;
   setControlPanelWidth: (width: number) => unknown;
   setDrawerPanels: (enabled: boolean) => unknown;
-  welcomeDismissed: boolean;
-  onDismissWelcome: () => unknown;
-  onShowWelcome: () => unknown;
 };
 
 export function Root({
@@ -67,9 +63,6 @@ export function Root({
   setNavPanelWidth,
   setControlPanelWidth,
   setDrawerPanels,
-  welcomeDismissed,
-  onDismissWelcome,
-  onShowWelcome,
 }: Props) {
   const navDrag = useDrag({
     value: navPanelWidth,
@@ -138,15 +131,7 @@ export function Root({
         )}
         <RendererContainer key="rendererContainer">
           <Slot name="rendererPreview" />
-          {!selectedFixtureId && (
-            <Slot name="homeOverlay">
-              <HomeOverlay
-                welcomeDismissed={welcomeDismissed}
-                onDismissWelcome={onDismissWelcome}
-                onShowWelcome={onShowWelcome}
-              />
-            </Slot>
-          )}
+          {!selectedFixtureId && <Slot name="homeOverlay" />}
         </RendererContainer>
         {dragging && <DragOverlay />}
         {drawerPanels && (navPanelOpen || controlPanelOpen) && (
