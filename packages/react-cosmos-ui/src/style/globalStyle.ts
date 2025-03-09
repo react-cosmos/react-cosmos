@@ -8,7 +8,7 @@ export const GlobalStyle = createGlobalStyle`
     font-family: ${fontFamily};
     font-size: 14px;
     -webkit-font-smoothing: antialiased;
-    -webkit-text-size-adjust: 100%;
+    -webkit-text-size-adjust: none;
   }
 
   body, p, ul, ol, li, h1, h2, h3, button, input, textarea, select {
