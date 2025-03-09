@@ -25,7 +25,10 @@ export function FixtureSearchResult({
 
   const containerRef = useScrollToActive(cleanFixturePath, active);
   const onClick = React.useCallback(
-    () => onSelect(fixtureId, true),
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      onSelect(fixtureId, true);
+    },
     [fixtureId, onSelect]
   );
 
