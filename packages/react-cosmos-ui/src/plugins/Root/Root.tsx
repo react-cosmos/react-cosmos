@@ -10,6 +10,7 @@ import {
   SetFixtureStateByName,
 } from '../RendererCore/spec.js';
 import { ControlPanel } from './ControlPanel.js';
+import { HomeOverlay } from './HomeOverlay/HomeOverlay.js';
 import { NavPanel } from './NavPanel.js';
 import { RendererHeader } from './RendererHeader.js';
 
@@ -131,7 +132,11 @@ export function Root({
         )}
         <RendererContainer key="rendererContainer">
           <Slot name="rendererPreview" />
-          {!selectedFixtureId && <Slot name="homeOverlay" />}
+          {!selectedFixtureId && (
+            <Slot name="homeOverlay">
+              <HomeOverlay />
+            </Slot>
+          )}
         </RendererContainer>
         {dragging && <DragOverlay />}
         {drawerPanels && (navPanelOpen || controlPanelOpen) && (
