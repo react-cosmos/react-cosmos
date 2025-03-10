@@ -104,7 +104,9 @@ testRenderer(
       fixtureId: { path: 'third' },
       fixtureState: {},
     });
-    await waitFor(() => expect(rootText()).toBe('Fixture not found: third'));
+    await waitFor(() =>
+      expect(rootText()).toBe('Fixture path not found: third')
+    );
   }
 );
 

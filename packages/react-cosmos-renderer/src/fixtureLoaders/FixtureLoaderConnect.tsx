@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  DelayRender,
   UserModuleWrappers,
   getFixtureListFromWrappers,
 } from 'react-cosmos-core';
@@ -28,12 +29,16 @@ export function FixtureLoaderConnect({
 
   function renderInner() {
     if (!selectedFixture) {
-      return renderMessage('No fixture selected.');
+      return (
+        <DelayRender delay={500}>
+          {renderMessage('No fixture selected.')}
+        </DelayRender>
+      );
     }
 
     const { fixtureId } = selectedFixture;
     if (!fixtures[fixtureId.path]) {
-      return renderMessage(`Fixture not found: ${fixtureId.path}`);
+      return renderMessage(`Fixture path not found: ${fixtureId.path}`);
     }
 
     return renderFixture(selectedFixture);

@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  isInsideWindowIframe,
-  RendererConfig,
-  UserModuleWrappers,
-} from 'react-cosmos-core';
+import { RendererConfig, UserModuleWrappers } from 'react-cosmos-core';
 import { ClientFixtureLoader } from 'react-cosmos-renderer/client';
 import { DomRendererProvider } from './DomRendererProvider.js';
 import { ErrorCatch } from './ErrorCatch.js';
@@ -41,9 +37,5 @@ const containerStyle: React.CSSProperties = {
 };
 
 function renderMessage(msg: string) {
-  // XXX: This is a hack to prevent the "No fixture selected." message from
-  // showing up when the renderer is loaded inside the Cosmos UI iframe.
-  if (msg === 'No fixture selected.' && isInsideWindowIframe()) return null;
-
   return <div style={containerStyle}>{msg}</div>;
 }
