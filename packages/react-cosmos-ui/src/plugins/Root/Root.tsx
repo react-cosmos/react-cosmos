@@ -75,8 +75,12 @@ export function Root({
     onChange: setControlPanelWidth,
   });
 
-  const showNavPanel = navPanelOpen || !selectedFixtureId;
   const dragging = navDrag.dragging || panelDrag.dragging;
+  const showNavPanel = navPanelOpen || !selectedFixtureId;
+  const showPanelOverlay =
+    drawerPanels &&
+    (navPanelOpen || controlPanelOpen) &&
+    selectedFixtureId !== null;
 
   // z-indexes are set here on purpose to show the layer hierarchy at a glance
   return (
@@ -111,7 +115,7 @@ export function Root({
         style={{
           zIndex: 1,
           filter: drawerPanels
-            ? `brightness(${navPanelOpen || controlPanelOpen ? 0.3 : 1})`
+            ? `brightness(${showPanelOverlay ? 0.3 : 1})`
             : undefined,
         }}
       >
@@ -139,7 +143,7 @@ export function Root({
           )}
         </RendererContainer>
         {dragging && <DragOverlay />}
-        {drawerPanels && (navPanelOpen || controlPanelOpen) && (
+        {showPanelOverlay && (
           <PanelBgOverlay
             onClick={() => {
               if (navPanelOpen) onToggleNavPanel();
