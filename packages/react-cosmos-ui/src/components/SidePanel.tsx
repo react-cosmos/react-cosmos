@@ -40,14 +40,7 @@ export function SidePanelTitle({ label, componentName }: TitleProps) {
 export const SidePanelActions = styled.div`
   display: flex;
   flex-direction: row;
-
-  > button {
-    margin-left: 4px;
-
-    :first-child {
-      margin-left: 0;
-    }
-  }
+  gap: 4px;
 `;
 
 export const SidePanelBody = styled.div`
