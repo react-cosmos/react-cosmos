@@ -196,7 +196,7 @@ const Container = styled.div.attrs({ 'data-testid': 'root' })<ContainerProps>`
   overflow: hidden;
   display: flex;
   background: ${grey32};
-  cursor: ${props => (props.dragging ? 'col-resize' : 'default')};
+  cursor: ${props => (props.dragging ? 'ew-resize' : 'default')};
 `;
 
 const ResizablePanel = styled.div`
@@ -229,7 +229,7 @@ const DragHandle = styled.div`
   width: 10px;
   height: 100%;
   background-clip: content-box;
-  cursor: col-resize;
+  cursor: ew-resize;
   user-select: none;
   touch-action: none;
 `;
