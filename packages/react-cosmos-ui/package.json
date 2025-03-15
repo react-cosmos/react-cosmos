@@ -8,7 +8,10 @@
   "main": "./dist/index.js",
   "sideEffects": [
     "./dist/plugins/pluginEntry.js",
-    "./dist/plugins/*/index.js"
+    "./dist/plugins/*/index.js",
+    "./src/plugins/pluginEntry.ts",
+    "./src/plugins/*/index.{ts,tsx}",
+    "./src/cosmos.loadPlugins.ts"
   ],
   "scripts": {
     "playground": "cosmos"
