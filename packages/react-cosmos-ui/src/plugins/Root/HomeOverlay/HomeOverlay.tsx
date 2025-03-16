@@ -38,17 +38,18 @@ const Container = styled.div`
   left: 0;
   right: 0;
   background-color: ${grey8};
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
 `;
 
 const Footer = styled.div`
-  position: absolute;
-  bottom: 0;
-  right: 0;
   height: 40px;
   padding: 0 4px;
   display: flex;
   align-items: center;
   gap: 4px;
+  overflow-x: auto;
 `;
 
 function FooterLink(props: {
