@@ -26,13 +26,13 @@ export function ExpandCollapseValues({
 
   return isTreeFullyCollapsed(expansion) ? (
     <IconButton32
-      title="Expand all fixture tree folders"
+      title="Expand all nested values"
       icon={<PlusSquareIcon />}
       onClick={() => setExpansion(getFullTreeExpansion(rootNode))}
     />
   ) : (
     <IconButton32
-      title="Collapse all fixture tree folders"
+      title="Collapse all nested values"
       icon={<MinusSquareIcon />}
       onClick={() => setExpansion({})}
     />

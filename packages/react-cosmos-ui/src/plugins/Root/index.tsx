@@ -5,7 +5,6 @@ import { CoreSpec } from '../Core/spec.js';
 import { RendererCoreSpec } from '../RendererCore/spec.js';
 import { RouterSpec } from '../Router/spec.js';
 import { StorageSpec } from '../Storage/spec.js';
-import { useWelcomeDismiss } from './HomeOverlay/welcomeDismiss.js';
 import { Root } from './Root.js';
 import {
   isControlPanelOpen,
@@ -78,7 +77,6 @@ plug('root', ({ pluginContext }) => {
   const fixtureItems = useFixtureItems(pluginContext);
   const onToggleNavPanel = useToggleNavPanel(pluginContext);
   const onToggleControlPanel = useToggleControlPanel(pluginContext);
-  const welcomeDismiss = useWelcomeDismiss(pluginContext);
 
   const { storageCacheReady } = getState();
   if (!storageCacheReady) return null;
@@ -116,9 +114,6 @@ plug('root', ({ pluginContext }) => {
       setNavPanelWidth={width => setNavPanelWidth(pluginContext, width)}
       setControlPanelWidth={width => setControlPanelWidth(pluginContext, width)}
       setDrawerPanels={enabled => setDrawerPanels(pluginContext, enabled)}
-      welcomeDismissed={welcomeDismiss.isWelcomeDismissed()}
-      onDismissWelcome={welcomeDismiss.onDismissWelcome}
-      onShowWelcome={welcomeDismiss.onShowWelcome}
     />
   );
 });

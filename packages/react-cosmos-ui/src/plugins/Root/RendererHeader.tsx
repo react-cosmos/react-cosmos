@@ -139,13 +139,7 @@ const Container = styled.div`
 `;
 
 const Actions = styled.div`
-  > button {
-    margin-left: 4px;
-
-    :first-child {
-      margin-left: 0;
-    }
-  }
+  gap: 4px;
 `;
 
 const Left = styled(Actions)`

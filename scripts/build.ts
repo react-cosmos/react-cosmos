@@ -21,8 +21,10 @@ type Builder = (pkgName: string) => Promise<void>;
 
 const builders: Partial<Record<Package, Builder>> & { default: Builder } = {
   'react-cosmos-ui': async pkgName => {
-    await buildPkgTs(pkgName, 'tsconfig.build.json');
-    await buildPkgWebpack(pkgName, 'webpack.config.build.js');
+    await Promise.all([
+      buildPkgTs(pkgName, 'tsconfig.build.json'),
+      buildPkgWebpack(pkgName, 'webpack.config.js'),
+    ]);
   },
   'react-cosmos': async pkgName => {
     await copyStaticAssets(pkgName);

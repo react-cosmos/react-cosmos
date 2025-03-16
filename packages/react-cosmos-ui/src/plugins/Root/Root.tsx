@@ -38,9 +38,6 @@ type Props = {
   setNavPanelWidth: (width: number) => unknown;
   setControlPanelWidth: (width: number) => unknown;
   setDrawerPanels: (enabled: boolean) => unknown;
-  welcomeDismissed: boolean;
-  onDismissWelcome: () => unknown;
-  onShowWelcome: () => unknown;
 };
 
 export function Root({
@@ -67,9 +64,6 @@ export function Root({
   setNavPanelWidth,
   setControlPanelWidth,
   setDrawerPanels,
-  welcomeDismissed,
-  onDismissWelcome,
-  onShowWelcome,
 }: Props) {
   const navDrag = useDrag({
     value: navPanelWidth,
@@ -81,8 +75,12 @@ export function Root({
     onChange: setControlPanelWidth,
   });
 
-  const showNavPanel = navPanelOpen || !selectedFixtureId;
   const dragging = navDrag.dragging || panelDrag.dragging;
+  const showNavPanel = navPanelOpen || !selectedFixtureId;
+  const showPanelOverlay =
+    drawerPanels &&
+    (navPanelOpen || controlPanelOpen) &&
+    selectedFixtureId !== null;
 
   // z-indexes are set here on purpose to show the layer hierarchy at a glance
   return (
@@ -117,7 +115,7 @@ export function Root({
         style={{
           zIndex: 1,
           filter: drawerPanels
-            ? `brightness(${navPanelOpen || controlPanelOpen ? 0.3 : 1})`
+            ? `brightness(${showPanelOverlay ? 0.3 : 1})`
             : undefined,
         }}
       >
@@ -140,16 +138,12 @@ export function Root({
           <Slot name="rendererPreview" />
           {!selectedFixtureId && (
             <Slot name="homeOverlay">
-              <HomeOverlay
-                welcomeDismissed={welcomeDismissed}
-                onDismissWelcome={onDismissWelcome}
-                onShowWelcome={onShowWelcome}
-              />
+              <HomeOverlay />
             </Slot>
           )}
         </RendererContainer>
         {dragging && <DragOverlay />}
-        {drawerPanels && (navPanelOpen || controlPanelOpen) && (
+        {showPanelOverlay && (
           <PanelBgOverlay
             onClick={() => {
               if (navPanelOpen) onToggleNavPanel();
@@ -202,7 +196,7 @@ const Container = styled.div.attrs({ 'data-testid': 'root' })<ContainerProps>`
   overflow: hidden;
   display: flex;
   background: ${grey32};
-  cursor: ${props => (props.dragging ? 'col-resize' : 'default')};
+  cursor: ${props => (props.dragging ? 'ew-resize' : 'default')};
 `;
 
 const ResizablePanel = styled.div`
@@ -235,7 +229,7 @@ const DragHandle = styled.div`
   width: 10px;
   height: 100%;
   background-clip: content-box;
-  cursor: col-resize;
+  cursor: ew-resize;
   user-select: none;
   touch-action: none;
 `;
