@@ -15,9 +15,20 @@ export function webTests(url: string) {
       await expect(page).toHaveTitle(`example-${exampleName()}`);
     });
 
-    test.skip('displays welcome message', async ({ page }) => {
+    test('displays home links', async ({ page }) => {
       await page.goto(url);
-      await expect(page.getByText('Welcome to React Cosmos')).toBeVisible();
+      await checkHomeLink(page, {
+        title: 'Releases',
+        href: 'https://github.com/react-cosmos/react-cosmos/releases',
+      });
+      await checkHomeLink(page, {
+        title: 'Documentation',
+        href: 'https://reactcosmos.org/docs/user-interface',
+      });
+      await checkHomeLink(page, {
+        title: 'Discord',
+        href: 'https://discord.gg/3X95VgfnW5',
+      });
     });
 
     test('shows renderer connected notification', async ({ page }) => {
@@ -146,6 +157,15 @@ export function webTests(url: string) {
       );
     }
   });
+}
+
+async function checkHomeLink(
+  page: Page,
+  args: { title: string; href: string }
+) {
+  const link = page.getByTitle(args.title);
+  await expect(link).toBeVisible();
+  await expect(link).toHaveAttribute('href', args.href);
 }
 
 async function waitForActiveSearchResult(page: Page, fixtureName: string) {
