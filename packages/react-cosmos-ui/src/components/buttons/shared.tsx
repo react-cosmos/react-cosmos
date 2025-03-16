@@ -49,6 +49,10 @@ export const StyledButton = styled.button<StyledButtonProps>`
   }
 `;
 
+export const StyledLink = styled(StyledButton.withComponent('a'))`
+  text-decoration: none;
+`;
+
 const iconSize = 16;
 
 export const StyledIcon = styled.span<{ color: string }>`

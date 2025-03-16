@@ -243,3 +243,9 @@ export const LayersIcon = () => (
     <polyline points="2 12 12 17 22 12"></polyline>
   </Icon>
 );
+
+export const MessageSquareIcon = () => (
+  <Icon>
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+  </Icon>
+);

@@ -1,5 +1,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
+import webpack from 'webpack';
+import lernaConfig from '../../lerna.json' with { type: 'json' };
 
 const dirname = fileURLToPath(new URL('.', import.meta.url));
 const src = path.join(dirname, 'src');
@@ -45,4 +47,9 @@ export default {
     path: dist,
     filename: 'playground.bundle.js',
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      VERSION: JSON.stringify(lernaConfig.version),
+    }),
+  ],
 };
