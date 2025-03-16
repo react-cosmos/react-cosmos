@@ -7,6 +7,7 @@ import {
   createRendererUrl,
 } from 'react-cosmos-core';
 import { exampleName } from './envVars.js';
+import { checkHomeLink } from './homeLink.js';
 
 export function webTests(url: string) {
   test.describe('homepage', () => {
@@ -157,15 +158,6 @@ export function webTests(url: string) {
       );
     }
   });
-}
-
-async function checkHomeLink(
-  page: Page,
-  args: { title: string; href: string }
-) {
-  const link = page.getByTitle(args.title);
-  await expect(link).toBeVisible();
-  await expect(link).toHaveAttribute('href', args.href);
 }
 
 async function waitForActiveSearchResult(page: Page, fixtureName: string) {

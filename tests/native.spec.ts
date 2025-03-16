@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 import fs from 'fs/promises';
 import { exampleName, lazy } from './helpers/envVars.js';
+import { checkHomeLink } from './helpers/homeLink.js';
 
 const url = 'http://localhost:5002';
 
@@ -11,9 +12,20 @@ test.describe('Native', () => {
       await expect(page).toHaveTitle(`example-${exampleName()}`);
     });
 
-    test.skip('displays welcome message', async ({ page }) => {
+    test('displays home links', async ({ page }) => {
       await page.goto(url);
-      await expect(page.getByText('Welcome to React Cosmos')).toBeVisible();
+      await checkHomeLink(page, {
+        title: 'Releases',
+        href: 'https://github.com/react-cosmos/react-cosmos/releases',
+      });
+      await checkHomeLink(page, {
+        title: 'Documentation',
+        href: 'https://reactcosmos.org/docs/user-interface',
+      });
+      await checkHomeLink(page, {
+        title: 'Discord',
+        href: 'https://discord.gg/3X95VgfnW5',
+      });
     });
   });
 
