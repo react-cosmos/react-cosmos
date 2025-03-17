@@ -216,12 +216,23 @@
       "type": "object",
       "additionalProperties": true,
       "properties": {
+        "rendererPreview": {
+          "description": "Options for the renderer preview UI plugin.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "backgroundColor": {
+              "description": "Background color of the iframe preview. [default: \"#fff\"]",
+              "type": "string"
+            }
+          }
+        },
         "responsivePreview": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "devices": {
-              "description": "List of device viewports",
+              "description": "List of device viewports.",
               "type": "array",
               "items": {
                 "type": "object",
