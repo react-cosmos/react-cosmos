@@ -6,5 +6,10 @@
     "react-cosmos-plugin-boolean-input",
     "react-cosmos-plugin-open-fixture",
     "react-cosmos-plugin-webpack"
-  ]
+  ],
+  "ui": {
+    "rendererPreview": {
+      "iframeBgColor": "rgb(24, 24, 24)"
+    }
+  }
 }
