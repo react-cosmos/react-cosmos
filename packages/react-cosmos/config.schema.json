@@ -221,7 +221,7 @@
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "iframeBgColor": {
+            "backgroundColor": {
               "description": "Background color of the iframe preview. [default: \"#fff\"]",
               "type": "string"
             }

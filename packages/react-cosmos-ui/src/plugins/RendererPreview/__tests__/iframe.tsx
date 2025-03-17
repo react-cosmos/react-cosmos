@@ -66,7 +66,7 @@ it('renders iframe with src set to renderer web url', async () => {
 
 it('sets background color of iframe container', async () => {
   registerTestPlugins();
-  const renderer = loadTestPlugins({ iframeBgColor: 'red' });
+  const renderer = loadTestPlugins({ backgroundColor: 'red' });
 
   await waitFor(() => {
     const container = getIframe(renderer).parentElement;

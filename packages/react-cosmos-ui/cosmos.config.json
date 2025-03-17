@@ -9,7 +9,7 @@
   ],
   "ui": {
     "rendererPreview": {
-      "iframeBgColor": "rgb(24, 24, 24)"
+      "backgroundColor": "rgb(24, 24, 24)"
     }
   }
 }

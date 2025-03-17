@@ -13,14 +13,14 @@ type Props = {
   rendererUrl: null | string;
   rendererConnected: boolean;
   runtimeStatus: RuntimeStatus;
-  iframeBgColor: string;
+  backgroundColor: string;
   onIframeRef: OnIframeRef;
 };
 export const RendererPreview = React.memo(function RendererPreview({
   rendererUrl,
   rendererConnected,
   runtimeStatus,
-  iframeBgColor,
+  backgroundColor,
   onIframeRef,
 }: Props) {
   if (!rendererUrl) {
@@ -34,7 +34,7 @@ export const RendererPreview = React.memo(function RendererPreview({
 
   return (
     <Slot name="rendererPreviewOuter">
-      <Container style={{ backgroundColor: iframeBgColor }}>
+      <Container style={{ backgroundColor }}>
         <Iframe
           data-testid="previewIframe"
           ref={onIframeRef}
