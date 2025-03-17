@@ -26,7 +26,7 @@ export const RendererPreview = React.memo(function RendererPreview({
   if (!rendererUrl) {
     // This code path is used when Cosmos is in React Native mode
     return (
-      <Container bgColor={grey8}>
+      <Container style={{ backgroundColor: grey8 }}>
         <RemoteRendererOverlay rendererConnected={rendererConnected} />
       </Container>
     );
@@ -34,7 +34,7 @@ export const RendererPreview = React.memo(function RendererPreview({
 
   return (
     <Slot name="rendererPreviewOuter">
-      <Container bgColor={iframeBgColor}>
+      <Container style={{ backgroundColor: iframeBgColor }}>
         <Iframe
           data-testid="previewIframe"
           ref={onIframeRef}
@@ -47,11 +47,10 @@ export const RendererPreview = React.memo(function RendererPreview({
   );
 });
 
-const Container = styled.div<{ bgColor: string }>`
+const Container = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: ${props => props.bgColor};
 `;
 
 const Iframe = styled.iframe`

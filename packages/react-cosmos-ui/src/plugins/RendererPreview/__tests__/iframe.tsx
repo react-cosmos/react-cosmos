@@ -9,6 +9,7 @@ import {
   mockRendererCore,
 } from '../../../testHelpers/pluginMocks.js';
 import { register } from '../index.js';
+import { RendererPreviewSpec } from '../spec.js';
 import { getIframe } from '../testHelpers/iframe.js';
 import { rendererReadyMsg, selectFixtureMsg } from '../testHelpers/messages.js';
 
@@ -22,8 +23,10 @@ function registerTestPlugins() {
   });
 }
 
-function loadTestPlugins() {
-  loadPlugins();
+function loadTestPlugins(config?: RendererPreviewSpec['config']) {
+  loadPlugins({
+    config: { rendererPreview: config ?? {} },
+  });
   window.postMessage(rendererReadyMsg, '*');
 
   return render(<Slot name="rendererPreview" />);
@@ -59,6 +62,16 @@ it('renders iframe with src set to renderer web url', async () => {
   await waitFor(() =>
     expect(getIframe(renderer).src).toBe('http://localhost:5000/_renderer.html')
   );
+});
+
+it('sets background color of iframe container', async () => {
+  registerTestPlugins();
+  const renderer = loadTestPlugins({ iframeBgColor: 'red' });
+
+  await waitFor(() => {
+    const container = getIframe(renderer).parentElement;
+    expect(container?.style.getPropertyValue('background-color')).toBe('red');
+  });
 });
 
 it('shows notification when renderer iframe location changes', async () => {
