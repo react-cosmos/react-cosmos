@@ -43,6 +43,8 @@ The fixture preview is the heart of React Cosmos. It loads a Cosmos renderer in 
 
 Communication and state synchronization between the Cosmos UI and the renderer is accomplished through [`window.postMessage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage).
 
+The preview background color can be customized using the `ui.rendererPreview.iframeBgColor` setting in the [Cosmos config](/docs/configuration/cosmos-config.md). For a more dynamic background configuration use a global [Decorator](/docs/fixtures/decorators.md).
+
 ## Responsive Preview
 
 Viewport controls that allow simulation of screen size and orientation, with the option to choose from a predefined list of common devices.

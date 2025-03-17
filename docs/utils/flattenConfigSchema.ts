@@ -14,7 +14,7 @@ export function flattenConfigSchema(
 
   Object.keys(properties)
     .filter(key => !key.startsWith('$'))
-    .filter(key => !['vite', 'webpack', 'ui'].includes(key))
+    .filter(key => !['vite', 'webpack'].includes(key))
     .sort((a, b) => a.localeCompare(b))
     .forEach(key => {
       const value = properties[key];
