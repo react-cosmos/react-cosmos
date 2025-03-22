@@ -3,7 +3,6 @@ import {
   CosmosConfig,
   findUserModulePaths,
   generateUserImports,
-  getPlaygroundUrl,
   getServerAddress,
   slash,
 } from 'react-cosmos';
@@ -41,9 +40,8 @@ export function reactCosmosViteRollupPlugin(
           cosmosConfig,
           modulePaths,
           rendererConfig: {
-            playgroundUrl: getPlaygroundUrl(cosmosConfig),
-            rendererUrl: null,
             serverAddress: getServerAddress(cosmosConfig),
+            rendererUrl: null,
             containerQuerySelector: cosmosConfig.dom.containerQuerySelector,
           },
           relativeToDir: null,

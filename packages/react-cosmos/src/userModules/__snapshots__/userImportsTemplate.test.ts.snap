@@ -16,9 +16,8 @@ import * as fixture1 from '/Users/ovidiu/cosmos/src/CounterButton/CounterButton.
 import * as decorator0 from '/Users/ovidiu/cosmos/src/cosmos.decorator';
 
 export const rendererConfig: RendererConfig = {
-  "playgroundUrl": "http://localhost:5002",
-  "rendererUrl": null,
-  "serverAddress": null
+  "serverAddress": "ws://localhost:5002",
+  "rendererUrl": null
 };
 
 const fixtures = {
@@ -54,9 +53,8 @@ import * as fixture1 from './CounterButton/CounterButton.fixture';
 import * as decorator0 from './cosmos.decorator';
 
 export const rendererConfig: RendererConfig = {
-  "playgroundUrl": "http://localhost:5002",
-  "rendererUrl": null,
-  "serverAddress": null
+  "serverAddress": "ws://localhost:5002",
+  "rendererUrl": null
 };
 
 const fixtures = {
@@ -90,9 +88,8 @@ import * as fixture1 from '/Users/ovidiu/cosmos/src/CounterButton/CounterButton.
 import * as decorator0 from '/Users/ovidiu/cosmos/src/cosmos.decorator.tsx';
 
 export const rendererConfig = {
-  "playgroundUrl": "http://localhost:5002",
-  "rendererUrl": null,
-  "serverAddress": null
+  "serverAddress": "ws://localhost:5002",
+  "rendererUrl": null
 };
 
 const fixtures = {
@@ -126,9 +123,8 @@ import * as fixture1 from './CounterButton/CounterButton.fixture.tsx';
 import * as decorator0 from './cosmos.decorator.tsx';
 
 export const rendererConfig = {
-  "playgroundUrl": "http://localhost:5002",
-  "rendererUrl": null,
-  "serverAddress": null
+  "serverAddress": "ws://localhost:5002",
+  "rendererUrl": null
 };
 
 const fixtures = {

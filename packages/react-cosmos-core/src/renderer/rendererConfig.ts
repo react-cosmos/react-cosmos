@@ -1,7 +1,6 @@
 export type RendererConfig = {
-  playgroundUrl: string;
   // TODO: Should serverAddress contain the WebSocket protocol? Or should it be
-  // called wsServerAddress?
+  // called wsServerAddress? or wsAddress? or wsUrl? or webSocketUrl?
   serverAddress: string | null;
   rendererUrl: string | null;
 };
