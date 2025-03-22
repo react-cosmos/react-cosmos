@@ -17,6 +17,8 @@ const modulePaths = { fixturePaths, decoratorPaths };
 
 const rendererConfig: RendererConfig = {
   playgroundUrl: 'http://localhost:5002',
+  rendererUrl: null,
+  serverAddress: null,
 };
 
 it('should generate user imports with absolute paths', () => {

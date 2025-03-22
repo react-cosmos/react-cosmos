@@ -12,6 +12,7 @@ export * from './cosmosPlugin/types.js';
 export * from './getFixtures/getFixtures.js';
 export * from './shared/findNextAvailablePort.js';
 export * from './shared/playgroundUrl.js';
+export * from './shared/serverAddress.js';
 export * from './shared/staticServer.js';
 export * from './testHelpers/cwd.js';
 export * from './userModules/findUserModulePaths.js';

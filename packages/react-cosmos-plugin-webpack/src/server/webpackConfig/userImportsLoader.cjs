@@ -20,6 +20,8 @@ module.exports = async function injectUserImports() {
   const modulePaths = await cosmos.findUserModulePaths(cosmosConfig);
   const rendererConfig = {
     playgroundUrl: cosmos.getPlaygroundUrl(cosmosConfig),
+    rendererUrl: null,
+    serverAddress: cosmos.getServerAddress(cosmosConfig),
     containerQuerySelector,
   };
   return cosmos.generateUserImports({
