@@ -6,22 +6,19 @@ import {
   createPostMessageConnect,
   createWebSocketsConnect,
 } from 'react-cosmos-renderer';
-import { createWebSocketsUrl } from './createWebSocketsUrl.js';
 
-export function useDomRendererConnect(playgroundUrl: string) {
+export function useDomRendererConnect(serverAddress: string | null) {
   return React.useMemo(
-    () => createDomRendererConnect(playgroundUrl),
-    [playgroundUrl]
+    () => createDomRendererConnect(serverAddress),
+    [serverAddress]
   );
 }
 
-function createDomRendererConnect(playgroundUrl: string) {
-  // TODO: Don't try to connect to WS in static exports.
-  if (typeof window === 'undefined') {
-    return createNoopRendererConnect();
-  } else {
-    return isInsideWindowIframe()
-      ? createPostMessageConnect()
-      : createWebSocketsConnect(createWebSocketsUrl(playgroundUrl));
+function createDomRendererConnect(serverAddress: string | null) {
+  if (typeof window !== 'undefined') {
+    if (isInsideWindowIframe()) return createPostMessageConnect();
+    if (serverAddress) return createWebSocketsConnect(serverAddress);
   }
+
+  return createNoopRendererConnect();
 }

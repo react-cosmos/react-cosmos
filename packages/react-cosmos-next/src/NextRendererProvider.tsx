@@ -21,11 +21,11 @@ type Props = {
 };
 export function NextRendererProvider({
   children,
-  rendererConfig: { rendererUrl, playgroundUrl },
+  rendererConfig: { rendererUrl, serverAddress },
   selectedFixture,
 }: Props) {
   const rendererId = useDomRendererId();
-  const rendererConnect = useDomRendererConnect(playgroundUrl);
+  const rendererConnect = useDomRendererConnect(serverAddress);
 
   const router = useRouter();
   const searchParams = useSearchParams();
