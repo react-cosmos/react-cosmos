@@ -1,5 +1,4 @@
 import React from 'react';
-import { ForwardRef } from 'react-is';
 
 type ElementType = string | React.ComponentType;
 
@@ -14,7 +13,7 @@ export function isRefSupported(elementType: ElementType): boolean {
 
   const { $$typeof, prototype } = elementType as ExtendedComponentType;
   return (
-    $$typeof === ForwardRef ||
+    $$typeof === Symbol.for('react.forward_ref') ||
     // Warning: Some functions don't have the .prototype property
     (prototype &&
       // ES6 Class

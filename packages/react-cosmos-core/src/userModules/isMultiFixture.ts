@@ -1,4 +1,4 @@
-import { isElement } from 'react-is';
+import { isValidElement } from 'react';
 import { ReactFixtureExport, ReactFixtureMap } from './userModuleTypes.js';
 
 export function isMultiFixture(
@@ -7,7 +7,7 @@ export function isMultiFixture(
   return (
     fixtureExport !== null &&
     typeof fixtureExport === 'object' &&
-    !isElement(fixtureExport) &&
+    !isValidElement(fixtureExport) &&
     // With React Server Components, fixture exports of Client fixtures are
     // wrapped in a Promise. The React ComponentType union does include
     // PromiseLikeOfReactNode but for some reason it's impossible do type

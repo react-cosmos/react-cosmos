@@ -1,6 +1,5 @@
 import { get } from 'lodash-es';
-import React, { ReactElement, ReactNode } from 'react';
-import { isElement } from 'react-is';
+import React, { isValidElement, ReactElement, ReactNode } from 'react';
 import { findElementPaths } from '../index.js';
 
 it('finds no paths on empty node', () => {
@@ -67,7 +66,7 @@ it('finds nested paths', () => {
 
   // Ensure paths are valid
   paths.forEach(path => {
-    expect(isElement(path === '' ? node : get(node, path))).toBe(true);
+    expect(isValidElement(path === '' ? node : get(node, path))).toBe(true);
   });
 });
 
