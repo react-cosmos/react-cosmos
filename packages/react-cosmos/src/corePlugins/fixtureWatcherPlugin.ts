@@ -73,7 +73,10 @@ async function generateImportsFile(
 
   const rendererConfig = {
     webSocketUrl: getWebSocketUrl(cosmosConfig, platform === 'native'),
-    rendererUrl: pickRendererUrl(cosmosConfig.rendererUrl, command),
+    rendererUrl:
+      platform === 'web'
+        ? pickRendererUrl(cosmosConfig.rendererUrl, command)
+        : null,
   };
   const fileSource = generateUserImports<RendererConfig>({
     cosmosConfig,
