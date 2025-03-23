@@ -1,7 +1,7 @@
 import * as os from 'node:os';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 
-export function getServerAddress(cosmosConfig: CosmosConfig) {
+export function getWebSocketUrl(cosmosConfig: CosmosConfig) {
   const protocol = cosmosConfig.https ? 'wss' : 'ws';
   const host = cosmosConfig.hostname ?? getIpAddress();
   return `${protocol}://${host}:${cosmosConfig.port}`;

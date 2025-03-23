@@ -7,8 +7,8 @@ import {
 } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { CosmosPlatform, CosmosServerPlugin } from '../cosmosPlugin/types.js';
-import { getServerAddress } from '../shared/serverAddress.js';
 import { updateFixtureListCache } from '../shared/serverFixtureList.js';
+import { getWebSocketUrl } from '../shared/webSocketUrl.js';
 import { findUserModulePaths } from '../userModules/findUserModulePaths.js';
 import { startFixtureWatcher } from '../userModules/fixtureWatcher.js';
 import { generateUserImports } from '../userModules/generateUserImports.js';
@@ -71,7 +71,7 @@ async function generateImportsFile(
   const typeScript = /\.tsx?$/.test(filePath);
 
   const rendererConfig = {
-    serverAddress: getServerAddress(cosmosConfig),
+    webSocketUrl: getWebSocketUrl(cosmosConfig),
     rendererUrl: pickRendererUrl(cosmosConfig.rendererUrl, command),
   };
   const fileSource = generateUserImports<RendererConfig>({

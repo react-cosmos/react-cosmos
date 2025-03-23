@@ -7,17 +7,17 @@ import {
   createWebSocketsConnect,
 } from 'react-cosmos-renderer';
 
-export function useDomRendererConnect(serverAddress: string | null) {
+export function useDomRendererConnect(webSocketUrl: string | null) {
   return React.useMemo(
-    () => createDomRendererConnect(serverAddress),
-    [serverAddress]
+    () => createDomRendererConnect(webSocketUrl),
+    [webSocketUrl]
   );
 }
 
-function createDomRendererConnect(serverAddress: string | null) {
+function createDomRendererConnect(webSocketUrl: string | null) {
   if (typeof window !== 'undefined') {
     if (isInsideWindowIframe()) return createPostMessageConnect();
-    if (serverAddress) return createWebSocketsConnect(serverAddress);
+    if (webSocketUrl) return createWebSocketsConnect(webSocketUrl);
   }
 
   return createNoopRendererConnect();

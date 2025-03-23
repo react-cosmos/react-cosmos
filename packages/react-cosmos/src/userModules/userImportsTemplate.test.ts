@@ -16,7 +16,7 @@ const decoratorPaths = ['/Users/ovidiu/cosmos/src/cosmos.decorator.tsx'];
 const modulePaths = { fixturePaths, decoratorPaths };
 
 const rendererConfig: RendererConfig = {
-  serverAddress: 'ws://localhost:5002',
+  webSocketUrl: 'ws://localhost:5002',
   rendererUrl: null,
 };
 

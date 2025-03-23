@@ -14,15 +14,15 @@ type Props = {
 };
 export function NativeRendererProvider({
   children,
-  rendererConfig: { serverAddress },
+  rendererConfig: { webSocketUrl },
   initialFixtureId = null,
 }: Props) {
   const rendererConnect = React.useMemo(
     () =>
-      serverAddress
-        ? createWebSocketsConnect(serverAddress)
+      webSocketUrl
+        ? createWebSocketsConnect(webSocketUrl)
         : createNoopRendererConnect(),
-    [serverAddress]
+    [webSocketUrl]
   );
 
   return (
