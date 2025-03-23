@@ -1,5 +1,4 @@
-import { ReactElement, ReactNode } from 'react';
-import { isElement } from 'react-is';
+import { ReactElement, ReactNode, isValidElement } from 'react';
 
 // Allows accessing props.children in unknown elements
 export type ReactElementWithChildren = ReactElement<{
@@ -10,5 +9,5 @@ export type ReactElementWithChildren = ReactElement<{
 export function isReactElement(
   node: ReactNode
 ): node is ReactElementWithChildren {
-  return isElement(node);
+  return isValidElement(node);
 }

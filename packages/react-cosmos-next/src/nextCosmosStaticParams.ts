@@ -1,10 +1,10 @@
 import { mapValues } from 'lodash-es';
+import { isValidElement } from 'react';
 import {
   ByPath,
   UserModuleWrappers,
   encodeRendererUrlFixture,
 } from 'react-cosmos-core';
-import { isElement } from 'react-is';
 import { NextCosmosParams } from './nextTypes.js';
 
 type Args = {
@@ -31,7 +31,7 @@ export function nextCosmosStaticParams({ moduleWrappers }: Args) {
       if (
         module.default &&
         typeof module.default === 'object' &&
-        !isElement(module.default)
+        !isValidElement(module.default)
       ) {
         for (const fixtureName in module.default) {
           params.push({
