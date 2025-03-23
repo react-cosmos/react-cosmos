@@ -1,10 +1,10 @@
 import * as os from 'node:os';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 
-export function getWebSocketUrl(cosmosConfig: CosmosConfig) {
-  const protocol = cosmosConfig.https ? 'wss' : 'ws';
-  const host = cosmosConfig.hostname ?? getIpAddress();
-  return `${protocol}://${host}:${cosmosConfig.port}`;
+export function getWebSocketUrl(config: CosmosConfig, ipAddress: boolean) {
+  const protocol = config.https ? 'wss' : 'ws';
+  const host = config.hostname ?? (ipAddress ? getIpAddress() : 'localhost');
+  return `${protocol}://${host}:${config.port}`;
 }
 
 function getIpAddress() {

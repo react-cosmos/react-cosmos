@@ -23,7 +23,7 @@ export const fixtureWatcherPlugin: CosmosServerPlugin = {
 
     if (exposeImports) {
       const modulePaths = await findUserModulePaths(cosmosConfig);
-      await generateImportsFile(cosmosConfig, 'dev', modulePaths);
+      await generateImportsFile(platform, cosmosConfig, 'dev', modulePaths);
     }
 
     const watcher = await startFixtureWatcher(cosmosConfig, 'all', async () => {
@@ -32,7 +32,7 @@ export const fixtureWatcherPlugin: CosmosServerPlugin = {
       updateFixtureListCache(cosmosConfig.rootDir, modulePaths.fixturePaths);
 
       if (exposeImports) {
-        generateImportsFile(cosmosConfig, 'dev', modulePaths);
+        generateImportsFile(platform, cosmosConfig, 'dev', modulePaths);
       }
     });
 
@@ -44,7 +44,7 @@ export const fixtureWatcherPlugin: CosmosServerPlugin = {
   async export({ cosmosConfig }) {
     if (shouldExposeImports('web', cosmosConfig)) {
       const modulePaths = await findUserModulePaths(cosmosConfig);
-      await generateImportsFile(cosmosConfig, 'export', modulePaths);
+      await generateImportsFile('web', cosmosConfig, 'export', modulePaths);
     }
   },
 };
@@ -57,6 +57,7 @@ function shouldExposeImports(
 }
 
 async function generateImportsFile(
+  platform: CosmosPlatform,
   cosmosConfig: CosmosConfig,
   command: CosmosCommand,
   modulePaths: UserModulePaths
@@ -71,7 +72,7 @@ async function generateImportsFile(
   const typeScript = /\.tsx?$/.test(filePath);
 
   const rendererConfig = {
-    webSocketUrl: getWebSocketUrl(cosmosConfig),
+    webSocketUrl: getWebSocketUrl(cosmosConfig, platform === 'native'),
     rendererUrl: pickRendererUrl(cosmosConfig.rendererUrl, command),
   };
   const fileSource = generateUserImports<RendererConfig>({
