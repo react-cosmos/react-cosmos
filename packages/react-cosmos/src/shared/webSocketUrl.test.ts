@@ -32,15 +32,13 @@ it('web socket URL includes default host', async () => {
 });
 
 it('web socket URL includes IP address', async () => {
-  const config = createCosmosConfig(process.cwd(), { port: 5050 });
+  const config = createCosmosConfig(process.cwd());
   const url = getWebSocketUrl(config, true);
-  expect(url).toMatch(new RegExp('//([0-9.]+):'));
+  expect(url).toMatch(new RegExp('^ws://([0-9.]+):5000$'));
 });
 
 it('web socket URL includes custom host', async () => {
-  const config = createCosmosConfig(process.cwd(), {
-    hostname: '192.168.0.1',
-  });
+  const config = createCosmosConfig(process.cwd(), { hostname: '192.168.0.1' });
   const url = getWebSocketUrl(config, false);
   expect(url).toBe('ws://192.168.0.1:5000');
 });
