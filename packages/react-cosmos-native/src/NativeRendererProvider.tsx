@@ -1,9 +1,11 @@
 import React from 'react';
 import { FixtureId, RendererConfig } from 'react-cosmos-core';
-import { createWebSocketsConnect } from 'react-cosmos-renderer';
+import {
+  createNoopRendererConnect,
+  createWebSocketsConnect,
+} from 'react-cosmos-renderer';
 import { StatefulRendererProvider } from 'react-cosmos-renderer/client';
 import { DevSettings } from 'react-native';
-import { getSocketUrl } from './getSocketUrl.js';
 
 type Props = {
   children: React.ReactNode;
@@ -12,12 +14,15 @@ type Props = {
 };
 export function NativeRendererProvider({
   children,
-  rendererConfig,
+  rendererConfig: { webSocketUrl },
   initialFixtureId = null,
 }: Props) {
   const rendererConnect = React.useMemo(
-    () => createWebSocketsConnect(getSocketUrl(rendererConfig.playgroundUrl)),
-    [rendererConfig.playgroundUrl]
+    () =>
+      webSocketUrl
+        ? createWebSocketsConnect(webSocketUrl)
+        : createNoopRendererConnect(),
+    [webSocketUrl]
   );
 
   return (

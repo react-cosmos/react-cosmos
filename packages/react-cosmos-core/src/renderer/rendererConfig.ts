@@ -1,4 +1,4 @@
 export type RendererConfig = {
-  playgroundUrl: string;
-  rendererUrl?: null | string;
+  webSocketUrl: string | null;
+  rendererUrl: string | null;
 };

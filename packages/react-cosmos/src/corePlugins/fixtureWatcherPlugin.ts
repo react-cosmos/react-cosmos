@@ -7,8 +7,8 @@ import {
 } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { CosmosPlatform, CosmosServerPlugin } from '../cosmosPlugin/types.js';
-import { getPlaygroundUrl } from '../shared/playgroundUrl.js';
 import { updateFixtureListCache } from '../shared/serverFixtureList.js';
+import { getWebSocketUrl } from '../shared/webSocketUrl.js';
 import { findUserModulePaths } from '../userModules/findUserModulePaths.js';
 import { startFixtureWatcher } from '../userModules/fixtureWatcher.js';
 import { generateUserImports } from '../userModules/generateUserImports.js';
@@ -23,7 +23,7 @@ export const fixtureWatcherPlugin: CosmosServerPlugin = {
 
     if (exposeImports) {
       const modulePaths = await findUserModulePaths(cosmosConfig);
-      await generateImportsFile(cosmosConfig, 'dev', modulePaths);
+      await generateImportsFile(platform, cosmosConfig, 'dev', modulePaths);
     }
 
     const watcher = await startFixtureWatcher(cosmosConfig, 'all', async () => {
@@ -32,7 +32,7 @@ export const fixtureWatcherPlugin: CosmosServerPlugin = {
       updateFixtureListCache(cosmosConfig.rootDir, modulePaths.fixturePaths);
 
       if (exposeImports) {
-        generateImportsFile(cosmosConfig, 'dev', modulePaths);
+        generateImportsFile(platform, cosmosConfig, 'dev', modulePaths);
       }
     });
 
@@ -44,7 +44,7 @@ export const fixtureWatcherPlugin: CosmosServerPlugin = {
   async export({ cosmosConfig }) {
     if (shouldExposeImports('web', cosmosConfig)) {
       const modulePaths = await findUserModulePaths(cosmosConfig);
-      await generateImportsFile(cosmosConfig, 'export', modulePaths);
+      await generateImportsFile('web', cosmosConfig, 'export', modulePaths);
     }
   },
 };
@@ -57,6 +57,7 @@ function shouldExposeImports(
 }
 
 async function generateImportsFile(
+  platform: CosmosPlatform,
   cosmosConfig: CosmosConfig,
   command: CosmosCommand,
   modulePaths: UserModulePaths
@@ -71,8 +72,11 @@ async function generateImportsFile(
   const typeScript = /\.tsx?$/.test(filePath);
 
   const rendererConfig = {
-    playgroundUrl: getPlaygroundUrl(cosmosConfig),
-    rendererUrl: pickRendererUrl(cosmosConfig.rendererUrl, command),
+    webSocketUrl: getWebSocketUrl(cosmosConfig, platform === 'native'),
+    rendererUrl:
+      platform === 'web'
+        ? pickRendererUrl(cosmosConfig.rendererUrl, command)
+        : null,
   };
   const fileSource = generateUserImports<RendererConfig>({
     cosmosConfig,

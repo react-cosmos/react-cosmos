@@ -48,9 +48,9 @@ test.describe('Native', () => {
   });
 
   test.describe('imports file', () => {
-    test('has port option', async () => {
-      expect(await readImportsFile()).toContain(
-        `"playgroundUrl": "http://localhost:5002"`
+    test('has web socket URL', async () => {
+      expect(await readImportsFile()).toMatch(
+        new RegExp(`"webSocketUrl": "ws://([0-9.]+):5002"`)
       );
     });
 
