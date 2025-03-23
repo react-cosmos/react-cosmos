@@ -21,7 +21,6 @@ export function createCosmosConfig(
     fixtureFileSuffix: getFixtureFileSuffix(cosmosConfigInput),
     fixturesDir: getFixturesDir(cosmosConfigInput),
     globalImports: getGlobalImports(cosmosConfigInput, rootDir),
-    // TODO: Deprecate hostname in favor of host
     hostname: getHostname(cosmosConfigInput),
     https: getHttps(cosmosConfigInput),
     httpsOptions: getHttpsOptions(cosmosConfigInput, rootDir),
