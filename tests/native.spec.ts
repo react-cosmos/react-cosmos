@@ -49,8 +49,8 @@ test.describe('Native', () => {
 
   test.describe('imports file', () => {
     test('has web socket URL', async () => {
-      expect(await readImportsFile()).toContain(
-        `"webSocketUrl": "ws://localhost:5002"`
+      expect(await readImportsFile()).toMatch(
+        new RegExp(`"webSocketUrl": "ws://([0-9.]+):5002"`)
       );
     });
 
