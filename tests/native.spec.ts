@@ -48,7 +48,7 @@ test.describe('Native', () => {
   });
 
   test.describe('imports file', () => {
-    test('has server address', async () => {
+    test('has web socket URL', async () => {
       expect(await readImportsFile()).toContain(
         `"webSocketUrl": "ws://localhost:5002"`
       );
