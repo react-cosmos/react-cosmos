@@ -1,10 +1,10 @@
 import { CosmosConfig } from '../cosmosConfig/types.js';
 
 export function getPlaygroundUrl(cosmosConfig: CosmosConfig) {
-  const { hostname, port, https: httpsEnabled } = cosmosConfig;
+  const { host, port, https: httpsEnabled } = cosmosConfig;
 
   const protocol = httpsEnabled ? 'https' : 'http';
-  const hostnameDisplay = hostname || 'localhost';
+  const hostDisplay = host || 'localhost';
 
-  return `${protocol}://${hostnameDisplay}:${port}`;
+  return `${protocol}://${hostDisplay}:${port}`;
 }

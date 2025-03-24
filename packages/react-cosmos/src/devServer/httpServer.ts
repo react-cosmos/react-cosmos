@@ -11,25 +11,23 @@ type RequestListener = (
 ) => void;
 
 export async function createHttpServer(
-  cosmosConfig: CosmosConfig,
+  config: CosmosConfig,
   requestListener: RequestListener
 ) {
-  const { port, hostname, https: httpsEnabled } = cosmosConfig;
-
-  const server = httpsEnabled
-    ? https.createServer(await getHttpsOpts(cosmosConfig), requestListener)
+  const server = config.https
+    ? https.createServer(await getHttpsOpts(config), requestListener)
     : http.createServer(requestListener);
 
   async function start() {
     await new Promise<void>(resolve => {
-      if (hostname === null) {
-        server.listen(port, resolve);
+      if (config.host === null) {
+        server.listen(config.port, resolve);
       } else {
-        server.listen(port, hostname, resolve);
+        server.listen(config.port, config.host, resolve);
       }
     });
 
-    console.log(`[Cosmos] See you at ${getPlaygroundUrl(cosmosConfig)}`);
+    console.log(`[Cosmos] See you at ${getPlaygroundUrl(config)}`);
   }
 
   async function stop() {

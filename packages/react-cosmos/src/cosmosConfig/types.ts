@@ -27,7 +27,7 @@ export type CosmosConfig = {
   // on the unspecified IPv6 address (::) when IPv6 is available, or the
   // This is particularly useful when running Cosmos inside a Docker container
   // unspecified IPv4 address (0.0.0.0) otherwise.
-  hostname: null | string;
+  host: null | string;
   https: boolean;
   httpsOptions: null | HttpsOptions;
   ignore: string[];
@@ -49,4 +49,9 @@ export type CosmosConfig = {
 };
 
 export type CosmosDomConfigInput = Partial<CosmosDomConfig>;
-export type CosmosConfigInput = Partial<CosmosConfig>;
+export type CosmosConfigInput = Partial<
+  CosmosConfig & {
+    // Deprecated
+    hostname: null | string;
+  }
+>;
