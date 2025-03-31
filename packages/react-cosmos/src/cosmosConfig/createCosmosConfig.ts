@@ -21,7 +21,7 @@ export function createCosmosConfig(
     fixtureFileSuffix: getFixtureFileSuffix(cosmosConfigInput),
     fixturesDir: getFixturesDir(cosmosConfigInput),
     globalImports: getGlobalImports(cosmosConfigInput, rootDir),
-    hostname: getHostname(cosmosConfigInput),
+    host: getHost(cosmosConfigInput),
     https: getHttps(cosmosConfigInput),
     httpsOptions: getHttpsOptions(cosmosConfigInput, rootDir),
     ignore: getIgnore(cosmosConfigInput),
@@ -105,8 +105,8 @@ function getExposeImports(
     : exposeImports;
 }
 
-function getHostname({ hostname = null }: CosmosConfigInput) {
-  return hostname;
+function getHost({ host = null, hostname = null }: CosmosConfigInput) {
+  return host ?? hostname;
 }
 
 function getPort(cosmosConfigInput: CosmosConfigInput) {

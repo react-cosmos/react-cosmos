@@ -71,8 +71,8 @@
       "description": "Expose user imports and config required for the Cosmos renderer. Used with React Native and in custom integrations. When a path is specified it requires a file extension (eg. \"src/cosmos.imports.ts\"). [default: false]",
       "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "boolean" }]
     },
-    "hostname": {
-      "description": "Dev server hostname. Set to null to accept connections with any hostname. [default: null]",
+    "host": {
+      "description": "Dev server host. Set to null to accept connections from any address that reaches the server. [default: null]",
       "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
     },
     "port": {

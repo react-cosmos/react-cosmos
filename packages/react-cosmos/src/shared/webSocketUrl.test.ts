@@ -38,7 +38,7 @@ it('web socket URL includes IP address', async () => {
 });
 
 it('web socket URL includes custom host', async () => {
-  const config = createCosmosConfig(process.cwd(), { hostname: '192.168.0.1' });
+  const config = createCosmosConfig(process.cwd(), { host: '192.168.0.1' });
   const url = getWebSocketUrl(config, false);
   expect(url).toBe('ws://192.168.0.1:5000');
 });

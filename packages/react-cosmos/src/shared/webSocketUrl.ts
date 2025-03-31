@@ -3,7 +3,7 @@ import { CosmosConfig } from '../cosmosConfig/types.js';
 
 export function getWebSocketUrl(config: CosmosConfig, ipAddress: boolean) {
   const protocol = config.https ? 'wss' : 'ws';
-  const host = config.hostname ?? (ipAddress ? getIpAddress() : 'localhost');
+  const host = config.host ?? (ipAddress ? getIpAddress() : 'localhost');
   return `${protocol}://${host}:${config.port}`;
 }
 
