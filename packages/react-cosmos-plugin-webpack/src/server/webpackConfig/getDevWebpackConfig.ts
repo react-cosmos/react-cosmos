@@ -28,7 +28,7 @@ export async function getDevWebpackConfig(
     ...baseWebpackConfig,
     entry: getEntry(cosmosConfig),
     output: getOutput(cosmosConfig),
-    module: getWebpackConfigModule(cosmosConfig, baseWebpackConfig),
+    module: getWebpackConfigModule(cosmosConfig, 'dev', baseWebpackConfig),
     resolve: getWebpackConfigResolve(cosmosConfig, baseWebpackConfig),
     plugins: getPlugins(cosmosConfig, baseWebpackConfig, userWebpack),
     experiments: getExperiments(baseWebpackConfig),

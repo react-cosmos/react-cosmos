@@ -35,7 +35,9 @@ export async function viteDevServerPlugin({
       // option enabled in their Vite config
       open: false,
     },
-    plugins: [reactCosmosViteRollupPlugin(cosmosConfig, cosmosViteConfig)],
+    plugins: [
+      reactCosmosViteRollupPlugin(cosmosConfig, 'dev', cosmosViteConfig),
+    ],
   });
   await server.listen();
 

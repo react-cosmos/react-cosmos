@@ -20,7 +20,9 @@ export async function viteExportPlugin({ cosmosConfig }: ExportPluginArgs) {
       emptyOutDir: false,
       minify: false,
     },
-    plugins: [reactCosmosViteRollupPlugin(cosmosConfig, cosmosViteConfig)],
+    plugins: [
+      reactCosmosViteRollupPlugin(cosmosConfig, 'export', cosmosViteConfig),
+    ],
   });
 
   await rename(
