@@ -1,10 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import {
-  CosmosCommand,
-  RendererConfig,
-  pickRendererUrl,
-} from 'react-cosmos-core';
+import { CosmosMode, RendererConfig, pickRendererUrl } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { CosmosPlatform, CosmosServerPlugin } from '../cosmosPlugin/types.js';
 import { updateFixtureListCache } from '../shared/serverFixtureList.js';
@@ -59,7 +55,7 @@ function shouldExposeImports(
 async function generateImportsFile(
   platform: CosmosPlatform,
   cosmosConfig: CosmosConfig,
-  command: CosmosCommand,
+  mode: CosmosMode,
   modulePaths: UserModulePaths
 ) {
   const { exposeImports } = cosmosConfig;
@@ -72,10 +68,13 @@ async function generateImportsFile(
   const typeScript = /\.tsx?$/.test(filePath);
 
   const rendererConfig = {
-    webSocketUrl: getWebSocketUrl(cosmosConfig, platform === 'native'),
+    webSocketUrl:
+      mode === 'dev'
+        ? getWebSocketUrl(cosmosConfig, platform === 'native')
+        : null,
     rendererUrl:
       platform === 'web'
-        ? pickRendererUrl(cosmosConfig.rendererUrl, command)
+        ? pickRendererUrl(cosmosConfig.rendererUrl, mode)
         : null,
   };
   const fileSource = generateUserImports<RendererConfig>({

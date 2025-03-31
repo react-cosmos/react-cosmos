@@ -9,13 +9,13 @@ import { getCosmosVitePort } from './createCosmosViteConfig.js';
 
 export async function viteConfigPlugin({
   cosmosConfig,
-  command,
+  mode,
 }: CosmosConfigPluginArgs): Promise<CosmosConfig> {
   if (cosmosConfig.rendererUrl) {
     return cosmosConfig;
   }
 
-  if (command === 'export') {
+  if (mode === 'export') {
     return {
       ...cosmosConfig,
       rendererUrl: path.join(cosmosConfig.publicUrl, RENDERER_FILENAME),

@@ -76,7 +76,7 @@ it('calls config hook', async () => {
 
     expect(testServerPlugin.config).toBeCalledWith({
       cosmosConfig: expect.objectContaining({ exportPath }),
-      command: 'export',
+      mode: 'export',
       platform: 'web',
     });
   });

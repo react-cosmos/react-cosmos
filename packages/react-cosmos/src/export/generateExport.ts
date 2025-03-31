@@ -30,7 +30,7 @@ export async function generateExport() {
   cosmosConfig = await applyServerConfigPlugins({
     cosmosConfig,
     serverPlugins,
-    command: 'export',
+    mode: 'export',
     platform: 'web',
   });
 

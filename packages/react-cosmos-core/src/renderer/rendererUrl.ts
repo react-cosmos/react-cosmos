@@ -1,5 +1,5 @@
 import { Base64 } from 'js-base64';
-import { CosmosCommand } from '../server/serverTypes.js';
+import { CosmosMode } from '../server/serverTypes.js';
 import { FixtureId } from '../userModules/fixtureTypes.js';
 import { buildRendererQueryString } from './rendererQueryString.js';
 
@@ -27,10 +27,10 @@ export function createRendererUrl(
 
 export function pickRendererUrl(
   rendererUrl: undefined | CosmosRendererUrl,
-  command: CosmosCommand
+  mode: CosmosMode
 ): null | string {
   return rendererUrl && typeof rendererUrl === 'object'
-    ? rendererUrl[command]
+    ? rendererUrl[mode]
     : (rendererUrl ?? null);
 }
 
