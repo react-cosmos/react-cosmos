@@ -6,7 +6,7 @@ import {
   getWebSocketUrl,
   slash,
 } from 'react-cosmos';
-import { CosmosCommand } from 'react-cosmos-core';
+import { CosmosMode } from 'react-cosmos-core';
 import { DomRendererConfig } from 'react-cosmos-dom';
 import { Plugin } from 'rollup';
 import { CosmosViteConfig } from './createCosmosViteConfig.js';
@@ -21,8 +21,8 @@ const defaultIndexPattern = new RegExp(
 
 export function reactCosmosViteRollupPlugin(
   cosmosConfig: CosmosConfig,
-  cosmosCommand: CosmosCommand,
-  cosmosViteConfig: CosmosViteConfig
+  cosmosViteConfig: CosmosViteConfig,
+  mode: CosmosMode
 ): Plugin {
   return {
     name: 'react-cosmos-vite-renderer',
@@ -43,9 +43,7 @@ export function reactCosmosViteRollupPlugin(
           modulePaths,
           rendererConfig: {
             webSocketUrl:
-              cosmosCommand === 'dev'
-                ? getWebSocketUrl(cosmosConfig, false)
-                : null,
+              mode === 'dev' ? getWebSocketUrl(cosmosConfig, false) : null,
             rendererUrl: null,
             containerQuerySelector: cosmosConfig.dom.containerQuerySelector,
           },

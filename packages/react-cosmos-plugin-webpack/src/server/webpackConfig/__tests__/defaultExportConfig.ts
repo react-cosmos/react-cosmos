@@ -59,7 +59,7 @@ it('includes user imports loader', async () => {
   expect(module!.rules).toContainEqual({
     loader: pkgPath('server/webpackConfig/userImportsLoader.cjs'),
     include: pkgPath('client/userImports.js'),
-    options: { cosmosConfig, cosmosCommand: 'export' },
+    options: { cosmosConfig, mode: 'export' },
   });
 });
 

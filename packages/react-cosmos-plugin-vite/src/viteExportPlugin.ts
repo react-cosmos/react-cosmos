@@ -21,7 +21,7 @@ export async function viteExportPlugin({ cosmosConfig }: ExportPluginArgs) {
       minify: false,
     },
     plugins: [
-      reactCosmosViteRollupPlugin(cosmosConfig, 'export', cosmosViteConfig),
+      reactCosmosViteRollupPlugin(cosmosConfig, cosmosViteConfig, 'export'),
     ],
   });
 

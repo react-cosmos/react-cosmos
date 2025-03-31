@@ -34,7 +34,7 @@ export async function startDevServer(platform: CosmosPlatform) {
   cosmosConfig = await applyServerConfigPlugins({
     cosmosConfig,
     serverPlugins,
-    command: 'dev',
+    mode: 'dev',
     platform,
   });
 

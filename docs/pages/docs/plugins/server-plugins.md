@@ -34,7 +34,7 @@ export default {
 | Argument       | Description                                                       |
 | -------------- | ----------------------------------------------------------------- |
 | `cosmosConfig` | The user's [Cosmos config](/docs/configuration/cosmos-config.md). |
-| `command`      | `"dev"` or `"export"`.                                            |
+| `mode`         | `"dev"` or `"export"`.                                            |
 | `platform`     | `"web"` or `"native"`.                                            |
 
 The `config` hook is called before both `devServer` and `export` hooks. It allows overriding the user's Cosmos config. Setting the `rendererUrl` config option is a common use case.

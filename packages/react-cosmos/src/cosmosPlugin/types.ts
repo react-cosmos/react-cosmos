@@ -1,13 +1,13 @@
 import express from 'express';
 import http from 'http';
-import { CosmosCommand, MessageType } from 'react-cosmos-core';
+import { CosmosMode, MessageType } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 
 export type CosmosPlatform = 'web' | 'native';
 
 export type CosmosConfigPluginArgs = {
   cosmosConfig: CosmosConfig;
-  command: CosmosCommand;
+  mode: CosmosMode;
   platform: CosmosPlatform;
 };
 

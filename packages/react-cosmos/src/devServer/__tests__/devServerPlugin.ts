@@ -70,7 +70,7 @@ beforeAll(async () => {
 it('calls config hook', async () => {
   expect(testServerPlugin.config).toBeCalledWith({
     cosmosConfig: expect.objectContaining({ port }),
-    command: 'dev',
+    mode: 'dev',
     platform: 'web',
   });
 });

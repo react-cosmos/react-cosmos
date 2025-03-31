@@ -3,7 +3,7 @@ import { sortBy } from 'lodash-es';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {
-  CosmosCommand,
+  CosmosMode,
   createRendererUrl,
   pickRendererUrl,
   removeFixtureNameExtension,
@@ -49,9 +49,9 @@ export const fixturesJsonPlugin: CosmosServerPlugin = {
 
 async function createFixtureItems(
   cosmosConfig: CosmosConfig,
-  command: CosmosCommand
+  mode: CosmosMode
 ): Promise<CosmosFixturesJson> {
-  const rendererUrl = pickRendererUrl(cosmosConfig.rendererUrl, command);
+  const rendererUrl = pickRendererUrl(cosmosConfig.rendererUrl, mode);
   if (!rendererUrl) {
     return {
       rendererUrl: null,
