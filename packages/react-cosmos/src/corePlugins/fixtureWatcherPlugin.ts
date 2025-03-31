@@ -68,7 +68,10 @@ async function generateImportsFile(
   const typeScript = /\.tsx?$/.test(filePath);
 
   const rendererConfig = {
-    webSocketUrl: getWebSocketUrl(cosmosConfig, platform === 'native'),
+    webSocketUrl:
+      mode === 'dev'
+        ? getWebSocketUrl(cosmosConfig, platform === 'native')
+        : null,
     rendererUrl:
       platform === 'web'
         ? pickRendererUrl(cosmosConfig.rendererUrl, mode)
