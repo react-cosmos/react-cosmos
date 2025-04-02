@@ -17,7 +17,7 @@ import {
 } from 'react-cosmos-core';
 import { createFixtureNode, decorateFixture } from 'react-cosmos-renderer';
 import { CosmosConfig } from '../cosmosConfig/types.js';
-import { getPlaygroundUrl } from '../shared/playgroundUrl.js';
+import { getPlaygroundUrls } from '../shared/playgroundUrl.js';
 import { importUserModules } from './importUserModules.js';
 
 export type FixtureApi = {
@@ -99,7 +99,7 @@ function getPlaygroundFixtureUrl(
   cosmosConfig: CosmosConfig,
   fixtureId: FixtureId
 ) {
-  const baseUrl = getPlaygroundUrl(cosmosConfig);
+  const [baseUrl] = getPlaygroundUrls(cosmosConfig);
   const query = buildPlaygroundQueryString({ fixture: fixtureId });
   return `${baseUrl}/${query}`;
 }

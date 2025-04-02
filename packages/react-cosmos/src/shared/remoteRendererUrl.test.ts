@@ -1,21 +1,6 @@
-import { vi } from 'vitest';
 import { createCosmosConfig } from '../cosmosConfig/createCosmosConfig.js';
+import '../testHelpers/mockOsNetworkInterfaces.js';
 import { getRemoteRendererUrl } from './remoteRendererUrl.js';
-
-vi.mock('os', () => ({
-  networkInterfaces: vitest.fn(() => ({
-    en0: [
-      {
-        address: '192.168.1.10',
-        netmask: '255.255.255.0',
-        family: 'IPv4',
-        mac: '00:00:00:00:00:00',
-        internal: false,
-        cidr: '192.168.1.10/24',
-      },
-    ],
-  })),
-}));
 
 describe('default host', () => {
   it('adds server host to relative renderer path', async () => {

@@ -3,7 +3,7 @@ import http from 'http';
 import https from 'https';
 import pem from 'pem';
 import { CosmosConfig } from '../cosmosConfig/types.js';
-import { getPlaygroundUrl } from '../shared/playgroundUrl.js';
+import { getPlaygroundUrls } from '../shared/playgroundUrl.js';
 
 type RequestListener = (
   request: http.IncomingMessage,
@@ -27,7 +27,8 @@ export async function createHttpServer(
       }
     });
 
-    console.log(`[Cosmos] See you at ${getPlaygroundUrl(config)}`);
+    const urls = getPlaygroundUrls(config);
+    console.log(`[Cosmos] Ready at ${urls.join(' or ')}`);
   }
 
   async function stop() {

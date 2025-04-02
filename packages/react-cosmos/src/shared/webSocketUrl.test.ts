@@ -1,20 +1,6 @@
 import { createCosmosConfig } from '../cosmosConfig/createCosmosConfig.js';
+import '../testHelpers/mockOsNetworkInterfaces.js';
 import { getWebSocketUrl } from './webSocketUrl.js';
-
-vi.mock('os', () => ({
-  networkInterfaces: vitest.fn(() => ({
-    en0: [
-      {
-        address: '192.168.1.10',
-        netmask: '255.255.255.0',
-        family: 'IPv4',
-        mac: '00:00:00:00:00:00',
-        internal: false,
-        cidr: '192.168.1.10/24',
-      },
-    ],
-  })),
-}));
 
 it('web socket URL starts with ws: protocol', async () => {
   const config = createCosmosConfig(process.cwd());
