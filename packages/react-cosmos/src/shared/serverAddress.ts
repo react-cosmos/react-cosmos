@@ -1,9 +1,12 @@
 import * as os from 'node:os';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 
+export function getServerHost(config: CosmosConfig) {
+  return config.host ?? getIpAddress();
+}
+
 export function getServerAddress(config: CosmosConfig) {
-  const host = config.host ?? getIpAddress();
-  return `${host}:${config.port}`;
+  return `${getServerHost(config)}:${config.port}`;
 }
 
 function getIpAddress() {
