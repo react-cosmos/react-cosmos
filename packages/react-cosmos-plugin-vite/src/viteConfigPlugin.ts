@@ -3,6 +3,7 @@ import {
   CosmosConfig,
   CosmosConfigPluginArgs,
   findNextAvailablePort,
+  getServerHost,
 } from 'react-cosmos';
 import { RENDERER_FILENAME } from './constants.js';
 import { getCosmosVitePort } from './createCosmosViteConfig.js';
@@ -30,7 +31,7 @@ export async function viteConfigPlugin({
 
   return {
     ...cosmosConfig,
-    rendererUrl: `http://localhost:${port}`,
+    rendererUrl: `http://${getServerHost(cosmosConfig)}:${port}`,
     vite: {
       ...cosmosViteConfig,
       port: port,
