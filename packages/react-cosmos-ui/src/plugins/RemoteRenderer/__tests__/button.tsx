@@ -74,6 +74,16 @@ it('notifies copy error on button click', async () => {
   const { getByTitle } = loadTestPlugins();
   const button = getByTitle(/copy remote renderer url/i);
 
+  // Mock the remote renderer URL endpoint
+  (global as any).fetch = vi.fn((input: string) =>
+    Promise.resolve({
+      json: () =>
+        input === '/_cosmos/remote-renderer-url'
+          ? Promise.resolve({ url: 'http://localhost:5000/renderer.html' })
+          : Promise.reject(),
+    })
+  );
+
   // Clipboard API isn't available in jsdom so we only test the error path
   fireEvent.click(button);
   await waitFor(() =>
