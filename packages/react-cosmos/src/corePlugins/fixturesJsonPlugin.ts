@@ -28,8 +28,8 @@ export type CosmosFixturesJson = {
 export const fixturesJsonPlugin: CosmosServerPlugin = {
   name: 'fixturesJson',
 
-  devServer({ cosmosConfig, expressApp }) {
-    expressApp.get(
+  devServer({ cosmosConfig, app }) {
+    app.get(
       '/cosmos.fixtures.json',
       async (req: express.Request, res: express.Response) => {
         res.json(await createFixtureItems(cosmosConfig, 'dev'));

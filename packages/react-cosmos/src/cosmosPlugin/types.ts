@@ -19,7 +19,7 @@ export type DevServerPluginArgs = {
   cosmosConfig: CosmosConfig;
   platform: CosmosPlatform;
   httpServer: http.Server;
-  expressApp: express.Express;
+  app: express.Express;
   sendMessage(msg: MessageType): unknown;
 };
 

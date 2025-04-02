@@ -10,8 +10,8 @@ type ReqQuery = { filePath: void | string; line: number; column: number };
 export const openFilePlugin: CosmosServerPlugin = {
   name: 'openFile',
 
-  devServer({ cosmosConfig, expressApp }) {
-    expressApp.get('/_open', (req: express.Request, res: express.Response) => {
+  devServer({ cosmosConfig, app }) {
+    app.get('/_open', (req: express.Request, res: express.Response) => {
       const { filePath, line, column } = getReqQuery(req);
       if (!filePath) {
         res.status(400).send(`File path missing`);

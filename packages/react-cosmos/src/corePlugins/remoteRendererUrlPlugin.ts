@@ -5,8 +5,8 @@ import { getRemoteRendererUrl } from '../shared/remoteRendererUrl.js';
 export const remoteRendererUrlPlugin: CosmosServerPlugin = {
   name: 'remoteRendererUrlPlugin',
 
-  devServer({ cosmosConfig, expressApp }) {
-    expressApp.get(
+  devServer({ cosmosConfig, app }) {
+    app.get(
       '/_cosmos/remote-renderer-url',
       (req: express.Request, res: express.Response) => {
         res.send({ url: getRemoteRendererUrl(cosmosConfig) });

@@ -82,7 +82,7 @@ it('calls dev server hook (with updated config)', async () => {
       ignore: ['**/ignored.fixture.js'],
     }),
     platform: 'web',
-    expressApp: expect.any(Function),
+    app: expect.any(Function),
     httpServer: expect.any(http.Server),
     sendMessage: expect.any(Function),
   });

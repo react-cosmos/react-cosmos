@@ -17,7 +17,7 @@ type WebpackConfig = webpack.Configuration & {
 export async function webpackDevServerPlugin({
   cosmosConfig,
   platform,
-  expressApp,
+  app,
   sendMessage,
 }: DevServerPluginArgs) {
   if (platform !== 'web') return;
@@ -35,7 +35,7 @@ export async function webpackDevServerPlugin({
     const webpackDerivedStaticPath = getWebpackStaticPath(webpackConfig);
     if (webpackDerivedStaticPath !== null) {
       serveStaticDir(
-        expressApp,
+        app,
         path.resolve(cosmosConfig.rootDir, webpackDerivedStaticPath),
         cosmosConfig.publicUrl
       );
@@ -85,11 +85,11 @@ export async function webpackDevServerPlugin({
     publicPath: cosmosConfig.publicUrl,
   });
 
-  expressApp.use(wdmInst);
+  app.use(wdmInst);
 
   const { hotReload } = createWebpackCosmosConfig(cosmosConfig);
   if (hotReload) {
-    expressApp.use(webpackHotMiddleware(webpackCompiler));
+    app.use(webpackHotMiddleware(webpackCompiler));
   }
 
   await onCompilationDone;
