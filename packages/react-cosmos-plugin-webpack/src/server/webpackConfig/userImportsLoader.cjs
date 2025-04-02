@@ -19,8 +19,7 @@ module.exports = async function injectUserImports() {
   const { containerQuerySelector } = cosmosConfig.dom;
   const modulePaths = await cosmos.findUserModulePaths(cosmosConfig);
   const rendererConfig = {
-    webSocketUrl:
-      mode === 'dev' ? cosmos.getWebSocketUrl(cosmosConfig, false) : null,
+    webSocketUrl: mode === 'dev' ? cosmos.getWebSocketUrl(cosmosConfig) : null,
     rendererUrl: null,
     containerQuerySelector,
   };

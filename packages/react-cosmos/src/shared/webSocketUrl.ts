@@ -1,9 +1,9 @@
 import * as os from 'node:os';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 
-export function getWebSocketUrl(config: CosmosConfig, ipAddress: boolean) {
+export function getWebSocketUrl(config: CosmosConfig) {
   const protocol = config.https ? 'wss' : 'ws';
-  const host = config.host ?? (ipAddress ? getIpAddress() : 'localhost');
+  const host = config.host ?? getIpAddress();
   return `${protocol}://${host}:${config.port}`;
 }
 

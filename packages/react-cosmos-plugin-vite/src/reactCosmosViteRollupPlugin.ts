@@ -42,8 +42,7 @@ export function reactCosmosViteRollupPlugin(
           cosmosConfig,
           modulePaths,
           rendererConfig: {
-            webSocketUrl:
-              mode === 'dev' ? getWebSocketUrl(cosmosConfig, false) : null,
+            webSocketUrl: mode === 'dev' ? getWebSocketUrl(cosmosConfig) : null,
             rendererUrl: null,
             containerQuerySelector: cosmosConfig.dom.containerQuerySelector,
           },
