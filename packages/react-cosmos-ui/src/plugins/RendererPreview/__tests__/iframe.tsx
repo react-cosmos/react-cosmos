@@ -34,7 +34,10 @@ function loadTestPlugins(config?: RendererPreviewSpec['config']) {
 
 async function mockRendererLocation(renderer: RenderResult, newPath: string) {
   Object.defineProperty(window, 'location', {
-    value: { href: 'http://localhost:5000' },
+    value: {
+      href: 'http://localhost:5000',
+      hostname: 'localhost',
+    },
     writable: true,
   });
 
@@ -42,6 +45,7 @@ async function mockRendererLocation(renderer: RenderResult, newPath: string) {
   Object.defineProperty(iframe.contentWindow, 'location', {
     value: {
       href: `http://localhost:5000${newPath}`,
+      hostname: 'localhost',
       replace: vi.fn(),
     },
     writable: true,
