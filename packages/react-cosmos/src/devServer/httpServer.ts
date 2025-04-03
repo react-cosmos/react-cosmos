@@ -1,9 +1,8 @@
-import fs from 'fs';
 import http from 'http';
 import https from 'https';
-import pem from 'pem';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { getPlaygroundUrls } from '../shared/playgroundUrl.js';
+import { getHttpsCreds } from './httpsCreds.js';
 
 type RequestListener = (
   request: http.IncomingMessage,
@@ -15,7 +14,7 @@ export async function createHttpServer(
   requestListener: RequestListener
 ) {
   const server = config.https
-    ? https.createServer(await getHttpsOpts(config), requestListener)
+    ? https.createServer(await getHttpsCreds(config), requestListener)
     : http.createServer(requestListener);
 
   async function start() {
@@ -36,23 +35,4 @@ export async function createHttpServer(
   }
 
   return { server, start, stop };
-}
-
-type Credentials = { key: string; cert: string };
-
-async function getHttpsOpts(cosmosConfig: CosmosConfig): Promise<Credentials> {
-  const { httpsOptions } = cosmosConfig;
-  if (httpsOptions)
-    return {
-      key: fs.readFileSync(httpsOptions.keyPath, 'utf8'),
-      cert: fs.readFileSync(httpsOptions.certPath, 'utf8'),
-    };
-
-  console.log('[Cosmos] Generating HTTPS certificate');
-  return await new Promise((resolve, reject) => {
-    pem.createCertificate({ days: 1000, selfSigned: true }, (err, keys) => {
-      if (err) return reject(err);
-      return resolve({ key: keys.serviceKey, cert: keys.certificate });
-    });
-  });
 }

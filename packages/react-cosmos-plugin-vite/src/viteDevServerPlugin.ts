@@ -1,4 +1,8 @@
-import { DevServerPluginArgs, startFixtureWatcher } from 'react-cosmos';
+import {
+  DevServerPluginArgs,
+  getHttpsCreds,
+  startFixtureWatcher,
+} from 'react-cosmos';
 import { pickRendererUrl } from 'react-cosmos-core';
 import { createServer } from 'vite';
 import { createCosmosViteConfig } from './createCosmosViteConfig.js';
@@ -31,6 +35,7 @@ export async function viteDevServerPlugin({
       // https://vitejs.dev/config/server-options.html#server-host
       host: '0.0.0.0',
       port: parseInt(new URL(rendererUrl).port, 10),
+      https: cosmosConfig.https ? await getHttpsCreds(cosmosConfig) : undefined,
       // Prevent auto opening Cosmos renderer in browser when user has this
       // option enabled in their Vite config
       open: false,

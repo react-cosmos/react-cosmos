@@ -9,6 +9,7 @@ export * from './cosmosConfig/types.js';
 export * from './cosmosPlugin/findCosmosPluginConfigs.js';
 export * from './cosmosPlugin/pluginConfigs.js';
 export * from './cosmosPlugin/types.js';
+export * from './devServer/httpsCreds.js';
 export * from './getFixtures/getFixtures.js';
 export * from './shared/findNextAvailablePort.js';
 export * from './shared/playgroundUrl.js';
