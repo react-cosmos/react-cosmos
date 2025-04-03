@@ -75,7 +75,7 @@ it('calls config hook', async () => {
     await generateExport();
 
     expect(testServerPlugin.config).toBeCalledWith({
-      cosmosConfig: expect.objectContaining({ exportPath }),
+      config: expect.objectContaining({ exportPath }),
       mode: 'export',
       platform: 'web',
     });
@@ -91,7 +91,7 @@ it('calls export hook (with updated config)', async () => {
     await generateExport();
 
     expect(testServerPlugin.export).toBeCalledWith({
-      cosmosConfig: expect.objectContaining({
+      config: expect.objectContaining({
         exportPath,
         ignore: ['**/ignored.fixture.js'],
       }),

@@ -11,20 +11,17 @@ import { resolveWebpackClientPath } from './resolveWebpackClientPath.js';
 import { ensureWebpackConfigTopLevelAwait } from './webpackConfigTopLevelAwait.js';
 
 export async function getExportWebpackConfig(
-  cosmosConfig: CosmosConfig,
+  config: CosmosConfig,
   userWebpack: typeof webpack
 ): Promise<webpack.Configuration> {
-  const baseWebpackConfig = await getUserWebpackConfig(
-    cosmosConfig,
-    userWebpack
-  );
+  const baseWebpackConfig = await getUserWebpackConfig(config, userWebpack);
   return {
     ...baseWebpackConfig,
     entry: getEntry(),
-    output: getOutput(cosmosConfig),
-    module: getWebpackConfigModule(cosmosConfig, baseWebpackConfig, 'export'),
-    resolve: getWebpackConfigResolve(cosmosConfig, baseWebpackConfig),
-    plugins: getPlugins(cosmosConfig, baseWebpackConfig, userWebpack),
+    output: getOutput(config),
+    module: getWebpackConfigModule(config, baseWebpackConfig, 'export'),
+    resolve: getWebpackConfigResolve(config, baseWebpackConfig),
+    plugins: getPlugins(config, baseWebpackConfig, userWebpack),
     experiments: getExperiments(baseWebpackConfig),
   };
 }
@@ -37,10 +34,9 @@ function getEntry() {
   return [devtoolsHook, clientIndex];
 }
 
-function getOutput(cosmosConfig: CosmosConfig) {
-  const { exportPath, publicUrl } = cosmosConfig;
-  const { includeHashInOutputFilename } =
-    createWebpackCosmosConfig(cosmosConfig);
+function getOutput(config: CosmosConfig) {
+  const { exportPath, publicUrl } = config;
+  const { includeHashInOutputFilename } = createWebpackCosmosConfig(config);
 
   return {
     path: path.join(exportPath, publicUrl),
@@ -52,15 +48,15 @@ function getOutput(cosmosConfig: CosmosConfig) {
 }
 
 function getPlugins(
-  cosmosConfig: CosmosConfig,
+  config: CosmosConfig,
   baseWebpackConfig: webpack.Configuration,
   userWebpack: typeof webpack
 ) {
   const existingPlugins = ignoreEmptyWebpackPlugins(baseWebpackConfig.plugins);
-  const globalsPlugin = getGlobalsPlugin(cosmosConfig, userWebpack, false);
+  const globalsPlugin = getGlobalsPlugin(config, userWebpack, false);
   const noEmitErrorsPlugin = new userWebpack.NoEmitOnErrorsPlugin();
 
-  return ensureHtmlWebackPlugin(cosmosConfig, [
+  return ensureHtmlWebackPlugin(config, [
     ...existingPlugins,
     globalsPlugin,
     noEmitErrorsPlugin,

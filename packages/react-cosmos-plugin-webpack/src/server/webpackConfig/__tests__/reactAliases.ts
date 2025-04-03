@@ -15,12 +15,12 @@ async function getCustomDevWebpackConfig(expectAliasLog: boolean) {
     if (expectAliasLog) {
       expectLog('[Cosmos] React and React DOM aliases found in webpack config');
     }
-    const cosmosConfig = createCosmosConfig(process.cwd(), {
+    const config = createCosmosConfig(process.cwd(), {
       webpack: {
         configPath: 'mywebpack.config.js',
       },
     });
-    return getDevWebpackConfig(cosmosConfig, webpack);
+    return getDevWebpackConfig(config, webpack);
   });
 }
 

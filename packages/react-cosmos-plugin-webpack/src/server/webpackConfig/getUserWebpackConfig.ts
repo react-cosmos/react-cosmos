@@ -27,14 +27,11 @@ type WebpackOverride = (
 ) => webpack.Configuration;
 
 export async function getUserWebpackConfig(
-  cosmosConfig: CosmosConfig,
+  config: CosmosConfig,
   userWebpack: typeof webpack
 ) {
-  const baseWebpackConfig = await getBaseWebpackConfig(
-    cosmosConfig,
-    userWebpack
-  );
-  const { overridePath } = createWebpackCosmosConfig(cosmosConfig);
+  const baseWebpackConfig = await getBaseWebpackConfig(config, userWebpack);
+  const { overridePath } = createWebpackCosmosConfig(config);
 
   if (!overridePath || !moduleExists(overridePath)) {
     console.log(
@@ -53,11 +50,11 @@ export async function getUserWebpackConfig(
 }
 
 async function getBaseWebpackConfig(
-  cosmosConfig: CosmosConfig,
+  config: CosmosConfig,
   userWebpack: typeof webpack
 ) {
-  const { rootDir } = cosmosConfig;
-  const { configPath } = createWebpackCosmosConfig(cosmosConfig);
+  const { rootDir } = config;
+  const { configPath } = createWebpackCosmosConfig(config);
 
   if (!configPath || !moduleExists(configPath)) {
     console.log('[Cosmos] Using default webpack config');

@@ -5,32 +5,32 @@ import { resolveWebpackClientPath } from './resolveWebpackClientPath.js';
 import { resolveWebpackLoaderPath } from './resolveWebpackLoaderPath.js';
 
 export function getWebpackConfigModule(
-  cosmosConfig: CosmosConfig,
+  config: CosmosConfig,
   webpackConfig: webpack.Configuration,
   mode: CosmosMode
 ): webpack.ModuleOptions {
   return {
     ...webpackConfig.module,
-    rules: getRules(cosmosConfig, webpackConfig, mode),
+    rules: getRules(config, webpackConfig, mode),
   };
 }
 
 function getRules(
-  cosmosConfig: CosmosConfig,
+  config: CosmosConfig,
   { module }: webpack.Configuration,
   mode: CosmosMode
 ) {
   const existingRules = (module && module.rules) || [];
-  return [...existingRules, getUserImportsLoaderRule(cosmosConfig, mode)];
+  return [...existingRules, getUserImportsLoaderRule(config, mode)];
 }
 
 function getUserImportsLoaderRule(
-  cosmosConfig: CosmosConfig,
+  config: CosmosConfig,
   mode: CosmosMode
 ): webpack.RuleSetRule {
   return {
     loader: resolveWebpackLoaderPath(),
     include: resolveWebpackClientPath('userImports.js'),
-    options: { cosmosConfig, mode },
+    options: { config, mode },
   };
 }

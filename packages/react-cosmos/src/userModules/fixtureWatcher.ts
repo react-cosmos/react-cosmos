@@ -6,11 +6,11 @@ import { getDecoratorPatterns, getFixturePatterns } from './shared.js';
 const DEBOUNCE_INTERVAL = 50;
 
 export async function startFixtureWatcher(
-  cosmosConfig: CosmosConfig,
+  config: CosmosConfig,
   event: 'all' | 'add',
   callback: () => unknown
 ): Promise<FSWatcher> {
-  const { fixturesDir, fixtureFileSuffix, ignore } = cosmosConfig;
+  const { fixturesDir, fixtureFileSuffix, ignore } = config;
   const FILE_PATTERNS = [
     ...getFixturePatterns(fixturesDir, fixtureFileSuffix),
     ...getDecoratorPatterns(),
@@ -19,7 +19,7 @@ export async function startFixtureWatcher(
     const watcher: FSWatcher = watch(FILE_PATTERNS, {
       ignored: ignore,
       ignoreInitial: true,
-      cwd: cosmosConfig.rootDir,
+      cwd: config.rootDir,
     })
       .on('ready', () => resolve(watcher))
       .on(

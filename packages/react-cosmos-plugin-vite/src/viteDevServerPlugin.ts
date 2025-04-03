@@ -12,41 +12,39 @@ import {
 } from './reactCosmosViteRollupPlugin.js';
 
 export async function viteDevServerPlugin({
-  cosmosConfig,
+  config,
   platform,
 }: DevServerPluginArgs) {
   if (platform !== 'web') return;
 
-  const rendererUrl = pickRendererUrl(cosmosConfig.rendererUrl, 'dev');
+  const rendererUrl = pickRendererUrl(config.rendererUrl, 'dev');
   if (!rendererUrl) {
-    throw new Error('Vite plugin requires cosmosConfig.rendererUrl to be set');
+    throw new Error('Vite plugin requires config.rendererUrl to be set');
   }
 
-  const { rootDir } = cosmosConfig;
-  const cosmosViteConfig = createCosmosViteConfig(cosmosConfig);
+  const { rootDir } = config;
+  const cosmosViteConfig = createCosmosViteConfig(config);
 
   const server = await createServer({
     // Last time I checked the config file is merged with this inline config:
     // https://github.com/vitejs/vite/blob/07bd6d14e545d05c6a29cf341f117fcfe9536ba4/packages/vite/src/node/config.ts#L418
     configFile: cosmosViteConfig.configPath,
     root: rootDir,
-    base: cosmosConfig.publicUrl,
+    base: config.publicUrl,
     server: {
       // https://vitejs.dev/config/server-options.html#server-host
       host: '0.0.0.0',
       port: parseInt(new URL(rendererUrl).port, 10),
-      https: cosmosConfig.https ? await getHttpsCreds(cosmosConfig) : undefined,
+      https: config.https ? await getHttpsCreds(config) : undefined,
       // Prevent auto opening Cosmos renderer in browser when user has this
       // option enabled in their Vite config
       open: false,
     },
-    plugins: [
-      reactCosmosViteRollupPlugin(cosmosConfig, cosmosViteConfig, 'dev'),
-    ],
+    plugins: [reactCosmosViteRollupPlugin(config, cosmosViteConfig, 'dev')],
   });
   await server.listen();
 
-  const watcher = await startFixtureWatcher(cosmosConfig, 'add', () => {
+  const watcher = await startFixtureWatcher(config, 'add', () => {
     const module = server.moduleGraph.getModuleById(
       userImportsResolvedModuleId
     );

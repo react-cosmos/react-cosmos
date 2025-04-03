@@ -14,11 +14,9 @@ export type CosmosViteConfig = {
 
 type CosmosViteConfigInput = Partial<CosmosViteConfig>;
 
-export function createCosmosViteConfig(
-  cosmosConfig: CosmosConfig
-): CosmosViteConfig {
-  const { rootDir } = cosmosConfig;
-  const configInput: CosmosViteConfigInput = cosmosConfig.vite || {};
+export function createCosmosViteConfig(config: CosmosConfig): CosmosViteConfig {
+  const { rootDir } = config;
+  const configInput: CosmosViteConfigInput = config.vite || {};
 
   const configPath = getViteConfigPath(configInput, rootDir);
   logViteConfigInfo(configPath);

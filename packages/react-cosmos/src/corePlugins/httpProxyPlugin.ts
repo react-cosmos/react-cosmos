@@ -16,21 +16,21 @@ type HttpProxyConfig = {
 export const httpProxyPlugin: CosmosServerPlugin = {
   name: 'httpProxy',
 
-  devServer({ cosmosConfig, platform, app }) {
+  devServer({ config, platform, app }) {
     if (platform !== 'web') return;
 
-    const httpProxyConfig = getHttpProxyCosmosConfig(cosmosConfig);
+    const httpProxyConfig = getHttpProxyCosmosConfig(config);
     Object.keys(httpProxyConfig).forEach(context => {
-      const config = httpProxyConfig[context];
-      if (typeof config === 'string') {
-        app.use(context, createProxyMiddleware(context, { target: config }));
-      } else if (typeof config === 'object') {
-        app.use(context, createProxyMiddleware(context, config));
+      const value = httpProxyConfig[context];
+      if (typeof value === 'string') {
+        app.use(context, createProxyMiddleware(context, { target: value }));
+      } else if (typeof value === 'object') {
+        app.use(context, createProxyMiddleware(context, value));
       }
     });
   },
 };
 
-function getHttpProxyCosmosConfig(cosmosConfig: CosmosConfig) {
-  return (cosmosConfig.httpProxy || {}) as HttpProxyConfig;
+function getHttpProxyCosmosConfig(config: CosmosConfig) {
+  return (config.httpProxy || {}) as HttpProxyConfig;
 }

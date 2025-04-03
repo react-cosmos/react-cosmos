@@ -35,16 +35,13 @@ export type FixtureApi = {
 type Options = {
   rendererUrl?: string;
 };
-export async function getFixtures(
-  cosmosConfig: CosmosConfig,
-  options: Options = {}
-) {
-  const { fixtures, decorators } = await importUserModules(cosmosConfig);
+export async function getFixtures(config: CosmosConfig, options: Options = {}) {
+  const { fixtures, decorators } = await importUserModules(config);
   const fixtureExports = mapValues(fixtures, f => f.default);
   const decoratorExports = mapValues(decorators, f => f.default);
   const result: FixtureApi[] = [];
 
-  getFlatFixtureTree(cosmosConfig, fixtureExports).forEach(
+  getFlatFixtureTree(config, fixtureExports).forEach(
     ({ fileName, fixtureId, name, parents }) => {
       const fixtureExport = fixtures[fixtureId.path].default;
       const fixtureOptions = fixtures[fixtureId.path].options ?? {};
@@ -58,7 +55,7 @@ export async function getFixtures(
       if (name) treePath.push(name);
 
       result.push({
-        absoluteFilePath: path.join(cosmosConfig.rootDir, fixtureId.path),
+        absoluteFilePath: path.join(config.rootDir, fixtureId.path),
         fileName,
         getElement: createFixtureElementGetter(
           fixture,
@@ -68,7 +65,7 @@ export async function getFixtures(
         ),
         name,
         parents,
-        playgroundUrl: getPlaygroundFixtureUrl(cosmosConfig, fixtureId),
+        playgroundUrl: getPlaygroundFixtureUrl(config, fixtureId),
         relativeFilePath: fixtureId.path,
         rendererUrl: options.rendererUrl
           ? createRendererUrl(options.rendererUrl, fixtureId)
@@ -82,10 +79,10 @@ export async function getFixtures(
 }
 
 function getFlatFixtureTree(
-  cosmosConfig: CosmosConfig,
+  config: CosmosConfig,
   fixtures: ByPath<ReactFixtureExport>
 ) {
-  const { fixturesDir, fixtureFileSuffix } = cosmosConfig;
+  const { fixturesDir, fixtureFileSuffix } = config;
   return flattenFixtureTree(
     createFixtureTree({
       fixtures: getFixtureListFromExports(fixtures),
@@ -95,11 +92,8 @@ function getFlatFixtureTree(
   );
 }
 
-function getPlaygroundFixtureUrl(
-  cosmosConfig: CosmosConfig,
-  fixtureId: FixtureId
-) {
-  const [baseUrl] = getPlaygroundUrls(cosmosConfig);
+function getPlaygroundFixtureUrl(config: CosmosConfig, fixtureId: FixtureId) {
+  const [baseUrl] = getPlaygroundUrls(config);
   const query = buildPlaygroundQueryString({ fixture: fixtureId });
   return `${baseUrl}/${query}`;
 }

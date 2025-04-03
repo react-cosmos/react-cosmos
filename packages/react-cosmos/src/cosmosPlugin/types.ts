@@ -6,7 +6,7 @@ import { CosmosConfig } from '../cosmosConfig/types.js';
 export type CosmosPlatform = 'web' | 'native';
 
 export type CosmosConfigPluginArgs = {
-  cosmosConfig: CosmosConfig;
+  config: CosmosConfig;
   mode: CosmosMode;
   platform: CosmosPlatform;
 };
@@ -16,7 +16,7 @@ export type CosmosConfigPlugin = (
 ) => Promise<CosmosConfig> | CosmosConfig;
 
 export type DevServerPluginArgs = {
-  cosmosConfig: CosmosConfig;
+  config: CosmosConfig;
   platform: CosmosPlatform;
   httpServer: http.Server;
   app: Express;
@@ -37,7 +37,7 @@ export type DevServerPlugin = (
 ) => DevServerPluginReturn;
 
 export type ExportPluginArgs = {
-  cosmosConfig: CosmosConfig;
+  config: CosmosConfig;
 };
 
 export type ExportPlugin = (args: ExportPluginArgs) => unknown;

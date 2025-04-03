@@ -15,29 +15,29 @@ type WebpackConfig = webpack.Configuration & {
 };
 
 export async function webpackDevServerPlugin({
-  cosmosConfig,
+  config,
   platform,
   app,
   sendMessage,
 }: DevServerPluginArgs) {
   if (platform !== 'web') return;
 
-  const userWebpack = getWebpack(cosmosConfig.rootDir);
+  const userWebpack = getWebpack(config.rootDir);
   if (!userWebpack) return;
 
   const webpackConfig = (await getDevWebpackConfig(
-    cosmosConfig,
+    config,
     userWebpack
   )) as WebpackConfig;
 
   // Serve static path derived from devServer.contentBase webpack config
-  if (cosmosConfig.staticPath === null) {
+  if (config.staticPath === null) {
     const webpackDerivedStaticPath = getWebpackStaticPath(webpackConfig);
     if (webpackDerivedStaticPath !== null) {
       serveStaticDir(
         app,
-        path.resolve(cosmosConfig.rootDir, webpackDerivedStaticPath),
-        cosmosConfig.publicUrl
+        path.resolve(config.rootDir, webpackDerivedStaticPath),
+        config.publicUrl
       );
     }
   }
@@ -82,12 +82,12 @@ export async function webpackDevServerPlugin({
   const wdmInst = wdmModule.default(webpackCompiler as any, {
     // publicPath is the base path for the webpack assets and has to match
     // webpack.output.publicPath
-    publicPath: cosmosConfig.publicUrl,
+    publicPath: config.publicUrl,
   });
 
   app.use(wdmInst);
 
-  const { hotReload } = createWebpackCosmosConfig(cosmosConfig);
+  const { hotReload } = createWebpackCosmosConfig(config);
   if (hotReload) {
     app.use(webpackHotMiddleware(webpackCompiler));
   }
