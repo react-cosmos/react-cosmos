@@ -66,7 +66,7 @@ export async function startDevServer(platform: CosmosPlatform) {
         cosmosConfig,
         platform,
         httpServer: httpServer.server,
-        expressApp: app,
+        app,
         sendMessage: msgHandler.sendMessage,
       });
 

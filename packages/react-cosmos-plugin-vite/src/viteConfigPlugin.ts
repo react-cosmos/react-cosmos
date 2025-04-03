@@ -28,9 +28,10 @@ export async function viteConfigPlugin({
     cosmosConfig.portRetries
   );
 
+  const protocol = cosmosConfig.https ? 'https' : 'http';
   return {
     ...cosmosConfig,
-    rendererUrl: `http://localhost:${port}`,
+    rendererUrl: `${protocol}://localhost:${port}`,
     vite: {
       ...cosmosViteConfig,
       port: port,

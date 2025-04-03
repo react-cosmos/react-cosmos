@@ -17,7 +17,7 @@ export default {
     return cosmosConfig;
   },
 
-  async devServer({ cosmosConfig, platform, httpServer, expressApp }) {
+  async devServer({ cosmosConfig, platform, httpServer, app }) {
     // Dev server plugin
   },
 
@@ -46,7 +46,7 @@ The `config` hook is called before both `devServer` and `export` hooks. It allow
 | `cosmosConfig` | The user's [Cosmos config](/docs/configuration/cosmos-config.md).                             |
 | `platform`     | `"web"` or `"native"`.                                                                        |
 | `httpServer`   | The [http.Server](https://nodejs.org/api/http.html#class-httpserver) instance used by Cosmos. |
-| `expressApp`   | The [Express App](https://expressjs.com/en/4x/api.html#app) instance used by Cosmos.          |
+| `app`          | The [Express App](https://expressjs.com/en/4x/api.html#app) instance used by Cosmos.          |
 | `sendMessage`  | Send a message to the Cosmos UI.                                                              |
 
 A hook for starting the renderer dev server alongside the Cosmos server.

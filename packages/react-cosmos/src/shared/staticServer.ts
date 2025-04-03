@@ -1,8 +1,8 @@
-import express from 'express';
+import express, { Application } from 'express';
 import path from 'path';
 
 export function serveStaticDir(
-  app: express.Application,
+  app: Application,
   staticPath: string,
   publicUrl: string
 ) {

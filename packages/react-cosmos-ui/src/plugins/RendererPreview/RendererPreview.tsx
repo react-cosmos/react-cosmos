@@ -38,7 +38,7 @@ export const RendererPreview = React.memo(function RendererPreview({
         <Iframe
           data-testid="previewIframe"
           ref={onIframeRef}
-          src={createRendererUrl(rendererUrl)}
+          src={createRendererUrl(applyParentHostnameToRendererUrl(rendererUrl))}
           allow="clipboard-write *; fullscreen *;"
         />
         <RendererOverlay runtimeStatus={runtimeStatus} />
@@ -46,6 +46,16 @@ export const RendererPreview = React.memo(function RendererPreview({
     </Slot>
   );
 });
+
+function applyParentHostnameToRendererUrl(rendererUrl: string) {
+  try {
+    const url = new URL(rendererUrl);
+    url.hostname = window.location.hostname;
+    return url.toString();
+  } catch {
+    return rendererUrl;
+  }
+}
 
 const Container = styled.div`
   position: relative;

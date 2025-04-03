@@ -1,4 +1,4 @@
-import express from 'express';
+import { Express } from 'express';
 import http from 'http';
 import { CosmosMode, MessageType } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
@@ -19,7 +19,7 @@ export type DevServerPluginArgs = {
   cosmosConfig: CosmosConfig;
   platform: CosmosPlatform;
   httpServer: http.Server;
-  expressApp: express.Express;
+  app: Express;
   sendMessage(msg: MessageType): unknown;
 };
 

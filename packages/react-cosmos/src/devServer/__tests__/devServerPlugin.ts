@@ -6,6 +6,7 @@
 // against the unmocked original modules instead.
 import { mockCosmosPlugins } from '../../testHelpers/mockCosmosPlugins.js';
 import { mockCosmosConfig, mockFile } from '../../testHelpers/mockFs.js';
+import '../../testHelpers/mockOsNetworkInterfaces.js';
 import { mockCliArgs } from '../../testHelpers/mockYargs.js';
 
 import retry from '@skidding/async-retry';
@@ -62,7 +63,9 @@ beforeAll(async () => {
   await mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
     expectLog('[Cosmos] Found 1 plugin: Test Cosmos plugin');
-    expectLog(`[Cosmos] See you at http://localhost:${port}`);
+    expectLog(
+      `[Cosmos] See you at http://localhost:${port} or http://192.168.1.10:${port}`
+    );
     _stopServer = await startDevServer('web');
   });
 });
@@ -82,7 +85,7 @@ it('calls dev server hook (with updated config)', async () => {
       ignore: ['**/ignored.fixture.js'],
     }),
     platform: 'web',
-    expressApp: expect.any(Function),
+    app: expect.any(Function),
     httpServer: expect.any(http.Server),
     sendMessage: expect.any(Function),
   });
