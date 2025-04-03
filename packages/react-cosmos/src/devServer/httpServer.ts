@@ -27,7 +27,7 @@ export async function createHttpServer(
     });
 
     const urls = getPlaygroundUrls(config);
-    console.log(`[Cosmos] Ready at ${urls.join(' or ')}`);
+    console.log(`[Cosmos] See you at ${urls.join(' or ')}`);
   }
 
   async function stop() {

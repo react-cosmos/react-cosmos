@@ -42,7 +42,7 @@ beforeAll(async () => {
     expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
     expectLog('[Cosmos] Found 1 plugin: Test Cosmos plugin');
     expectLog(
-      `[Cosmos] Ready at http://localhost:${port} or http://192.168.1.10:${port}`
+      `[Cosmos] See you at http://localhost:${port} or http://192.168.1.10:${port}`
     );
 
     _stopServer = await startDevServer('web');
