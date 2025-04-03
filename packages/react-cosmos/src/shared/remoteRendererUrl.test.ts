@@ -58,6 +58,15 @@ describe('default host', () => {
       'https://192.168.1.10:5050/renderer.html'
     );
   });
+
+  it('adds server host in full renderer URL with fixture var', async () => {
+    const config = createCosmosConfig(process.cwd(), {
+      rendererUrl: 'http://localhost:3000/cosmos/<fixture>',
+    });
+    expect(getRemoteRendererUrl(config)).toBe(
+      'http://192.168.1.10:3000/cosmos/index'
+    );
+  });
 });
 
 describe('custom host', () => {
@@ -126,6 +135,16 @@ describe('custom host', () => {
     });
     expect(getRemoteRendererUrl(config)).toBe(
       'https://192.168.1.20:5050/renderer.html'
+    );
+  });
+
+  it('adds custom host in full renderer URL with fixture var', async () => {
+    const config = createCosmosConfig(process.cwd(), {
+      rendererUrl: 'http://localhost:3000/cosmos/<fixture>',
+      host: '192.168.1.20',
+    });
+    expect(getRemoteRendererUrl(config)).toBe(
+      'http://192.168.1.20:3000/cosmos/index'
     );
   });
 });
