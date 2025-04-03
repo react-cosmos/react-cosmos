@@ -12,16 +12,16 @@ The `server` field in [`cosmos.plugin.json`](/docs/plugins.md) points to a modul
 export default {
   name: 'magic-plugin',
 
-  async config({ cosmosConfig }) {
+  async config({ config }) {
     // An opportunity to alter the user's Cosmos config
-    return cosmosConfig;
+    return config;
   },
 
-  async devServer({ cosmosConfig, platform, httpServer, app }) {
+  async devServer({ config, platform, httpServer, app }) {
     // Dev server plugin
   },
 
-  async export({ cosmosConfig }) {
+  async export({ config }) {
     // Static export plugin
   },
 };
@@ -31,23 +31,23 @@ export default {
 
 ### `config`
 
-| Argument       | Description                                                       |
-| -------------- | ----------------------------------------------------------------- |
-| `cosmosConfig` | The user's [Cosmos config](/docs/configuration/cosmos-config.md). |
-| `mode`         | `"dev"` or `"export"`.                                            |
-| `platform`     | `"web"` or `"native"`.                                            |
+| Argument   | Description                                                       |
+| ---------- | ----------------------------------------------------------------- |
+| `config`   | The user's [Cosmos config](/docs/configuration/cosmos-config.md). |
+| `mode`     | `"dev"` or `"export"`.                                            |
+| `platform` | `"web"` or `"native"`.                                            |
 
 The `config` hook is called before both `devServer` and `export` hooks. It allows overriding the user's Cosmos config. Setting the `rendererUrl` config option is a common use case.
 
 ### `devServer`
 
-| Argument       | Description                                                                                   |
-| -------------- | --------------------------------------------------------------------------------------------- |
-| `cosmosConfig` | The user's [Cosmos config](/docs/configuration/cosmos-config.md).                             |
-| `platform`     | `"web"` or `"native"`.                                                                        |
-| `httpServer`   | The [http.Server](https://nodejs.org/api/http.html#class-httpserver) instance used by Cosmos. |
-| `app`          | The [Express App](https://expressjs.com/en/4x/api.html#app) instance used by Cosmos.          |
-| `sendMessage`  | Send a message to the Cosmos UI.                                                              |
+| Argument      | Description                                                                                   |
+| ------------- | --------------------------------------------------------------------------------------------- |
+| `config`      | The user's [Cosmos config](/docs/configuration/cosmos-config.md).                             |
+| `platform`    | `"web"` or `"native"`.                                                                        |
+| `httpServer`  | The [http.Server](https://nodejs.org/api/http.html#class-httpserver) instance used by Cosmos. |
+| `app`         | The [Express App](https://expressjs.com/en/4x/api.html#app) instance used by Cosmos.          |
+| `sendMessage` | Send a message to the Cosmos UI.                                                              |
 
 A hook for starting the renderer dev server alongside the Cosmos server.
 
@@ -55,8 +55,8 @@ For example in the Webpack plugin the Webpack compiler is attached to Cosmos' in
 
 ### `export`
 
-| Argument       | Description                                                       |
-| -------------- | ----------------------------------------------------------------- |
-| `cosmosConfig` | The user's [Cosmos config](/docs/configuration/cosmos-config.md). |
+| Argument | Description                                                       |
+| -------- | ----------------------------------------------------------------- |
+| `config` | The user's [Cosmos config](/docs/configuration/cosmos-config.md). |
 
 A hook for exporting the user's fixtures and decorators into a static Cosmos renderer that the static Cosmos UI connects to.
