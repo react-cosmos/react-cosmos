@@ -1,4 +1,4 @@
-import express from 'express';
+import { Request, Response } from 'express';
 import { sortBy } from 'lodash-es';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -29,12 +29,9 @@ export const fixturesJsonPlugin: CosmosServerPlugin = {
   name: 'fixturesJson',
 
   devServer({ cosmosConfig, app }) {
-    app.get(
-      '/cosmos.fixtures.json',
-      async (req: express.Request, res: express.Response) => {
-        res.json(await createFixtureItems(cosmosConfig, 'dev'));
-      }
-    );
+    app.get('/cosmos.fixtures.json', async (req: Request, res: Response) => {
+      res.json(await createFixtureItems(cosmosConfig, 'dev'));
+    });
   },
 
   async export({ cosmosConfig }) {

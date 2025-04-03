@@ -1,4 +1,4 @@
-import express from 'express';
+import { Request, Response } from 'express';
 import path from 'node:path';
 import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
 import { resolveSilent } from '../utils/resolveSilent.js';
@@ -7,7 +7,7 @@ export const pluginEndpointPlugin: CosmosServerPlugin = {
   name: 'pluginEndpoint',
 
   devServer({ app }) {
-    app.get('/_plugin/*.js', (req: express.Request, res: express.Response) => {
+    app.get('/_plugin/*.js', (req: Request, res: Response) => {
       const modulePath = req.params['0'];
 
       if (!modulePath) {
