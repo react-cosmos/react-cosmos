@@ -5,9 +5,9 @@ import { getRemoteRendererUrl } from '../shared/remoteRendererUrl.js';
 export const remoteRendererUrlPlugin: CosmosServerPlugin = {
   name: 'remoteRendererUrlPlugin',
 
-  devServer({ config, app }) {
+  devServer({ cosmosConfig, app }) {
     app.get('/_cosmos/remote-renderer-url', (_: Request, res: Response) => {
-      res.send({ url: getRemoteRendererUrl(config) });
+      res.send({ url: getRemoteRendererUrl(cosmosConfig) });
     });
   },
 };

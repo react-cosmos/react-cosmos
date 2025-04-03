@@ -12,49 +12,52 @@ import { getStaticPath } from '../shared/staticPath.js';
 import { resolve } from '../utils/resolve.js';
 
 export async function generateExport() {
-  let config = await detectCosmosConfig();
+  let cosmosConfig = await detectCosmosConfig();
 
   const pluginConfigs = await getPluginConfigs({
-    config,
+    cosmosConfig,
     // Relative paths work in exports because all plugin modules are copied
     // inside the export path
     relativePaths: true,
   });
   logPluginInfo(pluginConfigs);
 
-  const serverPlugins = await getServerPlugins(pluginConfigs, config.rootDir);
+  const serverPlugins = await getServerPlugins(
+    pluginConfigs,
+    cosmosConfig.rootDir
+  );
 
-  config = await applyServerConfigPlugins({
-    config,
+  cosmosConfig = await applyServerConfigPlugins({
+    cosmosConfig,
     serverPlugins,
     mode: 'export',
     platform: 'web',
   });
 
   // Clear previous export (or other files at export path)
-  const { exportPath } = config;
+  const { exportPath } = cosmosConfig;
   await fs.rm(exportPath, { recursive: true, force: true });
   await fs.mkdir(exportPath, { recursive: true });
 
   // Copy static assets first, so that the built index.html overrides the its
   // template file (in case the static assets are served from the root path)
-  await copyStaticAssets(config);
+  await copyStaticAssets(cosmosConfig);
 
   for (const plugin of serverPlugins) {
     if (!plugin.export) continue;
 
     try {
-      await plugin.export({ config });
+      await plugin.export({ cosmosConfig });
     } catch (err) {
       console.log(`[Cosmos][plugin:${plugin.name}] Export failed`);
       throw err;
     }
   }
 
-  await exportPlaygroundFiles(config, pluginConfigs);
+  await exportPlaygroundFiles(cosmosConfig, pluginConfigs);
 
   console.log('[Cosmos] Export complete!');
-  console.log(`Export path: ${config.exportPath}`);
+  console.log(`Export path: ${cosmosConfig.exportPath}`);
 }
 
 async function copyStaticAssets(cosmosConfig: CosmosConfig) {

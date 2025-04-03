@@ -14,11 +14,11 @@ import { createHttpServer } from './httpServer.js';
 import { createMessageHandler } from './messageHandler.js';
 
 export async function startDevServer(platform: CosmosPlatform) {
-  let config = await detectCosmosConfig();
+  let cosmosConfig = await detectCosmosConfig();
   logCosmosConfigInfo();
 
   const pluginConfigs = await getPluginConfigs({
-    config,
+    cosmosConfig,
     // Absolute paths are required in dev mode because the dev server could
     // run in a monorepo package that's not the root of the project and plugins
     // could be installed in the root
@@ -26,21 +26,24 @@ export async function startDevServer(platform: CosmosPlatform) {
   });
   logPluginInfo(pluginConfigs);
 
-  const serverPlugins = await getServerPlugins(pluginConfigs, config.rootDir);
+  const serverPlugins = await getServerPlugins(
+    pluginConfigs,
+    cosmosConfig.rootDir
+  );
 
-  config = await applyServerConfigPlugins({
-    config,
+  cosmosConfig = await applyServerConfigPlugins({
+    cosmosConfig,
     serverPlugins,
     mode: 'dev',
     platform,
   });
 
-  const app = await createExpressApp(platform, config, pluginConfigs);
-  const httpServer = await createHttpServer(config, app);
+  const app = await createExpressApp(platform, cosmosConfig, pluginConfigs);
+  const httpServer = await createHttpServer(cosmosConfig, app);
   const msgHandler = createMessageHandler(httpServer.server);
 
-  if (config.staticPath) {
-    serveStaticDir(app, config.staticPath, config.publicUrl);
+  if (cosmosConfig.staticPath) {
+    serveStaticDir(app, cosmosConfig.staticPath, cosmosConfig.publicUrl);
   }
 
   // Make Playground available as soon as possible and show a loading screen
@@ -60,7 +63,7 @@ export async function startDevServer(platform: CosmosPlatform) {
       if (!plugin.devServer) continue;
 
       const pluginReturn = await plugin.devServer({
-        config,
+        cosmosConfig,
         platform,
         httpServer: httpServer.server,
         app,

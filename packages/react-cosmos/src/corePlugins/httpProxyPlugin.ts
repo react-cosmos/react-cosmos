@@ -16,16 +16,16 @@ type HttpProxyConfig = {
 export const httpProxyPlugin: CosmosServerPlugin = {
   name: 'httpProxy',
 
-  devServer({ config, platform, app }) {
+  devServer({ cosmosConfig, platform, app }) {
     if (platform !== 'web') return;
 
-    const httpProxyConfig = getHttpProxyCosmosConfig(config);
+    const httpProxyConfig = getHttpProxyCosmosConfig(cosmosConfig);
     Object.keys(httpProxyConfig).forEach(context => {
-      const value = httpProxyConfig[context];
-      if (typeof value === 'string') {
-        app.use(context, createProxyMiddleware(context, { target: value }));
-      } else if (typeof value === 'object') {
-        app.use(context, createProxyMiddleware(context, value));
+      const config = httpProxyConfig[context];
+      if (typeof config === 'string') {
+        app.use(context, createProxyMiddleware(context, { target: config }));
+      } else if (typeof config === 'object') {
+        app.use(context, createProxyMiddleware(context, config));
       }
     });
   },

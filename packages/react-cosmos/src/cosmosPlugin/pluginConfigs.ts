@@ -4,15 +4,15 @@ import { findCosmosPluginConfigs } from './findCosmosPluginConfigs.js';
 import { readCosmosPluginConfig } from './readCosmosPluginConfig.js';
 
 type GetPluginConfigArgs = {
-  config: CosmosConfig;
+  cosmosConfig: CosmosConfig;
   relativePaths: boolean;
 };
 export async function getPluginConfigs({
-  config,
+  cosmosConfig,
   relativePaths,
 }: GetPluginConfigArgs): Promise<CosmosPluginConfig[]> {
   const { rootDir, detectLocalPlugins, disablePlugins, plugins, exportPath } =
-    config;
+    cosmosConfig;
 
   if (disablePlugins) return [];
 

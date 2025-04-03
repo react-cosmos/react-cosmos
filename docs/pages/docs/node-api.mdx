@@ -19,7 +19,7 @@ Fetching a Cosmos config can be done in a number of ways, depending on whether o
 ```js
 import { detectCosmosConfig } from 'react-cosmos';
 
-const config = await detectCosmosConfig();
+const cosmosConfig = await detectCosmosConfig();
 ```
 
 ### Read Existing Config at Exact Path
@@ -29,7 +29,9 @@ const config = await detectCosmosConfig();
 ```js
 import { getCosmosConfigAtPath } from 'react-cosmos';
 
-const config = await getCosmosConfigAtPath(require.resolve('./cosmos.config'));
+const cosmosConfig = await getCosmosConfigAtPath(
+  require.resolve('./cosmos.config')
+);
 ```
 
 ### Create Default Config
@@ -39,7 +41,7 @@ The minimum requirement to create a config is a root directory.
 ```js
 import { createCosmosConfig } from 'react-cosmos';
 
-const config = createCosmosConfig(__dirname);
+const cosmosConfig = createCosmosConfig(__dirname);
 ```
 
 ### Create Custom Config
@@ -49,7 +51,7 @@ You can also customize your config programatically, without the need for an exte
 ```js
 import { createCosmosConfig } from 'react-cosmos';
 
-const config = createCosmosConfig(__dirname, {
+const cosmosConfig = createCosmosConfig(__dirname, {
   // Options... (TypeScript is your friend)
 });
 ```
@@ -66,7 +68,7 @@ Get all your fixtures programatically. A ton of information is provided for each
 ```js
 import { getFixtures } from 'react-cosmos';
 
-const fixtures = await getFixtures(config, {
+const fixtures = await getFixtures(cosmosConfig, {
   rendererUrl: 'http://localhost:5000/renderer.html',
 });
 

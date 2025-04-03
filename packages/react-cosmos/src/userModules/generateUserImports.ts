@@ -5,22 +5,24 @@ import { userImportsLazyTemplate } from './userImportsLazyTemplate.js';
 import { userImportsTemplate } from './userImportsTemplate.js';
 
 type Args<T extends RendererConfig> = {
-  config: CosmosConfig;
+  cosmosConfig: CosmosConfig;
   modulePaths: UserModulePaths;
   rendererConfig: T;
   relativeToDir: string | null;
   typeScript: boolean;
 };
 export function generateUserImports<T extends RendererConfig>({
-  config,
+  cosmosConfig,
   modulePaths,
   rendererConfig,
   relativeToDir,
   typeScript,
 }: Args<T>): string {
-  const { rootDir, globalImports } = config;
+  const { rootDir, globalImports } = cosmosConfig;
 
-  const template = config.lazy ? userImportsLazyTemplate : userImportsTemplate;
+  const template = cosmosConfig.lazy
+    ? userImportsLazyTemplate
+    : userImportsTemplate;
 
   return template({
     rootDir,
