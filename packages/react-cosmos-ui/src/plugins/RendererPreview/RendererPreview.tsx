@@ -38,7 +38,7 @@ export const RendererPreview = React.memo(function RendererPreview({
         <Iframe
           data-testid="previewIframe"
           ref={onIframeRef}
-          src={createRendererUrl(applyParentHostnameToRendererUrl(rendererUrl))}
+          src={applyParentHostnameToRendererUrl(createRendererUrl(rendererUrl))}
           allow="clipboard-write *; fullscreen *;"
         />
         <RendererOverlay runtimeStatus={runtimeStatus} />
