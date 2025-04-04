@@ -4,7 +4,7 @@ import React from 'react';
 import {
   FixtureId,
   RendererConfig,
-  createIframeRendererUrl,
+  createWebRendererUrl,
 } from 'react-cosmos-core';
 import {
   GlobalErrorHandler,
@@ -35,7 +35,7 @@ export function NextRendererProvider({
     (fixtureId: FixtureId) => {
       if (rendererUrl) {
         router.replace(
-          trimHtmlExtension(createIframeRendererUrl(rendererUrl, fixtureId))
+          trimHtmlExtension(createWebRendererUrl(rendererUrl, fixtureId))
         );
       }
     },
@@ -44,13 +44,13 @@ export function NextRendererProvider({
 
   const unselectFixture = React.useCallback(() => {
     if (rendererUrl) {
-      router.replace(trimHtmlExtension(createIframeRendererUrl(rendererUrl)));
+      router.replace(trimHtmlExtension(createWebRendererUrl(rendererUrl)));
     }
   }, [rendererUrl, router]);
 
   const reloadRenderer = React.useCallback(() => {
     if (rendererUrl) {
-      window.location.href = createIframeRendererUrl(rendererUrl);
+      window.location.href = createWebRendererUrl(rendererUrl);
     }
   }, [rendererUrl]);
 

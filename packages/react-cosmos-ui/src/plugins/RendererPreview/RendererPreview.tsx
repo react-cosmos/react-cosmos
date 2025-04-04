@@ -1,5 +1,5 @@
 import React from 'react';
-import { createIframeRendererUrl } from 'react-cosmos-core';
+import { createWebRendererUrl } from 'react-cosmos-core';
 import { Slot } from 'react-plugin';
 import styled from 'styled-components';
 import { grey8 } from '../../style/colors.js';
@@ -38,7 +38,7 @@ export const RendererPreview = React.memo(function RendererPreview({
         <Iframe
           data-testid="previewIframe"
           ref={onIframeRef}
-          src={createIframeRendererUrl(rendererUrl)}
+          src={createWebRendererUrl(rendererUrl)}
           allow="clipboard-write *; fullscreen *;"
         />
         <RendererOverlay runtimeStatus={runtimeStatus} />
