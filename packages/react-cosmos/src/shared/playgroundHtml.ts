@@ -15,19 +15,19 @@ import { getStaticPath } from './staticPath.js';
 
 export async function getDevPlaygroundHtml(
   platform: CosmosPlatform,
-  cosmosConfig: CosmosConfig,
+  config: CosmosConfig,
   pluginConfigs: CosmosPluginConfig[]
 ) {
-  const { ui } = cosmosConfig;
+  const { ui } = config;
   return getPlaygroundHtml({
     playgroundConfig: {
       ...ui,
-      core: await getCoreConfig(cosmosConfig, true),
+      core: await getCoreConfig(config, true),
       rendererCore: {
-        fixtures: await getServerFixtureList(cosmosConfig),
+        fixtures: await getServerFixtureList(config),
         rendererUrl:
           platform === 'web'
-            ? pickRendererUrl(cosmosConfig.rendererUrl, 'dev')
+            ? pickRendererUrl(config.rendererUrl, 'dev')
             : null,
       },
     },
@@ -36,25 +36,25 @@ export async function getDevPlaygroundHtml(
 }
 
 export async function getExportPlaygroundHtml(
-  cosmosConfig: CosmosConfig,
+  config: CosmosConfig,
   pluginConfigs: CosmosPluginConfig[]
 ) {
-  const { ui } = cosmosConfig;
+  const { ui } = config;
   return getPlaygroundHtml({
     playgroundConfig: {
       ...ui,
-      core: await getCoreConfig(cosmosConfig, false),
+      core: await getCoreConfig(config, false),
       rendererCore: {
-        fixtures: await getServerFixtureList(cosmosConfig),
-        rendererUrl: pickRendererUrl(cosmosConfig.rendererUrl, 'export'),
+        fixtures: await getServerFixtureList(config),
+        rendererUrl: pickRendererUrl(config.rendererUrl, 'export'),
       },
     },
     pluginConfigs,
   });
 }
 
-async function getCoreConfig(cosmosConfig: CosmosConfig, devServerOn: boolean) {
-  const { rootDir, fixturesDir, fixtureFileSuffix } = cosmosConfig;
+async function getCoreConfig(config: CosmosConfig, devServerOn: boolean) {
+  const { rootDir, fixturesDir, fixtureFileSuffix } = config;
   return {
     projectId: await getProjectId(rootDir),
     fixturesDir,

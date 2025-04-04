@@ -4,11 +4,11 @@ import webpack from 'webpack';
 import { resolveFromSilent } from '../utils/resolveSilent.js';
 
 export function getWebpackConfigResolve(
-  cosmosConfig: CosmosConfig,
+  config: CosmosConfig,
   webpackConfig: webpack.Configuration
 ): webpack.ResolveOptions {
   return removeModuleScopePlugin(
-    resolveLocalReactDeps(cosmosConfig, webpackConfig.resolve)
+    resolveLocalReactDeps(config, webpackConfig.resolve)
   );
 }
 
@@ -26,10 +26,10 @@ function removeModuleScopePlugin(
 }
 
 function resolveLocalReactDeps(
-  cosmosConfig: CosmosConfig,
+  config: CosmosConfig,
   resolve: webpack.ResolveOptions = {}
 ): webpack.ResolveOptions {
-  const { rootDir } = cosmosConfig;
+  const { rootDir } = config;
 
   let alias = resolve.alias || {};
 

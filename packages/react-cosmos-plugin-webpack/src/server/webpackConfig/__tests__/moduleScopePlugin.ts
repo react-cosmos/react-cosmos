@@ -11,12 +11,12 @@ async function getCustomDevWebpackConfig() {
     expectLog(
       '[Cosmos] Learn how to override webpack config for cosmos: https://reactcosmos.org/docs/getting-started/webpack#webpack-config-override'
     );
-    const cosmosConfig = createCosmosConfig(process.cwd(), {
+    const config = createCosmosConfig(process.cwd(), {
       webpack: {
         configPath: 'mywebpack.config.js',
       },
     });
-    return getDevWebpackConfig(cosmosConfig, webpack);
+    return getDevWebpackConfig(config, webpack);
   });
 }
 

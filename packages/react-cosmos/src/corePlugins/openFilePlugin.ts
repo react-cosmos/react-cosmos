@@ -10,7 +10,7 @@ type ReqQuery = { filePath: void | string; line: number; column: number };
 export const openFilePlugin: CosmosServerPlugin = {
   name: 'openFile',
 
-  devServer({ cosmosConfig, app }) {
+  devServer({ config, app }) {
     app.get('/_open', (req: Request, res: Response) => {
       const { filePath, line, column } = getReqQuery(req);
       if (!filePath) {
@@ -18,7 +18,7 @@ export const openFilePlugin: CosmosServerPlugin = {
         return;
       }
 
-      const absFilePath = resolveFilePath(cosmosConfig.rootDir, filePath);
+      const absFilePath = resolveFilePath(config.rootDir, filePath);
       if (!fs.existsSync(absFilePath)) {
         res.status(404).send(`File not found at path: ${absFilePath}`);
         return;

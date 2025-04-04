@@ -8,13 +8,13 @@ import { resolve } from '../utils/resolve.js';
 
 export async function createExpressApp(
   platform: CosmosPlatform,
-  cosmosConfig: CosmosConfig,
+  config: CosmosConfig,
   pluginConfigs: CosmosPluginConfig[]
 ): Promise<Express> {
   const app = express();
 
   app.get('/', async (_: Request, res: Response) => {
-    res.send(await getDevPlaygroundHtml(platform, cosmosConfig, pluginConfigs));
+    res.send(await getDevPlaygroundHtml(platform, config, pluginConfigs));
   });
 
   app.get('/playground.bundle.js', (_: Request, res: Response) => {

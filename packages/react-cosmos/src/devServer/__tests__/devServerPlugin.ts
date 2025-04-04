@@ -31,9 +31,9 @@ const devServerCleanup = vi.fn(() => Promise.resolve());
 const testServerPlugin = {
   name: 'testServerPlugin',
 
-  config: vi.fn(async ({ cosmosConfig }) => {
+  config: vi.fn(async ({ config }) => {
     return {
-      ...cosmosConfig,
+      ...config,
       ignore: ['**/ignored.fixture.js'],
     };
   }),
@@ -72,7 +72,7 @@ beforeAll(async () => {
 
 it('calls config hook', async () => {
   expect(testServerPlugin.config).toBeCalledWith({
-    cosmosConfig: expect.objectContaining({ port }),
+    config: expect.objectContaining({ port }),
     mode: 'dev',
     platform: 'web',
   });
@@ -80,7 +80,7 @@ it('calls config hook', async () => {
 
 it('calls dev server hook (with updated config)', async () => {
   expect(testServerPlugin.devServer).toBeCalledWith({
-    cosmosConfig: expect.objectContaining({
+    config: expect.objectContaining({
       port,
       ignore: ['**/ignored.fixture.js'],
     }),

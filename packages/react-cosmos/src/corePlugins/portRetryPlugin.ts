@@ -4,14 +4,14 @@ import { findNextAvailablePort } from '../shared/findNextAvailablePort.js';
 export const portRetryPlugin: CosmosServerPlugin = {
   name: 'portRetry',
 
-  async config({ cosmosConfig, mode }) {
+  async config({ config, mode }) {
     if (mode === 'export') {
-      return cosmosConfig;
+      return config;
     }
 
-    const { port, portRetries } = cosmosConfig;
+    const { port, portRetries } = config;
     return {
-      ...cosmosConfig,
+      ...config,
       port: portRetries ? await findNextAvailablePort(port, portRetries) : port,
     };
   },

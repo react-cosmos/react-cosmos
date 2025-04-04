@@ -27,9 +27,9 @@ const asyncMock = vi.fn();
 const testServerPlugin = {
   name: 'testServerPlugin',
 
-  config: vi.fn(async ({ cosmosConfig }) => {
+  config: vi.fn(async ({ config }) => {
     return {
-      ...cosmosConfig,
+      ...config,
       ignore: ['**/ignored.fixture.js'],
     };
   }),
@@ -75,7 +75,7 @@ it('calls config hook', async () => {
     await generateExport();
 
     expect(testServerPlugin.config).toBeCalledWith({
-      cosmosConfig: expect.objectContaining({ exportPath }),
+      config: expect.objectContaining({ exportPath }),
       mode: 'export',
       platform: 'web',
     });
@@ -91,7 +91,7 @@ it('calls export hook (with updated config)', async () => {
     await generateExport();
 
     expect(testServerPlugin.export).toBeCalledWith({
-      cosmosConfig: expect.objectContaining({
+      config: expect.objectContaining({
         exportPath,
         ignore: ['**/ignored.fixture.js'],
       }),
