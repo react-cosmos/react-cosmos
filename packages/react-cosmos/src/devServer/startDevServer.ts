@@ -8,6 +8,7 @@ import { CosmosPlatform } from '../cosmosPlugin/types.js';
 import { applyServerConfigPlugins } from '../shared/applyServerConfigPlugins.js';
 import { getServerPlugins } from '../shared/getServerPlugins.js';
 import { logPluginInfo } from '../shared/logPluginInfo.js';
+import { logPlaygroundUrls } from '../shared/playgroundUrl.js';
 import { serveStaticDir } from '../shared/staticServer.js';
 import { createExpressApp } from './expressApp.js';
 import { createHttpServer } from './httpServer.js';
@@ -89,6 +90,8 @@ export async function startDevServer(platform: CosmosPlatform) {
       throw err;
     }
   }
+
+  logPlaygroundUrls(config);
 
   return cleanUp;
 }

@@ -1,7 +1,6 @@
 import http from 'http';
 import https from 'https';
 import { CosmosConfig } from '../cosmosConfig/types.js';
-import { getPlaygroundUrls } from '../shared/playgroundUrl.js';
 import { getHttpsCreds } from './httpsCreds.js';
 
 type RequestListener = (
@@ -25,9 +24,6 @@ export async function createHttpServer(
         server.listen(config.port, config.host, resolve);
       }
     });
-
-    const urls = getPlaygroundUrls(config);
-    console.log(`[Cosmos] See you at ${urls.join(' or ')}`);
   }
 
   async function stop() {
