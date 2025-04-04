@@ -11,13 +11,13 @@ afterEach(async () => {
 });
 
 it('defaults lazy to false', () => {
-  const cosmosConfig = createCosmosConfig(process.cwd());
-  expect(cosmosConfig.lazy).toBe(false);
+  const config = createCosmosConfig(process.cwd());
+  expect(config.lazy).toBe(false);
 });
 
 it('uses --lazy CLI arg', async () => {
   await mockCliArgs({ lazy: true });
 
-  const cosmosConfig = createCosmosConfig(process.cwd());
-  expect(cosmosConfig.lazy).toBe(true);
+  const config = createCosmosConfig(process.cwd());
+  expect(config.lazy).toBe(true);
 });

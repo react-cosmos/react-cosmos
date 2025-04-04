@@ -12,27 +12,27 @@ afterEach(async () => {
 });
 
 it('does not expose imports by default', () => {
-  const cosmosConfig = createCosmosConfig(process.cwd());
-  expect(cosmosConfig.exposeImports).toBe(false);
+  const config = createCosmosConfig(process.cwd());
+  expect(config.exposeImports).toBe(false);
 });
 
 it('returns resolved user imports path', () => {
-  const cosmosConfig = createCosmosConfig(process.cwd(), {
+  const config = createCosmosConfig(process.cwd(), {
     exposeImports: 'src/myImports.ts',
   });
-  expect(cosmosConfig.exposeImports).toBe(getCwdPath('src/myImports.ts'));
+  expect(config.exposeImports).toBe(getCwdPath('src/myImports.ts'));
 });
 
 it('uses --exportImports CLI arg', async () => {
   await mockCliArgs({ exposeImports: true });
 
-  const cosmosConfig = createCosmosConfig(process.cwd());
-  expect(cosmosConfig.exposeImports).toBe(true);
+  const config = createCosmosConfig(process.cwd());
+  expect(config.exposeImports).toBe(true);
 });
 
 it('resolves --exportImports CLI arg path', async () => {
   await mockCliArgs({ exposeImports: 'src/myImports.ts' });
 
-  const cosmosConfig = createCosmosConfig(process.cwd());
-  expect(cosmosConfig.exposeImports).toBe(getCwdPath('src/myImports.ts'));
+  const config = createCosmosConfig(process.cwd());
+  expect(config.exposeImports).toBe(getCwdPath('src/myImports.ts'));
 });

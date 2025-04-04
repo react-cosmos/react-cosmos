@@ -6,11 +6,11 @@ import { getFixtures } from './getFixtures.js';
 const rootDir = path.join(__dirname, '../../../../examples/webpack');
 
 it('renders fixture elements', async () => {
-  const cosmosConfig = createCosmosConfig(rootDir, {
+  const config = createCosmosConfig(rootDir, {
     ignore: ['**/*.mdx'],
   });
 
-  const fixures = await getFixtures(cosmosConfig, {
+  const fixures = await getFixtures(config, {
     rendererUrl: 'http://localhost:5000/renderer.html',
   });
 
@@ -28,11 +28,11 @@ it('renders fixture elements', async () => {
 });
 
 it('returns fixture info', async () => {
-  const cosmosConfig = createCosmosConfig(rootDir, {
+  const config = createCosmosConfig(rootDir, {
     ignore: ['**/*.mdx'],
   });
 
-  const fixtures = await getFixtures(cosmosConfig, {
+  const fixtures = await getFixtures(config, {
     rendererUrl: 'http://localhost:5000/renderer.html',
   });
 

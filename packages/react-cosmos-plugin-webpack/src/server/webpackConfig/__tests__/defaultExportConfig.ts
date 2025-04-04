@@ -12,7 +12,7 @@ afterAll(async () => {
   await unmockCliArgs();
 });
 
-const cosmosConfig = createCosmosConfig(process.cwd());
+const config = createCosmosConfig(process.cwd());
 
 async function getDefaultExportWebpackConfig() {
   return mockConsole(async ({ expectLog }) => {
@@ -20,7 +20,7 @@ async function getDefaultExportWebpackConfig() {
     expectLog(
       '[Cosmos] Learn how to override webpack config for cosmos: https://reactcosmos.org/docs/getting-started/webpack#webpack-config-override'
     );
-    return await getExportWebpackConfig(cosmosConfig, webpack);
+    return await getExportWebpackConfig(config, webpack);
   });
 }
 
@@ -59,7 +59,7 @@ it('includes user imports loader', async () => {
   expect(module!.rules).toContainEqual({
     loader: pkgPath('server/webpackConfig/userImportsLoader.cjs'),
     include: pkgPath('client/userImports.js'),
-    options: { cosmosConfig, mode: 'export' },
+    options: { config, mode: 'export' },
   });
 });
 

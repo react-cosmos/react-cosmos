@@ -31,9 +31,9 @@ const devServerCleanup = vi.fn(() => Promise.resolve());
 const testServerPlugin = {
   name: 'testServerPlugin',
 
-  config: vi.fn(async ({ cosmosConfig }) => {
+  config: vi.fn(async ({ config }) => {
     return {
-      ...cosmosConfig,
+      ...config,
       ignore: ['**/ignored.fixture.js'],
     };
   }),
