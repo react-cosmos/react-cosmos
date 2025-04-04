@@ -5,6 +5,15 @@ import { buildRendererQueryString } from './rendererQueryString.js';
 
 export type CosmosRendererUrl = null | string | { dev: string; export: string };
 
+export function pickRendererUrl(
+  rendererUrl: undefined | CosmosRendererUrl,
+  mode: CosmosMode
+): null | string {
+  return rendererUrl && typeof rendererUrl === 'object'
+    ? rendererUrl[mode]
+    : (rendererUrl ?? null);
+}
+
 export function createRendererUrl(
   rendererUrl: string,
   fixtureId?: FixtureId,
@@ -25,13 +34,14 @@ export function createRendererUrl(
   }
 }
 
-export function pickRendererUrl(
-  rendererUrl: undefined | CosmosRendererUrl,
-  mode: CosmosMode
-): null | string {
-  return rendererUrl && typeof rendererUrl === 'object'
-    ? rendererUrl[mode]
-    : (rendererUrl ?? null);
+export function createWebRendererUrl(
+  rendererUrl: string,
+  fixtureId?: FixtureId,
+  locked?: boolean
+) {
+  return applyWindowHostnameToRendererUrl(
+    createRendererUrl(rendererUrl, fixtureId, locked)
+  );
 }
 
 export function encodeRendererUrlFixture(fixtureId: FixtureId) {
@@ -56,5 +66,19 @@ function hostOnlyUrl(url: string) {
     return (protocol === 'http:' || protocol === 'https:') && pathname === '/';
   } catch (err) {
     return false;
+  }
+}
+
+function applyWindowHostnameToRendererUrl(rendererUrl: string) {
+  try {
+    const url = new URL(rendererUrl);
+
+    const windowHostname = window.location.hostname;
+    if (url.hostname !== windowHostname && url.hostname === 'localhost')
+      url.hostname = windowHostname;
+
+    return url.toString();
+  } catch {
+    return rendererUrl;
   }
 }

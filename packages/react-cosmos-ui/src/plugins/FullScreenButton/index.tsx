@@ -1,5 +1,5 @@
 import React from 'react';
-import { createRendererUrl } from 'react-cosmos-core';
+import { createWebRendererUrl } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
 import { RendererActionSlotProps } from '../../slots/RendererActionSlot.js';
 import { CoreSpec } from '../Core/spec.js';
@@ -23,7 +23,7 @@ namedPlug<RendererActionSlotProps>(
 
     const onSelect = React.useCallback(() => {
       if (rendererUrl) {
-        const fixtureUrl = createRendererUrl(rendererUrl, fixtureId, true);
+        const fixtureUrl = createWebRendererUrl(rendererUrl, fixtureId, true);
         // noopener is required to prevent reuse of sessionStorage from the
         // Playground window, thus making sure the remote renderer will generate
         // a different rendererId from the iframe renderer.
