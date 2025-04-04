@@ -13,3 +13,8 @@ export function getPlaygroundUrls(config: CosmosConfig) {
     `${protocol}://${getServerHost(config)}:${config.port}`,
   ];
 }
+
+export function logPlaygroundUrls(config: CosmosConfig) {
+  const urls = getPlaygroundUrls(config);
+  console.log(`[Cosmos] See you at ${urls.join(' or ')}`);
+}
