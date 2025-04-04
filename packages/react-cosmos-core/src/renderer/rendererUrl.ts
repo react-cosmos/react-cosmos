@@ -34,7 +34,7 @@ export function createRendererUrl(
   }
 }
 
-export function createIframeRendererUrl(
+export function createWebRendererUrl(
   rendererUrl: string,
   fixtureId?: FixtureId,
   locked?: boolean
@@ -72,7 +72,11 @@ function hostOnlyUrl(url: string) {
 function applyWindowHostnameToRendererUrl(rendererUrl: string) {
   try {
     const url = new URL(rendererUrl);
-    url.hostname = window.location.hostname;
+
+    const windowHostname = window.location.hostname;
+    if (url.hostname !== windowHostname && url.hostname === 'localhost')
+      url.hostname = windowHostname;
+
     return url.toString();
   } catch {
     return rendererUrl;
