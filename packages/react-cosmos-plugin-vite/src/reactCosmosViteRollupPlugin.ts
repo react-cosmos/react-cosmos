@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import {
   CosmosConfig,
@@ -8,9 +9,10 @@ import {
 } from 'react-cosmos';
 import { CosmosMode } from 'react-cosmos-core';
 import { DomRendererConfig } from 'react-cosmos-dom';
-import { Plugin } from 'rollup';
+import { PluginOption, ResolvedConfig } from 'vite';
 import { CosmosViteConfig } from './createCosmosViteConfig.js';
 import { createViteRendererIndex } from './createViteRendererIndex.js';
+import { generateViteIndexHtml } from './generateViteIndexHtml.js';
 
 export const userImportsVirtualModuleId = 'virtual:cosmos-imports';
 export const userImportsResolvedModuleId = '\0' + userImportsVirtualModuleId;
@@ -23,9 +25,19 @@ export function reactCosmosViteRollupPlugin(
   config: CosmosConfig,
   cosmosViteConfig: CosmosViteConfig,
   mode: CosmosMode
-): Plugin {
+): PluginOption {
   return {
     name: 'react-cosmos-vite-renderer',
+
+    configResolved(viteConfig: ResolvedConfig) {
+      const htmlPath = path.resolve(viteConfig.root, 'index.html');
+      if (!fs.existsSync(htmlPath)) {
+        console.log(
+          `[Cosmos] Vite index.html not found, creating a default one...`
+        );
+        fs.writeFileSync(htmlPath, generateViteIndexHtml(viteConfig));
+      }
+    },
 
     resolveId(id) {
       if (id === userImportsVirtualModuleId) {
