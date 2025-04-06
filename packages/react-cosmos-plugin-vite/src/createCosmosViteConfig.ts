@@ -1,10 +1,5 @@
 import path from 'node:path';
-import {
-  CosmosConfig,
-  fileExists,
-  resolveFromSilent,
-  resolveLoose,
-} from 'react-cosmos';
+import { CosmosConfig, fileExists, resolveFromSilent } from 'react-cosmos';
 
 export type CosmosViteConfig = {
   configPath: string | false;
@@ -25,7 +20,7 @@ export function createCosmosViteConfig(config: CosmosConfig): CosmosViteConfig {
     configPath,
 
     indexPath: configInput.indexPath
-      ? resolveLoose(rootDir, configInput.indexPath)
+      ? path.join(rootDir, configInput.indexPath)
       : null,
 
     port: getCosmosVitePort(configInput),
@@ -55,7 +50,7 @@ function getViteConfigPath(
     );
   }
 
-  const absPath = resolveLoose(rootDir, configPath);
+  const absPath = path.join(rootDir, configPath);
   if (!fileExists(absPath)) {
     const relPath = path.relative(process.cwd(), absPath);
     throw new Error(`Vite config not found at path: ${relPath}`);
