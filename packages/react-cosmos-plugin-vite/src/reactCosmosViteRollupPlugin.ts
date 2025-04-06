@@ -35,7 +35,7 @@ export function reactCosmosViteRollupPlugin(
         console.log(
           `[Cosmos] Vite index.html not found, creating a default one...`
         );
-        fs.writeFileSync(htmlPath, generateViteIndexHtml(viteConfig));
+        fs.writeFileSync(htmlPath, generateViteIndexHtml());
       }
     },
 

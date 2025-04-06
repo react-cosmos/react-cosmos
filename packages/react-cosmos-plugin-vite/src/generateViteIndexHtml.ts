@@ -1,6 +1,11 @@
-import { ResolvedConfig } from 'vite';
+import { moduleExists } from 'react-cosmos';
 
-export function generateViteIndexHtml(viteConfig: ResolvedConfig) {
+const tsMainPath = 'src/main.tsx';
+const jsMainPath = 'src/main.jsx';
+
+export function generateViteIndexHtml() {
+  const mainPath = moduleExists('typescript') ? tsMainPath : jsMainPath;
+
   return `<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,7 +15,7 @@ export function generateViteIndexHtml(viteConfig: ResolvedConfig) {
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="/${mainPath}"></script>
   </body>
-</html>`;
+</html>\n`;
 }
