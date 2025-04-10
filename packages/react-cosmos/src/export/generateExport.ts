@@ -46,7 +46,7 @@ export async function generateExport() {
     try {
       await plugin.export({ config });
     } catch (err) {
-      console.log(`[Cosmos][plugin:${plugin.name}] Export failed`);
+      console.log(`[Cosmos][${plugin.name}] Export failed`);
       throw err;
     }
   }
