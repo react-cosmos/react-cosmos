@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { grey128, grey160, grey32, white10 } from '../style/colors.js';
+import { grey128, grey160, grey32 } from '../style/colors.js';
 
 export const SidePanelContainer = styled.div`
   background: ${grey32};
-  border-top: 1px solid ${white10};
 
   :first-child {
     border-top: none;
@@ -41,14 +40,7 @@ export function SidePanelTitle({ label, componentName }: TitleProps) {
 export const SidePanelActions = styled.div`
   display: flex;
   flex-direction: row;
-
-  > button {
-    margin-left: 4px;
-
-    :first-child {
-      margin-left: 0;
-    }
-  }
+  gap: 4px;
 `;
 
 export const SidePanelBody = styled.div`

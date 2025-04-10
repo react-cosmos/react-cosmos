@@ -1,5 +1,5 @@
 import launchEditor from '@skidding/launch-editor';
-import express from 'express';
+import { Request, Response } from 'express';
 import fs from 'fs';
 import open from 'open';
 import path from 'path';
@@ -10,15 +10,15 @@ type ReqQuery = { filePath: void | string; line: number; column: number };
 export const openFilePlugin: CosmosServerPlugin = {
   name: 'openFile',
 
-  devServer({ cosmosConfig, expressApp }) {
-    expressApp.get('/_open', (req: express.Request, res: express.Response) => {
+  devServer({ config, app }) {
+    app.get('/_open', (req: Request, res: Response) => {
       const { filePath, line, column } = getReqQuery(req);
       if (!filePath) {
         res.status(400).send(`File path missing`);
         return;
       }
 
-      const absFilePath = resolveFilePath(cosmosConfig.rootDir, filePath);
+      const absFilePath = resolveFilePath(config.rootDir, filePath);
       if (!fs.existsSync(absFilePath)) {
         res.status(404).send(`File not found at path: ${absFilePath}`);
         return;
@@ -43,7 +43,7 @@ export const openFilePlugin: CosmosServerPlugin = {
   },
 };
 
-function getReqQuery(req: express.Request): ReqQuery {
+function getReqQuery(req: Request): ReqQuery {
   const { filePath, line, column } = req.query;
   if (typeof filePath !== 'string') throw new Error('filePath missing');
   return {

@@ -16,10 +16,10 @@ type WebpackCosmosConfig = {
 type WebpackCosmosConfigInput = Partial<WebpackCosmosConfig>;
 
 export function createWebpackCosmosConfig(
-  cosmosConfig: CosmosConfig
+  config: CosmosConfig
 ): WebpackCosmosConfig {
-  const { rootDir } = cosmosConfig;
-  const configInput: WebpackCosmosConfigInput = cosmosConfig.webpack || {};
+  const { rootDir } = config;
+  const configInput: WebpackCosmosConfigInput = config.webpack || {};
 
   return {
     configPath: getWebpackConfigPath(configInput, rootDir),

@@ -1,6 +1,5 @@
-import React, { ComponentType, ReactNode } from 'react';
+import React, { ComponentType, isValidElement, ReactNode } from 'react';
 import { ReactFixture } from 'react-cosmos-core';
-import { isElement } from 'react-is';
 
 export function createFixtureNode(fixture: ReactFixture): React.ReactNode {
   // Warning: In a React Server Components setup this function is called on the
@@ -28,7 +27,7 @@ function isNodeFixture(fixture: ReactFixture): fixture is ReactNode {
     Array.isArray(fixture) ||
     // If you're curious what isElement checks:
     // https://github.com/facebook/react/blob/1b0132c05acabae5aebd32c2cadddfb16bda70bc/packages/react-is/src/ReactIs.js#L108-L114
-    isElement(fixture)
+    isValidElement(fixture)
   );
 }
 

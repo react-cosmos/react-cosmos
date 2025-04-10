@@ -1,5 +1,4 @@
 import React, { RefObject } from 'react';
-import { FixtureId } from 'react-cosmos-core';
 import styled from 'styled-components';
 import { quick } from '../../../style/vars.js';
 import { FixtureLink } from './FixtureLink.js';
@@ -11,7 +10,6 @@ type Props = {
   indentLevel: number;
   selected: boolean;
   selectedRef: RefObject<HTMLElement | null>;
-  onSelect: (fixtureId: FixtureId) => unknown;
 };
 
 export function FixtureButton({
@@ -20,10 +18,9 @@ export function FixtureButton({
   indentLevel,
   selected,
   selectedRef,
-  onSelect,
 }: Props) {
   return (
-    <FixtureLink fixtureId={{ path: fixturePath }} onSelect={onSelect}>
+    <FixtureLink fixtureId={{ path: fixturePath }}>
       <FixtureTreeItem
         ref={selected ? selectedRef : undefined}
         indentLevel={indentLevel}

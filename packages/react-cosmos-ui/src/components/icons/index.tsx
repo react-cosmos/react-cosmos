@@ -221,3 +221,31 @@ export const StarIcon = () => (
     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
   </Icon>
 );
+
+export const LockIcon = () => (
+  <Icon>
+    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+  </Icon>
+);
+
+export const UnlockIcon = () => (
+  <Icon>
+    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+    <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+  </Icon>
+);
+
+export const LayersIcon = () => (
+  <Icon>
+    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+    <polyline points="2 17 12 22 22 17"></polyline>
+    <polyline points="2 12 12 17 22 12"></polyline>
+  </Icon>
+);
+
+export const MessageSquareIcon = () => (
+  <Icon>
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+  </Icon>
+);

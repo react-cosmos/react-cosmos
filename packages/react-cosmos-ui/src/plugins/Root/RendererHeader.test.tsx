@@ -18,34 +18,38 @@ const propDefaults = {
     path: 'src/plugins/Notifications/index.fixture.tsx',
     name: 'multiple',
   },
-  panelOpen: false,
-  navOpen: false,
+  navPanelOpen: false,
+  controlPanelOpen: false,
+  drawerPanels: false,
   fixtureActionOrder: [],
   rendererActionOrder: [],
-  onOpenNav: () => {},
-  onTogglePanel: () => {},
+  onToggleNavPanel: () => {},
+  onToggleControlPanel: () => {},
   onReloadRenderer: () => {},
   onClose: () => {},
 };
 
-it('renders toggle nav button', async () => {
-  const onOpenNav = vi.fn();
+it('renders show nav panel button', async () => {
+  const onToggleNavPanel = vi.fn();
   const { getByTitle } = render(
-    <RendererHeader {...propDefaults} onOpenNav={onOpenNav} />
+    <RendererHeader {...propDefaults} onToggleNavPanel={onToggleNavPanel} />
   );
 
-  fireEvent.click(getByTitle(/show fixture list/i));
-  expect(onOpenNav).toBeCalled();
+  fireEvent.click(getByTitle(/show nav panel/i));
+  expect(onToggleNavPanel).toBeCalled();
 });
 
-it('renders toggle panel button', async () => {
-  const onTogglePanel = vi.fn();
+it('renders show control panel button', async () => {
+  const onToggleControlPanel = vi.fn();
   const { getByTitle } = render(
-    <RendererHeader {...propDefaults} onTogglePanel={onTogglePanel} />
+    <RendererHeader
+      {...propDefaults}
+      onToggleControlPanel={onToggleControlPanel}
+    />
   );
 
-  fireEvent.click(getByTitle(/toggle control panel/i));
-  expect(onTogglePanel).toBeCalled();
+  fireEvent.click(getByTitle(/show control panel/i));
+  expect(onToggleControlPanel).toBeCalled();
 });
 
 it('renders close button', async () => {

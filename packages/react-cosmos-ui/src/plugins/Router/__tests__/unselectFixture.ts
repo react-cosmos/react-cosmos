@@ -21,7 +21,7 @@ afterEach(() => {
 const fixtureId = { path: 'zwei.js' };
 
 function loadTestPlugins() {
-  pushUrlParams({ fixtureId: JSON.stringify(fixtureId) });
+  pushUrlParams({ fixture: JSON.stringify(fixtureId) });
   loadPlugins();
 }
 

@@ -1,5 +1,4 @@
 src
 cosmos.config.json
 tsconfig.build.json
-webpack.config.build.js
-webpack.config.cosmos.js
+webpack.config.js

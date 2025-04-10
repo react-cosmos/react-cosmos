@@ -1,13 +1,15 @@
 {
   "$schema": "../react-cosmos/config.schema.json",
   "globalImports": ["src/cosmos.loadPlugins.ts"],
-  "webpack": {
-    "configPath": "./webpack.config.cosmos.js"
-  },
   "port": 5500,
   "plugins": [
     "react-cosmos-plugin-boolean-input",
     "react-cosmos-plugin-open-fixture",
     "react-cosmos-plugin-webpack"
-  ]
+  ],
+  "ui": {
+    "rendererPreview": {
+      "backgroundColor": "rgb(24, 24, 24)"
+    }
+  }
 }

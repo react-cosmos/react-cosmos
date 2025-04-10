@@ -16,21 +16,18 @@ import { resolveWebpackClientPath } from './resolveWebpackClientPath.js';
 import { ensureWebpackConfigTopLevelAwait } from './webpackConfigTopLevelAwait.js';
 
 export async function getDevWebpackConfig(
-  cosmosConfig: CosmosConfig,
+  config: CosmosConfig,
   userWebpack: typeof webpack
 ): Promise<webpack.Configuration> {
-  const baseWebpackConfig = await getUserWebpackConfig(
-    cosmosConfig,
-    userWebpack
-  );
+  const baseWebpackConfig = await getUserWebpackConfig(config, userWebpack);
 
   const webpackConfig = {
     ...baseWebpackConfig,
-    entry: getEntry(cosmosConfig),
-    output: getOutput(cosmosConfig),
-    module: getWebpackConfigModule(cosmosConfig, baseWebpackConfig),
-    resolve: getWebpackConfigResolve(cosmosConfig, baseWebpackConfig),
-    plugins: getPlugins(cosmosConfig, baseWebpackConfig, userWebpack),
+    entry: getEntry(config),
+    output: getOutput(config),
+    module: getWebpackConfigModule(config, baseWebpackConfig, 'dev'),
+    resolve: getWebpackConfigResolve(config, baseWebpackConfig),
+    plugins: getPlugins(config, baseWebpackConfig, userWebpack),
     experiments: getExperiments(baseWebpackConfig),
   };
 
@@ -52,8 +49,8 @@ export async function getDevWebpackConfig(
   return webpackConfig;
 }
 
-function getEntry(cosmosConfig: CosmosConfig) {
-  const { hotReload, reloadOnFail } = createWebpackCosmosConfig(cosmosConfig);
+function getEntry(config: CosmosConfig) {
+  const { hotReload, reloadOnFail } = createWebpackCosmosConfig(config);
   // The React devtools hook needs to be imported before any other module that
   // might import React
   const devtoolsHook = resolveWebpackClientPath('reactDevtoolsHook.js');
@@ -76,22 +73,22 @@ function getOutput({ publicUrl }: CosmosConfig) {
 }
 
 function getPlugins(
-  cosmosConfig: CosmosConfig,
+  config: CosmosConfig,
   baseWebpackConfig: webpack.Configuration,
   userWebpack: typeof webpack
 ) {
   const existingPlugins = ignoreEmptyWebpackPlugins(baseWebpackConfig.plugins);
-  const globalsPlugin = getGlobalsPlugin(cosmosConfig, userWebpack, true);
+  const globalsPlugin = getGlobalsPlugin(config, userWebpack, true);
   const noEmitErrorsPlugin = new userWebpack.NoEmitOnErrorsPlugin();
   let plugins = [...existingPlugins, globalsPlugin, noEmitErrorsPlugin];
 
-  const { hotReload } = createWebpackCosmosConfig(cosmosConfig);
+  const { hotReload } = createWebpackCosmosConfig(config);
   if (hotReload && !hasPlugin(plugins, 'HotModuleReplacementPlugin')) {
     const hmrPlugin = new userWebpack.HotModuleReplacementPlugin();
     plugins = [...plugins, hmrPlugin];
   }
 
-  return ensureHtmlWebackPlugin(cosmosConfig, plugins);
+  return ensureHtmlWebackPlugin(config, plugins);
 }
 
 function getHotMiddlewareEntry(reloadOnFail: boolean) {

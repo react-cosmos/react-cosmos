@@ -3,9 +3,10 @@ import {
   CosmosConfig,
   findUserModulePaths,
   generateUserImports,
-  getPlaygroundUrl,
+  getWebSocketUrl,
   slash,
 } from 'react-cosmos';
+import { CosmosMode } from 'react-cosmos-core';
 import { DomRendererConfig } from 'react-cosmos-dom';
 import { Plugin } from 'rollup';
 import { CosmosViteConfig } from './createCosmosViteConfig.js';
@@ -19,8 +20,9 @@ const defaultIndexPattern = new RegExp(
 );
 
 export function reactCosmosViteRollupPlugin(
-  cosmosConfig: CosmosConfig,
-  cosmosViteConfig: CosmosViteConfig
+  config: CosmosConfig,
+  cosmosViteConfig: CosmosViteConfig,
+  mode: CosmosMode
 ): Plugin {
   return {
     name: 'react-cosmos-vite-renderer',
@@ -35,13 +37,14 @@ export function reactCosmosViteRollupPlugin(
 
     async load(id: string) {
       if (id == userImportsResolvedModuleId) {
-        const modulePaths = await findUserModulePaths(cosmosConfig);
+        const modulePaths = await findUserModulePaths(config);
         return generateUserImports<DomRendererConfig>({
-          cosmosConfig,
+          config,
           modulePaths,
           rendererConfig: {
-            playgroundUrl: getPlaygroundUrl(cosmosConfig),
-            containerQuerySelector: cosmosConfig.dom.containerQuerySelector,
+            webSocketUrl: mode === 'dev' ? getWebSocketUrl(config) : null,
+            rendererUrl: null,
+            containerQuerySelector: config.dom.containerQuerySelector,
           },
           relativeToDir: null,
           typeScript: false,
@@ -54,11 +57,11 @@ export function reactCosmosViteRollupPlugin(
     transform(src, id) {
       const absPath =
         cosmosViteConfig.indexPath &&
-        absoluteIndexPath(cosmosViteConfig.indexPath, cosmosConfig.rootDir);
+        absoluteIndexPath(cosmosViteConfig.indexPath, config.rootDir);
 
       const isRendererIndex = absPath
         ? absPath === id
-        : path.relative(cosmosConfig.rootDir, id).match(defaultIndexPattern);
+        : path.relative(config.rootDir, id).match(defaultIndexPattern);
 
       if (isRendererIndex) {
         const relPath = path.relative(process.cwd(), id);

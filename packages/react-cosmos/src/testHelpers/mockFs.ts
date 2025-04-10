@@ -98,11 +98,11 @@ export async function mockFile(filePath: string, fileMock: {}) {
 }
 
 export async function mockCosmosConfig(
-  cosmosConfigPath: string,
-  cosmosConfig: Partial<CosmosConfig>
+  configPath: string,
+  config: Partial<CosmosConfig>
 ) {
-  const absPath = getCwdPath(cosmosConfigPath);
-  await mockFile(absPath, cosmosConfig);
+  const absPath = getCwdPath(configPath);
+  await mockFile(absPath, config);
 }
 
 export async function mockCwdModuleDefault(filePath: string, fileMock: {}) {

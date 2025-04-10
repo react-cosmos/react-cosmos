@@ -8,29 +8,30 @@ import { RENDERER_FILENAME } from './constants.js';
 import { getCosmosVitePort } from './createCosmosViteConfig.js';
 
 export async function viteConfigPlugin({
-  cosmosConfig,
-  command,
+  config,
+  mode,
 }: CosmosConfigPluginArgs): Promise<CosmosConfig> {
-  if (cosmosConfig.rendererUrl) {
-    return cosmosConfig;
+  if (config.rendererUrl) {
+    return config;
   }
 
-  if (command === 'export') {
+  if (mode === 'export') {
     return {
-      ...cosmosConfig,
-      rendererUrl: path.join(cosmosConfig.publicUrl, RENDERER_FILENAME),
+      ...config,
+      rendererUrl: path.join(config.publicUrl, RENDERER_FILENAME),
     };
   }
 
-  const cosmosViteConfig = cosmosConfig.vite || {};
+  const cosmosViteConfig = config.vite || {};
   const port = await findNextAvailablePort(
     getCosmosVitePort(cosmosViteConfig),
-    cosmosConfig.portRetries
+    config.portRetries
   );
 
+  const protocol = config.https ? 'https' : 'http';
   return {
-    ...cosmosConfig,
-    rendererUrl: `http://localhost:${port}`,
+    ...config,
+    rendererUrl: `${protocol}://localhost:${port}`,
     vite: {
       ...cosmosViteConfig,
       port: port,

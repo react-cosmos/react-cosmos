@@ -1,14 +1,10 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import {
-  CosmosCommand,
-  RendererConfig,
-  pickRendererUrl,
-} from 'react-cosmos-core';
+import { CosmosMode, RendererConfig, pickRendererUrl } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { CosmosPlatform, CosmosServerPlugin } from '../cosmosPlugin/types.js';
-import { getPlaygroundUrl } from '../shared/playgroundUrl.js';
 import { updateFixtureListCache } from '../shared/serverFixtureList.js';
+import { getWebSocketUrl } from '../shared/webSocketUrl.js';
 import { findUserModulePaths } from '../userModules/findUserModulePaths.js';
 import { startFixtureWatcher } from '../userModules/fixtureWatcher.js';
 import { generateUserImports } from '../userModules/generateUserImports.js';
@@ -18,21 +14,21 @@ import { moduleExists } from '../utils/fs.js';
 export const fixtureWatcherPlugin: CosmosServerPlugin = {
   name: 'fixtureWatcher',
 
-  async devServer({ cosmosConfig, platform }) {
-    const exposeImports = shouldExposeImports(platform, cosmosConfig);
+  async devServer({ config, platform }) {
+    const exposeImports = shouldExposeImports(platform, config);
 
     if (exposeImports) {
-      const modulePaths = await findUserModulePaths(cosmosConfig);
-      await generateImportsFile(cosmosConfig, 'dev', modulePaths);
+      const modulePaths = await findUserModulePaths(config);
+      await generateImportsFile(platform, config, 'dev', modulePaths);
     }
 
-    const watcher = await startFixtureWatcher(cosmosConfig, 'all', async () => {
-      const modulePaths = await findUserModulePaths(cosmosConfig);
+    const watcher = await startFixtureWatcher(config, 'all', async () => {
+      const modulePaths = await findUserModulePaths(config);
 
-      updateFixtureListCache(cosmosConfig.rootDir, modulePaths.fixturePaths);
+      updateFixtureListCache(config.rootDir, modulePaths.fixturePaths);
 
       if (exposeImports) {
-        generateImportsFile(cosmosConfig, 'dev', modulePaths);
+        generateImportsFile(platform, config, 'dev', modulePaths);
       }
     });
 
@@ -41,41 +37,40 @@ export const fixtureWatcherPlugin: CosmosServerPlugin = {
     };
   },
 
-  async export({ cosmosConfig }) {
-    if (shouldExposeImports('web', cosmosConfig)) {
-      const modulePaths = await findUserModulePaths(cosmosConfig);
-      await generateImportsFile(cosmosConfig, 'export', modulePaths);
+  async export({ config }) {
+    if (shouldExposeImports('web', config)) {
+      const modulePaths = await findUserModulePaths(config);
+      await generateImportsFile('web', config, 'export', modulePaths);
     }
   },
 };
 
-function shouldExposeImports(
-  platform: CosmosPlatform,
-  cosmosConfig: CosmosConfig
-) {
-  return platform === 'native' || Boolean(cosmosConfig.exposeImports);
+function shouldExposeImports(platform: CosmosPlatform, config: CosmosConfig) {
+  return platform === 'native' || Boolean(config.exposeImports);
 }
 
 async function generateImportsFile(
-  cosmosConfig: CosmosConfig,
-  command: CosmosCommand,
+  platform: CosmosPlatform,
+  config: CosmosConfig,
+  mode: CosmosMode,
   modulePaths: UserModulePaths
 ) {
-  const { exposeImports } = cosmosConfig;
+  const { exposeImports } = config;
 
   const filePath =
     typeof exposeImports === 'string'
       ? exposeImports
-      : getDefaultFilePath(cosmosConfig.rootDir);
+      : getDefaultFilePath(config.rootDir);
 
   const typeScript = /\.tsx?$/.test(filePath);
 
   const rendererConfig = {
-    playgroundUrl: getPlaygroundUrl(cosmosConfig),
-    rendererUrl: pickRendererUrl(cosmosConfig.rendererUrl, command),
+    webSocketUrl: mode === 'dev' ? getWebSocketUrl(config) : null,
+    rendererUrl:
+      platform === 'web' ? pickRendererUrl(config.rendererUrl, mode) : null,
   };
   const fileSource = generateUserImports<RendererConfig>({
-    cosmosConfig,
+    config,
     modulePaths,
     rendererConfig,
     relativeToDir: path.dirname(filePath),

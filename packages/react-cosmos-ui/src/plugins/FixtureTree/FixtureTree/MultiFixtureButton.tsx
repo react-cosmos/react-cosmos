@@ -14,7 +14,6 @@ type Props = {
   selected: boolean;
   selectedFixtureId: null | FixtureId;
   selectedRef: RefObject<HTMLElement | null>;
-  onSelect: (fixtureId: FixtureId) => unknown;
 };
 
 export function MultiFixtureButton({
@@ -25,7 +24,6 @@ export function MultiFixtureButton({
   selected,
   selectedFixtureId,
   selectedRef,
-  onSelect,
 }: Props) {
   if (!selected) {
     const [firstFixtureName] = fixtureNames;
@@ -34,7 +32,7 @@ export function MultiFixtureButton({
       : { path: fixturePath };
 
     return (
-      <FixtureLink fixtureId={fixtureId} onSelect={onSelect}>
+      <FixtureLink fixtureId={fixtureId} multiFixtureOpen>
         <FixtureTreeItem indentLevel={indentLevel} selected={false}>
           <Name>{name}</Name>
           <Count>{fixtureNames.length}</Count>
@@ -68,7 +66,6 @@ export function MultiFixtureButton({
             indentLevel={indentLevel + 1}
             selected={childSelected}
             selectedRef={selectedRef}
-            onSelect={onSelect}
           />
         );
       })}

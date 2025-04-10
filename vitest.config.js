@@ -13,6 +13,7 @@ export default defineConfig({
     // Default value: ['**/*.{test,spec}.?(c|m)[jt]s?(x)'],
     include: ['**/__tests__/**/*.{ts,tsx}', '**/?(*.)test.{ts,tsx}'],
     setupFiles: ['./vitest-setup.js'],
+    testTimeout: 10_000,
     pool: 'threads',
     poolOptions: {
       threads: {

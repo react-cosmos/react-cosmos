@@ -9,7 +9,6 @@
   "main": "./dist/index.js",
   "dependencies": {
     "js-base64": "3.7.7",
-    "lodash-es": "4.17.21",
-    "react-is": "19.0.0"
+    "lodash-es": "4.17.21"
   }
 }

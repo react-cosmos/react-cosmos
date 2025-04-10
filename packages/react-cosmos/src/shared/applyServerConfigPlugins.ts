@@ -1,23 +1,23 @@
-import { CosmosCommand } from 'react-cosmos-core';
+import { CosmosMode } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 import { CosmosPlatform, CosmosServerPlugin } from '../cosmosPlugin/types.js';
 
 type Args = {
-  cosmosConfig: CosmosConfig;
+  config: CosmosConfig;
   serverPlugins: CosmosServerPlugin[];
-  command: CosmosCommand;
+  mode: CosmosMode;
   platform: CosmosPlatform;
 };
 export async function applyServerConfigPlugins({
-  cosmosConfig,
+  config,
   serverPlugins,
-  command,
+  mode,
   platform,
 }: Args) {
   for (const plugin of serverPlugins) {
     if (plugin.config) {
       try {
-        cosmosConfig = await plugin.config({ cosmosConfig, command, platform });
+        config = await plugin.config({ config, mode, platform });
       } catch (err) {
         console.log(`[Cosmos][plugin:${plugin.name}] Config hook failed`);
         throw err;
@@ -25,5 +25,5 @@ export async function applyServerConfigPlugins({
     }
   }
 
-  return cosmosConfig;
+  return config;
 }

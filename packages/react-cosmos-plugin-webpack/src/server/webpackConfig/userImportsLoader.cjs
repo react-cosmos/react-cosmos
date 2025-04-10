@@ -4,7 +4,7 @@
 // dist folder as part of the build process
 module.exports = async function injectUserImports() {
   const cosmos = await import('react-cosmos');
-  const { cosmosConfig } = this.getOptions();
+  const { config, mode } = this.getOptions();
 
   // This ensures this loader is invalidated whenever a new file is added to or
   // removed from user's project, which in turn triggers findUserModulePaths
@@ -13,17 +13,18 @@ module.exports = async function injectUserImports() {
   // of require.context, which not only watches for file changes but also
   // automatically bundles new files that match the watcher's query.
   // https://github.com/webpack/webpack/issues/222#issuecomment-40691546
-  const watchDirs = cosmosConfig.watchDirs;
+  const watchDirs = config.watchDirs;
   watchDirs.forEach(watchDir => this.addContextDependency(watchDir));
 
-  const { containerQuerySelector } = cosmosConfig.dom;
-  const modulePaths = await cosmos.findUserModulePaths(cosmosConfig);
+  const { containerQuerySelector } = config.dom;
+  const modulePaths = await cosmos.findUserModulePaths(config);
   const rendererConfig = {
-    playgroundUrl: cosmos.getPlaygroundUrl(cosmosConfig),
+    webSocketUrl: mode === 'dev' ? cosmos.getWebSocketUrl(config) : null,
+    rendererUrl: null,
     containerQuerySelector,
   };
   return cosmos.generateUserImports({
-    cosmosConfig,
+    config,
     modulePaths,
     rendererConfig,
     relativeToDir: null,

@@ -5,6 +5,7 @@ import { httpProxyPlugin } from './httpProxyPlugin.js';
 import { openFilePlugin } from './openFilePlugin.js';
 import { pluginEndpointPlugin } from './pluginEndpointPlugin.js';
 import { portRetryPlugin } from './portRetryPlugin.js';
+import { remoteRendererUrlPlugin } from './remoteRendererUrlPlugin.js';
 
 export const coreServerPlugins: CosmosServerPlugin[] = [
   portRetryPlugin,
@@ -12,6 +13,7 @@ export const coreServerPlugins: CosmosServerPlugin[] = [
   httpProxyPlugin,
   openFilePlugin,
   pluginEndpointPlugin,
+  remoteRendererUrlPlugin,
 ];
 
 // Omit starting chokidar in unit tests for performance reasons

@@ -5,10 +5,10 @@ import { importKeyPath } from '../userModules/shared.js';
 
 let fixtureListCache: FixtureList | null = null;
 
-export async function getServerFixtureList(cosmosConfig: CosmosConfig) {
+export async function getServerFixtureList(config: CosmosConfig) {
   if (!fixtureListCache) {
-    const { fixturePaths } = await findUserModulePaths(cosmosConfig);
-    fixtureListCache = createFixtureList(cosmosConfig.rootDir, fixturePaths);
+    const { fixturePaths } = await findUserModulePaths(config);
+    fixtureListCache = createFixtureList(config.rootDir, fixturePaths);
   }
 
   return fixtureListCache;

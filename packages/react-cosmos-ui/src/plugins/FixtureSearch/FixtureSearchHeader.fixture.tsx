@@ -5,6 +5,6 @@ export default (
   <FixtureSearchHeader
     fixtureSelected={true}
     onOpen={() => console.log('Open fixture search overlay')}
-    onCloseNav={() => console.log('Close nav')}
+    onCloseNavPanel={() => console.log('Close nav panel')}
   />
 );

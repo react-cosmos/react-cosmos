@@ -4,7 +4,7 @@ import React from 'react';
 import {
   FixtureId,
   RendererConfig,
-  createRendererUrl,
+  createWebRendererUrl,
 } from 'react-cosmos-core';
 import {
   GlobalErrorHandler,
@@ -21,11 +21,11 @@ type Props = {
 };
 export function NextRendererProvider({
   children,
-  rendererConfig: { rendererUrl, playgroundUrl },
+  rendererConfig: { rendererUrl, webSocketUrl },
   selectedFixture,
 }: Props) {
   const rendererId = useDomRendererId();
-  const rendererConnect = useDomRendererConnect(playgroundUrl);
+  const rendererConnect = useDomRendererConnect(webSocketUrl);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -35,7 +35,7 @@ export function NextRendererProvider({
     (fixtureId: FixtureId) => {
       if (rendererUrl) {
         router.replace(
-          trimHrefHtmlExtension(createRendererUrl(rendererUrl, fixtureId))
+          trimHtmlExtension(createWebRendererUrl(rendererUrl, fixtureId))
         );
       }
     },
@@ -44,13 +44,13 @@ export function NextRendererProvider({
 
   const unselectFixture = React.useCallback(() => {
     if (rendererUrl) {
-      router.replace(trimHrefHtmlExtension(createRendererUrl(rendererUrl)));
+      router.replace(trimHtmlExtension(createWebRendererUrl(rendererUrl)));
     }
   }, [rendererUrl, router]);
 
   const reloadRenderer = React.useCallback(() => {
     if (rendererUrl) {
-      window.location.href = createRendererUrl(rendererUrl);
+      window.location.href = createWebRendererUrl(rendererUrl);
     }
   }, [rendererUrl]);
 
@@ -70,6 +70,6 @@ export function NextRendererProvider({
   );
 }
 
-function trimHrefHtmlExtension(href: string) {
+function trimHtmlExtension(href: string) {
   return href.replace(/\.html$/, '');
 }

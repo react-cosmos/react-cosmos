@@ -6,6 +6,7 @@
 // against the unmocked original modules instead.
 import { mockCosmosPlugins } from '../../testHelpers/mockCosmosPlugins.js';
 import { mockCosmosConfig, mockFile } from '../../testHelpers/mockFs.js';
+import '../../testHelpers/mockOsNetworkInterfaces.js';
 import { mockCliArgs } from '../../testHelpers/mockYargs.js';
 
 import retry from '@skidding/async-retry';
@@ -30,9 +31,9 @@ const devServerCleanup = vi.fn(() => Promise.resolve());
 const testServerPlugin = {
   name: 'testServerPlugin',
 
-  config: vi.fn(async ({ cosmosConfig }) => {
+  config: vi.fn(async ({ config }) => {
     return {
-      ...cosmosConfig,
+      ...config,
       ignore: ['**/ignored.fixture.js'],
     };
   }),
@@ -62,27 +63,29 @@ beforeAll(async () => {
   await mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
     expectLog('[Cosmos] Found 1 plugin: Test Cosmos plugin');
-    expectLog(`[Cosmos] See you at http://localhost:${port}`);
+    expectLog(
+      `[Cosmos] See you at http://localhost:${port} or http://192.168.1.10:${port}`
+    );
     _stopServer = await startDevServer('web');
   });
 });
 
 it('calls config hook', async () => {
   expect(testServerPlugin.config).toBeCalledWith({
-    cosmosConfig: expect.objectContaining({ port }),
-    command: 'dev',
+    config: expect.objectContaining({ port }),
+    mode: 'dev',
     platform: 'web',
   });
 });
 
 it('calls dev server hook (with updated config)', async () => {
   expect(testServerPlugin.devServer).toBeCalledWith({
-    cosmosConfig: expect.objectContaining({
+    config: expect.objectContaining({
       port,
       ignore: ['**/ignored.fixture.js'],
     }),
     platform: 'web',
-    expressApp: expect.any(Function),
+    app: expect.any(Function),
     httpServer: expect.any(http.Server),
     sendMessage: expect.any(Function),
   });

@@ -11,7 +11,7 @@ import {
   updateElementExpansion,
 } from '../../components/ValueInputTree/index.js';
 import { TreeExpansion } from '../../shared/treeExpansion.js';
-import { SidePanelRowSlotProps } from '../../slots/SidePanelRowSlot.js';
+import { ControlPanelRowSlotProps } from '../../slots/ControlPanelRowSlot.js';
 import { StorageSpec } from '../Storage/spec.js';
 import { ClassStatePanel } from './ClassStatePanel/index.js';
 import {
@@ -26,8 +26,8 @@ const { namedPlug, register } = createPlugin<ClassStatePanelSpec>({
   name: 'classStatePanel',
 });
 
-namedPlug<SidePanelRowSlotProps>(
-  'sidePanelRow',
+namedPlug<ControlPanelRowSlotProps>(
+  'controlPanelRow',
   'classState',
   ({ pluginContext, slotProps }) => {
     const { fixtureId, getFixtureState, setFixtureState } = slotProps;

@@ -32,13 +32,13 @@ onLoad(context => {
   setState({ urlParams });
 
   const { initialFixtureId } = getConfig();
-  if (initialFixtureId && !urlParams.fixtureId) {
+  if (initialFixtureId && !urlParams.fixture) {
     selectFixture(context, initialFixtureId);
   }
 
   return subscribeToLocationChanges((nextUrlParams: PlaygroundParams) => {
-    const { fixtureId } = context.getState().urlParams;
-    const fixtureChanged = !isEqual(nextUrlParams.fixtureId, fixtureId);
+    const { fixture } = context.getState().urlParams;
+    const fixtureChanged = !isEqual(nextUrlParams.fixture, fixture);
 
     setState({ urlParams: nextUrlParams }, () => {
       if (fixtureChanged) {
@@ -53,11 +53,11 @@ export { register };
 if (process.env.NODE_ENV !== 'test') register();
 
 function getSelectedFixtureId({ getState }: RouterContext) {
-  return getState().urlParams.fixtureId || null;
+  return getState().urlParams.fixture || null;
 }
 
 function selectFixture(context: RouterContext, fixtureId: FixtureId) {
-  setUrlParams(context, { fixtureId });
+  setUrlParams(context, { fixture: fixtureId });
 }
 
 function unselectFixture(context: RouterContext) {
@@ -66,7 +66,7 @@ function unselectFixture(context: RouterContext) {
 
 function setUrlParams(context: RouterContext, nextUrlParams: PlaygroundParams) {
   const { urlParams } = context.getState();
-  const fixtureChanged = !isEqual(nextUrlParams.fixtureId, urlParams.fixtureId);
+  const fixtureChanged = !isEqual(nextUrlParams.fixture, urlParams.fixture);
   const urlParamsEqual = isEqual(nextUrlParams, urlParams);
 
   if (urlParamsEqual) {

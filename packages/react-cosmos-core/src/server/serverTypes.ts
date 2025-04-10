@@ -1,1 +1,1 @@
-export type CosmosCommand = 'dev' | 'export';
+export type CosmosMode = 'dev' | 'export';

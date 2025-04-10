@@ -6,6 +6,7 @@ import {
 } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
 import { RendererCoreSpec } from '../RendererCore/spec.js';
+import { RouterSpec } from '../Router/spec.js';
 import { StorageSpec } from '../Storage/spec.js';
 import { ResponsivePreview } from './ResponsivePreview/ResponsivePreview.js';
 import { ToggleButton } from './ToggleButton/index.js';
@@ -26,16 +27,18 @@ const { plug, namedPlug, register } = createPlugin<ResponsivePreviewSpec>({
 });
 
 plug('rendererPreviewOuter', ({ children, pluginContext }) => {
-  const { getConfig } = pluginContext;
+  const { getConfig, getMethodsOf } = pluginContext;
   const { devices } = getConfig();
   const { enabled, viewport, scaled } = getViewportState(pluginContext);
   const onViewportChange = useViewportChange(pluginContext);
   const onScaledChange = useScaledChange(pluginContext);
+  const router = getMethodsOf<RouterSpec>('router');
+  const fixtureSelected = router.getSelectedFixtureId() !== null;
 
   return (
     <ResponsivePreview
       devices={devices}
-      enabled={enabled}
+      enabled={enabled && fixtureSelected}
       viewport={viewport}
       scaled={scaled}
       setViewport={onViewportChange}

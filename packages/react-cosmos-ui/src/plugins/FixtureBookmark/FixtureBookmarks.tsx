@@ -18,7 +18,6 @@ import {
   grey32,
   grey8,
   selectedColors,
-  white10,
 } from '../../style/colors.js';
 import { quick } from '../../style/vars.js';
 
@@ -61,7 +60,7 @@ export function FixtureBookmarks({
         return (
           <ListItem key={itemKey} selected={selected}>
             <FixtureLink
-              href={createRelativePlaygroundUrl({ fixtureId })}
+              href={createRelativePlaygroundUrl({ fixture: fixtureId })}
               selected={selected}
               onClick={handleClick}
             >
@@ -109,7 +108,6 @@ const Header = styled.div`
   flex-shrink: 0;
   height: 40px;
   padding: 0 4px;
-  border-top: 1px solid ${white10};
   background: ${grey32};
   display: flex;
   flex-direction: row;

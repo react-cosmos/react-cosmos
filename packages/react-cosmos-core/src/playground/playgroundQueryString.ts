@@ -2,7 +2,7 @@ import { buildQueryString, parseQueryString } from '../utils/queryString.js';
 import { PlaygroundParams } from './playgroundParams.js';
 
 type SearchParams = {
-  fixtureId?: string;
+  fixture?: string;
 };
 
 export function buildPlaygroundQueryString(params: PlaygroundParams) {
@@ -16,8 +16,8 @@ export function parsePlaygroundQueryString(query: string) {
 function encodePlaygroundSearchParams(params: PlaygroundParams) {
   const stringParams: SearchParams = {};
 
-  if (params.fixtureId) {
-    stringParams.fixtureId = JSON.stringify(params.fixtureId);
+  if (params.fixture) {
+    stringParams.fixture = JSON.stringify(params.fixture);
   }
 
   return stringParams;
@@ -26,8 +26,8 @@ function encodePlaygroundSearchParams(params: PlaygroundParams) {
 function decodePlaygroundSearchParams(stringParams: SearchParams) {
   const params: PlaygroundParams = {};
 
-  if (stringParams.fixtureId) {
-    params.fixtureId = JSON.parse(stringParams.fixtureId);
+  if (stringParams.fixture) {
+    params.fixture = JSON.parse(stringParams.fixture);
   }
 
   return params;

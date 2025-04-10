@@ -6,13 +6,13 @@ import { RENDERER_FILENAME } from './constants.js';
 import { createCosmosViteConfig } from './createCosmosViteConfig.js';
 import { reactCosmosViteRollupPlugin } from './reactCosmosViteRollupPlugin.js';
 
-export async function viteExportPlugin({ cosmosConfig }: ExportPluginArgs) {
-  const { rootDir, exportPath, publicUrl } = cosmosConfig;
-  const cosmosViteConfig = createCosmosViteConfig(cosmosConfig);
+export async function viteExportPlugin({ config }: ExportPluginArgs) {
+  const { rootDir, exportPath, publicUrl } = config;
+  const viteConfig = createCosmosViteConfig(config);
 
   const outDir = path.join(exportPath, publicUrl);
   await build({
-    configFile: cosmosViteConfig.configPath,
+    configFile: viteConfig.configPath,
     root: rootDir,
     base: publicUrl,
     build: {
@@ -20,7 +20,7 @@ export async function viteExportPlugin({ cosmosConfig }: ExportPluginArgs) {
       emptyOutDir: false,
       minify: false,
     },
-    plugins: [reactCosmosViteRollupPlugin(cosmosConfig, cosmosViteConfig)],
+    plugins: [reactCosmosViteRollupPlugin(config, viteConfig, 'export')],
   });
 
   await rename(

@@ -1,32 +1,36 @@
 import { CosmosConfig } from 'react-cosmos';
+import { CosmosMode } from 'react-cosmos-core';
 import webpack from 'webpack';
 import { resolveWebpackClientPath } from './resolveWebpackClientPath.js';
 import { resolveWebpackLoaderPath } from './resolveWebpackLoaderPath.js';
 
 export function getWebpackConfigModule(
-  cosmosConfig: CosmosConfig,
-  webpackConfig: webpack.Configuration
+  config: CosmosConfig,
+  webpackConfig: webpack.Configuration,
+  mode: CosmosMode
 ): webpack.ModuleOptions {
   return {
     ...webpackConfig.module,
-    rules: getRules(cosmosConfig, webpackConfig),
+    rules: getRules(config, webpackConfig, mode),
   };
 }
 
 function getRules(
-  cosmosConfig: CosmosConfig,
-  { module }: webpack.Configuration
+  config: CosmosConfig,
+  { module }: webpack.Configuration,
+  mode: CosmosMode
 ) {
   const existingRules = (module && module.rules) || [];
-  return [...existingRules, getUserImportsLoaderRule(cosmosConfig)];
+  return [...existingRules, getUserImportsLoaderRule(config, mode)];
 }
 
 function getUserImportsLoaderRule(
-  cosmosConfig: CosmosConfig
+  config: CosmosConfig,
+  mode: CosmosMode
 ): webpack.RuleSetRule {
   return {
     loader: resolveWebpackLoaderPath(),
     include: resolveWebpackClientPath('userImports.js'),
-    options: { cosmosConfig },
+    options: { config, mode },
   };
 }

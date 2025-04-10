@@ -1,13 +1,12 @@
 import styled from 'styled-components';
-import { createGreyColor, grey192 } from '../../../style/colors.js';
+import { grey192, grey32 } from '../../../style/colors.js';
 
 export const RendererOverlayContainer = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: ${createGreyColor(8, 0.9)};
-  border-radius: 3px;
+  background: ${grey32};
   height: 116px;
   padding: 0 24px;
   display: flex;

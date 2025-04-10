@@ -3,13 +3,13 @@ import webpack, { StatsCompilation } from 'webpack';
 import { getWebpack } from './getWebpack.js';
 import { getExportWebpackConfig } from './webpackConfig/getExportWebpackConfig.js';
 
-export async function webpackExportPlugin({ cosmosConfig }: ExportPluginArgs) {
-  const userWebpack = getWebpack(cosmosConfig.rootDir);
+export async function webpackExportPlugin({ config }: ExportPluginArgs) {
+  const userWebpack = getWebpack(config.rootDir);
   if (!userWebpack) {
     return;
   }
 
-  const webpackConfig = await getExportWebpackConfig(cosmosConfig, userWebpack);
+  const webpackConfig = await getExportWebpackConfig(config, userWebpack);
   try {
     await runWebpackCompiler(userWebpack, webpackConfig);
   } catch (err) {

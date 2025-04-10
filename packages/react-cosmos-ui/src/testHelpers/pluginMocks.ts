@@ -12,6 +12,7 @@ import { MessageHandlerSpec } from '../plugins/MessageHandler/spec.js';
 import { NotificationsSpec } from '../plugins/Notifications/spec.js';
 import { RendererCoreSpec } from '../plugins/RendererCore/spec.js';
 import { RendererPreviewSpec } from '../plugins/RendererPreview/spec.js';
+import { RootSpec } from '../plugins/Root/spec.js';
 import { RouterSpec } from '../plugins/Router/spec.js';
 import { StorageSpec } from '../plugins/Storage/spec.js';
 import { getMethodsOf, mockMethodsOf, on } from './pluginHelpers.js';
@@ -89,6 +90,16 @@ export function mockCore(methods: MethodsOf<CoreSpec> = {}) {
     ...methods,
   };
   mockMethodsOf<CoreSpec>('core', allMethods);
+  return allMethods;
+}
+
+export function mockRoot(methods: MethodsOf<RootSpec> = {}) {
+  const allMethods = {
+    drawerPanelsEnabled: vi.fn(),
+    closeNavPanel: vi.fn(),
+    ...methods,
+  };
+  mockMethodsOf<RootSpec>('root', allMethods);
   return allMethods;
 }
 

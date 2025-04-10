@@ -2,7 +2,7 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { FixtureList } from 'react-cosmos-core';
 import { Slot, loadPlugins, resetPlugins } from 'react-plugin';
-import { NavRowSlot } from '../../slots/NavRowSlot.js';
+import { NavPanelRowSlot } from '../../slots/NavPanelRowSlot.js';
 import {
   mockCore,
   mockFixtureTree,
@@ -41,7 +41,10 @@ function loadTestPlugins() {
   loadPlugins();
   return render(
     <>
-      <NavRowSlot slotProps={{ onCloseNav: () => {} }} plugOrder={[]} />
+      <NavPanelRowSlot
+        slotProps={{ onCloseNavPanel: () => {} }}
+        plugOrder={[]}
+      />
       <Slot name="global" />
     </>
   );
@@ -53,7 +56,7 @@ it('open fixture list and selects fixture', async () => {
   const { getByText, getByTestId, queryByTestId } = loadTestPlugins();
 
   // Opens fixture search overlay
-  fireEvent.click(getByText(/search fixtures/i));
+  fireEvent.click(getByText(/search/i));
 
   // Shows (cleaned up) fixture list
   getByTestId('fixtureSearchContent');
@@ -80,7 +83,7 @@ it('closes fixture list on outside click', async () => {
   const { getByText, getByTestId, queryByTestId } = loadTestPlugins();
 
   // Opens fixture search overlay
-  fireEvent.click(getByText(/search fixtures/i));
+  fireEvent.click(getByText(/search/i));
   getByTestId('fixtureSearchContent');
 
   // Closes fixture search overlay
@@ -94,10 +97,10 @@ it('filters fixture list', async () => {
   const { getByText, queryByText, getByPlaceholderText } = loadTestPlugins();
 
   // Opens fixture search overlay
-  fireEvent.click(getByText(/search fixtures/i));
+  fireEvent.click(getByText(/search/i));
 
   // Filter fixtures
-  fireEvent.change(getByPlaceholderText('Fixture search'), {
+  fireEvent.change(getByPlaceholderText('Search your fixtures...'), {
     target: { value: 'foobar' },
   });
 

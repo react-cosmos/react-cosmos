@@ -1,4 +1,4 @@
-import { isElement } from 'react-is';
+import { isValidElement } from 'react';
 import {
   isArray,
   isObject,
@@ -50,7 +50,7 @@ function stringifyUnserializableData(data: unknown) {
   // NOTE: We used to use the react-element-to-jsx-string package but it added
   // bloat and complicated ESM support. We might go back to something similar
   // in the future. Or expose a plugin API for custom stringifiers.
-  return isElement(data) ? '<React.Element />' : String(data);
+  return isValidElement(data) ? '<React.Element />' : String(data);
 }
 
 const emptyFnRegex = /^\(\) => \{.+\}$/s;

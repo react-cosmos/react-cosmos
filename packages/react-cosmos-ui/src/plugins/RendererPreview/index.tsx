@@ -11,6 +11,9 @@ const { postRendererRequest, setIframeRef } = createRendererRequestHandler();
 
 const { onLoad, on, plug, register } = createPlugin<RendererPreviewSpec>({
   name: 'rendererPreview',
+  defaultConfig: {
+    backgroundColor: '#fff',
+  },
   initialState: {
     runtimeStatus: 'pending',
   },
@@ -43,6 +46,7 @@ plug('rendererPreview', ({ pluginContext }) => {
       rendererUrl={getRendererUrl(pluginContext)}
       rendererConnected={getRendererConnected(pluginContext)}
       runtimeStatus={pluginContext.getState().runtimeStatus}
+      backgroundColor={pluginContext.getConfig().backgroundColor}
       onIframeRef={handleIframeRef}
     />
   );

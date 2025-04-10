@@ -26,7 +26,7 @@ afterAll(async () => {
 const MY_RULE = {};
 const MY_PLUGIN = {};
 
-const cosmosConfig = createCosmosConfig(process.cwd(), {
+const config = createCosmosConfig(process.cwd(), {
   webpack: {
     configPath: 'mywebpack.config.js',
   },
@@ -38,7 +38,7 @@ async function getCustomExportWebpackConfig() {
     expectLog(
       '[Cosmos] Learn how to override webpack config for cosmos: https://reactcosmos.org/docs/getting-started/webpack#webpack-config-override'
     );
-    return await getExportWebpackConfig(cosmosConfig, webpack);
+    return await getExportWebpackConfig(config, webpack);
   });
 }
 
@@ -87,7 +87,7 @@ it('includes user imports loader', async () => {
   expect(module!.rules).toContainEqual({
     loader: pkgPath('server/webpackConfig/userImportsLoader.cjs'),
     include: pkgPath('client/userImports.js'),
-    options: { cosmosConfig },
+    options: { config, mode: 'export' },
   });
 });
 

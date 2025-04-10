@@ -40,9 +40,9 @@ async function loadTestPlugins() {
   return utils;
 }
 
-it('renders "navRow" slot', async () => {
+it('renders "navPanelRow" slot', async () => {
   registerTestPlugins();
-  mockPlug('navRow', () => <>we are the robots</>);
+  mockPlug('navPanelRow', () => <>we are the robots</>);
 
   const { findByText } = await loadTestPlugins();
   await findByText(/we are the robots/i);
