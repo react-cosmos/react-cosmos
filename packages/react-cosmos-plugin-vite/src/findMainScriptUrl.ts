@@ -3,13 +3,9 @@ import { CosmosConfig, slash } from 'react-cosmos';
 import { createCosmosViteConfig } from './createCosmosViteConfig.js';
 import { getHtmlScriptSrcs } from './utils/htmlScriptSrcs.js';
 
-// TODO: Do we need to normalize slashes for Windows in some places?
+const mainSrcPattern = new RegExp(`^(\\.?/)?(src/)?(index|main)\\.(js|ts)x?$`);
 
-const defaultIndexPattern = new RegExp(
-  `^(\\.?/)?(src/)?(index|main)\\.(js|ts)x?$`
-);
-
-export function resolveViteIndexPath(config: CosmosConfig, indexHtml: string) {
+export function findMainScriptUrl(config: CosmosConfig, indexHtml: string) {
   const { rootDir } = config;
   const scripts = getHtmlScriptSrcs(indexHtml);
   // TODO: Auto fix this, for both default and custom index paths
@@ -22,8 +18,8 @@ export function resolveViteIndexPath(config: CosmosConfig, indexHtml: string) {
   const { indexPath } = createCosmosViteConfig(config);
   if (indexPath === null) {
     if (scripts.length > 1) {
-      const indexSrc = scripts.find(src => defaultIndexPattern.test(src));
-      if (indexSrc) return path.join(rootDir, indexSrc);
+      const mainSrc = scripts.find(src => mainSrcPattern.test(src));
+      if (mainSrc) return mainSrc;
 
       throw new Error(
         `Multiple script paths found in index.html. ` +
@@ -32,15 +28,15 @@ export function resolveViteIndexPath(config: CosmosConfig, indexHtml: string) {
       );
     }
 
-    return path.join(rootDir, scripts[0]);
+    return scripts[0];
   }
 
-  const indexSrc = scripts.find(src => path.join(rootDir, src) === indexPath);
-  if (indexSrc) return path.join(rootDir, indexSrc);
+  const mainSrc = scripts.find(src => path.join(rootDir, src) === indexPath);
+  if (mainSrc) return mainSrc;
 
   const relPath = slash(path.relative(rootDir, indexPath));
   throw new Error(
-    `Custom index path /${relPath} not found in index.html. ` +
-      `Please add it or change vite.indexPath in your Cosmos config.`
+    `Main script path /${relPath} not found in index.html. ` +
+      `Please create it or change vite.indexPath in your Cosmos config.`
   );
 }

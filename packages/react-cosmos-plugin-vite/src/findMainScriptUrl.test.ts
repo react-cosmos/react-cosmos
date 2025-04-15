@@ -1,45 +1,40 @@
 // NOTE: Mock files need to imported before modules that use the mocked APIs
 import { mockConsole } from 'react-cosmos/vitest.js';
 
-import path from 'node:path';
 import { CosmosConfig, createCosmosConfig } from 'react-cosmos';
-import { resolveViteIndexPath } from './resolveViteIndexPath.js';
+import { findMainScriptUrl } from './findMainScriptUrl.js';
 
-describe('default index paths', () => {
-  const indexPaths = [
-    ...scriptPathVariations('src/main'),
-    ...scriptPathVariations('src/index'),
-    ...scriptPathVariations('main'),
-    ...scriptPathVariations('index'),
+describe('default script detection', () => {
+  const scriptSrcs = [
+    ...scriptUrlVariations('src/main'),
+    ...scriptUrlVariations('src/index'),
+    ...scriptUrlVariations('main'),
+    ...scriptUrlVariations('index'),
   ];
-  indexPaths.forEach(indexPath => {
-    it(`resolves "${indexPath}" script path`, async () => {
+  scriptSrcs.forEach(scriptSrc => {
+    it(`finds "${scriptSrc}" script`, async () => {
       const config = createCosmosConfig('/my/root/path', {});
-      const indexHtml = mockIndexHtml(['/src/polyfills.ts', indexPath]);
+      const indexHtml = mockIndexHtml(['/src/polyfills.ts', scriptSrc]);
 
-      expect(await resolveIndexPathMocked(config, indexHtml)).toBe(
-        path.join(config.rootDir, indexPath)
-      );
+      expect(await findUrlMocked(config, indexHtml)).toBe(scriptSrc);
     });
   });
 
-  it(`resolves any single script path`, async () => {
+  it(`finds any single script URL`, async () => {
     const config = createCosmosConfig('/my/root/path', {});
     const indexHtml = mockIndexHtml(['/src/custom-main.tsx']);
 
-    expect(await resolveIndexPathMocked(config, indexHtml)).toBe(
-      path.join(config.rootDir, 'src/custom-main.tsx')
-    );
+    expect(await findUrlMocked(config, indexHtml)).toBe('/src/custom-main.tsx');
   });
 
-  it(`throws when index path couldn't be established from multiple local paths`, async () => {
+  it(`throws when main script can't be established from multiple scripts`, async () => {
     const config = createCosmosConfig('/my/root/path', {});
     const indexHtml = mockIndexHtml([
       '/src/custom-main-a.tsx',
       '/src/custom-main-b.tsx',
     ]);
 
-    await expect(resolveIndexPathMocked(config, indexHtml)).rejects.toThrow(
+    await expect(findUrlMocked(config, indexHtml)).rejects.toThrow(
       `Multiple script paths found in index.html. ` +
         `Please set vite.indexPath in your Cosmos config: ` +
         `https://reactcosmos.org/docs/getting-started/vite#configuration`
@@ -47,59 +42,57 @@ describe('default index paths', () => {
   });
 
   // TODO: Auto fix this
-  it(`throws when index doesn't contain any script`, async () => {
+  it(`throws when index.html doesn't contain any script`, async () => {
     const config = createCosmosConfig('/my/root/path', {});
     const indexHtml = mockIndexHtml([]);
 
-    await expect(resolveIndexPathMocked(config, indexHtml)).rejects.toThrow(
+    await expect(findUrlMocked(config, indexHtml)).rejects.toThrow(
       `You need at least one script tag in your index.html file. ` +
         `Example: <script type="module" src="/src/main.tsx"></script>`
     );
   });
 });
 
-describe('custom index path', () => {
-  it('resolves custom index path when matching script exists', async () => {
+describe('custom script path', () => {
+  it('finds existing custom script', async () => {
     const config = createCosmosConfig('/my/root/path', {
-      vite: { indexPath: '/src/custom-main.tsx' },
+      vite: { indexPath: 'src/custom-main.tsx' },
     });
     const indexHtml = mockIndexHtml([
       '/src/polyfills.ts',
       '/src/custom-main.tsx',
     ]);
 
-    expect(await resolveIndexPathMocked(config, indexHtml)).toBe(
-      path.join(config.rootDir, 'src/custom-main.tsx')
-    );
+    expect(await findUrlMocked(config, indexHtml)).toBe('/src/custom-main.tsx');
   });
 
-  it(`throws when custom index path doesn't match any script`, async () => {
+  it(`throws when custom script doesn't exist`, async () => {
     const config = createCosmosConfig('/my/root/path', {
-      vite: { indexPath: '/src/custom-main.tsx' },
+      vite: { indexPath: 'src/custom-main.tsx' },
     });
     const indexHtml = mockIndexHtml(['/src/custom-main-a.tsx']);
 
-    await expect(resolveIndexPathMocked(config, indexHtml)).rejects.toThrow(
-      `Custom index path /src/custom-main.tsx not found in index.html. ` +
-        `Please add it or change vite.indexPath in your Cosmos config.`
+    await expect(findUrlMocked(config, indexHtml)).rejects.toThrow(
+      `Main script path /src/custom-main.tsx not found in index.html. ` +
+        `Please create it or change vite.indexPath in your Cosmos config.`
     );
   });
 
   // TODO: Auto fix this
-  it(`throws when index doesn't contain any script`, async () => {
+  it(`throws when index.html doesn't contain any script`, async () => {
     const config = createCosmosConfig('/my/root/path', {
       vite: { indexPath: '/src/custom-main.tsx' },
     });
     const indexHtml = mockIndexHtml([]);
 
-    await expect(resolveIndexPathMocked(config, indexHtml)).rejects.toThrow(
+    await expect(findUrlMocked(config, indexHtml)).rejects.toThrow(
       `You need at least one script tag in your index.html file. ` +
         `Example: <script type="module" src="/src/main.tsx"></script>`
     );
   });
 });
 
-function scriptPathVariations(scriptPath: string) {
+function scriptUrlVariations(scriptPath: string) {
   const exts = (p: string) => [`${p}.js`, `${p}.jsx`, `${p}.ts`, `${p}.tsx`];
   return [
     ...exts(scriptPath),
@@ -108,10 +101,10 @@ function scriptPathVariations(scriptPath: string) {
   ];
 }
 
-async function resolveIndexPathMocked(config: CosmosConfig, indexHtml: string) {
+async function findUrlMocked(config: CosmosConfig, indexHtml: string) {
   return mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] No vite config found, using default settings');
-    return resolveViteIndexPath(config, indexHtml);
+    return findMainScriptUrl(config, indexHtml);
   });
 }
 
