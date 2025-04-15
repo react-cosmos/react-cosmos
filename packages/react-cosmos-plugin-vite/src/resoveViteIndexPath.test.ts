@@ -32,14 +32,14 @@ describe('default index paths', () => {
     );
   });
 
-  it(`throws when index path couldn't be established from multiple local paths`, () => {
+  it(`throws when index path couldn't be established from multiple local paths`, async () => {
     const config = createCosmosConfig('/my/root/path', {});
     const indexHtml = mockIndexHtml([
       '/src/custom-main-a.tsx',
       '/src/custom-main-b.tsx',
     ]);
 
-    expect(() => resolveViteIndexPath(config, indexHtml)).toThrow(
+    await expect(resolveIndexPathMocked(config, indexHtml)).rejects.toThrow(
       `Multiple script paths found in index.html. ` +
         `Please set vite.indexPath in your Cosmos config: ` +
         `https://reactcosmos.org/docs/getting-started/vite#configuration`
@@ -47,11 +47,11 @@ describe('default index paths', () => {
   });
 
   // TODO: Auto fix this
-  it(`throws when index doesn't contain any script`, () => {
+  it(`throws when index doesn't contain any script`, async () => {
     const config = createCosmosConfig('/my/root/path', {});
     const indexHtml = mockIndexHtml([]);
 
-    expect(() => resolveViteIndexPath(config, indexHtml)).toThrow(
+    await expect(resolveIndexPathMocked(config, indexHtml)).rejects.toThrow(
       `You need at least one script tag in your index.html file. ` +
         `Example: <script type="module" src="/src/main.tsx"></script>`
     );
@@ -73,26 +73,26 @@ describe('custom index path', () => {
     );
   });
 
-  it(`throws when custom index path doesn't match any script`, () => {
+  it(`throws when custom index path doesn't match any script`, async () => {
     const config = createCosmosConfig('/my/root/path', {
       vite: { indexPath: '/src/custom-main.tsx' },
     });
     const indexHtml = mockIndexHtml(['/src/custom-main-a.tsx']);
 
-    expect(() => resolveViteIndexPath(config, indexHtml)).toThrow(
+    await expect(resolveIndexPathMocked(config, indexHtml)).rejects.toThrow(
       `Custom index path /src/custom-main.tsx not found in index.html. ` +
         `Please add it or change vite.indexPath in your Cosmos config.`
     );
   });
 
   // TODO: Auto fix this
-  it(`throws when index doesn't contain any script`, () => {
+  it(`throws when index doesn't contain any script`, async () => {
     const config = createCosmosConfig('/my/root/path', {
       vite: { indexPath: '/src/custom-main.tsx' },
     });
     const indexHtml = mockIndexHtml([]);
 
-    expect(() => resolveViteIndexPath(config, indexHtml)).toThrow(
+    await expect(resolveIndexPathMocked(config, indexHtml)).rejects.toThrow(
       `You need at least one script tag in your index.html file. ` +
         `Example: <script type="module" src="/src/main.tsx"></script>`
     );

@@ -1,12 +1,12 @@
 import path from 'node:path';
-import { CosmosConfig } from 'react-cosmos';
+import { CosmosConfig, slash } from 'react-cosmos';
 import { createCosmosViteConfig } from './createCosmosViteConfig.js';
 import { getHtmlScriptSrcs } from './utils/htmlScriptSrcs.js';
 
 // TODO: Do we need to normalize slashes for Windows in some places?
 
 const defaultIndexPattern = new RegExp(
-  `^(\\.?\\${path.sep})?(src\\${path.sep})?(index|main)\\.(js|ts)x?$`
+  `^(\\.?/)?(src/)?(index|main)\\.(js|ts)x?$`
 );
 
 export function resolveViteIndexPath(config: CosmosConfig, indexHtml: string) {
@@ -38,7 +38,7 @@ export function resolveViteIndexPath(config: CosmosConfig, indexHtml: string) {
   const indexSrc = scripts.find(src => path.join(rootDir, src) === indexPath);
   if (indexSrc) return path.join(rootDir, indexSrc);
 
-  const relPath = path.relative(rootDir, indexPath);
+  const relPath = slash(path.relative(rootDir, indexPath));
   throw new Error(
     `Custom index path /${relPath} not found in index.html. ` +
       `Please add it or change vite.indexPath in your Cosmos config.`
