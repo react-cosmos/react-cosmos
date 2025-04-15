@@ -49,7 +49,6 @@ export async function viteDevServerPlugin({
       userImportsResolvedModuleId
     );
     if (!module) {
-      // TODO: What this do? What about rendererResolvedModuleId?
       throw new Error(
         `Vite module graph doesn't contain module with id ${userImportsResolvedModuleId}`
       );

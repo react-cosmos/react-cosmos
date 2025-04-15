@@ -14,6 +14,7 @@ export function createCosmosViteConfig(config: CosmosConfig): CosmosViteConfig {
   const configInput: CosmosViteConfigInput = config.vite || {};
 
   const configPath = getViteConfigPath(configInput, rootDir);
+  // FIXME: Log this only once!
   logViteConfigInfo(configPath);
 
   return {
