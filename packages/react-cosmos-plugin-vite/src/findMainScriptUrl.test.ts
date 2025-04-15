@@ -5,18 +5,18 @@ import { CosmosConfig, createCosmosConfig } from 'react-cosmos';
 import { findMainScriptUrl } from './findMainScriptUrl.js';
 
 describe('default script detection', () => {
-  const scriptSrcs = [
+  const scriptUrls = [
     ...scriptUrlVariations('src/main'),
     ...scriptUrlVariations('src/index'),
     ...scriptUrlVariations('main'),
     ...scriptUrlVariations('index'),
   ];
-  scriptSrcs.forEach(scriptSrc => {
-    it(`finds "${scriptSrc}" script`, async () => {
+  scriptUrls.forEach(scriptUrl => {
+    it(`finds "${scriptUrl}" script`, async () => {
       const config = createCosmosConfig('/my/root/path', {});
-      const indexHtml = mockIndexHtml(['/src/polyfills.ts', scriptSrc]);
+      const indexHtml = mockIndexHtml(['/src/polyfills.ts', scriptUrl]);
 
-      expect(await findUrlMocked(config, indexHtml)).toBe(scriptSrc);
+      expect(await findUrlMocked(config, indexHtml)).toBe(scriptUrl);
     });
   });
 
