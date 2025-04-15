@@ -4,7 +4,7 @@ import { mockConsole } from 'react-cosmos/vitest.js';
 import { CosmosConfig, createCosmosConfig } from 'react-cosmos';
 import { findMainScriptUrl } from './findMainScriptUrl.js';
 
-describe('default script detection', () => {
+describe('main script detection', () => {
   const scriptUrls = [
     ...scriptUrlVariations('src/main'),
     ...scriptUrlVariations('src/index'),
@@ -53,7 +53,7 @@ describe('default script detection', () => {
   });
 });
 
-describe('custom script path', () => {
+describe('custom main script path', () => {
   it('finds existing custom script', async () => {
     const config = createCosmosConfig('/my/root/path', {
       vite: { indexPath: 'src/custom-main.tsx' },
