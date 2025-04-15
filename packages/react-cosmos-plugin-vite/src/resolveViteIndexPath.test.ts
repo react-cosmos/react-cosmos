@@ -7,8 +7,8 @@ import { resolveViteIndexPath } from './resolveViteIndexPath.js';
 
 describe('default index paths', () => {
   const indexPaths = [
-    ...scriptPathVariations(`src${path.sep}main`),
-    ...scriptPathVariations(`src${path.sep}index`),
+    ...scriptPathVariations(`src/main`),
+    ...scriptPathVariations(`src/index`),
     ...scriptPathVariations('main'),
     ...scriptPathVariations('index'),
   ];
@@ -103,8 +103,8 @@ function scriptPathVariations(scriptPath: string) {
   const exts = (p: string) => [`${p}.js`, `${p}.jsx`, `${p}.ts`, `${p}.tsx`];
   return [
     ...exts(scriptPath),
-    ...exts(`.${path.sep}${scriptPath}`),
-    ...exts(`${path.sep}${scriptPath}`),
+    ...exts(`./${scriptPath}`),
+    ...exts(`/${scriptPath}`),
   ];
 }
 
