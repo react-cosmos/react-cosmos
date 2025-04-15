@@ -7,8 +7,8 @@ import { resolveViteIndexPath } from './resolveViteIndexPath.js';
 
 describe('default index paths', () => {
   const indexPaths = [
-    ...scriptPathVariations(`src/main`),
-    ...scriptPathVariations(`src/index`),
+    ...scriptPathVariations('src/main'),
+    ...scriptPathVariations('src/index'),
     ...scriptPathVariations('main'),
     ...scriptPathVariations('index'),
   ];
@@ -28,7 +28,7 @@ describe('default index paths', () => {
     const indexHtml = mockIndexHtml(['/src/custom-main.tsx']);
 
     expect(await resolveIndexPathMocked(config, indexHtml)).toBe(
-      '/my/root/path/src/custom-main.tsx'
+      path.join(config.rootDir, 'src/custom-main.tsx')
     );
   });
 
@@ -69,7 +69,7 @@ describe('custom index path', () => {
     ]);
 
     expect(await resolveIndexPathMocked(config, indexHtml)).toBe(
-      '/my/root/path/src/custom-main.tsx'
+      path.join(config.rootDir, 'src/custom-main.tsx')
     );
   });
 
