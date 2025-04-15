@@ -1,10 +1,7 @@
 import { moduleExists } from 'react-cosmos';
 
-const tsMainPath = 'src/main.tsx';
-const jsMainPath = 'src/main.jsx';
-
 export function generateViteIndexHtml() {
-  const mainPath = moduleExists('typescript') ? tsMainPath : jsMainPath;
+  const ext = moduleExists('typescript') ? 'tsx' : 'jsx';
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -15,7 +12,7 @@ export function generateViteIndexHtml() {
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/${mainPath}"></script>
+    <script type="module" src="/src/main.${ext}"></script>
   </body>
 </html>\n`;
 }
