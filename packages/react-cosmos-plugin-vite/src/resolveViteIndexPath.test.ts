@@ -3,7 +3,7 @@ import { mockConsole } from 'react-cosmos/vitest.js';
 
 import path from 'node:path';
 import { CosmosConfig, createCosmosConfig } from 'react-cosmos';
-import { resolveViteIndexPath } from './resoveViteIndexPath.js';
+import { resolveViteIndexPath } from './resolveViteIndexPath.js';
 
 describe('default index paths', () => {
   const indexPaths = [
