@@ -5,93 +5,80 @@ import {
   findUserModulePaths,
   generateUserImports,
   getWebSocketUrl,
-  slash,
 } from 'react-cosmos';
 import { CosmosMode } from 'react-cosmos-core';
 import { DomRendererConfig } from 'react-cosmos-dom';
 import { PluginOption, ResolvedConfig } from 'vite';
-import { CosmosViteConfig } from './createCosmosViteConfig.js';
 import { createViteRendererIndex } from './createViteRendererIndex.js';
+import { findMainScriptUrl } from './findMainScriptUrl.js';
 import { generateViteIndexHtml } from './generateViteIndexHtml.js';
 
+export const rendererResolvedModuleId = '\0' + 'virtual:cosmos-renderer';
 export const userImportsVirtualModuleId = 'virtual:cosmos-imports';
 export const userImportsResolvedModuleId = '\0' + userImportsVirtualModuleId;
 
-const defaultIndexPattern = new RegExp(
-  `^(src\\${path.sep})?(index|main)\.(js|ts)x?$`
-);
-
 export function reactCosmosViteRollupPlugin(
   config: CosmosConfig,
-  cosmosViteConfig: CosmosViteConfig,
   mode: CosmosMode
 ): PluginOption {
+  let mainScriptUrl: string;
+
   return {
     name: 'react-cosmos-vite-renderer',
+    enforce: 'pre',
 
     configResolved(viteConfig: ResolvedConfig) {
+      let html = '';
+
       const htmlPath = path.resolve(viteConfig.root, 'index.html');
       if (!fs.existsSync(htmlPath)) {
         console.log(
           `[Cosmos] Vite index.html not found, creating a default one...`
         );
-        fs.writeFileSync(htmlPath, generateViteIndexHtml());
+        html = generateViteIndexHtml();
+        fs.writeFileSync(htmlPath, html);
+      } else {
+        // TODO: Add a default script if the user doesn't have one
+        html = fs.readFileSync(htmlPath, 'utf-8');
       }
+
+      mainScriptUrl = findMainScriptUrl(config, html);
     },
 
     resolveId(id) {
-      if (id === userImportsVirtualModuleId) {
-        return userImportsResolvedModuleId;
-      } else {
-        return null;
+      switch (id) {
+        case mainScriptUrl:
+          return rendererResolvedModuleId;
+        case userImportsVirtualModuleId:
+          return userImportsResolvedModuleId;
+        default:
+          return null;
       }
     },
 
     async load(id: string) {
-      if (id == userImportsResolvedModuleId) {
-        const modulePaths = await findUserModulePaths(config);
-        return generateUserImports<DomRendererConfig>({
-          config,
-          modulePaths,
-          rendererConfig: {
-            webSocketUrl: mode === 'dev' ? getWebSocketUrl(config) : null,
-            rendererUrl: null,
-            containerQuerySelector: config.dom.containerQuerySelector,
-          },
-          relativeToDir: null,
-          typeScript: false,
-        });
-      } else {
-        return null;
-      }
-    },
-
-    transform(src, id) {
-      const absPath =
-        cosmosViteConfig.indexPath &&
-        absoluteIndexPath(cosmosViteConfig.indexPath, config.rootDir);
-
-      const isRendererIndex = absPath
-        ? absPath === id
-        : path.relative(config.rootDir, id).match(defaultIndexPattern);
-
-      if (isRendererIndex) {
-        const relPath = path.relative(process.cwd(), id);
-        console.log(`[Cosmos] Replacing vite index module at ${relPath}`);
-
-        return {
-          code: createViteRendererIndex(userImportsVirtualModuleId),
-          map: null,
-        };
-      } else {
-        return null;
+      switch (id) {
+        case rendererResolvedModuleId: {
+          console.log(`[Cosmos] Loading cosmos renderer at ${mainScriptUrl}`);
+          return createViteRendererIndex(userImportsVirtualModuleId);
+        }
+        case userImportsResolvedModuleId: {
+          const modulePaths = await findUserModulePaths(config);
+          return generateUserImports<DomRendererConfig>({
+            config,
+            modulePaths,
+            rendererConfig: {
+              webSocketUrl: mode === 'dev' ? getWebSocketUrl(config) : null,
+              rendererUrl: null,
+              containerQuerySelector: config.dom.containerQuerySelector,
+            },
+            relativeToDir: null,
+            typeScript: false,
+          });
+        }
+        default:
+          return null;
       }
     },
   };
-}
-
-function absoluteIndexPath(indexPath: string, rootDir: string) {
-  return indexPath.startsWith(rootDir)
-    ? indexPath
-    : slash(path.join(rootDir, indexPath));
 }

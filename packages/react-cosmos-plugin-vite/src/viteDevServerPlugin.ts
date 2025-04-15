@@ -40,7 +40,7 @@ export async function viteDevServerPlugin({
       // option enabled in their Vite config
       open: false,
     },
-    plugins: [reactCosmosViteRollupPlugin(config, cosmosViteConfig, 'dev')],
+    plugins: [reactCosmosViteRollupPlugin(config, 'dev')],
   });
   await server.listen();
 
@@ -49,6 +49,7 @@ export async function viteDevServerPlugin({
       userImportsResolvedModuleId
     );
     if (!module) {
+      // TODO: What this do? What about rendererResolvedModuleId?
       throw new Error(
         `Vite module graph doesn't contain module with id ${userImportsResolvedModuleId}`
       );
