@@ -17,7 +17,7 @@ beforeEach(() => {
 });
 
 it('creates default index.html when none exists and returns it', async () => {
-  const rootDir = path.join('my', 'root', 'path');
+  const rootDir = path.resolve('my', 'root', 'path');
   const indexPath = path.join(rootDir, 'index.html');
 
   const defaultHtml = `<!DOCTYPE html>
@@ -43,7 +43,7 @@ it('creates default index.html when none exists and returns it', async () => {
 });
 
 it('returns existing index.html when none exists', async () => {
-  const rootDir = path.join('my', 'root', 'path');
+  const rootDir = path.resolve('my', 'root', 'path');
   const indexPath = path.join(rootDir, 'index.html');
 
   const customHtml = `<!DOCTYPE html>
