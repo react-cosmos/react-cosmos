@@ -41,15 +41,10 @@ describe('main script detection', () => {
     );
   });
 
-  // TODO: Auto fix this
-  it(`throws when index.html doesn't contain any script`, async () => {
+  it(`returns default main script URL when index.html doesn't contain any script`, async () => {
     const config = createCosmosConfig('/my/root/path', {});
     const indexHtml = mockIndexHtml([]);
-
-    await expect(findUrlMocked(config, indexHtml)).rejects.toThrow(
-      `You need at least one script tag in your index.html file. ` +
-        `Example: <script type="module" src="/src/main.tsx"></script>`
-    );
+    expect(await findUrlMocked(config, indexHtml)).toBe('/src/main.tsx');
   });
 });
 
@@ -78,7 +73,6 @@ describe('custom main script path', () => {
     );
   });
 
-  // TODO: Auto fix this
   it(`throws when index.html doesn't contain any script`, async () => {
     const config = createCosmosConfig('/my/root/path', {
       vite: { indexPath: '/src/custom-main.tsx' },
@@ -86,8 +80,8 @@ describe('custom main script path', () => {
     const indexHtml = mockIndexHtml([]);
 
     await expect(findUrlMocked(config, indexHtml)).rejects.toThrow(
-      `You need at least one script tag in your index.html file. ` +
-        `Example: <script type="module" src="/src/main.tsx"></script>`
+      `Main script path /src/custom-main.tsx not found in index.html. ` +
+        `Please create it or change vite.indexPath in your Cosmos config.`
     );
   });
 });

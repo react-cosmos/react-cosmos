@@ -1,8 +1,6 @@
-import { moduleExists } from 'react-cosmos';
+import { defaultMainScriptUrl } from './defaultMainScriptUrl.js';
 
 export function generateViteIndexHtml() {
-  const ext = moduleExists('typescript') ? 'tsx' : 'jsx';
-
   return `<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -12,7 +10,7 @@ export function generateViteIndexHtml() {
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.${ext}"></script>
+    <script type="module" src="${defaultMainScriptUrl()}"></script>
   </body>
 </html>\n`;
 }

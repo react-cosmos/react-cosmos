@@ -9,6 +9,7 @@ import { DomRendererConfig } from 'react-cosmos-dom';
 import { PluginOption, ResolvedConfig } from 'vite';
 import { createViteRendererIndex } from './createViteRendererIndex.js';
 import { ensureIndexHtml } from './indexHtml/ensureIndexHtml.js';
+import { ensureMainScriptUrl } from './indexHtml/ensureMainScriptUrl.js';
 import { findMainScriptUrl } from './indexHtml/findMainScriptUrl.js';
 
 export const rendererResolvedModuleId = '\0' + 'virtual:cosmos-renderer';
@@ -26,8 +27,14 @@ export function reactCosmosViteRollupPlugin(
     enforce: 'pre',
 
     configResolved(viteConfig: ResolvedConfig) {
-      const indexHtml = ensureIndexHtml(viteConfig.root);
-      mainScriptUrl = findMainScriptUrl(config, indexHtml);
+      const html = ensureIndexHtml(viteConfig.root);
+      mainScriptUrl = findMainScriptUrl(config, html);
+    },
+
+    transformIndexHtml(html) {
+      // Redetect the main script URL when index.html changes
+      mainScriptUrl = findMainScriptUrl(config, html);
+      return ensureMainScriptUrl(html);
     },
 
     resolveId(id) {

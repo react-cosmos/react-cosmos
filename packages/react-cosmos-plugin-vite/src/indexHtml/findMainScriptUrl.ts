@@ -1,22 +1,21 @@
 import path from 'node:path';
 import { CosmosConfig, slash } from 'react-cosmos';
 import { createCosmosViteConfig } from '../createCosmosViteConfig.js';
-import { getHtmlScriptSrcs } from '../utils/htmlScriptSrcs.js';
+import { defaultMainScriptUrl } from './defaultMainScriptUrl.js';
+import { getHtmlScriptUrls } from './getHtmlScriptUrls.js';
 
 const mainSrcPattern = new RegExp(`^(\\.?/)?(src/)?(index|main)\\.(js|ts)x?$`);
 
-export function findMainScriptUrl(config: CosmosConfig, indexHtml: string) {
+export function findMainScriptUrl(config: CosmosConfig, html: string) {
   const { rootDir } = config;
-  const scripts = getHtmlScriptSrcs(indexHtml);
-  // TODO: Auto fix this, for both default and custom index paths
-  if (scripts.length === 0)
-    throw new Error(
-      `You need at least one script tag in your index.html file. ` +
-        `Example: <script type="module" src="/src/main.tsx"></script>`
-    );
+  const scripts = getHtmlScriptUrls(html);
 
   const { indexPath } = createCosmosViteConfig(config);
   if (indexPath === null) {
+    // NOTE: This assumes the html will also be transformed to include a script
+    // tag with default main script URL.
+    if (scripts.length === 0) return defaultMainScriptUrl();
+
     if (scripts.length > 1) {
       const mainSrc = scripts.find(src => mainSrcPattern.test(src));
       if (mainSrc) return mainSrc;
