@@ -73,8 +73,8 @@ describe('custom main script path', () => {
     const indexHtml = mockIndexHtml(['/src/custom-main-a.tsx']);
 
     await expect(findUrlMocked(config, indexHtml)).rejects.toThrow(
-      `Main script path /src/custom-main.tsx not found in index.html. ` +
-        `Please create it or change vite.indexPath in your Cosmos config.`
+      `Script URL /src/custom-main.tsx not found in index.html. ` +
+        `Add it or change vite.indexPath in your Cosmos config.`
     );
   });
 
@@ -85,8 +85,8 @@ describe('custom main script path', () => {
     const indexHtml = mockIndexHtml([]);
 
     await expect(findUrlMocked(config, indexHtml)).rejects.toThrow(
-      `Main script path /src/custom-main.tsx not found in index.html. ` +
-        `Please create it or change vite.indexPath in your Cosmos config.`
+      `Script URL /src/custom-main.tsx not found in index.html. ` +
+        `Add it or change vite.indexPath in your Cosmos config.`
     );
   });
 });

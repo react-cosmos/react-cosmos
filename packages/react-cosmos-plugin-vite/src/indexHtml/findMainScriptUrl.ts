@@ -35,8 +35,8 @@ export function findMainScriptUrl(config: CosmosConfig, html: string) {
 
   const relPath = slash(path.relative(rootDir, indexPath));
   throw new Error(
-    `Main script path /${relPath} not found in index.html. ` +
-      `Please create it or change vite.indexPath in your Cosmos config.`
+    `Script URL /${relPath} not found in index.html. ` +
+      `Add it or change vite.indexPath in your Cosmos config.`
   );
 }
 
