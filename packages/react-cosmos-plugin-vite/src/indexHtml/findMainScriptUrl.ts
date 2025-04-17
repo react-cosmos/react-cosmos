@@ -4,7 +4,7 @@ import { createCosmosViteConfig } from '../createCosmosViteConfig.js';
 import { defaultMainScriptUrl } from './defaultMainScriptUrl.js';
 import { getHtmlScriptUrls } from './getHtmlScriptUrls.js';
 
-const mainUrlPattern = new RegExp(`(\\.?/)?(src/)?(index|main)\\.(js|ts)x?$`);
+const mainUrlPattern = new RegExp(`/(src/)?(index|main)\\.(js|ts)x?$`);
 
 export function findMainScriptUrl(config: CosmosConfig, html: string) {
   const { rootDir } = config;
