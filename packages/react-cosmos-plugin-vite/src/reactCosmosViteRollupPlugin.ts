@@ -7,6 +7,7 @@ import {
 import { CosmosMode } from 'react-cosmos-core';
 import { DomRendererConfig } from 'react-cosmos-dom';
 import { PluginOption, ResolvedConfig } from 'vite';
+import { CosmosViteConfig } from './createCosmosViteConfig.js';
 import { createViteRendererIndex } from './createViteRendererIndex.js';
 import { ensureIndexHtml } from './indexHtml/ensureIndexHtml.js';
 import { ensureMainScriptUrl } from './indexHtml/ensureMainScriptUrl.js';
@@ -18,6 +19,7 @@ export const userImportsResolvedModuleId = '\0' + userImportsVirtualModuleId;
 
 export function reactCosmosViteRollupPlugin(
   config: CosmosConfig,
+  cosmosViteConfig: CosmosViteConfig,
   mode: CosmosMode
 ): PluginOption {
   let mainScriptUrl: string;
@@ -28,12 +30,20 @@ export function reactCosmosViteRollupPlugin(
 
     configResolved(viteConfig: ResolvedConfig) {
       const html = ensureIndexHtml(viteConfig.root);
-      mainScriptUrl = findMainScriptUrl(config, html);
+      mainScriptUrl = findMainScriptUrl(
+        html,
+        config.rootDir,
+        cosmosViteConfig.indexPath
+      );
     },
 
     transformIndexHtml(html) {
       // Redetect the main script URL when index.html changes
-      mainScriptUrl = findMainScriptUrl(config, html);
+      mainScriptUrl = findMainScriptUrl(
+        html,
+        config.rootDir,
+        cosmosViteConfig.indexPath
+      );
       return ensureMainScriptUrl(html);
     },
 

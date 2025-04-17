@@ -40,7 +40,7 @@ export async function viteDevServerPlugin({
       // option enabled in their Vite config
       open: false,
     },
-    plugins: [reactCosmosViteRollupPlugin(config, 'dev')],
+    plugins: [reactCosmosViteRollupPlugin(config, cosmosViteConfig, 'dev')],
   });
   await server.listen();
 
