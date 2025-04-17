@@ -17,8 +17,20 @@ export function findMainScriptUrl(config: CosmosConfig, html: string) {
     if (scripts.length === 0) return defaultMainScriptUrl();
 
     if (scripts.length > 1) {
-      const mainUrl = scripts.find(url => mainUrlPattern.test(url));
-      if (mainUrl) return mainUrl;
+      // Pick the best match
+      // Eg. Between "/src/main.tsx" and "/foo/main.tsx", pick "/src/index.tsx"
+      let bestUrl;
+      let bestUrlLength = 0;
+      for (const url of scripts) {
+        const match = url.match(mainUrlPattern);
+        if (match && match[0].length > bestUrlLength) {
+          bestUrl = url;
+          bestUrlLength = match[0].length;
+        }
+      }
+      if (bestUrl) {
+        return bestUrl;
+      }
 
       throw new Error(
         `Multiple script paths found in index.html. ` +

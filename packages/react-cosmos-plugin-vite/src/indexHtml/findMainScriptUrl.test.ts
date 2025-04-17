@@ -32,6 +32,13 @@ describe('main script detection', () => {
     expect(await findUrlMocked(config, indexHtml)).toBe('/src/custom-main.tsx');
   });
 
+  it(`finds best script URL match`, async () => {
+    const config = createCosmosConfig('/my/root/path', {});
+    const indexHtml = mockIndexHtml(['/foo/main.tsx', '/src/main.tsx']);
+
+    expect(await findUrlMocked(config, indexHtml)).toBe('/src/main.tsx');
+  });
+
   it(`throws when main script can't be established from multiple scripts`, async () => {
     const config = createCosmosConfig('/my/root/path', {});
     const indexHtml = mockIndexHtml([
