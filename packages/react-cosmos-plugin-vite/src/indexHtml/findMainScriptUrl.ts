@@ -4,11 +4,11 @@ import { createCosmosViteConfig } from '../createCosmosViteConfig.js';
 import { defaultMainScriptUrl } from './defaultMainScriptUrl.js';
 import { getHtmlScriptUrls } from './getHtmlScriptUrls.js';
 
-const mainSrcPattern = new RegExp(`^(\\.?/)?(src/)?(index|main)\\.(js|ts)x?$`);
+const mainUrlPattern = new RegExp(`(\\.?/)?(src/)?(index|main)\\.(js|ts)x?$`);
 
 export function findMainScriptUrl(config: CosmosConfig, html: string) {
   const { rootDir } = config;
-  const scripts = getHtmlScriptUrls(html);
+  const scripts = getHtmlScriptUrls(html).map(normalizeUrl);
 
   const { indexPath } = createCosmosViteConfig(config);
   if (indexPath === null) {
@@ -17,8 +17,8 @@ export function findMainScriptUrl(config: CosmosConfig, html: string) {
     if (scripts.length === 0) return defaultMainScriptUrl();
 
     if (scripts.length > 1) {
-      const mainSrc = scripts.find(src => mainSrcPattern.test(src));
-      if (mainSrc) return mainSrc;
+      const mainUrl = scripts.find(url => mainUrlPattern.test(url));
+      if (mainUrl) return mainUrl;
 
       throw new Error(
         `Multiple script paths found in index.html. ` +
@@ -30,12 +30,22 @@ export function findMainScriptUrl(config: CosmosConfig, html: string) {
     return scripts[0];
   }
 
-  const mainSrc = scripts.find(src => path.join(rootDir, src) === indexPath);
-  if (mainSrc) return mainSrc;
+  const mainUrl = scripts.find(url => path.join(rootDir, url) === indexPath);
+  if (mainUrl) return mainUrl;
 
   const relPath = slash(path.relative(rootDir, indexPath));
   throw new Error(
     `Main script path /${relPath} not found in index.html. ` +
       `Please create it or change vite.indexPath in your Cosmos config.`
   );
+}
+
+function normalizeUrl(url: string) {
+  // "src/main.tsx" => "/src/main.tsx"
+  // "./src/main.tsx" => "/src/main.tsx"
+  // "../src/main.tsx" => "/src/main.tsx"
+  return `/${url
+    .split('/')
+    .filter(p => !['', '.', '..'].includes(p))
+    .join('/')}`;
 }

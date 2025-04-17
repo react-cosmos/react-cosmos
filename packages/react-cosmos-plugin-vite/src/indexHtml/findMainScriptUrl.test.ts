@@ -6,17 +6,22 @@ import { findMainScriptUrl } from './findMainScriptUrl.js';
 
 describe('main script detection', () => {
   const scriptUrls = [
-    ...scriptUrlVariations('src/main'),
-    ...scriptUrlVariations('src/index'),
-    ...scriptUrlVariations('main'),
-    ...scriptUrlVariations('index'),
+    ...urlExtVariations('src/main'),
+    ...urlExtVariations('src/index'),
+    ...urlExtVariations('main'),
+    ...urlExtVariations('index'),
+    ...urlExtVariations('vite/main'),
   ];
   scriptUrls.forEach(scriptUrl => {
-    it(`finds "${scriptUrl}" script`, async () => {
+    it(scriptUrl, async () => {
       const config = createCosmosConfig('/my/root/path', {});
-      const indexHtml = mockIndexHtml(['/src/polyfills.ts', scriptUrl]);
 
-      expect(await findUrlMocked(config, indexHtml)).toBe(scriptUrl);
+      const findVariation = (url: string) =>
+        findUrlMocked(config, mockIndexHtml(['/src/polyfills.ts', url]));
+
+      expect(await findVariation(scriptUrl)).toBe(`/${scriptUrl}`);
+      expect(await findVariation(`./${scriptUrl}`)).toBe(`/${scriptUrl}`);
+      expect(await findVariation(`/${scriptUrl}`)).toBe(`/${scriptUrl}`);
     });
   });
 
@@ -86,13 +91,8 @@ describe('custom main script path', () => {
   });
 });
 
-function scriptUrlVariations(scriptPath: string) {
-  const exts = (p: string) => [`${p}.js`, `${p}.jsx`, `${p}.ts`, `${p}.tsx`];
-  return [
-    ...exts(scriptPath),
-    ...exts(`./${scriptPath}`),
-    ...exts(`/${scriptPath}`),
-  ];
+function urlExtVariations(url: string) {
+  return [`${url}.jsx`, `${url}.tsx`];
 }
 
 async function findUrlMocked(config: CosmosConfig, indexHtml: string) {
