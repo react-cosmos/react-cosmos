@@ -7,9 +7,9 @@ import {
 import { CosmosMode } from 'react-cosmos-core';
 import { DomRendererConfig } from 'react-cosmos-dom';
 import { PluginOption, ResolvedConfig } from 'vite';
-import { findMainScriptUrl } from '../dist/findMainScriptUrl.js';
 import { createViteRendererIndex } from './createViteRendererIndex.js';
 import { ensureIndexHtml } from './indexHtml/ensureIndexHtml.js';
+import { findMainScriptUrl } from './indexHtml/findMainScriptUrl.js';
 
 export const rendererResolvedModuleId = '\0' + 'virtual:cosmos-renderer';
 export const userImportsVirtualModuleId = 'virtual:cosmos-imports';
