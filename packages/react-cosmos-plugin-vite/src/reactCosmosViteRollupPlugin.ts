@@ -1,5 +1,3 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import {
   CosmosConfig,
   findUserModulePaths,
@@ -9,9 +7,9 @@ import {
 import { CosmosMode } from 'react-cosmos-core';
 import { DomRendererConfig } from 'react-cosmos-dom';
 import { PluginOption, ResolvedConfig } from 'vite';
+import { findMainScriptUrl } from '../dist/findMainScriptUrl.js';
 import { createViteRendererIndex } from './createViteRendererIndex.js';
-import { findMainScriptUrl } from './findMainScriptUrl.js';
-import { generateViteIndexHtml } from './generateViteIndexHtml.js';
+import { ensureIndexHtml } from './indexHtml/ensureIndexHtml.js';
 
 export const rendererResolvedModuleId = '\0' + 'virtual:cosmos-renderer';
 export const userImportsVirtualModuleId = 'virtual:cosmos-imports';
@@ -28,21 +26,8 @@ export function reactCosmosViteRollupPlugin(
     enforce: 'pre',
 
     configResolved(viteConfig: ResolvedConfig) {
-      let html = '';
-
-      const htmlPath = path.resolve(viteConfig.root, 'index.html');
-      if (!fs.existsSync(htmlPath)) {
-        console.log(
-          `[Cosmos] Vite index.html not found, creating a default one...`
-        );
-        html = generateViteIndexHtml();
-        fs.writeFileSync(htmlPath, html);
-      } else {
-        // TODO: Add a default script if the user doesn't have one
-        html = fs.readFileSync(htmlPath, 'utf-8');
-      }
-
-      mainScriptUrl = findMainScriptUrl(config, html);
+      const indexHtml = ensureIndexHtml(viteConfig.root);
+      mainScriptUrl = findMainScriptUrl(config, indexHtml);
     },
 
     resolveId(id) {

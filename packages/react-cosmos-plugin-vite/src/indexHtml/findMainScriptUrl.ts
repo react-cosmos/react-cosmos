@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { CosmosConfig, slash } from 'react-cosmos';
-import { createCosmosViteConfig } from './createCosmosViteConfig.js';
-import { getHtmlScriptSrcs } from './utils/htmlScriptSrcs.js';
+import { createCosmosViteConfig } from '../createCosmosViteConfig.js';
+import { getHtmlScriptSrcs } from '../utils/htmlScriptSrcs.js';
 
 const mainSrcPattern = new RegExp(`^(\\.?/)?(src/)?(index|main)\\.(js|ts)x?$`);
 
