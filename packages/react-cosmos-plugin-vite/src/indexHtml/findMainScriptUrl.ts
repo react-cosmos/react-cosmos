@@ -20,7 +20,7 @@ export function findMainScriptUrl(
   }
 
   // NOTE: This assumes the html will also be transformed to include a script
-  // tag with default main script URL.
+  // tag with the default main script URL.
   if (scripts.length === 0) return defaultMainScriptUrl();
 
   if (scripts.length === 1) return scripts[0];
