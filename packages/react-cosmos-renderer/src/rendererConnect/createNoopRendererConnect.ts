@@ -2,7 +2,12 @@ import { RendererConnect } from 'react-cosmos-core';
 
 export function createNoopRendererConnect(): RendererConnect {
   return {
-    postMessage() {},
+    postMessage(rendererResponse) {
+      // Allow headless browsers to capture renderer responses
+      if (window.cosmosRendererResponse) {
+        window.cosmosRendererResponse(rendererResponse);
+      }
+    },
     onMessage() {
       return () => {};
     },
