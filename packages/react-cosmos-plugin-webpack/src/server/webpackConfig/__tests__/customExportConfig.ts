@@ -34,9 +34,9 @@ const config = createCosmosConfig(process.cwd(), {
 
 async function getCustomExportWebpackConfig() {
   return mockConsole(async ({ expectLog }) => {
-    expectLog('[Cosmos] Using webpack config found at mywebpack.config.js');
+    expectLog('[Cosmos] Using Webpack config found at mywebpack.config.js');
     expectLog(
-      '[Cosmos] Learn how to override webpack config for cosmos: https://reactcosmos.org/docs/getting-started/webpack#webpack-config-override'
+      '[Cosmos] Learn how to override Webpack config for Cosmos: https://reactcosmos.org/docs/getting-started/webpack#webpack-config-override'
     );
     return await getExportWebpackConfig(config, webpack);
   });

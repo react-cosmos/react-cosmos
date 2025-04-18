@@ -8,11 +8,11 @@ import { reactCosmosViteRollupPlugin } from './reactCosmosViteRollupPlugin.js';
 
 export async function viteExportPlugin({ config }: ExportPluginArgs) {
   const { rootDir, exportPath, publicUrl } = config;
-  const viteConfig = createCosmosViteConfig(config);
+  const cosmosViteConfig = createCosmosViteConfig(config);
 
   const outDir = path.join(exportPath, publicUrl);
   await build({
-    configFile: viteConfig.configPath,
+    configFile: cosmosViteConfig.configPath,
     root: rootDir,
     base: publicUrl,
     build: {
@@ -20,7 +20,7 @@ export async function viteExportPlugin({ config }: ExportPluginArgs) {
       emptyOutDir: false,
       minify: false,
     },
-    plugins: [reactCosmosViteRollupPlugin(config, viteConfig, 'export')],
+    plugins: [reactCosmosViteRollupPlugin(config, cosmosViteConfig, 'export')],
   });
 
   await rename(

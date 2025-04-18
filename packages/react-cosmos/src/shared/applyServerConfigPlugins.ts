@@ -19,7 +19,7 @@ export async function applyServerConfigPlugins({
       try {
         config = await plugin.config({ config, mode, platform });
       } catch (err) {
-        console.log(`[Cosmos][plugin:${plugin.name}] Config hook failed`);
+        console.log(`[Cosmos][${plugin.name}] Config hook failed`);
         throw err;
       }
     }

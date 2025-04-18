@@ -75,9 +75,7 @@ export async function startDevServer(platform: CosmosPlatform) {
           } catch (err) {
             // Log when a plugin fails to clean up, but continue to attempt
             // to clean up the remaining plugins
-            console.log(
-              `[Cosmos][plugin:${plugin.name}] Dev server cleanup failed`
-            );
+            console.log(`[Cosmos][${plugin.name}] Dev server cleanup failed`);
             console.log(err);
           }
         });
@@ -85,7 +83,7 @@ export async function startDevServer(platform: CosmosPlatform) {
     } catch (err) {
       // Abort starting server if a plugin init fails and attempt cleanup of all
       // plugins that have already initialized
-      console.log(`[Cosmos][plugin:${plugin.name}] Dev server init failed`);
+      console.log(`[Cosmos][${plugin.name}] Dev server init failed`);
       cleanUp();
       throw err;
     }
@@ -99,10 +97,10 @@ export async function startDevServer(platform: CosmosPlatform) {
 function logCosmosConfigInfo() {
   const cosmosConfigPath = detectCosmosConfigPath();
   if (!cosmosConfigPath) {
-    console.log(`[Cosmos] Using default cosmos config`);
+    console.log(`[Cosmos] Using default Cosmos config`);
     return;
   }
 
   const relConfigPath = path.relative(process.cwd(), cosmosConfigPath);
-  console.log(`[Cosmos] Using cosmos config found at ${relConfigPath}`);
+  console.log(`[Cosmos] Using config found at ${relConfigPath}`);
 }

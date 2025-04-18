@@ -15,6 +15,7 @@
     "@mdx-js/rollup": "3.1.0",
     "@vitejs/plugin-react": "4.3.4",
     "examples-shared": "^6.1.0",
+    "parse5": "7.2.1",
     "react": "19.0.0",
     "react-cosmos": "^6.2.3",
     "react-cosmos-plugin-boolean-input": "^6.2.3",

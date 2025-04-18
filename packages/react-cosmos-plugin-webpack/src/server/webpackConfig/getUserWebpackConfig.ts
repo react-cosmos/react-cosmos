@@ -35,13 +35,13 @@ export async function getUserWebpackConfig(
 
   if (!overridePath || !moduleExists(overridePath)) {
     console.log(
-      `[Cosmos] Learn how to override webpack config for cosmos: https://reactcosmos.org/docs/getting-started/webpack#webpack-config-override`
+      `[Cosmos] Learn how to override Webpack config for Cosmos: https://reactcosmos.org/docs/getting-started/webpack#webpack-config-override`
     );
     return baseWebpackConfig;
   }
 
   const relPath = path.relative(process.cwd(), overridePath);
-  console.log(`[Cosmos] Overriding webpack config at ${relPath}`);
+  console.log(`[Cosmos] Overriding Webpack config at ${relPath}`);
 
   const module = await importModule<{ default: WebpackOverride }>(overridePath);
   const webpackOverride = module.default;
@@ -57,12 +57,12 @@ async function getBaseWebpackConfig(
   const { configPath } = createWebpackCosmosConfig(config);
 
   if (!configPath || !moduleExists(configPath)) {
-    console.log('[Cosmos] Using default webpack config');
+    console.log('[Cosmos] Using default Webpack config');
     return getDefaultWebpackConfig(userWebpack, rootDir);
   }
 
   const relPath = path.relative(process.cwd(), configPath);
-  console.log(`[Cosmos] Using webpack config found at ${relPath}`);
+  console.log(`[Cosmos] Using Webpack config found at ${relPath}`);
 
   const module = await importModule<{ default: WebpackConfig }>(configPath);
   const webpackConfig = module.default;
