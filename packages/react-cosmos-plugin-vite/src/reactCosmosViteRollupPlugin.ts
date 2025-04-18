@@ -37,7 +37,7 @@ export function reactCosmosViteRollupPlugin(
       // index.html in the root if it already exists.
       const resolved = await this.resolve(htmlPath);
       const html = resolved
-        ? fs.readFileSync(htmlPath, 'utf-8')
+        ? fs.readFileSync(resolved.id, 'utf-8')
         : createIndexHtml(htmlPath);
       mainScriptUrl = findMainScriptUrl(html, cosmosViteConfig.mainScriptUrl);
     },
