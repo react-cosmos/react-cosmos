@@ -175,7 +175,7 @@
           "anyOf": [{ "type": "string", "minLength": 1 }, { "enum": [false] }]
         },
         "mainScriptUrl": {
-          "description": "URL to custom main script (eg. \"/src/my-main.tsx\"). [default: detect main script URL using common patterns]",
+          "description": "URL to custom main script (eg. \"/src/my-main.tsx\"). [default: detect main script URL]",
           "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
         },
         "port": {
