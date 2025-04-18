@@ -65,7 +65,7 @@
     "prettier-plugin-organize-imports": "3.2.4",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "react-native": "0.78.2",
+    "react-native": "0.79.1",
     "source-map-loader": "4.0.2",
     "style-loader": "3.3.4",
     "styled-components": "5.3.11",
