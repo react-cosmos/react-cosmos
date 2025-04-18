@@ -3,7 +3,7 @@ import { CosmosConfig, fileExists, resolveFromSilent } from 'react-cosmos';
 
 export type CosmosViteConfig = {
   configPath: string | false;
-  indexPath: string | null;
+  mainScriptUrl: string | null;
   port: number;
 };
 
@@ -18,11 +18,7 @@ export function createCosmosViteConfig(config: CosmosConfig): CosmosViteConfig {
 
   return {
     configPath,
-
-    indexPath: configInput.indexPath
-      ? path.join(rootDir, configInput.indexPath)
-      : null,
-
+    mainScriptUrl: configInput.mainScriptUrl ?? null,
     port: getCosmosVitePort(configInput),
   };
 }

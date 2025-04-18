@@ -30,20 +30,12 @@ export function reactCosmosViteRollupPlugin(
 
     configResolved(viteConfig: ResolvedConfig) {
       const html = ensureIndexHtml(viteConfig.root);
-      mainScriptUrl = findMainScriptUrl(
-        html,
-        config.rootDir,
-        cosmosViteConfig.indexPath
-      );
+      mainScriptUrl = findMainScriptUrl(html, cosmosViteConfig.mainScriptUrl);
     },
 
     transformIndexHtml(html) {
       // Redetect the main script URL when index.html changes
-      mainScriptUrl = findMainScriptUrl(
-        html,
-        config.rootDir,
-        cosmosViteConfig.indexPath
-      );
+      mainScriptUrl = findMainScriptUrl(html, cosmosViteConfig.mainScriptUrl);
       return ensureMainScriptUrl(html);
     },
 

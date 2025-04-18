@@ -1,5 +1,3 @@
-import path from 'node:path';
-import { slash } from 'react-cosmos';
 import { defaultMainScriptUrl } from './defaultMainScriptUrl.js';
 import { getHtmlScriptUrls } from './getHtmlScriptUrls.js';
 
@@ -7,51 +5,33 @@ const mainUrlPattern = new RegExp(`/(src/)?(index|main)\\.(js|ts)x?$`);
 
 export function findMainScriptUrl(
   html: string,
-  rootDir: string,
-  mainScriptPath: string | null = null
+  mainScriptUrl: string | null = null
 ) {
   const scripts = getHtmlScriptUrls(html).map(normalizeUrl);
 
-  if (mainScriptPath === null) {
-    // NOTE: This assumes the html will also be transformed to include a script
-    // tag with default main script URL.
-    if (scripts.length === 0) return defaultMainScriptUrl();
+  if (mainScriptUrl !== null) {
+    const mainUrl = scripts.find(url => url === normalizeUrl(mainScriptUrl));
+    if (mainUrl) return mainUrl;
 
-    if (scripts.length > 1) {
-      // Pick the best match
-      // Eg. Between "/src/main.tsx" and "/foo/main.tsx", pick "/src/index.tsx"
-      let bestUrl;
-      let bestUrlLength = 0;
-      for (const url of scripts) {
-        const match = url.match(mainUrlPattern);
-        if (match && match[0].length > bestUrlLength) {
-          bestUrl = url;
-          bestUrlLength = match[0].length;
-        }
-      }
-      if (bestUrl) {
-        return bestUrl;
-      }
-
-      throw new Error(
-        `Multiple script paths found in index.html. ` +
-          `Please set vite.mainScriptPath in your Cosmos config: ` +
-          `https://reactcosmos.org/docs/getting-started/vite#configuration`
-      );
-    }
-
-    return scripts[0];
+    throw new Error(
+      `Script URL "${mainScriptUrl}" not found in index.html. ` +
+        `Add it or change vite.mainScriptUrl in your Cosmos config.`
+    );
   }
 
-  const mainUrl = scripts.find(
-    url => path.join(rootDir, url) === mainScriptPath
-  );
+  // NOTE: This assumes the html will also be transformed to include a script
+  // tag with default main script URL.
+  if (scripts.length === 0) return defaultMainScriptUrl();
+
+  if (scripts.length === 1) return scripts[0];
+
+  const mainUrl = guessMainScriptUrl(scripts);
   if (mainUrl) return mainUrl;
 
-  const relPath = slash(path.relative(rootDir, mainScriptPath));
   throw new Error(
-    `Script URL /${relPath} not found in index.html. ` +
-      `Add it or change vite.mainScriptPath in your Cosmos config.`
+    `Multiple script paths found in index.html. ` +
+      `Please set vite.mainScriptUrl in your Cosmos config: ` +
+      `https://reactcosmos.org/docs/getting-started/vite#configuration`
   );
 }
 
@@ -63,4 +43,22 @@ function normalizeUrl(url: string) {
     .split('/')
     .filter(p => !['', '.', '..'].includes(p))
     .join('/')}`;
+}
+
+function guessMainScriptUrl(urls: string[]) {
+  // Find main script URL from multiple script tags based on common patterns
+  // and pick the longest match when multiple matches are found.
+  // Eg. Between "/src/main.tsx" and "/foo/main.tsx", pick "/src/index.tsx"
+  let bestUrl = null;
+  let bestUrlLength = 0;
+
+  for (const url of urls) {
+    const match = url.match(mainUrlPattern);
+    if (match && match[0].length > bestUrlLength) {
+      bestUrl = url;
+      bestUrlLength = match[0].length;
+    }
+  }
+
+  return bestUrl;
 }

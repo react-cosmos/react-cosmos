@@ -174,8 +174,8 @@
           "description": "Path to Vite config. Set to false to disable reading it from the default path. [default: \"vite.config.js\" or \"vite.config.ts\"]",
           "anyOf": [{ "type": "string", "minLength": 1 }, { "enum": [false] }]
         },
-        "indexPath": {
-          "description": "Path to index module (eg. \"src/my-index.tsx\"). [default: detects common index/main module paths]",
+        "mainScriptUrl": {
+          "description": "URL to custom main script (eg. \"/src/my-main.tsx\"). [default: detect main script URL using common patterns]",
           "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
         },
         "port": {
