@@ -1,7 +1,5 @@
-// TODO: This is an implicit Vite dependency, we should probably add it to the
-// explicit dependencies or replace it with vanilla JS
 import * as parse5 from 'parse5';
-import { Node } from 'parse5/dist/tree-adapters/default.js';
+import { Node } from 'parse5/dist/tree-adapters/default';
 
 export function getHtmlScriptUrls(html: string) {
   const document = parse5.parse(html);
@@ -15,7 +13,6 @@ export function getHtmlScriptUrls(html: string) {
 
     if ('childNodes' in node) node.childNodes.forEach(walk);
   }
-
   walk(document);
 
   return urls.filter(url => !url.startsWith('/@vite'));
