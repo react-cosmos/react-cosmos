@@ -62,8 +62,8 @@ function getViteConfigPath(
 function logViteConfigInfo(viteConfigPath: string | false) {
   if (viteConfigPath) {
     const relPath = path.relative(process.cwd(), viteConfigPath);
-    console.log(`[Cosmos] Using vite config found at ${relPath}`);
+    console.log(`[Cosmos] Using Vite config found at ${relPath}`);
   } else {
-    console.log(`[Cosmos] No vite config found, using default settings`);
+    console.log(`[Cosmos] No Vite config found, using default settings`);
   }
 }

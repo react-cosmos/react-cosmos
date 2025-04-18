@@ -38,12 +38,12 @@ function resolveLocalReactDeps(
   let reactDomAlias = hasAlias(alias, 'react-dom');
 
   if (reactAlias && reactDomAlias) {
-    console.log('[Cosmos] React and React DOM aliases found in webpack config');
+    console.log('[Cosmos] React and React DOM aliases found in Webpack config');
     return resolve;
   }
 
   if (reactAlias) {
-    console.log('[Cosmos] React alias found in webpack config');
+    console.log('[Cosmos] React alias found in Webpack config');
   } else {
     const reactPath = resolveFromSilent(rootDir, 'react');
     if (!reactPath)
@@ -52,7 +52,7 @@ function resolveLocalReactDeps(
   }
 
   if (reactDomAlias) {
-    console.log('[Cosmos] React DOM alias found in webpack config');
+    console.log('[Cosmos] React DOM alias found in Webpack config');
   } else {
     const reactDomPath = resolveFromSilent(rootDir, 'react-dom');
     if (!reactDomPath)

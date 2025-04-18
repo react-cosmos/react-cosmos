@@ -50,9 +50,9 @@ export async function webpackDevServerPlugin({
   webpackCompiler.hooks.invalid.tap('Cosmos', filePath => {
     if (typeof filePath === 'string') {
       const relFilePath = path.relative(process.cwd(), filePath);
-      console.log('[Cosmos] webpack build invalidated by', relFilePath);
+      console.log('[Cosmos] Webpack build invalidated by', relFilePath);
     } else {
-      console.log('[Cosmos] webpack build invalidated by unknown file');
+      console.log('[Cosmos] Webpack build invalidated by unknown file');
     }
     sendBuildMessage({ type: 'buildStart' });
   });
@@ -70,7 +70,7 @@ export async function webpackDevServerPlugin({
     });
   });
 
-  console.log('[Cosmos] Building webpack...');
+  console.log('[Cosmos] Building Webpack...');
 
   // Why import WDM here instead of at module level? Because it imports webpack,
   // which might not be installed in the user's codebase. If this were to happen

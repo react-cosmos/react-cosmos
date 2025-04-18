@@ -97,10 +97,10 @@ export async function startDevServer(platform: CosmosPlatform) {
 function logCosmosConfigInfo() {
   const cosmosConfigPath = detectCosmosConfigPath();
   if (!cosmosConfigPath) {
-    console.log(`[Cosmos] Using default cosmos config`);
+    console.log(`[Cosmos] Using default Cosmos config`);
     return;
   }
 
   const relConfigPath = path.relative(process.cwd(), cosmosConfigPath);
-  console.log(`[Cosmos] Using cosmos config found at ${relConfigPath}`);
+  console.log(`[Cosmos] Using config found at ${relConfigPath}`);
 }

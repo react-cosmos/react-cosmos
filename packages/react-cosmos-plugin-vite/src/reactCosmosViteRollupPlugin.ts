@@ -61,7 +61,7 @@ export function reactCosmosViteRollupPlugin(
     async load(id: string) {
       switch (id) {
         case rendererResolvedModuleId: {
-          console.log(`[Cosmos] Loading cosmos renderer at ${mainScriptUrl}`);
+          console.log(`[Cosmos] Loading Cosmos renderer at ${mainScriptUrl}`);
           return createViteRendererIndex(userImportsVirtualModuleId);
         }
         case userImportsResolvedModuleId: {
