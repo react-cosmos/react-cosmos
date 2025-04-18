@@ -1,3 +1,5 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import {
   CosmosConfig,
   findUserModulePaths,
@@ -6,10 +8,10 @@ import {
 } from 'react-cosmos';
 import { CosmosMode } from 'react-cosmos-core';
 import { DomRendererConfig } from 'react-cosmos-dom';
-import { PluginOption, ResolvedConfig } from 'vite';
+import { Plugin } from 'vite';
 import { CosmosViteConfig } from './createCosmosViteConfig.js';
 import { createViteRendererIndex } from './createViteRendererIndex.js';
-import { ensureIndexHtml } from './indexHtml/ensureIndexHtml.js';
+import { createIndexHtml } from './indexHtml/createIndexHtml.js';
 import { ensureMainScriptUrl } from './indexHtml/ensureMainScriptUrl.js';
 import { findMainScriptUrl } from './indexHtml/findMainScriptUrl.js';
 
@@ -21,15 +23,22 @@ export function reactCosmosViteRollupPlugin(
   config: CosmosConfig,
   cosmosViteConfig: CosmosViteConfig,
   mode: CosmosMode
-): PluginOption {
+): Plugin {
   let mainScriptUrl: string;
 
   return {
     name: 'react-cosmos-vite-renderer',
     enforce: 'pre',
 
-    configResolved(viteConfig: ResolvedConfig) {
-      const html = ensureIndexHtml(viteConfig.root);
+    async buildStart() {
+      const htmlPath = path.resolve(config.rootDir, 'index.html');
+      // Other plugins might intercept <root>/index.html and resolve it to
+      // a different path. We need to respect that and avoid generating a new
+      // index.html in the root if it already exists.
+      const resolved = await this.resolve(htmlPath);
+      const html = resolved
+        ? fs.readFileSync(resolved.id, 'utf-8')
+        : createIndexHtml(htmlPath);
       mainScriptUrl = findMainScriptUrl(html, cosmosViteConfig.mainScriptUrl);
     },
 
