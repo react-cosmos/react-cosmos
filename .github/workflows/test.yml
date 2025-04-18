@@ -90,7 +90,7 @@ jobs:
         id: playwright-cache
         with:
           path: ${{ matrix.os == 'windows' && 'C:\Users\runneradmin\AppData\Local\ms-playwright' || '~/.cache/ms-playwright' }}
-          key: '${{ runner.os }}-playwright-1.49.1'
+          key: '${{ runner.os }}-playwright-1.52.0'
 
       # https://playwright.dev/docs/browsers#install-system-dependencies
       - if: steps.playwright-cache.outputs.cache-hit != 'true'
