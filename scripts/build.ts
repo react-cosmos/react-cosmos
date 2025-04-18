@@ -45,8 +45,6 @@ const builders: Partial<Record<Package, Builder>> & { default: Builder } = {
       pkgPath(pkgName, 'src/server/webpackConfig/userImportsLoader.cjs'),
       pkgPath(pkgName, 'dist/server/webpackConfig/userImportsLoader.cjs')
     );
-    await buildPkgTs(pkgName, 'tsconfig.build.ui.json');
-    await buildPkgWebpack(pkgName, 'src/ui/webpack.config.js');
   },
   default: async pkgName => {
     await buildPkgTs(pkgName, 'tsconfig.build.json');

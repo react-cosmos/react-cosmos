@@ -40,7 +40,6 @@ it('loads mono repo plugins', async () => {
   expect(configs).toContainEqual({
     name: 'Webpack',
     rootDir: 'react-cosmos-plugin-webpack',
-    ui: path.join('react-cosmos-plugin-webpack', 'dist', 'ui', 'build.js'),
     server: path.join(
       'react-cosmos-plugin-webpack',
       'dist',
