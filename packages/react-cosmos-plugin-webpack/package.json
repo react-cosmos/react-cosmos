@@ -14,10 +14,6 @@
     "webpack-dev-middleware": "6.1.3",
     "webpack-hot-middleware": "2.26.1"
   },
-  "devDependencies": {
-    "react-cosmos-ui": "^6.2.3",
-    "react-plugin": "3.0.0-alpha.4"
-  },
   "peerDependencies": {
     "webpack": "*"
   }
