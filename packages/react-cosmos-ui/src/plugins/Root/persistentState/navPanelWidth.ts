@@ -3,6 +3,8 @@ import { RootContext } from '../shared.js';
 
 const STORAGE_KEY = 'navPanelWidth';
 const DEFAULT_VALUE = 320;
+// Width used in demo screenshot
+// const DEFAULT_VALUE = 284;
 
 const MIN_WIDTH = 224;
 const MAX_WIDTH = 512;

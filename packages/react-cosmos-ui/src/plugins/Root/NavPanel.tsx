@@ -59,7 +59,7 @@ const Container = styled.div`
   ::after {
     content: '';
     position: absolute;
-    top: 1px;
+    top: 0;
     right: 0;
     bottom: 0;
     width: 1px;
