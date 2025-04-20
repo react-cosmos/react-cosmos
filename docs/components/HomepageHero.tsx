@@ -16,7 +16,7 @@ export function HomepageHero({ version, stars: initialStars }: Props) {
       <div className={styles.content}>
         <div className={styles.badgeContainer}>
           <Link className={styles.badge} href="/docs/getting-started">
-            React Cosmos 7: React 19, Next 15, and more! 🎉
+            React 19, Next 15, and more 🎉
           </Link>
         </div>
         <h1 className={styles.headline}>
