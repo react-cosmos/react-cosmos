@@ -8,8 +8,13 @@ export function findElementPaths(
   curPath: string = ''
 ): string[] {
   if (Array.isArray(node)) {
+    // Array.from is used to fill array holes with undefined values. Array holes
+    // have been observed in Next.js server components that receive undefined
+    // children inside an array of children.
     return flatten(
-      node.map((child, idx) => findElementPaths(child, `${curPath}[${idx}]`))
+      Array.from(node).map((child, idx) =>
+        findElementPaths(child, `${curPath}[${idx}]`)
+      )
     );
   }
 

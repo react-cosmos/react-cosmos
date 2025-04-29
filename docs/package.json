@@ -25,8 +25,5 @@
     "tailwindcss": "3.4.16",
     "typescript": "5.7.2",
     "wrangler": "3.103.2"
-  },
-  "optionalDependencies": {
-    "@napi-rs/simple-git-linux-x64-gnu": "0.1.19"
   }
 }

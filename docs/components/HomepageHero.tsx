@@ -8,6 +8,7 @@ type Props = {
 };
 export function HomepageHero({ version, stars: initialStars }: Props) {
   const stars = useStargazersCount(initialStars);
+  const preRelease = version.includes('-');
   return (
     <div className={styles.root}>
       <div className={styles.tilesBg}></div>
@@ -15,7 +16,7 @@ export function HomepageHero({ version, stars: initialStars }: Props) {
       <div className={styles.content}>
         <div className={styles.badgeContainer}>
           <Link className={styles.badge} href="/docs/getting-started">
-            Ready for React 19 and Next 15 🐣
+            React 19, Next 15, and more 🎉
           </Link>
         </div>
         <h1 className={styles.headline}>
@@ -52,7 +53,7 @@ export function HomepageHero({ version, stars: initialStars }: Props) {
             GitHub <strong>☆{stars}</strong>
           </a>
           <a
-            href="https://github.com/react-cosmos/react-cosmos/releases"
+            href={`https://github.com/react-cosmos/react-cosmos/${preRelease ? 'tags' : 'releases'}`}
             target="_blank"
             rel="noopener noreferrer"
           >

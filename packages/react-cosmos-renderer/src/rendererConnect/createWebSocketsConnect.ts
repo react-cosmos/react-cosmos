@@ -1,16 +1,9 @@
 import {
   RendererConnect,
   RendererRequest,
-  RendererResponse,
   SocketMessage,
   rendererSocketMessage,
 } from 'react-cosmos-core';
-
-declare global {
-  interface Window {
-    cosmosRendererResponse?: (msg: RendererResponse) => void;
-  }
-}
 
 export function createWebSocketsConnect(url: string): RendererConnect {
   let pendingMessages: SocketMessage[] = [];

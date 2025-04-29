@@ -48,8 +48,8 @@ const config = createCosmosConfig(process.cwd(), {
 
 async function getCustomDevWebpackConfig() {
   return mockConsole(async ({ expectLog }) => {
-    expectLog('[Cosmos] Using webpack config found at mywebpack.config.js');
-    expectLog('[Cosmos] Overriding webpack config at mywebpack.override.js');
+    expectLog('[Cosmos] Using Webpack config found at mywebpack.config.js');
+    expectLog('[Cosmos] Overriding Webpack config at mywebpack.override.js');
     return await getDevWebpackConfig(config, webpack);
   });
 }

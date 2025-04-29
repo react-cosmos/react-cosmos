@@ -16,12 +16,15 @@ export async function mockConsole<R>(
     }
   });
 
-  const cbReturn = await cb({
-    expectLog: (msg: string) => expectedLogs.push(msg),
-  });
-  expectedLogs.forEach(msg => expect(console.log).toBeCalledWith(msg));
-
-  console.log = origConsoleLog;
-
-  return cbReturn;
+  try {
+    const cbReturn = await cb({
+      expectLog: (msg: string) => expectedLogs.push(msg),
+    });
+    expectedLogs.forEach(msg => expect(console.log).toBeCalledWith(msg));
+    return cbReturn;
+  } catch (err) {
+    throw err;
+  } finally {
+    console.log = origConsoleLog;
+  }
 }

@@ -39,7 +39,7 @@ beforeAll(async () => {
   await fs.writeFile(testCosmosPlugin.ui, 'export {}', 'utf8');
 
   await mockConsole(async ({ expectLog }) => {
-    expectLog('[Cosmos] Using cosmos config found at cosmos.config.json');
+    expectLog('[Cosmos] Using config found at cosmos.config.json');
     expectLog('[Cosmos] Found 1 plugin: Test Cosmos plugin');
     expectLog(
       `[Cosmos] See you at http://localhost:${port} or http://192.168.1.10:${port}`
