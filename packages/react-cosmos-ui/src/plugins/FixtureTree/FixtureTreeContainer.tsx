@@ -69,4 +69,5 @@ const TreeContainer = styled.div`
   flex: 1;
   background: ${grey32};
   overflow: auto;
+  color-scheme: dark;
 `;
