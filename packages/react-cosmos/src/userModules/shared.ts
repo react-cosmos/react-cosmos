@@ -67,3 +67,7 @@ export function importPath(filePath: string, relativeToDir: string | null) {
       : filePath
   );
 }
+
+export function sortedImportKeys(importMap: Record<string, string>): string[] {
+  return Object.keys(importMap).sort();
+}
