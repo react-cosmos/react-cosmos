@@ -433,6 +433,7 @@ const ResultsViewport = styled.div`
   background: ${grey224};
   overflow-x: hidden;
   overflow-y: auto;
+  color-scheme: light;
 `;
 
 const ResultsContainer = styled.div`

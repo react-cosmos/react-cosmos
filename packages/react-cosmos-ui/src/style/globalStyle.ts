@@ -9,6 +9,7 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 14px;
     -webkit-font-smoothing: antialiased;
     -webkit-text-size-adjust: none;
+    color-scheme: dark;
   }
 
   body, p, ul, ol, li, h1, h2, h3, button, input, textarea, select {
