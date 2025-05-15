@@ -3,6 +3,7 @@ import {
   UserImportsTemplateArgs,
   createImportMap,
   importPath,
+  sortedImportKeys,
 } from './shared.js';
 
 export function userImportsTemplate({
@@ -27,7 +28,7 @@ export function userImportsTemplate({
   );
 
   const fixtures = createImportMap(fixturePaths, rootDir, relativeToDir);
-  const fixtureKeys = Object.keys(fixtures);
+  const fixtureKeys = sortedImportKeys(fixtures);
   const fixtureImports = fixtureKeys.map(
     (k, i) => `import * as fixture${i} from '${ext(fixtures[k])}';`
   );
@@ -36,7 +37,7 @@ export function userImportsTemplate({
   );
 
   const decorators = createImportMap(decoratorPaths, rootDir, relativeToDir);
-  const decoratorKeys = Object.keys(decorators);
+  const decoratorKeys = sortedImportKeys(decorators);
   const decoratorImports = decoratorKeys.map(
     (k, i) => `import * as decorator${i} from '${ext(decorators[k])}';`
   );
