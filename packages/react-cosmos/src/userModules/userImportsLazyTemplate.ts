@@ -3,6 +3,7 @@ import {
   UserImportsTemplateArgs,
   createImportMap,
   importPath,
+  sortedImportKeys,
 } from './shared.js';
 
 export function userImportsLazyTemplate({
@@ -27,13 +28,13 @@ export function userImportsLazyTemplate({
   );
 
   const fixtures = createImportMap(fixturePaths, rootDir, relativeToDir);
-  const fixtureKeys = Object.keys(fixtures);
+  const fixtureKeys = sortedImportKeys(fixtures);
   const fixtureItems = fixtureKeys.map(
     k => `  '${k}': { getModule: () => import('${ext(fixtures[k])}') }`
   );
 
   const decorators = createImportMap(decoratorPaths, rootDir, relativeToDir);
-  const decoratorKeys = Object.keys(decorators);
+  const decoratorKeys = sortedImportKeys(decorators);
   const decoratorItems = decoratorKeys.map(
     k => `  '${k}': { getModule: () => import('${ext(decorators[k])}') }`
   );
