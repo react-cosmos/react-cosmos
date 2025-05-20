@@ -60,4 +60,5 @@ const Iframe = styled.iframe`
   margin: 0;
   padding: 0;
   border: 0;
+  color-scheme: normal;
 `;
