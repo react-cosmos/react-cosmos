@@ -7,6 +7,7 @@
   "type": "module",
   "main": "cosmos.plugin.json",
   "dependencies": {
+    "parse5": "7.3.0",
     "react-cosmos-core": "7.0.0-beta.0",
     "react-cosmos-dom": "7.0.0-beta.0"
   },
