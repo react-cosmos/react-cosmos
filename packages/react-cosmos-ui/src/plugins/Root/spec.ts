@@ -13,6 +13,8 @@ export type RootSpec = {
   };
   methods: {
     drawerPanelsEnabled: () => boolean;
+    navPanelOpen: () => boolean;
     closeNavPanel: () => void;
+    openNavPanel: () => void;
   };
 };

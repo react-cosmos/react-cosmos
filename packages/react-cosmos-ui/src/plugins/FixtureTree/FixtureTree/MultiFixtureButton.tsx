@@ -32,7 +32,7 @@ export function MultiFixtureButton({
       : { path: fixturePath };
 
     return (
-      <FixtureLink fixtureId={fixtureId} multiFixtureOpen>
+      <FixtureLink fixtureId={fixtureId} keepDrawerNavOpen>
         <FixtureTreeItem indentLevel={indentLevel} selected={false}>
           <Name>{name}</Name>
           <Count>{fixtureNames.length}</Count>

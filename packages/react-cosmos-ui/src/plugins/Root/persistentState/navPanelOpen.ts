@@ -10,7 +10,7 @@ export function isNavPanelOpen(context: RootContext) {
   return typeof open === 'boolean' ? open : DEFAULT_VALUE;
 }
 
-export function openNavPanel(context: RootContext, open: boolean) {
+export function setNavPanelState(context: RootContext, open: boolean) {
   const storage = context.getMethodsOf<StorageSpec>('storage');
   storage.setItem(STORAGE_KEY, open);
 }

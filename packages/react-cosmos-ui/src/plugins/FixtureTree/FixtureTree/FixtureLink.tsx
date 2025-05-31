@@ -8,10 +8,10 @@ import { useFixtureSelect } from '../FixtureSelectContext.js';
 type Props = {
   children: ReactNode;
   fixtureId: FixtureId;
-  multiFixtureOpen?: boolean;
+  keepDrawerNavOpen?: boolean;
 };
 
-export function FixtureLink({ children, fixtureId, multiFixtureOpen }: Props) {
+export function FixtureLink({ children, fixtureId, keepDrawerNavOpen }: Props) {
   const { selectFixture } = useFixtureSelect();
   return (
     <Link
@@ -19,7 +19,7 @@ export function FixtureLink({ children, fixtureId, multiFixtureOpen }: Props) {
       onClick={e => {
         e.preventDefault();
         if (e.metaKey) openAnchorInNewTab(e.currentTarget);
-        else selectFixture(fixtureId, multiFixtureOpen ?? false);
+        else selectFixture(fixtureId, keepDrawerNavOpen ?? false);
       }}
     >
       {children}
