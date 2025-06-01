@@ -77,10 +77,6 @@ export function Root({
 
   const dragging = navDrag.dragging || panelDrag.dragging;
   const showNavPanel = navPanelOpen || !selectedFixtureId;
-  const showPanelOverlay =
-    drawerPanels &&
-    (navPanelOpen || controlPanelOpen) &&
-    selectedFixtureId !== null;
 
   // z-indexes are set here on purpose to show the layer hierarchy at a glance
   return (
@@ -110,40 +106,40 @@ export function Root({
           <NavDragHandle ref={navDrag.dragElRef} />
         </ResizablePanel>
       )}
-      <MainContainer
-        key="main"
-        style={{
-          zIndex: 1,
-          filter: drawerPanels
-            ? `brightness(${showPanelOverlay ? 0.3 : 1})`
-            : undefined,
-        }}
-      >
-        {selectedFixtureId && (
-          <RendererHeader
-            fixtureItems={fixtureItems}
-            fixtureId={selectedFixtureId}
-            navPanelOpen={navPanelOpen}
-            controlPanelOpen={controlPanelOpen}
-            drawerPanels={drawerPanels}
-            fixtureActionOrder={fixtureActionOrder}
-            rendererActionOrder={rendererActionOrder}
-            onToggleNavPanel={onToggleNavPanel}
-            onToggleControlPanel={onToggleControlPanel}
-            onReloadRenderer={onReloadRenderer}
-            onClose={onCloseFixture}
-          />
-        )}
-        <RendererContainer key="rendererContainer">
-          <Slot name="rendererPreview" />
-          {!selectedFixtureId && (
-            <Slot name="homeOverlay">
-              <HomeOverlay />
-            </Slot>
+      <MainContainer key="main" style={{ zIndex: 1 }}>
+        <RendererContainer
+          key="renderer"
+          style={{
+            filter: drawerPanels
+              ? `brightness(${showNavPanel || controlPanelOpen ? 0.3 : 1})`
+              : undefined,
+          }}
+        >
+          {selectedFixtureId && (
+            <RendererHeader
+              fixtureItems={fixtureItems}
+              fixtureId={selectedFixtureId}
+              navPanelOpen={navPanelOpen}
+              controlPanelOpen={controlPanelOpen}
+              drawerPanels={drawerPanels}
+              fixtureActionOrder={fixtureActionOrder}
+              rendererActionOrder={rendererActionOrder}
+              onToggleNavPanel={onToggleNavPanel}
+              onToggleControlPanel={onToggleControlPanel}
+              onReloadRenderer={onReloadRenderer}
+              onClose={onCloseFixture}
+            />
           )}
+          <RendererBody key="rendererBody">
+            <Slot name="rendererPreview" />
+          </RendererBody>
         </RendererContainer>
-        {dragging && <DragOverlay />}
-        {showPanelOverlay && (
+        {!selectedFixtureId && (
+          <Slot name="homeOverlay">
+            <HomeOverlay />
+          </Slot>
+        )}
+        {selectedFixtureId && (navPanelOpen || controlPanelOpen) && (
           <PanelBgOverlay
             onClick={() => {
               if (navPanelOpen) onToggleNavPanel();
@@ -151,6 +147,7 @@ export function Root({
             }}
           />
         )}
+        {dragging && <DragOverlay />}
       </MainContainer>
       {selectedFixtureId && (controlPanelOpen || drawerPanels) && (
         <ResizablePanel
@@ -209,13 +206,21 @@ const ResizablePanel = styled.div`
 const MainContainer = styled.div`
   flex: 1;
   position: relative;
+`;
+
+const RendererContainer = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   transition: filter ${quick}s;
 `;
 
-const RendererContainer = styled.div`
+const RendererBody = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
