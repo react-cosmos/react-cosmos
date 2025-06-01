@@ -86,6 +86,14 @@ export type FixtureLoadedResponse = {
   };
 };
 
+export type FixtureChangeResponse = {
+  type: 'fixtureChange';
+  payload: {
+    rendererId: RendererId;
+    fixtureId: FixtureId;
+  };
+};
+
 // Caused by an organic state change inside the renderer. Also dispatched
 // after a fixtureSelect request, when rendering stateful components, as their
 // initial state is read.
@@ -113,6 +121,7 @@ export type RendererResponse =
   | RendererErrorResponse
   | FixtureLoadedResponse
   | FixtureListUpdateResponse
+  | FixtureChangeResponse
   | FixtureStateChangeResponse
   | PlaygroundCommandResponse;
 

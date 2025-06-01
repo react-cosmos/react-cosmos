@@ -1,5 +1,6 @@
 import { MessageType, RendererResponse } from 'react-cosmos-core';
 import { RendererCoreContext } from '../shared/index.js';
+import { receiveFixtureChangeResponse } from './fixtureChange.js';
 import { receiveFixtureListUpdateResponse } from './fixtureListUpdate.js';
 import { receiveFixtureStateChangeResponse } from './fixtureStateChange.js';
 import { receivePlaygroundCommandResponse } from './playgroundCommand.js';
@@ -17,6 +18,8 @@ export function receiveResponse(
       return receiveRendererReadyResponse(context, rendererResponse);
     case 'fixtureListUpdate':
       return receiveFixtureListUpdateResponse(context, rendererResponse);
+    case 'fixtureChange':
+      return receiveFixtureChangeResponse(context, rendererResponse);
     case 'fixtureStateChange':
       return receiveFixtureStateChangeResponse(context, rendererResponse);
     case 'playgroundCommand':
