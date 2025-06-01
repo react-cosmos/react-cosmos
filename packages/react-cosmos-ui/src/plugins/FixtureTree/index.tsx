@@ -36,10 +36,10 @@ namedPlug('navPanelRow', 'fixtureTree', ({ pluginContext }) => {
   );
 
   const handleFixtureSelect = useCallback(
-    (fixtureId: FixtureId, keepDrawerNavOpen: boolean) => {
+    (fixtureId: FixtureId, keepNavOpen: boolean) => {
       if (root.drawerPanelsEnabled()) {
-        if (keepDrawerNavOpen && !root.navPanelOpen()) root.openNavPanel();
-        if (!keepDrawerNavOpen && root.navPanelOpen()) root.closeNavPanel();
+        if (keepNavOpen && !root.navPanelOpen()) root.openNavPanel();
+        if (!keepNavOpen && root.navPanelOpen()) root.closeNavPanel();
       }
 
       router.selectFixture(fixtureId);

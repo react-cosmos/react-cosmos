@@ -2,7 +2,7 @@ import React, { ReactNode, useContext, useMemo } from 'react';
 import { FixtureId } from 'react-cosmos-core';
 
 type ContextValue = {
-  selectFixture: (fixtureId: FixtureId, keepDrawerNavOpen: boolean) => unknown;
+  selectFixture: (fixtureId: FixtureId, keepNavOpen: boolean) => unknown;
 };
 
 const FixtureSelectContext = React.createContext<ContextValue>({
