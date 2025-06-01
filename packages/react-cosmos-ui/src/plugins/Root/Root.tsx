@@ -139,14 +139,16 @@ export function Root({
             <HomeOverlay />
           </Slot>
         )}
-        {selectedFixtureId && (navPanelOpen || controlPanelOpen) && (
-          <PanelBgOverlay
-            onClick={() => {
-              if (navPanelOpen) onToggleNavPanel();
-              if (controlPanelOpen) onToggleControlPanel();
-            }}
-          />
-        )}
+        {selectedFixtureId &&
+          drawerPanels &&
+          (navPanelOpen || controlPanelOpen) && (
+            <PanelBgOverlay
+              onClick={() => {
+                if (navPanelOpen) onToggleNavPanel();
+                if (controlPanelOpen) onToggleControlPanel();
+              }}
+            />
+          )}
         {dragging && <DragOverlay />}
       </MainContainer>
       {selectedFixtureId && (controlPanelOpen || drawerPanels) && (
