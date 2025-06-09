@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos",
-  "version": "7.0.0-beta.5",
+  "version": "7.0.0",
   "description": "Sandbox for developing and testing UI components in isolation",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos",
   "license": "MIT",
@@ -16,9 +16,9 @@
     "micromatch": "4.0.8",
     "open": "10.1.1",
     "pem": "1.14.8",
-    "react-cosmos-core": "7.0.0-beta.0",
-    "react-cosmos-renderer": "7.0.0-beta.0",
-    "react-cosmos-ui": "7.0.0-beta.5",
+    "react-cosmos-core": "^7.0.0",
+    "react-cosmos-renderer": "^7.0.0",
+    "react-cosmos-ui": "^7.0.0",
     "ws": "8.18.1",
     "yargs": "17.7.2"
   },
