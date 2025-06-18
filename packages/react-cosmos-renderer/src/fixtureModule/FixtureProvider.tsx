@@ -109,9 +109,26 @@ export function FixtureProvider(props: Props) {
     [setState]
   );
 
+  const changeFixture = React.useCallback(
+    (path: string, name?: string) => {
+      rendererConnect.postMessage({
+        type: 'fixtureChange',
+        payload: {
+          rendererId,
+          fixtureId: { path, name },
+        },
+      });
+    },
+    [rendererConnect, rendererId]
+  );
+
   const contextValue = React.useMemo(
-    () => ({ fixtureState: state.fixtureState, setFixtureState }),
-    [setFixtureState, state.fixtureState]
+    () => ({
+      fixtureState: state.fixtureState,
+      setFixtureState,
+      changeFixture,
+    }),
+    [changeFixture, setFixtureState, state.fixtureState]
   );
 
   return (

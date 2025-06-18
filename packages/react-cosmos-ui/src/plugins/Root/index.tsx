@@ -20,7 +20,7 @@ import {
 } from './persistentState/drawerPanels.js';
 import {
   isNavPanelOpen,
-  openNavPanel,
+  setNavPanelState,
 } from './persistentState/navPanelOpen.js';
 import {
   getNavPanelWidth,
@@ -44,12 +44,22 @@ const { onLoad, plug, register } = createPlugin<RootSpec>({
   },
   methods: {
     drawerPanelsEnabled,
+    navPanelOpen,
     closeNavPanel,
+    openNavPanel,
   },
 });
 
+function navPanelOpen(context: RootContext) {
+  return isNavPanelOpen(context);
+}
+
 function closeNavPanel(context: RootContext) {
-  openNavPanel(context, false);
+  setNavPanelState(context, false);
+}
+
+function openNavPanel(context: RootContext) {
+  setNavPanelState(context, true);
 }
 
 onLoad(context => {
@@ -63,7 +73,7 @@ onLoad(context => {
 onLoad(context => {
   const core = context.getMethodsOf<CoreSpec>('core');
   return core.registerCommands({
-    toggleNavPanel: () => openNavPanel(context, !isNavPanelOpen(context)),
+    toggleNavPanel: () => setNavPanelState(context, !isNavPanelOpen(context)),
     toggleControlPanel: () =>
       openControlPanel(context, !isControlPanelOpen(context)),
   });
@@ -142,7 +152,7 @@ function useFixtureItems(context: RootContext) {
 
 function useToggleNavPanel(context: RootContext) {
   return React.useCallback(() => {
-    openNavPanel(context, !isNavPanelOpen(context));
+    setNavPanelState(context, !isNavPanelOpen(context));
   }, [context]);
 }
 
