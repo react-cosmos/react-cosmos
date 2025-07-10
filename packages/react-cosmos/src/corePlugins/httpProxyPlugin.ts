@@ -20,12 +20,12 @@ export const httpProxyPlugin: CosmosServerPlugin = {
     if (platform !== 'web') return;
 
     const httpProxyConfig = getHttpProxyCosmosConfig(config);
-    Object.keys(httpProxyConfig).forEach(context => {
-      const value = httpProxyConfig[context];
+    Object.keys(httpProxyConfig).forEach(pathFilter => {
+      const value = httpProxyConfig[pathFilter];
       if (typeof value === 'string') {
-        app.use(context, createProxyMiddleware(context, { target: value }));
+        app.use(pathFilter, createProxyMiddleware({ target: value }));
       } else if (typeof value === 'object') {
-        app.use(context, createProxyMiddleware(context, value));
+        app.use(pathFilter, createProxyMiddleware(value));
       }
     });
   },
