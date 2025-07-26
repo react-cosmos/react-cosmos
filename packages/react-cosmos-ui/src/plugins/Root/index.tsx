@@ -15,6 +15,10 @@ import {
   setControlPanelWidth,
 } from './persistentState/controlPanelWidth.js';
 import {
+  getControlPanelPosition,
+  setControlPanelPosition,
+} from './persistentState/controlPanelPosition.js';
+import {
   drawerPanelsEnabled,
   setDrawerPanels,
 } from './persistentState/drawerPanels.js';
@@ -110,6 +114,7 @@ plug('root', ({ pluginContext }) => {
       controlPanelOpen={isControlPanelOpen(pluginContext)}
       navPanelWidth={getNavPanelWidth(pluginContext)}
       controlPanelWidth={getControlPanelWidth(pluginContext)}
+      controlPanelPosition={getControlPanelPosition(pluginContext)}
       drawerPanels={drawerPanelsEnabled(pluginContext)}
       globalActionOrder={globalActionOrder}
       globalOrder={globalOrder}
@@ -123,6 +128,7 @@ plug('root', ({ pluginContext }) => {
       onCloseFixture={router.unselectFixture}
       setNavPanelWidth={width => setNavPanelWidth(pluginContext, width)}
       setControlPanelWidth={width => setControlPanelWidth(pluginContext, width)}
+      setControlPanelPosition={position => setControlPanelPosition(pluginContext, position)}
       setDrawerPanels={enabled => setDrawerPanels(pluginContext, enabled)}
     />
   );

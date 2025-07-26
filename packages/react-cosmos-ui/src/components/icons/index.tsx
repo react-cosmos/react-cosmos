@@ -249,3 +249,11 @@ export const MessageSquareIcon = () => (
     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
   </Icon>
 );
+
+export const PanelPositionIcon = () => (
+  <Icon>
+    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+    <line x1="15" y1="3" x2="15" y2="21"></line>
+    <line x1="3" y1="15" x2="21" y2="15"></line>
+  </Icon>
+);

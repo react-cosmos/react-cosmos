@@ -24,6 +24,7 @@ type Props = {
   controlPanelOpen: boolean;
   navPanelWidth: number;
   controlPanelWidth: number;
+  controlPanelPosition: 'right' | 'bottom';
   drawerPanels: boolean;
   globalActionOrder: string[];
   globalOrder: string[];
@@ -37,6 +38,7 @@ type Props = {
   onCloseFixture: () => unknown;
   setNavPanelWidth: (width: number) => unknown;
   setControlPanelWidth: (width: number) => unknown;
+  setControlPanelPosition: (position: 'right' | 'bottom') => unknown;
   setDrawerPanels: (enabled: boolean) => unknown;
 };
 
@@ -50,6 +52,7 @@ export function Root({
   controlPanelOpen,
   navPanelWidth,
   controlPanelWidth,
+  controlPanelPosition,
   drawerPanels,
   globalActionOrder,
   globalOrder,
@@ -63,6 +66,7 @@ export function Root({
   onCloseFixture,
   setNavPanelWidth,
   setControlPanelWidth,
+  setControlPanelPosition,
   setDrawerPanels,
 }: Props) {
   const navDrag = useDrag({
@@ -71,16 +75,23 @@ export function Root({
   });
   const panelDrag = useDrag({
     value: controlPanelWidth,
+    direction: controlPanelPosition === 'bottom' ? 'vertical' : 'horizontal',
     reverse: true,
     onChange: setControlPanelWidth,
   });
 
   const dragging = navDrag.dragging || panelDrag.dragging;
   const showNavPanel = navPanelOpen || !selectedFixtureId;
+  const cursor = panelDrag.dragging && controlPanelPosition === 'bottom' ? 'ns-resize' : 'ew-resize';
+  const onToggleControlPanelPosition = () => {
+    setControlPanelPosition(
+      controlPanelPosition === 'right' ? 'bottom' : 'right'
+    );
+  };
 
   // z-indexes are set here on purpose to show the layer hierarchy at a glance
   return (
-    <Container dragging={dragging}>
+    <Container dragging={dragging} cursor={cursor}>
       {(showNavPanel || drawerPanels) && (
         <ResizablePanel
           inert={!showNavPanel}
@@ -89,6 +100,7 @@ export function Root({
             left: 0,
             zIndex: 3,
             width: navPanelWidth,
+            height: '100%',
             transform: drawerPanels
               ? `translateX(${showNavPanel ? 0 : -navPanelWidth}px)`
               : undefined,
@@ -106,75 +118,115 @@ export function Root({
           <NavDragHandle ref={navDrag.dragElRef} />
         </ResizablePanel>
       )}
-      <MainContainer key="main" style={{ zIndex: 1 }}>
-        <RendererContainer
-          key="renderer"
-          style={{
-            filter: drawerPanels
-              ? `brightness(${showNavPanel || controlPanelOpen ? 0.3 : 1})`
-              : undefined,
-          }}
-        >
-          {selectedFixtureId && (
-            <RendererHeader
-              fixtureItems={fixtureItems}
-              fixtureId={selectedFixtureId}
-              navPanelOpen={navPanelOpen}
-              controlPanelOpen={controlPanelOpen}
-              drawerPanels={drawerPanels}
-              fixtureActionOrder={fixtureActionOrder}
-              rendererActionOrder={rendererActionOrder}
-              onToggleNavPanel={onToggleNavPanel}
-              onToggleControlPanel={onToggleControlPanel}
-              onReloadRenderer={onReloadRenderer}
-              onClose={onCloseFixture}
-            />
-          )}
-          <RendererBody key="rendererBody">
-            <Slot name="rendererPreview" />
-          </RendererBody>
-        </RendererContainer>
-        {!selectedFixtureId && (
-          <Slot name="homeOverlay">
-            <HomeOverlay />
-          </Slot>
-        )}
-        {selectedFixtureId &&
-          drawerPanels &&
-          (navPanelOpen || controlPanelOpen) && (
-            <PanelBgOverlay
-              onClick={() => {
-                if (navPanelOpen) onToggleNavPanel();
-                if (controlPanelOpen) onToggleControlPanel();
+      <RightSideWrapper>
+        <HorizontalWrapper>
+          <MainContainer key="main" style={{ zIndex: 1 }}>
+            <RendererContainer
+              key="renderer"
+              style={{
+                filter: drawerPanels
+                  ? `brightness(${showNavPanel || controlPanelOpen ? 0.3 : 1})`
+                  : undefined,
               }}
-            />
-          )}
-        {dragging && <DragOverlay />}
-      </MainContainer>
-      {selectedFixtureId && (controlPanelOpen || drawerPanels) && (
-        <ResizablePanel
-          inert={!controlPanelOpen}
-          style={{
-            position: drawerPanels ? 'absolute' : 'relative',
-            right: 0,
-            zIndex: 2,
-            width: controlPanelWidth,
-            transform: drawerPanels
-              ? `translateX(${controlPanelOpen ? 0 : controlPanelWidth}px)`
-              : undefined,
-          }}
-        >
-          <ControlPanel
-            fixtureId={selectedFixtureId}
-            getFixtureState={getFixtureState}
-            setFixtureState={setFixtureState}
-            rowOrder={controlPanelRowOrder}
-            onClose={onToggleControlPanel}
-          />
-          {panelDrag.dragging && <DragOverlay />}
-          <PanelDragHandle ref={panelDrag.dragElRef} />
-        </ResizablePanel>
-      )}
+            >
+              {selectedFixtureId && (
+                <RendererHeader
+                  fixtureItems={fixtureItems}
+                  fixtureId={selectedFixtureId}
+                  navPanelOpen={navPanelOpen}
+                  controlPanelOpen={controlPanelOpen}
+                  drawerPanels={drawerPanels}
+                  fixtureActionOrder={fixtureActionOrder}
+                  rendererActionOrder={rendererActionOrder}
+                  onToggleNavPanel={onToggleNavPanel}
+                  onToggleControlPanel={onToggleControlPanel}
+                  onReloadRenderer={onReloadRenderer}
+                  onClose={onCloseFixture}
+                />
+              )}
+              <RendererBody key="rendererBody">
+                <Slot name="rendererPreview" />
+              </RendererBody>
+            </RendererContainer>
+            {!selectedFixtureId && (
+              <Slot name="homeOverlay">
+                <HomeOverlay />
+              </Slot>
+            )}
+            {selectedFixtureId &&
+              drawerPanels &&
+              (navPanelOpen || controlPanelOpen) && (
+                <PanelBgOverlay
+                  onClick={() => {
+                    if (navPanelOpen) onToggleNavPanel();
+                    if (controlPanelOpen) onToggleControlPanel();
+                  }}
+                />
+              )}
+            {dragging && <DragOverlay />}
+          </MainContainer>
+          {selectedFixtureId && (controlPanelOpen || drawerPanels) && 
+            controlPanelPosition === 'right' && (
+              <ResizablePanel
+                inert={!controlPanelOpen}
+                style={{
+                  position: drawerPanels ? 'absolute' : 'relative',
+                  right: 0,
+                  zIndex: 2,
+                  width: controlPanelWidth,
+                  transform: drawerPanels
+                    ? `translateX(${controlPanelOpen ? 0 : controlPanelWidth}px)`
+                    : undefined,
+                }}
+              >
+                <ControlPanel
+                  fixtureId={selectedFixtureId}
+                  getFixtureState={getFixtureState}
+                  setFixtureState={setFixtureState}
+                  rowOrder={controlPanelRowOrder}
+                  position={controlPanelPosition}
+                  onClose={onToggleControlPanel}
+                  onTogglePosition={onToggleControlPanelPosition}
+                />
+                {panelDrag.dragging && <DragOverlay />}
+                <PanelDragHandle ref={panelDrag.dragElRef} />
+              </ResizablePanel>
+            )
+          }
+        </HorizontalWrapper>
+        {selectedFixtureId && (controlPanelOpen || drawerPanels) && 
+          controlPanelPosition === 'bottom' && (
+            <BottomResizablePanel
+              inert={!controlPanelOpen}
+              style={{
+                position: drawerPanels ? 'absolute' : 'relative',
+                ...(drawerPanels && {
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                }),
+                zIndex: 2,
+                height: controlPanelWidth,
+                transform: drawerPanels
+                  ? `translateY(${controlPanelOpen ? 0 : controlPanelWidth}px)`
+                  : undefined,
+              }}
+            >
+              <ControlPanel
+                fixtureId={selectedFixtureId}
+                getFixtureState={getFixtureState}
+                setFixtureState={setFixtureState}
+                rowOrder={controlPanelRowOrder}
+                position={controlPanelPosition}
+                onClose={onToggleControlPanel}
+                onTogglePosition={onToggleControlPanelPosition}
+              />
+              {panelDrag.dragging && <DragOverlay />}
+              <BottomPanelDragHandle ref={panelDrag.dragElRef} />
+            </BottomResizablePanel>
+          )
+        }
+      </RightSideWrapper>
       <div style={{ zIndex: 4 }}>
         <ArraySlot name="global" plugOrder={globalOrder} />
       </div>
@@ -184,6 +236,7 @@ export function Root({
 
 type ContainerProps = {
   dragging?: boolean;
+  cursor?: string;
 };
 
 const Container = styled.div.attrs({ 'data-testid': 'root' })<ContainerProps>`
@@ -194,8 +247,9 @@ const Container = styled.div.attrs({ 'data-testid': 'root' })<ContainerProps>`
   right: 0;
   overflow: hidden;
   display: flex;
+  flex-direction: row;
   background: ${grey32};
-  cursor: ${props => (props.dragging ? 'ew-resize' : 'default')};
+  cursor: ${props => (props.dragging ? props.cursor || 'ew-resize' : 'default')};
 `;
 
 const ResizablePanel = styled.div`
@@ -203,6 +257,30 @@ const ResizablePanel = styled.div`
   max-width: 100%;
   height: 100%;
   transition: transform ${quick}s;
+`;
+
+const RightSideWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+`;
+
+const HorizontalWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  overflow: hidden;
+`;
+
+const BottomResizablePanel = styled.div`
+  flex-shrink: 0;
+  width: 100%;
+  transition: transform ${quick}s;
+  display: flex;
+  flex-direction: column;
 `;
 
 const MainContainer = styled.div`
@@ -247,6 +325,18 @@ const NavDragHandle = styled(DragHandle)`
 
 const PanelDragHandle = styled(DragHandle)`
   left: -2px;
+`;
+
+const BottomPanelDragHandle = styled.div`
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background-clip: content-box;
+  cursor: ns-resize;
+  user-select: none;
+  touch-action: none;
 `;
 
 // The purpose of DragOverlay is to cover the renderer iframe while dragging,
