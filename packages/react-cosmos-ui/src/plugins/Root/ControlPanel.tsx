@@ -14,6 +14,7 @@ type Props = {
   fixtureId: FixtureId;
   getFixtureState: GetFixtureState;
   setFixtureState: SetFixtureStateByName;
+  toolbarPosition: 'top' | 'bottom';
   rowOrder: string[];
   onClose: () => unknown;
 };
@@ -22,6 +23,7 @@ export const ControlPanel = React.memo(function ControlPanel({
   fixtureId,
   getFixtureState,
   setFixtureState,
+  toolbarPosition,
   rowOrder,
   onClose,
 }: Props) {
@@ -30,18 +32,23 @@ export const ControlPanel = React.memo(function ControlPanel({
     [fixtureId, getFixtureState, setFixtureState]
   );
 
+  const header = (
+    <Header>
+      <IconButton32
+        icon={<ChevronRightIcon />}
+        title="Hide control panel (P)"
+        onClick={onClose}
+      />
+    </Header>
+  );
+
   return (
     <Container>
-      <Header>
-        <IconButton32
-          icon={<ChevronRightIcon />}
-          title="Hide control panel (P)"
-          onClick={onClose}
-        />
-      </Header>
+      {toolbarPosition === 'top' && header}
       <Content>
         <ControlPanelRowSlot slotProps={slotProps} plugOrder={rowOrder} />
       </Content>
+      {toolbarPosition === 'bottom' && header}
     </Container>
   );
 });
@@ -77,8 +84,8 @@ const Header = styled.div`
 
 // The background color is required for the proper scroll bar color theme
 const Content = styled.div`
+  flex: 1;
   width: 100%;
-  max-height: 100%;
   background: ${grey32};
   overflow-x: hidden;
   overflow-y: auto;

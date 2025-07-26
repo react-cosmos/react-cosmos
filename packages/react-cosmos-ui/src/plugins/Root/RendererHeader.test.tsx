@@ -21,6 +21,7 @@ const propDefaults = {
   navPanelOpen: false,
   controlPanelOpen: false,
   drawerPanels: false,
+  position: 'top' as const,
   fixtureActionOrder: [],
   rendererActionOrder: [],
   onToggleNavPanel: () => {},

@@ -13,6 +13,7 @@ import { ControlPanel } from './ControlPanel.js';
 import { HomeOverlay } from './HomeOverlay/HomeOverlay.js';
 import { NavPanel } from './NavPanel.js';
 import { RendererHeader } from './RendererHeader.js';
+import { ToolbarPosition } from './persistentState/toolbarPosition.js';
 
 type Props = {
   fixtureItems: FlatFixtureTreeItem[];
@@ -25,6 +26,7 @@ type Props = {
   navPanelWidth: number;
   controlPanelWidth: number;
   drawerPanels: boolean;
+  toolbarPosition: ToolbarPosition;
   globalActionOrder: string[];
   globalOrder: string[];
   navPanelRowOrder: string[];
@@ -38,6 +40,7 @@ type Props = {
   setNavPanelWidth: (width: number) => unknown;
   setControlPanelWidth: (width: number) => unknown;
   setDrawerPanels: (enabled: boolean) => unknown;
+  setToolbarPosition: (position: ToolbarPosition) => unknown;
 };
 
 export function Root({
@@ -51,6 +54,7 @@ export function Root({
   navPanelWidth,
   controlPanelWidth,
   drawerPanels,
+  toolbarPosition,
   globalActionOrder,
   globalOrder,
   navPanelRowOrder,
@@ -64,6 +68,7 @@ export function Root({
   setNavPanelWidth,
   setControlPanelWidth,
   setDrawerPanels,
+  setToolbarPosition,
 }: Props) {
   const navDrag = useDrag({
     value: navPanelWidth,
@@ -98,6 +103,8 @@ export function Root({
             rendererConnected={rendererConnected}
             drawerPanels={drawerPanels}
             setDrawerPanels={setDrawerPanels}
+            toolbarPosition={toolbarPosition}
+            onToggleToolbarPosition={() => setToolbarPosition(toolbarPosition === 'top' ? 'bottom' : 'top')}
             navPanelRowOrder={navPanelRowOrder}
             globalActionOrder={globalActionOrder}
             onClose={onToggleNavPanel}
@@ -113,6 +120,7 @@ export function Root({
             filter: drawerPanels
               ? `brightness(${showNavPanel || controlPanelOpen ? 0.3 : 1})`
               : undefined,
+            flexDirection: toolbarPosition === 'bottom' ? 'column-reverse' : 'column',
           }}
         >
           {selectedFixtureId && (
@@ -122,6 +130,7 @@ export function Root({
               navPanelOpen={navPanelOpen}
               controlPanelOpen={controlPanelOpen}
               drawerPanels={drawerPanels}
+              position={toolbarPosition}
               fixtureActionOrder={fixtureActionOrder}
               rendererActionOrder={rendererActionOrder}
               onToggleNavPanel={onToggleNavPanel}
@@ -168,6 +177,7 @@ export function Root({
             fixtureId={selectedFixtureId}
             getFixtureState={getFixtureState}
             setFixtureState={setFixtureState}
+            toolbarPosition={toolbarPosition}
             rowOrder={controlPanelRowOrder}
             onClose={onToggleControlPanel}
           />

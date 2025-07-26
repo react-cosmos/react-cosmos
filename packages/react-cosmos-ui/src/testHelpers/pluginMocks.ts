@@ -99,6 +99,8 @@ export function mockRoot(methods: MethodsOf<RootSpec> = {}) {
     navPanelOpen: vi.fn(),
     closeNavPanel: vi.fn(),
     openNavPanel: vi.fn(),
+    getToolbarPosition: vi.fn(() => 'top' as const),
+    setToolbarPosition: vi.fn(),
     ...methods,
   };
   mockMethodsOf<RootSpec>('root', allMethods);

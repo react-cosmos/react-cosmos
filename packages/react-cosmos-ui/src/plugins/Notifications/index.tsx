@@ -1,5 +1,6 @@
 import React from 'react';
 import { createPlugin } from 'react-plugin';
+import { RootSpec } from '../Root/spec.js';
 import { Notifications } from './Notifications.js';
 import {
   clearTimedNotification,
@@ -40,7 +41,10 @@ namedPlug('global', 'notifications', ({ pluginContext }) => {
       ? stickyNotifications
       : [...stickyNotifications, ...timedNotifications.items];
 
-  return <Notifications notifications={notifications} />;
+  const root = pluginContext.getMethodsOf<RootSpec>('root');
+  const toolbarPosition = root.getToolbarPosition();
+
+  return <Notifications notifications={notifications} toolbarPosition={toolbarPosition} />;
 });
 
 export { register };

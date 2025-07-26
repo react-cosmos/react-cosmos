@@ -12,11 +12,12 @@ import { NotificationItem, NotificationType } from './spec.js';
 
 type Props = {
   notifications: NotificationItem[];
+  toolbarPosition: 'top' | 'bottom';
 };
 
-export function Notifications({ notifications }: Props) {
+export function Notifications({ notifications, toolbarPosition }: Props) {
   return (
-    <Container>
+    <Container $toolbarPosition={toolbarPosition}>
       {notifications.map(({ id, type, title, info }) => {
         const Icon = IconTypes[type];
         return (
@@ -35,9 +36,9 @@ export function Notifications({ notifications }: Props) {
   );
 }
 
-const Container = styled.div`
+const Container = styled.div<{ $toolbarPosition: 'top' | 'bottom' }>`
   position: absolute;
-  bottom: 8px;
+  ${props => props.$toolbarPosition === 'bottom' ? 'top: 8px;' : 'bottom: 8px;'}
   right: 8px;
 `;
 

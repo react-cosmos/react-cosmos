@@ -16,5 +16,7 @@ export type RootSpec = {
     navPanelOpen: () => boolean;
     closeNavPanel: () => void;
     openNavPanel: () => void;
+    getToolbarPosition: () => 'top' | 'bottom';
+    setToolbarPosition: (position: 'top' | 'bottom') => void;
   };
 };

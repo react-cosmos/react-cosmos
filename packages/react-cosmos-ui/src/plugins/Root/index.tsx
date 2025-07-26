@@ -26,6 +26,10 @@ import {
   getNavPanelWidth,
   setNavPanelWidth,
 } from './persistentState/navPanelWidth.js';
+import {
+  getToolbarPosition,
+  setToolbarPosition,
+} from './persistentState/toolbarPosition.js';
 import { RootContext } from './shared.js';
 import { RootSpec } from './spec.js';
 
@@ -47,6 +51,8 @@ const { onLoad, plug, register } = createPlugin<RootSpec>({
     navPanelOpen,
     closeNavPanel,
     openNavPanel,
+    getToolbarPosition,
+    setToolbarPosition,
   },
 });
 
@@ -111,6 +117,7 @@ plug('root', ({ pluginContext }) => {
       navPanelWidth={getNavPanelWidth(pluginContext)}
       controlPanelWidth={getControlPanelWidth(pluginContext)}
       drawerPanels={drawerPanelsEnabled(pluginContext)}
+      toolbarPosition={getToolbarPosition(pluginContext)}
       globalActionOrder={globalActionOrder}
       globalOrder={globalOrder}
       navPanelRowOrder={navPanelRowOrder}
@@ -124,6 +131,7 @@ plug('root', ({ pluginContext }) => {
       setNavPanelWidth={width => setNavPanelWidth(pluginContext, width)}
       setControlPanelWidth={width => setControlPanelWidth(pluginContext, width)}
       setDrawerPanels={enabled => setDrawerPanels(pluginContext, enabled)}
+      setToolbarPosition={position => setToolbarPosition(pluginContext, position)}
     />
   );
 });

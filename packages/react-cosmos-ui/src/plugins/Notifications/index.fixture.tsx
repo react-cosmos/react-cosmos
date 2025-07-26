@@ -28,6 +28,7 @@ function NotificationFixture() {
       notifications={[
         { id: '1', type, title: titles[type], info: infos[type] },
       ]}
+      toolbarPosition="top"
     />
   );
 }
@@ -36,6 +37,7 @@ export default {
   single: <NotificationFixture />,
   multiple: (
     <Notifications
+      toolbarPosition="top"
       notifications={[
         createSuccessNotification({
           id: 'renderer-url-copy',

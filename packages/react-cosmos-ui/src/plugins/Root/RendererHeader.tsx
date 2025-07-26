@@ -19,6 +19,7 @@ type Props = {
   navPanelOpen: boolean;
   controlPanelOpen: boolean;
   drawerPanels: boolean;
+  position: 'top' | 'bottom';
   fixtureActionOrder: string[];
   rendererActionOrder: string[];
   onToggleNavPanel: () => unknown;
@@ -32,6 +33,7 @@ export const RendererHeader = React.memo(function RendererHeader({
   navPanelOpen,
   controlPanelOpen,
   drawerPanels,
+  position,
   fixtureActionOrder,
   rendererActionOrder,
   onToggleNavPanel,
@@ -43,7 +45,7 @@ export const RendererHeader = React.memo(function RendererHeader({
   const slotProps = React.useMemo(() => ({ fixtureId }), [fixtureId]);
 
   return (
-    <Container>
+    <Container $position={position}>
       <Left>
         {(drawerPanels || !navPanelOpen) && (
           <IconButton32
@@ -124,7 +126,7 @@ function getFixtureName({ name, fileName }: FlatFixtureTreeItem) {
   return name ? `${fileName} ${name}` : fileName;
 }
 
-const Container = styled.div`
+const Container = styled.div<{ $position: 'top' | 'bottom' }>`
   flex-shrink: 0;
   display: flex;
   flex-direction: row;
@@ -132,7 +134,7 @@ const Container = styled.div`
   justify-content: space-between;
   height: 40px;
   padding: 0 4px;
-  border-bottom: 1px solid ${white10};
+  ${props => props.$position === 'top' ? `border-bottom: 1px solid ${white10};` : `border-top: 1px solid ${white10};`}
   background: ${grey32};
   white-space: nowrap;
   overflow-x: auto;

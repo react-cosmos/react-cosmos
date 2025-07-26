@@ -2,7 +2,7 @@ import React from 'react';
 import { ArraySlot } from 'react-plugin';
 import styled from 'styled-components';
 import { IconButton32 } from '../../components/buttons/IconButton32.js';
-import { LayersIcon } from '../../components/icons/index.js';
+import { ChevronDownIcon, ChevronUpIcon, LayersIcon } from '../../components/icons/index.js';
 import { NavPanelRowSlot } from '../../slots/NavPanelRowSlot.js';
 import { grey32, white10 } from '../../style/colors.js';
 
@@ -10,6 +10,8 @@ type Props = {
   rendererConnected: boolean;
   drawerPanels: boolean;
   setDrawerPanels: (enabled: boolean) => unknown;
+  toolbarPosition: 'top' | 'bottom';
+  onToggleToolbarPosition: () => unknown;
   navPanelRowOrder: string[];
   globalActionOrder: string[];
   onClose: () => unknown;
@@ -19,6 +21,8 @@ export const NavPanel = React.memo(function NavPanel({
   rendererConnected,
   drawerPanels,
   setDrawerPanels,
+  toolbarPosition,
+  onToggleToolbarPosition,
   navPanelRowOrder,
   globalActionOrder,
   onClose,
@@ -28,23 +32,42 @@ export const NavPanel = React.memo(function NavPanel({
     [onClose]
   );
 
+  const footer = (
+    <Footer>
+      {rendererConnected && (
+        <ArraySlot name="globalAction" plugOrder={globalActionOrder} />
+      )}
+      <IconButton32
+        icon={<LayersIcon />}
+        title={'Toggle drawer panels'}
+        selected={drawerPanels}
+        onClick={() => setDrawerPanels(!drawerPanels)}
+      />
+      <IconButton32
+        icon={toolbarPosition === 'bottom' ? <ChevronUpIcon /> : <ChevronDownIcon />}
+        title={`Move toolbar to ${toolbarPosition === 'top' ? 'bottom' : 'top'}`}
+        selected={false}
+        onClick={onToggleToolbarPosition}
+      />
+    </Footer>
+  );
+
+  const content = (
+    <Content>
+      <NavPanelRowSlot 
+        slotProps={slotProps} 
+        plugOrder={toolbarPosition === 'bottom' ? [...navPanelRowOrder].reverse() : navPanelRowOrder} 
+      />
+    </Content>
+  );
+
   return (
     <Container>
-      <Content>
-        <NavPanelRowSlot slotProps={slotProps} plugOrder={navPanelRowOrder} />
-      </Content>
-      <Separator />
-      <Footer>
-        {rendererConnected && (
-          <ArraySlot name="globalAction" plugOrder={globalActionOrder} />
-        )}
-        <IconButton32
-          icon={<LayersIcon />}
-          title={'Toggle drawer panels'}
-          selected={drawerPanels}
-          onClick={() => setDrawerPanels(!drawerPanels)}
-        />
-      </Footer>
+      {toolbarPosition === 'bottom' && footer}
+      {toolbarPosition === 'bottom' && <Separator />}
+      {content}
+      {toolbarPosition === 'top' && <Separator />}
+      {toolbarPosition === 'top' && footer}
     </Container>
   );
 });
@@ -91,3 +114,4 @@ const Separator = styled.div`
   height: 1px;
   background: ${white10};
 `;
+
