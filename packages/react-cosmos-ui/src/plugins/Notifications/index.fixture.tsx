@@ -1,7 +1,7 @@
 import React from 'react';
+import { NotificationItem, NotificationType } from 'react-cosmos-core';
 import { useFixtureSelect } from 'react-cosmos/client';
 import { Notifications } from './Notifications.js';
-import { NotificationItem, NotificationType } from './spec.js';
 
 type Args = Pick<NotificationItem, 'id' | 'title' | 'info'>;
 

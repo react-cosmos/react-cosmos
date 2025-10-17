@@ -3,6 +3,7 @@ export {
   ClassStateMock,
   FixtureContext,
   Viewport,
+  useCosmosNotification,
   useFixtureInput,
   useFixtureSelect,
   useFixtureState,
