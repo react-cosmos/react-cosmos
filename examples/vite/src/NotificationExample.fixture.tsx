@@ -25,7 +25,7 @@ export default function NotificationExample() {
 
   const handleInfo = () => {
     notification.pushTimedNotification({
-      id: 'info-example',
+      id: 'info-example-' + Date.now(),
       type: 'info',
       title: 'Information',
       info: 'This is an info notification from a fixture',
@@ -43,7 +43,7 @@ export default function NotificationExample() {
 
     try {
       // Simulate async operation
-      await new Promise((resolve) => setTimeout(resolve, 3000));
+      await new Promise(resolve => setTimeout(resolve, 3000));
 
       // Remove loading notification
       notification.removeStickyNotification('async-operation');
