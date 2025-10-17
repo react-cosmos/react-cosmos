@@ -7,6 +7,7 @@ export function receivePushStickyNotificationResponse(
   { payload }: PushStickyNotificationResponse
 ) {
   const { notification } = payload;
-  const notifications = context.getMethodsOf<NotificationsSpec>('notifications');
+  const notifications =
+    context.getMethodsOf<NotificationsSpec>('notifications');
   notifications.pushStickyNotification(notification);
 }

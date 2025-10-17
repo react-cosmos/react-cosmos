@@ -7,6 +7,7 @@ export function receiveRemoveStickyNotificationResponse(
   { payload }: RemoveStickyNotificationResponse
 ) {
   const { notificationId } = payload;
-  const notifications = context.getMethodsOf<NotificationsSpec>('notifications');
+  const notifications =
+    context.getMethodsOf<NotificationsSpec>('notifications');
   notifications.removeStickyNotification(notificationId);
 }

@@ -7,6 +7,7 @@ export function receivePushTimedNotificationResponse(
   { payload }: PushTimedNotificationResponse
 ) {
   const { notification } = payload;
-  const notifications = context.getMethodsOf<NotificationsSpec>('notifications');
+  const notifications =
+    context.getMethodsOf<NotificationsSpec>('notifications');
   notifications.pushTimedNotification(notification);
 }
