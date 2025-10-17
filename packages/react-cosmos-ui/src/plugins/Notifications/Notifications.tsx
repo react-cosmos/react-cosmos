@@ -8,7 +8,7 @@ import {
 } from '../../components/icons/index.js';
 import { grey128, grey32, grey64, grey8, white95 } from '../../style/colors.js';
 import { quick } from '../../style/vars.js';
-import { NotificationItem, NotificationType } from './spec.js';
+import { NotificationItem, NotificationType } from 'react-cosmos-core';
 
 type Props = {
   notifications: NotificationItem[];

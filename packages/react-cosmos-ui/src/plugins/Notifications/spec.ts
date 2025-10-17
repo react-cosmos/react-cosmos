@@ -1,11 +1,6 @@
-export type NotificationType = 'success' | 'error' | 'info' | 'loading';
+import { NotificationItem } from 'react-cosmos-core';
 
-export type NotificationItem = {
-  id: string;
-  type: NotificationType;
-  title: string;
-  info: string;
-};
+export type { NotificationItem, NotificationType } from 'react-cosmos-core';
 
 export type NotificationsSpec = {
   name: 'notifications';

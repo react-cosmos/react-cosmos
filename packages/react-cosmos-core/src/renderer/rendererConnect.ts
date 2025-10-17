@@ -1,4 +1,5 @@
 import { FixtureState } from '../fixtureState/types.js';
+import { NotificationItem } from '../playground/notifications.js';
 import {
   FixtureId,
   FixtureList,
@@ -116,6 +117,33 @@ export type PlaygroundCommandResponse = {
   };
 };
 
+export type PushStickyNotificationResponse = {
+  type: 'pushStickyNotification';
+  payload: {
+    rendererId: RendererId;
+    fixtureId: FixtureId;
+    notification: NotificationItem;
+  };
+};
+
+export type RemoveStickyNotificationResponse = {
+  type: 'removeStickyNotification';
+  payload: {
+    rendererId: RendererId;
+    fixtureId: FixtureId;
+    notificationId: string;
+  };
+};
+
+export type PushTimedNotificationResponse = {
+  type: 'pushTimedNotification';
+  payload: {
+    rendererId: RendererId;
+    fixtureId: FixtureId;
+    notification: NotificationItem;
+  };
+};
+
 export type RendererResponse =
   | RendererReadyResponse
   | RendererErrorResponse
@@ -123,7 +151,10 @@ export type RendererResponse =
   | FixtureListUpdateResponse
   | FixtureChangeResponse
   | FixtureStateChangeResponse
-  | PlaygroundCommandResponse;
+  | PlaygroundCommandResponse
+  | PushStickyNotificationResponse
+  | RemoveStickyNotificationResponse
+  | PushTimedNotificationResponse;
 
 export type RendererConnect<
   Request = RendererRequest,

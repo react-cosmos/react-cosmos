@@ -14,6 +14,7 @@ export * from './fixtureTree/flattenFixtureTree.js';
 export * from './fixtureTree/types.js';
 export * from './message/serverMessage.js';
 export * from './message/socketMessage.js';
+export * from './playground/notifications.js';
 export * from './playground/playgroundParams.js';
 export * from './playground/playgroundQueryString.js';
 export * from './playground/registerPlaygroundShortcuts.js';
