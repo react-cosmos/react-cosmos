@@ -7,6 +7,6 @@ export type NotificationItem = {
   info: string;
 };
 
-export type TimedNotificationItem = NotificationItem & {
+export type TimedNotificationItem = Omit<NotificationItem, 'id'> & {
   id?: string;
 };
