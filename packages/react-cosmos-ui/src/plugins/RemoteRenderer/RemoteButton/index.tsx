@@ -1,7 +1,7 @@
 import React from 'react';
+import { NotificationItem } from 'react-cosmos-core';
 import { IconButton32 } from '../../../components/buttons/index.js';
 import { CastIcon } from '../../../components/icons/index.js';
-import { NotificationItem } from '../../Notifications/spec.js';
 import { copyToClipboard } from './copyToClipboard.js';
 
 type Props = {

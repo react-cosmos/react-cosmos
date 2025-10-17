@@ -1,6 +1,12 @@
-import { removeItemMatch, replaceOrAddItem } from 'react-cosmos-core';
+import {
+  NotificationItem,
+  removeItemMatch,
+  replaceOrAddItem,
+  TimedNotificationItem,
+  uuid,
+} from 'react-cosmos-core';
 import { NotificationsContext } from './shared.js';
-import { NotificationItem, NotificationsSpec } from './spec.js';
+import { NotificationsSpec } from './spec.js';
 
 const TIMEOUT = 3000;
 
@@ -33,12 +39,17 @@ export function removeStickyNotification(
 
 export function pushTimedNotification(
   context: NotificationsContext,
-  notification: NotificationItem
+  timedNotification: TimedNotificationItem
 ) {
   const { timedNotifications } = context.getState();
   if (timedNotifications !== null) {
     window.clearTimeout(timedNotifications.timeoutId);
   }
+
+  const notification = {
+    ...timedNotification,
+    id: timedNotification.id ?? uuid(),
+  };
 
   context.setState(prevState => ({
     ...prevState,

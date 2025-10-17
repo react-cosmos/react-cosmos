@@ -7,7 +7,6 @@ export default function NotificationExample() {
 
   const handleSuccess = () => {
     notification.pushTimedNotification({
-      id: 'success-example',
       type: 'success',
       title: 'Success!',
       info: 'This is a success notification from a fixture',
@@ -16,7 +15,6 @@ export default function NotificationExample() {
 
   const handleError = () => {
     notification.pushTimedNotification({
-      id: 'error-example',
       type: 'error',
       title: 'Error occurred',
       info: 'This is an error notification from a fixture',
@@ -25,7 +23,6 @@ export default function NotificationExample() {
 
   const handleInfo = () => {
     notification.pushTimedNotification({
-      id: 'info-example-' + Date.now(),
       type: 'info',
       title: 'Information',
       info: 'This is an info notification from a fixture',
@@ -45,18 +42,13 @@ export default function NotificationExample() {
       // Simulate async operation
       await new Promise(resolve => setTimeout(resolve, 3000));
 
-      // Remove loading notification
       notification.removeStickyNotification('async-operation');
-
-      // Show success
       notification.pushTimedNotification({
-        id: 'async-success',
         type: 'success',
         title: 'Operation completed!',
         info: 'The async operation finished successfully',
       });
     } catch (error) {
-      // Replace loading with error
       notification.pushStickyNotification({
         id: 'async-operation',
         type: 'error',

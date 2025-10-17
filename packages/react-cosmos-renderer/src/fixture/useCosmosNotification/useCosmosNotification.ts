@@ -1,18 +1,11 @@
 import { useContext } from 'react';
-import { NotificationType } from 'react-cosmos-core';
+import { NotificationItem, TimedNotificationItem } from 'react-cosmos-core';
 import { RendererContext } from '../../rendererConnect/RendererContext.js';
 
-type NotificationInput = {
-  id: string;
-  type: NotificationType;
-  title: string;
-  info: string;
-};
-
 type UseCosmosNotificationReturn = {
-  pushStickyNotification(notification: NotificationInput): void;
+  pushStickyNotification(notification: NotificationItem): void;
   removeStickyNotification(notificationId: string): void;
-  pushTimedNotification(notification: NotificationInput): void;
+  pushTimedNotification(notification: TimedNotificationItem): void;
 };
 
 export function useCosmosNotification(): UseCosmosNotificationReturn {
@@ -27,7 +20,7 @@ export function useCosmosNotification(): UseCosmosNotificationReturn {
 
   const { fixtureId } = selectedFixture;
 
-  const pushStickyNotification = (notification: NotificationInput) => {
+  const pushStickyNotification = (notification: NotificationItem) => {
     rendererConnect.postMessage({
       type: 'pushStickyNotification',
       payload: {
@@ -49,7 +42,7 @@ export function useCosmosNotification(): UseCosmosNotificationReturn {
     });
   };
 
-  const pushTimedNotification = (notification: NotificationInput) => {
+  const pushTimedNotification = (notification: TimedNotificationItem) => {
     rendererConnect.postMessage({
       type: 'pushTimedNotification',
       payload: {

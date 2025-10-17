@@ -1,5 +1,8 @@
 import { FixtureState } from '../fixtureState/types.js';
-import { NotificationItem } from '../playground/notifications.js';
+import {
+  NotificationItem,
+  TimedNotificationItem,
+} from '../playground/notifications.js';
 import {
   FixtureId,
   FixtureList,
@@ -140,7 +143,7 @@ export type PushTimedNotificationResponse = {
   payload: {
     rendererId: RendererId;
     fixtureId: FixtureId;
-    notification: NotificationItem;
+    notification: TimedNotificationItem;
   };
 };
 
