@@ -1,11 +1,11 @@
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { NotificationItem, TimedNotificationItem } from 'react-cosmos-core';
 import { RendererContext } from '../../rendererConnect/RendererContext.js';
 
 type UseCosmosNotificationReturn = {
-  pushStickyNotification(notification: NotificationItem): void;
-  removeStickyNotification(notificationId: string): void;
-  pushTimedNotification(notification: TimedNotificationItem): void;
+  pushSticky(notification: NotificationItem): void;
+  removeSticky(notificationId: string): void;
+  pushTimed(notification: TimedNotificationItem): void;
 };
 
 export function useCosmosNotification(): UseCosmosNotificationReturn {
@@ -19,43 +19,41 @@ export function useCosmosNotification(): UseCosmosNotificationReturn {
   }
 
   const { fixtureId } = selectedFixture;
+  const { postMessage } = rendererConnect;
 
-  const pushStickyNotification = (notification: NotificationItem) => {
-    rendererConnect.postMessage({
-      type: 'pushStickyNotification',
-      payload: {
-        rendererId,
-        fixtureId,
-        notification,
+  return useMemo(
+    () => ({
+      pushSticky: (notification: NotificationItem) => {
+        postMessage({
+          type: 'pushStickyNotification',
+          payload: {
+            rendererId,
+            fixtureId,
+            notification,
+          },
+        });
       },
-    });
-  };
-
-  const removeStickyNotification = (notificationId: string) => {
-    rendererConnect.postMessage({
-      type: 'removeStickyNotification',
-      payload: {
-        rendererId,
-        fixtureId,
-        notificationId,
+      removeSticky: (notificationId: string) => {
+        postMessage({
+          type: 'removeStickyNotification',
+          payload: {
+            rendererId,
+            fixtureId,
+            notificationId,
+          },
+        });
       },
-    });
-  };
-
-  const pushTimedNotification = (notification: TimedNotificationItem) => {
-    rendererConnect.postMessage({
-      type: 'pushTimedNotification',
-      payload: {
-        rendererId,
-        fixtureId,
-        notification,
+      pushTimed: (notification: TimedNotificationItem) => {
+        postMessage({
+          type: 'pushTimedNotification',
+          payload: {
+            rendererId,
+            fixtureId,
+            notification,
+          },
+        });
       },
-    });
-  };
-
-  return {
-    pushStickyNotification,
-    removeStickyNotification,
-    pushTimedNotification,
-  };
+    }),
+    [fixtureId, postMessage, rendererId]
+  );
 }
