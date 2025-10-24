@@ -6,7 +6,7 @@ export default function NotificationExample() {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const handleSuccess = () => {
-    notification.pushTimedNotification({
+    notification.pushTimed({
       type: 'success',
       title: 'Success!',
       info: 'This is a success notification from a fixture',
@@ -14,7 +14,7 @@ export default function NotificationExample() {
   };
 
   const handleError = () => {
-    notification.pushTimedNotification({
+    notification.pushTimed({
       type: 'error',
       title: 'Error occurred',
       info: 'This is an error notification from a fixture',
@@ -22,7 +22,7 @@ export default function NotificationExample() {
   };
 
   const handleInfo = () => {
-    notification.pushTimedNotification({
+    notification.pushTimed({
       type: 'info',
       title: 'Information',
       info: 'This is an info notification from a fixture',
@@ -31,7 +31,7 @@ export default function NotificationExample() {
 
   const handleAsyncOperation = async () => {
     setIsLoading(true);
-    notification.pushStickyNotification({
+    notification.pushSticky({
       id: 'async-operation',
       type: 'loading',
       title: 'Processing...',
@@ -42,14 +42,14 @@ export default function NotificationExample() {
       // Simulate async operation
       await new Promise(resolve => setTimeout(resolve, 3000));
 
-      notification.removeStickyNotification('async-operation');
-      notification.pushTimedNotification({
+      notification.removeSticky('async-operation');
+      notification.pushTimed({
         type: 'success',
         title: 'Operation completed!',
         info: 'The async operation finished successfully',
       });
     } catch (error) {
-      notification.pushStickyNotification({
+      notification.pushSticky({
         id: 'async-operation',
         type: 'error',
         title: 'Operation failed',
