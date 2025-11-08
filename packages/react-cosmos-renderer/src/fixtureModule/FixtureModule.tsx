@@ -18,6 +18,8 @@ type Props = {
   decoratorModules: ReactDecoratorModule[];
   globalDecorators?: ReactDecorator[];
   fixtureId: FixtureId;
+  // fixtureParams: FixtureParams;
+  // setFixtureParams: (params: FixtureParams) => void;
   initialFixtureState?: FixtureState;
   renderKey: number;
   lazy: boolean;
@@ -28,6 +30,8 @@ export function FixtureModule({
   decoratorModules,
   globalDecorators,
   fixtureId,
+  // fixtureParams,
+  // setFixtureParams,
   initialFixtureState,
   renderKey,
   lazy,
@@ -59,6 +63,8 @@ export function FixtureModule({
     <FixtureProvider
       key={fixtureKey}
       fixtureId={fixtureId}
+      // fixtureParams={fixtureParams}
+      // setFixtureParams={setFixtureParams}
       initialFixtureState={initialFixtureState}
       fixtureItem={fixtureItem}
       fixtureOptions={serializableOptions}

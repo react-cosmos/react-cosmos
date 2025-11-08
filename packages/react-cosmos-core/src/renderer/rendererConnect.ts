@@ -13,6 +13,8 @@ import {
 // cannot be established by consensus
 export type RendererId = string;
 
+export type FixtureParams = Record<string, string>;
+
 export type PingRenderersRequest = {
   type: 'pingRenderers';
 };
@@ -40,6 +42,17 @@ export type UnselectFixtureRequest = {
   };
 };
 
+export type SetFixtureParamsRequest = {
+  type: 'setFixtureParams';
+  payload: {
+    rendererId: RendererId;
+    // The fixture ID is sent alongside the fixture params change to ensure
+    // that the fixture params is only paired with its corresponding fixture
+    fixtureId: FixtureId;
+    fixtureParams: FixtureParams;
+  };
+};
+
 export type SetFixtureStateRequest = {
   type: 'setFixtureState';
   payload: {
@@ -56,6 +69,7 @@ export type RendererRequest =
   | ReloadRendererRequest
   | SelectFixtureRequest
   | UnselectFixtureRequest
+  | SetFixtureParamsRequest
   | SetFixtureStateRequest;
 
 export type RendererReadyResponse = {

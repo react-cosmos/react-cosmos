@@ -203,7 +203,11 @@ async function takeFixtureSnapshot(
   fixtureId: FixtureId,
   cleanPath: string[]
 ) {
-  const fixtureUrl = createRendererUrl(rendererUrl, fixtureId, true);
+  const fixtureUrl = createRendererUrl({
+    rendererUrl,
+    fixtureId,
+    locked: true,
+  });
   await page.goto(fixtureUrl);
   await expect(page).toHaveScreenshot(`${cleanPath.join('-')}.png`);
 }

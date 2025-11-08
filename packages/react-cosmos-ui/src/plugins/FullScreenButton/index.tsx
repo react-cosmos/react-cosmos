@@ -23,7 +23,11 @@ namedPlug<RendererActionSlotProps>(
 
     const onSelect = React.useCallback(() => {
       if (rendererUrl) {
-        const fixtureUrl = createWebRendererUrl(rendererUrl, fixtureId, true);
+        const fixtureUrl = createWebRendererUrl({
+          rendererUrl,
+          fixtureId,
+          locked: true,
+        });
         // noopener is required to prevent reuse of sessionStorage from the
         // Playground window, thus making sure the remote renderer will generate
         // a different rendererId from the iframe renderer.

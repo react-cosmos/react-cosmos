@@ -7,17 +7,36 @@ describe('static renderer URL', () => {
     const rendererUrl = 'http://localhost:5000';
 
     it('index', () => {
-      expect(createRendererUrl(rendererUrl)).toEqual('http://localhost:5000');
+      expect(createRendererUrl({ rendererUrl })).toEqual(
+        'http://localhost:5000'
+      );
     });
 
     it('fixture', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId, false)).toEqual(
+      expect(
+        createRendererUrl({ rendererUrl, fixtureId, locked: false })
+      ).toEqual(
         'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D'
       );
     });
 
+    it('fixture params', () => {
+      expect(
+        createRendererUrl({
+          rendererUrl,
+          fixtureId,
+          fixtureParams: { color: 'red', size: 'large' },
+          locked: false,
+        })
+      ).toEqual(
+        'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D&fixtureParams=%7B%22color%22%3A%22red%22%2C%22size%22%3A%22large%22%7D'
+      );
+    });
+
     it('fixture locked', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId, true)).toEqual(
+      expect(
+        createRendererUrl({ rendererUrl, fixtureId, locked: true })
+      ).toEqual(
         'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D&locked=true'
       );
     });
@@ -27,19 +46,23 @@ describe('static renderer URL', () => {
     const rendererUrl = 'http://localhost:5000/renderer.html';
 
     it('index', () => {
-      expect(createRendererUrl(rendererUrl)).toEqual(
+      expect(createRendererUrl({ rendererUrl })).toEqual(
         'http://localhost:5000/renderer.html'
       );
     });
 
     it('fixture', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId, false)).toEqual(
+      expect(
+        createRendererUrl({ rendererUrl, fixtureId, locked: false })
+      ).toEqual(
         'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D'
       );
     });
 
     it('fixture locked', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId, true)).toEqual(
+      expect(
+        createRendererUrl({ rendererUrl, fixtureId, locked: true })
+      ).toEqual(
         'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D&locked=true'
       );
     });
@@ -49,17 +72,21 @@ describe('static renderer URL', () => {
     const rendererUrl = 'renderer.html';
 
     it('index', () => {
-      expect(createRendererUrl(rendererUrl)).toEqual('renderer.html');
+      expect(createRendererUrl({ rendererUrl })).toEqual('renderer.html');
     });
 
     it('fixture', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId, false)).toEqual(
+      expect(
+        createRendererUrl({ rendererUrl, fixtureId, locked: false })
+      ).toEqual(
         'renderer.html?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D'
       );
     });
 
     it('fixture locked', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId, true)).toEqual(
+      expect(
+        createRendererUrl({ rendererUrl, fixtureId, locked: true })
+      ).toEqual(
         'renderer.html?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D&locked=true'
       );
     });
@@ -69,17 +96,21 @@ describe('static renderer URL', () => {
     const rendererUrl = '/renderer.html';
 
     it('index', () => {
-      expect(createRendererUrl(rendererUrl)).toEqual('/renderer.html');
+      expect(createRendererUrl({ rendererUrl })).toEqual('/renderer.html');
     });
 
     it('fixture', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId, false)).toEqual(
+      expect(
+        createRendererUrl({ rendererUrl, fixtureId, locked: false })
+      ).toEqual(
         '/renderer.html?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D'
       );
     });
 
     it('fixture locked', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId, true)).toEqual(
+      expect(
+        createRendererUrl({ rendererUrl, fixtureId, locked: true })
+      ).toEqual(
         '/renderer.html?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D&locked=true'
       );
     });
@@ -89,17 +120,23 @@ describe('static renderer URL', () => {
     const rendererUrl = '/cosmos/renderer.html';
 
     it('index', () => {
-      expect(createRendererUrl(rendererUrl)).toEqual('/cosmos/renderer.html');
+      expect(createRendererUrl({ rendererUrl })).toEqual(
+        '/cosmos/renderer.html'
+      );
     });
 
     it('fixture', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId, false)).toEqual(
+      expect(
+        createRendererUrl({ rendererUrl, fixtureId, locked: false })
+      ).toEqual(
         '/cosmos/renderer.html?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D'
       );
     });
 
     it('fixture locked', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId, true)).toEqual(
+      expect(
+        createRendererUrl({ rendererUrl, fixtureId, locked: true })
+      ).toEqual(
         '/cosmos/renderer.html?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D&locked=true'
       );
     });
@@ -111,19 +148,23 @@ describe('dynamic renderer URL', () => {
     const rendererUrl = 'http://localhost:5000/<fixture>';
 
     it('index', () => {
-      expect(createRendererUrl(rendererUrl)).toEqual(
+      expect(createRendererUrl({ rendererUrl })).toEqual(
         'http://localhost:5000/index'
       );
     });
 
     it('fixture', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId, false)).toEqual(
+      expect(
+        createRendererUrl({ rendererUrl, fixtureId, locked: false })
+      ).toEqual(
         'http://localhost:5000/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9'
       );
     });
 
     it('fixture locked', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId, true)).toEqual(
+      expect(
+        createRendererUrl({ rendererUrl, fixtureId, locked: true })
+      ).toEqual(
         'http://localhost:5000/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9?locked=true'
       );
     });
@@ -133,19 +174,23 @@ describe('dynamic renderer URL', () => {
     const rendererUrl = 'http://localhost:5000/cosmos/<fixture>';
 
     it('index', () => {
-      expect(createRendererUrl(rendererUrl)).toEqual(
+      expect(createRendererUrl({ rendererUrl })).toEqual(
         'http://localhost:5000/cosmos/index'
       );
     });
 
     it('fixture', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId, false)).toEqual(
+      expect(
+        createRendererUrl({ rendererUrl, fixtureId, locked: false })
+      ).toEqual(
         'http://localhost:5000/cosmos/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9'
       );
     });
 
     it('fixture locked', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId, true)).toEqual(
+      expect(
+        createRendererUrl({ rendererUrl, fixtureId, locked: true })
+      ).toEqual(
         'http://localhost:5000/cosmos/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9?locked=true'
       );
     });
@@ -155,17 +200,21 @@ describe('dynamic renderer URL', () => {
     const rendererUrl = '/<fixture>';
 
     it('index', () => {
-      expect(createRendererUrl(rendererUrl)).toEqual('/index');
+      expect(createRendererUrl({ rendererUrl })).toEqual('/index');
     });
 
     it('fixture', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId, false)).toEqual(
+      expect(
+        createRendererUrl({ rendererUrl, fixtureId, locked: false })
+      ).toEqual(
         '/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9'
       );
     });
 
     it('fixture locked', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId, true)).toEqual(
+      expect(
+        createRendererUrl({ rendererUrl, fixtureId, locked: true })
+      ).toEqual(
         '/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9?locked=true'
       );
     });
@@ -175,17 +224,21 @@ describe('dynamic renderer URL', () => {
     const rendererUrl = '/cosmos/<fixture>';
 
     it('index', () => {
-      expect(createRendererUrl(rendererUrl)).toEqual('/cosmos/index');
+      expect(createRendererUrl({ rendererUrl })).toEqual('/cosmos/index');
     });
 
     it('fixture', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId, false)).toEqual(
+      expect(
+        createRendererUrl({ rendererUrl, fixtureId, locked: false })
+      ).toEqual(
         '/cosmos/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9'
       );
     });
 
     it('fixture locked', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId, true)).toEqual(
+      expect(
+        createRendererUrl({ rendererUrl, fixtureId, locked: true })
+      ).toEqual(
         '/cosmos/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9?locked=true'
       );
     });

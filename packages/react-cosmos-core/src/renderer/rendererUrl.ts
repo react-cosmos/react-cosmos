@@ -1,6 +1,7 @@
 import { Base64 } from 'js-base64';
 import { CosmosMode } from '../server/serverTypes.js';
 import { FixtureId } from '../userModules/fixtureTypes.js';
+import { FixtureParams } from './rendererConnect.js';
 import { buildRendererQueryString } from './rendererQueryString.js';
 
 export type CosmosRendererUrl = null | string | { dev: string; export: string };
@@ -14,34 +15,38 @@ export function pickRendererUrl(
     : (rendererUrl ?? null);
 }
 
-export function createRendererUrl(
-  rendererUrl: string,
-  fixtureId?: FixtureId,
-  locked?: boolean
-) {
+export function createRendererUrl(opts: {
+  rendererUrl: string;
+  fixtureId?: FixtureId;
+  fixtureParams?: FixtureParams;
+  locked?: boolean;
+}) {
+  const { rendererUrl, fixtureId, fixtureParams, locked } = opts;
+
   if (hasFixtureVar(rendererUrl)) {
     if (!fixtureId) return replaceFixtureVar(rendererUrl, 'index');
 
     return (
       replaceFixtureVar(rendererUrl, encodeRendererUrlFixture(fixtureId)) +
-      buildRendererQueryString({ locked })
+      buildRendererQueryString({ fixtureParams, locked })
     );
   } else {
     if (!fixtureId) return rendererUrl;
 
     const baseUrl = hostOnlyUrl(rendererUrl) ? rendererUrl + '/' : rendererUrl;
-    return baseUrl + buildRendererQueryString({ fixtureId, locked });
+    return (
+      baseUrl + buildRendererQueryString({ fixtureId, fixtureParams, locked })
+    );
   }
 }
 
-export function createWebRendererUrl(
-  rendererUrl: string,
-  fixtureId?: FixtureId,
-  locked?: boolean
-) {
-  return applyWindowHostnameToRendererUrl(
-    createRendererUrl(rendererUrl, fixtureId, locked)
-  );
+export function createWebRendererUrl(opts: {
+  rendererUrl: string;
+  fixtureId?: FixtureId;
+  fixtureParams?: FixtureParams;
+  locked?: boolean;
+}) {
+  return applyWindowHostnameToRendererUrl(createRendererUrl(opts));
 }
 
 export function encodeRendererUrlFixture(fixtureId: FixtureId) {

@@ -23,6 +23,13 @@ export function NextFixtureLoader({
 
   const selectedFixture = fixtureId && {
     fixtureId,
+    // FIXME: The big conundrum is whether to store fixture params in Next.js params
+    // or search params. The latter is only available on the server for dynamic pages.
+    // One one hand Cosmos should also work with statically exported pages. On the
+    // other hand fixture params are inherently dynamic and shouldn't be crammed
+    // into the URL path segments. Maybe we add an option to NextRendererConfig to
+    // opt into dynamic mode and only then do `await nextPageProps.params`.
+    // fixtureParams: {},
     initialFixtureState: {},
     // This fixture loader is meant to work with Next.js build-time static
     // generation. Its props will be driven by finite URL segment params and not

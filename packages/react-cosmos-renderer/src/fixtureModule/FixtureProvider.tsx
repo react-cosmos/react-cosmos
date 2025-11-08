@@ -13,6 +13,8 @@ import { RendererContext } from '../rendererConnect/RendererContext.js';
 type Props = {
   children: React.ReactNode;
   fixtureId: FixtureId;
+  // fixtureParams: FixtureParams;
+  // setFixtureParams: (params: FixtureParams) => void;
   initialFixtureState?: FixtureState;
   fixtureItem: FixtureListItem;
   fixtureOptions: {};
@@ -124,11 +126,19 @@ export function FixtureProvider(props: Props) {
 
   const contextValue = React.useMemo(
     () => ({
+      // fixtureParams: props.fixtureParams,
+      // setFixtureParams: props.setFixtureParams,
       fixtureState: state.fixtureState,
       setFixtureState,
       changeFixture,
     }),
-    [changeFixture, setFixtureState, state.fixtureState]
+    [
+      changeFixture,
+      // props.fixtureParams,
+      // props.setFixtureParams,
+      setFixtureState,
+      state.fixtureState,
+    ]
   );
 
   return (

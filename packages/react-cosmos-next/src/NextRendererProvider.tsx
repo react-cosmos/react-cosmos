@@ -1,10 +1,13 @@
 'use client';
+
 import { useRouter, useSearchParams } from 'next/navigation';
 import React from 'react';
 import {
   FixtureId,
+  FixtureParams,
   RendererConfig,
   createWebRendererUrl,
+  decodeRendererSearchParams,
 } from 'react-cosmos-core';
 import {
   GlobalErrorHandler,
@@ -29,13 +32,15 @@ export function NextRendererProvider({
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const locked = searchParams.get('locked') === 'true';
+  const { fixtureParams = {}, locked = false } = decodeRendererSearchParams(
+    Object.fromEntries(searchParams.entries())
+  );
 
   const selectFixture = React.useCallback(
     (fixtureId: FixtureId) => {
       if (rendererUrl) {
         router.replace(
-          trimHtmlExtension(createWebRendererUrl(rendererUrl, fixtureId))
+          trimHtmlExtension(createWebRendererUrl({ rendererUrl, fixtureId }))
         );
       }
     },
@@ -44,15 +49,30 @@ export function NextRendererProvider({
 
   const unselectFixture = React.useCallback(() => {
     if (rendererUrl) {
-      router.replace(trimHtmlExtension(createWebRendererUrl(rendererUrl)));
+      router.replace(trimHtmlExtension(createWebRendererUrl({ rendererUrl })));
     }
   }, [rendererUrl, router]);
 
+  const setFixtureParams = React.useCallback(
+    (newFixtureParams: FixtureParams) => {
+      if (rendererUrl && selectedFixture) {
+        window.location.href = createWebRendererUrl({
+          rendererUrl,
+          fixtureId: selectedFixture.fixtureId,
+          fixtureParams: newFixtureParams,
+        });
+      }
+    },
+    [rendererUrl, selectedFixture]
+  );
+
   const reloadRenderer = React.useCallback(() => {
     if (rendererUrl) {
-      window.location.href = createWebRendererUrl(rendererUrl);
+      window.location.href = createWebRendererUrl({ rendererUrl });
     }
   }, [rendererUrl]);
+
+  console.log({ fixtureParams, setFixtureParams });
 
   return (
     <RendererProvider

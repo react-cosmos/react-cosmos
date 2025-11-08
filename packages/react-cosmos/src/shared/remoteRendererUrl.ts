@@ -5,7 +5,7 @@ import { getServerAddress, getServerHost } from './serverAddress.js';
 export function getRemoteRendererUrl(config: CosmosConfig) {
   const rendererUrl = pickRendererUrl(config.rendererUrl, 'dev');
   return rendererUrl
-    ? fullServerUrl(config, createRendererUrl(rendererUrl)).toString()
+    ? fullServerUrl(config, createRendererUrl({ rendererUrl })).toString()
     : null;
 }
 
