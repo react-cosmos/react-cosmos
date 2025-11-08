@@ -24,12 +24,14 @@ type Props = {
   globalDecorators?: ReactDecorator[];
   renderMessage?: (msg: string) => React.ReactNode;
   selectedFixture: SelectedFixture | null;
+  fixtureProps?: Record<string, unknown>;
 };
 export function ServerFixtureLoader({
   moduleWrappers,
   globalDecorators,
   renderMessage = defaultRenderMessage,
   selectedFixture,
+  fixtureProps
 }: Props) {
   return (
     <FixtureLoaderConnect
@@ -48,6 +50,7 @@ export function ServerFixtureLoader({
                 {...modules}
                 {...selected}
                 globalDecorators={globalDecorators}
+                fixtureProps={fixtureProps}
                 lazy={moduleWrappers.lazy}
                 renderMessage={renderMessage}
               />

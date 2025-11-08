@@ -9,12 +9,14 @@ export function nextCosmosPage(args: {
 }) {
   return async function NextCosmosPage(props: {
     params: Promise<NextCosmosParams>;
+    searchParams: Promise<URLSearchParams>; // Promise<{ [key: string]: string | string[] | undefined }> ?
   }) {
     return (
       <NextFixtureLoader
         rendererConfig={args.rendererConfig}
         moduleWrappers={args.moduleWrappers}
         params={await props.params}
+        searchParams={props.searchParams}
       />
     );
   };

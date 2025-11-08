@@ -13,11 +13,13 @@ type Props = {
   rendererConfig: RendererConfig;
   moduleWrappers: UserModuleWrappers;
   params: NextCosmosParams;
+  searchParams: Promise<URLSearchParams>; // Promise<{ [key: string]: string | string[] | undefined }> ?
 };
 export function NextFixtureLoader({
   rendererConfig,
   moduleWrappers,
   params,
+  searchParams,
 }: Props) {
   const fixtureId = getFixtureIdFromPageParams(params);
 
@@ -33,6 +35,7 @@ export function NextFixtureLoader({
     renderKey: 0,
   };
 
+  // TODO: Memoize fixtureProps
   return (
     <Suspense>
       <NextRendererProvider
@@ -43,6 +46,7 @@ export function NextFixtureLoader({
           moduleWrappers={moduleWrappers}
           renderMessage={renderMessage}
           selectedFixture={selectedFixture}
+          fixtureProps={{ searchParams }}
         />
       </NextRendererProvider>
     </Suspense>

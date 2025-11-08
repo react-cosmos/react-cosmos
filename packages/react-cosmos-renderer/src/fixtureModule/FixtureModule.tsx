@@ -19,6 +19,7 @@ type Props = {
   globalDecorators?: ReactDecorator[];
   fixtureId: FixtureId;
   initialFixtureState?: FixtureState;
+  fixtureProps?: Record<string, unknown>;
   renderKey: number;
   lazy: boolean;
   renderMessage: (msg: string) => React.ReactNode;
@@ -29,6 +30,7 @@ export function FixtureModule({
   globalDecorators,
   fixtureId,
   initialFixtureState,
+  fixtureProps,
   renderKey,
   lazy,
   renderMessage,
@@ -67,6 +69,7 @@ export function FixtureModule({
       <DecoratedFixture
         fixture={fixture}
         fixtureOptions={options}
+        fixtureProps={fixtureProps}
         userDecoratorModules={decoratorModules}
         globalDecorators={globalDecorators}
       />
