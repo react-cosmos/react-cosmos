@@ -11,12 +11,14 @@ import { decorateFixture } from './decorateFixture.js';
 type Props = {
   fixture: ReactFixture;
   fixtureOptions: {};
+  fixtureProps?: Record<string, unknown>;
   userDecoratorModules: ReactDecoratorModule[];
   globalDecorators?: ReactDecorator[];
 };
 export function DecoratedFixture({
   fixture,
   fixtureOptions,
+  fixtureProps,
   userDecoratorModules,
   globalDecorators = [],
 }: Props) {
@@ -27,10 +29,16 @@ export function DecoratedFixture({
     ];
     return decorateFixture(
       <FixtureCapture decoratorId="root">
-        {createFixtureNode(fixture)}
+        {createFixtureNode(fixture, fixtureProps)}
       </FixtureCapture>,
       fixtureOptions,
       decorators
     );
-  }, [fixture, fixtureOptions, globalDecorators, userDecoratorModules]);
+  }, [
+    fixture,
+    fixtureOptions,
+    fixtureProps,
+    globalDecorators,
+    userDecoratorModules,
+  ]);
 }

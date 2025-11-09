@@ -1,7 +1,10 @@
 import React, { ComponentType, isValidElement, ReactNode } from 'react';
 import { ReactFixture } from 'react-cosmos-core';
 
-export function createFixtureNode(fixture: ReactFixture): React.ReactNode {
+export function createFixtureNode(
+  fixture: ReactFixture,
+  fixtureProps?: Record<string, unknown>
+): React.ReactNode {
   // Warning: In a React Server Components setup this function is called on the
   // server. When a fixture module uses the 'use client' directive, the fixture
   // export will be a Promise wrapper (imbued with magical properties methinks).
@@ -11,7 +14,7 @@ export function createFixtureNode(fixture: ReactFixture): React.ReactNode {
   return isNodeFixture(fixture) ? (
     fixture
   ) : (
-    <FixtureElement Component={fixture} />
+    <FixtureElement Component={fixture} fixtureProps={fixtureProps} />
   );
 }
 
@@ -31,7 +34,13 @@ function isNodeFixture(fixture: ReactFixture): fixture is ReactNode {
   );
 }
 
-function FixtureElement({ Component }: { Component: ComponentType }) {
-  return <Component />;
+function FixtureElement({
+  Component,
+  fixtureProps,
+}: {
+  Component: ComponentType;
+  fixtureProps?: Record<string, unknown>;
+}) {
+  return <Component {...fixtureProps} />;
 }
 FixtureElement.cosmosCapture = false;

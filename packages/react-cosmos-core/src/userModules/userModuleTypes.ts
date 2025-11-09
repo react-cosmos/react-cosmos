@@ -10,7 +10,7 @@ type FixtureModule<FixtureType> = {
 type ModuleWrapper<ModuleType> = { module: ModuleType };
 type LazyModuleWrapper<ModuleType> = { getModule: () => Promise<ModuleType> };
 
-export type ReactFixture = ReactNode | ComponentType;
+export type ReactFixture = ReactNode | ComponentType<any>;
 export type ReactFixtureMap = FixtureMap<ReactFixture>;
 export type ReactFixtureExport = FixtureExport<ReactFixture>;
 export type ReactFixtureModule = FixtureModule<ReactFixture>;

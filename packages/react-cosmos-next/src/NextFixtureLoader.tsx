@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useMemo } from 'react';
 import {
   FixtureId,
   RendererConfig,
@@ -13,13 +13,16 @@ type Props = {
   rendererConfig: RendererConfig;
   moduleWrappers: UserModuleWrappers;
   params: NextCosmosParams;
+  searchParams: { [key: string]: string | string[] | undefined };
 };
 export function NextFixtureLoader({
   rendererConfig,
   moduleWrappers,
   params,
+  searchParams,
 }: Props) {
   const fixtureId = getFixtureIdFromPageParams(params);
+  const fixtureProps = useMemo(() => ({ searchParams }), [searchParams]);
 
   const selectedFixture = fixtureId && {
     fixtureId,
@@ -43,6 +46,7 @@ export function NextFixtureLoader({
           moduleWrappers={moduleWrappers}
           renderMessage={renderMessage}
           selectedFixture={selectedFixture}
+          fixtureProps={fixtureProps}
         />
       </NextRendererProvider>
     </Suspense>
