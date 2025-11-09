@@ -9,7 +9,7 @@ export function nextCosmosPage(args: {
 }) {
   return async function NextCosmosPage(props: {
     params: Promise<NextCosmosParams>;
-    searchParams: Promise<URLSearchParams>; // Promise<{ [key: string]: string | string[] | undefined }> ?
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
   }) {
     return (
       <NextFixtureLoader
