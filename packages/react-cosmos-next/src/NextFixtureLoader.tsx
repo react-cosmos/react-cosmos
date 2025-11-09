@@ -13,7 +13,7 @@ type Props = {
   rendererConfig: RendererConfig;
   moduleWrappers: UserModuleWrappers;
   params: NextCosmosParams;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  searchParams: { [key: string]: string | string[] | undefined };
 };
 export function NextFixtureLoader({
   rendererConfig,
