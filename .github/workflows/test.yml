@@ -55,11 +55,11 @@ jobs:
         include:
           - example: webpack
             os: ubuntu
-            node-version: 18
+            node-version: 22
             lazy: false
           - example: webpack
             os: windows
-            node-version: 18
+            node-version: 22
             lazy: false
           - example: webpack
             os: ubuntu
