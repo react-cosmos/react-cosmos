@@ -9,17 +9,17 @@
   "dependencies": {
     "@skidding/launch-editor": "2.2.3",
     "chokidar": "3.6.0",
-    "express": "4.21.2",
-    "glob": "10.4.5",
+    "express": "4.22.1",
+    "glob": "10.5.0",
     "http-proxy-middleware": "3.0.5",
-    "lodash-es": "4.17.21",
+    "lodash-es": "4.17.22",
     "micromatch": "4.0.8",
-    "open": "10.1.1",
-    "pem": "1.14.8",
+    "open": "10.2.0",
+    "pem": "1.15.1",
     "react-cosmos-core": "^7.0.0",
     "react-cosmos-renderer": "^7.0.0",
     "react-cosmos-ui": "^7.0.0",
-    "ws": "8.18.1",
+    "ws": "8.18.3",
     "yargs": "17.7.2"
   },
   "bin": {
