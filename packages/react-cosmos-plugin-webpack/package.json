@@ -7,7 +7,7 @@
   "type": "module",
   "main": "cosmos.plugin.json",
   "dependencies": {
-    "lodash-es": "4.17.21",
+    "lodash-es": "4.17.22",
     "react-cosmos-core": "^7.0.0",
     "react-cosmos-dom": "^7.0.0",
     "react-error-overlay": "6.0.9",
