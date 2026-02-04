@@ -12,7 +12,7 @@
     "express": "4.22.1",
     "glob": "10.5.0",
     "http-proxy-middleware": "3.0.5",
-    "lodash-es": "4.17.22",
+    "lodash-es": "4.17.23",
     "micromatch": "4.0.8",
     "open": "10.2.0",
     "pem": "1.15.1",
