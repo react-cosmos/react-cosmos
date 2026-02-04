@@ -7,7 +7,7 @@
   "type": "module",
   "main": "./dist/index.js",
   "dependencies": {
-    "lodash-es": "4.17.22",
+    "lodash-es": "4.17.23",
     "react-cosmos-core": "^7.1.0",
     "react-cosmos-dom": "^7.1.0",
     "react-cosmos-renderer": "^7.1.0"

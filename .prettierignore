@@ -11,3 +11,4 @@ lerna.json
 package.json
 packages/*/dist
 testMocks
+tests/playwright-report/

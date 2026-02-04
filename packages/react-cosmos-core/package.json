@@ -9,6 +9,6 @@
   "main": "./dist/index.js",
   "dependencies": {
     "js-base64": "3.7.8",
-    "lodash-es": "4.17.22"
+    "lodash-es": "4.17.23"
   }
 }

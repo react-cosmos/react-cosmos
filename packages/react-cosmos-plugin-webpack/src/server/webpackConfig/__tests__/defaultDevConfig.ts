@@ -37,9 +37,7 @@ it('includes DOM devtooks hook entry', async () => {
 it('includes webpack-hot-middleware entry', async () => {
   const { entry } = await getDefaultDevWebpackConfig();
   expect(entry).toContain(
-    `${require.resolve(
-      'webpack-hot-middleware/client'
-    )}?reload=false&overlay=false`
+    `${require.resolve('webpack-hot-middleware/client')}?reload=false&overlay=false`
   );
 });
 

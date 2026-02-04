@@ -12,14 +12,14 @@
     "express": "4.22.1",
     "glob": "10.5.0",
     "http-proxy-middleware": "3.0.5",
-    "lodash-es": "4.17.22",
+    "lodash-es": "4.17.23",
     "micromatch": "4.0.8",
     "open": "10.2.0",
     "pem": "1.15.1",
     "react-cosmos-core": "^7.1.0",
     "react-cosmos-renderer": "^7.1.0",
     "react-cosmos-ui": "^7.1.0",
-    "ws": "8.18.3",
+    "ws": "8.19.0",
     "yargs": "17.7.2"
   },
   "bin": {

@@ -65,9 +65,7 @@ it('includes DOM devtooks hook entry', async () => {
 it('does not include webpack-hot-middleware entry', async () => {
   const { entry } = await getCustomExportWebpackConfig();
   expect(entry).not.toContain(
-    `${require.resolve(
-      'webpack-hot-middleware/client'
-    )}?reload=true&overlay=false`
+    `${require.resolve('webpack-hot-middleware/client')}?reload=true&overlay=false`
   );
 });
 
