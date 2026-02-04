@@ -31,7 +31,7 @@ export function ServerFixtureLoader({
   globalDecorators,
   renderMessage = defaultRenderMessage,
   selectedFixture,
-  fixtureProps
+  fixtureProps,
 }: Props) {
   return (
     <FixtureLoaderConnect

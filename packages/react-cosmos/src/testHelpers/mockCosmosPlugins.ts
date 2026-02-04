@@ -26,7 +26,5 @@ export async function mockCosmosPlugins(configs: CosmosPluginConfig[]) {
 }
 
 async function importMocked() {
-  return import(
-    '../cosmosPlugin/findCosmosPluginConfigs.js'
-  ) as Promise<MockApi>;
+  return import('../cosmosPlugin/findCosmosPluginConfigs.js') as Promise<MockApi>;
 }
