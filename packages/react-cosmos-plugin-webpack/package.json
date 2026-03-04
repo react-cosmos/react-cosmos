@@ -15,6 +15,9 @@
     "webpack-hot-middleware": "2.26.1"
   },
   "peerDependencies": {
+    "react": ">=18",
+    "react-cosmos": ">=7",
+    "react-dom": ">=18",
     "webpack": "*"
   }
 }

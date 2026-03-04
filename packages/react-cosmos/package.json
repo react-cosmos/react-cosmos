@@ -22,6 +22,10 @@
     "ws": "8.19.0",
     "yargs": "17.7.2"
   },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
   "bin": {
     "cosmos": "./bin/cosmos.js",
     "cosmos-export": "./bin/cosmos-export.js",

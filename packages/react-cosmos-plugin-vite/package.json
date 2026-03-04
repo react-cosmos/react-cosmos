@@ -12,6 +12,9 @@
     "react-cosmos-dom": "^7.1.1"
   },
   "peerDependencies": {
+    "react": ">=18",
+    "react-cosmos": ">=7",
+    "react-dom": ">=18",
     "vite": "*"
   }
 }

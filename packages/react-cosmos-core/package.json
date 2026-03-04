@@ -10,5 +10,8 @@
   "dependencies": {
     "js-base64": "3.7.8",
     "lodash-es": "4.17.23"
+  },
+  "peerDependencies": {
+    "react": ">=18"
   }
 }
