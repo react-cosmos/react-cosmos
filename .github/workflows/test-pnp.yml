@@ -19,6 +19,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: react-cosmos/pnp-example
+          ref: vite
           path: pnp-example
 
       # https://github.com/actions/setup-node/issues/531#issuecomment-1872977503
