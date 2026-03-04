@@ -13,5 +13,8 @@
   "dependencies": {
     "lodash-es": "4.17.23",
     "react-cosmos-core": "^7.1.1"
+  },
+  "peerDependencies": {
+    "react": ">=18"
   }
 }
