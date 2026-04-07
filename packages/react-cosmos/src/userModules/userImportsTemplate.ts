@@ -1,4 +1,3 @@
-import { flatten } from 'lodash-es';
 import {
   UserImportsTemplateArgs,
   createImportMap,
@@ -74,7 +73,7 @@ export const moduleWrappers${ts(': UserModuleWrappers')} = {
 }
 
 function importsStr(items: string[][]) {
-  if (flatten(items).length === 0) {
+  if (items.flat().length === 0) {
     return '';
   }
 

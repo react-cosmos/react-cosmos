@@ -1,4 +1,3 @@
-import { flatten } from 'lodash-es';
 import React, { Fragment } from 'react';
 import { isReactElement } from 'react-cosmos-core';
 import { getChildrenPath } from './shared.js';
@@ -11,11 +10,9 @@ export function findElementPaths(
     // Array.from is used to fill array holes with undefined values. Array holes
     // have been observed in Next.js server components that receive undefined
     // children inside an array of children.
-    return flatten(
-      Array.from(node).map((child, idx) =>
-        findElementPaths(child, `${curPath}[${idx}]`)
-      )
-    );
+    return Array.from(node)
+      .map((child, idx) => findElementPaths(child, `${curPath}[${idx}]`))
+      .flat();
   }
 
   if (!isReactElement(node)) {

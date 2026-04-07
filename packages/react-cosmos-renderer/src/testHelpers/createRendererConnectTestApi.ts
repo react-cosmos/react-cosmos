@@ -1,5 +1,4 @@
 import until from 'async-until';
-import { findLast } from 'lodash-es';
 import {
   FixtureListUpdateResponse,
   FixtureLoadedResponse,
@@ -174,6 +173,9 @@ export function createRendererConnectTestApi(args: {
 
   function findLastResponseWithType(type: string): null | RendererResponse {
     const messages = args.getResponses();
-    return findLast(messages, msg => msg.type === type) ?? null;
+    for (let i = messages.length - 1; i >= 0; i--) {
+      if (messages[i].type === type) return messages[i];
+    }
+    return null;
   }
 }

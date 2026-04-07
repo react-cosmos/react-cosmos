@@ -1,5 +1,4 @@
 import { act, render, RenderResult } from '@testing-library/react';
-import { mapValues } from 'lodash-es';
 import { setTimeout } from 'node:timers/promises';
 import React from 'react';
 import {
@@ -11,6 +10,7 @@ import {
   RendererId,
   RendererResponse,
   UserModuleWrappers,
+  mapValues,
 } from 'react-cosmos-core';
 import { ClientFixtureLoader } from '../fixtureLoaders/ClientFixtureLoader.js';
 import { StatefulRendererProvider } from '../rendererConnect/StatefulRendererProvider.js';
@@ -108,18 +108,18 @@ function createModuleWrappers(
   if (lazy) {
     return {
       lazy: true,
-      fixtures: mapValues(fixtures, fixture => ({
-        getModule: () => dynamicImportWrapper(fixture),
+      fixtures: mapValues(fixtures, v => ({
+        getModule: () => dynamicImportWrapper(v),
       })),
-      decorators: mapValues(decorators, decorator => ({
-        getModule: () => dynamicImportWrapper(decorator),
+      decorators: mapValues(decorators, v => ({
+        getModule: () => dynamicImportWrapper(v),
       })),
     };
   } else {
     return {
       lazy: false,
-      fixtures: mapValues(fixtures, fixture => ({ module: fixture })),
-      decorators: mapValues(decorators, decorator => ({ module: decorator })),
+      fixtures: mapValues(fixtures, v => ({ module: v })),
+      decorators: mapValues(decorators, v => ({ module: v })),
     };
   }
 }

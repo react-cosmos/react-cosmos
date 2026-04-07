@@ -33,6 +33,7 @@ export * from './userModules/userModuleTypes.js';
 export * from './utils/array.js';
 export * from './utils/data.js';
 export * from './utils/isEqual.js';
+export * from './utils/mapValues.js';
 export * from './utils/keys.js';
 export * from './utils/queryString.js';
 export * from './utils/react/areNodesEqual.js';

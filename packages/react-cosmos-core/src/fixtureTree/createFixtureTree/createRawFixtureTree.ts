@@ -1,4 +1,3 @@
-import { get, set } from 'lodash-es';
 import {
   FixtureList,
   FixtureListItem,
@@ -65,22 +64,14 @@ function injectNode(
   if (parents.length === 0)
     return addTreeNodeChild(rootNode, childName, childNode);
 
-  let curParentDepth = 1;
-  let curParent: FixtureTreeNode;
-  do {
-    const curParents = parents.slice(0, curParentDepth);
-    const curPath = curParents.map(p => `children["${p}"]`).join('.');
-
-    curParent = get(rootNode, curPath);
-    if (!curParent) {
-      curParent = {
-        data: { type: 'fileDir' },
-      };
-      set(rootNode, curPath, curParent);
+  let curParent = rootNode;
+  for (const parentName of parents) {
+    if (!curParent.children) curParent.children = {};
+    if (!curParent.children[parentName]) {
+      curParent.children[parentName] = { data: { type: 'fileDir' } };
     }
-
-    curParentDepth += 1;
-  } while (curParentDepth <= parents.length);
+    curParent = curParent.children[parentName];
+  }
 
   addTreeNodeChild(curParent, childName, childNode);
 }

@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { sortBy } from 'lodash-es';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {
@@ -71,7 +70,9 @@ async function createFixtureItems(
 
   return {
     rendererUrl,
-    fixtures: sortBy(fixtures, f => f.cleanPath.join('-')),
+    fixtures: [...fixtures].sort((a, b) =>
+      a.cleanPath.join('-').localeCompare(b.cleanPath.join('-'))
+    ),
   };
 }
 

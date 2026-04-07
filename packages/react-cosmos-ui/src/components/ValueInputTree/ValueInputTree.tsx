@@ -1,4 +1,3 @@
-import { clone, setWith } from 'lodash-es';
 import React from 'react';
 import { FixtureStateValue, FixtureStateValues } from 'react-cosmos-core';
 import styled from 'styled-components';
@@ -87,9 +86,16 @@ function setValueAtPath(
   values: FixtureStateValues,
   newValue: FixtureStateValue,
   valuePath: string
-) {
-  // Inspired by https://github.com/lodash/lodash/issues/1696#issuecomment-328335502
-  return setWith(clone(values), valuePath, newValue, clone);
+): FixtureStateValues {
+  const keys = valuePath.split('.');
+  const result = { ...values };
+  let cur: Record<string, unknown> = result;
+  for (let i = 0; i < keys.length - 1; i++) {
+    cur[keys[i]] = { ...(cur[keys[i]] as Record<string, unknown>) };
+    cur = cur[keys[i]] as Record<string, unknown>;
+  }
+  cur[keys[keys.length - 1]] = newValue;
+  return result;
 }
 
 function getChildrenText(childKeys: string[], isArray: boolean) {
