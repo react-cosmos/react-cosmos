@@ -1,4 +1,3 @@
-import { isEqual, mapValues } from 'lodash-es';
 import React from 'react';
 import {
   DEFAULT_RENDER_KEY,
@@ -7,6 +6,7 @@ import {
   extendWithValues,
   findPropsFixtureStateItem,
   getComponentName,
+  isEqual,
 } from 'react-cosmos-core';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
 import { getChildrenPath, setElementAtPath } from '../shared/nodeTree/index.js';
@@ -44,16 +44,19 @@ export function useFixtureProps(
       const extendedProps = extendWithValues(originalProps, fsItem.values);
 
       // Preserve identity between renders for indentical non-primitive props
-      const cachedProps = mapValues(extendedProps, (value, propName) => {
+      const cachedProps: Record<string, unknown> = {};
+      for (const [propName, value] of Object.entries(extendedProps)) {
         const key = getPropCacheKey(elPath, propName);
         if (!propCache.hasOwnProperty(key))
           propCache[key] = originalProps[propName];
 
-        if (isEqual(propCache[key], value)) return propCache[key];
-
-        propCache[key] = value;
-        return value;
-      });
+        if (isEqual(propCache[key], value)) {
+          cachedProps[propName] = propCache[key];
+        } else {
+          propCache[key] = value;
+          cachedProps[propName] = value;
+        }
+      }
 
       // HACK alert: Editing React Element by hand
       // This is blasphemy, but there are two reasons why React.cloneElement

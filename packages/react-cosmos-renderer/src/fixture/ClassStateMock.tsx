@@ -1,5 +1,5 @@
-import { isEqual } from 'lodash-es';
 import React from 'react';
+import { isEqual } from 'react-cosmos-core';
 
 type Props = {
   children: React.ReactElement<{ ref?: React.Ref<unknown> }>;

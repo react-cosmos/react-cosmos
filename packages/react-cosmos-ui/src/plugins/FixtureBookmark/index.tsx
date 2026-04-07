@@ -1,6 +1,5 @@
-import { isEqual } from 'lodash-es';
 import React from 'react';
-import { FlatFixtureTree } from 'react-cosmos-core';
+import { FlatFixtureTree, isEqual } from 'react-cosmos-core';
 import { createPlugin, PluginContext } from 'react-plugin';
 import { FixtureActionSlotProps } from '../../slots/FixtureActionSlot.js';
 import { RootSpec } from '../Root/spec.js';

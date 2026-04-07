@@ -1,6 +1,5 @@
-import { isEqual } from 'lodash-es';
 import React from 'react';
-import { areNodesEqual, DecoratorProps } from 'react-cosmos-core';
+import { areNodesEqual, DecoratorProps, isEqual } from 'react-cosmos-core';
 import {
   FixtureContext,
   FixtureContextValue,

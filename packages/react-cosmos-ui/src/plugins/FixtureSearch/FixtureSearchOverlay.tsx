@@ -1,5 +1,4 @@
 import { filter } from 'fuzzaldrin-plus';
-import { isEqual } from 'lodash-es';
 import React, {
   useCallback,
   useEffect,
@@ -19,6 +18,7 @@ import {
   KEY_UP,
   createFixtureTree,
   flattenFixtureTree,
+  isEqual,
 } from 'react-cosmos-core';
 import styled from 'styled-components';
 import { HelpCircleIcon, SearchIcon } from '../../components/icons/index.js';

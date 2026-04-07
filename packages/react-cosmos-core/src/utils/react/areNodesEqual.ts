@@ -1,5 +1,5 @@
-import { isEqual, isEqualWith } from 'lodash-es';
 import { ComponentType, ReactNode } from 'react';
+import { isEqual } from '../isEqual.js';
 import { getComponentName } from './getComponentName.js';
 import { isReactElement, ReactElementWithChildren } from './isReactElement.js';
 
@@ -60,16 +60,20 @@ function areArrayNodesEqual(
 type PlainObject = Record<string, unknown>;
 
 function arePropsEqual(object1: PlainObject, object2: PlainObject) {
-  if (!isEqual(Object.keys(object1), Object.keys(object2))) return false;
+  const keys1 = Object.keys(object1);
+  const keys2 = Object.keys(object2);
+  if (keys1.length !== keys2.length) return false;
 
-  return Object.keys(object1).every(key =>
-    isEqualWith(
-      object1[key],
-      object2[key],
-      (value1: unknown, value2: unknown) =>
-        typeof value1 === 'function' && typeof value2 === 'function'
-          ? value1 === value2 || value1.toString() === value2.toString()
-          : isEqual(value1, value2)
-    )
-  );
+  return keys1.every(key => {
+    if (!Object.prototype.hasOwnProperty.call(object2, key)) return false;
+
+    const value1 = object1[key];
+    const value2 = object2[key];
+
+    // Treat functions as equal if they have the same toString representation
+    if (typeof value1 === 'function' && typeof value2 === 'function')
+      return value1 === value2 || value1.toString() === value2.toString();
+
+    return isEqual(value1, value2);
+  });
 }
