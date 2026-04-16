@@ -64,14 +64,14 @@ function injectNode(
   if (parents.length === 0)
     return addTreeNodeChild(rootNode, childName, childNode);
 
-  let curParent = rootNode;
-  for (const parentName of parents) {
-    if (!curParent.children) curParent.children = {};
-    if (!curParent.children[parentName]) {
-      curParent.children[parentName] = { data: { type: 'fileDir' } };
+  let curNode = rootNode;
+  for (const dirName of parents) {
+    if (!curNode.children) curNode.children = {};
+    if (!curNode.children[dirName]) {
+      curNode.children[dirName] = { data: { type: 'fileDir' } };
     }
-    curParent = curParent.children[parentName];
+    curNode = curNode.children[dirName];
   }
 
-  addTreeNodeChild(curParent, childName, childNode);
+  addTreeNodeChild(curNode, childName, childNode);
 }
