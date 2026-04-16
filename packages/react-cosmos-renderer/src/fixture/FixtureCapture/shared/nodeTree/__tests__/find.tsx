@@ -1,6 +1,6 @@
 import React, { isValidElement, ReactElement, ReactNode } from 'react';
-import { findElementPaths } from '../index.js';
-import { getByPath } from '../shared.js';
+import { findElementPaths } from '../findElementPaths.js';
+import { getByPath } from '../pathUtils.js';
 
 it('finds no paths on empty node', () => {
   const noChildrenNodes: ReactNode[] = [null, true, false, 'Hello', 7];

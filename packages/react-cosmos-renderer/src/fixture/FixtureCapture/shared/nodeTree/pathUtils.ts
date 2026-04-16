@@ -6,19 +6,6 @@ export function isRootPath(elPath: string) {
   return elPath === '';
 }
 
-// Parse lodash-style paths like "props.children[0].props.children"
-function parsePath(path: string): (string | number)[] {
-  const segments: (string | number)[] = [];
-  for (const part of path.split('.')) {
-    const match = part.match(/^([^[]*)(.*)/);
-    if (!match) continue;
-    if (match[1]) segments.push(match[1]);
-    const brackets = match[2].matchAll(/\[(\d+)]/g);
-    for (const b of brackets) segments.push(Number(b[1]));
-  }
-  return segments;
-}
-
 export function getByPath<T = unknown>(obj: unknown, path: string): T {
   let cur = obj;
   for (const key of parsePath(path)) {
@@ -36,4 +23,17 @@ export function setByPath<T>(obj: T, path: string, value: unknown): T {
   }
   cur[keys[keys.length - 1]] = value;
   return obj;
+}
+
+// Parse paths like "props.children[0].props.children"
+function parsePath(path: string): (string | number)[] {
+  const segments: (string | number)[] = [];
+  for (const part of path.split('.')) {
+    const match = part.match(/^([^[]*)(.*)/);
+    if (!match) continue;
+    if (match[1]) segments.push(match[1]);
+    const brackets = match[2].matchAll(/\[(\d+)]/g);
+    for (const b of brackets) segments.push(Number(b[1]));
+  }
+  return segments;
 }

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { isReactElement } from 'react-cosmos-core';
-import { getChildrenPath } from './shared.js';
+import { getChildrenPath } from './pathUtils.js';
 
 export function findElementPaths(
   node: React.ReactNode,

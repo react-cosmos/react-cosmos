@@ -11,4 +11,4 @@ export {
   getExpectedElementAtPath,
 } from './getElementAtPath.js';
 export { setElementAtPath } from './setElementAtPath.js';
-export { getChildrenPath } from './shared.js';
+export { getChildrenPath } from './pathUtils.js';

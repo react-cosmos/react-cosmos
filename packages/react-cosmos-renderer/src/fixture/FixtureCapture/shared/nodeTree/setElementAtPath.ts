@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { isReactElement, ReactElementWithChildren } from 'react-cosmos-core';
 import { getExpectedElementAtPath } from './getElementAtPath.js';
-import { isRootPath, setByPath } from './shared.js';
+import { isRootPath, setByPath } from './pathUtils.js';
 
 export function setElementAtPath(
   node: ReactNode,
