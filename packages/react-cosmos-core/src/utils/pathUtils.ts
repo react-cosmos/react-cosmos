@@ -1,11 +1,3 @@
-export function getChildrenPath(elPath: string) {
-  return isRootPath(elPath) ? 'props.children' : `${elPath}.props.children`;
-}
-
-export function isRootPath(elPath: string) {
-  return elPath === '';
-}
-
 export function getByPath<T = unknown>(obj: unknown, path: string): T {
   let cur = obj;
   for (const key of parsePath(path)) {
@@ -16,13 +8,28 @@ export function getByPath<T = unknown>(obj: unknown, path: string): T {
 }
 
 export function setByPath<T>(obj: T, path: string, value: unknown): T {
-  const keys = parsePath(path);
-  let cur = obj as Record<string | number, unknown>;
-  for (let i = 0; i < keys.length - 1; i++) {
-    cur = cur[keys[i]] as Record<string | number, unknown>;
+  return setDeep(obj, parsePath(path), value, 0) as T;
+}
+
+function setDeep(
+  current: unknown,
+  keys: (string | number)[],
+  value: unknown,
+  index: number
+): unknown {
+  if (index === keys.length) return value;
+
+  const key = keys[index];
+  const currentChild = (current as Record<string | number, unknown>)?.[key];
+  const nextValue = setDeep(currentChild, keys, value, index + 1);
+
+  if (Array.isArray(current)) {
+    const copy = [...current];
+    copy[key as number] = nextValue;
+    return copy;
   }
-  cur[keys[keys.length - 1]] = value;
-  return obj;
+
+  return { ...(current as object), [key]: nextValue };
 }
 
 // Parse paths like "props.children[0].props.children"

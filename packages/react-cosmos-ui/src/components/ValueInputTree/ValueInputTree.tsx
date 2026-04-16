@@ -1,5 +1,9 @@
 import React from 'react';
-import { FixtureStateValue, FixtureStateValues } from 'react-cosmos-core';
+import {
+  FixtureStateValue,
+  FixtureStateValues,
+  setByPath,
+} from 'react-cosmos-core';
 import styled from 'styled-components';
 import { TreeExpansion } from '../../shared/treeExpansion.js';
 import { grey248, grey32 } from '../../style/colors.js';
@@ -87,15 +91,7 @@ function setValueAtPath(
   newValue: FixtureStateValue,
   valuePath: string
 ): FixtureStateValues {
-  const keys = valuePath.split('.');
-  const result = { ...values };
-  let cur: Record<string, unknown> = result;
-  for (let i = 0; i < keys.length - 1; i++) {
-    cur[keys[i]] = { ...(cur[keys[i]] as Record<string, unknown>) };
-    cur = cur[keys[i]] as Record<string, unknown>;
-  }
-  cur[keys[keys.length - 1]] = newValue;
-  return result;
+  return setByPath(values, valuePath, newValue);
 }
 
 function getChildrenText(childKeys: string[], isArray: boolean) {

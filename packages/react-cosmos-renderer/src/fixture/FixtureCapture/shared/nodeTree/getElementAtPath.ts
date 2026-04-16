@@ -1,6 +1,10 @@
 import { ReactNode } from 'react';
-import { isReactElement, ReactElementWithChildren } from 'react-cosmos-core';
-import { getByPath, isRootPath } from './pathUtils.js';
+import {
+  getByPath,
+  isReactElement,
+  ReactElementWithChildren,
+} from 'react-cosmos-core';
+import { isRootPath } from './elPath.js';
 
 // Why be silent about trying to fetch a node that isn't an element?
 // Because users of this utility only care about elements. Whether the child
