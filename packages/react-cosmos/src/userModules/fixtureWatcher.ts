@@ -21,7 +21,10 @@ export async function startFixtureWatcher(
       cwd: config.rootDir,
     })
       .on('ready', () => resolve(watcher))
-      .on(event, debounce(() => callback(), DEBOUNCE_INTERVAL));
+      .on(
+        event,
+        debounce(() => callback(), DEBOUNCE_INTERVAL)
+      );
   });
 }
 

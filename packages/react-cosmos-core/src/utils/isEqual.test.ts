@@ -162,8 +162,14 @@ describe('maps', () => {
   });
 
   it('treats maps with same entries as equal', () => {
-    const a = new Map<string, number>([['a', 1], ['b', 2]]);
-    const b = new Map<string, number>([['a', 1], ['b', 2]]);
+    const a = new Map<string, number>([
+      ['a', 1],
+      ['b', 2],
+    ]);
+    const b = new Map<string, number>([
+      ['a', 1],
+      ['b', 2],
+    ]);
     expect(isEqual(a, b)).toBe(true);
   });
 
@@ -175,7 +181,10 @@ describe('maps', () => {
 
   it('treats maps of different sizes as unequal', () => {
     const a = new Map([['a', 1]]);
-    const b = new Map([['a', 1], ['b', 2]]);
+    const b = new Map([
+      ['a', 1],
+      ['b', 2],
+    ]);
     expect(isEqual(a, b)).toBe(false);
   });
 
@@ -215,20 +224,31 @@ describe('functions', () => {
   });
 
   it('treats distinct function references as unequal', () => {
-    expect(isEqual(() => 1, () => 1)).toBe(false);
+    expect(
+      isEqual(
+        () => 1,
+        () => 1
+      )
+    ).toBe(false);
   });
 });
 
 describe('real-world fixture-like shapes', () => {
   it('treats matching fixtureId objects as equal', () => {
     expect(
-      isEqual({ path: 'Button/fixture', name: null }, { path: 'Button/fixture', name: null })
+      isEqual(
+        { path: 'Button/fixture', name: null },
+        { path: 'Button/fixture', name: null }
+      )
     ).toBe(true);
   });
 
   it('treats fixtureIds differing by name as unequal', () => {
     expect(
-      isEqual({ path: 'Button/fixture', name: null }, { path: 'Button/fixture', name: 'primary' })
+      isEqual(
+        { path: 'Button/fixture', name: null },
+        { path: 'Button/fixture', name: 'primary' }
+      )
     ).toBe(false);
   });
 

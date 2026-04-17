@@ -1,9 +1,6 @@
 type Indexable = Record<string | number, unknown>;
 
-export function getByPath<T extends object>(
-  obj: T,
-  path: string
-): unknown {
+export function getByPath<T extends object>(obj: T, path: string): unknown {
   let cur: unknown = obj;
   for (const key of parsePath(path)) {
     if (cur === null || cur === undefined) return undefined;

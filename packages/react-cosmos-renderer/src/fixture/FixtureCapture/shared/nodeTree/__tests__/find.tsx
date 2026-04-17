@@ -66,7 +66,9 @@ it('finds nested paths', () => {
 
   // Ensure paths are valid
   paths.forEach(path => {
-    expect(isValidElement(path === '' ? node : getByPath(node, path))).toBe(true);
+    expect(isValidElement(path === '' ? node : getByPath(node, path))).toBe(
+      true
+    );
   });
 });
 

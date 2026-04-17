@@ -15,9 +15,7 @@ export function nextCosmosPage(args: {
     // Accessing searchParams opts the route into dynamic rendering in Next.js.
     // Only read them when explicitly opted in.
     // https://github.com/react-cosmos/react-cosmos/issues/1750
-    const searchParams = args.readSearchParams
-      ? await props.searchParams
-      : {};
+    const searchParams = args.readSearchParams ? await props.searchParams : {};
 
     return (
       <NextFixtureLoader

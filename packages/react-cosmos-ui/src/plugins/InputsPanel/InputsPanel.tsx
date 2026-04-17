@@ -1,5 +1,9 @@
 import React from 'react';
-import { InputFixtureState, InputsFixtureState, isEqual } from 'react-cosmos-core';
+import {
+  InputFixtureState,
+  InputsFixtureState,
+  isEqual,
+} from 'react-cosmos-core';
 import {
   SidePanelActions,
   SidePanelBody,

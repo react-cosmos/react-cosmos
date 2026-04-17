@@ -1,0 +1,25 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "arrowParens": "avoid",
+  "endOfLine": "lf",
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "printWidth": 80,
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    ".next",
+    ".vscode",
+    "cosmos-export",
+    "cosmos.imports.js",
+    "cosmos.imports.ts",
+    "coverage",
+    "docs/.vercel",
+    "docs/out",
+    "docs/tsconfig.json",
+    "lerna.json",
+    "package.json",
+    "packages/*/dist",
+    "testMocks",
+    "tests/playwright-report/"
+  ]
+}
