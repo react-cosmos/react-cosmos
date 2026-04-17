@@ -1,5 +1,5 @@
 import React from 'react';
-import { Viewport } from 'react-cosmos-core';
+import type { Viewport } from 'react-cosmos-core';
 import styled from 'styled-components';
 import { Button8 } from '../../../components/buttons/index.js';
 import {
@@ -18,7 +18,7 @@ import {
   grey8,
 } from '../../../style/colors.js';
 import { quick } from '../../../style/vars.js';
-import { ResponsiveDevice } from '../spec.js';
+import type { ResponsiveDevice } from '../spec.js';
 
 type Props = {
   devices: ResponsiveDevice[];

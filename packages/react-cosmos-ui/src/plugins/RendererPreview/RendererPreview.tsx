@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { grey8 } from '../../style/colors.js';
 import { RemoteRendererOverlay } from './RendererOverlay/RemoteRendererOverlay.js';
 import { RendererOverlay } from './RendererOverlay/RendererOverlay.js';
-import { RuntimeStatus } from './spec.js';
+import type { RuntimeStatus } from './spec.js';
 
 export type OnIframeRef = (elRef: null | HTMLIFrameElement) => void;
 

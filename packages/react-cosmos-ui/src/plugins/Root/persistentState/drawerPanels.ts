@@ -1,5 +1,5 @@
-import { StorageSpec } from '../../Storage/spec.js';
-import { RootContext } from '../shared.js';
+import type { StorageSpec } from '../../Storage/spec.js';
+import type { RootContext } from '../shared.js';
 
 const STORAGE_KEY = 'drawerPanels';
 const DEFAULT_VALUE = window.innerWidth < 640;

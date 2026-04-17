@@ -1,5 +1,6 @@
-import React, { RefObject } from 'react';
-import { FixtureId } from 'react-cosmos-core';
+import type { RefObject } from 'react';
+import React from 'react';
+import type { FixtureId } from 'react-cosmos-core';
 import styled from 'styled-components';
 import { grey8 } from '../../../style/colors.js';
 import { FixtureLink } from './FixtureLink.js';

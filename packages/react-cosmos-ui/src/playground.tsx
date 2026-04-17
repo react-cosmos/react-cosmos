@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDom from 'react-dom/client';
 import * as ReactPlugin from 'react-plugin';
 import styled from 'styled-components';
-import { PlaygroundMountArgs } from './playgroundConfig.js';
+import type { PlaygroundMountArgs } from './playgroundConfig.js';
 import './plugins/pluginEntry.js';
 import { DEFAULT_PLUGIN_CONFIG } from './shared/defaultPluginConfig.js';
 import { GlobalStyle } from './style/globalStyle.js';

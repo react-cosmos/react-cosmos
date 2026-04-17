@@ -1,5 +1,6 @@
-import http from 'http';
-import { ServerMessage, serverSocketMessage } from 'react-cosmos-core';
+import type http from 'http';
+import type { ServerMessage } from 'react-cosmos-core';
+import { serverSocketMessage } from 'react-cosmos-core';
 import WebSocket, { WebSocketServer } from 'ws';
 
 export function createMessageHandler(httpServer: http.Server) {

@@ -1,7 +1,7 @@
 import path from 'path';
 import { getCliArgs } from '../utils/cli.js';
 import { resolveLoose } from '../utils/resolveLoose.js';
-import {
+import type {
   CosmosConfig,
   CosmosConfigInput,
   CosmosDomConfigInput,

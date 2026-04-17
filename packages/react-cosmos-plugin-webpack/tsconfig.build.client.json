@@ -1,7 +1,8 @@
 {
   "extends": "../../tsconfig.build.json",
   "compilerOptions": {
-    "outDir": "dist/client"
+    "outDir": "dist/client",
+    "rootDir": "src/client"
   },
-  "include": ["src/client/**/*"]
+  "include": ["src/client"]
 }

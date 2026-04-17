@@ -1,11 +1,11 @@
 import React from 'react';
 import { createWebRendererUrl } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
-import { RendererActionSlotProps } from '../../slots/RendererActionSlot.js';
-import { CoreSpec } from '../Core/spec.js';
-import { RendererCoreSpec } from '../RendererCore/spec.js';
+import type { RendererActionSlotProps } from '../../slots/RendererActionSlot.js';
+import type { CoreSpec } from '../Core/spec.js';
+import type { RendererCoreSpec } from '../RendererCore/spec.js';
 import { FullScreenButton } from './FullScreenButton.js';
-import { FullScreenButtonSpec } from './spec.js';
+import type { FullScreenButtonSpec } from './spec.js';
 
 const { namedPlug, register } = createPlugin<FullScreenButtonSpec>({
   name: 'fullScreenButton',

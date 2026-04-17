@@ -1,8 +1,7 @@
 import React from 'react';
+import type { FixtureDecoratorId, PropsFixtureState } from 'react-cosmos-core';
 import {
   DEFAULT_RENDER_KEY,
-  FixtureDecoratorId,
-  PropsFixtureState,
   extendWithValues,
   findPropsFixtureStateItem,
   getComponentName,

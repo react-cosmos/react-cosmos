@@ -1,7 +1,8 @@
 import { setTimeout } from 'node:timers/promises';
-import { act, render, RenderResult } from '@testing-library/react';
+import type { RenderResult } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import React from 'react';
-import {
+import type {
   ByPath,
   FixtureId,
   ReactDecoratorModule,
@@ -10,14 +11,12 @@ import {
   RendererId,
   RendererResponse,
   UserModuleWrappers,
-  mapValues,
 } from 'react-cosmos-core';
+import { mapValues } from 'react-cosmos-core';
 import { ClientFixtureLoader } from '../fixtureLoaders/ClientFixtureLoader.js';
 import { StatefulRendererProvider } from '../rendererConnect/StatefulRendererProvider.js';
-import {
-  createRendererConnectTestApi,
-  RendererConnectTestApi,
-} from './createRendererConnectTestApi.js';
+import type { RendererConnectTestApi } from './createRendererConnectTestApi.js';
+import { createRendererConnectTestApi } from './createRendererConnectTestApi.js';
 import { createTestRendererConnect } from './createTestRendererConnect.js';
 
 export type RendererTestArgs = {

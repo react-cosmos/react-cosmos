@@ -1,7 +1,8 @@
-import express, { Express, Request, Response } from 'express';
-import { CosmosPluginConfig } from 'react-cosmos-core';
-import { CosmosConfig } from '../cosmosConfig/types.js';
-import { CosmosPlatform } from '../cosmosPlugin/types.js';
+import type { Express, Request, Response } from 'express';
+import express from 'express';
+import type { CosmosPluginConfig } from 'react-cosmos-core';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
+import type { CosmosPlatform } from '../cosmosPlugin/types.js';
 import { getDevPlaygroundHtml } from '../shared/playgroundHtml.js';
 import { getStaticPath } from '../shared/staticPath.js';
 import { resolve } from '../utils/resolve.js';

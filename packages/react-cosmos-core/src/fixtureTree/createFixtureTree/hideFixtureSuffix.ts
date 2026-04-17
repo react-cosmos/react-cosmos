@@ -1,5 +1,5 @@
 import { removeFixtureNameSuffix } from '../fixtureUtils.js';
-import { FixtureTreeNode } from '../types.js';
+import type { FixtureTreeNode } from '../types.js';
 
 export function hideFixtureSuffix(
   treeNode: FixtureTreeNode,

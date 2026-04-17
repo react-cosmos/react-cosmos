@@ -1,5 +1,5 @@
-import { MessageType, RendererResponse } from 'react-cosmos-core';
-import { RendererCoreContext } from '../shared/index.js';
+import type { MessageType, RendererResponse } from 'react-cosmos-core';
+import type { RendererCoreContext } from '../shared/index.js';
 import { receiveFixtureChangeResponse } from './fixtureChange.js';
 import { receiveFixtureListUpdateResponse } from './fixtureListUpdate.js';
 import { receiveFixtureStateChangeResponse } from './fixtureStateChange.js';

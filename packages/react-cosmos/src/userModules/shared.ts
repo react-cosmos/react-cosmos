@@ -1,5 +1,6 @@
 import path from 'path';
-import { RendererConfig, replaceKeys } from 'react-cosmos-core';
+import type { RendererConfig } from 'react-cosmos-core';
+import { replaceKeys } from 'react-cosmos-core';
 import { slash } from '../utils/slash.js';
 
 export type UserModulePaths = {

@@ -1,4 +1,4 @@
-import { FixtureId, FixtureState } from 'react-cosmos-core';
+import type { FixtureId, FixtureState } from 'react-cosmos-core';
 
 export type SelectedFixture = {
   fixtureId: FixtureId;

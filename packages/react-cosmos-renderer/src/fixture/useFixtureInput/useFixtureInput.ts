@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react-cosmos-core';
+import type { Dispatch, SetStateAction } from 'react-cosmos-core';
 import { useCurrentInputValue } from './useCurrentInputValue.js';
 import { useInputFixtureState } from './useInputFixtureState.js';
 import { useSetInputValue } from './useSetInputValue.js';

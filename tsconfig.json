@@ -9,7 +9,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "newLine": "LF",
     "noEmit": true,
     "noImplicitAny": true,
@@ -20,6 +20,7 @@
     "strict": true,
     "target": "ES2022",
     "module": "ES2022",
+    "verbatimModuleSyntax": true,
     "types": ["vitest/globals", "@testing-library/jest-dom"]
   },
   "exclude": ["node_modules", "docs"]

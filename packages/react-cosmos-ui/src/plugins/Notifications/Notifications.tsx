@@ -1,5 +1,5 @@
 import React from 'react';
-import { NotificationItem, NotificationType } from 'react-cosmos-core';
+import type { NotificationItem, NotificationType } from 'react-cosmos-core';
 import styled from 'styled-components';
 import {
   AlertCircleIcon,

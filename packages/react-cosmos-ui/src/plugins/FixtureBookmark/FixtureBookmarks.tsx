@@ -1,11 +1,10 @@
 import React from 'react';
-import {
+import type {
   FixtureId,
   FlatFixtureTree,
   FlatFixtureTreeItem,
-  isEqual,
-  stringifyFixtureId,
 } from 'react-cosmos-core';
+import { isEqual, stringifyFixtureId } from 'react-cosmos-core';
 import styled from 'styled-components';
 import { XIcon } from '../../components/icons/index.js';
 import { createRelativePlaygroundUrl } from '../../shared/url.js';

@@ -1,7 +1,8 @@
-import { RendererId, RendererReadyResponse, isEqual } from 'react-cosmos-core';
-import { NotificationsSpec } from '../../Notifications/spec.js';
-import { RouterSpec } from '../../Router/spec.js';
-import { RendererCoreContext, State } from '../shared/index.js';
+import type { RendererId, RendererReadyResponse } from 'react-cosmos-core';
+import { isEqual } from 'react-cosmos-core';
+import type { NotificationsSpec } from '../../Notifications/spec.js';
+import type { RouterSpec } from '../../Router/spec.js';
+import type { RendererCoreContext, State } from '../shared/index.js';
 import {
   postSelectFixtureRequest,
   postSetFixtureStateRequest,

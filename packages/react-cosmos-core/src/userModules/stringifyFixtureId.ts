@@ -1,4 +1,4 @@
-import { FixtureId } from './fixtureTypes.js';
+import type { FixtureId } from './fixtureTypes.js';
 
 export function stringifyFixtureId(fixtureId: FixtureId) {
   const { path, name } = fixtureId;

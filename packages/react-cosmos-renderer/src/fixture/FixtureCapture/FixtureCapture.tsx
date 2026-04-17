@@ -7,7 +7,7 @@
 // 2. Props of native elements rendered by server components (eg. div, p, etc.)
 'use client';
 import React from 'react';
-import { FixtureDecoratorId } from 'react-cosmos-core';
+import type { FixtureDecoratorId } from 'react-cosmos-core';
 import { useClassStateCapture } from './classState/index.js';
 import { usePropsCapture } from './props/index.js';
 

@@ -1,4 +1,4 @@
-import { ServerMessage } from 'react-cosmos-core';
+import type { ServerMessage } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getMessageHandlerContext,

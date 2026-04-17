@@ -1,10 +1,10 @@
 import React from 'react';
 import { createFixtureTree, flattenFixtureTree } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
-import { CoreSpec } from '../Core/spec.js';
-import { RendererCoreSpec } from '../RendererCore/spec.js';
-import { RouterSpec } from '../Router/spec.js';
-import { StorageSpec } from '../Storage/spec.js';
+import type { CoreSpec } from '../Core/spec.js';
+import type { RendererCoreSpec } from '../RendererCore/spec.js';
+import type { RouterSpec } from '../Router/spec.js';
+import type { StorageSpec } from '../Storage/spec.js';
 import {
   isControlPanelOpen,
   openControlPanel,
@@ -26,8 +26,8 @@ import {
   setNavPanelWidth,
 } from './persistentState/navPanelWidth.js';
 import { Root } from './Root.js';
-import { RootContext } from './shared.js';
-import { RootSpec } from './spec.js';
+import type { RootContext } from './shared.js';
+import type { RootSpec } from './spec.js';
 
 const { onLoad, plug, register } = createPlugin<RootSpec>({
   name: 'root',

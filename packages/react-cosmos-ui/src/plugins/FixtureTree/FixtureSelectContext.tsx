@@ -1,5 +1,6 @@
-import React, { ReactNode, useContext, useMemo } from 'react';
-import { FixtureId } from 'react-cosmos-core';
+import type { ReactNode } from 'react';
+import React, { useContext, useMemo } from 'react';
+import type { FixtureId } from 'react-cosmos-core';
 
 type ContextValue = {
   selectFixture: (fixtureId: FixtureId, keepNavOpen: boolean) => unknown;

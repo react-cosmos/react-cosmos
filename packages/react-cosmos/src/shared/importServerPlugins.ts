@@ -1,6 +1,6 @@
 import path from 'node:path';
-import { CosmosPluginConfig } from 'react-cosmos-core';
-import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
+import type { CosmosPluginConfig } from 'react-cosmos-core';
+import type { CosmosServerPlugin } from '../cosmosPlugin/types.js';
 import { importModule } from '../utils/fs.js';
 
 export async function importServerPlugins(

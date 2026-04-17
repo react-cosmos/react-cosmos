@@ -4,12 +4,12 @@ import {
   updateItem,
 } from '../utils/array.js';
 import { isEqual } from '../utils/isEqual.js';
-import {
+import type {
   PropsFixtureState,
   PropsFixtureStateItem,
   PropsFixtureStateRenderKey,
 } from './propsTypes.js';
-import {
+import type {
   FixtureDecoratorId,
   FixtureElementId,
   FixtureStateValues,

@@ -1,8 +1,8 @@
 import React from 'react';
-import { UserModuleWrappers } from 'react-cosmos-core';
+import type { UserModuleWrappers } from 'react-cosmos-core';
 import { createRoot } from 'react-dom/client';
 import { DomFixtureLoader } from './DomFixtureLoader.js';
-import { DomRendererConfig } from './DomRendererConfig.js';
+import type { DomRendererConfig } from './DomRendererConfig.js';
 import { getDomContainer } from './getDomContainer.js';
 
 type CachedRoot = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { PropsFixtureState } from 'react-cosmos-core';
+import type { PropsFixtureState } from 'react-cosmos-core';
 import { stringifyElementId } from '../../../components/ValueInputTree/index.js';
 import { PropsPanel } from './index.js';
 

@@ -1,14 +1,18 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { CosmosMode, RendererConfig, pickRendererUrl } from 'react-cosmos-core';
-import { CosmosConfig } from '../cosmosConfig/types.js';
-import { CosmosPlatform, CosmosServerPlugin } from '../cosmosPlugin/types.js';
+import type { CosmosMode, RendererConfig } from 'react-cosmos-core';
+import { pickRendererUrl } from 'react-cosmos-core';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
+import type {
+  CosmosPlatform,
+  CosmosServerPlugin,
+} from '../cosmosPlugin/types.js';
 import { updateFixtureListCache } from '../shared/serverFixtureList.js';
 import { getWebSocketUrl } from '../shared/webSocketUrl.js';
 import { findUserModulePaths } from '../userModules/findUserModulePaths.js';
 import { startFixtureWatcher } from '../userModules/fixtureWatcher.js';
 import { generateUserImports } from '../userModules/generateUserImports.js';
-import { UserModulePaths } from '../userModules/shared.js';
+import type { UserModulePaths } from '../userModules/shared.js';
 import { moduleExists } from '../utils/fs.js';
 
 export const fixtureWatcherPlugin: CosmosServerPlugin = {

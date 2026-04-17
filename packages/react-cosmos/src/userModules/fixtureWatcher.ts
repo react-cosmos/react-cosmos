@@ -1,5 +1,6 @@
-import { FSWatcher, watch } from 'chokidar';
-import { CosmosConfig } from '../cosmosConfig/types.js';
+import type { FSWatcher } from 'chokidar';
+import { watch } from 'chokidar';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
 import { getDecoratorPatterns, getFixturePatterns } from './shared.js';
 
 const DEBOUNCE_INTERVAL = 50;

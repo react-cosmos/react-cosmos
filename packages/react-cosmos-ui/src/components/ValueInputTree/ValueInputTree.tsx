@@ -1,11 +1,8 @@
 import React from 'react';
-import {
-  FixtureStateValue,
-  FixtureStateValues,
-  setByPath,
-} from 'react-cosmos-core';
+import type { FixtureStateValue, FixtureStateValues } from 'react-cosmos-core';
+import { setByPath } from 'react-cosmos-core';
 import styled from 'styled-components';
-import { TreeExpansion } from '../../shared/treeExpansion.js';
+import type { TreeExpansion } from '../../shared/treeExpansion.js';
 import { grey248, grey32 } from '../../style/colors.js';
 import { TreeView } from '../TreeView.js';
 import { ValueInput } from './ValueInput/ValueInput.js';

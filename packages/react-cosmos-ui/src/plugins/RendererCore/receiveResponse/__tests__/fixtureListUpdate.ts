@@ -1,5 +1,5 @@
 import { waitFor } from '@testing-library/dom';
-import { FixtureList } from 'react-cosmos-core';
+import type { FixtureList } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,

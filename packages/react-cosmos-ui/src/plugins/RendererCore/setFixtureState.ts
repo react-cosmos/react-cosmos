@@ -1,9 +1,6 @@
-import {
-  FixtureId,
-  FixtureStateChange,
-  updateFixtureState,
-} from 'react-cosmos-core';
-import { RendererCoreContext, State } from './shared/index.js';
+import type { FixtureId, FixtureStateChange } from 'react-cosmos-core';
+import { updateFixtureState } from 'react-cosmos-core';
+import type { RendererCoreContext, State } from './shared/index.js';
 import { postSetFixtureStateRequest } from './shared/postRequest.js';
 import { getSelectedFixtureId } from './shared/router.js';
 

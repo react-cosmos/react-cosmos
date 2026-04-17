@@ -1,6 +1,6 @@
 import path from 'path';
-import { CosmosConfig } from 'react-cosmos';
-import webpack from 'webpack';
+import type { CosmosConfig } from 'react-cosmos';
+import type webpack from 'webpack';
 import { resolveFromSilent } from '../utils/resolveSilent.js';
 
 export function getWebpackConfigResolve(

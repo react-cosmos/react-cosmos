@@ -1,5 +1,5 @@
 import React from 'react';
-import { FixtureState, SetFixtureState } from 'react-cosmos-core';
+import type { FixtureState, SetFixtureState } from 'react-cosmos-core';
 
 export type FixtureContextValue = {
   fixtureState: FixtureState;

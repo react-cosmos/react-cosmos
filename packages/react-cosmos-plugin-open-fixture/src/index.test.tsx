@@ -1,8 +1,10 @@
 // @vitest-environment jsdom
 import { waitFor } from '@testing-library/dom';
-import { fireEvent, render, RenderResult } from '@testing-library/react';
+import type { RenderResult } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { Commands, RendererActionSlot } from 'react-cosmos-ui';
+import type { Commands } from 'react-cosmos-ui';
+import { RendererActionSlot } from 'react-cosmos-ui';
 import { mockCore, mockNotifications } from 'react-cosmos-ui/pluginMocks.js';
 import { mockFetch } from 'react-cosmos/vitest.js';
 import { loadPlugins, resetPlugins } from 'react-plugin';

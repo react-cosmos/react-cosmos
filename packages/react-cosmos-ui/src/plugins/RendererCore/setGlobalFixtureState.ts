@@ -1,5 +1,5 @@
 import { setFixtureState } from './setFixtureState.js';
-import { RendererCoreContext } from './shared/index.js';
+import type { RendererCoreContext } from './shared/index.js';
 import { getSelectedFixtureId } from './shared/router.js';
 
 export function setGlobalFixtureState(

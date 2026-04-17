@@ -1,7 +1,8 @@
 import { waitFor } from '@testing-library/dom';
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { FixtureList, createFixtureTree } from 'react-cosmos-core';
+import type { FixtureList } from 'react-cosmos-core';
+import { createFixtureTree } from 'react-cosmos-core';
 import { vi } from 'vitest';
 import { FixtureTree } from './FixtureTree.js';
 

@@ -1,7 +1,8 @@
 import React from 'react';
-import { PrimitiveData } from 'react-cosmos-core';
+import type { PrimitiveData } from 'react-cosmos-core';
 import { ValueInputSlot } from '../../../slots/ValueInputSlot.js';
-import { LeafValue, ValueTreeItem } from '../shared.js';
+import type { LeafValue } from '../shared.js';
+import { ValueTreeItem } from '../shared.js';
 import { BooleanValueInput } from './BooleanValueInput.js';
 import { NullValueInput } from './NullValueInput.js';
 import { NumberValueInput } from './NumberValueInput.js';

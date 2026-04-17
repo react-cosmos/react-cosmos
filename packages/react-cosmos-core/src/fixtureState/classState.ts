@@ -4,11 +4,11 @@ import {
   updateItem,
 } from '../utils/array.js';
 import { isEqual } from '../utils/isEqual.js';
-import {
+import type {
   ClassStateFixtureState,
   ClassStateFixtureStateItem,
 } from './classStateTypes.js';
-import {
+import type {
   FixtureDecoratorId,
   FixtureElementId,
   FixtureStateValues,

@@ -1,4 +1,4 @@
-import { RendererConfig } from 'react-cosmos-core';
+import type { RendererConfig } from 'react-cosmos-core';
 import { userImportsLazyTemplate } from './userImportsLazyTemplate.js';
 
 const globalImports = [

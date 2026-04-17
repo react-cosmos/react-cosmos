@@ -1,6 +1,9 @@
-import { CosmosMode } from 'react-cosmos-core';
-import { CosmosConfig } from '../cosmosConfig/types.js';
-import { CosmosPlatform, CosmosServerPlugin } from '../cosmosPlugin/types.js';
+import type { CosmosMode } from 'react-cosmos-core';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
+import type {
+  CosmosPlatform,
+  CosmosServerPlugin,
+} from '../cosmosPlugin/types.js';
 
 type Args = {
   config: CosmosConfig;

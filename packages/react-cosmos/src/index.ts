@@ -1,4 +1,4 @@
-export {
+export type {
   CosmosFixtureJson,
   CosmosFixturesJson,
 } from './corePlugins/fixturesJsonPlugin.js';

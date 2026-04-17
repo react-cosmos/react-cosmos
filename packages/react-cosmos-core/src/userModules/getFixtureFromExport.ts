@@ -1,5 +1,5 @@
 import { isMultiFixture } from './isMultiFixture.js';
-import { ReactFixture, ReactFixtureExport } from './userModuleTypes.js';
+import type { ReactFixture, ReactFixtureExport } from './userModuleTypes.js';
 
 export function getFixtureFromExport(
   fixtureExport: ReactFixtureExport,

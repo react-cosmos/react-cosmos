@@ -1,12 +1,10 @@
-import {
+import type {
   NotificationItem,
-  removeItemMatch,
-  replaceOrAddItem,
   TimedNotificationItem,
-  uuid,
 } from 'react-cosmos-core';
-import { NotificationsContext } from './shared.js';
-import { NotificationsSpec } from './spec.js';
+import { removeItemMatch, replaceOrAddItem, uuid } from 'react-cosmos-core';
+import type { NotificationsContext } from './shared.js';
+import type { NotificationsSpec } from './spec.js';
 
 const TIMEOUT = 3000;
 

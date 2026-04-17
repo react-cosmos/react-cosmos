@@ -1,22 +1,24 @@
 import path from 'path';
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
+import type {
+  ByPath,
+  FixtureId,
+  ReactDecorator,
+  ReactFixture,
+  ReactFixtureExport,
+} from 'react-cosmos-core';
 import {
   buildPlaygroundQueryString,
-  ByPath,
   createFixtureTree,
   createRendererUrl,
-  FixtureId,
   flattenFixtureTree,
   getFixtureFromExport,
   mapValues,
   getFixtureListFromExports,
   getSortedDecoratorsForFixturePath,
-  ReactDecorator,
-  ReactFixture,
-  ReactFixtureExport,
 } from 'react-cosmos-core';
 import { createFixtureNode, decorateFixture } from 'react-cosmos-renderer';
-import { CosmosConfig } from '../cosmosConfig/types.js';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
 import { getPlaygroundUrls } from '../shared/playgroundUrl.js';
 import { importUserModules } from './importUserModules.js';
 

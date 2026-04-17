@@ -1,4 +1,4 @@
-import { PluginContext } from 'react-plugin';
-import { RendererPreviewSpec } from './spec.js';
+import type { PluginContext } from 'react-plugin';
+import type { RendererPreviewSpec } from './spec.js';
 
 export type RendererPreviewContext = PluginContext<RendererPreviewSpec>;

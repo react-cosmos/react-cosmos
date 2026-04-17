@@ -1,5 +1,5 @@
-import { PrimitiveData } from '../utils/data.js';
-import { StateUpdater } from '../utils/state.js';
+import type { PrimitiveData } from '../utils/data.js';
+import type { StateUpdater } from '../utils/state.js';
 
 export type FixtureDecoratorId = string;
 

@@ -1,8 +1,9 @@
-import { ComponentType, ReactNode } from 'react';
+import type { ComponentType, ReactNode } from 'react';
 import { isObject } from '../data.js';
 import { isEqual } from '../isEqual.js';
 import { getComponentName } from './getComponentName.js';
-import { isReactElement, ReactElementWithChildren } from './isReactElement.js';
+import type { ReactElementWithChildren } from './isReactElement.js';
+import { isReactElement } from './isReactElement.js';
 
 export function areNodesEqual(
   node1: ReactNode,

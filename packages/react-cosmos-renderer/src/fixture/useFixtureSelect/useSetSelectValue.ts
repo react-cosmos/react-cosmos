@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import { InputsFixtureState } from 'react-cosmos-core';
+import type { InputsFixtureState } from 'react-cosmos-core';
 import { useFixtureState } from '../useFixtureState.js';
-import { SetSelectValue } from './shared.js';
+import type { SetSelectValue } from './shared.js';
 
 export function useSetSelectValue<Option extends string>(
   selectName: string

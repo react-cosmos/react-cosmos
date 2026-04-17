@@ -6,7 +6,7 @@ import webpack from 'webpack';
 import { pkgPath } from '../../../testHelpers/pkgPath.js';
 import { RENDERER_FILENAME } from '../constants.js';
 import { getExportWebpackConfig } from '../getExportWebpackConfig.js';
-import { HtmlWebpackPlugin } from '../htmlPlugin.js';
+import type { HtmlWebpackPlugin } from '../htmlPlugin.js';
 
 afterAll(async () => {
   await unmockCliArgs();

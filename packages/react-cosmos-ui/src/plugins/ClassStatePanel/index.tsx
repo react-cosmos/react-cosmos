@@ -1,24 +1,23 @@
 import React, { useCallback } from 'react';
-import {
+import type {
   ClassStateFixtureState,
   FixtureElementId,
   FixtureId,
 } from 'react-cosmos-core';
-import { PluginContext, createPlugin } from 'react-plugin';
+import type { PluginContext } from 'react-plugin';
+import { createPlugin } from 'react-plugin';
+import type { FixtureExpansionGroup } from '../../components/ValueInputTree/index.js';
 import {
-  FixtureExpansionGroup,
   getFixtureExpansion,
   updateElementExpansion,
 } from '../../components/ValueInputTree/index.js';
-import { TreeExpansion } from '../../shared/treeExpansion.js';
-import { ControlPanelRowSlotProps } from '../../slots/ControlPanelRowSlot.js';
-import { StorageSpec } from '../Storage/spec.js';
+import type { TreeExpansion } from '../../shared/treeExpansion.js';
+import type { ControlPanelRowSlotProps } from '../../slots/ControlPanelRowSlot.js';
+import type { StorageSpec } from '../Storage/spec.js';
 import { ClassStatePanel } from './ClassStatePanel/index.js';
-import {
-  CLASS_STATE_TREE_EXPANSION_STORAGE_KEY,
-  SetClassStateFixtureState,
-} from './shared.js';
-import { ClassStatePanelSpec } from './spec.js';
+import type { SetClassStateFixtureState } from './shared.js';
+import { CLASS_STATE_TREE_EXPANSION_STORAGE_KEY } from './shared.js';
+import type { ClassStatePanelSpec } from './spec.js';
 
 type ClassStatePanelContext = PluginContext<ClassStatePanelSpec>;
 

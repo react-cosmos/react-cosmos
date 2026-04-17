@@ -1,4 +1,4 @@
-import webpack from 'webpack';
+import type webpack from 'webpack';
 import { resolveFromSilent } from '../utils/resolveSilent.js';
 import { RENDERER_FILENAME } from './constants.js';
 import { getWebpackNodeEnv } from './getWebpackNodeEnv.js';

@@ -1,22 +1,21 @@
 import React from 'react';
-import {
+import type {
   SetStateAction,
   Viewport,
   ViewportFixtureState,
 } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
-import { RendererCoreSpec } from '../RendererCore/spec.js';
-import { RouterSpec } from '../Router/spec.js';
-import { StorageSpec } from '../Storage/spec.js';
+import type { RendererCoreSpec } from '../RendererCore/spec.js';
+import type { RouterSpec } from '../Router/spec.js';
+import type { StorageSpec } from '../Storage/spec.js';
 import { ResponsivePreview } from './ResponsivePreview/ResponsivePreview.js';
+import type { ResponsivePreviewContext, ViewportState } from './shared.js';
 import {
   DEFAULT_DEVICES,
   DEFAULT_VIEWPORT_STATE,
-  ResponsivePreviewContext,
   VIEWPORT_STORAGE_KEY,
-  ViewportState,
 } from './shared.js';
-import { ResponsivePreviewSpec } from './spec.js';
+import type { ResponsivePreviewSpec } from './spec.js';
 import { ToggleButton } from './ToggleButton/index.js';
 
 const { plug, namedPlug, register } = createPlugin<ResponsivePreviewSpec>({

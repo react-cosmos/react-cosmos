@@ -1,8 +1,8 @@
-import {
-  mountTestRenderer,
+import type {
   RendererTestArgs,
   RendererTestCallback,
 } from './mountTestRenderer.js';
+import { mountTestRenderer } from './mountTestRenderer.js';
 
 export function testRenderer(
   testName: string,

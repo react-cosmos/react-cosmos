@@ -1,6 +1,6 @@
-import { Options as HtmlWebpackPluginOptions } from 'html-webpack-plugin';
-import { CosmosConfig } from 'react-cosmos';
-import webpack from 'webpack';
+import type { Options as HtmlWebpackPluginOptions } from 'html-webpack-plugin';
+import type { CosmosConfig } from 'react-cosmos';
+import type webpack from 'webpack';
 import { requireFromSilent } from '../utils/requireSilent.js';
 import { RENDERER_FILENAME } from './constants.js';
 import { hasPlugin, isInstanceOfWebpackPlugin } from './plugins.js';

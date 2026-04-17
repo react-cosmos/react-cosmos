@@ -1,4 +1,4 @@
-import { Viewport } from 'react-cosmos-core';
+import type { Viewport } from 'react-cosmos-core';
 
 export type ResponsiveDevice = Viewport & {
   label: string;

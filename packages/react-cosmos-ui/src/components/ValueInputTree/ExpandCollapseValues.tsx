@@ -1,10 +1,10 @@
 import React from 'react';
-import { FixtureStateValues } from 'react-cosmos-core';
+import type { FixtureStateValues } from 'react-cosmos-core';
+import type { TreeExpansion } from '../../shared/treeExpansion.js';
 import {
   getFullTreeExpansion,
   hasExpandableNodes,
   isTreeFullyCollapsed,
-  TreeExpansion,
 } from '../../shared/treeExpansion.js';
 import { IconButton32 } from '../buttons/index.js';
 import { MinusSquareIcon, PlusSquareIcon } from '../icons/index.js';

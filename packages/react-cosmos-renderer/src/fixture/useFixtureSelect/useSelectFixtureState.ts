@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import { InputsFixtureState } from 'react-cosmos-core';
+import type { InputsFixtureState } from 'react-cosmos-core';
 import { useFixtureState } from '../useFixtureState.js';
-import { getDefaultSelectValue, UseSelectArgs } from './shared.js';
+import type { UseSelectArgs } from './shared.js';
+import { getDefaultSelectValue } from './shared.js';
 
 export function useSelectFixtureState<Option extends string>(
   selectName: string,

@@ -7,7 +7,7 @@ import {
   pushTimedNotification,
   removeStickyNotification,
 } from './pushNotification.js';
-import { NotificationsSpec } from './spec.js';
+import type { NotificationsSpec } from './spec.js';
 
 const { register, onLoad, namedPlug } = createPlugin<NotificationsSpec>({
   name: 'notifications',

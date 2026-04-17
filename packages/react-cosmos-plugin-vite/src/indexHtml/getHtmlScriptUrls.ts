@@ -1,5 +1,6 @@
 import * as parse5 from 'parse5';
-import { Node } from 'parse5/dist/tree-adapters/default';
+
+type Node = parse5.DefaultTreeAdapterTypes.Node;
 
 export function getHtmlScriptUrls(html: string) {
   const document = parse5.parse(html);

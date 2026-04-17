@@ -1,13 +1,13 @@
 import React, { Suspense, useMemo } from 'react';
-import {
+import type {
   FixtureId,
   RendererConfig,
   UserModuleWrappers,
-  decodeRendererUrlFixture,
 } from 'react-cosmos-core';
+import { decodeRendererUrlFixture } from 'react-cosmos-core';
 import { ServerFixtureLoader } from 'react-cosmos-renderer';
 import { NextRendererProvider } from './NextRendererProvider.js';
-import { NextCosmosParams } from './nextTypes.js';
+import type { NextCosmosParams } from './nextTypes.js';
 
 type Props = {
   rendererConfig: RendererConfig;

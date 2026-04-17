@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
-import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
+import type { Request, Response } from 'express';
+import type { CosmosServerPlugin } from '../cosmosPlugin/types.js';
 import { getRemoteRendererUrl } from '../shared/remoteRendererUrl.js';
 
 export const remoteRendererUrlPlugin: CosmosServerPlugin = {

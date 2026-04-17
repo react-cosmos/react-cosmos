@@ -1,6 +1,7 @@
-import React, { ReactNode, useCallback } from 'react';
-import { TreeNode } from 'react-cosmos-core';
-import { TreeExpansion } from '../shared/treeExpansion.js';
+import type { ReactNode } from 'react';
+import React, { useCallback } from 'react';
+import type { TreeNode } from 'react-cosmos-core';
+import type { TreeExpansion } from '../shared/treeExpansion.js';
 
 type Props<Item> = {
   node: TreeNode<Item>;

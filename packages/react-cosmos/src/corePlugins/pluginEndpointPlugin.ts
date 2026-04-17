@@ -1,6 +1,6 @@
 import path from 'node:path';
-import { Request, Response } from 'express';
-import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
+import type { Request, Response } from 'express';
+import type { CosmosServerPlugin } from '../cosmosPlugin/types.js';
 import { resolveSilent } from '../utils/resolveSilent.js';
 
 export const pluginEndpointPlugin: CosmosServerPlugin = {

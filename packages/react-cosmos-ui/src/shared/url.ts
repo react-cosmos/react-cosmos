@@ -1,5 +1,5 @@
+import type { PlaygroundParams } from 'react-cosmos-core';
 import {
-  PlaygroundParams,
   buildPlaygroundQueryString,
   parsePlaygroundQueryString,
 } from 'react-cosmos-core';

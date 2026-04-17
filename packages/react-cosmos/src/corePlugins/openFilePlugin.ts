@@ -1,9 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 import launchEditor from '@skidding/launch-editor';
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import open from 'open';
-import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
+import type { CosmosServerPlugin } from '../cosmosPlugin/types.js';
 
 type ReqQuery = { filePath: void | string; line: number; column: number };
 

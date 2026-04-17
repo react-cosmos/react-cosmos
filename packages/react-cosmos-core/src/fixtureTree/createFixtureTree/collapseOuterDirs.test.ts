@@ -1,4 +1,4 @@
-import { FixtureTreeNode } from '../types.js';
+import type { FixtureTreeNode } from '../types.js';
 import { collapseOuterDirs } from './collapseOuterDirs.js';
 
 it('collapses one outer dir', () => {

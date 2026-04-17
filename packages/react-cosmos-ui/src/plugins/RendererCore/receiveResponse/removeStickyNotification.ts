@@ -1,6 +1,6 @@
-import { RemoveStickyNotificationResponse } from 'react-cosmos-core';
-import { NotificationsSpec } from '../../Notifications/spec.js';
-import { RendererCoreContext } from '../shared/index.js';
+import type { RemoveStickyNotificationResponse } from 'react-cosmos-core';
+import type { NotificationsSpec } from '../../Notifications/spec.js';
+import type { RendererCoreContext } from '../shared/index.js';
 
 export function receiveRemoveStickyNotificationResponse(
   context: RendererCoreContext,

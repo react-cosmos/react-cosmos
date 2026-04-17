@@ -1,10 +1,9 @@
-import React, { ChangeEvent, useCallback } from 'react';
+import type { ChangeEvent } from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { useFocus } from '../../hooks/useFocus.js';
-import {
-  GroupedOptions,
-  isGroupedOptions,
-} from '../../shared/groupedOptions.js';
+import type { GroupedOptions } from '../../shared/groupedOptions.js';
+import { isGroupedOptions } from '../../shared/groupedOptions.js';
 import { blue, grey32 } from '../../style/colors.js';
 import { ChevronDownIcon } from '../icons/index.js';
 

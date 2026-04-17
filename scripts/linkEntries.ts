@@ -2,13 +2,13 @@ import fs from 'fs/promises';
 import { fileURLToPath } from 'url';
 import chalk from 'chalk';
 import { globSync } from 'glob';
+import type { Package } from './shared.js';
 import {
   done,
   error,
   findPackage,
   getFormattedPackageList,
   getUnnamedArg,
-  Package,
   packages,
 } from './shared.js';
 

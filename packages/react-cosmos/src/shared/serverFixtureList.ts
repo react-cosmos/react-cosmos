@@ -1,5 +1,5 @@
-import { FixtureList } from 'react-cosmos-core';
-import { CosmosConfig } from '../cosmosConfig/types.js';
+import type { FixtureList } from 'react-cosmos-core';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
 import { findUserModulePaths } from '../userModules/findUserModulePaths.js';
 import { importKeyPath } from '../userModules/shared.js';
 

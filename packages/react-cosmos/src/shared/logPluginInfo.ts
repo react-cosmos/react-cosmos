@@ -1,4 +1,4 @@
-import { CosmosPluginConfig } from 'react-cosmos-core';
+import type { CosmosPluginConfig } from 'react-cosmos-core';
 
 export function logPluginInfo(pluginConfigs: CosmosPluginConfig[]) {
   const pluginCount = pluginConfigs.length;

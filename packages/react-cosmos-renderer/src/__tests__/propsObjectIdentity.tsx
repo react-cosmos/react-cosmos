@@ -5,7 +5,8 @@ import {
   updatePropsFixtureStateItem,
   uuid,
 } from 'react-cosmos-core';
-import { Mock, vi } from 'vitest';
+import type { Mock } from 'vitest';
+import { vi } from 'vitest';
 import { getProps } from '../testHelpers/fixtureState.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';

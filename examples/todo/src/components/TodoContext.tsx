@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFixtureInput, useFixtureSelect } from 'react-cosmos/client';
-import { Todo, TodoFilter } from '../types.js';
+import type { Todo, TodoFilter } from '../types.js';
 
 type ContextValue = {
   todos: Todo[];

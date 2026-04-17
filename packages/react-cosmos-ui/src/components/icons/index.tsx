@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icon, IconProps } from '../Icon.js';
+import type { IconProps } from '../Icon.js';
+import { Icon } from '../Icon.js';
 
 export const ChevronLeftIcon = () => (
   <Icon>

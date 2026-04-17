@@ -1,6 +1,6 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { FixtureList } from 'react-cosmos-core';
+import type { FixtureList } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { NavPanelRowSlot } from '../../slots/NavPanelRowSlot.js';
 import {

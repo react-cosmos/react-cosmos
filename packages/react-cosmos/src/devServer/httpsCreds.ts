@@ -1,6 +1,6 @@
 import fs from 'fs';
 import pem from 'pem';
-import { CosmosConfig } from '../cosmosConfig/types.js';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
 
 type HttpsCreds = { key: string; cert: string };
 

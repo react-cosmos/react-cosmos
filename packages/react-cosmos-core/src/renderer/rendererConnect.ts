@@ -1,9 +1,9 @@
-import { FixtureState } from '../fixtureState/types.js';
-import {
+import type { FixtureState } from '../fixtureState/types.js';
+import type {
   NotificationItem,
   TimedNotificationItem,
 } from '../playground/notifications.js';
-import {
+import type {
   FixtureId,
   FixtureList,
   FixtureListItem,

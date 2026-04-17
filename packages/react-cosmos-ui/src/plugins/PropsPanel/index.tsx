@@ -1,29 +1,28 @@
 import React, { useCallback } from 'react';
-import {
+import type {
   ClassStateFixtureState,
   FixtureElementId,
   FixtureId,
   InputsFixtureState,
   PropsFixtureState,
 } from 'react-cosmos-core';
-import { PluginContext, createPlugin } from 'react-plugin';
+import type { PluginContext } from 'react-plugin';
+import { createPlugin } from 'react-plugin';
+import type { FixtureExpansionGroup } from '../../components/ValueInputTree/index.js';
 import {
-  FixtureExpansionGroup,
   getFixtureExpansion,
   hasFsValues,
   updateElementExpansion,
 } from '../../components/ValueInputTree/index.js';
-import { TreeExpansion } from '../../shared/treeExpansion.js';
-import { ControlPanelRowSlotProps } from '../../slots/ControlPanelRowSlot.js';
-import { GetFixtureState } from '../RendererCore/spec.js';
-import { StorageSpec } from '../Storage/spec.js';
+import type { TreeExpansion } from '../../shared/treeExpansion.js';
+import type { ControlPanelRowSlotProps } from '../../slots/ControlPanelRowSlot.js';
+import type { GetFixtureState } from '../RendererCore/spec.js';
+import type { StorageSpec } from '../Storage/spec.js';
 import { BlankState } from './BlankState.js';
 import { PropsPanel } from './PropsPanel/index.js';
-import {
-  PROPS_TREE_EXPANSION_STORAGE_KEY,
-  SetPropsFixtureState,
-} from './shared.js';
-import { PropsPanelSpec } from './spec.js';
+import type { SetPropsFixtureState } from './shared.js';
+import { PROPS_TREE_EXPANSION_STORAGE_KEY } from './shared.js';
+import type { PropsPanelSpec } from './spec.js';
 
 type PropsPanelContext = PluginContext<PropsPanelSpec>;
 

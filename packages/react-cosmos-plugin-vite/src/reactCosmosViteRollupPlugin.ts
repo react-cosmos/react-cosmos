@@ -1,15 +1,15 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import type { CosmosConfig } from 'react-cosmos';
 import {
-  CosmosConfig,
   findUserModulePaths,
   generateUserImports,
   getWebSocketUrl,
 } from 'react-cosmos';
-import { CosmosMode } from 'react-cosmos-core';
-import { DomRendererConfig } from 'react-cosmos-dom';
-import { Plugin } from 'vite';
-import { CosmosViteConfig } from './createCosmosViteConfig.js';
+import type { CosmosMode } from 'react-cosmos-core';
+import type { DomRendererConfig } from 'react-cosmos-dom';
+import type { Plugin } from 'vite';
+import type { CosmosViteConfig } from './createCosmosViteConfig.js';
 import { createViteRendererIndex } from './createViteRendererIndex.js';
 import { createIndexHtml } from './indexHtml/createIndexHtml.js';
 import { ensureMainScriptUrl } from './indexHtml/ensureMainScriptUrl.js';

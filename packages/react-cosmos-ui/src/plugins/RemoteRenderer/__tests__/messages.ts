@@ -1,5 +1,8 @@
 import { waitFor } from '@testing-library/dom';
-import { RendererReadyResponse, SelectFixtureRequest } from 'react-cosmos-core';
+import type {
+  RendererReadyResponse,
+  SelectFixtureRequest,
+} from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getMessageHandlerContext,

@@ -1,5 +1,5 @@
 import { Navbar } from 'nextra-theme-docs';
-import { Item, MenuItem, PageItem } from 'nextra/normalize-pages';
+import type { Item, MenuItem, PageItem } from 'nextra/normalize-pages';
 
 type NavBarProps = {
   flatDirectories: Item[];

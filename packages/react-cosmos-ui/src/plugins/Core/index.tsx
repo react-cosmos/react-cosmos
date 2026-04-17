@@ -1,6 +1,7 @@
 import { registerPlaygroundShortcuts } from 'react-cosmos-core';
-import { createPlugin, PluginContext } from 'react-plugin';
-import { Commands, CoreSpec } from './spec.js';
+import type { PluginContext } from 'react-plugin';
+import { createPlugin } from 'react-plugin';
+import type { Commands, CoreSpec } from './spec.js';
 
 type CoreContext = PluginContext<CoreSpec>;
 

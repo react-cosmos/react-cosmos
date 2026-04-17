@@ -3,7 +3,7 @@ import { loadPlugins, resetPlugins } from 'react-plugin';
 import { vi } from 'vitest';
 import { getMethodsOf } from '../../testHelpers/pluginHelpers.js';
 import { register } from './index.js';
-import { StorageSpec } from './spec.js';
+import type { StorageSpec } from './spec.js';
 
 const mockSetItem = vi.fn();
 

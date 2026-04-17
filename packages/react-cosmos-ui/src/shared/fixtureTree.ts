@@ -1,4 +1,4 @@
-import { FixtureId, FixtureTreeNode } from 'react-cosmos-core';
+import type { FixtureId, FixtureTreeNode } from 'react-cosmos-core';
 
 export function fixtureTreeNodeContainsFixtureId(
   { data, children }: FixtureTreeNode,

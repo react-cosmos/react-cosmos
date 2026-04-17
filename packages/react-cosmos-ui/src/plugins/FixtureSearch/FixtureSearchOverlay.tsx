@@ -6,10 +6,12 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {
+import type {
   FixtureId,
   FixtureList,
   FlatFixtureTreeItem,
+} from 'react-cosmos-core';
+import {
   KEY_DOWN,
   KEY_ENTER,
   KEY_ESC,

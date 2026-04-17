@@ -1,5 +1,5 @@
-import { FixtureId } from '../userModules/fixtureTypes.js';
-import { FixtureTreeNode } from './types.js';
+import type { FixtureId } from '../userModules/fixtureTypes.js';
+import type { FixtureTreeNode } from './types.js';
 
 export type FlatFixtureTreeItem = {
   fileName: string;

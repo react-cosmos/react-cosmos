@@ -1,10 +1,7 @@
 import { glob } from 'glob';
 import micromatch from 'micromatch';
-import {
-  UserModulePaths,
-  getDecoratorPatterns,
-  getFixturePatterns,
-} from './shared.js';
+import type { UserModulePaths } from './shared.js';
+import { getDecoratorPatterns, getFixturePatterns } from './shared.js';
 
 type FindUserModulePathsArgs = {
   rootDir: string;

@@ -1,5 +1,8 @@
 import { useContext, useMemo } from 'react';
-import { NotificationItem, TimedNotificationItem } from 'react-cosmos-core';
+import type {
+  NotificationItem,
+  TimedNotificationItem,
+} from 'react-cosmos-core';
 import { RendererContext } from '../../rendererConnect/RendererContext.js';
 
 type UseCosmosNotificationReturn = {

@@ -1,7 +1,9 @@
 import React, { useCallback } from 'react';
-import {
+import type {
   FixtureStateValues,
   PropsFixtureStateItem,
+} from 'react-cosmos-core';
+import {
   isEqual,
   resetPropsFixtureStateItem,
   updatePropsFixtureStateItem,
@@ -16,14 +18,16 @@ import {
   SidePanelTitle,
 } from '../../../components/SidePanel.js';
 import { ExpandCollapseValues } from '../../../components/ValueInputTree/ExpandCollapseValues.js';
-import {
+import type {
   FixtureExpansion,
   OnElementExpansionChange,
+} from '../../../components/ValueInputTree/index.js';
+import {
   ValueInputTree,
   stringifyElementId,
 } from '../../../components/ValueInputTree/index.js';
-import { TreeExpansion } from '../../../shared/treeExpansion.js';
-import { SetPropsFixtureState } from '../shared.js';
+import type { TreeExpansion } from '../../../shared/treeExpansion.js';
+import type { SetPropsFixtureState } from '../shared.js';
 import { propsFsItemUpdater } from './shared.js';
 
 type Props = {

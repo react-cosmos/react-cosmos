@@ -1,4 +1,4 @@
-import webpack from 'webpack';
+import type webpack from 'webpack';
 import { requireFromSilent } from './utils/requireSilent.js';
 
 export function getWebpack(rootDir: string) {

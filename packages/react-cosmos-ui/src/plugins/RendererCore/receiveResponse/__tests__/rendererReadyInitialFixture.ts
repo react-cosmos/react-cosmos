@@ -1,5 +1,5 @@
 import { waitFor } from '@testing-library/dom';
-import { FixtureId } from 'react-cosmos-core';
+import type { FixtureId } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   mockCore,

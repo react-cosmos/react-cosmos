@@ -1,5 +1,5 @@
 import { globSync } from 'glob';
-import { CosmosPluginConfig } from 'react-cosmos-core';
+import type { CosmosPluginConfig } from 'react-cosmos-core';
 import { readCosmosPluginConfig } from './readCosmosPluginConfig.js';
 
 type Args = {
