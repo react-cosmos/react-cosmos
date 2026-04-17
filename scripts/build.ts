@@ -133,7 +133,7 @@ async function buildPkgWebpack(pkgName: string, webpackConfig: string) {
 function runTypeScript(config: string) {
   const args = ['-b', config];
   if (watch) args.push('--watch');
-  const promise = runAsyncTask({ cmd: 'tsc', args });
+  const promise = runAsyncTask({ cmd: 'tsgo', args });
   return watch ? null : promise;
 }
 

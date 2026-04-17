@@ -10,7 +10,7 @@
   "scripts": {
     "format": "oxfmt",
     "format:check": "oxfmt --check",
-    "check-types": "tsc",
+    "check-types": "tsgo",
     "lint": "oxlint",
     "test": "vitest -c vitest.config.js",
     "test:run": "vitest run -c vitest.config.js",
@@ -43,6 +43,7 @@
     "@types/styled-components": "5.1.36",
     "@types/webpack-hot-middleware": "2.25.12",
     "@types/ws": "8.18.1",
+    "@typescript/native-preview": "7.0.0-dev.20260417.1",
     "@vitest/coverage-v8": "2.1.9",
     "async-until": "4.0.1",
     "chalk": "5.6.2",

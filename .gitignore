@@ -4,6 +4,7 @@ npm-debug.log
 .claude/settings.local.json
 
 packages/*/dist
+*.tsbuildinfo
 __testFs__
 
 coverage
