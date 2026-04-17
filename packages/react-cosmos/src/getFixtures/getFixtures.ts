@@ -1,4 +1,3 @@
-import { mapValues } from 'lodash-es';
 import path from 'path';
 import { ReactElement } from 'react';
 import {
@@ -9,6 +8,7 @@ import {
   FixtureId,
   flattenFixtureTree,
   getFixtureFromExport,
+  mapValues,
   getFixtureListFromExports,
   getSortedDecoratorsForFixturePath,
   ReactDecorator,

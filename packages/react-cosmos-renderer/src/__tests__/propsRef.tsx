@@ -1,5 +1,4 @@
 import { waitFor } from '@testing-library/react';
-import { uniq } from 'lodash-es';
 import React from 'react';
 import {
   createValues,
@@ -65,7 +64,7 @@ testRenderer(
     update({ rendererId, fixtures: getFixtures() });
     await waitFor(() => {
       expect(rootText()).toEqual('Hello Blanca');
-      expect(uniq(refs).length).toBe(1);
+      expect(new Set(refs).size).toBe(1);
     });
   }
 );
@@ -99,7 +98,7 @@ testRenderer(
     update({ rendererId, fixtures: getFixtures() });
     await waitFor(() => {
       expect(rootText()).toEqual('Hello Blanca');
-      expect(uniq(refs).length).toBe(2);
+      expect(new Set(refs).size).toBe(2);
     });
   }
 );

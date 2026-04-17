@@ -1,9 +1,9 @@
-import { isEqual, sortBy } from 'lodash-es';
 import React from 'react';
 import {
   FixtureId,
   FlatFixtureTree,
   FlatFixtureTreeItem,
+  isEqual,
   stringifyFixtureId,
 } from 'react-cosmos-core';
 import styled from 'styled-components';
@@ -81,11 +81,11 @@ export function FixtureBookmarks({
 function useSortedBookmarks(bookmarks: FlatFixtureTree) {
   return React.useMemo(
     () =>
-      sortBy(
-        bookmarks,
-        b => b.fixtureId.path,
-        b => b.fixtureId.name
-      ),
+      [...bookmarks].sort((a, b) => {
+        const pathCmp = a.fixtureId.path.localeCompare(b.fixtureId.path);
+        if (pathCmp !== 0) return pathCmp;
+        return (a.fixtureId.name ?? '').localeCompare(b.fixtureId.name ?? '');
+      }),
     [bookmarks]
   );
 }

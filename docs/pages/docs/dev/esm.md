@@ -36,7 +36,6 @@ Here's a rough example of the renderer index.html for ESM fixtures.
   <script type="importmap">
     {
       "imports": {
-        "lodash-es": "/node_modules/lodash-es/lodash.js",
         "react": "https://unpkg.com/es-react",
         "react-dom": "https://unpkg.com/es-react/react-dom",
         "react-is": "https://unpkg.com/es-react/react-is",

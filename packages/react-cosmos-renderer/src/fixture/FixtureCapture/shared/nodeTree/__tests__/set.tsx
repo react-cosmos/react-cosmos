@@ -1,5 +1,5 @@
 import React from 'react';
-import { setElementAtPath } from '../index.js';
+import { setElementAtPath } from '../setElementAtPath.js';
 
 it('sets root child', () => {
   const node = <div />;

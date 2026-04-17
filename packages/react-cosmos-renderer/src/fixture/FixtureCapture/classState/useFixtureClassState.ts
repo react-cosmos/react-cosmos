@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash-es';
+import { isEqual } from 'react-cosmos-core';
 import {
   Component,
   ComponentClass,

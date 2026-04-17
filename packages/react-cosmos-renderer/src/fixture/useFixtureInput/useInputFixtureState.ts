@@ -1,10 +1,10 @@
-import { isEqual } from 'lodash-es';
 import React from 'react';
 import {
   FixtureStateValue,
   InputsFixtureState,
   createValue,
   extendWithValue,
+  isEqual,
 } from 'react-cosmos-core';
 import { useFixtureState } from '../useFixtureState.js';
 

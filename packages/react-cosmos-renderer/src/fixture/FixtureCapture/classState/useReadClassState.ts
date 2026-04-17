@@ -1,4 +1,3 @@
-import { isEqual } from 'lodash-es';
 import { ReactNode, RefObject, useEffect, useRef } from 'react';
 import {
   ClassStateFixtureState,
@@ -7,6 +6,7 @@ import {
   createValues,
   extendWithValues,
   findClassStateFixtureStateItem,
+  isEqual,
   updateClassStateFixtureStateItem,
 } from 'react-cosmos-core';
 import { useFixtureState } from '../../useFixtureState.js';

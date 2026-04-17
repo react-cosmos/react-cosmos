@@ -1,8 +1,8 @@
-import { isEqual } from 'lodash-es';
 import React, { useCallback } from 'react';
 import {
   FixtureStateValues,
   PropsFixtureStateItem,
+  isEqual,
   resetPropsFixtureStateItem,
   updatePropsFixtureStateItem,
 } from 'react-cosmos-core';

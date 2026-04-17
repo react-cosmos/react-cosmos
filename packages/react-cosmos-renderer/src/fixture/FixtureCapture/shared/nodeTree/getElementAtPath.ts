@@ -1,7 +1,10 @@
-import { get } from 'lodash-es';
 import { ReactNode } from 'react';
-import { isReactElement, ReactElementWithChildren } from 'react-cosmos-core';
-import { isRootPath } from './shared.js';
+import {
+  getByPath,
+  isReactElement,
+  ReactElementWithChildren,
+} from 'react-cosmos-core';
+import { isRootPath } from './elPath.js';
 
 // Why be silent about trying to fetch a node that isn't an element?
 // Because users of this utility only care about elements. Whether the child
@@ -17,7 +20,9 @@ export function getElementAtPath(
   }
 
   const rootNode = node as ReactElementWithChildren | ReactNode[];
-  const childNode = isRootPath(elPath) ? rootNode : get(rootNode, elPath);
+  const childNode = isRootPath(elPath)
+    ? rootNode
+    : (getByPath(rootNode, elPath) as ReactNode);
 
   if (!isReactElement(childNode)) {
     return null;

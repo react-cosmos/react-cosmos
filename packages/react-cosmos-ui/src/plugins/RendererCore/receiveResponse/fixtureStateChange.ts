@@ -1,5 +1,4 @@
-import { isEqual } from 'lodash-es';
-import { FixtureStateChangeResponse } from 'react-cosmos-core';
+import { FixtureStateChangeResponse, isEqual } from 'react-cosmos-core';
 import { RendererCoreContext } from '../shared/index.js';
 import { postSetFixtureStateRequest } from '../shared/postRequest.js';
 import { getSelectedFixtureId } from '../shared/router.js';

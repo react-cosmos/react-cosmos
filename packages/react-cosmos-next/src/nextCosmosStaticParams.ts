@@ -1,9 +1,9 @@
-import { mapValues } from 'lodash-es';
 import { isValidElement } from 'react';
 import {
   ByPath,
   UserModuleWrappers,
   encodeRendererUrlFixture,
+  mapValues,
 } from 'react-cosmos-core';
 import { NextCosmosParams } from './nextTypes.js';
 

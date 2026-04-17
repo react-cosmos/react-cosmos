@@ -1,6 +1,6 @@
-import { get } from 'lodash-es';
 import React, { isValidElement, ReactElement, ReactNode } from 'react';
-import { findElementPaths } from '../index.js';
+import { findElementPaths } from '../findElementPaths.js';
+import { getByPath } from 'react-cosmos-core';
 
 it('finds no paths on empty node', () => {
   const noChildrenNodes: ReactNode[] = [null, true, false, 'Hello', 7];
@@ -66,7 +66,7 @@ it('finds nested paths', () => {
 
   // Ensure paths are valid
   paths.forEach(path => {
-    expect(isValidElement(path === '' ? node : get(node, path))).toBe(true);
+    expect(isValidElement(path === '' ? node : getByPath(node, path))).toBe(true);
   });
 });
 

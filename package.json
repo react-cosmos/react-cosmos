@@ -33,7 +33,6 @@
     "@types/express": "4.17.25",
     "@types/fuzzaldrin-plus": "0.6.5",
     "@types/isomorphic-fetch": "0.0.39",
-    "@types/lodash-es": "4.17.12",
     "@types/micromatch": "4.0.10",
     "@types/node": "20.19.27",
     "@types/pem": "1.14.4",

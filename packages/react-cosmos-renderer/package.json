@@ -11,7 +11,6 @@
     "./client": "./client.js"
   },
   "dependencies": {
-    "lodash-es": "4.17.23",
     "react-cosmos-core": "^7.2.0"
   },
   "peerDependencies": {

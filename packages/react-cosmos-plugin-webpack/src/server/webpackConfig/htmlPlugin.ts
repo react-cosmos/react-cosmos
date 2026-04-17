@@ -1,5 +1,4 @@
 import { Options as HtmlWebpackPluginOptions } from 'html-webpack-plugin';
-import { omit } from 'lodash-es';
 import { CosmosConfig } from 'react-cosmos';
 import webpack from 'webpack';
 import { requireFromSilent } from '../utils/requireSilent.js';
@@ -59,7 +58,7 @@ function changeHtmlPluginFilename(htmlPlugin: HtmlWebpackPlugin) {
   if (!isIndexHtmlWebpackPlugin(htmlPlugin)) return htmlPlugin;
 
   const options = htmlPlugin.userOptions || htmlPlugin.options;
-  const safeOptions = omit(options, 'chunks');
+  const { chunks: _, ...safeOptions } = options;
 
   return new htmlPlugin.constructor({
     ...safeOptions,

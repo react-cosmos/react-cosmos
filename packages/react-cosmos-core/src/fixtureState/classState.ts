@@ -1,9 +1,9 @@
-import { find, isEqual } from 'lodash-es';
 import {
   removeItemMatch,
   replaceOrAddItem,
   updateItem,
 } from '../utils/array.js';
+import { isEqual } from '../utils/isEqual.js';
 import {
   ClassStateFixtureState,
   ClassStateFixtureStateItem,
@@ -28,7 +28,7 @@ export function findClassStateFixtureStateItem(
   elementId: FixtureElementId
 ): void | ClassStateFixtureStateItem {
   return (
-    classStateFs && find(classStateFs, s => isEqual(s.elementId, elementId))
+    classStateFs && classStateFs.find(s => isEqual(s.elementId, elementId))
   );
 }
 

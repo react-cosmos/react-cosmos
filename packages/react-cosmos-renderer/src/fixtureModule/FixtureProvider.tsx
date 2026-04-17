@@ -1,11 +1,11 @@
 'use client';
-import { isEqual } from 'lodash-es';
 import React from 'react';
 import {
   FixtureId,
   FixtureListItem,
   FixtureState,
   SetFixtureState,
+  isEqual,
 } from 'react-cosmos-core';
 import { FixtureContext } from '../fixture/FixtureContext.js';
 import { RendererContext } from '../rendererConnect/RendererContext.js';

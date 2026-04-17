@@ -1,5 +1,3 @@
-import { findIndex } from 'lodash-es';
-
 export function updateItem<T>(
   items: Readonly<T[]>,
   item: T,
@@ -18,7 +16,7 @@ export function replaceOrAddItem<T>(
   matcher: (item: T) => boolean,
   item: T
 ): T[] {
-  const index = findIndex(items, matcher);
+  const index = items.findIndex(matcher);
   return index !== -1
     ? [...items.slice(0, index), item, ...items.slice(index + 1)]
     : [...items, item];
@@ -28,7 +26,7 @@ export function removeItemMatch<T>(
   items: Readonly<T[]>,
   matcher: (item: T) => boolean
 ): T[] {
-  const index = findIndex(items, matcher);
+  const index = items.findIndex(matcher);
   return index === -1
     ? [...items]
     : [...items.slice(0, index), ...items.slice(index + 1)];
