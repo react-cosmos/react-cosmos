@@ -19,7 +19,7 @@ export function moduleExists(moduleId: string) {
   try {
     resolve(moduleId);
     return true;
-  } catch (err) {
+  } catch {
     return false;
   }
 }

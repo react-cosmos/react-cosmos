@@ -10,7 +10,7 @@ type Props = {
   onChange: (data: boolean) => unknown;
 };
 
-export function BooleanValueInput({ id, name, data, onChange }: Props) {
+export function BooleanValueInput({ name, data, onChange }: Props) {
   const onToggle = React.useCallback(() => onChange(!data), [onChange, data]);
 
   return (

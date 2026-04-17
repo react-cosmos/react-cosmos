@@ -2,7 +2,7 @@ import { isArray, isObject, isPrimitiveData } from './data.js';
 
 export function pickSerializableValues(object: Record<string, unknown>) {
   return Object.fromEntries(
-    Object.entries(object).filter(([k, v]) => isSerializable(v))
+    Object.entries(object).filter(([, v]) => isSerializable(v))
   );
 }
 

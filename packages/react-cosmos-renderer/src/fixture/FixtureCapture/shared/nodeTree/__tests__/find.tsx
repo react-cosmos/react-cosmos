@@ -73,7 +73,7 @@ it('finds nested paths', () => {
 });
 
 it('only finds paths outside function children', () => {
-  const Comp = (props: { children: () => ReactElement }) => null;
+  const Comp = (_props: { children: () => ReactElement }) => null;
   expect(
     findElementPaths(
       <div>

@@ -66,7 +66,7 @@ function useOpen(
             );
         }
       })
-      .catch(err => onError('Is the Cosmos server running?'));
+      .catch(() => onError('Is the Cosmos server running?'));
   }, [fixtureId.path, onError, devServerOn]);
 }
 

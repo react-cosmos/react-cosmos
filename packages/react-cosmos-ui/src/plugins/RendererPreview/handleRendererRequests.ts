@@ -91,7 +91,7 @@ function iframeLocationChanged(iframeWindow: Window, iframeSrc: string) {
         iframeSrc.replace(/\.html$/, '')
       )
     );
-  } catch (err) {
+  } catch {
     // An exception is thrown when trying to access the location of a
     // cross-origin frame, which signals that the iframe location host changed.
     return true;

@@ -64,7 +64,7 @@ function hostOnlyUrl(url: string) {
   try {
     const { protocol, pathname } = new URL(url);
     return (protocol === 'http:' || protocol === 'https:') && pathname === '/';
-  } catch (err) {
+  } catch {
     return false;
   }
 }

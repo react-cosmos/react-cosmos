@@ -45,7 +45,7 @@ export function RemoteButton({
           title: `Renderer URL copied to clipboard`,
           info: 'Paste the renderer URL in the address bar of another browser.',
         });
-      } catch (err) {
+      } catch {
         pushNotification({
           id: 'renderer-url-copy',
           type: 'error',
@@ -62,7 +62,7 @@ async function fetchRemoteRendererUrl() {
     const res = await fetch(`/_cosmos/remote-renderer-url`);
     const body = (await res.json()) as { url: string | null };
     return body.url;
-  } catch (err) {
+  } catch {
     return null;
   }
 }
