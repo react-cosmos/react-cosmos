@@ -1,5 +1,5 @@
 const repoUrl = 'https://api.github.com/repos/react-cosmos/react-cosmos';
-const fallbackCount = 7912;
+const fallbackCount = 8660;
 
 export async function getStargazersCount() {
   try {
