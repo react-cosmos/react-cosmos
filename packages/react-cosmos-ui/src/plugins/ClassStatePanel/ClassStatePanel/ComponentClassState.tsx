@@ -5,6 +5,8 @@ import {
   isEqual,
   updateClassStateFixtureStateItem,
 } from 'react-cosmos-core';
+import { IconButton32 } from '../../../components/buttons/index.js';
+import { RotateCcwIcon } from '../../../components/icons/index.js';
 import {
   SidePanelActions,
   SidePanelBody,
@@ -19,8 +21,6 @@ import {
   ValueInputTree,
   stringifyElementId,
 } from '../../../components/ValueInputTree/index.js';
-import { IconButton32 } from '../../../components/buttons/index.js';
-import { RotateCcwIcon } from '../../../components/icons/index.js';
 import { TreeExpansion } from '../../../shared/treeExpansion.js';
 import { SetClassStateFixtureState } from '../shared.js';
 import { classStateFsItemUpdater } from './shared.js';

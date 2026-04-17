@@ -1,6 +1,6 @@
 import React, { isValidElement, ReactElement, ReactNode } from 'react';
-import { findElementPaths } from '../findElementPaths.js';
 import { getByPath } from 'react-cosmos-core';
+import { findElementPaths } from '../findElementPaths.js';
 
 it('finds no paths on empty node', () => {
   const noChildrenNodes: ReactNode[] = [null, true, false, 'Hello', 7];

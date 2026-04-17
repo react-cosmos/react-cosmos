@@ -9,10 +9,10 @@ import { mockCosmosConfig } from '../../testHelpers/mockFs.js';
 import '../../testHelpers/mockOsNetworkInterfaces.js';
 import { mockCliArgs } from '../../testHelpers/mockYargs.js';
 
-import retry from '@skidding/async-retry';
-import 'isomorphic-fetch';
 import fs from 'node:fs/promises';
+import 'isomorphic-fetch';
 import path from 'node:path';
+import retry from '@skidding/async-retry';
 import { ServerMessage, SocketMessage } from 'react-cosmos-core';
 import { vi } from 'vitest';
 import { ensureFile } from '../../testHelpers/ensureFile.js';

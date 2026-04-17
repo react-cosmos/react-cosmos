@@ -5,6 +5,10 @@
   "singleQuote": true,
   "trailingComma": "es5",
   "printWidth": 80,
+  "sortImports": {
+    "newlinesBetween": false,
+    "partitionByNewline": true
+  },
   "sortPackageJson": false,
   "ignorePatterns": [
     ".next",

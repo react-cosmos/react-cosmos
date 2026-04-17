@@ -1,4 +1,3 @@
-import { isEqual } from 'react-cosmos-core';
 import {
   Component,
   ComponentClass,
@@ -8,6 +7,7 @@ import {
   useEffect,
   useRef,
 } from 'react';
+import { isEqual } from 'react-cosmos-core';
 import {
   ClassStateFixtureState,
   FixtureDecoratorId,
