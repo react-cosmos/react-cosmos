@@ -1,4 +1,5 @@
 import { ComponentType, ReactNode } from 'react';
+import { isObject } from '../data.js';
 import { isEqual } from '../isEqual.js';
 import { getComponentName } from './getComponentName.js';
 import { isReactElement, ReactElementWithChildren } from './isReactElement.js';
@@ -59,21 +60,32 @@ function areArrayNodesEqual(
 
 type PlainObject = Record<string, unknown>;
 
-function arePropsEqual(object1: PlainObject, object2: PlainObject) {
+function arePropsEqual(object1: PlainObject, object2: PlainObject): boolean {
   const keys1 = Object.keys(object1);
   const keys2 = Object.keys(object2);
   if (keys1.length !== keys2.length) return false;
 
-  return keys1.every(key => {
-    if (!Object.prototype.hasOwnProperty.call(object2, key)) return false;
+  return keys1.every(
+    key =>
+      Object.prototype.hasOwnProperty.call(object2, key) &&
+      arePropValuesEqual(object1[key], object2[key])
+  );
+}
 
-    const value1 = object1[key];
-    const value2 = object2[key];
+// Recurse into plain objects and arrays so that functions at any depth are
+// compared by their source code, not by reference. This makes prop comparison
+// resilient to HMR, which creates fresh function instances on every reload.
+function arePropValuesEqual(value1: unknown, value2: unknown): boolean {
+  if (typeof value1 === 'function' && typeof value2 === 'function')
+    return value1 === value2 || value1.toString() === value2.toString();
 
-    // Treat functions as equal if they have the same toString representation
-    if (typeof value1 === 'function' && typeof value2 === 'function')
-      return value1 === value2 || value1.toString() === value2.toString();
+  if (isObject(value1) && isObject(value2))
+    return arePropsEqual(value1, value2);
 
-    return isEqual(value1, value2);
-  });
+  if (Array.isArray(value1) && Array.isArray(value2)) {
+    if (value1.length !== value2.length) return false;
+    return value1.every((v, i) => arePropValuesEqual(v, value2[i]));
+  }
+
+  return isEqual(value1, value2);
 }
