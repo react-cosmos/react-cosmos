@@ -1,15 +1,11 @@
-import React, {
-  ReactNode,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import { Dispatch, SetStateAction, Viewport, isEqual } from 'react-cosmos-core';
+import type { ReactNode } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import type { Dispatch, SetStateAction, Viewport } from 'react-cosmos-core';
+import { isEqual } from 'react-cosmos-core';
 import styled, { css } from 'styled-components';
 import { useDrag } from '../../../hooks/useDrag.js';
 import { grey64, grey8 } from '../../../style/colors.js';
-import { ResponsiveDevice } from '../spec.js';
+import type { ResponsiveDevice } from '../spec.js';
 import { ResponsiveHeader } from './ResponsiveHeader.js';
 import {
   getStyles,

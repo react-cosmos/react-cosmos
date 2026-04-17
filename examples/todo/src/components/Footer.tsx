@@ -1,5 +1,5 @@
 import React from 'react';
-import { TodoFilter } from '../types.js';
+import type { TodoFilter } from '../types.js';
 import { useTodoContext } from './TodoContext.js';
 
 export function Footer() {

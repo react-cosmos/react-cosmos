@@ -1,6 +1,6 @@
-import { FixtureList, FixtureListItem } from './fixtureTypes.js';
+import type { FixtureList, FixtureListItem } from './fixtureTypes.js';
 import { isMultiFixture } from './isMultiFixture.js';
-import {
+import type {
   ByPath,
   ReactFixtureExport,
   UserModuleWrappers,

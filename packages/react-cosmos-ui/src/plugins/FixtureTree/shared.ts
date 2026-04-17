@@ -1,7 +1,7 @@
-import { PluginContext } from 'react-plugin';
-import { TreeExpansion } from '../../shared/treeExpansion.js';
-import { StorageSpec } from '../Storage/spec.js';
-import { FixtureTreeSpec } from './spec.js';
+import type { PluginContext } from 'react-plugin';
+import type { TreeExpansion } from '../../shared/treeExpansion.js';
+import type { StorageSpec } from '../Storage/spec.js';
+import type { FixtureTreeSpec } from './spec.js';
 
 export type FixtureTreeContext = PluginContext<FixtureTreeSpec>;
 

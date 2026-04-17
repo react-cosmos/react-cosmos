@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
-import { SelectInputFixtureState } from 'react-cosmos-core';
+import type { SelectInputFixtureState } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
-import { InputSlotProps } from '../../slots/InputSlot.js';
+import type { InputSlotProps } from '../../slots/InputSlot.js';
 import { SelectValueInput } from './SelectValueInput.js';
-import { SelectInputSpec } from './spec.js';
+import type { SelectInputSpec } from './spec.js';
 
 const { plug, register } = createPlugin<SelectInputSpec>({
   name: 'selectInput',

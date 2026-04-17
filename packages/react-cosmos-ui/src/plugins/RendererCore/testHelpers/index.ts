@@ -1,4 +1,4 @@
-import {
+import type {
   FixtureId,
   FixtureList,
   FixtureListUpdateResponse,

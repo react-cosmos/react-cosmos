@@ -1,5 +1,6 @@
-import React, { ReactNode } from 'react';
-import {
+import type { ReactNode } from 'react';
+import React from 'react';
+import type {
   FixtureStatePrimitiveValue,
   FixtureStateUnserializableValue,
   PrimitiveData,

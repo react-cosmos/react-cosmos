@@ -1,5 +1,6 @@
-import { FixtureStateChangeResponse, isEqual } from 'react-cosmos-core';
-import { RendererCoreContext } from '../shared/index.js';
+import type { FixtureStateChangeResponse } from 'react-cosmos-core';
+import { isEqual } from 'react-cosmos-core';
+import type { RendererCoreContext } from '../shared/index.js';
 import { postSetFixtureStateRequest } from '../shared/postRequest.js';
 import { getSelectedFixtureId } from '../shared/router.js';
 

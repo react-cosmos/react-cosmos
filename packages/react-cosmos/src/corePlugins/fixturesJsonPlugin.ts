@@ -1,15 +1,15 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
+import type { CosmosMode } from 'react-cosmos-core';
 import {
-  CosmosMode,
   createRendererUrl,
   pickRendererUrl,
   removeFixtureNameExtension,
   removeFixtureNameSuffix,
 } from 'react-cosmos-core';
-import { CosmosConfig } from '../cosmosConfig/types.js';
-import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
+import type { CosmosServerPlugin } from '../cosmosPlugin/types.js';
 import { findUserModulePaths } from '../userModules/findUserModulePaths.js';
 import { importKeyPath } from '../userModules/shared.js';
 

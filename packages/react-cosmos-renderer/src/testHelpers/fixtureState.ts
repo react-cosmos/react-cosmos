@@ -1,4 +1,4 @@
-import {
+import type {
   ClassStateFixtureState,
   ClassStateFixtureStateItem,
   FixtureDecoratorId,
@@ -7,8 +7,8 @@ import {
   InputsFixtureState,
   PropsFixtureState,
   PropsFixtureStateItem,
-  fixtureStateByName,
 } from 'react-cosmos-core';
+import { fixtureStateByName } from 'react-cosmos-core';
 
 export function anyProps(
   args: {

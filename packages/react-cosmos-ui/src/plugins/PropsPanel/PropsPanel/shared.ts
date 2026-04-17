@@ -1,9 +1,9 @@
-import {
-  findPropsFixtureStateItem,
+import type {
   FixtureElementId,
   FixtureStateUpdater,
   PropsFixtureState,
 } from 'react-cosmos-core';
+import { findPropsFixtureStateItem } from 'react-cosmos-core';
 import { stringifyElementId } from '../../../components/ValueInputTree/index.js';
 
 export function propsFsItemUpdater(

@@ -1,11 +1,7 @@
 import path from 'node:path';
-import {
-  CosmosConfig,
-  getCliArgs,
-  importModule,
-  moduleExists,
-} from 'react-cosmos';
-import webpack from 'webpack';
+import type { CosmosConfig } from 'react-cosmos';
+import { getCliArgs, importModule, moduleExists } from 'react-cosmos';
+import type webpack from 'webpack';
 import { createWebpackCosmosConfig } from '../cosmosConfig/createWebpackCosmosConfig.js';
 import { getDefaultWebpackConfig } from './getDefaultWebpackConfig.js';
 import { getWebpackNodeEnv } from './getWebpackNodeEnv.js';

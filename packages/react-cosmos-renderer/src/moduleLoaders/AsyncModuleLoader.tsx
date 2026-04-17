@@ -1,9 +1,6 @@
 import React from 'react';
-import {
-  FixtureModules,
-  UserModuleWrappers,
-  getSortedDecoratorsForFixturePath,
-} from 'react-cosmos-core';
+import type { FixtureModules, UserModuleWrappers } from 'react-cosmos-core';
+import { getSortedDecoratorsForFixturePath } from 'react-cosmos-core';
 import { importLazyFixtureModules } from './importLazyFixtureModules.js';
 
 type Props = {

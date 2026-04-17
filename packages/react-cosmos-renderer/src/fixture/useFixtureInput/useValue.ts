@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react-cosmos-core';
+import type { Dispatch, SetStateAction } from 'react-cosmos-core';
 import { useFixtureInput } from './useFixtureInput.js';
 
 type Opts<T> = {

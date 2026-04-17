@@ -1,7 +1,8 @@
-import { RendererId, fixtureStateByName } from 'react-cosmos-core';
+import type { RendererId } from 'react-cosmos-core';
+import { fixtureStateByName } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
-import { CoreSpec } from '../Core/spec.js';
-import { RouterSpec } from '../Router/spec.js';
+import type { CoreSpec } from '../Core/spec.js';
+import type { RouterSpec } from '../Router/spec.js';
 import { onRouterFixtureReselect } from './onRouterFixtureReselect.js';
 import { onRouterFixtureSelect } from './onRouterFixtureSelect.js';
 import { onRouterFixtureUnselect } from './onRouterFixtureUnselect.js';
@@ -9,8 +10,8 @@ import { receiveResponse } from './receiveResponse/index.js';
 import { reloadRenderer } from './reloadRenderer.js';
 import { setFixtureState } from './setFixtureState.js';
 import { setGlobalFixtureState } from './setGlobalFixtureState.js';
-import { RendererCoreContext } from './shared/index.js';
-import { RendererCoreSpec } from './spec.js';
+import type { RendererCoreContext } from './shared/index.js';
+import type { RendererCoreSpec } from './spec.js';
 
 const { on, register, onLoad } = createPlugin<RendererCoreSpec>({
   name: 'rendererCore',

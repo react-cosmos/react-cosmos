@@ -1,10 +1,9 @@
 import React, { useCallback } from 'react';
-import {
+import type {
   ClassStateFixtureStateItem,
   FixtureStateValues,
-  isEqual,
-  updateClassStateFixtureStateItem,
 } from 'react-cosmos-core';
+import { isEqual, updateClassStateFixtureStateItem } from 'react-cosmos-core';
 import { IconButton32 } from '../../../components/buttons/index.js';
 import { RotateCcwIcon } from '../../../components/icons/index.js';
 import {
@@ -15,14 +14,16 @@ import {
   SidePanelTitle,
 } from '../../../components/SidePanel.js';
 import { ExpandCollapseValues } from '../../../components/ValueInputTree/ExpandCollapseValues.js';
-import {
+import type {
   FixtureExpansion,
   OnElementExpansionChange,
+} from '../../../components/ValueInputTree/index.js';
+import {
   ValueInputTree,
   stringifyElementId,
 } from '../../../components/ValueInputTree/index.js';
-import { TreeExpansion } from '../../../shared/treeExpansion.js';
-import { SetClassStateFixtureState } from '../shared.js';
+import type { TreeExpansion } from '../../../shared/treeExpansion.js';
+import type { SetClassStateFixtureState } from '../shared.js';
 import { classStateFsItemUpdater } from './shared.js';
 
 type Props = {

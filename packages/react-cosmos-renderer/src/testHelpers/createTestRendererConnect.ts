@@ -1,6 +1,6 @@
 import { setTimeout } from 'node:timers/promises';
 import { act } from '@testing-library/react';
-import {
+import type {
   RendererConnect,
   RendererRequest,
   RendererResponse,

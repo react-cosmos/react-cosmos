@@ -1,6 +1,4 @@
-import {
-  createPlugin,
-  getPluginContext,
+import type {
   PlugComponentType,
   PluginEventHandlers,
   PluginMethodHandlers,
@@ -8,6 +6,7 @@ import {
   PluginWithEvents,
   PluginWithMethods,
 } from 'react-plugin';
+import { createPlugin, getPluginContext } from 'react-plugin';
 
 export function getMethodsOf<Spec extends PluginSpec>(
   pluginName: Spec['name']

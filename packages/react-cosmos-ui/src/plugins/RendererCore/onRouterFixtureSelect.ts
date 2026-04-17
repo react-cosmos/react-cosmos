@@ -1,5 +1,5 @@
-import { FixtureId } from 'react-cosmos-core';
-import { RendererCoreContext } from './shared/index.js';
+import type { FixtureId } from 'react-cosmos-core';
+import type { RendererCoreContext } from './shared/index.js';
 import { postSelectFixtureRequest } from './shared/postRequest.js';
 
 export function onRouterFixtureSelect(

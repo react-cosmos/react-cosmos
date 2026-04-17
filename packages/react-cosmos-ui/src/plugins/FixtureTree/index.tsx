@@ -1,17 +1,17 @@
 import React, { useCallback } from 'react';
-import { FixtureId } from 'react-cosmos-core';
+import type { FixtureId } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
-import { TreeExpansion } from '../../shared/treeExpansion.js';
-import { CoreSpec } from '../Core/spec.js';
-import { RendererCoreSpec } from '../RendererCore/spec.js';
-import { RootSpec } from '../Root/spec.js';
-import { RouterSpec } from '../Router/spec.js';
-import { StorageSpec } from '../Storage/spec.js';
+import type { TreeExpansion } from '../../shared/treeExpansion.js';
+import type { CoreSpec } from '../Core/spec.js';
+import type { RendererCoreSpec } from '../RendererCore/spec.js';
+import type { RootSpec } from '../Root/spec.js';
+import type { RouterSpec } from '../Router/spec.js';
+import type { StorageSpec } from '../Storage/spec.js';
 import { FixtureSelectProvider } from './FixtureSelectContext.js';
 import { FixtureTreeContainer } from './FixtureTreeContainer.js';
 import { revealFixture } from './revealFixture.js';
 import { getTreeExpansion, setTreeExpansion } from './shared.js';
-import { FixtureTreeSpec } from './spec.js';
+import type { FixtureTreeSpec } from './spec.js';
 
 const { namedPlug, register } = createPlugin<FixtureTreeSpec>({
   name: 'fixtureTree',

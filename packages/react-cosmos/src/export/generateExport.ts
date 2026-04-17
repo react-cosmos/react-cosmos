@@ -1,8 +1,11 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { CosmosPluginConfig, UiCosmosPluginConfig } from 'react-cosmos-core';
+import type {
+  CosmosPluginConfig,
+  UiCosmosPluginConfig,
+} from 'react-cosmos-core';
 import { detectCosmosConfig } from '../cosmosConfig/detectCosmosConfig.js';
-import { CosmosConfig } from '../cosmosConfig/types.js';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
 import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
 import { applyServerConfigPlugins } from '../shared/applyServerConfigPlugins.js';
 import { getServerPlugins } from '../shared/getServerPlugins.js';

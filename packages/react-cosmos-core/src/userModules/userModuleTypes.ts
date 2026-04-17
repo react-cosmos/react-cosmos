@@ -1,4 +1,4 @@
-import { ComponentType, ReactNode } from 'react';
+import type { ComponentType, ReactNode } from 'react';
 
 type FixtureMap<FixtureType> = { [fixtureName: string]: FixtureType };
 type FixtureExport<FixtureType> = FixtureType | FixtureMap<FixtureType>;

@@ -1,4 +1,4 @@
-export { DecoratorProps } from 'react-cosmos-core';
+export type { DecoratorProps } from 'react-cosmos-core';
 export {
   ClassStateMock,
   FixtureContext,

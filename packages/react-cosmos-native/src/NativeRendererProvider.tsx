@@ -1,5 +1,5 @@
 import React from 'react';
-import { FixtureId, RendererConfig } from 'react-cosmos-core';
+import type { FixtureId, RendererConfig } from 'react-cosmos-core';
 import {
   createNoopRendererConnect,
   createWebSocketsConnect,

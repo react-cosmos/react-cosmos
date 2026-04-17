@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { FixtureList } from 'react-cosmos-core';
+import type { FixtureList } from 'react-cosmos-core';
 import { RendererContext } from '../rendererConnect/RendererContext.js';
 
 type Props = {

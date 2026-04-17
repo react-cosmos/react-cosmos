@@ -1,9 +1,6 @@
-import {
-  FixtureElementId,
-  FixtureId,
-  stringifyFixtureId,
-} from 'react-cosmos-core';
-import { TreeExpansion } from '../../shared/treeExpansion.js';
+import type { FixtureElementId, FixtureId } from 'react-cosmos-core';
+import { stringifyFixtureId } from 'react-cosmos-core';
+import type { TreeExpansion } from '../../shared/treeExpansion.js';
 import { stringifyElementId } from './shared.js';
 
 export type FixtureExpansion = Record<string, void | TreeExpansion>;

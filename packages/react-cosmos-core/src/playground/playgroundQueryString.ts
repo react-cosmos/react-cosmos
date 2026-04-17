@@ -1,5 +1,5 @@
 import { buildQueryString, parseQueryString } from '../utils/queryString.js';
-import { PlaygroundParams } from './playgroundParams.js';
+import type { PlaygroundParams } from './playgroundParams.js';
 
 type SearchParams = {
   fixture?: string;

@@ -1,6 +1,6 @@
 import { createProxyMiddleware } from 'http-proxy-middleware';
-import { CosmosConfig } from '../cosmosConfig/types.js';
-import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
+import type { CosmosServerPlugin } from '../cosmosPlugin/types.js';
 
 type HttpProxyConfig = {
   [context: string]:

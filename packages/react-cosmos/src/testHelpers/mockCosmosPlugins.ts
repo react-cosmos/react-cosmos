@@ -1,4 +1,4 @@
-import { CosmosPluginConfig } from 'react-cosmos-core';
+import type { CosmosPluginConfig } from 'react-cosmos-core';
 import { vi } from 'vitest';
 
 type ActualApi = typeof import('../cosmosPlugin/findCosmosPluginConfigs.js');

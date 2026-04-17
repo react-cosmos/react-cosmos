@@ -1,4 +1,5 @@
-import React, { RefObject } from 'react';
+import type { RefObject } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { quick } from '../../../style/vars.js';
 import { FixtureLink } from './FixtureLink.js';

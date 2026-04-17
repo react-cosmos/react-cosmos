@@ -1,4 +1,4 @@
-import { SetSelectValue, UseSelectArgs } from './shared.js';
+import type { SetSelectValue, UseSelectArgs } from './shared.js';
 import { useFixtureSelect } from './useFixtureSelect.js';
 
 // NOTE: This is an alias for useFixtureSelect kept for backwards compatibility

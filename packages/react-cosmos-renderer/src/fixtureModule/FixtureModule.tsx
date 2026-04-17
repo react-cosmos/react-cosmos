@@ -1,10 +1,12 @@
 import React from 'react';
-import {
+import type {
   FixtureId,
   FixtureState,
   ReactDecorator,
   ReactDecoratorModule,
   ReactFixtureModule,
+} from 'react-cosmos-core';
+import {
   getFixtureFromExport,
   getFixtureItemFromExport,
   pickSerializableValues,

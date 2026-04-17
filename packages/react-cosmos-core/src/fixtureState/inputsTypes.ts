@@ -1,4 +1,4 @@
-import { FixtureStateValue } from './types.js';
+import type { FixtureStateValue } from './types.js';
 
 export type StandardInputFixtureState = {
   type: 'standard';

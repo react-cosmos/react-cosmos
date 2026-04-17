@@ -1,4 +1,5 @@
-import { Mock, vi } from 'vitest';
+import type { Mock } from 'vitest';
+import { vi } from 'vitest';
 
 export async function mockFetch(
   httpStatus: number,

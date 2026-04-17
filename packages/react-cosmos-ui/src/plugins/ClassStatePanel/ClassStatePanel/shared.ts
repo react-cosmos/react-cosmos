@@ -1,9 +1,9 @@
-import {
+import type {
   ClassStateFixtureState,
-  findClassStateFixtureStateItem,
   FixtureElementId,
   FixtureStateUpdater,
 } from 'react-cosmos-core';
+import { findClassStateFixtureStateItem } from 'react-cosmos-core';
 import { stringifyElementId } from '../../../components/ValueInputTree/index.js';
 
 export function classStateFsItemUpdater(

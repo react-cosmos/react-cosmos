@@ -1,5 +1,5 @@
 import { importJson } from '../utils/fs.js';
-import { CosmosConfigInput } from './types.js';
+import type { CosmosConfigInput } from './types.js';
 
 export function getCurrentDir() {
   return process.cwd();

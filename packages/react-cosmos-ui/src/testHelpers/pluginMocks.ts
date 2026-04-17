@@ -1,20 +1,20 @@
-import {
-  getPluginContext,
+import type {
   PluginEventHandlers,
   PluginMethodHandlers,
   PluginWithEvents,
   PluginWithMethods,
 } from 'react-plugin';
+import { getPluginContext } from 'react-plugin';
 import { vi } from 'vitest';
-import { CoreSpec } from '../plugins/Core/spec.js';
-import { FixtureTreeSpec } from '../plugins/FixtureTree/spec.js';
-import { MessageHandlerSpec } from '../plugins/MessageHandler/spec.js';
-import { NotificationsSpec } from '../plugins/Notifications/spec.js';
-import { RendererCoreSpec } from '../plugins/RendererCore/spec.js';
-import { RendererPreviewSpec } from '../plugins/RendererPreview/spec.js';
-import { RootSpec } from '../plugins/Root/spec.js';
-import { RouterSpec } from '../plugins/Router/spec.js';
-import { StorageSpec } from '../plugins/Storage/spec.js';
+import type { CoreSpec } from '../plugins/Core/spec.js';
+import type { FixtureTreeSpec } from '../plugins/FixtureTree/spec.js';
+import type { MessageHandlerSpec } from '../plugins/MessageHandler/spec.js';
+import type { NotificationsSpec } from '../plugins/Notifications/spec.js';
+import type { RendererCoreSpec } from '../plugins/RendererCore/spec.js';
+import type { RendererPreviewSpec } from '../plugins/RendererPreview/spec.js';
+import type { RootSpec } from '../plugins/Root/spec.js';
+import type { RouterSpec } from '../plugins/Router/spec.js';
+import type { StorageSpec } from '../plugins/Storage/spec.js';
 import { getMethodsOf, mockMethodsOf, on } from './pluginHelpers.js';
 
 type MethodsOf<Spec extends PluginWithMethods> = Partial<

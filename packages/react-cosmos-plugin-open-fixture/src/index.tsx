@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect } from 'react';
-import { FixtureId } from 'react-cosmos-core';
-import {
+import type { FixtureId } from 'react-cosmos-core';
+import type {
   CoreSpec,
   NotificationsSpec,
   RendererActionSlotProps,
 } from 'react-cosmos-ui';
-import { PluginContext, createPlugin } from 'react-plugin';
+import type { PluginContext } from 'react-plugin';
+import { createPlugin } from 'react-plugin';
 import { OpenFixtureButton } from './OpenFixtureButton.js';
-import { OpenFixtureSpec } from './spec.js';
+import type { OpenFixtureSpec } from './spec.js';
 
 type OpenFixtureContext = PluginContext<OpenFixtureSpec>;
 

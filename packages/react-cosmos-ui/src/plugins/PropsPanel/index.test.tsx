@@ -1,12 +1,8 @@
 import { waitFor } from '@testing-library/dom';
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import {
-  FixtureState,
-  FixtureStateValues,
-  applyFixtureStateChange,
-  fixtureStateByName,
-} from 'react-cosmos-core';
+import type { FixtureState, FixtureStateValues } from 'react-cosmos-core';
+import { applyFixtureStateChange, fixtureStateByName } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { ControlPanelRowSlot } from '../../slots/ControlPanelRowSlot.js';
 import { mockStorage } from '../../testHelpers/pluginMocks.js';

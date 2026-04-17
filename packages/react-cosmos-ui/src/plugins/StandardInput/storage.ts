@@ -1,8 +1,8 @@
 import React from 'react';
-import { PluginContext } from 'react-plugin';
-import { TreeExpansion } from '../../shared/treeExpansion.js';
-import { StorageSpec } from '../Storage/spec.js';
-import { StandardInputSpec } from './spec.js';
+import type { PluginContext } from 'react-plugin';
+import type { TreeExpansion } from '../../shared/treeExpansion.js';
+import type { StorageSpec } from '../Storage/spec.js';
+import type { StandardInputSpec } from './spec.js';
 
 const storageKey = 'standardInputTreeExpansion';
 const emptyTreeExpansion = {};

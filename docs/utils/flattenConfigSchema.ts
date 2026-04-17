@@ -1,4 +1,4 @@
-import { JSONSchema4 } from 'json-schema';
+import type { JSONSchema4 } from 'json-schema';
 
 type ConfigItem = {
   name: string;

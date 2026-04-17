@@ -1,4 +1,4 @@
-import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
+import type { CosmosServerPlugin } from '../cosmosPlugin/types.js';
 import { fixturesJsonPlugin } from './fixturesJsonPlugin.js';
 import { fixtureWatcherPlugin } from './fixtureWatcherPlugin.js';
 import { httpProxyPlugin } from './httpProxyPlugin.js';

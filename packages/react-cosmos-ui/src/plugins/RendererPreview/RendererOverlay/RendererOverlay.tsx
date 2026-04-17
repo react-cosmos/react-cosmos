@@ -1,5 +1,5 @@
 import React from 'react';
-import { RuntimeStatus } from '../spec.js';
+import type { RuntimeStatus } from '../spec.js';
 import { WaitingForRenderer } from './WaitingForRenderer.js';
 
 type Props = {

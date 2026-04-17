@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatFixtureTreeItem } from 'react-cosmos-core';
+import type { FlatFixtureTreeItem } from 'react-cosmos-core';
 import { ArraySlot } from 'react-plugin';
 
 export type FixtureActionSlotProps = {

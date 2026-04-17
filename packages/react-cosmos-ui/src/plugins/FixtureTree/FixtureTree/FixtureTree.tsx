@@ -1,9 +1,10 @@
-import React, { RefObject } from 'react';
-import { FixtureId, FixtureTreeNode } from 'react-cosmos-core';
+import type { RefObject } from 'react';
+import React from 'react';
+import type { FixtureId, FixtureTreeNode } from 'react-cosmos-core';
 import styled from 'styled-components';
 import { TreeView } from '../../../components/TreeView.js';
 import { fixtureTreeNodeContainsFixtureId } from '../../../shared/fixtureTree.js';
-import { TreeExpansion } from '../../../shared/treeExpansion.js';
+import type { TreeExpansion } from '../../../shared/treeExpansion.js';
 import { grey32 } from '../../../style/colors.js';
 import { FixtureButton } from './FixtureButton.js';
 import { FixtureDir } from './FixtureDir.js';

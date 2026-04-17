@@ -2,6 +2,7 @@ import { spawn } from 'child_process';
 import fs from 'fs/promises';
 import { fileURLToPath } from 'url';
 import chalk from 'chalk';
+import type { Package } from './shared.js';
 import {
   done,
   error,
@@ -9,7 +10,6 @@ import {
   getBoolArg,
   getFormattedPackageList,
   getUnnamedArg,
-  Package,
   packages,
 } from './shared.js';
 

@@ -1,5 +1,6 @@
 import React from 'react';
-import { FixtureId, FlatFixtureTreeItem, isEqual } from 'react-cosmos-core';
+import type { FixtureId, FlatFixtureTreeItem } from 'react-cosmos-core';
+import { isEqual } from 'react-cosmos-core';
 import styled from 'styled-components';
 import { IconButton32 } from '../../components/buttons/index.js';
 import {

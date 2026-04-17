@@ -1,10 +1,6 @@
 import { waitFor } from '@testing-library/dom';
-import {
-  BuildErrorMessage,
-  RendererResponse,
-  rendererSocketMessage,
-  serverSocketMessage,
-} from 'react-cosmos-core';
+import type { BuildErrorMessage, RendererResponse } from 'react-cosmos-core';
+import { rendererSocketMessage, serverSocketMessage } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { vi } from 'vitest';
 import { WebSocketServer } from 'ws';

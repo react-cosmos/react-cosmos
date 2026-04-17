@@ -1,5 +1,6 @@
-import React, { ComponentType, isValidElement, ReactNode } from 'react';
-import { ReactFixture } from 'react-cosmos-core';
+import type { ComponentType, ReactNode } from 'react';
+import React, { isValidElement } from 'react';
+import type { ReactFixture } from 'react-cosmos-core';
 
 export function createFixtureNode(
   fixture: ReactFixture,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { RendererConfig, UserModuleWrappers } from 'react-cosmos-core';
+import type { RendererConfig, UserModuleWrappers } from 'react-cosmos-core';
 import { ClientFixtureLoader } from 'react-cosmos-renderer/client';
 import { DomRendererProvider } from './DomRendererProvider.js';
 import { ErrorCatch } from './ErrorCatch.js';

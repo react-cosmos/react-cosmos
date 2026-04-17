@@ -1,13 +1,15 @@
 import React from 'react';
-import { FlatFixtureTree, isEqual } from 'react-cosmos-core';
-import { createPlugin, PluginContext } from 'react-plugin';
-import { FixtureActionSlotProps } from '../../slots/FixtureActionSlot.js';
-import { RootSpec } from '../Root/spec.js';
-import { RouterSpec } from '../Router/spec.js';
-import { StorageSpec } from '../Storage/spec.js';
+import type { FlatFixtureTree } from 'react-cosmos-core';
+import { isEqual } from 'react-cosmos-core';
+import type { PluginContext } from 'react-plugin';
+import { createPlugin } from 'react-plugin';
+import type { FixtureActionSlotProps } from '../../slots/FixtureActionSlot.js';
+import type { RootSpec } from '../Root/spec.js';
+import type { RouterSpec } from '../Router/spec.js';
+import type { StorageSpec } from '../Storage/spec.js';
 import { BookmarkFixtureButton } from './BookmarkFixtureButton.js';
 import { FixtureBookmarks } from './FixtureBookmarks.js';
-import { FixtureBookmarkSpec } from './spec.js';
+import type { FixtureBookmarkSpec } from './spec.js';
 
 type FixtureBookmarkContext = PluginContext<FixtureBookmarkSpec>;
 

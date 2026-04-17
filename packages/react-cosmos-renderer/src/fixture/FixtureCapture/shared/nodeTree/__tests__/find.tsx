@@ -1,4 +1,5 @@
-import React, { isValidElement, ReactElement, ReactNode } from 'react';
+import type { ReactElement, ReactNode } from 'react';
+import React, { isValidElement } from 'react';
 import { getByPath } from 'react-cosmos-core';
 import { findElementPaths } from '../findElementPaths.js';
 

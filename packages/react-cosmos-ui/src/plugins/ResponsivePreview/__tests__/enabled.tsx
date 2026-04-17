@@ -1,6 +1,8 @@
-import { fireEvent, render, RenderResult } from '@testing-library/react';
+import type { RenderResult } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { applyFixtureStateChange, FixtureState } from 'react-cosmos-core';
+import type { FixtureState } from 'react-cosmos-core';
+import { applyFixtureStateChange } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { RendererActionSlot } from '../../../slots/RendererActionSlot.js';
 import {
@@ -9,13 +11,13 @@ import {
   mockStorage,
 } from '../../../testHelpers/pluginMocks.js';
 import { register } from '../index.js';
+import type { ViewportState } from '../shared.js';
 import {
   DEFAULT_DEVICES,
   DEFAULT_VIEWPORT_STATE,
   VIEWPORT_STORAGE_KEY,
-  ViewportState,
 } from '../shared.js';
-import { StorageMock } from '../testHelpers/index.js';
+import type { StorageMock } from '../testHelpers/index.js';
 
 beforeEach(() => {
   register();

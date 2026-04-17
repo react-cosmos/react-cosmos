@@ -1,9 +1,5 @@
-import {
-  UserImportsTemplateArgs,
-  createImportMap,
-  importPath,
-  sortedImportKeys,
-} from './shared.js';
+import type { UserImportsTemplateArgs } from './shared.js';
+import { createImportMap, importPath, sortedImportKeys } from './shared.js';
 
 export function userImportsTemplate({
   globalImports,

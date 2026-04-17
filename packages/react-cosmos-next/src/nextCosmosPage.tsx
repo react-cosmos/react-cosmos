@@ -1,7 +1,7 @@
 import React from 'react';
-import { RendererConfig, UserModuleWrappers } from 'react-cosmos-core';
+import type { RendererConfig, UserModuleWrappers } from 'react-cosmos-core';
 import { NextFixtureLoader } from './NextFixtureLoader.js';
-import { NextCosmosParams } from './nextTypes.js';
+import type { NextCosmosParams } from './nextTypes.js';
 
 export function nextCosmosPage(args: {
   rendererConfig: RendererConfig;

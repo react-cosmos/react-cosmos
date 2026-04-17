@@ -1,7 +1,7 @@
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { getCoreMethods, mockStorage } from '../../testHelpers/pluginMocks.js';
 import { register } from './index.js';
-import { CoreSpec } from './spec.js';
+import type { CoreSpec } from './spec.js';
 
 beforeEach(register);
 

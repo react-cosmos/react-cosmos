@@ -1,11 +1,11 @@
 import React from 'react';
-import { FixtureId, FlatFixtureTreeItem } from 'react-cosmos-core';
+import type { FixtureId, FlatFixtureTreeItem } from 'react-cosmos-core';
 import { ArraySlot, Slot } from 'react-plugin';
 import styled from 'styled-components';
 import { useDrag } from '../../hooks/useDrag.js';
 import { grey32 } from '../../style/colors.js';
 import { quick } from '../../style/vars.js';
-import {
+import type {
   GetFixtureState,
   SetFixtureStateByName,
 } from '../RendererCore/spec.js';

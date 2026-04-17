@@ -4,7 +4,7 @@ import {
   detectCosmosConfigPath,
 } from '../cosmosConfig/detectCosmosConfig.js';
 import { getPluginConfigs } from '../cosmosPlugin/pluginConfigs.js';
-import { CosmosPlatform } from '../cosmosPlugin/types.js';
+import type { CosmosPlatform } from '../cosmosPlugin/types.js';
 import { applyServerConfigPlugins } from '../shared/applyServerConfigPlugins.js';
 import { getServerPlugins } from '../shared/getServerPlugins.js';
 import { logPluginInfo } from '../shared/logPluginInfo.js';

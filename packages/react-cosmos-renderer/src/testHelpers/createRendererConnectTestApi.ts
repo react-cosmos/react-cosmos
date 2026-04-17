@@ -1,5 +1,5 @@
 import until from 'async-until';
-import {
+import type {
   FixtureListUpdateResponse,
   FixtureLoadedResponse,
   FixtureState,

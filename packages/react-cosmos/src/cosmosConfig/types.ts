@@ -1,4 +1,4 @@
-import { CosmosRendererUrl } from 'react-cosmos-core';
+import type { CosmosRendererUrl } from 'react-cosmos-core';
 
 interface HttpsOptions {
   keyPath: string;

@@ -1,7 +1,7 @@
-import { Viewport } from 'react-cosmos-core';
-import { PluginContext } from 'react-plugin';
-import { StorageSpec } from '../Storage/spec.js';
-import { ResponsivePreviewSpec } from './spec.js';
+import type { Viewport } from 'react-cosmos-core';
+import type { PluginContext } from 'react-plugin';
+import type { StorageSpec } from '../Storage/spec.js';
+import type { ResponsivePreviewSpec } from './spec.js';
 
 export type ResponsivePreviewContext = PluginContext<ResponsivePreviewSpec>;
 

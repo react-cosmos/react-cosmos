@@ -1,6 +1,6 @@
-import { CosmosConfig } from 'react-cosmos';
-import { CosmosMode } from 'react-cosmos-core';
-import webpack from 'webpack';
+import type { CosmosConfig } from 'react-cosmos';
+import type { CosmosMode } from 'react-cosmos-core';
+import type webpack from 'webpack';
 import { resolveWebpackClientPath } from './resolveWebpackClientPath.js';
 import { resolveWebpackLoaderPath } from './resolveWebpackLoaderPath.js';
 

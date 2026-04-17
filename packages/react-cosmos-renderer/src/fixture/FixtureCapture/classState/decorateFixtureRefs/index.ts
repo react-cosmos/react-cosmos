@@ -1,14 +1,8 @@
-import {
-  cloneElement,
-  Component,
-  ReactNode,
-  Ref,
-  RefCallback,
-  RefObject,
-} from 'react';
+import type { Component, ReactNode, Ref, RefCallback, RefObject } from 'react';
+import { cloneElement } from 'react';
 import { findRelevantElementPaths } from '../../shared/findRelevantElementPaths.js';
 import { setElementAtPath } from '../../shared/nodeTree/index.js';
-import { CachedRefHandlers } from '../shared.js';
+import type { CachedRefHandlers } from '../shared.js';
 import { isRefSupported } from './isRefSupported.js';
 
 type SpyRef = (elPath: string, elRef: null | Component) => unknown;

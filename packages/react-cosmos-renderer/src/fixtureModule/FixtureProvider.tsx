@@ -1,12 +1,12 @@
 'use client';
 import React from 'react';
-import {
+import type {
   FixtureId,
   FixtureListItem,
   FixtureState,
   SetFixtureState,
-  isEqual,
 } from 'react-cosmos-core';
+import { isEqual } from 'react-cosmos-core';
 import { FixtureContext } from '../fixture/FixtureContext.js';
 import { RendererContext } from '../rendererConnect/RendererContext.js';
 

@@ -1,4 +1,4 @@
-import { SetSelectValue, UseSelectArgs } from './shared.js';
+import type { SetSelectValue, UseSelectArgs } from './shared.js';
 import { useCurrentSelectValue } from './useCurrentSelectValue.js';
 import { useSelectFixtureState } from './useSelectFixtureState.js';
 import { useSetSelectValue } from './useSetSelectValue.js';

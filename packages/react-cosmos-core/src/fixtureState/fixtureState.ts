@@ -1,4 +1,4 @@
-import { FixtureState } from './types.js';
+import type { FixtureState } from './types.js';
 
 export type FixtureStateUpdater<T> = (prevState: T | undefined) => T;
 

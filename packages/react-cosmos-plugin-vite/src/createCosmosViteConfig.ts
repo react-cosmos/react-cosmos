@@ -1,5 +1,6 @@
 import path from 'node:path';
-import { CosmosConfig, fileExists, resolveFromSilent } from 'react-cosmos';
+import type { CosmosConfig } from 'react-cosmos';
+import { fileExists, resolveFromSilent } from 'react-cosmos';
 
 export type CosmosViteConfig = {
   configPath: string | false;

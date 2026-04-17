@@ -1,4 +1,4 @@
-import { FixtureElementId, FixtureStateValues } from './types.js';
+import type { FixtureElementId, FixtureStateValues } from './types.js';
 
 export type ClassStateFixtureStateItem = {
   elementId: FixtureElementId;

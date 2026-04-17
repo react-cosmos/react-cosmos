@@ -1,11 +1,12 @@
-import { APIRequestContext, Page, expect, test } from '@playwright/test';
-import { CosmosFixtureJson, CosmosFixturesJson } from 'react-cosmos';
-import {
+import type { APIRequestContext, Page } from '@playwright/test';
+import { expect, test } from '@playwright/test';
+import type { CosmosFixtureJson, CosmosFixturesJson } from 'react-cosmos';
+import type {
   FixtureId,
   FixtureListItem,
   RendererResponse,
-  createRendererUrl,
 } from 'react-cosmos-core';
+import { createRendererUrl } from 'react-cosmos-core';
 import { exampleName } from './envVars.js';
 import { checkHomeLink } from './homeLink.js';
 

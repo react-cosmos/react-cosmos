@@ -1,7 +1,8 @@
 import path from 'path';
-import { DevServerPluginArgs, serveStaticDir } from 'react-cosmos';
-import { ServerMessage } from 'react-cosmos-core';
-import webpack from 'webpack';
+import type { DevServerPluginArgs } from 'react-cosmos';
+import { serveStaticDir } from 'react-cosmos';
+import type { ServerMessage } from 'react-cosmos-core';
+import type webpack from 'webpack';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { createWebpackCosmosConfig } from './cosmosConfig/createWebpackCosmosConfig.js';
 import { getWebpack } from './getWebpack.js';

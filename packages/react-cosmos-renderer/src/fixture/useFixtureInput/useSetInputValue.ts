@@ -1,11 +1,10 @@
 import React from 'react';
-import {
+import type {
   Dispatch,
   InputsFixtureState,
   SetStateAction,
-  createValue,
-  extendWithValue,
 } from 'react-cosmos-core';
+import { createValue, extendWithValue } from 'react-cosmos-core';
 import { useFixtureState } from '../useFixtureState.js';
 
 export function useSetInputValue<T>(

@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
-import { InputsFixtureState } from 'react-cosmos-core';
+import type { InputsFixtureState } from 'react-cosmos-core';
 import { createPlugin } from 'react-plugin';
-import { ControlPanelRowSlotProps } from '../../slots/ControlPanelRowSlot.js';
+import type { ControlPanelRowSlotProps } from '../../slots/ControlPanelRowSlot.js';
 import { InputsPanel } from './InputsPanel.js';
-import { SetInputsFixtureState } from './shared.js';
-import { InputsPanelSpec } from './spec.js';
+import type { SetInputsFixtureState } from './shared.js';
+import type { InputsPanelSpec } from './spec.js';
 
 const { namedPlug, register } = createPlugin<InputsPanelSpec>({
   name: 'inputsPanel',

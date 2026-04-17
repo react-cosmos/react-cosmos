@@ -1,18 +1,12 @@
-import {
-  createFixtureTree,
-  FixtureId,
-  FixtureTreeNode,
-} from 'react-cosmos-core';
+import type { FixtureId, FixtureTreeNode } from 'react-cosmos-core';
+import { createFixtureTree } from 'react-cosmos-core';
 import { fixtureTreeNodeContainsFixtureId } from '../../shared/fixtureTree.js';
-import { TreeExpansion } from '../../shared/treeExpansion.js';
-import { CoreSpec } from '../Core/spec.js';
-import { RendererCoreSpec } from '../RendererCore/spec.js';
-import { StorageSpec } from '../Storage/spec.js';
-import {
-  FixtureTreeContext,
-  getTreeExpansion,
-  setTreeExpansion,
-} from './shared.js';
+import type { TreeExpansion } from '../../shared/treeExpansion.js';
+import type { CoreSpec } from '../Core/spec.js';
+import type { RendererCoreSpec } from '../RendererCore/spec.js';
+import type { StorageSpec } from '../Storage/spec.js';
+import type { FixtureTreeContext } from './shared.js';
+import { getTreeExpansion, setTreeExpansion } from './shared.js';
 
 export function revealFixture(
   context: FixtureTreeContext,

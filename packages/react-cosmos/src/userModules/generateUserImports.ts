@@ -1,6 +1,6 @@
-import { RendererConfig } from 'react-cosmos-core';
-import { CosmosConfig } from '../cosmosConfig/types.js';
-import { UserModulePaths } from './shared.js';
+import type { RendererConfig } from 'react-cosmos-core';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
+import type { UserModulePaths } from './shared.js';
 import { userImportsLazyTemplate } from './userImportsLazyTemplate.js';
 import { userImportsTemplate } from './userImportsTemplate.js';
 

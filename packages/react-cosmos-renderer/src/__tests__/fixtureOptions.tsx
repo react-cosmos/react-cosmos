@@ -1,6 +1,7 @@
 import { waitFor } from '@testing-library/react';
 import React from 'react';
-import { DecoratorProps, uuid } from 'react-cosmos-core';
+import type { DecoratorProps } from 'react-cosmos-core';
+import { uuid } from 'react-cosmos-core';
 import { testRenderer } from '../testHelpers/testRenderer.js';
 import { wrapDefaultExport } from '../testHelpers/wrapDefaultExport.js';
 

@@ -1,4 +1,4 @@
-import { RendererCoreContext } from './shared/index.js';
+import type { RendererCoreContext } from './shared/index.js';
 import { postUnselectFixtureRequest } from './shared/postRequest.js';
 
 export function onRouterFixtureUnselect(context: RendererCoreContext) {

@@ -1,4 +1,4 @@
-import webpack from 'webpack';
+import type webpack from 'webpack';
 
 export function ensureWebpackConfigTopLevelAwait(
   baseWebpackConfig: webpack.Configuration

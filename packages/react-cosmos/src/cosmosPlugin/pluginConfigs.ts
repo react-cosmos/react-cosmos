@@ -1,5 +1,5 @@
-import { CosmosPluginConfig } from 'react-cosmos-core';
-import { CosmosConfig } from '../cosmosConfig/types.js';
+import type { CosmosPluginConfig } from 'react-cosmos-core';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
 import { findCosmosPluginConfigs } from './findCosmosPluginConfigs.js';
 import { readCosmosPluginConfig } from './readCosmosPluginConfig.js';
 

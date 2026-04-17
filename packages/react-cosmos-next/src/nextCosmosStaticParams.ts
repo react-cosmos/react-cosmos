@@ -1,11 +1,7 @@
 import { isValidElement } from 'react';
-import {
-  ByPath,
-  UserModuleWrappers,
-  encodeRendererUrlFixture,
-  mapValues,
-} from 'react-cosmos-core';
-import { NextCosmosParams } from './nextTypes.js';
+import type { ByPath, UserModuleWrappers } from 'react-cosmos-core';
+import { encodeRendererUrlFixture, mapValues } from 'react-cosmos-core';
+import type { NextCosmosParams } from './nextTypes.js';
 
 type Args = {
   moduleWrappers: UserModuleWrappers;

@@ -1,5 +1,6 @@
-import { ReactNode } from 'react';
-import { ReactElementWithChildren, setByPath } from 'react-cosmos-core';
+import type { ReactNode } from 'react';
+import type { ReactElementWithChildren } from 'react-cosmos-core';
+import { setByPath } from 'react-cosmos-core';
 import { isRootPath } from './elPath.js';
 import { getExpectedElementAtPath } from './getElementAtPath.js';
 

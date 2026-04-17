@@ -1,6 +1,6 @@
 import { rename } from 'node:fs/promises';
 import path from 'node:path';
-import { ExportPluginArgs } from 'react-cosmos';
+import type { ExportPluginArgs } from 'react-cosmos';
 import { build } from 'vite';
 import { RENDERER_FILENAME } from './constants.js';
 import { createCosmosViteConfig } from './createCosmosViteConfig.js';

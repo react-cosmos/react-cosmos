@@ -1,4 +1,4 @@
-import { TreeNode } from '../utils/tree.js';
+import type { TreeNode } from '../utils/tree.js';
 
 export type FixtureTreeNode = TreeNode<
   | { type: 'fileDir' }

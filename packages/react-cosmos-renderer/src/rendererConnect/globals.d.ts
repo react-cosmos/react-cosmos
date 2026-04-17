@@ -1,4 +1,4 @@
-import { RendererResponse } from 'react-cosmos-core';
+import type { RendererResponse } from 'react-cosmos-core';
 
 declare global {
   interface Window {

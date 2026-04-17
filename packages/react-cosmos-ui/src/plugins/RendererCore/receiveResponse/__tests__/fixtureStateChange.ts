@@ -1,5 +1,5 @@
 import { waitFor } from '@testing-library/dom';
-import { RendererId } from 'react-cosmos-core';
+import type { RendererId } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import {
   getRendererCoreMethods,

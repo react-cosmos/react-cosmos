@@ -1,10 +1,7 @@
-import {
-  MessageType,
-  rendererSocketMessage,
-  SocketMessage,
-} from 'react-cosmos-core';
-import { CoreSpec } from '../Core/spec.js';
-import { MessageHandlerContext } from './shared.js';
+import type { MessageType, SocketMessage } from 'react-cosmos-core';
+import { rendererSocketMessage } from 'react-cosmos-core';
+import type { CoreSpec } from '../Core/spec.js';
+import type { MessageHandlerContext } from './shared.js';
 
 let socket: null | WebSocket = null;
 let pendingMessages: SocketMessage[] = [];

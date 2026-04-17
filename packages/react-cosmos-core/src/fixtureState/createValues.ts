@@ -1,11 +1,7 @@
 import { isValidElement } from 'react';
-import {
-  isArray,
-  isObject,
-  isPrimitiveData,
-  ObjectData,
-} from '../utils/data.js';
-import { FixtureStateValue, FixtureStateValues } from './types.js';
+import type { ObjectData } from '../utils/data.js';
+import { isArray, isObject, isPrimitiveData } from '../utils/data.js';
+import type { FixtureStateValue, FixtureStateValues } from './types.js';
 
 export function createValues(obj: ObjectData): FixtureStateValues {
   const values: FixtureStateValues = {};

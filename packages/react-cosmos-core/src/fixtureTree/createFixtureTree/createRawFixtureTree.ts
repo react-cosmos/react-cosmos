@@ -1,10 +1,10 @@
-import {
+import type {
   FixtureList,
   FixtureListItem,
 } from '../../userModules/fixtureTypes.js';
 import { addTreeNodeChild } from '../../utils/tree.js';
 import { removeFixtureNameExtension } from '../fixtureUtils.js';
-import { FixtureTreeNode } from '../types.js';
+import type { FixtureTreeNode } from '../types.js';
 
 export function createRawFixtureTree(fixtures: FixtureList): FixtureTreeNode {
   const rootNode: FixtureTreeNode = {

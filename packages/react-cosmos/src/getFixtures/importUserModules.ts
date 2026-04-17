@@ -1,9 +1,9 @@
-import {
+import type {
   ByPath,
   ReactDecoratorModule,
   ReactFixtureModule,
 } from 'react-cosmos-core';
-import { CosmosConfig } from '../cosmosConfig/types.js';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
 import { findUserModulePaths } from '../userModules/findUserModulePaths.js';
 import { importKeyPath } from '../userModules/shared.js';
 

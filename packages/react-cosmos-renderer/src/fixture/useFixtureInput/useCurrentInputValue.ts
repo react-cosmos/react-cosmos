@@ -1,4 +1,5 @@
-import { InputsFixtureState, extendWithValue } from 'react-cosmos-core';
+import type { InputsFixtureState } from 'react-cosmos-core';
+import { extendWithValue } from 'react-cosmos-core';
 import { useFixtureState } from '../useFixtureState.js';
 
 export function useCurrentInputValue<T>(inputName: string, defaultValue: T): T {

@@ -1,5 +1,5 @@
 declare module 'yargs/yargs' {
-  import { Argv } from 'yargs';
+  import type { Argv } from 'yargs';
 
   declare interface MockedYargs {
     (

@@ -1,11 +1,11 @@
 import React from 'react';
-import { FixtureId } from 'react-cosmos-core';
+import type { FixtureId } from 'react-cosmos-core';
 import styled from 'styled-components';
 import { IconButton32 } from '../../components/buttons/IconButton32.js';
 import { ChevronRightIcon } from '../../components/icons/index.js';
 import { ControlPanelRowSlot } from '../../slots/ControlPanelRowSlot.js';
 import { grey32, white10 } from '../../style/colors.js';
-import {
+import type {
   GetFixtureState,
   SetFixtureStateByName,
 } from '../RendererCore/spec.js';

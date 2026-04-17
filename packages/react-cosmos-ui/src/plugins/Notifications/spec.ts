@@ -1,4 +1,7 @@
-import { NotificationItem, TimedNotificationItem } from 'react-cosmos-core';
+import type {
+  NotificationItem,
+  TimedNotificationItem,
+} from 'react-cosmos-core';
 
 export type NotificationsSpec = {
   name: 'notifications';

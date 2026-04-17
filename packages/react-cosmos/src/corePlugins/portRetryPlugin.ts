@@ -1,4 +1,4 @@
-import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
+import type { CosmosServerPlugin } from '../cosmosPlugin/types.js';
 import { findNextAvailablePort } from '../shared/findNextAvailablePort.js';
 
 export const portRetryPlugin: CosmosServerPlugin = {

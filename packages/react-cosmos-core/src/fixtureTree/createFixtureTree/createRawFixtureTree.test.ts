@@ -1,5 +1,5 @@
-import { FixtureList } from '../../userModules/fixtureTypes.js';
-import { FixtureTreeNode } from '../types.js';
+import type { FixtureList } from '../../userModules/fixtureTypes.js';
+import type { FixtureTreeNode } from '../types.js';
 import { createRawFixtureTree } from './createRawFixtureTree.js';
 
 it('creates tree with fixture', () => {

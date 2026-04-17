@@ -1,9 +1,9 @@
-import {
+import type {
   RendererConnect,
   RendererRequest,
   RendererResponse,
-  registerPlaygroundShortcuts,
 } from 'react-cosmos-core';
+import { registerPlaygroundShortcuts } from 'react-cosmos-core';
 
 export function createPostMessageConnect(): RendererConnect {
   function postMessage(msg: RendererResponse) {

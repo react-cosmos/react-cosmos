@@ -13,7 +13,7 @@ import fs from 'node:fs/promises';
 import 'isomorphic-fetch';
 import path from 'node:path';
 import retry from '@skidding/async-retry';
-import { ServerMessage, SocketMessage } from 'react-cosmos-core';
+import type { ServerMessage, SocketMessage } from 'react-cosmos-core';
 import { vi } from 'vitest';
 import { ensureFile } from '../../testHelpers/ensureFile.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';

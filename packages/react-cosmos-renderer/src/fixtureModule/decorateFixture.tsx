@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactDecorator } from 'react-cosmos-core';
+import type { ReactDecorator } from 'react-cosmos-core';
 
 export function decorateFixture(
   fixtureNode: React.ReactNode,
