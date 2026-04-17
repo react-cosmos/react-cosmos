@@ -1,5 +1,5 @@
 export function isEqual(a: unknown, b: unknown): boolean {
-  if (Object.is(a, b)) return true;
+  if (a === b || (Number.isNaN(a) && Number.isNaN(b))) return true;
 
   if (
     a === null ||
@@ -9,33 +9,36 @@ export function isEqual(a: unknown, b: unknown): boolean {
   )
     return false;
 
-  if (a instanceof Date)
-    return b instanceof Date && a.getTime() === b.getTime();
+  if (a.constructor !== b.constructor) return false;
+
+  if (a instanceof Date) return a.getTime() === (b as Date).getTime();
 
   if (a instanceof RegExp)
-    return b instanceof RegExp && a.source === b.source && a.flags === b.flags;
+    return a.source === (b as RegExp).source && a.flags === (b as RegExp).flags;
 
   if (a instanceof Map) {
-    if (!(b instanceof Map) || a.size !== b.size) return false;
+    const mb = b as Map<unknown, unknown>;
+    if (a.size !== mb.size) return false;
     for (const [key, val] of a) {
-      if (!b.has(key) || !isEqual(val, b.get(key))) return false;
+      if (!mb.has(key) || !isEqual(val, mb.get(key))) return false;
     }
     return true;
   }
 
   if (a instanceof Set) {
-    if (!(b instanceof Set) || a.size !== b.size) return false;
+    const sb = b as Set<unknown>;
+    if (a.size !== sb.size) return false;
     for (const val of a) {
-      if (!b.has(val)) return false;
+      if (!sb.has(val)) return false;
     }
     return true;
   }
 
   if (Array.isArray(a)) {
-    if (!Array.isArray(b) || a.length !== b.length) return false;
-    return a.every((val, i) => isEqual(val, b[i]));
+    const arrB = b as unknown[];
+    if (a.length !== arrB.length) return false;
+    return a.every((val, i) => isEqual(val, arrB[i]));
   }
-  if (Array.isArray(b)) return false;
 
   const keysA = Object.keys(a);
   const keysB = Object.keys(b);
@@ -43,7 +46,7 @@ export function isEqual(a: unknown, b: unknown): boolean {
 
   return keysA.every(
     key =>
-      Object.prototype.hasOwnProperty.call(b, key) &&
+      Object.hasOwn(b, key) &&
       isEqual(
         (a as Record<string, unknown>)[key],
         (b as Record<string, unknown>)[key]
