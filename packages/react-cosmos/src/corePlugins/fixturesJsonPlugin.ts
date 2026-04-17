@@ -70,9 +70,11 @@ async function createFixtureItems(
 
   return {
     rendererUrl,
-    fixtures: [...fixtures].sort((a, b) =>
-      a.cleanPath.join('-').localeCompare(b.cleanPath.join('-'))
-    ),
+    fixtures: [...fixtures].sort((a, b) => {
+      const ak = a.cleanPath.join('-');
+      const bk = b.cleanPath.join('-');
+      return ak < bk ? -1 : ak > bk ? 1 : 0;
+    }),
   };
 }
 
