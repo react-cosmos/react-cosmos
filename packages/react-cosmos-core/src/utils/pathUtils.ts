@@ -1,46 +1,47 @@
-export function getByPath<T = unknown>(obj: unknown, path: string): T {
-  let cur = obj;
-  for (const key of parsePath(path)) {
-    if (cur === null || cur === undefined) return undefined as T;
-    cur = (cur as Record<string | number, unknown>)[key];
-  }
-  return cur as T;
-}
+type Indexable = Record<string | number, unknown>;
 
-export function setByPath<T>(obj: T, path: string, value: unknown): T {
-  return setDeep(obj, parsePath(path), value, 0) as T;
-}
-
-function setDeep(
-  current: unknown,
-  keys: (string | number)[],
-  value: unknown,
-  index: number
+export function getByPath<T extends object>(
+  obj: T,
+  path: string
 ): unknown {
-  if (index === keys.length) return value;
+  let cur: unknown = obj;
+  for (const key of parsePath(path)) {
+    if (cur === null || cur === undefined) return undefined;
+    cur = (cur as Indexable)[key];
+  }
+  return cur;
+}
 
-  const key = keys[index];
-  const currentChild = (current as Record<string | number, unknown>)?.[key];
-  const nextValue = setDeep(currentChild, keys, value, index + 1);
+export function setByPath<T extends object>(
+  obj: T,
+  path: string,
+  value: unknown
+): T {
+  const keys = parsePath(path);
 
-  if (Array.isArray(current)) {
-    const copy = [...current];
-    copy[key as number] = nextValue;
-    return copy;
+  function set(current: unknown, index: number): unknown {
+    if (index === keys.length) return value;
+
+    const key = keys[index];
+    const cur = current as Indexable | undefined;
+    const next = set(cur?.[key], index + 1);
+    if (Array.isArray(current)) {
+      const copy = [...current];
+      copy[key as number] = next;
+      return copy;
+    }
+    return { ...cur, [key]: next };
   }
 
-  return { ...(current as object), [key]: nextValue };
+  return set(obj, 0) as T;
 }
 
 // Parse paths like "props.children[0].props.children"
+// into segments like ["props", "children", 0, "props", "children"]
 function parsePath(path: string): (string | number)[] {
-  const segments: (string | number)[] = [];
-  for (const part of path.split('.')) {
-    const match = part.match(/^([^[]*)(.*)/);
-    if (!match) continue;
-    if (match[1]) segments.push(match[1]);
-    const brackets = match[2].matchAll(/\[(\d+)]/g);
-    for (const b of brackets) segments.push(Number(b[1]));
-  }
-  return segments;
+  return path
+    .replace(/\[(\d+)]/g, '.$1') // [0] → .0
+    .split('.')
+    .filter(s => s !== '')
+    .map(s => (/^\d+$/.test(s) ? Number(s) : s));
 }

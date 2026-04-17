@@ -20,9 +20,9 @@ export function getElementAtPath(
   }
 
   const rootNode = node as ReactElementWithChildren | ReactNode[];
-  const childNode: ReactNode = isRootPath(elPath)
+  const childNode = isRootPath(elPath)
     ? rootNode
-    : getByPath(rootNode, elPath);
+    : (getByPath(rootNode, elPath) as ReactNode);
 
   if (!isReactElement(childNode)) {
     return null;
