@@ -2,17 +2,17 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "noEmit": false,
-    "declaration": true,
-    "types": ["node", "vitest/globals", "@testing-library/jest-dom"]
+    "declaration": true
   },
   "exclude": [
     "node_modules",
+    "**/__tests__/**/*",
+    "**/__mocks__/**/*",
+    "**/__fixtures__/**/*",
     "**/*.test.ts",
     "**/*.test.tsx",
     "**/*.fixture.ts",
     "**/*.fixture.tsx",
-    "**/__tests__/**/*",
-    "**/__fixtures__/**/*",
     "**/testHelpers/**/*",
     "**/testMocks/**/*"
   ]

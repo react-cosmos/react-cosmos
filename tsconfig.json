@@ -21,19 +21,7 @@
     "target": "ES2022",
     "module": "ES2022",
     "verbatimModuleSyntax": true,
-    "types": ["node"]
+    "types": ["vitest/globals", "@testing-library/jest-dom"]
   },
-  "exclude": [
-    "node_modules",
-    "docs",
-    "**/*.test.ts",
-    "**/*.test.tsx",
-    "**/*.fixture.ts",
-    "**/*.fixture.tsx",
-    "**/__tests__/**/*",
-    "**/__fixtures__/**/*",
-    "**/testHelpers/**/*",
-    "**/testMocks/**/*",
-    "packages/*/src/vitest.ts"
-  ]
+  "exclude": ["node_modules", "docs"]
 }
