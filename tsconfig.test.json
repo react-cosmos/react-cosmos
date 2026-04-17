@@ -1,0 +1,13 @@
+// Type-checks everything INCLUDING test, fixture, and test-helper files.
+// Kept separate from `tsconfig.json` so that test-framework globals (vitest,
+// jest-dom) don't leak into editor autocomplete or type-checking for source
+// files — source files still use `tsconfig.json`, which excludes these
+// globals. Editors automatically pick this config for files matching the
+// test patterns below.
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["node", "vitest/globals", "@testing-library/jest-dom"]
+  },
+  "exclude": ["node_modules", "docs", "packages/*/dist"]
+}
