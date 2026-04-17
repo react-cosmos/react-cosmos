@@ -2,6 +2,10 @@
 
 Guidance for Claude Code when working in this monorepo.
 
+## Architecture
+
+See [docs/pages/docs/dev/architecture.md](docs/pages/docs/dev/architecture.md) for the three-part breakdown of React Cosmos (Server, UI, Renderer) and how they communicate. Keep it in mind when making changes — the boundaries between these parts are load-bearing.
+
 ## Dependencies
 
 All npm dependencies are pinned to exact versions (no `^` or `~` prefix). When adding or upgrading a package, use `npm install --save-exact <pkg>` (or `-E`) so the `package.json` entry is an exact version.
