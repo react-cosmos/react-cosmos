@@ -29,10 +29,10 @@ jobs:
       - run: npm ci --cache .npm-cache
 
       # Test source (with cross-package coverage)
+      - run: npm run format:check
       - run: npm run src
       - run: npm run check-types
       - run: npm run lint
-      - run: npm run format:check
       - run: npm run test:run -- --coverage
 
       - uses: codecov/codecov-action@v4

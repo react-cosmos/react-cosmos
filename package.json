@@ -8,7 +8,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "prettify": "oxfmt",
+    "format": "oxfmt",
     "format:check": "oxfmt --check",
     "check-types": "tsc",
     "lint": "eslint \"**/*.{ts,tsx}\"",
