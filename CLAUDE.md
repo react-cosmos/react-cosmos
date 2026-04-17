@@ -2,6 +2,10 @@
 
 Guidance for Claude Code when working in this monorepo.
 
+## Dependencies
+
+All npm dependencies are pinned to exact versions (no `^` or `~` prefix). When adding or upgrading a package, use `npm install --save-exact <pkg>` (or `-E`) so the `package.json` entry is an exact version.
+
 ## Build & test commands
 
 Use the npm scripts, not raw `tsc` / `vitest` — the scripts wrap custom build orchestration (see `scripts/build.ts`) and shared config that the raw tools don't know about.
