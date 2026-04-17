@@ -48,7 +48,7 @@ export default function NotificationExample() {
         title: 'Operation completed!',
         info: 'The async operation finished successfully',
       });
-    } catch (error) {
+    } catch {
       notification.pushSticky({
         id: 'async-operation',
         type: 'error',

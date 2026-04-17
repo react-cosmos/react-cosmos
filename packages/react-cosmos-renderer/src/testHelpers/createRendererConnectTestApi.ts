@@ -133,13 +133,13 @@ export function createRendererConnectTestApi(args: {
             // https://jestjs.io/docs/en/expect#expectanyconstructor
             expect(findLastResponseWithType(msg.type)).toEqual(msg);
             return true;
-          } catch (err) {
+          } catch {
             return false;
           }
         },
         { timeout: 3000 }
       );
-    } catch (err) {
+    } catch {
       expect(findLastResponseWithType(msg.type)).toEqual(msg);
     }
   }
@@ -157,10 +157,12 @@ export function createRendererConnectTestApi(args: {
         },
         { timeout: 1000 }
       );
-    } finally {
-      if (!lastMsg || lastMsg.type !== msgType) {
-        throw new Error(`"${msgType}" message never arrived`);
-      }
+    } catch {
+      // fall through to the type check below
+    }
+
+    if (!lastMsg || (lastMsg as RendererResponse).type !== msgType) {
+      throw new Error(`"${msgType}" message never arrived`);
     }
 
     return lastMsg as M;

@@ -22,8 +22,6 @@ export async function mockConsole<R>(
     });
     expectedLogs.forEach(msg => expect(console.log).toBeCalledWith(msg));
     return cbReturn;
-  } catch (err) {
-    throw err;
   } finally {
     console.log = origConsoleLog;
   }

@@ -183,7 +183,7 @@ function expectFixture(fixtures: CosmosFixtureJson[], fileName: string) {
 function resolveRendererUrl(url: string, rendererUrl: string) {
   try {
     return new URL(rendererUrl).href;
-  } catch (err) {
+  } catch {
     return new URL(rendererUrl, url).href;
   }
 }

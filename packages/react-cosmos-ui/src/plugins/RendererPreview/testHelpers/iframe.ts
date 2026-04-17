@@ -14,9 +14,6 @@ export async function mockIframeMessage(
   try {
     contentWindow.addEventListener('message', onMessage, false);
     await children({ onMessage });
-  } catch (err) {
-    // Make errors visible
-    throw err;
   } finally {
     contentWindow.removeEventListener('message', onMessage);
   }

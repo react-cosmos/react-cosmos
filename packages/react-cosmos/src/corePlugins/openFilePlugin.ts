@@ -33,7 +33,7 @@ export const openFilePlugin: CosmosServerPlugin = {
         // Fall back to open in case launchEditor fails. launchEditor only works
         // when the editor app is already open, but is favorable because it can
         // open a code file on a specific line & column.
-        .catch(err => open(absFilePath))
+        .catch(() => open(absFilePath))
         .catch(err => {
           console.log(err);
           res.status(500).send('Failed to open file');

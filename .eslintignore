@@ -1,7 +1,0 @@
-node_modules
-
-packages/*/dist
-examples/*/cosmos-export
-
-**/__testFs__/**
-coverage

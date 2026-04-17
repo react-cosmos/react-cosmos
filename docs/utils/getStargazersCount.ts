@@ -6,7 +6,7 @@ export async function getStargazersCount() {
     const res = await fetch(repoUrl);
     const repo = await res.json();
     return repo.stargazers_count ?? fallbackCount;
-  } catch (err) {
+  } catch {
     return fallbackCount;
   }
 }

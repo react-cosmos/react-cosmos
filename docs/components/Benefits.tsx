@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import { Rocket } from './Rocket';
 import styles from './Benefits.module.css';
 
@@ -21,24 +20,5 @@ export function Benefits() {
         </li>
       </ul>
     </div>
-  );
-}
-
-// Prototype quickly, debug with ease and
-// maintain quality at scale.
-
-type FeatureProps = {
-  title: string;
-  description: string;
-  icon: ReactNode;
-};
-function Feature({ title, description, icon }: FeatureProps) {
-  return (
-    <li>
-      <strong>
-        {icon} {title}
-      </strong>{' '}
-      {description}
-    </li>
   );
 }

@@ -124,12 +124,9 @@ function createModuleWrappers(
   }
 }
 
-function dynamicImportWrapper<T>(module: T) {
-  return new Promise<T>(async resolve => {
-    // Simulate module download time
-    await setTimeout(25 + Math.round(Math.random() * 25));
-    await act(async () => {
-      resolve(module);
-    });
-  });
+async function dynamicImportWrapper<T>(module: T): Promise<T> {
+  // Simulate module download time
+  await setTimeout(25 + Math.round(Math.random() * 25));
+  await act(async () => {});
+  return module;
 }

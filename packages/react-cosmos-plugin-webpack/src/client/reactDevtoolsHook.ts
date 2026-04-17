@@ -13,7 +13,7 @@ if (process.env.NODE_ENV === 'development') {
     (window as any).__REACT_DEVTOOLS_GLOBAL_HOOK__ = (
       window.parent as any
     ).__REACT_DEVTOOLS_GLOBAL_HOOK__;
-  } catch (err) {
+  } catch {
     console.warn('Could not access parent React devtools hook');
   }
 }
