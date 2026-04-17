@@ -123,9 +123,16 @@ function createModuleWrappers(
   }
 }
 
-async function dynamicImportWrapper<T>(module: T): Promise<T> {
-  // Simulate module download time
-  await setTimeout(25 + Math.round(Math.random() * 25));
-  await act(async () => {});
-  return module;
+function dynamicImportWrapper<T>(module: T): Promise<T> {
+  return new Promise<T>(resolve => {
+    // Resolving inside an `act()` scope ensures downstream React updates
+    // triggered by the awaiter's continuation are flushed within act.
+    void (async () => {
+      // Simulate module download time
+      await setTimeout(25 + Math.round(Math.random() * 25));
+      await act(async () => {
+        resolve(module);
+      });
+    })();
+  });
 }
