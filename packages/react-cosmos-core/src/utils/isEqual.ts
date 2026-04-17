@@ -1,3 +1,17 @@
+/**
+ * Deep equality for the subset of values that appear in react-cosmos
+ * fixture state, props, and element IDs.
+ *
+ * Handles: primitives (NaN and +0/-0 are treated as equal), Date, RegExp,
+ * Map, Set, arrays, and plain objects (enumerable own keys only).
+ *
+ * Not handled — do not rely on correct results for these:
+ * - Circular references (will stack overflow).
+ * - Sets containing non-primitives (compared by identity, not structure).
+ * - Symbol-keyed properties (ignored).
+ * - TypedArrays / ArrayBuffer / Error / arguments objects (fall through
+ *   to the plain-object branch).
+ */
 export function isEqual(a: unknown, b: unknown): boolean {
   if (a === b || (Number.isNaN(a) && Number.isNaN(b))) return true;
 
