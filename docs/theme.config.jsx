@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
-import { Footer } from './components/Footer.tsx';
-import { Logo } from './components/Logo.tsx';
-import { NavbarWrapper } from './components/NavbarWrapper.tsx';
+import { Footer } from './components/Footer';
+import { Logo } from './components/Logo';
+import { NavbarWrapper } from './components/NavbarWrapper';
 
 export default {
   docsRepositoryBase:
