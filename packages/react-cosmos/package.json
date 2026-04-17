@@ -7,7 +7,7 @@
   "type": "module",
   "main": "./index.js",
   "dependencies": {
-    "@skidding/launch-editor": "2.2.3",
+    "@skidding/launch-editor": "2.13.2",
     "chokidar": "3.6.0",
     "express": "4.22.1",
     "glob": "10.5.0",
