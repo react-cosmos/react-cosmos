@@ -1,15 +1,15 @@
 {
   "name": "react-cosmos-next",
-  "version": "7.2.0",
+  "version": "7.3.0",
   "description": "Next.js API for React Cosmos",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-next",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
   "dependencies": {
-    "react-cosmos-core": "^7.2.0",
-    "react-cosmos-dom": "^7.2.0",
-    "react-cosmos-renderer": "^7.2.0"
+    "react-cosmos-core": "^7.3.0",
+    "react-cosmos-dom": "^7.3.0",
+    "react-cosmos-renderer": "^7.3.0"
   },
   "peerDependencies": {
     "react": ">=18",

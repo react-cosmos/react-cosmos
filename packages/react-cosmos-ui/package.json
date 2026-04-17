@@ -1,6 +1,6 @@
 {
   "name": "react-cosmos-ui",
-  "version": "7.2.0",
+  "version": "7.3.0",
   "description": "React Cosmos UI",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/packages/react-cosmos-ui",
   "license": "MIT",
@@ -17,7 +17,7 @@
     "playground": "cosmos"
   },
   "dependencies": {
-    "react-cosmos-core": "^7.2.0"
+    "react-cosmos-core": "^7.3.0"
   },
   "peerDependencies": {
     "react": ">=18",
