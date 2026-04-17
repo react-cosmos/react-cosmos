@@ -1,6 +1,6 @@
+import { setTimeout } from 'node:timers/promises';
 import type { RenderResult } from '@testing-library/react';
 import { act, render } from '@testing-library/react';
-import { setTimeout } from 'node:timers/promises';
 import React from 'react';
 import type {
   ByPath,
