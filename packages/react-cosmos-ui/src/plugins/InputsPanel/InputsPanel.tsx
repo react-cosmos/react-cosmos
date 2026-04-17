@@ -1,5 +1,11 @@
 import React from 'react';
-import { InputFixtureState, InputsFixtureState, isEqual } from 'react-cosmos-core';
+import {
+  InputFixtureState,
+  InputsFixtureState,
+  isEqual,
+} from 'react-cosmos-core';
+import { IconButton32 } from '../../components/buttons/index.js';
+import { RotateCcwIcon } from '../../components/icons/index.js';
 import {
   SidePanelActions,
   SidePanelBody,
@@ -7,10 +13,8 @@ import {
   SidePanelHeader,
   SidePanelTitle,
 } from '../../components/SidePanel.js';
-import { IconButton32 } from '../../components/buttons/index.js';
-import { RotateCcwIcon } from '../../components/icons/index.js';
-import { InputSlot } from '../../slots/InputSlot.js';
 import { InputsActionSlot } from '../../slots/InputsActionSlot.js';
+import { InputSlot } from '../../slots/InputSlot.js';
 import { SetInputsFixtureState } from './shared.js';
 
 type Props = {

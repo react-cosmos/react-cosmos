@@ -1,5 +1,5 @@
-import { render } from '@testing-library/react';
 import path from 'node:path';
+import { render } from '@testing-library/react';
 import { createCosmosConfig } from '../cosmosConfig/createCosmosConfig.js';
 import { getFixtures } from './getFixtures.js';
 

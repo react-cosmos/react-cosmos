@@ -1,6 +1,6 @@
+import { setTimeout } from 'node:timers/promises';
 import { act, waitFor } from '@testing-library/react';
 import until from 'async-until';
-import { setTimeout } from 'node:timers/promises';
 import React from 'react';
 import { FixtureStatePrimitiveValue, uuid } from 'react-cosmos-core';
 import { ClassStateMock } from '../fixture/ClassStateMock.js';

@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
 import fs from 'fs/promises';
+import { expect, test } from '@playwright/test';
 import { exampleName, lazy } from './helpers/envVars.js';
 import { checkHomeLink } from './helpers/homeLink.js';
 

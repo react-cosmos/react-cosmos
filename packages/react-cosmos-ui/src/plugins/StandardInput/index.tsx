@@ -7,8 +7,8 @@ import {
 import { createPlugin } from 'react-plugin';
 import { ExpandCollapseValues } from '../../components/ValueInputTree/ExpandCollapseValues.js';
 import { ValueInputTree } from '../../components/ValueInputTree/index.js';
-import { InputSlotProps } from '../../slots/InputSlot.js';
 import { InputsActionSlotProps } from '../../slots/InputsActionSlot.js';
+import { InputSlotProps } from '../../slots/InputSlot.js';
 import { StandardInputSpec } from './spec.js';
 import { useTreeExpansionStorage } from './storage.js';
 

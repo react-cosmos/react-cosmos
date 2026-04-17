@@ -1,5 +1,5 @@
-import { Express } from 'express';
 import http from 'http';
+import { Express } from 'express';
 import { CosmosMode, MessageType } from 'react-cosmos-core';
 import { CosmosConfig } from '../cosmosConfig/types.js';
 

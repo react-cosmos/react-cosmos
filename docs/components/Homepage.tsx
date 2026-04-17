@@ -1,9 +1,9 @@
 import { useData } from 'nextra/data';
 import { Benefits } from './Benefits';
 import { Features } from './Features';
-import styles from './Homepage.module.css';
 import { HomepageHero } from './HomepageHero';
 import { HomepageLogos } from './HomepageLogos';
+import styles from './Homepage.module.css';
 
 type StaticProps = {
   version: string;

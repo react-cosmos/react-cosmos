@@ -1,7 +1,7 @@
-import chalk from 'chalk';
 import fs from 'fs/promises';
-import { globSync } from 'glob';
 import { fileURLToPath } from 'url';
+import chalk from 'chalk';
+import { globSync } from 'glob';
 import {
   done,
   error,

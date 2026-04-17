@@ -9,7 +9,6 @@ import { RendererCoreSpec } from '../RendererCore/spec.js';
 import { RouterSpec } from '../Router/spec.js';
 import { StorageSpec } from '../Storage/spec.js';
 import { ResponsivePreview } from './ResponsivePreview/ResponsivePreview.js';
-import { ToggleButton } from './ToggleButton/index.js';
 import {
   DEFAULT_DEVICES,
   DEFAULT_VIEWPORT_STATE,
@@ -18,6 +17,7 @@ import {
   ViewportState,
 } from './shared.js';
 import { ResponsivePreviewSpec } from './spec.js';
+import { ToggleButton } from './ToggleButton/index.js';
 
 const { plug, namedPlug, register } = createPlugin<ResponsivePreviewSpec>({
   name: 'responsivePreview',

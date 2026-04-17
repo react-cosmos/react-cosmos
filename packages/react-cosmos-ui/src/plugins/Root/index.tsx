@@ -5,7 +5,6 @@ import { CoreSpec } from '../Core/spec.js';
 import { RendererCoreSpec } from '../RendererCore/spec.js';
 import { RouterSpec } from '../Router/spec.js';
 import { StorageSpec } from '../Storage/spec.js';
-import { Root } from './Root.js';
 import {
   isControlPanelOpen,
   openControlPanel,
@@ -26,6 +25,7 @@ import {
   getNavPanelWidth,
   setNavPanelWidth,
 } from './persistentState/navPanelWidth.js';
+import { Root } from './Root.js';
 import { RootContext } from './shared.js';
 import { RootSpec } from './spec.js';
 

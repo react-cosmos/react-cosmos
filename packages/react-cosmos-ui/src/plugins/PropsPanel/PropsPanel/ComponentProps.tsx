@@ -6,6 +6,8 @@ import {
   resetPropsFixtureStateItem,
   updatePropsFixtureStateItem,
 } from 'react-cosmos-core';
+import { IconButton32 } from '../../../components/buttons/index.js';
+import { CopyIcon, RotateCcwIcon } from '../../../components/icons/index.js';
 import {
   SidePanelActions,
   SidePanelBody,
@@ -20,8 +22,6 @@ import {
   ValueInputTree,
   stringifyElementId,
 } from '../../../components/ValueInputTree/index.js';
-import { IconButton32 } from '../../../components/buttons/index.js';
-import { CopyIcon, RotateCcwIcon } from '../../../components/icons/index.js';
 import { TreeExpansion } from '../../../shared/treeExpansion.js';
 import { SetPropsFixtureState } from '../shared.js';
 import { propsFsItemUpdater } from './shared.js';

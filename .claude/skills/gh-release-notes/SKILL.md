@@ -1,7 +1,7 @@
 ---
 name: gh-release-notes
 description: Generate a clean list of commits between two git tags for GitHub release notes.
-argument-hint: "[tag]"
+argument-hint: '[tag]'
 ---
 
 # GitHub Release Notes

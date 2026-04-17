@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
-import styles from './Benefits.module.css';
 import { Rocket } from './Rocket';
+import styles from './Benefits.module.css';
 
 export function Benefits() {
   return (

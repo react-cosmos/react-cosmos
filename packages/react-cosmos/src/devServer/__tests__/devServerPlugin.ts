@@ -9,11 +9,11 @@ import { mockCosmosConfig, mockFile } from '../../testHelpers/mockFs.js';
 import '../../testHelpers/mockOsNetworkInterfaces.js';
 import { mockCliArgs } from '../../testHelpers/mockYargs.js';
 
-import retry from '@skidding/async-retry';
-import 'isomorphic-fetch';
 import * as http from 'node:http';
+import 'isomorphic-fetch';
 import path from 'node:path';
 import { setTimeout } from 'node:timers/promises';
+import retry from '@skidding/async-retry';
 import { ServerMessage, SocketMessage } from 'react-cosmos-core';
 import { vi } from 'vitest';
 import { DevServerPluginArgs } from '../../cosmosPlugin/types.js';
