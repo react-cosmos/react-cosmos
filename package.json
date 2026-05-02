@@ -70,8 +70,8 @@
     "vite": "5.4.21",
     "vitest": "2.1.9",
     "wait-on": "7.2.0",
-    "webpack": "5.105.4",
-    "webpack-cli": "5.1.4",
+    "webpack": "5.106.2",
+    "webpack-cli": "7.0.2",
     "yargs": "17.7.2"
   }
 }

@@ -16,7 +16,7 @@
     "@babel/preset-react": "7.28.5",
     "@babel/preset-typescript": "7.28.5",
     "@mdx-js/loader": "3.1.1",
-    "@pmmmwh/react-refresh-webpack-plugin": "0.6.0",
+    "@pmmmwh/react-refresh-webpack-plugin": "0.6.2",
     "babel-loader": "9.2.1",
     "examples-shared": "^7.0.0",
     "react": "19.2.5",
@@ -25,8 +25,8 @@
     "react-cosmos-plugin-open-fixture": "^7.3.0",
     "react-cosmos-plugin-webpack": "^7.3.0",
     "react-dom": "19.2.5",
-    "react-refresh": "0.17.0",
-    "webpack": "5.105.4",
-    "webpack-dev-server": "5.2.1"
+    "react-refresh": "0.18.0",
+    "webpack": "5.106.2",
+    "webpack-dev-server": "5.2.3"
   }
 }
