@@ -6,11 +6,10 @@
 // browsers — kept as a fallback for setups where neither DevTools nor React
 // Refresh has installed a hook.
 //
-// Wiring constraint: this file is imported by hand in each renderer
-// implementation. It must run *before* both user-defined global imports
-// (which may import React) and the main renderer entry (which imports
-// fixtures and decorators) — anything that imports React after this file
-// will see the hook we put in place.
+// Wiring constraint: this file must run *before* both user-defined global
+// imports (which may import React) and the main renderer entry (which
+// imports fixtures and decorators) — anything that imports React after
+// this file will see the hook we put in place.
 if (process.env.NODE_ENV === 'development') {
   type DevtoolsWindow = Window & {
     __REACT_DEVTOOLS_GLOBAL_HOOK__?: unknown;
