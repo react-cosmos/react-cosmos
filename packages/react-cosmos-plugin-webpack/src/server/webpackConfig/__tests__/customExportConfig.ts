@@ -10,7 +10,7 @@ import webpack from 'webpack';
 import { pkgPath } from '../../../testHelpers/pkgPath.js';
 import { RENDERER_FILENAME } from '../constants.js';
 import { getExportWebpackConfig } from '../getExportWebpackConfig.js';
-import { HtmlWebpackPlugin } from '../htmlPlugin.js';
+import type { HtmlWebpackPlugin } from '../htmlPlugin.js';
 
 beforeAll(async () => {
   await mockCwdModuleDefault('mywebpack.config.js', {
@@ -65,9 +65,7 @@ it('includes DOM devtooks hook entry', async () => {
 it('does not include webpack-hot-middleware entry', async () => {
   const { entry } = await getCustomExportWebpackConfig();
   expect(entry).not.toContain(
-    `${require.resolve(
-      'webpack-hot-middleware/client'
-    )}?reload=true&overlay=false`
+    `${require.resolve('webpack-hot-middleware/client')}?reload=true&overlay=false`
   );
 });
 

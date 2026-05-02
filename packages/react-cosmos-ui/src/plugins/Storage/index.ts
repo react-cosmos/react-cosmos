@@ -1,6 +1,7 @@
 import localForage from 'localforage';
-import { createPlugin, PluginContext } from 'react-plugin';
-import { StorageSpec } from './spec.js';
+import type { PluginContext } from 'react-plugin';
+import { createPlugin } from 'react-plugin';
+import type { StorageSpec } from './spec.js';
 
 type StorageContext = PluginContext<StorageSpec>;
 

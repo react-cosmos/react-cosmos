@@ -1,6 +1,7 @@
 import React from 'react';
 import { useFixtureInput } from 'react-cosmos/client';
-import { PluginList, SimplePlugin } from './PluginList.js';
+import type { SimplePlugin } from './PluginList.js';
+import { PluginList } from './PluginList.js';
 
 const initialPlugins: SimplePlugin[] = [
   { name: 'buildNotifications', enabled: true },

@@ -1,4 +1,4 @@
-import { PluginContext } from 'react-plugin';
-import { RemoteRendererSpec } from './spec.js';
+import type { PluginContext } from 'react-plugin';
+import type { RemoteRendererSpec } from './spec.js';
 
 export type RemoteRendererContext = PluginContext<RemoteRendererSpec>;

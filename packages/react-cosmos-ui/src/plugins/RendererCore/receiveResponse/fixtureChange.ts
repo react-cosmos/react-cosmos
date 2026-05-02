@@ -1,6 +1,6 @@
-import { FixtureChangeResponse } from 'react-cosmos-core';
-import { RouterSpec } from '../../Router/spec.js';
-import { RendererCoreContext } from '../shared/index.js';
+import type { FixtureChangeResponse } from 'react-cosmos-core';
+import type { RouterSpec } from '../../Router/spec.js';
+import type { RendererCoreContext } from '../shared/index.js';
 
 export function receiveFixtureChangeResponse(
   context: RendererCoreContext,

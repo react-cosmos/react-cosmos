@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { ViewportFixtureState } from 'react-cosmos-core';
+import type { ViewportFixtureState } from 'react-cosmos-core';
 import { useFixtureState } from './useFixtureState.js';
 
 type Props = {

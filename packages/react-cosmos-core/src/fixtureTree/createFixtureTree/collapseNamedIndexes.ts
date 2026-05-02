@@ -1,4 +1,4 @@
-import { FixtureTreeNode } from '../types.js';
+import type { FixtureTreeNode } from '../types.js';
 
 export function collapseNamedIndexes(
   treeNode: FixtureTreeNode

@@ -9,14 +9,14 @@ import { mockCosmosConfig, mockFile } from '../../testHelpers/mockFs.js';
 import '../../testHelpers/mockOsNetworkInterfaces.js';
 import { mockCliArgs } from '../../testHelpers/mockYargs.js';
 
-import retry from '@skidding/async-retry';
-import 'isomorphic-fetch';
 import * as http from 'node:http';
+import 'isomorphic-fetch';
 import path from 'node:path';
 import { setTimeout } from 'node:timers/promises';
-import { ServerMessage, SocketMessage } from 'react-cosmos-core';
+import retry from '@skidding/async-retry';
+import type { ServerMessage, SocketMessage } from 'react-cosmos-core';
 import { vi } from 'vitest';
-import { DevServerPluginArgs } from '../../cosmosPlugin/types.js';
+import type { DevServerPluginArgs } from '../../cosmosPlugin/types.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
 import { viteWorkerId } from '../../testHelpers/viteUtils.js';
 import { startDevServer } from '../startDevServer.js';

@@ -1,9 +1,6 @@
 import { useCallback, useContext } from 'react';
-import {
-  FixtureStateChange,
-  fixtureStateByName,
-  updateFixtureState,
-} from 'react-cosmos-core';
+import type { FixtureStateChange } from 'react-cosmos-core';
+import { fixtureStateByName, updateFixtureState } from 'react-cosmos-core';
 import { FixtureContext } from './FixtureContext.js';
 
 export function useFixtureState<T>(name: string) {

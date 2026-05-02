@@ -1,4 +1,4 @@
-import { FixtureTreeNode } from '../types.js';
+import type { FixtureTreeNode } from '../types.js';
 import { hideFixtureSuffix } from './hideFixtureSuffix.js';
 
 it('hides fixture suffix', () => {

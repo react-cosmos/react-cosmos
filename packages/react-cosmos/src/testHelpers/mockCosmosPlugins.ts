@@ -1,4 +1,4 @@
-import { CosmosPluginConfig } from 'react-cosmos-core';
+import type { CosmosPluginConfig } from 'react-cosmos-core';
 import { vi } from 'vitest';
 
 type ActualApi = typeof import('../cosmosPlugin/findCosmosPluginConfigs.js');
@@ -26,7 +26,5 @@ export async function mockCosmosPlugins(configs: CosmosPluginConfig[]) {
 }
 
 async function importMocked() {
-  return import(
-    '../cosmosPlugin/findCosmosPluginConfigs.js'
-  ) as Promise<MockApi>;
+  return import('../cosmosPlugin/findCosmosPluginConfigs.js') as Promise<MockApi>;
 }

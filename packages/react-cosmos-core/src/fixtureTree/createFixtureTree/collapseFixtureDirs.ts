@@ -1,5 +1,4 @@
-import { omit } from 'lodash-es';
-import { FixtureTreeNode } from '../types.js';
+import type { FixtureTreeNode } from '../types.js';
 
 export function collapseFixtureDirs(
   treeNode: FixtureTreeNode,
@@ -10,7 +9,7 @@ export function collapseFixtureDirs(
 
   const collapsableDirNode = children[fixturesDir];
   if (collapsableDirNode && collapsableDirNode.data.type === 'fileDir') {
-    const otherChildren = omit(children, fixturesDir);
+    const { [fixturesDir]: _, ...otherChildren } = children;
     const innerChildren = collapsableDirNode.children;
     // Make sure children of the collapsed dir don't overlap with children of
     // the parent dir

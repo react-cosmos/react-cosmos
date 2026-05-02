@@ -1,7 +1,7 @@
-import { omit } from 'lodash-es';
 import { registerPlaygroundShortcuts } from 'react-cosmos-core';
-import { createPlugin, PluginContext } from 'react-plugin';
-import { Commands, CoreSpec } from './spec.js';
+import type { PluginContext } from 'react-plugin';
+import { createPlugin } from 'react-plugin';
+import type { Commands, CoreSpec } from './spec.js';
 
 type CoreContext = PluginContext<CoreSpec>;
 
@@ -53,7 +53,11 @@ function registerCommands(context: CoreContext, commands: Commands) {
   return () =>
     context.setState(prevState => ({
       ...prevState,
-      commands: omit(prevState.commands, ...Object.keys(commands)),
+      commands: Object.fromEntries(
+        Object.entries(prevState.commands).filter(
+          ([k]) => !Object.keys(commands).includes(k)
+        )
+      ),
     }));
 }
 

@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import {
+import type {
   FixtureStateValues,
   InputsFixtureState,
   StandardInputFixtureState,
@@ -7,9 +7,9 @@ import {
 import { createPlugin } from 'react-plugin';
 import { ExpandCollapseValues } from '../../components/ValueInputTree/ExpandCollapseValues.js';
 import { ValueInputTree } from '../../components/ValueInputTree/index.js';
-import { InputSlotProps } from '../../slots/InputSlot.js';
-import { InputsActionSlotProps } from '../../slots/InputsActionSlot.js';
-import { StandardInputSpec } from './spec.js';
+import type { InputsActionSlotProps } from '../../slots/InputsActionSlot.js';
+import type { InputSlotProps } from '../../slots/InputSlot.js';
+import type { StandardInputSpec } from './spec.js';
 import { useTreeExpansionStorage } from './storage.js';
 
 const { namedPlug, plug, register } = createPlugin<StandardInputSpec>({

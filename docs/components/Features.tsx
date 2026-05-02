@@ -1,12 +1,12 @@
 import { Link } from 'nextra-theme-docs';
-import { ReactNode } from 'react';
-import styles from './Features.module.css';
+import type { ReactNode } from 'react';
 import BoxSvg from './svg/icons/box.svg';
 import CodeSvg from './svg/icons/code.svg';
 import MonitorSvg from './svg/icons/monitor.svg';
 import SettingsSvg from './svg/icons/settings.svg';
 import UploadCloudSvg from './svg/icons/upload-cloud.svg';
 import ZapSvg from './svg/icons/zap.svg';
+import styles from './Features.module.css';
 
 export function Features() {
   return (

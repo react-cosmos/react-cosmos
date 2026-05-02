@@ -1,7 +1,7 @@
-import { RendererResponse } from 'react-cosmos-core';
-import { NotificationsSpec } from '../Notifications/spec.js';
-import { RendererCoreSpec } from '../RendererCore/spec.js';
-import { RendererPreviewContext } from './shared.js';
+import type { RendererResponse } from 'react-cosmos-core';
+import type { NotificationsSpec } from '../Notifications/spec.js';
+import type { RendererCoreSpec } from '../RendererCore/spec.js';
+import type { RendererPreviewContext } from './shared.js';
 
 type WindowMsg = { data: { [key: string]: unknown } };
 

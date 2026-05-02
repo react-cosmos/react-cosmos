@@ -1,12 +1,12 @@
 'use client';
 import React from 'react';
-import {
+import type {
   FixtureId,
   FixtureList,
   FixtureState,
   RendererConnect,
 } from 'react-cosmos-core';
-import { SelectedFixture } from '../fixtureLoaders/SelectedFixture.js';
+import type { SelectedFixture } from '../fixtureLoaders/SelectedFixture.js';
 import { RendererContext } from './RendererContext.js';
 
 type Props = {

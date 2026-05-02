@@ -12,7 +12,7 @@ import webpack from 'webpack';
 import { pkgPath } from '../../../testHelpers/pkgPath.js';
 import { RENDERER_FILENAME } from '../constants.js';
 import { getDevWebpackConfig } from '../getDevWebpackConfig.js';
-import { HtmlWebpackPlugin } from '../htmlPlugin.js';
+import type { HtmlWebpackPlugin } from '../htmlPlugin.js';
 
 const mockWebpackConfig = vi.fn(() => ({
   module: { rules: [MY_RULE] },
@@ -94,9 +94,7 @@ it('includes DOM devtooks hook entry', async () => {
 it('includes webpack-hot-middleware entry', async () => {
   const { entry } = await getCustomDevWebpackConfig();
   expect(entry).toContain(
-    `${require.resolve(
-      'webpack-hot-middleware/client'
-    )}?reload=false&overlay=false`
+    `${require.resolve('webpack-hot-middleware/client')}?reload=false&overlay=false`
   );
 });
 

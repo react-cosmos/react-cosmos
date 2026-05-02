@@ -1,11 +1,7 @@
-export type NotificationType = 'success' | 'error' | 'info' | 'loading';
-
-export type NotificationItem = {
-  id: string;
-  type: NotificationType;
-  title: string;
-  info: string;
-};
+import type {
+  NotificationItem,
+  TimedNotificationItem,
+} from 'react-cosmos-core';
 
 export type NotificationsSpec = {
   name: 'notifications';
@@ -19,6 +15,6 @@ export type NotificationsSpec = {
   methods: {
     pushStickyNotification(notification: NotificationItem): void;
     removeStickyNotification(notificationId: string): void;
-    pushTimedNotification(notification: NotificationItem): void;
+    pushTimedNotification(notification: TimedNotificationItem): void;
   };
 };

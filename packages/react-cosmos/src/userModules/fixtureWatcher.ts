@@ -1,6 +1,6 @@
-import { FSWatcher, watch } from 'chokidar';
-import { debounce } from 'lodash-es';
-import { CosmosConfig } from '../cosmosConfig/types.js';
+import type { FSWatcher } from 'chokidar';
+import { watch } from 'chokidar';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
 import { getDecoratorPatterns, getFixturePatterns } from './shared.js';
 
 const DEBOUNCE_INTERVAL = 50;
@@ -27,4 +27,15 @@ export async function startFixtureWatcher(
         debounce(() => callback(), DEBOUNCE_INTERVAL)
       );
   });
+}
+
+function debounce<T extends (...args: unknown[]) => unknown>(
+  fn: T,
+  delay: number
+): T {
+  let timer: ReturnType<typeof setTimeout>;
+  return ((...args: unknown[]) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), delay);
+  }) as T;
 }

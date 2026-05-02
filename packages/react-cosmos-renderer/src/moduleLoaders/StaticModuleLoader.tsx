@@ -1,11 +1,11 @@
 import React from 'react';
-import {
+import type {
   ByPath,
   FixtureModules,
   ReactDecoratorWrapper,
   ReactFixtureWrapper,
-  getSortedDecoratorsForFixturePath,
 } from 'react-cosmos-core';
+import { getSortedDecoratorsForFixturePath } from 'react-cosmos-core';
 
 type Props = {
   fixtureWrapper: ReactFixtureWrapper;

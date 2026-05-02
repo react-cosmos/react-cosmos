@@ -29,6 +29,7 @@ jobs:
       - run: npm ci --cache .npm-cache
 
       # Test source (with cross-package coverage)
+      - run: npm run format:check
       - run: npm run src
       - run: npm run check-types
       - run: npm run lint
@@ -55,11 +56,11 @@ jobs:
         include:
           - example: webpack
             os: ubuntu
-            node-version: 18
+            node-version: 22
             lazy: false
           - example: webpack
             os: windows
-            node-version: 18
+            node-version: 22
             lazy: false
           - example: webpack
             os: ubuntu
@@ -90,7 +91,7 @@ jobs:
         id: playwright-cache
         with:
           path: ${{ matrix.os == 'windows' && 'C:\Users\runneradmin\AppData\Local\ms-playwright' || '~/.cache/ms-playwright' }}
-          key: '${{ runner.os }}-playwright-1.52.0'
+          key: '${{ runner.os }}-playwright-1.58.1'
 
       # https://playwright.dev/docs/browsers#install-system-dependencies
       - if: steps.playwright-cache.outputs.cache-hit != 'true'

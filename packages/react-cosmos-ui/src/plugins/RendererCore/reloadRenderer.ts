@@ -1,4 +1,4 @@
-import { RendererCoreContext } from './shared/index.js';
+import type { RendererCoreContext } from './shared/index.js';
 import { postReloadRendererRequest } from './shared/postRequest.js';
 
 export function reloadRenderer(context: RendererCoreContext) {

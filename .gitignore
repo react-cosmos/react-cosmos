@@ -1,8 +1,10 @@
 node_modules
 npm-debug.log
 .npm-cache
+.claude/settings.local.json
 
 packages/*/dist
+*.tsbuildinfo
 __testFs__
 
 coverage

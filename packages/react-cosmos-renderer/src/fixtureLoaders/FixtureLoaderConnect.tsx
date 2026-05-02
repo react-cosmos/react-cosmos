@@ -1,11 +1,8 @@
 import React from 'react';
-import {
-  DelayRender,
-  UserModuleWrappers,
-  getFixtureListFromWrappers,
-} from 'react-cosmos-core';
+import type { UserModuleWrappers } from 'react-cosmos-core';
+import { DelayRender, getFixtureListFromWrappers } from 'react-cosmos-core';
 import { RendererSync } from './RendererSync.js';
-import { SelectedFixture } from './SelectedFixture.js';
+import type { SelectedFixture } from './SelectedFixture.js';
 
 type Props = {
   moduleWrappers: UserModuleWrappers;

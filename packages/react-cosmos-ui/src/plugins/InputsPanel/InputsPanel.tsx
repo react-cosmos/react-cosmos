@@ -1,6 +1,8 @@
-import { isEqual } from 'lodash-es';
 import React from 'react';
-import { InputFixtureState, InputsFixtureState } from 'react-cosmos-core';
+import type { InputFixtureState, InputsFixtureState } from 'react-cosmos-core';
+import { isEqual } from 'react-cosmos-core';
+import { IconButton32 } from '../../components/buttons/index.js';
+import { RotateCcwIcon } from '../../components/icons/index.js';
 import {
   SidePanelActions,
   SidePanelBody,
@@ -8,11 +10,9 @@ import {
   SidePanelHeader,
   SidePanelTitle,
 } from '../../components/SidePanel.js';
-import { IconButton32 } from '../../components/buttons/index.js';
-import { RotateCcwIcon } from '../../components/icons/index.js';
-import { InputSlot } from '../../slots/InputSlot.js';
 import { InputsActionSlot } from '../../slots/InputsActionSlot.js';
-import { SetInputsFixtureState } from './shared.js';
+import { InputSlot } from '../../slots/InputSlot.js';
+import type { SetInputsFixtureState } from './shared.js';
 
 type Props = {
   fixtureState: InputsFixtureState | undefined;

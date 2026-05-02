@@ -1,5 +1,5 @@
 import React from 'react';
-import { ClassStateFixtureState } from 'react-cosmos-core';
+import type { ClassStateFixtureState } from 'react-cosmos-core';
 import { stringifyElementId } from '../../../components/ValueInputTree/index.js';
 import { ClassStatePanel } from './index.js';
 

@@ -1,10 +1,5 @@
-import { flatten } from 'lodash-es';
-import {
-  UserImportsTemplateArgs,
-  createImportMap,
-  importPath,
-  sortedImportKeys,
-} from './shared.js';
+import type { UserImportsTemplateArgs } from './shared.js';
+import { createImportMap, importPath, sortedImportKeys } from './shared.js';
 
 export function userImportsLazyTemplate({
   globalImports,
@@ -68,7 +63,7 @@ export const moduleWrappers${ts(': UserModuleWrappers')} = {
 }
 
 function importsStr(items: string[][]) {
-  if (flatten(items).length === 0) {
+  if (items.flat().length === 0) {
     return '';
   }
 

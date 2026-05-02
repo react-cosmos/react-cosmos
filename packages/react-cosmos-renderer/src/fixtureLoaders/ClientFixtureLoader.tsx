@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import {
+import type {
   FixtureModules,
   ReactDecorator,
   UserModuleWrappers,
@@ -9,8 +9,8 @@ import { FixtureModule } from '../fixtureModule/FixtureModule.js';
 import { LazyModuleLoader } from '../moduleLoaders/LazyModuleLoader.js';
 import { StaticModuleLoader } from '../moduleLoaders/StaticModuleLoader.js';
 import { RendererContext } from '../rendererConnect/RendererContext.js';
-import { FixtureLoaderConnect } from './FixtureLoaderConnect.js';
 import { defaultRenderMessage } from './defaultRenderMessage.js';
+import { FixtureLoaderConnect } from './FixtureLoaderConnect.js';
 
 type Props = {
   moduleWrappers: UserModuleWrappers;

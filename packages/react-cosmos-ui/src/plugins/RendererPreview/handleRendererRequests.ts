@@ -1,6 +1,6 @@
-import { MessageType } from 'react-cosmos-core';
-import { NotificationsSpec } from '../Notifications/spec.js';
-import { RendererPreviewContext } from './shared.js';
+import type { MessageType } from 'react-cosmos-core';
+import type { NotificationsSpec } from '../Notifications/spec.js';
+import type { RendererPreviewContext } from './shared.js';
 
 type State = {
   iframeRef: HTMLIFrameElement;
@@ -91,7 +91,7 @@ function iframeLocationChanged(iframeWindow: Window, iframeSrc: string) {
         iframeSrc.replace(/\.html$/, '')
       )
     );
-  } catch (err) {
+  } catch {
     // An exception is thrown when trying to access the location of a
     // cross-origin frame, which signals that the iframe location host changed.
     return true;

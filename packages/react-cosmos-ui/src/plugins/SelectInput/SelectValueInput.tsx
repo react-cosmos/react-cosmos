@@ -1,11 +1,11 @@
 import React from 'react';
-import { SelectInputFixtureState } from 'react-cosmos-core';
+import type { SelectInputFixtureState } from 'react-cosmos-core';
+import { Select } from '../../components/inputs/Select.js';
 import {
   Label,
   ValueDataContainer,
   ValueInputContainer,
 } from '../../components/ValueInputTree/ValueInput/shared.js';
-import { Select } from '../../components/inputs/Select.js';
 import { isGroupedOptions } from '../../shared/groupedOptions.js';
 import { lightBlue } from '../../style/colors.js';
 

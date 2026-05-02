@@ -1,6 +1,6 @@
 import http from 'http';
 import https from 'https';
-import { CosmosConfig } from '../cosmosConfig/types.js';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
 import { getHttpsCreds } from './httpsCreds.js';
 
 type RequestListener = (

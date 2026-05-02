@@ -1,11 +1,11 @@
 import React from 'react';
-import {
+import type {
   FixtureId,
   FixtureList,
   FixtureState,
   RendererConnect,
 } from 'react-cosmos-core';
-import { SelectedFixture } from '../fixtureLoaders/SelectedFixture.js';
+import type { SelectedFixture } from '../fixtureLoaders/SelectedFixture.js';
 
 export type RendererContextValue = {
   rendererId: string;

@@ -1,5 +1,5 @@
 import { loadPlugins } from 'react-plugin';
-import { PlaygroundConfig } from './playgroundConfig.js';
+import type { PlaygroundConfig } from './playgroundConfig.js';
 import './plugins/pluginEntry.js';
 import { DEFAULT_PLUGIN_CONFIG } from './shared/defaultPluginConfig.js';
 

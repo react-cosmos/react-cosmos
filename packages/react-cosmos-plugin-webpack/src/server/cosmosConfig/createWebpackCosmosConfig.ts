@@ -1,5 +1,6 @@
 import path from 'path';
-import { CosmosConfig, fileExists } from 'react-cosmos';
+import type { CosmosConfig } from 'react-cosmos';
+import { fileExists } from 'react-cosmos';
 import { resolveLoose } from '../utils/resolveLoose.js';
 
 type WebpackCosmosConfig = {

@@ -1,9 +1,6 @@
 import path from 'node:path';
-import {
-  CosmosConfig,
-  CosmosConfigPluginArgs,
-  findNextAvailablePort,
-} from 'react-cosmos';
+import type { CosmosConfig, CosmosConfigPluginArgs } from 'react-cosmos';
+import { findNextAvailablePort } from 'react-cosmos';
 import { RENDERER_FILENAME } from './constants.js';
 import { getCosmosVitePort } from './createCosmosViteConfig.js';
 

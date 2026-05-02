@@ -1,6 +1,6 @@
 import React from 'react';
-import { FixtureDecoratorId } from 'react-cosmos-core';
-import { ElRefs } from './shared.js';
+import type { FixtureDecoratorId } from 'react-cosmos-core';
+import type { ElRefs } from './shared.js';
 import { useFixtureClassState } from './useFixtureClassState.js';
 import { useReadClassState } from './useReadClassState.js';
 

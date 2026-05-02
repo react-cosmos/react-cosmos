@@ -59,6 +59,19 @@ export default nextCosmosPage(cosmosImports);
 
 This is your Cosmos Renderer.
 
+<Callout type="info">
+  By default, `nextCosmosPage` does not access `searchParams` to keep routes
+  eligible for static rendering. If your fixtures need search params, opt in
+  with `readSearchParams`:
+
+```jsx
+export default nextCosmosPage({ ...cosmosImports, readSearchParams: true });
+```
+
+This opts the route into [dynamic rendering](https://nextjs.org/docs/app/api-reference/file-conventions/page#searchparams-optional).
+
+</Callout>
+
 Start Next.js:
 
 ```bash npm2yarn

@@ -1,4 +1,4 @@
-import { ComponentType } from 'react';
+import type { ComponentType } from 'react';
 
 const componentNames: WeakMap<ComponentType, string> = new WeakMap();
 

@@ -1,7 +1,7 @@
-import { Express } from 'express';
-import http from 'http';
-import { CosmosMode, MessageType } from 'react-cosmos-core';
-import { CosmosConfig } from '../cosmosConfig/types.js';
+import type http from 'http';
+import type { Express } from 'express';
+import type { CosmosMode, MessageType } from 'react-cosmos-core';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
 
 export type CosmosPlatform = 'web' | 'native';
 

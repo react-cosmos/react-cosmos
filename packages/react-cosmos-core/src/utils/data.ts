@@ -1,4 +1,3 @@
-import { isPlainObject } from 'lodash-es';
 import { isValidElement } from 'react';
 
 export type PrimitiveData = string | number | boolean | null | undefined;
@@ -38,7 +37,10 @@ export function isPrimitiveData(data: unknown): data is PrimitiveData {
 }
 
 export function isObject(data: unknown): data is ObjectData {
-  return isPlainObject(data) && !isValidElement(data);
+  if (data === null || typeof data !== 'object' || isValidElement(data))
+    return false;
+  const proto = Object.getPrototypeOf(data);
+  return proto === Object.prototype || proto === null;
 }
 
 export function isArray(data: unknown): data is ArrayData {

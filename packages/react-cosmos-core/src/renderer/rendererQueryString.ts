@@ -1,4 +1,4 @@
-import { FixtureId } from '../userModules/fixtureTypes.js';
+import type { FixtureId } from '../userModules/fixtureTypes.js';
 import { buildQueryString, parseQueryString } from '../utils/queryString.js';
 
 type RendererParams = {

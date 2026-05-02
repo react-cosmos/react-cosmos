@@ -1,9 +1,9 @@
 import path from 'node:path';
 import { vi } from 'vitest';
-import { CosmosConfig } from '../cosmosConfig/types.js';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
 import { getCwdPath } from './cwd.js';
 
-type ActualApi = typeof import('../utils/fs');
+type ActualApi = typeof import('../utils/fs.js');
 
 type MockApi = ActualApi & {
   __mockFile: (filePath: string, fileMock: {}) => void;

@@ -1,6 +1,6 @@
 import { createProxyMiddleware } from 'http-proxy-middleware';
-import { CosmosConfig } from '../cosmosConfig/types.js';
-import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
+import type { CosmosServerPlugin } from '../cosmosPlugin/types.js';
 
 type HttpProxyConfig = {
   [context: string]:
@@ -20,12 +20,12 @@ export const httpProxyPlugin: CosmosServerPlugin = {
     if (platform !== 'web') return;
 
     const httpProxyConfig = getHttpProxyCosmosConfig(config);
-    Object.keys(httpProxyConfig).forEach(context => {
-      const value = httpProxyConfig[context];
+    Object.keys(httpProxyConfig).forEach(pathFilter => {
+      const value = httpProxyConfig[pathFilter];
       if (typeof value === 'string') {
-        app.use(context, createProxyMiddleware(context, { target: value }));
+        app.use(pathFilter, createProxyMiddleware({ target: value }));
       } else if (typeof value === 'object') {
-        app.use(context, createProxyMiddleware(context, value));
+        app.use(pathFilter, createProxyMiddleware(value));
       }
     });
   },

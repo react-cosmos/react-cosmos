@@ -1,4 +1,4 @@
-import { CosmosPluginConfig } from 'react-cosmos-core';
+import type { CosmosPluginConfig } from 'react-cosmos-core';
 import { coreServerPlugins } from '../corePlugins/index.js';
 import { importServerPlugins } from './importServerPlugins.js';
 

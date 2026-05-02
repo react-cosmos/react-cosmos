@@ -1,17 +1,14 @@
 'use client';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React from 'react';
-import {
-  FixtureId,
-  RendererConfig,
-  createWebRendererUrl,
-} from 'react-cosmos-core';
+import type { FixtureId, RendererConfig } from 'react-cosmos-core';
+import { createWebRendererUrl } from 'react-cosmos-core';
 import {
   GlobalErrorHandler,
   useDomRendererConnect,
   useDomRendererId,
 } from 'react-cosmos-dom';
-import { SelectedFixture } from 'react-cosmos-renderer';
+import type { SelectedFixture } from 'react-cosmos-renderer';
 import { RendererProvider } from 'react-cosmos-renderer/client';
 
 type Props = {

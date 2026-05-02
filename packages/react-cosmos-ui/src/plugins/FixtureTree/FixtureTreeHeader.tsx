@@ -1,16 +1,17 @@
 import React, { useMemo } from 'react';
-import { createFixtureTree, FixtureList } from 'react-cosmos-core';
+import type { FixtureList } from 'react-cosmos-core';
+import { createFixtureTree } from 'react-cosmos-core';
 import styled from 'styled-components';
 import { IconButton32 } from '../../components/buttons/index.js';
 import {
   MinusSquareIcon,
   PlusSquareIcon,
 } from '../../components/icons/index.js';
+import type { TreeExpansion } from '../../shared/treeExpansion.js';
 import {
   getFullTreeExpansion,
   hasExpandableNodes,
   isTreeFullyCollapsed,
-  TreeExpansion,
 } from '../../shared/treeExpansion.js';
 import { grey128, grey32 } from '../../style/colors.js';
 

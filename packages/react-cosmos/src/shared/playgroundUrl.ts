@@ -1,4 +1,4 @@
-import { CosmosConfig } from '../cosmosConfig/types.js';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
 import { getServerHost } from './serverAddress.js';
 
 export function getPlaygroundUrls(config: CosmosConfig) {

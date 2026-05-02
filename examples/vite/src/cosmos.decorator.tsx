@@ -1,5 +1,6 @@
 import React from 'react';
-import { DecoratorProps, Viewport } from 'react-cosmos/client';
+import type { DecoratorProps } from 'react-cosmos/client';
+import { Viewport } from 'react-cosmos/client';
 
 type FixtureOptions = {
   viewport?: { width: number; height: number };

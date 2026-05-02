@@ -1,14 +1,15 @@
 import React from 'react';
-import { FixtureId } from 'react-cosmos-core';
-import { createPlugin, PluginContext } from 'react-plugin';
-import { NavPanelRowSlotProps } from '../../slots/NavPanelRowSlot.js';
-import { CoreSpec } from '../Core/spec.js';
-import { FixtureTreeSpec } from '../FixtureTree/spec.js';
-import { RendererCoreSpec } from '../RendererCore/spec.js';
-import { RouterSpec } from '../Router/spec.js';
+import type { FixtureId } from 'react-cosmos-core';
+import type { PluginContext } from 'react-plugin';
+import { createPlugin } from 'react-plugin';
+import type { NavPanelRowSlotProps } from '../../slots/NavPanelRowSlot.js';
+import type { CoreSpec } from '../Core/spec.js';
+import type { FixtureTreeSpec } from '../FixtureTree/spec.js';
+import type { RendererCoreSpec } from '../RendererCore/spec.js';
+import type { RouterSpec } from '../Router/spec.js';
 import { FixtureSearchHeader } from './FixtureSearchHeader.js';
 import { FixtureSearchOverlay } from './FixtureSearchOverlay.js';
-import { FixtureSearchSpec } from './spec.js';
+import type { FixtureSearchSpec } from './spec.js';
 
 type FixtureSearchContext = PluginContext<FixtureSearchSpec>;
 

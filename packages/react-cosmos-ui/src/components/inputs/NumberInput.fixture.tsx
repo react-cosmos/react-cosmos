@@ -3,7 +3,8 @@ import { useFixtureInput } from 'react-cosmos/client';
 import styled from 'styled-components';
 import { blue, grey248, grey8 } from '../../style/colors.js';
 import { Space } from '../Space.js';
-import { NumberInput, NumberInputStyles } from './NumberInput.js';
+import type { NumberInputStyles } from './NumberInput.js';
+import { NumberInput } from './NumberInput.js';
 
 const styles: NumberInputStyles = {
   focusedColor: grey248,

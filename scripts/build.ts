@@ -1,7 +1,8 @@
-import chalk from 'chalk';
 import { spawn } from 'child_process';
 import fs from 'fs/promises';
 import { fileURLToPath } from 'url';
+import chalk from 'chalk';
+import type { Package } from './shared.js';
 import {
   done,
   error,
@@ -9,7 +10,6 @@ import {
   getBoolArg,
   getFormattedPackageList,
   getUnnamedArg,
-  Package,
   packages,
 } from './shared.js';
 
@@ -133,7 +133,7 @@ async function buildPkgWebpack(pkgName: string, webpackConfig: string) {
 function runTypeScript(config: string) {
   const args = ['-b', config];
   if (watch) args.push('--watch');
-  const promise = runAsyncTask({ cmd: 'tsc', args });
+  const promise = runAsyncTask({ cmd: 'tsgo', args });
   return watch ? null : promise;
 }
 

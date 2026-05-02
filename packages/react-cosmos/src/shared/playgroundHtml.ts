@@ -1,14 +1,11 @@
 import fs from 'fs';
 import { readFile } from 'fs/promises';
 import path from 'path';
-import {
-  CosmosPluginConfig,
-  pickRendererUrl,
-  replaceKeys,
-} from 'react-cosmos-core';
-import { PlaygroundMountArgs } from 'react-cosmos-ui';
-import { CosmosConfig } from '../cosmosConfig/types.js';
-import { CosmosPlatform } from '../cosmosPlugin/types.js';
+import type { CosmosPluginConfig } from 'react-cosmos-core';
+import { pickRendererUrl, replaceKeys } from 'react-cosmos-core';
+import type { PlaygroundMountArgs } from 'react-cosmos-ui';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
+import type { CosmosPlatform } from '../cosmosPlugin/types.js';
 import { findUp } from '../utils/findUp.js';
 import { getServerFixtureList } from './serverFixtureList.js';
 import { getStaticPath } from './staticPath.js';

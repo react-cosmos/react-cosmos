@@ -1,6 +1,6 @@
-import { CosmosPluginConfig } from 'react-cosmos-core';
-import { CoreSpec } from './plugins/Core/spec.js';
-import { RendererCoreSpec } from './plugins/RendererCore/spec.js';
+import type { CosmosPluginConfig } from 'react-cosmos-core';
+import type { CoreSpec } from './plugins/Core/spec.js';
+import type { RendererCoreSpec } from './plugins/RendererCore/spec.js';
 
 // Config can also contain keys for 3rd party plugins
 export type PlaygroundConfig = {

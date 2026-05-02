@@ -1,4 +1,4 @@
-import { CosmosConfig } from '../cosmosConfig/types.js';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
 import { getServerAddress } from './serverAddress.js';
 
 export function getWebSocketUrl(config: CosmosConfig) {

@@ -1,5 +1,6 @@
-import { isEqual } from 'lodash-es';
-import React, { RefCallback } from 'react';
+import type { RefCallback } from 'react';
+import React from 'react';
+import { isEqual } from 'react-cosmos-core';
 
 export type ElRefs = { [elPath: string]: React.Component };
 

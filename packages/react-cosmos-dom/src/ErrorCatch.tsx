@@ -1,10 +1,8 @@
-import { isEqual } from 'lodash-es';
 import React from 'react';
-import { areNodesEqual, DecoratorProps } from 'react-cosmos-core';
-import {
-  FixtureContext,
-  FixtureContextValue,
-} from 'react-cosmos-renderer/client';
+import type { DecoratorProps } from 'react-cosmos-core';
+import { areNodesEqual, isEqual } from 'react-cosmos-core';
+import type { FixtureContextValue } from 'react-cosmos-renderer/client';
+import { FixtureContext } from 'react-cosmos-renderer/client';
 
 type State = {
   error: null | string;

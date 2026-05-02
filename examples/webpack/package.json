@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "example-webpack",
-  "version": "7.0.0",
+  "version": "7.3.0",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/examples/webpack",
   "license": "MIT",
   "type": "module",
@@ -12,21 +12,21 @@
     "native": "cosmos-native"
   },
   "dependencies": {
-    "@babel/core": "7.26.10",
-    "@babel/preset-react": "7.26.3",
-    "@babel/preset-typescript": "7.27.0",
-    "@mdx-js/loader": "3.1.0",
+    "@babel/core": "7.29.0",
+    "@babel/preset-react": "7.28.5",
+    "@babel/preset-typescript": "7.28.5",
+    "@mdx-js/loader": "3.1.1",
     "@pmmmwh/react-refresh-webpack-plugin": "0.6.0",
     "babel-loader": "9.2.1",
     "examples-shared": "^7.0.0",
-    "react": "19.1.0",
-    "react-cosmos": "^7.0.0",
-    "react-cosmos-plugin-boolean-input": "^7.0.0",
-    "react-cosmos-plugin-open-fixture": "^7.0.0",
-    "react-cosmos-plugin-webpack": "^7.0.0",
-    "react-dom": "19.1.0",
+    "react": "19.2.5",
+    "react-cosmos": "^7.3.0",
+    "react-cosmos-plugin-boolean-input": "^7.3.0",
+    "react-cosmos-plugin-open-fixture": "^7.3.0",
+    "react-cosmos-plugin-webpack": "^7.3.0",
+    "react-dom": "19.2.5",
     "react-refresh": "0.17.0",
-    "webpack": "5.99.6",
+    "webpack": "5.105.4",
     "webpack-dev-server": "5.2.1"
   }
 }

@@ -1,5 +1,6 @@
-import express, { Application } from 'express';
 import path from 'path';
+import type { Application } from 'express';
+import express from 'express';
 
 export function serveStaticDir(
   app: Application,

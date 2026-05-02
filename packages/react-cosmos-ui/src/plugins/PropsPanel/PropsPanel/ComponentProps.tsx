@@ -1,11 +1,15 @@
-import { isEqual } from 'lodash-es';
 import React, { useCallback } from 'react';
-import {
+import type {
   FixtureStateValues,
   PropsFixtureStateItem,
+} from 'react-cosmos-core';
+import {
+  isEqual,
   resetPropsFixtureStateItem,
   updatePropsFixtureStateItem,
 } from 'react-cosmos-core';
+import { IconButton32 } from '../../../components/buttons/index.js';
+import { CopyIcon, RotateCcwIcon } from '../../../components/icons/index.js';
 import {
   SidePanelActions,
   SidePanelBody,
@@ -14,16 +18,16 @@ import {
   SidePanelTitle,
 } from '../../../components/SidePanel.js';
 import { ExpandCollapseValues } from '../../../components/ValueInputTree/ExpandCollapseValues.js';
-import {
+import type {
   FixtureExpansion,
   OnElementExpansionChange,
+} from '../../../components/ValueInputTree/index.js';
+import {
   ValueInputTree,
   stringifyElementId,
 } from '../../../components/ValueInputTree/index.js';
-import { IconButton32 } from '../../../components/buttons/index.js';
-import { CopyIcon, RotateCcwIcon } from '../../../components/icons/index.js';
-import { TreeExpansion } from '../../../shared/treeExpansion.js';
-import { SetPropsFixtureState } from '../shared.js';
+import type { TreeExpansion } from '../../../shared/treeExpansion.js';
+import type { SetPropsFixtureState } from '../shared.js';
 import { propsFsItemUpdater } from './shared.js';
 
 type Props = {

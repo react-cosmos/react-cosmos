@@ -1,13 +1,15 @@
 import React from 'react';
-import { PropsFixtureState } from 'react-cosmos-core';
-import {
+import type { PropsFixtureState } from 'react-cosmos-core';
+import type {
   FixtureExpansion,
   OnElementExpansionChange,
+} from '../../../components/ValueInputTree/index.js';
+import {
   hasFsValues,
   sortFsValueGroups,
   stringifyElementId,
 } from '../../../components/ValueInputTree/index.js';
-import { SetPropsFixtureState } from '../shared.js';
+import type { SetPropsFixtureState } from '../shared.js';
 import { ComponentProps } from './ComponentProps.js';
 
 type Props = {

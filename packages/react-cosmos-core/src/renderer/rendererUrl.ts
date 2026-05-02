@@ -1,6 +1,6 @@
 import { Base64 } from 'js-base64';
-import { CosmosMode } from '../server/serverTypes.js';
-import { FixtureId } from '../userModules/fixtureTypes.js';
+import type { CosmosMode } from '../server/serverTypes.js';
+import type { FixtureId } from '../userModules/fixtureTypes.js';
 import { buildRendererQueryString } from './rendererQueryString.js';
 
 export type CosmosRendererUrl = null | string | { dev: string; export: string };
@@ -64,7 +64,7 @@ function hostOnlyUrl(url: string) {
   try {
     const { protocol, pathname } = new URL(url);
     return (protocol === 'http:' || protocol === 'https:') && pathname === '/';
-  } catch (err) {
+  } catch {
     return false;
   }
 }

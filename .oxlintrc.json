@@ -1,0 +1,41 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "import"],
+  "rules": {
+    "no-shadow": "warn",
+    "import/extensions": ["error", "ignorePackages"],
+    "react/exhaustive-deps": "warn",
+    "react/rules-of-hooks": "error"
+  },
+  "overrides": [
+    {
+      "files": ["cosmos.imports.ts"],
+      "rules": {
+        "import/extensions": "off"
+      }
+    },
+    {
+      "files": ["docs/**"],
+      "rules": {
+        "import/extensions": [
+          "error",
+          "never",
+          { "svg": "always", "css": "always" }
+        ]
+      }
+    },
+    {
+      "files": ["*.fixture.{ts,tsx}", "**/__fixtures__/**"],
+      "rules": {
+        "react/rules-of-hooks": "off"
+      }
+    }
+  ],
+  "ignorePatterns": [
+    "node_modules",
+    "packages/*/dist",
+    "examples/*/cosmos-export",
+    "**/__testFs__/**",
+    "coverage"
+  ]
+}

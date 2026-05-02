@@ -1,5 +1,6 @@
 import React from 'react';
-import { RendererId, uuid } from 'react-cosmos-core';
+import type { RendererId } from 'react-cosmos-core';
+import { uuid } from 'react-cosmos-core';
 
 export function useDomRendererId() {
   return React.useMemo(() => getDomRendererId(), []);

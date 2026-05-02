@@ -1,4 +1,4 @@
-import { FixtureList } from '../userModules/fixtureTypes.js';
+import type { FixtureList } from '../userModules/fixtureTypes.js';
 import { createFixtureTree } from './createFixtureTree/index.js';
 import { flattenFixtureTree } from './flattenFixtureTree.js';
 

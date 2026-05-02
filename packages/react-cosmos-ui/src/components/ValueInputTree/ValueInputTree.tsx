@@ -1,8 +1,8 @@
-import { clone, setWith } from 'lodash-es';
 import React from 'react';
-import { FixtureStateValue, FixtureStateValues } from 'react-cosmos-core';
+import type { FixtureStateValue, FixtureStateValues } from 'react-cosmos-core';
+import { setByPath } from 'react-cosmos-core';
 import styled from 'styled-components';
-import { TreeExpansion } from '../../shared/treeExpansion.js';
+import type { TreeExpansion } from '../../shared/treeExpansion.js';
 import { grey248, grey32 } from '../../style/colors.js';
 import { TreeView } from '../TreeView.js';
 import { ValueInput } from './ValueInput/ValueInput.js';
@@ -87,9 +87,8 @@ function setValueAtPath(
   values: FixtureStateValues,
   newValue: FixtureStateValue,
   valuePath: string
-) {
-  // Inspired by https://github.com/lodash/lodash/issues/1696#issuecomment-328335502
-  return setWith(clone(values), valuePath, newValue, clone);
+): FixtureStateValues {
+  return setByPath(values, valuePath, newValue);
 }
 
 function getChildrenText(childKeys: string[], isArray: boolean) {

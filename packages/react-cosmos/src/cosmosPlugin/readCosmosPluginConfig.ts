@@ -1,5 +1,8 @@
 import path from 'path';
-import { CosmosPluginConfig, RawCosmosPluginConfig } from 'react-cosmos-core';
+import type {
+  CosmosPluginConfig,
+  RawCosmosPluginConfig,
+} from 'react-cosmos-core';
 import { importJson } from '../utils/fs.js';
 import { resolveSilent } from '../utils/resolveSilent.js';
 

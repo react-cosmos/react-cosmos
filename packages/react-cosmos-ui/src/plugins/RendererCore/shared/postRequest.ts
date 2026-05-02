@@ -1,10 +1,10 @@
-import {
+import type {
   FixtureId,
   FixtureState,
   RendererId,
   RendererRequest,
 } from 'react-cosmos-core';
-import { RendererCoreContext } from './index.js';
+import type { RendererCoreContext } from './index.js';
 
 export function postReloadRendererRequest(
   context: RendererCoreContext,

@@ -1,16 +1,15 @@
-import { Request, Response } from 'express';
-import { sortBy } from 'lodash-es';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import type { Request, Response } from 'express';
+import type { CosmosMode } from 'react-cosmos-core';
 import {
-  CosmosMode,
   createRendererUrl,
   pickRendererUrl,
   removeFixtureNameExtension,
   removeFixtureNameSuffix,
 } from 'react-cosmos-core';
-import { CosmosConfig } from '../cosmosConfig/types.js';
-import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
+import type { CosmosServerPlugin } from '../cosmosPlugin/types.js';
 import { findUserModulePaths } from '../userModules/findUserModulePaths.js';
 import { importKeyPath } from '../userModules/shared.js';
 
@@ -71,7 +70,11 @@ async function createFixtureItems(
 
   return {
     rendererUrl,
-    fixtures: sortBy(fixtures, f => f.cleanPath.join('-')),
+    fixtures: [...fixtures].sort((a, b) => {
+      const ak = a.cleanPath.join('-');
+      const bk = b.cleanPath.join('-');
+      return ak < bk ? -1 : ak > bk ? 1 : 0;
+    }),
   };
 }
 

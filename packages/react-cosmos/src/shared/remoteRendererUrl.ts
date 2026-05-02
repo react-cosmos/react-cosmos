@@ -1,5 +1,5 @@
 import { createRendererUrl, pickRendererUrl } from 'react-cosmos-core';
-import { CosmosConfig } from '../cosmosConfig/types.js';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
 import { getServerAddress, getServerHost } from './serverAddress.js';
 
 export function getRemoteRendererUrl(config: CosmosConfig) {

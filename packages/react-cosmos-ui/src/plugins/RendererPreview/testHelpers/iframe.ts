@@ -1,5 +1,6 @@
-import { RenderResult } from '@testing-library/react';
-import { Mock, vi } from 'vitest';
+import type { RenderResult } from '@testing-library/react';
+import type { Mock } from 'vitest';
+import { vi } from 'vitest';
 
 export async function mockIframeMessage(
   iframe: HTMLIFrameElement,
@@ -14,9 +15,6 @@ export async function mockIframeMessage(
   try {
     contentWindow.addEventListener('message', onMessage, false);
     await children({ onMessage });
-  } catch (err) {
-    // Make errors visible
-    throw err;
   } finally {
     contentWindow.removeEventListener('message', onMessage);
   }

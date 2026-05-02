@@ -1,8 +1,8 @@
-import styles from './HomepageLogos.module.css';
 import Formidable from './svg/logos/formidable.svg';
 import GlobalCtoForum from './svg/logos/globalctoforum.svg';
 import Hootsuite from './svg/logos/hootsuite.svg';
 import StadiumGoods from './svg/logos/stadiumgoods.svg';
+import styles from './HomepageLogos.module.css';
 
 export function HomepageLogos() {
   return (

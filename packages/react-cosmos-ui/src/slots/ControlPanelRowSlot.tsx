@@ -1,7 +1,7 @@
 import React from 'react';
-import { FixtureId } from 'react-cosmos-core';
+import type { FixtureId } from 'react-cosmos-core';
 import { ArraySlot } from 'react-plugin';
-import {
+import type {
   GetFixtureState,
   SetFixtureStateByName,
 } from '../plugins/RendererCore/spec.js';

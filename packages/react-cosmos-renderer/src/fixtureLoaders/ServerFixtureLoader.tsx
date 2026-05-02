@@ -2,12 +2,12 @@
 /// <reference types="react/experimental" />
 
 import React, { Suspense } from 'react';
-import { ReactDecorator, UserModuleWrappers } from 'react-cosmos-core';
+import type { ReactDecorator, UserModuleWrappers } from 'react-cosmos-core';
 import { FixtureModule } from '../fixtureModule/FixtureModule.js';
 import { AsyncModuleLoader } from '../moduleLoaders/AsyncModuleLoader.js';
-import { FixtureLoaderConnect } from './FixtureLoaderConnect.js';
-import { SelectedFixture } from './SelectedFixture.js';
 import { defaultRenderMessage } from './defaultRenderMessage.js';
+import { FixtureLoaderConnect } from './FixtureLoaderConnect.js';
+import type { SelectedFixture } from './SelectedFixture.js';
 
 // This fixture loader is designed for React Server Components setups.
 // Although server components are stateless, this fixture loader still
@@ -24,12 +24,14 @@ type Props = {
   globalDecorators?: ReactDecorator[];
   renderMessage?: (msg: string) => React.ReactNode;
   selectedFixture: SelectedFixture | null;
+  fixtureProps?: Record<string, unknown>;
 };
 export function ServerFixtureLoader({
   moduleWrappers,
   globalDecorators,
   renderMessage = defaultRenderMessage,
   selectedFixture,
+  fixtureProps,
 }: Props) {
   return (
     <FixtureLoaderConnect
@@ -48,6 +50,7 @@ export function ServerFixtureLoader({
                 {...modules}
                 {...selected}
                 globalDecorators={globalDecorators}
+                fixtureProps={fixtureProps}
                 lazy={moduleWrappers.lazy}
                 renderMessage={renderMessage}
               />

@@ -1,7 +1,7 @@
 import path from 'path';
 import { createCosmosConfig } from './createCosmosConfig.js';
 import { importConfigFile } from './shared.js';
-import { CosmosConfigInput } from './types.js';
+import type { CosmosConfigInput } from './types.js';
 
 export async function getCosmosConfigAtPath(cosmosConfigPath: string) {
   const cosmosConfigInput = await importConfigFile(cosmosConfigPath);

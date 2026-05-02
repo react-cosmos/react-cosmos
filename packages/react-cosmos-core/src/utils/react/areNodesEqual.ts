@@ -1,7 +1,9 @@
-import { isEqual, isEqualWith } from 'lodash-es';
-import { ComponentType, ReactNode } from 'react';
+import type { ComponentType, ReactNode } from 'react';
+import { isObject } from '../data.js';
+import { isEqual } from '../isEqual.js';
 import { getComponentName } from './getComponentName.js';
-import { isReactElement, ReactElementWithChildren } from './isReactElement.js';
+import type { ReactElementWithChildren } from './isReactElement.js';
+import { isReactElement } from './isReactElement.js';
 
 export function areNodesEqual(
   node1: ReactNode,
@@ -59,17 +61,32 @@ function areArrayNodesEqual(
 
 type PlainObject = Record<string, unknown>;
 
-function arePropsEqual(object1: PlainObject, object2: PlainObject) {
-  if (!isEqual(Object.keys(object1), Object.keys(object2))) return false;
+function arePropsEqual(object1: PlainObject, object2: PlainObject): boolean {
+  const keys1 = Object.keys(object1);
+  const keys2 = Object.keys(object2);
+  if (keys1.length !== keys2.length) return false;
 
-  return Object.keys(object1).every(key =>
-    isEqualWith(
-      object1[key],
-      object2[key],
-      (value1: unknown, value2: unknown) =>
-        typeof value1 === 'function' && typeof value2 === 'function'
-          ? value1 === value2 || value1.toString() === value2.toString()
-          : isEqual(value1, value2)
-    )
+  return keys1.every(
+    key =>
+      Object.prototype.hasOwnProperty.call(object2, key) &&
+      arePropValuesEqual(object1[key], object2[key])
   );
+}
+
+// Recurse into plain objects and arrays so that functions at any depth are
+// compared by their source code, not by reference. This makes prop comparison
+// resilient to HMR, which creates fresh function instances on every reload.
+function arePropValuesEqual(value1: unknown, value2: unknown): boolean {
+  if (typeof value1 === 'function' && typeof value2 === 'function')
+    return value1 === value2 || value1.toString() === value2.toString();
+
+  if (isObject(value1) && isObject(value2))
+    return arePropsEqual(value1, value2);
+
+  if (Array.isArray(value1) && Array.isArray(value2)) {
+    if (value1.length !== value2.length) return false;
+    return value1.every((v, i) => arePropValuesEqual(v, value2[i]));
+  }
+
+  return isEqual(value1, value2);
 }

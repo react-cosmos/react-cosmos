@@ -1,7 +1,7 @@
-import { ReactNode, useEffect, useRef } from 'react';
+import type { ReactNode } from 'react';
+import { useEffect, useRef } from 'react';
+import type { FixtureDecoratorId, PropsFixtureState } from 'react-cosmos-core';
 import {
-  FixtureDecoratorId,
-  PropsFixtureState,
   areNodesEqual,
   createPropsFixtureStateItem,
   createValues,

@@ -1,16 +1,17 @@
-import { isEqual } from 'lodash-es';
-import {
+import type {
   Component,
   ComponentClass,
   ComponentType,
   ReactNode,
   RefObject,
-  useEffect,
-  useRef,
 } from 'react';
-import {
+import { useEffect, useRef } from 'react';
+import { isEqual } from 'react-cosmos-core';
+import type {
   ClassStateFixtureState,
   FixtureDecoratorId,
+} from 'react-cosmos-core';
+import {
   createClassStateFixtureStateItem,
   createValues,
   extendWithValues,
@@ -22,12 +23,8 @@ import {
 import { useFixtureState } from '../../useFixtureState.js';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
 import { decorateFixtureRefs } from './decorateFixtureRefs/index.js';
-import {
-  CachedRefHandlers,
-  ElRefs,
-  InitialStates,
-  replaceState,
-} from './shared.js';
+import type { CachedRefHandlers, ElRefs, InitialStates } from './shared.js';
+import { replaceState } from './shared.js';
 
 export function useFixtureClassState(
   fixture: ReactNode,

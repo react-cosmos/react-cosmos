@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
-import { RendererConfig, parseRendererQueryString } from 'react-cosmos-core';
+import type { RendererConfig } from 'react-cosmos-core';
+import { parseRendererQueryString } from 'react-cosmos-core';
 import { StatefulRendererProvider } from 'react-cosmos-renderer/client';
 import { GlobalErrorHandler } from './GlobalErrorHandler.js';
 import { reloadDomRenderer } from './reloadDomRenderer.js';

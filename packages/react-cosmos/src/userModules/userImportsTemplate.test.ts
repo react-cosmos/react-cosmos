@@ -1,4 +1,4 @@
-import { RendererConfig } from 'react-cosmos-core';
+import type { RendererConfig } from 'react-cosmos-core';
 import { userImportsTemplate } from './userImportsTemplate.js';
 
 const globalImports = [

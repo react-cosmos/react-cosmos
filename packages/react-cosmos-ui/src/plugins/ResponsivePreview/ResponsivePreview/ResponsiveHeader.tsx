@@ -1,7 +1,6 @@
 import React from 'react';
-import { Viewport } from 'react-cosmos-core';
+import type { Viewport } from 'react-cosmos-core';
 import styled from 'styled-components';
-import { Space } from '../../../components/Space.js';
 import { Button8 } from '../../../components/buttons/index.js';
 import {
   Minimize2Icon,
@@ -9,6 +8,7 @@ import {
 } from '../../../components/icons/index.js';
 import { NumberInput } from '../../../components/inputs/NumberInput.js';
 import { Select } from '../../../components/inputs/Select.js';
+import { Space } from '../../../components/Space.js';
 import {
   blue,
   grey128,
@@ -18,7 +18,7 @@ import {
   grey8,
 } from '../../../style/colors.js';
 import { quick } from '../../../style/vars.js';
-import { ResponsiveDevice } from '../spec.js';
+import type { ResponsiveDevice } from '../spec.js';
 
 type Props = {
   devices: ResponsiveDevice[];

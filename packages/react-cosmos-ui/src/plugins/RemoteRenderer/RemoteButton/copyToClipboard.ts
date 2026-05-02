@@ -6,7 +6,7 @@ export async function copyToClipboard(text: string): Promise<void> {
     // @ts-ignore Sorry, TS, MDN begs to differ https://developer.mozilla.org/en-US/docs/Web/API/Permissions/query#Parameters
     const { state } = await permissions.query({ name: 'clipboard-write' });
     permissionDenied = state !== 'granted' && state !== 'prompt';
-  } catch (err) {
+  } catch {
     // Some browsers (eg. Firefox 66) don't support the 'clipboard'
     // PermissionDescriptor but support clipboard.writeText. So unless
     // permission is explicitly denied, we try to copy to clipboard even if the
@@ -19,7 +19,7 @@ export async function copyToClipboard(text: string): Promise<void> {
 
   try {
     await clipboard.writeText(text);
-  } catch (err) {
+  } catch {
     throw new Error('Failed to write to clipboard');
   }
 }

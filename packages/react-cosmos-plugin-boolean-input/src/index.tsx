@@ -1,5 +1,5 @@
 import React from 'react';
-import { ValueInputSlotProps } from 'react-cosmos-ui';
+import type { ValueInputSlotProps } from 'react-cosmos-ui';
 import { createPlugin } from 'react-plugin';
 import { BooleanInput } from './BooleanInput.js';
 

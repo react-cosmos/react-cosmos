@@ -1,8 +1,8 @@
-import { act, render, RenderResult } from '@testing-library/react';
-import { mapValues } from 'lodash-es';
 import { setTimeout } from 'node:timers/promises';
+import type { RenderResult } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import React from 'react';
-import {
+import type {
   ByPath,
   FixtureId,
   ReactDecoratorModule,
@@ -12,12 +12,11 @@ import {
   RendererResponse,
   UserModuleWrappers,
 } from 'react-cosmos-core';
+import { mapValues } from 'react-cosmos-core';
 import { ClientFixtureLoader } from '../fixtureLoaders/ClientFixtureLoader.js';
 import { StatefulRendererProvider } from '../rendererConnect/StatefulRendererProvider.js';
-import {
-  createRendererConnectTestApi,
-  RendererConnectTestApi,
-} from './createRendererConnectTestApi.js';
+import type { RendererConnectTestApi } from './createRendererConnectTestApi.js';
+import { createRendererConnectTestApi } from './createRendererConnectTestApi.js';
 import { createTestRendererConnect } from './createTestRendererConnect.js';
 
 export type RendererTestArgs = {
@@ -108,28 +107,32 @@ function createModuleWrappers(
   if (lazy) {
     return {
       lazy: true,
-      fixtures: mapValues(fixtures, fixture => ({
-        getModule: () => dynamicImportWrapper(fixture),
+      fixtures: mapValues(fixtures, v => ({
+        getModule: () => dynamicImportWrapper(v),
       })),
-      decorators: mapValues(decorators, decorator => ({
-        getModule: () => dynamicImportWrapper(decorator),
+      decorators: mapValues(decorators, v => ({
+        getModule: () => dynamicImportWrapper(v),
       })),
     };
   } else {
     return {
       lazy: false,
-      fixtures: mapValues(fixtures, fixture => ({ module: fixture })),
-      decorators: mapValues(decorators, decorator => ({ module: decorator })),
+      fixtures: mapValues(fixtures, v => ({ module: v })),
+      decorators: mapValues(decorators, v => ({ module: v })),
     };
   }
 }
 
-function dynamicImportWrapper<T>(module: T) {
-  return new Promise<T>(async resolve => {
-    // Simulate module download time
-    await setTimeout(25 + Math.round(Math.random() * 25));
-    await act(async () => {
-      resolve(module);
-    });
+function dynamicImportWrapper<T>(module: T): Promise<T> {
+  return new Promise<T>(resolve => {
+    // Resolving inside an `act()` scope ensures downstream React updates
+    // triggered by the awaiter's continuation are flushed within act.
+    void (async () => {
+      // Simulate module download time
+      await setTimeout(25 + Math.round(Math.random() * 25));
+      await act(async () => {
+        resolve(module);
+      });
+    })();
   });
 }

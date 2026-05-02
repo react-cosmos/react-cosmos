@@ -1,17 +1,20 @@
-import { isEqual } from 'lodash-es';
-import { ReactNode, RefObject, useEffect, useRef } from 'react';
-import {
+import type { ReactNode, RefObject } from 'react';
+import { useEffect, useRef } from 'react';
+import type {
   ClassStateFixtureState,
   ClassStateFixtureStateItem,
   FixtureDecoratorId,
+} from 'react-cosmos-core';
+import {
   createValues,
   extendWithValues,
   findClassStateFixtureStateItem,
+  isEqual,
   updateClassStateFixtureStateItem,
 } from 'react-cosmos-core';
 import { useFixtureState } from '../../useFixtureState.js';
 import { findRelevantElementPaths } from '../shared/findRelevantElementPaths.js';
-import { ElRefs } from './shared.js';
+import type { ElRefs } from './shared.js';
 
 // How often to check the state of the loaded component and update the fixture
 // state if it changed

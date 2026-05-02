@@ -1,4 +1,4 @@
-import { Viewport } from 'react-cosmos-core';
+import type { Viewport } from 'react-cosmos-core';
 import { white20 } from '../../../style/colors.js';
 
 export const responsivePreviewPadding = {

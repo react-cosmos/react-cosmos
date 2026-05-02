@@ -1,6 +1,5 @@
 import until from 'async-until';
-import { findLast } from 'lodash-es';
-import {
+import type {
   FixtureListUpdateResponse,
   FixtureLoadedResponse,
   FixtureState,
@@ -134,13 +133,13 @@ export function createRendererConnectTestApi(args: {
             // https://jestjs.io/docs/en/expect#expectanyconstructor
             expect(findLastResponseWithType(msg.type)).toEqual(msg);
             return true;
-          } catch (err) {
+          } catch {
             return false;
           }
         },
         { timeout: 3000 }
       );
-    } catch (err) {
+    } catch {
       expect(findLastResponseWithType(msg.type)).toEqual(msg);
     }
   }
@@ -158,10 +157,12 @@ export function createRendererConnectTestApi(args: {
         },
         { timeout: 1000 }
       );
-    } finally {
-      if (!lastMsg || lastMsg.type !== msgType) {
-        throw new Error(`"${msgType}" message never arrived`);
-      }
+    } catch {
+      // fall through to the type check below
+    }
+
+    if (!lastMsg || (lastMsg as RendererResponse).type !== msgType) {
+      throw new Error(`"${msgType}" message never arrived`);
     }
 
     return lastMsg as M;
@@ -174,6 +175,9 @@ export function createRendererConnectTestApi(args: {
 
   function findLastResponseWithType(type: string): null | RendererResponse {
     const messages = args.getResponses();
-    return findLast(messages, msg => msg.type === type) ?? null;
+    for (let i = messages.length - 1; i >= 0; i--) {
+      if (messages[i].type === type) return messages[i];
+    }
+    return null;
   }
 }

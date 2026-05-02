@@ -1,15 +1,15 @@
-import { find, isEqual } from 'lodash-es';
 import {
   removeItemMatch,
   replaceOrAddItem,
   updateItem,
 } from '../utils/array.js';
-import {
+import { isEqual } from '../utils/isEqual.js';
+import type {
   PropsFixtureState,
   PropsFixtureStateItem,
   PropsFixtureStateRenderKey,
 } from './propsTypes.js';
-import {
+import type {
   FixtureDecoratorId,
   FixtureElementId,
   FixtureStateValues,
@@ -30,7 +30,7 @@ export function findPropsFixtureStateItem(
   propsFs: PropsFixtureState | undefined,
   elementId: FixtureElementId
 ): void | PropsFixtureStateItem {
-  return propsFs && find(propsFs, p => isEqual(p.elementId, elementId));
+  return propsFs && propsFs.find(p => isEqual(p.elementId, elementId));
 }
 
 type CreatePropsFixtureStateArgs = {

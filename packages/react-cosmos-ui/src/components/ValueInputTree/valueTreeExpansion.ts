@@ -1,10 +1,6 @@
-import { clone, setWith } from 'lodash-es';
-import {
-  FixtureElementId,
-  FixtureId,
-  stringifyFixtureId,
-} from 'react-cosmos-core';
-import { TreeExpansion } from '../../shared/treeExpansion.js';
+import type { FixtureElementId, FixtureId } from 'react-cosmos-core';
+import { stringifyFixtureId } from 'react-cosmos-core';
+import type { TreeExpansion } from '../../shared/treeExpansion.js';
 import { stringifyElementId } from './shared.js';
 
 export type FixtureExpansion = Record<string, void | TreeExpansion>;
@@ -31,16 +27,13 @@ export function updateElementExpansion(
   elementId: FixtureElementId,
   treeExpansion: TreeExpansion
 ): FixtureExpansionGroup {
-  const valuePath = createElementExpansionPath(fixtureId, elementId);
-  // Inspired by https://github.com/lodash/lodash/issues/1696#issuecomment-328335502
-  return setWith(clone(groupExpansion), valuePath, treeExpansion, clone);
-}
-
-function createElementExpansionPath(
-  fixtureId: FixtureId,
-  elementId: FixtureElementId
-): string[] {
   const strFixtureId = stringifyFixtureId(fixtureId);
   const strElementId = stringifyElementId(elementId);
-  return [strFixtureId, strElementId];
+  return {
+    ...groupExpansion,
+    [strFixtureId]: {
+      ...(groupExpansion[strFixtureId] as FixtureExpansion | undefined),
+      [strElementId]: treeExpansion,
+    },
+  };
 }

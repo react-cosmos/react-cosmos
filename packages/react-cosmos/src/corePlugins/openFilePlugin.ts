@@ -1,9 +1,9 @@
-import launchEditor from '@skidding/launch-editor';
-import { Request, Response } from 'express';
 import fs from 'fs';
-import open from 'open';
 import path from 'path';
-import { CosmosServerPlugin } from '../cosmosPlugin/types.js';
+import launchEditor from '@skidding/launch-editor';
+import type { Request, Response } from 'express';
+import open from 'open';
+import type { CosmosServerPlugin } from '../cosmosPlugin/types.js';
 
 type ReqQuery = { filePath: void | string; line: number; column: number };
 
@@ -33,7 +33,7 @@ export const openFilePlugin: CosmosServerPlugin = {
         // Fall back to open in case launchEditor fails. launchEditor only works
         // when the editor app is already open, but is favorable because it can
         // open a code file on a specific line & column.
-        .catch(err => open(absFilePath))
+        .catch(() => open(absFilePath))
         .catch(err => {
           console.log(err);
           res.status(500).send('Failed to open file');

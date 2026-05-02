@@ -1,12 +1,13 @@
-import { isEqual } from 'lodash-es';
-import { FixtureId, PlaygroundParams } from 'react-cosmos-core';
-import { PluginContext, createPlugin } from 'react-plugin';
+import type { FixtureId, PlaygroundParams } from 'react-cosmos-core';
+import { isEqual } from 'react-cosmos-core';
+import type { PluginContext } from 'react-plugin';
+import { createPlugin } from 'react-plugin';
 import {
   getUrlParams,
   pushUrlParams,
   subscribeToLocationChanges,
 } from '../../shared/url.js';
-import { RouterSpec } from './spec.js';
+import type { RouterSpec } from './spec.js';
 
 type RouterContext = PluginContext<RouterSpec>;
 

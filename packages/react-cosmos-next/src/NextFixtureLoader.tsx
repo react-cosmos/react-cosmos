@@ -1,25 +1,28 @@
-import React, { Suspense } from 'react';
-import {
+import React, { Suspense, useMemo } from 'react';
+import type {
   FixtureId,
   RendererConfig,
   UserModuleWrappers,
-  decodeRendererUrlFixture,
 } from 'react-cosmos-core';
+import { decodeRendererUrlFixture } from 'react-cosmos-core';
 import { ServerFixtureLoader } from 'react-cosmos-renderer';
 import { NextRendererProvider } from './NextRendererProvider.js';
-import { NextCosmosParams } from './nextTypes.js';
+import type { NextCosmosParams } from './nextTypes.js';
 
 type Props = {
   rendererConfig: RendererConfig;
   moduleWrappers: UserModuleWrappers;
   params: NextCosmosParams;
+  searchParams: { [key: string]: string | string[] | undefined };
 };
 export function NextFixtureLoader({
   rendererConfig,
   moduleWrappers,
   params,
+  searchParams,
 }: Props) {
   const fixtureId = getFixtureIdFromPageParams(params);
+  const fixtureProps = useMemo(() => ({ searchParams }), [searchParams]);
 
   const selectedFixture = fixtureId && {
     fixtureId,
@@ -43,6 +46,7 @@ export function NextFixtureLoader({
           moduleWrappers={moduleWrappers}
           renderMessage={renderMessage}
           selectedFixture={selectedFixture}
+          fixtureProps={fixtureProps}
         />
       </NextRendererProvider>
     </Suspense>

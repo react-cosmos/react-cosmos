@@ -1,4 +1,4 @@
-import { RendererConnect } from 'react-cosmos-core';
+import type { RendererConnect } from 'react-cosmos-core';
 
 export function createNoopRendererConnect(): RendererConnect {
   return {

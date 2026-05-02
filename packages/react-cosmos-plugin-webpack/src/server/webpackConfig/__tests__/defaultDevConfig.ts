@@ -6,7 +6,7 @@ import webpack from 'webpack';
 import { pkgPath } from '../../../testHelpers/pkgPath.js';
 import { RENDERER_FILENAME } from '../constants.js';
 import { getDevWebpackConfig } from '../getDevWebpackConfig.js';
-import { HtmlWebpackPlugin } from '../htmlPlugin.js';
+import type { HtmlWebpackPlugin } from '../htmlPlugin.js';
 
 afterAll(async () => {
   await unmockCliArgs();
@@ -37,9 +37,7 @@ it('includes DOM devtooks hook entry', async () => {
 it('includes webpack-hot-middleware entry', async () => {
   const { entry } = await getDefaultDevWebpackConfig();
   expect(entry).toContain(
-    `${require.resolve(
-      'webpack-hot-middleware/client'
-    )}?reload=false&overlay=false`
+    `${require.resolve('webpack-hot-middleware/client')}?reload=false&overlay=false`
   );
 });
 

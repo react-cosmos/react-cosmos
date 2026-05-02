@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { CosmosConfig, CosmosConfigPluginArgs } from 'react-cosmos';
+import type { CosmosConfig, CosmosConfigPluginArgs } from 'react-cosmos';
 import { RENDERER_FILENAME } from './webpackConfig/constants.js';
 
 export async function webpackConfigPlugin({

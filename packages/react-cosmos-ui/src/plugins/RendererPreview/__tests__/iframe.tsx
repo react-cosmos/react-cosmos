@@ -1,5 +1,6 @@
 import { waitFor } from '@testing-library/dom';
-import { act, fireEvent, render, RenderResult } from '@testing-library/react';
+import type { RenderResult } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { loadPlugins, resetPlugins, Slot } from 'react-plugin';
 import { vi } from 'vitest';
@@ -9,7 +10,7 @@ import {
   mockRendererCore,
 } from '../../../testHelpers/pluginMocks.js';
 import { register } from '../index.js';
-import { RendererPreviewSpec } from '../spec.js';
+import type { RendererPreviewSpec } from '../spec.js';
 import { getIframe } from '../testHelpers/iframe.js';
 import { rendererReadyMsg, selectFixtureMsg } from '../testHelpers/messages.js';
 

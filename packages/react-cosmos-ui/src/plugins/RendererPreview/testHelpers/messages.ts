@@ -1,4 +1,4 @@
-import {
+import type {
   RendererErrorResponse,
   RendererReadyResponse,
   SelectFixtureRequest,

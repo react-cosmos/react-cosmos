@@ -1,5 +1,5 @@
-import { CosmosConfig } from 'react-cosmos';
-import webpack from 'webpack';
+import type { CosmosConfig } from 'react-cosmos';
+import type webpack from 'webpack';
 import { getWebpackNodeEnv } from './getWebpackNodeEnv.js';
 
 export function getGlobalsPlugin(

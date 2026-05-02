@@ -1,4 +1,4 @@
-import { FixtureId, PlaygroundParams } from 'react-cosmos-core';
+import type { FixtureId, PlaygroundParams } from 'react-cosmos-core';
 
 export type RouterSpec = {
   name: 'router';

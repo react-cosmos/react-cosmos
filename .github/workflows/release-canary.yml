@@ -3,6 +3,11 @@ on:
   push:
     branches:
       - main
+
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
+
 jobs:
   release:
     if: ${{ !contains(github.event.head_commit.message, '[release]') }}
@@ -13,6 +18,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
 
       - uses: actions/cache@v4
         id: npm-cache
@@ -21,8 +27,6 @@ jobs:
           key: '${{ runner.os }}-npm'
 
       - run: npm ci --cache .npm-cache
-
-      - run: npm set "//registry.npmjs.org/:_authToken" ${{ secrets.NPM_TOKEN }}
       - run: npm run release:check
 
       # https://github.com/lerna/lerna/issues/2622

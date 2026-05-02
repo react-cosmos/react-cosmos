@@ -1,11 +1,10 @@
-import { get, set } from 'lodash-es';
-import {
+import type {
   FixtureList,
   FixtureListItem,
 } from '../../userModules/fixtureTypes.js';
 import { addTreeNodeChild } from '../../utils/tree.js';
 import { removeFixtureNameExtension } from '../fixtureUtils.js';
-import { FixtureTreeNode } from '../types.js';
+import type { FixtureTreeNode } from '../types.js';
 
 export function createRawFixtureTree(fixtures: FixtureList): FixtureTreeNode {
   const rootNode: FixtureTreeNode = {
@@ -65,22 +64,14 @@ function injectNode(
   if (parents.length === 0)
     return addTreeNodeChild(rootNode, childName, childNode);
 
-  let curParentDepth = 1;
-  let curParent: FixtureTreeNode;
-  do {
-    const curParents = parents.slice(0, curParentDepth);
-    const curPath = curParents.map(p => `children["${p}"]`).join('.');
-
-    curParent = get(rootNode, curPath);
-    if (!curParent) {
-      curParent = {
-        data: { type: 'fileDir' },
-      };
-      set(rootNode, curPath, curParent);
+  let curNode = rootNode;
+  for (const dirName of parents) {
+    if (!curNode.children) curNode.children = {};
+    if (!curNode.children[dirName]) {
+      curNode.children[dirName] = { data: { type: 'fileDir' } };
     }
+    curNode = curNode.children[dirName];
+  }
 
-    curParentDepth += 1;
-  } while (curParentDepth <= parents.length);
-
-  addTreeNodeChild(curParent, childName, childNode);
+  addTreeNodeChild(curNode, childName, childNode);
 }

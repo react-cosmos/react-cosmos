@@ -1,5 +1,6 @@
 import { waitFor } from '@testing-library/react';
-import React, { RefCallback } from 'react';
+import type { RefCallback } from 'react';
+import React from 'react';
 import { uuid } from 'react-cosmos-core';
 import { HelloMessageCls } from '../testHelpers/components.js';
 import { testRenderer } from '../testHelpers/testRenderer.js';

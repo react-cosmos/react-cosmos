@@ -4,7 +4,7 @@ import {
   mockCore,
 } from '../../../testHelpers/pluginMocks.js';
 import { register } from '../index.js';
-import { RendererCoreSpec } from '../spec.js';
+import type { RendererCoreSpec } from '../spec.js';
 
 beforeEach(register);
 

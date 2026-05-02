@@ -1,5 +1,5 @@
 import * as os from 'node:os';
-import { CosmosConfig } from '../cosmosConfig/types.js';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
 
 export function getServerHost(config: CosmosConfig) {
   return config.host ?? getIpAddress();
