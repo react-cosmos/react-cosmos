@@ -35,12 +35,14 @@ export function FixtureSearchResult({
   return (
     <Container
       ref={containerRef}
-      selected={active}
+      $selected={active}
       data-testid={active ? 'activeFixtureSearchResult' : undefined}
       onClick={onClick}
     >
       <Text>
-        <Name selected={active}>{name ? `${fileName} ${name}` : fileName}</Name>
+        <Name $selected={active}>
+          {name ? `${fileName} ${name}` : fileName}
+        </Name>
         {parents.length > 0 && <Parents>{parents.join('/')}</Parents>}
       </Text>
     </Container>
@@ -67,7 +69,7 @@ function scrollIntoView(node: HTMLElement) {
   }
 }
 
-const Container = styled.div<{ selected: boolean }>`
+const Container = styled.div<{ $selected: boolean }>`
   padding: 0 24px 0 48px;
   background: ${selectedColors('transparent', blue)};
   color: ${selectedColors(
@@ -85,7 +87,7 @@ const Text = styled.div`
   user-select: none;
 `;
 
-const Name = styled.span<{ selected: boolean }>`
+const Name = styled.span<{ $selected: boolean }>`
   color: ${selectedColors(grey64, 'white')};
   font-weight: 500;
 `;

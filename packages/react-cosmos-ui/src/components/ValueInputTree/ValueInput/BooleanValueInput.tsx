@@ -40,11 +40,11 @@ const BooleanButton = styled.button`
   outline: none;
   user-select: none;
 
-  :focus {
+  &:focus {
     box-shadow: 0 0 0.5px 1px ${blue};
   }
 
-  ::-moz-focus-inner {
+  &::-moz-focus-inner {
     border: 0;
   }
 `;

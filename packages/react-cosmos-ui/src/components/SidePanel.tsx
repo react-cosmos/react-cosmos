@@ -5,7 +5,7 @@ import { grey128, grey160, grey32 } from '../style/colors.js';
 export const SidePanelContainer = styled.div`
   background: ${grey32};
 
-  :first-child {
+  &:first-child {
     border-top: none;
   }
 `;

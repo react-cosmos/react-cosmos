@@ -27,17 +27,17 @@ export function IconButton8({
 }: Props) {
   return (
     <StyledButton
-      bg={grey8}
-      bgSelect={grey32}
-      bgHover={grey24}
-      color={grey216}
-      colorSelect={grey248}
+      $bg={grey8}
+      $bgSelect={grey32}
+      $bgHover={grey24}
+      $color={grey216}
+      $colorSelect={grey248}
       title={title}
-      selected={selected}
+      $selected={selected}
       disabled={disabled}
       onClick={onClick}
     >
-      <StyledIcon color={selected ? grey176 : grey144}>{icon}</StyledIcon>
+      <StyledIcon $color={selected ? grey176 : grey144}>{icon}</StyledIcon>
     </StyledButton>
   );
 }

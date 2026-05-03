@@ -55,12 +55,12 @@ export function Select<Option extends BaseOption>({
   const selectedLabel = selectedOption ? selectedOption.label : CUSTOM_LABEL;
 
   return (
-    <Container focused={focused} bg={grey32}>
-      <VisibleButton height={height} padding={padding}>
-        <Label height={height} color={color}>
+    <Container $focused={focused} $bg={grey32}>
+      <VisibleButton $height={height} $padding={padding}>
+        <Label $height={height} $color={color}>
           {selectedLabel}
         </Label>
-        <IconContainer color={color}>
+        <IconContainer $color={color}>
           <ChevronDownIcon />
         </IconContainer>
       </VisibleButton>
@@ -101,29 +101,29 @@ function findOption<Option extends BaseOption>(
 }
 
 type StyledSelectProps = {
-  focused: boolean;
-  bg: string;
+  $focused: boolean;
+  $bg: string;
 };
 
 const Container = styled.div<StyledSelectProps>`
   position: relative;
   border-radius: 3px;
-  background: ${props => props.bg};
-  box-shadow: ${props => (props.focused ? `0 0 0.5px 1px ${blue}` : 'none')};
+  background: ${props => props.$bg};
+  box-shadow: ${props => (props.$focused ? `0 0 0.5px 1px ${blue}` : 'none')};
   overflow: hidden;
 `;
 
-const VisibleButton = styled.div<{ height: number; padding: number }>`
+const VisibleButton = styled.div<{ $height: number; $padding: number }>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0 ${props => props.padding - 2}px 0 ${props => props.padding}px;
-  height: ${props => props.height}px;
+  padding: 0 ${props => props.$padding - 2}px 0 ${props => props.$padding}px;
+  height: ${props => props.$height}px;
 `;
 
-const Label = styled.span<{ height: number; color: string }>`
-  color: ${props => props.color};
-  line-height: ${props => props.height}px;
+const Label = styled.span<{ $height: number; $color: string }>`
+  color: ${props => props.$color};
+  line-height: ${props => props.$height}px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -131,12 +131,12 @@ const Label = styled.span<{ height: number; color: string }>`
 
 const iconSize = 16;
 
-const IconContainer = styled.span<{ color: string }>`
+const IconContainer = styled.span<{ $color: string }>`
   flex-shrink: 0;
   width: ${iconSize}px;
   height: ${iconSize}px;
   padding: 2px 0 0 2px;
-  color: ${props => props.color};
+  color: ${props => props.$color};
   opacity: 0.7;
 `;
 

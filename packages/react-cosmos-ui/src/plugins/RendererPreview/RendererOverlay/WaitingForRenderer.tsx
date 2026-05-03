@@ -28,8 +28,8 @@ const Loader = styled.div`
   border-radius: 50%;
   position: relative;
 
-  :before,
-  :after {
+  &:before,
+  &:after {
     content: '';
     box-sizing: border-box;
     border: 1px ${grey144} solid;
@@ -40,13 +40,13 @@ const Loader = styled.div`
     left: 0px;
   }
 
-  :before {
+  &:before {
     transform: scale(1, 1);
     opacity: 1;
     animation: waveOuter 1.5s infinite linear;
   }
 
-  :after {
+  &:after {
     transform: scale(0, 0);
     opacity: 0;
     animation: waveInner 1.5s infinite linear;

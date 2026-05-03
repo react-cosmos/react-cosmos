@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { disabledColors, grey128, grey224 } from '../../../style/colors.js';
 
-export const Label = styled.label<{ disabled?: boolean }>`
+export const Label = styled.label<{ $disabled?: boolean }>`
   padding: 0;
   color: ${disabledColors(grey224, grey128)};
   font-size: 14px;

@@ -22,7 +22,7 @@ type Props = {
 export function ValueInput({ value, name, id, indentLevel, onChange }: Props) {
   return (
     <ValueInputSlot slotProps={{ id, name, value, indentLevel, onChange }}>
-      <ValueTreeItem indentLevel={indentLevel}>
+      <ValueTreeItem $indentLevel={indentLevel}>
         <ValueInputContainer>
           {getInput(id, name, value, onChange)}
         </ValueInputContainer>

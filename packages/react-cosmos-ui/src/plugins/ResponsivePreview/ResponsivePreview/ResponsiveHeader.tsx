@@ -181,12 +181,12 @@ export const RotateButton = styled.button`
   outline: none;
   transition: color ${quick}s;
 
-  :hover,
-  :focus {
+  &:hover,
+  &:focus {
     color: ${grey216};
   }
 
-  ::-moz-focus-inner {
+  &::-moz-focus-inner {
     border: 0;
   }
 `;

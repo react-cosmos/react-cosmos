@@ -8,7 +8,7 @@ type Props = {
 export function UndefinedValueInput({ name }: Props) {
   return (
     <>
-      <Label title={name} disabled>
+      <Label title={name} $disabled>
         {name}
       </Label>
       <ValueDataContainer>

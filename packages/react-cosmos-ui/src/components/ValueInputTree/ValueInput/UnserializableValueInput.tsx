@@ -9,7 +9,7 @@ type Props = {
 export function UnserializableValueInput({ name, data }: Props) {
   return (
     <>
-      <Label title={name} disabled>
+      <Label title={name} $disabled>
         {name}
       </Label>
       <ValueDataContainer>

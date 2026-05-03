@@ -62,12 +62,12 @@ const SearchButton = styled.button`
   overflow: hidden;
   cursor: text;
 
-  :focus {
+  &:focus {
     outline: none;
     box-shadow: inset 2px 0px 0 0 ${blue};
   }
 
-  ::-moz-focus-inner {
+  &::-moz-focus-inner {
     border: 0;
   }
 `;

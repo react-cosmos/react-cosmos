@@ -32,8 +32,8 @@ export function MultiFixtureChildButton({
     <FixtureLink fixtureId={fixtureId}>
       <TreeItem
         ref={selected ? selectedRef : undefined}
-        indentLevel={indentLevel}
-        selected={selected}
+        $indentLevel={indentLevel}
+        $selected={selected}
       >
         <Name>{name}</Name>
       </TreeItem>
@@ -52,7 +52,7 @@ const TreeItem = styled(FixtureTreeItem)`
   background: ${grey8};
   color: ${selectedColors(grey144, grey248)};
 
-  :hover {
+  &:hover {
     background: ${grey8};
     color: ${selectedColors(grey192, grey248)};
   }

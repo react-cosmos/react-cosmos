@@ -53,7 +53,7 @@ const Item = styled.div`
   line-height: 20px;
   animation: fadeScaleIn ${quick}s forwards;
 
-  :first-child {
+  &:first-child {
     margin-top: 0;
   }
 
