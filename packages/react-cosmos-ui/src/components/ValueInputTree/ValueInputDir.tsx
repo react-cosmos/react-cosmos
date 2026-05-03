@@ -28,7 +28,7 @@ export function ValueInputDir({
   onToggle,
 }: Props) {
   return (
-    <ValueTreeItem indentLevel={indentLevel}>
+    <ValueTreeItem $indentLevel={indentLevel}>
       <ButtonContainer>
         <Button disabled={disabled} onClick={onToggle}>
           <>
@@ -38,7 +38,7 @@ export function ValueInputDir({
               </ChevronContainer>
             )}
             <Text>
-              <DirName disabled={disabled}>{name}</DirName>
+              <DirName $disabled={disabled}>{name}</DirName>
               <ChildrenInfo>{childrenText}</ChildrenInfo>
             </Text>
           </>
@@ -95,9 +95,9 @@ const Text = styled.span`
   text-overflow: ellipsis;
 `;
 
-const DirName = styled.span<{ disabled: boolean }>`
+const DirName = styled.span<{ $disabled: boolean }>`
   color: ${disabledColors(grey224, grey128)};
-  padding: 0 0 0 ${props => (props.disabled ? 16 : 0)}px;
+  padding: 0 0 0 ${props => (props.$disabled ? 16 : 0)}px;
 `;
 
 const ChildrenInfo = styled.span`

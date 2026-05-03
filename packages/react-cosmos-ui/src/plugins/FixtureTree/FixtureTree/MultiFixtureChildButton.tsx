@@ -32,8 +32,8 @@ export function MultiFixtureChildButton({
     <FixtureLink fixtureId={fixtureId}>
       <TreeItem
         ref={selected ? selectedRef : undefined}
-        indentLevel={indentLevel}
-        selected={selected}
+        $indentLevel={indentLevel}
+        $selected={selected}
       >
         <Name>{name}</Name>
       </TreeItem>

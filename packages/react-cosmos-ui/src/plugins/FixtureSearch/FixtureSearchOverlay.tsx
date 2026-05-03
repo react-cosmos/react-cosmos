@@ -260,11 +260,11 @@ export function FixtureSearchOverlay({
             onChange={onInputChange}
             onKeyDown={onInputKeyDown}
           />
-          <HelpButton selected={showShortcuts} onClick={handleToggleHelp}>
+          <HelpButton $selected={showShortcuts} onClick={handleToggleHelp}>
             <HelpCircleIcon />
           </HelpButton>
         </InputContainer>
-        <ShortcutsContainer visible={showShortcuts}>
+        <ShortcutsContainer $visible={showShortcuts}>
           <FixtureSearchShortcuts />
         </ShortcutsContainer>
         <ResultsViewport>
@@ -400,15 +400,15 @@ const SearchInput = styled.input`
   }
 `;
 
-const HelpButton = styled.div<{ selected: boolean }>`
+const HelpButton = styled.div<{ $selected: boolean }>`
   flex-shrink: 0;
   width: 20px;
   height: 20px;
   margin: 2px 0 0 0;
   padding: 6px;
   border-radius: 50%;
-  background: ${props => (props.selected ? grey224 : 'transparent')};
-  color: ${props => (props.selected ? grey128 : grey176)};
+  background: ${props => (props.$selected ? grey224 : 'transparent')};
+  color: ${props => (props.$selected ? grey128 : grey176)};
   cursor: pointer;
   transition:
     background ${quick}s,
@@ -419,10 +419,10 @@ const HelpButton = styled.div<{ selected: boolean }>`
   }
 `;
 
-const ShortcutsContainer = styled.div<{ visible: boolean }>`
-  height: ${props => (props.visible ? 72 : 0)}px;
+const ShortcutsContainer = styled.div<{ $visible: boolean }>`
+  height: ${props => (props.$visible ? 72 : 0)}px;
   overflow: hidden;
-  opacity: ${props => (props.visible ? 1 : 0)};
+  opacity: ${props => (props.$visible ? 1 : 0)};
   transition:
     height ${quick}s,
     opacity ${quick}s;

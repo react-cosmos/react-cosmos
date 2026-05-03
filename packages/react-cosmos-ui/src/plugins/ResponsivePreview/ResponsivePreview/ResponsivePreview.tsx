@@ -96,7 +96,7 @@ export function ResponsivePreview({
   // component instances are preserved and the transition is seamless.
   if (!enabled || !container) {
     return (
-      <Container>
+      <Container data-testid="responsivePreview">
         <div key="preview" ref={handleContainerRef} style={stretchStyle}>
           <div style={stretchStyle}>
             <div key="container" style={stretchStyle}>
@@ -116,7 +116,7 @@ export function ResponsivePreview({
     scaleContainerStyle,
   } = getStyles({ container, viewport, scaled });
   return (
-    <Container>
+    <Container data-testid="responsivePreview">
       <ResponsiveHeader
         devices={devices}
         selectedViewport={viewport}
@@ -160,7 +160,7 @@ function getContainerSize(containerEl: null | HTMLElement) {
   return { width, height };
 }
 
-const Container = styled.div.attrs({ 'data-testid': 'responsivePreview' })`
+const Container = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;

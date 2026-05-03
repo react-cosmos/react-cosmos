@@ -57,10 +57,10 @@ export function FixtureBookmarks({
         }
 
         return (
-          <ListItem key={itemKey} selected={selected}>
+          <ListItem key={itemKey} $selected={selected}>
             <FixtureLink
               href={createRelativePlaygroundUrl({ fixture: fixtureId })}
-              selected={selected}
+              $selected={selected}
               onClick={handleClick}
             >
               {getFixtureName(fixtureItem)}
@@ -124,7 +124,7 @@ const HeaderTitle = styled.div`
   text-transform: uppercase;
 `;
 
-const FixtureLink = styled.a<{ selected: boolean }>`
+const FixtureLink = styled.a<{ $selected: boolean }>`
   flex: 1;
   padding: 0 0 0 24px;
   font-size: 14px;
@@ -162,7 +162,7 @@ const DeleteIconContainer = styled.div`
   color: ${grey128};
 `;
 
-const ListItem = styled.span<{ selected: boolean }>`
+const ListItem = styled.span<{ $selected: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;

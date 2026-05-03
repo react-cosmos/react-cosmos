@@ -24,7 +24,7 @@ export function FixtureDir({
 }: Props) {
   return (
     <DirButton onClick={onToggle}>
-      <FixtureTreeItem indentLevel={indentLevel} selected={selected}>
+      <FixtureTreeItem $indentLevel={indentLevel} $selected={selected}>
         <CevronContainer>
           {expanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
         </CevronContainer>

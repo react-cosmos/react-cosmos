@@ -65,16 +65,16 @@ function FooterLink(props: {
       href={href}
       rel="noopener noreferrer"
       target="_blank"
-      bg={grey8}
-      bgSelect={grey32}
-      bgHover={grey24}
-      color={grey128}
-      colorSelect={grey128}
+      $bg={grey8}
+      $bgSelect={grey32}
+      $bgHover={grey24}
+      $color={grey128}
+      $colorSelect={grey128}
       title={title}
-      selected={false}
+      $selected={false}
       disabled={false}
     >
-      {icon ? <StyledIcon color={grey128}>{icon}</StyledIcon> : label}
+      {icon ? <StyledIcon $color={grey128}>{icon}</StyledIcon> : label}
     </StyledLink>
   );
 }
