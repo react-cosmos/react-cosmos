@@ -3,7 +3,14 @@
   "plugins": ["react", "import"],
   "rules": {
     "no-shadow": "warn",
-    "import/extensions": ["error", "ignorePackages"],
+    "import/extensions": [
+      "error",
+      "always",
+      {
+        "ignorePackages": true,
+        "pathGroupOverrides": [{ "pattern": "**/*.js", "action": "ignore" }]
+      }
+    ],
     "react/exhaustive-deps": "warn",
     "react/rules-of-hooks": "error"
   },

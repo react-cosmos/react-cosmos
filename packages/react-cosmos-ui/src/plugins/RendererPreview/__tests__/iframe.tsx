@@ -43,13 +43,16 @@ async function mockRendererLocation(renderer: RenderResult, newPath: string) {
   });
 
   const iframe = getIframe(renderer);
-  Object.defineProperty(iframe.contentWindow, 'location', {
+  Object.defineProperty(iframe, 'contentWindow', {
     value: {
-      href: `http://localhost:5000${newPath}`,
-      hostname: 'localhost',
-      replace: vi.fn(),
+      location: {
+        href: `http://localhost:5000${newPath}`,
+        hostname: 'localhost',
+        replace: vi.fn(),
+      },
+      postMessage: vi.fn(),
     },
-    writable: true,
+    configurable: true,
   });
   await fireIframeLoadEvent(iframe);
 }
