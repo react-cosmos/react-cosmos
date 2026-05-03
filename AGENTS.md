@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Guidance for Codex when working in this monorepo.
+Guidance for agents when working in this monorepo.
 
 Never commit without an explicit prompt — the user reviews changes before they land.
 
