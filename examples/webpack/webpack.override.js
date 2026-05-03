@@ -7,9 +7,10 @@ export default function (webpackConfig, env) {
 
   if (env === 'development') {
     webpackConfig.module.rules[0].use.options.plugins = ['react-refresh/babel'];
-    // overlay: false — Cosmos already has its own error overlay via
-    // react-error-overlay, and the plugin's default sock integration pulls
-    // in webpack-dev-server, which Cosmos doesn't use.
+    // overlay: false — Cosmos's webpack plugin already provides its own
+    // error overlay (react-error-overlay) for both build and runtime
+    // errors, so enabling this plugin's overlay alongside it would be
+    // redundant.
     webpackConfig.plugins.push(
       new ReactRefreshWebpackPlugin({ overlay: false })
     );
