@@ -4,7 +4,7 @@
 
 In general we keep dependencies up to date. The following packages, however, need to be pinned to a specific version:
 
-- `react-error-overlay@6.0.9` because of [this](https://github.com/facebook/create-react-app/issues/11773) and [this](https://github.com/react-cosmos/react-cosmos/issues/1359).
+- `react-error-overlay@6.0.9` (a dependency of `react-cosmos-plugin-webpack`) because 6.0.10+ broke outside CRA's webpack-with-DefinePlugin setup ([CRA #11773](https://github.com/facebook/create-react-app/issues/11773), Cosmos symptom in [#1359](https://github.com/react-cosmos/react-cosmos/issues/1359)). The regression — an unguarded `process.env.NODE_ENV` reference in the bundle — is still open as [CRA #12064](https://github.com/facebook/create-react-app/issues/12064); 6.1.0 (Feb 2025) is just a republish, no code fix. The pin is low-cost: the package has zero runtime dependencies and ships a single ~360KB bundled file. The realistic exit is replacing it altogether — kept for now because it provides a tasteful default error overlay with click-to-open-in-editor, and only burdens the webpack plugin, not Cosmos itself.
 - `styled-components@5.x` because [6.x added a breaking change](https://github.com/styled-components/styled-components/releases/tag/v6.0.0) where all component props that don't start with `$` ("transient props") are passed down to the underlying components, which in most cases are DOM elements that shouldn't receive random attributes. We can upgrade to 6.x safely after prefixing styled props with `$`.
 
 ## Code improvements
