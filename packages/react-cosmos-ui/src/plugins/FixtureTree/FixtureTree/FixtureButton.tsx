@@ -24,8 +24,8 @@ export function FixtureButton({
     <FixtureLink fixtureId={{ path: fixturePath }}>
       <FixtureTreeItem
         ref={selected ? selectedRef : undefined}
-        indentLevel={indentLevel}
-        selected={selected}
+        $indentLevel={indentLevel}
+        $selected={selected}
       >
         <Name>{name}</Name>
       </FixtureTreeItem>

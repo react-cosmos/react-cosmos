@@ -39,14 +39,14 @@ const Link = styled.a`
   font-size: 14px;
   text-decoration: none;
 
-  :focus {
+  &:focus {
     outline: none;
     > span {
       box-shadow: inset 2px 0px 0 0 ${blue};
     }
   }
 
-  ::-moz-focus-inner {
+  &::-moz-focus-inner {
     border: 0;
   }
 `;

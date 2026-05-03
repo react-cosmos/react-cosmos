@@ -47,20 +47,20 @@ export function StringValueInput({ id, name, data, onChange }: Props) {
       </Label>
       <ValueDataContainer>
         <TextInputContainer
-          focused={focused}
-          focusedBg={grey8}
-          focusedBoxShadow={`0 0 0.5px 1px ${blue}`}
+          $focused={focused}
+          $focusedBg={grey8}
+          $focusedBoxShadow={`0 0 0.5px 1px ${blue}`}
         >
           <TextContainer>
-            <TextMirror minWidth={64} focused={focused}>
+            <TextMirror $minWidth={64} $focused={focused}>
               {localData.length > 0 || focused ? mirrorText : <em>empty</em>}
             </TextMirror>
             <TextField
               rows={1}
               id={id}
               value={localData}
-              focused={focused}
-              color={grey248}
+              $focused={focused}
+              $color={grey248}
               onChange={onInputChange}
               onFocus={onFocus}
               onBlur={onBlur}

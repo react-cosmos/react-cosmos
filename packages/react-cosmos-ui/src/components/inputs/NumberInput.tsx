@@ -113,20 +113,20 @@ export function NumberInput({
 
   return (
     <TextInputContainer
-      focused={focused}
-      focusedBg={styles.focusedBg}
-      focusedBoxShadow={styles.focusedBoxShadow}
+      $focused={focused}
+      $focusedBg={styles.focusedBg}
+      $focusedBoxShadow={styles.focusedBoxShadow}
     >
       <TextContainer>
-        <TextMirror minWidth={8} focused={focused}>
+        <TextMirror $minWidth={8} $focused={focused}>
           {rawValue}
         </TextMirror>
         <TextField
           rows={1}
           id={id}
           value={rawValue}
-          focused={focused}
-          color={styles.focusedColor}
+          $focused={focused}
+          $color={styles.focusedColor}
           onChange={handleChange}
           onFocus={onFocus}
           onBlur={handleBlur}

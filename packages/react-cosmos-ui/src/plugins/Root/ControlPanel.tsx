@@ -53,7 +53,7 @@ const Container = styled.div`
   justify-content: flex-start;
   background: ${grey32};
 
-  ::after {
+  &::after {
     content: '';
     position: absolute;
     top: 0;

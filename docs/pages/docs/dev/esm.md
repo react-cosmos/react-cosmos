@@ -71,7 +71,7 @@ Here's a rough example of the renderer index.html for ESM fixtures.
 
 Authoring UI plugins as pure ESM is a cool prospect. It lowers the barries for plugin authors. It's also possible. ESM modules can be script-injected or dynamically imported from a CJS Cosmos UI. Here's what's needed to make this possible:
 
-- Same as with ESM fixtures: Serve NPM dependencies from node_modules and make them accessible via import maps in the Cosmos UI index.html (eg. `styled-components` has 10 runtime dependencies that need mapping). Import maps for installed NPM modules should be automatically generated for this to work smoothly.
+- Same as with ESM fixtures: Serve NPM dependencies from node_modules and make them accessible via import maps in the Cosmos UI index.html (eg. `styled-components` has runtime dependencies that need mapping). Import maps for installed NPM modules should be automatically generated for this to work smoothly.
 - Static exports need to employ a slightly different strategy where node_modules are also exported, with import maps pointing to their new location.
 
 This is doable with some work. But for now, building UI plugins with shared dependencies attached to the global window namespace is a decent compromise (eg. using Webpack `externals`). Bundled plugins will be easy to re-publish as ESM later on once we add support.

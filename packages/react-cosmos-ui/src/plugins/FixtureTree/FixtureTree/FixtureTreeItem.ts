@@ -12,8 +12,8 @@ import { quick } from '../../../style/vars.js';
 const itemHeight = 28;
 
 type Props = {
-  indentLevel: number;
-  selected?: boolean;
+  $indentLevel: number;
+  $selected?: boolean;
 };
 
 export const FixtureTreeItem = styled.span<Props>`
@@ -21,7 +21,7 @@ export const FixtureTreeItem = styled.span<Props>`
   flex-direction: row;
   align-items: center;
   height: ${itemHeight}px;
-  padding: 0 0 0 ${props => getLeftPadding(props.indentLevel)}px;
+  padding: 0 0 0 ${props => getLeftPadding(props.$indentLevel)}px;
   background: ${selectedColors(grey32, grey8)};
   color: ${selectedColors(grey224, grey248)};
   line-height: ${itemHeight}px;
@@ -29,7 +29,7 @@ export const FixtureTreeItem = styled.span<Props>`
   cursor: default;
   transition: color ${quick}s;
 
-  :hover {
+  &:hover {
     background: ${selectedColors(grey24, grey8)};
   }
 `;

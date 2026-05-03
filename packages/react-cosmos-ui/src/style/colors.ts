@@ -24,13 +24,13 @@ export const blue = '#3182ce';
 export const lightBlue = '#63b3ed';
 
 export function selectedColors(defaultColor: string, selectedColor: string) {
-  return (props: { selected?: boolean }) =>
-    props.selected ? selectedColor : defaultColor;
+  return (props: { $selected?: boolean }) =>
+    props.$selected ? selectedColor : defaultColor;
 }
 
 export function disabledColors(defaultColor: string, disabledColor: string) {
-  return (props: { disabled?: boolean }) =>
-    props.disabled ? disabledColor : defaultColor;
+  return (props: { $disabled?: boolean }) =>
+    props.$disabled ? disabledColor : defaultColor;
 }
 
 export function createGreyColor(intensity: number, alpha: number = 1) {

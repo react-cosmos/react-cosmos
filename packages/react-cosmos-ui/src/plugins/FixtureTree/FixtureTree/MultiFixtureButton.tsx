@@ -34,7 +34,7 @@ export function MultiFixtureButton({
 
     return (
       <FixtureLink fixtureId={fixtureId} keepNavOpen>
-        <FixtureTreeItem indentLevel={indentLevel} selected={false}>
+        <FixtureTreeItem $indentLevel={indentLevel} $selected={false}>
           <Name>{name}</Name>
           <Count>{fixtureNames.length}</Count>
         </FixtureTreeItem>
@@ -44,7 +44,7 @@ export function MultiFixtureButton({
 
   return (
     <>
-      <FixtureTreeItem indentLevel={indentLevel} selected={true}>
+      <FixtureTreeItem $indentLevel={indentLevel} $selected={true}>
         <Name>{name}</Name>
         <Count>{fixtureNames.length}</Count>
       </FixtureTreeItem>

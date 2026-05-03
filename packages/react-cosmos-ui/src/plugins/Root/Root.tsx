@@ -80,7 +80,7 @@ export function Root({
 
   // z-indexes are set here on purpose to show the layer hierarchy at a glance
   return (
-    <Container dragging={dragging}>
+    <Container data-testid="root" $dragging={dragging}>
       {(showNavPanel || drawerPanels) && (
         <ResizablePanel
           inert={!showNavPanel}
@@ -183,10 +183,10 @@ export function Root({
 }
 
 type ContainerProps = {
-  dragging?: boolean;
+  $dragging?: boolean;
 };
 
-const Container = styled.div.attrs({ 'data-testid': 'root' })<ContainerProps>`
+const Container = styled.div<ContainerProps>`
   position: absolute;
   top: 0;
   bottom: 0;
@@ -195,7 +195,7 @@ const Container = styled.div.attrs({ 'data-testid': 'root' })<ContainerProps>`
   overflow: hidden;
   display: flex;
   background: ${grey32};
-  cursor: ${props => (props.dragging ? 'ew-resize' : 'default')};
+  cursor: ${props => (props.$dragging ? 'ew-resize' : 'default')};
 `;
 
 const ResizablePanel = styled.div`

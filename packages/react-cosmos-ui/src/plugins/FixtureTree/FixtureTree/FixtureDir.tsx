@@ -24,7 +24,7 @@ export function FixtureDir({
 }: Props) {
   return (
     <DirButton onClick={onToggle}>
-      <FixtureTreeItem indentLevel={indentLevel} selected={selected}>
+      <FixtureTreeItem $indentLevel={indentLevel} $selected={selected}>
         <CevronContainer>
           {expanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
         </CevronContainer>
@@ -42,14 +42,14 @@ const DirButton = styled.button`
   background: transparent;
   font-size: 14px;
 
-  :focus {
+  &:focus {
     outline: none;
     > span {
       box-shadow: inset 2px 0px 0 0 ${blue};
     }
   }
 
-  ::-moz-focus-inner {
+  &::-moz-focus-inner {
     border: 0;
   }
 `;

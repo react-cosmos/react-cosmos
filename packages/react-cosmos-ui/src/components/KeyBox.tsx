@@ -46,7 +46,7 @@ const Container = styled.span`
   border-radius: 5px;
   text-align: center;
 
-  :first-child {
+  &:first-child {
     margin-left: 0;
   }
 `;

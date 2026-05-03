@@ -73,7 +73,7 @@ const ShortcutContainer = styled.div`
   padding: 0 10px;
   line-height: 24px;
 
-  :last-child {
+  &:last-child {
     margin-bottom: 0;
   }
 `;
