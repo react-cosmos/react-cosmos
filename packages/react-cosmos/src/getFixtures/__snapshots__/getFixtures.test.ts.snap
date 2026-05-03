@@ -27,7 +27,7 @@ exports[`renders fixture elements 2`] = `
 exports[`renders fixture elements 3`] = `
 <div>
   <div
-    style="border: 2px dashed #aaa; padding: 0px 16px; border-radius: 8px;"
+    style="border: 2px dashed rgb(170, 170, 170); padding: 0px 16px; border-radius: 8px;"
   >
     <h1>
       Hi

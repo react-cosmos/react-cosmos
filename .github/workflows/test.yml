@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
       - uses: actions/cache@v4
         id: npm-cache
@@ -51,24 +51,24 @@ jobs:
       matrix:
         example: [webpack, vite]
         os: [ubuntu, windows]
-        node-version: [20]
+        node-version: [22]
         lazy: [false]
         include:
           - example: webpack
             os: ubuntu
-            node-version: 22
+            node-version: 24
             lazy: false
           - example: webpack
             os: windows
-            node-version: 22
+            node-version: 24
             lazy: false
           - example: webpack
             os: ubuntu
-            node-version: 20
+            node-version: 22
             lazy: true
           - example: vite
             os: ubuntu
-            node-version: 20
+            node-version: 22
             lazy: true
     runs-on: ${{ matrix.os }}-latest
     steps:
@@ -91,7 +91,7 @@ jobs:
         id: playwright-cache
         with:
           path: ${{ matrix.os == 'windows' && 'C:\Users\runneradmin\AppData\Local\ms-playwright' || '~/.cache/ms-playwright' }}
-          key: '${{ runner.os }}-playwright-1.58.1'
+          key: '${{ runner.os }}-playwright-1.59.1'
 
       # https://playwright.dev/docs/browsers#install-system-dependencies
       - if: steps.playwright-cache.outputs.cache-hit != 'true'

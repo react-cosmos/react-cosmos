@@ -62,7 +62,11 @@ async function loadPluginScript(scriptPath: string) {
     : `/${scriptPath}`;
 
   try {
-    await import(/* webpackIgnore: true */ `./_plugin${normalizedPath}`);
+    await import(
+      /* webpackIgnore: true */
+      /* @vite-ignore */
+      `./_plugin${normalizedPath}`
+    );
   } catch (err) {
     console.log(`[Cosmos] Failed to load plugin script ${scriptPath}`);
     console.log(err);

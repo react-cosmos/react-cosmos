@@ -7,7 +7,7 @@ export const pluginEndpointPlugin: CosmosServerPlugin = {
   name: 'pluginEndpoint',
 
   devServer({ app }) {
-    app.get('/_plugin/*.js', (req: Request, res: Response) => {
+    app.get(/^\/_plugin\/(.+\.js)$/, (req: Request, res: Response) => {
       const modulePath = req.params['0'];
 
       if (!modulePath) {

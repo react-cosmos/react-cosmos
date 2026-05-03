@@ -16,6 +16,7 @@ import { setTimeout } from 'node:timers/promises';
 import retry from '@skidding/async-retry';
 import type { ServerMessage, SocketMessage } from 'react-cosmos-core';
 import { vi } from 'vitest';
+import WebSocket from 'ws';
 import type { DevServerPluginArgs } from '../../cosmosPlugin/types.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
 import { viteWorkerId } from '../../testHelpers/viteUtils.js';
@@ -102,15 +103,20 @@ it('calls dev server hook with send message API', async () => {
   };
 
   const onMessage = vi.fn();
-  client.addEventListener('open', () => {
-    client.addEventListener('message', msg => onMessage(msg.data));
+  client.on('message', msg => onMessage(msg.toString()));
 
+  try {
+    await waitForOpen(client);
     const [args] = testServerPlugin.devServer.mock
       .calls[0] as DevServerPluginArgs[];
     args.sendMessage(message.message);
-  });
 
-  await retry(() => expect(onMessage).toBeCalledWith(JSON.stringify(message)));
+    await retry(() =>
+      expect(onMessage).toBeCalledWith(JSON.stringify(message))
+    );
+  } finally {
+    client.close();
+  }
 });
 
 it('embeds plugin in playground HTML', async () => {
@@ -125,3 +131,13 @@ it('calls dev server cleanup hook', async () => {
   await _stopServer!();
   expect(devServerCleanup).toBeCalled();
 });
+
+function waitForOpen(client: WebSocket) {
+  if (client.readyState === WebSocket.OPEN) {
+    return Promise.resolve();
+  }
+
+  return new Promise<void>(resolve => {
+    client.once('open', resolve);
+  });
+}
