@@ -8,18 +8,18 @@
   "main": "./index.js",
   "dependencies": {
     "@skidding/launch-editor": "2.13.2",
-    "chokidar": "3.6.0",
-    "express": "4.22.1",
-    "glob": "10.5.0",
+    "chokidar": "5.0.0",
+    "express": "5.2.1",
+    "glob": "13.0.6",
     "http-proxy-middleware": "3.0.5",
     "micromatch": "4.0.8",
-    "open": "10.2.0",
+    "open": "11.0.0",
     "pem": "1.15.1",
     "react-cosmos-core": "^7.3.0",
     "react-cosmos-renderer": "^7.3.0",
     "react-cosmos-ui": "^7.3.0",
-    "ws": "8.19.0",
-    "yargs": "17.7.2"
+    "ws": "8.20.0",
+    "yargs": "18.0.0"
   },
   "peerDependencies": {
     "react": ">=18",

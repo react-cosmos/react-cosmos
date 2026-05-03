@@ -15,6 +15,7 @@ import path from 'node:path';
 import retry from '@skidding/async-retry';
 import type { ServerMessage, SocketMessage } from 'react-cosmos-core';
 import { vi } from 'vitest';
+import WebSocket from 'ws';
 import { ensureFile } from '../../testHelpers/ensureFile.js';
 import { mockConsole } from '../../testHelpers/mockConsole.js';
 import { rootPath } from '../../testHelpers/rootPath.js';
@@ -110,25 +111,30 @@ it('creates message handler', async () => {
   };
 
   const onMessage = vi.fn();
-  client1.addEventListener('open', () => {
-    client1.addEventListener('message', msg => onMessage(msg.data));
-    client2.addEventListener('open', () => {
-      client2.send(JSON.stringify(message));
-    });
-  });
+  client1.on('message', msg => onMessage(msg.toString()));
 
-  await retry(() => expect(onMessage).toBeCalledWith(JSON.stringify(message)));
+  try {
+    await Promise.all([waitForOpen(client1), waitForOpen(client2)]);
+    client2.send(JSON.stringify(message));
+
+    await retry(() =>
+      expect(onMessage).toBeCalledWith(JSON.stringify(message))
+    );
+  } finally {
+    client1.close();
+    client2.close();
+  }
 });
 
 it('stops server and closes message handler clients', async () => {
   const client1 = new WebSocket(`ws://localhost:${port}`);
 
   const onOpen = vi.fn();
-  client1.addEventListener('open', onOpen);
+  client1.on('open', onOpen);
   await retry(() => expect(onOpen).toBeCalled());
 
   const onClose = vi.fn();
-  client1.addEventListener('close', onClose);
+  client1.on('close', onClose);
   await _stopServer!();
 
   await retry(() => expect(onClose).toBeCalled());
@@ -137,3 +143,13 @@ it('stops server and closes message handler clients', async () => {
     'fetch failed'
   );
 });
+
+function waitForOpen(client: WebSocket) {
+  if (client.readyState === WebSocket.OPEN) {
+    return Promise.resolve();
+  }
+
+  return new Promise<void>(resolve => {
+    client.once('open', resolve);
+  });
+}

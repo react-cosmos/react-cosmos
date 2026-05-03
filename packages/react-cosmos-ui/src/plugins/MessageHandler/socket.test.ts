@@ -61,10 +61,11 @@ function mockWebSocket() {
 }
 
 function createMockWebSocket() {
-  return () =>
-    ({
+  return function MockWebSocket() {
+    return {
       addEventListener: vi.fn(),
       close: vi.fn(),
       removeEventListener: vi.fn(),
-    }) as unknown as WebSocket;
+    } as unknown as WebSocket;
+  };
 }
