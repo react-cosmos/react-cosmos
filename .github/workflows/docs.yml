@@ -60,7 +60,7 @@ jobs:
           name: demo-cosmos-export
           path: ./docs/out/demo
 
-      - uses: cloudflare/wrangler-action@v3
+      - uses: cloudflare/wrangler-action@v4
         if: env.CLOUDFLARE_API_TOKEN != ''
         with:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
