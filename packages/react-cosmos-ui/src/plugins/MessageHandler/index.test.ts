@@ -12,7 +12,6 @@ import {
 import { register } from './index.js';
 
 const originalWebSocket = global.WebSocket;
-type Wss = InstanceType<typeof WebSocketServer>;
 
 beforeAll(() => {
   global.WebSocket = WebSocket as unknown as typeof global.WebSocket;
@@ -31,7 +30,10 @@ beforeEach(register);
 afterEach(resetPlugins);
 
 async function withWebSocketServer(
-  cb: (args: { wss: Wss; onMessage: () => unknown }) => Promise<void>
+  cb: (args: {
+    wss: WebSocketServer;
+    onMessage: () => unknown;
+  }) => Promise<void>
 ) {
   const onMessage = vi.fn();
 
