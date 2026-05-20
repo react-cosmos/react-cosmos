@@ -2,3 +2,4 @@ src
 cosmos.config.json
 tsconfig.build.json
 webpack.config.js
+*.tsbuildinfo
