@@ -1,5 +1,3 @@
-// @vitest-environment jsdom
-
 // WARNING: Module mocks need to be imported before the mocked modules are
 // imported, which are sometimes imported indirectly by the modules being
 // tested. Otherwise the mocks will be applied too late and the tests will run
