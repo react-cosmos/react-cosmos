@@ -3,7 +3,7 @@ import type { BuildErrorMessage, RendererResponse } from 'react-cosmos-core';
 import { rendererSocketMessage, serverSocketMessage } from 'react-cosmos-core';
 import { loadPlugins, resetPlugins } from 'react-plugin';
 import { vi } from 'vitest';
-import WebSocket from 'ws';
+import WebSocket, { WebSocketServer } from 'ws';
 import {
   getMessageHandlerMethods,
   mockCore,
@@ -11,9 +11,6 @@ import {
 } from '../../testHelpers/pluginMocks.js';
 import { register } from './index.js';
 
-const WebSocketServer = (
-  WebSocket as unknown as { Server: typeof import('ws').WebSocketServer }
-).Server;
 const originalWebSocket = global.WebSocket;
 type Wss = InstanceType<typeof WebSocketServer>;
 
