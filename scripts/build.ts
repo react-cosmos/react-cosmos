@@ -93,7 +93,14 @@ const builders: Partial<Record<Package, Builder>> & { default: Builder } = {
 
     // Packages are built serially because they depend on each other and
     // this way TypeScript ensures their interfaces are compatible
-    for (const p of packages) await tryBuildPackage(p);
+    for (const p of packages) {
+      const success = await tryBuildPackage(p);
+      if (!success) {
+        stderr.write(error(`Stopped after ${chalk.bold(p)} failed.\n`));
+        process.exit(1);
+        return;
+      }
+    }
 
     stdout.write(`Built ${packages.length} packages successfully.\n`);
   }
@@ -103,9 +110,11 @@ async function tryBuildPackage(pkgName: Package) {
   try {
     await buildPackage(pkgName);
     stdout.write(done(`${chalk.bold(pkgName)}\n`));
+    return true;
   } catch (err) {
-    console.log(err);
+    if (err) console.log(err);
     stderr.write(error(`${chalk.bold(pkgName)}\n`));
+    return false;
   }
 }
 
