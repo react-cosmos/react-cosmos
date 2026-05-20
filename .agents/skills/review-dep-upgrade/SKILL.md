@@ -27,31 +27,36 @@ description: Review npm dependency upgrade diffs. Use when comparing upgraded di
    - Sort largest positive elapsed time first.
    - Keep negative or same-day anomalies, but call them out briefly.
 
-4. Add concise analysis.
+4. Add analysis.
    - `Notable changes`: only upstream changes likely to matter for this repo or the upgrade risk. Prefer official changelogs, migration guides, release notes, or docs. Avoid irrelevant metadata trivia.
    - `Repo impact`: concrete local files, config changes, test fixes, build/lint failures, or `None observed`.
    - Mark uncertainty explicitly instead of overstating causes.
 
 5. Verify claims.
    - Run relevant repo commands when practical, especially tests/build/lint/type-check if discussing required changes.
-   - Note commands not run, network failures, missing changelogs, and any claims inferred from local experiments.
+   - Use verification results to inform `Repo impact`.
 
 ## Output
 
-Produce a Markdown table with this column order:
+Produce a Markdown section for each dependency, sorted by largest positive release gap first:
 
-| Dependency | Previous version | Current version | Release gap | Notable changes | Repo impact |
-| ---------- | ---------------- | --------------- | ----------- | --------------- | ----------- |
+```markdown
+### `dependency` — `previous` (YYYY-MM-DD) → `current` (YYYY-MM-DD)
+
+- **Release gap:** 3y 5mo
+- **Notable changes:** TODO
+- **Repo impact:** TODO
+```
 
 Guidelines:
 
 - Use backticks around package names and versions.
 - Use `YYYY-MM-DD` for release dates.
 - Use compact release gaps such as `3y 5mo`, `54d 1h`, or `3d 23h`.
-- The helper script scaffolds `Notable changes` and `Repo impact` as `TODO`; fill them before presenting the table.
-- Keep `Notable changes` and `Repo impact` to one short sentence each.
-- Link sources after the table when upstream summaries depend on browsed pages.
-- Add a short verification note after the table.
+- The helper script scaffolds `Notable changes` and `Repo impact` as `TODO`; fill them before presenting the report.
+- `Notable changes` and `Repo impact` may be multiple sentences when needed for important context.
+- Use `None observed.` for repo impact when there is nothing concrete.
+- End with a `### Sources` section when upstream summaries depend on browsed pages.
 
 ## Helper Script
 
@@ -65,7 +70,7 @@ Useful options:
 
 - `--base <ref>`: git ref for previous versions.
 - `--head <ref>`: git ref for current versions. Use `--head worktree` for current files on disk.
-- `--json`: emit JSON instead of Markdown.
+- `--json`: emit raw collected data instead of the Markdown report scaffold.
 - `--no-network`: skip npm publish-date lookups and emit blank date/release-gap fields.
 - `--npm-timeout <ms>`: timeout per `npm view` call. Default: `15000`.
 

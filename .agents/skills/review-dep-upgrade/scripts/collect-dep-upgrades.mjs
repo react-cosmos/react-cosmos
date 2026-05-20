@@ -184,15 +184,25 @@ function dateDiff(previousDate, currentDate) {
 }
 
 function printMarkdown(rows) {
-  console.log(
-    '| Dependency | Previous version | Current version | Release gap | Notable changes | Repo impact |'
-  );
-  console.log('|---|---|---|---:|---|---|');
+  if (rows.length === 0) {
+    console.log('No direct dependency upgrades found.');
+    return;
+  }
+
   for (const row of rows) {
     console.log(
-      `| \`${row.dependency}\` | ${formatVersion(row.previousVersion, row.previousDate)} | ${formatVersion(row.currentVersion, row.currentDate)} | ${row.releaseGap} | TODO | TODO |`
+      `### \`${row.dependency}\` — ${formatVersion(row.previousVersion, row.previousDate)} → ${formatVersion(row.currentVersion, row.currentDate)}`
     );
+    console.log('');
+    console.log(`- **Release gap:** ${row.releaseGap || 'unknown'}`);
+    console.log('- **Notable changes:** TODO');
+    console.log('- **Repo impact:** TODO');
+    console.log('');
   }
+
+  console.log('### Sources');
+  console.log('');
+  console.log('- TODO');
 }
 
 function formatVersion(version, date) {
