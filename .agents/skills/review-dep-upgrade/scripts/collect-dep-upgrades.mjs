@@ -20,6 +20,7 @@ const internalNames = collectInternalNames(packageFiles, head);
 const upgrades = [];
 const seen = new Set();
 const packageTimeCache = new Map();
+const failedLookups = new Set();
 
 for (const file of packageFiles) {
   const before = readPackageAt(file, base);
@@ -72,7 +73,17 @@ upgrades.sort(
   (a, b) => (b.releaseGapMs ?? -Infinity) - (a.releaseGapMs ?? -Infinity)
 );
 
+for (const upgrade of upgrades) {
+  if (failedLookups.has(upgrade.dependency)) {
+    upgrade.lookupError = true;
+  }
+}
+
 console.log(JSON.stringify(upgrades, null, 2));
+
+if (failedLookups.size > 0) {
+  process.exitCode = 1;
+}
 
 function parseArgs(argv) {
   const parsed = {};
@@ -151,7 +162,11 @@ function getPublishDate(name, version, cache) {
       cache.set(name, JSON.parse(raw));
     }
     return cache.get(name)[version] || null;
-  } catch {
+  } catch (err) {
+    if (!failedLookups.has(name)) {
+      failedLookups.add(name);
+      console.error(`npm view ${name} failed: ${err.message.split('\n')[0]}`);
+    }
     cache.set(name, {});
     return null;
   }

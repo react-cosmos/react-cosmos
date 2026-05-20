@@ -19,7 +19,8 @@ description: Review npm dependency upgrade diffs. Use when comparing upgraded di
    - Mention added or removed direct dependencies separately only when they explain a repo-impact change.
 
 3. Sanity-check the dates.
-   - If any `previousDate` or `currentDate` comes back `null`, call out that entry — the version may have been unpublished or renamed. If lookups fail across the board, request escalation for npm registry access.
+   - If any entry has `"lookupError": true`, the `npm view` call failed for that package (the script also exits non-zero and prints the failure to stderr). Treat this as a tooling problem: request escalation for npm registry access and re-run before presenting the report — do not ship a report with `lookupError` entries.
+   - If a date is `null` without `lookupError`, that specific version is missing from npm's `time` data — it may have been unpublished or renamed. Call it out in the report.
    - Keep negative or same-day release gaps in the report, but call them out briefly.
 
 4. Add analysis.
@@ -81,4 +82,4 @@ Emits a JSON array of direct dependency upgrades, sorted by largest release gap,
 }
 ```
 
-Render the Markdown report (see Output) from this data and fill in `Notable changes` and `Repo impact`.
+If `npm view` fails for a package, its entries gain `"lookupError": true`, the failure is logged to stderr, and the script exits non-zero. Render the Markdown report (see Output) from this data and fill in `Notable changes` and `Repo impact`.
