@@ -14,7 +14,7 @@
     "http-proxy-middleware": "3.0.5",
     "micromatch": "4.0.8",
     "open": "11.0.0",
-    "pem": "1.15.1",
+    "pem": "1.14.8",
     "react-cosmos-core": "^7.3.0",
     "react-cosmos-renderer": "^7.3.0",
     "react-cosmos-ui": "^7.3.0",
