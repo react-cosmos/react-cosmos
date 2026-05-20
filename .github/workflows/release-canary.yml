@@ -32,12 +32,7 @@ jobs:
       # https://github.com/lerna/lerna/issues/2622
       # https://github.com/lerna/lerna/issues/3554
       # https://github.com/lerna/lerna/issues/2060#issuecomment-658182391
-      # Provenance is disabled because canary tarballs are often byte-identical
-      # to a previous canary (when a commit doesn't touch package source), which
-      # makes Sigstore's transparency log reject the duplicate signature with 409.
-      - env:
-          NPM_CONFIG_PROVENANCE: false
-        run: |
+      - run: |
           npx lerna publish \
             --canary \
             --preid canary.$(git rev-parse --short HEAD) \
