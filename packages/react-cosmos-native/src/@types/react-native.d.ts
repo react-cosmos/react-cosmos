@@ -9,7 +9,12 @@ declare module 'react-native' {
 
   export type Style = { [key: string]: string | number };
 
-  export type StyleProp = Style | readonly StyleProp[] | null | undefined | false;
+  export type StyleProp =
+    | Style
+    | readonly StyleProp[]
+    | null
+    | undefined
+    | false;
 
   export const View: React.ComponentType<{
     style?: StyleProp;
