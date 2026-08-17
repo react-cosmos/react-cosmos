@@ -1,5 +1,6 @@
 {
   "private": true,
+  "version": "7.3.0",
   "workspaces": [
     "packages/*",
     "examples/*"
@@ -23,8 +24,8 @@
     "build": "tsx ./scripts/build.ts",
     "demo:build": "tsx ./scripts/buildDemo.ts",
     "release:check": "npm run build:clear && npm run build && npm run src && npm run lint && npm run dist && npm run test:run",
-    "release": "npm run release:check && lerna publish -m \"[release] %s\"",
-    "release:next": "npm run release:check && lerna publish --dist-tag=next --exact -m \"[release] %s\""
+    "release": "npm run release:check && tsx ./scripts/release.ts",
+    "release:canary": "tsx ./scripts/release.ts --canary"
   },
   "devDependencies": {
     "@playwright/test": "1.62.1",
@@ -53,7 +54,6 @@
     "http-server": "14.1.1",
     "isomorphic-fetch": "3.0.0",
     "jsdom": "29.1.1",
-    "lerna": "9.0.7",
     "localforage": "1.10.0",
     "oxfmt": "0.62.0",
     "oxlint": "1.77.0",

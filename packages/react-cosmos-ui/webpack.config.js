@@ -1,7 +1,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import webpack from 'webpack';
-import lernaConfig from '../../lerna.json' with { type: 'json' };
+import rootPackage from '../../package.json' with { type: 'json' };
 
 const dirname = fileURLToPath(new URL('.', import.meta.url));
 const src = path.join(dirname, 'src');
@@ -47,7 +47,7 @@ export default {
   },
   plugins: [
     new webpack.DefinePlugin({
-      VERSION: JSON.stringify(lernaConfig.version),
+      VERSION: JSON.stringify(rootPackage.version),
     }),
   ],
 };
