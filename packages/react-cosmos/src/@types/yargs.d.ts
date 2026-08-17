@@ -1,7 +1,7 @@
 declare module 'yargs/yargs' {
   import type { Argv } from 'yargs';
 
-  declare interface MockedYargs {
+  interface MockedYargs {
     (
       processArgs?: ReadonlyArray<string> | string,
       cwd?: string,
@@ -11,7 +11,7 @@ declare module 'yargs/yargs' {
     __mockArgsv(newArgv: {}): void;
   }
 
-  declare const MockedYargs: MockedYargs;
+  const MockedYargs: MockedYargs;
 
   export = MockedYargs;
 }

@@ -86,12 +86,15 @@ jobs:
       - run: npm ci --cache .npm-cache
       - run: npm run build
 
-      # Cache Playwright binaries
+      # Cache Playwright binaries, keyed by the installed @playwright/test version
+      - id: playwright-version
+        shell: bash
+        run: echo "version=$(node -p "require('./package.json').devDependencies['@playwright/test']")" >> "$GITHUB_OUTPUT"
       - uses: actions/cache@v5
         id: playwright-cache
         with:
           path: ${{ matrix.os == 'windows' && 'C:\Users\runneradmin\AppData\Local\ms-playwright' || '~/.cache/ms-playwright' }}
-          key: '${{ runner.os }}-playwright-1.60.0'
+          key: '${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}'
 
       # https://playwright.dev/docs/browsers#install-system-dependencies
       - if: steps.playwright-cache.outputs.cache-hit != 'true'

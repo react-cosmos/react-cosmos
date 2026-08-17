@@ -30,12 +30,10 @@ export default {
       {
         test: /\.[jt]sx?$/,
         include: [src],
-        loader: 'ts-loader',
+        loader: 'esbuild-loader',
         options: {
-          configFile: path.join(dirname, './tsconfig.build.json'),
-          compilerOptions: {
-            noUnusedLocals: false,
-          },
+          tsconfig: path.join(dirname, './tsconfig.build.json'),
+          target: 'es2022',
         },
       },
     ],

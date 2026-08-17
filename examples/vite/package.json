@@ -13,15 +13,15 @@
   },
   "dependencies": {
     "@mdx-js/rollup": "3.1.1",
-    "@vitejs/plugin-react": "6.0.1",
+    "@vitejs/plugin-react": "6.0.5",
     "examples-shared": "^7.0.0",
     "parse5": "8.0.1",
-    "react": "19.2.6",
+    "react": "19.2.8",
     "react-cosmos": "^7.3.0",
     "react-cosmos-plugin-boolean-input": "^7.3.0",
     "react-cosmos-plugin-open-fixture": "^7.3.0",
     "react-cosmos-plugin-vite": "^7.3.0",
-    "react-dom": "19.2.6",
-    "vite": "8.0.12"
+    "react-dom": "19.2.8",
+    "vite": "8.2.1"
   }
 }

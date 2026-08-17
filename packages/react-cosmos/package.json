@@ -11,15 +11,15 @@
     "chokidar": "5.0.0",
     "express": "5.2.1",
     "glob": "13.0.6",
-    "http-proxy-middleware": "3.0.5",
+    "http-proxy-middleware": "3.0.7",
     "micromatch": "4.0.8",
     "open": "11.0.0",
     "pem": "1.14.8",
     "react-cosmos-core": "^7.3.0",
     "react-cosmos-renderer": "^7.3.0",
     "react-cosmos-ui": "^7.3.0",
-    "ws": "8.20.1",
-    "yargs": "18.0.0"
+    "ws": "8.21.3",
+    "yargs": "18.1.0"
   },
   "peerDependencies": {
     "react": ">=18",
