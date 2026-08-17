@@ -13,5 +13,10 @@
   "peerDependencies": {
     "react": ">=18",
     "react-native": "*"
+  },
+  "peerDependenciesMeta": {
+    "react-native": {
+      "optional": true
+    }
   }
 }
