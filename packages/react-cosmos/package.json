@@ -19,7 +19,7 @@
     "react-cosmos-renderer": "^7.3.0",
     "react-cosmos-ui": "^7.3.0",
     "ws": "8.21.3",
-    "yargs": "18.0.0"
+    "yargs": "18.1.0"
   },
   "peerDependencies": {
     "react": ">=18",

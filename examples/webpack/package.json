@@ -26,6 +26,6 @@
     "react-cosmos-plugin-webpack": "^7.3.0",
     "react-dom": "19.2.8",
     "react-refresh": "0.18.0",
-    "webpack": "5.108.4"
+    "webpack": "5.109.2"
   }
 }
