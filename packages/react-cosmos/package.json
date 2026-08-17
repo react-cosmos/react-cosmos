@@ -11,7 +11,7 @@
     "chokidar": "5.0.0",
     "express": "5.2.1",
     "glob": "13.0.6",
-    "http-proxy-middleware": "4.2.0",
+    "http-proxy-middleware": "3.0.7",
     "micromatch": "4.0.8",
     "open": "11.0.0",
     "pem": "1.14.8",
