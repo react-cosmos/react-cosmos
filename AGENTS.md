@@ -4,6 +4,8 @@ Guidance for agents when working in this monorepo.
 
 Never commit without an explicit prompt — the user reviews changes before they land.
 
+Never add a `Co-Authored-By` line or any other tool attribution to commit messages.
+
 ## Architecture
 
 See [docs/pages/docs/dev/architecture.md](docs/pages/docs/dev/architecture.md) for the three-part breakdown of React Cosmos (Server, UI, Renderer) and how they communicate. Keep it in mind when making changes — the boundaries between these parts are load-bearing.

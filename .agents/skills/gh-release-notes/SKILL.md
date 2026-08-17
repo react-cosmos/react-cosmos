@@ -14,6 +14,6 @@ Generate a clean commit list between two git tags for GitHub release notes.
 2. Find the previous tag by running `git tag --sort=-v:refname` and picking the tag immediately after the provided one in the sorted list.
 3. Run `git log --pretty=oneline <previous_tag>...<provided_tag>` to get the commit list.
 4. Remove any commits containing `[release]` from the output.
-5. Output the remaining commits as a clean list.
+5. Output the remaining commits as a clean list, keeping the `git log --pretty=oneline` format: each line starts with the full commit sha followed by the commit message.
 6. Ask the user for confirmation before creating the release. Show them the exact release name (same as the tag) and the exact body (the clean commit list from step 5). Do NOT proceed without explicit confirmation.
 7. After confirmation, create the GitHub release using `gh release create <tag> --title "<tag>" --notes "<commit list>"`. The release title must be the tag name and the body must be the exact clean list from step 5. Do NOT include a Co-Authored-By line or any tool attribution.
