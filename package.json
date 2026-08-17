@@ -27,7 +27,6 @@
     "release:next": "npm run release:check && lerna publish --dist-tag=next --exact -m \"[release] %s\""
   },
   "devDependencies": {
-    "@babel/core": "8.0.1",
     "@playwright/test": "1.62.1",
     "@skidding/async-retry": "4.0.0",
     "@testing-library/jest-dom": "6.9.1",
@@ -60,7 +59,6 @@
     "oxlint": "1.77.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "react-native": "0.86.2",
     "source-map-loader": "5.0.0",
     "style-loader": "4.0.0",
     "styled-components": "6.5.1",
