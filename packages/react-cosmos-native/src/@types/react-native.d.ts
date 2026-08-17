@@ -7,7 +7,9 @@
 declare module 'react-native' {
   import type * as React from 'react';
 
-  export type StyleProp = Record<string, unknown>;
+  export type Style = { [key: string]: string | number };
+
+  export type StyleProp = Style | readonly StyleProp[] | null | undefined | false;
 
   export const View: React.ComponentType<{
     style?: StyleProp;
@@ -20,7 +22,7 @@ declare module 'react-native' {
   }>;
 
   export const StyleSheet: {
-    create<T extends Record<string, StyleProp>>(styles: T): T;
+    create<T extends Record<string, Style>>(styles: T): T;
   };
 
   export const DevSettings: {
