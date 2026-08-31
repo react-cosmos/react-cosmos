@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "example-webpack",
-  "version": "7.4.0",
+  "version": "7.4.1",
   "repository": "https://github.com/react-cosmos/react-cosmos/tree/main/examples/webpack",
   "license": "MIT",
   "type": "module",
@@ -20,7 +20,7 @@
     "babel-loader": "10.1.1",
     "examples-shared": "^7.0.0",
     "react": "19.2.8",
-    "react-cosmos": "^7.4.0",
+    "react-cosmos": "^7.4.1",
     "react-cosmos-plugin-boolean-input": "^7.4.0",
     "react-cosmos-plugin-open-fixture": "^7.4.0",
     "react-cosmos-plugin-webpack": "^7.4.0",
