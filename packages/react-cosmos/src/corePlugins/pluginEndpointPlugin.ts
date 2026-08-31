@@ -1,6 +1,7 @@
 import path from 'node:path';
 import type { Request, Response } from 'express';
 import type { CosmosServerPlugin } from '../cosmosPlugin/types.js';
+import { sendFile } from '../shared/sendFile.js';
 import { resolveSilent } from '../utils/resolveSilent.js';
 
 export const pluginEndpointPlugin: CosmosServerPlugin = {
@@ -26,7 +27,7 @@ export const pluginEndpointPlugin: CosmosServerPlugin = {
         return;
       }
 
-      res.sendFile(resolvedPath);
+      sendFile(res, resolvedPath);
     });
   },
 };

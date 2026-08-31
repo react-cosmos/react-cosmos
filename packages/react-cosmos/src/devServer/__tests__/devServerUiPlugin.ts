@@ -19,10 +19,23 @@ const port = 5000 + viteWorkerId();
 const testFsPath = path.join(__dirname, '../__testFs__');
 const pluginPath = path.join(testFsPath, `plugin-${viteWorkerId()}`);
 
+// Package managers like pnpm resolve modules inside a dot directory
+const dotPluginPath = path.join(
+  testFsPath,
+  '.pnpm',
+  `plugin-${viteWorkerId()}`
+);
+
 const testCosmosPlugin = {
   name: 'Test Cosmos plugin',
   rootDir: pluginPath,
   ui: path.join(pluginPath, 'ui.js'),
+};
+
+const testCosmosDotPlugin = {
+  name: 'Test Cosmos dot plugin',
+  rootDir: dotPluginPath,
+  ui: path.join(dotPluginPath, 'ui.js'),
 };
 
 let _stopServer: (() => Promise<unknown>) | undefined;
@@ -33,14 +46,18 @@ beforeAll(async () => {
     rootDir: testFsPath,
     port,
   });
-  await mockCosmosPlugins([testCosmosPlugin]);
+  await mockCosmosPlugins([testCosmosPlugin, testCosmosDotPlugin]);
 
-  await fs.mkdir(testCosmosPlugin.rootDir, { recursive: true });
-  await fs.writeFile(testCosmosPlugin.ui, 'export {}', 'utf8');
+  for (const plugin of [testCosmosPlugin, testCosmosDotPlugin]) {
+    await fs.mkdir(plugin.rootDir, { recursive: true });
+    await fs.writeFile(plugin.ui, 'export {}', 'utf8');
+  }
 
   await mockConsole(async ({ expectLog }) => {
     expectLog('[Cosmos] Using config found at cosmos.config.json');
-    expectLog('[Cosmos] Found 1 plugin: Test Cosmos plugin');
+    expectLog(
+      '[Cosmos] Found 2 plugins: Test Cosmos plugin, Test Cosmos dot plugin'
+    );
     expectLog(
       `[Cosmos] See you at http://localhost:${port} or http://192.168.1.10:${port}`
     );
@@ -52,6 +69,7 @@ beforeAll(async () => {
 afterAll(async () => {
   await _stopServer!();
   await fs.rm(pluginPath, { recursive: true, force: true });
+  await fs.rm(dotPluginPath, { recursive: true, force: true });
 });
 
 it('embeds plugin in playground HTML', async () => {
@@ -59,17 +77,32 @@ it('embeds plugin in playground HTML', async () => {
   expect(res.status).toBe(200);
 
   const html = await res.text();
-  expect(html).toContain(JSON.stringify([testCosmosPlugin]));
+  expect(html).toContain(
+    JSON.stringify([testCosmosPlugin, testCosmosDotPlugin])
+  );
 });
 
 it('serves plugin JS files', async () => {
-  // Windows paths don't start with a slash (e.g. C:\foo\bar.js)
-  const uiPath = testCosmosPlugin.ui.startsWith('/')
-    ? testCosmosPlugin.ui
-    : `/${testCosmosPlugin.ui}`;
-  const res = await fetch(`http://localhost:${port}/_plugin${uiPath}`);
+  const res = await fetch(
+    `http://localhost:${port}/_plugin${pluginUrlPath(testCosmosPlugin.ui)}`
+  );
   expect(res.status).toBe(200);
 
   const uiJs = await res.text();
   expect(uiJs).toBe('export {}');
 });
+
+it('serves plugin JS files from dot directories', async () => {
+  const res = await fetch(
+    `http://localhost:${port}/_plugin${pluginUrlPath(testCosmosDotPlugin.ui)}`
+  );
+  expect(res.status).toBe(200);
+
+  const uiJs = await res.text();
+  expect(uiJs).toBe('export {}');
+});
+
+function pluginUrlPath(uiPath: string) {
+  // Windows paths don't start with a slash (e.g. C:\foo\bar.js)
+  return uiPath.startsWith('/') ? uiPath : `/${uiPath}`;
+}
