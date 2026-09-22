@@ -4,6 +4,7 @@ import type {
   SocketMessage,
 } from 'react-cosmos-core';
 import { rendererSocketMessage } from 'react-cosmos-core';
+import { onWindowRendererRequest } from './windowRendererRequest.js';
 
 export function createWebSocketsConnect(url: string): RendererConnect {
   let pendingMessages: SocketMessage[] = [];
@@ -39,7 +40,11 @@ export function createWebSocketsConnect(url: string): RendererConnect {
         }
       }
       socket.addEventListener('message', handleMessage);
-      return () => socket.removeEventListener('message', handleMessage);
+      const offWindowRequest = onWindowRendererRequest(onMessage);
+      return () => {
+        socket.removeEventListener('message', handleMessage);
+        offWindowRequest();
+      };
     },
   };
 }

@@ -1,4 +1,5 @@
 import type { RendererConnect } from 'react-cosmos-core';
+import { onWindowRendererRequest } from './windowRendererRequest.js';
 
 export function createNoopRendererConnect(): RendererConnect {
   return {
@@ -8,8 +9,8 @@ export function createNoopRendererConnect(): RendererConnect {
         window.cosmosRendererResponse(rendererResponse);
       }
     },
-    onMessage() {
-      return () => {};
+    onMessage(onMessage) {
+      return onWindowRendererRequest(onMessage);
     },
   };
 }

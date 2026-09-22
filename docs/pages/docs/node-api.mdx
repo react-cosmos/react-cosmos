@@ -87,6 +87,19 @@ console.log(fixtures);
 
 Aside from the fixture information showcased above, each fixture object returned also contains a `getElement` function property, which takes no arguments. `getElement` allows you to render fixtures in your own time, in environments like jsdom. Just as in the Cosmos UI, the fixture element will include any decorators you've defined for your fixtures. `getElement` can be used for Jest snapshot testing.
 
+### Headless browser hooks
+
+The renderer exposes two `window` globals for headless browsers. If `window.cosmosRendererResponse` is defined, the renderer calls it with every response it emits, such as `rendererReady`, `fixtureListUpdate` and `fixtureLoaded`. A runner can call `window.cosmosRendererRequest(request)` to send a request to the renderer, such as `selectFixture`, which follows the same path as requests coming from the Cosmos UI.
+
+The renderer URLs in `cosmos.fixtures.json` carry `locked=true` and a locked renderer ignores fixture selection requests. To switch fixtures in-page, build an unlocked URL with `createRendererUrl(rendererUrl, fixtureId)` from `react-cosmos-core` and pass the renderer's `rendererId`, which is found in the `rendererReady` or `fixtureListUpdate` response, or in `sessionStorage['cosmosRendererId']`.
+
+```ts
+await page.evaluate(msg => window.cosmosRendererRequest?.(msg), {
+  type: 'selectFixture',
+  payload: { rendererId, fixtureId, fixtureState: {} },
+});
+```
+
 ### Caveats
 
 The `getFixtures()` API is tricky to work with.
