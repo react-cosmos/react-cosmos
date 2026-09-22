@@ -4,7 +4,10 @@ import type {
   SocketMessage,
 } from 'react-cosmos-core';
 import { rendererSocketMessage } from 'react-cosmos-core';
-import { onWindowRendererRequest } from './windowRendererRequest.js';
+import {
+  onWindowRendererRequest,
+  postWindowRendererResponse,
+} from './windowRendererHooks.js';
 
 export function createWebSocketsConnect(url: string): RendererConnect {
   let pendingMessages: SocketMessage[] = [];
@@ -26,10 +29,7 @@ export function createWebSocketsConnect(url: string): RendererConnect {
         pendingMessages.push(socketMessage);
       }
 
-      // Allow headless browsers to capture renderer responses
-      if (window.cosmosRendererResponse) {
-        window.cosmosRendererResponse(rendererResponse);
-      }
+      postWindowRendererResponse(rendererResponse);
     },
 
     onMessage(onMessage) {
