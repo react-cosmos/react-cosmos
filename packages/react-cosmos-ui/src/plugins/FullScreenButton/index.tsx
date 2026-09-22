@@ -23,7 +23,8 @@ namedPlug<RendererActionSlotProps>(
 
     const onSelect = React.useCallback(() => {
       if (rendererUrl) {
-        const fixtureUrl = createWebRendererUrl(rendererUrl, fixtureId, {
+        const fixtureUrl = createWebRendererUrl(rendererUrl, {
+          fixtureId,
           locked: true,
         });
         // noopener is required to prevent reuse of sessionStorage from the

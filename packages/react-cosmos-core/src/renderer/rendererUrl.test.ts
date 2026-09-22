@@ -10,15 +10,21 @@ describe('static renderer URL', () => {
       expect(createRendererUrl(rendererUrl)).toEqual('http://localhost:5000');
     });
 
+    it('index detached', () => {
+      expect(createRendererUrl(rendererUrl, { detached: true })).toEqual(
+        'http://localhost:5000/?detached=true'
+      );
+    });
+
     it('fixture', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId)).toEqual(
+      expect(createRendererUrl(rendererUrl, { fixtureId })).toEqual(
         'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D'
       );
     });
 
     it('fixture locked', () => {
       expect(
-        createRendererUrl(rendererUrl, fixtureId, { locked: true })
+        createRendererUrl(rendererUrl, { fixtureId, locked: true })
       ).toEqual(
         'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D&locked=true'
       );
@@ -26,7 +32,7 @@ describe('static renderer URL', () => {
 
     it('fixture detached', () => {
       expect(
-        createRendererUrl(rendererUrl, fixtureId, { detached: true })
+        createRendererUrl(rendererUrl, { fixtureId, detached: true })
       ).toEqual(
         'http://localhost:5000/?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D&detached=true'
       );
@@ -42,15 +48,21 @@ describe('static renderer URL', () => {
       );
     });
 
+    it('index detached', () => {
+      expect(createRendererUrl(rendererUrl, { detached: true })).toEqual(
+        'http://localhost:5000/renderer.html?detached=true'
+      );
+    });
+
     it('fixture', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId)).toEqual(
+      expect(createRendererUrl(rendererUrl, { fixtureId })).toEqual(
         'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D'
       );
     });
 
     it('fixture locked', () => {
       expect(
-        createRendererUrl(rendererUrl, fixtureId, { locked: true })
+        createRendererUrl(rendererUrl, { fixtureId, locked: true })
       ).toEqual(
         'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D&locked=true'
       );
@@ -58,7 +70,7 @@ describe('static renderer URL', () => {
 
     it('fixture detached', () => {
       expect(
-        createRendererUrl(rendererUrl, fixtureId, { detached: true })
+        createRendererUrl(rendererUrl, { fixtureId, detached: true })
       ).toEqual(
         'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D&detached=true'
       );
@@ -72,15 +84,21 @@ describe('static renderer URL', () => {
       expect(createRendererUrl(rendererUrl)).toEqual('renderer.html');
     });
 
+    it('index detached', () => {
+      expect(createRendererUrl(rendererUrl, { detached: true })).toEqual(
+        'renderer.html?detached=true'
+      );
+    });
+
     it('fixture', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId)).toEqual(
+      expect(createRendererUrl(rendererUrl, { fixtureId })).toEqual(
         'renderer.html?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D'
       );
     });
 
     it('fixture locked', () => {
       expect(
-        createRendererUrl(rendererUrl, fixtureId, { locked: true })
+        createRendererUrl(rendererUrl, { fixtureId, locked: true })
       ).toEqual(
         'renderer.html?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D&locked=true'
       );
@@ -88,7 +106,7 @@ describe('static renderer URL', () => {
 
     it('fixture detached', () => {
       expect(
-        createRendererUrl(rendererUrl, fixtureId, { detached: true })
+        createRendererUrl(rendererUrl, { fixtureId, detached: true })
       ).toEqual(
         'renderer.html?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D&detached=true'
       );
@@ -102,15 +120,21 @@ describe('static renderer URL', () => {
       expect(createRendererUrl(rendererUrl)).toEqual('/renderer.html');
     });
 
+    it('index detached', () => {
+      expect(createRendererUrl(rendererUrl, { detached: true })).toEqual(
+        '/renderer.html?detached=true'
+      );
+    });
+
     it('fixture', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId)).toEqual(
+      expect(createRendererUrl(rendererUrl, { fixtureId })).toEqual(
         '/renderer.html?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D'
       );
     });
 
     it('fixture locked', () => {
       expect(
-        createRendererUrl(rendererUrl, fixtureId, { locked: true })
+        createRendererUrl(rendererUrl, { fixtureId, locked: true })
       ).toEqual(
         '/renderer.html?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D&locked=true'
       );
@@ -118,7 +142,7 @@ describe('static renderer URL', () => {
 
     it('fixture detached', () => {
       expect(
-        createRendererUrl(rendererUrl, fixtureId, { detached: true })
+        createRendererUrl(rendererUrl, { fixtureId, detached: true })
       ).toEqual(
         '/renderer.html?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D&detached=true'
       );
@@ -132,15 +156,21 @@ describe('static renderer URL', () => {
       expect(createRendererUrl(rendererUrl)).toEqual('/cosmos/renderer.html');
     });
 
+    it('index detached', () => {
+      expect(createRendererUrl(rendererUrl, { detached: true })).toEqual(
+        '/cosmos/renderer.html?detached=true'
+      );
+    });
+
     it('fixture', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId)).toEqual(
+      expect(createRendererUrl(rendererUrl, { fixtureId })).toEqual(
         '/cosmos/renderer.html?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D'
       );
     });
 
     it('fixture locked', () => {
       expect(
-        createRendererUrl(rendererUrl, fixtureId, { locked: true })
+        createRendererUrl(rendererUrl, { fixtureId, locked: true })
       ).toEqual(
         '/cosmos/renderer.html?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D&locked=true'
       );
@@ -148,7 +178,7 @@ describe('static renderer URL', () => {
 
     it('fixture detached', () => {
       expect(
-        createRendererUrl(rendererUrl, fixtureId, { detached: true })
+        createRendererUrl(rendererUrl, { fixtureId, detached: true })
       ).toEqual(
         '/cosmos/renderer.html?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D&detached=true'
       );
@@ -166,15 +196,21 @@ describe('dynamic renderer URL', () => {
       );
     });
 
+    it('index detached', () => {
+      expect(createRendererUrl(rendererUrl, { detached: true })).toEqual(
+        'http://localhost:5000/index?detached=true'
+      );
+    });
+
     it('fixture', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId)).toEqual(
+      expect(createRendererUrl(rendererUrl, { fixtureId })).toEqual(
         'http://localhost:5000/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9'
       );
     });
 
     it('fixture locked', () => {
       expect(
-        createRendererUrl(rendererUrl, fixtureId, { locked: true })
+        createRendererUrl(rendererUrl, { fixtureId, locked: true })
       ).toEqual(
         'http://localhost:5000/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9?locked=true'
       );
@@ -182,7 +218,7 @@ describe('dynamic renderer URL', () => {
 
     it('fixture detached', () => {
       expect(
-        createRendererUrl(rendererUrl, fixtureId, { detached: true })
+        createRendererUrl(rendererUrl, { fixtureId, detached: true })
       ).toEqual(
         'http://localhost:5000/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9?detached=true'
       );
@@ -198,15 +234,21 @@ describe('dynamic renderer URL', () => {
       );
     });
 
+    it('index detached', () => {
+      expect(createRendererUrl(rendererUrl, { detached: true })).toEqual(
+        'http://localhost:5000/cosmos/index?detached=true'
+      );
+    });
+
     it('fixture', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId)).toEqual(
+      expect(createRendererUrl(rendererUrl, { fixtureId })).toEqual(
         'http://localhost:5000/cosmos/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9'
       );
     });
 
     it('fixture locked', () => {
       expect(
-        createRendererUrl(rendererUrl, fixtureId, { locked: true })
+        createRendererUrl(rendererUrl, { fixtureId, locked: true })
       ).toEqual(
         'http://localhost:5000/cosmos/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9?locked=true'
       );
@@ -214,7 +256,7 @@ describe('dynamic renderer URL', () => {
 
     it('fixture detached', () => {
       expect(
-        createRendererUrl(rendererUrl, fixtureId, { detached: true })
+        createRendererUrl(rendererUrl, { fixtureId, detached: true })
       ).toEqual(
         'http://localhost:5000/cosmos/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9?detached=true'
       );
@@ -228,15 +270,21 @@ describe('dynamic renderer URL', () => {
       expect(createRendererUrl(rendererUrl)).toEqual('/index');
     });
 
+    it('index detached', () => {
+      expect(createRendererUrl(rendererUrl, { detached: true })).toEqual(
+        '/index?detached=true'
+      );
+    });
+
     it('fixture', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId)).toEqual(
+      expect(createRendererUrl(rendererUrl, { fixtureId })).toEqual(
         '/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9'
       );
     });
 
     it('fixture locked', () => {
       expect(
-        createRendererUrl(rendererUrl, fixtureId, { locked: true })
+        createRendererUrl(rendererUrl, { fixtureId, locked: true })
       ).toEqual(
         '/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9?locked=true'
       );
@@ -244,7 +292,7 @@ describe('dynamic renderer URL', () => {
 
     it('fixture detached', () => {
       expect(
-        createRendererUrl(rendererUrl, fixtureId, { detached: true })
+        createRendererUrl(rendererUrl, { fixtureId, detached: true })
       ).toEqual(
         '/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9?detached=true'
       );
@@ -258,15 +306,21 @@ describe('dynamic renderer URL', () => {
       expect(createRendererUrl(rendererUrl)).toEqual('/cosmos/index');
     });
 
+    it('index detached', () => {
+      expect(createRendererUrl(rendererUrl, { detached: true })).toEqual(
+        '/cosmos/index?detached=true'
+      );
+    });
+
     it('fixture', () => {
-      expect(createRendererUrl(rendererUrl, fixtureId)).toEqual(
+      expect(createRendererUrl(rendererUrl, { fixtureId })).toEqual(
         '/cosmos/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9'
       );
     });
 
     it('fixture locked', () => {
       expect(
-        createRendererUrl(rendererUrl, fixtureId, { locked: true })
+        createRendererUrl(rendererUrl, { fixtureId, locked: true })
       ).toEqual(
         '/cosmos/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9?locked=true'
       );
@@ -274,7 +328,7 @@ describe('dynamic renderer URL', () => {
 
     it('fixture detached', () => {
       expect(
-        createRendererUrl(rendererUrl, fixtureId, { detached: true })
+        createRendererUrl(rendererUrl, { fixtureId, detached: true })
       ).toEqual(
         '/cosmos/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9?detached=true'
       );

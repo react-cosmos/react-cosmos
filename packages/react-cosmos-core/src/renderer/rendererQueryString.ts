@@ -1,11 +1,5 @@
-import type { FixtureId } from '../userModules/fixtureTypes.js';
 import { buildQueryString, parseQueryString } from '../utils/queryString.js';
-
-type RendererParams = {
-  fixtureId?: FixtureId;
-  locked?: boolean;
-  detached?: boolean;
-};
+import type { RendererParams } from './rendererParams.js';
 
 export type RendererSearchParams = {
   fixtureId?: string;

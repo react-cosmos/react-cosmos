@@ -204,7 +204,8 @@ async function takeFixtureSnapshot(
   fixtureId: FixtureId,
   cleanPath: string[]
 ) {
-  const fixtureUrl = createRendererUrl(rendererUrl, fixtureId, {
+  const fixtureUrl = createRendererUrl(rendererUrl, {
+    fixtureId,
     detached: true,
   });
   await page.goto(fixtureUrl);

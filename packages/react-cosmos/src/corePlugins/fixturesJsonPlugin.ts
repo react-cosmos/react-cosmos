@@ -64,7 +64,8 @@ async function createFixtureItems(
     return {
       filePath: relPath,
       cleanPath: cleanFixturePath(relPath, fixturesDir, fixtureFileSuffix),
-      rendererUrl: createRendererUrl(rendererUrl, fixtureId, {
+      rendererUrl: createRendererUrl(rendererUrl, {
+        fixtureId,
         detached: true,
       }),
     };

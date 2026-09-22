@@ -1,18 +1,10 @@
 import { Base64 } from 'js-base64';
 import type { CosmosMode } from '../server/serverTypes.js';
 import type { FixtureId } from '../userModules/fixtureTypes.js';
+import type { RendererParams } from './rendererParams.js';
 import { buildRendererQueryString } from './rendererQueryString.js';
 
 export type CosmosRendererUrl = null | string | { dev: string; export: string };
-
-export type RendererUrlOptions = {
-  // The renderer stays on the selected fixture but still syncs fixture state
-  // with the Cosmos UI. Used by the full-screen preview.
-  locked?: boolean;
-  // The renderer is disconnected from the Cosmos UI and the dev server and
-  // only responds to window hooks. Used by visual test runners.
-  detached?: boolean;
-};
 
 export function pickRendererUrl(
   rendererUrl: undefined | CosmosRendererUrl,
@@ -25,31 +17,30 @@ export function pickRendererUrl(
 
 export function createRendererUrl(
   rendererUrl: string,
-  fixtureId?: FixtureId,
-  options: RendererUrlOptions = {}
+  params: RendererParams = {}
 ) {
   if (hasFixtureVar(rendererUrl)) {
-    if (!fixtureId) return replaceFixtureVar(rendererUrl, 'index');
-
+    const { fixtureId, ...queryParams } = params;
+    const fixture = fixtureId ? encodeRendererUrlFixture(fixtureId) : 'index';
     return (
-      replaceFixtureVar(rendererUrl, encodeRendererUrlFixture(fixtureId)) +
-      buildRendererQueryString(options)
+      replaceFixtureVar(rendererUrl, fixture) +
+      buildRendererQueryString(queryParams)
     );
   } else {
-    if (!fixtureId) return rendererUrl;
+    const queryString = buildRendererQueryString(params);
+    if (!queryString) return rendererUrl;
 
     const baseUrl = hostOnlyUrl(rendererUrl) ? rendererUrl + '/' : rendererUrl;
-    return baseUrl + buildRendererQueryString({ fixtureId, ...options });
+    return baseUrl + queryString;
   }
 }
 
 export function createWebRendererUrl(
   rendererUrl: string,
-  fixtureId?: FixtureId,
-  options?: RendererUrlOptions
+  params?: RendererParams
 ) {
   return applyWindowHostnameToRendererUrl(
-    createRendererUrl(rendererUrl, fixtureId, options)
+    createRendererUrl(rendererUrl, params)
   );
 }
 
