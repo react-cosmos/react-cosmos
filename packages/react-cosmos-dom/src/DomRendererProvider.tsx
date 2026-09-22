@@ -13,12 +13,16 @@ type Props = {
   rendererConfig: RendererConfig;
 };
 export function DomRendererProvider({ children, rendererConfig }: Props) {
-  const rendererId = useDomRendererId();
-  const rendererConnect = useDomRendererConnect(rendererConfig.webSocketUrl);
+  const {
+    locked = false,
+    detached = false,
+    fixtureId = null,
+  } = React.useMemo(() => parseRendererQueryString(location.search), []);
 
-  const { locked = false, fixtureId = null } = React.useMemo(
-    () => parseRendererQueryString(location.search),
-    []
+  const rendererId = useDomRendererId();
+  const rendererConnect = useDomRendererConnect(
+    rendererConfig.webSocketUrl,
+    detached
   );
 
   return (
