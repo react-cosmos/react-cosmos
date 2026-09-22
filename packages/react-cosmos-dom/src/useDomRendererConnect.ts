@@ -5,6 +5,7 @@ import {
   createNoopRendererConnect,
   createPostMessageConnect,
   createWebSocketsConnect,
+  createWindowRendererConnect,
 } from 'react-cosmos-renderer';
 
 export function useDomRendererConnect(
@@ -23,10 +24,12 @@ export function createDomRendererConnect(
   webSocketUrl: string | null,
   detached: boolean
 ) {
-  if (typeof window !== 'undefined' && !detached) {
+  if (typeof window === 'undefined') return createNoopRendererConnect();
+
+  if (!detached) {
     if (isInsideWindowIframe()) return createPostMessageConnect();
     if (webSocketUrl) return createWebSocketsConnect(webSocketUrl);
   }
 
-  return createNoopRendererConnect();
+  return createWindowRendererConnect();
 }

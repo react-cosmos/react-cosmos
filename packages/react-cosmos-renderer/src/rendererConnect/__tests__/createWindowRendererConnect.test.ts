@@ -1,5 +1,5 @@
 import type { RendererRequest, RendererResponse } from 'react-cosmos-core';
-import { createNoopRendererConnect } from '../createNoopRendererConnect.js';
+import { createWindowRendererConnect } from '../createWindowRendererConnect.js';
 
 const request: RendererRequest = {
   type: 'selectFixture',
@@ -23,7 +23,7 @@ beforeEach(() => {
 it('forwards window requests to message handlers', () => {
   const handler1 = vi.fn();
   const handler2 = vi.fn();
-  const connect = createNoopRendererConnect();
+  const connect = createWindowRendererConnect();
   const unsubscribe1 = connect.onMessage(handler1);
   connect.onMessage(handler2);
 
@@ -37,12 +37,23 @@ it('forwards window requests to message handlers', () => {
   expect(handler2).toHaveBeenCalledTimes(2);
 });
 
+it('replaces stale window request hook', () => {
+  window.cosmosRendererRequest = () => {};
+  const handler = vi.fn();
+  createWindowRendererConnect().onMessage(handler);
+
+  window.cosmosRendererRequest(request);
+  expect(handler).toHaveBeenCalledWith(request);
+});
+
 it('forwards responses to window handler', () => {
   window.cosmosRendererResponse = vi.fn();
-  createNoopRendererConnect().postMessage(response);
+  createWindowRendererConnect().postMessage(response);
   expect(window.cosmosRendererResponse).toHaveBeenCalledWith(response);
 });
 
 it('posts responses without window handler', () => {
-  expect(() => createNoopRendererConnect().postMessage(response)).not.toThrow();
+  expect(() =>
+    createWindowRendererConnect().postMessage(response)
+  ).not.toThrow();
 });

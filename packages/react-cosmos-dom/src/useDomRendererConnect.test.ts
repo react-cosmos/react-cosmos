@@ -7,6 +7,7 @@ class MockWebSocket {
     MockWebSocket.instances.push(url);
   }
   addEventListener() {}
+  removeEventListener() {}
 }
 
 beforeEach(() => {
@@ -26,4 +27,27 @@ it('connects to web socket', () => {
 it('does not connect to web socket when detached', () => {
   createDomRendererConnect('ws://localhost:5000', true);
   expect(MockWebSocket.instances).toEqual([]);
+});
+
+it('does not expose window request hook when connected to web socket', () => {
+  delete window.cosmosRendererRequest;
+  createDomRendererConnect('ws://localhost:5000', false).onMessage(() => {});
+  expect(window.cosmosRendererRequest).toBeUndefined();
+});
+
+it('exposes window request hook when detached', () => {
+  delete window.cosmosRendererRequest;
+  const handler = vi.fn();
+  createDomRendererConnect('ws://localhost:5000', true).onMessage(handler);
+  window.cosmosRendererRequest!({
+    type: 'unselectFixture',
+    payload: { rendererId: 'mockRendererId' },
+  });
+  expect(handler).toHaveBeenCalled();
+});
+
+it('exposes window request hook without web socket', () => {
+  delete window.cosmosRendererRequest;
+  createDomRendererConnect(null, false).onMessage(() => {});
+  expect(window.cosmosRendererRequest).toBeDefined();
 });

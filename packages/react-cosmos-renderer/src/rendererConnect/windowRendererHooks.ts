@@ -4,12 +4,16 @@ import type { RendererRequest, RendererResponse } from 'react-cosmos-core';
 
 const requestHandlers = new Set<(msg: RendererRequest) => unknown>();
 
+function handleWindowRendererRequest(msg: RendererRequest) {
+  requestHandlers.forEach(handler => handler(msg));
+}
+
 export function onWindowRendererRequest(
   handler: (msg: RendererRequest) => unknown
 ) {
-  if (!window.cosmosRendererRequest) {
-    window.cosmosRendererRequest = msg => requestHandlers.forEach(h => h(msg));
-  }
+  // Assigned on every subscription to replace a stale global, e.g. one left
+  // behind by a previous instance of this module
+  window.cosmosRendererRequest = handleWindowRendererRequest;
   requestHandlers.add(handler);
   return () => {
     requestHandlers.delete(handler);
