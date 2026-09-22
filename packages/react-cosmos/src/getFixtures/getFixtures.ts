@@ -70,7 +70,9 @@ export async function getFixtures(config: CosmosConfig, options: Options = {}) {
         playgroundUrl: getPlaygroundFixtureUrl(config, fixtureId),
         relativeFilePath: fixtureId.path,
         rendererUrl: options.rendererUrl
-          ? createRendererUrl(options.rendererUrl, fixtureId)
+          ? createRendererUrl(options.rendererUrl, fixtureId, {
+              detached: true,
+            })
           : null,
         treePath,
       });

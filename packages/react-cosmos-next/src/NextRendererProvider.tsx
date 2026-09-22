@@ -21,29 +21,36 @@ export function NextRendererProvider({
   rendererConfig: { rendererUrl, webSocketUrl },
   selectedFixture,
 }: Props) {
-  const rendererId = useDomRendererId();
-  const rendererConnect = useDomRendererConnect(webSocketUrl);
-
   const router = useRouter();
   const searchParams = useSearchParams();
   const locked = searchParams.get('locked') === 'true';
+  const detached = searchParams.get('detached') === 'true';
+
+  const rendererId = useDomRendererId();
+  const rendererConnect = useDomRendererConnect(webSocketUrl, detached);
 
   const selectFixture = React.useCallback(
     (fixtureId: FixtureId) => {
       if (rendererUrl) {
         router.replace(
-          trimHtmlExtension(createWebRendererUrl(rendererUrl, fixtureId))
+          trimHtmlExtension(
+            createWebRendererUrl(rendererUrl, fixtureId, { detached })
+          )
         );
       }
     },
-    [rendererUrl, router]
+    [detached, rendererUrl, router]
   );
 
   const unselectFixture = React.useCallback(() => {
     if (rendererUrl) {
-      router.replace(trimHtmlExtension(createWebRendererUrl(rendererUrl)));
+      router.replace(
+        trimHtmlExtension(
+          createWebRendererUrl(rendererUrl, undefined, { detached })
+        )
+      );
     }
-  }, [rendererUrl, router]);
+  }, [detached, rendererUrl, router]);
 
   const reloadRenderer = React.useCallback(() => {
     if (rendererUrl) {

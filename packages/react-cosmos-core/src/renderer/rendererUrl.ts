@@ -5,6 +5,15 @@ import { buildRendererQueryString } from './rendererQueryString.js';
 
 export type CosmosRendererUrl = null | string | { dev: string; export: string };
 
+export type RendererUrlOptions = {
+  // The renderer stays on the selected fixture but still syncs fixture state
+  // with the Cosmos UI. Used by the full-screen preview.
+  locked?: boolean;
+  // The renderer is disconnected from the Cosmos UI and the dev server and
+  // only responds to window hooks. Used by visual test runners.
+  detached?: boolean;
+};
+
 export function pickRendererUrl(
   rendererUrl: undefined | CosmosRendererUrl,
   mode: CosmosMode
@@ -17,30 +26,30 @@ export function pickRendererUrl(
 export function createRendererUrl(
   rendererUrl: string,
   fixtureId?: FixtureId,
-  locked?: boolean
+  options: RendererUrlOptions = {}
 ) {
   if (hasFixtureVar(rendererUrl)) {
     if (!fixtureId) return replaceFixtureVar(rendererUrl, 'index');
 
     return (
       replaceFixtureVar(rendererUrl, encodeRendererUrlFixture(fixtureId)) +
-      buildRendererQueryString({ locked })
+      buildRendererQueryString(options)
     );
   } else {
     if (!fixtureId) return rendererUrl;
 
     const baseUrl = hostOnlyUrl(rendererUrl) ? rendererUrl + '/' : rendererUrl;
-    return baseUrl + buildRendererQueryString({ fixtureId, locked });
+    return baseUrl + buildRendererQueryString({ fixtureId, ...options });
   }
 }
 
 export function createWebRendererUrl(
   rendererUrl: string,
   fixtureId?: FixtureId,
-  locked?: boolean
+  options?: RendererUrlOptions
 ) {
   return applyWindowHostnameToRendererUrl(
-    createRendererUrl(rendererUrl, fixtureId, locked)
+    createRendererUrl(rendererUrl, fixtureId, options)
   );
 }
 

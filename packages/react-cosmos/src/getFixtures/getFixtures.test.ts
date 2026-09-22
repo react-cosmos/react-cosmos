@@ -48,7 +48,7 @@ it('returns fixture info', async () => {
       parents: ['controls'],
       relativeFilePath: 'src/__fixtures__/controls/Inputs Panel.tsx',
       rendererUrl:
-        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2Fcontrols%2FInputs+Panel.tsx%22%7D',
+        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2Fcontrols%2FInputs+Panel.tsx%22%7D&detached=true',
       playgroundUrl:
         'http://localhost:5000/?fixture=%7B%22path%22%3A%22src%2F__fixtures__%2Fcontrols%2FInputs+Panel.tsx%22%7D',
       treePath: ['controls', 'Inputs Panel'],
@@ -64,7 +64,7 @@ it('returns fixture info', async () => {
       parents: ['controls'],
       relativeFilePath: 'src/__fixtures__/controls/Props Panel.tsx',
       rendererUrl:
-        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2Fcontrols%2FProps+Panel.tsx%22%7D',
+        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2F__fixtures__%2Fcontrols%2FProps+Panel.tsx%22%7D&detached=true',
       playgroundUrl:
         'http://localhost:5000/?fixture=%7B%22path%22%3A%22src%2F__fixtures__%2Fcontrols%2FProps+Panel.tsx%22%7D',
       treePath: ['controls', 'Props Panel'],
@@ -79,7 +79,7 @@ it('returns fixture info', async () => {
         'http://localhost:5000/?fixture=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22default%22%7D',
       relativeFilePath: 'src/Counter.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22default%22%7D',
+        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22default%22%7D&detached=true',
       treePath: ['Counter', 'default'],
     },
     {
@@ -92,7 +92,7 @@ it('returns fixture info', async () => {
         'http://localhost:5000/?fixture=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22small+number%22%7D',
       relativeFilePath: 'src/Counter.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22small+number%22%7D',
+        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22small+number%22%7D&detached=true',
       treePath: ['Counter', 'small number'],
     },
     {
@@ -105,7 +105,7 @@ it('returns fixture info', async () => {
         'http://localhost:5000/?fixture=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22large+number%22%7D',
       relativeFilePath: 'src/Counter.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22large+number%22%7D',
+        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2FCounter.fixture.tsx%22%2C%22name%22%3A%22large+number%22%7D&detached=true',
       treePath: ['Counter', 'large number'],
     },
     {
@@ -118,7 +118,7 @@ it('returns fixture info', async () => {
         'http://localhost:5000/?fixture=%7B%22path%22%3A%22src%2FCounterButton.fixture.tsx%22%7D',
       relativeFilePath: 'src/CounterButton.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2FCounterButton.fixture.tsx%22%7D',
+        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2FCounterButton.fixture.tsx%22%7D&detached=true',
       treePath: ['CounterButton'],
     },
     {
@@ -134,7 +134,7 @@ it('returns fixture info', async () => {
         'http://localhost:5000/?fixture=%7B%22path%22%3A%22src%2FWelcomeMessage%2FWelcomeMessage.fixture.tsx%22%7D',
       relativeFilePath: 'src/WelcomeMessage/WelcomeMessage.fixture.tsx',
       rendererUrl:
-        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2FWelcomeMessage%2FWelcomeMessage.fixture.tsx%22%7D',
+        'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22src%2FWelcomeMessage%2FWelcomeMessage.fixture.tsx%22%7D&detached=true',
       treePath: ['WelcomeMessage'],
     },
   ]);

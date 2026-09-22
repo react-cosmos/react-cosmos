@@ -118,7 +118,7 @@ export function webTests(url: string) {
         filePath: 'src/WelcomeMessage/WelcomeMessage.fixture.tsx',
         cleanPath: ['src', 'WelcomeMessage', 'WelcomeMessage'],
         rendererUrl: expect.stringContaining(
-          '?fixtureId=%7B%22path%22%3A%22src%2FWelcomeMessage%2FWelcomeMessage.fixture.tsx%22%7D&locked=true'
+          '?fixtureId=%7B%22path%22%3A%22src%2FWelcomeMessage%2FWelcomeMessage.fixture.tsx%22%7D&detached=true'
         ),
       });
     });
@@ -204,7 +204,9 @@ async function takeFixtureSnapshot(
   fixtureId: FixtureId,
   cleanPath: string[]
 ) {
-  const fixtureUrl = createRendererUrl(rendererUrl, fixtureId, true);
+  const fixtureUrl = createRendererUrl(rendererUrl, fixtureId, {
+    detached: true,
+  });
   await page.goto(fixtureUrl);
   await expect(page).toHaveScreenshot(`${cleanPath.join('-')}.png`);
 }
