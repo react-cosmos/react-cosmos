@@ -63,6 +63,8 @@ const config = createCosmosConfig(__dirname, {
 
 Get all your fixtures programatically. A ton of information is provided for each fixture, enabling you to hack away on top of React Cosmos. To generate visual snapshots from your fixtures, you load `rendererUrl` in a headless browser like [Puppeteer](https://github.com/puppeteer/puppeteer) and take a screenshot on page load. You can compare visual snapshots between deploys to catch sneaky UI regressions.
 
+Renderer URLs carry `detached=true`. A detached renderer is disconnected from the Cosmos UI and the dev server, so a Cosmos UI session on the same server can't change the fixture or its state while your visual tests run.
+
 ```js
 import { getFixtures } from 'react-cosmos';
 
@@ -79,7 +81,7 @@ console.log(fixtures);
 //     "parents": ["pages", "Error"]
 //     "playgroundUrl": "http://localhost:5000/?fixtureId=%7B%22path%22%3A%22components%2Fpages%2FError%2F__fixtures__%2Fnot-found.js%22%2C%22name%22%3Anull%7D",
 //     "relativeFilePath": "components/pages/Error/__fixtures__/not-found.js",
-//     "rendererUrl": "http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22components%2Fpages%2FError%2F__fixtures__%2Fnot-found.js%22%2C%22name%22%3Anull%7D",
+//     "rendererUrl": "http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22components%2Fpages%2FError%2F__fixtures__%2Fnot-found.js%22%2C%22name%22%3Anull%7D&detached=true",
 //     "treePath": ["pages", "Error", "not-found"]
 //   },
 //   ...

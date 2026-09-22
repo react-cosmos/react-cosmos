@@ -1,14 +1,10 @@
-import type { FixtureId } from '../userModules/fixtureTypes.js';
 import { buildQueryString, parseQueryString } from '../utils/queryString.js';
-
-type RendererParams = {
-  fixtureId?: FixtureId;
-  locked?: boolean;
-};
+import type { RendererParams } from './rendererParams.js';
 
 export type RendererSearchParams = {
   fixtureId?: string;
   locked?: string;
+  detached?: string;
 };
 
 export function buildRendererQueryString(params: RendererParams) {
@@ -32,6 +28,10 @@ function encodeRendererSearchParams(params: RendererParams) {
     stringParams.locked = 'true';
   }
 
+  if (params.detached) {
+    stringParams.detached = 'true';
+  }
+
   return stringParams;
 }
 
@@ -44,6 +44,10 @@ function decodeRendererSearchParams(stringParams: RendererSearchParams) {
 
   if (stringParams.locked) {
     params.locked = stringParams.locked === 'true';
+  }
+
+  if (stringParams.detached) {
+    params.detached = stringParams.detached === 'true';
   }
 
   return params;
