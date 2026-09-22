@@ -9,7 +9,7 @@ import {
 } from 'react-cosmos-renderer';
 
 type DomRendererConnectOptions = {
-  webSocketUrl?: string | null;
+  webSocketUrl: string | null;
   detached?: boolean;
 };
 

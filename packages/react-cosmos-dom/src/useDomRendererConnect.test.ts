@@ -46,6 +46,6 @@ it('exposes window request hook when detached', () => {
 });
 
 it('exposes window request hook without web socket', () => {
-  createDomRendererConnect({}).onMessage(() => {});
+  createDomRendererConnect({ webSocketUrl: null }).onMessage(() => {});
   expect(window.cosmosRendererRequest).toBeDefined();
 });
