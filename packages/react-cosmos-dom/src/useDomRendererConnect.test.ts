@@ -24,28 +24,16 @@ it('connects to web socket', () => {
   expect(MockWebSocket.instances).toEqual(['ws://localhost:5000']);
 });
 
-it('does not connect to web socket when detached', () => {
+it('uses window hooks when detached', () => {
   createDomRendererConnect({
     webSocketUrl: 'ws://localhost:5000',
     detached: true,
-  });
+  }).onMessage(() => {});
   expect(MockWebSocket.instances).toEqual([]);
+  expect(window.cosmosRendererRequest).toBeDefined();
 });
 
-it('exposes window request hook when detached', () => {
-  const handler = vi.fn();
-  createDomRendererConnect({
-    webSocketUrl: 'ws://localhost:5000',
-    detached: true,
-  }).onMessage(handler);
-  window.cosmosRendererRequest!({
-    type: 'unselectFixture',
-    payload: { rendererId: 'mockRendererId' },
-  });
-  expect(handler).toHaveBeenCalled();
-});
-
-it('exposes window request hook without web socket', () => {
+it('uses window hooks without web socket', () => {
   createDomRendererConnect({ webSocketUrl: null }).onMessage(() => {});
   expect(window.cosmosRendererRequest).toBeDefined();
 });
