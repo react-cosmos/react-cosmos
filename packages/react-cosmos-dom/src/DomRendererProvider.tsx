@@ -20,10 +20,10 @@ export function DomRendererProvider({ children, rendererConfig }: Props) {
   } = React.useMemo(() => parseRendererQueryString(location.search), []);
 
   const rendererId = useDomRendererId();
-  const rendererConnect = useDomRendererConnect(
-    rendererConfig.webSocketUrl,
-    detached
-  );
+  const rendererConnect = useDomRendererConnect({
+    webSocketUrl: rendererConfig.webSocketUrl,
+    detached,
+  });
 
   return (
     <StatefulRendererProvider

@@ -8,22 +8,27 @@ import {
   createWindowRendererConnect,
 } from 'react-cosmos-renderer';
 
-export function useDomRendererConnect(
-  webSocketUrl: string | null,
-  detached: boolean
-) {
+type DomRendererConnectOptions = {
+  webSocketUrl?: string | null;
+  detached?: boolean;
+};
+
+export function useDomRendererConnect({
+  webSocketUrl,
+  detached,
+}: DomRendererConnectOptions) {
   return React.useMemo(
-    () => createDomRendererConnect(webSocketUrl, detached),
+    () => createDomRendererConnect({ webSocketUrl, detached }),
     [webSocketUrl, detached]
   );
 }
 
 // A detached renderer is disconnected from the Cosmos UI and the dev server
 // and only responds to window hooks, which is how headless browsers control it
-export function createDomRendererConnect(
-  webSocketUrl: string | null,
-  detached: boolean
-) {
+export function createDomRendererConnect({
+  webSocketUrl,
+  detached = false,
+}: DomRendererConnectOptions) {
   if (typeof window === 'undefined') return createNoopRendererConnect();
 
   if (!detached) {

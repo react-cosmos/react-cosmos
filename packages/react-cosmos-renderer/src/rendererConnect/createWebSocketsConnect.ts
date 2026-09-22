@@ -4,7 +4,6 @@ import type {
   SocketMessage,
 } from 'react-cosmos-core';
 import { rendererSocketMessage } from 'react-cosmos-core';
-import { postWindowRendererResponse } from './windowRendererHooks.js';
 
 export function createWebSocketsConnect(url: string): RendererConnect {
   let pendingMessages: SocketMessage[] = [];
@@ -25,8 +24,6 @@ export function createWebSocketsConnect(url: string): RendererConnect {
       } else {
         pendingMessages.push(socketMessage);
       }
-
-      postWindowRendererResponse(rendererResponse);
     },
 
     onMessage(onMessage) {
