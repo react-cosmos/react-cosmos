@@ -5,3 +5,4 @@ export * from './fixtureModule/decorateFixture.js';
 export * from './rendererConnect/createNoopRendererConnect.js';
 export * from './rendererConnect/createPostMessageConnect.js';
 export * from './rendererConnect/createWebSocketsConnect.js';
+export * from './rendererConnect/createWindowRendererConnect.js';

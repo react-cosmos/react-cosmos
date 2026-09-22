@@ -11,6 +11,7 @@ class MockWebSocket {
 
 beforeEach(() => {
   MockWebSocket.instances = [];
+  delete window.cosmosRendererRequest;
   vi.stubGlobal('WebSocket', MockWebSocket);
 });
 
@@ -19,11 +20,22 @@ afterEach(() => {
 });
 
 it('connects to web socket', () => {
-  createDomRendererConnect('ws://localhost:5000', false);
+  createDomRendererConnect({ webSocketUrl: 'ws://localhost:5000' });
   expect(MockWebSocket.instances).toEqual(['ws://localhost:5000']);
 });
 
-it('does not connect to web socket when detached', () => {
-  createDomRendererConnect('ws://localhost:5000', true);
+it('uses window hooks when detached', () => {
+  const connect = createDomRendererConnect({
+    webSocketUrl: 'ws://localhost:5000',
+    detached: true,
+  });
+  onTestFinished(connect.onMessage(() => {}));
   expect(MockWebSocket.instances).toEqual([]);
+  expect(window.cosmosRendererRequest).toBeDefined();
+});
+
+it('uses window hooks without web socket', () => {
+  const connect = createDomRendererConnect({ webSocketUrl: null });
+  onTestFinished(connect.onMessage(() => {}));
+  expect(window.cosmosRendererRequest).toBeDefined();
 });

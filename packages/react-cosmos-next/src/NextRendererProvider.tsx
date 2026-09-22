@@ -27,7 +27,7 @@ export function NextRendererProvider({
   const detached = searchParams.get('detached') === 'true';
 
   const rendererId = useDomRendererId();
-  const rendererConnect = useDomRendererConnect(webSocketUrl, detached);
+  const rendererConnect = useDomRendererConnect({ webSocketUrl, detached });
 
   const selectFixture = React.useCallback(
     (fixtureId: FixtureId) => {

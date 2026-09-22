@@ -24,11 +24,6 @@ export function createWebSocketsConnect(url: string): RendererConnect {
       } else {
         pendingMessages.push(socketMessage);
       }
-
-      // Allow headless browsers to capture renderer responses
-      if (window.cosmosRendererResponse) {
-        window.cosmosRendererResponse(rendererResponse);
-      }
     },
 
     onMessage(onMessage) {
