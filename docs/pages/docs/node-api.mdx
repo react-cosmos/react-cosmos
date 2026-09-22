@@ -93,7 +93,7 @@ Aside from the fixture information showcased above, each fixture object returned
 
 The renderer exposes two `window` globals for headless browsers. If `window.cosmosRendererResponse` is defined, the renderer calls it with every response it emits, such as `rendererReady`, `fixtureListUpdate` and `fixtureLoaded`. A runner can call `window.cosmosRendererRequest(request)` to send a request to the renderer, such as `selectFixture`, which follows the same path as requests coming from the Cosmos UI.
 
-The renderer URLs from `getFixtures()` and `cosmos.fixtures.json` are detached, so they only respond to window hooks. Load one of them and switch fixtures in-page by passing the renderer's `rendererId`, which is found in the `rendererReady` or `fixtureListUpdate` response, or in `sessionStorage['cosmosRendererId']`.
+The renderer URLs from `getFixtures()` and `cosmos.fixtures.json` are detached, so they only respond to window hooks. Load one of them and switch fixtures in-page by passing the renderer's `rendererId`, which is found in the `rendererReady` or `fixtureListUpdate` response, or in `sessionStorage['cosmosRendererId']`. Wait for `rendererReady` before sending requests.
 
 ```ts
 await page.evaluate(msg => window.cosmosRendererRequest?.(msg), {

@@ -25,7 +25,7 @@ it('forwards window requests to message handlers', () => {
   const handler2 = vi.fn();
   const connect = createWindowRendererConnect();
   const unsubscribe1 = connect.onMessage(handler1);
-  connect.onMessage(handler2);
+  onTestFinished(connect.onMessage(handler2));
 
   window.cosmosRendererRequest!(request);
   expect(handler1).toHaveBeenCalledWith(request);
@@ -40,7 +40,7 @@ it('forwards window requests to message handlers', () => {
 it('replaces stale window request hook', () => {
   window.cosmosRendererRequest = () => {};
   const handler = vi.fn();
-  createWindowRendererConnect().onMessage(handler);
+  onTestFinished(createWindowRendererConnect().onMessage(handler));
 
   window.cosmosRendererRequest(request);
   expect(handler).toHaveBeenCalledWith(request);

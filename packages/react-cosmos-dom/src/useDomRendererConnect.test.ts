@@ -25,15 +25,17 @@ it('connects to web socket', () => {
 });
 
 it('uses window hooks when detached', () => {
-  createDomRendererConnect({
+  const connect = createDomRendererConnect({
     webSocketUrl: 'ws://localhost:5000',
     detached: true,
-  }).onMessage(() => {});
+  });
+  onTestFinished(connect.onMessage(() => {}));
   expect(MockWebSocket.instances).toEqual([]);
   expect(window.cosmosRendererRequest).toBeDefined();
 });
 
 it('uses window hooks without web socket', () => {
-  createDomRendererConnect({ webSocketUrl: null }).onMessage(() => {});
+  const connect = createDomRendererConnect({ webSocketUrl: null });
+  onTestFinished(connect.onMessage(() => {}));
   expect(window.cosmosRendererRequest).toBeDefined();
 });

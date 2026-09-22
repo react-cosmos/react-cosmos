@@ -4,6 +4,7 @@ import type { CosmosFixtureJson, CosmosFixturesJson } from 'react-cosmos';
 import type {
   FixtureId,
   FixtureListItem,
+  RendererRequest,
   RendererResponse,
 } from 'react-cosmos-core';
 import { createRendererUrl } from 'react-cosmos-core';
@@ -129,6 +130,29 @@ export function webTests(url: string) {
       await page.goto(resolveRendererUrl(url, fixture.rendererUrl));
       await expect(page.getByText('Hello World!')).toBeVisible();
     });
+
+    test('selects fixture via window hook', async ({ request, page }) => {
+      const { fixtures } = await getFixturesJson(request, url);
+      const fixture = expectFixture(fixtures, 'Counter.fixture.tsx');
+      const rendererUrl = resolveRendererUrl(url, fixture.rendererUrl);
+      const rendererId = await loadRenderer(page, rendererUrl);
+
+      const selectRequest: RendererRequest = {
+        type: 'selectFixture',
+        payload: {
+          rendererId,
+          fixtureId: { path: fixture.filePath, name: 'large number' },
+          fixtureState: {},
+        },
+      };
+      await page.evaluate(
+        msg => window.cosmosRendererRequest!(msg),
+        selectRequest
+      );
+
+      const button = page.getByTitle('Click to increment');
+      await expect(button).toContainText('555555555 times');
+    });
   });
 
   test.skip('takes fixture screenshots', async ({ request, page }) => {
@@ -187,6 +211,17 @@ function resolveRendererUrl(url: string, rendererUrl: string) {
   } catch {
     return new URL(rendererUrl, url).href;
   }
+}
+
+async function loadRenderer(page: Page, rendererUrl: string) {
+  return new Promise<string>((resolve, reject) => {
+    page
+      .exposeFunction('cosmosRendererResponse', (msg: RendererResponse) => {
+        if (msg.type === 'rendererReady') resolve(msg.payload.rendererId);
+      })
+      .then(() => page.goto(rendererUrl))
+      .catch(reject);
+  });
 }
 
 async function loadFixture(page: Page, fixture: CosmosFixtureJson) {
