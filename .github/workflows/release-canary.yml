@@ -32,9 +32,13 @@ jobs:
       # https://github.com/lerna/lerna/issues/2622
       # https://github.com/lerna/lerna/issues/3554
       # https://github.com/lerna/lerna/issues/2060#issuecomment-658182391
+      # Publish one package at a time to make provenance tlog conflicts less
+      # likely (unconfirmed workaround):
+      # https://github.com/npm/cli/issues/10078
       - run: |
           npx lerna publish \
             --canary \
+            --concurrency 1 \
             --preid canary.$(git rev-parse --short HEAD) \
             --dist-tag=canary \
             --exact \
