@@ -21,33 +21,36 @@ export async function startFixtureWatcher(
 
   // Chokidar 4 removed glob support, so the root dir is watched and paths are
   // filtered here instead. This mirrors findUserModulePaths: dot entries and
-  // ignored paths are skipped (without descending into them), and only files
-  // matching the fixture and decorator patterns are watched.
+  // ignored paths are skipped (chokidar checks a dir before its contents, so it
+  // never descends into them), and only files matching the fixture and
+  // decorator patterns are watched. Chokidar passes absolute paths when `cwd`
+  // is set.
   function ignored(filePath: string, stats?: { isFile(): boolean }) {
-    const relPath = slash(
-      path.relative(rootDir, path.resolve(rootDir, filePath))
-    );
-    if (relPath === '') return false;
-    if (relPath.split('/').some(segment => segment.startsWith('.')))
-      return true;
-    if (micromatch.isMatch(relPath, ignore, { dot: true })) return true;
+    const relPath = slash(path.relative(rootDir, filePath));
     return (
-      stats?.isFile() === true &&
-      !micromatch.isMatch(relPath, FILE_PATTERNS, { dot: true })
+      path.basename(relPath).startsWith('.') ||
+      micromatch.isMatch(relPath, ignore, { dot: true }) ||
+      (stats?.isFile() === true &&
+        !micromatch.isMatch(relPath, FILE_PATTERNS, { dot: true }))
     );
   }
+
+  // Dirs pass the filter to stay watchable, so only file events call back: a
+  // dir event alone would trigger a needless rescan. Removing a dir also emits
+  // `unlink` for each tracked file in it.
+  const onChange = debounce(() => callback(), DEBOUNCE_INTERVAL);
+  const fileEvents =
+    event === 'all'
+      ? (['add', 'change', 'unlink'] as const)
+      : (['add'] as const);
 
   return new Promise(resolve => {
     const watcher: FSWatcher = watch('.', {
       ignored,
       ignoreInitial: true,
       cwd: rootDir,
-    })
-      .on('ready', () => resolve(watcher))
-      .on(
-        event,
-        debounce(() => callback(), DEBOUNCE_INTERVAL)
-      );
+    }).on('ready', () => resolve(watcher));
+    fileEvents.forEach(e => watcher.on(e, onChange));
   });
 }
 

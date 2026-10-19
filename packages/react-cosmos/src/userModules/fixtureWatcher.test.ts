@@ -88,3 +88,19 @@ it('ignores fixture files in dot dirs', async () => {
   await writeFile('.cache/New.fixture.tsx');
   await expectNoCallback();
 });
+
+it('ignores new directories without fixtures', async () => {
+  await fs.mkdir(path.join(rootDir, 'src/components/nested'), {
+    recursive: true,
+  });
+  await expectNoCallback();
+});
+
+it('calls back when a dir with fixtures is removed', async () => {
+  await fs.mkdir(path.join(rootDir, 'src/__fixtures__'));
+  await writeFile('src/__fixtures__/Gone.tsx');
+  await expectCallback();
+  callback.mockClear();
+  await fs.rm(path.join(rootDir, 'src/__fixtures__'), { recursive: true });
+  await expectCallback();
+});
