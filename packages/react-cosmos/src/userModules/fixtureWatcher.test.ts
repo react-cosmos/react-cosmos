@@ -10,7 +10,7 @@ const SETTLE_MS = 300;
 const WAIT_OPTIONS = { timeout: 5000 };
 
 let rootDir: string;
-let watcher: FSWatcher;
+let watcher: FSWatcher | undefined;
 const callback = vi.fn();
 
 beforeEach(async () => {
@@ -32,7 +32,7 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
-  await watcher.close();
+  await watcher?.close();
   await fs.rm(rootDir, { recursive: true, force: true });
 });
 
