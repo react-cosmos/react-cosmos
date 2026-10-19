@@ -6,7 +6,8 @@ import { vi } from 'vitest';
 import { createCosmosConfig } from '../cosmosConfig/createCosmosConfig.js';
 import { startFixtureWatcher } from './fixtureWatcher.js';
 
-const SETTLE_MS = 300;
+const WATCH_START_MS = 100;
+const NO_CALLBACK_WAIT_MS = 300;
 const WAIT_OPTIONS = { timeout: 5000 };
 
 let rootDir: string;
@@ -18,16 +19,16 @@ beforeEach(async () => {
   await fs.mkdir(path.join(rootDir, 'src'));
   await fs.mkdir(path.join(rootDir, 'node_modules/pkg'), { recursive: true });
   await fs.mkdir(path.join(rootDir, '.cache'));
-  await fs.writeFile(path.join(rootDir, 'src/Existing.fixture.tsx'), '');
-  // File system events for the setup above can arrive after the watcher is
-  // ready (seen with FSEvents on macOS), so let them settle on both sides.
-  await wait(SETTLE_MS);
+  // Setup only creates dirs, and dir events don't call back, so late file
+  // system events for it (seen with FSEvents on macOS) can't leak into tests
   watcher = await startFixtureWatcher(
     createCosmosConfig(rootDir),
     'all',
     callback
   );
-  await wait(SETTLE_MS);
+  // The watcher can be ready slightly before the OS delivers its events, so
+  // a file written right away is sometimes missed (seen on macOS)
+  await wait(WATCH_START_MS);
   callback.mockClear();
 });
 
@@ -49,7 +50,7 @@ async function expectCallback() {
 }
 
 async function expectNoCallback() {
-  await wait(1000);
+  await wait(NO_CALLBACK_WAIT_MS);
   expect(callback).not.toHaveBeenCalled();
 }
 
@@ -70,6 +71,9 @@ it('calls back when a decorator file is added', async () => {
 });
 
 it('calls back when a fixture file is removed', async () => {
+  await writeFile('src/Existing.fixture.tsx');
+  await expectCallback();
+  callback.mockClear();
   await fs.rm(path.join(rootDir, 'src/Existing.fixture.tsx'));
   await expectCallback();
 });
