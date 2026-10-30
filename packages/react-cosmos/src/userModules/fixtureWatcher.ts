@@ -10,13 +10,14 @@ export async function startFixtureWatcher(
   callback: () => unknown
 ): Promise<FSWatcher> {
   // Chokidar 4 removed glob support, so the root dir is watched and paths are
-  // filtered here instead. Ignored dirs are skipped (chokidar checks a dir
-  // before its contents, so it never descends into them), and only user
-  // module files are watched.
-  function ignored(filePath: string, stats?: { isFile(): boolean }) {
+  // filtered here instead. Files are watched only if they're user modules.
+  // Dirs can't be user modules, so they're only skipped if they're ignored, in
+  // which case chokidar doesn't descend into them. Chokidar also calls this
+  // before it has stats, when it can't tell files and dirs apart yet.
+  function ignored(absPath: string, stats?: { isFile(): boolean }) {
     return stats?.isFile()
-      ? !isUserModulePath(config, filePath)
-      : isIgnoredPath(config, filePath);
+      ? !isUserModulePath(config, absPath)
+      : isIgnoredPath(config, absPath);
   }
 
   // Dirs pass the filter to stay watchable, so only file events call back: a

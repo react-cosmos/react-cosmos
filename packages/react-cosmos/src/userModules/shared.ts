@@ -1,7 +1,13 @@
 import path from 'path';
 import type { RendererConfig } from 'react-cosmos-core';
 import { replaceKeys } from 'react-cosmos-core';
+import type { CosmosConfig } from '../cosmosConfig/types.js';
 import { slash } from '../utils/slash.js';
+
+export type UserModuleConfig = Pick<
+  CosmosConfig,
+  'rootDir' | 'fixturesDir' | 'fixtureFileSuffix' | 'ignore'
+>;
 
 export type UserModulePaths = {
   fixturePaths: string[];

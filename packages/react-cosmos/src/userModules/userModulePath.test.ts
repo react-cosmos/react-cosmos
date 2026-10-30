@@ -28,6 +28,13 @@ it('matches decorator files', () => {
   );
 });
 
+it('matches user modules in the root dir', () => {
+  expect(isUserModulePath(config, rootPath('cosmos.decorator.tsx'))).toBe(true);
+  expect(isUserModulePath(config, rootPath('__fixtures__/Button.tsx'))).toBe(
+    true
+  );
+});
+
 it('matches custom fixture suffix and fixtures dir', () => {
   const customConfig = createCosmosConfig(rootDir, {
     fixtureFileSuffix: 'story',
@@ -54,6 +61,21 @@ it('ignores fixture files in ignored paths', () => {
   expect(isUserModulePath(config, filePath)).toBe(false);
 });
 
+it('ignores fixture files in custom ignored paths', () => {
+  const customConfig = createCosmosConfig(rootDir, {
+    ignore: ['**/legacy/**'],
+  });
+  const filePath = rootPath('src/legacy/Button.fixture.tsx');
+  expect(isIgnoredPath(customConfig, filePath)).toBe(true);
+  expect(isUserModulePath(customConfig, filePath)).toBe(false);
+});
+
+it('ignores dot fixture files', () => {
+  const filePath = rootPath('src/.Button.fixture.tsx');
+  expect(isIgnoredPath(config, filePath)).toBe(true);
+  expect(isUserModulePath(config, filePath)).toBe(false);
+});
+
 it('ignores fixture files in dot dirs', () => {
   const filePath = rootPath('.cache/src/Button.fixture.tsx');
   expect(isIgnoredPath(config, filePath)).toBe(true);
@@ -65,6 +87,16 @@ it('ignores fixture files outside the root dir', () => {
   expect(isIgnoredPath(config, filePath)).toBe(true);
   expect(isUserModulePath(config, filePath)).toBe(false);
 });
+
+it.runIf(process.platform === 'win32')(
+  'ignores fixture files on another drive',
+  () => {
+    const drive = rootDir.startsWith('Z:') ? 'Y:' : 'Z:';
+    const filePath = `${drive}\\Button.fixture.tsx`;
+    expect(isIgnoredPath(config, filePath)).toBe(true);
+    expect(isUserModulePath(config, filePath)).toBe(false);
+  }
+);
 
 it("doesn't ignore the root dir or regular dirs", () => {
   expect(isIgnoredPath(config, rootDir)).toBe(false);

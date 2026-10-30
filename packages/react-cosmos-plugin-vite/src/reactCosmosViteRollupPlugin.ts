@@ -62,6 +62,8 @@ export function reactCosmosViteRollupPlugin(
         userImportsResolvedModuleId
       );
       if (module) {
+        // reloadModule does nothing when HMR is disabled, but invalidating the
+        // module still makes the next page load pick up the change
         server.moduleGraph.invalidateModule(module);
         server.reloadModule(module);
       }
