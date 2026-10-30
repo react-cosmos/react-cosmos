@@ -1,12 +1,9 @@
 import type { DevServerPluginArgs } from 'react-cosmos';
-import { getHttpsCreds, startFixtureWatcher } from 'react-cosmos';
+import { getHttpsCreds } from 'react-cosmos';
 import { pickRendererUrl } from 'react-cosmos-core';
 import { createServer } from 'vite';
 import { createCosmosViteConfig } from './createCosmosViteConfig.js';
-import {
-  reactCosmosViteRollupPlugin,
-  userImportsResolvedModuleId,
-} from './reactCosmosViteRollupPlugin.js';
+import { reactCosmosViteRollupPlugin } from './reactCosmosViteRollupPlugin.js';
 
 export async function viteDevServerPlugin({
   config,
@@ -40,21 +37,4 @@ export async function viteDevServerPlugin({
     plugins: [reactCosmosViteRollupPlugin(config, cosmosViteConfig, 'dev')],
   });
   await server.listen();
-
-  const watcher = await startFixtureWatcher(config, 'add', () => {
-    const module = server.moduleGraph.getModuleById(
-      userImportsResolvedModuleId
-    );
-    if (!module) {
-      throw new Error(
-        `Vite module graph doesn't contain module with id ${userImportsResolvedModuleId}`
-      );
-    }
-    server.moduleGraph.invalidateModule(module);
-    server.reloadModule(module);
-  });
-
-  return () => {
-    watcher.close();
-  };
 }
