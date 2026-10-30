@@ -26,7 +26,7 @@ export const fixtureWatcherPlugin: CosmosServerPlugin = {
       await generateImportsFile(platform, config, 'dev', modulePaths);
     }
 
-    const watcher = await startFixtureWatcher(config, 'all', async () => {
+    const watcher = await startFixtureWatcher(config, async () => {
       const modulePaths = await findUserModulePaths(config);
 
       updateFixtureListCache(config.rootDir, modulePaths.fixturePaths);

@@ -1,20 +1,14 @@
 import { glob } from 'glob';
 import micromatch from 'micromatch';
-import type { UserModulePaths } from './shared.js';
+import type { UserModuleConfig, UserModulePaths } from './shared.js';
 import { getDecoratorPatterns, getFixturePatterns } from './shared.js';
 
-type FindUserModulePathsArgs = {
-  rootDir: string;
-  fixturesDir: string;
-  fixtureFileSuffix: string;
-  ignore: string[];
-};
 export async function findUserModulePaths({
   rootDir,
   fixturesDir,
   fixtureFileSuffix,
   ignore,
-}: FindUserModulePathsArgs): Promise<UserModulePaths> {
+}: UserModuleConfig): Promise<UserModulePaths> {
   const paths = await glob('**/*', {
     cwd: rootDir,
     absolute: true,

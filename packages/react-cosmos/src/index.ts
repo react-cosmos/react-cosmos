@@ -20,6 +20,7 @@ export * from './testHelpers/cwd.js';
 export * from './userModules/findUserModulePaths.js';
 export * from './userModules/fixtureWatcher.js';
 export * from './userModules/generateUserImports.js';
+export * from './userModules/userModulePath.js';
 export * from './utils/cli.js';
 export * from './utils/fs.js';
 export * from './utils/resolve.js';

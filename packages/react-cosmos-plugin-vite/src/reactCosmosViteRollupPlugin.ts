@@ -5,10 +5,11 @@ import {
   findUserModulePaths,
   generateUserImports,
   getWebSocketUrl,
+  isUserModulePath,
 } from 'react-cosmos';
 import type { CosmosMode } from 'react-cosmos-core';
 import type { DomRendererConfig } from 'react-cosmos-dom';
-import type { Plugin } from 'vite';
+import type { Plugin, ViteDevServer } from 'vite';
 import type { CosmosViteConfig } from './createCosmosViteConfig.js';
 import { createViteRendererIndex } from './createViteRendererIndex.js';
 import { createIndexHtml } from './indexHtml/createIndexHtml.js';
@@ -25,6 +26,7 @@ export function reactCosmosViteRollupPlugin(
   mode: CosmosMode
 ): Plugin {
   let mainScriptUrl: string;
+  let server: ViteDevServer | undefined;
 
   return {
     name: 'react-cosmos-vite-renderer',
@@ -40,6 +42,31 @@ export function reactCosmosViteRollupPlugin(
         ? fs.readFileSync(resolved.id, 'utf-8')
         : createIndexHtml(htmlPath);
       mainScriptUrl = findMainScriptUrl(html, cosmosViteConfig.mainScriptUrl);
+    },
+
+    configureServer(devServer) {
+      server = devServer;
+    },
+
+    // Vite doesn't know about new fixture files until virtual:cosmos-imports
+    // imports them. And when an imported fixture is deleted, Vite soft
+    // invalidates virtual:cosmos-imports, which keeps the stale import. This
+    // hook runs before Vite's own HMR handling, so reloading the module here
+    // keeps it in sync in both cases.
+    watchChange(id, { event }) {
+      if (!server || event === 'update' || !isUserModulePath(config, id)) {
+        return;
+      }
+
+      const module = server.moduleGraph.getModuleById(
+        userImportsResolvedModuleId
+      );
+      if (module) {
+        // reloadModule does nothing when HMR is disabled, but invalidating the
+        // module still makes the next page load pick up the change
+        server.moduleGraph.invalidateModule(module);
+        server.reloadModule(module);
+      }
     },
 
     transformIndexHtml(html) {
