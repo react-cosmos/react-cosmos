@@ -10,12 +10,12 @@ async function mount() {
   mountDomRenderer(args);
 }
 
-// Fallback for when React Refresh isn't enabled.
-// Under normal conditions accepting HMR updates here isn't necessary because
-// individual React modules will be hot reloaded by React Refresh.
+// Accept updates that reach this module, which re-runs it and mounts the
+// renderer with fresh user imports. This happens when a fixture or decorator
+// isn't hot reloaded on its own by React Refresh. Mounting from an accept
+// callback isn't needed, and it would use the stale imports of the previous
+// module instance.
 if (import.meta.hot) {
-  import.meta.hot.accept(() => {
-    mount();
-  });
+  import.meta.hot.accept();
 }\n`;
 }
