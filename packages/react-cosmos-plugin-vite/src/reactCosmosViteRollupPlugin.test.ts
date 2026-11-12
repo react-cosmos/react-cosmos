@@ -67,6 +67,58 @@ it("doesn't reload user imports before they're loaded", () => {
   expect(server.reloadModule).not.toHaveBeenCalled();
 });
 
-it('does nothing without a dev server', () => {
-  expect(() => startPlugin()(fixturePath, 'create')).not.toThrow();
+it('does nothing without a dev server', async () => {
+  await expect(startPlugin()(fixturePath, 'create')).resolves.toBeUndefined();
+});
+
+describe('hot update', () => {
+  function hotUpdate(type: string, file: string, importerIds: string[]) {
+    const config = createCosmosConfig(rootDir);
+    const plugin = reactCosmosViteRollupPlugin(
+      config,
+      createCosmosViteConfig(config),
+      'dev'
+    );
+    const module = {
+      id: file,
+      importers: new Set(importerIds.map(id => ({ id }))),
+    };
+    const result = (plugin.hotUpdate as Hook)({
+      type,
+      file,
+      modules: [module],
+    });
+    return { module, result };
+  }
+
+  it('skips a deleted fixture imported only by user imports', () => {
+    const { result } = hotUpdate('delete', fixturePath, [
+      userImportsResolvedModuleId,
+    ]);
+    expect(result).toEqual([]);
+  });
+
+  it('keeps a deleted fixture that has other importers', () => {
+    const { module, result } = hotUpdate('delete', fixturePath, [
+      userImportsResolvedModuleId,
+      path.join(rootDir, 'src/Other.fixture.tsx'),
+    ]);
+    expect(result).toEqual([module]);
+  });
+
+  it("doesn't filter updated fixtures", () => {
+    const { result } = hotUpdate('update', fixturePath, [
+      userImportsResolvedModuleId,
+    ]);
+    expect(result).toBeUndefined();
+  });
+
+  it("doesn't filter deleted non-fixture files", () => {
+    const { result } = hotUpdate(
+      'delete',
+      path.join(rootDir, 'src/Button.tsx'),
+      [userImportsResolvedModuleId]
+    );
+    expect(result).toBeUndefined();
+  });
 });

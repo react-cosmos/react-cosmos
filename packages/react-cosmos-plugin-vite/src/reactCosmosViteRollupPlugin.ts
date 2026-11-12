@@ -53,7 +53,7 @@ export function reactCosmosViteRollupPlugin(
     // invalidates virtual:cosmos-imports, which keeps the stale import. This
     // hook runs before Vite's own HMR handling, so reloading the module here
     // keeps it in sync in both cases.
-    watchChange(id, { event }) {
+    async watchChange(id, { event }) {
       if (!server || event === 'update' || !isUserModulePath(config, id)) {
         return;
       }
@@ -65,8 +65,25 @@ export function reactCosmosViteRollupPlugin(
         // reloadModule does nothing when HMR is disabled, but invalidating the
         // module still makes the next page load pick up the change
         server.moduleGraph.invalidateModule(module);
-        server.reloadModule(module);
+        await server.reloadModule(module);
       }
+    },
+
+    // Once reloaded, virtual:cosmos-imports no longer imports a deleted user
+    // module, so there's nothing left to update. Without this, Vite asks the
+    // browser to re-import deleted modules that accept their own updates (like
+    // React Refresh boundaries), which fails with a 404. Modules with other
+    // importers still go through Vite's regular HMR handling. (Vite 6+)
+    hotUpdate({ type, file, modules }) {
+      if (type !== 'delete' || !isUserModulePath(config, file)) {
+        return undefined;
+      }
+
+      return modules.filter(module =>
+        [...module.importers].some(
+          importer => importer.id !== userImportsResolvedModuleId
+        )
+      );
     },
 
     transformIndexHtml(html) {
