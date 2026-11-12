@@ -5,10 +5,11 @@ import {
   findUserModulePaths,
   generateUserImports,
   getWebSocketUrl,
+  isUserModulePath,
 } from 'react-cosmos';
 import type { CosmosMode } from 'react-cosmos-core';
 import type { DomRendererConfig } from 'react-cosmos-dom';
-import type { Plugin } from 'vite';
+import type { Plugin, ViteDevServer } from 'vite';
 import type { CosmosViteConfig } from './createCosmosViteConfig.js';
 import { createViteRendererIndex } from './createViteRendererIndex.js';
 import { createIndexHtml } from './indexHtml/createIndexHtml.js';
@@ -25,6 +26,7 @@ export function reactCosmosViteRollupPlugin(
   mode: CosmosMode
 ): Plugin {
   let mainScriptUrl: string;
+  let server: ViteDevServer | undefined;
 
   return {
     name: 'react-cosmos-vite-renderer',
@@ -40,6 +42,48 @@ export function reactCosmosViteRollupPlugin(
         ? fs.readFileSync(resolved.id, 'utf-8')
         : createIndexHtml(htmlPath);
       mainScriptUrl = findMainScriptUrl(html, cosmosViteConfig.mainScriptUrl);
+    },
+
+    configureServer(devServer) {
+      server = devServer;
+    },
+
+    // Vite doesn't know about new fixture files until virtual:cosmos-imports
+    // imports them. And when an imported fixture is deleted, Vite soft
+    // invalidates virtual:cosmos-imports, which keeps the stale import. This
+    // hook runs before Vite's own HMR handling, so reloading the module here
+    // keeps it in sync in both cases.
+    async watchChange(id, { event }) {
+      if (!server || event === 'update' || !isUserModulePath(config, id)) {
+        return;
+      }
+
+      const module = server.moduleGraph.getModuleById(
+        userImportsResolvedModuleId
+      );
+      if (module) {
+        // reloadModule does nothing when HMR is disabled, but invalidating the
+        // module still makes the next page load pick up the change
+        server.moduleGraph.invalidateModule(module);
+        await server.reloadModule(module);
+      }
+    },
+
+    // Once reloaded, virtual:cosmos-imports no longer imports a deleted user
+    // module, so there's nothing left to update. Without this, Vite asks the
+    // browser to re-import deleted modules that accept their own updates (like
+    // React Refresh boundaries), which fails with a 404. Modules with other
+    // importers still go through Vite's regular HMR handling. (Vite 6+)
+    hotUpdate({ type, file, modules }) {
+      if (type !== 'delete' || !isUserModulePath(config, file)) {
+        return undefined;
+      }
+
+      return modules.filter(module =>
+        [...module.importers].some(
+          importer => importer.id !== userImportsResolvedModuleId
+        )
+      );
     },
 
     transformIndexHtml(html) {

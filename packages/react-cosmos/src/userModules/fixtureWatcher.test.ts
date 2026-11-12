@@ -21,11 +21,7 @@ beforeEach(async () => {
   await fs.mkdir(path.join(rootDir, '.cache'));
   // Setup only creates dirs, and dir events don't call back, so late file
   // system events for it (seen with FSEvents on macOS) can't leak into tests
-  watcher = await startFixtureWatcher(
-    createCosmosConfig(rootDir),
-    'all',
-    callback
-  );
+  watcher = await startFixtureWatcher(createCosmosConfig(rootDir), callback);
   // The watcher can be ready slightly before the OS delivers its events, so
   // a file written right away is sometimes missed (seen on macOS)
   await wait(WATCH_START_MS);
