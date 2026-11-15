@@ -2,6 +2,21 @@ import { Callout } from 'nextra/components';
 
 # Migration Guide
 
+## v7 to v8
+
+Vite plugin changes:
+
+- The Vite renderer is now served by the Cosmos dev server at `/renderer.html` (eg. `http://localhost:5000/renderer.html`), instead of a separate Vite server on port `5050`. Update anything that points to port `5050`, like scripts that wait for the renderer or take screenshots of it. The `rendererUrl` values in `cosmos.fixtures.json` are now relative to the Cosmos server, as they already are in static exports and with the Webpack plugin.
+- The renderer shares its origin with the Cosmos UI, and fixtures see `/renderer.html` as the URL path instead of `/`. Set `vite.port` to keep the renderer on [a separate port](/docs/getting-started/vite.mdx#separate-renderer-port).
+- `vite.port` is now exact. Cosmos fails to start if the port is taken instead of moving the renderer to another port.
+- Vite's `server.port`, `server.strictPort`, `server.host`, `server.https` and `server.open` options no longer apply to the renderer, unless `vite.port` is set.
+
+Server plugin changes:
+
+- The dev server port is now chosen when the server starts listening, after the `config` hooks run. The `config` hook receives the configured `port`, and the `devServer` hook receives the port in use.
+- The Cosmos WebSocket server only handles connections to the server root that don't request a subprotocol. Other upgrade requests are left to plugins.
+- `findNextAvailablePort` is deprecated.
+
 ## v6 to v7
 
 [![npm version](https://img.shields.io/npm/v/react-cosmos.svg?style=flat)](https://www.npmjs.com/package/react-cosmos)

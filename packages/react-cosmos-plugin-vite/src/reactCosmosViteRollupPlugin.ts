@@ -86,10 +86,15 @@ export function reactCosmosViteRollupPlugin(
       );
     },
 
-    transformIndexHtml(html) {
-      // Redetect the main script URL when index.html changes
-      mainScriptUrl = findMainScriptUrl(html, cosmosViteConfig.mainScriptUrl);
-      return ensureMainScriptUrl(html);
+    transformIndexHtml: {
+      // Run before Vite prepends the base URL to script paths, because the
+      // main script URL has to match the module ID Vite asks us to resolve
+      order: 'pre',
+      handler(html) {
+        // Redetect the main script URL when index.html changes
+        mainScriptUrl = findMainScriptUrl(html, cosmosViteConfig.mainScriptUrl);
+        return ensureMainScriptUrl(html);
+      },
     },
 
     resolveId(id) {

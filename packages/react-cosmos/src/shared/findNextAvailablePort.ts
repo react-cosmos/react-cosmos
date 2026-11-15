@@ -1,6 +1,11 @@
 import net from 'net';
 
 // Inspired by https://stackoverflow.com/q/19129570
+/**
+ * @deprecated A port found this way can be taken by another process before
+ * you bind it. Listen on the port instead and move to the next one when that
+ * fails. Cosmos no longer uses this and it'll be removed in a future version.
+ */
 export async function findNextAvailablePort(
   port: number,
   retries: number,

@@ -2,28 +2,17 @@ import http from 'http';
 import https from 'https';
 import type { CosmosConfig } from '../cosmosConfig/types.js';
 import { getHttpsCreds } from './httpsCreds.js';
+import { listenOnAvailablePort } from './listenOnAvailablePort.js';
 
-type RequestListener = (
-  request: http.IncomingMessage,
-  response: http.ServerResponse
-) => void;
-
-export async function createHttpServer(
-  config: CosmosConfig,
-  requestListener: RequestListener
-) {
+export async function createHttpServer(config: CosmosConfig) {
   const server = config.https
-    ? https.createServer(await getHttpsCreds(config), requestListener)
-    : http.createServer(requestListener);
+    ? https.createServer(await getHttpsCreds(config))
+    : http.createServer();
 
+  // Returns the port the server ended up listening on, which can differ from
+  // the one in the config
   async function start() {
-    await new Promise<void>(resolve => {
-      if (config.host === null) {
-        server.listen(config.port, resolve);
-      } else {
-        server.listen(config.port, config.host, resolve);
-      }
-    });
+    return listenOnAvailablePort(server, config);
   }
 
   async function stop() {

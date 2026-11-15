@@ -36,17 +36,21 @@ export async function startDevServer(platform: CosmosPlatform) {
     platform,
   });
 
+  // Bind the port before anything gets to announce it. From here on
+  // config.port is the port the server is listening on, which is what the
+  // Cosmos UI, the renderers and the dev server plugins need to know.
+  const httpServer = await createHttpServer(config);
+  config = { ...config, port: await httpServer.start() };
+
+  // Make Playground available as soon as possible and show a loading screen
+  // while plugins are initializing
   const app = await createExpressApp(platform, config, pluginConfigs);
-  const httpServer = await createHttpServer(config, app);
+  httpServer.server.on('request', app);
   const msgHandler = createMessageHandler(httpServer.server);
 
   if (config.staticPath) {
     serveStaticDir(app, config.staticPath, config.publicUrl);
   }
-
-  // Make Playground available as soon as possible and show a loading screen
-  // while plugins are initializing
-  await httpServer.start();
 
   const pluginCleanupCallbacks: (() => Promise<void>)[] = [];
 
