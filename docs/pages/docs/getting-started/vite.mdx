@@ -86,6 +86,8 @@ The Cosmos renderer is served by the Cosmos dev server at `/renderer.html`, next
 
 The renderer's HTML is your project's `index.html`, same as in a static export. Vite's `server.proxy`, `server.allowedHosts`, `server.cors`, `server.fs` and `publicDir` options apply to the renderer as usual, while Vite's `server.port`, `server.strictPort`, `server.host`, `server.https` and `server.open` options don't, because the Cosmos server is the one listening. Use the `port`, `host` and `https` options from your Cosmos config instead.
 
+Behind a proxy or a container only the Cosmos port needs to be exposed. Hot reloading connects to the address the renderer was loaded from, so Vite's `server.hmr` options (`server.ws` since Vite 8.1) can usually be left out. If the hostname isn't `localhost`, add it to Vite's `server.allowedHosts`.
+
 ### Separate renderer port
 
 Because they share an origin, the renderer and the Cosmos UI also share cookies and local storage, and your fixtures see `/renderer.html` as the URL path. If your code needs an origin of its own (eg. it registers a service worker or it reads the URL path), set `vite.port` to run the renderer on a separate Vite server:

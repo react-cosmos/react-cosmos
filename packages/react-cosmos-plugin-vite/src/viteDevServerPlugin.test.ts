@@ -27,7 +27,7 @@ afterEach(async () => {
 
 // A minimal Vite project with a fixture that can be told apart from the
 // fixtures of other projects
-async function createProject(marker: string, viteConfig = '') {
+async function createProject(marker: string, viteServerOptions = '') {
   const rootDir = path.join(
     testFsDir,
     `devServer-${workerId}-${++projectCount}`
@@ -50,7 +50,9 @@ async function createProject(marker: string, viteConfig = '') {
         cacheDir: './.vite',
         logLevel: 'silent',
         optimizeDeps: { noDiscovery: true },
-        ${viteConfig}
+        // Vite restarts when its config file changes, and it sometimes takes
+        // the creation of this file for a change when watching files
+        server: { watch: null, ${viteServerOptions} },
       };`
     ),
   ]);
@@ -126,6 +128,33 @@ async function fetchText(
   // browsers respond to by reloading the page
   if (res.status === 504) return fetchText(url);
   return { status: res.status, text };
+}
+
+async function fetchViteClient(url: string) {
+  const { text } = await fetchText(`${url}/@vite/client`);
+  const [, token] = text.match(/const wsToken = "(.+)";/)!;
+  return { text, token };
+}
+
+// Returns the first message Vite sends over its hot reloading socket
+async function connectHotReloadSocket(
+  port: number,
+  token: string,
+  origin: string
+) {
+  const socket = new WebSocket(
+    `ws://localhost:${port}/?token=${token}`,
+    'vite-hmr',
+    { origin }
+  );
+  try {
+    return await new Promise((resolve, reject) => {
+      socket.once('message', msg => resolve(JSON.parse(msg.toString())));
+      socket.once('error', reject);
+    });
+  } finally {
+    socket.terminate();
+  }
 }
 
 async function findFreePort() {
@@ -218,25 +247,41 @@ describe('renderer served by the Cosmos server', () => {
   it('runs hot reloading socket on the Cosmos server', async () => {
     const { url, port } = await startCosmosServer(await createProject('one'));
 
-    const client = await fetchText(`${url}/@vite/client`);
-    const [, token] = client.text.match(/const wsToken = "(.+)";/)!;
+    const client = await fetchViteClient(url);
     // No separate socket port for the client to connect to
     expect(client.text).toContain('const hmrPort = null;');
 
-    const socket = new WebSocket(
-      `ws://localhost:${port}/?token=${token}`,
-      'vite-hmr',
-      { origin: url }
+    const message = await connectHotReloadSocket(port, client.token, url);
+    expect(message).toEqual({ type: 'connected' });
+  });
+
+  it('keeps hot reloading client port from the Vite config', async () => {
+    // The port a proxy exposes the Cosmos server on (eg. a container port
+    // published under a different number)
+    const clientPort = await findFreePort();
+    const rootDir = await createProject(
+      'one',
+      `hmr: { clientPort: ${clientPort} }`
     );
-    try {
-      const message = await new Promise((resolve, reject) => {
-        socket.once('message', msg => resolve(JSON.parse(msg.toString())));
-        socket.once('error', reject);
-      });
-      expect(message).toEqual({ type: 'connected' });
-    } finally {
-      socket.terminate();
-    }
+    const { url, port } = await startCosmosServer(rootDir);
+
+    const client = await fetchViteClient(url);
+    expect(client.text).toContain(`const hmrPort = ${clientPort};`);
+
+    const message = await connectHotReloadSocket(port, client.token, url);
+    expect(message).toEqual({ type: 'connected' });
+  });
+
+  it('keeps hot reloading socket port from the Vite config', async () => {
+    const socketPort = await findFreePort();
+    const rootDir = await createProject('one', `hmr: { port: ${socketPort} }`);
+    const { url } = await startCosmosServer(rootDir);
+
+    const client = await fetchViteClient(url);
+    expect(client.text).toContain(`const hmrPort = ${socketPort};`);
+
+    const message = await connectHotReloadSocket(socketPort, client.token, url);
+    expect(message).toEqual({ type: 'connected' });
   });
 
   it('proxies sockets from the Vite config through the Cosmos server', async () => {
@@ -248,11 +293,9 @@ describe('renderer served by the Cosmos server', () => {
 
     const rootDir = await createProject(
       'one',
-      `server: {
-        proxy: {
-          '/socket': { target: 'ws://localhost:${backendPort}', ws: true },
-        },
-      },`
+      `proxy: {
+        '/socket': { target: 'ws://localhost:${backendPort}', ws: true },
+      }`
     );
     const { port } = await startCosmosServer(rootDir);
 

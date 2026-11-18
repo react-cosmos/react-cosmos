@@ -8,7 +8,6 @@ import '../../testHelpers/mockOsNetworkInterfaces.js';
 import { mockCliArgs } from '../../testHelpers/mockYargs.js';
 
 import http from 'node:http';
-import type net from 'node:net';
 import 'isomorphic-fetch';
 import path from 'node:path';
 import { vi } from 'vitest';
@@ -17,7 +16,10 @@ import type {
   DevServerPluginArgs,
 } from '../../cosmosPlugin/types.js';
 import { getWebSocketUrl } from '../../shared/webSocketUrl.js';
+import { createTestPortFinder } from '../../testHelpers/testPorts.js';
 import { startDevServer } from '../startDevServer.js';
+
+const findTestPort = createTestPortFinder(21000);
 
 const testCosmosPlugin = {
   name: 'Test Cosmos plugin',
@@ -38,8 +40,8 @@ let consoleLog: ReturnType<typeof vi.spyOn>;
 beforeEach(async () => {
   // Another server takes the port before Cosmos starts
   otherServer = http.createServer((_, res) => res.end('Not Cosmos'));
-  await new Promise<void>(resolve => otherServer.listen(0, resolve));
-  takenPort = (otherServer.address() as net.AddressInfo).port;
+  takenPort = await findTestPort();
+  await new Promise<void>(resolve => otherServer.listen(takenPort, resolve));
 
   consoleLog = vi.spyOn(console, 'log').mockImplementation(() => {});
   testServerPlugin.config.mockClear();

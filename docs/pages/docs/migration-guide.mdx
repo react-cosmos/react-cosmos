@@ -10,12 +10,13 @@ Vite plugin changes:
 - The renderer shares its origin with the Cosmos UI, and fixtures see `/renderer.html` as the URL path instead of `/`. Set `vite.port` to keep the renderer on [a separate port](/docs/getting-started/vite.mdx#separate-renderer-port).
 - `vite.port` is now exact. Cosmos fails to start if the port is taken instead of moving the renderer to another port.
 - Vite's `server.port`, `server.strictPort`, `server.host`, `server.https` and `server.open` options no longer apply to the renderer, unless `vite.port` is set.
+- Vite's hot reloading connection goes through the Cosmos port. If your Vite config sets `server.hmr.clientPort` (`server.ws.clientPort` since Vite 8.1) to reach the old renderer port through a proxy or a container, remove it or point it to the port the Cosmos server is exposed on.
 
 Server plugin changes:
 
 - The dev server port is now chosen when the server starts listening, after the `config` hooks run. The `config` hook receives the configured `port`, and the `devServer` hook receives the port in use.
 - The Cosmos WebSocket server only handles connections to the server root that don't request a subprotocol. Other upgrade requests are left to plugins.
-- `findNextAvailablePort` is deprecated.
+- `findNextAvailablePort` was removed. The dev server finds its own port, and a server started by a plugin on a port of its own should fail when that port is taken, because the Cosmos UI can't follow it to another one.
 
 ## v6 to v7
 

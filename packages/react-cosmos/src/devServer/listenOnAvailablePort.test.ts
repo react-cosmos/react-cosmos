@@ -1,8 +1,11 @@
 import http from 'node:http';
 import net from 'node:net';
 import { mockConsole } from '../testHelpers/mockConsole.js';
+import { createTestPortFinder } from '../testHelpers/testPorts.js';
 import { listenOnAvailablePort } from './listenOnAvailablePort.js';
 import { isUnsafePort } from './unsafePorts.js';
+
+const findTestPort = createTestPortFinder(20000);
 
 const servers: net.Server[] = [];
 
@@ -33,12 +36,9 @@ async function occupyPort(port: number, host?: string) {
   return (server.address() as net.AddressInfo).port;
 }
 
-// Find a port that's free at the moment, away from the fixed ports used by
-// other tests
-async function findFreePort() {
-  const port = await occupyPort(0);
-  await closeServer(servers.pop()!);
-  return port;
+// Take a port that has free ports after it
+async function occupyTestPort(host?: string) {
+  return occupyPort(await findTestPort(), host);
 }
 
 function boundPort(server: net.Server) {
@@ -46,7 +46,7 @@ function boundPort(server: net.Server) {
 }
 
 it('listens on the requested port', async () => {
-  const port = await findFreePort();
+  const port = await findTestPort();
   const server = createServer();
 
   const args = { port, portRetries: 10, host: null };
@@ -55,7 +55,7 @@ it('listens on the requested port', async () => {
 });
 
 it('moves to another port when the requested one is taken', async () => {
-  const port = await occupyPort(0);
+  const port = await occupyTestPort();
   const server = createServer();
 
   await mockConsole(async ({ expectLog }) => {
@@ -76,7 +76,7 @@ it.each(['127.0.0.1', '::1'])(
   async localhost => {
     let port: number;
     try {
-      port = await occupyPort(0, localhost);
+      port = await occupyTestPort(localhost);
     } catch {
       // No IPv6 on this machine
       return;
@@ -93,7 +93,7 @@ it.each(['127.0.0.1', '::1'])(
 );
 
 it('moves to another port when the host port is taken on all addresses', async () => {
-  const port = await occupyPort(0, '0.0.0.0');
+  const port = await occupyTestPort('0.0.0.0');
   const server = createServer();
 
   await mockConsole(async ({ expectLog }) => {
@@ -105,7 +105,7 @@ it('moves to another port when the host port is taken on all addresses', async (
 });
 
 it('gives each server its own port when they start at the same time', async () => {
-  const port = await findFreePort();
+  const port = await findTestPort();
   const args = { port, portRetries: 10, host: null };
 
   await mockConsole(async ({ expectLog }) => {
@@ -122,7 +122,7 @@ it('gives each server its own port when they start at the same time', async () =
 });
 
 it('fails when the requested port is taken and retries are off', async () => {
-  const port = await occupyPort(0);
+  const port = await occupyTestPort();
   const server = createServer();
 
   const args = { port, portRetries: 0, host: null };
@@ -133,7 +133,7 @@ it('fails when the requested port is taken and retries are off', async () => {
 });
 
 it('fails when no port is available within the retry limit', async () => {
-  const port = await occupyPort(0);
+  const port = await occupyTestPort();
   const nextPort = port + 1;
   try {
     await occupyPort(nextPort);
