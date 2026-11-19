@@ -16,6 +16,7 @@ import type {
   DevServerPluginArgs,
 } from '../../cosmosPlugin/types.js';
 import { getWebSocketUrl } from '../../shared/webSocketUrl.js';
+import { mockConsole } from '../../testHelpers/mockConsole.js';
 import { createTestPortFinder } from '../../testHelpers/testPorts.js';
 import { startDevServer } from '../startDevServer.js';
 
@@ -35,7 +36,6 @@ const testServerPlugin = {
 
 let otherServer: http.Server;
 let takenPort: number;
-let consoleLog: ReturnType<typeof vi.spyOn>;
 
 beforeEach(async () => {
   // Another server takes the port before Cosmos starts
@@ -43,7 +43,6 @@ beforeEach(async () => {
   takenPort = await findTestPort();
   await new Promise<void>(resolve => otherServer.listen(takenPort, resolve));
 
-  consoleLog = vi.spyOn(console, 'log').mockImplementation(() => {});
   testServerPlugin.config.mockClear();
   testServerPlugin.devServer.mockClear();
 
@@ -53,7 +52,6 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
-  consoleLog.mockRestore();
   await new Promise(resolve => otherServer.close(resolve));
 });
 
@@ -63,25 +61,27 @@ it('moves to another port and shares it with plugins', async () => {
     port: takenPort,
   });
 
-  const stopServer = await startDevServer('web');
+  const newPort = takenPort + 1;
+  const stopServer = await mockConsole(async ({ expectLog }) => {
+    expectLog('[Cosmos] Using config found at cosmos.config.json');
+    expectLog('[Cosmos] Found 1 plugin: Test Cosmos plugin');
+    expectLog(`[Cosmos] Port ${takenPort} already in use, trying next...`);
+    expectLog(
+      `[Cosmos] See you at http://localhost:${newPort} or http://192.168.1.10:${newPort}`
+    );
+    return startDevServer('web');
+  });
   try {
     // Config plugins run before the port is bound
     const [configArgs] = testServerPlugin.config.mock.calls[0];
     expect(configArgs.config.port).toBe(takenPort);
 
     const [{ config }] = testServerPlugin.devServer.mock.calls[0];
-    expect(config.port).toBeGreaterThan(takenPort);
+    expect(config.port).toBe(newPort);
     expect(getWebSocketUrl(config)).toBe(`ws://192.168.1.10:${config.port}`);
 
     const res = await fetch(`http://localhost:${config.port}`);
     expect(await res.text()).toContain('<title>React Cosmos</title>');
-
-    expect(consoleLog).toBeCalledWith(
-      `[Cosmos] Port ${takenPort} already in use, trying next...`
-    );
-    expect(consoleLog).toBeCalledWith(
-      `[Cosmos] See you at http://localhost:${config.port} or http://192.168.1.10:${config.port}`
-    );
   } finally {
     await stopServer();
   }
@@ -94,9 +94,13 @@ it('fails when the port is taken and port retries are off', async () => {
     portRetries: 0,
   });
 
-  await expect(startDevServer('web')).rejects.toThrow(
-    `Port ${takenPort} is already in use`
-  );
+  await mockConsole(async ({ expectLog }) => {
+    expectLog('[Cosmos] Using config found at cosmos.config.json');
+    expectLog('[Cosmos] Found 1 plugin: Test Cosmos plugin');
+    await expect(startDevServer('web')).rejects.toThrow(
+      `Port ${takenPort} is already in use`
+    );
+  });
   expect(testServerPlugin.devServer).not.toBeCalled();
 
   // The other server is left alone

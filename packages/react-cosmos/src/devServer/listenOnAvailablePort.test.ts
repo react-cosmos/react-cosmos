@@ -109,7 +109,9 @@ it('gives each server its own port when they start at the same time', async () =
   const args = { port, portRetries: 10, host: null };
 
   await mockConsole(async ({ expectLog }) => {
+    // Two servers lose the first port, and one of them also loses the second
     expectLog(`[Cosmos] Port ${port} already in use, trying next...`);
+    expectLog(`[Cosmos] Port ${port + 1} already in use, trying next...`);
 
     const ports = await Promise.all([
       listenOnAvailablePort(createServer(), args),

@@ -5,7 +5,7 @@ import path from 'node:path';
 import express from 'express';
 import type { CosmosConfigInput } from 'react-cosmos';
 import { createCosmosConfig } from 'react-cosmos';
-import { vi } from 'vitest';
+import { mockConsole } from 'react-cosmos/vitest.js';
 import WebSocket, { WebSocketServer } from 'ws';
 import { viteConfigPlugin } from './viteConfigPlugin.js';
 import { viteDevServerPlugin } from './viteDevServerPlugin.js';
@@ -16,12 +16,7 @@ const workerId = process.env.VITEST_WORKER_ID ?? '1';
 let projectCount = 0;
 const cleanups: (() => Promise<unknown>)[] = [];
 
-beforeEach(() => {
-  vi.spyOn(console, 'log').mockImplementation(() => {});
-});
-
 afterEach(async () => {
-  vi.restoreAllMocks();
   for (const cleanup of cleanups.splice(0).reverse()) await cleanup();
 });
 
@@ -52,7 +47,14 @@ async function createProject(marker: string, viteServerOptions = '') {
         optimizeDeps: { noDiscovery: true },
         // Vite restarts when its config file changes, and it sometimes takes
         // the creation of this file for a change when watching files
-        server: { watch: null, ${viteServerOptions} },
+        server: {
+          watch: null,
+          // Only load the renderer when a test requests it. Otherwise Vite
+          // loads it in the background after serving the renderer HTML, and
+          // the log that comes with it shows up at an unpredictable time.
+          preTransformRequests: false,
+          ${viteServerOptions}
+        },
       };`
     ),
   ]);
@@ -99,24 +101,57 @@ async function createCosmosServer(
   };
 }
 
+function viteConfigLog(rootDir: string) {
+  const configPath = path.join(rootDir, 'vite.config.js');
+  const relPath = path.relative(process.cwd(), configPath);
+  return `[Cosmos] Using Vite config found at ${relPath}`;
+}
+
+const rendererLog = '[Cosmos] Loading Cosmos renderer at /src/main.tsx';
+
 async function startCosmosServer(
   rootDir: string,
   configInput: CosmosConfigInput = {}
 ) {
-  const server = await createCosmosServer(rootDir, configInput);
-  const stopPlugin = await server.startPlugin();
-  if (!stopPlugin) throw new Error('Plugin cleanup callback missing');
+  const [server] = await startCosmosServers([rootDir], configInput);
+  return server;
+}
 
-  let stopped = false;
-  async function stop() {
-    if (!stopped) {
-      stopped = true;
-      await stopPlugin!();
-    }
-  }
-  cleanups.push(stop);
+// Starts all servers at the same time. They share one console mock because
+// console mocks can't overlap.
+async function startCosmosServers(
+  rootDirs: string[],
+  configInput: CosmosConfigInput = {}
+) {
+  return mockConsole(async ({ expectLog }) => {
+    rootDirs.forEach(rootDir => expectLog(viteConfigLog(rootDir)));
 
-  return { ...server, stop };
+    return Promise.all(
+      rootDirs.map(async rootDir => {
+        const server = await createCosmosServer(rootDir, configInput);
+        const stopPlugin = await server.startPlugin();
+        if (!stopPlugin) throw new Error('Plugin cleanup callback missing');
+
+        let stopped = false;
+        async function stop() {
+          if (!stopped) {
+            stopped = true;
+            await stopPlugin!();
+          }
+        }
+        cleanups.push(stop);
+
+        return { ...server, stop };
+      })
+    );
+  });
+}
+
+async function fetchRendererModule(url: string) {
+  return mockConsole(async ({ expectLog }) => {
+    expectLog(rendererLog);
+    return fetchText(url);
+  });
 }
 
 async function fetchText(
@@ -181,7 +216,7 @@ describe('renderer served by the Cosmos server', () => {
   it('serves renderer modules', async () => {
     const { url, port } = await startCosmosServer(await createProject('one'));
 
-    const main = await fetchText(`${url}/src/main.tsx`);
+    const main = await fetchRendererModule(`${url}/src/main.tsx`);
     expect(main.status).toBe(200);
     expect(main.text).toContain('mountDomRenderer');
 
@@ -202,7 +237,7 @@ describe('renderer served by the Cosmos server', () => {
     expect(status).toBe(200);
     expect(text).toContain('<script type="module" src="/foo/src/main.tsx">');
 
-    const main = await fetchText(`${url}/foo/src/main.tsx`);
+    const main = await fetchRendererModule(`${url}/foo/src/main.tsx`);
     expect(main.text).toContain('mountDomRenderer');
   });
 
@@ -220,16 +255,19 @@ describe('renderer served by the Cosmos server', () => {
   });
 
   it('holds renderer requests until Vite is ready', async () => {
-    const { url, startPlugin } = await createCosmosServer(
-      await createProject('one')
-    );
+    const rootDir = await createProject('one');
+    const { url, startPlugin } = await createCosmosServer(rootDir);
 
-    const pluginStarted = startPlugin();
-    const res = await fetchText(`${url}/renderer.html`);
-    cleanups.push(async () => (await pluginStarted)!());
+    await mockConsole(async ({ expectLog }) => {
+      expectLog(viteConfigLog(rootDir));
 
-    expect(res.status).toBe(200);
-    expect(res.text).toContain('<script type="module" src="/src/main.tsx">');
+      const pluginStarted = startPlugin();
+      const res = await fetchText(`${url}/renderer.html`);
+      cleanups.push(async () => (await pluginStarted)!());
+
+      expect(res.status).toBe(200);
+      expect(res.text).toContain('<script type="module" src="/src/main.tsx">');
+    });
   });
 
   it('passes on requests that are not for the renderer', async () => {
@@ -316,9 +354,7 @@ describe('renderer served by the Cosmos server', () => {
       createProject('one'),
       createProject('two'),
     ]);
-    const [server1, server2] = await Promise.all(
-      rootDirs.map(rootDir => startCosmosServer(rootDir))
-    );
+    const [server1, server2] = await startCosmosServers(rootDirs);
 
     const fixturePath = '/src/Marker.fixture.ts';
     expect((await fetchText(server1.url + fixturePath)).text).toContain('one');
@@ -354,12 +390,14 @@ describe('renderer served by its own server', () => {
     const port = await findFreePort();
     await startCosmosServer(await createProject('one'), { vite: { port } });
 
-    const server2 = await createCosmosServer(await createProject('two'), {
-      vite: { port },
+    const rootDir2 = await createProject('two');
+    const server2 = await createCosmosServer(rootDir2, { vite: { port } });
+    await mockConsole(async ({ expectLog }) => {
+      expectLog(viteConfigLog(rootDir2));
+      await expect(server2.startPlugin()).rejects.toThrow(
+        `Port ${port} is already in use`
+      );
     });
-    await expect(server2.startPlugin()).rejects.toThrow(
-      `Port ${port} is already in use`
-    );
 
     // The first renderer is still the one answering
     const fixture = await fetchText(
