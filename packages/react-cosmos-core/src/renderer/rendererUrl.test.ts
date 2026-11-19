@@ -1,4 +1,8 @@
-import { createRendererUrl, decodeRendererUrlFixture } from './rendererUrl.js';
+import {
+  createRendererUrl,
+  createWebRendererUrl,
+  decodeRendererUrlFixture,
+} from './rendererUrl.js';
 
 const fixtureId = { path: '/path/to/fixture.js', name: 'first' };
 
@@ -333,6 +337,58 @@ describe('dynamic renderer URL', () => {
         '/cosmos/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9?detached=true'
       );
     });
+  });
+});
+
+// Cosmos packages older than 7.5 call these with positional arguments
+describe('legacy positional arguments', () => {
+  const staticUrl = 'http://localhost:5000/renderer.html';
+  const dynamicUrl = 'http://localhost:5000/cosmos/<fixture>';
+
+  it('static fixture', () => {
+    expect(createRendererUrl(staticUrl, fixtureId)).toEqual(
+      createRendererUrl(staticUrl, { fixtureId })
+    );
+  });
+
+  it('static fixture locked', () => {
+    expect(createRendererUrl(staticUrl, fixtureId, true)).toEqual(
+      'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22%2Fpath%2Fto%2Ffixture.js%22%2C%22name%22%3A%22first%22%7D&locked=true'
+    );
+  });
+
+  it('static fixture without name', () => {
+    expect(createRendererUrl(staticUrl, { path: 'fixture.js' }, true)).toEqual(
+      'http://localhost:5000/renderer.html?fixtureId=%7B%22path%22%3A%22fixture.js%22%7D&locked=true'
+    );
+  });
+
+  it('dynamic fixture', () => {
+    expect(createRendererUrl(dynamicUrl, fixtureId, false)).toEqual(
+      'http://localhost:5000/cosmos/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9'
+    );
+  });
+
+  it('dynamic fixture locked', () => {
+    expect(createRendererUrl(dynamicUrl, fixtureId, true)).toEqual(
+      'http://localhost:5000/cosmos/eyJwYXRoIjoiL3BhdGgvdG8vZml4dHVyZS5qcyIsIm5hbWUiOiJmaXJzdCJ9?locked=true'
+    );
+  });
+
+  it('index', () => {
+    expect(createRendererUrl(staticUrl, undefined, true)).toEqual(staticUrl);
+    expect(createRendererUrl(dynamicUrl, undefined, true)).toEqual(
+      'http://localhost:5000/cosmos/index'
+    );
+  });
+
+  it('web fixture', () => {
+    expect(createWebRendererUrl(dynamicUrl, fixtureId)).toEqual(
+      createWebRendererUrl(dynamicUrl, { fixtureId })
+    );
+    expect(createWebRendererUrl(staticUrl, fixtureId, true)).toEqual(
+      createWebRendererUrl(staticUrl, { fixtureId, locked: true })
+    );
   });
 });
 

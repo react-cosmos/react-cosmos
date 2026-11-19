@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import type { RendererConnect } from 'react-cosmos-core';
 import { isInsideWindowIframe } from 'react-cosmos-core';
 import {
   createNoopRendererConnect,
@@ -13,10 +14,26 @@ type DomRendererConnectOptions = {
   detached?: boolean;
 };
 
-export function useDomRendererConnect({
-  webSocketUrl,
-  detached,
-}: DomRendererConnectOptions) {
+export function useDomRendererConnect(
+  options: DomRendererConnectOptions
+): RendererConnect;
+/** @deprecated Pass an options object */
+export function useDomRendererConnect(
+  webSocketUrl: string | null
+): RendererConnect;
+export function useDomRendererConnect(
+  optionsOrWebSocketUrl: DomRendererConnectOptions | string | null
+) {
+  // Cosmos packages older than 7.5 depend on this package with a caret range,
+  // so they can end up calling this version with the positional webSocketUrl
+  // argument they were built against. See the tech debt doc for when this can
+  // be removed.
+  const options: DomRendererConnectOptions =
+    typeof optionsOrWebSocketUrl === 'string' || optionsOrWebSocketUrl === null
+      ? { webSocketUrl: optionsOrWebSocketUrl }
+      : optionsOrWebSocketUrl;
+  const { webSocketUrl, detached } = options;
+
   return React.useMemo(
     () => createDomRendererConnect({ webSocketUrl, detached }),
     [webSocketUrl, detached]
