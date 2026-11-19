@@ -28,6 +28,12 @@ Use the npm scripts, not raw `tsc` / `vitest` — the scripts wrap custom build 
 - **Watch tests**: `npm run test`.
 - **E2E**: `npm run test:e2e` (Playwright).
 
+## Test output
+
+Tests must not print to the terminal. When the code under test logs something expected (e.g. `[Cosmos] No Vite config found, using default settings`), wrap the call in `mockConsole` from `react-cosmos/vitest.js` and declare each message with `expectLog` — this both swallows the log and asserts it was printed. See `packages/react-cosmos-plugin-vite/src/indexHtml/createIndexHtml.test.ts` for an example.
+
+Vitest hides console output from passing tests when it detects an agent, so check for stray logs with `npm run test:run -- <filter> --reporter=default` and look for `stdout |` / `stderr |` blocks.
+
 ## Cross-package source linking
 
 `npm run src` rewrites the root shim files (`packages/*/{index,client,vitest}.{js,d.ts}`) to point at `./src/…` so cross-package edits resolve without rebuilding and so cross-package test coverage is measured against source. CI runs it before `check-types`, `lint`, and `test:run` — source-mode must type-check cleanly, not just dist-mode.
