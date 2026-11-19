@@ -1,5 +1,9 @@
 // @vitest-environment jsdom
-import { createDomRendererConnect } from './useDomRendererConnect.js';
+import { renderHook } from '@testing-library/react';
+import {
+  createDomRendererConnect,
+  useDomRendererConnect,
+} from './useDomRendererConnect.js';
 
 class MockWebSocket {
   static instances: string[] = [];
@@ -38,4 +42,18 @@ it('uses window hooks without web socket', () => {
   const connect = createDomRendererConnect({ webSocketUrl: null });
   onTestFinished(connect.onMessage(() => {}));
   expect(window.cosmosRendererRequest).toBeDefined();
+});
+
+// Cosmos packages older than 7.5 call the hook with a positional argument
+describe('legacy positional argument', () => {
+  it('connects to web socket', () => {
+    renderHook(() => useDomRendererConnect('ws://localhost:5000'));
+    expect(MockWebSocket.instances).toEqual(['ws://localhost:5000']);
+  });
+
+  it('uses window hooks without web socket', () => {
+    const { result } = renderHook(() => useDomRendererConnect(null));
+    onTestFinished(result.current.onMessage(() => {}));
+    expect(window.cosmosRendererRequest).toBeDefined();
+  });
 });
