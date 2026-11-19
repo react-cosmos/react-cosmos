@@ -17,8 +17,20 @@ export function pickRendererUrl(
 
 export function createRendererUrl(
   rendererUrl: string,
-  params: RendererParams = {}
+  params?: RendererParams
+): string;
+/** @deprecated Pass renderer params as an object */
+export function createRendererUrl(
+  rendererUrl: string,
+  fixtureId?: FixtureId,
+  locked?: boolean
+): string;
+export function createRendererUrl(
+  rendererUrl: string,
+  paramsOrFixtureId?: RendererParams | FixtureId,
+  locked?: boolean
 ) {
+  const params = toRendererParams(paramsOrFixtureId, locked);
   if (hasFixtureVar(rendererUrl)) {
     const { fixtureId, ...queryParams } = params;
     const fixture = fixtureId ? encodeRendererUrlFixture(fixtureId) : 'index';
@@ -38,10 +50,34 @@ export function createRendererUrl(
 export function createWebRendererUrl(
   rendererUrl: string,
   params?: RendererParams
+): string;
+/** @deprecated Pass renderer params as an object */
+export function createWebRendererUrl(
+  rendererUrl: string,
+  fixtureId?: FixtureId,
+  locked?: boolean
+): string;
+export function createWebRendererUrl(
+  rendererUrl: string,
+  paramsOrFixtureId?: RendererParams | FixtureId,
+  locked?: boolean
 ) {
   return applyWindowHostnameToRendererUrl(
-    createRendererUrl(rendererUrl, params)
+    createRendererUrl(rendererUrl, toRendererParams(paramsOrFixtureId, locked))
   );
+}
+
+// Cosmos packages older than 7.5 depend on this package with a caret range, so
+// they can end up calling this version with the positional (fixtureId, locked)
+// arguments they were built against. See the tech debt doc for when this can
+// be removed.
+function toRendererParams(
+  paramsOrFixtureId: RendererParams | FixtureId = {},
+  locked?: boolean
+): RendererParams {
+  return 'path' in paramsOrFixtureId
+    ? { fixtureId: paramsOrFixtureId, locked }
+    : paramsOrFixtureId;
 }
 
 export function encodeRendererUrlFixture(fixtureId: FixtureId) {
