@@ -51,7 +51,11 @@ The `config` hook is called before both `devServer` and `export` hooks. It allow
 
 A hook for starting the renderer dev server alongside the Cosmos server.
 
-For example in the Webpack plugin the Webpack compiler is attached to Cosmos' internal Express app, having the renderer run on the same port as the Cosmos server. In contract, the Vite plugin starts the Vite dev server independently and in this case you end up using two ports—one for the Cosmos server and one for the Vite renderer.
+For example the Webpack and Vite plugins attach their bundler to Cosmos' internal Express app, having the renderer run on the same port as the Cosmos server. This is the recommended approach, because the renderer URL is a path on the Cosmos server that's known from the start. A plugin can also start a renderer server of its own, but then it has to set a `rendererUrl` in the `config` hook that it's certain to end up serving.
+
+The Cosmos server is already listening when this hook is called, and `config.port` is the port it's listening on. This can differ from the `port` received by the `config` hook, because Cosmos moves to the next available port when the configured one is taken.
+
+Plugins can run their own WebSockets on the Cosmos server by listening to the `upgrade` event of `httpServer`. Cosmos only handles the connections of the Cosmos UI and the renderers, which target the server root without a subprotocol, and leaves all other upgrade requests to plugins.
 
 ### `export`
 

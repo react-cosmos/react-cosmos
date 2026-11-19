@@ -119,7 +119,13 @@ function getPort(cosmosConfigInput: CosmosConfigInput) {
   return port;
 }
 
-function getPortRetries({ portRetries = 10 }: CosmosConfigInput) {
+function getPortRetries(cosmosConfigInput: CosmosConfigInput) {
+  const cliArgs = getCliArgs();
+  if (typeof cliArgs.portRetries === 'number') {
+    return cliArgs.portRetries;
+  }
+
+  const { portRetries = 10 } = cosmosConfigInput;
   return portRetries;
 }
 

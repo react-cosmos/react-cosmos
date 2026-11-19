@@ -5,7 +5,9 @@ import { fileExists, resolveFromSilent } from 'react-cosmos';
 export type CosmosViteConfig = {
   configPath: string | false;
   mainScriptUrl: string | null;
-  port: number;
+  // The renderer is served by the Cosmos server unless a port is set, in which
+  // case Vite starts its own server on that port
+  port: number | null;
 };
 
 type CosmosViteConfigInput = Partial<CosmosViteConfig>;
@@ -20,13 +22,13 @@ export function createCosmosViteConfig(config: CosmosConfig): CosmosViteConfig {
   return {
     configPath,
     mainScriptUrl: configInput.mainScriptUrl ?? null,
-    port: getCosmosVitePort(configInput),
+    port: getCosmosVitePort(config),
   };
 }
 
-export function getCosmosVitePort(cosmosViteConfig: CosmosViteConfigInput) {
-  const { port = 5050 } = cosmosViteConfig;
-  return port;
+export function getCosmosVitePort(config: CosmosConfig) {
+  const configInput: CosmosViteConfigInput = config.vite || {};
+  return configInput.port ?? null;
 }
 
 function getViteConfigPath(

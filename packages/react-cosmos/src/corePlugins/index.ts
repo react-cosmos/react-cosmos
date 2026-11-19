@@ -4,11 +4,9 @@ import { fixtureWatcherPlugin } from './fixtureWatcherPlugin.js';
 import { httpProxyPlugin } from './httpProxyPlugin.js';
 import { openFilePlugin } from './openFilePlugin.js';
 import { pluginEndpointPlugin } from './pluginEndpointPlugin.js';
-import { portRetryPlugin } from './portRetryPlugin.js';
 import { remoteRendererUrlPlugin } from './remoteRendererUrlPlugin.js';
 
 export const coreServerPlugins: CosmosServerPlugin[] = [
-  portRetryPlugin,
   fixturesJsonPlugin,
   httpProxyPlugin,
   openFilePlugin,

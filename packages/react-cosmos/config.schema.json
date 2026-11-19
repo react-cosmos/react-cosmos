@@ -76,11 +76,11 @@
       "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
     },
     "port": {
-      "description": "Dev server port. [default: 5000]",
+      "description": "Dev server port. Set to 0 to use any available port. [default: 5000]",
       "type": "number"
     },
     "portRetries": {
-      "description": "Max number of port retries. [default: 10]",
+      "description": "How many of the next ports to try when the dev server port is taken. Set to 0 to fail instead of using another port. [default: 10]",
       "type": "number"
     },
     "https": {
@@ -179,7 +179,7 @@
           "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
         },
         "port": {
-          "description": "Vite renderer port. [default: 5050]",
+          "description": "Run the Vite renderer on its own port instead of the Cosmos dev server port. Starting Cosmos fails if this port is taken. [default: none]",
           "type": "number"
         }
       }
